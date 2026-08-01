@@ -120,3 +120,5 @@ into the implementation.
   dual tree, cuts, quadrants, axes, and source-canvas relationship.
 - [`docs/converge-projection-myriahedral.md`](converge-projection-myriahedral.md)
   preserves the staged implementation brief.
+- [`assets/adhoc/myriahedral`](../assets/adhoc/myriahedral/README.md) preserves
+  the exact reconstruction artifacts and checksums used by the implementation.

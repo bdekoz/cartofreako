@@ -416,3 +416,7 @@ implementation. Its SHA-256 is:
 
 See the [bibliography](myriahedral-bibliography.md) for stable primary links,
 the configuration evidence, data sources, and licensing notes.
+The exact reconstruction inputs, generators, selected tree, planar baseline,
+and scoring output are preserved in the
+[`assets/adhoc/myriahedral`](../assets/adhoc/myriahedral/README.md) artifact
+manifest.
