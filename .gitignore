@@ -6,3 +6,5 @@
 /tests/test-voronoi-projection-api
 /tests/generate-geometry
 /tests/generate-graticules-ck
+/tests/generate-earth-ck
+/assets/natural-earth/10m-physical-vectors/

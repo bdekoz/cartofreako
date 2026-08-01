@@ -35,6 +35,20 @@ and longitude graticules with:
 make generate-graticules-ck
 ```
 
+Generate the layered 44×22 Cahill-Keyes physical map from Natural Earth's
+1:10m coastline, land, minor-island, reef, ocean, river, lake/reservoir,
+playa, ice, and twelve-depth bathymetry datasets with:
+
+```sh
+make generate-earth-ck
+```
+
+This target requires GDAL development headers plus `curl` and `unzip`. On its
+first run it downloads and SHA-256-verifies Natural Earth's official 5.1.1
+physical-vector bundle; the downloaded build input remains ignored by Git.
+See the [data note](assets/natural-earth-10m-physical-vectors.md) for source,
+checksum, licensing, and the standalone fetch target.
+
 ## AuthaGraph
 
 The AuthaGraph implementation follows Hajime Narukawa's 2022 analytic
@@ -233,6 +247,10 @@ native source-canvas dimensions but does not prescribe a raster.
 | [`geometry-ck-44-22.svg`](geometry-ck-44-22.svg) | Generated layered Cahill-Keyes face geometry in a 44×22 frame |
 | [`tests/generate-graticules-ck.cc`](tests/generate-graticules-ck.cc) | Izzi SVG generator and structural test for grouped, degree-labeled 10° Cahill-Keyes latitude and longitude lines |
 | [`graticules-ck-44-22.svg`](graticules-ck-44-22.svg) | Generated 44×22 Cahill-Keyes graticule with 17 latitude groups and 36 longitude groups |
+| [`tests/generate-earth-ck.cc`](tests/generate-earth-ck.cc) | GDAL/Izzi SVG generator and structural test for seam-clipped Natural Earth 1:10m physical-vector layers |
+| [`earth-ck-44-22.svg`](earth-ck-44-22.svg) | Generated layered 44×22 Cahill-Keyes physical map |
+| [`scripts/fetch-natural-earth-10m.sh`](scripts/fetch-natural-earth-10m.sh) | Pinned, checksum-verifying acquisition of the required Natural Earth shapefiles |
+| [`assets/natural-earth-10m-physical-vectors.md`](assets/natural-earth-10m-physical-vectors.md) | Natural Earth source, checksum, extracted-dataset, and licensing note |
 | [`src/cart0freak0-myriahedral.h`](src/cart0freak0-myriahedral.h) | Myriahedral mesh, unfolding, forward transform, frame validation, API, and source-raster preset |
 | [`src/cart0freak0-myriahedral-tree.inc`](src/cart0freak0-myriahedral-tree.inc) | Compact fixed parent tree for the 5120-face net |
 | [`tests/test-myriahedral-projection-api.cc`](tests/test-myriahedral-projection-api.cc) | Myriahedral topology, reference-coordinate, variable-frame, domain, and API tests |

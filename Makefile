@@ -4,11 +4,19 @@ CXXFLAGS ?= -std=c++20 -Wall -Wextra -Wpedantic -Werror
 TEST_DIR := tests
 ALPHA60_SRC ?= ../alpha60/src
 IZZI_SRC ?= ../izzi/src
+GDAL_CONFIG ?= gdal-config
+NATURAL_EARTH_DIR ?= assets/natural-earth/10m-physical-vectors
+NATURAL_EARTH_FETCHER := scripts/fetch-natural-earth-10m.sh
+NATURAL_EARTH_STAMP := \
+	$(NATURAL_EARTH_DIR)/.natural-earth-10m-physical-5.1.1
 CK_GEOMETRY_GENERATOR := $(TEST_DIR)/generate-geometry
 CK_GEOMETRY_SVG := geometry-ck-44-22.svg
 CK_GRATICULE_GENERATOR := $(TEST_DIR)/generate-graticules-ck
 CK_GRATICULE_SVG := graticules-ck-44-22.svg
+CK_EARTH_GENERATOR := $(TEST_DIR)/generate-earth-ck
+CK_EARTH_SVG := earth-ck-44-22.svg
 TEST_BINARIES := \
+	$(CK_EARTH_GENERATOR) \
 	$(CK_GEOMETRY_GENERATOR) \
 	$(CK_GRATICULE_GENERATOR) \
 	$(TEST_DIR)/test-cahill-keyes-projection \
@@ -18,7 +26,8 @@ TEST_BINARIES := \
 	$(TEST_DIR)/test-myriahedral-projection-api \
 	$(TEST_DIR)/test-voronoi-projection-api
 
-.PHONY: check clean generate-geometry generate-graticules-ck
+.PHONY: check clean fetch-natural-earth-10m generate-earth-ck \
+	generate-geometry generate-graticules-ck
 check:
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-cahill-keyes-projection.cc \
@@ -68,5 +77,23 @@ $(CK_GRATICULE_GENERATOR): $(TEST_DIR)/generate-graticules-ck.cc \
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$< -o $@
 
+fetch-natural-earth-10m: $(NATURAL_EARTH_STAMP)
+
+$(NATURAL_EARTH_STAMP): $(NATURAL_EARTH_FETCHER)
+	$(NATURAL_EARTH_FETCHER) "$(NATURAL_EARTH_DIR)"
+
+generate-earth-ck: $(CK_EARTH_SVG)
+
+$(CK_EARTH_SVG): $(CK_EARTH_GENERATOR) $(NATURAL_EARTH_STAMP)
+	NATURAL_EARTH_DIR="$(NATURAL_EARTH_DIR)" ./$(CK_EARTH_GENERATOR)
+
+$(CK_EARTH_GENERATOR): $(TEST_DIR)/generate-earth-ck.cc \
+		src/a60-carto-frame.h src/a60-carto-projection.h \
+		src/cart0freak0-cahill-keyes.h
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -o $@
+
 clean:
-	$(RM) $(TEST_BINARIES) $(CK_GEOMETRY_SVG) $(CK_GRATICULE_SVG)
+	$(RM) $(TEST_BINARIES) $(CK_EARTH_SVG) $(CK_GEOMETRY_SVG) \
+		$(CK_GRATICULE_SVG)
