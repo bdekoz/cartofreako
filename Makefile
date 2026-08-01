@@ -15,10 +15,13 @@ CK_GRATICULE_GENERATOR := $(TEST_DIR)/generate-graticules-ck
 CK_GRATICULE_SVG := graticules-ck-44-22.svg
 CK_EARTH_GENERATOR := $(TEST_DIR)/generate-earth-ck
 CK_EARTH_SVG := earth-ck-44-22.svg
+CK_OCEAN_GENERATOR := $(TEST_DIR)/generate-ocean-ck
+CK_OCEAN_SVG := ocean-ck-44-22.svg
 TEST_BINARIES := \
 	$(CK_EARTH_GENERATOR) \
 	$(CK_GEOMETRY_GENERATOR) \
 	$(CK_GRATICULE_GENERATOR) \
+	$(CK_OCEAN_GENERATOR) \
 	$(TEST_DIR)/test-cahill-keyes-projection \
 	$(TEST_DIR)/test-cahill-keyes-projection-api \
 	$(TEST_DIR)/test-cahill-keyes-path-functions \
@@ -27,7 +30,7 @@ TEST_BINARIES := \
 	$(TEST_DIR)/test-voronoi-projection-api
 
 .PHONY: check clean fetch-natural-earth-10m generate-earth-ck \
-	generate-geometry generate-graticules-ck
+	generate-geometry generate-graticules-ck generate-ocean-ck
 check:
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-cahill-keyes-projection.cc \
@@ -94,6 +97,20 @@ $(CK_EARTH_GENERATOR): $(TEST_DIR)/generate-earth-ck.cc \
 		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$< $(shell $(GDAL_CONFIG) --libs) -o $@
 
+generate-ocean-ck: $(CK_OCEAN_SVG)
+
+$(CK_OCEAN_SVG): $(CK_OCEAN_GENERATOR) $(NATURAL_EARTH_STAMP)
+	NATURAL_EARTH_DIR="$(NATURAL_EARTH_DIR)" ./$(CK_OCEAN_GENERATOR)
+
+$(CK_OCEAN_GENERATOR): $(TEST_DIR)/generate-ocean-ck.cc \
+		$(TEST_DIR)/hamonshu-v2-patterns.inc \
+		src/a60-carto-frame.h src/a60-carto-projection.h \
+		src/cart0freak0-cahill-keyes.h \
+		src/cart0freak0-cahill-keyes-functions.h
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -o $@
+
 clean:
 	$(RM) $(TEST_BINARIES) $(CK_EARTH_SVG) $(CK_GEOMETRY_SVG) \
-		$(CK_GRATICULE_SVG)
+		$(CK_GRATICULE_SVG) $(CK_OCEAN_SVG)

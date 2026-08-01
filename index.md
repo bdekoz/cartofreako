@@ -49,6 +49,20 @@ physical-vector bundle; the downloaded build input remains ignored by Git.
 See the [data note](assets/natural-earth-10m-physical-vectors.md) for source,
 checksum, licensing, and the standalone fetch target.
 
+Generate just the Natural Earth ocean, filled with 153 independently layered
+vector interpretations of the wave studies in Mori Yūzan's 1903 *Hamonshū*,
+volume 2, with:
+
+```sh
+make generate-ocean-ck
+```
+
+The output uses the same 44×22 Cahill-Keyes frame. Each English motif name is
+descriptive because the source has no printed pattern captions; every layer
+title records both its illustrated-page number and PDF scan number. See the
+[wave-pattern catalogue and rendering notes](docs/hamonshu-wave-patterns.md)
+for the page convention, naming scheme, vector method, and provenance.
+
 ## AuthaGraph
 
 The AuthaGraph implementation follows Hajime Narukawa's 2022 analytic
@@ -249,6 +263,10 @@ native source-canvas dimensions but does not prescribe a raster.
 | [`graticules-ck-44-22.svg`](graticules-ck-44-22.svg) | Generated 44×22 Cahill-Keyes graticule with 17 latitude groups and 36 longitude groups |
 | [`tests/generate-earth-ck.cc`](tests/generate-earth-ck.cc) | GDAL/Izzi SVG generator and structural test for seam-clipped Natural Earth 1:10m physical-vector layers |
 | [`earth-ck-44-22.svg`](earth-ck-44-22.svg) | Generated layered 44×22 Cahill-Keyes physical map |
+| [`tests/generate-ocean-ck.cc`](tests/generate-ocean-ck.cc) | GDAL/Izzi generator and structural test for the seam-clipped Natural Earth ocean and 153 source-indexed Hamonshū vector-pattern layers |
+| [`tests/hamonshu-v2-patterns.inc`](tests/hamonshu-v2-patterns.inc) | Complete illustrated-page, motif-number, and descriptive-name catalogue for *Hamonshū*, volume 2 |
+| [`ocean-ck-44-22.svg`](ocean-ck-44-22.svg) | Generated 44×22 Cahill-Keyes ocean with independently selectable wave-pattern layers |
+| [`docs/hamonshu-wave-patterns.md`](docs/hamonshu-wave-patterns.md) | PDF page mapping, motif naming, vector interpretation, ocean-clipping method, and source provenance |
 | [`scripts/fetch-natural-earth-10m.sh`](scripts/fetch-natural-earth-10m.sh) | Pinned, checksum-verifying acquisition of the required Natural Earth shapefiles |
 | [`assets/natural-earth-10m-physical-vectors.md`](assets/natural-earth-10m-physical-vectors.md) | Natural Earth source, checksum, extracted-dataset, and licensing note |
 | [`src/cart0freak0-myriahedral.h`](src/cart0freak0-myriahedral.h) | Myriahedral mesh, unfolding, forward transform, frame validation, API, and source-raster preset |
