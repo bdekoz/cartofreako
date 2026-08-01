@@ -114,11 +114,16 @@ make a new test file, generate-ocean-ck.cc, that use the Cahill-Keyes
   But fills the shapes with variation of wave patterns as found in the pdf assets/adhoc/hamonshū.wave-studies.1903.jp.pdf. There are 51 pages, some with multiple patterns on each. Disambiguate the pattern images present in the PDF into a unique set of wave path styles, by converting the unique pattern to SVG lines or elements via Izzi, name the paths generated via page number found and any other scheme including if the pattern name is present (translate japanese to english). Do each of the identified patterns as layers in the generated SVG file "ocean-ck-44-22.svg". Then add a new makefile rule to compile the file, run the exeutable, and generate the output SVG
 
 
-Stage 10
-Repeat the process of developing the generate files (geometry, graticules, earth, ocean), but for the other projections in cartofreako: authagraph, myriahedral, voroni. Some of these projections have different aspect ratios, so use a frame size that where the biggest of frame (width, height) is 44 or as close as possible.
+Stage 9
+make a new documentation file, docs/generation.md that goes through the generation files, describes what is being done, adds commentary or context about numerical techniques, folding, or perceptual issues
 
-make a new documentation file, docs/generation.md that goes through the generation files for the four projections.
+
+Stage 10
+Repeat the process of developing the generate files (geometry, graticules, earth, ocean), but for the other projections in cartofreako: authagraph, myriahedral, star-x, voroni. Some of these projections have different aspect ratios, so use a frame size that where the biggest of frame (width, height) is 44 or as close as possible.
+
 
 Stage 12
-Write documentation and create an example for compiling the C++20 generation function to a WASM binary and using it to load the generated projection image.
+Write documentation and create an example for compiling the C++20 generation function to a WASM binary and using it to generate a map and load the generated projection image.
 Ouput in docs/web-workflow.md
+
+
