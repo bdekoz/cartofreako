@@ -56,8 +56,8 @@ make check
 | [`src/a60-carto-projection.h`](src/a60-carto-projection.h) | Common projection interface and state |
 | [`src/a60-carto-frame.h`](src/a60-carto-frame.h) | Frame and `frame_area` abstraction |
 | [`src/a60-carto-projection-cahill-keyes-functions.h`](src/a60-carto-projection-cahill-keyes-functions.h) | Projection-specific path and seam helpers |
-| [`src/test-cahill-keyes-projection.cc`](src/test-cahill-keyes-projection.cc) | Mathematical reference, scaling, and domain tests |
-| [`src/test-cahill-keyes-projection-api.cc`](src/test-cahill-keyes-projection-api.cc) | Public API, frame, raster, and integration-anchor tests |
+| [`tests/test-cahill-keyes-projection.cc`](tests/test-cahill-keyes-projection.cc) | Mathematical reference, scaling, and domain tests |
+| [`tests/test-cahill-keyes-projection-api.cc`](tests/test-cahill-keyes-projection-api.cc) | Public API, frame, raster, and integration-anchor tests |
 | [`src/a60-svg-carto-geo.h`](src/a60-svg-carto-geo.h) | Geographic integration points exercised by the API test |
 
 ## Attribution and licensing
