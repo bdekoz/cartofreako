@@ -4,3 +4,4 @@
 /tests/test-authagraph-projection-api
 /tests/test-myriahedral-projection-api
 /tests/test-voronoi-projection-api
+/tests/generate-geometry
