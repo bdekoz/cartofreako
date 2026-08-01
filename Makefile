@@ -2,7 +2,12 @@ CXX ?= g++
 CPPFLAGS ?= -Isrc
 CXXFLAGS ?= -std=c++20 -Wall -Wextra -Wpedantic -Werror
 TEST_DIR := tests
+ALPHA60_SRC ?= ../alpha60/src
+IZZI_SRC ?= ../izzi/src
+CK_GEOMETRY_GENERATOR := $(TEST_DIR)/generate-geometry
+CK_GEOMETRY_SVG := geometry-ck-44-22.svg
 TEST_BINARIES := \
+	$(CK_GEOMETRY_GENERATOR) \
 	$(TEST_DIR)/test-cahill-keyes-projection \
 	$(TEST_DIR)/test-cahill-keyes-projection-api \
 	$(TEST_DIR)/test-cahill-keyes-path-functions \
@@ -10,7 +15,7 @@ TEST_BINARIES := \
 	$(TEST_DIR)/test-myriahedral-projection-api \
 	$(TEST_DIR)/test-voronoi-projection-api
 
-.PHONY: check clean
+.PHONY: check clean generate-geometry
 check:
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-cahill-keyes-projection.cc \
@@ -37,5 +42,17 @@ check:
 		-o $(TEST_DIR)/test-voronoi-projection-api
 	$(TEST_DIR)/test-voronoi-projection-api
 
+generate-geometry: $(CK_GEOMETRY_SVG)
+
+$(CK_GEOMETRY_SVG): $(CK_GEOMETRY_GENERATOR)
+	./$(CK_GEOMETRY_GENERATOR)
+
+$(CK_GEOMETRY_GENERATOR): $(TEST_DIR)/generate-geometry.cc \
+		src/a60-carto-frame.h src/a60-carto-projection.h \
+		src/cart0freak0-cahill-keyes.h \
+		src/cart0freak0-cahill-keyes-functions.h
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$< -o $@
+
 clean:
-	$(RM) $(TEST_BINARIES)
+	$(RM) $(TEST_BINARIES) $(CK_GEOMETRY_SVG)

@@ -21,6 +21,13 @@ Run all standalone projection checks with:
 make check
 ```
 
+Generate the layered 44×22 Cahill-Keyes face geometry with the real Alpha60
+and Izzi headers from the neighboring repositories:
+
+```sh
+make generate-geometry
+```
+
 ## AuthaGraph
 
 The AuthaGraph implementation follows Hajime Narukawa's 2022 analytic
@@ -215,6 +222,8 @@ native source-canvas dimensions but does not prescribe a raster.
 | [`tests/test-cahill-keyes-projection.cc`](tests/test-cahill-keyes-projection.cc) | Cahill-Keyes mathematical reference, scaling, and domain tests |
 | [`tests/test-cahill-keyes-projection-api.cc`](tests/test-cahill-keyes-projection-api.cc) | Cahill-Keyes public API, frame, raster, and integration-anchor tests |
 | [`tests/test-cahill-keyes-path-functions.cc`](tests/test-cahill-keyes-path-functions.cc) | Cahill-Keyes path seam, scaling, offset, state, and validation tests |
+| [`tests/generate-geometry.cc`](tests/generate-geometry.cc) | Izzi SVG generator and structural test for the 8 faces, 4 map quadrants, 8 octants, and 16 half-octants |
+| [`geometry-ck-44-22.svg`](geometry-ck-44-22.svg) | Generated layered Cahill-Keyes face geometry in a 44×22 frame |
 | [`src/cart0freak0-myriahedral.h`](src/cart0freak0-myriahedral.h) | Myriahedral mesh, unfolding, forward transform, frame validation, API, and source-raster preset |
 | [`src/cart0freak0-myriahedral-tree.inc`](src/cart0freak0-myriahedral-tree.inc) | Compact fixed parent tree for the 5120-face net |
 | [`tests/test-myriahedral-projection-api.cc`](tests/test-myriahedral-projection-api.cc) | Myriahedral topology, reference-coordinate, variable-frame, domain, and API tests |
