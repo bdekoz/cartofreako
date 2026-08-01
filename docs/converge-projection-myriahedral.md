@@ -8,8 +8,8 @@ The new c++20 implementation transforms from point (latitude, longitude) to poin
 src/a60-carto-projection.h
 
 Examples of other projection implementation using this API are here:
+src/a60-carto-projection-authagraph.h
 src/a60-carto-projection-cahill-keyes.h
-src/a60-carto-projection-un.h
 
 Implementation of the new implementation goes in this new file:
 src/a60-carto-projection-myriahedral.h
