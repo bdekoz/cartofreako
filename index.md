@@ -1,8 +1,8 @@
 # Cartographic projection documentation
 
 This repository contains native C++20 forward implementations of the
-AuthaGraph, Cahill-Keyes, and Myriahedral projections for
-`a60::carto::projection_api`. All three accept variable-size
+AuthaGraph, Cahill-Keyes, Myriahedral, and icosahedral Voronoi projections for
+`a60::carto::projection_api`. All four accept variable-size
 `a60::carto::frame` values while enforcing the aspect ratio required by the
 selected geometry or source-canvas registration.
 
@@ -13,6 +13,7 @@ selected geometry or source-canvas registration.
 | AuthaGraph | Oblique tetrahedron, 24 symmetric sectors, periodic rectangle | `4:sqrt(3)` | `agproj` | `make_authagraph_projection()` |
 | Cahill-Keyes | Octahedron, 8 octants, M-shaped rectangular layout | `2:1` | `ckproj` | `make_cahill_keyes_projection()` |
 | Myriahedral | Depth-5 icosahedral mesh, land-aware spanning-tree net | `16:9` source canvas | `myriaproj` | `make_myriahedral_projection()` |
+| Voronoi | Regular icosahedron, 20 nearest-site gnomonic faces | `48:25` source canvas | `voronoiproj` | `make_voronoi_projection()` |
 
 Run all standalone projection checks with:
 
@@ -162,6 +163,47 @@ coordinates. The optional raster name is metadata for `image_filename()` and
 does not participate in the numeric transform. The named
 `myriahedral_source` preset selects the checked-in raster at its native size.
 
+## Icosahedral Voronoi
+
+The Voronoi implementation reproduces the default `geoIcosahedral()` layout
+from `d3-geo-polygon` without a JavaScript dependency. Twelve spherical
+vertices define twenty regular triangular faces. Each triangle centroid is a
+Voronoi site; the forward transform selects the nearest site by maximizing its
+dot product with the geographic unit vector, projects onto that face's
+gnomonic tangent plane, and carries the result through the fixed shared-edge
+unfolding tree.
+
+This is distinct from the Myriahedral projection above: both begin with an
+icosahedron, but this projection retains 20 regular faces and a conventional
+fixed net, while Myriahedral subdivides to 5120 faces and uses a land-aware
+tree.
+
+### Quick use
+
+```c++
+#include "a60-carto-frame.h"
+#include "a60-carto-projection.h"
+#include "a60-carto-projection-voronoi.h"
+
+const double height = 500;
+const a60::carto::frame::area dimensions {
+  a60::carto::voronoi_width_to_height_ratio * height,
+  height
+};
+const a60::carto::frame map_frame {dimensions};
+const auto projection = a60::carto::make_voronoi_projection(
+  map_frame, "icosahedral-voronoi.png");
+
+// The public API accepts latitude first, then longitude.
+const auto [x, y] = projection.meridians_to_point_2d(40.7128, -74.0060);
+```
+
+The required width is `(48/25) * height`, preserving the original `960 x 500`
+source-canvas registration. Screen coordinates use an upper-left origin. The
+optional raster name is metadata for `image_filename()` and does not
+participate in the numeric transform. The `voronoi_source` preset selects the
+native source-canvas dimensions but does not prescribe a raster.
+
 ## Source guide
 
 | File | Role |
@@ -176,6 +218,8 @@ does not participate in the numeric transform. The named
 | [`src/a60-carto-projection-myriahedral.h`](src/a60-carto-projection-myriahedral.h) | Myriahedral mesh, unfolding, forward transform, frame validation, API, and source-raster preset |
 | [`src/a60-carto-projection-myriahedral-tree.inc`](src/a60-carto-projection-myriahedral-tree.inc) | Compact fixed parent tree for the 5120-face net |
 | [`tests/test-myriahedral-projection-api.cc`](tests/test-myriahedral-projection-api.cc) | Myriahedral topology, reference-coordinate, variable-frame, domain, and API tests |
+| [`src/a60-carto-projection-voronoi.h`](src/a60-carto-projection-voronoi.h) | Icosahedral Voronoi geometry, gnomonic face projection, affine unfolding, frame validation, API, and source-canvas preset |
+| [`tests/test-voronoi-projection-api.cc`](tests/test-voronoi-projection-api.cc) | Voronoi topology, independent D3 reference coordinates, variable-frame, global-domain, seam, and API tests |
 | [`src/a60-carto-projection.h`](src/a60-carto-projection.h) | Common projection interface and state |
 | [`src/a60-carto-frame.h`](src/a60-carto-frame.h) | Shared frame and `frame_area` abstraction |
 | [`src/a60-svg-carto-geo.h`](src/a60-svg-carto-geo.h) | Geographic integration points exercised by API tests |
@@ -201,3 +245,9 @@ tree-building method, source command, and raster derive from Hannes Schulz's
 Natural Earth. See the
 [Myriahedral implementation provenance](docs/myriahedral-implementation-notes.md#provenance)
 and [bibliography](docs/myriahedral-bibliography.md).
+
+The icosahedral Voronoi geometry, parent tree, and registration derive from
+the ISC-licensed [`d3-geo-polygon`](https://github.com/d3/d3-geo-polygon)
+implementation by Mike Bostock, with the Icosahedral map implemented by Jason
+Davies, Enrico Spinielli, and Philippe Riviere. The required ISC notice is
+retained in `src/a60-carto-projection-voronoi.h`.

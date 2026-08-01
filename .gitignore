@@ -3,3 +3,4 @@
 /tests/test-cahill-keyes-path-functions
 /tests/test-authagraph-projection-api
 /tests/test-myriahedral-projection-api
+/tests/test-voronoi-projection-api

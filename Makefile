@@ -7,7 +7,8 @@ TEST_BINARIES := \
 	$(TEST_DIR)/test-cahill-keyes-projection-api \
 	$(TEST_DIR)/test-cahill-keyes-path-functions \
 	$(TEST_DIR)/test-authagraph-projection-api \
-	$(TEST_DIR)/test-myriahedral-projection-api
+	$(TEST_DIR)/test-myriahedral-projection-api \
+	$(TEST_DIR)/test-voronoi-projection-api
 
 .PHONY: check clean
 check:
@@ -31,6 +32,10 @@ check:
 		$(TEST_DIR)/test-myriahedral-projection-api.cc \
 		-o $(TEST_DIR)/test-myriahedral-projection-api
 	$(TEST_DIR)/test-myriahedral-projection-api
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
+		$(TEST_DIR)/test-voronoi-projection-api.cc \
+		-o $(TEST_DIR)/test-voronoi-projection-api
+	$(TEST_DIR)/test-voronoi-projection-api
 
 clean:
 	$(RM) $(TEST_BINARIES)

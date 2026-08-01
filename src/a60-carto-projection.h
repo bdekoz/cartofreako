@@ -26,8 +26,9 @@ namespace a60::carto {
     {
       authagraph,
       cahill_keyes,
+      equirectangular,
       myriahedral,
-      voroni
+      voronoi
     };
 
 
@@ -40,7 +41,7 @@ namespace a60::carto {
    1. 2D representation
    2. math representing the 3D -> 2D transformation, ie the projection.
 
-   Potential projections for world maps are: Voroni, Cahill-Keyes,
+   Potential projections for world maps are: Voronoi, Cahill-Keyes,
    Robinson, Winkel Tripel, Natural Earth, AuthaGraph WorldMap, etc.
 */
 struct projection_base
