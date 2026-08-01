@@ -39,8 +39,8 @@ The work was delivered in three stages:
 
 | Component | Responsibility |
 | --- | --- |
-| [`a60-carto-projection-cahill-keyes.h`](../src/a60-carto-projection-cahill-keyes.h) | Numeric forward projection, frame validation, `projection_api` adapter, screen-coordinate conversion, raster naming, and compatibility presets |
-| [`a60-carto-projection-cahill-keyes-functions.h`](../src/a60-carto-projection-cahill-keyes-functions.h) | Scale- and offset-aware splitting of projected paths at wrapped frame edges |
+| [`cart0freak0-cahill-keyes.h`](../src/cart0freak0-cahill-keyes.h) | Numeric forward projection, frame validation, `projection_api` adapter, screen-coordinate conversion, raster naming, and compatibility presets |
+| [`cart0freak0-cahill-keyes-functions.h`](../src/cart0freak0-cahill-keyes-functions.h) | Scale- and offset-aware splitting of projected paths at wrapped frame edges |
 | [`test-cahill-keyes-projection.cc`](../tests/test-cahill-keyes-projection.cc) | Native reference points, scale invariance, domain sweep, and invalid geographic input |
 | [`test-cahill-keyes-projection-api.cc`](../tests/test-cahill-keyes-projection-api.cc) | Public API anchors, variable frames, invalid frames, raster paths, and compatibility construction |
 | [`test-cahill-keyes-path-functions.cc`](../tests/test-cahill-keyes-path-functions.cc) | Horizontal, vertical, corner, two-edge, variable-frame, stateful, and invalid path cases |
@@ -393,7 +393,7 @@ and split those paths at discontinuities:
 
 ```c++
 #include "a60-carto.h"
-#include "a60-carto-projection-cahill-keyes-functions.h"
+#include "cart0freak0-cahill-keyes-functions.h"
 
 a60::vrange geographic {
   {21.3, -157.8}, // latitude, longitude

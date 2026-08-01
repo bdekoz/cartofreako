@@ -197,7 +197,7 @@ A polyhedral projection is discontinuous at its cut edges. The point API makes
 a deterministic octant choice at every longitude boundary, but a line or
 polygon crossing a cut must be split instead of connected through the blank
 space between octants. Projection-specific path handling remains in
-[`a60-carto-projection-cahill-keyes-functions.h`](../src/a60-carto-projection-cahill-keyes-functions.h).
+[`cart0freak0-cahill-keyes-functions.h`](../src/cart0freak0-cahill-keyes-functions.h).
 
 The helper views the placed projection as the rectangle bounded by `L`, `R`,
 `T`, and `B`. A large jump between opposite outer quarters or opposite

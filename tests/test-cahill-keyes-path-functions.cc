@@ -86,8 +86,8 @@ end_path(const string& value)
 } // namespace a60
 
 #include "a60-carto-projection.h"
-#include "a60-carto-projection-cahill-keyes.h"
-#include "a60-carto-projection-cahill-keyes-functions.h"
+#include "cart0freak0-cahill-keyes.h"
+#include "cart0freak0-cahill-keyes-functions.h"
 
 namespace {
 

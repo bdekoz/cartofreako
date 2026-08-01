@@ -69,7 +69,7 @@ end_path(const string& value)
 } // namespace a60
 
 #include "a60-carto-projection.h"
-#include "a60-carto-projection-myriahedral.h"
+#include "cart0freak0-myriahedral.h"
 
 namespace {
 

@@ -35,8 +35,8 @@ The work has three parts:
 
 | Component | Responsibility |
 | --- | --- |
-| [`a60-carto-projection-myriahedral.h`](../src/a60-carto-projection-myriahedral.h) | Mesh generation, unfolding, forward transform, frame validation, API adapter, and source-raster preset |
-| [`a60-carto-projection-myriahedral-tree.inc`](../src/a60-carto-projection-myriahedral-tree.inc) | Compact parent indices for the fixed 5120-face spanning tree |
+| [`cart0freak0-myriahedral.h`](../src/cart0freak0-myriahedral.h) | Mesh generation, unfolding, forward transform, frame validation, API adapter, and source-raster preset |
+| [`cart0freak0-myriahedral-tree.inc`](../src/cart0freak0-myriahedral-tree.inc) | Compact parent indices for the fixed 5120-face spanning tree |
 | [`a60-carto-projection.h`](../src/a60-carto-projection.h) | Shared `projection_api`, `projection_base`, and `myriahedral` projection mode |
 | [`a60-carto-frame.h`](../src/a60-carto-frame.h) | `frame` and `frame.frame_area` geometry |
 | [`a60-carto.h`](../src/a60-carto.h) | Umbrella include that exports the projection |
@@ -330,7 +330,7 @@ discarded because placement in a larger composition belongs to `cartography`.
 ```c++
 #include "a60-carto-frame.h"
 #include "a60-carto-projection.h"
-#include "a60-carto-projection-myriahedral.h"
+#include "cart0freak0-myriahedral.h"
 
 const double height = 900;
 const a60::carto::frame::area size {

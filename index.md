@@ -47,7 +47,7 @@ sheet.
 ```c++
 #include "a60-carto-frame.h"
 #include "a60-carto-projection.h"
-#include "a60-carto-projection-authagraph.h"
+#include "cart0freak0-authagraph.h"
 
 const double height = 900;
 const a60::carto::frame::area dimensions {
@@ -97,7 +97,7 @@ positive 2:1 `a60::carto::frame`.
 ```c++
 #include "a60-carto-frame.h"
 #include "a60-carto-projection.h"
-#include "a60-carto-projection-cahill-keyes.h"
+#include "cart0freak0-cahill-keyes.h"
 
 const a60::carto::frame::area dimensions {13200, 6600};
 const a60::carto::frame map_frame {dimensions};
@@ -141,7 +141,7 @@ Natural Earth.
 ```c++
 #include "a60-carto-frame.h"
 #include "a60-carto-projection.h"
-#include "a60-carto-projection-myriahedral.h"
+#include "cart0freak0-myriahedral.h"
 
 const double height = 900;
 const a60::carto::frame::area dimensions {
@@ -183,7 +183,7 @@ tree.
 ```c++
 #include "a60-carto-frame.h"
 #include "a60-carto-projection.h"
-#include "a60-carto-projection-voronoi.h"
+#include "cart0freak0-voronoi.h"
 
 const double height = 500;
 const a60::carto::frame::area dimensions {
@@ -208,17 +208,17 @@ native source-canvas dimensions but does not prescribe a raster.
 
 | File | Role |
 | --- | --- |
-| [`src/a60-carto-projection-authagraph.h`](src/a60-carto-projection-authagraph.h) | AuthaGraph analytic forward transform, frame validation, API, and A3 preset |
+| [`src/cart0freak0-authagraph.h`](src/cart0freak0-authagraph.h) | AuthaGraph analytic forward transform, frame validation, API, and A3 preset |
 | [`tests/test-authagraph-projection-api.cc`](tests/test-authagraph-projection-api.cc) | AuthaGraph formula, source-plate, variable-frame, domain, and API tests |
-| [`src/a60-carto-projection-cahill-keyes.h`](src/a60-carto-projection-cahill-keyes.h) | Native scalable forward construction, `projection_api`, frame validation, and named presets |
-| [`src/a60-carto-projection-cahill-keyes-functions.h`](src/a60-carto-projection-cahill-keyes-functions.h) | Scale- and offset-aware Cahill-Keyes projected-path seam splitting |
+| [`src/cart0freak0-cahill-keyes.h`](src/cart0freak0-cahill-keyes.h) | Native scalable forward construction, `projection_api`, frame validation, and named presets |
+| [`src/cart0freak0-cahill-keyes-functions.h`](src/cart0freak0-cahill-keyes-functions.h) | Scale- and offset-aware Cahill-Keyes projected-path seam splitting |
 | [`tests/test-cahill-keyes-projection.cc`](tests/test-cahill-keyes-projection.cc) | Cahill-Keyes mathematical reference, scaling, and domain tests |
 | [`tests/test-cahill-keyes-projection-api.cc`](tests/test-cahill-keyes-projection-api.cc) | Cahill-Keyes public API, frame, raster, and integration-anchor tests |
 | [`tests/test-cahill-keyes-path-functions.cc`](tests/test-cahill-keyes-path-functions.cc) | Cahill-Keyes path seam, scaling, offset, state, and validation tests |
-| [`src/a60-carto-projection-myriahedral.h`](src/a60-carto-projection-myriahedral.h) | Myriahedral mesh, unfolding, forward transform, frame validation, API, and source-raster preset |
-| [`src/a60-carto-projection-myriahedral-tree.inc`](src/a60-carto-projection-myriahedral-tree.inc) | Compact fixed parent tree for the 5120-face net |
+| [`src/cart0freak0-myriahedral.h`](src/cart0freak0-myriahedral.h) | Myriahedral mesh, unfolding, forward transform, frame validation, API, and source-raster preset |
+| [`src/cart0freak0-myriahedral-tree.inc`](src/cart0freak0-myriahedral-tree.inc) | Compact fixed parent tree for the 5120-face net |
 | [`tests/test-myriahedral-projection-api.cc`](tests/test-myriahedral-projection-api.cc) | Myriahedral topology, reference-coordinate, variable-frame, domain, and API tests |
-| [`src/a60-carto-projection-voronoi.h`](src/a60-carto-projection-voronoi.h) | Icosahedral Voronoi geometry, gnomonic face projection, affine unfolding, frame validation, API, and source-canvas preset |
+| [`src/cart0freak0-voronoi.h`](src/cart0freak0-voronoi.h) | Icosahedral Voronoi geometry, gnomonic face projection, affine unfolding, frame validation, API, and source-canvas preset |
 | [`tests/test-voronoi-projection-api.cc`](tests/test-voronoi-projection-api.cc) | Voronoi topology, independent D3 reference coordinates, variable-frame, global-domain, seam, and API tests |
 | [`src/a60-carto-projection.h`](src/a60-carto-projection.h) | Common projection interface and state |
 | [`src/a60-carto-frame.h`](src/a60-carto-frame.h) | Shared frame and `frame_area` abstraction |
@@ -250,4 +250,4 @@ The icosahedral Voronoi geometry, parent tree, and registration derive from
 the ISC-licensed [`d3-geo-polygon`](https://github.com/d3/d3-geo-polygon)
 implementation by Mike Bostock, with the Icosahedral map implemented by Jason
 Davies, Enrico Spinielli, and Philippe Riviere. The required ISC notice is
-retained in `src/a60-carto-projection-voronoi.h`.
+retained in `src/cart0freak0-voronoi.h`.

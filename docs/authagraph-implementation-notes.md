@@ -33,7 +33,7 @@ The work was delivered in three stages:
 
 | Component | Responsibility |
 | --- | --- |
-| [`a60-carto-projection-authagraph.h`](../src/a60-carto-projection-authagraph.h) | Numeric forward transform, net assembly, frame validation, API adapter, and A3 compatibility preset |
+| [`cart0freak0-authagraph.h`](../src/cart0freak0-authagraph.h) | Numeric forward transform, net assembly, frame validation, API adapter, and A3 compatibility preset |
 | [`a60-carto-projection.h`](../src/a60-carto-projection.h) | Shared `projection_api`, `projection_base`, and projection mode |
 | [`a60-carto-frame.h`](../src/a60-carto-frame.h) | `frame` and `frame.frame_area` geometry |
 | [`a60-carto.h`](../src/a60-carto.h) | Umbrella include that exports the projection |
@@ -253,7 +253,7 @@ Construct a map-only projection from any valid `frame::area`:
 ```c++
 #include "a60-carto-frame.h"
 #include "a60-carto-projection.h"
-#include "a60-carto-projection-authagraph.h"
+#include "cart0freak0-authagraph.h"
 
 const double height = 900;
 const a60::carto::frame::area dimensions {
