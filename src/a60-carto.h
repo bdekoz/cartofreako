@@ -30,6 +30,7 @@
 #include "a60-io.h"
 #include "a60-carto-frame.h"
 #include "a60-carto-projection.h"
+#include "a60-carto-projection-authagraph.h"
 #include "a60-carto-projection-un.h"
 #include "a60-carto-projection-cahill-keyes.h"
 //#include "a60-carto-projection-cahill-keyes-butterfly.h"
@@ -159,6 +160,10 @@ struct carto_state
     return bool(vslyc == slice_mode::v_duo || vn || vs);
   }
 };
+
+
+/// Standard cartography state, AuthaGraph.
+const carto_state agwestate(authagraph, slice_mode::whole_earth);
 
 
 /// Standard cartography states, Cahill-Keyes
@@ -328,6 +333,10 @@ struct cartography
     return m;
   }
 };
+
+
+/// Standard cartography object, AuthaGraph A3 source plate.
+const cartography<agproj> agwecarto_a3(pauthagraph_a3, ag_a3);
 
 
 /// Standard cartography objects, Cahill-Keyes projection.
