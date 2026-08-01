@@ -5,6 +5,15 @@ verification outputs used to implement
 `src/a60-carto-projection-myriahedral.h`. They were copied byte-for-byte from
 `/tmp/myriaworld.gjlN58` on 2026-08-01.
 
+## Repository location
+
+The reconstruction package was staged during development under
+`assets/adhoc/myriahedral` and now lives permanently in
+`assets/myriahedral`. Documentation, tooling, and future provenance references
+should use the permanent path. The production base raster remains
+`assets/myriahedral/black-white-downsampled.png`, alongside these supporting
+artifacts.
+
 ## Selected configuration
 
 Grid entry `37` in `boost-grid-configs.txt` records:
