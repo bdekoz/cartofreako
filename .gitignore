@@ -1,4 +1,5 @@
 /tests/test-cahill-keyes-projection
 /tests/test-cahill-keyes-projection-api
+/tests/test-cahill-keyes-path-functions
 /tests/test-authagraph-projection-api
 /tests/test-myriahedral-projection-api

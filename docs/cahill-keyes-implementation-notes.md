@@ -40,8 +40,10 @@ The work was delivered in three stages:
 | Component | Responsibility |
 | --- | --- |
 | [`a60-carto-projection-cahill-keyes.h`](../src/a60-carto-projection-cahill-keyes.h) | Numeric forward projection, frame validation, `projection_api` adapter, screen-coordinate conversion, raster naming, and compatibility presets |
+| [`a60-carto-projection-cahill-keyes-functions.h`](../src/a60-carto-projection-cahill-keyes-functions.h) | Scale- and offset-aware splitting of projected paths at wrapped frame edges |
 | [`test-cahill-keyes-projection.cc`](../tests/test-cahill-keyes-projection.cc) | Native reference points, scale invariance, domain sweep, and invalid geographic input |
 | [`test-cahill-keyes-projection-api.cc`](../tests/test-cahill-keyes-projection-api.cc) | Public API anchors, variable frames, invalid frames, raster paths, and compatibility construction |
+| [`test-cahill-keyes-path-functions.cc`](../tests/test-cahill-keyes-path-functions.cc) | Horizontal, vertical, corner, two-edge, variable-frame, stateful, and invalid path cases |
 
 `ck_native::forward_projection` owns all scale-dependent construction values.
 Its constructor calculates the fixed scaffold geometry once. Calls to
@@ -382,6 +384,94 @@ Invalid frame dimensions throw `std::invalid_argument` during construction.
 Geographic range errors throw the same exception during projection. Internal
 degenerate geometry uses `std::domain_error`.
 
+## Projected path seam handling
+
+The forward API maps one geographic point at a time. Connecting its results
+without considering the octahedral cuts can draw a long false line across the
+map. The separate path utilities consume **already projected screen points**
+and split those paths at discontinuities:
+
+```c++
+#include "a60-carto.h"
+#include "a60-carto-projection-cahill-keyes-functions.h"
+
+a60::vrange geographic {
+  {21.3, -157.8}, // latitude, longitude
+  {-18.1, 178.4},
+};
+
+a60::vrange projected;
+for (const auto& location : geographic)
+  projected.push_back(a60::carto::ckwecarto_44x22.to_point_2d(location));
+
+const a60::vvranges segments = a60::carto::fold_path_edges(
+  a60::carto::ckwecarto_44x22, projected);
+// Render every element of segments as a separate SVG path.
+```
+
+`fold_path_edges()` is the preferred interface. It does not modify its input,
+returns no segments for an empty input, and otherwise returns only nonempty
+segments. Original points stay ordered. Each split adds an exit point on one
+frame edge and a corresponding entry point on the opposite edge.
+
+`minimize_path_distance()` remains as a compatibility interface for callers
+that render one segment per iteration. It returns the next continuous segment
+and mutates its `vrange&` argument. After a split, that argument contains the
+unprocessed suffix beginning at the opposite-edge entry point. When no split
+remains, the function returns the final segment and clears the argument:
+
+```c++
+while (!projected.empty())
+  {
+    const a60::vrange segment = a60::carto::minimize_path_distance(
+      a60::carto::ckwecarto_44x22, projected);
+    // Render segment.
+  }
+```
+
+Repeated calls produce exactly the same segmentation as
+`fold_path_edges()`.
+
+### Detection and edge-intersection formulas
+
+Let the projection frame have width `W`, height `H`, and drawing origin
+`(ox, oy)`. Its screen-space edges are:
+
+```text
+L = ox       R = ox + W
+T = oy       B = oy + H
+```
+
+An adjacent pair is a horizontal wrap candidate when its points occupy the
+opposite outer quarters and `abs(xc - xp) >= W/2`. It is a vertical candidate
+when its points occupy opposite halves and `abs(yc - yp) >= H/3`. These
+thresholds retain the historical Cahill-Keyes M-layout classification while
+deriving all lengths from the current variable frame.
+
+For a left-to-right wrap, the current point is temporarily unwrapped as
+`xc' = xc - W` and the exit edge is `L`; the reverse direction uses
+`xc' = xc + W` and `R`. Top/bottom wrapping applies the same construction with
+`H`. For one coordinate `s`, its unwrapped endpoint `e`, and the selected edge
+`b`, the segment parameter is:
+
+```text
+t = (b - s) / (e - s)
+```
+
+The other coordinate is linearly interpolated at `t`. The result is clamped
+only to absorb floating-point roundoff at the frame boundary. If both axes
+wrap, both endpoint coordinates are unwrapped and the earlier intersection is
+emitted first. Equal intersection parameters pass through paired opposite
+corners in one split; unequal parameters create the necessary middle segment
+between two different frame edges.
+
+The frame origin may be positive or negative, and dimensions may be any valid
+2:1 size. The helper independently checks the aspect ratio so an incompatible
+cartography fails before path processing. Invalid dimensions/origins and
+non-finite projected points throw `std::invalid_argument`. Large jumps that do
+not match an opposite-edge classification are preserved unchanged rather than
+losing a point.
+
 ## Translation method and compatibility decisions
 
 The C++ implementation ports the original mathematical subroutines, not the
@@ -406,7 +496,7 @@ file, or global coordinate cache in the forward path.
 
 ## Verification
 
-Run both standalone executables under strict C++20 warnings:
+Run all standalone tests under strict C++20 warnings:
 
 ```sh
 make check
@@ -426,14 +516,23 @@ The checks cover:
 - 320×160, 44×22, 4224×2112, 13200×6600, and 1234.5×617.25 frames;
 - rejection of 16:9, approximate 2:1, portrait, zero, negative, and infinite
   frames;
-- preservation of an explicitly offset legacy `projection_base`; and
-- the checked-in inverse-raster filename convention.
+- preservation of an explicitly offset legacy `projection_base`;
+- the checked-in inverse-raster filename convention;
+- a real projected seam crossing between 158° E and 162° E;
+- horizontal and vertical path folds in both directions;
+- simultaneous corner crossings and ordered two-edge crossings;
+- preservation of unrecognized jumps and of the incremental remainder;
+- agreement between the non-mutating and stateful path APIs;
+- scale and nonzero-origin path behavior; and
+- rejection of invalid path sizes, aspect ratios, origins, and points.
 
-During implementation the same tests were also run with AddressSanitizer and
-UndefinedBehaviorSanitizer, and the projection/frame headers were compiled
-against the repository's real `a60` and `izzi` frame definitions. The API test
-contains a small compatible frame fixture so the numeric projection can be
-built in isolation without the rest of the application dependency graph.
+The path-function executable was also run with AddressSanitizer and
+UndefinedBehaviorSanitizer. Leak detection was disabled because it is not
+supported under the execution environment's `ptrace`; address and undefined
+behavior checks passed. The projection, frame, and path headers were also
+compiled together against the neighboring real `a60` and `izzi` definitions.
+The tests otherwise contain small compatible fixtures so the implementation
+can be built without the rest of the application dependency graph.
 
 ## Invariants and limitations
 
