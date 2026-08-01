@@ -162,14 +162,14 @@ struct carto_state
 
 
 /// Standard cartography states, Cahill-Keyes
-const carto_state ckwestate(cahillkeyes, slice_mode::whole_earth);
+const carto_state ckwestate(cahill_keyes, slice_mode::whole_earth);
 
-const carto_state ckh2state(cahillkeyes, slice_mode::h_duo);
-const carto_state ckh3state(cahillkeyes, slice_mode::h_trio);
-const carto_state ckh3v2state(cahillkeyes, slice_mode::h_trio, slice_mode::v_duo);
+const carto_state ckh2state(cahill_keyes, slice_mode::h_duo);
+const carto_state ckh3state(cahill_keyes, slice_mode::h_trio);
+const carto_state ckh3v2state(cahill_keyes, slice_mode::h_trio, slice_mode::v_duo);
 
-const carto_state ckh4state(cahillkeyes, slice_mode::h_quarto);
-const carto_state ckh4v2state(cahillkeyes, slice_mode::h_quarto, slice_mode::v_duo);
+const carto_state ckh4state(cahill_keyes, slice_mode::h_quarto);
+const carto_state ckh4v2state(cahill_keyes, slice_mode::h_quarto, slice_mode::v_duo);
 
 
 /// Standard cartography states, ER (UN)
