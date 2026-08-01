@@ -59,3 +59,37 @@ docs/cahill-keyes-context.md
 
 Bibliography,
 docs/cahill-keyes-bibliography.md
+
+
+Stage 4
+
+now repair, test, document
+a60-carto-projection-cahill-keyes-functions.h
+
+Stage 5
+
+make a new test file, generate-geometry-ck.cc, that use the Cahill-Keyes
+  projection at frame size {44,22}, and the izzi SVG path functions, to make a
+  function test_ck_grids(frame size) that draws all the the eight triangular
+  faces, Quadrants, octants, and half-octants as layers in the generated SVG
+  file "geometry-ck-44-22.svg". Then add a new makefile rule to compile the
+  file, run the exeutable, and generate the output SVG
+
+Stage 6
+
+make a new test file, generate-graticules-ck.cc, that use the Cahill-Keyes
+  projection at frame size {44,22}, and the izzi SVG path functions, to make a
+  function test_ck_graticules(frame size) that draws all the lattitude and logitude lines, with lattitude grouped and each labeled with number and or degree, and longitude grouped and labeled with number and or degree as layers in the generated SVG file "graticules-ck-44-22.svg". Then add a new makefile rule to compile the file, run the exeutable, and generate the output SVG
+
+
+Stage 7
+
+make a new test file, generate-earth-ck.cc, that use the Cahill-Keyes
+  projection at frame size {44,22}, and the izzi SVG path functions, to make a
+  function test_ck_earth(frame size) that draws all using the Natural Earth shapefiles from
+
+  https://www.naturalearthdata.com/downloads/10m-physical-vectors/
+
+  including: coastline, land, minor islands, reefs, ocean, rivers, lakes and reservoirs, playas, ice (antarctic ice shelve and glaciated), bathymetry
+
+  as layers in the generated SVG file "earth-ck-44-22.svg". Then add a new makefile rule to compile the file, run the exeutable, and generate the output SVG
