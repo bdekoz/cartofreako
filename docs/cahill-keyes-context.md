@@ -199,6 +199,39 @@ polygon crossing a cut must be split instead of connected through the blank
 space between octants. Projection-specific path handling remains in
 [`a60-carto-projection-cahill-keyes-functions.h`](../src/a60-carto-projection-cahill-keyes-functions.h).
 
+The helper views the placed projection as the rectangle bounded by `L`, `R`,
+`T`, and `B`. A large jump between opposite outer quarters or opposite
+vertical halves is interpreted as a short wrapped continuation. It terminates
+the current path at one edge and begins a new path at the paired edge:
+
+| Projected movement | Current segment exits | Next segment enters |
+| --- | --- | --- |
+| left outer quarter → right outer quarter | `L` | `R` |
+| right outer quarter → left outer quarter | `R` | `L` |
+| north half → south half | `T` | `B` |
+| south half → north half | `B` | `T` |
+
+The edge point is not copied from either endpoint. It is the intersection of
+the selected unwrapped line with the frame edge, so a diagonal path remains
+directionally continuous. A link that crosses both horizontal and vertical
+edges is split in intersection order; a link aimed exactly through a corner
+exits and re-enters through the opposite corner.
+
+```mermaid
+flowchart LR
+  PAIR["adjacent projected points"] --> CLASSIFY["classify opposite<br/>quarters / halves"]
+  CLASSIFY --> UNWRAP["shift endpoint by<br/>frame width / height"]
+  UNWRAP --> INTERSECT["intersect selected line<br/>with frame edge"]
+  INTERSECT --> SPLIT["close at exit<br/>restart at paired entry"]
+```
+
+This is projected-path repair, not spherical clipping. It assumes ordered,
+reasonably sampled points already produced by the same placed Cahill-Keyes
+cartography. It deliberately leaves a large jump unchanged when the endpoints
+do not identify a supported opposite-frame-edge transition. See the
+[implementation notes](cahill-keyes-implementation-notes.md#projected-path-seam-handling)
+for the API contract, thresholds, formulas, and example.
+
 The native class is a **forward** projection only. It converts geographic
 coordinates to map coordinates; it does not solve the inverse map-to-globe
 problem.

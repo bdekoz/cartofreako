@@ -169,9 +169,10 @@ does not participate in the numeric transform. The named
 | [`src/a60-carto-projection-authagraph.h`](src/a60-carto-projection-authagraph.h) | AuthaGraph analytic forward transform, frame validation, API, and A3 preset |
 | [`tests/test-authagraph-projection-api.cc`](tests/test-authagraph-projection-api.cc) | AuthaGraph formula, source-plate, variable-frame, domain, and API tests |
 | [`src/a60-carto-projection-cahill-keyes.h`](src/a60-carto-projection-cahill-keyes.h) | Native scalable forward construction, `projection_api`, frame validation, and named presets |
-| [`src/a60-carto-projection-cahill-keyes-functions.h`](src/a60-carto-projection-cahill-keyes-functions.h) | Cahill-Keyes path and seam helpers |
+| [`src/a60-carto-projection-cahill-keyes-functions.h`](src/a60-carto-projection-cahill-keyes-functions.h) | Scale- and offset-aware Cahill-Keyes projected-path seam splitting |
 | [`tests/test-cahill-keyes-projection.cc`](tests/test-cahill-keyes-projection.cc) | Cahill-Keyes mathematical reference, scaling, and domain tests |
 | [`tests/test-cahill-keyes-projection-api.cc`](tests/test-cahill-keyes-projection-api.cc) | Cahill-Keyes public API, frame, raster, and integration-anchor tests |
+| [`tests/test-cahill-keyes-path-functions.cc`](tests/test-cahill-keyes-path-functions.cc) | Cahill-Keyes path seam, scaling, offset, state, and validation tests |
 | [`src/a60-carto-projection-myriahedral.h`](src/a60-carto-projection-myriahedral.h) | Myriahedral mesh, unfolding, forward transform, frame validation, API, and source-raster preset |
 | [`src/a60-carto-projection-myriahedral-tree.inc`](src/a60-carto-projection-myriahedral-tree.inc) | Compact fixed parent tree for the 5120-face net |
 | [`tests/test-myriahedral-projection-api.cc`](tests/test-myriahedral-projection-api.cc) | Myriahedral topology, reference-coordinate, variable-frame, domain, and API tests |
