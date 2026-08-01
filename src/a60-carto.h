@@ -31,7 +31,6 @@
 #include "a60-carto-frame.h"
 #include "a60-carto-projection.h"
 #include "a60-carto-projection-authagraph.h"
-#include "a60-carto-projection-un.h"
 #include "a60-carto-projection-cahill-keyes.h"
 #include "a60-carto-projection-myriahedral.h"
 //#include "a60-carto-projection-cahill-keyes-butterfly.h"
@@ -96,7 +95,7 @@ namespace a60::carto {
    1 = pacifica americas
    2 = afro eur asia
 
-   [3,6]x == trio (UN) [landscape 1,2,3 tiles x north,south engc]
+   [3,6]x == trio [three horizontal tiles, optionally north and south]
    1 = afro eur asia
    2 = americas
    3 = asia pacifica
@@ -176,12 +175,6 @@ const carto_state ckh3v2state(cahill_keyes, slice_mode::h_trio, slice_mode::v_du
 
 const carto_state ckh4state(cahill_keyes, slice_mode::h_quarto);
 const carto_state ckh4v2state(cahill_keyes, slice_mode::h_quarto, slice_mode::v_duo);
-
-
-/// Standard cartography states, ER (UN)
-const carto_state erwestate(equirectangular, slice_mode::whole_earth);
-const carto_state erh3state(equirectangular, slice_mode::h_trio);
-const carto_state erh3v2state(equirectangular, slice_mode::h_trio, slice_mode::v_duo);
 
 
 /**
@@ -382,16 +375,6 @@ const cartography<ckproj> ckh4carto_44x22(f22x44v, ck_44x22,
 //const cartography<ckogproj> ckogwecarto_44x22(f44x22h, ckog_44x22, true);
 
 
-/// Standard cartography objects, ER (UN) projection.
-const cartography<erproj> erwecarto_engc(f22x17_096_h, er96, true);
-const cartography<erproj> erh3carto_engc(f22x17_096_h, er96_2x,
-					 tiles_er_2x_h, tiles_er_2x_v);
-
-const cartography<erproj> erwecarto_qa4(fqa4b_096_h, er96, true);
-const cartography<erproj> erh3carto_qa4(fqa4b_096_h, er96_2x,
-					 tiles_er_2x_h, tiles_er_2x_v);
-
-
 /// Slice base type
 struct slice_base
 {
@@ -466,7 +449,6 @@ template<typename _Proj>
 using slices = std::vector<slice<_Proj>>;
 
 using ckproj_slices = std::vector<slice<ckproj>>;
-using erproj_slices = std::vector<slice<erproj>>;
 
 
 void
@@ -780,44 +762,6 @@ get_slices(const cartography<ckmproj>&, const carto_state)
   return s;
 }
 #endif
-
-/// ER slices.
-template<>
-slices<erproj>
-get_slices(const cartography<erproj>& carto, const carto_state cstate)
-{
-  slices<erproj> s;
-  const slice_mode hslyc = cstate.hslyc;
-  const slice_mode vslyc = cstate.vslyc;
-
-  const bool p31(hslyc == slice_mode::h_trio_1);
-  const bool p32(hslyc == slice_mode::h_trio_2);
-  const bool p33(hslyc == slice_mode::h_trio_3);
-  const bool all3p(hslyc == slice_mode::h_trio);
-  const bool pv(vslyc == slice_mode::all || vslyc == slice_mode::v_duo);
-  if (p31 || p32 || p33 || all3p)
-    {
-      // No vertical slice.
-      if (vslyc == slice_mode::none)
-	{
-	  frame fdoublev(carto.f);
-	  fdoublev.height() *= 2;
-	  auto cartodoublev(carto);
-	  cartodoublev.f = fdoublev;
-	  get_slices_trio(s, carto, cstate);
-	}
-
-      // Two vertical slices: north, south.
-      if (pv || vslyc == slice_mode::v_duo_north)
-	get_slices_trio(s, carto, cstate, "North ");
-      if (pv || vslyc == slice_mode::v_duo_south)
-	get_slices_trio_v_s(s, carto, cstate);
-    }
-
-  if (hslyc == slice_mode::country_code)
-    get_slices_by_country(s, carto);
-  return s;
-}
 
 } // namespace carto
 

@@ -26,7 +26,6 @@ namespace a60::carto {
     {
       authagraph,
       cahill_keyes,
-      equirectangular,
       myriahedral,
       voroni
     };

@@ -7,8 +7,8 @@ into a new c++20 implementation that transforms from point (latitude, longitude)
 src/a60-carto-projection.h
 
 Examples of other projection implementation using this API are here:
+src/a60-carto-projection-authagraph.h
 src/a60-carto-projection-cahill-keyes.h
-src/a60-carto-projection-un.h
 
 Implementation of the new implementation goes in this new file:
 src/a60-carto-projection-cahill-keyes-v2.h
