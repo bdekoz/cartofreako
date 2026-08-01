@@ -115,7 +115,7 @@ make a new test file, generate-ocean-ck.cc, that use the Cahill-Keyes
 
 
 Stage 10
-Repeat the process of developing the generate files (geometry, graticules, earth), but for the other projections in cartofreako: authagraph, myriahedral, voroni. Some of these projections have different aspect ratios, so use a frame size that where the biggest of frame (width, height) is 44 or as close as possible.
+Repeat the process of developing the generate files (geometry, graticules, earth, ocean), but for the other projections in cartofreako: authagraph, myriahedral, voroni. Some of these projections have different aspect ratios, so use a frame size that where the biggest of frame (width, height) is 44 or as close as possible.
 
 make a new documentation file, docs/generation.md that goes through the generation files for the four projections.
 
