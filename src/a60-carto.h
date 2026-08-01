@@ -33,6 +33,7 @@
 #include "a60-carto-projection-authagraph.h"
 #include "a60-carto-projection-un.h"
 #include "a60-carto-projection-cahill-keyes.h"
+#include "a60-carto-projection-myriahedral.h"
 //#include "a60-carto-projection-cahill-keyes-butterfly.h"
 //#include "a60-carto-projection-cahill-keyes-ckog.h"
 
