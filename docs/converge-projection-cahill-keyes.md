@@ -93,3 +93,32 @@ make a new test file, generate-earth-ck.cc, that use the Cahill-Keyes
   including: coastline, land, minor islands, reefs, ocean, rivers, lakes and reservoirs, playas, ice (antarctic ice shelve and glaciated), bathymetry
 
   as layers in the generated SVG file "earth-ck-44-22.svg". Then add a new makefile rule to compile the file, run the exeutable, and generate the output SVG
+
+chatgpt-5.8-sol max
+"
+Natural Earth’s official 10m physical bundle contains every requested theme in
+  one versioned 49.99 MB archive, including all 12 nested bathymetry levels.
+  GDAL is already installed locally, so the C++ generator can read the
+  authoritative shapefiles directly—no lossy intermediate GeoJSON or custom
+  shapefile parser is necessary.
+"
+
+Stage 8
+
+make a new test file, generate-ocean-ck.cc, that use the Cahill-Keyes
+  projection at frame size {44,22}, and the izzi SVG path functions, to make a
+  function test_ck_ocean(frame size) that draws just the ocean layer of the Natural Earth shapefiles from
+
+  https://www.naturalearthdata.com/downloads/10m-physical-vectors/
+
+  But fills the shapes with variation of wave patterns as found in the pdf assets/adhoc/hamonshū.wave-studies.1903.jp.pdf. There are 51 pages, some with multiple patterns on each. Disambiguate the pattern images present in the PDF into a unique set of wave path styles, by converting the unique pattern to SVG lines or elements via Izzi, name the paths generated via page number found and any other scheme including if the pattern name is present (translate japanese to english). Do each of the identified patterns as layers in the generated SVG file "ocean-ck-44-22.svg". Then add a new makefile rule to compile the file, run the exeutable, and generate the output SVG
+
+
+Stage 10
+Repeat the process of developing the generate files (geometry, graticules, earth), but for the other projections in cartofreako: authagraph, myriahedral, voroni. Some of these projections have different aspect ratios, so use a frame size that where the biggest of frame (width, height) is 44 or as close as possible.
+
+make a new documentation file, docs/generation.md that goes through the generation files for the four projections.
+
+Stage 12
+Write documentation and create an example for compiling the C++20 generation function to a WASM binary and using it to load the generated projection image.
+Ouput in docs/web-workflow.md
