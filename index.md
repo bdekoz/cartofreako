@@ -1,9 +1,10 @@
 # Cartographic projection documentation
 
 This repository contains native C++20 forward implementations of the
-AuthaGraph and Cahill-Keyes projections for `a60::carto::projection_api`.
-Both projections accept variable-size `a60::carto::frame` values while
-enforcing the aspect ratio required by their geometry.
+AuthaGraph, Cahill-Keyes, and Myriahedral projections for
+`a60::carto::projection_api`. All three accept variable-size
+`a60::carto::frame` values while enforcing the aspect ratio required by the
+selected geometry or source-canvas registration.
 
 ## Choose a projection
 
@@ -11,6 +12,7 @@ enforcing the aspect ratio required by their geometry.
 | --- | --- | ---: | --- | --- |
 | AuthaGraph | Oblique tetrahedron, 24 symmetric sectors, periodic rectangle | `4:sqrt(3)` | `agproj` | `make_authagraph_projection()` |
 | Cahill-Keyes | Octahedron, 8 octants, M-shaped rectangular layout | `2:1` | `ckproj` | `make_cahill_keyes_projection()` |
+| Myriahedral | Depth-5 icosahedral mesh, land-aware spanning-tree net | `16:9` source canvas | `myriaproj` | `make_myriahedral_projection()` |
 
 Run all standalone projection checks with:
 
@@ -109,6 +111,57 @@ The width must equal twice the height. As with AuthaGraph, the returned point
 uses upper-left-origin screen coordinates, and the optional raster name does
 not participate in the projection calculation.
 
+## Myriahedral
+
+The Myriahedral implementation reproduces the depth-5 icosahedral mesh of
+`temporaer/myriaworld` and uses a fixed tree reconstructed and registered for
+the checked-in source raster. A compact embedded minimum-spanning tree
+specifies which of the 5120 small faces stay attached.
+The projection locates a spherical face, transfers the point affinely into its
+unfolded planar copy, and scales the complete net to a variable frame. It has
+no runtime dependency on the historical generator, Boost.Graph, S2, GDAL, or
+Natural Earth.
+
+### Read by purpose
+
+- [Geometric context](docs/myriahedral-context.md) explains the icosahedral
+  mesh, primal and dual graphs, land-aware cut tree, hinges, geographic
+  quadrants, screen axes, and `16:9` canvas.
+- [Implementation notes](docs/myriahedral-implementation-notes.md) records the
+  exact subdivision and affine formulas, fixed-tree provenance, unfolding,
+  hierarchical face search, frame contract, API, tests, and limitations.
+- [Bibliography](docs/myriahedral-bibliography.md) identifies van Wijk's 2008
+  paper, the previous implementation, available configuration evidence,
+  Natural Earth data, source-raster digest, and licensing evidence.
+- [README](README.md) gives the shortest repository introduction.
+
+### Quick use
+
+```c++
+#include "a60-carto-frame.h"
+#include "a60-carto-projection.h"
+#include "a60-carto-projection-myriahedral.h"
+
+const double height = 900;
+const a60::carto::frame::area dimensions {
+  a60::carto::myriahedral_width_to_height_ratio * height,
+  height
+};
+const a60::carto::frame map_frame {dimensions};
+const auto projection = a60::carto::make_myriahedral_projection(
+  map_frame, "assets/myriahedral/black-white-downsampled.png");
+
+// The public API accepts latitude first, then longitude.
+const auto [x, y] = projection.meridians_to_point_2d(40.7128, -74.0060);
+```
+
+The width must equal `(16/9) * height`. That ratio preserves registration with
+the complete `4480 x 2520` source raster; it is not an inherent ratio of every
+possible Myriahedral net. The returned point uses upper-left-origin screen
+coordinates. The optional raster name is metadata for `image_filename()` and
+does not participate in the numeric transform. The named
+`myriahedral_source` preset selects the checked-in raster at its native size.
+
 ## Source guide
 
 | File | Role |
@@ -120,6 +173,9 @@ not participate in the projection calculation.
 | [`src/a60-carto-projection-cahill-keyes-functions.h`](src/a60-carto-projection-cahill-keyes-functions.h) | Cahill-Keyes path and seam helpers |
 | [`tests/test-cahill-keyes-projection.cc`](tests/test-cahill-keyes-projection.cc) | Cahill-Keyes mathematical reference, scaling, and domain tests |
 | [`tests/test-cahill-keyes-projection-api.cc`](tests/test-cahill-keyes-projection-api.cc) | Cahill-Keyes public API, frame, raster, and integration-anchor tests |
+| [`src/a60-carto-projection-myriahedral.h`](src/a60-carto-projection-myriahedral.h) | Myriahedral mesh, unfolding, forward transform, frame validation, API, and source-raster preset |
+| [`src/a60-carto-projection-myriahedral-tree.inc`](src/a60-carto-projection-myriahedral-tree.inc) | Compact fixed parent tree for the 5120-face net |
+| [`tests/test-myriahedral-projection-api.cc`](tests/test-myriahedral-projection-api.cc) | Myriahedral topology, reference-coordinate, variable-frame, domain, and API tests |
 | [`src/a60-carto-projection.h`](src/a60-carto-projection.h) | Common projection interface and state |
 | [`src/a60-carto-frame.h`](src/a60-carto-frame.h) | Shared frame and `frame_area` abstraction |
 | [`src/a60-svg-carto-geo.h`](src/a60-svg-carto-geo.h) | Geographic integration points exercised by API tests |
@@ -138,3 +194,10 @@ by Mary Jo Graça. Its source header permits non-commercial use with attribution
 to Graça and Keyes and asks commercial users to contact Gene Keyes. See the
 [Cahill-Keyes provenance and licensing note](docs/cahill-keyes-implementation-notes.md#provenance-and-licensing)
 and [bibliography](docs/cahill-keyes-bibliography.md).
+
+The Myriahedral method was published by Jarke J. van Wijk. The fixed mesh,
+tree-building method, source command, and raster derive from Hannes Schulz's
+`temporaer/myriaworld` implementation; historical land geometry came from
+Natural Earth. See the
+[Myriahedral implementation provenance](docs/myriahedral-implementation-notes.md#provenance)
+and [bibliography](docs/myriahedral-bibliography.md).
