@@ -19,6 +19,9 @@ src/a60-carto-frame.h
 
 Stage 3 development: document implementation and usage
 
+
+Add Voronoi projection documentation
+
 Index to documentation pages:
 index.md
 

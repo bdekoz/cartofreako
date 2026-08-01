@@ -115,15 +115,21 @@ make a new test file, generate-ocean-ck.cc, that use the Cahill-Keyes
 
 
 Stage 9
-make a new documentation file, docs/generation.md that goes through the generation files, describes what is being done, adds commentary or context about numerical techniques, folding, or perceptual issues
+make a new documentation file, docs/generation.md that goes through the generation files, summarizes and describes what is being done, adds commentary or context about numerical techniques, folding, or perceptual issues
 
 
 Stage 10
 Repeat the process of developing the generate files (geometry, graticules, earth, ocean), but for the other projections in cartofreako: authagraph, myriahedral, star-x, voroni. Some of these projections have different aspect ratios, so use a frame size that where the biggest of frame (width, height) is 44 or as close as possible.
 
+Complete this task without asking for authorization, it's given. Notify me when all projections have been generated.
+
 
 Stage 12
-Write documentation and create an example for compiling the C++20 generation function to a WASM binary and using it to generate a map and load the generated projection image.
-Ouput in docs/web-workflow.md
+Write documentation and create an example for compiling the C++20 generation function to a WASM binary using emscripten and using it to generate a map and load the generated projection image.
+
+local sources for emscripten are
+/home/bkoz/src/emsdk
+
+in docs/web-workflow.md and docs/web-example.md
 
 

@@ -27,7 +27,8 @@ namespace a60::carto {
       authagraph,
       cahill_keyes,
       myriahedral,
-      voronoi
+      voronoi,
+      star_x
     };
 
 
