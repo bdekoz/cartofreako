@@ -133,10 +133,10 @@ projection's one-degree longitude adjustment preserves registration with this
 asset family.
 
 17. **cartofreako contributors.** Native mathematical verification.
-    [`test-cahill-keyes-projection.cc`](../src/test-cahill-keyes-projection.cc).
+    [`test-cahill-keyes-projection.cc`](../tests/test-cahill-keyes-projection.cc).
 
 18. **cartofreako contributors.** Public API and variable-frame verification.
-    [`test-cahill-keyes-projection-api.cc`](../src/test-cahill-keyes-projection-api.cc).
+    [`test-cahill-keyes-projection-api.cc`](../tests/test-cahill-keyes-projection-api.cc).
 
 19. **alpha60 contributors.** Geographic integration anchors.
     [`augment_carto_geo_specific`](../src/a60-svg-carto-geo.h).

@@ -41,8 +41,8 @@ The work was delivered in three stages:
 | --- | --- |
 | [`a60-carto-projection-cahill-keyes-native.h`](../src/a60-carto-projection-cahill-keyes-native.h) | Self-contained numeric forward projection in mathematical coordinates |
 | [`a60-carto-projection-cahill-keyes.h`](../src/a60-carto-projection-cahill-keyes.h) | Frame validation, `projection_api` adapter, screen-coordinate conversion, raster naming, and compatibility presets |
-| [`test-cahill-keyes-projection.cc`](../src/test-cahill-keyes-projection.cc) | Native reference points, scale invariance, domain sweep, and invalid geographic input |
-| [`test-cahill-keyes-projection-api.cc`](../src/test-cahill-keyes-projection-api.cc) | Public API anchors, variable frames, invalid frames, raster paths, and compatibility construction |
+| [`test-cahill-keyes-projection.cc`](../tests/test-cahill-keyes-projection.cc) | Native reference points, scale invariance, domain sweep, and invalid geographic input |
+| [`test-cahill-keyes-projection-api.cc`](../tests/test-cahill-keyes-projection-api.cc) | Public API anchors, variable frames, invalid frames, raster paths, and compatibility construction |
 
 `ck_native::forward_projection` owns all scale-dependent construction values.
 Its constructor calculates the fixed scaffold geometry once. Calls to
