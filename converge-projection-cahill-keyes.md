@@ -1,3 +1,5 @@
+Stage 1 development: reimplement clean c++20 implementation of Cahill-Keyes Butterfly M projection from previous
+
 transform the pearl script here:
 assets/cahill-keyes/MegamapMaker-prep9.pl
 
@@ -43,11 +45,14 @@ src/a60-carto-frame.h
 
 Stage 3 development: document implementation and usage
 
+Index to documentation pages:
+index.md
+
 Summarize the work, methods used, numeric forumlas and other relevant implementation details in
 docs/cahill-keyes-implementation-notes.md
 
-Explain the geometric context, approach, quadrants, in
+Explain and illustrate the geometric context, approach, quadrants, in
 docs/cahill-keyes-context.md
 
-Bibliography, 
+Bibliography,
 docs/cahill-keyes-bibliography.md
