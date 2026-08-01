@@ -66,7 +66,7 @@ end_path(const string& value)
 } // namespace a60
 
 #include "a60-carto-projection.h"
-#include "a60-carto-projection-authagraph.h"
+#include "cart0freak0-authagraph.h"
 
 namespace {
 

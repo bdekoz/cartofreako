@@ -30,12 +30,12 @@
 #include "a60-io.h"
 #include "a60-carto-frame.h"
 #include "a60-carto-projection.h"
-#include "a60-carto-projection-authagraph.h"
-#include "a60-carto-projection-cahill-keyes.h"
-#include "a60-carto-projection-myriahedral.h"
-#include "a60-carto-projection-voronoi.h"
-//#include "a60-carto-projection-cahill-keyes-butterfly.h"
-//#include "a60-carto-projection-cahill-keyes-ckog.h"
+#include "cart0freak0-authagraph.h"
+#include "cart0freak0-cahill-keyes.h"
+#include "cart0freak0-myriahedral.h"
+#include "cart0freak0-voronoi.h"
+//#include "cart0freak0-cahill-keyes-butterfly.h"
+//#include "cart0freak0-cahill-keyes-ckog.h"
 
 
 /**

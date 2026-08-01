@@ -17,8 +17,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 // General Public License for more details.
 
-#ifndef a60_CARTOGRAPHY_PROJECTION_CK_FUNCTIONS_H
-#define a60_CARTOGRAPHY_PROJECTION_CK_FUNCTIONS_H 1
+#ifndef cart0freak0_CK_FUNCTIONS_H
+#define cart0freak0_CK_FUNCTIONS_H 1
 
 #include <algorithm>
 #include <cmath>

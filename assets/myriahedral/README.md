@@ -2,7 +2,7 @@
 
 These files preserve the temporary inputs, generators, selected topology, and
 verification outputs used to implement
-`src/a60-carto-projection-myriahedral.h`. They were copied byte-for-byte from
+`src/cart0freak0-myriahedral.h`. They were copied byte-for-byte from
 `/tmp/myriaworld.gjlN58` on 2026-08-01.
 
 ## Repository location

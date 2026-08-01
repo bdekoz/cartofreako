@@ -115,7 +115,7 @@ mathematics and the drawing controls only the compatibility viewport.
 ## Repository implementation and verification sources
 
 7. **AuthaGraph C++20 forward projection.**
-   [`src/a60-carto-projection-authagraph.h`](../src/a60-carto-projection-authagraph.h).
+   [`src/cart0freak0-authagraph.h`](../src/cart0freak0-authagraph.h).
 
    This file contains the four published vertex coordinates, spherical local
    coordinate conversion, equations 2.22 and 2.23, the 24-sector

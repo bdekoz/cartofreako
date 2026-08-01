@@ -7,11 +7,11 @@ into a new c++20 implementation that transforms from point (latitude, longitude)
 src/a60-carto-projection.h
 
 Examples of other projection implementation using this API are here:
-src/a60-carto-projection-authagraph.h
-src/a60-carto-projection-cahill-keyes.h
+src/cart0freak0-authagraph.h
+src/cart0freak0-cahill-keyes.h
 
 Implementation of the new implementation goes in this new file:
-src/a60-carto-projection-cahill-keyes-v2.h
+src/cart0freak0-cahill-keyes-v2.h
 
 The projection should be able to pass the test function
 augment_carto_geo_specific in the source file here:

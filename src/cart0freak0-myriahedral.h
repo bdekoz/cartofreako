@@ -16,8 +16,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 // General Public License for more details.
 
-#ifndef a60_CARTOGRAPHY_PROJECTION_MYRIAHEDRAL_H
-#define a60_CARTOGRAPHY_PROJECTION_MYRIAHEDRAL_H 1
+#ifndef cart0freak0_MYRIAHEDRAL_H
+#define cart0freak0_MYRIAHEDRAL_H 1
 
 #include <algorithm>
 #include <array>
@@ -218,7 +218,7 @@ make_spherical_faces()
 // and removes runtime Boost, S2, and shapefile dependencies from the forward
 // transform.
 inline constexpr char spanning_tree_parent_hex[] =
-#include "a60-carto-projection-myriahedral-tree.inc"
+#include "cart0freak0-myriahedral-tree.inc"
   ;
 
 static_assert(sizeof(spanning_tree_parent_hex) - 1 == face_count * 4);
