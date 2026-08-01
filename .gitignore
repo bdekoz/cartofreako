@@ -5,3 +5,4 @@
 /tests/test-myriahedral-projection-api
 /tests/test-voronoi-projection-api
 /tests/generate-geometry
+/tests/generate-graticules-ck

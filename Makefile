@@ -6,8 +6,11 @@ ALPHA60_SRC ?= ../alpha60/src
 IZZI_SRC ?= ../izzi/src
 CK_GEOMETRY_GENERATOR := $(TEST_DIR)/generate-geometry
 CK_GEOMETRY_SVG := geometry-ck-44-22.svg
+CK_GRATICULE_GENERATOR := $(TEST_DIR)/generate-graticules-ck
+CK_GRATICULE_SVG := graticules-ck-44-22.svg
 TEST_BINARIES := \
 	$(CK_GEOMETRY_GENERATOR) \
+	$(CK_GRATICULE_GENERATOR) \
 	$(TEST_DIR)/test-cahill-keyes-projection \
 	$(TEST_DIR)/test-cahill-keyes-projection-api \
 	$(TEST_DIR)/test-cahill-keyes-path-functions \
@@ -15,7 +18,7 @@ TEST_BINARIES := \
 	$(TEST_DIR)/test-myriahedral-projection-api \
 	$(TEST_DIR)/test-voronoi-projection-api
 
-.PHONY: check clean generate-geometry
+.PHONY: check clean generate-geometry generate-graticules-ck
 check:
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-cahill-keyes-projection.cc \
@@ -54,5 +57,16 @@ $(CK_GEOMETRY_GENERATOR): $(TEST_DIR)/generate-geometry.cc \
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$< -o $@
 
+generate-graticules-ck: $(CK_GRATICULE_SVG)
+
+$(CK_GRATICULE_SVG): $(CK_GRATICULE_GENERATOR)
+	./$(CK_GRATICULE_GENERATOR)
+
+$(CK_GRATICULE_GENERATOR): $(TEST_DIR)/generate-graticules-ck.cc \
+		src/a60-carto-frame.h src/a60-carto-projection.h \
+		src/cart0freak0-cahill-keyes.h
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$< -o $@
+
 clean:
-	$(RM) $(TEST_BINARIES) $(CK_GEOMETRY_SVG)
+	$(RM) $(TEST_BINARIES) $(CK_GEOMETRY_SVG) $(CK_GRATICULE_SVG)
