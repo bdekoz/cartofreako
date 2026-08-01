@@ -1,6 +1,6 @@
 Stage 1 development:
-implement a new C++20 projection in the file src/a60-carto-
-  projection-star-x.h using the same carto API as previous. 
+implement a new C++20 projection in the file src/cart0freak0-star-x.h using
+the same carto API as previous.
   
   Base on the existing Cahill-Keyes implementation, but with the following modification to the geometry: The octants are split in two, with octants 1-4 (left side) as group 1 and octants 5-8 (the right side) as group 2.
   
@@ -32,4 +32,3 @@ docs/star-x-context.md
 
 Bibliography,
 docs/star-x-bibliography.md
-

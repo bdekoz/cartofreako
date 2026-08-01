@@ -504,6 +504,17 @@ public:
 
 namespace a60::carto {
 
+/// Apply the one-degree longitude registration shared by the project’s
+/// Cahill-Keyes raster family and rearrangements of that registered net.
+inline double
+cahill_keyes_registered_longitude(const double longitude)
+{
+  double adjusted = longitude + 1;
+  if (adjusted > 180)
+    adjusted -= 360;
+  return adjusted;
+}
+
 inline constexpr double cahill_keyes_width_to_height_ratio = 2.0;
 
 /// True when a frame has finite, positive dimensions in the required 2:1
@@ -596,9 +607,8 @@ struct ckproj : public projection_base, public projection_api
   a60::point_2t
   meridians_to_point_2d(const double lt, const double lng) const
   {
-    double adjusted_longitude = lng + 1;
-    if (adjusted_longitude > 180)
-      adjusted_longitude -= 360;
+    const double adjusted_longitude
+      = cahill_keyes_registered_longitude(lng);
     const auto [ckx, cky] = forward(adjusted_longitude, lt);
     return std::make_tuple(longitude_zero_x + ckx, latitude_zero_y - cky);
   }

@@ -33,6 +33,7 @@
 #include "cart0freak0-authagraph.h"
 #include "cart0freak0-cahill-keyes.h"
 #include "cart0freak0-myriahedral.h"
+#include "cart0freak0-star-x.h"
 #include "cart0freak0-voronoi.h"
 //#include "cart0freak0-cahill-keyes-butterfly.h"
 //#include "cart0freak0-cahill-keyes-ckog.h"
@@ -176,6 +177,9 @@ const carto_state ckh3v2state(cahill_keyes, slice_mode::h_trio, slice_mode::v_du
 
 const carto_state ckh4state(cahill_keyes, slice_mode::h_quarto);
 const carto_state ckh4v2state(cahill_keyes, slice_mode::h_quarto, slice_mode::v_duo);
+
+/// Standard cartography state, direct Star-X projection.
+const carto_state starxwestate(star_x, slice_mode::whole_earth);
 
 
 /**

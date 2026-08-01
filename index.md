@@ -1,8 +1,8 @@
 # Cartographic projection documentation
 
 This repository contains native C++20 forward implementations of the
-AuthaGraph, Cahill-Keyes, Myriahedral, and icosahedral Voronoi projections for
-`a60::carto::projection_api`. All four accept variable-size
+AuthaGraph, Cahill-Keyes, Star-X, Myriahedral, and icosahedral Voronoi
+projections for `a60::carto::projection_api`. All five accept variable-size
 `a60::carto::frame` values while enforcing the aspect ratio required by the
 selected geometry or source-canvas registration.
 
@@ -12,6 +12,7 @@ selected geometry or source-canvas registration.
 | --- | --- | ---: | --- | --- |
 | AuthaGraph | Oblique tetrahedron, 24 symmetric sectors, periodic rectangle | `4:sqrt(3)` | `agproj` | `make_authagraph_projection()` |
 | Cahill-Keyes | Octahedron, 8 octants, M-shaped rectangular layout | `2:1` | `ckproj` | `make_cahill_keyes_projection()` |
+| Star-X | Cahill-Keyes octants, two stacked four-face groups, polar-centered X | `17:22` | `starxproj` | `make_star_x_projection()` |
 | Myriahedral | Depth-5 icosahedral mesh, land-aware spanning-tree net | `16:9` source canvas | `myriaproj` | `make_myriahedral_projection()` |
 | Voronoi | Regular icosahedron, 20 nearest-site gnomonic faces | `48:25` source canvas | `voronoiproj` | `make_voronoi_projection()` |
 
@@ -154,6 +155,52 @@ The width must equal twice the height. As with AuthaGraph, the returned point
 uses upper-left-origin screen coordinates, and the optional raster name does
 not participate in the projection calculation.
 
+## Star-X
+
+Star-X reuses the native Cahill-Keyes geometry, splits the ordinary M layout
+into left and right groups of four spatial face slots, rotates the right
+group by 180 degrees, and stacks it above the left group. This produces the
+portrait X arrangement around the northern polar locus without raster tiles
+or temporary maps.
+
+### Read by purpose
+
+- [Geometric context](docs/star-x-context.md) explains the octahedral model,
+  official octant numbers versus spatial slots, group rotation, final page
+  quadrants, polar center, cuts, and aspect ratio.
+- [Implementation notes](docs/star-x-implementation-notes.md) records the
+  shared Cahill-Keyes calculation, exact assembly formulas, frame contract,
+  public API, validation, test strategy, provenance, and limitations.
+- [Bibliography](docs/star-x-bibliography.md) identifies the original Star-X
+  description and plate diagram, inherited Cahill-Keyes sources, historical
+  context, assets, and verification material.
+- [README](README.md) gives the shortest repository introduction.
+
+### Quick use
+
+```c++
+#include "a60-carto-frame.h"
+#include "a60-carto-projection.h"
+#include "cart0freak0-star-x.h"
+
+const double height = 2200;
+const a60::carto::frame::area dimensions {
+  a60::carto::star_x_width_to_height_ratio * height,
+  height
+};
+const a60::carto::frame map_frame {dimensions};
+const auto projection = a60::carto::make_star_x_projection(
+  map_frame, "star-x.svg");
+
+// The public API accepts latitude first, then longitude.
+const auto [x, y] = projection.meridians_to_point_2d(40.7128, -74.0060);
+```
+
+The width must equal `(17/22) * height`. This retains the historical
+34-by-44 four-panel carrier at every scale; `17x22`, `34x44`, `1632x2112`,
+and `5100x6600` are all valid examples. The returned point uses an
+upper-left screen origin. The optional raster name is metadata only.
+
 ## Myriahedral
 
 The Myriahedral implementation reproduces the depth-5 icosahedral mesh of
@@ -220,6 +267,21 @@ icosahedron, but this projection retains 20 regular faces and a conventional
 fixed net, while Myriahedral subdivides to 5120 faces and uses a land-aware
 tree.
 
+### Read by purpose
+
+- [Geometric context](docs/voronoi-context.md) explains the regular
+  icosahedron, spherical Voronoi cells, face-centered gnomonic projection,
+  unfolding tree, cuts, geographic quadrants, screen axes, and registered
+  canvas.
+- [Implementation notes](docs/voronoi-implementation-notes.md) records the
+  vertex and face construction, nearest-site and gnomonic formulas,
+  shared-edge transforms, fixed D3 registration, frame contract, API,
+  numeric safeguards, tests, and limitations.
+- [Bibliography](docs/voronoi-bibliography.md) identifies the pinned
+  `d3-geo-polygon` sources, D3 projection semantics, cartographic background,
+  attribution, licensing, and repository verification sources.
+- [README](README.md) gives the shortest repository introduction.
+
 ### Quick use
 
 ```c++
@@ -257,6 +319,11 @@ native source-canvas dimensions but does not prescribe a raster.
 | [`tests/test-cahill-keyes-projection.cc`](tests/test-cahill-keyes-projection.cc) | Cahill-Keyes mathematical reference, scaling, and domain tests |
 | [`tests/test-cahill-keyes-projection-api.cc`](tests/test-cahill-keyes-projection-api.cc) | Cahill-Keyes public API, frame, raster, and integration-anchor tests |
 | [`tests/test-cahill-keyes-path-functions.cc`](tests/test-cahill-keyes-path-functions.cc) | Cahill-Keyes path seam, scaling, offset, state, and validation tests |
+| [`src/cart0freak0-star-x.h`](src/cart0freak0-star-x.h) | Direct Star-X group assembly, frame validation, public API, and factory |
+| [`tests/test-star-x-projection-api.cc`](tests/test-star-x-projection-api.cc) | Star-X anchors, rigid assembly, global domain, polar placement, variable-frame, validation, and API tests |
+| [`docs/star-x-context.md`](docs/star-x-context.md) | Star-X octahedral context, face-slot mapping, group rotation, quadrants, polar locus, and cuts |
+| [`docs/star-x-implementation-notes.md`](docs/star-x-implementation-notes.md) | Star-X formulas, scaling proof, API, safeguards, verification, and provenance |
+| [`docs/star-x-bibliography.md`](docs/star-x-bibliography.md) | Star-X arrangement, Cahill-Keyes geometry, historical, asset, and test sources |
 | [`tests/generate-geometry.cc`](tests/generate-geometry.cc) | Izzi SVG generator and structural test for the 8 faces, 4 map quadrants, 8 octants, and 16 half-octants |
 | [`geometry-ck-44-22.svg`](geometry-ck-44-22.svg) | Generated layered Cahill-Keyes face geometry in a 44×22 frame |
 | [`tests/generate-graticules-ck.cc`](tests/generate-graticules-ck.cc) | Izzi SVG generator and structural test for grouped, degree-labeled 10° Cahill-Keyes latitude and longitude lines |
@@ -293,6 +360,11 @@ to Graça and Keyes and asks commercial users to contact Gene Keyes. See the
 [Cahill-Keyes provenance and licensing note](docs/cahill-keyes-implementation-notes.md#provenance-and-licensing)
 and [bibliography](docs/cahill-keyes-bibliography.md).
 
+Star-X retains that Cahill-Keyes construction and its terms, then applies
+Benjamin De Kosnik's two-group arrangement. See the
+[Star-X implementation provenance](docs/star-x-implementation-notes.md#provenance-and-limitations)
+and [bibliography](docs/star-x-bibliography.md).
+
 The Myriahedral method was published by Jarke J. van Wijk. The fixed mesh,
 tree-building method, source command, and raster derive from Hannes Schulz's
 `temporaer/myriaworld` implementation; historical land geometry came from
@@ -303,5 +375,7 @@ and [bibliography](docs/myriahedral-bibliography.md).
 The icosahedral Voronoi geometry, parent tree, and registration derive from
 the ISC-licensed [`d3-geo-polygon`](https://github.com/d3/d3-geo-polygon)
 implementation by Mike Bostock, with the Icosahedral map implemented by Jason
-Davies, Enrico Spinielli, and Philippe Riviere. The required ISC notice is
-retained in `src/cart0freak0-voronoi.h`.
+Davies, Enrico Spinielli, and Philippe Rivière. The required ISC notice is
+retained in `src/cart0freak0-voronoi.h`. See the
+[Voronoi implementation provenance](docs/voronoi-implementation-notes.md#provenance-and-licensing)
+and [bibliography](docs/voronoi-bibliography.md).

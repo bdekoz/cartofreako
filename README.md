@@ -1,8 +1,8 @@
 # cartofreako
 
 This repository contains native C++20 forward implementations of the
-AuthaGraph, Cahill-Keyes, Myriahedral, and icosahedral Voronoi projections for
-the shared `a60::carto::projection_api`.
+AuthaGraph, Cahill-Keyes, Star-X, Myriahedral, and icosahedral Voronoi
+projections for the shared `a60::carto::projection_api`.
 
 The authoritative project documentation is [`index.md`](index.md). It contains
 the projection comparison, aspect-ratio requirements, public APIs, usage
