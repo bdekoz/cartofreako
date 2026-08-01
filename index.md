@@ -168,8 +168,7 @@ does not participate in the numeric transform. The named
 | --- | --- |
 | [`src/a60-carto-projection-authagraph.h`](src/a60-carto-projection-authagraph.h) | AuthaGraph analytic forward transform, frame validation, API, and A3 preset |
 | [`tests/test-authagraph-projection-api.cc`](tests/test-authagraph-projection-api.cc) | AuthaGraph formula, source-plate, variable-frame, domain, and API tests |
-| [`src/a60-carto-projection-cahill-keyes-native.h`](src/a60-carto-projection-cahill-keyes-native.h) | Native, scalable Cahill-Keyes forward construction |
-| [`src/a60-carto-projection-cahill-keyes.h`](src/a60-carto-projection-cahill-keyes.h) | Cahill-Keyes `projection_api`, frame validation, and named presets |
+| [`src/a60-carto-projection-cahill-keyes.h`](src/a60-carto-projection-cahill-keyes.h) | Native scalable forward construction, `projection_api`, frame validation, and named presets |
 | [`src/a60-carto-projection-cahill-keyes-functions.h`](src/a60-carto-projection-cahill-keyes-functions.h) | Cahill-Keyes path and seam helpers |
 | [`tests/test-cahill-keyes-projection.cc`](tests/test-cahill-keyes-projection.cc) | Cahill-Keyes mathematical reference, scaling, and domain tests |
 | [`tests/test-cahill-keyes-projection-api.cc`](tests/test-cahill-keyes-projection-api.cc) | Cahill-Keyes public API, frame, raster, and integration-anchor tests |

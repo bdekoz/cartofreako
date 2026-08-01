@@ -2,8 +2,75 @@
 #include <cassert>
 #include <cmath>
 #include <stdexcept>
+#include <string>
+#include <tuple>
+#include <vector>
 
-#include "a60-carto-projection-cahill-keyes-native.h"
+namespace a60 {
+
+using point_2t = std::tuple<double, double>;
+using string = std::string;
+using vd = std::vector<double>;
+
+namespace carto {
+
+struct frame
+{
+  struct area
+  {
+    double _M_width;
+    double _M_height;
+  };
+
+  area frame_area;
+  double moriginx;
+  double moriginy;
+
+  frame(const area dimensions, const double x = 0, const double y = 0)
+  : frame_area(dimensions), moriginx(x), moriginy(y)
+  { }
+
+  frame(const double width, const double height,
+        const double x = 0, const double y = 0)
+  : frame({width, height}, x, y)
+  { }
+
+  double width() const { return frame_area._M_width; }
+  double height() const { return frame_area._M_height; }
+};
+
+inline const frame pck_1x1080 {1920, 960};
+inline const frame pck_2x1080 {3840, 1920};
+inline const frame pck_7x {4984, 2492};
+inline const frame pck_3x {2004, 1002};
+inline const frame f44x22h {4224, 2112};
+
+} // namespace carto
+
+namespace io {
+
+struct resources
+{
+  string data;
+};
+
+inline resources&
+get_run_time_resources()
+{
+  static resources value;
+  return value;
+}
+
+inline string
+end_path(const string& value)
+{ return value.empty() || value.back() == '/' ? value : value + '/'; }
+
+} // namespace io
+
+} // namespace a60
+
+#include "a60-carto-projection.h"
+#include "a60-carto-projection-cahill-keyes.h"
 
 namespace {
 
