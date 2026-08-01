@@ -8,6 +8,9 @@ Examples of other projection implementation using this API are here:
 src/a60-carto-projection-cahill-keyes.h
 src/a60-carto-projection-un.h
 
+Implementation of the new implementation goes in this new file:
+src/a60-carto-projection-cahill-keyes-v2.h
+
 The projection should be able to pass the test function
 augment_carto_geo_specific in the source file here:
 src/a60-svg-carto-geo.h
