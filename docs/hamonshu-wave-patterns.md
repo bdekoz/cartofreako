@@ -100,7 +100,7 @@ and Voronoi ocean SVGs. `make clean` removes the binary and generated files.
 - [Smithsonian Libraries digital edition of *Hamonshū*, volume 2](https://library.si.edu/digital-library/book/hamonshuy00mori)
 - [National Diet Library catalogue record](https://ndlsearch.ndl.go.jp/books/R100000094-I214457)
 - [Natural Earth 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/)
-- [Repository Natural Earth data note](../assets/natural-earth-10m-physical-vectors.md)
+- [Repository Natural Earth data note](natural-earth-10m-physical-vectors.md)
 
 The Smithsonian marks the digitized volume CC0.  Natural Earth data is public
 domain; version, archive checksum, and extracted files are recorded in the
