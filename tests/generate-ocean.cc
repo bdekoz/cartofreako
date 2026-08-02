@@ -593,7 +593,10 @@ generate_ocean(const projection_spec& projection_specification)
       for (const projected_region& region : assigned[index])
         {
           region_data += region.path_data;
-          motif_data += make_motif_path(spec, region.box);
+          motif_data += hamonshu::make_motif_path(
+            spec,
+            {region.box.left, region.box.top,
+             region.box.right, region.box.bottom});
           ++region_count;
         }
 

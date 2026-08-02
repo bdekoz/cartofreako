@@ -3,9 +3,14 @@
 The generated `generated/ocean-*.svg` projection suite combines the Natural
 Earth 1:10m ocean polygon with vector interpretations of the wave studies in
 Mori Yūzan's 1903 *Hamonshū*, volume 2. The generator is
-[`tests/generate-ocean.cc`](../tests/generate-ocean.cc); its complete,
-machine-readable 153-entry catalogue is
-[`tests/hamonshu-v2-patterns.inc`](../tests/hamonshu-v2-patterns.inc).
+[`tests/generate-ocean.cc`](../tests/generate-ocean.cc). Reusable motif
+construction and the complete, machine-readable 153-entry catalogue now live
+in Izzi's
+[`a60-svg-curves-hamonshu.h`](https://github.com/bdekoz/izzi/blob/main/src/a60-svg-curves-hamonshu.h)
+and
+[`a60-svg-curves-hamonshu-v2.inc`](https://github.com/bdekoz/izzi/blob/main/src/a60-svg-curves-hamonshu-v2.inc).
+Cartofreako supplies the geographic tiling, projection, ocean clipping,
+palette, and layer assembly around those paths.
 
 ## Page and name conventions
 
@@ -42,8 +47,9 @@ an SVG editor's layer panel or the XML itself.
 ## Vector interpretation
 
 The catalogue distinguishes individual bands, medallions, sprays, crests,
-scrolls, fields, and multi-page compositions.  The C++20 generator translates
-their visible geometric vocabulary into sixteen procedural line families:
+scrolls, fields, and multi-page compositions. The Izzi C++20 curve header
+translates their visible geometric vocabulary into sixteen procedural line
+families:
 waterlines, crests, spirals, spray, arcs, lattices, bubbles, scrolls, fans,
 breakers, braids, cascades, ripples, fountains, clouds, and cells.  Page and
 motif metadata seed the spacing, phase, direction, and density, so each
@@ -78,9 +84,10 @@ motif layer, catalogue IDs and titles, and finite coordinates.
 
 ## Rebuild
 
-GDAL development files, `curl`, and `unzip` are required.  The existing
-Natural Earth fetch target downloads and verifies the pinned physical-vector
-bundle when needed:
+GDAL development files, `curl`, `unzip`, and the neighboring Izzi source tree
+are required. The Makefile tracks the Izzi Hamonshū header and catalogue as
+direct build dependencies. The existing Natural Earth fetch target downloads
+and verifies the pinned physical-vector bundle when needed:
 
 ```sh
 make generate-ocean-ck

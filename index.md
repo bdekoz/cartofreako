@@ -380,7 +380,7 @@ native source-canvas dimensions but does not prescribe a raster.
 | [`tests/generate-earth.cc`](tests/generate-earth.cc) | GDAL/Izzi SVG generator and structural test for clipped and native-cut-split Natural Earth 1:10m physical-vector layers |
 | [`generated/earth-ck-44-22.svg`](generated/earth-ck-44-22.svg) | Generated layered 44×22 Cahill-Keyes physical map |
 | [`tests/generate-ocean.cc`](tests/generate-ocean.cc) | GDAL/Izzi generator and structural test for the seam-safe Natural Earth ocean and 153 source-indexed Hamonshū vector-pattern layers |
-| [`tests/hamonshu-v2-patterns.inc`](tests/hamonshu-v2-patterns.inc) | Complete illustrated-page, motif-number, and descriptive-name catalogue for *Hamonshū*, volume 2 |
+| [Izzi `a60-svg-curves-hamonshu.h`](https://github.com/bdekoz/izzi/blob/main/src/a60-svg-curves-hamonshu.h) | Reusable procedural path API and complete illustrated-page, motif-number, and descriptive-name catalogue for *Hamonshū*, volume 2 |
 | [`generated/ocean-ck-44-22.svg`](generated/ocean-ck-44-22.svg) | Generated 44×22 Cahill-Keyes ocean with independently selectable wave-pattern layers |
 | [`docs/hamonshu-wave-patterns.md`](docs/hamonshu-wave-patterns.md) | PDF page mapping, motif naming, vector interpretation, ocean-clipping method, and source provenance |
 | [`scripts/fetch-natural-earth-10m.sh`](scripts/fetch-natural-earth-10m.sh) | Pinned, checksum-verifying acquisition of the required Natural Earth shapefiles |
