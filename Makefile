@@ -9,36 +9,37 @@ NATURAL_EARTH_DIR ?= assets/natural-earth/10m-physical-vectors
 NATURAL_EARTH_FETCHER := scripts/fetch-natural-earth-10m.sh
 NATURAL_EARTH_STAMP := \
 	$(NATURAL_EARTH_DIR)/.natural-earth-10m-physical-5.1.1
+GENERATED_DIR := generated
 
 GEOMETRY_GENERATOR := $(TEST_DIR)/generate-geometry
 GRATICULE_GENERATOR := $(TEST_DIR)/generate-graticules
 EARTH_GENERATOR := $(TEST_DIR)/generate-earth
 OCEAN_GENERATOR := $(TEST_DIR)/generate-ocean
 
-CK_GEOMETRY_SVG := geometry-ck-44-22.svg
-CK_GRATICULE_SVG := graticules-ck-44-22.svg
-CK_EARTH_SVG := earth-ck-44-22.svg
-CK_OCEAN_SVG := ocean-ck-44-22.svg
+CK_GEOMETRY_SVG := $(GENERATED_DIR)/geometry-ck-44-22.svg
+CK_GRATICULE_SVG := $(GENERATED_DIR)/graticules-ck-44-22.svg
+CK_EARTH_SVG := $(GENERATED_DIR)/earth-ck-44-22.svg
+CK_OCEAN_SVG := $(GENERATED_DIR)/ocean-ck-44-22.svg
 
-AUTHAGRAPH_GEOMETRY_SVG := geometry-authagraph-44-19.052559.svg
-AUTHAGRAPH_GRATICULE_SVG := graticules-authagraph-44-19.052559.svg
-AUTHAGRAPH_EARTH_SVG := earth-authagraph-44-19.052559.svg
-AUTHAGRAPH_OCEAN_SVG := ocean-authagraph-44-19.052559.svg
+AUTHAGRAPH_GEOMETRY_SVG := $(GENERATED_DIR)/geometry-authagraph-44-19.052559.svg
+AUTHAGRAPH_GRATICULE_SVG := $(GENERATED_DIR)/graticules-authagraph-44-19.052559.svg
+AUTHAGRAPH_EARTH_SVG := $(GENERATED_DIR)/earth-authagraph-44-19.052559.svg
+AUTHAGRAPH_OCEAN_SVG := $(GENERATED_DIR)/ocean-authagraph-44-19.052559.svg
 
-MYRIAHEDRAL_GEOMETRY_SVG := geometry-myriahedral-44-24.75.svg
-MYRIAHEDRAL_GRATICULE_SVG := graticules-myriahedral-44-24.75.svg
-MYRIAHEDRAL_EARTH_SVG := earth-myriahedral-44-24.75.svg
-MYRIAHEDRAL_OCEAN_SVG := ocean-myriahedral-44-24.75.svg
+MYRIAHEDRAL_GEOMETRY_SVG := $(GENERATED_DIR)/geometry-myriahedral-44-24.75.svg
+MYRIAHEDRAL_GRATICULE_SVG := $(GENERATED_DIR)/graticules-myriahedral-44-24.75.svg
+MYRIAHEDRAL_EARTH_SVG := $(GENERATED_DIR)/earth-myriahedral-44-24.75.svg
+MYRIAHEDRAL_OCEAN_SVG := $(GENERATED_DIR)/ocean-myriahedral-44-24.75.svg
 
-STAR_X_GEOMETRY_SVG := geometry-star-x-34-44.svg
-STAR_X_GRATICULE_SVG := graticules-star-x-34-44.svg
-STAR_X_EARTH_SVG := earth-star-x-34-44.svg
-STAR_X_OCEAN_SVG := ocean-star-x-34-44.svg
+STAR_X_GEOMETRY_SVG := $(GENERATED_DIR)/geometry-star-x-34-44.svg
+STAR_X_GRATICULE_SVG := $(GENERATED_DIR)/graticules-star-x-34-44.svg
+STAR_X_EARTH_SVG := $(GENERATED_DIR)/earth-star-x-34-44.svg
+STAR_X_OCEAN_SVG := $(GENERATED_DIR)/ocean-star-x-34-44.svg
 
-VORONOI_GEOMETRY_SVG := geometry-voronoi-44-22.916667.svg
-VORONOI_GRATICULE_SVG := graticules-voronoi-44-22.916667.svg
-VORONOI_EARTH_SVG := earth-voronoi-44-22.916667.svg
-VORONOI_OCEAN_SVG := ocean-voronoi-44-22.916667.svg
+VORONOI_GEOMETRY_SVG := $(GENERATED_DIR)/geometry-voronoi-44-22.916667.svg
+VORONOI_GRATICULE_SVG := $(GENERATED_DIR)/graticules-voronoi-44-22.916667.svg
+VORONOI_EARTH_SVG := $(GENERATED_DIR)/earth-voronoi-44-22.916667.svg
+VORONOI_OCEAN_SVG := $(GENERATED_DIR)/ocean-voronoi-44-22.916667.svg
 
 REQUESTED_GEOMETRY_SVGS := \
 	$(AUTHAGRAPH_GEOMETRY_SVG) \
@@ -98,7 +99,7 @@ AREA_GENERATOR_HEADER := $(TEST_DIR)/projection-area-generation.h
 
 .DELETE_ON_ERROR:
 
-.PHONY: check clean fetch-natural-earth-10m \
+.PHONY: check clean fetch-natural-earth-10m make-generated \
 	generate-geometry generate-graticules-ck generate-earth-ck \
 	generate-ocean-ck generate-projections \
 	generate-geometry-projections generate-graticules-projections \
@@ -171,48 +172,59 @@ fetch-natural-earth-10m: $(NATURAL_EARTH_STAMP)
 $(NATURAL_EARTH_STAMP): $(NATURAL_EARTH_FETCHER)
 	$(NATURAL_EARTH_FETCHER) "$(NATURAL_EARTH_DIR)"
 
+$(GENERATED_DIR):
+	mkdir -p "$@"
+
 # Preserve the original Cahill-Keyes workflow and output names.
 generate-geometry: $(CK_GEOMETRY_SVG)
 
-$(CK_GEOMETRY_SVG): $(GEOMETRY_GENERATOR)
-	./$(GEOMETRY_GENERATOR) cahill-keyes
+$(CK_GEOMETRY_SVG): $(GEOMETRY_GENERATOR) | $(GENERATED_DIR)
+	cd "$(GENERATED_DIR)" && \
+		"$(abspath $(GEOMETRY_GENERATOR))" cahill-keyes
 
 generate-graticules-ck: $(CK_GRATICULE_SVG)
 
-$(CK_GRATICULE_SVG): $(GRATICULE_GENERATOR)
-	./$(GRATICULE_GENERATOR) cahill-keyes
+$(CK_GRATICULE_SVG): $(GRATICULE_GENERATOR) | $(GENERATED_DIR)
+	cd "$(GENERATED_DIR)" && \
+		"$(abspath $(GRATICULE_GENERATOR))" cahill-keyes
 
 generate-earth-ck: $(CK_EARTH_SVG)
 
-$(CK_EARTH_SVG): $(EARTH_GENERATOR) $(NATURAL_EARTH_STAMP)
-	NATURAL_EARTH_DIR="$(NATURAL_EARTH_DIR)" \
-		./$(EARTH_GENERATOR) cahill-keyes
+$(CK_EARTH_SVG): $(EARTH_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_DIR)
+	cd "$(GENERATED_DIR)" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		"$(abspath $(EARTH_GENERATOR))" cahill-keyes
 
 generate-ocean-ck: $(CK_OCEAN_SVG)
 
-$(CK_OCEAN_SVG): $(OCEAN_GENERATOR) $(NATURAL_EARTH_STAMP)
-	NATURAL_EARTH_DIR="$(NATURAL_EARTH_DIR)" \
-		./$(OCEAN_GENERATOR) cahill-keyes
+$(CK_OCEAN_SVG): $(OCEAN_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_DIR)
+	cd "$(GENERATED_DIR)" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		"$(abspath $(OCEAN_GENERATOR))" cahill-keyes
 
 # $(1): command-line projection name; $(2)-$(5): generated artifacts.
 define PROJECTION_RULES
 generate-geometry-$(1): $(2)
-$(2): $(GEOMETRY_GENERATOR)
-	./$(GEOMETRY_GENERATOR) $(1)
+$(2): $(GEOMETRY_GENERATOR) | $(GENERATED_DIR)
+	cd "$(GENERATED_DIR)" && \
+		"$(abspath $(GEOMETRY_GENERATOR))" $(1)
 
 generate-graticules-$(1): $(3)
-$(3): $(GRATICULE_GENERATOR)
-	./$(GRATICULE_GENERATOR) $(1)
+$(3): $(GRATICULE_GENERATOR) | $(GENERATED_DIR)
+	cd "$(GENERATED_DIR)" && \
+		"$(abspath $(GRATICULE_GENERATOR))" $(1)
 
 generate-earth-$(1): $(4)
-$(4): $(EARTH_GENERATOR) $(NATURAL_EARTH_STAMP)
-	NATURAL_EARTH_DIR="$(NATURAL_EARTH_DIR)" \
-		./$(EARTH_GENERATOR) $(1)
+$(4): $(EARTH_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_DIR)
+	cd "$(GENERATED_DIR)" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		"$(abspath $(EARTH_GENERATOR))" $(1)
 
 generate-ocean-$(1): $(5)
-$(5): $(OCEAN_GENERATOR) $(NATURAL_EARTH_STAMP)
-	NATURAL_EARTH_DIR="$(NATURAL_EARTH_DIR)" \
-		./$(OCEAN_GENERATOR) $(1)
+$(5): $(OCEAN_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_DIR)
+	cd "$(GENERATED_DIR)" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		"$(abspath $(OCEAN_GENERATOR))" $(1)
 
 generate-$(1): $(2) $(3) $(4) $(5)
 endef
@@ -237,6 +249,8 @@ generate-graticules-projections: $(REQUESTED_GRATICULE_SVGS)
 generate-earth-projections: $(REQUESTED_EARTH_SVGS)
 generate-ocean-projections: $(REQUESTED_OCEAN_SVGS)
 generate-projections: $(REQUESTED_PROJECTION_SVGS)
+make-generated: $(GENERATED_SVGS)
 
 clean:
-	$(RM) $(TEST_BINARIES) $(GENERATED_SVGS)
+	$(RM) $(TEST_BINARIES)
+	$(RM) -r "$(GENERATED_DIR)"

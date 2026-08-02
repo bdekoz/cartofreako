@@ -1,8 +1,8 @@
 # Hamonshū volume 2 wave-pattern catalogue and rendering notes
 
-The generated `ocean-*.svg` projection suite combines the Natural Earth
-1:10m ocean polygon with vector interpretations of the wave studies in Mori
-Yūzan's 1903 *Hamonshū*, volume 2. The generator is
+The generated `generated/ocean-*.svg` projection suite combines the Natural
+Earth 1:10m ocean polygon with vector interpretations of the wave studies in
+Mori Yūzan's 1903 *Hamonshū*, volume 2. The generator is
 [`tests/generate-ocean.cc`](../tests/generate-ocean.cc); its complete,
 machine-readable 153-entry catalogue is
 [`tests/hamonshu-v2-patterns.inc`](../tests/hamonshu-v2-patterns.inc).
@@ -88,8 +88,9 @@ make generate-ocean-projections
 ```
 
 The commands build `tests/generate-ocean`. The first writes
-`ocean-ck-44-22.svg`; the second writes the AuthaGraph, Myriahedral, Star-X,
-and Voronoi ocean SVGs. `make clean` removes the binary and generated files.
+`generated/ocean-ck-44-22.svg`; the second writes the AuthaGraph, Myriahedral,
+Star-X, and Voronoi ocean SVGs under `generated/`. `make clean` removes the
+binary and the complete generated directory.
 
 ## Sources and provenance
 

@@ -101,6 +101,14 @@ expect_invalid(const a60::carto::projection_api& projection,
   assert(rejected);
 }
 
+bool
+is_second_group(const double longitude)
+{
+  const double adjusted
+    = a60::carto::cahill_keyes_registered_longitude(longitude);
+  return adjusted >= -20 && adjusted < 160;
+}
+
 } // namespace
 
 int
@@ -110,13 +118,20 @@ main()
   static_assert(std::is_base_of_v<projection_api, starxproj>);
 
   // This reference frame is the historic 17-by-22 Engineering C carrier
-  // at 96 DPI. The values independently apply the documented Star-X rigid
-  // transforms to the Perl-derived 2112-by-1056 Cahill-Keyes anchors used
-  // by augment_carto_geo_specific.
+  // at 96 DPI. The values independently apply the original edge-to-edge
+  // Star-X rigid transforms to the Perl-derived 2112-by-1056 Cahill-Keyes
+  // anchors used by augment_carto_geo_specific. The default configurable
+  // gap then moves each group 108 pixels toward the center, the
+  // scale-equivalent of 2.25 units in the generated 34-by-44 frame.
   const frame reference_frame {1632, 2112};
   const starxproj reference = make_star_x_projection(
     reference_frame, "star-x.svg");
+  const double reference_group_shift
+    = star_x_default_group_shift_ratio * reference_frame.height();
   const projection_api& api = reference;
+  assert(std::abs(reference_group_shift - 108) < 1e-12);
+  assert(std::abs(reference.group_gap_ratio()
+                  - star_x_default_group_gap_ratio) < 1e-12);
   assert(reference.pmode == star_x);
   assert(reference.pframe.width() == reference_frame.width());
   assert(reference.pframe.height() == reference_frame.height());
@@ -155,16 +170,48 @@ main()
     {
       const auto [x, y] = api.meridians_to_point_2d(
         expected.latitude, expected.longitude);
+      const double expected_y
+        = expected.y
+          + (is_second_group(expected.longitude)
+               ? reference_group_shift : -reference_group_shift);
       assert(std::isfinite(x) && std::isfinite(y));
       assert(std::abs(x - expected.x) < 1e-9);
-      assert(std::abs(y - expected.y) < 1e-9);
+      assert(std::abs(y - expected_y) < 1e-9);
       assert(x >= 0 && x <= reference_frame.width());
       assert(y >= 0 && y <= reference_frame.height());
     }
   assert(std::abs(reference.longitude_zero_x
                   - specific_locations.front().x) < 1e-9);
   assert(std::abs(reference.latitude_zero_y
-                  - specific_locations.front().y) < 1e-9);
+                  - specific_locations.front().y
+                  - reference_group_shift) < 1e-9);
+
+  // A zero carrier gap reproduces the previous edge-to-edge placement.
+  // The default signed gap is -4.5 inches in a 34-by-44 frame, split
+  // symmetrically into the requested 2.25-inch inward translations.
+  const star_x_layout adjacent_layout {.group_gap_ratio = 0};
+  const starxproj adjacent = make_star_x_projection(
+    reference_frame, "adjacent-star-x.svg", adjacent_layout);
+  assert(adjacent.group_gap_ratio() == 0);
+  for (const auto& expected : specific_locations)
+    {
+      const auto [adjacent_x, adjacent_y]
+        = adjacent.meridians_to_point_2d(
+            expected.latitude, expected.longitude);
+      const auto [default_x, default_y]
+        = reference.meridians_to_point_2d(
+            expected.latitude, expected.longitude);
+      const double direction
+        = is_second_group(expected.longitude) ? 1 : -1;
+      assert(std::abs(adjacent_x - expected.x) < 1e-9);
+      assert(std::abs(adjacent_y - expected.y) < 1e-9);
+      assert(std::abs(default_x - adjacent_x) < 1e-9);
+      assert(std::abs(default_y
+                      - (adjacent_y + direction * reference_group_shift))
+             < 1e-9);
+    }
+  assert(star_x_default_group_shift_ratio * 44 == 2.25);
+  assert(star_x_default_group_gap_ratio * 44 == -4.5);
 
   // Verify the defining assembly independently against the ordinary
   // Cahill-Keyes API. Spatial face slots 1-4 occupy the source's left
@@ -188,8 +235,8 @@ main()
               : side_margin + source_x;
         const double expected_y
           = second_group
-              ? group_side - source_y
-              : group_side + source_y;
+              ? group_side - source_y + reference_group_shift
+              : group_side + source_y - reference_group_shift;
         const auto [x, y]
           = reference.meridians_to_point_2d(latitude, longitude);
         assert(std::abs(x - expected_x) < 1e-9);
@@ -221,8 +268,8 @@ main()
     = reference.meridians_to_point_2d(-90, 24);
   static_cast<void>(south_lower_x);
   static_cast<void>(south_upper_x);
-  assert(south_lower_y > 9 * reference_frame.height() / 10);
-  assert(south_upper_y < reference_frame.height() / 10);
+  assert(south_lower_y > 7 * reference_frame.height() / 8);
+  assert(south_upper_y < reference_frame.height() / 8);
 
   // Every integral geographic coordinate is finite and inside the frame.
   for (int latitude = -90; latitude <= 90; ++latitude)
@@ -259,8 +306,12 @@ main()
         {
           const auto [x, y] = projection.meridians_to_point_2d(
             expected.latitude, expected.longitude);
+          const double reference_y
+            = expected.y
+              + (is_second_group(expected.longitude)
+                   ? reference_group_shift : -reference_group_shift);
           assert(std::abs(x - expected.x * factor) < tolerance);
-          assert(std::abs(y - expected.y * factor) < tolerance);
+          assert(std::abs(y - reference_y * factor) < tolerance);
           assert(x >= 0 && x <= map_frame.width());
           assert(y >= 0 && y <= map_frame.height());
         }
@@ -297,6 +348,27 @@ main()
   rejects_frame(frame {17, std::numeric_limits<double>::quiet_NaN()});
   rejects_frame(frame {std::numeric_limits<double>::max(),
                        std::numeric_limits<double>::max()});
+
+  const auto rejects_layout = [&reference_frame](
+    const star_x_layout invalid_layout)
+  {
+    bool rejected = false;
+    try
+      {
+        static_cast<void>(make_star_x_projection(
+          reference_frame, "", invalid_layout));
+      }
+    catch (const std::invalid_argument&)
+      {
+        rejected = true;
+      }
+    assert(rejected);
+  };
+  rejects_layout(star_x_layout {.group_gap_ratio = 0.001});
+  rejects_layout(star_x_layout {.group_gap_ratio = -0.501});
+  rejects_layout(star_x_layout {
+    .group_gap_ratio = std::numeric_limits<double>::quiet_NaN(),
+  });
 
   assert(api.image_filename(projection_base::filled) == "star-x.svg");
   a60::io::get_run_time_resources().data = "/opt/alpha60-data";

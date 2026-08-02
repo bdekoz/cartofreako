@@ -23,12 +23,16 @@ make check
 ```
 
 Generate geometry, labeled graticules, the layered Natural Earth physical
-map, and the 153-layer Hamonshū ocean for AuthaGraph, Myriahedral, Star-X,
-and Voronoi with:
+map, and the 153-layer Hamonshū ocean for all five projections with:
 
 ```sh
-make generate-projections
+make make-generated
 ```
+
+All 20 SVGs are written under `generated/`. The existing
+`make generate-projections` target generates the four artifact families for
+AuthaGraph, Myriahedral, Star-X, and Voronoi without rebuilding the four
+Cahill-Keyes artifacts.
 
 Every frame preserves the projection's required ratio and has a largest
 dimension of exactly 44 units:
@@ -49,10 +53,10 @@ output.
 
 | Projection | Geometry | Graticules | Earth | Ocean |
 | --- | --- | --- | --- | --- |
-| AuthaGraph | [`geometry-authagraph-44-19.052559.svg`](geometry-authagraph-44-19.052559.svg) | [`graticules-authagraph-44-19.052559.svg`](graticules-authagraph-44-19.052559.svg) | [`earth-authagraph-44-19.052559.svg`](earth-authagraph-44-19.052559.svg) | [`ocean-authagraph-44-19.052559.svg`](ocean-authagraph-44-19.052559.svg) |
-| Myriahedral | [`geometry-myriahedral-44-24.75.svg`](geometry-myriahedral-44-24.75.svg) | [`graticules-myriahedral-44-24.75.svg`](graticules-myriahedral-44-24.75.svg) | [`earth-myriahedral-44-24.75.svg`](earth-myriahedral-44-24.75.svg) | [`ocean-myriahedral-44-24.75.svg`](ocean-myriahedral-44-24.75.svg) |
-| Star-X | [`geometry-star-x-34-44.svg`](geometry-star-x-34-44.svg) | [`graticules-star-x-34-44.svg`](graticules-star-x-34-44.svg) | [`earth-star-x-34-44.svg`](earth-star-x-34-44.svg) | [`ocean-star-x-34-44.svg`](ocean-star-x-34-44.svg) |
-| Voronoi | [`geometry-voronoi-44-22.916667.svg`](geometry-voronoi-44-22.916667.svg) | [`graticules-voronoi-44-22.916667.svg`](graticules-voronoi-44-22.916667.svg) | [`earth-voronoi-44-22.916667.svg`](earth-voronoi-44-22.916667.svg) | [`ocean-voronoi-44-22.916667.svg`](ocean-voronoi-44-22.916667.svg) |
+| AuthaGraph | [`geometry-authagraph-44-19.052559.svg`](generated/geometry-authagraph-44-19.052559.svg) | [`graticules-authagraph-44-19.052559.svg`](generated/graticules-authagraph-44-19.052559.svg) | [`earth-authagraph-44-19.052559.svg`](generated/earth-authagraph-44-19.052559.svg) | [`ocean-authagraph-44-19.052559.svg`](generated/ocean-authagraph-44-19.052559.svg) |
+| Myriahedral | [`geometry-myriahedral-44-24.75.svg`](generated/geometry-myriahedral-44-24.75.svg) | [`graticules-myriahedral-44-24.75.svg`](generated/graticules-myriahedral-44-24.75.svg) | [`earth-myriahedral-44-24.75.svg`](generated/earth-myriahedral-44-24.75.svg) | [`ocean-myriahedral-44-24.75.svg`](generated/ocean-myriahedral-44-24.75.svg) |
+| Star-X | [`geometry-star-x-34-44.svg`](generated/geometry-star-x-34-44.svg) | [`graticules-star-x-34-44.svg`](generated/graticules-star-x-34-44.svg) | [`earth-star-x-34-44.svg`](generated/earth-star-x-34-44.svg) | [`ocean-star-x-34-44.svg`](generated/ocean-star-x-34-44.svg) |
+| Voronoi | [`geometry-voronoi-44-22.916667.svg`](generated/geometry-voronoi-44-22.916667.svg) | [`graticules-voronoi-44-22.916667.svg`](generated/graticules-voronoi-44-22.916667.svg) | [`earth-voronoi-44-22.916667.svg`](generated/earth-voronoi-44-22.916667.svg) | [`ocean-voronoi-44-22.916667.svg`](generated/ocean-voronoi-44-22.916667.svg) |
 
 The [SVG generation pipeline](docs/generation.md) explains the generator
 sources and Make targets, Natural Earth acquisition, seam handling, sampling,
@@ -365,14 +369,14 @@ native source-canvas dimensions but does not prescribe a raster.
 | [`tests/projection-generation-common.h`](tests/projection-generation-common.h) | Exact 44-unit frame configurations, projection dispatch, native-cell lookup, cut bisection, and shared seam-safe path projection |
 | [`tests/projection-area-generation.h`](tests/projection-area-generation.h) | Face-local Myriahedral and Voronoi area transforms plus exact planar-triangle clipping for filled paths |
 | [`tests/generate-geometry.cc`](tests/generate-geometry.cc) | Izzi SVG generator and structural test for native AuthaGraph, Cahill-Keyes/Star-X, Myriahedral, and Voronoi faces plus four map quadrants |
-| [`geometry-ck-44-22.svg`](geometry-ck-44-22.svg) | Generated layered Cahill-Keyes face geometry in a 44×22 frame |
+| [`generated/geometry-ck-44-22.svg`](generated/geometry-ck-44-22.svg) | Generated layered Cahill-Keyes face geometry in a 44×22 frame |
 | [`tests/generate-graticules.cc`](tests/generate-graticules.cc) | Izzi SVG generator and structural test for grouped, degree-labeled, discontinuity-split 10° latitude and longitude lines |
-| [`graticules-ck-44-22.svg`](graticules-ck-44-22.svg) | Generated 44×22 Cahill-Keyes graticule with 17 latitude groups and 36 longitude groups |
+| [`generated/graticules-ck-44-22.svg`](generated/graticules-ck-44-22.svg) | Generated 44×22 Cahill-Keyes graticule with 17 latitude groups and 36 longitude groups |
 | [`tests/generate-earth.cc`](tests/generate-earth.cc) | GDAL/Izzi SVG generator and structural test for clipped and native-cut-split Natural Earth 1:10m physical-vector layers |
-| [`earth-ck-44-22.svg`](earth-ck-44-22.svg) | Generated layered 44×22 Cahill-Keyes physical map |
+| [`generated/earth-ck-44-22.svg`](generated/earth-ck-44-22.svg) | Generated layered 44×22 Cahill-Keyes physical map |
 | [`tests/generate-ocean.cc`](tests/generate-ocean.cc) | GDAL/Izzi generator and structural test for the seam-safe Natural Earth ocean and 153 source-indexed Hamonshū vector-pattern layers |
 | [`tests/hamonshu-v2-patterns.inc`](tests/hamonshu-v2-patterns.inc) | Complete illustrated-page, motif-number, and descriptive-name catalogue for *Hamonshū*, volume 2 |
-| [`ocean-ck-44-22.svg`](ocean-ck-44-22.svg) | Generated 44×22 Cahill-Keyes ocean with independently selectable wave-pattern layers |
+| [`generated/ocean-ck-44-22.svg`](generated/ocean-ck-44-22.svg) | Generated 44×22 Cahill-Keyes ocean with independently selectable wave-pattern layers |
 | [`docs/hamonshu-wave-patterns.md`](docs/hamonshu-wave-patterns.md) | PDF page mapping, motif naming, vector interpretation, ocean-clipping method, and source provenance |
 | [`scripts/fetch-natural-earth-10m.sh`](scripts/fetch-natural-earth-10m.sh) | Pinned, checksum-verifying acquisition of the required Natural Earth shapefiles |
 | [`docs/natural-earth-10m-physical-vectors.md`](docs/natural-earth-10m-physical-vectors.md) | Natural Earth source, checksum, extracted-dataset, and licensing note |
