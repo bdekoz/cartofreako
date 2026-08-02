@@ -172,11 +172,22 @@ Using height units, the exact layout is:
 frame: 17/22 wide by 1 high
 each group: 1/2 wide by 1/2 high
 left and right margin: 3/22 each
+signed carrier gap: R in [-1/2, 0]
+default R: -9/88
 ```
 
 The margins are part of the frame contract, not anisotropic padding added
-after projection. Both group squares and every Cahill-Keyes construction
-length scale uniformly with `frame.height()`.
+after projection. Both group squares, their vertical spacing, and every
+Cahill-Keyes construction length scale uniformly with `frame.height()`.
+
+The “carrier gap” is signed because it describes the spacing between the
+two invisible square source regions. `R=0` gives their former edge-to-edge
+placement. A negative value overlaps those regions while leaving every
+octant rigid. The default `R=-9/88` translates each group inward by
+`9/176` of frame height. On the 34-by-44 generated example that is exactly
+2.25 units per group: the lower group rises and the upper group descends
+toward the 22-unit centerline. Passing a zero ratio remains available when
+the older, wider central opening is desired.
 
 ## Cuts and continuity
 

@@ -18,7 +18,8 @@ The implementation deliberately separates two operations:
    half-octant construction and standard M-layout coordinates.
 2. `star_x_detail::assemble_native_point()` applies only the Star-X net
    rearrangement: keep the left four spatial face slots below, rotate the
-   right four slots by 180 degrees, and place them above.
+   right four slots by 180 degrees, place them above, and apply the configured
+   symmetric inter-group spacing.
 
 This makes Star-X a real point projection while keeping its local geometry
 numerically identical to the tested Cahill-Keyes implementation.
@@ -27,7 +28,7 @@ numerically identical to the tested Cahill-Keyes implementation.
 
 | Component | Responsibility |
 | --- | --- |
-| [`cart0freak0-star-x.h`](../src/cart0freak0-star-x.h) | Frame contract, two-group assembly, public API adapter, input validation, and factory |
+| [`cart0freak0-star-x.h`](../src/cart0freak0-star-x.h) | Frame contract, configurable two-group assembly, public API adapter, input validation, and factory |
 | [`cart0freak0-cahill-keyes.h`](../src/cart0freak0-cahill-keyes.h) | Shared native half-octant formulas, M-layout assembly, and raster-registration longitude adjustment |
 | [`a60-carto-projection.h`](../src/a60-carto-projection.h) | Shared interface, projection state, and `star_x` mode |
 | [`a60-carto-frame.h`](../src/a60-carto-frame.h) | `frame` and `frame.frame_area` dimensions |
@@ -132,13 +133,16 @@ group square side G = 11s = H/2
 side margin M = 3s = (W-G)/2
 Cahill-Keyes source viewport = 2G by G
 Cahill-Keyes scaffold MG = G/2 = H/4
+default signed carrier gap D = -(9/88)H
+default inward shift per group T = -D/2 = (9/176)H
 ```
 
-The two source groups are therefore congruent `G`-by-`G` squares. They are
-stacked without stretching, and the remaining six carrier units become
-three-unit margins on the left and right. Every source length is multiplied
-by the same scale, so varying the frame cannot alter angles or local
-Cahill-Keyes proportions.
+The two source groups are therefore congruent `G`-by-`G` squares. Their
+local geometry is never stretched; only their vertical translations change.
+The remaining six carrier units become three-unit margins on the left and
+right. Every source length and the default translation are multiplied by the
+same scale, so varying the frame cannot alter angles or local Cahill-Keyes
+proportions.
 
 `is_star_x_frame()` compares `W` with `(17/22)H` using:
 
@@ -155,12 +159,16 @@ infinite dimensions are rejected.
 Let `(cx, cy)` be the centered Cartesian result from the Cahill-Keyes
 projector configured with scaffold altitude `H/4`. Thus `cx` spans the two
 source groups, `cy` is positive upward, `G=H/2`, and `M=(W-G)/2`.
+Let `R` be the configured signed carrier-gap ratio and `D=RH` its distance
+in output-frame units. `R=0` reproduces the original edge-to-edge carrier
+placement. Negative values overlap the invisible square carriers and pull
+the visible octants toward the center.
 
 Group 1 is converted to screen axes and translated into the lower half:
 
 ```text
 X1 = M + G + cx
-Y1 = 3G/2 - cy
+Y1 = 3G/2 - cy + D/2
 ```
 
 For group 2, the signs of both local coordinates are reversed—the 2D
@@ -169,7 +177,7 @@ half:
 
 ```text
 X2 = M + G - cx
-Y2 = G/2 + cy
+Y2 = G/2 + cy - D/2
 ```
 
 Equivalently, start with source-screen coordinates `(sx, sy)` in a `2G` by
@@ -179,8 +187,8 @@ Equivalently, start with source-screen coordinates `(sx, sy)` in a `2G` by
 sx = G + cx
 sy = G/2 - cy
 
-group 1: (X,Y) = (M + sx,       G + sy)
-group 2: (X,Y) = (M + 2G - sx,  G - sy)
+group 1: (X,Y) = (M + sx,       G + sy + D/2)
+group 2: (X,Y) = (M + 2G - sx,  G - sy - D/2)
 ```
 
 The second line makes the rigid 180-degree rotation particularly visible.
@@ -188,10 +196,28 @@ No latitude, longitude, or projected length is interpolated during net
 assembly.
 
 The implementation evaluates these formulas once in a unit-height carrier:
-`G=1/2`, `M=3/22`, and native scaffold altitude `1/4`. It divides `X` by
-`17/22` to obtain normalized `u`, then multiplies `(u,v)` by the requested
-frame dimensions. This normalized implementation is algebraically
+`G=1/2`, `M=3/22`, `D=R`, and native scaffold altitude `1/4`. It divides
+`X` by `17/22` to obtain normalized `u`, then multiplies `(u,v)` by the
+requested frame dimensions. This normalized implementation is algebraically
 equivalent to constructing a separate native scaffold at every output size.
+
+### Configurable group gap
+
+`star_x_layout::group_gap_ratio` accepts a finite value in `[-1/2, 0]`.
+Zero restores the former layout. The lower endpoint lets the two carrier
+centers coincide; intermediate negative values reduce the visible space
+without scaling, rotating, or otherwise changing an octant.
+
+The default is:
+
+```text
+Rdefault = -9/88
+Tdefault = -Rdefault H/2 = 9H/176
+```
+
+For the generator's 34-by-44 frame this is `D=-4.5`: group 2 moves down
+`2.25` units and group 1 moves up `2.25` units. Their inward tips converge
+at the 22-unit centerline instead of leaving the former broad central gap.
 
 ## Pole placement and the X
 
@@ -226,10 +252,22 @@ const auto [x, y]
   = projection.meridians_to_point_2d(40.7128, -74.0060);
 ```
 
+To reproduce the former edge-to-edge carrier placement, pass an explicit
+layout:
+
+```c++
+const a60::carto::star_x_layout old_spacing {
+  .group_gap_ratio = 0
+};
+const auto old_projection = a60::carto::make_star_x_projection(
+  map_frame, "star-x-old-spacing.svg", old_spacing);
+```
+
 The factory retains only `map_frame.frame_area`; input placement offsets are
 discarded because placement in a larger drawing belongs to `cartography`.
 The optional name is metadata returned by `image_filename()` and does not
-affect projection mathematics.
+affect projection mathematics. `group_gap_ratio()` reports the validated
+setting retained by the projection.
 
 `starxproj` also accepts a validated `projection_base`, preserving the
 construction shape used by existing projections. `make_star_x_projection()`
@@ -254,8 +292,9 @@ do not require path interpolation.
 
 The Star-X layer adds no trigonometric approximation. Its only arithmetic
 after the Cahill-Keyes result is addition, subtraction, division by the
-constant aspect ratio, and output scaling. Validation occurs before the
-native call, so invalid geographic values receive public Star-X diagnostics.
+constant aspect ratio, and output scaling. The gap ratio must be finite and
+within `[-1/2, 0]`. Validation occurs before the native call, so invalid
+layout and geographic values receive public Star-X diagnostics.
 The native projector remains immutable after its one-time function-local
 static initialization and is safe for concurrent read-only calls.
 
@@ -268,13 +307,15 @@ static initialization and is safe for concurrent read-only calls.
   `augment_carto_geo_specific`;
 - the defining group transform against ordinary Cahill-Keyes coordinates on
   a 5-degree global grid;
+- the default 2.25-unit inward translation on a 34-by-44 frame and exact
+  recovery of the former coordinates when the gap ratio is zero;
 - northern polar placement around the center and southern polar placement
   at the outer ends;
 - finite, in-frame output for every integer latitude and longitude;
 - exact uniform scaling across `17x22`, `34x44`, `1632x2112`, `5100x6600`,
   and fractional frames;
 - use of `frame.frame_area` rather than input placement offsets;
-- strict aspect-ratio and geographic-domain rejection; and
+- strict aspect-ratio, gap-ratio, and geographic-domain rejection; and
 - raster-name behavior with and without a runtime data prefix.
 
 The expected 1632-by-2112 anchors were calculated by applying the documented

@@ -8,9 +8,9 @@
 
 The repository contains four C++20 programs that are both SVG generators and
 structural tests. They exercise all five production projections through the
-real Alpha60 and Izzi APIs, write layered SVGs at the repository root, then
-reopen those files and verify dimensions, layer structure, path counts, and
-numeric sanity.
+real Alpha60 and Izzi APIs, write layered SVGs under the repository's
+`generated/` directory, then reopen those files and verify dimensions, layer
+structure, path counts, and numeric sanity.
 
 | Artifact | Generator | Principal input |
 | --- | --- | --- |
@@ -19,9 +19,15 @@ numeric sanity.
 | Earth | [`tests/generate-earth.cc`](../tests/generate-earth.cc) | Natural Earth 1:10m physical vectors |
 | Ocean | [`tests/generate-ocean.cc`](../tests/generate-ocean.cc) | Natural Earth ocean and the *Hamonshū* catalogue |
 
-The original Cahill-Keyes targets remain available. The aggregate target
-generates the same four artifact families for AuthaGraph, Myriahedral, Star-X,
-and Voronoi:
+The aggregate target generates all four artifact families for all five
+projections:
+
+```sh
+make make-generated
+```
+
+The original Cahill-Keyes targets remain available. To generate only the
+AuthaGraph, Myriahedral, Star-X, and Voronoi families, use:
 
 ```sh
 make generate-projections
@@ -71,21 +77,22 @@ make generate-authagraph
 make generate-myriahedral
 make generate-star-x
 make generate-voronoi
+make make-generated
 ```
 
 `make` rebuilds only when a declared dependency is newer. Use `make -B`
 when an unconditional regeneration is wanted. `make clean` removes the
-generator binaries and generated SVGs, but deliberately retains the
-downloaded Natural Earth input.
+generator binaries and the complete `generated/` directory, but deliberately
+retains the downloaded Natural Earth input.
 
 The generators are not part of `make check`; invoking a `generate-*`
 target both writes its artifact and runs that generator's embedded structural
 checks.
 
-The generated SVGs are checked in. This makes visual and XML diffs reviewable,
-but it also means that regenerating with a different GDAL or GEOS version can
-produce ordering or coordinate differences even though the input archive is
-pinned.
+The SVGs under `generated/` are checked in. This makes visual and XML diffs
+reviewable, but it also means that regenerating with a different GDAL or GEOS
+version can produce ordering or coordinate differences even though the input
+archive is pinned.
 
 ### Natural Earth acquisition
 

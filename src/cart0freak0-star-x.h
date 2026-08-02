@@ -55,6 +55,8 @@ inline constexpr double star_x_width_to_height_ratio = 17.0 / 22.0;
 inline constexpr double star_x_default_group_shift_ratio = 2.25 / 44.0;
 inline constexpr double star_x_default_group_gap_ratio
   = -2 * star_x_default_group_shift_ratio;
+inline constexpr double star_x_minimum_group_gap_ratio = -0.5;
+inline constexpr double star_x_maximum_group_gap_ratio = 0;
 
 struct star_x_layout
 {
@@ -65,8 +67,8 @@ inline star_x_layout
 validate_star_x_layout(const star_x_layout value)
 {
   if (!std::isfinite(value.group_gap_ratio)
-      || value.group_gap_ratio < -0.5
-      || value.group_gap_ratio > 0)
+      || value.group_gap_ratio < star_x_minimum_group_gap_ratio
+      || value.group_gap_ratio > star_x_maximum_group_gap_ratio)
     throw std::invalid_argument(
       "Star-X group gap ratio must be finite and within [-0.5, 0]");
   return value;
@@ -195,15 +197,17 @@ make_star_x_projection_base(const frame& map_frame, string raster_name,
 */
 struct starxproj : public projection_base, public projection_api
 {
-  star_x_layout layout;
+private:
+  star_x_layout layout_;
 
+public:
   explicit starxproj(const projection_base value,
                      const star_x_layout variable_layout = {})
   : projection_base(validate_star_x_projection_base(value)),
-    layout(validate_star_x_layout(variable_layout))
+    layout_(validate_star_x_layout(variable_layout))
   {
     const auto zero
-      = star_x_detail::project_to_normalized_map(0, 0, layout).point;
+      = star_x_detail::project_to_normalized_map(0, 0, layout_).point;
     longitude_zero_x = zero.x * pframe.width();
     latitude_zero_y = zero.y * pframe.height();
   }
@@ -219,6 +223,10 @@ struct starxproj : public projection_base, public projection_api
   { }
 
   starxproj(const starxproj&) = default;
+
+  double
+  group_gap_ratio() const noexcept
+  { return layout_.group_gap_ratio; }
 
   string
   image_filename(const raster_mode) const override
@@ -242,7 +250,7 @@ struct starxproj : public projection_base, public projection_api
         "Star-X longitude must be in [-180, 180] degrees");
 
     const auto projected = star_x_detail::project_to_normalized_map(
-      latitude, longitude, layout).point;
+      latitude, longitude, layout_).point;
     return std::make_tuple(projected.x * pframe.width(),
                            projected.y * pframe.height());
   }
