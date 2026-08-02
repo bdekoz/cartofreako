@@ -25,11 +25,11 @@ generation workflow. They do not require the same software:
 compatibility definitions for the Alpha60 API and do not use GDAL, Natural
 Earth, Izzi, Inkscape, or network access.
 
-`make generated-projections` builds the complete 20-file SVG suite. It needs
-all native build and data-acquisition dependencies through GEOS, but Make does
-not invoke Inkscape. Inkscape is a workflow requirement when the generated
-artwork must be inspected or edited; it may be omitted from a headless build
-job that only runs the embedded structural checks.
+`make all` builds the complete 20-file SVG suite. It needs all native build
+and data-acquisition dependencies through GEOS, but Make does not invoke
+Inkscape. Inkscape is a workflow requirement when the generated artwork must
+be inspected or edited; it may be omitted from a headless build job that only
+runs the embedded structural checks.
 
 ## Install the system packages
 
@@ -218,7 +218,7 @@ Override it when using a shared or pre-provisioned data directory:
 
 ```sh
 make NATURAL_EARTH_DIR=/absolute/path/to/10m-physical-vectors \
-  generated-projections
+  all
 ```
 
 Outbound network access is needed only when the pinned archive is absent.
@@ -286,7 +286,7 @@ test -f ../izzi/src/a60-svg.h
 gdal-config --ogr-enabled
 make check
 make fetch-natural-earth-10m
-make generated-projections
+make all
 inkscape --version
 ```
 

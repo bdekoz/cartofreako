@@ -24,11 +24,12 @@ The aggregate target generates all four artifact families for all five
 projections:
 
 ```sh
-make generated-projections
+make all
 ```
 
-`make generate-projections` and `make make-generated` are equivalent aliases.
-The original individual Cahill-Keyes targets also remain available.
+`make generated-projections`, `make generate-projections`, and
+`make make-generated` are equivalent aliases. The original individual
+Cahill-Keyes targets also remain available.
 
 The artifact-family aggregate targets include all five projections.
 
@@ -76,7 +77,7 @@ make generate-authagraph
 make generate-myriahedral
 make generate-star-x
 make generate-voronoi
-make generated-projections
+make all
 ```
 
 `make` rebuilds only when a declared dependency is newer. Use `make -B`

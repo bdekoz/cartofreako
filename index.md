@@ -30,11 +30,12 @@ Generate geometry, labeled graticules, the layered Natural Earth physical
 map, and the 153-layer Hamonshū ocean for all five projections with:
 
 ```sh
-make generated-projections
+make all
 ```
 
 All 20 SVGs are written under `generated/`. The targets
-`make generate-projections` and `make make-generated` are equivalent aliases.
+`make generated-projections`, `make generate-projections`, and
+`make make-generated` are equivalent aliases.
 
 Every frame preserves the projection's required ratio and has a largest
 dimension of exactly 44 units:
