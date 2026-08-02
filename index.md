@@ -42,6 +42,7 @@ dimension of exactly 44 units:
 
 | Projection | Generated frame | Per-projection target |
 | --- | ---: | --- |
+| Cahill-Keyes | `44 × 22` | `make generate-geometry generate-graticules-ck generate-earth-ck generate-ocean-ck` |
 | AuthaGraph | `44 × 19.052559` (`44 × 11√3`) | `make generate-authagraph` |
 | Myriahedral | `44 × 24.75` | `make generate-myriahedral` |
 | Star-X | `34 × 44` | `make generate-star-x` |
@@ -57,6 +58,7 @@ and finite numeric output.
 
 | Projection | Geometry | Graticules | Earth | Ocean |
 | --- | --- | --- | --- | --- |
+| Cahill-Keyes | [`geometry-ck-44-22.svg`](generated/geometry-ck-44-22.svg) | [`graticules-ck-44-22.svg`](generated/graticules-ck-44-22.svg) | [`earth-ck-44-22.svg`](generated/earth-ck-44-22.svg) | [`ocean-ck-44-22.svg`](generated/ocean-ck-44-22.svg) |
 | AuthaGraph | [`geometry-authagraph-44-19.052559.svg`](generated/geometry-authagraph-44-19.052559.svg) | [`graticules-authagraph-44-19.052559.svg`](generated/graticules-authagraph-44-19.052559.svg) | [`earth-authagraph-44-19.052559.svg`](generated/earth-authagraph-44-19.052559.svg) | [`ocean-authagraph-44-19.052559.svg`](generated/ocean-authagraph-44-19.052559.svg) |
 | Myriahedral | [`geometry-myriahedral-44-24.75.svg`](generated/geometry-myriahedral-44-24.75.svg) | [`graticules-myriahedral-44-24.75.svg`](generated/graticules-myriahedral-44-24.75.svg) | [`earth-myriahedral-44-24.75.svg`](generated/earth-myriahedral-44-24.75.svg) | [`ocean-myriahedral-44-24.75.svg`](generated/ocean-myriahedral-44-24.75.svg) |
 | Star-X | [`geometry-star-x-34-44.svg`](generated/geometry-star-x-34-44.svg) | [`graticules-star-x-34-44.svg`](generated/graticules-star-x-34-44.svg) | [`earth-star-x-34-44.svg`](generated/earth-star-x-34-44.svg) | [`ocean-star-x-34-44.svg`](generated/ocean-star-x-34-44.svg) |
