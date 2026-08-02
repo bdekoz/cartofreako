@@ -11,6 +11,11 @@ attribution, and source/test index.
 
 ## Build and test
 
+Install the components listed in
+[`docs/prerequisites.md`](docs/prerequisites.md) before building the complete
+SVG suite. The self-contained `make check` target needs only GNU Make and a
+C++20 compiler.
+
 Run the standalone algorithm and API compatibility checks with:
 
 ```sh

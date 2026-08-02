@@ -1,6 +1,7 @@
 # SVG generation pipeline
 
 [Documentation index](../index.md) ·
+[Prerequisites](prerequisites.md) ·
 [Cahill-Keyes context](cahill-keyes-context.md) ·
 [Hamonshū wave catalogue](hamonshu-wave-patterns.md)
 

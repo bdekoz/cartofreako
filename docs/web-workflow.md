@@ -1,6 +1,7 @@
 # Myriahedral WebAssembly workflow
 
 [Documentation index](../index.md) ·
+[Prerequisites](prerequisites.md) ·
 [Complete example](web-example.md) ·
 [Myriahedral implementation notes](myriahedral-implementation-notes.md) ·
 [Generation pipeline](generation.md)
