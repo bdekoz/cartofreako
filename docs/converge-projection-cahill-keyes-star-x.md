@@ -38,5 +38,5 @@ docs/star-x-bibliography.md
 
 Stage 4
 
-adjust star-x projection implementation such that the gap between group 1 and group 2 is configurable. Then, set the defaults such that for the {44,22} example in generate geometry, the bottom octant is moved 2.25" higher, and the top group is lowered 2.25" lower. The goal is for them to both touch at 22", the center of the frame.
+adjust star-x projection implementation such that the gap between octant group 1 and octant group 2 is configurable. Then, set the defaults such that for the {44,22} example in generate geometry, the bottom octant is moved 2.25" higher, and the top group is lowered 2.25" lower. The goal is for them to both touch at 22", the center of the frame. There is too much space inbetween in the current geometry-star-x-34-44.svg.
 
