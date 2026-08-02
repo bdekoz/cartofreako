@@ -6,6 +6,10 @@ projections for `a60::carto::projection_api`. All five accept variable-size
 `a60::carto::frame` values while enforcing the aspect ratio required by the
 selected geometry or source-canvas registration.
 
+Before building, see [Prerequisites](docs/prerequisites.md) for the compiler,
+GNU Make, Alpha60, Izzi, GDAL/GEOS, Natural Earth, Inkscape, and optional
+WebAssembly requirements.
+
 ## Choose a projection
 
 | Projection | Geometric model | Required map ratio | Public class | Factory |
@@ -360,6 +364,7 @@ native source-canvas dimensions but does not prescribe a raster.
 | [`tests/test-cahill-keyes-projection-api.cc`](tests/test-cahill-keyes-projection-api.cc) | Cahill-Keyes public API, frame, raster, and integration-anchor tests |
 | [`tests/test-cahill-keyes-path-functions.cc`](tests/test-cahill-keyes-path-functions.cc) | Cahill-Keyes path seam, scaling, offset, state, and validation tests |
 | [`docs/generation.md`](docs/generation.md) | End-to-end SVG generation, seam and folding techniques, data preparation, structural checks, and perceptual considerations |
+| [`docs/prerequisites.md`](docs/prerequisites.md) | Native build, data acquisition, Inkscape review, and optional WebAssembly prerequisites |
 | [`src/cart0freak0-star-x.h`](src/cart0freak0-star-x.h) | Direct Star-X group assembly, frame validation, public API, and factory |
 | [`tests/test-star-x-projection-api.cc`](tests/test-star-x-projection-api.cc) | Star-X anchors, rigid assembly, global domain, polar placement, variable-frame, validation, and API tests |
 | [`docs/star-x-context.md`](docs/star-x-context.md) | Star-X octahedral context, face-slot mapping, group rotation, quadrants, polar locus, and cuts |
