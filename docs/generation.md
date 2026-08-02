@@ -23,15 +23,13 @@ The aggregate target generates all four artifact families for all five
 projections:
 
 ```sh
-make make-generated
+make generated-projections
 ```
 
-The original Cahill-Keyes targets remain available. To generate only the
-AuthaGraph, Myriahedral, Star-X, and Voronoi families, use:
+`make generate-projections` and `make make-generated` are equivalent aliases.
+The original individual Cahill-Keyes targets also remain available.
 
-```sh
-make generate-projections
-```
+The artifact-family aggregate targets include all five projections.
 
 The suite fixes the largest frame dimension at 44 units while retaining each
 projection's exact aspect-ratio contract:
@@ -77,7 +75,7 @@ make generate-authagraph
 make generate-myriahedral
 make generate-star-x
 make generate-voronoi
-make make-generated
+make generated-projections
 ```
 
 `make` rebuilds only when a declared dependency is newer. Use `make -B`

@@ -101,7 +101,7 @@ AREA_GENERATOR_HEADER := $(TEST_DIR)/projection-area-generation.h
 
 .PHONY: check clean fetch-natural-earth-10m make-generated \
 	generate-geometry generate-graticules-ck generate-earth-ck \
-	generate-ocean-ck generate-projections \
+	generate-ocean-ck generate-projections generated-projections \
 	generate-geometry-projections generate-graticules-projections \
 	generate-earth-projections generate-ocean-projections \
 	generate-authagraph generate-myriahedral generate-star-x \
@@ -244,11 +244,14 @@ $(eval $(call PROJECTION_RULES,voronoi,\
 
 generate-voroni: generate-voronoi
 
-generate-geometry-projections: $(REQUESTED_GEOMETRY_SVGS)
-generate-graticules-projections: $(REQUESTED_GRATICULE_SVGS)
-generate-earth-projections: $(REQUESTED_EARTH_SVGS)
-generate-ocean-projections: $(REQUESTED_OCEAN_SVGS)
-generate-projections: $(REQUESTED_PROJECTION_SVGS)
+generate-geometry-projections: \
+	$(CK_GEOMETRY_SVG) $(REQUESTED_GEOMETRY_SVGS)
+generate-graticules-projections: \
+	$(CK_GRATICULE_SVG) $(REQUESTED_GRATICULE_SVGS)
+generate-earth-projections: $(CK_EARTH_SVG) $(REQUESTED_EARTH_SVGS)
+generate-ocean-projections: $(CK_OCEAN_SVG) $(REQUESTED_OCEAN_SVGS)
+generate-projections: $(GENERATED_SVGS)
+generated-projections: $(GENERATED_SVGS)
 make-generated: $(GENERATED_SVGS)
 
 clean:

@@ -26,13 +26,11 @@ Generate geometry, labeled graticules, the layered Natural Earth physical
 map, and the 153-layer Hamonshū ocean for all five projections with:
 
 ```sh
-make make-generated
+make generated-projections
 ```
 
-All 20 SVGs are written under `generated/`. The existing
-`make generate-projections` target generates the four artifact families for
-AuthaGraph, Myriahedral, Star-X, and Voronoi without rebuilding the four
-Cahill-Keyes artifacts.
+All 20 SVGs are written under `generated/`. The targets
+`make generate-projections` and `make make-generated` are equivalent aliases.
 
 Every frame preserves the projection's required ratio and has a largest
 dimension of exactly 44 units:
@@ -47,9 +45,10 @@ dimension of exactly 44 units:
 Artifact-family targets are also available as
 `generate-geometry-projections`, `generate-graticules-projections`,
 `generate-earth-projections`, and `generate-ocean-projections`. Each generic
-generator accepts a projection name on its command line and reopens its SVG
-to validate the view box, required layers, path structure, and finite numeric
-output.
+family target includes Cahill-Keyes plus AuthaGraph, Myriahedral, Star-X, and
+Voronoi. Each generator accepts a projection name on its command line and
+reopens its SVG to validate the view box, required layers, path structure,
+and finite numeric output.
 
 | Projection | Geometry | Graticules | Earth | Ocean |
 | --- | --- | --- | --- | --- |
