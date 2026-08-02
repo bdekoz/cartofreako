@@ -43,6 +43,35 @@ namespace a60::carto {
 */
 inline constexpr double star_x_width_to_height_ratio = 17.0 / 22.0;
 
+/**
+   Vertical separation between the two square group carriers, expressed as
+   a fraction of frame height. Zero preserves the original edge-to-edge
+   carrier placement; a negative value overlaps the carriers and pulls the
+   visible octants toward the center.
+
+   The default is -4.5/44, so a 34-by-44 drawing moves the upper group down
+   2.25 units and the lower group up 2.25 units.
+*/
+inline constexpr double star_x_default_group_shift_ratio = 2.25 / 44.0;
+inline constexpr double star_x_default_group_gap_ratio
+  = -2 * star_x_default_group_shift_ratio;
+
+struct star_x_layout
+{
+  double group_gap_ratio = star_x_default_group_gap_ratio;
+};
+
+inline star_x_layout
+validate_star_x_layout(const star_x_layout value)
+{
+  if (!std::isfinite(value.group_gap_ratio)
+      || value.group_gap_ratio < -0.5
+      || value.group_gap_ratio > 0)
+    throw std::invalid_argument(
+      "Star-X group gap ratio must be finite and within [-0.5, 0]");
+  return value;
+}
+
 /// True when a frame has finite, positive dimensions in the required
 /// 17:22 Star-X aspect ratio. The tolerance admits floating-point
 /// roundoff, not approximate aspect ratios.
@@ -100,29 +129,33 @@ struct assembled_point
    M-layout is therefore 1 unit wide by 1/2 unit high. Each four-face
    group is a 1/2-by-1/2 square. Group one (negative native x) is placed
    below the frame midpoint. Group two is rotated 180 degrees and placed
-   above it. Results are normalized to the full 17:22 frame.
+   above it. A signed carrier gap separates or overlaps the two groups;
+   results are normalized to the full 17:22 frame.
 */
 inline assembled_point
 assemble_native_point(const double cahill_keyes_x,
-                      const double cahill_keyes_y)
+                      const double cahill_keyes_y,
+                      const star_x_layout layout = {})
 {
   constexpr double group_side = 0.5;
   constexpr double side_margin = 3.0 / 22.0;
   const bool second_group = cahill_keyes_x >= 0;
+  const double half_gap = layout.group_gap_ratio / 2;
 
   const double x_in_height_units
     = second_group
         ? side_margin + group_side - cahill_keyes_x
         : side_margin + group_side + cahill_keyes_x;
   const double y = second_group
-                     ? group_side / 2 + cahill_keyes_y
-                     : 3 * group_side / 2 - cahill_keyes_y;
+                     ? group_side / 2 + cahill_keyes_y - half_gap
+                     : 3 * group_side / 2 - cahill_keyes_y + half_gap;
   return {{x_in_height_units / star_x_width_to_height_ratio, y},
           second_group ? face_group::two : face_group::one};
 }
 
 inline assembled_point
-project_to_normalized_map(const double latitude, const double longitude)
+project_to_normalized_map(const double latitude, const double longitude,
+                          const star_x_layout layout = {})
 {
   // For a unit-height Star-X carrier, each group side is 1/2 and the
   // source Cahill-Keyes frame is 1 by 1/2. Its scaffold altitude is 1/4.
@@ -130,7 +163,7 @@ project_to_normalized_map(const double latitude, const double longitude)
   const double adjusted_longitude
     = cahill_keyes_registered_longitude(longitude);
   const auto [x, y] = forward(adjusted_longitude, latitude);
-  return assemble_native_point(x, y);
+  return assemble_native_point(x, y, layout);
 }
 
 } // namespace star_x_detail
@@ -138,12 +171,15 @@ project_to_normalized_map(const double latitude, const double longitude)
 /// Construct generic projection state from a variable-size 17:22 frame.
 /// Only frame_area is retained; map placement remains cartography's job.
 inline projection_base
-make_star_x_projection_base(const frame& map_frame, string raster_name)
+make_star_x_projection_base(const frame& map_frame, string raster_name,
+                            const star_x_layout variable_layout = {})
 {
+  const star_x_layout layout = validate_star_x_layout(variable_layout);
   const frame projection_frame {map_frame.frame_area};
   projection_base value = validate_star_x_projection_base(
     {projection_frame, 0, 0, star_x, std::move(raster_name)});
-  const auto zero = star_x_detail::project_to_normalized_map(0, 0).point;
+  const auto zero
+    = star_x_detail::project_to_normalized_map(0, 0, layout).point;
   value.longitude_zero_x = zero.x * projection_frame.width();
   value.latitude_zero_y = zero.y * projection_frame.height();
   return value;
@@ -159,15 +195,27 @@ make_star_x_projection_base(const frame& map_frame, string raster_name)
 */
 struct starxproj : public projection_base, public projection_api
 {
-  explicit starxproj(const projection_base value)
-  : projection_base(validate_star_x_projection_base(value))
-  { }
+  star_x_layout layout;
+
+  explicit starxproj(const projection_base value,
+                     const star_x_layout variable_layout = {})
+  : projection_base(validate_star_x_projection_base(value)),
+    layout(validate_star_x_layout(variable_layout))
+  {
+    const auto zero
+      = star_x_detail::project_to_normalized_map(0, 0, layout).point;
+    longitude_zero_x = zero.x * pframe.width();
+    latitude_zero_y = zero.y * pframe.height();
+  }
 
   /// Make a projection for any valid 17:22 frame. Frame placement offsets
   /// are deliberately discarded; the projection owns only frame_area.
-  explicit starxproj(const frame& variable_frame, string raster_name = {})
+  explicit starxproj(const frame& variable_frame, string raster_name = {},
+                     const star_x_layout variable_layout = {})
   : starxproj(make_star_x_projection_base(variable_frame,
-                                           std::move(raster_name)))
+                                           std::move(raster_name),
+                                           variable_layout),
+              variable_layout)
   { }
 
   starxproj(const starxproj&) = default;
@@ -193,17 +241,18 @@ struct starxproj : public projection_base, public projection_api
       throw std::invalid_argument(
         "Star-X longitude must be in [-180, 180] degrees");
 
-    const auto projected
-      = star_x_detail::project_to_normalized_map(latitude, longitude).point;
+    const auto projected = star_x_detail::project_to_normalized_map(
+      latitude, longitude, layout).point;
     return std::make_tuple(projected.x * pframe.width(),
                            projected.y * pframe.height());
   }
 };
 
 inline starxproj
-make_star_x_projection(const frame& map_frame, string raster_name = {})
+make_star_x_projection(const frame& map_frame, string raster_name = {},
+                       const star_x_layout layout = {})
 {
-  return starxproj(map_frame, std::move(raster_name));
+  return starxproj(map_frame, std::move(raster_name), layout);
 }
 
 } // namespace a60::carto

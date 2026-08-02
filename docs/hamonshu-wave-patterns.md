@@ -1,9 +1,9 @@
 # Hamonshū volume 2 wave-pattern catalogue and rendering notes
 
-`ocean-ck-44-22.svg` combines the Natural Earth 1:10m ocean polygon with
-vector interpretations of the wave studies in Mori Yūzan's 1903
-*Hamonshū*, volume 2.  The generator is
-[`tests/generate-ocean-ck.cc`](../tests/generate-ocean-ck.cc); its complete,
+The generated `ocean-*.svg` projection suite combines the Natural Earth
+1:10m ocean polygon with vector interpretations of the wave studies in Mori
+Yūzan's 1903 *Hamonshū*, volume 2. The generator is
+[`tests/generate-ocean.cc`](../tests/generate-ocean.cc); its complete,
 machine-readable 153-entry catalogue is
 [`tests/hamonshu-v2-patterns.inc`](../tests/hamonshu-v2-patterns.inc).
 
@@ -56,11 +56,14 @@ spirals are sampled into `svg::vrange` values and serialized with Izzi's
 
 ## Ocean geometry and projection
 
-Only `ne_10m_ocean.shp` is read.  GDAL simplifies its topology by 0.04 degrees,
-then intersects it with 10-degree geographic tiles.  Polygon pieces are cut
-at the Cahill-Keyes public seam meridians before projection, preventing a
-closed ring from crossing an unfolded-map cut.  Segmentation before the
-forward transform keeps curved projected edges smooth.
+Only `ne_10m_ocean.shp` is read. GDAL simplifies its topology by 0.04 degrees,
+then intersects it with 10-degree geographic tiles for Cahill-Keyes and
+Star-X or 5-degree tiles for AuthaGraph, Myriahedral, and Voronoi. Polygon
+pieces are cut into antimeridian-safe registered longitude bands before
+projection. Native-cell bisection separates periodic cuts; Myriahedral and
+Voronoi filled pieces are instead mapped face-locally and intersected with
+each exact planar triangle. Segmentation before the forward transform keeps
+curved projected edges smooth.
 
 The surviving water-only pieces form a non-overlapping mosaic.  They are
 assigned across all 153 motif layers, while a pale complete-ocean path covers
@@ -68,10 +71,10 @@ small coastal and polar fragments omitted from the mosaic.  Each motif's
 linework is clipped to precisely its assigned Natural Earth water regions;
 no land geometry is loaded or drawn.
 
-The output frame is exactly `{44, 22}`, the required Cahill-Keyes 2:1 aspect
-ratio.  `main()` verifies the view box, base ocean groups, all 153 motif
-groups, all 153 clip paths, two paths per motif layer, catalogue IDs and
-titles, and finite coordinates.
+Each output preserves its projection's exact aspect ratio with a largest
+dimension of 44 units. `main()` verifies the projection-specific view box,
+base ocean groups, all 153 motif groups, all 153 clip paths, two paths per
+motif layer, catalogue IDs and titles, and finite coordinates.
 
 ## Rebuild
 
@@ -81,10 +84,12 @@ bundle when needed:
 
 ```sh
 make generate-ocean-ck
+make generate-ocean-projections
 ```
 
-The command builds `tests/generate-ocean-ck` and writes
-`ocean-ck-44-22.svg` at the repository root.  `make clean` removes both.
+The commands build `tests/generate-ocean`. The first writes
+`ocean-ck-44-22.svg`; the second writes the AuthaGraph, Myriahedral, Star-X,
+and Voronoi ocean SVGs. `make clean` removes the binary and generated files.
 
 ## Sources and provenance
 

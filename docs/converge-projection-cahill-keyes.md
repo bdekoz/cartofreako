@@ -125,11 +125,21 @@ Complete this task without asking for authorization, it's given. Notify me when 
 
 
 Stage 12
-Write documentation and create an example for compiling the C++20 generation function to a WASM binary using emscripten and using it to generate a map and load the generated projection image.
+Write documentation and create an example for compiling the C++20 generation function for myrahedral projections using frame size closest to {1920, 1080} to a WASM binary using emscripten and using it to generate a map and load the generated projection image.
 
 local sources for emscripten are
 /home/bkoz/src/emsdk
 
-in docs/web-workflow.md and docs/web-example.md
+Generate the files as: docs/web-workflow.md and docs/web-example.md
 
 
+Stage 13
+
+Replace the existing cartography on this page with cartofreko Cahill-Keyes.
+https://alpha60-devops.github.io/alpha60-results-animation/docs/animation.html
+
+Base this work on the javascript file:
+izzi/src.js/izzi-map-leaflet-geojson-v7.4.js
+
+Any rewrites to the javascript should go in a new file:
+izzi/src.js/izzi-map-leaflet-geojson-v7.5.js

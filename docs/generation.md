@@ -7,25 +7,41 @@
 ## Purpose
 
 The repository contains four C++20 programs that are both SVG generators and
-structural tests. They exercise the production Cahill-Keyes projection through
-the real Alpha60 and Izzi APIs, write a layered SVG at the repository root,
-then reopen that file and verify its dimensions, layer structure, path counts,
-and numeric sanity.
+structural tests. They exercise all five production projections through the
+real Alpha60 and Izzi APIs, write layered SVGs at the repository root, then
+reopen those files and verify dimensions, layer structure, path counts, and
+numeric sanity.
 
-The four outputs describe progressively richer views of the same 44 by 22
-Cahill-Keyes frame:
+| Artifact | Generator | Principal input |
+| --- | --- | --- |
+| Geometry | [`tests/generate-geometry.cc`](../tests/generate-geometry.cc) | Native projection faces and screen quadrants |
+| Graticules | [`tests/generate-graticules.cc`](../tests/generate-graticules.cc) | Sampled latitude and longitude lines |
+| Earth | [`tests/generate-earth.cc`](../tests/generate-earth.cc) | Natural Earth 1:10m physical vectors |
+| Ocean | [`tests/generate-ocean.cc`](../tests/generate-ocean.cc) | Natural Earth ocean and the *Hamonshū* catalogue |
 
-| Make target | Generator | Principal input | Output |
-| --- | --- | --- | --- |
-| `generate-geometry` | [`tests/generate-geometry.cc`](../tests/generate-geometry.cc) | Constructed octant boundaries | [`geometry-ck-44-22.svg`](../geometry-ck-44-22.svg) |
-| `generate-graticules-ck` | [`tests/generate-graticules-ck.cc`](../tests/generate-graticules-ck.cc) | Sampled latitude and longitude lines | [`graticules-ck-44-22.svg`](../graticules-ck-44-22.svg) |
-| `generate-earth-ck` | [`tests/generate-earth-ck.cc`](../tests/generate-earth-ck.cc) | Natural Earth 1:10m physical vectors | [`earth-ck-44-22.svg`](../earth-ck-44-22.svg) |
-| `generate-ocean-ck` | [`tests/generate-ocean-ck.cc`](../tests/generate-ocean-ck.cc) | Natural Earth ocean and the *Hamonshū* catalogue | [`ocean-ck-44-22.svg`](../ocean-ck-44-22.svg) |
+The original Cahill-Keyes targets remain available. The aggregate target
+generates the same four artifact families for AuthaGraph, Myriahedral, Star-X,
+and Voronoi:
 
-These files are diagnostic and illustrative rather than a general map-rendering
-command line. Each generator currently asserts the exact `{44, 22}` fixture,
-although the underlying Cahill-Keyes projection accepts any finite, positive
-2:1 frame.
+```sh
+make generate-projections
+```
+
+The suite fixes the largest frame dimension at 44 units while retaining each
+projection's exact aspect-ratio contract:
+
+| Projection | Frame | Exact construction |
+| --- | ---: | --- |
+| Cahill-Keyes | `44 × 22` | `2:1` |
+| AuthaGraph | `44 × 19.052559` | height `= 11√3` |
+| Myriahedral | `44 × 24.75` | `16:9` |
+| Star-X | `34 × 44` | `17:22` |
+| Voronoi | `44 × 22.916667` | height `= 275/12`, ratio `48:25` |
+
+The filenames round irrational or recurring dimensions to six decimals,
+matching Izzi's serialized `viewBox`; the in-memory frames use the exact
+double expressions. These files are diagnostic and illustrative rather than
+a general map-rendering command line.
 
 ## Build orchestration and inputs
 
@@ -51,11 +67,15 @@ make generate-geometry
 make generate-graticules-ck
 make generate-earth-ck
 make generate-ocean-ck
+make generate-authagraph
+make generate-myriahedral
+make generate-star-x
+make generate-voronoi
 ```
 
 `make` rebuilds only when a declared dependency is newer. Use `make -B`
 when an unconditional regeneration is wanted. `make clean` removes the
-generator binaries and all four generated SVGs, but deliberately retains the
+generator binaries and generated SVGs, but deliberately retains the
 downloaded Natural Earth input.
 
 The generators are not part of `make check`; invoking a `generate-*`
@@ -87,28 +107,31 @@ are recorded in the
 ## Shared coordinate pipeline
 
 All four generators use
-[`cart0freak0-cahill-keyes.h`](../src/cart0freak0-cahill-keyes.h) through
-`make_cahill_keyes_projection(frame {44, 22}, ...)`. Geographic calls use
-the public API order `(latitude, longitude)`; projected coordinates use an
-upper-left SVG origin.
+[`projection-generation-common.h`](../tests/projection-generation-common.h)
+to select a production projection, construct its exact frame, and call the
+shared public API in `(latitude, longitude)` order. Projected coordinates use
+an upper-left SVG origin.
 
 ```mermaid
 flowchart LR
   SOURCE["Geographic construction<br/>or WGS84 vector data"]
-  CUT["Separate or clip at<br/>Cahill-Keyes cuts"]
+  CUT["Clip at geographic<br/>registration seams"]
   DENSE["Sample or densify<br/>in geographic space"]
-  PROJECT["Cahill-Keyes<br/>forward projection"]
+  PROJECT["Selected production<br/>forward projection"]
+  SPLIT["Bisect native-cell<br/>transitions and split cuts"]
   SVG["Izzi path<br/>serialization"]
   CHECK["Reopen SVG and<br/>check structure"]
 
-  SOURCE --> CUT --> DENSE --> PROJECT --> SVG --> CHECK
+  SOURCE --> CUT --> DENSE --> PROJECT --> SPLIT --> SVG --> CHECK
 ```
 
-The ordering matters. A map projection transforms points; it does not know
-whether two adjacent input points should remain connected across a cut in the
-unfolded octahedron. Cutting first preserves geographic topology. Densifying
-before projection then approximates the curved projected edge with short SVG
-line segments.
+The ordering matters. A point projection alone does not say whether adjacent
+input points remain connected in an unfolded net. Geographic clipping keeps
+antimeridian and registered Cahill-Keyes closures local. Densification then
+ensures adjacent samples cross at most one small native cell. The shared path
+projector identifies that cell transition, bisects it 48 times, compares the
+two limiting projected points, and starts a new SVG subpath only when those
+limits are genuinely separated.
 
 ### Registered cut meridians
 
@@ -134,8 +157,10 @@ a deliberate microscopic gap rather than an exact topological weld.
 
 ### Sampling and densification
 
-The geometry and graticule generators sample analytic parallels and meridians
-every 2.5 degrees. The Natural Earth generators retain source vertices, apply
+The Cahill-Keyes/Star-X geometry outlines sample analytic boundaries every
+2.5 degrees. Graticules use 0.5-degree samples so even the depth-5
+Myriahedral mesh crosses no more than one native edge per input segment. The
+Natural Earth generators retain source vertices, apply
 topology-preserving simplification, then call GDAL `segmentize()` so no input
 segment exceeds a configured angular length.
 
@@ -147,54 +172,67 @@ projected-space error should be measured and the sampling threshold reduced
 or made adaptive.
 
 Consecutive points that project to exactly the same coordinate are removed.
-All generators reject non-finite points and material out-of-frame results.
-The Natural Earth programs additionally clamp tolerated roundoff at the frame
-boundary; the analytic geometry and graticule programs retain their original
-projected coordinates.
+All generators reject non-finite points and material out-of-frame results,
+then clamp tolerated roundoff at the frame boundary.
 
 ## Folding, clipping, and discontinuities
 
-There are two related meanings of “folding” in this code:
+The shared generator does not infer cuts from a projection-independent jump
+distance. Instead it assigns every geographic sample to a native cell:
 
-- The Cahill-Keyes projection unfolds eight spherical octants into its planar
-  M-shaped net.
-- [`cart0freak0-cahill-keyes-functions.h`](../src/cart0freak0-cahill-keyes-functions.h)
-  folds an already projected open path across opposite rectangular frame
-  edges by splitting it into visually short segments.
+- eight registered octants for Cahill-Keyes and Star-X;
+- the nearest tetrahedron vertex plus one of six local sectors for
+  AuthaGraph;
+- one of 5,120 subdivided spherical triangles for Myriahedral; or
+- one of twenty rotated nearest-site faces for Voronoi.
 
-The projected-path helper detects a large jump between opposite outer
-quarters or opposite vertical halves. It temporarily unwraps the destination
-coordinate, solves the segment/edge intersection
+When adjacent samples select different cells, a geographic bisection retains
+the last point on the left cell and the first on the right. If the projected
+limits agree within `44 × 10^-5`, the edge is joined in the planar net and both
+limits stay in the same path. Otherwise the edge is a cut and a new subpath
+begins. This tests the assembled net itself: tree-connected Myriahedral and
+Voronoi faces remain joined, while their non-tree edges split without a
+hard-coded list of thousands of relationships.
 
-```text
-t = (edge - start) / (end - start)
-```
+AuthaGraph has an additional periodic coordinate wrap that can occur without
+changing its spherical sector. Adjacent projected samples separated by more
+than one third of the frame's largest dimension trigger a second bisection;
+the half interval containing the large jump is retained until its paired exit
+and entry limits are found.
 
-and interpolates the other coordinate at the same `t`. It emits a paired
-exit point and entry point on opposite frame edges. Scale-aware
-floating-point tolerances handle points that are nearly parallel to or
-already on an edge.
+Filled rings still need more care than open lines. All source polygons are
+first intersected with the five antimeridian-safe registered longitude bands
+used by Cahill-Keyes. Cahill-Keyes and Star-X can then close those face-safe
+pieces directly. AuthaGraph additionally uses a 5-degree geographic grid and
+rejects any fragment whose projected closing edge exceeds 2.5 frame units.
 
-That repair is appropriate for an ordered open polyline whose intended
-continuity is already known. It is not sufficient for a filled polygon:
-closing a ring after projection can create a false chord across several
-octants and fill a large triangle that never existed on Earth. Consequently,
-the current generators do not rely on projected-path folding:
-
-- geometry and graticule paths are constructed as separate face-safe paths;
-- Earth and ocean polygons are intersected with geographic clipping bands
-  before projection.
-
-This distinction also matters when adapting a generator to Star-X,
-AuthaGraph, Myriahedral, or Voronoi. Their cut graphs and frame topology differ;
-the Cahill-Keyes 2:1 rectangular wrap heuristics must not be reused merely
-because the point API is the same.
+Myriahedral and Voronoi use exact native-face clipping from
+[`projection-area-generation.h`](../tests/projection-area-generation.h).
+Every 5-degree geographic cell is densified, mapped separately through each
+candidate face's local transform, repaired with GEOS if necessary, and
+intersected with that face's exact planar triangle. Myriahedral uses the same
+3D-chord affine coordinates as its 5,120-face implementation; Voronoi uses
+the same face-local gnomonic transform and unfolding affine. Only the clipped
+planar pieces are normalized into the output frame, so a filled ring never
+needs a chord between unrelated net edges. Same-color area hairlines hide
+microscopic cracks along adjacent pieces.
 
 ## Geometry generator
 
 [`tests/generate-geometry.cc`](../tests/generate-geometry.cc) constructs the
-projection's explanatory skeleton rather than reading external data.
-`test_ck_grids()`:
+selected projection's explanatory skeleton rather than reading external
+data. The `triangular-faces` layer is constructed from each projection's
+native topology:
+
+| Projection | Face construction | Path count |
+| --- | --- | ---: |
+| AuthaGraph | Exact 24-sector planar assembly table, cyclically shifted and clipped at the periodic frame edges | at least 24 |
+| Cahill-Keyes | Sampled registered octants | 8 |
+| Myriahedral | Normalized planar triangles from the fixed depth-5 layout | 5,120 |
+| Star-X | Sampled Cahill-Keyes octants assembled into the two stacked groups | 8 |
+| Voronoi | Twenty face-local gnomonic triangles transformed through the fixed unfolding tree | 20 |
+
+For Cahill-Keyes and Star-X, the generator additionally:
 
 1. defines four registered 90-degree longitude sectors and their official
    northern and southern octant numbers;
@@ -204,6 +242,8 @@ projection's explanatory skeleton rather than reading external data.
 4. constructs four equal-width screen-space rectangles matching Alpha60's
    map-quadrant convention; and
 5. writes four semantic SVG layers.
+
+For those two projections the additional layer counts are:
 
 | Layer | Count | Meaning |
 | --- | ---: | --- |
@@ -223,18 +263,19 @@ polar vertex instead of allowing a seam longitude to choose an adjacent face.
 The visible pole duplication is a property of the unfolded net, not numerical
 noise.
 
-The program verifies the 44 by 22 view box, exact path count in every layer,
-and absence of NaN or infinity.
+Every projection also receives four equal-width screen-space `quadrants`.
+The program verifies the projection-specific view box, native face count,
+quadrant count, optional octant layers, and absence of NaN or infinity.
 
 ## Graticule generator
 
-[`tests/generate-graticules-ck.cc`](../tests/generate-graticules-ck.cc)
+[`tests/generate-graticules.cc`](../tests/generate-graticules.cc)
 creates a conventional ten-degree geographic reference grid:
 
 - 17 parallels from `80°S` through the equator to `80°N`;
 - 36 meridians from `180°` through `170°E`;
-- four seam-safe path segments for each parallel; and
-- separate northern and southern path segments for each meridian.
+- seam-safe subpaths determined from native-cell transitions; and
+- explicit octant-sector and hemisphere pieces for Cahill-Keyes and Star-X.
 
 Splitting a parallel by longitude sector prevents a line from jumping between
 distant octants. Splitting a meridian at the equator reflects the fact that
@@ -242,22 +283,23 @@ its northern and southern halves belong to different octahedral faces even
 though they touch geographically.
 
 Each line is a named SVG subgroup with paths, a title, and one visible degree
-label. Multiples of 30 degrees receive stronger styling. Latitude labels are
-anchored at a projected point on longitude `-156°` with a small manual
-offset. Longitude labels alternate between `3.5°S` and `3.5°N` to reduce
-collisions near the equator; `180°` is displayed without an east/west suffix.
+label. Multiples of 30 degrees receive stronger styling. The label is placed
+at the midpoint sample of the longest projected subpath, which keeps it on a
+visible part of irregular nets without projection-specific anchor constants.
+`180°` is displayed without an east/west suffix.
 
-These are layout heuristics, not a general label-placement engine. They work
-for the fixed 44 by 22 diagnostic. Dense overlays, different typography, or
-another aspect ratio may require collision detection, leader lines, or
-multiple labels per disconnected parallel.
+These are layout heuristics, not a general label-placement engine. They are
+tuned for the 44-unit diagnostic frames. Dense overlays or different
+typography may require collision detection, leader lines, or multiple labels
+per disconnected parallel.
 
-The self-check expects 17 latitude groups and labels, 68 latitude paths, 36
-longitude groups and labels, and 72 longitude paths.
+The self-check expects 17 latitude groups and labels, 36 longitude groups and
+labels, at least one visible path per group, and finite coordinates. The
+subpath count is projection-dependent.
 
 ## Natural Earth physical-map generator
 
-[`tests/generate-earth-ck.cc`](../tests/generate-earth-ck.cc) turns the
+[`tests/generate-earth.cc`](../tests/generate-earth.cc) turns the
 pinned Natural Earth physical datasets into a layered vector map.
 
 ### Geometry processing
@@ -270,9 +312,12 @@ For each shapefile, the program:
 3. optionally simplifies it while preserving topology;
 4. skips clipping bands that cannot overlap the feature envelope;
 5. intersects the feature with every relevant seam-safe longitude band;
-6. densifies each surviving piece with `segmentize()`;
-7. projects polygon rings or line strings point by point; and
-8. serializes the result as one named Izzi path per source feature and band.
+6. for AuthaGraph, Myriahedral, and Voronoi, further clips areas to a
+   5-degree geographic grid;
+7. densifies each surviving piece with `segmentize()`;
+8. projects lines with native-cell bisection and areas either directly or by
+   exact Myriahedral/Voronoi face-local triangle intersection; and
+9. serializes the result as one named Izzi path per source feature and band.
 
 Interior polygon rings are retained, and area paths use SVG's `evenodd`
 fill rule so lakes or other holes are not painted solid. All tolerances below
@@ -320,7 +365,7 @@ subgroups, a minimum path count, the view box, and finite coordinates.
 
 ## Hamonshū ocean generator
 
-[`tests/generate-ocean-ck.cc`](../tests/generate-ocean-ck.cc) combines one
+[`tests/generate-ocean.cc`](../tests/generate-ocean.cc) combines one
 Natural Earth ocean feature with 153 deterministic vector interpretations of
 Mori Yūzan's 1903 *Hamonshū*, volume 2.
 
@@ -342,12 +387,16 @@ convention is documented in the
 
 The program simplifies the complete ocean with a 0.04-degree
 topology-preserving tolerance. One seam-clipped, 0.5-degree-densified version
-becomes the pale base ocean.
+becomes the pale base ocean. AuthaGraph, Myriahedral, and Voronoi base oceans
+also use 5-degree cells; the latter two are clipped exactly per native face.
 
 For patterned regions, the source ocean is intersected with a 10 by 10 degree
-geographic grid. Rows are traversed alternately west-to-east and
-east-to-west—a serpentine order—then every tile is intersected again with the
-Cahill-Keyes clipping bands. Pieces are retained only when:
+geographic grid for Cahill-Keyes and Star-X, and a 5 by 5 degree grid for
+AuthaGraph, Myriahedral, and Voronoi. Rows are traversed alternately
+west-to-east and east-to-west—a serpentine order—then every tile is
+intersected again with the antimeridian-safe registered clipping bands.
+Native projection cuts are resolved during path projection or face-local
+clipping. Pieces are retained only when:
 
 - GDAL reports at least one square degree of area in the geographic source
   coordinate system; and
@@ -362,8 +411,10 @@ omitted from the patterned mosaic.
 Surviving regions are distributed round-robin across the 153 catalogue
 entries. The serpentine traversal avoids a hard reset at every latitude row,
 but the assignment is artistic and deterministic rather than geographic or
-historical. Tile boundaries may be perceived as ocean regions even though
-they encode no oceanographic phenomenon.
+historical. Myriahedral retains every exact face fragment in a tile's clip
+path but uses one motif bounding box per source tile, keeping the 5,120-face
+output tractable. Tile boundaries may be perceived as ocean regions even
+though they encode no oceanographic phenomenon.
 
 ### Procedural line families
 
@@ -401,9 +452,9 @@ for bathymetric zones. Fixed output-space stroke widths can also appear denser
 in small tiles than in large ones.
 
 The self-check requires the base ocean, all 153 named groups, 153 clip paths,
-two paths per catalogue layer, source titles, the 44 by 22 view box, and
-finite coordinates. It verifies provenance and structure, not visual
-fidelity to the scanned pages.
+two paths per catalogue layer, source titles, the projection-specific view
+box, and finite coordinates. It verifies provenance and structure, not
+visual fidelity to the scanned pages.
 
 ## What the executable checks do—and do not—prove
 

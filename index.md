@@ -22,6 +22,43 @@ Run all standalone projection checks with:
 make check
 ```
 
+Generate geometry, labeled graticules, the layered Natural Earth physical
+map, and the 153-layer Hamonshū ocean for AuthaGraph, Myriahedral, Star-X,
+and Voronoi with:
+
+```sh
+make generate-projections
+```
+
+Every frame preserves the projection's required ratio and has a largest
+dimension of exactly 44 units:
+
+| Projection | Generated frame | Per-projection target |
+| --- | ---: | --- |
+| AuthaGraph | `44 × 19.052559` (`44 × 11√3`) | `make generate-authagraph` |
+| Myriahedral | `44 × 24.75` | `make generate-myriahedral` |
+| Star-X | `34 × 44` | `make generate-star-x` |
+| Voronoi | `44 × 22.916667` (`44 × 275/12`) | `make generate-voronoi` |
+
+Artifact-family targets are also available as
+`generate-geometry-projections`, `generate-graticules-projections`,
+`generate-earth-projections`, and `generate-ocean-projections`. Each generic
+generator accepts a projection name on its command line and reopens its SVG
+to validate the view box, required layers, path structure, and finite numeric
+output.
+
+| Projection | Geometry | Graticules | Earth | Ocean |
+| --- | --- | --- | --- | --- |
+| AuthaGraph | [`geometry-authagraph-44-19.052559.svg`](geometry-authagraph-44-19.052559.svg) | [`graticules-authagraph-44-19.052559.svg`](graticules-authagraph-44-19.052559.svg) | [`earth-authagraph-44-19.052559.svg`](earth-authagraph-44-19.052559.svg) | [`ocean-authagraph-44-19.052559.svg`](ocean-authagraph-44-19.052559.svg) |
+| Myriahedral | [`geometry-myriahedral-44-24.75.svg`](geometry-myriahedral-44-24.75.svg) | [`graticules-myriahedral-44-24.75.svg`](graticules-myriahedral-44-24.75.svg) | [`earth-myriahedral-44-24.75.svg`](earth-myriahedral-44-24.75.svg) | [`ocean-myriahedral-44-24.75.svg`](ocean-myriahedral-44-24.75.svg) |
+| Star-X | [`geometry-star-x-34-44.svg`](geometry-star-x-34-44.svg) | [`graticules-star-x-34-44.svg`](graticules-star-x-34-44.svg) | [`earth-star-x-34-44.svg`](earth-star-x-34-44.svg) | [`ocean-star-x-34-44.svg`](ocean-star-x-34-44.svg) |
+| Voronoi | [`geometry-voronoi-44-22.916667.svg`](geometry-voronoi-44-22.916667.svg) | [`graticules-voronoi-44-22.916667.svg`](graticules-voronoi-44-22.916667.svg) | [`earth-voronoi-44-22.916667.svg`](earth-voronoi-44-22.916667.svg) | [`ocean-voronoi-44-22.916667.svg`](ocean-voronoi-44-22.916667.svg) |
+
+The [SVG generation pipeline](docs/generation.md) explains the generator
+sources and Make targets, Natural Earth acquisition, seam handling, sampling,
+polygon clipping, projected-path folding, layer construction, self-checks,
+and perceptual tradeoffs.
+
 Generate the layered 44×22 Cahill-Keyes face geometry with the real Alpha60
 and Izzi headers from the neighboring repositories:
 
@@ -319,18 +356,21 @@ native source-canvas dimensions but does not prescribe a raster.
 | [`tests/test-cahill-keyes-projection.cc`](tests/test-cahill-keyes-projection.cc) | Cahill-Keyes mathematical reference, scaling, and domain tests |
 | [`tests/test-cahill-keyes-projection-api.cc`](tests/test-cahill-keyes-projection-api.cc) | Cahill-Keyes public API, frame, raster, and integration-anchor tests |
 | [`tests/test-cahill-keyes-path-functions.cc`](tests/test-cahill-keyes-path-functions.cc) | Cahill-Keyes path seam, scaling, offset, state, and validation tests |
+| [`docs/generation.md`](docs/generation.md) | End-to-end SVG generation, seam and folding techniques, data preparation, structural checks, and perceptual considerations |
 | [`src/cart0freak0-star-x.h`](src/cart0freak0-star-x.h) | Direct Star-X group assembly, frame validation, public API, and factory |
 | [`tests/test-star-x-projection-api.cc`](tests/test-star-x-projection-api.cc) | Star-X anchors, rigid assembly, global domain, polar placement, variable-frame, validation, and API tests |
 | [`docs/star-x-context.md`](docs/star-x-context.md) | Star-X octahedral context, face-slot mapping, group rotation, quadrants, polar locus, and cuts |
 | [`docs/star-x-implementation-notes.md`](docs/star-x-implementation-notes.md) | Star-X formulas, scaling proof, API, safeguards, verification, and provenance |
 | [`docs/star-x-bibliography.md`](docs/star-x-bibliography.md) | Star-X arrangement, Cahill-Keyes geometry, historical, asset, and test sources |
-| [`tests/generate-geometry.cc`](tests/generate-geometry.cc) | Izzi SVG generator and structural test for the 8 faces, 4 map quadrants, 8 octants, and 16 half-octants |
+| [`tests/projection-generation-common.h`](tests/projection-generation-common.h) | Exact 44-unit frame configurations, projection dispatch, native-cell lookup, cut bisection, and shared seam-safe path projection |
+| [`tests/projection-area-generation.h`](tests/projection-area-generation.h) | Face-local Myriahedral and Voronoi area transforms plus exact planar-triangle clipping for filled paths |
+| [`tests/generate-geometry.cc`](tests/generate-geometry.cc) | Izzi SVG generator and structural test for native AuthaGraph, Cahill-Keyes/Star-X, Myriahedral, and Voronoi faces plus four map quadrants |
 | [`geometry-ck-44-22.svg`](geometry-ck-44-22.svg) | Generated layered Cahill-Keyes face geometry in a 44×22 frame |
-| [`tests/generate-graticules-ck.cc`](tests/generate-graticules-ck.cc) | Izzi SVG generator and structural test for grouped, degree-labeled 10° Cahill-Keyes latitude and longitude lines |
+| [`tests/generate-graticules.cc`](tests/generate-graticules.cc) | Izzi SVG generator and structural test for grouped, degree-labeled, discontinuity-split 10° latitude and longitude lines |
 | [`graticules-ck-44-22.svg`](graticules-ck-44-22.svg) | Generated 44×22 Cahill-Keyes graticule with 17 latitude groups and 36 longitude groups |
-| [`tests/generate-earth-ck.cc`](tests/generate-earth-ck.cc) | GDAL/Izzi SVG generator and structural test for seam-clipped Natural Earth 1:10m physical-vector layers |
+| [`tests/generate-earth.cc`](tests/generate-earth.cc) | GDAL/Izzi SVG generator and structural test for clipped and native-cut-split Natural Earth 1:10m physical-vector layers |
 | [`earth-ck-44-22.svg`](earth-ck-44-22.svg) | Generated layered 44×22 Cahill-Keyes physical map |
-| [`tests/generate-ocean-ck.cc`](tests/generate-ocean-ck.cc) | GDAL/Izzi generator and structural test for the seam-clipped Natural Earth ocean and 153 source-indexed Hamonshū vector-pattern layers |
+| [`tests/generate-ocean.cc`](tests/generate-ocean.cc) | GDAL/Izzi generator and structural test for the seam-safe Natural Earth ocean and 153 source-indexed Hamonshū vector-pattern layers |
 | [`tests/hamonshu-v2-patterns.inc`](tests/hamonshu-v2-patterns.inc) | Complete illustrated-page, motif-number, and descriptive-name catalogue for *Hamonshū*, volume 2 |
 | [`ocean-ck-44-22.svg`](ocean-ck-44-22.svg) | Generated 44×22 Cahill-Keyes ocean with independently selectable wave-pattern layers |
 | [`docs/hamonshu-wave-patterns.md`](docs/hamonshu-wave-patterns.md) | PDF page mapping, motif naming, vector interpretation, ocean-clipping method, and source provenance |

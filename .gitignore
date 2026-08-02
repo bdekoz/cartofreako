@@ -9,4 +9,7 @@
 /tests/generate-graticules-ck
 /tests/generate-earth-ck
 /tests/generate-ocean-ck
+/tests/generate-graticules
+/tests/generate-earth
+/tests/generate-ocean
 /assets/natural-earth/10m-physical-vectors/
