@@ -20,6 +20,11 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 // General Public License for more details.
 
+/**
+ * @file cart0freak0-star-x.h
+ * @brief Star-X arrangement of the native Cahill-Keyes octants.
+ */
+
 #ifndef cart0freak0_STAR_X_H
 #define cart0freak0_STAR_X_H 1
 
@@ -53,16 +58,25 @@ inline constexpr double star_x_width_to_height_ratio = 17.0 / 22.0;
    2.25 units and the lower group up 2.25 units.
 */
 inline constexpr double star_x_default_group_shift_ratio = 2.25 / 44.0;
+/// Default signed gap between group carriers as a fraction of frame height.
 inline constexpr double star_x_default_group_gap_ratio
   = -2 * star_x_default_group_shift_ratio;
+/// Smallest supported group gap ratio, representing 50-percent overlap.
 inline constexpr double star_x_minimum_group_gap_ratio = -0.5;
+/// Largest supported group gap ratio, with the carriers edge-to-edge.
 inline constexpr double star_x_maximum_group_gap_ratio = 0;
 
+/// Configurable placement of the two four-face Star-X groups.
 struct star_x_layout
 {
+  /// Signed group separation as a fraction of the complete frame height.
   double group_gap_ratio = star_x_default_group_gap_ratio;
 };
 
+/// Validate a Star-X layout configuration.
+/// @param value Layout to validate and return.
+/// @return The validated layout.
+/// @throws std::invalid_argument if the gap ratio is non-finite or unsupported.
 inline star_x_layout
 validate_star_x_layout(const star_x_layout value)
 {
@@ -77,6 +91,8 @@ validate_star_x_layout(const star_x_layout value)
 /// True when a frame has finite, positive dimensions in the required
 /// 17:22 Star-X aspect ratio. The tolerance admits floating-point
 /// roundoff, not approximate aspect ratios.
+/// @param candidate Frame to validate.
+/// @return `true` when the dimensions are finite, positive, and ratio-correct.
 inline bool
 is_star_x_frame(const frame& candidate)
 {
@@ -94,6 +110,10 @@ is_star_x_frame(const frame& candidate)
   return std::abs(width - expected_width) <= tolerance;
 }
 
+/// Validate generic projection state for use by Star-X.
+/// @param value Projection state to validate and return.
+/// @return The validated projection state.
+/// @throws std::invalid_argument if its frame does not have a 17:22 ratio.
 inline projection_base
 validate_star_x_projection_base(projection_base value)
 {
@@ -104,24 +124,28 @@ validate_star_x_projection_base(projection_base value)
   return value;
 }
 
+/// Internal Cahill-Keyes-to-Star-X assembly helpers.
 namespace star_x_detail {
 
+/// Point in a normalized two-dimensional carrier.
 struct point_2d
 {
-  double x;
-  double y;
+  double x; ///< Horizontal coordinate.
+  double y; ///< Vertical coordinate.
 };
 
+/// Four-face carrier group selected by a native Cahill-Keyes point.
 enum class face_group
 {
-  one,
-  two
+  one, ///< Lower group assembled from the negative-x native half.
+  two ///< Upper, rotated group assembled from the non-negative-x half.
 };
 
+/// Normalized Star-X point paired with its selected face group.
 struct assembled_point
 {
-  point_2d point;
-  face_group group;
+  point_2d point; ///< Point in the complete normalized Star-X carrier.
+  face_group group; ///< Four-face group containing the point.
 };
 
 /**
@@ -133,6 +157,11 @@ struct assembled_point
    below the frame midpoint. Group two is rotated 180 degrees and placed
    above it. A signed carrier gap separates or overlaps the two groups;
    results are normalized to the full 17:22 frame.
+
+   @param cahill_keyes_x Native centered Cahill-Keyes x coordinate.
+   @param cahill_keyes_y Native centered Cahill-Keyes y coordinate.
+   @param layout Valid group-placement configuration.
+   @return Normalized Star-X point and its selected face group.
 */
 inline assembled_point
 assemble_native_point(const double cahill_keyes_x,
@@ -155,6 +184,11 @@ assemble_native_point(const double cahill_keyes_x,
           second_group ? face_group::two : face_group::one};
 }
 
+/// Project a geographic coordinate into the normalized Star-X carrier.
+/// @param latitude Geographic latitude in degrees.
+/// @param longitude Geographic longitude in degrees.
+/// @param layout Valid group-placement configuration.
+/// @return Normalized point and selected four-face group.
 inline assembled_point
 project_to_normalized_map(const double latitude, const double longitude,
                           const star_x_layout layout = {})
@@ -172,6 +206,10 @@ project_to_normalized_map(const double latitude, const double longitude,
 
 /// Construct generic projection state from a variable-size 17:22 frame.
 /// Only frame_area is retained; map placement remains cartography's job.
+/// @param map_frame Ratio-correct output frame.
+/// @param raster_name Optional registered raster filename.
+/// @param variable_layout Group placement to validate and retain.
+/// @return Validated generic projection state with its origin initialized.
 inline projection_base
 make_star_x_projection_base(const frame& map_frame, string raster_name,
                             const star_x_layout variable_layout = {})
@@ -198,9 +236,12 @@ make_star_x_projection_base(const frame& map_frame, string raster_name,
 struct starxproj : public projection_base, public projection_api
 {
 private:
-  star_x_layout layout_;
+  star_x_layout layout_; ///< Validated group placement used by the transform.
 
 public:
+  /// Construct from generic projection state and a layout.
+  /// @param value Generic projection state with a ratio-correct frame.
+  /// @param variable_layout Group placement configuration.
   explicit starxproj(const projection_base value,
                      const star_x_layout variable_layout = {})
   : projection_base(validate_star_x_projection_base(value)),
@@ -214,6 +255,9 @@ public:
 
   /// Make a projection for any valid 17:22 frame. Frame placement offsets
   /// are deliberately discarded; the projection owns only frame_area.
+  /// @param variable_frame Ratio-correct output frame.
+  /// @param raster_name Optional registered raster filename.
+  /// @param variable_layout Group placement configuration.
   explicit starxproj(const frame& variable_frame, string raster_name = {},
                      const star_x_layout variable_layout = {})
   : starxproj(make_star_x_projection_base(variable_frame,
@@ -222,19 +266,32 @@ public:
               variable_layout)
   { }
 
-  starxproj(const starxproj&) = default;
+  /// Copy a Star-X projection.
+  /// @param other Projection to copy.
+  starxproj(const starxproj& other) = default;
 
+  /// Return the configured signed carrier gap.
+  /// @return Gap as a fraction of complete frame height.
   double
   group_gap_ratio() const noexcept
   { return layout_.group_gap_ratio; }
 
+  /// Resolve the registered raster against the runtime data directory.
+  /// @param mode Raster variant requested by the common API; unused here.
+  /// @return Full runtime-resource path to the registered raster.
   string
-  image_filename(const raster_mode) const override
+  image_filename([[maybe_unused]] const raster_mode mode) const override
   {
     auto& resources = io::get_run_time_resources();
     return io::end_path(resources.data) + name;
   }
 
+  /// Project a geographic coordinate into the configured Star-X frame.
+  /// @param latitude Latitude in degrees, in `[-90, 90]`.
+  /// @param longitude Longitude in degrees, in `[-180, 180]`.
+  /// @return Output-frame coordinate in screen-axis orientation.
+  /// @throws std::invalid_argument if either coordinate is non-finite or out
+  /// of range.
   a60::point_2t
   meridians_to_point_2d(const double latitude,
                         const double longitude) const override
@@ -256,6 +313,11 @@ public:
   }
 };
 
+/// Construct a variable-size Star-X projection.
+/// @param map_frame Ratio-correct output frame.
+/// @param raster_name Optional registered raster filename.
+/// @param layout Group placement configuration.
+/// @return Configured Star-X projection.
 inline starxproj
 make_star_x_projection(const frame& map_frame, string raster_name = {},
                        const star_x_layout layout = {})

@@ -21,6 +21,11 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 // General Public License for more details.
 
+/**
+ * @file cart0freak0-cahill-keyes.h
+ * @brief Native scalable Cahill-Keyes forward projection and raster presets.
+ */
+
 #ifndef cart0freak0_CK_H
 #define cart0freak0_CK_H 1
 
@@ -32,72 +37,88 @@
 #include <stdexcept>
 #include <utility>
 
+/// Native scalable implementation of the Cahill-Keyes construction.
 namespace a60::carto::ck_native {
 
 /// Native forward Cahill-Keyes projection in scalable Megamap units.
 class forward_projection
 {
+  /// Two-dimensional point in the native Megamap scaffold.
   struct xy
   {
-    double x = 0;
-    double y = 0;
+    double x = 0; ///< Horizontal Megamap coordinate.
+    double y = 0; ///< Vertical Megamap coordinate.
   };
 
+  /// Result of intersecting a finite line segment with a circle.
   struct circle_intersection
   {
-    bool intersects = false;
-    xy point;
+    bool intersects = false; ///< Whether a segment intersection exists.
+    xy point; ///< First usable intersection point on the segment.
   };
 
+  /// Point and signed distance associated with the 73-degree parallel.
   struct parallel_73_result
   {
-    xy point;
-    double length = 0;
+    xy point; ///< Constructed 73-degree point.
+    double length = 0; ///< Signed distance from the flex joint.
   };
 
+  /// Canonical half-octant coordinates and assembly metadata.
   struct meridian
   {
-    double value = 0;
-    double parallel = 0;
-    double sign = 1;
-    int octant = 1;
+    double value = 0; ///< Meridian magnitude within a half-octant, in degrees.
+    double parallel = 0; ///< Absolute latitude, in degrees.
+    double sign = 1; ///< Sign used to reflect across the half-octant axis.
+    int octant = 1; ///< One-based target octant in the complete M-layout.
   };
 
-  static constexpr double pi = std::numbers::pi_v<double>;
-  static constexpr double radians = pi / 180.0;
+  static constexpr double pi = std::numbers::pi_v<double>; ///< Pi in radians.
+  static constexpr double radians = pi / 180.0; ///< Radians per degree.
 
-  double length_mg;
-  double scale;
-  double length_ma;
-  double latitude_degree_100;
-  double latitude_degree_104;
-  double sin_60 = std::sqrt(3.0) / 2.0;
-  double cos_60 = 0.5;
-  double y_translate;
+  double length_mg; ///< Selected scaffold altitude and primary length unit.
+  double scale; ///< Scale relative to the original 10,000-unit construction.
+  double length_ma; ///< Scaled distance from control point M to A.
+  double latitude_degree_100; ///< Scaled 100-unit latitude increment.
+  double latitude_degree_104; ///< Scaled 104-unit polar latitude increment.
+  double sin_60 = std::sqrt(3.0) / 2.0; ///< Sine of 60 degrees.
+  double cos_60 = 0.5; ///< Cosine of 60 degrees.
+  double y_translate; ///< Vertical translation into the complete M-layout.
 
-  xy point_m {0, 0};
-  xy point_g;
-  xy point_a;
-  xy point_b;
-  xy point_c;
-  xy point_d;
-  xy point_e;
-  xy point_f;
-  xy point_t;
+  xy point_m {0, 0}; ///< Native scaffold control point M.
+  xy point_g; ///< Native scaffold control point G.
+  xy point_a; ///< Native scaffold control point A.
+  xy point_b; ///< Derived control point B.
+  xy point_c; ///< Center of the 15-degree circular construction.
+  xy point_d; ///< Derived control point D.
+  xy point_e; ///< Derived equatorial control point E.
+  xy point_f; ///< Derived equatorial control point F.
+  xy point_t; ///< Derived 73-degree control point T.
 
-  double length_ab = 0;
-  double length_gf = 0;
-  double delta_m_equator = 0;
-  double length_ap_73 = 0;
-  double length_ap_75 = 0;
-  double radius = 0;
+  double length_ab = 0; ///< Distance between control points A and B.
+  double length_gf = 0; ///< Distance between control points G and F.
+  double delta_m_equator = 0; ///< Equatorial distance per meridian degree.
+  double length_ap_73 = 0; ///< Radial distance from A to parallel 73.
+  double length_ap_75 = 0; ///< Radial distance from A to parallel 75.
+  double radius = 0; ///< Radius of the 15-degree circular construction.
 
+  /// Compute Euclidean distance between native points.
+  /// @param a First point.
+  /// @param b Second point.
+  /// @return Distance between the points.
   static double
   distance(const xy a, const xy b)
   {
     return std::hypot(a.x - b.x, a.y - b.y);
   }
 
+  /// Interpolate along a finite native line segment by physical distance.
+  /// @param length Distance from `start` along the segment.
+  /// @param total Total segment length.
+  /// @param start Segment start point.
+  /// @param end Segment end point.
+  /// @return Interpolated point.
+  /// @throws std::domain_error if `total` is zero.
   static xy
   interpolate(const double length, const double total, const xy start,
               const xy end)
@@ -110,6 +131,12 @@ class forward_projection
             start.y + (end.y - start.y) * ratio};
   }
 
+  /// Intersect two infinite lines expressed as points and degree slopes.
+  /// @param first Point on the first line.
+  /// @param first_slope First line's slope angle in degrees.
+  /// @param second Point on the second line.
+  /// @param second_slope Second line's slope angle in degrees.
+  /// @return Intersection of the two lines.
   static xy
   line_intersection(const xy first, const double first_slope,
                     const xy second, const double second_slope)
@@ -121,6 +148,12 @@ class forward_projection
     return {x, m1 * (x - first.x) + first.y};
   }
 
+  /// Intersect a circle with a finite line segment.
+  /// @param center Circle center.
+  /// @param r Circle radius.
+  /// @param first Segment start point.
+  /// @param second Segment end point.
+  /// @return First intersection whose segment parameter lies in `[0, 1]`.
   static circle_intersection
   intersect_circle_line(const xy center, const double r, const xy first,
                         const xy second)
@@ -152,6 +185,11 @@ class forward_projection
     return {};
   }
 
+  /// Rotate a native half-octant point by a supported assembly angle.
+  /// @param point Point to rotate about the origin.
+  /// @param angle Rotation in degrees; must be `-60` or `-120`.
+  /// @return Rotated point.
+  /// @throws std::invalid_argument for any unsupported angle.
   xy
   rotate(const xy point, const int angle) const
   {
@@ -164,6 +202,9 @@ class forward_projection
     throw std::invalid_argument("unsupported Cahill-Keyes octant rotation");
   }
 
+  /// Locate the equatorial point for a canonical meridian.
+  /// @param m Meridian magnitude in degrees within the half-octant.
+  /// @return Point on the piecewise G-F-E equatorial path.
   xy
   equator(const double m) const
   {
@@ -174,12 +215,18 @@ class forward_projection
     return interpolate(length, length_ab, point_f, point_e);
   }
 
+  /// Construct the torrid/middle-zone junction for a meridian.
+  /// @param m Meridian magnitude in degrees.
+  /// @return Junction point T for the requested meridian.
   xy
   joint_t(const double m) const
   {
     return line_intersection(point_m, 2 * m / 3, equator(m), m / 3);
   }
 
+  /// Construct the middle/frigid-zone junction for a meridian.
+  /// @param m Meridian magnitude in degrees.
+  /// @return Junction point F for the requested meridian.
   xy
   joint_f(const double m) const
   {
@@ -188,14 +235,23 @@ class forward_projection
     return line_intersection(point_a, m, point_m, 2 * m / 3);
   }
 
+  /// Measure the torrid segment of a constructed meridian.
+  /// @param m Meridian magnitude in degrees.
+  /// @return Distance from the equator to the T junction.
   double
   torrid_length(const double m) const
   { return distance(equator(m), joint_t(m)); }
 
+  /// Measure the middle segment of a constructed meridian.
+  /// @param m Meridian magnitude in degrees.
+  /// @return Distance from the T junction to the F junction.
   double
   middle_length(const double m) const
   { return distance(joint_t(m), joint_f(m)); }
 
+  /// Construct the 73-degree parallel and its signed frigid-zone length.
+  /// @param m Meridian magnitude in degrees.
+  /// @return Parallel point and signed distance from the F junction.
   parallel_73_result
   parallel_73(const double m) const
   {
@@ -225,6 +281,9 @@ class forward_projection
     return {p73, length};
   }
 
+  /// Construct the circular 75-degree parallel for a meridian.
+  /// @param m Meridian magnitude in degrees.
+  /// @return Point on the 75-degree parallel.
   xy
   parallel_75(const double m) const
   {
@@ -232,6 +291,11 @@ class forward_projection
             point_a.y + length_ap_75 * std::sin(m * radians)};
   }
 
+  /// Reduce geographic coordinates to canonical half-octant coordinates.
+  /// @param longitude Registered longitude in degrees.
+  /// @param latitude Geographic latitude in degrees.
+  /// @return Meridian magnitude, absolute parallel, reflection sign, and
+  /// target octant.
   meridian
   longitude_latitude_to_meridian(const double longitude,
                                  const double latitude) const
@@ -252,6 +316,10 @@ class forward_projection
     return {m, std::abs(latitude), sign, octant};
   }
 
+  /// Evaluate special transition zone H near the 73-75 degree parallels.
+  /// @param m Meridian magnitude in degrees.
+  /// @param p Absolute parallel in degrees.
+  /// @return Native half-octant point.
   xy
   zone_h(const double m, const double p) const
   {
@@ -266,6 +334,10 @@ class forward_projection
     return interpolate(length, lf, point_b, p73);
   }
 
+  /// Evaluate zone I along the complete piecewise meridian.
+  /// @param m Meridian magnitude in degrees.
+  /// @param p Absolute parallel in degrees.
+  /// @return Native half-octant point.
   xy
   zone_i(const double m, const double p) const
   {
@@ -280,6 +352,10 @@ class forward_projection
     return interpolate(length - lt - lm, p73.length, joint_f(m), p73.point);
   }
 
+  /// Evaluate transition zone J between parallels 73 and 75.
+  /// @param m Meridian magnitude in degrees.
+  /// @param p Absolute parallel in degrees.
+  /// @return Native half-octant point.
   xy
   zone_j(const double m, const double p) const
   {
@@ -293,6 +369,11 @@ class forward_projection
     return interpolate(length, -p73.length, joint_f(m), p73.point);
   }
 
+  /// Evaluate low-latitude zone K relative to the 15-degree construction.
+  /// @param m Meridian magnitude in degrees.
+  /// @param p Absolute parallel in degrees, at most 15.
+  /// @param length_15 Distance along the meridian at parallel 15.
+  /// @return Native half-octant point.
   xy
   zone_k(const double m, const double p, const double length_15) const
   {
@@ -303,6 +384,11 @@ class forward_projection
     return interpolate(length - lt, middle_length(m), joint_t(m), joint_f(m));
   }
 
+  /// Evaluate zone L between the 15- and 73-degree constructions.
+  /// @param m Meridian magnitude in degrees.
+  /// @param p Absolute parallel in degrees.
+  /// @param length_15 Distance along the meridian at parallel 15.
+  /// @return Native half-octant point.
   xy
   zone_l(const double m, const double p, const double length_15) const
   {
@@ -318,6 +404,10 @@ class forward_projection
     return interpolate(length - lt - lm, p73.length, joint_f(m), p73.point);
   }
 
+  /// Evaluate a canonical meridian/parallel intersection.
+  /// @param m Meridian magnitude in degrees within a half-octant.
+  /// @param p Absolute parallel in degrees.
+  /// @return Native point before octant assembly.
   xy
   meridian_parallel_to_xy(const double m, const double p) const
   {
@@ -377,6 +467,11 @@ class forward_projection
                    : zone_l(m, p, length_15);
   }
 
+  /// Rotate, reflect, and translate a half-octant point into the M-layout.
+  /// @param point Canonical half-octant point.
+  /// @param octant One-based target octant in `[1, 8]`.
+  /// @return Point in the complete centered Megamap layout.
+  /// @throws std::domain_error if `octant` is outside `[1, 8]`.
   xy
   half_octant_to_megamap(xy point, const int octant) const
   {
@@ -426,6 +521,7 @@ class forward_projection
     return result;
   }
 
+  /// Derive all scale-dependent control points and segment lengths.
   void
   calculate_preliminaries()
   {
@@ -462,6 +558,9 @@ class forward_projection
   }
 
 public:
+  /// Construct the native projection at a requested scaffold scale.
+  /// @param scaffold_altitude Positive M-G scaffold altitude in output units.
+  /// @throws std::invalid_argument if the altitude is non-finite or non-positive.
   explicit
   forward_projection(const double scaffold_altitude)
   : length_mg(scaffold_altitude),
@@ -481,7 +580,12 @@ public:
     calculate_preliminaries();
   }
 
-  /// Convert (longitude, latitude) in degrees to Megamap (x, y).
+  /// Convert `(longitude, latitude)` in degrees to centered Megamap `(x, y)`.
+  /// @param longitude Registered longitude in degrees, in `[-180, 180]`.
+  /// @param latitude Latitude in degrees, in `[-90, 90]`.
+  /// @return Centered native Megamap coordinate.
+  /// @throws std::invalid_argument if either input is non-finite or out of
+  /// range.
   std::pair<double, double>
   operator()(const double longitude, const double latitude) const
   {
@@ -506,6 +610,8 @@ namespace a60::carto {
 
 /// Apply the one-degree longitude registration shared by the project’s
 /// Cahill-Keyes raster family and rearrangements of that registered net.
+/// @param longitude Geographic longitude in degrees.
+/// @return Registered longitude in `(-180, 180]`.
 inline double
 cahill_keyes_registered_longitude(const double longitude)
 {
@@ -515,11 +621,14 @@ cahill_keyes_registered_longitude(const double longitude)
   return adjusted;
 }
 
+/// Required width-to-height ratio of the complete Cahill-Keyes M-layout.
 inline constexpr double cahill_keyes_width_to_height_ratio = 2.0;
 
 /// True when a frame has finite, positive dimensions in the required 2:1
 /// Cahill-Keyes aspect ratio. The tolerance admits floating-point roundoff,
 /// not approximate aspect ratios.
+/// @param candidate Frame to validate.
+/// @return `true` when the dimensions are finite, positive, and ratio-correct.
 inline bool
 is_cahill_keyes_frame(const frame& candidate)
 {
@@ -535,6 +644,10 @@ is_cahill_keyes_frame(const frame& candidate)
   return std::abs(width - expected_width) <= tolerance;
 }
 
+/// Validate generic projection state for use by Cahill-Keyes.
+/// @param value Projection state to validate and return.
+/// @return The validated projection state.
+/// @throws std::invalid_argument if its frame does not have a 2:1 ratio.
 inline projection_base
 validate_cahill_keyes_projection_base(projection_base value)
 {
@@ -547,6 +660,9 @@ validate_cahill_keyes_projection_base(projection_base value)
 
 /// Construct generic projection state from a variable-size map frame.
 /// The projection origin is the center of frame.frame_area.
+/// @param map_frame Valid 2:1 output frame.
+/// @param raster_name Optional registered raster filename.
+/// @return Validated generic projection state centered in the frame.
 inline projection_base
 make_cahill_keyes_projection_base(const frame& map_frame, string raster_name)
 {
@@ -565,23 +681,33 @@ make_cahill_keyes_projection_base(const frame& map_frame, string raster_name)
 */
 struct ckproj : public projection_base, public projection_api
 {
+  /// Scale-specific native forward transform.
   ck_native::forward_projection forward;
 
-  ckproj(const projection_base d)
-  : projection_base(validate_cahill_keyes_projection_base(d)),
+  /// Construct from generic projection state.
+  /// @param value State with a valid 2:1 frame.
+  ckproj(const projection_base value)
+  : projection_base(validate_cahill_keyes_projection_base(value)),
     forward(pframe.height() / 2)
   { }
 
   /// Make a projection for any valid 2:1 map frame. The raster name is kept
   /// separate from size so one projection implementation fits every scale.
+  /// @param map_frame Ratio-correct output frame.
+  /// @param raster_name Optional registered raster filename.
   explicit
   ckproj(const frame& map_frame, string raster_name = {})
   : ckproj(make_cahill_keyes_projection_base(map_frame,
                                               std::move(raster_name)))
   { }
 
-  ckproj(const ckproj&) = default;
+  /// Copy a Cahill-Keyes projection.
+  /// @param other Projection to copy.
+  ckproj(const ckproj& other) = default;
 
+  /// Resolve a requested raster variant against the runtime data directory.
+  /// @param v Raster mode whose suffix is appended to the registered name.
+  /// @return Full PNG path for the requested raster variant.
   string
   image_filename(const raster_mode v) const
   {
@@ -604,6 +730,11 @@ struct ckproj : public projection_base, public projection_api
   /// Native C++20 forward projection. The one-degree longitude adjustment
   /// preserves registration with the existing visionscarto raster; the Perl
   /// octant formula itself uses its documented -20/70/160 degree boundaries.
+  /// @param lt Latitude in degrees, in `[-90, 90]`.
+  /// @param lng Longitude in degrees, in `[-180, 180]`.
+  /// @return Output-frame coordinate in screen-axis orientation.
+  /// @throws std::invalid_argument if either coordinate is non-finite or out
+  /// of range.
   a60::point_2t
   meridians_to_point_2d(const double lt, const double lng) const
   {
@@ -614,6 +745,10 @@ struct ckproj : public projection_base, public projection_api
   }
 };
 
+/// Construct a variable-size Cahill-Keyes projection.
+/// @param map_frame Ratio-correct output frame.
+/// @param raster_name Optional registered raster filename.
+/// @return Configured Cahill-Keyes projection.
 inline ckproj
 make_cahill_keyes_projection(const frame& map_frame,
                              string raster_name = {})
@@ -643,84 +778,87 @@ make_cahill_keyes_projection(const frame& map_frame,
    the octant grid where 2y = height.
 */
 
-/// 1080P
-const ckproj ck_1x1080(
-  pck_1x1080, "visionscarto-cahillkeyes-1080p-1x.096");
+/// Single-scale 1080p Cahill-Keyes raster preset.
+const ckproj ck_1x1080{
+  pck_1x1080, "visionscarto-cahillkeyes-1080p-1x.096"};
 
-const ckproj ck_2x1080(
-  pck_2x1080, "visionscarto-cahillkeyes-1080p-2x.096");
+/// Double-scale 1080p Cahill-Keyes raster preset.
+const ckproj ck_2x1080{
+  pck_2x1080, "visionscarto-cahillkeyes-1080p-2x.096"};
 
 
 /// ENGC
 
-/// 1x
-/// 22 x 17 map (landscape)
-const ckproj ck_1xengc(
-  frame {2112, 1056}, "visionscarto-cahillkeyes-engc-1x.096");
+/// Single-scale 22-by-17-inch Engineering C landscape preset.
+const ckproj ck_1xengc{
+  frame {2112, 1056}, "visionscarto-cahillkeyes-engc-1x.096"};
 
-/// 2x
-/// 2 x Engineering C (landscape)
-/// 44 x 17 map (landscape)
-const ckproj ck_2xengc(
-  frame {4224, 2112}, "visionscarto-cahillkeyes-engc-2x-v3.300");
+/// Double-scale 44-by-17-inch Engineering C landscape preset.
+const ckproj ck_2xengc{
+  frame {4224, 2112}, "visionscarto-cahillkeyes-engc-2x-v3.300"};
 
-/// 2.66x
-/// 44 x 34 map (landscape)
-const ckproj ck_4xengc(
-  frame {8448, 4224}, "visionscarto-cahillkeyes-engc-4x.096");
+/// Four-sheet 44-by-34-inch Engineering C landscape preset.
+const ckproj ck_4xengc{
+  frame {8448, 4224}, "visionscarto-cahillkeyes-engc-4x.096"};
 
-/// 2.5x
-/// 4 x Engineering C (portrait)
-/// (17 x 22) x 4 slices == (portrait) 68 x 22
-const ckproj ck96_2bisx(
-  frame {5280, 2640}, "visionscarto-cahillkeyes-engc-2.5x.096");
-const ckproj ck300_2bisx(
-  frame {16500, 8250}, "visionscarto-cahillkeyes-engc-2.5x.300");
+/// 96-DPI four-slice Engineering C portrait preset.
+const ckproj ck96_2bisx{
+  frame {5280, 2640}, "visionscarto-cahillkeyes-engc-2.5x.096"};
+/// 300-DPI four-slice Engineering C portrait preset.
+const ckproj ck300_2bisx{
+  frame {16500, 8250}, "visionscarto-cahillkeyes-engc-2.5x.300"};
 
-/// 7.3x aka "star x"
-/// 4 x Engineering C (portrait)
-/// (17 x 22) x 2 slices (invert and mirror) top		-> 34 x 22
-/// (17 x 22) x 2 slices bottom					-> 34 x 22
-/// Tiled to project over North Pole				-> 34 x 44
-/// Felix Gonzalez-Torres "Untitled", 1992/1993, poster SFMOMA  -> 29 x 44
-const ckproj ck96_starx_engc(
-  pck_7x, "visionscarto-cahillkeyes-engc-7.3x-starx.096");
-const ckproj ck300_starx_engc(
-  pck_7x, "visionscarto-cahillkeyes-engc-7.3x-starx.300");
+/// 96-DPI legacy four-sheet Star-X raster preset.
+const ckproj ck96_starx_engc{
+  pck_7x, "visionscarto-cahillkeyes-engc-7.3x-starx.096"};
+/// 300-DPI legacy four-sheet Star-X raster preset.
+const ckproj ck300_starx_engc{
+  pck_7x, "visionscarto-cahillkeyes-engc-7.3x-starx.300"};
 
-/// 3x aka "star x"
-/// 4 x A5 (portrait)
-const ckproj ck96_starx_a5(
-  pck_3x, "visionscarto-cahillkeyes-a5-3x-starx");
+/// Legacy four-sheet A5 Star-X raster preset.
+const ckproj ck96_starx_a5{
+  pck_3x, "visionscarto-cahillkeyes-a5-3x-starx"};
 
-/// 44x22
-const ckproj ck_44x22(
-  f44x22h, "visionscarto-cahillkeyes-44x22.300");
+/// 44-by-22-inch Cahill-Keyes raster preset.
+const ckproj ck_44x22{
+  f44x22h, "visionscarto-cahillkeyes-44x22.300"};
 
 
+/// Horizontal tile offsets for the double-scale Engineering C preset.
 const vd tiles_ck_2xengc_h = { 0, -2112 };
+/// Vertical tile offsets for the double-scale Engineering C preset.
 const vd tiles_ck_2xengc_v = { -240 };
 
+/// Horizontal tile offsets for the double-scale 1080p preset.
 const vd tiles_ck_2x1080p_h = { 0, -1920 };
+/// Vertical tile offsets for the double-scale 1080p preset.
 const vd tiles_ck_2x1080p_v = { -280 };
 
-// NB: Formula is xoff, xoff - (n * 1320) where n >= 1
+/// Horizontal four-slice offsets; `xoff - n * 1320` for `n >= 1`.
 const vd tiles_ck_2bisx_h = { 156, -1164, -2484, -3804 };
+/// Primary vertical tile offset for the four-slice preset.
 const vd tiles_ck_2bisx_v = { -265 };
+/// Alternate vertical tile offsets for the four-slice preset.
 const vd tiles_ck_2bisx_v2 = { -126, -886 };
 
+/// Horizontal tile offsets for the four-sheet Engineering C preset.
 const vd tiles_ck_4x_h = { -6208, -1754, -4570 };
+/// Vertical tile offsets for the four-sheet Engineering C preset.
 const vd tiles_ck_4x_v = { 19 };
 
+/// Horizontal tile offsets for the 44-by-22 four-sheet preset.
 const vd tiles_ck_4x44x22_h = { 0, -1056, -2112, -3168 };
+/// Vertical tile offsets for the 44-by-22 four-sheet preset.
 const vd tiles_ck_4x44x22_v = { 19 };
 
-// 378, -1254, -2098, -3728
+/// Horizontal tile offsets for the Engineering C Star-X raster.
 const vd tiles_ck_starx_engc_h = { 378, -1254, -2098, -3728 };
+/// Vertical tile offsets for the Engineering C Star-X raster.
 const vd tiles_ck_starx_engc_v = { -190 };
 
-// 378, -1254, -2098, -3728
+/// Horizontal tile offsets for the A5 Star-X raster.
 const vd tiles_ck_starx_a5_h = { 57, -503, -939, -1500 };
+/// Vertical tile offsets for the A5 Star-X raster.
 const vd tiles_ck_starx_a5_v = { -104 };
 
 } // namespace carto

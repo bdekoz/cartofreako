@@ -17,6 +17,11 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 // General Public License for more details.
 
+/**
+ * @file cart0freak0-cahill-keyes-functions.h
+ * @brief Seam-aware projected-path splitting for Cahill-Keyes layouts.
+ */
+
 #ifndef cart0freak0_CK_FUNCTIONS_H
 #define cart0freak0_CK_FUNCTIONS_H 1
 
@@ -31,14 +36,19 @@
 
 namespace a60::carto {
 
+/// Internal edge-intersection helpers for Cahill-Keyes path folding.
 namespace cahill_keyes_path_detail {
 
+/// Paired points on opposite sides of a wrapped frame edge.
 struct edge_transition
 {
-  point_2t exit;
-  point_2t entry;
+  point_2t exit; ///< Point where the current segment leaves the frame.
+  point_2t entry; ///< Corresponding point where the next segment begins.
 };
 
+/// Test both coordinates of a projected point for finiteness.
+/// @param point Projected point to inspect.
+/// @return `true` when both coordinates are finite.
 inline bool
 finite_point(const point_2t& point)
 {
@@ -46,6 +56,13 @@ finite_point(const point_2t& point)
   return std::isfinite(x) && std::isfinite(y);
 }
 
+/// Find where a scalar segment intersects a frame-edge coordinate.
+/// @param start Coordinate at the start of the segment.
+/// @param end Coordinate at the end of the unwrapped segment.
+/// @param edge Coordinate of the candidate frame edge.
+/// @param scale Frame dimension used to scale numeric tolerance.
+/// @return Clamped segment parameter in `[0, 1]`, or no value when the edge
+/// is not crossed.
 inline std::optional<double>
 intersection_parameter(const double start, const double end,
                        const double edge, const double scale)
@@ -71,6 +88,11 @@ intersection_parameter(const double start, const double end,
   return std::clamp(parameter, 0.0, 1.0);
 }
 
+/// Validate the frame dimensions and placement used for path folding.
+/// @tparam Projection Projection implementation held by the cartography.
+/// @param cartog Cartography context whose projection and frame are checked.
+/// @throws std::invalid_argument if dimensions, aspect ratio, or origin are
+/// invalid.
 template<typename Projection>
 void
 validate_path_context(const cartography<Projection>& cartog)
@@ -104,6 +126,14 @@ validate_path_context(const cartography<Projection>& cartog)
    least half the projection width. Vertical wrapping is limited to opposite
    halves and a jump of at least one third of the projection height. Those are
    the historical Cahill-Keyes M-layout discontinuity tests.
+
+   @tparam Projection Projection implementation held by the cartography.
+   @param cartog Valid 2:1 cartography context.
+   @param previous First point in the adjacent pair.
+   @param current Second point in the adjacent pair.
+   @return Paired exit/entry points for the first crossed edge, or no value
+   when the pair is continuous.
+   @throws std::invalid_argument if either point is non-finite.
 */
 template<typename Projection>
 std::optional<edge_transition>
@@ -205,6 +235,11 @@ first_edge_transition(const cartography<Projection>& cartog,
   return edge_transition {{x, exit_y}, {x, entry_y}};
 }
 
+/// Remove and return the next continuous path segment.
+/// @tparam Projection Projection implementation held by the cartography.
+/// @param cartog Valid 2:1 cartography context.
+/// @param points In/out path suffix; replaced at a split or cleared at end.
+/// @return Next nonempty continuous segment, or an empty range for empty input.
 template<typename Projection>
 vrange
 extract_next_segment(const cartography<Projection>& cartog, vrange& points)
@@ -255,6 +290,11 @@ extract_next_segment(const cartography<Projection>& cartog, vrange& points)
    edges. The input is not modified. Every returned segment is nonempty and
    all original points remain in order; paired synthetic exit and entry points
    terminate and restart the path at opposite projection-frame edges.
+
+   @tparam Projection Projection implementation held by the cartography.
+   @param cartog Valid 2:1 cartography context.
+   @param points Ordered projected path; never modified.
+   @return Continuous path segments in original traversal order.
 */
 template<typename Projection>
 vvranges
@@ -276,6 +316,11 @@ fold_path_edges(const cartography<Projection>& cartog, const vrange& points)
    edge. On a split, `points` is replaced by the unprocessed suffix beginning
    at the opposite edge; otherwise `points` is cleared. Repeated calls until
    `points.empty()` produce the same segments as `fold_path_edges()`.
+
+   @tparam Projection Projection implementation held by the cartography.
+   @param cartog Valid 2:1 cartography context.
+   @param points In/out path suffix to consume.
+   @return The next continuous projected segment.
 */
 template<typename Projection>
 vrange
