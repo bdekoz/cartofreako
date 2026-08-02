@@ -6,6 +6,9 @@ ALPHA60_SRC ?= ../alpha60/src
 IZZI_SRC ?= ../izzi/src
 GDAL_CONFIG ?= gdal-config
 DOXYGEN ?= doxygen
+EMXX ?= ../emsdk/upstream/emscripten/em++
+NODE ?= node
+EM_CACHE ?= /tmp/cartofreako-emscripten-cache
 NATURAL_EARTH_DIR ?= assets/natural-earth/10m-physical-vectors
 NATURAL_EARTH_FETCHER := scripts/fetch-natural-earth-10m.sh
 NATURAL_EARTH_STAMP := \
@@ -14,6 +17,16 @@ GENERATED_DIR := generated
 DOXYGEN_CONFIG := Doxyfile
 DOXYGEN_OUTPUT_DIR := docs/doxygen
 DOXYGEN_HEADERS := $(wildcard src/cart0freak0*.h)
+WEB_DIR := web
+WEB_BUILD_DIR := build/web
+CK_WEB_SOURCE := $(WEB_DIR)/cahill-keyes-web.cc
+CK_WEB_LAND := $(WEB_DIR)/cartofreako-cahill-keyes-land-110m.geojson
+CK_WEB_SMOKE := $(WEB_DIR)/cahill-keyes-smoke.mjs
+CK_WEB_MODULE := $(WEB_BUILD_DIR)/cartofreako-cahill-keyes.mjs
+CK_WEB_WASM := $(WEB_BUILD_DIR)/cartofreako-cahill-keyes.wasm
+CK_WEB_BUILD_LAND := \
+	$(WEB_BUILD_DIR)/cartofreako-cahill-keyes-land-110m.geojson
+CK_WEB_BUILD_SMOKE := $(WEB_BUILD_DIR)/cahill-keyes-smoke.mjs
 
 GEOMETRY_GENERATOR := $(TEST_DIR)/generate-geometry
 GRATICULE_GENERATOR := $(TEST_DIR)/generate-graticules
@@ -107,6 +120,7 @@ HAMONSHU_CURVE_HEADERS := \
 .DELETE_ON_ERROR:
 
 .PHONY: all check clean doxygen fetch-natural-earth-10m make-generated \
+	wasm-cahill-keyes check-wasm-cahill-keyes \
 	generate-geometry generate-graticules-ck generate-earth-ck \
 	generate-ocean-ck generate-projections generated-projections \
 	generate-geometry-projections generate-graticules-projections \
@@ -154,6 +168,29 @@ check:
 
 doxygen: $(DOXYGEN_CONFIG) $(DOXYGEN_HEADERS)
 	$(DOXYGEN) $(DOXYGEN_CONFIG)
+
+wasm-cahill-keyes: $(CK_WEB_MODULE) $(CK_WEB_WASM) \
+	$(CK_WEB_BUILD_LAND) $(CK_WEB_BUILD_SMOKE)
+
+$(CK_WEB_MODULE) $(CK_WEB_WASM) $(CK_WEB_BUILD_LAND) \
+		$(CK_WEB_BUILD_SMOKE) &: \
+		$(CK_WEB_SOURCE) $(CK_WEB_LAND) $(CK_WEB_SMOKE) \
+		src/a60-carto-frame.h src/a60-carto-projection.h \
+		src/cart0freak0-cahill-keyes.h
+	mkdir -p "$(WEB_BUILD_DIR)"
+	EM_CACHE="$(EM_CACHE)" "$(EMXX)" "$(CK_WEB_SOURCE)" \
+		-I src -isystem "$(ALPHA60_SRC)" -isystem "$(IZZI_SRC)" \
+		-std=c++20 -O3 -Wall -Wextra -Wpedantic -Werror \
+		--bind --no-entry -fexceptions -sDISABLE_EXCEPTION_CATCHING=0 \
+		-sMODULARIZE=1 -sEXPORT_ES6=1 \
+		-sEXPORT_NAME=createCartofreakoCahillKeyesModule \
+		-sENVIRONMENT=web,node -sALLOW_MEMORY_GROWTH=1 -sFILESYSTEM=0 \
+		-o "$(CK_WEB_MODULE)"
+	cp "$(CK_WEB_LAND)" "$(WEB_BUILD_DIR)/"
+	cp "$(CK_WEB_SMOKE)" "$(WEB_BUILD_DIR)/"
+
+check-wasm-cahill-keyes: wasm-cahill-keyes
+	cd "$(WEB_BUILD_DIR)" && "$(NODE)" cahill-keyes-smoke.mjs
 
 $(GEOMETRY_GENERATOR): $(TEST_DIR)/generate-geometry.cc $(GENERATOR_HEADERS)
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
@@ -269,3 +306,4 @@ clean:
 	$(RM) $(TEST_BINARIES)
 	$(RM) -r "$(GENERATED_DIR)"
 	$(RM) -r "$(DOXYGEN_OUTPUT_DIR)"
+	$(RM) -r "$(WEB_BUILD_DIR)"
