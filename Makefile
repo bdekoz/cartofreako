@@ -17,16 +17,13 @@ GENERATED_DIR := generated
 DOXYGEN_CONFIG := Doxyfile
 DOXYGEN_OUTPUT_DIR := docs/doxygen
 DOXYGEN_HEADERS := $(wildcard src/cart0freak0*.h)
-WEB_DIR := web
-WEB_BUILD_DIR := build/web
+WEB_DIR := $(GENERATED_DIR)/wasm
+WEB_BUILD_DIR := $(WEB_DIR)
 CK_WEB_SOURCE := $(WEB_DIR)/cahill-keyes-web.cc
 CK_WEB_LAND := $(WEB_DIR)/cartofreako-cahill-keyes-land-110m.geojson
 CK_WEB_SMOKE := $(WEB_DIR)/cahill-keyes-smoke.mjs
 CK_WEB_MODULE := $(WEB_BUILD_DIR)/cartofreako-cahill-keyes.mjs
 CK_WEB_WASM := $(WEB_BUILD_DIR)/cartofreako-cahill-keyes.wasm
-CK_WEB_BUILD_LAND := \
-	$(WEB_BUILD_DIR)/cartofreako-cahill-keyes-land-110m.geojson
-CK_WEB_BUILD_SMOKE := $(WEB_BUILD_DIR)/cahill-keyes-smoke.mjs
 
 GEOMETRY_GENERATOR := $(TEST_DIR)/generate-geometry
 GRATICULE_GENERATOR := $(TEST_DIR)/generate-graticules
@@ -170,10 +167,9 @@ doxygen: $(DOXYGEN_CONFIG) $(DOXYGEN_HEADERS)
 	$(DOXYGEN) $(DOXYGEN_CONFIG)
 
 wasm-cahill-keyes: $(CK_WEB_MODULE) $(CK_WEB_WASM) \
-	$(CK_WEB_BUILD_LAND) $(CK_WEB_BUILD_SMOKE)
+	$(CK_WEB_LAND) $(CK_WEB_SMOKE)
 
-$(CK_WEB_MODULE) $(CK_WEB_WASM) $(CK_WEB_BUILD_LAND) \
-		$(CK_WEB_BUILD_SMOKE) &: \
+$(CK_WEB_MODULE) $(CK_WEB_WASM) &: \
 		$(CK_WEB_SOURCE) $(CK_WEB_LAND) $(CK_WEB_SMOKE) \
 		src/a60-carto-frame.h src/a60-carto-projection.h \
 		src/cart0freak0-cahill-keyes.h
@@ -186,8 +182,6 @@ $(CK_WEB_MODULE) $(CK_WEB_WASM) $(CK_WEB_BUILD_LAND) \
 		-sEXPORT_NAME=createCartofreakoCahillKeyesModule \
 		-sENVIRONMENT=web,node -sALLOW_MEMORY_GROWTH=1 -sFILESYSTEM=0 \
 		-o "$(CK_WEB_MODULE)"
-	cp "$(CK_WEB_LAND)" "$(WEB_BUILD_DIR)/"
-	cp "$(CK_WEB_SMOKE)" "$(WEB_BUILD_DIR)/"
 
 check-wasm-cahill-keyes: wasm-cahill-keyes
 	cd "$(WEB_BUILD_DIR)" && "$(NODE)" cahill-keyes-smoke.mjs
@@ -304,6 +298,7 @@ all: $(GENERATED_SVGS)
 
 clean:
 	$(RM) $(TEST_BINARIES)
-	$(RM) -r "$(GENERATED_DIR)"
+	$(RM) $(GENERATED_SVGS) $(CK_WEB_MODULE) $(CK_WEB_WASM)
+	$(RM) -r "$(GENERATED_DIR)/svg" "$(GENERATED_DIR)/png" \
+		"$(GENERATED_DIR)/pdf"
 	$(RM) -r "$(DOXYGEN_OUTPUT_DIR)"
-	$(RM) -r "$(WEB_BUILD_DIR)"
