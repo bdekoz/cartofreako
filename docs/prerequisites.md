@@ -19,6 +19,7 @@ generation workflow. They do not require the same software:
 | GEOS support in GDAL | Earth and ocean generation | Performs polygon intersection, repair, and seam-safe clipping |
 | Bash, `curl`, `unzip`, and `sha256sum` | Natural Earth acquisition | Downloads, verifies, and extracts the pinned input archive |
 | Inkscape | Contributor visual review and SVG editing | Inspects layers, clip paths, geometry, and rendering seams |
+| Doxygen | API reference generation | Builds the documented projection-header reference under `docs/doxygen/` |
 | Emscripten, Node.js, and a browser | Optional WebAssembly example | Builds and exercises the browser-oriented Myriahedral example |
 
 `make check` needs only GNU Make and a C++20 compiler. The tests provide small
@@ -41,7 +42,7 @@ Inkscape. Package names may differ on older or derivative distributions.
 ```sh
 sudo dnf install \
   gcc-c++ make git bash curl unzip coreutils \
-  gdal gdal-devel geos geos-devel inkscape
+  gdal gdal-devel geos geos-devel inkscape doxygen
 ```
 
 The `-devel` packages are important: the runtime-only GDAL package does not
@@ -53,7 +54,7 @@ provide the C++ headers and link metadata used by the Makefile.
 sudo apt-get update
 sudo apt-get install \
   build-essential git bash curl unzip coreutils \
-  gdal-bin libgdal-dev libgeos-dev inkscape
+  gdal-bin libgdal-dev libgeos-dev inkscape doxygen
 ```
 
 ### macOS with Homebrew
@@ -63,7 +64,7 @@ components:
 
 ```sh
 xcode-select --install
-brew install make gdal coreutils git
+brew install make gdal coreutils git doxygen
 brew install --cask inkscape
 ```
 
@@ -90,6 +91,7 @@ Official installation references:
 - [GDAL downloads and platform packages](https://gdal.org/en/stable/download.html)
 - [GEOS](https://libgeos.org/)
 - [Installing Inkscape](https://wiki.inkscape.org/wiki/Installing_Inkscape)
+- [Installing Doxygen](https://www.doxygen.nl/manual/install.html)
 - [Emscripten SDK](https://emscripten.org/docs/tools_reference/emsdk.html)
 
 ## Compiler and Make requirements
@@ -120,6 +122,21 @@ make check
 Use GNU Make rather than BSD Make because the Makefile constructs the
 per-projection rules with GNU Make's `call`, `eval`, and related expansion
 features.
+
+## Doxygen API reference
+
+The API reference covers every `src/cart0freak0*.h` projection header,
+including internal geometric data structures and helper functions. Generate
+it with:
+
+```sh
+doxygen --version
+make doxygen
+```
+
+Open `docs/doxygen/html/index.html` after the command completes. Documentation
+warnings, including missing parameter descriptions, make the target fail.
+`make clean` removes the generated `docs/doxygen/` tree.
 
 ## Alpha60 and Izzi source trees
 

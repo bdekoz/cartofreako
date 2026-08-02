@@ -34,6 +34,11 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+/**
+ * @file cart0freak0-voronoi.h
+ * @brief Icosahedral Voronoi forward projection and fixed face-tree layout.
+ */
+
 #ifndef cart0freak0_VORONOI_H
 #define cart0freak0_VORONOI_H 1
 
@@ -48,13 +53,17 @@
 
 namespace a60::carto {
 
-/// d3-geo-polygon's registered canvas for the default icosahedral net.
+/// Width of d3-geo-polygon's registered default canvas, in pixels.
 inline constexpr double voronoi_source_width = 960;
+/// Height of d3-geo-polygon's registered default canvas, in pixels.
 inline constexpr double voronoi_source_height = 500;
+/// Required width-to-height ratio of the registered source canvas.
 inline constexpr double voronoi_width_to_height_ratio = 48.0 / 25.0;
 
 /// True when a frame has finite, positive dimensions in the registered
 /// 960:500 source-canvas ratio. The tolerance admits roundoff only.
+/// @param candidate Frame to validate.
+/// @return `true` when the dimensions are finite, positive, and ratio-correct.
 inline bool
 is_voronoi_frame(const frame& candidate)
 {
@@ -72,6 +81,10 @@ is_voronoi_frame(const frame& candidate)
   return std::abs(width - expected_width) <= tolerance;
 }
 
+/// Validate generic projection state for use by the Voronoi projection.
+/// @param value Projection state to validate and return.
+/// @return The validated projection state.
+/// @throws std::invalid_argument if its frame does not have a 48:25 ratio.
 inline projection_base
 validate_voronoi_projection_base(projection_base value)
 {
@@ -82,52 +95,80 @@ validate_voronoi_projection_base(projection_base value)
   return value;
 }
 
+/// Internal icosahedral geometry, face selection, and tree-unfolding helpers.
 namespace voronoi_detail {
 
+/// Pi in radians.
 inline constexpr double pi = 3.141592653589793238462643383279502884;
+/// Number of vertices in the base icosahedron.
 inline constexpr std::size_t vertex_count = 12;
+/// Number of triangular faces in the base icosahedron.
 inline constexpr std::size_t face_count = 20;
+/// Scale from the unfolded gnomonic net to source-canvas pixels.
 inline constexpr double source_scale = 131.777;
+/// Horizontal center of the registered source canvas.
 inline constexpr double source_center_x = voronoi_source_width / 2;
+/// Vertical center of the registered source canvas.
 inline constexpr double source_center_y = voronoi_source_height / 2;
+/// Longitude rotation applied before choosing an icosahedral face.
 inline constexpr double input_rotation_degrees = 108;
+/// Longitude used to register the unfolded net with the source canvas.
 inline constexpr double registration_longitude_degrees = 162;
 
+/// Cartesian point in the unfolded two-dimensional net.
 struct point_2d
 {
-  double x;
-  double y;
+  double x; ///< Horizontal coordinate.
+  double y; ///< Vertical coordinate.
 };
 
+/// Cartesian vector on or near the unit sphere.
 struct vector_3d
 {
-  double x;
-  double y;
-  double z;
+  double x; ///< First Cartesian component.
+  double y; ///< Second Cartesian component.
+  double z; ///< Third Cartesian component.
 };
 
+/// Two-dimensional affine transform represented as a 2-by-3 matrix.
 struct affine_transform
 {
-  double a;
-  double b;
-  double c;
-  double d;
-  double e;
-  double f;
+  double a; ///< Coefficient multiplying the input x coordinate for output x.
+  double b; ///< Coefficient multiplying the input y coordinate for output x.
+  double c; ///< Translation added to the output x coordinate.
+  double d; ///< Coefficient multiplying the input x coordinate for output y.
+  double e; ///< Coefficient multiplying the input y coordinate for output y.
+  double f; ///< Translation added to the output y coordinate.
 };
 
+/// Subtract two planar points component-wise.
+/// @param left Left operand.
+/// @param right Right operand.
+/// @return Component-wise difference.
 inline constexpr point_2d
 operator-(const point_2d& left, const point_2d& right)
 { return {left.x - right.x, left.y - right.y}; }
 
+/// Add two three-dimensional vectors component-wise.
+/// @param left Left operand.
+/// @param right Right operand.
+/// @return Component-wise sum.
 inline constexpr vector_3d
 operator+(const vector_3d& left, const vector_3d& right)
 { return {left.x + right.x, left.y + right.y, left.z + right.z}; }
 
+/// Compute the dot product of two three-dimensional vectors.
+/// @param left Left operand.
+/// @param right Right operand.
+/// @return Scalar dot product.
 inline constexpr double
 dot(const vector_3d& left, const vector_3d& right)
 { return left.x * right.x + left.y * right.y + left.z * right.z; }
 
+/// Compute the right-handed cross product of two vectors.
+/// @param left Left operand.
+/// @param right Right operand.
+/// @return Vector perpendicular to both operands.
 inline constexpr vector_3d
 cross(const vector_3d& left, const vector_3d& right)
 {
@@ -136,10 +177,16 @@ cross(const vector_3d& left, const vector_3d& right)
           left.x * right.y - left.y * right.x};
 }
 
+/// Measure a three-dimensional vector.
+/// @param value Vector to measure.
+/// @return Euclidean magnitude.
 inline double
 length(const vector_3d& value)
 { return std::sqrt(dot(value, value)); }
 
+/// Normalize a nonzero three-dimensional vector.
+/// @param value Vector to normalize.
+/// @return Unit vector in the same direction.
 inline vector_3d
 normalized(const vector_3d& value)
 {
@@ -147,10 +194,17 @@ normalized(const vector_3d& value)
   return {value.x / magnitude, value.y / magnitude, value.z / magnitude};
 }
 
+/// Convert angular degrees to radians.
+/// @param value Angle in degrees.
+/// @return The angle in radians.
 inline constexpr double
 degrees_to_radians(const double value)
 { return value * pi / 180; }
 
+/// Convert geographic coordinates to a unit Cartesian vector.
+/// @param latitude Latitude in degrees in `[-90, 90]`.
+/// @param longitude Longitude in degrees in `[-180, 180]`.
+/// @return Point on the unit sphere, with exact vectors at both poles.
 inline vector_3d
 geographic_vector(const double latitude, const double longitude)
 {
@@ -169,10 +223,16 @@ geographic_vector(const double latitude, const double longitude)
           std::sin(phi)};
 }
 
+/// Construct the identity affine transform.
+/// @return Transform that leaves every planar point unchanged.
 inline constexpr affine_transform
 identity_transform()
 { return {1, 0, 0, 0, 1, 0}; }
 
+/// Apply an affine transform to a planar point.
+/// @param transform Transform to apply.
+/// @param point Input point.
+/// @return Transformed point.
 inline constexpr point_2d
 apply(const affine_transform& transform, const point_2d& point)
 {
@@ -181,6 +241,9 @@ apply(const affine_transform& transform, const point_2d& point)
 }
 
 /// Compose two affine transforms so the result applies right, then left.
+/// @param left Transform applied second.
+/// @param right Transform applied first.
+/// @return Composite affine transform.
 inline constexpr affine_transform
 multiply(const affine_transform& left, const affine_transform& right)
 {
@@ -195,6 +258,11 @@ multiply(const affine_transform& left, const affine_transform& right)
 }
 
 /// Similarity transform mapping source[0..1] onto target[0..1].
+/// @param target Target edge endpoints.
+/// @param source Source edge endpoints.
+/// @return Scale, rotation, reflection convention, and translation mapping the
+/// source edge to the target edge.
+/// @throws std::logic_error if either edge has zero length.
 inline affine_transform
 edge_transform(const std::array<point_2d, 2>& target,
                const std::array<point_2d, 2>& source)
@@ -219,23 +287,28 @@ edge_transform(const std::array<point_2d, 2>& target,
           d, e, target[0].y - d * source[0].x - e * source[0].y};
 }
 
+/// Three indices identifying the vertices of one icosahedral face.
 using face_vertices = std::array<std::size_t, 3>;
 
+/// Spherical and planar geometry associated with one icosahedral face.
 struct face_geometry
 {
-  face_vertices vertices {};
-  vector_3d site {};
-  vector_3d east {};
-  vector_3d north {};
-  affine_transform transform {identity_transform()};
+  face_vertices vertices {}; ///< Indices of the face's spherical vertices.
+  vector_3d site {}; ///< Unit vector through the face center.
+  vector_3d east {}; ///< Local gnomonic east basis vector.
+  vector_3d north {}; ///< Local gnomonic north basis vector.
+  affine_transform transform {identity_transform()}; ///< Face-to-net transform.
 };
 
+/// Complete base icosahedron and its unfolded face transformations.
 struct layout_data
 {
-  std::array<vector_3d, vertex_count> vertices {};
-  std::array<face_geometry, face_count> faces {};
+  std::array<vector_3d, vertex_count> vertices {}; ///< Spherical vertices.
+  std::array<face_geometry, face_count> faces {}; ///< Face geometry and layout.
 };
 
+/// Construct the twelve vertices of the registered icosahedron.
+/// @return Spherical vertex vectors ordered for the face index table.
 inline std::array<vector_3d, vertex_count>
 make_vertices()
 {
@@ -254,6 +327,8 @@ make_vertices()
   return result;
 }
 
+/// Return the vertex indices of all twenty oriented faces.
+/// @return Face-to-vertex lookup table.
 inline constexpr std::array<face_vertices, face_count>
 face_vertex_indices()
 {
@@ -264,6 +339,8 @@ face_vertex_indices()
            {1, 2, 4}, {1, 4, 6}, {1, 6, 8}, {1, 8, 10}, {1, 10, 2}}};
 }
 
+/// Return the parent of every face in the fixed unfolding tree.
+/// @return Parent indices, with `-1` marking the root face.
 inline constexpr std::array<int, face_count>
 face_parents()
 {
@@ -273,6 +350,11 @@ face_parents()
            6, 8, 10, 12, 14}};
 }
 
+/// Project a spherical direction into a face-centered gnomonic plane.
+/// @param face Face basis and center used for the projection.
+/// @param point Unit direction to project.
+/// @return Coordinates in the face's local plane.
+/// @throws std::logic_error if the direction lies behind the selected face.
 inline point_2d
 project_on_face(const face_geometry& face, const vector_3d& point)
 {
@@ -284,6 +366,12 @@ project_on_face(const face_geometry& face, const vector_3d& point)
           -dot(point, face.north) / denominator};
 }
 
+/// Map a child face's local plane across its shared edge into its parent.
+/// @param data Icosahedral vertices and initialized face geometry.
+/// @param child_index Index of the child face.
+/// @param parent_index Index of the adjacent parent face.
+/// @return Affine transform from child-local to parent-local coordinates.
+/// @throws std::logic_error if the faces do not share exactly one edge.
 inline affine_transform
 shared_edge_transform(const layout_data& data,
                       const std::size_t child_index,
@@ -317,6 +405,9 @@ shared_edge_transform(const layout_data& data,
   return edge_transform(parent_edge, child_edge);
 }
 
+/// Build all spherical face bases and their transforms into the unfolded net.
+/// @return Fully initialized immutable-layout value.
+/// @throws std::logic_error if the fixed face tree is malformed.
 inline layout_data
 make_layout()
 {
@@ -368,6 +459,8 @@ make_layout()
   return result;
 }
 
+/// Access the process-wide lazily initialized Voronoi layout.
+/// @return Const reference to the complete layout data.
 inline const layout_data&
 layout()
 {
@@ -377,6 +470,8 @@ layout()
 
 /// Nearest spherical site; maximizing the dot product avoids an unnecessary
 /// acos and has the same stable, lowest-index tie behavior as the source.
+/// @param point Unit direction whose containing Voronoi cell is required.
+/// @return Index of the nearest face-center site.
 inline std::size_t
 containing_face(const vector_3d& point)
 {
@@ -397,6 +492,10 @@ containing_face(const vector_3d& point)
   return closest;
 }
 
+/// Project geographic coordinates into the unregistered unfolded net.
+/// @param latitude Latitude in degrees.
+/// @param longitude Longitude in degrees.
+/// @return Point in unfolded-net coordinates.
 inline point_2d
 project_to_unfolded_net(const double latitude, const double longitude)
 {
@@ -409,6 +508,8 @@ project_to_unfolded_net(const double latitude, const double longitude)
 
 /// Apply the same spherical rotation convention as d3-geo. Keeping +180
 /// rather than canonicalizing it to -180 preserves face ties at map cuts.
+/// @param longitude Geographic longitude in degrees.
+/// @return Longitude rotated by 108 degrees and wrapped to `[-180, 180]`.
 inline double
 rotate_longitude(const double longitude)
 {
@@ -420,6 +521,11 @@ rotate_longitude(const double longitude)
   return result;
 }
 
+/// Project geographic coordinates into the registered source-canvas domain.
+/// @param latitude Latitude in degrees.
+/// @param longitude Longitude in degrees.
+/// @return Normalized map point, where the source canvas spans `[0, 1]` on
+/// each axis.
 inline point_2d
 project_to_normalized_map(const double latitude, const double longitude)
 {
@@ -437,6 +543,10 @@ project_to_normalized_map(const double latitude, const double longitude)
 
 /// Construct generic projection state from a variable-size 48:25 frame.
 /// Only frame_area is retained; map placement remains cartography's job.
+/// @param map_frame Frame whose area determines the projection dimensions.
+/// @param raster_name Optional backing-raster filename.
+/// @return Validated generic Voronoi projection state.
+/// @throws std::invalid_argument if the resulting frame is not 48:25.
 inline projection_base
 make_voronoi_projection_base(const frame& map_frame, string raster_name)
 {
@@ -461,26 +571,43 @@ make_voronoi_projection_base(const frame& map_frame, string raster_name)
 */
 struct voronoiproj : public projection_base, public projection_api
 {
+  /// Construct from validated generic projection state.
+  /// @param value Generic projection state with a 48:25 frame.
+  /// @throws std::invalid_argument if the frame is invalid.
   explicit voronoiproj(const projection_base value)
   : projection_base(validate_voronoi_projection_base(value))
   { }
 
   /// Make a projection for any valid 48:25 frame. Frame placement offsets are
   /// deliberately discarded; the projection owns only frame_area.
+  /// @param variable_frame Frame whose area supplies the projection size.
+  /// @param raster_name Optional backing-raster filename.
+  /// @throws std::invalid_argument if the resulting frame is invalid.
   explicit voronoiproj(const frame& variable_frame, string raster_name = {})
   : voronoiproj(make_voronoi_projection_base(variable_frame,
                                               std::move(raster_name)))
   { }
 
-  voronoiproj(const voronoiproj&) = default;
+  /// Copy an existing Voronoi projection.
+  /// @param other Projection to copy.
+  voronoiproj(const voronoiproj& other) = default;
 
+  /// Resolve the backing raster against the run-time data directory.
+  /// @param mode Raster variant requested by the generic API; unused here.
+  /// @return Full raster filename.
   string
-  image_filename(const raster_mode) const override
+  image_filename([[maybe_unused]] const raster_mode mode) const override
   {
     auto& resources = io::get_run_time_resources();
     return io::end_path(resources.data) + name;
   }
 
+  /// Project one geographic coordinate into the configured frame.
+  /// @param latitude Latitude in degrees in `[-90, 90]`.
+  /// @param longitude Longitude in degrees in `[-180, 180]`.
+  /// @return Projected `(x, y)` frame coordinates.
+  /// @throws std::invalid_argument if either coordinate is non-finite or
+  /// outside its supported range.
   a60::point_2t
   meridians_to_point_2d(const double latitude,
                         const double longitude) const override
@@ -502,16 +629,23 @@ struct voronoiproj : public projection_base, public projection_api
   }
 };
 
+/// Construct a variable-size Voronoi projection.
+/// @param map_frame Frame whose area supplies the projection size.
+/// @param raster_name Optional backing-raster filename.
+/// @return Configured Voronoi projection.
+/// @throws std::invalid_argument if the frame is invalid.
 inline voronoiproj
 make_voronoi_projection(const frame& map_frame, string raster_name = {})
 {
   return voronoiproj(map_frame, std::move(raster_name));
 }
 
+/// Registered 960-by-500 source frame for the canonical projection.
 inline const frame pvoronoi_source {
   voronoi_source_width, voronoi_source_height
 };
 
+/// Canonical Voronoi projection using the registered source frame.
 inline const voronoiproj voronoi_source {pvoronoi_source};
 
 } // namespace a60::carto

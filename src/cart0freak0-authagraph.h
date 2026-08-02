@@ -16,6 +16,11 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 // General Public License for more details.
 
+/**
+ * @file cart0freak0-authagraph.h
+ * @brief AuthaGraph forward projection, tetrahedral geometry, and presets.
+ */
+
 #ifndef cart0freak0_AUTHAGRAPH_H
 #define cart0freak0_AUTHAGRAPH_H 1
 
@@ -30,25 +35,29 @@
 
 namespace a60::carto {
 
-// The checked-in source plate is an A3 PDF. These measurements are used only
-// by its compatibility preset; the projection mathematics and variable-size
-// API operate in a normalized rectangle.
+/// Width of the checked-in A3 AuthaGraph source plate, in PDF points.
 inline constexpr double authagraph_page_width = 1190.55;
+/// Height of the checked-in A3 AuthaGraph source plate, in PDF points.
 inline constexpr double authagraph_page_height = 841.89;
+/// Horizontal offset of the map viewport within the A3 source plate.
 inline constexpr double authagraph_map_left = 107.101118;
+/// Vertical offset of the map viewport within the A3 source plate.
 inline constexpr double authagraph_map_top = 199.632551;
+/// Height of the map viewport measured from the A3 source plate.
 inline constexpr double authagraph_map_height = 422.690833;
 
-// The rectangular net is two tetrahedron-edge lengths wide and one
-// equilateral-face altitude high: width / height = 4 / sqrt(3).
+/// Required width-to-height ratio, `4 / sqrt(3)`, of the rectangular net.
 inline constexpr double authagraph_width_to_height_ratio
   = 2.309401076758503058036595122007829823;
+/// Width of the map viewport measured from its height and required ratio.
 inline constexpr double authagraph_map_width
   = authagraph_width_to_height_ratio * authagraph_map_height;
 
 /// True when a frame has finite, positive dimensions in the required
 /// 4:sqrt(3) AuthaGraph aspect ratio. The tolerance admits floating-point
 /// roundoff, not approximate aspect ratios.
+/// @param candidate Frame to validate.
+/// @return `true` when the dimensions are finite, positive, and ratio-correct.
 inline bool
 is_authagraph_frame(const frame& candidate)
 {
@@ -66,6 +75,10 @@ is_authagraph_frame(const frame& candidate)
   return std::abs(width - expected_width) <= tolerance;
 }
 
+/// Validate generic projection state for use by AuthaGraph.
+/// @param value Projection state to validate and return.
+/// @return The validated projection state.
+/// @throws std::invalid_argument if the frame is not a valid AuthaGraph frame.
 inline projection_base
 validate_authagraph_projection_base(projection_base value)
 {
@@ -76,36 +89,54 @@ validate_authagraph_projection_base(projection_base value)
   return value;
 }
 
+/// Internal geometry used to evaluate and unfold the AuthaGraph tetrahedron.
 namespace authagraph_detail {
 
+/// Pi in radians.
 inline constexpr double pi = 3.141592653589793238462643383279502884;
+/// Square root of two used by the published analytic formula.
 inline constexpr double sqrt_two = 1.414213562373095048801688724209698079;
+/// Square root of three used by tetrahedral face geometry.
 inline constexpr double sqrt_three = 1.732050807568877293527446341505872367;
+/// Scale of a unit-vector tetrahedron edge in the unfolded net.
 inline constexpr double tetrahedron_scale = 0.816496580927726032732428024901963798;
+/// Width of the complete unnormalized tetrahedral net.
 inline constexpr double unfolded_width = 4 * tetrahedron_scale;
+/// Height of the complete unnormalized tetrahedral net.
 inline constexpr double unfolded_height = sqrt_two;
 
 // Register the cyclic tetrahedron net with the map rectangle in the source
 // PDF.  Its four singular vertices are separated by one quarter-map width.
-inline constexpr double horizontal_shift = -0.08797138953590078;
+inline constexpr double horizontal_shift = -0.08797138953590078; ///< Source-plate horizontal registration.
 
+/// Cartesian point in the unfolded two-dimensional construction.
 struct point_2d
 {
-  double x;
-  double y;
+  double x; ///< Horizontal coordinate.
+  double y; ///< Vertical coordinate.
 };
 
+/// Cartesian vector on or near the unit sphere.
 struct vector_3d
 {
-  double x;
-  double y;
-  double z;
+  double x; ///< First Cartesian component.
+  double y; ///< Second Cartesian component.
+  double z; ///< Third Cartesian component.
 };
 
+/// Convert angular degrees to radians.
+/// @param value Angle in degrees.
+/// @return The angle in radians.
 inline constexpr double
 degrees_to_radians(const double value)
 { return value * pi / 180; }
 
+/// Convert a signed degrees-minutes-seconds angle to radians.
+/// @param degrees Whole-degree component.
+/// @param minutes Arc-minute component.
+/// @param seconds Arc-second component.
+/// @param sign Direction multiplier, normally `1` or `-1`.
+/// @return The signed angle in radians.
 inline constexpr double
 dms_to_radians(const double degrees, const double minutes,
                const double seconds, const double sign)
@@ -114,6 +145,10 @@ dms_to_radians(const double degrees, const double minutes,
     degrees + (minutes + seconds / 60) / 60);
 }
 
+/// Convert spherical longitude and latitude to a unit Cartesian vector.
+/// @param longitude Longitude in radians.
+/// @param latitude Latitude in radians.
+/// @return Unit vector at the requested spherical coordinate.
 inline vector_3d
 longitude_latitude_to_vector(const double longitude, const double latitude)
 {
@@ -123,10 +158,18 @@ longitude_latitude_to_vector(const double longitude, const double latitude)
           std::sin(latitude)};
 }
 
+/// Compute the dot product of two three-dimensional vectors.
+/// @param left Left operand.
+/// @param right Right operand.
+/// @return Scalar dot product.
 inline constexpr double
 dot(const vector_3d& left, const vector_3d& right)
 { return left.x * right.x + left.y * right.y + left.z * right.z; }
 
+/// Compute the right-handed cross product of two vectors.
+/// @param left Left operand.
+/// @param right Right operand.
+/// @return Vector perpendicular to both operands.
 inline constexpr vector_3d
 cross(const vector_3d& left, const vector_3d& right)
 {
@@ -135,6 +178,10 @@ cross(const vector_3d& left, const vector_3d& right)
           left.x * right.y - left.y * right.x};
 }
 
+/// Construct a unit tangent at a spherical pole toward another meridian.
+/// @param pole Unit vector defining the local north pole.
+/// @param meridian Unit vector selecting the local prime-meridian direction.
+/// @return Normalized tangent vector in the pole's tangent plane.
 inline vector_3d
 unit_tangent_toward(const vector_3d& pole, const vector_3d& meridian)
 {
@@ -149,6 +196,8 @@ unit_tangent_toward(const vector_3d& pole, const vector_3d& meridian)
   return tangent;
 }
 
+/// Return the four published geographic tetrahedron vertices.
+/// @return Stable vertex array whose order controls net assembly.
 inline const std::array<vector_3d, 4>&
 tetrahedron_vertices()
 {
@@ -171,6 +220,11 @@ tetrahedron_vertices()
   return vertices;
 }
 
+/// Express a unit vector in a pole-centered longitude/latitude system.
+/// @param value Geographic unit vector to transform.
+/// @param pole Unit vector serving as the local north pole.
+/// @param prime_meridian Unit vector selecting local zero longitude.
+/// @return Local longitude in `x` and latitude in `y`, both in radians.
 inline point_2d
 local_longitude_latitude(const vector_3d& value,
                          const vector_3d& pole,
@@ -185,6 +239,10 @@ local_longitude_latitude(const vector_3d& value,
           std::asin(sine_latitude)};
 }
 
+/// Compute a non-negative floating-point remainder.
+/// @param value Dividend.
+/// @param modulus Positive modulus.
+/// @return A value in `[0, modulus)`.
 inline double
 positive_modulo(const double value, const double modulus)
 {
@@ -192,12 +250,16 @@ positive_modulo(const double value, const double modulus)
   return remainder < 0 ? remainder + modulus : remainder;
 }
 
+/// A point projected into one of six sectors around a tetrahedron vertex.
 struct triangle_projection
 {
-  point_2d point;
-  int sector;
+  point_2d point; ///< Analytic point in the canonical planar triangle.
+  int sector; ///< Zero-based 60-degree sector around the selected vertex.
 };
 
+/// Project pole-centered spherical coordinates into a canonical triangle.
+/// @param local Local longitude and latitude in radians.
+/// @return Planar coordinates and the selected 60-degree sector.
 inline triangle_projection
 project_spherical_triangle(const point_2d& local)
 {
@@ -224,6 +286,10 @@ project_spherical_triangle(const point_2d& local)
           sector};
 }
 
+/// Select a tetrahedron vertex and assemble its projected sector into the net.
+/// @param latitude Geographic latitude in radians.
+/// @param longitude Geographic longitude in radians.
+/// @return Point in the unnormalized cyclic tetrahedral net.
 inline point_2d
 project_to_unfolded_tetrahedron(const double latitude,
                                 const double longitude)
@@ -280,6 +346,10 @@ project_to_unfolded_tetrahedron(const double latitude,
           sine * triangle.point.x + cosine * triangle.point.y + origin_y};
 }
 
+/// Project geographic coordinates into the normalized AuthaGraph rectangle.
+/// @param latitude Geographic latitude in degrees.
+/// @param longitude Geographic longitude in degrees.
+/// @return Screen-oriented point whose coordinates nominally lie in `[0, 1]`.
 inline point_2d
 project_to_normalized_map(const double latitude, const double longitude)
 {
@@ -296,6 +366,9 @@ project_to_normalized_map(const double latitude, const double longitude)
 
 /// Construct generic projection state from a variable-size AuthaGraph frame.
 /// The returned origin is the projected geographic coordinate (0,0).
+/// @param map_frame Valid 4:sqrt(3) output frame.
+/// @param raster_name Optional registered raster filename.
+/// @return Validated generic projection state with its geographic origin set.
 inline projection_base
 make_authagraph_projection_base(const frame& map_frame, string raster_name)
 {
@@ -311,6 +384,10 @@ make_authagraph_projection_base(const frame& map_frame, string raster_name)
 /// Validate a map viewport embedded in a larger projection frame. This is
 /// used by the A3 source-plate compatibility preset; ordinary variable-size
 /// projections use pframe itself as the viewport.
+/// @param value Generic projection state containing the outer frame.
+/// @param map_viewport Ratio-correct map rectangle inside the outer frame.
+/// @return The validated generic projection state.
+/// @throws std::invalid_argument if the viewport is invalid or out of bounds.
 inline projection_base
 validate_authagraph_layout(projection_base value, const frame& map_viewport)
 {
@@ -352,11 +429,16 @@ struct agproj : public projection_base, public projection_api
   /// projection it is pframe.frame_area at (0,0); a source plate may embed it.
   frame map_frame;
 
+  /// Construct from validated generic projection state.
+  /// @param value State whose frame supplies the map rectangle.
   explicit agproj(const projection_base value)
   : projection_base(validate_authagraph_projection_base(value)),
     map_frame(pframe.frame_area)
   { }
 
+  /// Construct a projection whose map occupies a viewport in a larger frame.
+  /// @param value Generic state containing the outer projection frame.
+  /// @param map_viewport Ratio-correct map viewport within that frame.
   agproj(const projection_base value, const frame& map_viewport)
   : projection_base(validate_authagraph_layout(value, map_viewport)),
     map_frame(map_viewport)
@@ -364,20 +446,33 @@ struct agproj : public projection_base, public projection_api
 
   /// Make a projection for any valid 4:sqrt(3) map frame. Only frame_area is
   /// used; placement in a larger cartography frame remains cartography's job.
+  /// @param variable_frame Ratio-correct output frame.
+  /// @param raster_name Optional registered raster filename.
   explicit agproj(const frame& variable_frame, string raster_name = {})
   : agproj(make_authagraph_projection_base(variable_frame,
                                             std::move(raster_name)))
   { }
 
-  agproj(const agproj&) = default;
+  /// Copy an AuthaGraph projection.
+  /// @param other Projection to copy.
+  agproj(const agproj& other) = default;
 
+  /// Resolve the registered raster against the runtime data directory.
+  /// @param mode Raster variant requested by the common API; unused here.
+  /// @return Full runtime-resource path to the registered raster.
   string
-  image_filename(const raster_mode) const override
+  image_filename([[maybe_unused]] const raster_mode mode) const override
   {
     auto& resources = io::get_run_time_resources();
     return io::end_path(resources.data) + name;
   }
 
+  /// Project a geographic coordinate into the configured map viewport.
+  /// @param latitude Latitude in degrees, in `[-90, 90]`.
+  /// @param longitude Longitude in degrees, in `[-180, 180]`.
+  /// @return Output-frame coordinate in screen-axis orientation.
+  /// @throws std::invalid_argument if either coordinate is non-finite or out
+  /// of range.
   a60::point_2t
   meridians_to_point_2d(const double latitude,
                         const double longitude) const override
@@ -401,30 +496,39 @@ struct agproj : public projection_base, public projection_api
   }
 };
 
+/// Construct a variable-size AuthaGraph projection.
+/// @param map_frame Ratio-correct output frame.
+/// @param raster_name Optional registered raster filename.
+/// @return Configured AuthaGraph projection.
 inline agproj
 make_authagraph_projection(const frame& map_frame, string raster_name = {})
 {
   return agproj(map_frame, std::move(raster_name));
 }
 
+/// A3 source-plate x coordinate of geographic `(0, 0)`.
 inline constexpr double authagraph_longitude_zero_x = 120.05917135268346;
+/// A3 source-plate y coordinate of geographic `(0, 0)`.
 inline constexpr double authagraph_latitude_zero_y = 267.89452133439636;
 
+/// Complete A3 source-plate frame.
 inline const frame pauthagraph_a3 {
   authagraph_page_width, authagraph_page_height
 };
 
+/// AuthaGraph map viewport embedded in the A3 source plate.
 inline const frame pauthagraph_a3_map {
   authagraph_map_width, authagraph_map_height,
   authagraph_map_left, authagraph_map_top
 };
 
-inline const agproj ag_a3({pauthagraph_a3,
+/// Registered projection preset for the checked-in A3 source plate.
+inline const agproj ag_a3{{pauthagraph_a3,
                            authagraph_longitude_zero_x,
                            authagraph_latitude_zero_y,
                            authagraph,
                            "assets/authagraph/15-SP-TESD-03-AG.pdf"},
-                          pauthagraph_a3_map);
+                          pauthagraph_a3_map};
 
 } // namespace a60::carto
 

@@ -5,11 +5,15 @@ TEST_DIR := tests
 ALPHA60_SRC ?= ../alpha60/src
 IZZI_SRC ?= ../izzi/src
 GDAL_CONFIG ?= gdal-config
+DOXYGEN ?= doxygen
 NATURAL_EARTH_DIR ?= assets/natural-earth/10m-physical-vectors
 NATURAL_EARTH_FETCHER := scripts/fetch-natural-earth-10m.sh
 NATURAL_EARTH_STAMP := \
 	$(NATURAL_EARTH_DIR)/.natural-earth-10m-physical-5.1.1
 GENERATED_DIR := generated
+DOXYGEN_CONFIG := Doxyfile
+DOXYGEN_OUTPUT_DIR := docs/doxygen
+DOXYGEN_HEADERS := $(wildcard src/cart0freak0*.h)
 
 GEOMETRY_GENERATOR := $(TEST_DIR)/generate-geometry
 GRATICULE_GENERATOR := $(TEST_DIR)/generate-graticules
@@ -102,7 +106,7 @@ HAMONSHU_CURVE_HEADERS := \
 
 .DELETE_ON_ERROR:
 
-.PHONY: all check clean fetch-natural-earth-10m make-generated \
+.PHONY: all check clean doxygen fetch-natural-earth-10m make-generated \
 	generate-geometry generate-graticules-ck generate-earth-ck \
 	generate-ocean-ck generate-projections generated-projections \
 	generate-geometry-projections generate-graticules-projections \
@@ -147,6 +151,9 @@ check:
 		$(TEST_DIR)/test-voronoi-projection-api.cc \
 		-o $(TEST_DIR)/test-voronoi-projection-api
 	$(TEST_DIR)/test-voronoi-projection-api
+
+doxygen: $(DOXYGEN_CONFIG) $(DOXYGEN_HEADERS)
+	$(DOXYGEN) $(DOXYGEN_CONFIG)
 
 $(GEOMETRY_GENERATOR): $(TEST_DIR)/generate-geometry.cc $(GENERATOR_HEADERS)
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
@@ -261,3 +268,4 @@ all: $(GENERATED_SVGS)
 clean:
 	$(RM) $(TEST_BINARIES)
 	$(RM) -r "$(GENERATED_DIR)"
+	$(RM) -r "$(DOXYGEN_OUTPUT_DIR)"
