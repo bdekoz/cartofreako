@@ -24,3 +24,9 @@ make check
 
 The checks build in `tests/` with C++20 and strict compiler warnings. See
 [`index.md`](index.md#choose-a-projection) to select and use a projection.
+
+Generate all 20 SVG artifacts under `generated/` with:
+
+```sh
+make all
+```

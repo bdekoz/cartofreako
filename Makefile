@@ -99,7 +99,7 @@ AREA_GENERATOR_HEADER := $(TEST_DIR)/projection-area-generation.h
 
 .DELETE_ON_ERROR:
 
-.PHONY: check clean fetch-natural-earth-10m make-generated \
+.PHONY: all check clean fetch-natural-earth-10m make-generated \
 	generate-geometry generate-graticules-ck generate-earth-ck \
 	generate-ocean-ck generate-projections generated-projections \
 	generate-geometry-projections generate-graticules-projections \
@@ -253,6 +253,7 @@ generate-ocean-projections: $(CK_OCEAN_SVG) $(REQUESTED_OCEAN_SVGS)
 generate-projections: $(GENERATED_SVGS)
 generated-projections: $(GENERATED_SVGS)
 make-generated: $(GENERATED_SVGS)
+all: $(GENERATED_SVGS)
 
 clean:
 	$(RM) $(TEST_BINARIES)
