@@ -33,7 +33,7 @@ map, and the 153-layer Hamonshū ocean for all five projections with:
 make all
 ```
 
-All 20 SVGs are written under `generated/`. The targets
+All 20 SVGs are written under `generated/svg/`. The targets
 `make generated-projections`, `make generate-projections`, and
 `make make-generated` are equivalent aliases.
 
@@ -58,11 +58,11 @@ and finite numeric output.
 
 | Projection | Geometry | Graticules | Earth | Ocean |
 | --- | --- | --- | --- | --- |
-| Cahill-Keyes | [`geometry-ck-44-22.svg`](generated/geometry-ck-44-22.svg) | [`graticules-ck-44-22.svg`](generated/graticules-ck-44-22.svg) | [`earth-ck-44-22.svg`](generated/earth-ck-44-22.svg) | [`ocean-ck-44-22.svg`](generated/ocean-ck-44-22.svg) |
-| AuthaGraph | [`geometry-authagraph-44-19.052559.svg`](generated/geometry-authagraph-44-19.052559.svg) | [`graticules-authagraph-44-19.052559.svg`](generated/graticules-authagraph-44-19.052559.svg) | [`earth-authagraph-44-19.052559.svg`](generated/earth-authagraph-44-19.052559.svg) | [`ocean-authagraph-44-19.052559.svg`](generated/ocean-authagraph-44-19.052559.svg) |
-| Myriahedral | [`geometry-myriahedral-44-24.75.svg`](generated/geometry-myriahedral-44-24.75.svg) | [`graticules-myriahedral-44-24.75.svg`](generated/graticules-myriahedral-44-24.75.svg) | [`earth-myriahedral-44-24.75.svg`](generated/earth-myriahedral-44-24.75.svg) | [`ocean-myriahedral-44-24.75.svg`](generated/ocean-myriahedral-44-24.75.svg) |
-| Star-X | [`geometry-star-x-34-44.svg`](generated/geometry-star-x-34-44.svg) | [`graticules-star-x-34-44.svg`](generated/graticules-star-x-34-44.svg) | [`earth-star-x-34-44.svg`](generated/earth-star-x-34-44.svg) | [`ocean-star-x-34-44.svg`](generated/ocean-star-x-34-44.svg) |
-| Voronoi | [`geometry-voronoi-44-22.916667.svg`](generated/geometry-voronoi-44-22.916667.svg) | [`graticules-voronoi-44-22.916667.svg`](generated/graticules-voronoi-44-22.916667.svg) | [`earth-voronoi-44-22.916667.svg`](generated/earth-voronoi-44-22.916667.svg) | [`ocean-voronoi-44-22.916667.svg`](generated/ocean-voronoi-44-22.916667.svg) |
+| Cahill-Keyes | [`geometry-ck-44-22.png`](generated/png/geometry-ck-44-22.png) | [`graticules-ck-44-22.png`](generated/png/graticules-ck-44-22.png) | [`earth-ck-44-22.png`](generated/png/earth-ck-44-22.png) | [`ocean-ck-44-22.png`](generated/png/ocean-ck-44-22.png) |
+| AuthaGraph | [`geometry-authagraph-44-19.052559.png`](generated/png/geometry-authagraph-44-19.052559.png) | [`graticules-authagraph-44-19.052559.png`](generated/png/graticules-authagraph-44-19.052559.png) | [`earth-authagraph-44-19.052559.png`](generated/png/earth-authagraph-44-19.052559.png) | [`ocean-authagraph-44-19.052559.png`](generated/png/ocean-authagraph-44-19.052559.png) |
+| Myriahedral | [`geometry-myriahedral-44-24.75.png`](generated/png/geometry-myriahedral-44-24.75.png) | [`graticules-myriahedral-44-24.75.png`](generated/png/graticules-myriahedral-44-24.75.png) | [`earth-myriahedral-44-24.75.png`](generated/png/earth-myriahedral-44-24.75.png) | [`ocean-myriahedral-44-24.75.png`](generated/png/ocean-myriahedral-44-24.75.png) |
+| Star-X | [`geometry-star-x-34-44.png`](generated/png/geometry-star-x-34-44.png) | [`graticules-star-x-34-44.png`](generated/png/graticules-star-x-34-44.png) | [`earth-star-x-34-44.png`](generated/png/earth-star-x-34-44.png) | [`ocean-star-x-34-44.png`](generated/png/ocean-star-x-34-44.png) |
+| Voronoi | [`geometry-voronoi-44-22.916667.png`](generated/png/geometry-voronoi-44-22.916667.png) | [`graticules-voronoi-44-22.916667.png`](generated/png/graticules-voronoi-44-22.916667.png) | [`earth-voronoi-44-22.916667.png`](generated/png/earth-voronoi-44-22.916667.png) | [`ocean-voronoi-44-22.916667.png`](generated/png/ocean-voronoi-44-22.916667.png) |
 
 The [SVG generation pipeline](docs/generation.md) explains the generator
 sources and Make targets, Natural Earth acquisition, seam handling, sampling,
@@ -382,14 +382,14 @@ native source-canvas dimensions but does not prescribe a raster.
 | [`tests/projection-generation-common.h`](tests/projection-generation-common.h) | Exact 44-unit frame configurations, projection dispatch, native-cell lookup, cut bisection, and shared seam-safe path projection |
 | [`tests/projection-area-generation.h`](tests/projection-area-generation.h) | Face-local Myriahedral and Voronoi area transforms plus exact planar-triangle clipping for filled paths |
 | [`tests/generate-geometry.cc`](tests/generate-geometry.cc) | Izzi SVG generator and structural test for native AuthaGraph, Cahill-Keyes/Star-X, Myriahedral, and Voronoi faces plus four map quadrants |
-| [`generated/geometry-ck-44-22.svg`](generated/geometry-ck-44-22.svg) | Generated layered Cahill-Keyes face geometry in a 44×22 frame |
+| [`generated/png/geometry-ck-44-22.png`](generated/png/geometry-ck-44-22.png) | PNG preview of the generated layered Cahill-Keyes face geometry in a 44×22 frame |
 | [`tests/generate-graticules.cc`](tests/generate-graticules.cc) | Izzi SVG generator and structural test for grouped, degree-labeled, discontinuity-split 10° latitude and longitude lines |
-| [`generated/graticules-ck-44-22.svg`](generated/graticules-ck-44-22.svg) | Generated 44×22 Cahill-Keyes graticule with 17 latitude groups and 36 longitude groups |
+| [`generated/png/graticules-ck-44-22.png`](generated/png/graticules-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes graticule with 17 latitudes and 36 longitudes |
 | [`tests/generate-earth.cc`](tests/generate-earth.cc) | GDAL/Izzi SVG generator and structural test for clipped and native-cut-split Natural Earth 1:10m physical-vector layers |
-| [`generated/earth-ck-44-22.svg`](generated/earth-ck-44-22.svg) | Generated layered 44×22 Cahill-Keyes physical map |
+| [`generated/png/earth-ck-44-22.png`](generated/png/earth-ck-44-22.png) | PNG preview of the generated layered 44×22 Cahill-Keyes physical map |
 | [`tests/generate-ocean.cc`](tests/generate-ocean.cc) | GDAL/Izzi generator and structural test for the seam-safe Natural Earth ocean and 153 source-indexed Hamonshū vector-pattern layers |
 | [Izzi `a60-svg-curves-hamonshu.h`](https://github.com/bdekoz/izzi/blob/main/src/a60-svg-curves-hamonshu.h) | Reusable procedural path API and complete illustrated-page, motif-number, and descriptive-name catalogue for *Hamonshū*, volume 2 |
-| [`generated/ocean-ck-44-22.svg`](generated/ocean-ck-44-22.svg) | Generated 44×22 Cahill-Keyes ocean with independently selectable wave-pattern layers |
+| [`generated/png/ocean-ck-44-22.png`](generated/png/ocean-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes ocean and its wave-pattern rendering |
 | [`docs/hamonshu-wave-patterns.md`](docs/hamonshu-wave-patterns.md) | PDF page mapping, motif naming, vector interpretation, ocean-clipping method, and source provenance |
 | [`scripts/fetch-natural-earth-10m.sh`](scripts/fetch-natural-earth-10m.sh) | Pinned, checksum-verifying acquisition of the required Natural Earth shapefiles |
 | [`docs/natural-earth-10m-physical-vectors.md`](docs/natural-earth-10m-physical-vectors.md) | Natural Earth source, checksum, extracted-dataset, and licensing note |
