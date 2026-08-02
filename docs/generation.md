@@ -102,7 +102,7 @@ downloads Natural Earth 5.1.1's complete 1:10m physical-vector archive. It:
 The Earth and ocean targets depend on that stamp and pass
 `NATURAL_EARTH_DIR` to their executables. The archive digest and licensing
 are recorded in the
-[Natural Earth data note](../assets/natural-earth-10m-physical-vectors.md).
+[Natural Earth data note](natural-earth-10m-physical-vectors.md).
 
 ## Shared coordinate pipeline
 
