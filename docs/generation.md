@@ -378,11 +378,16 @@ Mori Yūzan's 1903 *Hamonshū*, volume 2.
 
 ### Catalogue and provenance
 
-[`tests/hamonshu-v2-patterns.inc`](../tests/hamonshu-v2-patterns.inc) is a
-compile-time catalogue of illustrated page or page span, motif ordinal, and
+Izzi's
+[`a60-svg-curves-hamonshu.h`](https://github.com/bdekoz/izzi/blob/main/src/a60-svg-curves-hamonshu.h)
+and its
+[`catalogue include`](https://github.com/bdekoz/izzi/blob/main/src/a60-svg-curves-hamonshu-v2.inc)
+provide the compile-time illustrated page or page span, motif ordinal, and
 descriptive English slug. A `static_assert` fixes the catalogue at 153
 entries. The source has no printed motif captions, so these names are
-descriptions rather than translations or historical titles.
+descriptions rather than translations or historical titles. Keeping this
+projection-independent material in Izzi lets other SVG programs render the
+same source-indexed paths without depending on GDAL or cartofreako.
 
 The PDF is visual source material, not a runtime input and not an image
 texture embedded in the SVG. Stable layer IDs and titles map each procedural
@@ -425,7 +430,7 @@ though they encode no oceanographic phenomenon.
 
 ### Procedural line families
 
-The descriptive slug classifies each catalogue entry into one of sixteen
+The Izzi header classifies each descriptive slug into one of sixteen
 families:
 
 ```text
@@ -441,10 +446,13 @@ select the same construction.
 
 Curves are evaluated parametrically at fixed sample counts. Ellipses and
 spirals are likewise converted to point sequences, and Izzi serializes them
-as SVG paths. Motifs are authored in normalized `(u,v)` coordinates and
-mapped into each assigned region's projected bounding box. This makes the
-pattern fill its tile, but it also means a long narrow region stretches the
-motif anisotropically and changes its apparent wavelength.
+as SVG paths. Motifs are authored in normalized `(u,v)` coordinates and the
+public `svg::hamonshu::make_motif_path()` function maps them into each
+assigned region's projected bounding box. This makes the pattern fill its
+tile, but it also means a long narrow region stretches the motif
+anisotropically and changes its apparent wavelength. A deterministic rotation
+of up to four degrees can extend linework beyond the box; the generator's SVG
+clip path constrains it to the assigned ocean region.
 
 Each catalogue layer contains:
 

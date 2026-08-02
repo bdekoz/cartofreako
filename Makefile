@@ -96,6 +96,9 @@ GENERATOR_HEADERS := \
 	src/cart0freak0-star-x.h \
 	src/cart0freak0-voronoi.h
 AREA_GENERATOR_HEADER := $(TEST_DIR)/projection-area-generation.h
+HAMONSHU_CURVE_HEADERS := \
+	$(IZZI_SRC)/a60-svg-curves-hamonshu.h \
+	$(IZZI_SRC)/a60-svg-curves-hamonshu-v2.inc
 
 .DELETE_ON_ERROR:
 
@@ -161,7 +164,7 @@ $(EARTH_GENERATOR): $(TEST_DIR)/generate-earth.cc $(GENERATOR_HEADERS) \
 		$< $(shell $(GDAL_CONFIG) --libs) -o $@
 
 $(OCEAN_GENERATOR): $(TEST_DIR)/generate-ocean.cc \
-		$(TEST_DIR)/hamonshu-v2-patterns.inc $(GENERATOR_HEADERS) \
+		$(HAMONSHU_CURVE_HEADERS) $(GENERATOR_HEADERS) \
 		$(AREA_GENERATOR_HEADER)
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
 		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \

@@ -229,8 +229,9 @@ See the [data provenance note](natural-earth-10m-physical-vectors.md) for the
 archive URL, checksum, dataset list, and license.
 
 The checked-in *Hamonshū* PDF is provenance artwork, not a runtime input. The
-ocean generator uses the compiled catalogue in
-[`tests/hamonshu-v2-patterns.inc`](../tests/hamonshu-v2-patterns.inc).
+ocean generator uses the compiled catalogue and procedural path API from the
+neighboring Izzi checkout's
+[`a60-svg-curves-hamonshu.h`](https://github.com/bdekoz/izzi/blob/main/src/a60-svg-curves-hamonshu.h).
 
 ## Inkscape and visual review
 
