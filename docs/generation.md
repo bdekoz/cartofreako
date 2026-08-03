@@ -20,7 +20,7 @@ as a 3840-pixel-long-side PNG.
 | Graticules | [`src.generate/generate-graticules.cc`](../src.generate/generate-graticules.cc) | Sampled latitude and longitude lines |
 | Earth | [`src.generate/generate-earth.cc`](../src.generate/generate-earth.cc) | Natural Earth 1:10m ocean and land |
 | Water | [`src.generate/generate-water.cc`](../src.generate/generate-water.cc) | Every other Natural Earth 1:10m physical layer |
-| Four slices | [`src.generate/generate-4-slice.cc`](../src.generate/generate-4-slice.cc) | Four horizontal quadrant enlargements from the Cahill-Keyes Earth SVG |
+| Four slices | [`src.generate/generate-4-slice.cc`](../src.generate/generate-4-slice.cc) | Four full-height, quarter-width quadrant-pair enlargements from the Cahill-Keyes Earth SVG |
 | Eight slices | [`src.generate/generate-8-slice.cc`](../src.generate/generate-8-slice.cc) | Eight exact-octant enlargements from the Cahill-Keyes Earth SVG |
 
 The aggregate target generates all four artifact families for all five
@@ -33,8 +33,6 @@ make all
 `make generated-projections`, `make generate-projections`, and
 `make make-generated` are equivalent aliases. The original individual
 Cahill-Keyes targets also remain available.
-
-The artifact-family aggregate targets include all five projections.
 
 The suite fixes the largest print dimension at 44 inches while retaining each
 projection's exact aspect-ratio contract:
@@ -132,6 +130,7 @@ Inkscape exports vector PDFs at the SVG's physical page size without changing
 the layered SVG originals. For example, a 44-by-22-inch Cahill-Keyes page is
 3168 by 1584 PDF points. The explicit PNG pixel override is independent of
 that physical page size.
+
 Final files are grouped by format rather than mixed at the `assets.generated/` root:
 
 ```text
@@ -141,7 +140,7 @@ assets.generated/
 └── png/
 ```
 
-### Natural Earth acquisition
+## Natural Earth acquisition
 
 [`scripts/fetch-natural-earth-10m.sh`](../scripts/fetch-natural-earth-10m.sh)
 downloads Natural Earth 5.1.1's complete 1:10m physical-vector archive. It:
@@ -481,6 +480,78 @@ and `land`. Both also enforce minimum path counts, the projection-specific
 view box, and finite coordinates. Star-X additionally requires its central
 star, unified Antarctic land and ice shelves, and unified Antarctic
 coastline.
+
+## Cahill-Keyes enlargement slices
+
+The slicing subsystem separates two concepts that must not be conflated:
+
+- the **projection carrier** is the complete Cahill-Keyes world and must
+  remain 2:1; and
+- a **slice frame** is a viewport into already projected carrier coordinates
+  and may have any aspect ratio.
+
+Let the carrier be `W × H`, and let a source viewport be
+`V = (x0, y0, w, h)`. The Earth is projected once on the carrier. A slice
+only changes the visible coordinate window:
+
+```text
+x_local = x_carrier - x0
+y_local = y_carrier - y0
+```
+
+There is no second forward projection and no geometric enlargement in the
+SVG path data. The smaller physical page and the normal 4K raster export make
+the selected region an enlargement when printed or displayed. In particular,
+the slice frame must never be passed to `make_cahill_keyes_projection()`:
+most useful slices are deliberately not 2:1.
+
+[`cart0freak0-cahill-keyes-slicing.h`](../src.projections/cart0freak0-cahill-keyes-slicing.h)
+owns carrier validation, slice descriptors, coordinate translation, octant
+outlines, SVG wrappers, stable names, and structural checks. The two thin
+entry points implement complementary publishing styles:
+
+| Style | Generator | Geometry |
+| --- | --- | --- |
+| Four strips | [`generate-4-slice.cc`](../src.generate/generate-4-slice.cc) | Four full-height, quarter-width viewports containing octant pairs `(1,6)`, `(2,7)`, `(3,8)`, and `(4,5)` |
+| Eight octants | [`generate-8-slice.cc`](../src.generate/generate-8-slice.cc) | Eight face-clipped viewports using each projected octant's natural rectangular bounds |
+
+For the standard 44×22 carrier, the four source viewports begin at `x = 0`,
+`11`, `22`, and `33`; each output page is 11×22 inches. The requested ordered
+latitude contexts—`-30→20`, `20→-60`, `-50→30`, and `60→-40` degrees—are
+stored as descriptive metadata. They do not define the viewport and do not
+clip source data. A real latitude filter would need to operate on geographic
+geometry before projection.
+
+The exact-octant style samples each face perimeter, computes its tight
+axis-aligned carrier bounds, and applies the same outline as an SVG clip path.
+Its pages have naturally varying ratios. North and south octant bounds overlap
+vertically in the M layout, so an ordinary 4×2 rectangular grid would not
+isolate the eight semantic faces.
+
+Slice SVGs are lightweight wrappers whose `<use>` references
+`earth-ck-44-22.svg#earth-ck-44-22`. The root `width` and `height` carry inch
+units while the `viewBox` stays in the original unitless carrier coordinates.
+The master Earth SVG must therefore remain beside the slice SVGs. Inkscape
+resolves that vector reference when exporting the self-contained PDFs and
+opaque PNGs. With the default 3840-pixel long side, an 11×22 strip becomes
+1920×3840 pixels.
+
+Generate or verify the styles independently with:
+
+```sh
+make generate-4-slice
+make generate-8-slice
+make generate-ck-slices
+```
+
+The design follows Gene Keyes's historical use of four tall Megamap strips,
+while deliberately distinguishing exact octants from his eight square Beta-1
+printing installments. Those square installments used a convenient straight
+cut at the central `y = 10000` line rather than the diagonal Equator, so each
+included material from a neighboring octant. See Keyes's
+[Beta-1 Megamap](https://www.genekeyes.com/MEGAMAP-BETA-1/Megamap-Beta-1.html),
+[full-size octants](https://www.genekeyes.com/1-DEG-GLOBE/8-octants.html), and
+[one-octant construction workflow](https://www.genekeyes.com/CKOG-OOo/7-CKOG-illus-%26-coastline.html).
 
 ## What the executable checks do—and do not—prove
 

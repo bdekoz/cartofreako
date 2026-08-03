@@ -118,7 +118,5 @@ into the implementation.
   exact formulas, fixed-tree design, API, scaling, tests, and limits.
 - [Geometric context](myriahedral-context.md) illustrates the primal mesh,
   dual tree, cuts, quadrants, axes, and source-canvas relationship.
-- [`docs/converge-projection-myriahedral.md`](converge-projection-myriahedral.md)
-  preserves the staged implementation brief.
 - [`assets.static/myriahedral`](../assets.static/myriahedral/README.md) preserves
   the exact reconstruction artifacts and checksums used by the implementation.

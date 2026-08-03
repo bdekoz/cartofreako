@@ -19,6 +19,12 @@ Emscripten. The example:
 - turns the generated SVG string into a Blob URL; and
 - layers the SVG over the raster in one responsive 16:9 viewport.
 
+This is an illustrative, copyable workflow. The production WebAssembly files
+checked into [`src.wasm/`](../src.wasm/) implement Cahill-Keyes and are
+documented by that directory's [README](../src.wasm/README.md). The
+Myriahedral source and outputs below are not checked in, avoiding a second
+generated binary that could be mistaken for the production browser adapter.
+
 The build produces:
 
 ```text

@@ -1,5 +1,9 @@
 # Cahill-Keyes WebAssembly renderer
 
+[Documentation index](../index.md) ·
+[Cahill-Keyes implementation notes](../docs/cahill-keyes-implementation-notes.md) ·
+[Illustrative Myriahedral workflow](../docs/web-workflow.md)
+
 This directory contains the production browser adapter and checked-in
 WebAssembly build for cartofreako's C++20 Cahill-Keyes projection.
 `cahill-keyes-web.cc` exports a variable-size 2:1 projection through Embind.
@@ -9,6 +13,12 @@ C++ object to generate a complete SVG base map.
 The generated SVG contains eight ocean faces, seam-safe ten-degree
 graticules, and projected Natural Earth land. It is returned as a string and
 loaded through a browser Blob URL; no pre-projected SVG or raster is used.
+
+These checked-in Cahill-Keyes sources and build products are distinct from
+the copyable Myriahedral example in
+[`docs/web-workflow.md`](../docs/web-workflow.md). That guide demonstrates a
+second projection and intentionally does not add another generated binary to
+this directory.
 
 Build and test it from the repository root:
 
@@ -70,4 +80,11 @@ map width.
 
 The native forward construction derives from `MegamapMaker-prep9.pl` by Mary
 Jo Graça and Gene Keyes. Its non-commercial attribution terms are recorded in
-`src.projections/cart0freak0-cahill-keyes.h`; commercial users should contact Gene Keyes.
+`src.projections/cart0freak0-cahill-keyes.h`; commercial users should contact
+Gene Keyes.
+
+---
+
+[Documentation index](../index.md) ·
+[Cahill-Keyes implementation notes](../docs/cahill-keyes-implementation-notes.md) ·
+[Illustrative Myriahedral workflow](../docs/web-workflow.md)
