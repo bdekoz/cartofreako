@@ -54,6 +54,31 @@ require(
 );
 require(!/(?:nan|inf)/i.test(svg), 'generated SVG has non-finite values');
 
+const landPathMatch = svg.match(
+    /<path id="natural-earth-land" d="([^"]+)"/
+);
+require(landPathMatch, 'generated SVG has no Natural Earth land path data');
+let previousLandPoint = null;
+let maximumLandSegment = 0;
+const pathPointPattern = /([ML])(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)/g;
+for (const match of landPathMatch[1].matchAll(pathPointPattern)) {
+    const point = {x: Number(match[2]), y: Number(match[3])};
+    if (match[1] === 'L' && previousLandPoint) {
+        maximumLandSegment = Math.max(
+            maximumLandSegment,
+            Math.hypot(
+                point.x - previousLandPoint.x,
+                point.y - previousLandPoint.y
+            )
+        );
+    }
+    previousLandPoint = point;
+}
+require(
+    maximumLandSegment < projection.width() / 4,
+    `generated land contains an unfolded-face chord: ${maximumLandSegment}`
+);
+
 const smallProjection = new module.CahillKeyesProjection(44, 22);
 const smallSanFrancisco = smallProjection.project(37.7749, -122.4194);
 require(
@@ -93,6 +118,7 @@ console.log(JSON.stringify({
     height: projection.height(),
     landFeatures: land.features.length,
     svgBytes: new TextEncoder().encode(svg).length,
+    maximumLandSegment,
     sanFrancisco
 }));
 

@@ -725,7 +725,7 @@ struct ckproj : public projection_base, public projection_api
   /// @throws std::invalid_argument if either coordinate is non-finite or out
   /// of range.
   a60::point_2t
-  meridians_to_point_2d(const double lt, const double lng) const
+  meridians_to_point_2d(const double lt, const double lng) const override
   {
     const double adjusted_longitude
       = cahill_keyes_registered_longitude(lng);

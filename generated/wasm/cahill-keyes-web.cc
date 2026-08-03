@@ -43,6 +43,19 @@ constexpr std::array cahill_keyes_sectors {
   longitude_sector {69, 159},
 };
 
+// Natural Earth is stored as five non-wrapping bands. A point exactly on an
+// east cut belongs to the next public Cahill-Keyes face, so the preceding
+// band must approach that cut from the west. This matters most at the South
+// Pole, where assigning -111 degrees to the next face creates a page-wide
+// closing chord through Antarctica.
+constexpr std::array cahill_keyes_land_bands {
+  longitude_sector {-180, -111},
+  longitude_sector {-111, -21},
+  longitude_sector {-21, 69},
+  longitude_sector {69, 159},
+  longitude_sector {159, 180},
+};
+
 double
 canonical_longitude(double longitude)
 {
@@ -53,6 +66,20 @@ canonical_longitude(double longitude)
     longitude -= 360;
   while (longitude < -180)
     longitude += 360;
+  return longitude;
+}
+
+double
+seam_safe_land_longitude(const double longitude, const unsigned band)
+{
+  if (band >= cahill_keyes_land_bands.size())
+    throw std::invalid_argument(
+      "Cahill-Keyes web land feature has an invalid ck_band");
+
+  const longitude_sector bounds = cahill_keyes_land_bands[band];
+  if (band + 1 < cahill_keyes_land_bands.size()
+      && std::abs(longitude - bounds.east) <= seam_epsilon)
+    return bounds.east - seam_epsilon;
   return longitude;
 }
 
@@ -130,7 +157,8 @@ class cahill_keyes_web_projection
 
   void
   append_polygon_coordinates(std::ostringstream& output,
-                             const emscripten::val& polygon) const
+                             const emscripten::val& polygon,
+                             const unsigned band) const
   {
     const unsigned ring_count = polygon["length"].as<unsigned>();
     for (unsigned ring_index = 0; ring_index < ring_count; ++ring_index)
@@ -144,7 +172,8 @@ class cahill_keyes_web_projection
              ++point_index)
           {
             const emscripten::val coordinate = ring[point_index];
-            const double longitude = coordinate[0].as<double>();
+            const double longitude = seam_safe_land_longitude(
+              coordinate[0].as<double>(), band);
             const double latitude = coordinate[1].as<double>();
             append_point(output, project_unchecked(latitude, longitude),
                          point_index == 0);
@@ -155,7 +184,8 @@ class cahill_keyes_web_projection
 
   void
   append_geometry(std::ostringstream& output,
-                  const emscripten::val& geometry) const
+                  const emscripten::val& geometry,
+                  const unsigned band) const
   {
     const std::string type = geometry["type"].as<std::string>();
     if (type == "GeometryCollection")
@@ -163,16 +193,16 @@ class cahill_keyes_web_projection
         const emscripten::val geometries = geometry["geometries"];
         const unsigned geometry_count = geometries["length"].as<unsigned>();
         for (unsigned index = 0; index < geometry_count; ++index)
-          append_geometry(output, geometries[index]);
+          append_geometry(output, geometries[index], band);
       }
     else if (type == "Polygon")
-      append_polygon_coordinates(output, geometry["coordinates"]);
+      append_polygon_coordinates(output, geometry["coordinates"], band);
     else if (type == "MultiPolygon")
       {
         const emscripten::val coordinates = geometry["coordinates"];
         const unsigned polygon_count = coordinates["length"].as<unsigned>();
         for (unsigned index = 0; index < polygon_count; ++index)
-          append_polygon_coordinates(output, coordinates[index]);
+          append_polygon_coordinates(output, coordinates[index], band);
       }
     else if (type != "LineString")
       throw std::invalid_argument(
@@ -191,7 +221,15 @@ class cahill_keyes_web_projection
     const emscripten::val features = geojson["features"];
     const unsigned feature_count = features["length"].as<unsigned>();
     for (unsigned index = 0; index < feature_count; ++index)
-      append_geometry(output, features[index]["geometry"]);
+      {
+        const emscripten::val feature = features[index];
+        const emscripten::val properties = feature["properties"];
+        if (!properties.hasOwnProperty("ck_band"))
+          throw std::invalid_argument(
+            "Cahill-Keyes web land feature is missing ck_band");
+        const unsigned band = properties["ck_band"].as<unsigned>();
+        append_geometry(output, feature["geometry"], band);
+      }
     output << "\" fill=\"#deddd4\" fill-rule=\"evenodd\" "
               "stroke=\"#747b78\" stroke-width=\""
            << map_frame.width() / 5200
