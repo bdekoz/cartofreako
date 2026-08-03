@@ -283,16 +283,16 @@ example are separate from native SVG generation. They require:
 
 The Cahill-Keyes target defaults to the sibling SDK path
 `../emsdk/upstream/emscripten/em++`; override `EMXX` when the checkout lives
-elsewhere. Build its ES module, WASM binary, geographic input copy, and Node
-smoke test with:
+elsewhere. Build its ES module and WASM binary beside the geographic input and
+Node smoke test with:
 
 ```sh
 make check-wasm-cahill-keyes
 ```
 
-See the [Cahill-Keyes WebAssembly renderer](../web/README.md) for its runtime
-SVG architecture and data provenance. The separate reproducible Myriahedral
-example uses the Emscripten release identified in
+See the [Cahill-Keyes WebAssembly renderer](../generated/wasm/README.md) for
+its runtime SVG architecture and data provenance. The separate reproducible
+Myriahedral example uses the Emscripten release identified in
 [`docs/web-workflow.md`](web-workflow.md). After activating the SDK, verify:
 
 ```sh

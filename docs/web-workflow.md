@@ -22,7 +22,7 @@ Emscripten. The example:
 The build produces:
 
 ```text
-build/web/
+generated/wasm/
 ├── index.html
 ├── myriahedral.mjs
 ├── myriahedral.wasm
@@ -139,10 +139,11 @@ The official Emscripten instructions describe the same
 
 ## Prepare the example files
 
-From the cartofreako repository root, create these source locations:
+From the cartofreako repository root, create these source locations beside the
+checked-in Cahill-Keyes WebAssembly artifacts:
 
 ```text
-web/
+generated/wasm/
 ├── index.html
 ├── myriahedral-web.cc
 └── smoke.mjs
@@ -159,9 +160,9 @@ With the SDK environment active and the current directory set to the
 cartofreako root:
 
 ```sh
-mkdir -p build/web
+mkdir -p generated/wasm
 
-em++ web/myriahedral-web.cc \
+em++ generated/wasm/myriahedral-web.cc \
   -I src \
   -isystem ../alpha60/src \
   -isystem ../izzi/src \
@@ -176,9 +177,7 @@ em++ web/myriahedral-web.cc \
   -sENVIRONMENT=web,node \
   -sALLOW_MEMORY_GROWTH=1 \
   -sFILESYSTEM=0 \
-  -o build/web/myriahedral.mjs
-
-cp web/index.html web/smoke.mjs build/web/
+  -o generated/wasm/myriahedral.mjs
 ```
 
 Alpha60 and Izzi are marked as system include directories so warnings inside
@@ -227,7 +226,7 @@ The ES module includes Node support solely so the generated function can be
 checked without a browser:
 
 ```sh
-node build/web/smoke.mjs
+node generated/wasm/smoke.mjs
 ```
 
 The smoke program:
@@ -238,7 +237,7 @@ The smoke program:
 - requires the SVG view box, latitude and longitude groups, and an anchor;
 - checks that exactly 53 graticule paths were generated;
 - rejects `nan` and `inf`; and
-- writes `build/web/myriahedral-1920x1080.svg` for inspection.
+- writes `generated/wasm/myriahedral-1920x1080.svg` for inspection.
 
 With Emscripten 6.0.5, the verified example produced:
 
@@ -261,16 +260,16 @@ emrun \
   --serve_after_close \
   --serve_root "$PWD" \
   --port 8000 \
-  build/web/index.html
+  generated/wasm/index.html
 ```
 
 Then open:
 
 ```text
-http://localhost:8000/build/web/index.html
+http://localhost:8000/generated/wasm/index.html
 ```
 
-`--serve_root` is important: it makes both `build/web` and the repository's
+`--serve_root` is important: it makes both `generated/wasm` and the repository's
 `assets` directory available beneath the same origin. The official
 [`emrun` documentation](https://emscripten.org/docs/compiling/Running-html-files-with-emrun.html)
 also explains browser launching, ports, and server lifetime.

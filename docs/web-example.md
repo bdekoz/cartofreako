@@ -17,18 +17,19 @@ needed.
 The example deliberately consists of three small source files:
 
 ```text
-web/
+generated/wasm/
 ├── index.html
 ├── myriahedral-web.cc
 └── smoke.mjs
 ```
 
-The build places the two Emscripten outputs and copies the browser and smoke
-files here:
+The build places the two Emscripten outputs beside the browser and smoke
+sources here:
 
 ```text
-build/web/
+generated/wasm/
 ├── index.html
+├── myriahedral-web.cc
 ├── myriahedral.mjs
 ├── myriahedral.wasm
 └── smoke.mjs
@@ -36,7 +37,7 @@ build/web/
 
 ## C++ source
 
-Save this as `web/myriahedral-web.cc`:
+Save this as `generated/wasm/myriahedral-web.cc`:
 
 ```c++
 #include <array>
@@ -405,7 +406,7 @@ limits start a new SVG subpath.
 
 ## Browser page
 
-Save this as `web/index.html`:
+Save this as `generated/wasm/index.html`:
 
 ```html
 <!doctype html>
@@ -500,7 +501,7 @@ Save this as `web/index.html`:
       raster.width = generatedMap.width = width;
       raster.height = generatedMap.height = height;
 
-      // This page is deployed as build/web/index.html, two levels below the
+      // This page is deployed as generated/wasm/index.html, two levels below the
       // repository root where assets/myriahedral lives.
       const repositoryRoot = new URL("../../", window.location.href);
       const rasterUrl = new URL(module.sourceRaster(), repositoryRoot);
@@ -550,7 +551,7 @@ revokes it on `pagehide`.
 
 ## Node smoke test
 
-Save this as `web/smoke.mjs`:
+Save this as `generated/wasm/smoke.mjs`:
 
 ```js
 import assert from "node:assert/strict";
@@ -596,13 +597,13 @@ directory:
 
 ```sh
 source /home/bkoz/src/emsdk/emsdk_env.sh
-mkdir -p web build/web
+mkdir -p generated/wasm
 ```
 
-Copy the three source blocks above into `web/`, then compile:
+Copy the three source blocks above into `generated/wasm/`, then compile:
 
 ```sh
-em++ web/myriahedral-web.cc \
+em++ generated/wasm/myriahedral-web.cc \
   -I src \
   -isystem ../alpha60/src \
   -isystem ../izzi/src \
@@ -617,9 +618,7 @@ em++ web/myriahedral-web.cc \
   -sENVIRONMENT=web,node \
   -sALLOW_MEMORY_GROWTH=1 \
   -sFILESYSTEM=0 \
-  -o build/web/myriahedral.mjs
-
-cp web/index.html web/smoke.mjs build/web/
+  -o generated/wasm/myriahedral.mjs
 ```
 
 The neighboring Alpha60 and Izzi headers are system includes so their own
@@ -639,7 +638,7 @@ export EM_CACHE=/tmp/cartofreako-emscripten-cache
 Run the smoke test from any directory:
 
 ```sh
-node /absolute/path/to/cartofreako/build/web/smoke.mjs
+node /absolute/path/to/cartofreako/generated/wasm/smoke.mjs
 ```
 
 For Emscripten 6.0.5, the verified build reported:
@@ -661,13 +660,13 @@ emrun \
   --serve_after_close \
   --serve_root "$PWD" \
   --port 8000 \
-  build/web/index.html
+  generated/wasm/index.html
 ```
 
 Open:
 
 ```text
-http://localhost:8000/build/web/index.html
+http://localhost:8000/generated/wasm/index.html
 ```
 
 The status first reports WASM loading and SVG generation, then shows the
@@ -723,4 +722,3 @@ For the numeric and perceptual reasoning behind those choices, see the
 [Web workflow](web-workflow.md) ·
 [Myriahedral implementation notes](myriahedral-implementation-notes.md) ·
 [Generation pipeline](generation.md)
-

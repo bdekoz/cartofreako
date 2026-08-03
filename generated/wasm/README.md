@@ -1,9 +1,10 @@
 # Cahill-Keyes WebAssembly renderer
 
-This directory contains the production browser adapter for cartofreako's
-C++20 Cahill-Keyes projection. `cahill-keyes-web.cc` exports a variable-size
-2:1 projection through Embind. The browser can project individual geographic
-coordinates and ask the same C++ object to generate a complete SVG base map.
+This directory contains the production browser adapter and checked-in
+WebAssembly build for cartofreako's C++20 Cahill-Keyes projection.
+`cahill-keyes-web.cc` exports a variable-size 2:1 projection through Embind.
+The browser can project individual geographic coordinates and ask the same
+C++ object to generate a complete SVG base map.
 
 The generated SVG contains eight ocean faces, seam-safe ten-degree
 graticules, and projected Natural Earth land. It is returned as a string and
@@ -16,14 +17,24 @@ make wasm-cahill-keyes
 make check-wasm-cahill-keyes
 ```
 
-The output is written to `build/web/`:
+The build writes these artifacts in place to `generated/wasm/`:
 
 ```text
 cartofreako-cahill-keyes.mjs
 cartofreako-cahill-keyes.wasm
+```
+
+They remain beside the inputs and test harness:
+
+```text
+cahill-keyes-web.cc
 cartofreako-cahill-keyes-land-110m.geojson
 cahill-keyes-smoke.mjs
 ```
+
+The generated `.mjs` loader and `.wasm` binary are stored in the repository
+alongside their adapter, smoke test, and seam-prepared geographic input. Run
+the build target again after changing the adapter or projection headers.
 
 ## Geographic source and projection seams
 
