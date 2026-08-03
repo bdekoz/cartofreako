@@ -1,6 +1,7 @@
 /tests/test-cahill-keyes-projection
 /tests/test-cahill-keyes-projection-api
 /tests/test-cahill-keyes-path-functions
+/tests/test-cahill-keyes-slicing
 /tests/test-authagraph-projection-api
 /tests/test-myriahedral-projection-api
 /tests/test-star-x-projection-api
@@ -12,6 +13,8 @@
 /tests/generate-graticules
 /tests/generate-earth
 /tests/generate-ocean
+/tests/generate-4-slice
+/tests/generate-8-slice
 /assets/natural-earth/10m-physical-vectors/
 /docs/doxygen/
 /build/

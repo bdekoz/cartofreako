@@ -709,7 +709,7 @@ struct ckproj : public projection_base, public projection_api
   /// @param v Raster mode retained for projection API compatibility.
   /// @return Full path to the generated PNG.
   string
-  image_filename(const raster_mode /*v*/) const override
+  image_filename([[maybe_unused]] const raster_mode v) const override
   {
     const string prefix = "/home/bkoz/src/cartofreako/generated/png/";
     string ret = prefix + name;
