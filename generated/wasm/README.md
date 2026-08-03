@@ -59,6 +59,15 @@ fill from closing across an interrupted-octant seam. All planar coordinates
 in the displayed map are still computed at runtime by
 `ckproj::meridians_to_point_2d()` inside WASM.
 
+Each clipped feature carries a zero-based `ck_band` property. GDAL can emit a
+vertex exactly on a band's eastern cut, while the public point projection
+assigns that exact longitude to the next face. Before projecting land, the
+WASM adapter uses `ck_band` to bias such an eastern vertex west by `1e-7`
+degrees. This preserves the feature's intended face and prevents a false
+closing chord through Antarctica. The smoke test also measures consecutive
+projected land segments and rejects any segment at least one quarter of the
+map width.
+
 The native forward construction derives from `MegamapMaker-prep9.pl` by Mary
 Jo Graça and Gene Keyes. Its non-commercial attribution terms are recorded in
 `src/cart0freak0-cahill-keyes.h`; commercial users should contact Gene Keyes.
