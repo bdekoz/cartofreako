@@ -325,7 +325,7 @@ inkscape --version
 Successful generation places five geometry maps, five graticule maps, five
 Earth maps, and five ocean maps in each of `generated/svg/`,
 `generated/pdf/`, and `generated/png/`. Every PNG preserves its source aspect
-ratio and has a 3840-pixel longest side.
+ratio, has a 3840-pixel longest side, and is flattened against opaque white.
 
 ## Common failures
 

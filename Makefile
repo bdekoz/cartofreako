@@ -8,6 +8,9 @@ GDAL_CONFIG ?= gdal-config
 DOXYGEN ?= doxygen
 INKSCAPE ?= inkscape
 PNG_LONG_SIDE ?= 3840
+PNG_EXPORT_BACKGROUND := --export-background=white \
+	--export-background-opacity=255 \
+	--export-png-color-mode=RGB_8
 EMXX ?= ../emsdk/upstream/emscripten/em++
 NODE ?= node
 EM_CACHE ?= /tmp/cartofreako-emscripten-cache
@@ -305,13 +308,15 @@ $(GENERATED_PDFS): $(GENERATED_PDF_DIR)/%.pdf: \
 	"$(INKSCAPE)" --export-area-page --export-filename="$@" "$<"
 
 $(LANDSCAPE_PNGS): $(GENERATED_PNG_DIR)/%.png: \
-		$(GENERATED_SVG_DIR)/%.svg | $(GENERATED_PNG_DIR)
-	"$(INKSCAPE)" --export-area-page --export-width=$(PNG_LONG_SIDE) \
+		$(GENERATED_SVG_DIR)/%.svg Makefile | $(GENERATED_PNG_DIR)
+	"$(INKSCAPE)" --export-area-page $(PNG_EXPORT_BACKGROUND) \
+		--export-width=$(PNG_LONG_SIDE) \
 		--export-filename="$@" "$<"
 
 $(STAR_X_PNGS): $(GENERATED_PNG_DIR)/%.png: \
-		$(GENERATED_SVG_DIR)/%.svg | $(GENERATED_PNG_DIR)
-	"$(INKSCAPE)" --export-area-page --export-height=$(PNG_LONG_SIDE) \
+		$(GENERATED_SVG_DIR)/%.svg Makefile | $(GENERATED_PNG_DIR)
+	"$(INKSCAPE)" --export-area-page $(PNG_EXPORT_BACKGROUND) \
+		--export-height=$(PNG_LONG_SIDE) \
 		--export-filename="$@" "$<"
 
 generate-voroni: generate-voronoi

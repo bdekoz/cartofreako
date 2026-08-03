@@ -104,7 +104,10 @@ though the input archive is pinned.
 Every PDF and PNG has a direct Make dependency on its layered SVG, so
 conversion starts only after that SVG generator and its embedded structural
 checks succeed. Inkscape uses the SVG page as the export area and preserves
-the original projection aspect ratio.
+the original projection aspect ratio. PNG exports set the background to white
+at full opacity and select 8-bit RGB output without an alpha channel,
+flattening transparent page regions without changing the layered SVG or PDF
+sources.
 
 The default `PNG_LONG_SIDE=3840` follows UHD 4K video's horizontal pixel
 resolution. Landscape Cahill-Keyes, AuthaGraph, Myriahedral, and Voronoi maps
