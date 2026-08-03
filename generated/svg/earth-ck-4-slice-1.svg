@@ -1,0 +1,15 @@
+<svg xml:space="preserve"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     id="earth-ck-4-slice-1" x="0px" y="0px"
+     width="11px" height="22px"
+     viewBox="0 0 11 22" enable-background="new 0 0 11 22" overflow="hidden" role="img"
+     data-slice-style="four-strip"
+     data-slice-number="1"
+     data-octants="1,6">
+<title>Cahill-Keyes four-strip slice 1</title>
+<desc>Unscaled viewport from a 44 by 22 Cahill-Keyes whole-Earth carrier; octants 1,6; ordered latitude context -30 to 20 degrees.</desc>
+<g id="earth-ck-4-slice-1-content">
+<use id="earth-ck-4-slice-1-source" href="earth-ck-44-22.svg#earth-ck-44-22" xlink:href="earth-ck-44-22.svg#earth-ck-44-22" />
+</g>
+</svg>
