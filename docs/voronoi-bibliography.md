@@ -177,7 +177,7 @@ The relevant roles are distinct:
   their publication text and figures are not incorporated into the code.
 
 The applicable ISC notice from `d3-geo-polygon` v1.12.1 is preserved in
-[`src/cart0freak0-voronoi.h`](../src/cart0freak0-voronoi.h). The remainder of
+[`src.projections/cart0freak0-voronoi.h`](../src.projections/cart0freak0-voronoi.h). The remainder of
 the repository continues under the licensing stated by its own headers and
 project files. Removing a JavaScript runtime dependency does not remove
 upstream attribution obligations.
@@ -185,7 +185,7 @@ upstream attribution obligations.
 ## Repository implementation and verification sources
 
 12. **Icosahedral Voronoi C++20 forward projection.**
-    [`src/cart0freak0-voronoi.h`](../src/cart0freak0-voronoi.h).
+    [`src.projections/cart0freak0-voronoi.h`](../src.projections/cart0freak0-voronoi.h).
 
     This file contains the fixed vertices, faces, parents, nearest-dot-product
     dispatch, tangent bases, gnomonic formula, edge transforms, tree

@@ -5,7 +5,7 @@ set -euo pipefail
 
 readonly natural_earth_url='https://naciscdn.org/naturalearth/10m/physical/10m_physical.zip'
 readonly natural_earth_sha256='a79cc39162f29832b567de5e24e8770f04a0b997eefd8d067ae4c9df40d21d2a'
-readonly destination="${1:-assets/natural-earth/10m-physical-vectors}"
+readonly destination="${1:-assets.static/natural-earth/10m-physical-vectors}"
 readonly archive="${destination}/10m_physical.zip"
 readonly stamp="${destination}/.natural-earth-10m-physical-5.1.1"
 

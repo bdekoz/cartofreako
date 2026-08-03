@@ -12,7 +12,7 @@ generation workflow. They do not require the same software:
 | Component | Required for | Purpose |
 | --- | --- | --- |
 | GNU Make | All Makefile targets | Expands the generated projection rules and coordinates builds |
-| C++20 compiler and standard library | Tests and native generators | Builds the projection checks and four SVG generators |
+| C++20 compiler and standard library | Tests and native generators | Builds the projection checks and six SVG-generation programs |
 | Alpha60 headers | SVG generation | Supplies `a60-io.h` and shared runtime-resource interfaces |
 | Izzi headers | SVG generation | Supplies `a60-svg.h` and SVG document/path serialization |
 | GDAL development package with OGR | Earth and water generation | Reads Natural Earth Shapefiles and provides vector geometry operations |
@@ -26,11 +26,11 @@ generation workflow. They do not require the same software:
 compatibility definitions for the Alpha60 API and do not use GDAL, Natural
 Earth, Izzi, Inkscape, or network access.
 
-`make all` builds 20 layered SVGs, then invokes Inkscape to export 20 PDFs and
-20 PNGs whose longest side is 3840 pixels. It needs all native build and
-data-acquisition dependencies through GEOS plus Inkscape. Inkscape may be
-omitted only when invoking individual SVG generation targets or the
-self-contained `make check` suite.
+`make all` builds 20 whole-earth maps and 12 Cahill-Keyes slices, then invokes
+Inkscape to export all 32 SVGs as PDFs and 3840-pixel-long-side PNGs. It needs
+all native build and data-acquisition dependencies through GEOS plus Inkscape.
+Inkscape may be omitted only when invoking individual SVG generation targets
+or the self-contained `make check` suite.
 
 ## Install the system packages
 
@@ -125,7 +125,7 @@ features.
 
 ## Doxygen API reference
 
-The API reference covers every `src/cart0freak0*.h` projection header,
+The API reference covers every `src.projections/cart0freak0*.h` projection header,
 including internal geometric data structures and helper functions. Generate
 it with:
 
@@ -151,7 +151,11 @@ workspace/
 │   └── src/a60-svg.h
 └── cartofreako/
     ├── Makefile
-    ├── src/
+    ├── src.projections/
+    ├── src.generate/
+    ├── src.wasm/
+    ├── assets.static/
+    ├── assets.generated/
     └── tests/
 ```
 
@@ -228,7 +232,7 @@ is present.
 The default data location is:
 
 ```text
-assets/natural-earth/10m-physical-vectors/
+assets.static/natural-earth/10m-physical-vectors/
 ```
 
 Override it when using a shared or pre-provisioned data directory:
@@ -257,7 +261,7 @@ Verify the installation and open an artifact with:
 
 ```sh
 inkscape --version
-inkscape generated/svg/earth-ck-44-22.svg
+inkscape assets.generated/svg/earth-ck-44-22.svg
 ```
 
 Use Inkscape's Layers and Objects panel to inspect group IDs and toggle dense
@@ -285,7 +289,7 @@ Node smoke test with:
 make check-wasm-cahill-keyes
 ```
 
-See the [Cahill-Keyes WebAssembly renderer](../generated/wasm/README.md) for
+See the [Cahill-Keyes WebAssembly renderer](../src.wasm/README.md) for
 its runtime SVG architecture and data provenance. The separate reproducible
 Myriahedral example uses the Emscripten release identified in
 [`docs/web-workflow.md`](web-workflow.md). After activating the SDK, verify:
@@ -317,9 +321,10 @@ inkscape --version
 ```
 
 Successful generation places five geometry maps, five graticule maps, five
-Earth maps, and five water maps in each of `generated/svg/`,
-`generated/pdf/`, and `generated/png/`. Every PNG preserves its source aspect
-ratio, has a 3840-pixel longest side, and is flattened against opaque white.
+Earth maps, five water maps, four quadrant slices, and eight octant slices in
+each of `assets.generated/svg/`, `assets.generated/pdf/`, and
+`assets.generated/png/`. Every PNG preserves its source aspect ratio, has a
+3840-pixel longest side, and is flattened against opaque white.
 
 ## Common failures
 

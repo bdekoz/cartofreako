@@ -1,7 +1,12 @@
 CXX ?= g++
-CPPFLAGS ?= -Isrc
-CXXFLAGS ?= -std=c++20 -Wall -Wextra -Wpedantic -Werror
+PROJECTION_SRC_DIR := src.projections
+GENERATOR_SRC_DIR := src.generate
 TEST_DIR := tests
+STATIC_ASSET_DIR := assets.static
+GENERATED_DIR := assets.generated
+WEB_DIR := src.wasm
+CPPFLAGS ?= -I$(PROJECTION_SRC_DIR) -I$(GENERATOR_SRC_DIR)
+CXXFLAGS ?= -std=c++20 -Wall -Wextra -Wpedantic -Werror
 ALPHA60_SRC ?= ../alpha60/src
 IZZI_SRC ?= ../izzi/src
 GDAL_CONFIG ?= gdal-config
@@ -14,18 +19,16 @@ PNG_EXPORT_BACKGROUND := --export-background=white \
 EMXX ?= ../emsdk/upstream/emscripten/em++
 NODE ?= node
 EM_CACHE ?= /tmp/cartofreako-emscripten-cache
-NATURAL_EARTH_DIR ?= assets/natural-earth/10m-physical-vectors
+NATURAL_EARTH_DIR ?= $(STATIC_ASSET_DIR)/natural-earth/10m-physical-vectors
 NATURAL_EARTH_FETCHER := scripts/fetch-natural-earth-10m.sh
 NATURAL_EARTH_STAMP := \
 	$(NATURAL_EARTH_DIR)/.natural-earth-10m-physical-5.1.1
-GENERATED_DIR := generated
 GENERATED_SVG_DIR := $(GENERATED_DIR)/svg
 GENERATED_PNG_DIR := $(GENERATED_DIR)/png
 GENERATED_PDF_DIR := $(GENERATED_DIR)/pdf
 DOXYGEN_CONFIG := Doxyfile
 DOXYGEN_OUTPUT_DIR := docs/doxygen
-DOXYGEN_HEADERS := $(wildcard src/cart0freak0*.h)
-WEB_DIR := $(GENERATED_DIR)/wasm
+DOXYGEN_HEADERS := $(wildcard $(PROJECTION_SRC_DIR)/cart0freak0*.h)
 WEB_BUILD_DIR := $(WEB_DIR)
 CK_WEB_SOURCE := $(WEB_DIR)/cahill-keyes-web.cc
 CK_WEB_LAND := $(WEB_DIR)/cartofreako-cahill-keyes-land-110m.geojson
@@ -33,12 +36,12 @@ CK_WEB_SMOKE := $(WEB_DIR)/cahill-keyes-smoke.mjs
 CK_WEB_MODULE := $(WEB_BUILD_DIR)/cartofreako-cahill-keyes.mjs
 CK_WEB_WASM := $(WEB_BUILD_DIR)/cartofreako-cahill-keyes.wasm
 
-GEOMETRY_GENERATOR := $(TEST_DIR)/generate-geometry
-GRATICULE_GENERATOR := $(TEST_DIR)/generate-graticules
-EARTH_GENERATOR := $(TEST_DIR)/generate-earth
-WATER_GENERATOR := $(TEST_DIR)/generate-water
-FOUR_SLICE_GENERATOR := $(TEST_DIR)/generate-4-slice
-EIGHT_SLICE_GENERATOR := $(TEST_DIR)/generate-8-slice
+GEOMETRY_GENERATOR := $(GENERATOR_SRC_DIR)/generate-geometry
+GRATICULE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-graticules
+EARTH_GENERATOR := $(GENERATOR_SRC_DIR)/generate-earth
+WATER_GENERATOR := $(GENERATOR_SRC_DIR)/generate-water
+FOUR_SLICE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-4-slice
+EIGHT_SLICE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-8-slice
 
 CK_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-ck-44-22.svg
 CK_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-ck-44-22.svg
@@ -132,7 +135,6 @@ GENERATOR_BINARIES := \
 	$(GRATICULE_GENERATOR) \
 	$(WATER_GENERATOR)
 TEST_BINARIES := \
-	$(GENERATOR_BINARIES) \
 	$(TEST_DIR)/test-cahill-keyes-projection \
 	$(TEST_DIR)/test-cahill-keyes-projection-api \
 	$(TEST_DIR)/test-cahill-keyes-path-functions \
@@ -143,17 +145,18 @@ TEST_BINARIES := \
 	$(TEST_DIR)/test-voronoi-projection-api
 
 GENERATOR_HEADERS := \
-	$(TEST_DIR)/projection-generation-common.h \
-	src/a60-carto-frame.h src/a60-carto-projection.h \
-	src/cart0freak0-authagraph.h \
-	src/cart0freak0-cahill-keyes.h \
-	src/cart0freak0-cahill-keyes-functions.h \
-	src/cart0freak0-myriahedral.h \
-	src/cart0freak0-star-x.h \
-	src/cart0freak0-voronoi.h
-AREA_GENERATOR_HEADER := $(TEST_DIR)/projection-area-generation.h
+	$(GENERATOR_SRC_DIR)/projection-generation-common.h \
+	$(PROJECTION_SRC_DIR)/a60-carto-frame.h \
+	$(PROJECTION_SRC_DIR)/a60-carto-projection.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-authagraph.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-cahill-keyes.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-cahill-keyes-functions.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-myriahedral.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-star-x.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-voronoi.h
+AREA_GENERATOR_HEADER := $(GENERATOR_SRC_DIR)/projection-area-generation.h
 NATURAL_EARTH_GENERATOR_HEADER := \
-	$(TEST_DIR)/natural-earth-generation.h
+	$(GENERATOR_SRC_DIR)/natural-earth-generation.h
 
 .DELETE_ON_ERROR:
 
@@ -217,11 +220,13 @@ wasm-cahill-keyes: $(CK_WEB_MODULE) $(CK_WEB_WASM) \
 
 $(CK_WEB_MODULE) $(CK_WEB_WASM) &: \
 		$(CK_WEB_SOURCE) $(CK_WEB_LAND) $(CK_WEB_SMOKE) \
-		src/a60-carto-frame.h src/a60-carto-projection.h \
-		src/cart0freak0-cahill-keyes.h
+		$(PROJECTION_SRC_DIR)/a60-carto-frame.h \
+		$(PROJECTION_SRC_DIR)/a60-carto-projection.h \
+		$(PROJECTION_SRC_DIR)/cart0freak0-cahill-keyes.h
 	mkdir -p "$(WEB_BUILD_DIR)"
 	EM_CACHE="$(EM_CACHE)" "$(EMXX)" "$(CK_WEB_SOURCE)" \
-		-I src -isystem "$(ALPHA60_SRC)" -isystem "$(IZZI_SRC)" \
+		-I "$(PROJECTION_SRC_DIR)" \
+		-isystem "$(ALPHA60_SRC)" -isystem "$(IZZI_SRC)" \
 		-std=c++20 -O3 -Wall -Wextra -Wpedantic -Werror \
 		--bind --no-entry -fexceptions -sDISABLE_EXCEPTION_CATCHING=0 \
 		-sMODULARIZE=1 -sEXPORT_ES6=1 \
@@ -232,40 +237,43 @@ $(CK_WEB_MODULE) $(CK_WEB_WASM) &: \
 check-wasm-cahill-keyes: wasm-cahill-keyes
 	cd "$(WEB_BUILD_DIR)" && "$(NODE)" cahill-keyes-smoke.mjs
 
-$(GEOMETRY_GENERATOR): $(TEST_DIR)/generate-geometry.cc $(GENERATOR_HEADERS)
-	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
-		$< -o $@
-
-$(GRATICULE_GENERATOR): $(TEST_DIR)/generate-graticules.cc \
+$(GEOMETRY_GENERATOR): $(GENERATOR_SRC_DIR)/generate-geometry.cc \
 		$(GENERATOR_HEADERS)
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$< -o $@
 
-$(EARTH_GENERATOR): $(TEST_DIR)/generate-earth.cc \
-		$(NATURAL_EARTH_GENERATOR_HEADER) $(GENERATOR_HEADERS) \
-		$(AREA_GENERATOR_HEADER)
-	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
-		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
-		$< $(shell $(GDAL_CONFIG) --libs) -o $@
-
-$(WATER_GENERATOR): $(TEST_DIR)/generate-water.cc \
-		$(NATURAL_EARTH_GENERATOR_HEADER) $(GENERATOR_HEADERS) \
-		$(AREA_GENERATOR_HEADER)
-	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
-		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
-		$< $(shell $(GDAL_CONFIG) --libs) -o $@
-
-$(FOUR_SLICE_GENERATOR): $(TEST_DIR)/generate-4-slice.cc \
-		src/cart0freak0-cahill-keyes-slicing.h \
-		src/cart0freak0-cahill-keyes.h src/a60-carto-frame.h \
-		src/a60-carto-projection.h
+$(GRATICULE_GENERATOR): $(GENERATOR_SRC_DIR)/generate-graticules.cc \
+		$(GENERATOR_HEADERS)
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$< -o $@
 
-$(EIGHT_SLICE_GENERATOR): $(TEST_DIR)/generate-8-slice.cc \
-		src/cart0freak0-cahill-keyes-slicing.h \
-		src/cart0freak0-cahill-keyes.h src/a60-carto-frame.h \
-		src/a60-carto-projection.h
+$(EARTH_GENERATOR): $(GENERATOR_SRC_DIR)/generate-earth.cc \
+		$(NATURAL_EARTH_GENERATOR_HEADER) $(GENERATOR_HEADERS) \
+		$(AREA_GENERATOR_HEADER)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -o $@
+
+$(WATER_GENERATOR): $(GENERATOR_SRC_DIR)/generate-water.cc \
+		$(NATURAL_EARTH_GENERATOR_HEADER) $(GENERATOR_HEADERS) \
+		$(AREA_GENERATOR_HEADER)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -o $@
+
+$(FOUR_SLICE_GENERATOR): $(GENERATOR_SRC_DIR)/generate-4-slice.cc \
+		$(PROJECTION_SRC_DIR)/cart0freak0-cahill-keyes-slicing.h \
+		$(PROJECTION_SRC_DIR)/cart0freak0-cahill-keyes.h \
+		$(PROJECTION_SRC_DIR)/a60-carto-frame.h \
+		$(PROJECTION_SRC_DIR)/a60-carto-projection.h
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$< -o $@
+
+$(EIGHT_SLICE_GENERATOR): $(GENERATOR_SRC_DIR)/generate-8-slice.cc \
+		$(PROJECTION_SRC_DIR)/cart0freak0-cahill-keyes-slicing.h \
+		$(PROJECTION_SRC_DIR)/cart0freak0-cahill-keyes.h \
+		$(PROJECTION_SRC_DIR)/a60-carto-frame.h \
+		$(PROJECTION_SRC_DIR)/a60-carto-projection.h
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$< -o $@
 
@@ -390,7 +398,7 @@ make-generated: $(GENERATED_ARTIFACTS)
 all: $(GENERATED_ARTIFACTS)
 
 clean:
-	$(RM) $(TEST_BINARIES)
+	$(RM) $(TEST_BINARIES) $(GENERATOR_BINARIES)
 	$(RM) $(GENERATED_SVGS) $(CK_WEB_MODULE) $(CK_WEB_WASM)
 	$(RM) -r "$(GENERATED_DIR)/svg" "$(GENERATED_DIR)/png" \
 		"$(GENERATED_DIR)/pdf"

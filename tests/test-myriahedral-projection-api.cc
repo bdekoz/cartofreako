@@ -126,7 +126,7 @@ main()
   assert(std::abs(zero_y - myriahedral_source.latitude_zero_y) < 1e-12);
 
   constexpr auto source
-    = "assets/myriahedral/black-white-downsampled.png";
+    = "assets.static/myriahedral/black-white-downsampled.png";
   constexpr std::array modes {
     projection_base::filled,
     projection_base::outline,
@@ -139,7 +139,7 @@ main()
 
   a60::io::get_run_time_resources().data = "/opt/alpha60-data";
   assert(api.image_filename(projection_base::filled)
-         == "/opt/alpha60-data/assets/myriahedral/"
+         == "/opt/alpha60-data/assets.static/myriahedral/"
             "black-white-downsampled.png");
   a60::io::get_run_time_resources().data.clear();
 

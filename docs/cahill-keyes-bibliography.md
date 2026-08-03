@@ -12,7 +12,7 @@ assets. Web resources were last checked on 2026-08-01.
 
 1. **Graça, Mary Jo, and Gene Keyes.** “MegamapMaker-prep9.” Perl source,
    2012-03-15, with additional notes dated 2013-11-28.
-   [Repository copy](../assets/cahill-keyes/MegamapMaker-prep9.pl).
+   [Repository copy](../assets.static/cahill-keyes/MegamapMaker-prep9.pl).
 
    This is the authoritative source for the C++ port. In particular, its
    `Preliminary`, `LLtoMP`, `MPtoXY`, and `MJtoMM` subroutines supply the
@@ -117,14 +117,14 @@ for the tests were generated from the checked-in Perl source.
 ## Repository map and test artifacts
 
 14. **Visionscarto.** “Cahill-Keyes 44 × 22.” SVG map asset, 2018.
-    [44-by-22-inch SVG](../assets/visionscarto/visionscarto-cahillkeyes-44x22.svg).
+    [44-by-22-inch SVG](../assets.static/visionscarto/visionscarto-cahillkeyes-44x22.svg).
 
 15. **Visionscarto.** “Cahill-Keyes 44 × 22, inverse.” 300-DPI PNG map
     asset, 13200 × 6600 pixels.
-    [Inverse raster](../assets/visionscarto/visionscarto-cahillkeyes-44x22.300-inverse.png).
+    [Inverse raster](../assets.static/visionscarto/visionscarto-cahillkeyes-44x22.300-inverse.png).
 
 16. **Visionscarto.** Compact Cahill-Keyes SVG map asset.
-    [Compact SVG](../assets/visionscarto/visionscarto-cahillkeyes.svg).
+    [Compact SVG](../assets.static/visionscarto/visionscarto-cahillkeyes.svg).
 
 The large SVG establishes a 4224 × 2112 logical coordinate example, while the
 PNG establishes the 13200 × 6600 raster example. Both are exact 2:1 frames and
@@ -139,7 +139,7 @@ asset family.
     [`test-cahill-keyes-projection-api.cc`](../tests/test-cahill-keyes-projection-api.cc).
 
 19. **alpha60 contributors.** Geographic integration anchors.
-    [`augment_carto_geo_specific`](../src/a60-svg-carto-geo.h).
+    [`augment_carto_geo_specific`](../src.projections/a60-svg-carto-geo.h).
 
 ## Source-to-implementation map
 

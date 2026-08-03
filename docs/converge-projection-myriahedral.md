@@ -2,21 +2,21 @@ Stage 1 development: reimplement clean c++20 implementation of Myriahedral proje
 https://github.com/temporaer/myriaworld
 
 Use the base image as
-assets/myriahedral/black-white-downsampled.png
+assets.static/myriahedral/black-white-downsampled.png
 
 The new c++20 implementation transforms from point (latitude, longitude) to point (x,y) using the projection API specified here:
-src/a60-carto-projection.h
+src.projections/a60-carto-projection.h
 
 Examples of other projection implementation using this API are here:
-src/cart0freak0-authagraph.h
-src/cart0freak0-cahill-keyes.h
+src.projections/cart0freak0-authagraph.h
+src.projections/cart0freak0-cahill-keyes.h
 
 Implementation of the new implementation goes in this new file:
-src/cart0freak0-myriahedral.h
+src.projections/cart0freak0-myriahedral.h
 
 The projection should be able to pass the test function
 augment_carto_geo_specific in the source file here:
-src/a60-svg-carto-geo.h
+src.projections/a60-svg-carto-geo.h
 
 That file maps out specific positions on a map that will be used to test the projection implementation.
 
@@ -29,7 +29,7 @@ Now, make the projection fit arbitrary map sizes as long as the new sizes retain
 Use the a60::carto::frame abstraction for the size of the variable projection, aka
 
 struct area { double x, double y}; from frame.frame_area here:
-src/a60-carto-frame.h
+src.projections/a60-carto-frame.h
 
 ---
 

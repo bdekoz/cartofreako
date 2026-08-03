@@ -17,7 +17,7 @@ needed.
 The example deliberately consists of three small source files:
 
 ```text
-generated/wasm/
+src.wasm/
 ├── index.html
 ├── myriahedral-web.cc
 └── smoke.mjs
@@ -27,7 +27,7 @@ The build places the two Emscripten outputs beside the browser and smoke
 sources here:
 
 ```text
-generated/wasm/
+src.wasm/
 ├── index.html
 ├── myriahedral-web.cc
 ├── myriahedral.mjs
@@ -37,7 +37,7 @@ generated/wasm/
 
 ## C++ source
 
-Save this as `generated/wasm/myriahedral-web.cc`:
+Save this as `src.wasm/myriahedral-web.cc`:
 
 ```c++
 #include <array>
@@ -94,7 +94,7 @@ projection()
     map_width_value, map_height_value
   };
   static const auto value = a60::carto::make_myriahedral_projection(
-    map_frame, "assets/myriahedral/black-white-downsampled.png");
+    map_frame, "assets.static/myriahedral/black-white-downsampled.png");
   return value;
 }
 
@@ -369,7 +369,7 @@ map_height()
 
 std::string
 source_raster()
-{ return "assets/myriahedral/black-white-downsampled.png"; }
+{ return "assets.static/myriahedral/black-white-downsampled.png"; }
 
 } // namespace
 
@@ -406,7 +406,7 @@ limits start a new SVG subpath.
 
 ## Browser page
 
-Save this as `generated/wasm/index.html`:
+Save this as `src.wasm/index.html`:
 
 ```html
 <!doctype html>
@@ -501,9 +501,9 @@ Save this as `generated/wasm/index.html`:
       raster.width = generatedMap.width = width;
       raster.height = generatedMap.height = height;
 
-      // This page is deployed as generated/wasm/index.html, two levels below the
-      // repository root where assets/myriahedral lives.
-      const repositoryRoot = new URL("../../", window.location.href);
+      // This page is deployed as src.wasm/index.html, one level below the
+      // repository root where assets.static/myriahedral lives.
+      const repositoryRoot = new URL("../", window.location.href);
       const rasterUrl = new URL(module.sourceRaster(), repositoryRoot);
       const rasterReady = loadImage(raster, rasterUrl.href);
 
@@ -540,9 +540,9 @@ The two images are registered by construction:
 - the upper image is the transparent SVG returned by WASM; and
 - both occupy the same responsive 16:9 CSS box.
 
-The page must be served from the repository root with its build output at
-`build/web`. That layout is why `../../` from the page resolves to the
-repository root and makes `assets/myriahedral/black-white-downsampled.png`
+The page must be served from the repository root with its files in
+`src.wasm/`. That layout is why `../` from the page resolves to the repository
+root and makes `assets.static/myriahedral/black-white-downsampled.png`
 available without copying it.
 
 Do not revoke the generated Blob URL immediately after assigning it. The URL
@@ -551,7 +551,7 @@ revokes it on `pagehide`.
 
 ## Node smoke test
 
-Save this as `generated/wasm/smoke.mjs`:
+Save this as `src.wasm/smoke.mjs`:
 
 ```js
 import assert from "node:assert/strict";
@@ -563,7 +563,7 @@ assert.equal(module.mapWidth(), 1920);
 assert.equal(module.mapHeight(), 1080);
 assert.equal(
   module.sourceRaster(),
-  "assets/myriahedral/black-white-downsampled.png"
+  "assets.static/myriahedral/black-white-downsampled.png"
 );
 
 const svg = module.generateMapSvg();
@@ -597,14 +597,14 @@ directory:
 
 ```sh
 source /home/bkoz/src/emsdk/emsdk_env.sh
-mkdir -p generated/wasm
+mkdir -p src.wasm
 ```
 
-Copy the three source blocks above into `generated/wasm/`, then compile:
+Copy the three source blocks above into `src.wasm/`, then compile:
 
 ```sh
-em++ generated/wasm/myriahedral-web.cc \
-  -I src \
+em++ src.wasm/myriahedral-web.cc \
+  -I src.projections \
   -isystem ../alpha60/src \
   -isystem ../izzi/src \
   -std=c++20 \
@@ -618,7 +618,7 @@ em++ generated/wasm/myriahedral-web.cc \
   -sENVIRONMENT=web,node \
   -sALLOW_MEMORY_GROWTH=1 \
   -sFILESYSTEM=0 \
-  -o generated/wasm/myriahedral.mjs
+  -o src.wasm/myriahedral.mjs
 ```
 
 The neighboring Alpha60 and Izzi headers are system includes so their own
@@ -638,7 +638,7 @@ export EM_CACHE=/tmp/cartofreako-emscripten-cache
 Run the smoke test from any directory:
 
 ```sh
-node /absolute/path/to/cartofreako/generated/wasm/smoke.mjs
+node /absolute/path/to/cartofreako/src.wasm/smoke.mjs
 ```
 
 For Emscripten 6.0.5, the verified build reported:
@@ -660,13 +660,13 @@ emrun \
   --serve_after_close \
   --serve_root "$PWD" \
   --port 8000 \
-  generated/wasm/index.html
+  src.wasm/index.html
 ```
 
 Open:
 
 ```text
-http://localhost:8000/generated/wasm/index.html
+http://localhost:8000/src.wasm/index.html
 ```
 
 The status first reports WASM loading and SVG generation, then shows the

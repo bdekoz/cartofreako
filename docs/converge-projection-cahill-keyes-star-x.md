@@ -1,5 +1,5 @@
 Stage 1 development:
-implement a new C++20 projection in the file src/cart0freak0-star-x.h using
+implement a new C++20 projection in the file src.projections/cart0freak0-star-x.h using
 the same carto API as previous.
 
   Base on the existing Cahill-Keyes implementation, but with the following modification to the geometry: The octants are split in two, with octants 1-4 (left side) as group 1 and octants 5-8 (the right side) as group 2.
@@ -15,7 +15,7 @@ Abstract any hard-coded map sizes () into variable size map sizes with the same 
 Use the a60::carto::frame abstraction for the size of the variable projection, aka
 
 struct area { double x, double y}; from frame.frame_area here:
-src/a60-carto-frame.h
+src.projections/a60-carto-frame.h
 
 ---
 
@@ -53,7 +53,7 @@ add these changes to the star-x algorithm to docs/star-x-implementation-notes.md
 Stage 6
 
 add another step to the "star-x" transformation. After the first and second step, make a third step illustrated as per the reference image
-assets/adhoc/geometry-star-x-34-44.with-poles.svg
+assets.static/adhoc/geometry-star-x-34-44.with-poles.svg
 
 this has two further modifications:
 1) a star centered on the page, where the north pole would be

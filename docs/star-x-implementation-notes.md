@@ -33,18 +33,18 @@ numerically identical to the tested Cahill-Keyes implementation.
 
 | Component | Responsibility |
 | --- | --- |
-| [`cart0freak0-star-x.h`](../src/cart0freak0-star-x.h) | Frame contract, configurable group spacing and enlargement, polar-composition geometry, public API adapter, validation, and factory |
-| [`cart0freak0-cahill-keyes.h`](../src/cart0freak0-cahill-keyes.h) | Shared native half-octant formulas, M-layout assembly, and raster-registration longitude adjustment |
-| [`a60-carto-projection.h`](../src/a60-carto-projection.h) | Shared interface, projection state, and `star_x` mode |
-| [`a60-carto-frame.h`](../src/a60-carto-frame.h) | `frame` and `frame.frame_area` dimensions |
-| [`a60-carto.h`](../src/a60-carto.h) | Umbrella include and `starxwestate` whole-earth state |
+| [`cart0freak0-star-x.h`](../src.projections/cart0freak0-star-x.h) | Frame contract, configurable group spacing and enlargement, polar-composition geometry, public API adapter, validation, and factory |
+| [`cart0freak0-cahill-keyes.h`](../src.projections/cart0freak0-cahill-keyes.h) | Shared native half-octant formulas, M-layout assembly, and raster-registration longitude adjustment |
+| [`a60-carto-projection.h`](../src.projections/a60-carto-projection.h) | Shared interface, projection state, and `star_x` mode |
+| [`a60-carto-frame.h`](../src.projections/a60-carto-frame.h) | `frame` and `frame.frame_area` dimensions |
+| [`a60-carto.h`](../src.projections/a60-carto.h) | Umbrella include and `starxwestate` whole-earth state |
 | [`test-star-x-projection-api.cc`](../tests/test-star-x-projection-api.cc) | Reference anchors, assembly identity, global domain, scaling, validation, and API tests |
-| [`generate-geometry.cc`](../tests/generate-geometry.cc) | Layered Star-X face geometry and the central North-pole star |
-| [`natural-earth-generation.h`](../tests/natural-earth-generation.h) | Layer-aware land, ice, and coastline split plus unified Antarctica placement |
+| [`generate-geometry.cc`](../src.generate/generate-geometry.cc) | Layered Star-X face geometry and the central North-pole star |
+| [`natural-earth-generation.h`](../src.generate/natural-earth-generation.h) | Layer-aware land, ice, and coastline split plus unified Antarctica placement |
 
 The repository renamed projection-specific headers from the former
 `a60-carto-projection-*` prefix to `cart0freak0-*`. The implementation is
-therefore in `src/cart0freak0-star-x.h`, consistent with every other current
+therefore in `src.projections/cart0freak0-star-x.h`, consistent with every other current
 projection header.
 
 ## Coordinate conventions
@@ -304,7 +304,7 @@ centered on the page axis and its lower edge aligns with the lowest octant.
 Ocean and bathymetry remain in the unfolded X; this preserves the global net
 while the land, ice, and coastline layers present Antarctica once. The
 checked-in
-[`geometry-star-x-34-44.with-poles.svg`](../assets/adhoc/geometry-star-x-34-44.with-poles.svg)
+[`geometry-star-x-34-44.with-poles.svg`](../assets.static/adhoc/geometry-star-x-34-44.with-poles.svg)
 establishes this visual intent only—none of its Antarctic path coordinates or
 scale are copied.
 

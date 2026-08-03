@@ -84,7 +84,7 @@ mathematics and the drawing controls only the compatibility viewport.
 ## Checked-in source plate
 
 5. **Narukawa Lab.** *15-SP-TESD-03-AG*, AuthaGraph A3 drawing sheet, PDF.
-   [Repository asset](../assets/authagraph/15-SP-TESD-03-AG.pdf).
+   [Repository asset](../assets.static/authagraph/15-SP-TESD-03-AG.pdf).
 
    Local file metadata:
 
@@ -115,7 +115,7 @@ mathematics and the drawing controls only the compatibility viewport.
 ## Repository implementation and verification sources
 
 7. **AuthaGraph C++20 forward projection.**
-   [`src/cart0freak0-authagraph.h`](../src/cart0freak0-authagraph.h).
+   [`src.projections/cart0freak0-authagraph.h`](../src.projections/cart0freak0-authagraph.h).
 
    This file contains the four published vertex coordinates, spherical local
    coordinate conversion, equations 2.22 and 2.23, the 24-sector
@@ -131,7 +131,7 @@ mathematics and the drawing controls only the compatibility viewport.
    the common projection API.
 
 9. **Cartographic integration locations.**
-   [`src/a60-svg-carto-geo.h`](../src/a60-svg-carto-geo.h).
+   [`src.projections/a60-svg-carto-geo.h`](../src.projections/a60-svg-carto-geo.h).
 
    `augment_carto_geo_specific()` defines the poles, seam probes, supple-zone
    probes, and world cities used as integration anchors. The AuthaGraph API
