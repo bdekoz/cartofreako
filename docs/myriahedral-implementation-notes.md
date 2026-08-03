@@ -35,13 +35,13 @@ The work has three parts:
 
 | Component | Responsibility |
 | --- | --- |
-| [`cart0freak0-myriahedral.h`](../src/cart0freak0-myriahedral.h) | Mesh generation, unfolding, forward transform, frame validation, API adapter, and source-raster preset |
-| [`cart0freak0-myriahedral-tree.inc`](../src/cart0freak0-myriahedral-tree.inc) | Compact parent indices for the fixed 5120-face spanning tree |
-| [`a60-carto-projection.h`](../src/a60-carto-projection.h) | Shared `projection_api`, `projection_base`, and `myriahedral` projection mode |
-| [`a60-carto-frame.h`](../src/a60-carto-frame.h) | `frame` and `frame.frame_area` geometry |
-| [`a60-carto.h`](../src/a60-carto.h) | Umbrella include that exports the projection |
+| [`cart0freak0-myriahedral.h`](../src.projections/cart0freak0-myriahedral.h) | Mesh generation, unfolding, forward transform, frame validation, API adapter, and source-raster preset |
+| [`cart0freak0-myriahedral-tree.inc`](../src.projections/cart0freak0-myriahedral-tree.inc) | Compact parent indices for the fixed 5120-face spanning tree |
+| [`a60-carto-projection.h`](../src.projections/a60-carto-projection.h) | Shared `projection_api`, `projection_base`, and `myriahedral` projection mode |
+| [`a60-carto-frame.h`](../src.projections/a60-carto-frame.h) | `frame` and `frame.frame_area` geometry |
+| [`a60-carto.h`](../src.projections/a60-carto.h) | Umbrella include that exports the projection |
 | [`test-myriahedral-projection-api.cc`](../tests/test-myriahedral-projection-api.cc) | Fixed anchors, upstream-layout checks, variable frames, full-degree sweep, domain validation, and API integration |
-| [`a60-svg-carto-geo.h`](../src/a60-svg-carto-geo.h) | Geographic integration anchors exercised by the projection test |
+| [`a60-svg-carto-geo.h`](../src.projections/a60-svg-carto-geo.h) | Geographic integration anchors exercised by the projection test |
 
 Most numeric helpers live in `a60::carto::myriahedral_detail`. They are
 header-local `inline` functions so the implementation follows the rest of the
@@ -339,7 +339,7 @@ const a60::carto::frame::area size {
 };
 const a60::carto::frame map_frame {size};
 const auto projection = a60::carto::make_myriahedral_projection(
-  map_frame, "assets/myriahedral/black-white-downsampled.png");
+  map_frame, "assets.static/myriahedral/black-white-downsampled.png");
 
 const auto [x, y]
   = projection.meridians_to_point_2d(40.7128, -74.0060);
@@ -406,7 +406,7 @@ Myriahedral Projections*. Natural Earth supplied the historical country
 geometry used while reconstructing the fixed tree.
 
 The local raster
-[`black-white-downsampled.png`](../assets/myriahedral/black-white-downsampled.png)
+[`black-white-downsampled.png`](../assets.static/myriahedral/black-white-downsampled.png)
 is byte-for-byte identical to the upstream sample at the time of
 implementation. Its SHA-256 is:
 
@@ -418,5 +418,5 @@ See the [bibliography](myriahedral-bibliography.md) for stable primary links,
 the configuration evidence, data sources, and licensing notes.
 The exact reconstruction inputs, generators, selected tree, planar baseline,
 and scoring output are preserved in the
-[`assets/myriahedral`](../assets/myriahedral/README.md) artifact
+[`assets.static/myriahedral`](../assets.static/myriahedral/README.md) artifact
 manifest.

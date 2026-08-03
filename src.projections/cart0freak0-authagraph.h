@@ -420,7 +420,7 @@ validate_authagraph_layout(projection_base value, const frame& map_viewport)
    normalized rectangle to map_frame.frame_area.
 
    The 2022 analytic formula approximates the earlier graphical construction
-   used by assets/authagraph/15-SP-TESD-03-AG.pdf. The A3 compatibility preset
+   used by assets.static/authagraph/15-SP-TESD-03-AG.pdf. The A3 compatibility preset
    uses the plate's measured map viewport so the coordinate systems align.
 */
 struct agproj : public projection_base, public projection_api
@@ -527,7 +527,7 @@ inline const agproj ag_a3{{pauthagraph_a3,
                            authagraph_longitude_zero_x,
                            authagraph_latitude_zero_y,
                            authagraph,
-                           "assets/authagraph/15-SP-TESD-03-AG.pdf"},
+                           "assets.static/authagraph/15-SP-TESD-03-AG.pdf"},
                           pauthagraph_a3_map};
 
 } // namespace a60::carto

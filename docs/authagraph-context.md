@@ -201,7 +201,7 @@ periodic normalization produces equivalent positions.
 ## Relationship to the source drawing sheet
 
 The repository includes
-[`assets/authagraph/15-SP-TESD-03-AG.pdf`](../assets/authagraph/15-SP-TESD-03-AG.pdf),
+[`assets.static/authagraph/15-SP-TESD-03-AG.pdf`](../assets.static/authagraph/15-SP-TESD-03-AG.pdf),
 a one-page A3 AuthaGraph drawing sheet. It serves two purposes:
 
 - a visual reference for the graticule, cuts, and chosen world-map aspect; and

@@ -779,7 +779,7 @@ inline const frame pmyriahedral_source {
 /// Registered projection preset for the checked-in Myriahedral raster.
 inline const myriaproj myriahedral_source {
   pmyriahedral_source,
-  "assets/myriahedral/black-white-downsampled.png"
+  "assets.static/myriahedral/black-white-downsampled.png"
 };
 
 } // namespace a60::carto

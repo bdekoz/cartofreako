@@ -33,12 +33,12 @@ The work was delivered in three stages:
 
 | Component | Responsibility |
 | --- | --- |
-| [`cart0freak0-authagraph.h`](../src/cart0freak0-authagraph.h) | Numeric forward transform, net assembly, frame validation, API adapter, and A3 compatibility preset |
-| [`a60-carto-projection.h`](../src/a60-carto-projection.h) | Shared `projection_api`, `projection_base`, and projection mode |
-| [`a60-carto-frame.h`](../src/a60-carto-frame.h) | `frame` and `frame.frame_area` geometry |
-| [`a60-carto.h`](../src/a60-carto.h) | Umbrella include that exports the projection |
+| [`cart0freak0-authagraph.h`](../src.projections/cart0freak0-authagraph.h) | Numeric forward transform, net assembly, frame validation, API adapter, and A3 compatibility preset |
+| [`a60-carto-projection.h`](../src.projections/a60-carto-projection.h) | Shared `projection_api`, `projection_base`, and projection mode |
+| [`a60-carto-frame.h`](../src.projections/a60-carto-frame.h) | `frame` and `frame.frame_area` geometry |
+| [`a60-carto.h`](../src.projections/a60-carto.h) | Umbrella include that exports the projection |
 | [`test-authagraph-projection-api.cc`](../tests/test-authagraph-projection-api.cc) | Reference coordinates, full-degree domain sweep, variable frames, validation, and API integration |
-| [`a60-svg-carto-geo.h`](../src/a60-svg-carto-geo.h) | Geographic integration anchors exercised by the projection test |
+| [`a60-svg-carto-geo.h`](../src.projections/a60-svg-carto-geo.h) | Geographic integration anchors exercised by the projection test |
 
 Most implementation helpers live in `a60::carto::authagraph_detail`. They are
 header-local `inline` functions so the projection retains the library's
@@ -288,7 +288,7 @@ the map rectangle itself.
 ## A3 source-plate calibration
 
 The compatibility preset is registered to
-[`15-SP-TESD-03-AG.pdf`](../assets/authagraph/15-SP-TESD-03-AG.pdf).
+[`15-SP-TESD-03-AG.pdf`](../assets.static/authagraph/15-SP-TESD-03-AG.pdf).
 
 | Measurement | Value in PDF points |
 | --- | ---: |

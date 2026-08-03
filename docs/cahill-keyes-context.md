@@ -20,7 +20,7 @@ cells. The implementation therefore follows a geometric construction rather
 than a single closed-form equation.
 
 <p align="center">
-  <img src="../assets/visionscarto/visionscarto-cahillkeyes-44x22.svg"
+  <img src="../assets.static/visionscarto/visionscarto-cahillkeyes-44x22.svg"
        width="900"
        alt="Cahill-Keyes world map in its M-shaped eight-octant layout">
 </p>
@@ -197,7 +197,7 @@ A polyhedral projection is discontinuous at its cut edges. The point API makes
 a deterministic octant choice at every longitude boundary, but a line or
 polygon crossing a cut must be split instead of connected through the blank
 space between octants. Projection-specific path handling remains in
-[`cart0freak0-cahill-keyes-functions.h`](../src/cart0freak0-cahill-keyes-functions.h).
+[`cart0freak0-cahill-keyes-functions.h`](../src.projections/cart0freak0-cahill-keyes-functions.h).
 
 The helper views the placed projection as the rectangle bounded by `L`, `R`,
 `T`, and `B`. A large jump between opposite outer quarters or opposite

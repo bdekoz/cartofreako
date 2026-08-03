@@ -1,7 +1,7 @@
 # Natural Earth 1:10m physical-vector input
 
 `make generate-earth-ck` downloads the Natural Earth 5.1.1 complete 1:10m
-physical-vector archive into `assets/natural-earth/10m-physical-vectors/`.
+physical-vector archive into `assets.static/natural-earth/10m-physical-vectors/`.
 The directory is a reproducible build input and is intentionally ignored by
 Git. Run only the acquisition step with:
 

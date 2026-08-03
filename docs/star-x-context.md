@@ -18,7 +18,7 @@ lower half, rotates the last two pairs by 180 degrees, and puts them in the
 upper half. The result is a portrait, polar-centered X.
 
 <p align="center">
-  <img src="../assets/adhoc/star-x-2024-08.png"
+  <img src="../assets.static/adhoc/star-x-2024-08.png"
        width="600"
        alt="Historical Star-X composition with two rotated Cahill-Keyes groups around a central polar star">
 </p>

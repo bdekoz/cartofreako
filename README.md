@@ -9,6 +9,18 @@ the projection comparison, aspect-ratio requirements, public APIs, usage
 examples, implementation guides, geometric context, bibliographies,
 attribution, and source/test index.
 
+The top-level directories separate implementation, generation, verification,
+and artifacts:
+
+| Directory | Contents |
+| --- | --- |
+| `src.projections/` | Native C++20 projection API and implementations |
+| `src.generate/` | SVG generator entry points and generation support headers |
+| `src.wasm/` | WebAssembly adapter, geographic input, smoke test, and checked-in build |
+| `tests/` | Standalone algorithm and API tests only |
+| `assets.static/` | Historical, reference, and downloaded source assets |
+| `assets.generated/` | Checked-in SVG, PDF, and PNG renderings |
+
 ## Build and test
 
 Install the components listed in
@@ -25,12 +37,12 @@ make check
 The checks build in `tests/` with C++20 and strict compiler warnings. See
 [`index.md`](index.md#choose-a-projection) to select and use a projection.
 
-Generate all 20 maps as layered SVG, PDF, and opaque-white,
-3840-pixel-long-side PNG artifacts with:
+Generate 20 whole-earth maps and 12 Cahill-Keyes enlargement slices as
+layered SVG, PDF, and opaque-white, 3840-pixel-long-side PNG artifacts with:
 
 ```sh
 make all
 ```
 
-Outputs are organized under `generated/svg/`, `generated/pdf/`, and
-`generated/png/`.
+Outputs are organized under `assets.generated/svg/`, `assets.generated/pdf/`, and
+`assets.generated/png/`.

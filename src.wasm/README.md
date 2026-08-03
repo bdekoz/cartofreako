@@ -17,7 +17,7 @@ make wasm-cahill-keyes
 make check-wasm-cahill-keyes
 ```
 
-The build writes these artifacts in place to `generated/wasm/`:
+The build writes these artifacts in place to `src.wasm/`:
 
 ```text
 cartofreako-cahill-keyes.mjs
@@ -70,4 +70,4 @@ map width.
 
 The native forward construction derives from `MegamapMaker-prep9.pl` by Mary
 Jo Graça and Gene Keyes. Its non-commercial attribution terms are recorded in
-`src/cart0freak0-cahill-keyes.h`; commercial users should contact Gene Keyes.
+`src.projections/cart0freak0-cahill-keyes.h`; commercial users should contact Gene Keyes.

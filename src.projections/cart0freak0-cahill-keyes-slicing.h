@@ -64,9 +64,9 @@
  * latitude restriction belongs before projection and projected-face clipping.
  *
  * `make generate-ck-slices` builds the two generators and writes all twelve
- * SVG wrappers under `generated/svg`. `make all` additionally runs the shared
+ * SVG wrappers under `assets.generated/svg`. `make all` additionally runs the shared
  * Inkscape workflow, producing self-contained vector PDFs under
- * `generated/pdf` and white-background RGB PNGs under `generated/png`. At the
+ * `assets.generated/pdf` and white-background RGB PNGs under `assets.generated/png`. At the
  * default 4K long-side setting, a quadrant strip raster is 1920 by 3840. The
  * naturally bounded octants also use a 3840-pixel height; their width follows
  * the unscaled face bounds. Artifact basenames are `earth-ck-4-slice-N` and

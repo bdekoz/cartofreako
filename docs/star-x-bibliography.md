@@ -28,7 +28,7 @@ artifacts. Web resources were last checked on 2026-08-01.
    tiling, and internet-geography context.
 
 3. **De Kosnik, Benjamin.** Historical Star-X rendered composition, 2024.
-   [Repository image](../assets/adhoc/star-x-2024-08.png).
+   [Repository image](../assets.static/adhoc/star-x-2024-08.png).
 
    The image is used to illustrate orientation and visual context. Its data
    overlays, crops, and page decoration are not numeric projection inputs.
@@ -37,7 +37,7 @@ artifacts. Web resources were last checked on 2026-08-01.
 
 4. **Graça, Mary Jo, and Gene Keyes.** “MegamapMaker-prep9.” Perl source,
    2012-03-15, with later notes dated 2013-11-28.
-   [Repository copy](../assets/cahill-keyes/MegamapMaker-prep9.pl).
+   [Repository copy](../assets.static/cahill-keyes/MegamapMaker-prep9.pl).
 
    This is the direct source of the half-octant A–L formulas, preliminary
    scaffold, geographic normalization, and ordinary M-layout used by both
@@ -47,7 +47,7 @@ artifacts. Web resources were last checked on 2026-08-01.
 
 5. **cartofreako contributors.** Native C++20 Cahill-Keyes forward
    projection.
-   [`cart0freak0-cahill-keyes.h`](../src/cart0freak0-cahill-keyes.h).
+   [`cart0freak0-cahill-keyes.h`](../src.projections/cart0freak0-cahill-keyes.h).
 
    Star-X calls this implementation directly. It is the numerical authority
    for local face geometry and the source M-layout; Star-X adds the group
@@ -115,7 +115,7 @@ implementation of Cahill's 1909 graticule.
 ## Registration and repository verification
 
 15. **Visionscarto.** “Cahill-Keyes 44 × 22.” SVG map asset, 2018.
-    [Repository SVG](../assets/visionscarto/visionscarto-cahillkeyes-44x22.svg).
+    [Repository SVG](../assets.static/visionscarto/visionscarto-cahillkeyes-44x22.svg).
 
    This is the registration family whose one-degree longitude adjustment is
    shared by the Cahill-Keyes and Star-X public APIs.
@@ -127,7 +127,7 @@ implementation of Cahill's 1909 graticule.
     [`test-cahill-keyes-projection-api.cc`](../tests/test-cahill-keyes-projection-api.cc).
 
 18. **alpha60 contributors.** Geographic integration anchors.
-    [`augment_carto_geo_specific`](../src/a60-svg-carto-geo.h).
+    [`augment_carto_geo_specific`](../src.projections/a60-svg-carto-geo.h).
 
 The Star-X reference points apply its documented rigid transform and centered
 page scale to item 17. The test also compares both public projections across
@@ -135,7 +135,7 @@ a separate global grid and checks every item 18 location.
 
 19. **De Kosnik, Benjamin.** “Geometry Star-X 34 × 44 with poles.” SVG
     concept drawing, 2026.
-    [Repository reference](../assets/adhoc/geometry-star-x-34-44.with-poles.svg).
+    [Repository reference](../assets.static/adhoc/geometry-star-x-34-44.with-poles.svg).
 
     This illustrates the requested 120-percent page-centered scale, central
     star, and unified Antarctic presentation. Its Antarctica silhouette is

@@ -37,7 +37,7 @@ using generation::geographic_point;
 using generation::projection_context;
 using generation::projection_spec;
 constexpr std::string_view default_data_directory
-  = "assets/natural-earth/10m-physical-vectors";
+  = "assets.static/natural-earth/10m-physical-vectors";
 
 // The public projection applies a one-degree registration adjustment. These
 // are its public cut meridians. Clipping source polygons before projection is

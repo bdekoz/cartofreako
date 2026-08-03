@@ -122,7 +122,7 @@ main()
   assert(std::abs(zero_x - ag_a3.longitude_zero_x) < 1e-12);
   assert(std::abs(zero_y - ag_a3.latitude_zero_y) < 1e-12);
 
-  constexpr auto source = "assets/authagraph/15-SP-TESD-03-AG.pdf";
+  constexpr auto source = "assets.static/authagraph/15-SP-TESD-03-AG.pdf";
   constexpr std::array modes {
     projection_base::filled,
     projection_base::outline,
@@ -135,7 +135,8 @@ main()
 
   a60::io::get_run_time_resources().data = "/opt/alpha60-data";
   assert(api.image_filename(projection_base::filled)
-         == "/opt/alpha60-data/assets/authagraph/15-SP-TESD-03-AG.pdf");
+         == "/opt/alpha60-data/assets.static/authagraph/"
+            "15-SP-TESD-03-AG.pdf");
   a60::io::get_run_time_resources().data.clear();
 
   // Reference values calculated independently from the published equations

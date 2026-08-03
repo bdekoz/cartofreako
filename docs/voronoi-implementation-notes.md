@@ -39,10 +39,10 @@ rotation, center, or scale would define a different planar map.
 
 | Component | Responsibility |
 | --- | --- |
-| [`cart0freak0-voronoi.h`](../src/cart0freak0-voronoi.h) | Icosahedral geometry, face sites, gnomonic formulas, affine unfolding, D3 registration, frame validation, API adapter, and source-canvas preset |
-| [`a60-carto-projection.h`](../src/a60-carto-projection.h) | Shared `projection_api`, `projection_base`, and `voronoi` projection mode |
-| [`a60-carto-frame.h`](../src/a60-carto-frame.h) | `frame` and `frame.frame_area` geometry |
-| [`a60-carto.h`](../src/a60-carto.h) | Umbrella include that exports the projection |
+| [`cart0freak0-voronoi.h`](../src.projections/cart0freak0-voronoi.h) | Icosahedral geometry, face sites, gnomonic formulas, affine unfolding, D3 registration, frame validation, API adapter, and source-canvas preset |
+| [`a60-carto-projection.h`](../src.projections/a60-carto-projection.h) | Shared `projection_api`, `projection_base`, and `voronoi` projection mode |
+| [`a60-carto-frame.h`](../src.projections/a60-carto-frame.h) | `frame` and `frame.frame_area` geometry |
+| [`a60-carto.h`](../src.projections/a60-carto.h) | Umbrella include that exports the projection |
 | [`test-voronoi-projection-api.cc`](../tests/test-voronoi-projection-api.cc) | D3 reference points, topology, transforms, variable frames, domain sweep, seam equivalence, validation, and API integration |
 
 Numeric helpers are in `a60::carto::voronoi_detail`. They are header-local
@@ -507,7 +507,7 @@ the Icosahedral map implementation to Jason Davies (2013), Enrico Spinielli
 Mike Bostock as author and copyright holder.
 
 The required 2017 Mike Bostock ISC notice is retained verbatim in
-[`cart0freak0-voronoi.h`](../src/cart0freak0-voronoi.h). The C++ code has no
+[`cart0freak0-voronoi.h`](../src.projections/cart0freak0-voronoi.h). The C++ code has no
 runtime D3 dependency, but removing the dependency does not remove the source
 attribution or notice requirement.
 

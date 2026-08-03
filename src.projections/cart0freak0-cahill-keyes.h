@@ -711,7 +711,7 @@ struct ckproj : public projection_base, public projection_api
   string
   image_filename([[maybe_unused]] const raster_mode v) const override
   {
-    const string prefix = "/home/bkoz/src/cartofreako/generated/png/";
+    const string prefix = "/home/bkoz/src/cartofreako/assets.generated/png/";
     string ret = prefix + name;
     return ret + ".png";
   }

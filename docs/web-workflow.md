@@ -22,7 +22,7 @@ Emscripten. The example:
 The build produces:
 
 ```text
-generated/wasm/
+src.wasm/
 ├── index.html
 ├── myriahedral.mjs
 ├── myriahedral.wasm
@@ -30,7 +30,7 @@ generated/wasm/
 ```
 
 The source raster remains at
-[`assets/myriahedral/black-white-downsampled.png`](../assets/myriahedral/black-white-downsampled.png).
+[`assets.static/myriahedral/black-white-downsampled.png`](../assets.static/myriahedral/black-white-downsampled.png).
 It is served as an ordinary browser asset rather than copied into the WASM
 linear memory or Emscripten's virtual filesystem.
 
@@ -143,7 +143,7 @@ From the cartofreako repository root, create these source locations beside the
 checked-in Cahill-Keyes WebAssembly artifacts:
 
 ```text
-generated/wasm/
+src.wasm/
 ├── index.html
 ├── myriahedral-web.cc
 └── smoke.mjs
@@ -160,10 +160,10 @@ With the SDK environment active and the current directory set to the
 cartofreako root:
 
 ```sh
-mkdir -p generated/wasm
+mkdir -p src.wasm
 
-em++ generated/wasm/myriahedral-web.cc \
-  -I src \
+em++ src.wasm/myriahedral-web.cc \
+  -I src.projections \
   -isystem ../alpha60/src \
   -isystem ../izzi/src \
   -std=c++20 \
@@ -177,13 +177,13 @@ em++ generated/wasm/myriahedral-web.cc \
   -sENVIRONMENT=web,node \
   -sALLOW_MEMORY_GROWTH=1 \
   -sFILESYSTEM=0 \
-  -o generated/wasm/myriahedral.mjs
+  -o src.wasm/myriahedral.mjs
 ```
 
 Alpha60 and Izzi are marked as system include directories so warnings inside
 those neighboring header trees do not become errors in this wrapper's strict
-Clang build. The cartofreako source directory remains a normal include path,
-so warnings in the projection and adapter are still checked.
+Clang build. `src.projections/` remains a normal include path, so warnings in
+the projection and adapter are still checked.
 
 ### Linker and runtime flags
 
@@ -226,7 +226,7 @@ The ES module includes Node support solely so the generated function can be
 checked without a browser:
 
 ```sh
-node generated/wasm/smoke.mjs
+node src.wasm/smoke.mjs
 ```
 
 The smoke program:
@@ -237,7 +237,7 @@ The smoke program:
 - requires the SVG view box, latitude and longitude groups, and an anchor;
 - checks that exactly 53 graticule paths were generated;
 - rejects `nan` and `inf`; and
-- writes `generated/wasm/myriahedral-1920x1080.svg` for inspection.
+- writes `src.wasm/myriahedral-1920x1080.svg` for inspection.
 
 With Emscripten 6.0.5, the verified example produced:
 
@@ -260,17 +260,17 @@ emrun \
   --serve_after_close \
   --serve_root "$PWD" \
   --port 8000 \
-  generated/wasm/index.html
+  src.wasm/index.html
 ```
 
 Then open:
 
 ```text
-http://localhost:8000/generated/wasm/index.html
+http://localhost:8000/src.wasm/index.html
 ```
 
-`--serve_root` is important: it makes both `generated/wasm` and the repository's
-`assets` directory available beneath the same origin. The official
+`--serve_root` is important: it makes both `src.wasm` and the repository's
+`assets.static` directory available beneath the same origin. The official
 [`emrun` documentation](https://emscripten.org/docs/compiling/Running-html-files-with-emrun.html)
 also explains browser launching, ports, and server lifetime.
 
@@ -303,7 +303,7 @@ page wraps it in a Blob, creates an object URL, and assigns that URL to the
 upper `<img>` layer.
 
 The lower `<img>` independently loads
-`assets/myriahedral/black-white-downsampled.png`. Keeping the layers
+`assets.static/myriahedral/black-white-downsampled.png`. Keeping the layers
 separate has several advantages:
 
 - the 1.2 MiB source raster stays out of WASM memory;
@@ -417,7 +417,7 @@ example's SVG is entirely generated from fixed C++ data.
 | Alpha60 unused-parameter warning becomes an error | Keep Alpha60 and Izzi on `-isystem` paths as shown |
 | Browser reports a WASM MIME error | Serve `.wasm` as `application/wasm` |
 | Browser fetches the wrong WASM path | Keep `.mjs` and `.wasm` together or pass `locateFile` |
-| Raster is 404 | Serve from the repository root and retain the `build/web` layout |
+| Raster is 404 | Serve from the repository root and retain the `src.wasm/` layout |
 | Overlay is missing under a strict CSP | Allow `blob:` for images or use a reviewed inline-SVG strategy |
 | Projection rejects the frame | Use an exact 16:9 pair such as `1920 x 1080`, not an approximate decimal ratio |
 | Long lines bridge separate branches | Preserve face-transition bisection and split at detected cuts |

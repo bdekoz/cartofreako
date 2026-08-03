@@ -6,22 +6,25 @@
 
 ## Purpose
 
-The repository contains four C++20 programs that are both SVG generators and
-structural tests. They exercise all five production projections through the
-real Alpha60 and Izzi APIs, write layered SVGs under the repository's
-`generated/svg/` directory, then reopen those files and verify dimensions,
-layer structure, path counts, and numeric sanity. Inkscape subsequently
-exports each validated SVG as PDF and as a 3840-pixel-long-side PNG.
+The repository contains six C++20 generation programs under `src.generate/`.
+Four exercise all five production projections through the real Alpha60 and
+Izzi APIs. Two derive enlarged Cahill-Keyes quadrant and octant views from the
+whole-earth SVG. They write layered SVGs under `assets.generated/svg/`, then
+reopen those files and verify dimensions, layer structure, path counts, and
+numeric sanity. Inkscape subsequently exports each validated SVG as PDF and
+as a 3840-pixel-long-side PNG.
 
 | Artifact | Generator | Principal input |
 | --- | --- | --- |
-| Geometry | [`tests/generate-geometry.cc`](../tests/generate-geometry.cc) | Native projection faces and screen quadrants |
-| Graticules | [`tests/generate-graticules.cc`](../tests/generate-graticules.cc) | Sampled latitude and longitude lines |
-| Earth | [`tests/generate-earth.cc`](../tests/generate-earth.cc) | Natural Earth 1:10m ocean and land |
-| Water | [`tests/generate-water.cc`](../tests/generate-water.cc) | Every other Natural Earth 1:10m physical layer |
+| Geometry | [`src.generate/generate-geometry.cc`](../src.generate/generate-geometry.cc) | Native projection faces and screen quadrants |
+| Graticules | [`src.generate/generate-graticules.cc`](../src.generate/generate-graticules.cc) | Sampled latitude and longitude lines |
+| Earth | [`src.generate/generate-earth.cc`](../src.generate/generate-earth.cc) | Natural Earth 1:10m ocean and land |
+| Water | [`src.generate/generate-water.cc`](../src.generate/generate-water.cc) | Every other Natural Earth 1:10m physical layer |
+| Four slices | [`src.generate/generate-4-slice.cc`](../src.generate/generate-4-slice.cc) | Four horizontal quadrant enlargements from the Cahill-Keyes Earth SVG |
+| Eight slices | [`src.generate/generate-8-slice.cc`](../src.generate/generate-8-slice.cc) | Eight exact-octant enlargements from the Cahill-Keyes Earth SVG |
 
 The aggregate target generates all four artifact families for all five
-projections:
+projections plus all 12 Cahill-Keyes slices:
 
 ```sh
 make all
@@ -70,7 +73,7 @@ The default locations can be overridden:
 | `ALPHA60_SRC` | `../alpha60/src` | Alpha60 headers |
 | `IZZI_SRC` | `../izzi/src` | Izzi SVG headers |
 | `GDAL_CONFIG` | `gdal-config` | GDAL compiler and linker flags |
-| `NATURAL_EARTH_DIR` | `assets/natural-earth/10m-physical-vectors` | Extracted shapefiles |
+| `NATURAL_EARTH_DIR` | `assets.static/natural-earth/10m-physical-vectors` | Extracted shapefiles |
 | `INKSCAPE` | `inkscape` | Command-line PDF and PNG exporter |
 | `PNG_LONG_SIDE` | `3840` | Pixel count assigned to each PNG's longest side |
 
@@ -98,11 +101,11 @@ The generators are not part of `make check`; invoking a `generate-*`
 target both writes its artifact and runs that generator's embedded structural
 checks.
 
-The three artifact sets under `generated/svg/`, `generated/pdf/`, and
-`generated/png/` are checked in. This makes visual and XML diffs reviewable,
-but it also means that regenerating with a different GDAL, GEOS, or Inkscape
-version can produce ordering, coordinate, or rendering differences even
-though the input archive is pinned.
+The 32 artifacts in each of `assets.generated/svg/`, `assets.generated/pdf/`,
+and `assets.generated/png/` are checked in. This makes visual and XML diffs
+reviewable, but it also means that regenerating with a different GDAL, GEOS,
+or Inkscape version can produce ordering, coordinate, or rendering differences
+even though the input archive is pinned.
 
 ## PDF and 4K PNG export
 
@@ -129,10 +132,10 @@ Inkscape exports vector PDFs at the SVG's physical page size without changing
 the layered SVG originals. For example, a 44-by-22-inch Cahill-Keyes page is
 3168 by 1584 PDF points. The explicit PNG pixel override is independent of
 that physical page size.
-Final files are grouped by format rather than mixed at the `generated/` root:
+Final files are grouped by format rather than mixed at the `assets.generated/` root:
 
 ```text
-generated/
+assets.generated/
 ├── svg/
 ├── pdf/
 └── png/
@@ -157,11 +160,16 @@ are recorded in the
 
 ## Shared coordinate pipeline
 
-All four generators use
-[`projection-generation-common.h`](../tests/projection-generation-common.h)
+The four whole-map generators use
+[`projection-generation-common.h`](../src.generate/projection-generation-common.h)
 to select a production projection, construct its exact frame, and call the
 shared public API in `(latitude, longitude)` order. Projected coordinates use
 an upper-left SVG origin.
+
+The two slicing programs instead use
+[`cart0freak0-cahill-keyes-slicing.h`](../src.projections/cart0freak0-cahill-keyes-slicing.h),
+which owns the slice descriptors, clipping geometry, SVG wrapper construction,
+and verification rules.
 
 ```mermaid
 flowchart LR
@@ -258,7 +266,7 @@ pieces directly. AuthaGraph additionally uses a 5-degree geographic grid and
 rejects any fragment whose projected closing edge exceeds 2.5 frame units.
 
 Myriahedral and Voronoi use exact native-face clipping from
-[`projection-area-generation.h`](../tests/projection-area-generation.h).
+[`projection-area-generation.h`](../src.generate/projection-area-generation.h).
 Every 5-degree geographic cell is densified, mapped separately through each
 candidate face's local transform, repaired with GEOS if necessary, and
 intersected with that face's exact planar triangle. Myriahedral uses the same
@@ -270,7 +278,7 @@ microscopic cracks along adjacent pieces.
 
 ## Geometry generator
 
-[`tests/generate-geometry.cc`](../tests/generate-geometry.cc) constructs the
+[`src.generate/generate-geometry.cc`](../src.generate/generate-geometry.cc) constructs the
 selected projection's explanatory skeleton rather than reading external
 data. The `triangular-faces` layer is constructed from each projection's
 native topology:
@@ -322,7 +330,7 @@ quadrant count, optional octant layers, and absence of NaN or infinity.
 
 ## Graticule generator
 
-[`tests/generate-graticules.cc`](../tests/generate-graticules.cc)
+[`src.generate/generate-graticules.cc`](../src.generate/generate-graticules.cc)
 creates a conventional ten-degree geographic reference grid:
 
 - 17 parallels from `80°S` through the equator to `80°N`;
@@ -352,10 +360,10 @@ subpath count is projection-dependent.
 
 ## Natural Earth physical-map generators
 
-[`tests/natural-earth-generation.h`](../tests/natural-earth-generation.h)
+[`src.generate/natural-earth-generation.h`](../src.generate/natural-earth-generation.h)
 contains the shared GDAL-to-Izzi rendering pipeline. The thin
-[`generate-earth.cc`](../tests/generate-earth.cc) and
-[`generate-water.cc`](../tests/generate-water.cc) entry points select two
+[`generate-earth.cc`](../src.generate/generate-earth.cc) and
+[`generate-water.cc`](../src.generate/generate-water.cc) entry points select two
 complementary artifact kinds, ensuring that both use identical clipping,
 densification, projection, styling, and validation logic.
 

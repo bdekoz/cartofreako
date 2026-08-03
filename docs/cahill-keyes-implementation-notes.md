@@ -39,8 +39,8 @@ The work was delivered in three stages:
 
 | Component | Responsibility |
 | --- | --- |
-| [`cart0freak0-cahill-keyes.h`](../src/cart0freak0-cahill-keyes.h) | Numeric forward projection, frame validation, `projection_api` adapter, screen-coordinate conversion, raster naming, and compatibility presets |
-| [`cart0freak0-cahill-keyes-functions.h`](../src/cart0freak0-cahill-keyes-functions.h) | Scale- and offset-aware splitting of projected paths at wrapped frame edges |
+| [`cart0freak0-cahill-keyes.h`](../src.projections/cart0freak0-cahill-keyes.h) | Numeric forward projection, frame validation, `projection_api` adapter, screen-coordinate conversion, raster naming, and compatibility presets |
+| [`cart0freak0-cahill-keyes-functions.h`](../src.projections/cart0freak0-cahill-keyes-functions.h) | Scale- and offset-aware splitting of projected paths at wrapped frame edges |
 | [`test-cahill-keyes-projection.cc`](../tests/test-cahill-keyes-projection.cc) | Native reference points, scale invariance, domain sweep, and invalid geographic input |
 | [`test-cahill-keyes-projection-api.cc`](../tests/test-cahill-keyes-projection-api.cc) | Public API anchors, variable frames, invalid frames, raster paths, and compatibility construction |
 | [`test-cahill-keyes-path-functions.cc`](../tests/test-cahill-keyes-path-functions.cc) | Horizontal, vertical, corner, two-edge, variable-frame, stateful, and invalid path cases |
@@ -551,7 +551,7 @@ can be built without the rest of the application dependency graph.
 ## Provenance and licensing
 
 The native implementation is derived from
-[`assets/cahill-keyes/MegamapMaker-prep9.pl`](../assets/cahill-keyes/MegamapMaker-prep9.pl),
+[`assets.static/cahill-keyes/MegamapMaker-prep9.pl`](../assets.static/cahill-keyes/MegamapMaker-prep9.pl),
 dated 2012-03-15 and attributed in its header to Mary Jo Graça, with Gene Keyes
 credited for the projection design and calculations. That header permits
 modification, reproduction, and redistribution for non-commercial use with

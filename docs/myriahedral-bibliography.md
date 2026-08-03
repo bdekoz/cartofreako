@@ -80,7 +80,7 @@ runtime dependency of `a60::carto::myriaproj`.
 
 The registration asset is:
 
-[`assets/myriahedral/black-white-downsampled.png`](../assets/myriahedral/black-white-downsampled.png)
+[`assets.static/myriahedral/black-white-downsampled.png`](../assets.static/myriahedral/black-white-downsampled.png)
 
 Properties verified during implementation:
 
@@ -120,5 +120,5 @@ into the implementation.
   dual tree, cuts, quadrants, axes, and source-canvas relationship.
 - [`docs/converge-projection-myriahedral.md`](converge-projection-myriahedral.md)
   preserves the staged implementation brief.
-- [`assets/myriahedral`](../assets/myriahedral/README.md) preserves
+- [`assets.static/myriahedral`](../assets.static/myriahedral/README.md) preserves
   the exact reconstruction artifacts and checksums used by the implementation.

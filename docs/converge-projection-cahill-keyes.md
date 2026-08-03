@@ -1,21 +1,21 @@
 Stage 1 development: reimplement clean c++20 implementation of Cahill-Keyes Butterfly M projection from previous
 
 transform the pearl script here:
-assets/cahill-keyes/MegamapMaker-prep9.pl
+assets.static/cahill-keyes/MegamapMaker-prep9.pl
 
 into a new c++20 implementation that transforms from point (latitude, longitude) to point (x,y) using the projection API specified here:
-src/a60-carto-projection.h
+src.projections/a60-carto-projection.h
 
 Examples of other projection implementation using this API are here:
-src/cart0freak0-authagraph.h
-src/cart0freak0-cahill-keyes.h
+src.projections/cart0freak0-authagraph.h
+src.projections/cart0freak0-cahill-keyes.h
 
 Implementation of the new implementation goes in this new file:
-src/cart0freak0-cahill-keyes-v2.h
+src.projections/cart0freak0-cahill-keyes-v2.h
 
 The projection should be able to pass the test function
 augment_carto_geo_specific in the source file here:
-src/a60-svg-carto-geo.h
+src.projections/a60-svg-carto-geo.h
 
 That file maps out specific positions on a map that will be used to test the projection implementation.
 
@@ -36,13 +36,13 @@ https://www.genekeyes.com/BETA-2-FOXIT/Beta-2-Foxit.html
 Stage 2 development: variable sized maps with aspect ratio constraint
 
 Abstract the hard-coded map sizes () into variable size map sizes with the same aspect ratio. Cahill-Keyes requires an aspect ratio of 2x:1y. Now, make the projection fit arbitrary map sizes as long as the new sizes retain the required 2:1 ratio, but have variable sizes, including these examples of Cahill-Key map projections in other sizes:
-assets/visionscarto/visionscarto-cahillkeyes-44x22.300-inverse.png
-assets/visionscarto/visionscarto-cahillkeyes-44x22.svg
+assets.static/visionscarto/visionscarto-cahillkeyes-44x22.300-inverse.png
+assets.static/visionscarto/visionscarto-cahillkeyes-44x22.svg
 
 Use the a60::carto::frame abstraction for the size of the variable projection, aka
 
 struct area { double x, double y}; from frame.frame_area here:
-src/a60-carto-frame.h
+src.projections/a60-carto-frame.h
 
 ---
 
@@ -111,7 +111,7 @@ make a new test file, generate-ocean-ck.cc, that use the Cahill-Keyes
 
   https://www.naturalearthdata.com/downloads/10m-physical-vectors/
 
-  But fills the shapes with variation of wave patterns as found in the pdf assets/adhoc/hamonshū.wave-studies.1903.jp.pdf. There are 51 pages, some with multiple patterns on each. Disambiguate the pattern images present in the PDF into a unique set of wave path styles, by converting the unique pattern to SVG lines or elements via Izzi, name the paths generated via page number found and any other scheme including if the pattern name is present (translate japanese to english). Do each of the identified patterns as layers in the generated SVG file "ocean-ck-44-22.svg". Then add a new makefile rule to compile the file, run the exeutable, and generate the output SVG
+  But fills the shapes with variation of wave patterns as found in the pdf assets.static/adhoc/hamonshū.wave-studies.1903.jp.pdf. There are 51 pages, some with multiple patterns on each. Disambiguate the pattern images present in the PDF into a unique set of wave path styles, by converting the unique pattern to SVG lines or elements via Izzi, name the paths generated via page number found and any other scheme including if the pattern name is present (translate japanese to english). Do each of the identified patterns as layers in the generated SVG file "ocean-ck-44-22.svg". Then add a new makefile rule to compile the file, run the exeutable, and generate the output SVG
 
 
 Stage 9
