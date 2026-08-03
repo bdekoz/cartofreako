@@ -27,7 +27,7 @@ make check
 ```
 
 Generate geometry, labeled graticules, the layered Natural Earth physical
-map, and the 153-layer Hamonshū ocean for all five projections with:
+map, and the 91-layer curated Hamonshū ocean for all five projections with:
 
 ```sh
 make all
@@ -100,9 +100,10 @@ physical-vector bundle; the downloaded build input remains ignored by Git.
 See the [data note](docs/natural-earth-10m-physical-vectors.md) for source,
 checksum, licensing, and the standalone fetch target.
 
-Generate just the Natural Earth ocean, filled with 153 independently layered
-vector interpretations of the wave studies in Mori Yūzan's 1903 *Hamonshū*,
-volume 2, with:
+Generate just the Natural Earth ocean, filled with the same 91 independently
+layered variations selected by Izzi's `examples/curves-hamonshu.cc`—13 source
+motifs at seven curvature ratios—from Mori Yūzan's 1903 *Hamonshū*, volume 2,
+with:
 
 ```sh
 make generate-ocean-ck
@@ -392,7 +393,7 @@ native source-canvas dimensions but does not prescribe a raster.
 | [`generated/png/graticules-ck-44-22.png`](generated/png/graticules-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes graticule with 17 latitudes and 36 longitudes |
 | [`tests/generate-earth.cc`](tests/generate-earth.cc) | GDAL/Izzi SVG generator and structural test for clipped and native-cut-split Natural Earth 1:10m physical-vector layers |
 | [`generated/png/earth-ck-44-22.png`](generated/png/earth-ck-44-22.png) | PNG preview of the generated layered 44×22 Cahill-Keyes physical map |
-| [`tests/generate-ocean.cc`](tests/generate-ocean.cc) | GDAL/Izzi generator and structural test for the seam-safe Natural Earth ocean and 153 source-indexed Hamonshū vector-pattern layers |
+| [`tests/generate-ocean.cc`](tests/generate-ocean.cc) | GDAL/Izzi generator and structural test for the seam-safe Natural Earth ocean and 91 curated Hamonshū motif/curvature layers |
 | [Izzi `a60-svg-curves-hamonshu.h`](https://github.com/bdekoz/izzi/blob/main/src/a60-svg-curves-hamonshu.h) | Reusable procedural path API and complete illustrated-page, motif-number, and descriptive-name catalogue for *Hamonshū*, volume 2 |
 | [`generated/png/ocean-ck-44-22.png`](generated/png/ocean-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes ocean and its wave-pattern rendering |
 | [Izzi Hamonshū wave-pattern catalogue](https://github.com/bdekoz/izzi/blob/main/docs/hamonshu-wave-patterns.md) | PDF page mapping, motif naming, vector interpretation, ocean-clipping method, and source provenance |
