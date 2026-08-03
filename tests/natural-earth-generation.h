@@ -960,6 +960,40 @@ print_total(const render_stats total)
             << total.paths << " paths, " << total.points << " points\n";
 }
 
+void
+add_octahedral_ocean_background(svg::group_element& layer,
+                                 const projection_context& context)
+{
+  require(context.spec.kind == generation::projection_kind::cahill_keyes
+            || context.spec.kind == generation::projection_kind::star_x,
+          "octahedral ocean background requires Cahill-Keyes or Star-X");
+
+  for (std::size_t band_index = 0;
+       band_index != longitude_bands.size(); ++band_index)
+    for (const bool north : {false, true})
+      {
+        const longitude_band band = longitude_bands[band_index];
+        const double south = north ? 0 : -90;
+        const double north_edge = north ? 90 : -seam_epsilon;
+        geometry_ptr face = make_clip_rectangle(
+          band.west, south, band.east, north_edge);
+        face->segmentize(0.25);
+
+        std::string path_data;
+        std::size_t point_count = 0;
+        append_geometry(path_data, point_count, *face, context,
+                        geometry_role::area);
+        require(!path_data.empty() && point_count >= 3,
+                "octahedral ocean background produced no face path");
+        const std::string id
+          = "ocean-face-background-" + std::to_string(band_index + 1)
+            + (north ? "-north" : "-south");
+        layer.add_element(svg::make_path(
+          path_data, ocean_spec.style, id, true,
+          R"(fill-rule="evenodd")"));
+      }
+}
+
 render_stats
 add_ocean_layer(svg::svg_element& document,
                 const projection_context& context)
@@ -968,9 +1002,8 @@ add_ocean_layer(svg::svg_element& document,
   layer.start_element(std::string(ocean_spec.id));
   layer.add_title(std::string(ocean_spec.title));
 
-  // AuthaGraph is periodic and covers its complete rectangular carrier. Keep
-  // its gap-hiding background inside the one public ocean layer so the Earth
-  // document still has exactly the requested ocean and land layer groups.
+  // Keep gap-hiding backgrounds inside the one public ocean layer so the
+  // Earth document still has exactly the requested ocean and land groups.
   if (context.spec.kind == generation::projection_kind::authagraph)
     {
       const svg::vrange corners {
@@ -983,6 +1016,9 @@ add_ocean_layer(svg::svg_element& document,
       layer.add_element(svg::make_path(
         path_data, ocean_spec.style, "ocean-periodic-background"));
     }
+  else if (context.spec.kind == generation::projection_kind::cahill_keyes
+           || context.spec.kind == generation::projection_kind::star_x)
+    add_octahedral_ocean_background(layer, context);
 
   const render_stats stats = render_source(layer, ocean_spec, context);
   layer.finish_element();
@@ -1158,6 +1194,22 @@ verify_earth(const std::string& generated,
           "generated earth SVG must contain exactly ocean and land groups");
   require(token_count(generated, "<path ") > 10,
           "generated earth SVG contains too few Natural Earth paths");
+  if (context.spec.kind == generation::projection_kind::cahill_keyes
+      || context.spec.kind == generation::projection_kind::star_x)
+    {
+      require(token_count(generated, "id=\"ocean-face-background-") == 10,
+              "generated octahedral earth SVG must contain ten seam-safe "
+              "ocean background pieces");
+      const std::size_t background_position
+        = generated.find("id=\"ocean-face-background-");
+      const std::size_t source_position
+        = generated.find("id=\"ocean-feature-");
+      require(background_position != std::string::npos
+                && source_position != std::string::npos
+                && background_position < source_position,
+              "generated octahedral ocean backgrounds must precede the "
+              "Natural Earth ocean paths");
+    }
   if (context.spec.kind == generation::projection_kind::star_x)
     {
       require(generated.find("id=\"north-pole-star\"")
