@@ -15,8 +15,8 @@ generation workflow. They do not require the same software:
 | C++20 compiler and standard library | Tests and native generators | Builds the projection checks and four SVG generators |
 | Alpha60 headers | SVG generation | Supplies `a60-io.h` and shared runtime-resource interfaces |
 | Izzi headers | SVG generation | Supplies `a60-svg.h` and SVG document/path serialization |
-| GDAL development package with OGR | Earth and ocean generation | Reads Natural Earth Shapefiles and provides vector geometry operations |
-| GEOS support in GDAL | Earth and ocean generation | Performs polygon intersection, repair, and seam-safe clipping |
+| GDAL development package with OGR | Earth and water generation | Reads Natural Earth Shapefiles and provides vector geometry operations |
+| GEOS support in GDAL | Earth and water generation | Performs polygon intersection, repair, and seam-safe clipping |
 | Bash, `curl`, `unzip`, and `sha256sum` | Natural Earth acquisition | Downloads, verifies, and extracts the pinned input archive |
 | Inkscape | Complete artifact generation and visual review | Exports PDF/PNG and inspects SVG layers, clipping, geometry, and seams |
 | Doxygen | API reference generation | Builds the documented projection-header reference under `docs/doxygen/` |
@@ -176,7 +176,7 @@ separate Alpha60 or Izzi library.
 
 ## GDAL, OGR, and GEOS
 
-Earth and ocean generation includes `gdal_priv.h`, `ogrsf_frmts.h`, and the
+Earth and water generation includes `gdal_priv.h`, `ogrsf_frmts.h`, and the
 OGR C API. The Makefile obtains compiler and linker arguments from:
 
 ```sh
@@ -212,7 +212,7 @@ Python GDAL bindings are not used by the active Make targets.
 
 ## Natural Earth input and network access
 
-The Earth and ocean targets require Natural Earth 5.1.1's complete 1:10m
+The Earth and water targets require Natural Earth 5.1.1's complete 1:10m
 physical-vector bundle. The repository does not require a manual download:
 
 ```sh
@@ -246,18 +246,12 @@ Natural Earth data and the checked-in WASM sources.
 See the [data provenance note](natural-earth-10m-physical-vectors.md) for the
 archive URL, checksum, dataset list, and license.
 
-The checked-in *Hamonshū* PDF is provenance artwork, not a runtime input. The
-ocean generator uses the compiled catalogue and procedural path API from the
-neighboring Izzi checkout's
-[`a60-svg-curves-hamonshu.h`](https://github.com/bdekoz/izzi/blob/main/src/a60-svg-curves-hamonshu.h).
-
 ## Inkscape and visual review
 
 Install Inkscape when reviewing or editing generated artifacts. It is useful
 here because the SVGs preserve named layers for faces, quadrants, graticules,
-physical features, bathymetry, clipping regions, and the 91 curated
-*Hamonshū* motif/curvature variations. A browser renders the final
-composition but is less useful for toggling and auditing those groups.
+physical features, bathymetry, and clipping regions. A browser renders the
+final composition but is less useful for toggling and auditing those groups.
 
 Verify the installation and open an artifact with:
 
@@ -267,7 +261,7 @@ inkscape generated/svg/earth-ck-44-22.svg
 ```
 
 Use Inkscape's Layers and Objects panel to inspect group IDs and toggle dense
-layers. Earth and ocean files can be large, so opening and switching layers
+layers. Earth and water files can be large, so opening and switching layers
 may require substantially more memory than viewing geometry or graticules.
 Saving from Inkscape can rewrite SVG formatting and metadata; avoid saving
 during a read-only visual review if a serialization diff is not intended.
@@ -323,7 +317,7 @@ inkscape --version
 ```
 
 Successful generation places five geometry maps, five graticule maps, five
-Earth maps, and five ocean maps in each of `generated/svg/`,
+Earth maps, and five water maps in each of `generated/svg/`,
 `generated/pdf/`, and `generated/png/`. Every PNG preserves its source aspect
 ratio, has a 3840-pixel longest side, and is flattened against opaque white.
 
@@ -339,7 +333,7 @@ ratio, has a 3840-pixel longest side, and is flattened against opaque white.
 | Missing `ne_10m_*.shp` | Run `make fetch-natural-earth-10m` or set `NATURAL_EARTH_DIR` |
 | `sha256sum: command not found` | Install GNU coreutils and ensure its binaries are on `PATH` |
 | Natural Earth checksum mismatch | Remove only the corrupt downloaded archive, then rerun the fetch target; do not bypass verification |
-| Inkscape is slow on an Earth or ocean SVG | Close other large documents and inspect one layer family at a time |
+| Inkscape is slow on an Earth or water SVG | Close other large documents and inspect one layer family at a time |
 | `em++: command not found` | Install and activate emsdk, then source its environment script in the current shell |
 
 ## Not required by current native targets

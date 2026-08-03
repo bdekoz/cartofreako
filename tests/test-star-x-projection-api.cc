@@ -122,16 +122,32 @@ main()
   // Star-X rigid transforms to the Perl-derived 2112-by-1056 Cahill-Keyes
   // anchors used by augment_carto_geo_specific. The default configurable
   // gap then moves each group 108 pixels toward the center, the
-  // scale-equivalent of 2.25 units in the generated 34-by-44 frame.
+  // scale-equivalent of 2.25 units in the generated 34-by-44 frame. The
+  // second transform enlarges the assembled result 120 percent about the
+  // center of the page.
   const frame reference_frame {1632, 2112};
   const starxproj reference = make_star_x_projection(
     reference_frame, "star-x.svg");
   const double reference_group_shift
     = star_x_default_group_shift_ratio * reference_frame.height();
+  const auto enlarge_x = [&reference_frame](const double x)
+  {
+    return reference_frame.width() / 2
+           + star_x_default_enlargement_factor
+               * (x - reference_frame.width() / 2);
+  };
+  const auto enlarge_y = [&reference_frame](const double y)
+  {
+    return reference_frame.height() / 2
+           + star_x_default_enlargement_factor
+               * (y - reference_frame.height() / 2);
+  };
   const projection_api& api = reference;
   assert(std::abs(reference_group_shift - 108) < 1e-12);
   assert(std::abs(reference.group_gap_ratio()
                   - star_x_default_group_gap_ratio) < 1e-12);
+  assert(std::abs(reference.enlargement_factor()
+                  - star_x_default_enlargement_factor) < 1e-12);
   assert(reference.pmode == star_x);
   assert(reference.pframe.width() == reference_frame.width());
   assert(reference.pframe.height() == reference_frame.height());
@@ -170,29 +186,33 @@ main()
     {
       const auto [x, y] = api.meridians_to_point_2d(
         expected.latitude, expected.longitude);
-      const double expected_y
+      const double placed_y
         = expected.y
           + (is_second_group(expected.longitude)
                ? reference_group_shift : -reference_group_shift);
       assert(std::isfinite(x) && std::isfinite(y));
-      assert(std::abs(x - expected.x) < 1e-9);
-      assert(std::abs(y - expected_y) < 1e-9);
+      assert(std::abs(x - enlarge_x(expected.x)) < 1e-9);
+      assert(std::abs(y - enlarge_y(placed_y)) < 1e-9);
       assert(x >= 0 && x <= reference_frame.width());
       assert(y >= 0 && y <= reference_frame.height());
     }
   assert(std::abs(reference.longitude_zero_x
-                  - specific_locations.front().x) < 1e-9);
+                  - enlarge_x(specific_locations.front().x)) < 1e-9);
   assert(std::abs(reference.latitude_zero_y
-                  - specific_locations.front().y
-                  - reference_group_shift) < 1e-9);
+                  - enlarge_y(specific_locations.front().y
+                              + reference_group_shift)) < 1e-9);
 
   // A zero carrier gap reproduces the previous edge-to-edge placement.
   // The default signed gap is -4.5 inches in a 34-by-44 frame, split
   // symmetrically into the requested 2.25-inch inward translations.
-  const star_x_layout adjacent_layout {.group_gap_ratio = 0};
+  const star_x_layout adjacent_layout {
+    .group_gap_ratio = 0,
+    .enlargement_factor = 1,
+  };
   const starxproj adjacent = make_star_x_projection(
     reference_frame, "adjacent-star-x.svg", adjacent_layout);
   assert(adjacent.group_gap_ratio() == 0);
+  assert(adjacent.enlargement_factor() == 1);
   for (const auto& expected : specific_locations)
     {
       const auto [adjacent_x, adjacent_y]
@@ -205,13 +225,34 @@ main()
         = is_second_group(expected.longitude) ? 1 : -1;
       assert(std::abs(adjacent_x - expected.x) < 1e-9);
       assert(std::abs(adjacent_y - expected.y) < 1e-9);
-      assert(std::abs(default_x - adjacent_x) < 1e-9);
+      assert(std::abs(default_x - enlarge_x(adjacent_x)) < 1e-9);
       assert(std::abs(default_y
-                      - (adjacent_y + direction * reference_group_shift))
+                      - enlarge_y(adjacent_y
+                                  + direction * reference_group_shift))
              < 1e-9);
     }
   assert(star_x_default_group_shift_ratio * 44 == 2.25);
   assert(star_x_default_group_gap_ratio * 44 == -4.5);
+  assert(star_x_default_enlargement_factor == 1.2);
+
+  // The enlargement is independently configurable and remains centered.
+  const starxproj enlarged = make_star_x_projection(
+    reference_frame, "enlarged-star-x.svg",
+    star_x_layout {.group_gap_ratio = 0, .enlargement_factor = 1.1});
+  for (const auto& expected : specific_locations)
+    {
+      const auto [x, y]
+        = enlarged.meridians_to_point_2d(
+            expected.latitude, expected.longitude);
+      assert(std::abs(x - (reference_frame.width() / 2
+                           + 1.1 * (expected.x
+                                    - reference_frame.width() / 2)))
+             < 1e-9);
+      assert(std::abs(y - (reference_frame.height() / 2
+                           + 1.1 * (expected.y
+                                    - reference_frame.height() / 2)))
+             < 1e-9);
+    }
 
   // Verify the defining assembly independently against the ordinary
   // Cahill-Keyes API. Spatial face slots 1-4 occupy the source's left
@@ -229,18 +270,18 @@ main()
         const double adjusted
           = cahill_keyes_registered_longitude(longitude);
         const bool second_group = adjusted >= -20 && adjusted < 160;
-        const double expected_x
+        const double assembled_x
           = second_group
               ? side_margin + 2 * group_side - source_x
               : side_margin + source_x;
-        const double expected_y
+        const double assembled_y
           = second_group
               ? group_side - source_y + reference_group_shift
               : group_side + source_y - reference_group_shift;
         const auto [x, y]
           = reference.meridians_to_point_2d(latitude, longitude);
-        assert(std::abs(x - expected_x) < 1e-9);
-        assert(std::abs(y - expected_y) < 1e-9);
+        assert(std::abs(x - enlarge_x(assembled_x)) < 1e-9);
+        assert(std::abs(y - enlarge_y(assembled_y)) < 1e-9);
 
         const auto assembled = star_x_detail::project_to_normalized_map(
           latitude, longitude);
@@ -306,12 +347,12 @@ main()
         {
           const auto [x, y] = projection.meridians_to_point_2d(
             expected.latitude, expected.longitude);
-          const double reference_y
+          const double placed_y
             = expected.y
               + (is_second_group(expected.longitude)
                    ? reference_group_shift : -reference_group_shift);
-          assert(std::abs(x - expected.x * factor) < tolerance);
-          assert(std::abs(y - reference_y * factor) < tolerance);
+          assert(std::abs(x - enlarge_x(expected.x) * factor) < tolerance);
+          assert(std::abs(y - enlarge_y(placed_y) * factor) < tolerance);
           assert(x >= 0 && x <= map_frame.width());
           assert(y >= 0 && y <= map_frame.height());
         }
@@ -369,6 +410,59 @@ main()
   rejects_layout(star_x_layout {
     .group_gap_ratio = std::numeric_limits<double>::quiet_NaN(),
   });
+  rejects_layout(star_x_layout {
+    .enlargement_factor = 0,
+  });
+  rejects_layout(star_x_layout {
+    .enlargement_factor = -1,
+  });
+  rejects_layout(star_x_layout {
+    .enlargement_factor = std::numeric_limits<double>::infinity(),
+  });
+  rejects_layout(star_x_layout {
+    .enlargement_factor = std::numeric_limits<double>::quiet_NaN(),
+  });
+
+  // Composition helpers keep the central mark and South-polar inset at the
+  // same physical scale as the enlarged Star-X map without changing the
+  // projection of ocean or bathymetry.
+  const auto polar_star = star_x_detail::make_north_pole_star(reference_frame);
+  const double star_outer_radius
+    = reference_frame.height() * star_x_polar_star_outer_radius_ratio;
+  for (std::size_t i = 0; i < polar_star.size(); ++i)
+    {
+      const double dx = polar_star[i].x - reference_frame.width() / 2;
+      const double dy = polar_star[i].y - reference_frame.height() / 2;
+      const double expected_radius
+        = i % 2 == 0
+            ? star_outer_radius
+            : star_outer_radius * star_x_polar_star_inner_radius_factor;
+      assert(std::abs(std::hypot(dx, dy) - expected_radius) < 1e-9);
+      const auto& opposite = polar_star[(i + 8) % polar_star.size()];
+      assert(std::abs(polar_star[i].x + opposite.x
+                      - reference_frame.width()) < 1e-9);
+      assert(std::abs(polar_star[i].y + opposite.y
+                      - reference_frame.height()) < 1e-9);
+    }
+  assert(std::abs(polar_star.front().x - reference_frame.width() / 2)
+         < 1e-9);
+  assert(polar_star.front().y < reference_frame.height() / 2);
+
+  const auto south_pole = star_x_detail::project_antarctic_inset_local(
+    -90, 0, reference_frame.height());
+  assert(std::abs(south_pole.x) < 1e-12);
+  assert(std::abs(south_pole.y) < 1e-12);
+  const double cap_radius
+    = 30 * reference_frame.height()
+      * star_x_default_enlargement_factor / 400;
+  const auto prime_meridian = star_x_detail::project_antarctic_inset_local(
+    star_x_antarctic_cutoff_latitude, 0, reference_frame.height());
+  const auto east_meridian = star_x_detail::project_antarctic_inset_local(
+    star_x_antarctic_cutoff_latitude, 90, reference_frame.height());
+  assert(std::abs(prime_meridian.x) < 1e-12);
+  assert(std::abs(prime_meridian.y + cap_radius) < 1e-9);
+  assert(std::abs(east_meridian.x - cap_radius) < 1e-9);
+  assert(std::abs(east_meridian.y) < 1e-9);
 
   assert(api.image_filename(projection_base::filled) == "star-x.svg");
   a60::io::get_run_time_resources().data = "/opt/alpha60-data";

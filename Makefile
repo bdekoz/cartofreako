@@ -36,14 +36,14 @@ CK_WEB_WASM := $(WEB_BUILD_DIR)/cartofreako-cahill-keyes.wasm
 GEOMETRY_GENERATOR := $(TEST_DIR)/generate-geometry
 GRATICULE_GENERATOR := $(TEST_DIR)/generate-graticules
 EARTH_GENERATOR := $(TEST_DIR)/generate-earth
-OCEAN_GENERATOR := $(TEST_DIR)/generate-ocean
+WATER_GENERATOR := $(TEST_DIR)/generate-water
 FOUR_SLICE_GENERATOR := $(TEST_DIR)/generate-4-slice
 EIGHT_SLICE_GENERATOR := $(TEST_DIR)/generate-8-slice
 
 CK_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-ck-44-22.svg
 CK_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-ck-44-22.svg
 CK_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-ck-44-22.svg
-CK_OCEAN_SVG := $(GENERATED_SVG_DIR)/ocean-ck-44-22.svg
+CK_WATER_SVG := $(GENERATED_SVG_DIR)/water-ck-44-22.svg
 CK_FOUR_SLICE_SVGS := \
 	$(GENERATED_SVG_DIR)/earth-ck-4-slice-1.svg \
 	$(GENERATED_SVG_DIR)/earth-ck-4-slice-2.svg \
@@ -63,22 +63,22 @@ CK_SLICE_SVGS := $(CK_FOUR_SLICE_SVGS) $(CK_EIGHT_SLICE_SVGS)
 AUTHAGRAPH_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-authagraph-44-19.052559.svg
 AUTHAGRAPH_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-authagraph-44-19.052559.svg
 AUTHAGRAPH_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-authagraph-44-19.052559.svg
-AUTHAGRAPH_OCEAN_SVG := $(GENERATED_SVG_DIR)/ocean-authagraph-44-19.052559.svg
+AUTHAGRAPH_WATER_SVG := $(GENERATED_SVG_DIR)/water-authagraph-44-19.052559.svg
 
 MYRIAHEDRAL_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-myriahedral-44-24.75.svg
 MYRIAHEDRAL_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-myriahedral-44-24.75.svg
 MYRIAHEDRAL_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-myriahedral-44-24.75.svg
-MYRIAHEDRAL_OCEAN_SVG := $(GENERATED_SVG_DIR)/ocean-myriahedral-44-24.75.svg
+MYRIAHEDRAL_WATER_SVG := $(GENERATED_SVG_DIR)/water-myriahedral-44-24.75.svg
 
 STAR_X_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-star-x-34-44.svg
 STAR_X_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-star-x-34-44.svg
 STAR_X_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-star-x-34-44.svg
-STAR_X_OCEAN_SVG := $(GENERATED_SVG_DIR)/ocean-star-x-34-44.svg
+STAR_X_WATER_SVG := $(GENERATED_SVG_DIR)/water-star-x-34-44.svg
 
 VORONOI_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-voronoi-44-22.916667.svg
 VORONOI_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-voronoi-44-22.916667.svg
 VORONOI_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-voronoi-44-22.916667.svg
-VORONOI_OCEAN_SVG := $(GENERATED_SVG_DIR)/ocean-voronoi-44-22.916667.svg
+VORONOI_WATER_SVG := $(GENERATED_SVG_DIR)/water-voronoi-44-22.916667.svg
 
 REQUESTED_GEOMETRY_SVGS := \
 	$(AUTHAGRAPH_GEOMETRY_SVG) \
@@ -95,26 +95,26 @@ REQUESTED_EARTH_SVGS := \
 	$(MYRIAHEDRAL_EARTH_SVG) \
 	$(STAR_X_EARTH_SVG) \
 	$(VORONOI_EARTH_SVG)
-REQUESTED_OCEAN_SVGS := \
-	$(AUTHAGRAPH_OCEAN_SVG) \
-	$(MYRIAHEDRAL_OCEAN_SVG) \
-	$(STAR_X_OCEAN_SVG) \
-	$(VORONOI_OCEAN_SVG)
+REQUESTED_WATER_SVGS := \
+	$(AUTHAGRAPH_WATER_SVG) \
+	$(MYRIAHEDRAL_WATER_SVG) \
+	$(STAR_X_WATER_SVG) \
+	$(VORONOI_WATER_SVG)
 REQUESTED_PROJECTION_SVGS := \
 	$(REQUESTED_GEOMETRY_SVGS) \
 	$(REQUESTED_GRATICULE_SVGS) \
 	$(REQUESTED_EARTH_SVGS) \
-	$(REQUESTED_OCEAN_SVGS)
+	$(REQUESTED_WATER_SVGS)
 GENERATED_SVGS := \
 	$(CK_GEOMETRY_SVG) $(CK_GRATICULE_SVG) \
-	$(CK_EARTH_SVG) $(CK_OCEAN_SVG) $(CK_SLICE_SVGS) \
+	$(CK_EARTH_SVG) $(CK_WATER_SVG) $(CK_SLICE_SVGS) \
 	$(REQUESTED_PROJECTION_SVGS)
 GENERATED_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PDF_DIR)/%.pdf,$(GENERATED_SVGS))
 GENERATED_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PNG_DIR)/%.png,$(GENERATED_SVGS))
 STAR_X_SVGS := $(STAR_X_GEOMETRY_SVG) $(STAR_X_GRATICULE_SVG) \
-	$(STAR_X_EARTH_SVG) $(STAR_X_OCEAN_SVG)
+	$(STAR_X_EARTH_SVG) $(STAR_X_WATER_SVG)
 STAR_X_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PNG_DIR)/%.png,$(STAR_X_SVGS))
 CK_SLICE_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
@@ -130,7 +130,7 @@ GENERATOR_BINARIES := \
 	$(FOUR_SLICE_GENERATOR) \
 	$(GEOMETRY_GENERATOR) \
 	$(GRATICULE_GENERATOR) \
-	$(OCEAN_GENERATOR)
+	$(WATER_GENERATOR)
 TEST_BINARIES := \
 	$(GENERATOR_BINARIES) \
 	$(TEST_DIR)/test-cahill-keyes-projection \
@@ -152,29 +152,28 @@ GENERATOR_HEADERS := \
 	src/cart0freak0-star-x.h \
 	src/cart0freak0-voronoi.h
 AREA_GENERATOR_HEADER := $(TEST_DIR)/projection-area-generation.h
-HAMONSHU_CURVE_HEADERS := \
-	$(IZZI_SRC)/a60-svg-curves-hamonshu.h \
-	$(IZZI_SRC)/a60-svg-curves-hamonshu-v2.inc
+NATURAL_EARTH_GENERATOR_HEADER := \
+	$(TEST_DIR)/natural-earth-generation.h
 
 .DELETE_ON_ERROR:
 
 .PHONY: all check clean doxygen fetch-natural-earth-10m make-generated \
 	wasm-cahill-keyes check-wasm-cahill-keyes \
 	generate-geometry generate-graticules-ck generate-earth-ck \
-	generate-ocean-ck generate-4-slice generate-8-slice \
+	generate-water-ck generate-4-slice generate-8-slice \
 	generate-ck-slices generate-projections generated-projections \
 	generate-geometry-projections generate-graticules-projections \
-	generate-earth-projections generate-ocean-projections \
+	generate-earth-projections generate-water-projections \
 	generate-authagraph generate-myriahedral generate-star-x \
 	generate-voronoi generate-voroni \
 	generate-geometry-authagraph generate-graticules-authagraph \
-	generate-earth-authagraph generate-ocean-authagraph \
+	generate-earth-authagraph generate-water-authagraph \
 	generate-geometry-myriahedral generate-graticules-myriahedral \
-	generate-earth-myriahedral generate-ocean-myriahedral \
+	generate-earth-myriahedral generate-water-myriahedral \
 	generate-geometry-star-x generate-graticules-star-x \
-	generate-earth-star-x generate-ocean-star-x \
+	generate-earth-star-x generate-water-star-x \
 	generate-geometry-voronoi generate-graticules-voronoi \
-	generate-earth-voronoi generate-ocean-voronoi
+	generate-earth-voronoi generate-water-voronoi
 
 check:
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
@@ -242,14 +241,15 @@ $(GRATICULE_GENERATOR): $(TEST_DIR)/generate-graticules.cc \
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$< -o $@
 
-$(EARTH_GENERATOR): $(TEST_DIR)/generate-earth.cc $(GENERATOR_HEADERS) \
+$(EARTH_GENERATOR): $(TEST_DIR)/generate-earth.cc \
+		$(NATURAL_EARTH_GENERATOR_HEADER) $(GENERATOR_HEADERS) \
 		$(AREA_GENERATOR_HEADER)
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
 		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$< $(shell $(GDAL_CONFIG) --libs) -o $@
 
-$(OCEAN_GENERATOR): $(TEST_DIR)/generate-ocean.cc \
-		$(HAMONSHU_CURVE_HEADERS) $(GENERATOR_HEADERS) \
+$(WATER_GENERATOR): $(TEST_DIR)/generate-water.cc \
+		$(NATURAL_EARTH_GENERATOR_HEADER) $(GENERATOR_HEADERS) \
 		$(AREA_GENERATOR_HEADER)
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
 		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
@@ -312,12 +312,12 @@ $(CK_EIGHT_SLICE_SVGS) &: $(EIGHT_SLICE_GENERATOR) $(CK_EARTH_SVG) | $(GENERATED
 
 generate-ck-slices: generate-4-slice generate-8-slice
 
-generate-ocean-ck: $(CK_OCEAN_SVG)
+generate-water-ck: $(CK_WATER_SVG)
 
-$(CK_OCEAN_SVG): $(OCEAN_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+$(CK_WATER_SVG): $(WATER_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
 	cd "$(GENERATED_SVG_DIR)" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
-		"$(abspath $(OCEAN_GENERATOR))" cahill-keyes
+		"$(abspath $(WATER_GENERATOR))" cahill-keyes
 
 # $(1): command-line projection name; $(2)-$(5): generated artifacts.
 define PROJECTION_RULES
@@ -337,27 +337,27 @@ $(4): $(EARTH_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		"$(abspath $(EARTH_GENERATOR))" $(1)
 
-generate-ocean-$(1): $(5)
-$(5): $(OCEAN_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+generate-water-$(1): $(5)
+$(5): $(WATER_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
 	cd "$(GENERATED_SVG_DIR)" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
-		"$(abspath $(OCEAN_GENERATOR))" $(1)
+		"$(abspath $(WATER_GENERATOR))" $(1)
 
 generate-$(1): $(2) $(3) $(4) $(5)
 endef
 
 $(eval $(call PROJECTION_RULES,authagraph,\
 	$(AUTHAGRAPH_GEOMETRY_SVG),$(AUTHAGRAPH_GRATICULE_SVG),\
-	$(AUTHAGRAPH_EARTH_SVG),$(AUTHAGRAPH_OCEAN_SVG)))
+	$(AUTHAGRAPH_EARTH_SVG),$(AUTHAGRAPH_WATER_SVG)))
 $(eval $(call PROJECTION_RULES,myriahedral,\
 	$(MYRIAHEDRAL_GEOMETRY_SVG),$(MYRIAHEDRAL_GRATICULE_SVG),\
-	$(MYRIAHEDRAL_EARTH_SVG),$(MYRIAHEDRAL_OCEAN_SVG)))
+	$(MYRIAHEDRAL_EARTH_SVG),$(MYRIAHEDRAL_WATER_SVG)))
 $(eval $(call PROJECTION_RULES,star-x,\
 	$(STAR_X_GEOMETRY_SVG),$(STAR_X_GRATICULE_SVG),\
-	$(STAR_X_EARTH_SVG),$(STAR_X_OCEAN_SVG)))
+	$(STAR_X_EARTH_SVG),$(STAR_X_WATER_SVG)))
 $(eval $(call PROJECTION_RULES,voronoi,\
 	$(VORONOI_GEOMETRY_SVG),$(VORONOI_GRATICULE_SVG),\
-	$(VORONOI_EARTH_SVG),$(VORONOI_OCEAN_SVG)))
+	$(VORONOI_EARTH_SVG),$(VORONOI_WATER_SVG)))
 
 $(GENERATED_PDFS): $(GENERATED_PDF_DIR)/%.pdf: \
 		$(GENERATED_SVG_DIR)/%.svg | $(GENERATED_PDF_DIR)
@@ -383,7 +383,7 @@ generate-graticules-projections: \
 	$(CK_GRATICULE_SVG) $(REQUESTED_GRATICULE_SVGS)
 generate-earth-projections: \
 	$(CK_EARTH_SVG) $(CK_SLICE_SVGS) $(REQUESTED_EARTH_SVGS)
-generate-ocean-projections: $(CK_OCEAN_SVG) $(REQUESTED_OCEAN_SVGS)
+generate-water-projections: $(CK_WATER_SVG) $(REQUESTED_WATER_SVGS)
 generate-projections: $(GENERATED_ARTIFACTS)
 generated-projections: $(GENERATED_ARTIFACTS)
 make-generated: $(GENERATED_ARTIFACTS)

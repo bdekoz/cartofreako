@@ -193,6 +193,16 @@ make_cahill_keyes_faces(const projection_context& context,
   return triangular_faces;
 }
 
+std::vector<named_path>
+make_star_x_polar_marks(const frame& map_frame)
+{
+  svg::vrange star;
+  for (const auto point
+       : a60::carto::star_x_detail::make_north_pole_star(map_frame))
+    star.push_back({point.x, point.y});
+  return {{"north-pole-star", std::move(star)}};
+}
+
 struct unit_point
 {
   double x;
@@ -449,6 +459,9 @@ generate_geometry(const projection_spec& spec)
   const svg::style half_octant_style {
     svg::color::none, 0, svg::color::red, 0.70, 0.055,
   };
+  const svg::style polar_mark_style {
+    svg::color::black, 1, svg::color::black, 1, 0.01,
+  };
 
   generation::projection_document document(
     basename, std::string(spec.title) + " native projection geometry",
@@ -462,6 +475,10 @@ generate_geometry(const projection_spec& spec)
       add_path_layer(
         document, "half-octants", half_octants, half_octant_style);
     }
+  if (spec.kind == projection_kind::star_x)
+    add_path_layer(document, "polar-marks",
+                   make_star_x_polar_marks(context.map_frame),
+                   polar_mark_style);
 }
 
 } // namespace
@@ -506,6 +523,9 @@ main(const int argc, char** argv)
         layer_path_count(generated, "half-octants") == 16,
         "half-octants layer must contain sixteen paths");
     }
+  if (spec.kind == projection_kind::star_x)
+    generation::require(layer_path_count(generated, "polar-marks") == 1,
+                        "Star-X polar marks must contain one star path");
   generation::require(generated.find("nan") == std::string::npos
                       && generated.find("inf") == std::string::npos,
                       "generated SVG contains a non-finite coordinate");
