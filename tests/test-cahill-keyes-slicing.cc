@@ -2,8 +2,11 @@
 #include <cassert>
 #include <cmath>
 #include <stdexcept>
+#include <string>
 
 #include <cart0freak0-cahill-keyes-slicing.h>
+
+#include "projection-generation-common.h"
 
 namespace {
 
@@ -18,6 +21,24 @@ main()
 {
   namespace slicing = a60::carto::ck_slicing;
   const a60::carto::frame carrier {44, 22};
+
+  // The projection coordinate system stays 44 by 22, but the outer document
+  // must declare those dimensions as physical inches rather than CSS pixels.
+  {
+    cart0freak0::generation::projection_document document(
+      "physical-document-test", "physical size test",
+      carrier.frame_area, false);
+    document.start("physical size test");
+    const std::string markup = document.str();
+    assert(markup.find(
+      "width=\"44.000000in\" height=\"22.000000in\"")
+      != std::string::npos);
+    assert(markup.find(
+      "viewBox=\"0 0 44.000000 22.000000\"")
+      != std::string::npos);
+    assert(markup.find("44.000000px") == std::string::npos);
+    document.finish(false);
+  }
 
   const auto four = slicing::make_four_slices(carrier);
   assert(four.size() == 4);

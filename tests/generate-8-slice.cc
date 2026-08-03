@@ -31,7 +31,7 @@ generate(const std::filesystem::path& source,
       slicing::write_slice_svg(
         output, source, source_fragment, slice, carrier);
       slicing::verify_slice_svg(
-        output, source, source_fragment, slice);
+        output, source, source_fragment, slice, carrier);
       std::cout << output.string() << ": "
                 << slicing::format_number(slice.output_frame.width()) << " x "
                 << slicing::format_number(slice.output_frame.height())

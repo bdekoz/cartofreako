@@ -34,7 +34,7 @@ Cahill-Keyes targets also remain available.
 
 The artifact-family aggregate targets include all five projections.
 
-The suite fixes the largest frame dimension at 44 units while retaining each
+The suite fixes the largest print dimension at 44 inches while retaining each
 projection's exact aspect-ratio contract:
 
 | Projection | Frame | Exact construction |
@@ -44,6 +44,12 @@ projection's exact aspect-ratio contract:
 | Myriahedral | `44 × 24.75` | `16:9` |
 | Star-X | `34 × 44` | `17:22` |
 | Voronoi | `44 × 22.916667` | height `= 275/12`, ratio `48:25` |
+
+The numeric frame is also the SVG's unitless coordinate system. Generated
+root documents attach `in` to `width` and `height`, but leave `viewBox`
+numeric: a Cahill-Keyes document is therefore `width="44in"`,
+`height="22in"`, and `viewBox="0 0 44 22"`. One viewBox coordinate unit maps
+to one physical inch without changing projection formulas or path data.
 
 The filenames round irrational or recurring dimensions to six decimals,
 matching Izzi's serialized `viewBox`; the in-memory frames use the exact
@@ -120,7 +126,10 @@ needed:
 make -B PNG_LONG_SIDE=7680 all
 ```
 
-Inkscape exports vector PDFs without changing the layered SVG originals.
+Inkscape exports vector PDFs at the SVG's physical page size without changing
+the layered SVG originals. For example, a 44-by-22-inch Cahill-Keyes page is
+3168 by 1584 PDF points. The explicit PNG pixel override is independent of
+that physical page size.
 Final files are grouped by format rather than mixed at the `generated/` root:
 
 ```text

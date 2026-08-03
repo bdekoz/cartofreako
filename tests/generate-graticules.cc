@@ -260,7 +260,7 @@ generate_graticules(const projection_spec& spec)
   const svg::typography longitude_typography
     = make_label_typography(svg::color::red);
 
-  svg::svg_element document(
+  generation::projection_document document(
     basename, "Labeled ten-degree graticules for the "
                 + std::string(spec.title) + " projection",
     context.map_frame.frame_area);
