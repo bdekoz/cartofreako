@@ -9,6 +9,10 @@ This is a complete, copyable example for compiling the cartofreako C++20
 Myriahedral projection to WebAssembly, generating a projection overlay in the
 browser, and loading the checked-in projection image beneath it.
 
+The files shown here are examples to create locally; they are not additional
+checked-in `src.wasm/` products. The checked-in production adapter is the
+[Cahill-Keyes renderer](../src.wasm/README.md).
+
 The target frame is exactly `1920 x 1080`. The source raster is `4480 x 2520`,
 so both canvases are 16:9 and the browser scales the raster uniformly by
 `3/7`. No aspect-ratio approximation, crop, or geometric correction is

@@ -41,9 +41,11 @@ The work was delivered in three stages:
 | --- | --- |
 | [`cart0freak0-cahill-keyes.h`](../src.projections/cart0freak0-cahill-keyes.h) | Numeric forward projection, frame validation, `projection_api` adapter, screen-coordinate conversion, raster naming, and compatibility presets |
 | [`cart0freak0-cahill-keyes-functions.h`](../src.projections/cart0freak0-cahill-keyes-functions.h) | Scale- and offset-aware splitting of projected paths at wrapped frame edges |
+| [`cart0freak0-cahill-keyes-slicing.h`](../src.projections/cart0freak0-cahill-keyes-slicing.h) | Carrier-frame viewport descriptors, exact-octant clipping, SVG slice wrappers, and verification |
 | [`test-cahill-keyes-projection.cc`](../tests/test-cahill-keyes-projection.cc) | Native reference points, scale invariance, domain sweep, and invalid geographic input |
 | [`test-cahill-keyes-projection-api.cc`](../tests/test-cahill-keyes-projection-api.cc) | Public API anchors, variable frames, invalid frames, raster paths, and compatibility construction |
 | [`test-cahill-keyes-path-functions.cc`](../tests/test-cahill-keyes-path-functions.cc) | Horizontal, vertical, corner, two-edge, variable-frame, stateful, and invalid path cases |
+| [`test-cahill-keyes-slicing.cc`](../tests/test-cahill-keyes-slicing.cc) | Four-strip and exact-octant geometry, metadata, source references, physical units, and invalid carriers |
 
 `ck_native::forward_projection` owns all scale-dependent construction values.
 Its constructor calculates the fixed scaffold geometry once. Calls to
@@ -472,6 +474,51 @@ non-finite projected points throw `std::invalid_argument`. Large jumps that do
 not match an opposite-edge classification are preserved unchanged rather than
 losing a point.
 
+## Carrier slicing and enlargement
+
+The full Cahill-Keyes projection and a published enlargement have different
+frame rules. The complete world is first projected on a finite, positive 2:1
+**carrier**. A slice is then a viewport into those projected coordinates; it
+is not another projection and is not required to be 2:1.
+
+For a carrier-space view `(x0, y0, w, h)`, the slice descriptor records an
+output frame of `w × h` with origin offsets `(-x0, -y0)`. Its local transform
+is only:
+
+```text
+Xslice = Xcarrier - x0
+Yslice = Ycarrier - y0
+```
+
+This preserves scale and geographic registration. Enlargement happens because
+the smaller viewport receives its own physical page or raster resolution, not
+because its coordinates are stretched. Passing an 11×22 strip to `ckproj`
+would be an architectural error: the projection correctly rejects that frame,
+whereas the slice writer correctly accepts it as a viewport.
+
+Two descriptor families are generated:
+
+1. `make_four_slices()` divides the carrier into four equal-width,
+   full-height rectangles. A 44×22 world therefore produces four 11×22 pages
+   containing official octant pairs `(1,6)`, `(2,7)`, `(3,8)`, and `(4,5)`.
+2. `make_eight_slices()` projects a sampled outline for each official octant,
+   computes its natural axis-aligned bounds, and uses the outline as an SVG
+   clip path. These eight pages have varying ratios and are semantic faces,
+   not cells of a rectangular 4×2 grid.
+
+The four ordered latitude ranges retained in descriptor metadata are
+presentation context only. Geographic filtering belongs before projection;
+changing a projected viewport cannot turn its irregular face content into a
+latitude band.
+
+The SVG wrapper keeps `viewBox` values in unitless carrier coordinates and
+expresses output `width` and `height` in inches. It references the complete
+Earth SVG through `<use>`, avoiding twelve duplicated copies of a large vector
+document. The sibling master SVG is therefore required by an SVG slice, while
+the exported PDF and PNG are self-contained. The complete generation,
+historical printing context, targets, and raster behavior are documented in
+the [generation guide](generation.md#cahill-keyes-enlargement-slices).
+
 ## Translation method and compatibility decisions
 
 The C++ implementation ports the original mathematical subroutines, not the
@@ -524,7 +571,12 @@ The checks cover:
 - preservation of unrecognized jumps and of the incremental remainder;
 - agreement between the non-mutating and stateful path APIs;
 - scale and nonzero-origin path behavior; and
-- rejection of invalid path sizes, aspect ratios, origins, and points.
+- rejection of invalid path sizes, aspect ratios, origins, and points;
+- exact four-strip carrier partitioning and official octant-pair metadata;
+- bounded, face-clipped outlines for all eight semantic octants;
+- inch-sized SVG roots with unscaled carrier-coordinate view boxes; and
+- rejection of non-2:1 projection carriers without imposing that ratio on
+  slice output frames.
 
 The path-function executable was also run with AddressSanitizer and
 UndefinedBehaviorSanitizer. Leak detection was disabled because it is not

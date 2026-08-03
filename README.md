@@ -6,7 +6,7 @@ projections for the shared `a60::carto::projection_api`.
 
 The authoritative project documentation is [`index.md`](index.md). It contains
 the projection comparison, aspect-ratio requirements, public APIs, usage
-examples, implementation guides, geometric context, bibliographies,
+entry points, implementation guides, geometric context, bibliographies,
 attribution, and source/test index.
 
 The top-level directories separate implementation, generation, verification,

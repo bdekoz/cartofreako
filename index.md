@@ -12,17 +12,44 @@ WebAssembly requirements.
 
 ## Repository layout
 
-| Directory | Responsibility |
-| --- | --- |
-| [`src.projections/`](src.projections/) | Projection interface, frame abstraction, and native implementations |
-| [`src.generate/`](src.generate/) | Native SVG generators and their shared generation support |
-| [`src.wasm/`](src.wasm/) | Browser adapter, seam-prepared input, smoke test, and checked-in WASM build |
-| [`tests/`](tests/) | Standalone algorithm and public-API tests |
-| [`assets.static/`](assets.static/) | Source plates, historical implementations, reference rasters, and downloaded geographic data |
-| [`assets.generated/`](assets.generated/) | Generated SVG, PDF, and opaque PNG deliverables |
+| Directory | Responsibility | Start here |
+| --- | --- | --- |
+| [`src.projections/`](src.projections/) | Projection interface, frame abstraction, and native implementations | [`a60-carto-projection.h`](src.projections/a60-carto-projection.h) |
+| [`src.generate/`](src.generate/) | Native SVG generators and their shared generation support | [Generation guide](docs/generation.md) |
+| [`src.wasm/`](src.wasm/) | Browser adapter, seam-prepared input, smoke test, and checked-in WASM build | [Cahill-Keyes WASM README](src.wasm/README.md) |
+| [`tests/`](tests/) | Standalone algorithm and public-API tests | [`make check`](Makefile) |
+| [`assets.static/`](assets.static/) | Source plates, historical implementations, reference rasters, and downloaded geographic data | [Myriahedral reconstruction assets](assets.static/myriahedral/README.md) |
+| [`assets.generated/`](assets.generated/) | Generated SVG, PDF, and opaque PNG deliverables | [Preview matrix](#generated-artifact-previews) |
 
 This separation keeps reproducible inputs distinct from rendered outputs and
 keeps generation programs out of the test suite.
+
+Projection-specific headers use the `cart0freak0-*.h` basename. The shared
+Alpha60-compatible interface and frame headers retain their established
+`a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`, `web/`,
+and `assets/` layout are no longer canonical.
+
+## Documentation map
+
+| Topic | Authoritative documentation |
+| --- | --- |
+| Installation and build dependencies | [Prerequisites](docs/prerequisites.md) |
+| SVG/PDF/PNG generation, Natural Earth, folding, slicing, and review | [Generation guide](docs/generation.md) |
+| Natural Earth acquisition, digest, and license | [Natural Earth data note](docs/natural-earth-10m-physical-vectors.md) |
+| Production Cahill-Keyes browser renderer | [Cahill-Keyes WebAssembly README](src.wasm/README.md) |
+| Illustrative Myriahedral browser build | [WebAssembly workflow](docs/web-workflow.md) and [complete example](docs/web-example.md) |
+
+Each projection has three complementary documents. Context explains the
+geometry and cuts, implementation notes describe formulas and code, and the
+bibliography records primary sources and attribution.
+
+| Projection | Context | Implementation | Bibliography |
+| --- | --- | --- | --- |
+| AuthaGraph | [Context](docs/authagraph-context.md) | [Notes](docs/authagraph-implementation-notes.md) | [Sources](docs/authagraph-bibliography.md) |
+| Cahill-Keyes | [Context](docs/cahill-keyes-context.md) | [Notes](docs/cahill-keyes-implementation-notes.md) | [Sources](docs/cahill-keyes-bibliography.md) |
+| Star-X | [Context](docs/star-x-context.md) | [Notes](docs/star-x-implementation-notes.md) | [Sources](docs/star-x-bibliography.md) |
+| Myriahedral | [Context](docs/myriahedral-context.md) | [Notes](docs/myriahedral-implementation-notes.md) | [Sources](docs/myriahedral-bibliography.md) |
+| Icosahedral Voronoi | [Context](docs/voronoi-context.md) | [Notes](docs/voronoi-implementation-notes.md) | [Sources](docs/voronoi-bibliography.md) |
 
 ## Choose a projection
 
@@ -33,6 +60,8 @@ keeps generation programs out of the test suite.
 | Star-X | Cahill-Keyes octants, two stacked four-face groups, polar-centered X | `17:22` | `starxproj` | `make_star_x_projection()` |
 | Myriahedral | Depth-5 icosahedral mesh, land-aware spanning-tree net | `16:9` source canvas | `myriaproj` | `make_myriahedral_projection()` |
 | Voronoi | Regular icosahedron, 20 nearest-site gnomonic faces | `48:25` source canvas | `voronoiproj` | `make_voronoi_projection()` |
+
+## Build and generated artifacts
 
 Run all standalone projection checks with:
 
@@ -76,9 +105,11 @@ Artifact-family targets are also available as
 `generate-geometry-projections`, `generate-graticules-projections`,
 `generate-earth-projections`, and `generate-water-projections`. Each generic
 family target includes Cahill-Keyes plus AuthaGraph, Myriahedral, Star-X, and
-Voronoi. Each generator accepts a projection name on its command line and
-reopens its SVG to validate the view box, required layers, path structure,
-and finite numeric output.
+Voronoi. The four whole-map generators accept a projection name on their
+command line. Every generator reopens its SVG to validate the view box,
+required layers, path structure, and finite numeric output.
+
+### Generated artifact previews
 
 | Projection | Geometry | Graticules | Earth | Water |
 | --- | --- | --- | --- | --- |
@@ -91,46 +122,9 @@ and finite numeric output.
 The [SVG generation pipeline](docs/generation.md) explains the generator
 sources and Make targets, Natural Earth acquisition, seam handling, sampling,
 polygon clipping, projected-path folding, layer construction, self-checks,
-and perceptual tradeoffs.
-
-Generate the layered 44×22 Cahill-Keyes face geometry with the real Alpha60
-and Izzi headers from the neighboring repositories:
-
-```sh
-make generate-geometry
-```
-
-Generate the separately grouped and degree-labeled 10° Cahill-Keyes latitude
-and longitude graticules with:
-
-```sh
-make generate-graticules-ck
-```
-
-Generate the 44×22 Cahill-Keyes base map containing only Natural Earth's
-1:10m `ocean` and `land` layers with:
-
-```sh
-make generate-earth-ck
-```
-
-This target requires GDAL development headers plus `curl` and `unzip`. On its
-first run it downloads and SHA-256-verifies Natural Earth's official 5.1.1
-physical-vector bundle; the downloaded build input remains ignored by Git.
-See the [data note](docs/natural-earth-10m-physical-vectors.md) for source,
-checksum, licensing, and the standalone fetch target.
-
-Generate the complementary transparent physical-feature overlay—bathymetry,
-minor islands, glaciated areas, Antarctic ice shelves, lakes and reservoirs,
-playas, rivers, reefs, and coastline, but no `ocean` or `land` group—with:
-
-```sh
-make generate-water-ck
-```
-
-The Earth and water SVGs use the same projection frame and form a disjoint
-layer partition: stacking water over Earth reconstructs the complete physical
-layer set without duplicating either base polygon family.
+perceptual tradeoffs, and both Cahill-Keyes enlargement styles. It is the
+authoritative reference for individual `generate-*` targets and the
+ocean/land versus physical-feature layer partition.
 
 ## AuthaGraph
 
@@ -140,48 +134,9 @@ vertices, and scales the unfolded periodic net to any valid map frame. A named
 A3 preset aligns projected coordinates with the checked-in AuthaGraph drawing
 sheet.
 
-### Read by purpose
-
-- [Geometric context](docs/authagraph-context.md) explains the oblique
-  tetrahedron, nearest-vertex regions, 60-degree sectors, 24-sector periodic
-  net, cuts, and aspect ratio.
-- [Implementation notes](docs/authagraph-implementation-notes.md) records the
-  coordinate pipeline, formulas, assembly table, C++ API, variable-frame
-  contract, A3 registration, numeric safeguards, tests, and limitations.
-- [Bibliography](docs/authagraph-bibliography.md) identifies the 2022 analytic
-  paper, the 2017 original method, official project material, the local source
-  plate, and repository verification sources.
-- [README](README.md) gives the shortest build and usage introduction.
-
-### Quick use
-
-```c++
-#include "a60-carto-frame.h"
-#include "a60-carto-projection.h"
-#include "cart0freak0-authagraph.h"
-
-const double height = 900;
-const a60::carto::frame::area dimensions {
-  a60::carto::authagraph_width_to_height_ratio * height,
-  height
-};
-const a60::carto::frame map_frame {dimensions};
-const auto projection = a60::carto::make_authagraph_projection(
-  map_frame, "authagraph-world.svg");
-
-// The public API accepts latitude first, then longitude.
-const auto [x, y] = projection.meridians_to_point_2d(40.7128, -74.0060);
-```
-
-The width must equal `(4/sqrt(3)) * height`, approximately
-`2.309401076758503 * height`. A conventional `2:1` frame is not valid. The
-returned point is in the frame's screen coordinate system: the origin is at
-the upper left, `x` increases to the right, and `y` increases downward.
-
-The optional raster name affects `image_filename()` only. It is not an input
-to the projection mathematics. A named compatibility preset, `ag_a3`, uses
-full-page coordinates for
-[`assets.static/authagraph/15-SP-TESD-03-AG.pdf`](assets.static/authagraph/15-SP-TESD-03-AG.pdf).
+Construction examples, screen-coordinate conventions, optional raster naming,
+the exact frame predicate, and the source-plate `ag_a3` preset are in the
+[AuthaGraph public API notes](docs/authagraph-implementation-notes.md#public-api-and-usage).
 
 ## Cahill-Keyes
 
@@ -190,41 +145,11 @@ Keyes's [`MegamapMaker-prep9.pl`](assets.static/cahill-keyes/MegamapMaker-prep9.
 preserves the existing Visionscarto map registration, and scales to any finite,
 positive 2:1 `a60::carto::frame`.
 
-### Read by purpose
-
-- [Geometric context](docs/cahill-keyes-context.md) explains the octahedral
-  model, octants and half-octants, the piecewise graticule, and the final
-  M-shaped layout.
-- [Implementation notes](docs/cahill-keyes-implementation-notes.md) records the
-  coordinate pipeline, constants, formulas, C++ API, scaling rules, validation,
-  and test strategy.
-- [Bibliography](docs/cahill-keyes-bibliography.md) identifies the historical
-  papers, primary specifications, source implementation, and related ports and
-  map assets.
-- [WebAssembly renderer](src.wasm/README.md) documents the production Embind
-  adapter, runtime SVG generation, Natural Earth seam clipping, build target,
-  and Node smoke test.
-- [README](README.md) gives the shortest build and usage introduction.
-
-### Quick use
-
-```c++
-#include "a60-carto-frame.h"
-#include "a60-carto-projection.h"
-#include "cart0freak0-cahill-keyes.h"
-
-const a60::carto::frame::area dimensions {13200, 6600};
-const a60::carto::frame map_frame {dimensions};
-const auto projection = a60::carto::make_cahill_keyes_projection(
-  map_frame, "visionscarto-cahillkeyes-44x22.300");
-
-// The public API accepts latitude first, then longitude.
-const auto [x, y] = projection.meridians_to_point_2d(40.7128, -74.0060);
-```
-
-The width must equal twice the height. As with AuthaGraph, the returned point
-uses upper-left-origin screen coordinates, and the optional raster name does
-not participate in the projection calculation.
+Construction examples, compatibility presets, screen coordinates, and error
+behavior are in the
+[Cahill-Keyes public API notes](docs/cahill-keyes-implementation-notes.md#public-construction-and-usage).
+The same guide distinguishes a valid 2:1 world carrier from arbitrary-ratio
+[enlargement slices](docs/cahill-keyes-implementation-notes.md#carrier-slicing-and-enlargement).
 
 ## Star-X
 
@@ -237,48 +162,11 @@ the complete X 120 percent about the page center, adds a central North-pole
 star, and composes Natural Earth Antarctica once at the lower end at the
 projection's geographic scale.
 
-### Read by purpose
-
-- [Geometric context](docs/star-x-context.md) explains the octahedral model,
-  official octant numbers versus spatial slots, group rotation, final page
-  quadrants, polar center, cuts, and aspect ratio.
-- [Implementation notes](docs/star-x-implementation-notes.md) records the
-  shared Cahill-Keyes calculation, gap and enlargement formulas, polar
-  composition, frame contract, public API, validation, test strategy,
-  provenance, and limitations.
-- [Bibliography](docs/star-x-bibliography.md) identifies the original Star-X
-  description and plate diagram, inherited Cahill-Keyes sources, historical
-  context, assets, and verification material.
-- [README](README.md) gives the shortest repository introduction.
-
-### Quick use
-
-```c++
-#include "a60-carto-frame.h"
-#include "a60-carto-projection.h"
-#include "cart0freak0-star-x.h"
-
-const double height = 2200;
-const a60::carto::frame::area dimensions {
-  a60::carto::star_x_width_to_height_ratio * height,
-  height
-};
-const a60::carto::frame map_frame {dimensions};
-const auto projection = a60::carto::make_star_x_projection(
-  map_frame, "star-x.svg");
-
-// The public API accepts latitude first, then longitude.
-const auto [x, y] = projection.meridians_to_point_2d(40.7128, -74.0060);
-```
-
-The width must equal `(17/22) * height`. This retains the historical
-34-by-44 four-panel carrier at every scale; `17x22`, `34x44`, `1632x2112`,
-and `5100x6600` are all valid examples. The returned point uses an
-upper-left screen origin. The optional raster name is metadata only.
-`star_x_layout` configures the signed group gap and page-centered enlargement;
-their defaults are `-9/88` of frame height and `1.2`, respectively. The
-central star and unified Antarctica are layer-aware SVG composition helpers,
-not a hidden change to `meridians_to_point_2d()`.
+Construction examples and `star_x_layout` configuration are in the
+[Star-X public API notes](docs/star-x-implementation-notes.md#public-c-api).
+The signed gap and page-centered enlargement default to `-9/88` of frame
+height and `1.2`. The central star and unified Antarctica remain layer-aware
+SVG composition helpers, not hidden changes to the point transform.
 
 ## Myriahedral
 
@@ -291,45 +179,10 @@ unfolded planar copy, and scales the complete net to a variable frame. It has
 no runtime dependency on the historical generator, Boost.Graph, S2, GDAL, or
 Natural Earth.
 
-### Read by purpose
-
-- [Geometric context](docs/myriahedral-context.md) explains the icosahedral
-  mesh, primal and dual graphs, land-aware cut tree, hinges, geographic
-  quadrants, screen axes, and `16:9` canvas.
-- [Implementation notes](docs/myriahedral-implementation-notes.md) records the
-  exact subdivision and affine formulas, fixed-tree provenance, unfolding,
-  hierarchical face search, frame contract, API, tests, and limitations.
-- [Bibliography](docs/myriahedral-bibliography.md) identifies van Wijk's 2008
-  paper, the previous implementation, available configuration evidence,
-  Natural Earth data, source-raster digest, and licensing evidence.
-- [README](README.md) gives the shortest repository introduction.
-
-### Quick use
-
-```c++
-#include "a60-carto-frame.h"
-#include "a60-carto-projection.h"
-#include "cart0freak0-myriahedral.h"
-
-const double height = 900;
-const a60::carto::frame::area dimensions {
-  a60::carto::myriahedral_width_to_height_ratio * height,
-  height
-};
-const a60::carto::frame map_frame {dimensions};
-const auto projection = a60::carto::make_myriahedral_projection(
-  map_frame, "assets.static/myriahedral/black-white-downsampled.png");
-
-// The public API accepts latitude first, then longitude.
-const auto [x, y] = projection.meridians_to_point_2d(40.7128, -74.0060);
-```
-
-The width must equal `(16/9) * height`. That ratio preserves registration with
-the complete `4480 x 2520` source raster; it is not an inherent ratio of every
-possible Myriahedral net. The returned point uses upper-left-origin screen
-coordinates. The optional raster name is metadata for `image_filename()` and
-does not participate in the numeric transform. The named
-`myriahedral_source` preset selects the checked-in raster at its native size.
+Construction examples, the `myriahedral_source` preset, and the distinction
+between this raster-compatible 16:9 net and other possible Myriahedral nets
+are in the
+[Myriahedral public API notes](docs/myriahedral-implementation-notes.md#public-api-and-use).
 
 ## Icosahedral Voronoi
 
@@ -346,46 +199,9 @@ icosahedron, but this projection retains 20 regular faces and a conventional
 fixed net, while Myriahedral subdivides to 5120 faces and uses a land-aware
 tree.
 
-### Read by purpose
-
-- [Geometric context](docs/voronoi-context.md) explains the regular
-  icosahedron, spherical Voronoi cells, face-centered gnomonic projection,
-  unfolding tree, cuts, geographic quadrants, screen axes, and registered
-  canvas.
-- [Implementation notes](docs/voronoi-implementation-notes.md) records the
-  vertex and face construction, nearest-site and gnomonic formulas,
-  shared-edge transforms, fixed D3 registration, frame contract, API,
-  numeric safeguards, tests, and limitations.
-- [Bibliography](docs/voronoi-bibliography.md) identifies the pinned
-  `d3-geo-polygon` sources, D3 projection semantics, cartographic background,
-  attribution, licensing, and repository verification sources.
-- [README](README.md) gives the shortest repository introduction.
-
-### Quick use
-
-```c++
-#include "a60-carto-frame.h"
-#include "a60-carto-projection.h"
-#include "cart0freak0-voronoi.h"
-
-const double height = 500;
-const a60::carto::frame::area dimensions {
-  a60::carto::voronoi_width_to_height_ratio * height,
-  height
-};
-const a60::carto::frame map_frame {dimensions};
-const auto projection = a60::carto::make_voronoi_projection(
-  map_frame, "icosahedral-voronoi.png");
-
-// The public API accepts latitude first, then longitude.
-const auto [x, y] = projection.meridians_to_point_2d(40.7128, -74.0060);
-```
-
-The required width is `(48/25) * height`, preserving the original `960 x 500`
-source-canvas registration. Screen coordinates use an upper-left origin. The
-optional raster name is metadata for `image_filename()` and does not
-participate in the numeric transform. The `voronoi_source` preset selects the
-native source-canvas dimensions but does not prescribe a raster.
+Construction examples, source-canvas registration, screen coordinates, and
+the `voronoi_source` preset are in the
+[Voronoi public API notes](docs/voronoi-implementation-notes.md#public-api-and-use).
 
 ## Source guide
 
@@ -395,14 +211,18 @@ native source-canvas dimensions but does not prescribe a raster.
 | [`tests/test-authagraph-projection-api.cc`](tests/test-authagraph-projection-api.cc) | AuthaGraph formula, source-plate, variable-frame, domain, and API tests |
 | [`src.projections/cart0freak0-cahill-keyes.h`](src.projections/cart0freak0-cahill-keyes.h) | Native scalable forward construction, `projection_api`, frame validation, and named presets |
 | [`src.projections/cart0freak0-cahill-keyes-functions.h`](src.projections/cart0freak0-cahill-keyes-functions.h) | Scale- and offset-aware Cahill-Keyes projected-path seam splitting |
+| [`src.projections/cart0freak0-cahill-keyes-slicing.h`](src.projections/cart0freak0-cahill-keyes-slicing.h) | Whole-Earth carrier validation, arbitrary-ratio viewport descriptors, exact-octant clipping, SVG wrappers, and slice verification |
 | [`tests/test-cahill-keyes-projection.cc`](tests/test-cahill-keyes-projection.cc) | Cahill-Keyes mathematical reference, scaling, and domain tests |
 | [`tests/test-cahill-keyes-projection-api.cc`](tests/test-cahill-keyes-projection-api.cc) | Cahill-Keyes public API, frame, raster, and integration-anchor tests |
 | [`tests/test-cahill-keyes-path-functions.cc`](tests/test-cahill-keyes-path-functions.cc) | Cahill-Keyes path seam, scaling, offset, state, and validation tests |
+| [`tests/test-cahill-keyes-slicing.cc`](tests/test-cahill-keyes-slicing.cc) | Four-strip and exact-octant geometry, metadata, SVG linkage, physical-size, and invalid-carrier tests |
 | [`src.wasm/cahill-keyes-web.cc`](src.wasm/cahill-keyes-web.cc) | Emscripten/Embind adapter that projects points and generates the browser SVG with the native C++20 Cahill-Keyes implementation |
 | [`src.wasm/cartofreako-cahill-keyes.mjs`](src.wasm/cartofreako-cahill-keyes.mjs) | Generated ES-module loader for the checked-in Cahill-Keyes WebAssembly binary |
 | [`src.wasm/cartofreako-cahill-keyes.wasm`](src.wasm/cartofreako-cahill-keyes.wasm) | Generated, checked-in Cahill-Keyes WebAssembly binary |
 | [`src.wasm/cahill-keyes-smoke.mjs`](src.wasm/cahill-keyes-smoke.mjs) | Node smoke test for projection identity, reference coordinates, variable frames, validation, land input, and generated SVG structure |
 | [`src.wasm/README.md`](src.wasm/README.md) | Browser build, output artifacts, runtime map architecture, seam-prepared Natural Earth input, and provenance |
+| [`docs/web-workflow.md`](docs/web-workflow.md) | Emscripten workflow for an illustrative 1920×1080 Myriahedral browser map |
+| [`docs/web-example.md`](docs/web-example.md) | Complete copyable C++, HTML, JavaScript, and build example for that Myriahedral workflow |
 | [`docs/generation.md`](docs/generation.md) | End-to-end SVG generation, seam and folding techniques, data preparation, structural checks, and perceptual considerations |
 | [`docs/prerequisites.md`](docs/prerequisites.md) | Native build, data acquisition, Inkscape review, and optional WebAssembly prerequisites |
 | [`src.projections/cart0freak0-star-x.h`](src.projections/cart0freak0-star-x.h) | Star-X group assembly, configurable centered scale, polar-composition geometry, frame validation, public API, and factory |
@@ -421,8 +241,8 @@ native source-canvas dimensions but does not prescribe a raster.
 | [`assets.generated/png/earth-ck-44-22.png`](assets.generated/png/earth-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes ocean-and-land base |
 | [`src.generate/generate-water.cc`](src.generate/generate-water.cc) | Thin generator entry point for every Natural Earth physical layer except `ocean` and `land` |
 | [`assets.generated/png/water-ck-44-22.png`](assets.generated/png/water-ck-44-22.png) | PNG preview of the complementary 44×22 Cahill-Keyes physical-feature overlay |
-| [`src.generate/generate-4-slice.cc`](src.generate/generate-4-slice.cc) | Four full-detail horizontal Cahill-Keyes quadrant enlargements |
-| [`src.generate/generate-8-slice.cc`](src.generate/generate-8-slice.cc) | Eight full-detail Cahill-Keyes octant enlargements |
+| [`src.generate/generate-4-slice.cc`](src.generate/generate-4-slice.cc) | Four full-height, quarter-width Cahill-Keyes quadrant-pair enlargements |
+| [`src.generate/generate-8-slice.cc`](src.generate/generate-8-slice.cc) | Eight naturally bounded, face-clipped Cahill-Keyes octant enlargements |
 | [`scripts/fetch-natural-earth-10m.sh`](scripts/fetch-natural-earth-10m.sh) | Pinned, checksum-verifying acquisition of the required Natural Earth shapefiles |
 | [`docs/natural-earth-10m-physical-vectors.md`](docs/natural-earth-10m-physical-vectors.md) | Natural Earth source, checksum, extracted-dataset, and licensing note |
 | [`src.projections/cart0freak0-myriahedral.h`](src.projections/cart0freak0-myriahedral.h) | Myriahedral mesh, unfolding, forward transform, frame validation, API, and source-raster preset |

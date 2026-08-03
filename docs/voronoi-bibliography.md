@@ -200,14 +200,6 @@ upstream attribution obligations.
     proportionality, complete integer-degree global coverage, antimeridian
     equivalence, invalid input, raster naming, and the common API contract.
 
-14. **Staged implementation brief.**
-    [`docs/converge-projection-voronoi.md`](converge-projection-voronoi.md).
-
-    This local note records the three requested stages: native C++20
-    projection, variable map sizes under an aspect-ratio constraint, and the
-    current documentation set. It is project history, not an independent
-    mathematical source.
-
 ## Terminology and claim boundary
 
 These documents use intentionally narrow claims:
