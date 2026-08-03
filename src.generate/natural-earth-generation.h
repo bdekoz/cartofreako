@@ -304,6 +304,17 @@ requires_area_grid(const layer_spec& spec,
          && context.spec.kind != generation::projection_kind::star_x;
 }
 
+bool
+requires_star_x_hemisphere_clipping(
+  const layer_spec& spec, const projection_context& context)
+{
+  // Star-X turns some equatorial octant edges into exterior notches. If an
+  // area ring spans both hemispheres, SVG closure can bridge one of those
+  // interruptions--most visibly in the wrapped 159 E / 201 W octant.
+  return spec.role == geometry_role::area
+         && context.spec.kind == generation::projection_kind::star_x;
+}
+
 void
 append_gridded_band(std::string& path_data, std::size_t& point_count,
                     const OGRGeometry& prepared, const OGREnvelope& envelope,
@@ -398,45 +409,67 @@ render_source(svg::group_element& output, const layer_spec& spec,
            band_index != longitude_bands.size(); ++band_index)
         {
           const longitude_band band = longitude_bands[band_index];
-          if (!envelope_overlaps(envelope, band, latitude))
-            continue;
-
-          std::string path_data;
-          std::size_t point_count = 0;
-          const std::string error_context
-            = path.string() + " feature "
-              + std::to_string(sequential_feature);
-          if (requires_area_grid(spec, context))
-            append_gridded_band(
-              path_data, point_count, *prepared, envelope, band, spec,
-              context, error_context);
-          else
+          const bool split_hemispheres
+            = requires_star_x_hemisphere_clipping(spec, context);
+          const int latitude_piece_count = split_hemispheres ? 2 : 1;
+          for (int latitude_piece = 0;
+               latitude_piece != latitude_piece_count; ++latitude_piece)
             {
-              geometry_ptr clip = make_clip_rectangle(
-                band.west, latitude.south, band.east, latitude.north);
-              geometry_ptr clipped(prepared->Intersection(clip.get()));
-              require(clipped != nullptr,
-                      "GDAL failed to clip " + error_context);
-              if (clipped->IsEmpty())
+              latitude_range clipped_latitude = latitude;
+              std::string_view hemisphere_suffix;
+              if (split_hemispheres)
+                {
+                  const bool north = latitude_piece == 1;
+                  clipped_latitude.south = std::max(
+                    latitude.south, north ? 0.0 : -90.0);
+                  clipped_latitude.north = std::min(
+                    latitude.north, north ? 90.0 : -seam_epsilon);
+                  hemisphere_suffix = north ? "-north" : "-south";
+                }
+              if (clipped_latitude.north <= clipped_latitude.south
+                  || !envelope_overlaps(
+                    envelope, band, clipped_latitude))
                 continue;
-              clipped->segmentize(spec.maximum_segment);
-              append_geometry(
-                path_data, point_count, *clipped, context, spec.role);
-            }
-          if (path_data.empty())
-            continue;
 
-          std::string id(spec.id);
-          id += "-feature-" + std::to_string(sequential_feature);
-          id += "-band-" + std::to_string(band_index + 1);
-          const std::string attributes
-            = spec.role == geometry_role::area
-              ? R"(fill-rule="evenodd")" : std::string {};
-          output.add_element(svg::make_path(
-            path_data, spec.style, id, true, attributes));
-          rendered_feature = true;
-          ++stats.paths;
-          stats.points += point_count;
+              std::string path_data;
+              std::size_t point_count = 0;
+              const std::string error_context
+                = path.string() + " feature "
+                  + std::to_string(sequential_feature);
+              if (requires_area_grid(spec, context))
+                append_gridded_band(
+                  path_data, point_count, *prepared, envelope, band, spec,
+                  context, error_context);
+              else
+                {
+                  geometry_ptr clip = make_clip_rectangle(
+                    band.west, clipped_latitude.south,
+                    band.east, clipped_latitude.north);
+                  geometry_ptr clipped(prepared->Intersection(clip.get()));
+                  require(clipped != nullptr,
+                          "GDAL failed to clip " + error_context);
+                  if (clipped->IsEmpty())
+                    continue;
+                  clipped->segmentize(spec.maximum_segment);
+                  append_geometry(
+                    path_data, point_count, *clipped, context, spec.role);
+                }
+              if (path_data.empty())
+                continue;
+
+              std::string id(spec.id);
+              id += "-feature-" + std::to_string(sequential_feature);
+              id += "-band-" + std::to_string(band_index + 1);
+              id += hemisphere_suffix;
+              const std::string attributes
+                = spec.role == geometry_role::area
+                  ? R"(fill-rule="evenodd")" : std::string {};
+              output.add_element(svg::make_path(
+                path_data, spec.style, id, true, attributes));
+              rendered_feature = true;
+              ++stats.paths;
+              stats.points += point_count;
+            }
         }
       const bool source_overlaps_latitude
         = envelope.MaxY >= latitude.south
@@ -1212,6 +1245,13 @@ verify_earth(const std::string& generated,
     }
   if (context.spec.kind == generation::projection_kind::star_x)
     {
+      require(
+        generated.find("id=\"ocean-feature-1-band-5-south\"")
+              != std::string::npos
+          && generated.find("id=\"ocean-feature-1-band-5-north\"")
+               != std::string::npos,
+        "generated Star-X ocean must hemisphere-clip the wrapped "
+        "159-degree band so equatorial notches remain open");
       require(generated.find("id=\"north-pole-star\"")
                 != std::string::npos,
               "generated Star-X earth SVG is missing its polar star");

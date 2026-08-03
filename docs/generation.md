@@ -377,12 +377,15 @@ For each shapefile, the program:
 3. optionally simplifies it while preserving topology;
 4. skips clipping bands that cannot overlap the feature envelope;
 5. intersects the feature with every relevant seam-safe longitude band;
-6. for AuthaGraph, Myriahedral, and Voronoi, further clips areas to a
+6. for Star-X, further clips filled areas into northern and southern pieces
+   so closing a projected ring cannot bridge an exterior equatorial notch;
+7. for AuthaGraph, Myriahedral, and Voronoi, further clips areas to a
    5-degree geographic grid;
-7. densifies each surviving piece with `segmentize()`;
-8. projects lines with native-cell bisection and areas either directly or by
+8. densifies each surviving piece with `segmentize()`;
+9. projects lines with native-cell bisection and areas either directly or by
    exact Myriahedral/Voronoi face-local triangle intersection; and
-9. serializes the result as one named Izzi path per source feature and band.
+10. serializes the result as one named Izzi path per source feature and band,
+    with a hemisphere suffix on Star-X area paths.
 
 Interior polygon rings are retained, and area paths use SVG's `evenodd`
 fill rule so lakes or other holes are not painted solid. All tolerances below
@@ -399,7 +402,10 @@ densified before projection. The detailed Natural Earth ocean is painted over
 that underlay, followed by land. A page-sized blue rectangle would also color
 the intentional cuts and the area outside the projection, whereas the
 face-local underlay keeps those regions white. The Earth self-check verifies
-both the piece count and that this paint order is preserved.
+both the piece count and that this paint order is preserved. Star-X also
+checks that the cyclic band crossing the antimeridian has distinct north and
+south ocean paths; without that split, SVG ring closure fills the lower-left
+equatorial notch even though the synthetic face underlay is correct.
 
 | Layer family | Simplification | Maximum segment |
 | --- | ---: | ---: |
