@@ -705,13 +705,13 @@ struct ckproj : public projection_base, public projection_api
   /// @param other Projection to copy.
   ckproj(const ckproj& other) = default;
 
-  /// Resolve a requested raster variant against the runtime data directory.
-  /// @param v Raster mode whose suffix is appended to the registered name.
-  /// @return Full PNG path for the requested raster variant.
+  /// Resolve the registered raster against the generated PNG directory.
+  /// @param v Raster mode retained for projection API compatibility.
+  /// @return Full path to the generated PNG.
   string
-  image_filename(const raster_mode /*v*/,
-		 const string prefix = "/home/bkoz/src/cartofreako/generated/png/") const
+  image_filename(const raster_mode /*v*/) const override
   {
+    const string prefix = "/home/bkoz/src/cartofreako/generated/png/";
     string ret = prefix + name;
     return ret + ".png";
   }

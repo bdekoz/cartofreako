@@ -406,8 +406,9 @@ subgroups, a minimum path count, the view box, and finite coordinates.
 ## Hamonshū ocean generator
 
 [`tests/generate-ocean.cc`](../tests/generate-ocean.cc) combines one
-Natural Earth ocean feature with 153 deterministic vector interpretations of
-Mori Yūzan's 1903 *Hamonshū*, volume 2.
+Natural Earth ocean feature with the 91 deterministic variations selected by
+Izzi's `examples/curves-hamonshu.cc`: 13 source motifs at seven curvature
+ratios from Mori Yūzan's 1903 *Hamonshū*, volume 2.
 
 ### Catalogue and provenance
 
@@ -421,6 +422,14 @@ entries. The source has no printed motif captions, so these names are
 descriptions rather than translations or historical titles. Keeping this
 projection-independent material in Izzi lets other SVG programs render the
 same source-indexed paths without depending on GDAL or cartofreako.
+
+The same public header is the single source for
+`curated_motif_selections`, the 13 source-coordinate selections displayed as
+rows by Izzi's parameter-grid example, and `curated_curvature_ratios`, the
+seven values `0.25`, `0.45`, `0.70`, `1.0`, `1.30`, `1.65`, and
+`2.10`. Their Cartesian product yields the ocean's 91 variations. Sharing
+these arrays prevents the example and map generator from acquiring divergent
+hand-copied selections.
 
 The PDF is visual source material, not a runtime input and not an image
 texture embedded in the SVG. Stable layer IDs and titles map each procedural
@@ -453,13 +462,13 @@ irregular coastal fragments can pass or fail differently from compact
 offshore pieces. The complete base ocean fills small pieces intentionally
 omitted from the patterned mosaic.
 
-Surviving regions are distributed round-robin across the 153 catalogue
-entries. The serpentine traversal avoids a hard reset at every latitude row,
-but the assignment is artistic and deterministic rather than geographic or
-historical. Myriahedral retains every exact face fragment in a tile's clip
-path but uses one motif bounding box per source tile, keeping the 5,120-face
-output tractable. Tile boundaries may be perceived as ocean regions even
-though they encode no oceanographic phenomenon.
+Surviving regions are distributed round-robin across the 91 curated
+motif/curvature variations. The serpentine traversal avoids a hard reset at
+every latitude row, but the assignment is artistic and deterministic rather
+than geographic or historical. Myriahedral retains every exact face fragment
+in a tile's clip path but uses one motif bounding box per source tile, keeping
+the 5,120-face output tractable. Tile boundaries may be perceived as ocean
+regions even though they encode no oceanographic phenomenon.
 
 ### Procedural line families
 
@@ -477,6 +486,12 @@ row count, phase, direction, density, color, stroke width, and a small
 rotation. There is no runtime randomness, so the same catalogue and geometry
 select the same construction.
 
+For each of the 13 selected motifs, the seven layers change only the public
+`motif_config.curvature` value. This multiplier controls wave height, curl
+radius, and transverse displacement; density, phase, orientation, reflection,
+sampling, and palette selection remain fixed across one motif's seven forms.
+The `1.0` column is the canonical catalogue form.
+
 Curves are evaluated parametrically at fixed sample counts. Ellipses and
 spirals are likewise converted to point sequences, and Izzi serializes them
 as SVG paths. Motifs are authored in normalized `(u,v)` coordinates and the
@@ -487,22 +502,24 @@ anisotropically and changes its apparent wavelength. A deterministic rotation
 of up to four degrees can extend linework beyond the box; the generator's SVG
 clip path constrains it to the assigned ocean region.
 
-Each catalogue layer contains:
+Each variation layer contains:
 
 1. a colored path for its assigned ocean regions; and
 2. one procedural line path clipped to those exact regions by an SVG
    `clipPath`.
 
 A small seeded palette varies adjacent water fields and ink. This makes the
-153 layers distinguishable in an editor and produces a deliberate patchwork,
+91 layers distinguishable in an editor and produces a deliberate patchwork,
 but color boundaries can compete perceptually with coastlines or be mistaken
 for bathymetric zones. Fixed output-space stroke widths can also appear denser
 in small tiles than in large ones.
 
-The self-check requires the base ocean, all 153 named groups, 153 clip paths,
-two paths per catalogue layer, source titles, the projection-specific view
-box, and finite coordinates. It verifies provenance and structure, not
-visual fidelity to the scanned pages.
+Layer IDs append `-curvature-C`, where `C` is the zero-based position in the
+seven-value array, to the stable source motif ID. The self-check requires the
+base ocean, all 91 named groups, 91 clip paths, two paths per variation,
+source-and-curvature titles, the projection-specific view box, and finite
+coordinates. It verifies provenance and structure, not visual fidelity to the
+scanned pages.
 
 ## What the executable checks do—and do not—prove
 

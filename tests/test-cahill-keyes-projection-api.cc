@@ -174,7 +174,8 @@ main()
   const auto raster_projection = a60::carto::make_cahill_keyes_projection(
     frame {png_44x22_300}, "visionscarto-cahillkeyes-44x22.300");
   assert(raster_projection.image_filename(a60::carto::projection_base::inverse)
-         == "visionscarto-map/visionscarto-cahillkeyes-44x22.300-inverse.png");
+         == "/home/bkoz/src/cartofreako/generated/png/"
+            "visionscarto-cahillkeyes-44x22.300.png");
 
   // The original projection_base constructor remains available, including
   // callers that intentionally provide a non-centered drawing origin.

@@ -255,9 +255,9 @@ neighboring Izzi checkout's
 
 Install Inkscape when reviewing or editing generated artifacts. It is useful
 here because the SVGs preserve named layers for faces, quadrants, graticules,
-physical features, bathymetry, clipping regions, and the 153 *Hamonshū*
-patterns. A browser renders the final composition but is less useful for
-toggling and auditing those groups.
+physical features, bathymetry, clipping regions, and the 91 curated
+*Hamonshū* motif/curvature variations. A browser renders the final
+composition but is less useful for toggling and auditing those groups.
 
 Verify the installation and open an artifact with:
 

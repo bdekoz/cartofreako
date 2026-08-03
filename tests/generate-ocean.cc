@@ -12,6 +12,7 @@
 #include <iterator>
 #include <limits>
 #include <memory>
+#include <sstream>
 #include <set>
 #include <stdexcept>
 #include <string>
@@ -41,7 +42,6 @@ using hamonshu::pattern_id;
 using hamonshu::pattern_spec;
 using hamonshu::pattern_title;
 using hamonshu::validate_pattern_spec;
-constexpr const auto& pattern_specs = hamonshu::pattern_specs;
 constexpr std::string_view ocean_shapefile = "ne_10m_ocean.shp";
 constexpr std::string_view default_data_directory
   = "assets/natural-earth/10m-physical-vectors";
@@ -59,6 +59,13 @@ pattern_style_seed(const pattern_spec& spec)
     seed = seed * 33U ^ character;
   return seed;
 }
+
+struct pattern_variation
+{
+  const pattern_spec* spec;
+  std::size_t curvature_index;
+  double curvature;
+};
 
 struct longitude_band
 {
@@ -139,6 +146,54 @@ require(const bool condition, const std::string& message)
 {
   if (!condition)
     throw std::runtime_error(message);
+}
+
+std::string
+number(const double value)
+{
+  std::ostringstream output;
+  output.precision(3);
+  output << value;
+  return output.str();
+}
+
+std::string
+variation_id(const pattern_variation& variation)
+{
+  return pattern_id(*variation.spec)
+    + "-curvature-" + std::to_string(variation.curvature_index);
+}
+
+std::string
+variation_title(const pattern_variation& variation)
+{
+  return pattern_title(*variation.spec)
+    + "; curvature=" + number(variation.curvature);
+}
+
+std::vector<pattern_variation>
+make_curated_variations()
+{
+  std::vector<pattern_variation> variations;
+  variations.reserve(hamonshu::curated_variation_count);
+  std::set<std::string> identifiers;
+  for (const auto selection : hamonshu::curated_motif_selections)
+    {
+      const pattern_spec& spec = hamonshu::curated_pattern(selection);
+      for (std::size_t index = 0;
+           index != hamonshu::curated_curvature_ratios.size(); ++index)
+        {
+          const pattern_variation variation {
+            &spec, index, hamonshu::curated_curvature_ratios[index],
+          };
+          require(identifiers.insert(variation_id(variation)).second,
+                  "duplicate curated Hamonshu variation");
+          variations.push_back(variation);
+        }
+    }
+  require(variations.size() == hamonshu::curated_variation_count,
+          "curated Hamonshu variation set is incomplete");
+  return variations;
 }
 
 const std::filesystem::path&
@@ -481,8 +536,9 @@ make_ocean_tiles(const OGRGeometry& ocean,
         }
     }
 
-  require(result.size() >= pattern_specs.size(),
-          "ocean mosaic produced fewer regions than Hamonshu patterns");
+  require(result.size() >= hamonshu::curated_variation_count,
+          "ocean mosaic produced fewer regions than curated Hamonshu "
+          "variations");
   return result;
 }
 
@@ -537,19 +593,23 @@ generate_ocean(const projection_spec& projection_specification)
   const projected_region complete_ocean = project_complete_ocean(
     *ocean, context);
   std::vector<projected_region> tiles = make_ocean_tiles(*ocean, context);
+  const std::vector<pattern_variation> variations
+    = make_curated_variations();
 
-  std::vector<std::vector<projected_region>> assigned(pattern_specs.size());
+  std::vector<std::vector<projected_region>> assigned(variations.size());
   for (std::size_t index = 0; index != tiles.size(); ++index)
-    assigned[index % pattern_specs.size()].push_back(
+    assigned[index % variations.size()].push_back(
       std::move(tiles[index]));
   for (std::size_t index = 0; index != assigned.size(); ++index)
     require(!assigned[index].empty(),
-            "Hamonshu pattern received no visible ocean mosaic region");
+            "Hamonshu variation received no visible ocean mosaic region");
 
   svg::svg_element document(
     basename,
-    "Natural Earth ocean filled with 153 source-indexed vector studies from "
-    "Mori Yuzan's 1903 Hamonshu volume 2 in the "
+    "Natural Earth ocean filled with "
+      + std::to_string(variations.size())
+      + " curated variations of 13 vector studies from Mori Yuzan's 1903 "
+        "Hamonshu volume 2 in the "
       + std::string(projection_specification.title) + " projection",
     context.map_frame.frame_area);
 
@@ -558,9 +618,9 @@ generate_ocean(const projection_spec& projection_specification)
   };
   svg::defs_element definitions;
   definitions.start_element();
-  for (std::size_t index = 0; index != pattern_specs.size(); ++index)
+  for (std::size_t index = 0; index != variations.size(); ++index)
     {
-      const std::string id = pattern_id(pattern_specs[index]);
+      const std::string id = variation_id(variations[index]);
       const std::string clip_id = "clip-" + id;
       std::string region_data;
       for (const projected_region& region : assigned[index])
@@ -592,29 +652,33 @@ generate_ocean(const projection_spec& projection_specification)
 
   std::set<std::string> unique_ids;
   std::size_t region_count = 0;
-  for (std::size_t index = 0; index != pattern_specs.size(); ++index)
+  for (std::size_t index = 0; index != variations.size(); ++index)
     {
-      const pattern_spec& spec = pattern_specs[index];
+      const pattern_variation& variation = variations[index];
+      const pattern_spec& spec = *variation.spec;
       validate_pattern_spec(spec);
-      const std::string id = pattern_id(spec);
+      const std::string id = variation_id(variation);
       require(unique_ids.insert(id).second,
-              "duplicate Hamonshu pattern layer id: " + id);
+              "duplicate Hamonshu variation layer id: " + id);
       const unsigned seed = pattern_style_seed(spec);
       std::string region_data;
       std::string motif_data;
+      hamonshu::motif_config config;
+      config.curvature = variation.curvature;
       for (const projected_region& region : assigned[index])
         {
           region_data += region.path_data;
           motif_data += hamonshu::make_motif_path(
             spec,
             {region.box.left, region.box.top,
-             region.box.right, region.box.bottom});
+             region.box.right, region.box.bottom},
+            config);
           ++region_count;
         }
 
       svg::group_element layer;
       layer.start_element(id);
-      layer.add_title(pattern_title(spec));
+      layer.add_title(variation_title(variation));
       layer.add_element(svg::make_path(
         region_data,
         area_style(background_palette[seed % background_palette.size()]),
@@ -633,7 +697,10 @@ generate_ocean(const projection_spec& projection_specification)
   ocean_layer.finish_element();
   document.add_element(ocean_layer);
 
-  std::cout << "Hamonshu patterns: " << pattern_specs.size()
+  std::cout << "Hamonshu variations: " << variations.size()
+            << " (" << hamonshu::curated_motif_selections.size()
+            << " motifs x " << hamonshu::curated_curvature_ratios.size()
+            << " curvature ratios)"
             << ", ocean mosaic regions: " << region_count << '\n';
 }
 
@@ -644,6 +711,8 @@ main(const int argc, char** argv)
     argc, argv);
   const std::string basename = generation::output_basename("ocean", spec);
   const projection_context context(spec, basename);
+  const std::vector<pattern_variation> variations
+    = make_curated_variations();
   generate_ocean(spec);
 
   std::ifstream input {basename + ".svg"};
@@ -657,22 +726,22 @@ main(const int argc, char** argv)
           && generated.find("<g id=\"ocean-base\">") != std::string::npos,
           "generated SVG is missing the Natural Earth ocean layers");
   require(token_count(generated, "<g id=\"hamonshu-page-")
-            == pattern_specs.size(),
-          "generated SVG does not contain all Hamonshu pattern layers");
+            == variations.size(),
+          "generated SVG does not contain all curated Hamonshu variations");
   require(token_count(generated, "<clipPath id=\"clip-hamonshu-page-")
-            == pattern_specs.size(),
-          "generated SVG does not contain one clip path per pattern layer");
+            == variations.size(),
+          "generated SVG does not contain one clip path per variation");
   require(token_count(generated, "<path id=\"hamonshu-page-")
-            == 2 * pattern_specs.size(),
-          "generated SVG does not contain two paths per pattern layer");
-  for (const pattern_spec& spec : pattern_specs)
+            == 2 * variations.size(),
+          "generated SVG does not contain two paths per variation");
+  for (const pattern_variation& variation : variations)
     {
-      const std::string id = pattern_id(spec);
+      const std::string id = variation_id(variation);
       require(generated.find("<g id=\"" + id + "\">")
                 != std::string::npos,
               "generated SVG is missing Hamonshu layer " + id);
-      require(generated.find(pattern_title(spec)) != std::string::npos,
-              "generated SVG is missing Hamonshu source title " + id);
+      require(generated.find(variation_title(variation)) != std::string::npos,
+              "generated SVG is missing Hamonshu variation title " + id);
     }
   require(generated.find(" nan") == std::string::npos
           && generated.find(" -nan") == std::string::npos
