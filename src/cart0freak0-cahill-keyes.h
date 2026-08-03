@@ -709,26 +709,10 @@ struct ckproj : public projection_base, public projection_api
   /// @param v Raster mode whose suffix is appended to the registered name.
   /// @return Full PNG path for the requested raster variant.
   string
-  image_filename(const raster_mode /*v*/) const
+  image_filename(const raster_mode /*v*/,
+		 const string prefix = "/home/bkoz/src/cartofreako/generated/png/") const
   {
-#if 0
-    auto& rtr = io::get_run_time_resources();
-    const string cartodata = "visionscarto-map";
-    string ret(io::end_path(rtr.data) + cartodata + "/" + name);
-    if (v == outline)
-      ret += "-outline";
-    if (v == inverse)
-      ret += "-inverse";
-    if (v == raster_mode(outline | inverse))
-      ret += "-outline-inverse";
-    if (v == grid)
-      ret += "-grid";
-    if (v == glitch)
-      ret += "-gitch";
-#else
-    string prefix = "/home/bkoz/src/cartofreako/generated/png/";
     string ret = prefix + name;
-#endif
     return ret + ".png";
   }
 
