@@ -38,7 +38,6 @@ using generation::geographic_point;
 using generation::projection_context;
 using generation::projection_spec;
 using hamonshu::pattern_id;
-using hamonshu::pattern_seed;
 using hamonshu::pattern_spec;
 using hamonshu::pattern_title;
 using hamonshu::validate_pattern_spec;
@@ -47,6 +46,19 @@ constexpr std::string_view ocean_shapefile = "ne_10m_ocean.shp";
 constexpr std::string_view default_data_directory
   = "assets/natural-earth/10m-physical-vectors";
 constexpr double seam_epsilon = 1e-7;
+
+// Preserve cartofreako's established palette choices without depending on
+// Izzi's private catalogue key, which is an implementation detail of motif
+// construction rather than part of the public Hamonshu API.
+unsigned
+pattern_style_seed(const pattern_spec& spec)
+{
+  unsigned seed = spec.first_page * 131U + spec.last_page * 17U
+                  + spec.motif * 43U;
+  for (const unsigned char character : spec.name)
+    seed = seed * 33U ^ character;
+  return seed;
+}
 
 struct longitude_band
 {
@@ -587,7 +599,7 @@ generate_ocean(const projection_spec& projection_specification)
       const std::string id = pattern_id(spec);
       require(unique_ids.insert(id).second,
               "duplicate Hamonshu pattern layer id: " + id);
-      const unsigned seed = pattern_seed(spec);
+      const unsigned seed = pattern_style_seed(spec);
       std::string region_data;
       std::string motif_data;
       for (const projected_region& region : assigned[index])
