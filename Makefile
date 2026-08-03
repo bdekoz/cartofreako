@@ -6,6 +6,8 @@ ALPHA60_SRC ?= ../alpha60/src
 IZZI_SRC ?= ../izzi/src
 GDAL_CONFIG ?= gdal-config
 DOXYGEN ?= doxygen
+INKSCAPE ?= inkscape
+PNG_LONG_SIDE ?= 3840
 EMXX ?= ../emsdk/upstream/emscripten/em++
 NODE ?= node
 EM_CACHE ?= /tmp/cartofreako-emscripten-cache
@@ -14,6 +16,9 @@ NATURAL_EARTH_FETCHER := scripts/fetch-natural-earth-10m.sh
 NATURAL_EARTH_STAMP := \
 	$(NATURAL_EARTH_DIR)/.natural-earth-10m-physical-5.1.1
 GENERATED_DIR := generated
+GENERATED_SVG_DIR := $(GENERATED_DIR)/svg
+GENERATED_PNG_DIR := $(GENERATED_DIR)/png
+GENERATED_PDF_DIR := $(GENERATED_DIR)/pdf
 DOXYGEN_CONFIG := Doxyfile
 DOXYGEN_OUTPUT_DIR := docs/doxygen
 DOXYGEN_HEADERS := $(wildcard src/cart0freak0*.h)
@@ -30,30 +35,30 @@ GRATICULE_GENERATOR := $(TEST_DIR)/generate-graticules
 EARTH_GENERATOR := $(TEST_DIR)/generate-earth
 OCEAN_GENERATOR := $(TEST_DIR)/generate-ocean
 
-CK_GEOMETRY_SVG := $(GENERATED_DIR)/geometry-ck-44-22.svg
-CK_GRATICULE_SVG := $(GENERATED_DIR)/graticules-ck-44-22.svg
-CK_EARTH_SVG := $(GENERATED_DIR)/earth-ck-44-22.svg
-CK_OCEAN_SVG := $(GENERATED_DIR)/ocean-ck-44-22.svg
+CK_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-ck-44-22.svg
+CK_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-ck-44-22.svg
+CK_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-ck-44-22.svg
+CK_OCEAN_SVG := $(GENERATED_SVG_DIR)/ocean-ck-44-22.svg
 
-AUTHAGRAPH_GEOMETRY_SVG := $(GENERATED_DIR)/geometry-authagraph-44-19.052559.svg
-AUTHAGRAPH_GRATICULE_SVG := $(GENERATED_DIR)/graticules-authagraph-44-19.052559.svg
-AUTHAGRAPH_EARTH_SVG := $(GENERATED_DIR)/earth-authagraph-44-19.052559.svg
-AUTHAGRAPH_OCEAN_SVG := $(GENERATED_DIR)/ocean-authagraph-44-19.052559.svg
+AUTHAGRAPH_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-authagraph-44-19.052559.svg
+AUTHAGRAPH_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-authagraph-44-19.052559.svg
+AUTHAGRAPH_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-authagraph-44-19.052559.svg
+AUTHAGRAPH_OCEAN_SVG := $(GENERATED_SVG_DIR)/ocean-authagraph-44-19.052559.svg
 
-MYRIAHEDRAL_GEOMETRY_SVG := $(GENERATED_DIR)/geometry-myriahedral-44-24.75.svg
-MYRIAHEDRAL_GRATICULE_SVG := $(GENERATED_DIR)/graticules-myriahedral-44-24.75.svg
-MYRIAHEDRAL_EARTH_SVG := $(GENERATED_DIR)/earth-myriahedral-44-24.75.svg
-MYRIAHEDRAL_OCEAN_SVG := $(GENERATED_DIR)/ocean-myriahedral-44-24.75.svg
+MYRIAHEDRAL_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-myriahedral-44-24.75.svg
+MYRIAHEDRAL_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-myriahedral-44-24.75.svg
+MYRIAHEDRAL_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-myriahedral-44-24.75.svg
+MYRIAHEDRAL_OCEAN_SVG := $(GENERATED_SVG_DIR)/ocean-myriahedral-44-24.75.svg
 
-STAR_X_GEOMETRY_SVG := $(GENERATED_DIR)/geometry-star-x-34-44.svg
-STAR_X_GRATICULE_SVG := $(GENERATED_DIR)/graticules-star-x-34-44.svg
-STAR_X_EARTH_SVG := $(GENERATED_DIR)/earth-star-x-34-44.svg
-STAR_X_OCEAN_SVG := $(GENERATED_DIR)/ocean-star-x-34-44.svg
+STAR_X_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-star-x-34-44.svg
+STAR_X_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-star-x-34-44.svg
+STAR_X_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-star-x-34-44.svg
+STAR_X_OCEAN_SVG := $(GENERATED_SVG_DIR)/ocean-star-x-34-44.svg
 
-VORONOI_GEOMETRY_SVG := $(GENERATED_DIR)/geometry-voronoi-44-22.916667.svg
-VORONOI_GRATICULE_SVG := $(GENERATED_DIR)/graticules-voronoi-44-22.916667.svg
-VORONOI_EARTH_SVG := $(GENERATED_DIR)/earth-voronoi-44-22.916667.svg
-VORONOI_OCEAN_SVG := $(GENERATED_DIR)/ocean-voronoi-44-22.916667.svg
+VORONOI_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-voronoi-44-22.916667.svg
+VORONOI_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-voronoi-44-22.916667.svg
+VORONOI_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-voronoi-44-22.916667.svg
+VORONOI_OCEAN_SVG := $(GENERATED_SVG_DIR)/ocean-voronoi-44-22.916667.svg
 
 REQUESTED_GEOMETRY_SVGS := \
 	$(AUTHAGRAPH_GEOMETRY_SVG) \
@@ -84,6 +89,17 @@ GENERATED_SVGS := \
 	$(CK_GEOMETRY_SVG) $(CK_GRATICULE_SVG) \
 	$(CK_EARTH_SVG) $(CK_OCEAN_SVG) \
 	$(REQUESTED_PROJECTION_SVGS)
+GENERATED_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PDF_DIR)/%.pdf,$(GENERATED_SVGS))
+GENERATED_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PNG_DIR)/%.png,$(GENERATED_SVGS))
+STAR_X_SVGS := $(STAR_X_GEOMETRY_SVG) $(STAR_X_GRATICULE_SVG) \
+	$(STAR_X_EARTH_SVG) $(STAR_X_OCEAN_SVG)
+STAR_X_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PNG_DIR)/%.png,$(STAR_X_SVGS))
+LANDSCAPE_PNGS := $(filter-out $(STAR_X_PNGS),$(GENERATED_PNGS))
+GENERATED_ARTIFACTS := $(GENERATED_SVGS) $(GENERATED_PDFS) \
+	$(GENERATED_PNGS)
 
 GENERATOR_BINARIES := \
 	$(EARTH_GENERATOR) \
@@ -213,57 +229,58 @@ fetch-natural-earth-10m: $(NATURAL_EARTH_STAMP)
 $(NATURAL_EARTH_STAMP): $(NATURAL_EARTH_FETCHER)
 	$(NATURAL_EARTH_FETCHER) "$(NATURAL_EARTH_DIR)"
 
-$(GENERATED_DIR):
+$(GENERATED_DIR) $(GENERATED_SVG_DIR) $(GENERATED_PNG_DIR) \
+		$(GENERATED_PDF_DIR):
 	mkdir -p "$@"
 
 # Preserve the original Cahill-Keyes workflow and output names.
 generate-geometry: $(CK_GEOMETRY_SVG)
 
-$(CK_GEOMETRY_SVG): $(GEOMETRY_GENERATOR) | $(GENERATED_DIR)
-	cd "$(GENERATED_DIR)" && \
+$(CK_GEOMETRY_SVG): $(GEOMETRY_GENERATOR) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
 		"$(abspath $(GEOMETRY_GENERATOR))" cahill-keyes
 
 generate-graticules-ck: $(CK_GRATICULE_SVG)
 
-$(CK_GRATICULE_SVG): $(GRATICULE_GENERATOR) | $(GENERATED_DIR)
-	cd "$(GENERATED_DIR)" && \
+$(CK_GRATICULE_SVG): $(GRATICULE_GENERATOR) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
 		"$(abspath $(GRATICULE_GENERATOR))" cahill-keyes
 
 generate-earth-ck: $(CK_EARTH_SVG)
 
-$(CK_EARTH_SVG): $(EARTH_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_DIR)
-	cd "$(GENERATED_DIR)" && \
+$(CK_EARTH_SVG): $(EARTH_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		"$(abspath $(EARTH_GENERATOR))" cahill-keyes
 
 generate-ocean-ck: $(CK_OCEAN_SVG)
 
-$(CK_OCEAN_SVG): $(OCEAN_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_DIR)
-	cd "$(GENERATED_DIR)" && \
+$(CK_OCEAN_SVG): $(OCEAN_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		"$(abspath $(OCEAN_GENERATOR))" cahill-keyes
 
 # $(1): command-line projection name; $(2)-$(5): generated artifacts.
 define PROJECTION_RULES
 generate-geometry-$(1): $(2)
-$(2): $(GEOMETRY_GENERATOR) | $(GENERATED_DIR)
-	cd "$(GENERATED_DIR)" && \
+$(2): $(GEOMETRY_GENERATOR) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
 		"$(abspath $(GEOMETRY_GENERATOR))" $(1)
 
 generate-graticules-$(1): $(3)
-$(3): $(GRATICULE_GENERATOR) | $(GENERATED_DIR)
-	cd "$(GENERATED_DIR)" && \
+$(3): $(GRATICULE_GENERATOR) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
 		"$(abspath $(GRATICULE_GENERATOR))" $(1)
 
 generate-earth-$(1): $(4)
-$(4): $(EARTH_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_DIR)
-	cd "$(GENERATED_DIR)" && \
+$(4): $(EARTH_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		"$(abspath $(EARTH_GENERATOR))" $(1)
 
 generate-ocean-$(1): $(5)
-$(5): $(OCEAN_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_DIR)
-	cd "$(GENERATED_DIR)" && \
+$(5): $(OCEAN_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		"$(abspath $(OCEAN_GENERATOR))" $(1)
 
@@ -283,6 +300,20 @@ $(eval $(call PROJECTION_RULES,voronoi,\
 	$(VORONOI_GEOMETRY_SVG),$(VORONOI_GRATICULE_SVG),\
 	$(VORONOI_EARTH_SVG),$(VORONOI_OCEAN_SVG)))
 
+$(GENERATED_PDFS): $(GENERATED_PDF_DIR)/%.pdf: \
+		$(GENERATED_SVG_DIR)/%.svg | $(GENERATED_PDF_DIR)
+	"$(INKSCAPE)" --export-area-page --export-filename="$@" "$<"
+
+$(LANDSCAPE_PNGS): $(GENERATED_PNG_DIR)/%.png: \
+		$(GENERATED_SVG_DIR)/%.svg | $(GENERATED_PNG_DIR)
+	"$(INKSCAPE)" --export-area-page --export-width=$(PNG_LONG_SIDE) \
+		--export-filename="$@" "$<"
+
+$(STAR_X_PNGS): $(GENERATED_PNG_DIR)/%.png: \
+		$(GENERATED_SVG_DIR)/%.svg | $(GENERATED_PNG_DIR)
+	"$(INKSCAPE)" --export-area-page --export-height=$(PNG_LONG_SIDE) \
+		--export-filename="$@" "$<"
+
 generate-voroni: generate-voronoi
 
 generate-geometry-projections: \
@@ -291,10 +322,10 @@ generate-graticules-projections: \
 	$(CK_GRATICULE_SVG) $(REQUESTED_GRATICULE_SVGS)
 generate-earth-projections: $(CK_EARTH_SVG) $(REQUESTED_EARTH_SVGS)
 generate-ocean-projections: $(CK_OCEAN_SVG) $(REQUESTED_OCEAN_SVGS)
-generate-projections: $(GENERATED_SVGS)
-generated-projections: $(GENERATED_SVGS)
-make-generated: $(GENERATED_SVGS)
-all: $(GENERATED_SVGS)
+generate-projections: $(GENERATED_ARTIFACTS)
+generated-projections: $(GENERATED_ARTIFACTS)
+make-generated: $(GENERATED_ARTIFACTS)
+all: $(GENERATED_ARTIFACTS)
 
 clean:
 	$(RM) $(TEST_BINARIES)

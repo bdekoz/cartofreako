@@ -13,8 +13,8 @@ attribution, and source/test index.
 
 Install the components listed in
 [`docs/prerequisites.md`](docs/prerequisites.md) before building the complete
-SVG suite. The self-contained `make check` target needs only GNU Make and a
-C++20 compiler.
+SVG, PDF, and PNG suite. The self-contained `make check` target needs only GNU
+Make and a C++20 compiler.
 
 Run the standalone algorithm and API compatibility checks with:
 
@@ -25,8 +25,12 @@ make check
 The checks build in `tests/` with C++20 and strict compiler warnings. See
 [`index.md`](index.md#choose-a-projection) to select and use a projection.
 
-Generate all 20 SVG artifacts under `generated/` with:
+Generate all 20 maps as layered SVG, PDF, and 3840-pixel-long-side PNG
+artifacts with:
 
 ```sh
 make all
 ```
+
+Outputs are organized under `generated/svg/`, `generated/pdf/`, and
+`generated/png/`.
