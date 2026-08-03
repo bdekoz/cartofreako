@@ -386,8 +386,14 @@ join two projected samples across a cut with a straight SVG segment.
 The existing `cart0freak0-cahill-keyes-functions.h` helper is specific to a
 2:1 M-layout rectangle and must not be applied to a 17:22 Star-X frame. The
 shared generators instead split geographic paths by registered octant and
-group before projection. The Stage 6 Antarctic branch clips source geometry
-geographically before applying its continuous polar transform.
+group before projection. Filled Natural Earth geometry receives an additional
+equatorial clip: northern and southern rings are closed separately before
+projection. This matters at the cyclic `159 degrees E / 201 degrees W`
+octant, where one ring spanning both hemispheres otherwise bridges the
+lower-left exterior notch when SVG applies its fill rule. Stable `-north` and
+`-south` path-ID suffixes make the split testable. The Stage 6 Antarctic
+branch clips source geometry geographically before applying its continuous
+polar transform.
 
 ## Numeric safeguards
 
