@@ -33,9 +33,12 @@ map, and the 153-layer Hamonshū ocean for all five projections with:
 make all
 ```
 
-All 20 SVGs are written under `generated/svg/`. The targets
-`make generated-projections`, `make generate-projections`, and
-`make make-generated` are equivalent aliases.
+Each of the 20 maps is written as a layered SVG under `generated/svg/`, an
+Inkscape PDF under `generated/pdf/`, and a PNG under `generated/png/`. PNGs
+preserve the projection aspect ratio and have a longest side of 3840 pixels,
+the horizontal resolution of UHD 4K video. The targets `make
+generated-projections`, `make generate-projections`, and `make
+make-generated` are equivalent aliases.
 
 Every frame preserves the projection's required ratio and has a largest
 dimension of exactly 44 units:
@@ -108,7 +111,7 @@ make generate-ocean-ck
 The output uses the same 44×22 Cahill-Keyes frame. Each English motif name is
 descriptive because the source has no printed pattern captions; every layer
 title records both its illustrated-page number and PDF scan number. See the
-[wave-pattern catalogue and rendering notes](docs/hamonshu-wave-patterns.md)
+[wave-pattern catalogue and rendering notes](https://github.com/bdekoz/izzi/blob/main/docs/hamonshu-wave-patterns.md)
 for the page convention, naming scheme, vector method, and provenance.
 
 ## AuthaGraph
@@ -392,7 +395,7 @@ native source-canvas dimensions but does not prescribe a raster.
 | [`tests/generate-ocean.cc`](tests/generate-ocean.cc) | GDAL/Izzi generator and structural test for the seam-safe Natural Earth ocean and 153 source-indexed Hamonshū vector-pattern layers |
 | [Izzi `a60-svg-curves-hamonshu.h`](https://github.com/bdekoz/izzi/blob/main/src/a60-svg-curves-hamonshu.h) | Reusable procedural path API and complete illustrated-page, motif-number, and descriptive-name catalogue for *Hamonshū*, volume 2 |
 | [`generated/png/ocean-ck-44-22.png`](generated/png/ocean-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes ocean and its wave-pattern rendering |
-| [`docs/hamonshu-wave-patterns.md`](docs/hamonshu-wave-patterns.md) | PDF page mapping, motif naming, vector interpretation, ocean-clipping method, and source provenance |
+| [Izzi Hamonshū wave-pattern catalogue](https://github.com/bdekoz/izzi/blob/main/docs/hamonshu-wave-patterns.md) | PDF page mapping, motif naming, vector interpretation, ocean-clipping method, and source provenance |
 | [`scripts/fetch-natural-earth-10m.sh`](scripts/fetch-natural-earth-10m.sh) | Pinned, checksum-verifying acquisition of the required Natural Earth shapefiles |
 | [`docs/natural-earth-10m-physical-vectors.md`](docs/natural-earth-10m-physical-vectors.md) | Natural Earth source, checksum, extracted-dataset, and licensing note |
 | [`src/cart0freak0-myriahedral.h`](src/cart0freak0-myriahedral.h) | Myriahedral mesh, unfolding, forward transform, frame validation, API, and source-raster preset |

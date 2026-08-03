@@ -3,15 +3,16 @@
 [Documentation index](../index.md) ·
 [Prerequisites](prerequisites.md) ·
 [Cahill-Keyes context](cahill-keyes-context.md) ·
-[Hamonshū wave catalogue](hamonshu-wave-patterns.md)
+[Hamonshū wave catalogue](https://github.com/bdekoz/izzi/blob/main/docs/hamonshu-wave-patterns.md)
 
 ## Purpose
 
 The repository contains four C++20 programs that are both SVG generators and
 structural tests. They exercise all five production projections through the
 real Alpha60 and Izzi APIs, write layered SVGs under the repository's
-`generated/` directory, then reopen those files and verify dimensions, layer
-structure, path counts, and numeric sanity.
+`generated/svg/` directory, then reopen those files and verify dimensions,
+layer structure, path counts, and numeric sanity. Inkscape subsequently
+exports each validated SVG as PDF and as a 3840-pixel-long-side PNG.
 
 | Artifact | Generator | Principal input |
 | --- | --- | --- |
@@ -65,6 +66,8 @@ The default locations can be overridden:
 | `IZZI_SRC` | `../izzi/src` | Izzi SVG headers |
 | `GDAL_CONFIG` | `gdal-config` | GDAL compiler and linker flags |
 | `NATURAL_EARTH_DIR` | `assets/natural-earth/10m-physical-vectors` | Extracted shapefiles |
+| `INKSCAPE` | `inkscape` | Command-line PDF and PNG exporter |
+| `PNG_LONG_SIDE` | `3840` | Pixel count assigned to each PNG's longest side |
 
 Run one target normally:
 
@@ -82,17 +85,47 @@ make all
 
 `make` rebuilds only when a declared dependency is newer. Use `make -B`
 when an unconditional regeneration is wanted. `make clean` removes the
-generator binaries and the complete `generated/` directory, but deliberately
-retains the downloaded Natural Earth input.
+generator binaries and generated SVG, PDF, PNG, and WASM build products, but
+deliberately retains the downloaded Natural Earth input and checked-in WASM
+sources.
 
 The generators are not part of `make check`; invoking a `generate-*`
 target both writes its artifact and runs that generator's embedded structural
 checks.
 
-The SVGs under `generated/` are checked in. This makes visual and XML diffs
-reviewable, but it also means that regenerating with a different GDAL or GEOS
-version can produce ordering or coordinate differences even though the input
-archive is pinned.
+The three artifact sets under `generated/svg/`, `generated/pdf/`, and
+`generated/png/` are checked in. This makes visual and XML diffs reviewable,
+but it also means that regenerating with a different GDAL, GEOS, or Inkscape
+version can produce ordering, coordinate, or rendering differences even
+though the input archive is pinned.
+
+## PDF and 4K PNG export
+
+Every PDF and PNG has a direct Make dependency on its layered SVG, so
+conversion starts only after that SVG generator and its embedded structural
+checks succeed. Inkscape uses the SVG page as the export area and preserves
+the original projection aspect ratio.
+
+The default `PNG_LONG_SIDE=3840` follows UHD 4K video's horizontal pixel
+resolution. Landscape Cahill-Keyes, AuthaGraph, Myriahedral, and Voronoi maps
+set their PNG width to 3840 pixels. Portrait Star-X maps set their PNG height
+to 3840 pixels. Supplying only the longer dimension lets Inkscape derive the
+other dimension without anisotropic scaling. Override the resolution when
+needed:
+
+```sh
+make -B PNG_LONG_SIDE=7680 all
+```
+
+Inkscape exports vector PDFs without changing the layered SVG originals.
+Final files are grouped by format rather than mixed at the `generated/` root:
+
+```text
+generated/
+├── svg/
+├── pdf/
+└── png/
+```
 
 ### Natural Earth acquisition
 
@@ -393,7 +426,7 @@ The PDF is visual source material, not a runtime input and not an image
 texture embedded in the SVG. Stable layer IDs and titles map each procedural
 interpretation back to its illustrated page and PDF scan. The complete page
 convention is documented in the
-[*Hamonshū* wave-pattern catalogue](hamonshu-wave-patterns.md).
+[*Hamonshū* wave-pattern catalogue](https://github.com/bdekoz/izzi/blob/main/docs/hamonshu-wave-patterns.md).
 
 ### Ocean mosaic
 
@@ -517,4 +550,4 @@ When adding another generated projection or layer:
 
 [Documentation index](../index.md) ·
 [Cahill-Keyes context](cahill-keyes-context.md) ·
-[Hamonshū wave catalogue](hamonshu-wave-patterns.md)
+[Hamonshū wave catalogue](https://github.com/bdekoz/izzi/blob/main/docs/hamonshu-wave-patterns.md)

@@ -18,7 +18,7 @@ generation workflow. They do not require the same software:
 | GDAL development package with OGR | Earth and ocean generation | Reads Natural Earth Shapefiles and provides vector geometry operations |
 | GEOS support in GDAL | Earth and ocean generation | Performs polygon intersection, repair, and seam-safe clipping |
 | Bash, `curl`, `unzip`, and `sha256sum` | Natural Earth acquisition | Downloads, verifies, and extracts the pinned input archive |
-| Inkscape | Contributor visual review and SVG editing | Inspects layers, clip paths, geometry, and rendering seams |
+| Inkscape | Complete artifact generation and visual review | Exports PDF/PNG and inspects SVG layers, clipping, geometry, and seams |
 | Doxygen | API reference generation | Builds the documented projection-header reference under `docs/doxygen/` |
 | Emscripten, Node.js, and a browser | Optional WebAssembly builds | Builds the production Cahill-Keyes adapter and exercises the Myriahedral example |
 
@@ -26,11 +26,11 @@ generation workflow. They do not require the same software:
 compatibility definitions for the Alpha60 API and do not use GDAL, Natural
 Earth, Izzi, Inkscape, or network access.
 
-`make all` builds the complete 20-file SVG suite. It needs all native build
-and data-acquisition dependencies through GEOS, but Make does not invoke
-Inkscape. Inkscape is a workflow requirement when the generated artwork must
-be inspected or edited; it may be omitted from a headless build job that only
-runs the embedded structural checks.
+`make all` builds 20 layered SVGs, then invokes Inkscape to export 20 PDFs and
+20 PNGs whose longest side is 3840 pixels. It needs all native build and
+data-acquisition dependencies through GEOS plus Inkscape. Inkscape may be
+omitted only when invoking individual SVG generation targets or the
+self-contained `make check` suite.
 
 ## Install the system packages
 
@@ -240,8 +240,9 @@ make NATURAL_EARTH_DIR=/absolute/path/to/10m-physical-vectors \
 
 Outbound network access is needed only when the pinned archive is absent.
 Allow at least a few hundred megabytes for the archive and extracted inputs,
-plus additional space for the generated Earth and ocean SVGs. `make clean`
-removes generator binaries and `generated/`, but retains Natural Earth data.
+plus additional space for the generated SVG, PDF, and PNG artifacts. `make
+clean` removes generator binaries and rendered build products, but retains
+Natural Earth data and the checked-in WASM sources.
 See the [data provenance note](natural-earth-10m-physical-vectors.md) for the
 archive URL, checksum, dataset list, and license.
 
@@ -262,7 +263,7 @@ Verify the installation and open an artifact with:
 
 ```sh
 inkscape --version
-inkscape generated/earth-ck-44-22.svg
+inkscape generated/svg/earth-ck-44-22.svg
 ```
 
 Use Inkscape's Layers and Objects panel to inspect group IDs and toggle dense
@@ -321,8 +322,10 @@ make all
 inkscape --version
 ```
 
-Successful generation places five geometry SVGs, five graticule SVGs, five
-Earth SVGs, and five ocean SVGs in `generated/`.
+Successful generation places five geometry maps, five graticule maps, five
+Earth maps, and five ocean maps in each of `generated/svg/`,
+`generated/pdf/`, and `generated/png/`. Every PNG preserves its source aspect
+ratio and has a 3840-pixel longest side.
 
 ## Common failures
 

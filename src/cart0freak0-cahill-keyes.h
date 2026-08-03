@@ -121,14 +121,14 @@ class forward_projection
   /// @throws std::domain_error if `total` is zero.
   static xy
   interpolate(const double length, const double total, const xy start,
-              const xy end)
+	      const xy end)
   {
     if (total == 0)
       throw std::domain_error(
-        "Cahill-Keyes interpolation over a zero-length segment");
+	"Cahill-Keyes interpolation over a zero-length segment");
     const double ratio = length / total;
     return {start.x + (end.x - start.x) * ratio,
-            start.y + (end.y - start.y) * ratio};
+	    start.y + (end.y - start.y) * ratio};
   }
 
   /// Intersect two infinite lines expressed as points and degree slopes.
@@ -139,12 +139,12 @@ class forward_projection
   /// @return Intersection of the two lines.
   static xy
   line_intersection(const xy first, const double first_slope,
-                    const xy second, const double second_slope)
+		    const xy second, const double second_slope)
   {
     const double m1 = std::tan(first_slope * radians);
     const double m2 = std::tan(second_slope * radians);
     const double x = (m1 * first.x - m2 * second.x - first.y + second.y)
-                     / (m1 - m2);
+		     / (m1 - m2);
     return {x, m1 * (x - first.x) + first.y};
   }
 
@@ -156,7 +156,7 @@ class forward_projection
   /// @return First intersection whose segment parameter lies in `[0, 1]`.
   static circle_intersection
   intersect_circle_line(const xy center, const double r, const xy first,
-                        const xy second)
+			const xy second)
   {
     const double dx = second.x - first.x;
     const double dy = second.y - first.y;
@@ -165,11 +165,11 @@ class forward_projection
       return {};
 
     const double b = 2 * (dx * (first.x - center.x)
-                          + dy * (first.y - center.y));
+			  + dy * (first.y - center.y));
     const double c = center.x * center.x + center.y * center.y
-                     + first.x * first.x + first.y * first.y
-                     - 2 * (center.x * first.x + center.y * first.y)
-                     - r * r;
+		     + first.x * first.x + first.y * first.y
+		     - 2 * (center.x * first.x + center.y * first.y)
+		     - r * r;
     const double determinant = b * b - 4 * a * c;
     if (determinant < 0)
       return {};
@@ -181,7 +181,7 @@ class forward_projection
     };
     for (const double factor : factors)
       if (factor >= 0 && factor <= 1)
-        return {true, {first.x + factor * dx, first.y + factor * dy}};
+	return {true, {first.x + factor * dx, first.y + factor * dy}};
     return {};
   }
 
@@ -195,10 +195,10 @@ class forward_projection
   {
     if (angle == -60)
       return {point.x * cos_60 + point.y * sin_60,
-              -point.x * sin_60 + point.y * cos_60};
+	      -point.x * sin_60 + point.y * cos_60};
     if (angle == -120)
       return {-point.x * cos_60 + point.y * sin_60,
-              -point.x * sin_60 - point.y * cos_60};
+	      -point.x * sin_60 - point.y * cos_60};
     throw std::invalid_argument("unsupported Cahill-Keyes octant rotation");
   }
 
@@ -260,23 +260,23 @@ class forward_projection
     double length = 0;
     if (m <= 30)
       {
-        p73 = {point_a.x + length_ap_73 * std::cos(m * radians),
-               point_a.y + length_ap_73 * std::sin(m * radians)};
-        length = distance(jf, p73);
+	p73 = {point_a.x + length_ap_73 * std::cos(m * radians),
+	       point_a.y + length_ap_73 * std::sin(m * radians)};
+	length = distance(jf, p73);
       }
     else
       {
-        p73 = line_intersection(point_t, -60, jf, m);
-        length = distance(jf, p73);
-        if (m > 44)
-          {
-            const xy middle = line_intersection(point_t, -60, jf, 2 * m / 3);
-            if (middle.x > p73.x)
-              {
-                p73 = middle;
-                length = -distance(jf, p73);
-              }
-          }
+	p73 = line_intersection(point_t, -60, jf, m);
+	length = distance(jf, p73);
+	if (m > 44)
+	  {
+	    const xy middle = line_intersection(point_t, -60, jf, 2 * m / 3);
+	    if (middle.x > p73.x)
+	      {
+		p73 = middle;
+		length = -distance(jf, p73);
+	      }
+	  }
       }
     return {p73, length};
   }
@@ -288,7 +288,7 @@ class forward_projection
   parallel_75(const double m) const
   {
     return {point_a.x + length_ap_75 * std::cos(m * radians),
-            point_a.y + length_ap_75 * std::sin(m * radians)};
+	    point_a.y + length_ap_75 * std::sin(m * radians)};
   }
 
   /// Reduce geographic coordinates to canonical half-octant coordinates.
@@ -298,7 +298,7 @@ class forward_projection
   /// target octant.
   meridian
   longitude_latitude_to_meridian(const double longitude,
-                                 const double latitude) const
+				 const double latitude) const
   {
     // This is LLtoMP from MegamapMaker-prep9.pl. Octant 1 crosses the
     // antimeridian; southern octants 5-8 mirror northern octants 4,1-3.
@@ -310,8 +310,8 @@ class forward_projection
       octant = 1;
     if (latitude < 0)
       {
-        constexpr std::array<int, 5> south {0, 6, 7, 8, 5};
-        octant = south.at(octant);
+	constexpr std::array<int, 5> south {0, 6, 7, 8, 5};
+	octant = south.at(octant);
       }
     return {m, std::abs(latitude), sign, octant};
   }
@@ -396,7 +396,7 @@ class forward_projection
     const double lt = torrid_length(m);
     const double lm = middle_length(m);
     double length = length_15
-                    + (p - 15) * ((lt + lm + p73.length) - length_15) / 58;
+		    + (p - 15) * ((lt + lm + p73.length) - length_15) / 58;
     if (length <= lt)
       return interpolate(length, lt, equator(m), joint_t(m));
     if (length <= lt + lm)
@@ -413,14 +413,14 @@ class forward_projection
   {
     if (m == 0)
       return p >= 75
-        ? xy {point_a.x + (90 - p) * latitude_degree_104, 0}
-        : xy {point_g.x - p * latitude_degree_100, 0};
+	? xy {point_a.x + (90 - p) * latitude_degree_104, 0}
+	: xy {point_g.x - p * latitude_degree_100, 0};
 
     if (p >= 75)
       {
-        const double length = latitude_degree_104 * (90 - p);
-        return {point_a.x + length * std::cos(m * radians),
-                point_a.y + length * std::sin(m * radians)};
+	const double length = latitude_degree_104 * (90 - p);
+	return {point_a.x + length * std::cos(m * radians),
+		point_a.y + length * std::sin(m * radians)};
       }
 
     if (p == 0)
@@ -428,19 +428,19 @@ class forward_projection
 
     if (p >= 73 && m <= 30)
       {
-        const double length = length_ap_75
-                              + (75 - p) * latitude_degree_100;
-        return {point_a.x + length * std::cos(m * radians),
-                point_a.y + length * std::sin(m * radians)};
+	const double length = length_ap_75
+			      + (75 - p) * latitude_degree_100;
+	return {point_a.x + length * std::cos(m * radians),
+		point_a.y + length * std::sin(m * radians)};
       }
 
     if (m == 45)
       {
-        if (p <= 15)
-          return interpolate(p, 15, point_e, point_d);
-        if (p <= 73)
-          return interpolate(p - 15, 58, point_d, point_t);
-        return zone_h(m, p);
+	if (p <= 15)
+	  return interpolate(p, 15, point_e, point_d);
+	if (p <= 73)
+	  return interpolate(p - 15, 58, point_d, point_t);
+	return zone_h(m, p);
       }
 
     if (m <= 29)
@@ -457,14 +457,14 @@ class forward_projection
       length_15 = lt + distance(jt, p15.point);
     else
       {
-        p15 = intersect_circle_line(point_c, radius, equator(m), jt);
-        if (!p15.intersects)
-          throw std::domain_error(
-            "Cahill-Keyes parallel 15 misses its meridian");
-        length_15 = lt - distance(jt, p15.point);
+	p15 = intersect_circle_line(point_c, radius, equator(m), jt);
+	if (!p15.intersects)
+	  throw std::domain_error(
+	    "Cahill-Keyes parallel 15 misses its meridian");
+	length_15 = lt - distance(jt, p15.point);
       }
     return p <= 15 ? zone_k(m, p, length_15)
-                   : zone_l(m, p, length_15);
+		   : zone_l(m, p, length_15);
   }
 
   /// Rotate, reflect, and translate a half-octant point into the M-layout.
@@ -479,43 +479,43 @@ class forward_projection
     switch (octant)
       {
       case 1:
-        result = rotate(point, -120);
-        result.x -= length_mg;
-        break;
+	result = rotate(point, -120);
+	result.x -= length_mg;
+	break;
       case 2:
-        result = rotate(point, -60);
-        result.x -= length_mg;
-        break;
+	result = rotate(point, -60);
+	result.x -= length_mg;
+	break;
       case 3:
-        result = rotate(point, -120);
-        result.x += length_mg;
-        break;
+	result = rotate(point, -120);
+	result.x += length_mg;
+	break;
       case 4:
-        result = rotate(point, -60);
-        result.x += length_mg;
-        break;
+	result = rotate(point, -60);
+	result.x += length_mg;
+	break;
       case 5:
-        point.x = 2 * length_mg - point.x;
-        result = rotate(point, -60);
-        result.x += length_mg;
-        break;
+	point.x = 2 * length_mg - point.x;
+	result = rotate(point, -60);
+	result.x += length_mg;
+	break;
       case 6:
-        point.x = 2 * length_mg - point.x;
-        result = rotate(point, -120);
-        result.x -= length_mg;
-        break;
+	point.x = 2 * length_mg - point.x;
+	result = rotate(point, -120);
+	result.x -= length_mg;
+	break;
       case 7:
-        point.x = 2 * length_mg - point.x;
-        result = rotate(point, -60);
-        result.x -= length_mg;
-        break;
+	point.x = 2 * length_mg - point.x;
+	result = rotate(point, -60);
+	result.x -= length_mg;
+	break;
       case 8:
-        point.x = 2 * length_mg - point.x;
-        result = rotate(point, -120);
-        result.x += length_mg;
-        break;
+	point.x = 2 * length_mg - point.x;
+	result = rotate(point, -120);
+	result.x += length_mg;
+	break;
       default:
-        throw std::domain_error("invalid Cahill-Keyes octant");
+	throw std::domain_error("invalid Cahill-Keyes octant");
       }
     result.y += y_translate;
     return result;
@@ -533,12 +533,12 @@ class forward_projection
     point_d = interpolate(length_mb, length_mn, point_n, point_m);
     point_f = {length_mg, point_n.y - length_mb};
     point_e = {point_n.x - length_ma * std::sin(30 * radians),
-               point_n.y - length_ma * std::cos(30 * radians)};
+	       point_n.y - length_ma * std::cos(30 * radians)};
     length_gf = distance(point_g, point_f);
     delta_m_equator = (length_gf + length_ab) / 45;
 
     const xy point_u {point_a.x + length_ap_73 * std::cos(30 * radians),
-                      point_a.y + length_ap_73 * std::sin(30 * radians)};
+		      point_a.y + length_ap_73 * std::sin(30 * radians)};
     point_t = line_intersection(point_u, -60, point_b, 30);
 
     constexpr double m = 29;
@@ -550,9 +550,9 @@ class forward_projection
     const xy point_v = interpolate(length, lm, joint_t(m), joint_f(m));
     const double root_three = std::sqrt(3.0);
     point_c.y = (point_v.x * point_v.x + point_v.y * point_v.y
-                 - point_d.x * point_d.x - point_d.y * point_d.y)
-                / (2 * (root_three * point_v.x + point_v.y
-                        - root_three * point_d.x - point_d.y));
+		 - point_d.x * point_d.x - point_d.y * point_d.y)
+		/ (2 * (root_three * point_v.x + point_v.y
+			- root_three * point_d.x - point_d.y));
     point_c.x = root_three * point_c.y;
     radius = distance(point_c, point_d);
   }
@@ -576,7 +576,7 @@ public:
   {
     if (!std::isfinite(scaffold_altitude) || scaffold_altitude <= 0)
       throw std::invalid_argument(
-        "Cahill-Keyes scaffold altitude must be positive");
+	"Cahill-Keyes scaffold altitude must be positive");
     calculate_preliminaries();
   }
 
@@ -591,10 +591,10 @@ public:
   {
     if (!std::isfinite(latitude) || latitude < -90 || latitude > 90)
       throw std::invalid_argument(
-        "Cahill-Keyes latitude must be within [-90, 90]");
+	"Cahill-Keyes latitude must be within [-90, 90]");
     if (!std::isfinite(longitude) || longitude < -180 || longitude > 180)
       throw std::invalid_argument(
-        "Cahill-Keyes longitude must be within [-180, 180]");
+	"Cahill-Keyes longitude must be within [-180, 180]");
 
     const meridian mp = longitude_latitude_to_meridian(longitude, latitude);
     xy point = meridian_parallel_to_xy(mp.value, mp.parallel);
@@ -640,7 +640,7 @@ is_cahill_keyes_frame(const frame& candidate)
 
   const double expected_width = cahill_keyes_width_to_height_ratio * height;
   const double tolerance = 16 * std::numeric_limits<double>::epsilon()
-                           * std::max(width, expected_width);
+			   * std::max(width, expected_width);
   return std::abs(width - expected_width) <= tolerance;
 }
 
@@ -698,7 +698,7 @@ struct ckproj : public projection_base, public projection_api
   explicit
   ckproj(const frame& map_frame, string raster_name = {})
   : ckproj(make_cahill_keyes_projection_base(map_frame,
-                                              std::move(raster_name)))
+					      std::move(raster_name)))
   { }
 
   /// Copy a Cahill-Keyes projection.
@@ -709,10 +709,11 @@ struct ckproj : public projection_base, public projection_api
   /// @param v Raster mode whose suffix is appended to the registered name.
   /// @return Full PNG path for the requested raster variant.
   string
-  image_filename(const raster_mode v) const
+  image_filename(const raster_mode /*v*/) const
   {
-    const string cartodata = "visionscarto-map";
+#if 0
     auto& rtr = io::get_run_time_resources();
+    const string cartodata = "visionscarto-map";
     string ret(io::end_path(rtr.data) + cartodata + "/" + name);
     if (v == outline)
       ret += "-outline";
@@ -724,6 +725,10 @@ struct ckproj : public projection_base, public projection_api
       ret += "-grid";
     if (v == glitch)
       ret += "-gitch";
+#else
+    string prefix = "/home/bkoz/src/cartofreako/generated/png/";
+    string ret = prefix + name;
+#endif
     return ret + ".png";
   }
 
@@ -751,7 +756,7 @@ struct ckproj : public projection_base, public projection_api
 /// @return Configured Cahill-Keyes projection.
 inline ckproj
 make_cahill_keyes_projection(const frame& map_frame,
-                             string raster_name = {})
+			     string raster_name = {})
 {
   return ckproj(map_frame, std::move(raster_name));
 }
