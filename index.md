@@ -180,7 +180,7 @@ positive 2:1 `a60::carto::frame`.
 - [Bibliography](docs/cahill-keyes-bibliography.md) identifies the historical
   papers, primary specifications, source implementation, and related ports and
   map assets.
-- [WebAssembly renderer](web/README.md) documents the production Embind
+- [WebAssembly renderer](generated/wasm/README.md) documents the production Embind
   adapter, runtime SVG generation, Natural Earth seam clipping, build target,
   and Node smoke test.
 - [README](README.md) gives the shortest build and usage introduction.
@@ -369,9 +369,11 @@ native source-canvas dimensions but does not prescribe a raster.
 | [`tests/test-cahill-keyes-projection.cc`](tests/test-cahill-keyes-projection.cc) | Cahill-Keyes mathematical reference, scaling, and domain tests |
 | [`tests/test-cahill-keyes-projection-api.cc`](tests/test-cahill-keyes-projection-api.cc) | Cahill-Keyes public API, frame, raster, and integration-anchor tests |
 | [`tests/test-cahill-keyes-path-functions.cc`](tests/test-cahill-keyes-path-functions.cc) | Cahill-Keyes path seam, scaling, offset, state, and validation tests |
-| [`web/cahill-keyes-web.cc`](web/cahill-keyes-web.cc) | Emscripten/Embind adapter that projects points and generates the browser SVG with the native C++20 Cahill-Keyes implementation |
-| [`web/cahill-keyes-smoke.mjs`](web/cahill-keyes-smoke.mjs) | Node smoke test for projection identity, reference coordinates, variable frames, validation, land input, and generated SVG structure |
-| [`web/README.md`](web/README.md) | Browser build, output artifacts, runtime map architecture, seam-prepared Natural Earth input, and provenance |
+| [`generated/wasm/cahill-keyes-web.cc`](generated/wasm/cahill-keyes-web.cc) | Emscripten/Embind adapter that projects points and generates the browser SVG with the native C++20 Cahill-Keyes implementation |
+| [`generated/wasm/cartofreako-cahill-keyes.mjs`](generated/wasm/cartofreako-cahill-keyes.mjs) | Generated ES-module loader for the checked-in Cahill-Keyes WebAssembly binary |
+| [`generated/wasm/cartofreako-cahill-keyes.wasm`](generated/wasm/cartofreako-cahill-keyes.wasm) | Generated, checked-in Cahill-Keyes WebAssembly binary |
+| [`generated/wasm/cahill-keyes-smoke.mjs`](generated/wasm/cahill-keyes-smoke.mjs) | Node smoke test for projection identity, reference coordinates, variable frames, validation, land input, and generated SVG structure |
+| [`generated/wasm/README.md`](generated/wasm/README.md) | Browser build, output artifacts, runtime map architecture, seam-prepared Natural Earth input, and provenance |
 | [`docs/generation.md`](docs/generation.md) | End-to-end SVG generation, seam and folding techniques, data preparation, structural checks, and perceptual considerations |
 | [`docs/prerequisites.md`](docs/prerequisites.md) | Native build, data acquisition, Inkscape review, and optional WebAssembly prerequisites |
 | [`src/cart0freak0-star-x.h`](src/cart0freak0-star-x.h) | Direct Star-X group assembly, frame validation, public API, and factory |
