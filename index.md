@@ -36,7 +36,8 @@ make all
 Each of the 20 maps is written as a layered SVG under `generated/svg/`, an
 Inkscape PDF under `generated/pdf/`, and a PNG under `generated/png/`. PNGs
 preserve the projection aspect ratio and have a longest side of 3840 pixels,
-the horizontal resolution of UHD 4K video. The targets `make
+the horizontal resolution of UHD 4K video. Transparent SVG page regions are
+flattened against an opaque white background. The targets `make
 generated-projections`, `make generate-projections`, and `make
 make-generated` are equivalent aliases.
 
