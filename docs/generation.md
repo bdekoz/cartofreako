@@ -381,6 +381,18 @@ fill rule so lakes or other holes are not painted solid. All tolerances below
 are in geographic degrees, because simplification and densification happen
 before projection:
 
+The Natural Earth ocean is a complex polygon with interior rings. On the
+unfolded Cahill-Keyes net, clipping those rings at an octant boundary and
+closing each resulting subpath independently can expose a broad false hole
+between otherwise adjacent ocean pieces. Cahill-Keyes and Star-X therefore
+paint ten seam-safe background pieces first inside the existing `ocean`
+group: five registered longitude bands, each split at the equator and
+densified before projection. The detailed Natural Earth ocean is painted over
+that underlay, followed by land. A page-sized blue rectangle would also color
+the intentional cuts and the area outside the projection, whereas the
+face-local underlay keeps those regions white. The Earth self-check verifies
+both the piece count and that this paint order is preserved.
+
 | Layer family | Simplification | Maximum segment |
 | --- | ---: | ---: |
 | Ocean and twelve bathymetry levels | 0.04 | 0.50 |
