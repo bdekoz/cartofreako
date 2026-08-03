@@ -29,8 +29,10 @@
 #define cart0freak0_STAR_X_H 1
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <limits>
+#include <numbers>
 #include <stdexcept>
 #include <tuple>
 #include <utility>
@@ -66,17 +68,34 @@ inline constexpr double star_x_minimum_group_gap_ratio = -0.5;
 /// Largest supported group gap ratio, with the carriers edge-to-edge.
 inline constexpr double star_x_maximum_group_gap_ratio = 0;
 
-/// Configurable placement of the two four-face Star-X groups.
+/**
+   Page-centered enlargement applied after the two face groups have been
+   assembled. A factor of one preserves the assembled carrier; the historic
+   Star-X presentation enlarges that carrier to 120 percent.
+*/
+inline constexpr double star_x_default_enlargement_factor = 1.2;
+
+/// Southern latitude at which the optional unified Antarctic inset begins.
+inline constexpr double star_x_antarctic_cutoff_latitude = -60;
+
+/// Outer radius of the eight-point North-pole star as a fraction of height.
+inline constexpr double star_x_polar_star_outer_radius_ratio = 1.25 / 44.0;
+/// Inner radius of the North-pole star relative to its outer radius.
+inline constexpr double star_x_polar_star_inner_radius_factor = 0.4;
+
+/// Configurable placement and final scale of the Star-X arrangement.
 struct star_x_layout
 {
   /// Signed group separation as a fraction of the complete frame height.
   double group_gap_ratio = star_x_default_group_gap_ratio;
+  /// Page-centered scale applied after group assembly.
+  double enlargement_factor = star_x_default_enlargement_factor;
 };
 
 /// Validate a Star-X layout configuration.
 /// @param value Layout to validate and return.
 /// @return The validated layout.
-/// @throws std::invalid_argument if the gap ratio is non-finite or unsupported.
+/// @throws std::invalid_argument if either setting is non-finite or unsupported.
 inline star_x_layout
 validate_star_x_layout(const star_x_layout value)
 {
@@ -85,6 +104,10 @@ validate_star_x_layout(const star_x_layout value)
       || value.group_gap_ratio > star_x_maximum_group_gap_ratio)
     throw std::invalid_argument(
       "Star-X group gap ratio must be finite and within [-0.5, 0]");
+  if (!std::isfinite(value.enlargement_factor)
+      || value.enlargement_factor <= 0)
+    throw std::invalid_argument(
+      "Star-X enlargement factor must be finite and positive");
   return value;
 }
 
@@ -148,6 +171,17 @@ struct assembled_point
   face_group group; ///< Four-face group containing the point.
 };
 
+/// Scale a normalized carrier point about the center of its page.
+/// @param value Point in normalized page coordinates.
+/// @param factor Positive enlargement factor.
+/// @return Page-centered scaled point.
+inline point_2d
+enlarge_about_page_center(const point_2d value, const double factor)
+{
+  return {0.5 + factor * (value.x - 0.5),
+          0.5 + factor * (value.y - 0.5)};
+}
+
 /**
    Assemble a centered Cahill-Keyes native point into the Star-X carrier.
 
@@ -155,8 +189,9 @@ struct assembled_point
    M-layout is therefore 1 unit wide by 1/2 unit high. Each four-face
    group is a 1/2-by-1/2 square. Group one (negative native x) is placed
    below the frame midpoint. Group two is rotated 180 degrees and placed
-   above it. A signed carrier gap separates or overlaps the two groups;
-   results are normalized to the full 17:22 frame.
+   above it. A signed carrier gap separates or overlaps the two groups.
+   The assembled point is then enlarged about the center of the complete
+   page; results are normalized to the full 17:22 frame.
 
    @param cahill_keyes_x Native centered Cahill-Keyes x coordinate.
    @param cahill_keyes_y Native centered Cahill-Keyes y coordinate.
@@ -180,14 +215,17 @@ assemble_native_point(const double cahill_keyes_x,
   const double y = second_group
                      ? group_side / 2 + cahill_keyes_y - half_gap
                      : 3 * group_side / 2 - cahill_keyes_y + half_gap;
-  return {{x_in_height_units / star_x_width_to_height_ratio, y},
+  const point_2d assembled {
+    x_in_height_units / star_x_width_to_height_ratio, y
+  };
+  return {enlarge_about_page_center(assembled, layout.enlargement_factor),
           second_group ? face_group::two : face_group::one};
 }
 
 /// Project a geographic coordinate into the normalized Star-X carrier.
 /// @param latitude Geographic latitude in degrees.
 /// @param longitude Geographic longitude in degrees.
-/// @param layout Valid group-placement configuration.
+/// @param layout Valid arrangement configuration.
 /// @return Normalized point and selected four-face group.
 inline assembled_point
 project_to_normalized_map(const double latitude, const double longitude,
@@ -202,13 +240,70 @@ project_to_normalized_map(const double latitude, const double longitude,
   return assemble_native_point(x, y, layout);
 }
 
+/**
+   Project a South-polar coordinate into a local, unified Antarctic inset.
+
+   This helper is deliberately separate from the ordinary point projection:
+   callers apply it only to Antarctic land and ice geometry, so ocean and
+   bathymetry retain the Star-X face topology. At the canonical scale, one
+   degree from the South Pole occupies frame-height / 400; the configured
+   post-assembly enlargement scales the inset identically to the main map.
+
+   @param latitude Latitude in `[-90, star_x_antarctic_cutoff_latitude]`.
+   @param longitude Longitude in degrees.
+   @param frame_height Complete Star-X frame height.
+   @param enlargement_factor Post-assembly enlargement used by the main map.
+   @return Coordinate relative to the inset's South-pole origin.
+*/
+inline point_2d
+project_antarctic_inset_local(
+  const double latitude, const double longitude, const double frame_height,
+  const double enlargement_factor = star_x_default_enlargement_factor)
+{
+  const double radius
+    = (latitude + 90) * frame_height * enlargement_factor / 400;
+  const double radians = longitude * std::numbers::pi_v<double> / 180;
+  return {radius * std::sin(radians), -radius * std::cos(radians)};
+}
+
+/**
+   Construct the sixteen alternating vertices of an eight-point polar star.
+
+   @param map_frame Star-X output frame.
+   @param outer_radius_ratio Outer radius as a fraction of frame height.
+   @param inner_radius_factor Inner radius relative to the outer radius.
+   @return Vertices in clockwise screen order, beginning at the upper tip.
+*/
+inline std::array<point_2d, 16>
+make_north_pole_star(
+  const frame& map_frame,
+  const double outer_radius_ratio = star_x_polar_star_outer_radius_ratio,
+  const double inner_radius_factor = star_x_polar_star_inner_radius_factor)
+{
+  std::array<point_2d, 16> vertices {};
+  const point_2d center {map_frame.width() / 2, map_frame.height() / 2};
+  const double outer_radius = map_frame.height() * outer_radius_ratio;
+  for (std::size_t i = 0; i < vertices.size(); ++i)
+    {
+      const double radius = i % 2 == 0
+                              ? outer_radius
+                              : outer_radius * inner_radius_factor;
+      const double angle
+        = -std::numbers::pi_v<double> / 2
+          + static_cast<double>(i) * std::numbers::pi_v<double> / 8;
+      vertices[i] = {center.x + radius * std::cos(angle),
+                     center.y + radius * std::sin(angle)};
+    }
+  return vertices;
+}
+
 } // namespace star_x_detail
 
 /// Construct generic projection state from a variable-size 17:22 frame.
 /// Only frame_area is retained; map placement remains cartography's job.
 /// @param map_frame Ratio-correct output frame.
 /// @param raster_name Optional registered raster filename.
-/// @param variable_layout Group placement to validate and retain.
+/// @param variable_layout Arrangement to validate and retain.
 /// @return Validated generic projection state with its origin initialized.
 inline projection_base
 make_star_x_projection_base(const frame& map_frame, string raster_name,
@@ -231,17 +326,18 @@ make_star_x_projection_base(const frame& map_frame, string raster_name,
    The forward transform preserves the Cahill-Keyes half-octant formulas
    and M-layout registration. It splits that layout into its left and
    right four-face groups, places the left group below the center, and
-   rotates the right group 180 degrees into the upper half.
+   rotates the right group 180 degrees into the upper half, and uniformly
+   enlarges the complete result about the page center.
 */
 struct starxproj : public projection_base, public projection_api
 {
 private:
-  star_x_layout layout_; ///< Validated group placement used by the transform.
+  star_x_layout layout_; ///< Validated placement and scale configuration.
 
 public:
   /// Construct from generic projection state and a layout.
   /// @param value Generic projection state with a ratio-correct frame.
-  /// @param variable_layout Group placement configuration.
+  /// @param variable_layout Arrangement configuration.
   explicit starxproj(const projection_base value,
                      const star_x_layout variable_layout = {})
   : projection_base(validate_star_x_projection_base(value)),
@@ -257,7 +353,7 @@ public:
   /// are deliberately discarded; the projection owns only frame_area.
   /// @param variable_frame Ratio-correct output frame.
   /// @param raster_name Optional registered raster filename.
-  /// @param variable_layout Group placement configuration.
+  /// @param variable_layout Arrangement configuration.
   explicit starxproj(const frame& variable_frame, string raster_name = {},
                      const star_x_layout variable_layout = {})
   : starxproj(make_star_x_projection_base(variable_frame,
@@ -275,6 +371,12 @@ public:
   double
   group_gap_ratio() const noexcept
   { return layout_.group_gap_ratio; }
+
+  /// Return the configured page-centered enlargement.
+  /// @return Scale applied after face-group assembly.
+  double
+  enlargement_factor() const noexcept
+  { return layout_.enlargement_factor; }
 
   /// Resolve the registered raster against the runtime data directory.
   /// @param mode Raster variant requested by the common API; unused here.
@@ -316,7 +418,7 @@ public:
 /// Construct a variable-size Star-X projection.
 /// @param map_frame Ratio-correct output frame.
 /// @param raster_name Optional registered raster filename.
-/// @param layout Group placement configuration.
+/// @param layout Arrangement configuration.
 /// @return Configured Star-X projection.
 inline starxproj
 make_star_x_projection(const frame& map_frame, string raster_name = {},

@@ -96,11 +96,14 @@ flowchart TB
   SPLIT{"split into<br/>11 × 11 groups"}
   G1["group 1<br/>Q1 then Q2<br/>keep orientation"]
   G2["group 2<br/>Q3 then Q4<br/>rotate 180°"]
-  FINAL["17 × 22 Star-X carrier<br/>top: Q4 Q3<br/>center: North polar locus<br/>bottom: Q1 Q2"]
+  PLACE["close the group gap"]
+  SCALE["enlarge complete X 120%<br/>about page center"]
+  FINAL["17 × 22 Star-X carrier<br/>top: Q4 Q3<br/>center: North-pole star<br/>bottom: Q1 Q2 + Antarctica"]
 
   SRC --> SPLIT
-  SPLIT --> G1 --> FINAL
-  SPLIT --> G2 --> FINAL
+  SPLIT --> G1 --> PLACE
+  SPLIT --> G2 --> PLACE
+  PLACE --> SCALE --> FINAL
 ```
 
 A compact page diagram is:
@@ -141,7 +144,27 @@ snap at exactly 90 degrees latitude.
 The South Pole does not occupy the center. Group 2 carries its southern
 vertices toward the top edge after rotation, while group 1 carries them
 toward the bottom edge. The map can therefore be turned 180 degrees without
-giving one half a permanent visual “top.”
+giving one half a permanent visual “top.” Stage 6 then adds a single
+South-polar rendering of the Antarctic continent at the lower end. It is a
+layer-aware presentation, not a collapse of the point projection's polar
+copies.
+
+## Polar marks and Antarctica
+
+The finished presentation uses two different kinds of polar context. The
+North Pole is a symbolic eight-point star over the central locus. Antarctica
+is geographic source geometry: land, ice, and coastline south of 60 degrees
+south are clipped before projection and redrawn in a continuous South-polar
+view.
+
+This distinction is perceptual as well as numerical. The star makes the
+rotation center immediately legible without pretending that all cut copies
+of the North Pole are one topological vertex. The Antarctic inset restores a
+recognizable continent where the ordinary octahedral net would divide it
+among outer faces. Its scale follows the Cahill-Keyes construction and the
+same page enlargement as the X; only its placement is composed separately.
+Ocean and bathymetry remain on the X, preventing a second polar ocean from
+obscuring the unfolded map.
 
 ## Quadrants in the final carrier
 
@@ -174,6 +197,8 @@ each group: 1/2 wide by 1/2 high
 left and right margin: 3/22 each
 signed carrier gap: R in [-1/2, 0]
 default R: -9/88
+page-centered enlargement E > 0
+default E: 6/5
 ```
 
 The margins are part of the frame contract, not anisotropic padding added
@@ -188,6 +213,12 @@ octant rigid. The default `R=-9/88` translates each group inward by
 2.25 units per group: the lower group rises and the upper group descends
 toward the 22-unit centerline. Passing a zero ratio remains available when
 the older, wider central opening is desired.
+
+After the gap is closed, the complete arrangement is uniformly enlarged
+about the page center. The default 6/5 factor reduces the historical margins
+without changing the 17:22 page ratio or distorting any face. On the
+34-by-44 page this is the affine translation-and-scale
+`matrix(1.2,0,0,1.2,-3.4,-4.4)`.
 
 ## Cuts and continuity
 
@@ -212,11 +243,16 @@ flowchart TD
   SIDE{"native x < 0?"}
   LOWER["group 1<br/>translate to lower square"]
   UPPER["group 2<br/>rotate 180° and translate to upper square"]
-  SCALE["normalize and scale into<br/>frame.frame_area"]
+  GAP["apply symmetric<br/>signed group gap"]
+  ENLARGE["uniformly enlarge about<br/>the page center"]
+  FRAME["scale into<br/>frame.frame_area"]
+  COMPOSE["SVG composition:<br/>central star + unified Antarctica"]
 
   LL --> CK --> M --> SIDE
-  SIDE -- yes --> LOWER --> SCALE
-  SIDE -- no --> UPPER --> SCALE
+  SIDE -- yes --> LOWER --> GAP
+  SIDE -- no --> UPPER --> GAP
+  GAP --> ENLARGE --> FRAME
+  FRAME -. layer-aware generation .-> COMPOSE
 ```
 
 Star-X is forward-only: it maps the globe to the X net. It does not solve the

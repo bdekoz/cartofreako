@@ -9,10 +9,10 @@
 /tests/generate-geometry
 /tests/generate-graticules-ck
 /tests/generate-earth-ck
-/tests/generate-ocean-ck
+/tests/generate-water-ck
 /tests/generate-graticules
 /tests/generate-earth
-/tests/generate-ocean
+/tests/generate-water
 /tests/generate-4-slice
 /tests/generate-8-slice
 /assets/natural-earth/10m-physical-vectors/

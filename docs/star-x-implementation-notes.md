@@ -12,14 +12,19 @@ returns one `(x, y)` point in a portrait map frame. It does not render four
 temporary Cahill-Keyes images, crop raster tiles, or depend on an external
 projection process.
 
-The implementation deliberately separates two operations:
+The implementation deliberately separates three transformation stages:
 
 1. `ck_native::forward_projection` supplies the established Cahill-Keyes
    half-octant construction and standard M-layout coordinates.
-2. `star_x_detail::assemble_native_point()` applies only the Star-X net
+2. `star_x_detail::assemble_native_point()` applies the Star-X net
    rearrangement: keep the left four spatial face slots below, rotate the
-   right four slots by 180 degrees, place them above, and apply the configured
-   symmetric inter-group spacing.
+   right four slots by 180 degrees, place them above, apply the configured
+   symmetric inter-group spacing, and uniformly enlarge the assembled X
+   about the page center. The default enlargement is 120 percent.
+3. SVG composition helpers add the North-pole star and gather Natural Earth
+   geometry south of 60 degrees south into one correctly scaled polar
+   representation at the bottom of the page. This layer-aware step stays out
+   of the one-point API so it does not also gather ocean and bathymetry.
 
 This makes Star-X a real point projection while keeping its local geometry
 numerically identical to the tested Cahill-Keyes implementation.
@@ -28,12 +33,14 @@ numerically identical to the tested Cahill-Keyes implementation.
 
 | Component | Responsibility |
 | --- | --- |
-| [`cart0freak0-star-x.h`](../src/cart0freak0-star-x.h) | Frame contract, configurable two-group assembly, public API adapter, input validation, and factory |
+| [`cart0freak0-star-x.h`](../src/cart0freak0-star-x.h) | Frame contract, configurable group spacing and enlargement, polar-composition geometry, public API adapter, validation, and factory |
 | [`cart0freak0-cahill-keyes.h`](../src/cart0freak0-cahill-keyes.h) | Shared native half-octant formulas, M-layout assembly, and raster-registration longitude adjustment |
 | [`a60-carto-projection.h`](../src/a60-carto-projection.h) | Shared interface, projection state, and `star_x` mode |
 | [`a60-carto-frame.h`](../src/a60-carto-frame.h) | `frame` and `frame.frame_area` dimensions |
 | [`a60-carto.h`](../src/a60-carto.h) | Umbrella include and `starxwestate` whole-earth state |
 | [`test-star-x-projection-api.cc`](../tests/test-star-x-projection-api.cc) | Reference anchors, assembly identity, global domain, scaling, validation, and API tests |
+| [`generate-geometry.cc`](../tests/generate-geometry.cc) | Layered Star-X face geometry and the central North-pole star |
+| [`natural-earth-generation.h`](../tests/natural-earth-generation.h) | Layer-aware land, ice, and coastline split plus unified Antarctica placement |
 
 The repository renamed projection-specific headers from the former
 `a60-carto-projection-*` prefix to `cart0freak0-*`. The implementation is
@@ -46,7 +53,7 @@ projection header.
 | --- | --- | --- |
 | Public API | `(latitude, longitude)` in degrees | geographic |
 | Cahill-Keyes native core | `(longitude, latitude)` in degrees | centered Cartesian, `x` right and `y` up |
-| Normalized Star-X carrier | `(u, v)` in `[0,1]` frame fractions | `u` right and `v` down |
+| Normalized Star-X carrier | `(u, v)` in page fractions | `u` right and `v` down |
 | Public result | `(x, y)` in `frame.frame_area` | screen coordinates, origin at upper left |
 
 The public method accepts finite latitude in `[-90, 90]` and finite
@@ -135,10 +142,12 @@ Cahill-Keyes source viewport = 2G by G
 Cahill-Keyes scaffold MG = G/2 = H/4
 default signed carrier gap D = -(9/88)H
 default inward shift per group T = -D/2 = (9/176)H
+default page-centered enlargement E = 6/5
 ```
 
 The two source groups are therefore congruent `G`-by-`G` squares. Their
-local geometry is never stretched; only their vertical translations change.
+local geometry is never stretched: group placement is rigid and the later
+enlargement is uniform in both axes.
 The remaining six carrier units become three-unit margins on the left and
 right. Every source length and the default translation are multiplied by the
 same scale, so varying the frame cannot alter angles or local Cahill-Keyes
@@ -162,7 +171,8 @@ source groups, `cy` is positive upward, `G=H/2`, and `M=(W-G)/2`.
 Let `R` be the configured signed carrier-gap ratio and `D=RH` its distance
 in output-frame units. `R=0` reproduces the original edge-to-edge carrier
 placement. Negative values overlap the invisible square carriers and pull
-the visible octants toward the center.
+the visible octants toward the center. Let `E` be the configured positive
+page-enlargement factor.
 
 Group 1 is converted to screen axes and translated into the lower half:
 
@@ -195,13 +205,30 @@ The second line makes the rigid 180-degree rotation particularly visible.
 No latitude, longitude, or projected length is interpolated during net
 assembly.
 
+After either group formula, Stage 5 uniformly scales the assembled point
+about the exact page center:
+
+```text
+X' = W/2 + E(X - W/2)
+Y' = H/2 + E(Y - H/2)
+```
+
+Because both axes use the same `E`, this step changes neither angles nor the
+local Cahill-Keyes scale ratio. For the 34-by-44 generator frame and default
+`E=1.2`, the formula is the SVG-equivalent affine transform:
+
+```text
+matrix(1.2, 0, 0, 1.2, -3.4, -4.4)
+```
+
 The implementation evaluates these formulas once in a unit-height carrier:
 `G=1/2`, `M=3/22`, `D=R`, and native scaffold altitude `1/4`. It divides
-`X` by `17/22` to obtain normalized `u`, then multiplies `(u,v)` by the
-requested frame dimensions. This normalized implementation is algebraically
-equivalent to constructing a separate native scaffold at every output size.
+`X` by `17/22` to obtain normalized `u`, applies the centered enlargement in
+normalized page coordinates, then multiplies `(u,v)` by the requested frame
+dimensions. This is algebraically equivalent to constructing a separate
+native scaffold at every output size.
 
-### Configurable group gap
+### Stage 4: configurable group gap
 
 `star_x_layout::group_gap_ratio` accepts a finite value in `[-1/2, 0]`.
 Zero restores the former layout. The lower endpoint lets the two carrier
@@ -219,6 +246,68 @@ For the generator's 34-by-44 frame this is `D=-4.5`: group 2 moves down
 `2.25` units and group 1 moves up `2.25` units. Their inward tips converge
 at the 22-unit centerline instead of leaving the former broad central gap.
 
+### Stage 5: configurable page enlargement
+
+`star_x_layout::enlargement_factor` accepts any finite positive value. The
+default is `1.2`, matching the requested 120-percent enlargement. A value of
+`1` disables only this stage; it does not disable the configured group gap.
+Values larger than the default are permitted for intentional crop and poster
+layouts, so callers—not the point API—own any clipping decision.
+
+The order is significant: the algorithm first rotates and places each group,
+including the signed gap, and then scales the complete assembled result about
+the page center. Scaling the two groups independently would also scale their
+gap around two different centers and would not reproduce the reference
+geometry.
+
+### Stage 6: polar composition
+
+Stage 6 adds two presentation elements after the point transform.
+
+The North-pole mark is a regular eight-point star centered at `(W/2,H/2)`.
+It alternates an outer radius of `(1.25/44)H` with an inner radius equal to
+`0.4` of the outer radius. `make_north_pole_star()` returns its sixteen
+vertices, beginning at the upper tip, so Izzi can emit a native SVG path.
+
+Antarctica cannot be unified by the ordinary one-point API without also
+redirecting every ocean, bathymetry, and graticule sample south of the cutoff.
+The Natural Earth generator therefore clips land, minor islands, glaciated
+areas, ice shelves, and coastline at `phi_c = -60 degrees`. Geometry north of
+the cutoff follows the ordinary enlarged X. Southern geometry uses a local
+South-polar azimuthal representation:
+
+```text
+r = (phi + 90 degrees) H E / 400
+theta = lambda pi / 180
+xp = r sin(theta)
+yp = -r cos(theta)
+```
+
+The South Pole is the local origin and the prime meridian points upward. The
+`H/400` scale follows the Cahill-Keyes canonical construction: one degree is
+100 of 10,000 octant units and the Star-X scaffold altitude is `H/4`. The
+same `E` as Stage 5 is applied, so the continent retains the map's geographic
+scale instead of inheriting the deliberately oversized silhouette in the
+reference artwork.
+
+Placement is data-derived. If the projected Antarctic outline has local
+bounds `[xmin,xmax] x [ymin,ymax]`, its translation is:
+
+```text
+dx = W/2 - (xmin + xmax)/2
+dy = Ybottom - ymax
+```
+
+`Ybottom` is the lowest point of the enlarged Star-X octant geometry,
+sampled over the integer-degree globe. Thus the continent is visually
+centered on the page axis and its lower edge aligns with the lowest octant.
+Ocean and bathymetry remain in the unfolded X; this preserves the global net
+while the land, ice, and coastline layers present Antarctica once. The
+checked-in
+[`geometry-star-x-34-44.with-poles.svg`](../assets/adhoc/geometry-star-x-34-44.with-poles.svg)
+establishes this visual intent only—none of its Antarctic path coordinates or
+scale are copied.
+
 ## Pole placement and the X
 
 The northern polar vertices of group 1 approach the frame's center from
@@ -228,9 +317,12 @@ The standard M net duplicates polar vertices at cuts, so the center is a
 small polar locus rather than one artificially collapsed pixel. Historical
 Star-X compositions place an eight-point star over that locus.
 
-The southern polar copies remain near the two outer ends: group 2's South
-Pole is near the top and group 1's is near the bottom. This is a consequence
-of rotating an entire four-face group, not a special latitude case.
+The southern polar copies remain near the two outer ends in the ordinary
+point transform: group 2's South Pole is near the top and group 1's is near
+the bottom. This is a consequence of rotating an entire four-face group, not
+a special latitude case. The Stage 6 Natural Earth composition replaces the
+fragmented Antarctic *land presentation* with one polar inset; it does not
+silently change those public point coordinates.
 
 ## Public C++ API
 
@@ -256,18 +348,28 @@ To reproduce the former edge-to-edge carrier placement, pass an explicit
 layout:
 
 ```c++
-const a60::carto::star_x_layout old_spacing {
-  .group_gap_ratio = 0
+const a60::carto::star_x_layout original_layout {
+  .group_gap_ratio = 0,
+  .enlargement_factor = 1
 };
 const auto old_projection = a60::carto::make_star_x_projection(
-  map_frame, "star-x-old-spacing.svg", old_spacing);
+  map_frame, "star-x-original-layout.svg", original_layout);
+```
+
+To keep the gap-closing adjustment but choose a different enlargement:
+
+```c++
+const a60::carto::star_x_layout layout {
+  .enlargement_factor = 1.1
+};
 ```
 
 The factory retains only `map_frame.frame_area`; input placement offsets are
 discarded because placement in a larger drawing belongs to `cartography`.
 The optional name is metadata returned by `image_filename()` and does not
-affect projection mathematics. `group_gap_ratio()` reports the validated
-setting retained by the projection.
+affect projection mathematics. `group_gap_ratio()` and
+`enlargement_factor()` report the validated settings retained by the
+projection.
 
 `starxproj` also accepts a validated `projection_base`, preserving the
 construction shape used by existing projections. `make_star_x_projection()`
@@ -282,19 +384,20 @@ defined, including on a deterministic boundary side, but a renderer must not
 join two projected samples across a cut with a straight SVG segment.
 
 The existing `cart0freak0-cahill-keyes-functions.h` helper is specific to a
-2:1 M-layout rectangle and must not be applied to a 17:22 Star-X frame. A
-future Star-X coastline or graticule generator should split geographic paths
-by octant and group before projection, or provide a Star-X-specific edge
-folding helper. The point projection and `augment_carto_geo_specific` anchors
-do not require path interpolation.
+2:1 M-layout rectangle and must not be applied to a 17:22 Star-X frame. The
+shared generators instead split geographic paths by registered octant and
+group before projection. The Stage 6 Antarctic branch clips source geometry
+geographically before applying its continuous polar transform.
 
 ## Numeric safeguards
 
-The Star-X layer adds no trigonometric approximation. Its only arithmetic
-after the Cahill-Keyes result is addition, subtraction, division by the
-constant aspect ratio, and output scaling. The gap ratio must be finite and
-within `[-1/2, 0]`. Validation occurs before the native call, so invalid
-layout and geographic values receive public Star-X diagnostics.
+The normal Star-X point layer adds only addition, subtraction, division by
+the constant aspect ratio, and uniform output scaling. The gap ratio must be
+finite and within `[-1/2, 0]`; the enlargement must be finite and positive.
+Validation occurs before the native call, so invalid layout and geographic
+values receive public Star-X diagnostics. The optional Antarctic compositor
+uses one sine and cosine per densified source point; its radius is linear in
+co-latitude and becomes exactly zero at the South Pole.
 The native projector remains immutable after its one-time function-local
 static initialization and is safe for concurrent read-only calls.
 
@@ -307,21 +410,30 @@ static initialization and is safe for concurrent read-only calls.
   `augment_carto_geo_specific`;
 - the defining group transform against ordinary Cahill-Keyes coordinates on
   a 5-degree global grid;
-- the default 2.25-unit inward translation on a 34-by-44 frame and exact
-  recovery of the former coordinates when the gap ratio is zero;
+- the default 2.25-unit inward translation and 120-percent page-centered
+  enlargement on a 34-by-44 frame, plus exact recovery of the former
+  coordinates when the gap is zero and enlargement is one;
 - northern polar placement around the center and southern polar placement
   at the outer ends;
 - finite, in-frame output for every integer latitude and longitude;
 - exact uniform scaling across `17x22`, `34x44`, `1632x2112`, `5100x6600`,
   and fractional frames;
 - use of `frame.frame_area` rather than input placement offsets;
-- strict aspect-ratio, gap-ratio, and geographic-domain rejection; and
+- alternating radii and central symmetry of the eight-point polar star;
+- the Antarctic polar origin, radius, orientation, and enlargement scale;
+- strict aspect-ratio, gap-ratio, enlargement, and geographic-domain
+  rejection; and
 - raster-name behavior with and without a runtime data prefix.
 
 The expected 1632-by-2112 anchors were calculated by applying the documented
-rigid transforms to the independently Perl-derived 2112-by-1056
+rigid and centered-scale transforms to the independently Perl-derived 2112-by-1056
 Cahill-Keyes fixture. This gives the test a numeric oracle without making a
 historical raster the implementation.
+
+The geometry generator additionally asserts one `north-pole-star` path. The
+Natural Earth generators assert the unified land, ice-shelf, and coastline
+paths while retaining exactly two Earth layer groups and 22 water-overlay
+groups.
 
 ## Provenance and limitations
 
@@ -332,9 +444,12 @@ Star-X description and historical plate diagram. Full references and source
 roles are in the [bibliography](star-x-bibliography.md).
 
 This is a forward spherical projection. It does not provide an inverse,
-ellipsoidal correction, polygon clipping, or a raster reconstruction. The
-17:22 frame preserves the historical carrier; the projected net itself uses
-only the central 11:22 strip, leaving intentional three-unit side margins.
+ellipsoidal correction, or raster reconstruction. The point API does not
+automatically replace Antarctic points with the composed inset: callers that
+render geographic layers must opt into the supplied layer-aware helpers, as
+the Natural Earth generators do. The 17:22 frame preserves the historical
+carrier; the default centered enlargement reduces its former margins while
+remaining inside the 34-by-44 page for the tested Star-X geometry.
 
 ---
 

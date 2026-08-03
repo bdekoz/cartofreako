@@ -26,8 +26,8 @@ Run all standalone projection checks with:
 make check
 ```
 
-Generate geometry, labeled graticules, the layered Natural Earth physical
-map, and the 91-layer curated Hamonshū ocean for all five projections with:
+Generate geometry, labeled graticules, the Natural Earth ocean-and-land base,
+and its complementary physical-feature overlay for all five projections with:
 
 ```sh
 make all
@@ -46,7 +46,7 @@ dimension of exactly 44 inches:
 
 | Projection | Generated frame | Per-projection target |
 | --- | ---: | --- |
-| Cahill-Keyes | `44 × 22` | `make generate-geometry generate-graticules-ck generate-earth-ck generate-ocean-ck` |
+| Cahill-Keyes | `44 × 22` | `make generate-geometry generate-graticules-ck generate-earth-ck generate-water-ck` |
 | AuthaGraph | `44 × 19.052559` (`44 × 11√3`) | `make generate-authagraph` |
 | Myriahedral | `44 × 24.75` | `make generate-myriahedral` |
 | Star-X | `34 × 44` | `make generate-star-x` |
@@ -59,19 +59,19 @@ pixels to the longest side.
 
 Artifact-family targets are also available as
 `generate-geometry-projections`, `generate-graticules-projections`,
-`generate-earth-projections`, and `generate-ocean-projections`. Each generic
+`generate-earth-projections`, and `generate-water-projections`. Each generic
 family target includes Cahill-Keyes plus AuthaGraph, Myriahedral, Star-X, and
 Voronoi. Each generator accepts a projection name on its command line and
 reopens its SVG to validate the view box, required layers, path structure,
 and finite numeric output.
 
-| Projection | Geometry | Graticules | Earth | Ocean |
+| Projection | Geometry | Graticules | Earth | Water |
 | --- | --- | --- | --- | --- |
-| Cahill-Keyes | [`geometry-ck-44-22.png`](generated/png/geometry-ck-44-22.png) | [`graticules-ck-44-22.png`](generated/png/graticules-ck-44-22.png) | [`earth-ck-44-22.png`](generated/png/earth-ck-44-22.png) | [`ocean-ck-44-22.png`](generated/png/ocean-ck-44-22.png) |
-| AuthaGraph | [`geometry-authagraph-44-19.052559.png`](generated/png/geometry-authagraph-44-19.052559.png) | [`graticules-authagraph-44-19.052559.png`](generated/png/graticules-authagraph-44-19.052559.png) | [`earth-authagraph-44-19.052559.png`](generated/png/earth-authagraph-44-19.052559.png) | [`ocean-authagraph-44-19.052559.png`](generated/png/ocean-authagraph-44-19.052559.png) |
-| Myriahedral | [`geometry-myriahedral-44-24.75.png`](generated/png/geometry-myriahedral-44-24.75.png) | [`graticules-myriahedral-44-24.75.png`](generated/png/graticules-myriahedral-44-24.75.png) | [`earth-myriahedral-44-24.75.png`](generated/png/earth-myriahedral-44-24.75.png) | [`ocean-myriahedral-44-24.75.png`](generated/png/ocean-myriahedral-44-24.75.png) |
-| Star-X | [`geometry-star-x-34-44.png`](generated/png/geometry-star-x-34-44.png) | [`graticules-star-x-34-44.png`](generated/png/graticules-star-x-34-44.png) | [`earth-star-x-34-44.png`](generated/png/earth-star-x-34-44.png) | [`ocean-star-x-34-44.png`](generated/png/ocean-star-x-34-44.png) |
-| Voronoi | [`geometry-voronoi-44-22.916667.png`](generated/png/geometry-voronoi-44-22.916667.png) | [`graticules-voronoi-44-22.916667.png`](generated/png/graticules-voronoi-44-22.916667.png) | [`earth-voronoi-44-22.916667.png`](generated/png/earth-voronoi-44-22.916667.png) | [`ocean-voronoi-44-22.916667.png`](generated/png/ocean-voronoi-44-22.916667.png) |
+| Cahill-Keyes | [`geometry-ck-44-22.png`](generated/png/geometry-ck-44-22.png) | [`graticules-ck-44-22.png`](generated/png/graticules-ck-44-22.png) | [`earth-ck-44-22.png`](generated/png/earth-ck-44-22.png) | [`water-ck-44-22.png`](generated/png/water-ck-44-22.png) |
+| AuthaGraph | [`geometry-authagraph-44-19.052559.png`](generated/png/geometry-authagraph-44-19.052559.png) | [`graticules-authagraph-44-19.052559.png`](generated/png/graticules-authagraph-44-19.052559.png) | [`earth-authagraph-44-19.052559.png`](generated/png/earth-authagraph-44-19.052559.png) | [`water-authagraph-44-19.052559.png`](generated/png/water-authagraph-44-19.052559.png) |
+| Myriahedral | [`geometry-myriahedral-44-24.75.png`](generated/png/geometry-myriahedral-44-24.75.png) | [`graticules-myriahedral-44-24.75.png`](generated/png/graticules-myriahedral-44-24.75.png) | [`earth-myriahedral-44-24.75.png`](generated/png/earth-myriahedral-44-24.75.png) | [`water-myriahedral-44-24.75.png`](generated/png/water-myriahedral-44-24.75.png) |
+| Star-X | [`geometry-star-x-34-44.png`](generated/png/geometry-star-x-34-44.png) | [`graticules-star-x-34-44.png`](generated/png/graticules-star-x-34-44.png) | [`earth-star-x-34-44.png`](generated/png/earth-star-x-34-44.png) | [`water-star-x-34-44.png`](generated/png/water-star-x-34-44.png) |
+| Voronoi | [`geometry-voronoi-44-22.916667.png`](generated/png/geometry-voronoi-44-22.916667.png) | [`graticules-voronoi-44-22.916667.png`](generated/png/graticules-voronoi-44-22.916667.png) | [`earth-voronoi-44-22.916667.png`](generated/png/earth-voronoi-44-22.916667.png) | [`water-voronoi-44-22.916667.png`](generated/png/water-voronoi-44-22.916667.png) |
 
 The [SVG generation pipeline](docs/generation.md) explains the generator
 sources and Make targets, Natural Earth acquisition, seam handling, sampling,
@@ -92,9 +92,8 @@ and longitude graticules with:
 make generate-graticules-ck
 ```
 
-Generate the layered 44×22 Cahill-Keyes physical map from Natural Earth's
-1:10m coastline, land, minor-island, reef, ocean, river, lake/reservoir,
-playa, ice, and twelve-depth bathymetry datasets with:
+Generate the 44×22 Cahill-Keyes base map containing only Natural Earth's
+1:10m `ocean` and `land` layers with:
 
 ```sh
 make generate-earth-ck
@@ -106,20 +105,17 @@ physical-vector bundle; the downloaded build input remains ignored by Git.
 See the [data note](docs/natural-earth-10m-physical-vectors.md) for source,
 checksum, licensing, and the standalone fetch target.
 
-Generate just the Natural Earth ocean, filled with the same 91 independently
-layered variations selected by Izzi's `examples/curves-hamonshu.cc`—13 source
-motifs at seven curvature ratios—from Mori Yūzan's 1903 *Hamonshū*, volume 2,
-with:
+Generate the complementary transparent physical-feature overlay—bathymetry,
+minor islands, glaciated areas, Antarctic ice shelves, lakes and reservoirs,
+playas, rivers, reefs, and coastline, but no `ocean` or `land` group—with:
 
 ```sh
-make generate-ocean-ck
+make generate-water-ck
 ```
 
-The output uses the same 44×22 Cahill-Keyes frame. Each English motif name is
-descriptive because the source has no printed pattern captions; every layer
-title records both its illustrated-page number and PDF scan number. See the
-[wave-pattern catalogue and rendering notes](https://github.com/bdekoz/izzi/blob/main/docs/hamonshu-wave-patterns.md)
-for the page convention, naming scheme, vector method, and provenance.
+The Earth and water SVGs use the same projection frame and form a disjoint
+layer partition: stacking water over Earth reconstructs the complete physical
+layer set without duplicating either base polygon family.
 
 ## AuthaGraph
 
@@ -221,7 +217,10 @@ Star-X reuses the native Cahill-Keyes geometry, splits the ordinary M layout
 into left and right groups of four spatial face slots, rotates the right
 group by 180 degrees, and stacks it above the left group. This produces the
 portrait X arrangement around the northern polar locus without raster tiles
-or temporary maps.
+or temporary maps. Its default layout closes the former central gap, enlarges
+the complete X 120 percent about the page center, adds a central North-pole
+star, and composes Natural Earth Antarctica once at the lower end at the
+projection's geographic scale.
 
 ### Read by purpose
 
@@ -229,8 +228,9 @@ or temporary maps.
   official octant numbers versus spatial slots, group rotation, final page
   quadrants, polar center, cuts, and aspect ratio.
 - [Implementation notes](docs/star-x-implementation-notes.md) records the
-  shared Cahill-Keyes calculation, exact assembly formulas, frame contract,
-  public API, validation, test strategy, provenance, and limitations.
+  shared Cahill-Keyes calculation, gap and enlargement formulas, polar
+  composition, frame contract, public API, validation, test strategy,
+  provenance, and limitations.
 - [Bibliography](docs/star-x-bibliography.md) identifies the original Star-X
   description and plate diagram, inherited Cahill-Keyes sources, historical
   context, assets, and verification material.
@@ -260,6 +260,10 @@ The width must equal `(17/22) * height`. This retains the historical
 34-by-44 four-panel carrier at every scale; `17x22`, `34x44`, `1632x2112`,
 and `5100x6600` are all valid examples. The returned point uses an
 upper-left screen origin. The optional raster name is metadata only.
+`star_x_layout` configures the signed group gap and page-centered enlargement;
+their defaults are `-9/88` of frame height and `1.2`, respectively. The
+central star and unified Antarctica are layer-aware SVG composition helpers,
+not a hidden change to `meridians_to_point_2d()`.
 
 ## Myriahedral
 
@@ -386,10 +390,10 @@ native source-canvas dimensions but does not prescribe a raster.
 | [`generated/wasm/README.md`](generated/wasm/README.md) | Browser build, output artifacts, runtime map architecture, seam-prepared Natural Earth input, and provenance |
 | [`docs/generation.md`](docs/generation.md) | End-to-end SVG generation, seam and folding techniques, data preparation, structural checks, and perceptual considerations |
 | [`docs/prerequisites.md`](docs/prerequisites.md) | Native build, data acquisition, Inkscape review, and optional WebAssembly prerequisites |
-| [`src/cart0freak0-star-x.h`](src/cart0freak0-star-x.h) | Direct Star-X group assembly, frame validation, public API, and factory |
-| [`tests/test-star-x-projection-api.cc`](tests/test-star-x-projection-api.cc) | Star-X anchors, rigid assembly, global domain, polar placement, variable-frame, validation, and API tests |
-| [`docs/star-x-context.md`](docs/star-x-context.md) | Star-X octahedral context, face-slot mapping, group rotation, quadrants, polar locus, and cuts |
-| [`docs/star-x-implementation-notes.md`](docs/star-x-implementation-notes.md) | Star-X formulas, scaling proof, API, safeguards, verification, and provenance |
+| [`src/cart0freak0-star-x.h`](src/cart0freak0-star-x.h) | Star-X group assembly, configurable centered scale, polar-composition geometry, frame validation, public API, and factory |
+| [`tests/test-star-x-projection-api.cc`](tests/test-star-x-projection-api.cc) | Star-X anchors, assembly and scale, global domain, polar helpers, variable-frame, validation, and API tests |
+| [`docs/star-x-context.md`](docs/star-x-context.md) | Star-X octahedral context, face-slot mapping, group rotation, page enlargement, polar composition, and cuts |
+| [`docs/star-x-implementation-notes.md`](docs/star-x-implementation-notes.md) | Star-X gap, scale, and polar formulas, API, safeguards, verification, and provenance |
 | [`docs/star-x-bibliography.md`](docs/star-x-bibliography.md) | Star-X arrangement, Cahill-Keyes geometry, historical, asset, and test sources |
 | [`tests/projection-generation-common.h`](tests/projection-generation-common.h) | Exact 44-unit frame configurations, projection dispatch, native-cell lookup, cut bisection, and shared seam-safe path projection |
 | [`tests/projection-area-generation.h`](tests/projection-area-generation.h) | Face-local Myriahedral and Voronoi area transforms plus exact planar-triangle clipping for filled paths |
@@ -397,12 +401,11 @@ native source-canvas dimensions but does not prescribe a raster.
 | [`generated/png/geometry-ck-44-22.png`](generated/png/geometry-ck-44-22.png) | PNG preview of the generated layered Cahill-Keyes face geometry in a 44×22 frame |
 | [`tests/generate-graticules.cc`](tests/generate-graticules.cc) | Izzi SVG generator and structural test for grouped, degree-labeled, discontinuity-split 10° latitude and longitude lines |
 | [`generated/png/graticules-ck-44-22.png`](generated/png/graticules-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes graticule with 17 latitudes and 36 longitudes |
-| [`tests/generate-earth.cc`](tests/generate-earth.cc) | GDAL/Izzi SVG generator and structural test for clipped and native-cut-split Natural Earth 1:10m physical-vector layers |
-| [`generated/png/earth-ck-44-22.png`](generated/png/earth-ck-44-22.png) | PNG preview of the generated layered 44×22 Cahill-Keyes physical map |
-| [`tests/generate-ocean.cc`](tests/generate-ocean.cc) | GDAL/Izzi generator and structural test for the seam-safe Natural Earth ocean and 91 curated Hamonshū motif/curvature layers |
-| [Izzi `a60-svg-curves-hamonshu.h`](https://github.com/bdekoz/izzi/blob/main/src/a60-svg-curves-hamonshu.h) | Reusable procedural path API and complete illustrated-page, motif-number, and descriptive-name catalogue for *Hamonshū*, volume 2 |
-| [`generated/png/ocean-ck-44-22.png`](generated/png/ocean-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes ocean and its wave-pattern rendering |
-| [Izzi Hamonshū wave-pattern catalogue](https://github.com/bdekoz/izzi/blob/main/docs/hamonshu-wave-patterns.md) | PDF page mapping, motif naming, vector interpretation, ocean-clipping method, and source provenance |
+| [`tests/natural-earth-generation.h`](tests/natural-earth-generation.h) | Shared GDAL/Izzi renderer and structural checks for the complementary Natural Earth base and overlay layer sets |
+| [`tests/generate-earth.cc`](tests/generate-earth.cc) | Thin generator entry point for the `ocean` and `land` base layers |
+| [`generated/png/earth-ck-44-22.png`](generated/png/earth-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes ocean-and-land base |
+| [`tests/generate-water.cc`](tests/generate-water.cc) | Thin generator entry point for every Natural Earth physical layer except `ocean` and `land` |
+| [`generated/png/water-ck-44-22.png`](generated/png/water-ck-44-22.png) | PNG preview of the complementary 44×22 Cahill-Keyes physical-feature overlay |
 | [`scripts/fetch-natural-earth-10m.sh`](scripts/fetch-natural-earth-10m.sh) | Pinned, checksum-verifying acquisition of the required Natural Earth shapefiles |
 | [`docs/natural-earth-10m-physical-vectors.md`](docs/natural-earth-10m-physical-vectors.md) | Natural Earth source, checksum, extracted-dataset, and licensing note |
 | [`src/cart0freak0-myriahedral.h`](src/cart0freak0-myriahedral.h) | Myriahedral mesh, unfolding, forward transform, frame validation, API, and source-raster preset |

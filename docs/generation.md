@@ -2,8 +2,7 @@
 
 [Documentation index](../index.md) ·
 [Prerequisites](prerequisites.md) ·
-[Cahill-Keyes context](cahill-keyes-context.md) ·
-[Hamonshū wave catalogue](https://github.com/bdekoz/izzi/blob/main/docs/hamonshu-wave-patterns.md)
+[Cahill-Keyes context](cahill-keyes-context.md)
 
 ## Purpose
 
@@ -18,8 +17,8 @@ exports each validated SVG as PDF and as a 3840-pixel-long-side PNG.
 | --- | --- | --- |
 | Geometry | [`tests/generate-geometry.cc`](../tests/generate-geometry.cc) | Native projection faces and screen quadrants |
 | Graticules | [`tests/generate-graticules.cc`](../tests/generate-graticules.cc) | Sampled latitude and longitude lines |
-| Earth | [`tests/generate-earth.cc`](../tests/generate-earth.cc) | Natural Earth 1:10m physical vectors |
-| Ocean | [`tests/generate-ocean.cc`](../tests/generate-ocean.cc) | Natural Earth ocean and the *Hamonshū* catalogue |
+| Earth | [`tests/generate-earth.cc`](../tests/generate-earth.cc) | Natural Earth 1:10m ocean and land |
+| Water | [`tests/generate-water.cc`](../tests/generate-water.cc) | Every other Natural Earth 1:10m physical layer |
 
 The aggregate target generates all four artifact families for all five
 projections:
@@ -60,7 +59,7 @@ a general map-rendering command line.
 
 The [top-level Makefile](../Makefile) compiles every generator with C++20 and
 `-Wall -Wextra -Wpedantic -Werror`. The geometry and graticule programs need
-the neighboring Alpha60 and Izzi source trees. The Earth and ocean programs
+the neighboring Alpha60 and Izzi source trees. The Earth and water programs
 also use GDAL's vector API and require GDAL to have GEOS support for polygon
 intersection.
 
@@ -81,7 +80,7 @@ Run one target normally:
 make generate-geometry
 make generate-graticules-ck
 make generate-earth-ck
-make generate-ocean-ck
+make generate-water-ck
 make generate-authagraph
 make generate-myriahedral
 make generate-star-x
@@ -151,7 +150,7 @@ downloads Natural Earth 5.1.1's complete 1:10m physical-vector archive. It:
 4. extracts only the named physical datasets; and
 5. creates the completion stamp last, so interrupted extraction is retried.
 
-The Earth and ocean targets depend on that stamp and pass
+The Earth and water targets depend on that stamp and pass
 `NATURAL_EARTH_DIR` to their executables. The archive digest and licensing
 are recorded in the
 [Natural Earth data note](natural-earth-10m-physical-vectors.md).
@@ -293,7 +292,7 @@ For Cahill-Keyes and Star-X, the generator additionally:
 3. splits every octant at its central meridian to produce two half-octants;
 4. constructs four equal-width screen-space rectangles matching Alpha60's
    map-quadrant convention; and
-5. writes four semantic SVG layers.
+5. writes four semantic SVG layers, plus a Star-X-only `polar-marks` layer.
 
 For those two projections the additional layer counts are:
 
@@ -303,8 +302,10 @@ For those two projections the additional layer counts are:
 | `quadrants` | 4 | Equal-width drawing regions, not spherical quadrants |
 | `octants` | 8 | Outlined and officially numbered projected octants |
 | `half-octants` | 16 | Western/eastern halves used by the piecewise construction |
+| `polar-marks` | 1 | Star-X-only eight-point star centered on the North-pole locus |
 
-The `triangular-faces` and `octants` layers intentionally contain the same
+The `polar-marks` row applies only to Star-X. The `triangular-faces` and
+`octants` layers intentionally contain the same
 geometric outlines with different IDs and styles. One communicates the
 polyhedral faces perceptually; the other exposes the geographic numbering for
 inspection.
@@ -349,10 +350,14 @@ The self-check expects 17 latitude groups and labels, 36 longitude groups and
 labels, at least one visible path per group, and finite coordinates. The
 subpath count is projection-dependent.
 
-## Natural Earth physical-map generator
+## Natural Earth physical-map generators
 
-[`tests/generate-earth.cc`](../tests/generate-earth.cc) turns the
-pinned Natural Earth physical datasets into a layered vector map.
+[`tests/natural-earth-generation.h`](../tests/natural-earth-generation.h)
+contains the shared GDAL-to-Izzi rendering pipeline. The thin
+[`generate-earth.cc`](../tests/generate-earth.cc) and
+[`generate-water.cc`](../tests/generate-water.cc) entry points select two
+complementary artifact kinds, ensuring that both use identical clipping,
+densification, projection, styling, and validation logic.
 
 ### Geometry processing
 
@@ -392,12 +397,43 @@ Finer tolerances preserve small islands, reefs, and playas that would
 disappear under the bathymetry setting. Densification is also finer for
 features whose local bends or narrow scale matter perceptually.
 
-### Layer order and visual interpretation
+### Complementary layer partition
 
-The document draws ocean first, followed by twelve nested bathymetry polygons
-from 0 m through -10,000 m. Progressively deeper polygons are therefore
-painted over shallower ones with progressively darker blues. Land, minor
-islands, ice, lakes, playas, rivers, reefs, and coastline follow.
+The Earth document is an opaque base containing exactly two top-level SVG
+groups, in paint order: `ocean` and `land`. The water document is a
+transparent overlay containing every other physical family: twelve nested
+bathymetry levels, minor islands, glaciated areas, Antarctic ice shelves,
+lakes and reservoirs, playas, rivers, reefs, and coastline. It explicitly
+contains neither `ocean` nor `land`.
+
+The split is by source layer, not by a geographic definition of water. In
+particular, `minor-islands` belongs to the overlay even though it is land
+geometry, because the requested base is restricted to the two canonical
+Natural Earth polygon families. Both artifacts use the same projection frame,
+so compositing water over Earth reconstructs the original complete physical
+stack without duplicating a group.
+
+Star-X adds a layer-aware polar composition while preserving those public
+group counts. Its default point transform first closes the central group gap
+and enlarges the complete X 120 percent about the 34-by-44 page center. For
+land, minor islands, glaciated areas, Antarctic ice shelves, and coastline,
+the generator then splits the source at 60 degrees south. The northern part
+uses the ordinary X; the southern part is a single South-polar shape centered
+at the bottom and aligned with the lowest octant. Ocean and bathymetry stay in
+the unfolded net. The Earth `land` group also contains the central
+`north-pole-star` path, so Earth still has exactly two top-level groups and
+water still has 22.
+
+The Antarctic radial scale is derived from the Cahill-Keyes scaffold rather
+than from the concept artwork. Its coastline distance from the South Pole is
+linear in co-latitude and receives the same 1.2 enlargement as the main X.
+This keeps the continent at the map's scale while resolving the perceptual
+problem of recognizing its fragments across separate octants.
+
+Within the water overlay, the twelve bathymetry polygons run from 0 m through
+-10,000 m. Progressively deeper polygons are painted over shallower ones with
+progressively darker blues. Minor islands, ice, lakes, playas, rivers, reefs,
+and coastline follow.
 
 Bathymetry here is a stack of depth classes, not a continuous elevation
 surface or hillshade. Color steps emphasize categorical depth thresholds;
@@ -411,127 +447,14 @@ the API, the stroke covers sub-pixel cracks between separately clipped pieces.
 The tradeoff is that narrow shapes can appear slightly heavier and adjacent
 fills can overlap by a fraction of a display pixel.
 
-The executable prints source-feature, output-path, and projected-point counts
-for every layer. It then checks all required groups, all twelve bathymetry
-subgroups, a minimum path count, the view box, and finite coordinates.
-
-## Hamonshū ocean generator
-
-[`tests/generate-ocean.cc`](../tests/generate-ocean.cc) combines one
-Natural Earth ocean feature with the 91 deterministic variations selected by
-Izzi's `examples/curves-hamonshu.cc`: 13 source motifs at seven curvature
-ratios from Mori Yūzan's 1903 *Hamonshū*, volume 2.
-
-### Catalogue and provenance
-
-Izzi's
-[`a60-svg-curves-hamonshu.h`](https://github.com/bdekoz/izzi/blob/main/src/a60-svg-curves-hamonshu.h)
-and its
-[`catalogue include`](https://github.com/bdekoz/izzi/blob/main/src/a60-svg-curves-hamonshu-v2.inc)
-provide the compile-time illustrated page or page span, motif ordinal, and
-descriptive English slug. A `static_assert` fixes the catalogue at 153
-entries. The source has no printed motif captions, so these names are
-descriptions rather than translations or historical titles. Keeping this
-projection-independent material in Izzi lets other SVG programs render the
-same source-indexed paths without depending on GDAL or cartofreako.
-
-The same public header is the single source for
-`curated_motif_selections`, the 13 source-coordinate selections displayed as
-rows by Izzi's parameter-grid example, and `curated_curvature_ratios`, the
-seven values `0.25`, `0.45`, `0.70`, `1.0`, `1.30`, `1.65`, and
-`2.10`. Their Cartesian product yields the ocean's 91 variations. Sharing
-these arrays prevents the example and map generator from acquiring divergent
-hand-copied selections.
-
-The PDF is visual source material, not a runtime input and not an image
-texture embedded in the SVG. Stable layer IDs and titles map each procedural
-interpretation back to its illustrated page and PDF scan. The complete page
-convention is documented in the
-[*Hamonshū* wave-pattern catalogue](https://github.com/bdekoz/izzi/blob/main/docs/hamonshu-wave-patterns.md).
-
-### Ocean mosaic
-
-The program simplifies the complete ocean with a 0.04-degree
-topology-preserving tolerance. One seam-clipped, 0.5-degree-densified version
-becomes the pale base ocean. AuthaGraph, Myriahedral, and Voronoi base oceans
-also use 5-degree cells; the latter two are clipped exactly per native face.
-
-For patterned regions, the source ocean is intersected with a 10 by 10 degree
-geographic grid for Cahill-Keyes and Star-X, and a 5 by 5 degree grid for
-AuthaGraph, Myriahedral, and Voronoi. Rows are traversed alternately
-west-to-east and east-to-west—a serpentine order—then every tile is
-intersected again with the antimeridian-safe registered clipping bands.
-Native projection cuts are resolved during path projection or face-local
-clipping. Pieces are retained only when:
-
-- GDAL reports at least one square degree of area in the geographic source
-  coordinate system; and
-- the projected bounding box spans at least 0.08 unit in each direction.
-
-The area threshold is a practical complexity filter, not an equal-area
-measurement. A square degree changes physical size with latitude, and
-irregular coastal fragments can pass or fail differently from compact
-offshore pieces. The complete base ocean fills small pieces intentionally
-omitted from the patterned mosaic.
-
-Surviving regions are distributed round-robin across the 91 curated
-motif/curvature variations. The serpentine traversal avoids a hard reset at
-every latitude row, but the assignment is artistic and deterministic rather
-than geographic or historical. Myriahedral retains every exact face fragment
-in a tile's clip path but uses one motif bounding box per source tile, keeping
-the 5,120-face output tractable. Tile boundaries may be perceived as ocean
-regions even though they encode no oceanographic phenomenon.
-
-### Procedural line families
-
-The Izzi header classifies each descriptive slug into one of sixteen
-families:
-
-```text
-waterline  crest   spiral   spray    arc      lattice
-bubble     scroll  fan      breaker  braid    cascade
-ripple     fountain cloud   cell
-```
-
-A stable integer seed derived from page range, motif number, and slug varies
-row count, phase, direction, density, color, stroke width, and a small
-rotation. There is no runtime randomness, so the same catalogue and geometry
-select the same construction.
-
-For each of the 13 selected motifs, the seven layers change only the public
-`motif_config.curvature` value. This multiplier controls wave height, curl
-radius, and transverse displacement; density, phase, orientation, reflection,
-sampling, and palette selection remain fixed across one motif's seven forms.
-The `1.0` column is the canonical catalogue form.
-
-Curves are evaluated parametrically at fixed sample counts. Ellipses and
-spirals are likewise converted to point sequences, and Izzi serializes them
-as SVG paths. Motifs are authored in normalized `(u,v)` coordinates and the
-public `svg::hamonshu::make_motif_path()` function maps them into each
-assigned region's projected bounding box. This makes the pattern fill its
-tile, but it also means a long narrow region stretches the motif
-anisotropically and changes its apparent wavelength. A deterministic rotation
-of up to four degrees can extend linework beyond the box; the generator's SVG
-clip path constrains it to the assigned ocean region.
-
-Each variation layer contains:
-
-1. a colored path for its assigned ocean regions; and
-2. one procedural line path clipped to those exact regions by an SVG
-   `clipPath`.
-
-A small seeded palette varies adjacent water fields and ink. This makes the
-91 layers distinguishable in an editor and produces a deliberate patchwork,
-but color boundaries can compete perceptually with coastlines or be mistaken
-for bathymetric zones. Fixed output-space stroke widths can also appear denser
-in small tiles than in large ones.
-
-Layer IDs append `-curvature-C`, where `C` is the zero-based position in the
-seven-value array, to the stable source motif ID. The self-check requires the
-base ocean, all 91 named groups, 91 clip paths, two paths per variation,
-source-and-curvature titles, the projection-specific view box, and finite
-coordinates. It verifies provenance and structure, not visual fidelity to the
-scanned pages.
+Each executable prints source-feature, output-path, and projected-point counts
+for every selected layer. The Earth check requires exactly the `ocean` and
+`land` groups and rejects every overlay group. The water check requires every
+overlay group and all twelve bathymetry subgroups, while rejecting `ocean`
+and `land`. Both also enforce minimum path counts, the projection-specific
+view box, and finite coordinates. Star-X additionally requires its central
+star, unified Antarctic land and ice shelves, and unified Antarctic
+coastline.
 
 ## What the executable checks do—and do not—prove
 
@@ -548,11 +471,12 @@ Those checks do not prove that:
 - a simplification tolerance preserved every important small feature;
 - labels do not overlap at every renderer zoom level;
 - colors and line weights remain distinguishable for every viewer; or
-- a procedural wave is a facsimile of its historical specimen.
+- the separate Earth and water artifacts are perceptually balanced when
+  composited.
 
 Human review remains part of generation. Inspect the complete map, zoom into
 all seams and poles, toggle layers in an SVG-aware editor, and check both
-filled and outline features. The Earth and ocean files are currently much
+filled and outline features. The Earth and water files are currently much
 larger than the geometry and graticule diagnostics, so browser and editor
 performance is itself a practical review concern.
 
@@ -578,5 +502,4 @@ When adding another generated projection or layer:
 ---
 
 [Documentation index](../index.md) ·
-[Cahill-Keyes context](cahill-keyes-context.md) ·
-[Hamonshū wave catalogue](https://github.com/bdekoz/izzi/blob/main/docs/hamonshu-wave-patterns.md)
+[Cahill-Keyes context](cahill-keyes-context.md)

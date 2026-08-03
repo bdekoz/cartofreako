@@ -50,8 +50,8 @@ artifacts. Web resources were last checked on 2026-08-01.
    [`cart0freak0-cahill-keyes.h`](../src/cart0freak0-cahill-keyes.h).
 
    Star-X calls this implementation directly. It is the numerical authority
-   for local face geometry and the source M-layout; Star-X adds only a rigid
-   group rearrangement.
+   for local face geometry and the source M-layout; Star-X adds the group
+   rearrangement, uniform page scale, and polar-composition helpers.
 
 6. **cartofreako contributors.** Cahill-Keyes implementation notes and
    source map.
@@ -129,9 +129,25 @@ implementation of Cahill's 1909 graticule.
 18. **alpha60 contributors.** Geographic integration anchors.
     [`augment_carto_geo_specific`](../src/a60-svg-carto-geo.h).
 
-The Star-X reference points apply its documented rigid transform to item 17.
-The test also compares both public projections across a separate global grid
-and checks every item 18 location.
+The Star-X reference points apply its documented rigid transform and centered
+page scale to item 17. The test also compares both public projections across
+a separate global grid and checks every item 18 location.
+
+19. **De Kosnik, Benjamin.** “Geometry Star-X 34 × 44 with poles.” SVG
+    concept drawing, 2026.
+    [Repository reference](../assets/adhoc/geometry-star-x-34-44.with-poles.svg).
+
+    This illustrates the requested 120-percent page-centered scale, central
+    star, and unified Antarctic presentation. Its Antarctica silhouette is
+    intentionally not a scale reference; the implementation uses Natural
+    Earth geometry and the documented projection-relative scale instead.
+
+20. **Natural Earth.** “1:10m Physical Vectors.”
+    [Dataset page](https://www.naturalearthdata.com/downloads/10m-physical-vectors/).
+
+    The land, minor-island, glaciated-area, Antarctic ice-shelf, and coastline
+    layers provide the Stage 6 geographic geometry. GDAL clips these sources
+    at 60 degrees south before the polar composition is applied.
 
 ## Source-to-implementation map
 
@@ -140,6 +156,8 @@ and checks every item 18 location.
 | Half-octant formulas and ordinary M assembly | `MegamapMaker-prep9.pl` and native C++ port |
 | Left/right split, 180-degree rotation, `4 3 / 1 2` ordering | 2022 Star-X project description and plate diagram |
 | 17:22 variable carrier ratio | Historical 34-by-44 four-panel composition |
+| Gap closure and 120-percent page scale | Requested Stage 4/5 geometry and repository concept drawing |
+| North-pole star and unified Antarctica | Repository concept drawing for intent; analytic star plus Natural Earth for final geometry |
 | Official octant numbering | Keyes's eight-octant and polar-assembly page |
 | Longitude registration | Visionscarto asset family and shared C++ helper |
 | Numeric compatibility | Perl-derived CK anchors and Star-X API test |
