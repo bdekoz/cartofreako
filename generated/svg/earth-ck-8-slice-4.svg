@@ -1,8 +1,8 @@
 <svg xml:space="preserve"
      xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink"
-     id="earth-ck-8-slice-4" x="0px" y="0px"
-     width="9.96599998796px" height="10.910765384px"
+     id="earth-ck-8-slice-4" x="0in" y="0in"
+     width="9.96599998796in" height="10.910765384in"
      viewBox="33.0000000034 2.36919082588 9.96599998796 10.910765384" enable-background="new 33.0000000034 2.36919082588 9.96599998796 10.910765384" overflow="hidden" role="img"
      data-slice-style="eight-octant"
      data-slice-number="4"
@@ -15,6 +15,6 @@
 </clipPath>
 </defs>
 <g id="earth-ck-8-slice-4-content" clip-path="url(#earth-ck-8-slice-4-face-clip)">
-<use id="earth-ck-8-slice-4-source" href="earth-ck-44-22.svg#earth-ck-44-22" xlink:href="earth-ck-44-22.svg#earth-ck-44-22" />
+<use id="earth-ck-8-slice-4-source" href="earth-ck-44-22.svg#earth-ck-44-22" xlink:href="earth-ck-44-22.svg#earth-ck-44-22" x="0" y="0" width="44" height="22" />
 </g>
 </svg>

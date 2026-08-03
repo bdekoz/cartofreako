@@ -60,7 +60,8 @@ struct frame
   using atype = space_type;
   using area = svg::area<atype>;
 
-  /// Map size in pixels.
+  /// Map-coordinate extent. The SVG document selects its physical unit; the
+  /// print generators interpret one frame unit as one inch.
   area		frame_area;
 
   /// Projection coordinates in frame, at origin (0,0).

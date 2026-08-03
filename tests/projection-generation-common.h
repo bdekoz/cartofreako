@@ -18,6 +18,7 @@
 #include <variant>
 #include <vector>
 
+#include <a60-io.h>
 #include <a60-svg.h>
 
 #include "a60-carto-frame.h"
@@ -36,6 +37,25 @@ using a60::carto::frame;
 using a60::carto::myriaproj;
 using a60::carto::starxproj;
 using a60::carto::voronoiproj;
+
+/// Physical unit for print-oriented generated map documents. Projection and
+/// viewBox coordinates remain unitless, with one coordinate unit per inch.
+inline constexpr svg::unit projection_document_unit = svg::unit::inch;
+
+/// Root SVG document whose frame dimensions are physical print dimensions.
+struct projection_document : svg::svg_element
+{
+  projection_document(const std::string& name,
+                      const std::string& description,
+                      const frame::area& document_area,
+                      const bool lifetime = true)
+  : svg::svg_element(
+      name, document_area, lifetime, projection_document_unit)
+  {
+    if (lifetime)
+      add_desc(description);
+  }
+};
 
 enum class projection_kind
 {

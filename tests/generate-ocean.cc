@@ -604,7 +604,7 @@ generate_ocean(const projection_spec& projection_specification)
     require(!assigned[index].empty(),
             "Hamonshu variation received no visible ocean mosaic region");
 
-  svg::svg_element document(
+  generation::projection_document document(
     basename,
     "Natural Earth ocean filled with "
       + std::to_string(variations.size())

@@ -450,7 +450,7 @@ generate_geometry(const projection_spec& spec)
     svg::color::none, 0, svg::color::red, 0.70, 0.055,
   };
 
-  svg::svg_element document(
+  generation::projection_document document(
     basename, std::string(spec.title) + " native projection geometry",
     context.map_frame.frame_area);
   add_path_layer(document, "triangular-faces", faces, face_style);

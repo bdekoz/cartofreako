@@ -41,8 +41,8 @@ flattened against an opaque white background. The targets `make
 generated-projections`, `make generate-projections`, and `make
 make-generated` are equivalent aliases.
 
-Every frame preserves the projection's required ratio and has a largest
-dimension of exactly 44 units:
+Every print frame preserves the projection's required ratio and has a largest
+dimension of exactly 44 inches:
 
 | Projection | Generated frame | Per-projection target |
 | --- | ---: | --- |
@@ -51,6 +51,11 @@ dimension of exactly 44 units:
 | Myriahedral | `44 × 24.75` | `make generate-myriahedral` |
 | Star-X | `34 × 44` | `make generate-star-x` |
 | Voronoi | `44 × 22.916667` (`44 × 275/12`) | `make generate-voronoi` |
+
+Generated SVG roots express those physical dimensions with `in` suffixes,
+while their `viewBox` coordinates remain unitless and numerically identical.
+PDFs retain the physical page size; PNG targets independently assign 3840
+pixels to the longest side.
 
 Artifact-family targets are also available as
 `generate-geometry-projections`, `generate-graticules-projections`,

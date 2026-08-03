@@ -622,7 +622,7 @@ generate_earth(const projection_spec& spec)
   GDALAllRegister();
   const std::string basename = generation::output_basename("earth", spec);
   const projection_context context(spec, basename);
-  svg::svg_element document(
+  generation::projection_document document(
     basename, "Natural Earth 1:10m physical vectors in the "
                 + std::string(spec.title) + " projection",
     context.map_frame.frame_area);

@@ -39,10 +39,11 @@
  *     x_local = x_carrier - source_view.x
  *     y_local = y_carrier - source_view.y
  *
- * The SVG writer expresses the same operation with a non-zero viewBox whose
- * width and height equal the output frame. This preserves one carrier unit per
- * intrinsic SVG unit. Raster export may then enlarge a slice by assigning the
- * smaller viewport the normal output resolution.
+ * The SVG writer expresses the same operation with a non-zero, unitless
+ * viewBox whose width and height equal the output frame, while the root width
+ * and height use explicit `in` units. This preserves one carrier coordinate
+ * unit per physical inch. Raster export may then enlarge a slice by assigning
+ * the smaller viewport the normal output resolution.
  *
  * Two generated slicing styles are supported:
  *
@@ -88,7 +89,10 @@
  *   https://www.genekeyes.com/CKOG-OOo/7-CKOG-illus-%26-coastline.html
  *
  * Slice SVGs reference the complete generated Earth SVG with an external
- * `<use>` element. Inkscape keeps this reference vector during PDF and PNG
+ * `<use>` element. Its explicit, unitless carrier width and height override
+ * the source root's physical `44in` by `22in` viewport inside the slice; this
+ * keeps source geometry in carrier coordinates while the wrapper page remains
+ * physically sized. Inkscape keeps this reference vector during PDF and PNG
  * export, unlike an SVG `<image>` reference, while avoiding twelve copies of
  * the large master document. Consequently, the source SVG must remain beside
  * the generated slice SVGs. PDF and PNG derivatives are self-contained.
@@ -557,6 +561,7 @@ write_slice_svg(const std::filesystem::path& output,
   const std::string box = view_box(slice.source_view);
   const std::string width = format_number(slice.output_frame.width());
   const std::string height = format_number(slice.output_frame.height());
+  const std::string unit = svg::to_string(svg::unit::inch);
   const std::string clip_id = id + "-face-clip";
   const bool clipped = !slice.clip_outline.empty();
 
@@ -564,9 +569,10 @@ write_slice_svg(const std::filesystem::path& output,
     << "<svg xml:space=\"preserve\"\n"
     << "     xmlns=\"http://www.w3.org/2000/svg\"\n"
     << "     xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n"
-    << "     id=\"" << xml_escape(id) << "\" x=\"0px\" y=\"0px\"\n"
-    << "     width=\"" << width << "px\" height=\"" << height
-    << "px\"\n"
+    << "     id=\"" << xml_escape(id) << "\" x=\"0" << unit
+    << "\" y=\"0" << unit << "\"\n"
+    << "     width=\"" << width << unit << "\" height=\"" << height
+    << unit << "\"\n"
     << "     viewBox=\"" << box << "\" enable-background=\"new "
     << box << "\" overflow=\"hidden\" role=\"img\"\n"
     << "     data-slice-style=\"" << style_name(slice.style) << "\"\n"
@@ -605,7 +611,9 @@ write_slice_svg(const std::filesystem::path& output,
     << ">\n"
     << "<use id=\"" << xml_escape(id) << "-source\" href=\""
     << source_reference << "\" xlink:href=\"" << source_reference
-    << "\" />\n"
+    << "\" x=\"0\" y=\"0\" width=\""
+    << format_number(carrier.width()) << "\" height=\""
+    << format_number(carrier.height()) << "\" />\n"
     << "</g>\n"
     << "</svg>\n";
   stream.close();
@@ -633,13 +641,15 @@ read_text(const std::filesystem::path& path)
 /// @param source_svg Expected complete Earth SVG reference.
 /// @param source_fragment Expected root id within @p source_svg.
 /// @param slice Descriptor used to generate the SVG.
+/// @param carrier Complete projection carrier used by the source SVG.
 /// @throws std::runtime_error on an incorrect viewport, source reference,
 /// clipping mode, or unexpected scaling transform.
 inline void
 verify_slice_svg(const std::filesystem::path& output,
                  const std::filesystem::path& source_svg,
                  const std::string_view source_fragment,
-                 const slice_descriptor& slice)
+                 const slice_descriptor& slice,
+                 const frame& carrier)
 {
   const std::string generated = read_text(output);
   const std::string reference = source_svg.generic_string() + '#'
@@ -648,9 +658,25 @@ verify_slice_svg(const std::filesystem::path& output,
         == std::string::npos)
     throw std::runtime_error("generated slice has the wrong viewBox: "
                              + output.string());
+  const std::string unit = svg::to_string(svg::unit::inch);
+  const std::string physical_size
+    = "width=\"" + format_number(slice.output_frame.width()) + unit
+      + "\" height=\"" + format_number(slice.output_frame.height()) + unit
+      + "\"";
+  if (generated.find(physical_size) == std::string::npos)
+    throw std::runtime_error(
+      "generated slice does not have physical inch dimensions: "
+      + output.string());
   if (generated.find("href=\"" + reference + "\"") == std::string::npos)
     throw std::runtime_error("generated slice does not reference its source: "
                              + output.string());
+  const std::string source_viewport
+    = "x=\"0\" y=\"0\" width=\"" + format_number(carrier.width())
+      + "\" height=\"" + format_number(carrier.height()) + "\"";
+  if (generated.find(source_viewport) == std::string::npos)
+    throw std::runtime_error(
+      "generated slice does not override the source physical viewport: "
+      + output.string());
   const bool has_clip = generated.find("<clipPath ") != std::string::npos;
   if (has_clip != !slice.clip_outline.empty())
     throw std::runtime_error("generated slice has the wrong clipping mode: "
