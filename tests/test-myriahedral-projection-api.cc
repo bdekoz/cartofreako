@@ -334,7 +334,7 @@ main()
         assert(y >= 0 && y <= myriahedral_source_height);
 
         const auto geographic = myriahedral_detail::geographic_vector(
-          latitude, longitude == 180 ? -180 : longitude);
+          latitude, longitude);
         const std::size_t face
           = myriahedral_detail::containing_face(geographic);
         assert(myriahedral_detail::containment_margin(
@@ -345,6 +345,16 @@ main()
   // selection, including when that coordinate lies on a cut.
   for (int latitude = -90; latitude <= 90; latitude += 5)
     {
+      const auto west_vector
+        = myriahedral_detail::geographic_vector(latitude, -180);
+      const auto east_vector
+        = myriahedral_detail::geographic_vector(latitude, 180);
+      assert(west_vector.x == east_vector.x);
+      assert(west_vector.y == east_vector.y);
+      assert(west_vector.z == east_vector.z);
+      assert(myriahedral_detail::containing_face(west_vector)
+             == myriahedral_detail::containing_face(east_vector));
+
       const auto west = api.meridians_to_point_2d(latitude, -180);
       const auto east = api.meridians_to_point_2d(latitude, 180);
       assert(std::abs(std::get<0>(west) - std::get<0>(east)) < 1e-12);

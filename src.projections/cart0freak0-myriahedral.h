@@ -560,7 +560,11 @@ geographic_vector(const double latitude, const double longitude)
   if (latitude == -90)
     return {0, 0, -1};
   const double phi = latitude * pi / 180;
-  const double lambda = longitude * pi / 180;
+  // Exact +180 and -180 identify one meridian. Canonicalize before both
+  // face selection and projection so roundoff in sin(+/-pi) cannot select
+  // different faces when the meridian lies on a cut.
+  const double canonical_longitude = longitude == 180 ? -180 : longitude;
+  const double lambda = canonical_longitude * pi / 180;
   const double cosine = std::cos(phi);
   return {cosine * std::cos(lambda),
           cosine * std::sin(lambda),
@@ -633,8 +637,7 @@ containing_face(const vector_3d& value)
 inline point_2d
 project_to_unfolded_net(const double latitude, const double longitude)
 {
-  const vector_3d value = geographic_vector(
-    latitude, longitude == 180 ? -180 : longitude);
+  const vector_3d value = geographic_vector(latitude, longitude);
   const auto& projection = layout();
   const std::size_t index = containing_face(value);
   const auto& source = projection.spherical[index];

@@ -141,6 +141,7 @@ TEST_BINARIES := \
 	$(TEST_DIR)/test-cahill-keyes-slicing \
 	$(TEST_DIR)/test-authagraph-projection-api \
 	$(TEST_DIR)/test-myriahedral-projection-api \
+	$(TEST_DIR)/test-projection-generation-common \
 	$(TEST_DIR)/test-star-x-projection-api \
 	$(TEST_DIR)/test-voronoi-projection-api
 
@@ -203,6 +204,10 @@ check:
 		$(TEST_DIR)/test-myriahedral-projection-api.cc \
 		-o $(TEST_DIR)/test-myriahedral-projection-api
 	$(TEST_DIR)/test-myriahedral-projection-api
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$(TEST_DIR)/test-projection-generation-common.cc \
+		-o $(TEST_DIR)/test-projection-generation-common
+	$(TEST_DIR)/test-projection-generation-common
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-star-x-projection-api.cc \
 		-o $(TEST_DIR)/test-star-x-projection-api
