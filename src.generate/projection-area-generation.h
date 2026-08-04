@@ -43,12 +43,13 @@ uses_native_face_clipping(const projection_context& context)
 }
 
 inline raw_point
-project_on_myriahedral_face(const std::size_t face_index,
+project_on_myriahedral_face(const projection_context& context,
+                            const std::size_t face_index,
                             const double latitude, const double longitude)
 {
   using namespace a60::carto::myriahedral_detail;
   const vector_3d value = geographic_vector(latitude, longitude);
-  const auto& projection = layout();
+  const auto& projection = std::get<myriaproj>(context.projection).layout();
   const auto& source = projection.spherical[face_index];
   const auto& target = projection.planar[face_index];
   const vector_3d d0 = source[1] - source[0];
@@ -86,7 +87,8 @@ project_on_native_face(const projection_context& context,
                        const double latitude, const double longitude)
 {
   if (context.spec.kind == projection_kind::myriahedral)
-    return project_on_myriahedral_face(face_index, latitude, longitude);
+    return project_on_myriahedral_face(
+      context, face_index, latitude, longitude);
   if (context.spec.kind == projection_kind::voronoi)
     return project_on_voronoi_face(face_index, latitude, longitude);
   throw std::logic_error("native-face projection requested for another net");
@@ -101,20 +103,12 @@ normalize_native_face_point(const projection_context& context,
   if (context.spec.kind == projection_kind::myriahedral)
     {
       using namespace a60::carto::myriahedral_detail;
-      const auto& projection = layout();
-      const double extent_x = projection.maximum_x - projection.minimum_x;
-      const double extent_y = projection.maximum_y - projection.minimum_y;
-      const double scale = std::min(
-        a60::carto::myriahedral_width_to_height_ratio / extent_x,
-        1 / extent_y);
-      const double left = (a60::carto::myriahedral_width_to_height_ratio
-                           - extent_x * scale) / 2;
-      const double bottom = (1 - extent_y * scale) / 2;
-      x = (left + (point.x - projection.minimum_x) * scale)
-          / a60::carto::myriahedral_width_to_height_ratio
-          * context.map_frame.width();
-      y = (1 - (bottom + (point.y - projection.minimum_y) * scale))
-          * context.map_frame.height();
+      const auto& projection
+        = std::get<myriaproj>(context.projection).layout();
+      const point_2d normalized = normalize_planar_point(
+        projection, {point.x, point.y});
+      x = normalized.x * context.map_frame.width();
+      y = normalized.y * context.map_frame.height();
     }
   else if (context.spec.kind == projection_kind::voronoi)
     {
@@ -196,8 +190,8 @@ native_face_triangle(const projection_context& context,
 {
   if (context.spec.kind == projection_kind::myriahedral)
     {
-      const auto& triangle
-        = a60::carto::myriahedral_detail::layout().planar[face_index];
+      const auto& triangle = std::get<myriaproj>(
+        context.projection).layout().planar[face_index];
       return {{{triangle[0].x, triangle[0].y},
                {triangle[1].x, triangle[1].y},
                {triangle[2].x, triangle[2].y}}};

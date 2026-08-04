@@ -15,20 +15,23 @@ Boost.Graph, GDAL, Natural Earth, or Google's S2 geometry library.
 Myriahedral projection is a method for creating many possible maps, not one
 closed-form map. A fine spherical mesh is given a cut tree, and that tree
 determines the shape and seams of the resulting planar net. This
-implementation deliberately fixes one depth-5 configuration reconstructed and
+public default deliberately fixes one depth-5 configuration reconstructed and
 registered for the checked-in source raster. Its spanning tree is embedded as
-compact generated data. That makes the forward transform deterministic and
-suitable for a header-oriented library API.
+compact generated data. The generation layer can also select five immutable
+exploratory trees without making the public projection dependent on runtime
+configuration files. Every choice remains deterministic and suitable for a
+header-oriented library API.
 
-The work has three parts:
+The work has four parts:
 
 1. **Forward projection:** reproduce the upstream icosahedron face order,
    depth-5 subdivision, fixed land-aware cut tree, planar unfolding, and
    per-face affine transform in C++20.
-2. **Variable frames:** normalize that fixed net and uniformly scale it to
-   any finite, positive `frame.frame_area` with the checked-in source
-   raster's `16:9` ratio.
-3. **Documentation and tests:** record the geometry, formulas, provenance,
+2. **Perspective exploration:** preserve complete reference metadata and five
+   additional cut trees with independently selected planar registrations.
+3. **Variable frames and slices:** uniformly normalize a selected net to a
+   `16:9` carrier, then derive exact, unscaled terminal-face subsets.
+4. **Documentation and tests:** record the geometry, formulas, provenance,
    API contract, limitations, and fixed reference coordinates.
 
 ## Code organization
@@ -37,10 +40,15 @@ The work has three parts:
 | --- | --- |
 | [`cart0freak0-myriahedral.h`](../src.projections/cart0freak0-myriahedral.h) | Mesh generation, unfolding, forward transform, frame validation, API adapter, and source-raster preset |
 | [`cart0freak0-myriahedral-tree.inc`](../src.projections/cart0freak0-myriahedral-tree.inc) | Compact parent indices for the fixed 5120-face spanning tree |
+| [`myriahedral-perspective-generation.h`](../src.generate/myriahedral-perspective-generation.h) | Reference and exploratory configuration metadata, immutable cut trees, and lazy layouts |
+| [`perspective-configurations.json`](../assets.static/myriahedral/perspective-configurations.json) | Machine-readable preprocessing, registration, digest, and artifact metadata |
+| [`cart0freak0-myriahedral-slicing.h`](../src.projections/cart0freak0-myriahedral-slicing.h) | Exact two-group terminal-face partition, clip geometry, and SVG verification |
+| [`generate-myriahedral-slices.cc`](../src.generate/generate-myriahedral-slices.cc) | Ad-hoc water-slice wrapper generator |
 | [`a60-carto-projection.h`](../src.projections/a60-carto-projection.h) | Shared `projection_api`, `projection_base`, and `myriahedral` projection mode |
 | [`a60-carto-frame.h`](../src.projections/a60-carto-frame.h) | `frame` and `frame.frame_area` geometry |
 | [`a60-carto.h`](../src.projections/a60-carto.h) | Umbrella include that exports the projection |
 | [`test-myriahedral-projection-api.cc`](../tests/test-myriahedral-projection-api.cc) | Fixed anchors, upstream-layout checks, variable frames, full-degree sweep, domain validation, and API integration |
+| [`test-myriahedral-slicing.cc`](../tests/test-myriahedral-slicing.cc) | Hinge membership, complementary face counts, registered bounds, frame offsets, and invalid-carrier rejection |
 | [`projection-generation-common.h`](../src.generate/projection-generation-common.h) | Native-cell classification, repeated transition bisection, and seam-safe line generation |
 | [`test-projection-generation-common.cc`](../tests/test-projection-generation-common.cc) | Antimeridian and multi-face source-edge regression coverage |
 | [`a60-svg-carto-geo.h`](../src.projections/a60-svg-carto-geo.h) | Geographic integration anchors exercised by the projection test |
@@ -49,7 +57,7 @@ Most numeric helpers live in `a60::carto::myriahedral_detail`. They are
 header-local `inline` functions so the implementation follows the rest of the
 cartography library's integration model.
 
-## Fixed map configuration
+## Reference map configuration
 
 The upstream repository does not preserve the exact command that generated
 `black-white-downsampled.png`; its README command produces a different tree.
@@ -90,6 +98,108 @@ registration data.
 
 The final net is rotated `335` degrees in the mathematical plane to register
 the reconstructed net with the source raster's geographic orientation.
+
+## Perspective configuration metadata
+
+A Myriahedral “perspective” is not just a center longitude and a rotation.
+Those values do not determine where the mesh is cut. An accurate description
+needs enough metadata to reproduce both the topology and its presentation:
+
+| Layer | Required metadata | Why it matters |
+| --- | --- | --- |
+| Identity | Stable id, schema or algorithm revision, generator argument, output tag | Prevents a changed algorithm from masquerading as the same map |
+| Mesh | Icosahedron constants and face order, depth, subdivision order, terminal face count | Every tree index depends on the exact face numbering |
+| Land model | Source geometry or exact-fraction digest, smoothing kernel, `sigma`, cutoff, epsilon, and special-country multipliers | Changes the edge costs from which the tree is selected |
+| Tree selection | Cost formula, geographic weights and center, root face, spanning-tree algorithm, parent array, and tree digest | Completely determines retained hinges and cuts |
+| Flattening | `alpha` and the planar unfolding convention | Distinguishes partial folding from the fully open net used here |
+| Registration | Planar rotation, raw bounds, axis direction, and tie-breaking rule | Places the same topology in a recognizable reading orientation |
+| Canvas | Normalization formula, aspect ratio, physical carrier, crop or whitespace policy | Determines final output coordinates and apparent scale |
+| Verification | Reference-image digest and dimensions, or another fixed set of geographic anchors | Detects a plausible-looking but incorrectly registered result |
+
+The complete machine-readable record is
+[`perspective-configurations.json`](../assets.static/myriahedral/perspective-configurations.json).
+The corresponding compile-time records and parent arrays are in
+[`myriahedral-perspective-generation.h`](../src.generate/myriahedral-perspective-generation.h).
+The JSON records full raw bounds and SHA-256 digests; the embedded tree is the
+authoritative runtime topology.
+
+### Historical option-name trap
+
+The preserved preprocessing program's option names are transposed relative to
+their mathematical use. Reproduction must retain this behavior rather than
+silently “correcting” it:
+
+```text
+longitude_distance = abs(face_longitude - clat) / 180
+latitude_distance  = abs(face_latitude  - clon) / 90
+
+geographic_norm = wlat * longitude_distance^2
+                + wlon * latitude_distance^2
+```
+
+Thus legacy `wlat` is the **longitude** coefficient, `wlon` is the
+**latitude** coefficient, `clat` is the effective center **longitude**, and
+`clon` is the effective center **latitude**. Longitude distance is the
+historical direct absolute subtraction, not a newly wrapped great-circle
+difference. For the reference configuration, the effective center is
+therefore `(longitude=-60, latitude=-65)`.
+
+The shared land model uses the exact 5120-face fractions in
+[`exact-fractions.txt`](../assets.static/myriahedral/exact-fractions.txt),
+Gaussian smoothing with `sigma=0.7` and cutoff `0.001`, and an epsilon of
+`0.000001`. Indonesia, Australia, Greenland, Argentina, and Chile receive a
+factor of two after smoothing; New Zealand receives a factor of five. The
+area-weighted adjacent land value `f` then contributes the edge cost:
+
+```text
+edge_weight = exp((1 - f)^2 * geographic_norm)
+```
+
+Boost.Graph's Prim implementation starts at face `103`. Its 5119 selected
+edges are serialized as one parent per face. Preserving the parent data avoids
+depending on library-specific ordering when costs tie.
+
+### Five perspectives worth investigating
+
+All exploratory configurations retain depth `5`, `sigma=0.7`, `alpha=1`,
+root face `103`, the same exact land input, and a centered `44 × 24.75`
+carrier. The parameters below change the tree before unfolding. The legacy
+weights and centers are shown using their original flag spellings; “center”
+uses their effective geographic meaning.
+
+| Perspective | Effective center `(lon, lat)` | Legacy `wlat`, `wlon` | Rotation | Investigation |
+| --- | ---: | ---: | ---: | --- |
+| Reference | `(-60, -65)` | `0.5, 0.1` | `335°` | Compatibility with `black-white-downsampled.png` |
+| Americas | `(-100, 25)` | `0.5, 0.1` | `22°` | North–South American continuity and its links to the polar branches |
+| Atlantic | `(-25, 15)` | `0.5, 0.1` | `24°` | Relationships among the Americas, Europe, and Africa around the Atlantic |
+| Afro Eur Asia | `(35, 20)` | `0.5, 0.1` | `290°` | Africa–Europe–Asia continuity |
+| Pacific | `(160, 0)` | `0.5, 0.1` | `326°` | Trans-Pacific and Pacific-rim continuity, including Oceania |
+| Antarctic | `(0, -75)` | `0.3, 0.7` | `285°` | Southern Ocean continuity with deliberately stronger latitude weighting |
+
+The reference rotation came from geographic landmark registration against the
+source PNG. The exploratory rotations came from a deterministic integer-degree
+search: retain local north-up and east-right orientation near `(0°,0°)`, then
+maximize occupied scale inside the centered `16:9` carrier. This is a
+presentation policy, not part of Prim's tree selection; another publication
+may rotate or crop the same topology differently.
+
+The generated full-resolution ocean artifacts are:
+
+| Perspective | Ocean artifacts |
+| --- | --- |
+| Americas | [PNG](../assets.generated/png/water-myriahedral-americas-44-24.75.png) · [SVG](../assets.generated/svg/water-myriahedral-americas-44-24.75.svg) · [PDF](../assets.generated/pdf/water-myriahedral-americas-44-24.75.pdf) |
+| Atlantic | [PNG](../assets.generated/png/water-myriahedral-atlantic-44-24.75.png) · [SVG](../assets.generated/svg/water-myriahedral-atlantic-44-24.75.svg) · [PDF](../assets.generated/pdf/water-myriahedral-atlantic-44-24.75.pdf) |
+| Afro Eur Asia | [PNG](../assets.generated/png/water-myriahedral-afro-eur-asia-44-24.75.png) · [SVG](../assets.generated/svg/water-myriahedral-afro-eur-asia-44-24.75.svg) · [PDF](../assets.generated/pdf/water-myriahedral-afro-eur-asia-44-24.75.pdf) |
+| Pacific | [PNG](../assets.generated/png/water-myriahedral-pacific-44-24.75.png) · [SVG](../assets.generated/svg/water-myriahedral-pacific-44-24.75.svg) · [PDF](../assets.generated/pdf/water-myriahedral-pacific-44-24.75.pdf) |
+| Antarctic | [PNG](../assets.generated/png/water-myriahedral-antarctic-44-24.75.png) · [SVG](../assets.generated/svg/water-myriahedral-antarctic-44-24.75.svg) · [PDF](../assets.generated/pdf/water-myriahedral-antarctic-44-24.75.pdf) |
+
+Generate the five layered SVGs with:
+
+```sh
+make generate-water-myriahedral-perspectives
+```
+
+`make all` also exports their PDF and 3840-by-2160 PNG derivatives.
 
 ## Coordinate conventions
 
@@ -320,7 +430,8 @@ width / height = 16 / 9
 This ratio is **not an inherent property of the general Myriahedral method**.
 A different cut tree or a tightly cropped rendering could require a different
 canvas. It is required here so coordinates remain proportional to the chosen
-source asset.
+source asset. The five exploratory layouts deliberately reuse `16:9` as a
+comparison carrier; that is a generation policy, not a geometric discovery.
 
 Validation requires finite, positive dimensions and compares the calculated
 width using a small machine-epsilon tolerance. Approximate ratios are rejected.
@@ -351,14 +462,22 @@ The optional filename is returned by `image_filename()` after prefixing the
 runtime data-resource path. It does not influence projection mathematics.
 `myriahedral_source` is the named `4480 x 2520` preset for the checked-in PNG.
 
+Generation code may pass an explicit immutable `projection_layout` to the
+factory overload. The projection retains a pointer to that layout, so its
+lifetime must exceed the projection's; rvalue layouts are rejected. The six
+configured generation layouts are function-local statics and satisfy that
+contract. The ordinary public factory continues to select the reference
+layout.
+
 ## Initialization and complexity
 
-The spherical and planar face arrays are initialized once in a function-local
-static object. The one-time work subdivides and unfolds 5120 triangles. A
-forward query then uses the hierarchical face search and a constant-size
-affine solve. The data footprint is dominated by the spherical and planar
-triangle arrays; the compressed tree itself is about 20 KiB of hexadecimal
-text.
+The reference spherical and planar face arrays are initialized once in a
+function-local static object. Each exploratory layout has its own lazy static
+and is unfolded only if selected. The one-time work per selected perspective
+subdivides and unfolds 5120 triangles. A forward query then uses the
+hierarchical face search and a constant-size affine solve. The data footprint
+is dominated by each initialized spherical and planar triangle array; every
+compressed parent tree is about 20 KiB of hexadecimal text.
 
 Function-local static initialization is thread-safe under C++11 and later.
 
@@ -395,6 +514,105 @@ rivers are open line paths. The Earth base is composed from filled areas,
 which already use exact face-local triangle clipping and therefore did not
 emit the same false chords.
 
+## Myriahedral slicing
+
+Cahill-Keyes has four repeated columns and eight named octants, so quarto and
+octo slicing follow large construction faces. A Myriahedral net has no
+equivalent canonical four- or eight-page partition: its useful topology is the
+retained hinge tree over 5120 terminal faces. Four slicing families merit
+further use:
+
+1. **Hinge-component slices.** Cut one or a few retained hinges and publish
+   the resulting connected tree components. These have the cleanest
+   topological interpretation and preserve every uncut face relationship.
+2. **Semantic terminal-face groups.** Seed faces from named regions, optimize
+   a small set of hinge cuts, and serialize the resulting unions of exact
+   triangles. This is the method implemented below.
+3. **Base-icosahedron families.** Group terminal faces by their 20 original
+   icosahedron ancestors, then combine those ancestors into polar, five-part,
+   ten-part, or publication-specific sets. These are repeatable, though they
+   need not follow the unfolded tree's visually obvious branches.
+4. **Geographic masks or carrier viewports.** Select faces by hemisphere,
+   pole, ocean basin, centroid region, or simply crop rectangular strips.
+   These are useful presentation views, but a rectangle is not a pure
+   topological slice and may include pieces from unrelated branches.
+
+### Implemented two-group partition
+
+The requested ad-hoc partition is:
+
+- **Group 1:** North America, South America, Antarctica, Greenland, and
+  Iceland.
+- **Group 2:** every remaining land and ocean face.
+
+The exploration seeded a terminal face only when its exact land fraction was
+at least `0.05`. Group 1 seeds were selected by an Americas longitude/latitude
+window, an Antarctica latitude threshold, the exact Greenland country bit,
+and an Iceland centroid window. All other seeded land faces requested group
+2. A two-state dynamic program on the reference tree minimized the number of
+changed branches while penalizing cuts through land:
+
+```text
+hinge_cut_cost(a,b) = 1 + 1000 * max(raw_land_fraction[a],
+                                     raw_land_fraction[b])
+```
+
+That search found five retained hinges. Four have zero land fraction on both
+sides; the high-Arctic `51--273` separator is the one unavoidable
+land-adjacent transition for this exact semantic grouping:
+
+```text
+51--273
+3929--3924
+2026--2025
+3601--3602
+264--259
+```
+
+The production implementation no longer repeats the exploratory geographic
+heuristics. It stores those five exact edges in
+[`cart0freak0-myriahedral-slicing.h`](../src.projections/cart0freak0-myriahedral-slicing.h).
+Traversal starts at root face `103` in group 2 and toggles the current label
+whenever it crosses one of the five edges. Every face is consequently assigned
+once, with no overlap and no omitted carrier face:
+
+| Group | Terminal faces | Raw rotated bounds `(min x, min y) ... (max x, max y)` |
+| --- | ---: | --- |
+| 1 | 2722 | `(-3.794926045716, -2.925593176288) ... (0.333633177675, 1.609508207795)` |
+| 2 | 2398 | `(-3.145317798691, -2.245606055383) ... (2.570969787434, 0.706070797167)` |
+
+### Carrier-preserving output
+
+Both slices reuse
+[`water-myriahedral-44-24.75.svg`](../assets.generated/svg/water-myriahedral-44-24.75.svg)
+on its canonical `44 × 24.75` carrier. Each terminal face is normalized once
+with the reference layout, and its three exact planar vertices become one SVG
+clip-path subpath. The wrapper takes the tight rectangular bounds of that face
+union. It applies no `scale()` transform and does not call the geographic
+projection again.
+
+This is the direct Myriahedral analogue of the face-clipped Cahill-Keyes
+octants: projection belongs to the complete carrier; slicing belongs to the
+resulting planar geometry. The lightweight SVG wrappers use an external
+`<use>` reference and must remain beside the master SVG. Their PDF and PNG
+exports are self-contained.
+
+| Group | Carrier `viewBox` | Raster size | Ocean artifacts |
+| --- | --- | ---: | --- |
+| 1 | `4.62928339117 0 22.5313244677 24.75` | `3496 × 3840` | [PNG](../assets.generated/png/water-myriahedral-adhoc-slice-1.png) · [SVG](../assets.generated/svg/water-myriahedral-adhoc-slice-1.svg) · [PDF](../assets.generated/pdf/water-myriahedral-adhoc-slice-1.pdf) |
+| 2 | `8.17447516357 4.93044675727 31.1962414453 16.1085708816` | `3840 × 1983` | [PNG](../assets.generated/png/water-myriahedral-adhoc-slice-2.png) · [SVG](../assets.generated/svg/water-myriahedral-adhoc-slice-2.svg) · [PDF](../assets.generated/pdf/water-myriahedral-adhoc-slice-2.pdf) |
+
+Generate both slice SVGs with:
+
+```sh
+make generate-myriahedral-slices
+```
+
+They are also members of `make all`, which exports both PDF and PNG forms.
+The mask follows depth-5 mesh faces rather than legal or political borders;
+small coastal and high-Arctic differences are therefore a deliberate
+resolution property, not a claim about exact regional boundaries.
+
 ## Tests
 
 `tests/test-myriahedral-projection-api.cc` verifies:
@@ -415,7 +633,17 @@ emit the same false chords.
   native-face classification; and
 - a short Natural Earth river edge that crosses faces `377 -> 369 -> 355`,
   verifying that the retained hinge and following cut become two local
-  subpaths instead of one page-spanning chord.
+  subpaths instead of one page-spanning chord; and
+- all five exploratory metadata records, selected immutable layouts, frame
+  bounds, and distinct registered coordinates.
+
+`tests/test-myriahedral-slicing.cc` verifies:
+
+- all five configured cut pairs are real retained hinges;
+- the groups contain exactly 2722 and 2398 faces and together cover all 5120;
+- the two tight viewports and inverse output-frame offsets;
+- every clip triangle lies inside its declared viewport; and
+- rejection of a non-`16:9` complete carrier.
 
 Run it with every standalone projection check:
 
@@ -436,8 +664,10 @@ make check
 - Coastlines in the PNG are a rendered reference. The raster is not sampled
   during projection, and antialiasing or historical source-data differences
   can produce small visual registration differences at coast edges.
-- This header exposes one fixed Myriahedral configuration. Supporting arbitrary
-  run-time cut trees would be a separate generator and serialization feature.
+- The public default remains one fixed raster-compatible configuration. The
+  generation layer adds five compile-time exploratory layouts; accepting an
+  arbitrary untrusted run-time tree would still require a separate validated
+  serialization interface.
 
 ## Provenance
 

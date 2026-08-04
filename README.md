@@ -37,8 +37,10 @@ make check
 The checks build in `tests/` with C++20 and strict compiler warnings. See
 [`index.md`](index.md#choose-a-projection) to select and use a projection.
 
-Generate 20 whole-earth maps and 12 Cahill-Keyes enlargement slices as
-layered SVG, PDF, and opaque-white, 3840-pixel-long-side PNG artifacts with:
+Generate 20 production whole-earth maps, five exploratory Myriahedral ocean
+perspectives, 12 Cahill-Keyes enlargement slices, and two Myriahedral
+face-group slices as layered SVG, PDF, and opaque-white,
+3840-pixel-long-side PNG artifacts with:
 
 ```sh
 make all

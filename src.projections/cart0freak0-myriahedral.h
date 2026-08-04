@@ -89,6 +89,8 @@ inline constexpr std::size_t base_face_count = 20;
 inline constexpr std::size_t subdivision_levels = 4;
 /// Number of terminal spherical faces in the depth-5 mesh.
 inline constexpr std::size_t face_count = 5120;
+/// Root face shared by the reconstructed and exploratory spanning trees.
+inline constexpr std::size_t tree_root = 103;
 /// Rotation applied to the unfolded planar tree before registration.
 inline constexpr double layout_rotation_degrees = 335;
 
@@ -320,19 +322,27 @@ hex_digit(const char value)
            : static_cast<std::uint16_t>(value - 'a' + 10);
 }
 
-/// Decode the parent index of one terminal face.
+/// Decode the parent index of one terminal face from a compact tree.
+/// @param encoded_tree Four-lowercase-hex-digit parent indices.
 /// @param face Terminal face index.
 /// @return Parent face index; the root names itself.
 inline constexpr std::uint16_t
-tree_parent(const std::size_t face)
+tree_parent(const char* encoded_tree, const std::size_t face)
 {
   const std::size_t offset = face * 4;
   return static_cast<std::uint16_t>(
-    (hex_digit(spanning_tree_parent_hex[offset]) << 12)
-    | (hex_digit(spanning_tree_parent_hex[offset + 1]) << 8)
-    | (hex_digit(spanning_tree_parent_hex[offset + 2]) << 4)
-    | hex_digit(spanning_tree_parent_hex[offset + 3]));
+    (hex_digit(encoded_tree[offset]) << 12)
+    | (hex_digit(encoded_tree[offset + 1]) << 8)
+    | (hex_digit(encoded_tree[offset + 2]) << 4)
+    | hex_digit(encoded_tree[offset + 3]));
 }
+
+/// Decode one parent from the source-raster-compatible tree.
+/// @param face Terminal face index.
+/// @return Parent face index; face 103 names itself.
+inline constexpr std::uint16_t
+tree_parent(const std::size_t face)
+{ return tree_parent(spanning_tree_parent_hex, face); }
 
 /// Compact undirected adjacency representation of the fixed face tree.
 struct tree_adjacency
@@ -343,11 +353,12 @@ struct tree_adjacency
   std::array<std::uint8_t, face_count> degree {};
 };
 
-/// Decode and validate the undirected fixed-tree adjacency.
+/// Decode and validate one undirected tree adjacency.
+/// @param encoded_tree Four-lowercase-hex-digit parent indices.
 /// @return Adjacency and degree arrays for all terminal faces.
 /// @throws std::logic_error if an index, degree, or edge count is invalid.
 inline tree_adjacency
-make_tree_adjacency()
+make_tree_adjacency(const char* encoded_tree)
 {
   tree_adjacency result;
   const auto add = [&result](const std::size_t source,
@@ -363,7 +374,7 @@ make_tree_adjacency()
   std::size_t edges = 0;
   for (std::size_t face = 0; face < face_count; ++face)
     {
-      const std::size_t parent = tree_parent(face);
+      const std::size_t parent = tree_parent(encoded_tree, face);
       if (parent == face)
         continue;
       add(face, parent);
@@ -374,6 +385,12 @@ make_tree_adjacency()
     throw std::logic_error("Myriahedral spanning tree has the wrong size");
   return result;
 }
+
+/// Decode the source-raster-compatible tree adjacency.
+/// @return Adjacency and degree arrays for all terminal faces.
+inline tree_adjacency
+make_tree_adjacency()
+{ return make_tree_adjacency(spanning_tree_parent_hex); }
 
 /// Test whether two independently produced spherical vertices coincide.
 /// @param left First vertex.
@@ -485,14 +502,17 @@ struct projection_layout
   double maximum_y; ///< Maximum rotated planar y coordinate.
 };
 
-/// Build, unfold, rotate, and measure the complete fixed face tree.
+/// Build, unfold, rotate, and measure a complete face tree.
+/// @param encoded_tree Four-lowercase-hex-digit parent indices.
+/// @param rotation_degrees Counterclockwise planar registration rotation.
 /// @return Fully positioned projection layout.
-/// @throws std::logic_error if the fixed tree is disconnected.
+/// @throws std::logic_error if the tree is disconnected.
 inline projection_layout
-make_projection_layout()
+make_projection_layout(const char* encoded_tree,
+                       const double rotation_degrees)
 {
   projection_layout result {make_spherical_faces(), {}, 0, 0, 0, 0};
-  const tree_adjacency tree = make_tree_adjacency();
+  const tree_adjacency tree = make_tree_adjacency(encoded_tree);
   std::array<bool, face_count> positioned {};
   std::array<std::uint16_t, face_count> stack {};
   std::size_t stack_size = 0;
@@ -519,7 +539,7 @@ make_projection_layout()
       != positioned.end())
     throw std::logic_error("Myriahedral spanning tree is disconnected");
 
-  const double angle = layout_rotation_degrees * pi / 180;
+  const double angle = rotation_degrees * pi / 180;
   const double cosine = std::cos(angle);
   const double sine = std::sin(angle);
   result.minimum_x = std::numeric_limits<double>::infinity();
@@ -539,6 +559,15 @@ make_projection_layout()
   return result;
 }
 
+/// Build the source-raster-compatible projection layout.
+/// @return Fully positioned reference layout.
+inline projection_layout
+make_projection_layout()
+{
+  return make_projection_layout(
+    spanning_tree_parent_hex, layout_rotation_degrees);
+}
+
 /// Return the lazily initialized immutable projection layout.
 /// @return Shared complete layout used by all Myriahedral projections.
 inline const projection_layout&
@@ -546,6 +575,27 @@ layout()
 {
   static const projection_layout value = make_projection_layout();
   return value;
+}
+
+/// Normalize one raw planar point into the registered 16:9 unit canvas.
+/// @param projection Measured planar layout containing the point.
+/// @param raw Raw unfolded coordinate.
+/// @return Screen-oriented coordinate in the unit square.
+inline point_2d
+normalize_planar_point(const projection_layout& projection,
+                       const point_2d raw)
+{
+  const double extent_x = projection.maximum_x - projection.minimum_x;
+  const double extent_y = projection.maximum_y - projection.minimum_y;
+  const double scale = std::min(myriahedral_width_to_height_ratio / extent_x,
+                                1 / extent_y);
+  const double left = (myriahedral_width_to_height_ratio
+                       - extent_x * scale) / 2;
+  const double bottom = (1 - extent_y * scale) / 2;
+  const double x = (left + (raw.x - projection.minimum_x) * scale)
+                   / myriahedral_width_to_height_ratio;
+  const double y = 1 - (bottom + (raw.y - projection.minimum_y) * scale);
+  return {std::clamp(x, 0.0, 1.0), std::clamp(y, 0.0, 1.0)};
 }
 
 /// Convert geographic degrees to a unit Cartesian vector.
@@ -630,15 +680,16 @@ containing_face(const vector_3d& value)
   return selected;
 }
 
-/// Map a geographic coordinate affinely into the unfolded terminal face.
+/// Map a geographic coordinate affinely into a supplied unfolded layout.
+/// @param projection Complete layout to use.
 /// @param latitude Latitude in degrees.
 /// @param longitude Longitude in degrees.
 /// @return Point in the unnormalized unfolded planar net.
 inline point_2d
-project_to_unfolded_net(const double latitude, const double longitude)
+project_to_unfolded_net(const projection_layout& projection,
+                        const double latitude, const double longitude)
 {
   const vector_3d value = geographic_vector(latitude, longitude);
-  const auto& projection = layout();
   const std::size_t index = containing_face(value);
   const auto& source = projection.spherical[index];
   const auto& target = projection.planar[index];
@@ -658,45 +709,68 @@ project_to_unfolded_net(const double latitude, const double longitude)
                    + (target[2] - target[0]) * beta;
 }
 
-/// Normalize the unfolded net into the centered registered 16:9 canvas.
+/// Map a geographic coordinate into the reference unfolded layout.
+/// @param latitude Latitude in degrees.
+/// @param longitude Longitude in degrees.
+/// @return Point in the unnormalized reference net.
+inline point_2d
+project_to_unfolded_net(const double latitude, const double longitude)
+{ return project_to_unfolded_net(layout(), latitude, longitude); }
+
+/// Normalize a supplied layout into the centered registered 16:9 canvas.
+/// @param projection Complete layout to use.
+/// @param latitude Latitude in degrees.
+/// @param longitude Longitude in degrees.
+/// @return Screen-oriented point clamped to the unit square.
+inline point_2d
+project_to_normalized_map(const projection_layout& projection,
+                          const double latitude, const double longitude)
+{
+  return normalize_planar_point(
+    projection,
+    project_to_unfolded_net(projection, latitude, longitude));
+}
+
+/// Normalize the reference layout into its registered 16:9 canvas.
 /// @param latitude Latitude in degrees.
 /// @param longitude Longitude in degrees.
 /// @return Screen-oriented point clamped to the unit square.
 inline point_2d
 project_to_normalized_map(const double latitude, const double longitude)
-{
-  const point_2d raw = project_to_unfolded_net(latitude, longitude);
-  const auto& projection = layout();
-  const double extent_x = projection.maximum_x - projection.minimum_x;
-  const double extent_y = projection.maximum_y - projection.minimum_y;
-  const double scale = std::min(myriahedral_width_to_height_ratio / extent_x,
-                                1 / extent_y);
-  const double left = (myriahedral_width_to_height_ratio
-                       - extent_x * scale) / 2;
-  const double bottom = (1 - extent_y * scale) / 2;
-  const double x = (left + (raw.x - projection.minimum_x) * scale)
-                   / myriahedral_width_to_height_ratio;
-  const double y = 1 - (bottom + (raw.y - projection.minimum_y) * scale);
-  return {std::clamp(x, 0.0, 1.0), std::clamp(y, 0.0, 1.0)};
-}
+{ return project_to_normalized_map(layout(), latitude, longitude); }
 
 } // namespace myriahedral_detail
 
-/// Construct generic projection state from a variable-size 16:9 frame.
+/// Construct generic projection state for a supplied layout and 16:9 frame.
 /// Only frame_area is retained; map placement remains cartography's job.
+/// @param map_frame Ratio-correct output frame.
+/// @param raster_name Optional registered raster filename.
+/// @param projection_layout Complete layout used by the projection.
+/// @return Validated generic projection state with its origin initialized.
+inline projection_base
+make_myriahedral_projection_base(
+  const frame& map_frame, string raster_name,
+  const myriahedral_detail::projection_layout& projection_layout)
+{
+  const frame projection_frame {map_frame.frame_area};
+  projection_base value = validate_myriahedral_projection_base(
+    {projection_frame, 0, 0, myriahedral, std::move(raster_name)});
+  const auto zero = myriahedral_detail::project_to_normalized_map(
+    projection_layout, 0, 0);
+  value.longitude_zero_x = zero.x * projection_frame.width();
+  value.latitude_zero_y = zero.y * projection_frame.height();
+  return value;
+}
+
+/// Construct generic projection state for the reference layout.
 /// @param map_frame Ratio-correct output frame.
 /// @param raster_name Optional registered raster filename.
 /// @return Validated generic projection state with its origin initialized.
 inline projection_base
 make_myriahedral_projection_base(const frame& map_frame, string raster_name)
 {
-  const frame projection_frame {map_frame.frame_area};
-  projection_base value = validate_myriahedral_projection_base(
-    {projection_frame, 0, 0, myriahedral, std::move(raster_name)});
-  const auto zero = myriahedral_detail::project_to_normalized_map(0, 0);
-  value.longitude_zero_x = zero.x * projection_frame.width();
-  value.latitude_zero_y = zero.y * projection_frame.height();
-  return value;
+  return make_myriahedral_projection_base(
+    map_frame, std::move(raster_name), myriahedral_detail::layout());
 }
 
 /**
@@ -708,10 +782,23 @@ make_myriahedral_projection_base(const frame& map_frame, string raster_name)
 */
 struct myriaproj : public projection_base, public projection_api
 {
+  /// Immutable tree layout selected for this projection instance.
+  const myriahedral_detail::projection_layout* selected_layout;
+
   /// Construct from generic projection state.
   /// @param value State with a valid 16:9 frame.
   explicit myriaproj(const projection_base value)
-  : projection_base(validate_myriahedral_projection_base(value))
+  : projection_base(validate_myriahedral_projection_base(value)),
+    selected_layout(&myriahedral_detail::layout())
+  { }
+
+  /// Construct generic state against an explicit immutable layout.
+  /// @param value State with a valid 16:9 frame.
+  /// @param projection_layout Layout whose lifetime exceeds this projection.
+  myriaproj(const projection_base value,
+            const myriahedral_detail::projection_layout& projection_layout)
+  : projection_base(validate_myriahedral_projection_base(value)),
+    selected_layout(&projection_layout)
   { }
 
   /// Make a projection for any valid 16:9 frame. Frame placement offsets are
@@ -723,9 +810,33 @@ struct myriaproj : public projection_base, public projection_api
                                                 std::move(raster_name)))
   { }
 
+  /// Make a projection for a valid frame and an explicit immutable layout.
+  /// @param variable_frame Ratio-correct output frame.
+  /// @param projection_layout Layout whose lifetime exceeds this projection.
+  /// @param raster_name Optional registered raster filename.
+  myriaproj(const frame& variable_frame,
+            const myriahedral_detail::projection_layout& projection_layout,
+            string raster_name = {})
+  : myriaproj(
+      make_myriahedral_projection_base(
+        variable_frame, std::move(raster_name), projection_layout),
+      projection_layout)
+  { }
+
+  /// Reject a temporary layout because the projection stores a pointer to it.
+  myriaproj(const frame&,
+            myriahedral_detail::projection_layout&&,
+            string = {}) = delete;
+
   /// Copy a Myriahedral projection.
   /// @param other Projection to copy.
   myriaproj(const myriaproj& other) = default;
+
+  /// Return the immutable tree layout used by this projection.
+  /// @return Complete selected layout.
+  const myriahedral_detail::projection_layout&
+  layout() const
+  { return *selected_layout; }
 
   /// Resolve the registered raster against the runtime data directory.
   /// @param mode Raster variant requested by the common API; unused here.
@@ -758,7 +869,7 @@ struct myriaproj : public projection_base, public projection_api
         "Myriahedral longitude must be in [-180, 180] degrees");
 
     const auto projected = myriahedral_detail::project_to_normalized_map(
-      latitude, longitude);
+      layout(), latitude, longitude);
     return std::make_tuple(projected.x * pframe.width(),
                            projected.y * pframe.height());
   }
@@ -773,6 +884,26 @@ make_myriahedral_projection(const frame& map_frame, string raster_name = {})
 {
   return myriaproj(map_frame, std::move(raster_name));
 }
+
+/// Construct a variable-size projection from an explicit immutable layout.
+/// @param map_frame Ratio-correct output frame.
+/// @param projection_layout Layout whose lifetime exceeds the result.
+/// @param raster_name Optional registered raster filename.
+/// @return Configured Myriahedral projection.
+inline myriaproj
+make_myriahedral_projection(
+  const frame& map_frame,
+  const myriahedral_detail::projection_layout& projection_layout,
+  string raster_name = {})
+{
+  return myriaproj(
+    map_frame, projection_layout, std::move(raster_name));
+}
+
+/// Reject a temporary layout because the result retains a layout pointer.
+inline myriaproj
+make_myriahedral_projection(
+  const frame&, myriahedral_detail::projection_layout&&, string = {}) = delete;
 
 /// Frame matching the checked-in black-and-white source raster.
 inline const frame pmyriahedral_source {

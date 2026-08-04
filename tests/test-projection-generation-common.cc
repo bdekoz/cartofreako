@@ -2,6 +2,7 @@
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
+#include <string_view>
 #include <vector>
 
 #include "projection-generation-common.h"
@@ -66,4 +67,60 @@ main()
     context, std::vector {porcupine_left, porcupine_right}, false);
   assert(porcupine_paths.size() == 2);
   assert(maximum_segment(porcupine_paths) < 0.75);
+
+  // The five exploratory Myriahedral perspectives have immutable, complete
+  // generation metadata and use their own cut trees and registrations.
+  namespace myria = cart0freak0::myriahedral_generation;
+  assert(myria::perspectives.size() == 6);
+  const myria::perspective_metadata& reference
+    = myria::metadata(myria::perspective::reference);
+  assert(reference.depth == 5);
+  assert(reference.sigma == 0.7);
+  assert(reference.legacy_wlat == 0.5);
+  assert(reference.legacy_wlon == 0.1);
+  assert(reference.legacy_clat == -60);
+  assert(reference.legacy_clon == -65);
+  assert(reference.rotation_degrees == 335);
+
+  constexpr std::array<std::string_view, 5> perspective_arguments {
+    "myriahedral-americas",
+    "myriahedral-atlantic",
+    "myriahedral-afro-eur-asia",
+    "myriahedral-pacific",
+    "myriahedral-antarctic",
+  };
+  std::array<svg::point_2t, perspective_arguments.size()> registrations {};
+  for (std::size_t index = 0; index < perspective_arguments.size(); ++index)
+    {
+      const generation::projection_spec& spec
+        = generation::find_projection_spec(perspective_arguments[index]);
+      assert(spec.kind == generation::projection_kind::myriahedral);
+      const myria::perspective_metadata& metadata
+        = myria::metadata(spec.myriahedral_perspective);
+      assert(metadata.argument == perspective_arguments[index]);
+      assert(metadata.output_tag == spec.output_tag);
+      assert(metadata.depth == 5);
+      assert(metadata.alpha == 1);
+      assert(metadata.parent_hex != nullptr);
+      assert(metadata.parent_hex_sha256.size() == 64);
+      assert(metadata.tree_sha256.size() == 64);
+
+      const generation::projection_context alternate(spec, "");
+      registrations[index] = generation::project_point(
+        alternate, generation::geographic_point {12.5, -7.25});
+      static_cast<void>(generation::project_point(
+        alternate, generation::geographic_point {70, 160}));
+      static_cast<void>(generation::project_point(
+        alternate, generation::geographic_point {-75, -60}));
+      const auto& selected = std::get<a60::carto::myriaproj>(
+        alternate.projection).layout();
+      assert(&selected == &myria::layout(spec.myriahedral_perspective));
+      assert(std::abs(selected.minimum_x - metadata.minimum_x) < 1e-12);
+      assert(std::abs(selected.minimum_y - metadata.minimum_y) < 1e-12);
+      assert(std::abs(selected.maximum_x - metadata.maximum_x) < 1e-12);
+      assert(std::abs(selected.maximum_y - metadata.maximum_y) < 1e-12);
+    }
+  for (std::size_t index = 1; index < registrations.size(); ++index)
+    assert(generation::point_distance(
+             registrations[index - 1], registrations[index]) > 0.01);
 }
