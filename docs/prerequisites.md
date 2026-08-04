@@ -40,8 +40,10 @@ they are not discoverable at their defaults.
 compatibility definitions for the Alpha60 API and do not use GDAL, Natural
 Earth, Izzi, Inkscape, or network access.
 
-`make all` builds 20 whole-earth maps and 12 Cahill-Keyes slices, then invokes
-Inkscape to export all 32 SVGs as PDFs and 3840-pixel-long-side PNGs. It needs
+`make all` builds 20 production whole-earth maps, five exploratory
+Myriahedral water perspectives, 12 Cahill-Keyes slices, and two Myriahedral
+face-group slices, then invokes Inkscape to export all 39 SVGs as PDFs and
+3840-pixel-long-side PNGs. It needs
 all native build and data-acquisition dependencies through GEOS plus Inkscape.
 Inkscape may be omitted only when invoking individual SVG generation targets
 or the self-contained `make check` suite.
@@ -335,10 +337,12 @@ inkscape --version
 ```
 
 Successful generation places five geometry maps, five graticule maps, five
-Earth maps, five water maps, four quadrant slices, and eight octant slices in
-each of `assets.generated/svg/`, `assets.generated/pdf/`, and
-`assets.generated/png/`. Every PNG preserves its source aspect ratio, has a
-3840-pixel longest side, and is flattened against opaque white.
+Earth maps, ten water maps (five production plus five exploratory
+Myriahedral perspectives), four quadrant slices, eight octant slices, and two
+Myriahedral face-group slices in each of `assets.generated/svg/`,
+`assets.generated/pdf/`, and `assets.generated/png/`. Every PNG preserves its
+source aspect ratio, has a 3840-pixel longest side, and is flattened against
+opaque white.
 
 ## Common failures
 

@@ -5,6 +5,7 @@
 /tests/test-cahill-keyes-slicing
 /tests/test-authagraph-projection-api
 /tests/test-myriahedral-projection-api
+/tests/test-myriahedral-slicing
 /tests/test-projection-generation-common
 /tests/test-star-x-projection-api
 /tests/test-voronoi-projection-api
@@ -19,6 +20,7 @@
 /src.generate/generate-water
 /src.generate/generate-4-slice
 /src.generate/generate-8-slice
+/src.generate/generate-myriahedral-slices
 
 # Downloaded inputs and local build products.
 /assets.static/natural-earth/10m-physical-vectors/

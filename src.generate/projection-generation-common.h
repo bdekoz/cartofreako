@@ -28,6 +28,7 @@
 #include "cart0freak0-myriahedral.h"
 #include "cart0freak0-star-x.h"
 #include "cart0freak0-voronoi.h"
+#include "myriahedral-perspective-generation.h"
 
 namespace cart0freak0::generation {
 
@@ -74,6 +75,8 @@ struct projection_spec
   std::string_view output_tag;
   double width;
   double height;
+  myriahedral_generation::perspective myriahedral_perspective
+    = myriahedral_generation::perspective::reference;
 };
 
 inline constexpr std::array projection_specs {
@@ -90,6 +93,41 @@ inline constexpr std::array projection_specs {
     projection_kind::myriahedral,
     "myriahedral", "Myriahedral", "myriahedral-44-24.75",
     44, 44 / a60::carto::myriahedral_width_to_height_ratio,
+  },
+  projection_spec {
+    projection_kind::myriahedral,
+    "myriahedral-americas", "Myriahedral Americas perspective",
+    "myriahedral-americas-44-24.75",
+    44, 44 / a60::carto::myriahedral_width_to_height_ratio,
+    myriahedral_generation::perspective::americas,
+  },
+  projection_spec {
+    projection_kind::myriahedral,
+    "myriahedral-atlantic", "Myriahedral Atlantic perspective",
+    "myriahedral-atlantic-44-24.75",
+    44, 44 / a60::carto::myriahedral_width_to_height_ratio,
+    myriahedral_generation::perspective::atlantic,
+  },
+  projection_spec {
+    projection_kind::myriahedral,
+    "myriahedral-afro-eur-asia", "Myriahedral Afro Eur Asia perspective",
+    "myriahedral-afro-eur-asia-44-24.75",
+    44, 44 / a60::carto::myriahedral_width_to_height_ratio,
+    myriahedral_generation::perspective::afro_eur_asia,
+  },
+  projection_spec {
+    projection_kind::myriahedral,
+    "myriahedral-pacific", "Myriahedral Pacific perspective",
+    "myriahedral-pacific-44-24.75",
+    44, 44 / a60::carto::myriahedral_width_to_height_ratio,
+    myriahedral_generation::perspective::pacific,
+  },
+  projection_spec {
+    projection_kind::myriahedral,
+    "myriahedral-antarctic", "Myriahedral Antarctic perspective",
+    "myriahedral-antarctic-44-24.75",
+    44, 44 / a60::carto::myriahedral_width_to_height_ratio,
+    myriahedral_generation::perspective::antarctic,
   },
   projection_spec {
     projection_kind::star_x,
@@ -122,8 +160,7 @@ find_projection_spec(const std::string_view argument)
       return spec;
   throw std::invalid_argument(
     "unknown projection '" + std::string(argument)
-    + "' (expected cahill-keyes, authagraph, myriahedral, star-x, or "
-      "voronoi)");
+    + "' (use a configured projection argument)");
 }
 
 inline const projection_spec&
@@ -182,7 +219,10 @@ make_projection(const projection_spec& spec, const frame& map_frame,
     case projection_kind::authagraph:
       return a60::carto::make_authagraph_projection(map_frame, raster_name);
     case projection_kind::myriahedral:
-      return a60::carto::make_myriahedral_projection(map_frame, raster_name);
+      return a60::carto::make_myriahedral_projection(
+        map_frame,
+        myriahedral_generation::layout(spec.myriahedral_perspective),
+        raster_name);
     case projection_kind::star_x:
       return a60::carto::make_star_x_projection(map_frame, raster_name);
     case projection_kind::voronoi:

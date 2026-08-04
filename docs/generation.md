@@ -6,10 +6,10 @@
 
 ## Purpose
 
-The repository contains six C++20 generation programs under `src.generate/`.
+The repository contains seven C++20 generation programs under `src.generate/`.
 Four exercise all five production projections through the real Alpha60 and
-Izzi APIs. Two derive enlarged Cahill-Keyes quadrant and octant views from the
-whole-earth SVG. They write layered SVGs under `assets.generated/svg/`, then
+Izzi APIs. Three derive Cahill-Keyes or Myriahedral slices from an already
+projected whole-earth SVG. They write layered SVGs under `assets.generated/svg/`, then
 reopen those files and verify dimensions, layer structure, path counts, and
 numeric sanity. Inkscape subsequently exports each validated SVG as PDF and
 as a 3840-pixel-long-side PNG.
@@ -22,9 +22,11 @@ as a 3840-pixel-long-side PNG.
 | Water | [`src.generate/generate-water.cc`](../src.generate/generate-water.cc) | Every other Natural Earth 1:10m physical layer |
 | Four slices | [`src.generate/generate-4-slice.cc`](../src.generate/generate-4-slice.cc) | Four full-height, quarter-width quadrant-pair enlargements from the Cahill-Keyes Earth SVG |
 | Eight slices | [`src.generate/generate-8-slice.cc`](../src.generate/generate-8-slice.cc) | Eight exact-octant enlargements from the Cahill-Keyes Earth SVG |
+| Myriahedral groups | [`src.generate/generate-myriahedral-slices.cc`](../src.generate/generate-myriahedral-slices.cc) | Two complementary exact-terminal-face masks from the Myriahedral water SVG |
 
 The aggregate target generates all four artifact families for all five
-projections plus all 12 Cahill-Keyes slices:
+production projections, five exploratory Myriahedral water perspectives, all
+12 Cahill-Keyes slices, and two Myriahedral face-group slices:
 
 ```sh
 make all
@@ -84,6 +86,8 @@ make generate-earth-ck
 make generate-water-ck
 make generate-authagraph
 make generate-myriahedral
+make generate-water-myriahedral-perspectives
+make generate-myriahedral-slices
 make generate-star-x
 make generate-voronoi
 make all
@@ -99,7 +103,7 @@ The generators are not part of `make check`; invoking a `generate-*`
 target both writes its artifact and runs that generator's embedded structural
 checks.
 
-The 32 artifacts in each of `assets.generated/svg/`, `assets.generated/pdf/`,
+The 39 artifacts in each of `assets.generated/svg/`, `assets.generated/pdf/`,
 and `assets.generated/png/` are checked in. This makes visual and XML diffs
 reviewable, but it also means that regenerating with a different GDAL, GEOS,
 or Inkscape version can produce ordering, coordinate, or rendering differences
@@ -117,8 +121,9 @@ sources.
 
 The default `PNG_LONG_SIDE=3840` follows UHD 4K video's horizontal pixel
 resolution. Landscape Cahill-Keyes, AuthaGraph, Myriahedral, and Voronoi maps
-set their PNG width to 3840 pixels. Portrait Star-X maps set their PNG height
-to 3840 pixels. Supplying only the longer dimension lets Inkscape derive the
+set their PNG width to 3840 pixels. Portrait Star-X maps, Cahill-Keyes slices,
+and Myriahedral group 1 set their PNG height to 3840 pixels; Myriahedral group
+2 is landscape. Supplying only the longer dimension lets Inkscape derive the
 other dimension without anisotropic scaling. Override the resolution when
 needed:
 
@@ -165,10 +170,12 @@ to select a production projection, construct its exact frame, and call the
 shared public API in `(latitude, longitude)` order. Projected coordinates use
 an upper-left SVG origin.
 
-The two slicing programs instead use
+The three slicing programs instead use
 [`cart0freak0-cahill-keyes-slicing.h`](../src.projections/cart0freak0-cahill-keyes-slicing.h),
-which owns the slice descriptors, clipping geometry, SVG wrapper construction,
-and verification rules.
+or
+[`cart0freak0-myriahedral-slicing.h`](../src.projections/cart0freak0-myriahedral-slicing.h).
+Those headers own the slice descriptors, clipping geometry, SVG wrapper
+construction, and verification rules.
 
 ```mermaid
 flowchart LR
@@ -564,6 +571,39 @@ included material from a neighboring octant. See Keyes's
 [Beta-1 Megamap](https://www.genekeyes.com/MEGAMAP-BETA-1/Megamap-Beta-1.html),
 [full-size octants](https://www.genekeyes.com/1-DEG-GLOBE/8-octants.html), and
 [one-octant construction workflow](https://www.genekeyes.com/CKOG-OOo/7-CKOG-illus-%26-coastline.html).
+
+## Myriahedral perspectives and face-group slices
+
+The generation selector exposes five additional immutable depth-5
+Myriahedral layouts: Americas, Atlantic, Afro Eur Asia, Pacific, and Antarctic.
+Each has its own embedded Prim tree and planar registration, but uses the same
+`44 × 24.75` carrier and Natural Earth water-layer pipeline as the reference
+map. Generate their SVGs with:
+
+```sh
+make generate-water-myriahedral-perspectives
+```
+
+The requested two-way slice is an exact complementary partition of the
+reference layout's 5120 terminal triangles. Group 1 contains 2722 faces
+selected for North America, South America, Antarctica, Greenland, and Iceland;
+group 2 contains the other 2398. Five retained hinges define the boundary.
+The writer projects nothing a second time: it uses the union of each group's
+carrier-space triangles as an SVG clip path around
+`water-myriahedral-44-24.75.svg`, then adopts the group's tight `viewBox`.
+
+The external `<use>` rule is the same as for Cahill-Keyes slices: the two
+lightweight SVG wrappers must remain beside their master, while the PDF and
+PNG derivatives are self-contained. Generate or verify them with:
+
+```sh
+make generate-myriahedral-slices
+```
+
+The complete configuration fields, alternate image links, hinge list,
+selection method, face counts, and registered viewports are recorded in the
+[Myriahedral implementation notes](myriahedral-implementation-notes.md#perspective-configuration-metadata)
+and its [slicing section](myriahedral-implementation-notes.md#myriahedral-slicing).
 
 ## What the executable checks do—and do not—prove
 

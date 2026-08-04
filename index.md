@@ -76,14 +76,15 @@ and its complementary physical-feature overlay for all five projections with:
 make all
 ```
 
-Each of the 20 whole-earth maps and 12 Cahill-Keyes enlargement slices is
-written as a layered SVG under `assets.generated/svg/`, an Inkscape PDF under
-`assets.generated/pdf/`, and a PNG under `assets.generated/png/`. PNGs preserve
-the projection aspect ratio and have a longest side of 3840 pixels, the
-horizontal resolution of UHD 4K video. Transparent SVG page regions are
-flattened against an opaque white background. The targets `make
-generated-projections`, `make generate-projections`, and `make
-make-generated` are equivalent aliases.
+The 20 production whole-earth maps, five exploratory Myriahedral water
+perspectives, 12 Cahill-Keyes enlargement slices, and two Myriahedral
+face-group slices are each written as a layered SVG under
+`assets.generated/svg/`, an Inkscape PDF under `assets.generated/pdf/`, and a
+PNG under `assets.generated/png/`. PNGs preserve the source aspect ratio and
+have a longest side of 3840 pixels, the horizontal resolution of UHD 4K
+video. Transparent SVG page regions are flattened against an opaque white
+background. The targets `make generated-projections`, `make
+generate-projections`, and `make make-generated` are equivalent aliases.
 
 Every print frame preserves the projection's required ratio and has a largest
 dimension of exactly 44 inches:
@@ -171,9 +172,11 @@ SVG composition helpers, not hidden changes to the point transform.
 ## Myriahedral
 
 The Myriahedral implementation reproduces the depth-5 icosahedral mesh of
-`temporaer/myriaworld` and uses a fixed tree reconstructed and registered for
-the checked-in source raster. A compact embedded minimum-spanning tree
-specifies which of the 5120 small faces stay attached.
+`temporaer/myriaworld` and uses a fixed default tree reconstructed and
+registered for the checked-in source raster. Compact embedded
+minimum-spanning trees specify which of the 5120 small faces stay attached;
+the generation layer also includes five exploratory perspectives and two
+exact complementary face-group slices.
 The projection locates a spherical face, transfers the point affinely into its
 unfolded planar copy, and scales the complete net to a variable frame. It has
 no runtime dependency on the historical generator, Boost.Graph, S2, GDAL, or
@@ -183,6 +186,9 @@ Construction examples, the `myriahedral_source` preset, and the distinction
 between this raster-compatible 16:9 net and other possible Myriahedral nets
 are in the
 [Myriahedral public API notes](docs/myriahedral-implementation-notes.md#public-api-and-use).
+The same notes record the
+[perspective configurations](docs/myriahedral-implementation-notes.md#perspective-configuration-metadata)
+and [Myriahedral slicing](docs/myriahedral-implementation-notes.md#myriahedral-slicing).
 
 ## Icosahedral Voronoi
 
@@ -243,12 +249,17 @@ the `voronoi_source` preset are in the
 | [`assets.generated/png/water-ck-44-22.png`](assets.generated/png/water-ck-44-22.png) | PNG preview of the complementary 44×22 Cahill-Keyes physical-feature overlay |
 | [`src.generate/generate-4-slice.cc`](src.generate/generate-4-slice.cc) | Four full-height, quarter-width Cahill-Keyes quadrant-pair enlargements |
 | [`src.generate/generate-8-slice.cc`](src.generate/generate-8-slice.cc) | Eight naturally bounded, face-clipped Cahill-Keyes octant enlargements |
+| [`src.generate/generate-myriahedral-slices.cc`](src.generate/generate-myriahedral-slices.cc) | Two complementary, exact-terminal-face Myriahedral water slices |
 | [`scripts/fetch-natural-earth-10m.sh`](scripts/fetch-natural-earth-10m.sh) | Pinned, checksum-verifying acquisition of the required Natural Earth shapefiles |
 | [`docs/natural-earth-10m-physical-vectors.md`](docs/natural-earth-10m-physical-vectors.md) | Natural Earth source, checksum, extracted-dataset, and licensing note |
 | [`src.projections/cart0freak0-myriahedral.h`](src.projections/cart0freak0-myriahedral.h) | Myriahedral mesh, unfolding, forward transform, frame validation, API, and source-raster preset |
 | [`src.projections/cart0freak0-myriahedral-tree.inc`](src.projections/cart0freak0-myriahedral-tree.inc) | Compact fixed parent tree for the 5120-face net |
+| [`src.generate/myriahedral-perspective-generation.h`](src.generate/myriahedral-perspective-generation.h) | Five exploratory tree configurations, raw bounds, registrations, and lazy layouts |
+| [`assets.static/myriahedral/perspective-configurations.json`](assets.static/myriahedral/perspective-configurations.json) | Machine-readable Myriahedral preprocessing and perspective metadata |
+| [`src.projections/cart0freak0-myriahedral-slicing.h`](src.projections/cart0freak0-myriahedral-slicing.h) | Five-hinge semantic partition, exact face masks, SVG wrappers, and validation |
 | [`tests/test-myriahedral-projection-api.cc`](tests/test-myriahedral-projection-api.cc) | Myriahedral topology, reference-coordinate, variable-frame, domain, and API tests |
-| [`tests/test-projection-generation-common.cc`](tests/test-projection-generation-common.cc) | Seam-safe path regressions for exact antimeridian endpoints and source edges crossing multiple Myriahedral faces |
+| [`tests/test-myriahedral-slicing.cc`](tests/test-myriahedral-slicing.cc) | Complementary face counts, hinge boundaries, registered viewports, and carrier validation |
+| [`tests/test-projection-generation-common.cc`](tests/test-projection-generation-common.cc) | Seam-safe path regressions plus exploratory Myriahedral metadata and layout checks |
 | [`src.projections/cart0freak0-voronoi.h`](src.projections/cart0freak0-voronoi.h) | Icosahedral Voronoi geometry, gnomonic face projection, affine unfolding, frame validation, API, and source-canvas preset |
 | [`tests/test-voronoi-projection-api.cc`](tests/test-voronoi-projection-api.cc) | Voronoi topology, independent D3 reference coordinates, variable-frame, global-domain, seam, and API tests |
 | [`src.projections/a60-carto-projection.h`](src.projections/a60-carto-projection.h) | Common projection interface and state |

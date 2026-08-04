@@ -1,0 +1,199 @@
+{
+  "schema": "cartofreako.myriahedral-perspectives.v1",
+  "reference_image": {
+    "path": "assets.static/myriahedral/black-white-downsampled.png",
+    "sha256": "1228cae3fdcbdcb867952135e9eeaec7d894c092eb8dae828d0dd61ad8658fd7",
+    "width_pixels": 4480,
+    "height_pixels": 2520,
+    "aspect_ratio": "16:9"
+  },
+  "mesh": {
+    "depth": 5,
+    "base_faces": 20,
+    "subdivision_rounds": 4,
+    "terminal_faces": 5120,
+    "tree_root_face": 103,
+    "retained_hinges": 5119,
+    "tree_sha256_format": "root line followed by one '<face> <parent>' line for each terminal face"
+  },
+  "land_model": {
+    "input": "assets.static/myriahedral/exact-fractions.txt",
+    "input_sha256": "dcadd6b33ee606b3cd71e0722dd6549df151bc50abe13a4baa7f28e0386c5eda",
+    "smoothing_kernel": "exp(-angular_distance^2 / sigma^2)",
+    "smoothing_cutoff": 0.001,
+    "normalization_epsilon": 0.000001,
+    "special_land_multipliers": {
+      "Indonesia": 2,
+      "Australia": 2,
+      "Greenland": 2,
+      "New Zealand": 5,
+      "Argentina": 2,
+      "Chile": 2
+    },
+    "edge_weight": "exp((1 - adjacent_area_weighted_land_fraction)^2 * geographic_norm)",
+    "tree_algorithm": "Boost.Graph Prim minimum spanning tree"
+  },
+  "legacy_option_semantics": {
+    "wlat": "coefficient of squared normalized longitude distance",
+    "wlon": "coefficient of squared normalized latitude distance",
+    "clat": "center longitude in degrees",
+    "clon": "center latitude in degrees"
+  },
+  "flattening": {
+    "alpha": 1,
+    "meaning": "fully unfolded planar hinge tree"
+  },
+  "registration": {
+    "rotation_direction": "counterclockwise in the mathematical x-y plane",
+    "screen_y_direction": "down",
+    "carrier_width": 44,
+    "carrier_height": 24.75,
+    "normalization": "uniformly scale rotated raw bounds into a centered 16:9 carrier"
+  },
+  "perspectives": [
+    {
+      "id": "reference",
+      "generator_argument": "myriahedral",
+      "output_tag": "myriahedral-44-24.75",
+      "purpose": "landmark-registered compatibility view for the reference image",
+      "legacy_options": {
+        "sigma": 0.7,
+        "wlat": 0.5,
+        "wlon": 0.1,
+        "clat": -60,
+        "clon": -65,
+        "alpha": 1
+      },
+      "effective_center": {
+        "longitude": -60,
+        "latitude": -65
+      },
+      "rotation_degrees": 335,
+      "rotation_selection": "landmark registration against the reference image",
+      "raw_bounds": [-3.7949260457158975, -2.9255931762882703, 2.5709697874339961, 1.6095082077949852],
+      "tree_sha256": "ebfcfb6a89ccf468d2df74d0f979af9cceeff06615f1f40b04c13e7a73b7c89e",
+      "embedded_parent_data": "src.projections/cart0freak0-myriahedral-tree.inc",
+      "embedded_parent_sha256": "e52f7f8391f7742d81342c2ee09b8a88f4a559af828a0444644e7ab7b7c7ce7a"
+    },
+    {
+      "id": "americas",
+      "generator_argument": "myriahedral-americas",
+      "output_tag": "myriahedral-americas-44-24.75",
+      "purpose": "keep the American land chain near the favored center",
+      "legacy_options": {
+        "sigma": 0.7,
+        "wlat": 0.5,
+        "wlon": 0.1,
+        "clat": -100,
+        "clon": 25,
+        "alpha": 1
+      },
+      "effective_center": {
+        "longitude": -100,
+        "latitude": 25
+      },
+      "rotation_degrees": 22,
+      "rotation_selection": "largest centered 16:9 occupancy with local north up and east right near 0N 0E",
+      "raw_bounds": [-4.1206004492940833, -2.4025065718012648, 2.9997163078498215, 1.9224228379935782],
+      "tree_sha256": "a0c22c68f9c48a7f0d11d802c42702660f037220dde29372bf6f4a7e31b12a2c",
+      "embedded_parent_data": "src.generate/myriahedral-perspective-americas-tree.inc",
+      "embedded_parent_sha256": "30dc362622ed5ee971a62509ba4721df8bde67c4fcf599800808ae7f27381dbb"
+    },
+    {
+      "id": "atlantic",
+      "generator_argument": "myriahedral-atlantic",
+      "output_tag": "myriahedral-atlantic-44-24.75",
+      "purpose": "investigate Atlantic continuity between the Americas, Europe, and Africa",
+      "legacy_options": {
+        "sigma": 0.7,
+        "wlat": 0.5,
+        "wlon": 0.1,
+        "clat": -25,
+        "clon": 15,
+        "alpha": 1
+      },
+      "effective_center": {
+        "longitude": -25,
+        "latitude": 15
+      },
+      "rotation_degrees": 24,
+      "rotation_selection": "largest centered 16:9 occupancy with local north up and east right near 0N 0E",
+      "raw_bounds": [-2.7488319465535604, -3.4832056483745877, 3.185914616795285, 1.6607341094173917],
+      "tree_sha256": "ded9c5b12a71eddb04ab028b51f8a98416f563eb3b9efeac79ae034bbe2bcad5",
+      "embedded_parent_data": "src.generate/myriahedral-perspective-atlantic-tree.inc",
+      "embedded_parent_sha256": "5af1647356663ee9affd7d7c87eacd8a3ed2575952a5c9b882c2e149f0b964dd"
+    },
+    {
+      "id": "afro-eur-asia",
+      "generator_argument": "myriahedral-afro-eur-asia",
+      "output_tag": "myriahedral-afro-eur-asia-44-24.75",
+      "purpose": "investigate the Afro Eur Asia continental network",
+      "legacy_options": {
+        "sigma": 0.7,
+        "wlat": 0.5,
+        "wlon": 0.1,
+        "clat": 35,
+        "clon": 20,
+        "alpha": 1
+      },
+      "effective_center": {
+        "longitude": 35,
+        "latitude": 20
+      },
+      "rotation_degrees": 290,
+      "rotation_selection": "largest centered 16:9 occupancy with local north up and east right near 0N 0E",
+      "raw_bounds": [-3.8222780457297802, -3.0183800091994351, 2.0414123593423841, 2.3162192770089409],
+      "tree_sha256": "3a62d8d2addae901944a776f4341b0776eb9ad89e758100f3ff3f76b62e6f499",
+      "embedded_parent_data": "src.generate/myriahedral-perspective-afro-eur-asia-tree.inc",
+      "embedded_parent_sha256": "a802f449429e340f7461ee665d67a56a742433ece4c86e18e5c71bdd2d7e3471"
+    },
+    {
+      "id": "pacific",
+      "generator_argument": "myriahedral-pacific",
+      "output_tag": "myriahedral-pacific-44-24.75",
+      "purpose": "investigate Pacific-rim and trans-Pacific continuity",
+      "legacy_options": {
+        "sigma": 0.7,
+        "wlat": 0.5,
+        "wlon": 0.1,
+        "clat": 160,
+        "clon": 0,
+        "alpha": 1
+      },
+      "effective_center": {
+        "longitude": 160,
+        "latitude": 0
+      },
+      "rotation_degrees": 326,
+      "rotation_selection": "largest centered 16:9 occupancy with local north up and east right near 0N 0E",
+      "raw_bounds": [-3.3202431859536947, -2.5619480891692921, 4.1983393519077943, 2.4960126305723755],
+      "tree_sha256": "b3acc26737648b70ad649a52c254f3b4265aff6053e14fae22fd6b18faff4744",
+      "embedded_parent_data": "src.generate/myriahedral-perspective-pacific-tree.inc",
+      "embedded_parent_sha256": "b0350cd818f935685f2e85aebd927ac418ca5bcd0f310b6164d8e85215aa132f"
+    },
+    {
+      "id": "antarctic",
+      "generator_argument": "myriahedral-antarctic",
+      "output_tag": "myriahedral-antarctic-44-24.75",
+      "purpose": "investigate Antarctica and Southern Ocean continuity with stronger latitude weighting",
+      "legacy_options": {
+        "sigma": 0.7,
+        "wlat": 0.3,
+        "wlon": 0.7,
+        "clat": 0,
+        "clon": -75,
+        "alpha": 1
+      },
+      "effective_center": {
+        "longitude": 0,
+        "latitude": -75
+      },
+      "rotation_degrees": 285,
+      "rotation_selection": "largest centered 16:9 occupancy with local north up and east right near 0N 0E",
+      "raw_bounds": [-4.972802183827822, -3.8525081072183327, 1.6145189106927813, 0.80794382516716068],
+      "tree_sha256": "6eb3c760cdf927669d97eacea2816dd4ccf430f140724fb8f21135d930b98151",
+      "embedded_parent_data": "src.generate/myriahedral-perspective-antarctic-tree.inc",
+      "embedded_parent_sha256": "05fd9fde482bf9f0ec9c702fe182a2c9f35c8a9f5e725348a8036c59eddc5d3f"
+    }
+  ]
+}

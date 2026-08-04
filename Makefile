@@ -45,6 +45,8 @@ EARTH_GENERATOR := $(GENERATOR_SRC_DIR)/generate-earth
 WATER_GENERATOR := $(GENERATOR_SRC_DIR)/generate-water
 FOUR_SLICE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-4-slice
 EIGHT_SLICE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-8-slice
+MYRIAHEDRAL_SLICE_GENERATOR := \
+	$(GENERATOR_SRC_DIR)/generate-myriahedral-slices
 
 CK_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-ck-44-22.svg
 CK_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-ck-44-22.svg
@@ -75,6 +77,15 @@ MYRIAHEDRAL_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-myriahedral-44-24.75.s
 MYRIAHEDRAL_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-myriahedral-44-24.75.svg
 MYRIAHEDRAL_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-myriahedral-44-24.75.svg
 MYRIAHEDRAL_WATER_SVG := $(GENERATED_SVG_DIR)/water-myriahedral-44-24.75.svg
+MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS := \
+	$(GENERATED_SVG_DIR)/water-myriahedral-americas-44-24.75.svg \
+	$(GENERATED_SVG_DIR)/water-myriahedral-atlantic-44-24.75.svg \
+	$(GENERATED_SVG_DIR)/water-myriahedral-afro-eur-asia-44-24.75.svg \
+	$(GENERATED_SVG_DIR)/water-myriahedral-pacific-44-24.75.svg \
+	$(GENERATED_SVG_DIR)/water-myriahedral-antarctic-44-24.75.svg
+MYRIAHEDRAL_SLICE_SVGS := \
+	$(GENERATED_SVG_DIR)/water-myriahedral-adhoc-slice-1.svg \
+	$(GENERATED_SVG_DIR)/water-myriahedral-adhoc-slice-2.svg
 
 STAR_X_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-star-x-34-44.svg
 STAR_X_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-star-x-34-44.svg
@@ -114,7 +125,8 @@ REQUESTED_PROJECTION_SVGS := \
 GENERATED_SVGS := \
 	$(CK_GEOMETRY_SVG) $(CK_GRATICULE_SVG) \
 	$(CK_EARTH_SVG) $(CK_WATER_SVG) $(CK_SLICE_SVGS) \
-	$(REQUESTED_PROJECTION_SVGS)
+	$(REQUESTED_PROJECTION_SVGS) \
+	$(MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS) $(MYRIAHEDRAL_SLICE_SVGS)
 GENERATED_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PDF_DIR)/%.pdf,$(GENERATED_SVGS))
 GENERATED_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
@@ -125,7 +137,10 @@ STAR_X_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PNG_DIR)/%.png,$(STAR_X_SVGS))
 CK_SLICE_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PNG_DIR)/%.png,$(CK_SLICE_SVGS))
-PORTRAIT_PNGS := $(STAR_X_PNGS) $(CK_SLICE_PNGS)
+MYRIAHEDRAL_PORTRAIT_SLICE_PNG := \
+	$(GENERATED_PNG_DIR)/water-myriahedral-adhoc-slice-1.png
+PORTRAIT_PNGS := $(STAR_X_PNGS) $(CK_SLICE_PNGS) \
+	$(MYRIAHEDRAL_PORTRAIT_SLICE_PNG)
 LANDSCAPE_PNGS := $(filter-out $(PORTRAIT_PNGS),$(GENERATED_PNGS))
 GENERATED_ARTIFACTS := $(GENERATED_SVGS) $(GENERATED_PDFS) \
 	$(GENERATED_PNGS)
@@ -136,6 +151,7 @@ GENERATOR_BINARIES := \
 	$(FOUR_SLICE_GENERATOR) \
 	$(GEOMETRY_GENERATOR) \
 	$(GRATICULE_GENERATOR) \
+	$(MYRIAHEDRAL_SLICE_GENERATOR) \
 	$(WATER_GENERATOR)
 TEST_BINARIES := \
 	$(TEST_DIR)/test-cahill-keyes-projection \
@@ -144,18 +160,22 @@ TEST_BINARIES := \
 	$(TEST_DIR)/test-cahill-keyes-slicing \
 	$(TEST_DIR)/test-authagraph-projection-api \
 	$(TEST_DIR)/test-myriahedral-projection-api \
+	$(TEST_DIR)/test-myriahedral-slicing \
 	$(TEST_DIR)/test-projection-generation-common \
 	$(TEST_DIR)/test-star-x-projection-api \
 	$(TEST_DIR)/test-voronoi-projection-api
 
 GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/projection-generation-common.h \
+	$(GENERATOR_SRC_DIR)/myriahedral-perspective-generation.h \
+	$(wildcard $(GENERATOR_SRC_DIR)/myriahedral-perspective-*-tree.inc) \
 	$(PROJECTION_SRC_DIR)/a60-carto-frame.h \
 	$(PROJECTION_SRC_DIR)/a60-carto-projection.h \
 	$(PROJECTION_SRC_DIR)/cart0freak0-authagraph.h \
 	$(PROJECTION_SRC_DIR)/cart0freak0-cahill-keyes.h \
 	$(PROJECTION_SRC_DIR)/cart0freak0-cahill-keyes-functions.h \
 	$(PROJECTION_SRC_DIR)/cart0freak0-myriahedral.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-myriahedral-tree.inc \
 	$(PROJECTION_SRC_DIR)/cart0freak0-star-x.h \
 	$(PROJECTION_SRC_DIR)/cart0freak0-voronoi.h
 AREA_GENERATOR_HEADER := $(GENERATOR_SRC_DIR)/projection-area-generation.h
@@ -172,6 +192,7 @@ NATURAL_EARTH_GENERATOR_HEADER := \
 	generate-ck-slices generate-projections generated-projections \
 	generate-geometry-projections generate-graticules-projections \
 	generate-earth-projections generate-water-projections \
+	generate-water-myriahedral-perspectives generate-myriahedral-slices \
 	generate-authagraph generate-myriahedral generate-star-x \
 	generate-voronoi generate-voroni \
 	generate-geometry-authagraph generate-graticules-authagraph \
@@ -215,6 +236,10 @@ check:
 		$(TEST_DIR)/test-myriahedral-projection-api.cc \
 		-o $(TEST_DIR)/test-myriahedral-projection-api
 	$(TEST_DIR)/test-myriahedral-projection-api
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$(TEST_DIR)/test-myriahedral-slicing.cc \
+		-o $(TEST_DIR)/test-myriahedral-slicing
+	$(TEST_DIR)/test-myriahedral-slicing
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$(TEST_DIR)/test-projection-generation-common.cc \
 		-o $(TEST_DIR)/test-projection-generation-common
@@ -293,6 +318,16 @@ $(EIGHT_SLICE_GENERATOR): $(GENERATOR_SRC_DIR)/generate-8-slice.cc \
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$< -o $@
 
+$(MYRIAHEDRAL_SLICE_GENERATOR): \
+		$(GENERATOR_SRC_DIR)/generate-myriahedral-slices.cc \
+		$(PROJECTION_SRC_DIR)/cart0freak0-myriahedral-slicing.h \
+		$(PROJECTION_SRC_DIR)/cart0freak0-myriahedral.h \
+		$(PROJECTION_SRC_DIR)/cart0freak0-myriahedral-tree.inc \
+		$(PROJECTION_SRC_DIR)/a60-carto-frame.h \
+		$(PROJECTION_SRC_DIR)/a60-carto-projection.h
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$< -o $@
+
 fetch-natural-earth-10m: $(NATURAL_EARTH_STAMP)
 
 $(NATURAL_EARTH_STAMP): $(NATURAL_EARTH_FETCHER)
@@ -343,6 +378,23 @@ $(CK_WATER_SVG): $(WATER_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		"$(abspath $(WATER_GENERATOR))" cahill-keyes
 
+generate-water-myriahedral-perspectives: \
+	$(MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS)
+
+$(MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS): \
+		$(GENERATED_SVG_DIR)/water-myriahedral-%-44-24.75.svg: \
+		$(WATER_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		"$(abspath $(WATER_GENERATOR))" myriahedral-$*
+
+generate-myriahedral-slices: $(MYRIAHEDRAL_SLICE_SVGS)
+
+$(MYRIAHEDRAL_SLICE_SVGS) &: $(MYRIAHEDRAL_SLICE_GENERATOR) \
+		$(MYRIAHEDRAL_WATER_SVG) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
+		"$(abspath $(MYRIAHEDRAL_SLICE_GENERATOR))"
+
 # $(1): command-line projection name; $(2)-$(5): generated artifacts.
 define PROJECTION_RULES
 generate-geometry-$(1): $(2)
@@ -383,6 +435,11 @@ $(eval $(call PROJECTION_RULES,voronoi,\
 	$(VORONOI_GEOMETRY_SVG),$(VORONOI_GRATICULE_SVG),\
 	$(VORONOI_EARTH_SVG),$(VORONOI_WATER_SVG)))
 
+generate-water-myriahedral: generate-water-myriahedral-perspectives \
+	generate-myriahedral-slices
+generate-myriahedral: generate-water-myriahedral-perspectives \
+	generate-myriahedral-slices
+
 $(GENERATED_PDFS): $(GENERATED_PDF_DIR)/%.pdf: \
 		$(GENERATED_SVG_DIR)/%.svg | $(GENERATED_PDF_DIR)
 	"$(INKSCAPE)" --export-area-page --export-filename="$@" "$<"
@@ -407,7 +464,8 @@ generate-graticules-projections: \
 	$(CK_GRATICULE_SVG) $(REQUESTED_GRATICULE_SVGS)
 generate-earth-projections: \
 	$(CK_EARTH_SVG) $(CK_SLICE_SVGS) $(REQUESTED_EARTH_SVGS)
-generate-water-projections: $(CK_WATER_SVG) $(REQUESTED_WATER_SVGS)
+generate-water-projections: $(CK_WATER_SVG) $(REQUESTED_WATER_SVGS) \
+	$(MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS) $(MYRIAHEDRAL_SLICE_SVGS)
 generate-projections: $(GENERATED_ARTIFACTS)
 generated-projections: $(GENERATED_ARTIFACTS)
 make-generated: $(GENERATED_ARTIFACTS)

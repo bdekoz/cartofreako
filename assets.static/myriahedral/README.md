@@ -25,6 +25,12 @@ clat = -60
 clon = -65
 ```
 
+These are legacy option names, not semantic latitude/longitude labels. In
+`boost_tree.cc`, `wlat` weights longitude distance, `wlon` weights latitude
+distance, `clat` is the effective center longitude, and `clon` is the
+effective center latitude. The selected effective center is consequently
+`(-60, -65)` in `(longitude, latitude)` order.
+
 The grid was generated after Gaussian smoothing with `sigma = 0.7`. The
 selected planar registration applies a final `335` degree rotation. The
 rotation is used by the projection header and landmark scoring; it is not
@@ -47,6 +53,7 @@ baked into `boost-grid-37.tree` or the unrotated coordinates in
 | `landmark_scores.py` | Geographic-anchor registration scorer |
 | `landmark-output.txt` | Scoring output; grid 37 selects the 335-degree orientation |
 | `grid37-land.png` | Final low-resolution diagnostic rendering of the selected layout |
+| `perspective-configurations.json` | Machine-readable reference and five-perspective preprocessing, registration, digest, and artifact metadata |
 | `SHA256SUMS` | Digests for every preserved artifact except this manifest |
 
 The scripts intentionally retain the absolute `/tmp/myriaworld.gjlN58` paths
@@ -55,3 +62,9 @@ Large dependency trees, compiler outputs, the cloned upstream repository,
 historical Natural Earth source files, and rejected candidate layouts are not
 duplicated here. Their derived data needed by the final implementation is
 captured by `exact-fractions.txt`, the selected tree, and the planar baseline.
+
+The five exploratory trees are embedded under `src.generate/` and selected by
+`myriahedral-perspective-generation.h`. They reuse the exact fractions and
+historical weighting program recorded here; their complete parameters, raw
+bounds, rotations, parent-data paths, and source-tree digests are recorded in
+`perspective-configurations.json`.
