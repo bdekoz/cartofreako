@@ -46,3 +46,34 @@ docs/myriahedral-context.md
 
 Bibliography,
 docs/myriahedral-bibliography.md
+
+---
+
+Stage 4 development: explore the set configuration referenced previously that produced this input image: assets.static/myriahedral/black-white-downsampled.png
+
+Add a new section of
+
+docs/myriahedral-implementation-notes.md
+
+that talks about that set of metadata required to accurately describe that particular perspective, and suggest 3-5 other perspectives that merit investigation, and generate their configuration metadata.
+
+Generate ocean images of the suggested new perspectives and link to the implementation notes page.
+
+---
+
+Stage 5 development: Use what you know of quarto and octo slicing from the Cahill-Keyes projection and try to apply it to the myriahedral projection. What types of slicing would you suggest?
+
+Implement two ad-hoc slicing groups: 
+  group 1: north america, south america, antarctica, greenland, iceland
+  group 2: all the rest
+  
+  
+Generate ocean images of the suggested slices as per "make all"
+
+Add a new section of
+
+docs/myriahedral-implementation-notes.md
+
+That describes this slicing
+
+
