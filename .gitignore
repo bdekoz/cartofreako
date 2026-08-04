@@ -5,6 +5,7 @@
 /tests/test-cahill-keyes-slicing
 /tests/test-authagraph-projection-api
 /tests/test-myriahedral-projection-api
+/tests/test-projection-generation-common
 /tests/test-star-x-projection-api
 /tests/test-voronoi-projection-api
 

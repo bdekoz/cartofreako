@@ -41,6 +41,8 @@ The work has three parts:
 | [`a60-carto-frame.h`](../src.projections/a60-carto-frame.h) | `frame` and `frame.frame_area` geometry |
 | [`a60-carto.h`](../src.projections/a60-carto.h) | Umbrella include that exports the projection |
 | [`test-myriahedral-projection-api.cc`](../tests/test-myriahedral-projection-api.cc) | Fixed anchors, upstream-layout checks, variable frames, full-degree sweep, domain validation, and API integration |
+| [`projection-generation-common.h`](../src.generate/projection-generation-common.h) | Native-cell classification, repeated transition bisection, and seam-safe line generation |
+| [`test-projection-generation-common.cc`](../tests/test-projection-generation-common.cc) | Antimeridian and multi-face source-edge regression coverage |
 | [`a60-svg-carto-geo.h`](../src.projections/a60-svg-carto-geo.h) | Geographic integration anchors exercised by the projection test |
 
 Most numeric helpers live in `a60::carto::myriahedral_detail`. They are
@@ -360,6 +362,39 @@ text.
 
 Function-local static initialization is thread-safe under C++11 and later.
 
+## Generator boundary handling
+
+The projection API maps individual points. Producing a path also requires a
+topological decision: two geographically adjacent points can land on
+different planar copies when the unfolded net cuts their shared spherical
+edge. The shared generator assigns each input point to a depth-5 face and
+bisects a face transition 48 times. Let `p_left` be the last limiting point in
+the old face and `p_right` the first in the new face. If
+
+```text
+distance(project(p_left), project(p_right)) > max(frame width, frame height) * 1e-5
+```
+
+the transition is a cut and begins a new SVG subpath. Otherwise it is a
+retained tree hinge and the two limiting points remain connected.
+
+Densification normally leaves one transition in a source edge, but that is
+not a safe invariant. An edge passing close to a mesh vertex can cross several
+small faces. After each bisection the generator therefore advances to the
+first point in the new face and searches again until it reaches the endpoint
+face. A 64-transition guard detects non-progress or unexpectedly unsuitable
+input instead of silently emitting a distant chord.
+
+Exact longitude `+180` is canonicalized to `-180` by `geographic_vector()`.
+This makes native-face classification use the same representative as the
+forward point transform. Before the shared rule, an exact antimeridian
+endpoint could be classified on the east copy but projected on the west copy.
+
+These two cases were visible in the water artifact because coastlines and
+rivers are open line paths. The Earth base is composed from filled areas,
+which already use exact face-local triangle clipping and therefore did not
+emit the same false chords.
+
 ## Tests
 
 `tests/test-myriahedral-projection-api.cc` verifies:
@@ -373,6 +408,14 @@ Function-local static initialization is thread-safe under C++11 and later.
 - rejection of out-of-range or non-finite geographic coordinates;
 - a complete whole-degree latitude/longitude sweep;
 - exact equivalence of longitude `-180` and `+180`.
+
+`tests/test-projection-generation-common.cc` adds path-level regressions for:
+
+- an exact `+180` endpoint, including agreement between point projection and
+  native-face classification; and
+- a short Natural Earth river edge that crosses faces `377 -> 369 -> 355`,
+  verifying that the retained hinge and following cut become two local
+  subpaths instead of one page-spanning chord.
 
 Run it with every standalone projection check:
 

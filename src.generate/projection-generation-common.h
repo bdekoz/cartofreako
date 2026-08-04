@@ -329,6 +329,7 @@ struct projected_transition
 {
   svg::point_2t left;
   svg::point_2t right;
+  geographic_point geographic_right;
   bool is_cut;
 };
 
@@ -337,9 +338,10 @@ find_cell_transition(const projection_context& context,
                      geographic_point left, geographic_point right,
                      const std::uint64_t left_cell)
 {
-  // Inputs are segmentized finely enough that one cell boundary lies between
-  // adjacent samples. Bisection adds the two limiting points, eliminating a
-  // visible sampling gap on joined edges and exposing a true unfolded cut.
+  // Locate the first boundary after the left endpoint. The remaining interval
+  // can contain more transitions; project_path resumes from geographic_right
+  // until it reaches the endpoint cell. The limiting points eliminate a
+  // visible sampling gap at a retained hinge and expose a true unfolded cut.
   for (int iteration = 0; iteration != 48; ++iteration)
     {
       const geographic_point middle = interpolate(left, right, 0.5);
@@ -352,7 +354,7 @@ find_cell_transition(const projection_context& context,
   const svg::point_2t projected_right = project_point(context, right);
   const double maximum_dimension = std::max(
     context.map_frame.width(), context.map_frame.height());
-  return {projected_left, projected_right,
+  return {projected_left, projected_right, right,
           point_distance(projected_left, projected_right)
             > maximum_dimension * 1e-5};
 }
@@ -379,7 +381,7 @@ find_coordinate_wrap(const projection_context& context,
           projected_left = projected_middle;
         }
     }
-  return {projected_left, projected_right, true};
+  return {projected_left, projected_right, right, true};
 }
 
 inline void
@@ -408,45 +410,55 @@ project_path(const projection_context& context,
   const std::size_t edge_count = closed ? source.size() : source.size() - 1;
   for (std::size_t index = 0; index < edge_count; ++index)
     {
-      const geographic_point left = source[index];
+      geographic_point left = source[index];
       const geographic_point right = source[(index + 1) % source.size()];
       const svg::point_2t projected_right = project_point(context, right);
-      const std::uint64_t left_cell = projection_cell(context, left);
+      std::uint64_t left_cell = projection_cell(context, left);
       const std::uint64_t right_cell = projection_cell(context, right);
 
-      bool split = false;
-      projected_transition transition {
-        current.back(), projected_right, false,
-      };
-      if (left_cell != right_cell)
+      // Densification normally leaves at most one native-cell boundary per
+      // source edge, but an edge passing close to a mesh vertex can cross two
+      // or more tiny faces. Consume the first transition repeatedly instead
+      // of joining the first neighbor directly to the endpoint face.
+      constexpr std::size_t maximum_transitions_per_edge = 64;
+      std::size_t transition_count = 0;
+      while (left_cell != right_cell)
         {
-          transition = find_cell_transition(
+          require(++transition_count <= maximum_transitions_per_edge,
+                  std::string(context.spec.title)
+                    + " path edge crosses too many native cells");
+          const projected_transition transition = find_cell_transition(
             context, left, right, left_cell);
-          split = transition.is_cut;
-        }
-      else
-        {
-          const double maximum_dimension = std::max(
-            context.map_frame.width(), context.map_frame.height());
-          if (point_distance(current.back(), projected_right)
-              > maximum_dimension / 3)
+          append_unique(current, transition.left);
+          if (transition.is_cut)
             {
-              transition = find_coordinate_wrap(context, left, right);
-              split = true;
+              if (current.size() >= 2)
+                result.push_back(std::move(current));
+              current.clear();
             }
+          append_unique(current, transition.right);
+
+          left = transition.geographic_right;
+          const std::uint64_t next_cell = projection_cell(context, left);
+          require(next_cell != left_cell,
+                  std::string(context.spec.title)
+                    + " path transition did not enter a new native cell");
+          left_cell = next_cell;
         }
 
-      if (left_cell != right_cell || split)
-        append_unique(current, transition.left);
-      if (split)
+      const double maximum_dimension = std::max(
+        context.map_frame.width(), context.map_frame.height());
+      if (point_distance(current.back(), projected_right)
+          > maximum_dimension / 3)
         {
+          const projected_transition transition
+            = find_coordinate_wrap(context, left, right);
+          append_unique(current, transition.left);
           if (current.size() >= 2)
             result.push_back(std::move(current));
           current.clear();
           append_unique(current, transition.right);
         }
-      else if (left_cell != right_cell)
-        append_unique(current, transition.right);
       append_unique(current, projected_right);
     }
 

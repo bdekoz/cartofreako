@@ -176,7 +176,7 @@ flowchart LR
   CUT["Clip at geographic<br/>registration seams"]
   DENSE["Sample or densify<br/>in geographic space"]
   PROJECT["Selected production<br/>forward projection"]
-  SPLIT["Bisect native-cell<br/>transitions and split cuts"]
+  SPLIT["Bisect every native-cell<br/>transition and split cuts"]
   SVG["Izzi path<br/>serialization"]
   CHECK["Reopen SVG and<br/>check structure"]
 
@@ -185,11 +185,13 @@ flowchart LR
 
 The ordering matters. A point projection alone does not say whether adjacent
 input points remain connected in an unfolded net. Geographic clipping keeps
-antimeridian and registered Cahill-Keyes closures local. Densification then
-ensures adjacent samples cross at most one small native cell. The shared path
-projector identifies that cell transition, bisects it 48 times, compares the
-two limiting projected points, and starts a new SVG subpath only when those
-limits are genuinely separated.
+antimeridian and registered Cahill-Keyes closures local. Densification makes
+native-cell crossings short, but an edge that passes close to a mesh vertex
+can still cross more than one small face. The shared path projector repeatedly
+identifies and bisects the first cell transition until it reaches the endpoint
+cell. Each bisection runs for 48 iterations, compares the two limiting
+projected points, and starts a new SVG subpath only when those limits are
+genuinely separated.
 
 ### Registered cut meridians
 
@@ -216,11 +218,13 @@ a deliberate microscopic gap rather than an exact topological weld.
 ### Sampling and densification
 
 The Cahill-Keyes/Star-X geometry outlines sample analytic boundaries every
-2.5 degrees. Graticules use 0.5-degree samples so even the depth-5
-Myriahedral mesh crosses no more than one native edge per input segment. The
-Natural Earth generators retain source vertices, apply
-topology-preserving simplification, then call GDAL `segmentize()` so no input
-segment exceeds a configured angular length.
+2.5 degrees. Graticules use 0.5-degree samples to keep crossings of the
+depth-5 Myriahedral mesh short. The Natural Earth generators retain source
+vertices, apply topology-preserving simplification, then call GDAL
+`segmentize()` so no input segment exceeds a configured angular length. These
+steps greatly reduce the number of face transitions per edge but do not
+assume there is only one; a short edge can graze a mesh vertex and enter two
+or more faces.
 
 Both approaches are fixed-step approximations. They are predictable and
 compact, but not adaptive to projected curvature. A degree of longitude also
@@ -248,9 +252,16 @@ When adjacent samples select different cells, a geographic bisection retains
 the last point on the left cell and the first on the right. If the projected
 limits agree within `44 × 10^-5`, the edge is joined in the planar net and both
 limits stay in the same path. Otherwise the edge is a cut and a new subpath
-begins. This tests the assembled net itself: tree-connected Myriahedral and
+begins. The search then resumes just inside the new cell and repeats until the
+endpoint cell is reached, with a defensive limit of 64 transitions per source
+edge. This tests the assembled net itself: tree-connected Myriahedral and
 Voronoi faces remain joined, while their non-tree edges split without a
 hard-coded list of thousands of relationships.
+
+Myriahedral cell lookup and point projection both canonicalize exact
+longitude `+180` to `-180`. Without that shared tie rule, an endpoint on the
+antimeridian can be classified in one face but projected through a distant
+copy of another face, producing a false line across the map.
 
 AuthaGraph has an additional periodic coordinate wrap that can occur without
 changing its spherical sector. Adjacent projected samples separated by more
@@ -381,8 +392,9 @@ For each shapefile, the program:
 7. for AuthaGraph, Myriahedral, and Voronoi, further clips areas to a
    5-degree geographic grid;
 8. densifies each surviving piece with `segmentize()`;
-9. projects lines with native-cell bisection and areas either directly or by
-   exact Myriahedral/Voronoi face-local triangle intersection; and
+9. projects lines with repeated native-cell bisection and areas either
+   directly or by exact Myriahedral/Voronoi face-local triangle intersection;
+   and
 10. serializes the result as one named Izzi path per source feature and band,
     with a hemisphere suffix on Star-X area paths.
 
