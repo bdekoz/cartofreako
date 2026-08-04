@@ -22,6 +22,20 @@ generation workflow. They do not require the same software:
 | Doxygen | API reference generation | Builds the documented projection-header reference under `docs/doxygen/` |
 | Emscripten, Node.js, and a browser | Optional WebAssembly builds | Builds the production Cahill-Keyes adapter and exercises the Myriahedral example |
 
+Check the complete installed toolchain from the repository root with:
+
+```sh
+make check-prerequisite
+```
+
+The target verifies the native commands and sibling headers, compiles and runs
+a C++20 probe, and compiles a GDAL probe that checks OGR, GEOS, and the ESRI
+Shapefile driver. Missing native prerequisites make the target fail. Optional
+WebAssembly tools and a browser are always checked and reported, but do not
+change the exit status. The check honors the Makefile's tool and source-tree
+overrides; use `EMRUN` and `WEB_BROWSER` to identify those optional tools when
+they are not discoverable at their defaults.
+
 `make check` needs only GNU Make and a C++20 compiler. The tests provide small
 compatibility definitions for the Alpha60 API and do not use GDAL, Natural
 Earth, Izzi, Inkscape, or network access.

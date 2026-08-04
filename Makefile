@@ -17,10 +17,13 @@ PNG_EXPORT_BACKGROUND := --export-background=white \
 	--export-background-opacity=255 \
 	--export-png-color-mode=RGB_8
 EMXX ?= ../emsdk/upstream/emscripten/em++
+EMRUN ?= $(patsubst %em++,%emrun,$(EMXX))
 NODE ?= node
+WEB_BROWSER ?=
 EM_CACHE ?= /tmp/cartofreako-emscripten-cache
 NATURAL_EARTH_DIR ?= $(STATIC_ASSET_DIR)/natural-earth/10m-physical-vectors
 NATURAL_EARTH_FETCHER := scripts/fetch-natural-earth-10m.sh
+PREREQUISITE_CHECKER := scripts/check-prerequisites.sh
 NATURAL_EARTH_STAMP := \
 	$(NATURAL_EARTH_DIR)/.natural-earth-10m-physical-5.1.1
 GENERATED_SVG_DIR := $(GENERATED_DIR)/svg
@@ -161,7 +164,8 @@ NATURAL_EARTH_GENERATOR_HEADER := \
 
 .DELETE_ON_ERROR:
 
-.PHONY: all check clean doxygen fetch-natural-earth-10m make-generated \
+.PHONY: all check check-prerequisite clean doxygen \
+	fetch-natural-earth-10m make-generated \
 	wasm-cahill-keyes check-wasm-cahill-keyes \
 	generate-geometry generate-graticules-ck generate-earth-ck \
 	generate-water-ck generate-4-slice generate-8-slice \
@@ -178,6 +182,13 @@ NATURAL_EARTH_GENERATOR_HEADER := \
 	generate-earth-star-x generate-water-star-x \
 	generate-geometry-voronoi generate-graticules-voronoi \
 	generate-earth-voronoi generate-water-voronoi
+
+check-prerequisite: $(PREREQUISITE_CHECKER)
+	@"$(PREREQUISITE_CHECKER)" \
+		"$(MAKE_VERSION)" "$(CXX)" "$(CPPFLAGS)" "$(CXXFLAGS)" \
+		"$(ALPHA60_SRC)" "$(IZZI_SRC)" "$(GDAL_CONFIG)" \
+		"$(INKSCAPE)" "$(DOXYGEN)" "$(EMXX)" "$(EMRUN)" \
+		"$(NODE)" "$(WEB_BROWSER)"
 
 check:
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
