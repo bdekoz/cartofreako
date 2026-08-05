@@ -20,11 +20,13 @@ SUBMARINE_CABLE_SOURCE=../www.submarinecablemap.com
 INTERNET_EXCHANGE_SOURCE=../www.internetexchangemap.com
 ```
 
-The cloud pin deliberately uses the newer, internally consistent audited
-commit `80bc389786c7ea6bda563700685d117bbf3d5017`: 27 canonical layers,
-15,726 records, and 1,003 located records. The eight layers added since the
-previous commit contain 613 additional null-geometry records, so the larger
-source does not fabricate additional mapped points.
+The cloud pin uses audited commit
+`1be1eb04e73320e0337a74a99686cd532f09ad9b`: 28 canonical layers and
+27,378 records. The normal profile deliberately excludes observed cloud
+presences, including the new 11,659-record geocoded observation layer, so its
+rendered set remains 1,003 provider-declared locations. The observations stay
+in the parsed and validated source totals without being presented as declared
+infrastructure sites.
 
 The cloud repository says its original dataset is ODC-By 1.0 while provider
 snapshots can retain source-specific terms. Both TeleGeography map repositories

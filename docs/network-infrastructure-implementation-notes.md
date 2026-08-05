@@ -29,7 +29,7 @@ separate:
 
 | Source | Pinned snapshot | Implemented evidence |
 | --- | --- | --- |
-| [`bdekoz/cloud_cdn_cache`](https://github.com/bdekoz/cloud_cdn_cache) | commit `80bc389786c7ea6bda563700685d117bbf3d5017`, manifest dated 2026-08-05 | 27 canonical layers, 15,726 records, 1,003 located Point records |
+| [`bdekoz/cloud_cdn_cache`](https://github.com/bdekoz/cloud_cdn_cache) | commit `1be1eb04e73320e0337a74a99686cd532f09ad9b`, manifest dated 2026-08-05 | 28 canonical layers, 27,378 records, 1,003 rendered provider-declared Point records |
 | [TeleGeography Submarine Cable Map](https://github.com/telegeography/www.submarinecablemap.com) | commit `0d684b2aedeae0f7473280270f3f71fa0983f0b3`, 2022-11-11 | 526 cable systems, 532 route features, 1,458 route parts, 11,590 vertices, and 1,436 landing points |
 | [TeleGeography Internet Exchange Map](https://github.com/telegeography/www.internetexchangemap.com) | commit `2b9c36ad7fad083c0b4db998c4dedadc1ba89027`, 2022-09-20 | 1,772 geolocated facilities, 1,103 exchanges, and 2,581 source membership entries |
 
@@ -52,10 +52,10 @@ Those two incidences are retained as co-located logical hubs with their
 building counts and semantic metadata; no zero-length or invented route is
 drawn. SVG metadata records the number of such co-located groups.
 
-The selected cloud snapshot contains 13,638 null-geometry independently
-observed presences. They remain part of source totals but are not fabricated
-into points. The 1,003 located records are provider-declared or otherwise
-coordinate-bearing records. They are sites, not a connectivity graph.
+The selected cloud snapshot contains 13,631 null-geometry observed presences
+and 11,659 geocoded observed presences. They remain part of source totals, but
+the ordinary profile excludes both from rendering. Its 1,003 located records
+are provider-declared sites, not a connectivity graph.
 
 ## Claim boundary
 
@@ -114,12 +114,13 @@ tracked data paths. Unrelated documentation changes and untracked files in an
 external checkout do not invalidate the source snapshot. The C++ parser then
 validates manifest/layer counts and every consumed GeoJSON structure.
 
-The newer committed cloud snapshot is used deliberately. Relative to the
-2026-08-04 commit, it grows from 19 to 27 canonical layers and from 15,113 to
-15,726 records. Its eight additional hyperscaler layers contribute 613
-null-geometry records, so the accurately located/rendered set remains 1,003.
-The manifest and every referenced GeoJSON/report agree in the clean Git tree.
-Mutable working-tree data was not used to establish the pin.
+The current committed cloud snapshot is used deliberately. Relative to the
+preceding audited commit, it grows from 27 to 28 canonical layers and from
+15,726 to 27,378 records. The additional layer contains 11,659 geocoded
+observed presences. Because the ordinary profile excludes observed scope, its
+provider-declared rendered set remains 1,003. The manifest and every referenced
+GeoJSON/report agree in the clean Git tree; mutable working-tree data was not
+used to establish the pin.
 
 ## Normal and opt-in Make workflows
 

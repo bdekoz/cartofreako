@@ -28,8 +28,8 @@ main()
   assert(sites.product == infrastructure::infrastructure_product::sites);
   assert(!sites.topology_opt_in);
   assert(sites.include_cloud_sites && !sites.include_submarine_cables);
-  assert(sites.cloud.expected_layers == 27);
-  assert(sites.cloud.expected_records == 15726);
+  assert(sites.cloud.expected_layers == 28);
+  assert(sites.cloud.expected_records == 27378);
   assert(sites.cloud.expected_located == 1003);
   assert(topology.product
          == infrastructure::infrastructure_product::topology);

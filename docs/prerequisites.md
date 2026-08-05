@@ -505,16 +505,17 @@ atlas needs only the cloud/CDN checkout. With the default sibling layout:
 
 ```sh
 git clone https://github.com/bdekoz/cloud_cdn_cache.git ../cloud_cdn_cache
-git -C ../cloud_cdn_cache checkout 80bc389786c7ea6bda563700685d117bbf3d5017
+git -C ../cloud_cdn_cache checkout 1be1eb04e73320e0337a74a99686cd532f09ad9b
 make check-network-infrastructure-sources
 make generate-network-infrastructure
 ```
 
 The checker verifies the commit, the 2026-08-05 manifest digest, and clean
-consumed data/schema paths. The manifest is internally consistent at 27
-canonical layers, 15,726 records, and 1,003 located records. The higher total
-is expected: eight newly committed hyperscaler layers add 613 null-geometry
-records. They remain in provenance without receiving invented map positions.
+consumed data/schema paths. The manifest is internally consistent at 28
+canonical layers and 27,378 records. It contains 12,662 coordinate-bearing
+records, but the normal profile excludes observed presences, including the new
+11,659-record geocoded observation layer. The rendered set therefore remains
+1,003 provider-declared locations.
 
 Override a non-sibling checkout without editing the profile:
 
