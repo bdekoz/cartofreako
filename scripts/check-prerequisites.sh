@@ -7,25 +7,68 @@
 set -u
 set -f
 
-if [ "$#" -ne 13 ]; then
-  echo "usage: $0 MAKE_VERSION CXX CPPFLAGS CXXFLAGS ALPHA60_SRC IZZI_SRC GDAL_CONFIG INKSCAPE DOXYGEN EMXX EMRUN NODE WEB_BROWSER" >&2
-  exit 2
-fi
+usage()
+{
+  printf '%s\n' \
+    "usage: $0" \
+    "   or: $0 MAKE_VERSION CXX CPPFLAGS CXXFLAGS ALPHA60_SRC IZZI_SRC GDAL_CONFIG INKSCAPE DOXYGEN EMXX EMRUN NODE WEB_BROWSER" >&2
+}
 
-make_version=$1
-cxx=$2
-cppflags=$3
-cxxflags=$4
-alpha60_src=$5
-izzi_src=$6
-gdal_config=$7
-inkscape=$8
-doxygen=$9
-shift 9
-emxx=$1
-emrun=$2
-node=$3
-web_browser=$4
+no_argument_mode=0
+case $# in
+  0)
+    no_argument_mode=1
+    script_directory=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+    repository_root=$(CDPATH= cd -- "$script_directory/.." && pwd)
+    workspace_root=$(CDPATH= cd -- "$repository_root/.." && pwd)
+
+    make_command=${MAKE:-make}
+    make_version=${MAKE_VERSION:-}
+    if [ -z "$make_version" ]; then
+      make_version=$($make_command --version 2>/dev/null \
+        | sed -n '1s/^GNU Make //p')
+    fi
+
+    cxx=${CXX:-g++}
+    cppflags=${CPPFLAGS:-}
+    if [ -z "$cppflags" ]; then
+      cppflags="-I$repository_root/src.projections -I$repository_root/src.generate"
+    fi
+    cxxflags=${CXXFLAGS:-}
+    if [ -z "$cxxflags" ]; then
+      cxxflags='-std=c++20 -Wall -Wextra -Wpedantic -Werror'
+    fi
+    alpha60_src=${ALPHA60_SRC:-$workspace_root/alpha60/src}
+    izzi_src=${IZZI_SRC:-$workspace_root/izzi/src}
+    gdal_config=${GDAL_CONFIG:-gdal-config}
+    inkscape=${INKSCAPE:-inkscape}
+    doxygen=${DOXYGEN:-doxygen}
+    emxx=${EMXX:-$workspace_root/emsdk/upstream/emscripten/em++}
+    emrun=${EMRUN:-$workspace_root/emsdk/upstream/emscripten/emrun}
+    node=${NODE:-node}
+    web_browser=${WEB_BROWSER:-}
+    ;;
+  13)
+    make_version=$1
+    cxx=$2
+    cppflags=$3
+    cxxflags=$4
+    alpha60_src=$5
+    izzi_src=$6
+    gdal_config=$7
+    inkscape=$8
+    doxygen=$9
+    shift 9
+    emxx=$1
+    emrun=$2
+    node=$3
+    web_browser=$4
+    ;;
+  *)
+    usage
+    exit 2
+    ;;
+esac
 
 required_failures=0
 optional_missing=0
@@ -92,6 +135,11 @@ show_log()
     sed -n '1,12{s/^/      /;p;}' "$1"
   fi
 }
+
+if [ "$no_argument_mode" -eq 1 ]; then
+  printf 'Using no-argument configuration rooted at %s\n\n' \
+    "$repository_root"
+fi
 
 printf '%s\n' 'Checking required native prerequisites:'
 

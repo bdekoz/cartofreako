@@ -12,7 +12,7 @@ generation workflow. They do not require the same software:
 | Component | Required for | Purpose |
 | --- | --- | --- |
 | GNU Make | All Makefile targets | Expands the generated projection rules and coordinates builds |
-| C++20 compiler and standard library | Tests and native generators | Builds the projection checks and six SVG-generation programs |
+| C++20 compiler and standard library | Tests and native generators | Builds the projection checks and seven SVG-generation programs |
 | Alpha60 headers | SVG generation | Supplies `a60-io.h` and shared runtime-resource interfaces |
 | Izzi headers | SVG generation | Supplies `a60-svg.h` and SVG document/path serialization |
 | GDAL development package with OGR | Earth and water generation | Reads Natural Earth Shapefiles and provides vector geometry operations |
@@ -27,6 +27,19 @@ Check the complete installed toolchain from the repository root with:
 ```sh
 make check-prerequisite
 ```
+
+The underlying checker also has a no-argument mode and can be run directly:
+
+```sh
+./scripts/check-prerequisites.sh
+```
+
+That mode locates the repository from the script path, independently of the
+current working directory, and uses the working project defaults: `g++`, the
+local projection and generation headers, sibling `alpha60`, `izzi`, and
+`emsdk` trees, `gdal-config`, Inkscape, Doxygen, Node.js, and automatic browser
+discovery. Corresponding environment variables such as `CXX`, `ALPHA60_SRC`,
+`EMXX`, and `WEB_BROWSER` override those defaults.
 
 The target verifies the native commands and sibling headers, compiles and runs
 a C++20 probe, and compiles a GDAL probe that checks OGR, GEOS, and the ESRI

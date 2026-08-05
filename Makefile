@@ -184,7 +184,7 @@ NATURAL_EARTH_GENERATOR_HEADER := \
 
 .DELETE_ON_ERROR:
 
-.PHONY: all check check-prerequisite clean doxygen \
+PUBLIC_TARGETS := all check check-prerequisite clean doxygen list-targets \
 	fetch-natural-earth-10m make-generated \
 	wasm-cahill-keyes check-wasm-cahill-keyes \
 	generate-geometry generate-graticules-ck generate-earth-ck \
@@ -204,12 +204,19 @@ NATURAL_EARTH_GENERATOR_HEADER := \
 	generate-geometry-voronoi generate-graticules-voronoi \
 	generate-earth-voronoi generate-water-voronoi
 
+.PHONY: $(PUBLIC_TARGETS)
+
+list-targets:
+	@printf '%s\n' $(sort $(PUBLIC_TARGETS))
+
 check-prerequisite: $(PREREQUISITE_CHECKER)
-	@"$(PREREQUISITE_CHECKER)" \
-		"$(MAKE_VERSION)" "$(CXX)" "$(CPPFLAGS)" "$(CXXFLAGS)" \
-		"$(ALPHA60_SRC)" "$(IZZI_SRC)" "$(GDAL_CONFIG)" \
-		"$(INKSCAPE)" "$(DOXYGEN)" "$(EMXX)" "$(EMRUN)" \
-		"$(NODE)" "$(WEB_BROWSER)"
+	@MAKE_VERSION="$(MAKE_VERSION)" CXX="$(CXX)" \
+		CPPFLAGS="$(CPPFLAGS)" CXXFLAGS="$(CXXFLAGS)" \
+		ALPHA60_SRC="$(ALPHA60_SRC)" IZZI_SRC="$(IZZI_SRC)" \
+		GDAL_CONFIG="$(GDAL_CONFIG)" INKSCAPE="$(INKSCAPE)" \
+		DOXYGEN="$(DOXYGEN)" EMXX="$(EMXX)" EMRUN="$(EMRUN)" \
+		NODE="$(NODE)" WEB_BROWSER="$(WEB_BROWSER)" \
+		"$(PREREQUISITE_CHECKER)"
 
 check:
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
