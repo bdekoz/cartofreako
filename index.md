@@ -37,6 +37,7 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | --- | --- |
 | Installation and build dependencies | [Prerequisites](docs/prerequisites.md) |
 | SVG/PDF/PNG generation, Natural Earth, folding, slicing, and review | [Generation guide](docs/generation.md) |
+| Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/astro-implementation-notes.md) |
 | Natural Earth acquisition, digest, and license | [Natural Earth data note](docs/natural-earth-10m-physical-vectors.md) |
 | Production Cahill-Keyes and Myriahedral browser renderers | [WebAssembly renderer README](src.wasm/README.md) |
 | Illustrative raster-backed Myriahedral overlay | [WebAssembly workflow](docs/web-workflow.md) and [complete example](docs/web-example.md) |
@@ -73,15 +74,15 @@ Run all standalone projection checks with:
 make check
 ```
 
-Generate geometry, labeled graticules, the Natural Earth ocean-and-land base,
-and its complementary physical-feature overlay for all six projections with:
+Generate geometry, labeled graticules, both Natural Earth layer families, and
+both timestamped astronomy products for all six projections with:
 
 ```sh
 make all
 ```
 
-The 24 production whole-earth maps, five exploratory Myriahedral water
-perspectives, 12 Cahill-Keyes enlargement slices, and two Myriahedral
+The 24 production whole-earth maps, 12 astronomy maps, five exploratory
+Myriahedral water perspectives, 12 Cahill-Keyes enlargement slices, and two Myriahedral
 face-group slices are each written as a layered SVG under
 `assets.generated/svg/`, an Inkscape PDF under `assets.generated/pdf/`, and a
 PNG under `assets.generated/png/`. PNGs preserve the source aspect ratio and
@@ -109,9 +110,10 @@ pixels to the longest side.
 
 Artifact-family targets are also available as
 `generate-geometry-projections`, `generate-graticules-projections`,
-`generate-earth-projections`, and `generate-water-projections`. Each generic
+`generate-earth-projections`, `generate-water-projections`, and
+`generate-astro-projections`. Each generic
 family target includes Cahill-Keyes plus AuthaGraph, Dymaxion, Myriahedral,
-Star-X, and Voronoi. The four whole-map generators accept a projection name on their
+Star-X, and Voronoi. The five whole-map generators accept a projection name on their
 command line. Every generator reopens its SVG to validate the view box,
 required layers, path structure, and finite numeric output.
 
@@ -126,12 +128,26 @@ required layers, path structure, and finite numeric output.
 | Star-X | [`geometry-star-x-34-44.png`](assets.generated/png/geometry-star-x-34-44.png) | [`graticules-star-x-34-44.png`](assets.generated/png/graticules-star-x-34-44.png) | [`earth-star-x-34-44.png`](assets.generated/png/earth-star-x-34-44.png) | [`water-star-x-34-44.png`](assets.generated/png/water-star-x-34-44.png) |
 | Voronoi | [`geometry-voronoi-44-22.916667.png`](assets.generated/png/geometry-voronoi-44-22.916667.png) | [`graticules-voronoi-44-22.916667.png`](assets.generated/png/graticules-voronoi-44-22.916667.png) | [`earth-voronoi-44-22.916667.png`](assets.generated/png/earth-voronoi-44-22.916667.png) | [`water-voronoi-44-22.916667.png`](assets.generated/png/water-voronoi-44-22.916667.png) |
 
+The same frames carry an all-sky atlas and the observer-filtered view computed
+from the timestamp and San Francisco point stored in the JSON profile:
+
+| Projection | All sky | Observer |
+| --- | --- | --- |
+| Cahill-Keyes | [`astro-all-sky-ck-44-22.png`](assets.generated/png/astro-all-sky-ck-44-22.png) | [`astro-observer-ck-44-22.png`](assets.generated/png/astro-observer-ck-44-22.png) |
+| AuthaGraph | [`astro-all-sky-authagraph-44-19.052559.png`](assets.generated/png/astro-all-sky-authagraph-44-19.052559.png) | [`astro-observer-authagraph-44-19.052559.png`](assets.generated/png/astro-observer-authagraph-44-19.052559.png) |
+| Dymaxion | [`astro-all-sky-dymaxion-44-20.78461.png`](assets.generated/png/astro-all-sky-dymaxion-44-20.78461.png) | [`astro-observer-dymaxion-44-20.78461.png`](assets.generated/png/astro-observer-dymaxion-44-20.78461.png) |
+| Myriahedral | [`astro-all-sky-myriahedral-44-24.75.png`](assets.generated/png/astro-all-sky-myriahedral-44-24.75.png) | [`astro-observer-myriahedral-44-24.75.png`](assets.generated/png/astro-observer-myriahedral-44-24.75.png) |
+| Star-X | [`astro-all-sky-star-x-34-44.png`](assets.generated/png/astro-all-sky-star-x-34-44.png) | [`astro-observer-star-x-34-44.png`](assets.generated/png/astro-observer-star-x-34-44.png) |
+| Voronoi | [`astro-all-sky-voronoi-44-22.916667.png`](assets.generated/png/astro-all-sky-voronoi-44-22.916667.png) | [`astro-observer-voronoi-44-22.916667.png`](assets.generated/png/astro-observer-voronoi-44-22.916667.png) |
+
 The [SVG generation pipeline](docs/generation.md) explains the generator
 sources and Make targets, Natural Earth acquisition, seam handling, sampling,
 polygon clipping, projected-path folding, layer construction, self-checks,
 perceptual tradeoffs, and both Cahill-Keyes enlargement styles. It is the
 authoritative reference for individual `generate-*` targets and the
-ocean/land versus physical-feature layer partition.
+ocean/land versus physical-feature layer partition. The
+[astronomy notes](docs/astro-implementation-notes.md) cover the profile,
+source evaluation, calculations, instrument filter, and accuracy boundary.
 
 ## AuthaGraph
 
@@ -262,6 +278,7 @@ the `voronoi_source` preset are in the
 | [`docs/web-example.md`](docs/web-example.md) | Complete copyable C++, HTML, JavaScript, and build example for that Myriahedral workflow |
 | [`docs/generation.md`](docs/generation.md) | End-to-end SVG generation, seam and folding techniques, data preparation, structural checks, and perceptual considerations |
 | [`docs/prerequisites.md`](docs/prerequisites.md) | Native build, data acquisition, Inkscape review, and optional WebAssembly prerequisites |
+| [`docs/astro-implementation-notes.md`](docs/astro-implementation-notes.md) | Astronomy profile schema, source evaluation, astrometric formulas, instrumentation filter, output contract, verification, and accuracy boundary |
 | [`src.projections/cart0freak0-star-x.h`](src.projections/cart0freak0-star-x.h) | Star-X group assembly, configurable centered scale, polar-composition geometry, frame validation, public API, and factory |
 | [`tests/test-star-x-projection-api.cc`](tests/test-star-x-projection-api.cc) | Star-X anchors, assembly and scale, global domain, polar helpers, variable-frame, validation, and API tests |
 | [`docs/star-x-context.md`](docs/star-x-context.md) | Star-X octahedral context, face-slot mapping, group rotation, page enlargement, polar composition, and cuts |
@@ -278,6 +295,13 @@ the `voronoi_source` preset are in the
 | [`assets.generated/png/earth-ck-44-22.png`](assets.generated/png/earth-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes ocean-and-land base |
 | [`src.generate/generate-water.cc`](src.generate/generate-water.cc) | Thin generator entry point for every Natural Earth physical layer except `ocean` and `land` |
 | [`assets.generated/png/water-ck-44-22.png`](assets.generated/png/water-ck-44-22.png) | PNG preview of the complementary 44×22 Cahill-Keyes physical-feature overlay |
+| [`src.generate/astro-data.h`](src.generate/astro-data.h) | Validated JSON profile and catalog ingestion, proper motion, Solar System approximation, sidereal time, altitude, event window, and band filtering |
+| [`src.generate/astro-generation.h`](src.generate/astro-generation.h) | Projection-aware astronomy layers, metadata, markers, spherical uncertainty contours, labels, and embedded SVG checks |
+| [`src.generate/generate-astro.cc`](src.generate/generate-astro.cc) | Thin all-sky and observer astronomy generator entry point |
+| [`tests/test-astro-generation.cc`](tests/test-astro-generation.cc) | Profile authority, time, orientation, horizon, catalog, event-window, instrumentation, and JPL Horizons tolerance tests |
+| [`assets.static/astronomy/astro-profile.json`](assets.static/astronomy/astro-profile.json) | Reproducible timestamp, San Francisco reference point, celestial orientation, multi-band instrumentation, event interval, display budgets, and catalog paths |
+| [`assets.static/astronomy/curated-sky.json`](assets.static/astronomy/curated-sky.json) | Provenanced persistent multi-band objects and timestamped GCN/NSSDC transient snapshot |
+| [`scripts/fetch-astro-data.sh`](scripts/fetch-astro-data.sh) | Bounded Gaia DR3, NASA Exoplanet Archive, and JPL SBDB snapshot refresh |
 | [`src.generate/generate-4-slice.cc`](src.generate/generate-4-slice.cc) | Four full-height, quarter-width Cahill-Keyes quadrant-pair enlargements |
 | [`src.generate/generate-8-slice.cc`](src.generate/generate-8-slice.cc) | Eight naturally bounded, face-clipped Cahill-Keyes octant enlargements |
 | [`src.generate/generate-myriahedral-slices.cc`](src.generate/generate-myriahedral-slices.cc) | Two complementary, exact-terminal-face Myriahedral water slices |

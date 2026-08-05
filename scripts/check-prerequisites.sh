@@ -154,6 +154,9 @@ check_required_tool "Bash" "bash"
 check_required_tool "curl" "curl"
 check_required_tool "unzip" "unzip"
 check_required_tool "sha256sum" "sha256sum"
+check_required_tool "Coreutils install" "install"
+check_required_tool "Coreutils mktemp" "mktemp"
+check_required_tool "Coreutils wc" "wc"
 check_required_file "Alpha60 header" "$alpha60_src/a60-io.h"
 check_required_file "Izzi header" "$izzi_src/a60-svg.h"
 check_required_tool "Inkscape" "$inkscape"
@@ -187,13 +190,17 @@ if command_available "$cxx"; then
 #include <numbers>
 #include <variant>
 
+#include <rapidjson/document.h>
+
 int
 main()
 {
   const std::filesystem::path current{"."};
   const std::variant<int, double> value{42};
+  rapidjson::Document document;
+  document.Parse("{}");
   return (!current.empty() && std::holds_alternative<int>(value)
-          && std::numbers::pi > 3.0) ? 0 : 1;
+          && std::numbers::pi > 3.0 && document.IsObject()) ? 0 : 1;
 }
 EOF
 
@@ -202,9 +209,9 @@ EOF
   if $cxx $cppflags $cxxflags "$tmp_dir/cxx20.cc" \
       -o "$tmp_dir/cxx20" >"$tmp_dir/cxx20.log" 2>&1 \
       && "$tmp_dir/cxx20" >>"$tmp_dir/cxx20.log" 2>&1; then
-    pass "C++20 compiler and standard library ($cxx)"
+    pass "C++20 compiler, standard library, and RapidJSON headers ($cxx)"
   else
-    fail "C++20 compiler and standard library ($cxx)"
+    fail "C++20 compiler, standard library, and RapidJSON headers ($cxx)"
     show_log "$tmp_dir/cxx20.log"
   fi
 else

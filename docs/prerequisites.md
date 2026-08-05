@@ -12,12 +12,13 @@ generation workflow. They do not require the same software:
 | Component | Required for | Purpose |
 | --- | --- | --- |
 | GNU Make | All Makefile targets | Expands the generated projection rules and coordinates builds |
-| C++20 compiler and standard library | Tests and native generators | Builds the projection checks and seven SVG-generation programs |
+| C++20 compiler and standard library | Tests and native generators | Builds the projection checks and eight SVG-generation programs |
+| RapidJSON development headers | Astronomy test and generator | Parses the authoritative profile, curated sky, and JPL SBDB snapshots |
 | Alpha60 headers | SVG generation | Supplies `a60-io.h` and shared runtime-resource interfaces |
 | Izzi headers | SVG generation | Supplies `a60-svg.h` and SVG document/path serialization |
 | GDAL development package with OGR | Earth and water generation | Reads Natural Earth Shapefiles and provides vector geometry operations |
 | GEOS support in GDAL | Earth and water generation | Performs polygon intersection, repair, and seam-safe clipping |
-| Bash, `curl`, `unzip`, and `sha256sum` | Natural Earth acquisition | Downloads, verifies, and extracts the pinned input archive |
+| Bash, `curl`, `unzip`, and `sha256sum` | Natural Earth and astronomy acquisition | Downloads, verifies, and extracts or installs bounded source data |
 | Inkscape | Complete artifact generation and visual review | Exports PDF/PNG and inspects SVG layers, clipping, geometry, and seams |
 | Doxygen | API reference generation | Builds the documented projection-header reference under `docs/doxygen/` |
 | Emscripten, Node.js, and a browser | Optional WebAssembly builds | Builds the production Cahill-Keyes and land/ocean-only Myriahedral adapters, plus the illustrative Myriahedral overlay |
@@ -42,21 +43,22 @@ discovery. Corresponding environment variables such as `CXX`, `ALPHA60_SRC`,
 `EMXX`, and `WEB_BROWSER` override those defaults.
 
 The target verifies the native commands and sibling headers, compiles and runs
-a C++20 probe, and compiles a GDAL probe that checks OGR, GEOS, and the ESRI
-Shapefile driver. Missing native prerequisites make the target fail. Optional
+a C++20 and RapidJSON probe, and compiles a GDAL probe that checks OGR, GEOS,
+and the ESRI Shapefile driver. Missing native prerequisites make the target fail. Optional
 WebAssembly tools and a browser are always checked and reported, but do not
 change the exit status. The check honors the Makefile's tool and source-tree
 overrides; use `EMRUN` and `WEB_BROWSER` to identify those optional tools when
 they are not discoverable at their defaults.
 
-`make check` needs only GNU Make and a C++20 compiler. The tests provide small
+`make check` needs GNU Make, a C++20 compiler, RapidJSON headers, and the
+checked-in astronomy profile and bounded snapshots. The tests provide small
 compatibility definitions for the Alpha60 API and do not use GDAL, Natural
 Earth, Izzi, Inkscape, or network access.
 
-`make all` builds 24 production whole-earth maps, five exploratory
-Myriahedral water perspectives, 12 Cahill-Keyes slices, and two Myriahedral
-face-group slices, then invokes Inkscape to export all 43 SVGs as PDFs and
-3840-pixel-long-side PNGs. It needs
+`make all` builds 24 production whole-earth maps, 12 astronomy maps, five
+exploratory Myriahedral water perspectives, 12 Cahill-Keyes slices, and two
+Myriahedral face-group slices, then invokes Inkscape to export all 55 SVGs as
+PDFs and 3840-pixel-long-side PNGs. It needs
 all native build and data-acquisition dependencies through GEOS plus Inkscape.
 Inkscape may be omitted only when invoking individual SVG generation targets
 or the self-contained `make check` suite.
@@ -71,7 +73,7 @@ Inkscape. Package names may differ on older or derivative distributions.
 ```sh
 sudo dnf install \
   gcc-c++ make git bash curl unzip coreutils \
-  gdal gdal-devel geos geos-devel inkscape doxygen
+  gdal gdal-devel geos geos-devel rapidjson-devel inkscape doxygen
 ```
 
 The `-devel` packages are important: the runtime-only GDAL package does not
@@ -83,7 +85,7 @@ provide the C++ headers and link metadata used by the Makefile.
 sudo apt-get update
 sudo apt-get install \
   build-essential git bash curl unzip coreutils \
-  gdal-bin libgdal-dev libgeos-dev inkscape doxygen
+  gdal-bin libgdal-dev libgeos-dev rapidjson-dev inkscape doxygen
 ```
 
 ### macOS with Homebrew
@@ -93,7 +95,7 @@ components:
 
 ```sh
 xcode-select --install
-brew install make gdal coreutils git doxygen
+brew install make gdal rapidjson coreutils git doxygen
 brew install --cask inkscape
 ```
 
@@ -151,6 +153,14 @@ make check
 Use GNU Make rather than BSD Make because the Makefile constructs the
 per-projection rules with GNU Make's `call`, `eval`, and related expansion
 features.
+
+RapidJSON is header-only; no additional linker library is required. The
+astronomy profile and JPL small-body snapshots use its DOM parser. Verify the
+header independently when diagnosing a compiler probe failure:
+
+```sh
+test -r /usr/include/rapidjson/document.h
+```
 
 ## Doxygen API reference
 
@@ -279,6 +289,25 @@ clean` removes generator binaries and rendered build products, but retains
 Natural Earth data and the checked-in WASM sources.
 See the [data provenance note](natural-earth-10m-physical-vectors.md) for the
 archive URL, checksum, dataset list, and license.
+
+## Astronomy input and network access
+
+The astronomy SVGs and `make check` run offline from the checked-in
+`assets.static/astronomy/` profile and bounded catalog snapshots. The profile
+is authoritative for both the timestamp and the observer point. Refresh the
+external Gaia DR3, NASA Exoplanet Archive, and JPL SBDB snapshots only when an
+upstream update is intended:
+
+```sh
+make fetch-astro-data
+```
+
+That target needs Bash, `curl`, `sha256sum`, standard Coreutils, and outbound
+HTTPS access. It checks the expected row counts and replaces the bounded CSV
+and JSON files before writing new hashes. It intentionally leaves the profile
+and curated transient snapshot unchanged. See the
+[astronomy implementation notes](astro-implementation-notes.md) for the data
+roles and accuracy boundary.
 
 ## Inkscape and visual review
 
