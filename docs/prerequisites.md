@@ -53,9 +53,9 @@ they are not discoverable at their defaults.
 compatibility definitions for the Alpha60 API and do not use GDAL, Natural
 Earth, Izzi, Inkscape, or network access.
 
-`make all` builds 20 production whole-earth maps, five exploratory
+`make all` builds 24 production whole-earth maps, five exploratory
 Myriahedral water perspectives, 12 Cahill-Keyes slices, and two Myriahedral
-face-group slices, then invokes Inkscape to export all 39 SVGs as PDFs and
+face-group slices, then invokes Inkscape to export all 43 SVGs as PDFs and
 3840-pixel-long-side PNGs. It needs
 all native build and data-acquisition dependencies through GEOS plus Inkscape.
 Inkscape may be omitted only when invoking individual SVG generation targets
@@ -154,9 +154,10 @@ features.
 
 ## Doxygen API reference
 
-The API reference covers every `src.projections/cart0freak0*.h` projection header,
-including internal geometric data structures and helper functions. Generate
-it with:
+The API reference covers every production projection header, including the
+`src.projections/cart0freak0*.h` family and
+`src.projections/a60-carto-projection-dymaxion.h`, plus their internal
+geometric data structures and helper functions. Generate it with:
 
 ```sh
 doxygen --version
@@ -349,8 +350,8 @@ make all
 inkscape --version
 ```
 
-Successful generation places five geometry maps, five graticule maps, five
-Earth maps, ten water maps (five production plus five exploratory
+Successful generation places six geometry maps, six graticule maps, six
+Earth maps, eleven water maps (six production plus five exploratory
 Myriahedral perspectives), four quadrant slices, eight octant slices, and two
 Myriahedral face-group slices in each of `assets.generated/svg/`,
 `assets.generated/pdf/`, and `assets.generated/png/`. Every PNG preserves its

@@ -383,6 +383,29 @@ make_voronoi_faces(const projection_context& context)
   return result;
 }
 
+std::vector<named_path>
+make_dymaxion_faces(const projection_context& context)
+{
+  constexpr auto planar = a60::carto::dymaxion_detail::planar_faces();
+  std::vector<named_path> result;
+  result.reserve(planar.size());
+  for (std::size_t index = 0; index < planar.size(); ++index)
+    {
+      svg::vrange points;
+      for (const auto point : planar[index])
+        {
+          const auto normalized
+            = a60::carto::dymaxion_detail::normalize_planar_point(point);
+          points.push_back({normalized.x * context.map_frame.width(),
+                            normalized.y * context.map_frame.height()});
+        }
+      result.push_back({
+        "triangular-face-" + std::to_string(index + 1), std::move(points),
+      });
+    }
+  return result;
+}
+
 void
 add_path_layer(svg::svg_element& document, const std::string& layer_id,
                const std::vector<named_path>& paths, const svg::style& style)
@@ -438,6 +461,9 @@ generate_geometry(const projection_spec& spec)
       break;
     case projection_kind::authagraph:
       faces = make_authagraph_faces(context);
+      break;
+    case projection_kind::dymaxion:
+      faces = make_dymaxion_faces(context);
       break;
     case projection_kind::myriahedral:
       faces = make_myriahedral_faces(context);
@@ -503,6 +529,7 @@ main(const int argc, char** argv)
     "generated geometry SVG does not use the requested viewBox");
   const std::size_t expected_faces
     = spec.kind == projection_kind::myriahedral ? 5120
+      : spec.kind == projection_kind::dymaxion ? 23
       : spec.kind == projection_kind::voronoi ? 20 : 8;
   const std::size_t face_paths = layer_path_count(
     generated, "triangular-faces");

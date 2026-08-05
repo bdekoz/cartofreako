@@ -4,6 +4,7 @@
 /tests/test-cahill-keyes-path-functions
 /tests/test-cahill-keyes-slicing
 /tests/test-authagraph-projection-api
+/tests/test-dymaxion-projection-api
 /tests/test-myriahedral-projection-api
 /tests/test-myriahedral-slicing
 /tests/test-projection-generation-common
