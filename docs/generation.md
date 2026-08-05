@@ -6,6 +6,7 @@
 [Cahill-Keyes context](cahill-keyes-context.md) ·
 [Astronomy notes](astro-implementation-notes.md) ·
 [Cloud-atmosphere notes](cloud-atmosphere-implementation-notes.md) ·
+[P-Tree download quick start](ptree-production-download.md) ·
 [Orbital Technosphere notes](orbital-technosphere-implementation-notes.md) ·
 [Anthropocene notes](anthropocene-implementation-notes.md) ·
 [Network-swarm notes](network-swarm-implementation-notes.md) ·
@@ -385,7 +386,10 @@ make verify-cloud-atmosphere-data
 make generate-cloud-atmosphere
 ```
 
-The fetch requires an existing P-Tree `.netrc` entry. Use
+The fetch requires an existing P-Tree `.netrc` entry. Follow the
+[credentialed production-download quick start](ptree-production-download.md)
+to register, configure and test credentials, run a reproducible refresh, and
+diagnose common failures. Use
 `generate-cloud-atmosphere-PROJECTION` for one SVG,
 `generate-cloud-atmosphere-projections` for all six SVGs, or
 `generate-cloud-atmosphere-artifacts` for SVG/PDF/PNG output. This family is

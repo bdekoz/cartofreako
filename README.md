@@ -114,6 +114,11 @@ make verify-cloud-atmosphere-data
 make generate-cloud-atmosphere
 ```
 
+See the
+[credentialed P-Tree production-download quick start](docs/ptree-production-download.md)
+for account registration, secure `.netrc` setup, a login smoke test,
+reproducible commands, expected files, and troubleshooting.
+
 Solar illumination is calculated once at generator process start. AOD remains
 distinct from smoke and PM2.5, precipitation is not an event count, and
 missing data means unobserved. See the

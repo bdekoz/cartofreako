@@ -15,6 +15,11 @@ The checked fixture under `fixtures/` exercises the schema and renderer. It is
 synthetic, is identified as a fixture in its metadata, and must not be
 presented as an observation.
 
+For first-time production setup, follow the
+[credentialed P-Tree download quick start](../../docs/ptree-production-download.md).
+It covers registration, safe `.netrc` configuration, a read-only login test,
+the complete refresh sequence, expected outputs, and troubleshooting.
+
 Refresh workflow:
 
 1. Configure a `.netrc` entry for `ftp.ptree.jaxa.jp`.

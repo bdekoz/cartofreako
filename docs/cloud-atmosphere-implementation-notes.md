@@ -2,6 +2,7 @@
 
 [Documentation index](../index.md) ·
 [Generation pipeline](generation.md) ·
+[P-Tree download quick start](ptree-production-download.md) ·
 [Source profile](../assets.static/cloud-atmosphere/README.md) ·
 [Astronomy notes](astro-implementation-notes.md) ·
 [Prerequisites](prerequisites.md)
@@ -96,6 +97,10 @@ metadata records the generation process instant, the fetch-selection process
 instant, source endpoints, subsolar point, selection rule, and fixture status.
 
 ## P-Tree access and terms
+
+For a copy-pasteable account, credential, connection-test, and production
+workflow, start with the
+[P-Tree production-download quick start](ptree-production-download.md).
 
 P-Tree requires a registered account. The fetcher uses implicit FTPS on port
 990 and `curl --netrc`; it never accepts credentials as command-line
