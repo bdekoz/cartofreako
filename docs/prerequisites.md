@@ -610,8 +610,8 @@ inkscape --version
 Successful generation places six geometry maps, six graticule maps, six
 Earth maps, eleven water maps (six production plus five exploratory
 Myriahedral perspectives), 12 astronomy maps, 12 Orbital Technosphere maps,
-six Anthropocene maps, six network-swarm maps, six Bathymetry Roulette maps,
-six network-infrastructure site maps, four quadrant slices, eight
+six Anthropocene maps, six network-swarm maps, six network-infrastructure site
+maps, six Bathymetry Roulette maps, four quadrant slices, eight
 octant slices, and two Myriahedral face-group
 slices in each of `assets.generated/svg/`,
 `assets.generated/pdf/`, and `assets.generated/png/`. Every PNG preserves its

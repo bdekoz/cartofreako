@@ -46,10 +46,11 @@ route carries traffic. Building `18438` repeats one São Paulo exchange entry,
 so the generated metadata records 2,581 raw entries, 2,580 unique incidences,
 and one duplicate. The relationship is rendered once.
 
-The two facilities carrying `minap-milan-italy` have distinct source records
-but identical coordinates. That incidence is retained as a co-located logical
-hub with its building count and semantic metadata; no zero-length or invented
-route is drawn. SVG metadata records the number of such co-located groups.
+The two facilities carrying each of `minap-milan-italy` and
+`netix-milan-italy` have distinct source records but identical coordinates.
+Those two incidences are retained as co-located logical hubs with their
+building counts and semantic metadata; no zero-length or invented route is
+drawn. SVG metadata records the number of such co-located groups.
 
 The selected cloud snapshot contains 13,638 null-geometry independently
 observed presences. They remain part of source totals but are not fabricated

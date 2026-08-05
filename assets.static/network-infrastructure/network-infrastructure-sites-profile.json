@@ -25,13 +25,13 @@
   "sources": {
     "cloud_cdn": {
       "repository": "https://github.com/bdekoz/cloud_cdn_cache",
-      "commit": "7af9b774d191c3c22137682ec697856ef85016a0",
+      "commit": "80bc389786c7ea6bda563700685d117bbf3d5017",
       "license": "ODC-By-1.0 original dataset; source-specific terms retained",
       "snapshot": "2026-08-04",
-      "manifest": "data/manifest.20260804.json",
-      "manifest_sha256": "c0c506438778af6bef8f7a595e5f6198f59c90799377ffda80dea85d54e8932b",
-      "expected_layers": 19,
-      "expected_records": 15113,
+      "manifest": "data/manifest.20260805.json",
+      "manifest_sha256": "514187d06086d3f3e2c276a7d42f6e1c11e13fdf68f14b90972174206c7f3f67",
+      "expected_layers": 27,
+      "expected_records": 15726,
       "expected_located": 1003
     },
     "submarine_cables": {

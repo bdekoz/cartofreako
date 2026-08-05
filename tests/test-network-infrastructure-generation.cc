@@ -2,6 +2,7 @@
 #include <cassert>
 #include <cmath>
 #include <set>
+#include <stdexcept>
 #include <string>
 #include <string_view>
 #include <utility>
@@ -27,8 +28,8 @@ main()
   assert(sites.product == infrastructure::infrastructure_product::sites);
   assert(!sites.topology_opt_in);
   assert(sites.include_cloud_sites && !sites.include_submarine_cables);
-  assert(sites.cloud.expected_layers == 19);
-  assert(sites.cloud.expected_records == 15113);
+  assert(sites.cloud.expected_layers == 27);
+  assert(sites.cloud.expected_records == 15726);
   assert(sites.cloud.expected_located == 1003);
   assert(topology.product
          == infrastructure::infrastructure_product::topology);
@@ -37,6 +38,22 @@ main()
          != std::string::npos);
   assert(topology.include_submarine_cables
          && topology.include_exchange_membership);
+
+  auto unlicensed_topology = infrastructure::read_json_document(
+    "assets.static/network-infrastructure/"
+    "network-infrastructure-topology-profile.json");
+  unlicensed_topology["licensing"]["tele_geography_opt_in"].SetBool(false);
+  bool rejected_unlicensed_topology = false;
+  try
+    {
+      static_cast<void>(infrastructure::parse_infrastructure_profile(
+        unlicensed_topology, "unlicensed-topology-profile.json"));
+    }
+  catch (const std::runtime_error&)
+    {
+      rejected_unlicensed_topology = true;
+    }
+  assert(rejected_unlicensed_topology);
 
   const auto dateline = infrastructure::split_at_dateline(
     {{12, 170}, {16, -170}});

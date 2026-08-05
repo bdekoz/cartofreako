@@ -59,9 +59,9 @@ test $# -ge 2 || usage
 mode=$1
 cloud_root=$2
 
-cloud_commit=7af9b774d191c3c22137682ec697856ef85016a0
-cloud_manifest=data/manifest.20260804.json
-cloud_manifest_sha256=c0c506438778af6bef8f7a595e5f6198f59c90799377ffda80dea85d54e8932b
+cloud_commit=80bc389786c7ea6bda563700685d117bbf3d5017
+cloud_manifest=data/manifest.20260805.json
+cloud_manifest_sha256=514187d06086d3f3e2c276a7d42f6e1c11e13fdf68f14b90972174206c7f3f67
 
 check_repo cloud_cdn_cache "$cloud_root" "$cloud_commit"
 check_tracked_clean cloud_cdn_cache "$cloud_root" data schema

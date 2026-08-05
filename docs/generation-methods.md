@@ -496,7 +496,7 @@ The following remain explicit rather than configurable in schema version 1:
 - one astronomy product instead of both;
 - one Orbital Technosphere product instead of both;
 - Cahill-Keyes four- and eight-slice generation;
-- Myriahedral perspective and face-group slice generation; and
+- Myriahedral perspective and face-group slice generation;
 - the CC BY-NC-SA 3.0 network-infrastructure topology product; and
 - semantic layer enable/disable switches inside a generator.
 

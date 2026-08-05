@@ -128,10 +128,10 @@ pixels to the longest side.
 
 Artifact-family targets are also available as
 `generate-geometry-projections`, `generate-graticules-projections`,
-`generate-earth-projections`, `generate-water-projections`, and
-`generate-astro-projections`, `generate-orbiting-projections`, and
+`generate-earth-projections`, `generate-water-projections`,
+`generate-astro-projections`, `generate-orbiting-projections`,
 `generate-anthropocene-projections`,
-`generate-network-swarm-projections`, and
+`generate-network-swarm-projections`,
 `generate-network-infrastructure-projections`, and
 `generate-bathymetry-roulette-projections`. Each generic
 family target includes Cahill-Keyes plus AuthaGraph, Dymaxion, Myriahedral,
