@@ -29,7 +29,7 @@ separate:
 
 | Source | Pinned snapshot | Implemented evidence |
 | --- | --- | --- |
-| [`bdekoz/cloud_cdn_cache`](https://github.com/bdekoz/cloud_cdn_cache) | commit `7af9b774d191c3c22137682ec697856ef85016a0`, manifest dated 2026-08-04 | 19 canonical layers, 15,113 records, 1,003 located Point records |
+| [`bdekoz/cloud_cdn_cache`](https://github.com/bdekoz/cloud_cdn_cache) | commit `80bc389786c7ea6bda563700685d117bbf3d5017`, manifest dated 2026-08-05 | 27 canonical layers, 15,726 records, 1,003 located Point records |
 | [TeleGeography Submarine Cable Map](https://github.com/telegeography/www.submarinecablemap.com) | commit `0d684b2aedeae0f7473280270f3f71fa0983f0b3`, 2022-11-11 | 526 cable systems, 532 route features, 1,458 route parts, 11,590 vertices, and 1,436 landing points |
 | [TeleGeography Internet Exchange Map](https://github.com/telegeography/www.internetexchangemap.com) | commit `2b9c36ad7fad083c0b4db998c4dedadc1ba89027`, 2022-09-20 | 1,772 geolocated facilities, 1,103 exchanges, and 2,581 source membership entries |
 
@@ -114,12 +114,12 @@ tracked data paths. Unrelated documentation changes and untracked files in an
 external checkout do not invalidate the source snapshot. The C++ parser then
 validates manifest/layer counts and every consumed GeoJSON structure.
 
-The audited GitHub cloud commit is used deliberately. A newer local
-`manifest.20260805.json` encountered during implementation reports 13,638
-records for `observations/cdn-mapping.20260804.geojson`, while that referenced
-GeoJSON and its report contain 13,631. Growth between snapshots is valid; a
-seven-record disagreement inside one snapshot is not. Moving the profile to a
-newer commit is appropriate after its manifest and files agree.
+The newer committed cloud snapshot is used deliberately. Relative to the
+2026-08-04 commit, it grows from 19 to 27 canonical layers and from 15,113 to
+15,726 records. Its eight additional hyperscaler layers contribute 613
+null-geometry records, so the accurately located/rendered set remains 1,003.
+The manifest and every referenced GeoJSON/report agree in the clean Git tree.
+Mutable working-tree data was not used to establish the pin.
 
 ## Normal and opt-in Make workflows
 

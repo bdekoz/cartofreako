@@ -20,10 +20,11 @@ SUBMARINE_CABLE_SOURCE=../www.submarinecablemap.com
 INTERNET_EXCHANGE_SOURCE=../www.internetexchangemap.com
 ```
 
-The cloud pin deliberately uses the internally consistent audited commit
-`7af9b774d191c3c22137682ec697856ef85016a0`. A newer local snapshot observed
-during implementation had a seven-record manifest/GeoJSON discrepancy and is
-therefore not silently accepted.
+The cloud pin deliberately uses the newer, internally consistent audited
+commit `80bc389786c7ea6bda563700685d117bbf3d5017`: 27 canonical layers,
+15,726 records, and 1,003 located records. The eight layers added since the
+previous commit contain 613 additional null-geometry records, so the larger
+source does not fabricate additional mapped points.
 
 The cloud repository says its original dataset is ODC-By 1.0 while provider
 snapshots can retain source-specific terms. Both TeleGeography map repositories
