@@ -26,6 +26,10 @@ NATURAL_EARTH_FETCHER := scripts/fetch-natural-earth-10m.sh
 ASTRO_DATA_DIR ?= $(STATIC_ASSET_DIR)/astronomy
 ASTRO_PROFILE ?= $(ASTRO_DATA_DIR)/astro-profile.json
 ASTRO_FETCHER := scripts/fetch-astro-data.sh
+ORBITING_DATA_DIR ?= $(STATIC_ASSET_DIR)/orbital-technosphere
+ORBITING_PROFILE ?= \
+	$(ORBITING_DATA_DIR)/orbital-technosphere-profile.json
+ORBITING_FETCHER := scripts/fetch-orbiting-data.sh
 PREREQUISITE_CHECKER := scripts/check-prerequisites.sh
 NATURAL_EARTH_STAMP := \
 	$(NATURAL_EARTH_DIR)/.natural-earth-10m-physical-5.1.1
@@ -57,10 +61,18 @@ EIGHT_SLICE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-8-slice
 MYRIAHEDRAL_SLICE_GENERATOR := \
 	$(GENERATOR_SRC_DIR)/generate-myriahedral-slices
 ASTRO_GENERATOR := $(GENERATOR_SRC_DIR)/generate-astro
+ORBITING_GENERATOR := $(GENERATOR_SRC_DIR)/generate-orbiting
+SGP4_SOURCE := $(GENERATOR_SRC_DIR)/third_party/sgp4/SGP4.cpp
+SGP4_HEADER := $(GENERATOR_SRC_DIR)/third_party/sgp4/SGP4.h
+SGP4_OBJECT := $(GENERATOR_SRC_DIR)/third_party/sgp4/SGP4.o
 
 ASTRO_PROFILE_DIR := $(dir $(ASTRO_PROFILE))
 ASTRO_CATALOGS := $(filter-out $(ASTRO_PROFILE),\
 	$(wildcard $(ASTRO_PROFILE_DIR)*.csv $(ASTRO_PROFILE_DIR)*.json))
+ORBITING_PROFILE_DIR := $(dir $(ORBITING_PROFILE))
+ORBITING_CATALOGS := $(filter-out $(ORBITING_PROFILE),\
+	$(wildcard $(ORBITING_PROFILE_DIR)*.csv $(ORBITING_PROFILE_DIR)*.json \
+		$(ORBITING_PROFILE_DIR)SHA256SUMS))
 
 CK_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-ck-44-22.svg
 CK_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-ck-44-22.svg
@@ -132,6 +144,26 @@ ASTRO_OBSERVER_SVGS := \
 	$(GENERATED_SVG_DIR)/astro-observer-voronoi-44-22.916667.svg
 ASTRO_SVGS := $(ASTRO_ALL_SKY_SVGS) $(ASTRO_OBSERVER_SVGS)
 
+ORBITING_GLOBAL_SVGS := \
+	$(GENERATED_SVG_DIR)/orbital-technosphere-global-ck-44-22.svg \
+	$(GENERATED_SVG_DIR)/orbital-technosphere-global-authagraph-44-19.052559.svg \
+	$(GENERATED_SVG_DIR)/orbital-technosphere-global-dymaxion-44-20.78461.svg \
+	$(GENERATED_SVG_DIR)/orbital-technosphere-global-myriahedral-44-24.75.svg \
+	$(GENERATED_SVG_DIR)/orbital-technosphere-global-star-x-34-44.svg \
+	$(GENERATED_SVG_DIR)/orbital-technosphere-global-voronoi-44-22.916667.svg
+ORBITING_OBSERVER_SVGS := \
+	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-ck-44-22.svg \
+	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-authagraph-44-19.052559.svg \
+	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-dymaxion-44-20.78461.svg \
+	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-myriahedral-44-24.75.svg \
+	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-star-x-34-44.svg \
+	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-voronoi-44-22.916667.svg
+ORBITING_SVGS := $(ORBITING_GLOBAL_SVGS) $(ORBITING_OBSERVER_SVGS)
+ORBITING_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PDF_DIR)/%.pdf,$(ORBITING_SVGS))
+ORBITING_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PNG_DIR)/%.png,$(ORBITING_SVGS))
+
 REQUESTED_GEOMETRY_SVGS := \
 	$(AUTHAGRAPH_GEOMETRY_SVG) \
 	$(DYMAXION_GEOMETRY_SVG) \
@@ -166,7 +198,7 @@ GENERATED_SVGS := \
 	$(CK_EARTH_SVG) $(CK_WATER_SVG) $(CK_SLICE_SVGS) \
 	$(REQUESTED_PROJECTION_SVGS) \
 	$(MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS) $(MYRIAHEDRAL_SLICE_SVGS) \
-	$(ASTRO_SVGS)
+	$(ASTRO_SVGS) $(ORBITING_SVGS)
 GENERATED_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PDF_DIR)/%.pdf,$(GENERATED_SVGS))
 GENERATED_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
@@ -182,9 +214,15 @@ ASTRO_STAR_X_SVGS := \
 	$(GENERATED_SVG_DIR)/astro-observer-star-x-34-44.svg
 ASTRO_STAR_X_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PNG_DIR)/%.png,$(ASTRO_STAR_X_SVGS))
+ORBITING_STAR_X_SVGS := \
+	$(GENERATED_SVG_DIR)/orbital-technosphere-global-star-x-34-44.svg \
+	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-star-x-34-44.svg
+ORBITING_STAR_X_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PNG_DIR)/%.png,$(ORBITING_STAR_X_SVGS))
 MYRIAHEDRAL_PORTRAIT_SLICE_PNG := \
 	$(GENERATED_PNG_DIR)/water-myriahedral-adhoc-slice-1.png
-PORTRAIT_PNGS := $(STAR_X_PNGS) $(ASTRO_STAR_X_PNGS) $(CK_SLICE_PNGS) \
+PORTRAIT_PNGS := $(STAR_X_PNGS) $(ASTRO_STAR_X_PNGS) \
+	$(ORBITING_STAR_X_PNGS) $(CK_SLICE_PNGS) \
 	$(MYRIAHEDRAL_PORTRAIT_SLICE_PNG)
 LANDSCAPE_PNGS := $(filter-out $(PORTRAIT_PNGS),$(GENERATED_PNGS))
 GENERATED_ARTIFACTS := $(GENERATED_SVGS) $(GENERATED_PDFS) \
@@ -192,6 +230,7 @@ GENERATED_ARTIFACTS := $(GENERATED_SVGS) $(GENERATED_PDFS) \
 
 GENERATOR_BINARIES := \
 	$(ASTRO_GENERATOR) \
+	$(ORBITING_GENERATOR) \
 	$(EIGHT_SLICE_GENERATOR) \
 	$(EARTH_GENERATOR) \
 	$(FOUR_SLICE_GENERATOR) \
@@ -201,6 +240,7 @@ GENERATOR_BINARIES := \
 	$(WATER_GENERATOR)
 TEST_BINARIES := \
 	$(TEST_DIR)/test-astro-generation \
+	$(TEST_DIR)/test-orbiting-generation \
 	$(TEST_DIR)/test-cahill-keyes-projection \
 	$(TEST_DIR)/test-cahill-keyes-projection-api \
 	$(TEST_DIR)/test-cahill-keyes-path-functions \
@@ -234,11 +274,16 @@ ASTRO_GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/astro-data.h \
 	$(GENERATOR_SRC_DIR)/astro-generation.h \
 	$(GENERATOR_HEADERS)
+ORBITING_GENERATOR_HEADERS := \
+	$(GENERATOR_SRC_DIR)/orbiting-data.h \
+	$(GENERATOR_SRC_DIR)/orbiting-generation.h \
+	$(NATURAL_EARTH_GENERATOR_HEADER) \
+	$(GENERATOR_HEADERS) $(SGP4_HEADER)
 
 .DELETE_ON_ERROR:
 
 PUBLIC_TARGETS := all check check-prerequisite clean doxygen list-targets \
-	fetch-natural-earth-10m fetch-astro-data make-generated \
+	fetch-natural-earth-10m fetch-astro-data fetch-orbiting-data make-generated \
 	wasm-cahill-keyes check-wasm-cahill-keyes \
 	wasm-cahill-myriahedral check-wasm-cahill-myriahedral \
 	generate-geometry generate-graticules-ck generate-earth-ck \
@@ -251,6 +296,12 @@ PUBLIC_TARGETS := all check check-prerequisite clean doxygen list-targets \
 	generate-astro-authagraph generate-astro-dymaxion \
 	generate-astro-myriahedral generate-astro-star-x \
 	generate-astro-voronoi \
+	generate-orbiting generate-orbiting-projections \
+	generate-orbiting-artifacts \
+	generate-orbiting-global generate-orbiting-observer \
+	generate-orbiting-cahill-keyes generate-orbiting-authagraph \
+	generate-orbiting-dymaxion generate-orbiting-myriahedral \
+	generate-orbiting-star-x generate-orbiting-voronoi \
 	generate-water-myriahedral-perspectives generate-myriahedral-slices \
 	generate-authagraph generate-dymaxion generate-myriahedral generate-star-x \
 	generate-voronoi generate-voroni \
@@ -279,11 +330,16 @@ check-prerequisite: $(PREREQUISITE_CHECKER)
 		NODE="$(NODE)" WEB_BROWSER="$(WEB_BROWSER)" \
 		"$(PREREQUISITE_CHECKER)"
 
-check:
+check: $(SGP4_OBJECT)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-astro-generation.cc \
 		-o $(TEST_DIR)/test-astro-generation
 	$(TEST_DIR)/test-astro-generation
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
+		$(TEST_DIR)/test-orbiting-generation.cc $(SGP4_OBJECT) \
+		-o $(TEST_DIR)/test-orbiting-generation
+	$(TEST_DIR)/test-orbiting-generation
+	sha256sum -c $(ORBITING_DATA_DIR)/SHA256SUMS
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-cahill-keyes-projection.cc \
 		-o $(TEST_DIR)/test-cahill-keyes-projection
@@ -432,8 +488,20 @@ $(ASTRO_GENERATOR): $(GENERATOR_SRC_DIR)/generate-astro.cc \
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$< -o $@
 
+$(SGP4_OBJECT): $(SGP4_SOURCE) $(SGP4_HEADER)
+	$(CXX) -std=c++20 -w -c $(SGP4_SOURCE) -o $@
+
+$(ORBITING_GENERATOR): $(GENERATOR_SRC_DIR)/generate-orbiting.cc \
+		$(ORBITING_GENERATOR_HEADERS) $(SGP4_OBJECT)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(SGP4_OBJECT) $(shell $(GDAL_CONFIG) --libs) -o $@
+
 fetch-astro-data: $(ASTRO_FETCHER)
 	$(ASTRO_FETCHER) "$(ASTRO_DATA_DIR)"
+
+fetch-orbiting-data: $(ORBITING_FETCHER) $(ORBITING_PROFILE)
+	$(ORBITING_FETCHER) "$(ORBITING_DATA_DIR)"
 
 fetch-natural-earth-10m: $(NATURAL_EARTH_STAMP)
 
@@ -583,6 +651,49 @@ generate-astro-observer: $(ASTRO_OBSERVER_SVGS)
 generate-astro: $(ASTRO_SVGS)
 generate-astro-projections: $(ASTRO_SVGS)
 
+# $(1): command-line projection name; $(2)-$(3): Orbital Technosphere products.
+define ORBITING_PROJECTION_RULES
+generate-orbiting-$(1): $(2) $(3)
+$(2): $(ORBITING_GENERATOR) $(ORBITING_PROFILE) $(ORBITING_CATALOGS) \
+		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		"$(abspath $(ORBITING_GENERATOR))" $(1) global \
+		"$(abspath $(ORBITING_PROFILE))"
+
+$(3): $(ORBITING_GENERATOR) $(ORBITING_PROFILE) $(ORBITING_CATALOGS) \
+		| $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
+		"$(abspath $(ORBITING_GENERATOR))" $(1) observer \
+		"$(abspath $(ORBITING_PROFILE))"
+endef
+
+$(eval $(call ORBITING_PROJECTION_RULES,cahill-keyes,\
+	$(GENERATED_SVG_DIR)/orbital-technosphere-global-ck-44-22.svg,\
+	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-ck-44-22.svg))
+$(eval $(call ORBITING_PROJECTION_RULES,authagraph,\
+	$(GENERATED_SVG_DIR)/orbital-technosphere-global-authagraph-44-19.052559.svg,\
+	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-authagraph-44-19.052559.svg))
+$(eval $(call ORBITING_PROJECTION_RULES,dymaxion,\
+	$(GENERATED_SVG_DIR)/orbital-technosphere-global-dymaxion-44-20.78461.svg,\
+	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-dymaxion-44-20.78461.svg))
+$(eval $(call ORBITING_PROJECTION_RULES,myriahedral,\
+	$(GENERATED_SVG_DIR)/orbital-technosphere-global-myriahedral-44-24.75.svg,\
+	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-myriahedral-44-24.75.svg))
+$(eval $(call ORBITING_PROJECTION_RULES,star-x,\
+	$(GENERATED_SVG_DIR)/orbital-technosphere-global-star-x-34-44.svg,\
+	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-star-x-34-44.svg))
+$(eval $(call ORBITING_PROJECTION_RULES,voronoi,\
+	$(GENERATED_SVG_DIR)/orbital-technosphere-global-voronoi-44-22.916667.svg,\
+	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-voronoi-44-22.916667.svg))
+
+generate-orbiting-global: $(ORBITING_GLOBAL_SVGS)
+generate-orbiting-observer: $(ORBITING_OBSERVER_SVGS)
+generate-orbiting: $(ORBITING_SVGS)
+generate-orbiting-projections: $(ORBITING_SVGS)
+generate-orbiting-artifacts: $(ORBITING_SVGS) $(ORBITING_PDFS) \
+	$(ORBITING_PNGS)
+
 generate-water-myriahedral: generate-water-myriahedral-perspectives \
 	generate-myriahedral-slices
 generate-myriahedral: generate-water-myriahedral-perspectives \
@@ -621,6 +732,7 @@ all: $(GENERATED_ARTIFACTS)
 
 clean:
 	$(RM) $(TEST_BINARIES) $(GENERATOR_BINARIES)
+	$(RM) $(SGP4_OBJECT)
 	$(RM) $(GENERATED_SVGS) $(CK_WEB_MODULE) $(CK_WEB_WASM) \
 		$(MYRIA_WEB_MODULE) $(MYRIA_WEB_WASM)
 	$(RM) -r "$(GENERATED_DIR)/svg" "$(GENERATED_DIR)/png" \

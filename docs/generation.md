@@ -3,12 +3,13 @@
 [Documentation index](../index.md) ·
 [Prerequisites](prerequisites.md) ·
 [Cahill-Keyes context](cahill-keyes-context.md) ·
-[Astronomy notes](astro-implementation-notes.md)
+[Astronomy notes](astro-implementation-notes.md) ·
+[Orbital Technosphere notes](orbital-technosphere-implementation-notes.md)
 
 ## Purpose
 
-The repository contains eight C++20 generation programs under `src.generate/`.
-Five exercise all six production projections through the real Alpha60 and
+The repository contains nine C++20 generation programs under `src.generate/`.
+Six exercise all six production projections through the real Alpha60 and
 Izzi APIs. Three derive Cahill-Keyes or Myriahedral slices from an already
 projected whole-earth SVG. They write layered SVGs under
 `assets.generated/svg/`, then reopen those files and verify dimensions, layer
@@ -22,12 +23,14 @@ validated SVG as PDF and as a 3840-pixel-long-side PNG.
 | Earth | [`src.generate/generate-earth.cc`](../src.generate/generate-earth.cc) | Natural Earth 1:10m ocean and land |
 | Water | [`src.generate/generate-water.cc`](../src.generate/generate-water.cc) | Every other Natural Earth 1:10m physical layer |
 | Astronomy | [`src.generate/generate-astro.cc`](../src.generate/generate-astro.cc) | Profile timestamp and observer, bounded Gaia/exoplanet/SBDB snapshots, curated multi-band sources and events |
+| Orbital Technosphere | [`src.generate/generate-orbiting.cc`](../src.generate/generate-orbiting.cc) | Profile timestamp and observer, CelesTrak OMM population and memberships, NASA SSCWeb reference positions, and SGP4 |
 | Four slices | [`src.generate/generate-4-slice.cc`](../src.generate/generate-4-slice.cc) | Four full-height, quarter-width quadrant-pair enlargements from the Cahill-Keyes Earth SVG |
 | Eight slices | [`src.generate/generate-8-slice.cc`](../src.generate/generate-8-slice.cc) | Eight exact-octant enlargements from the Cahill-Keyes Earth SVG |
 | Myriahedral groups | [`src.generate/generate-myriahedral-slices.cc`](../src.generate/generate-myriahedral-slices.cc) | Two complementary exact-terminal-face masks from the Myriahedral water SVG |
 
 The aggregate target generates all four terrestrial artifact families and two
-astronomy products for all six production projections, five exploratory
+astronomy and two Orbital Technosphere products for all six production
+projections, five exploratory
 Myriahedral water perspectives, all 12 Cahill-Keyes slices, and two
 Myriahedral face-group slices:
 
@@ -80,6 +83,8 @@ The default locations can be overridden:
 | `NATURAL_EARTH_DIR` | `assets.static/natural-earth/10m-physical-vectors` | Extracted shapefiles |
 | `ASTRO_DATA_DIR` | `assets.static/astronomy` | Astronomy profile and bounded catalog snapshots |
 | `ASTRO_PROFILE` | `$(ASTRO_DATA_DIR)/astro-profile.json` | Authoritative timestamp, point of reference, orientation, instrumentation, event window, and catalog paths |
+| `ORBITING_DATA_DIR` | `assets.static/orbital-technosphere` | Orbital Technosphere profile, OMM CSV snapshots, NASA reference, and checksums |
+| `ORBITING_PROFILE` | `$(ORBITING_DATA_DIR)/orbital-technosphere-profile.json` | Authoritative propagation instant, make-invocation reference point, catalog roles, freshness rules, visibility rules, and display budgets |
 | `INKSCAPE` | `inkscape` | Command-line PDF and PNG exporter |
 | `PNG_LONG_SIDE` | `3840` | Pixel count assigned to each PNG's longest side |
 
@@ -105,6 +110,7 @@ make generate-myriahedral-slices
 make generate-star-x
 make generate-voronoi
 make generate-astro
+make generate-orbiting
 make all
 ```
 
@@ -118,7 +124,7 @@ The generators are not part of `make check`; invoking a `generate-*`
 target both writes its artifact and runs that generator's embedded structural
 checks.
 
-The 55 artifacts in each of `assets.generated/svg/`, `assets.generated/pdf/`,
+The 67 artifacts in each of `assets.generated/svg/`, `assets.generated/pdf/`,
 and `assets.generated/png/` are checked in. This makes visual and XML diffs
 reviewable, but it also means that regenerating with a different GDAL, GEOS,
 or Inkscape version can produce ordering, coordinate, or rendering differences
@@ -197,6 +203,37 @@ the curated transient snapshot. The
 profile schema, source evaluation, orbital and observer formulas,
 instrument-band behavior, SVG layers, current limitations, and every output.
 
+## Orbital Technosphere generation
+
+The Orbital Technosphere pass propagates checked-in OMM elements with the
+published Vallado/CelesTrak SGP4 implementation at the exact instant stored in
+its JSON profile. The global family maps Earth subpoints over a subdued
+Natural Earth base; the observer family maps above-horizon topocentric
+positions from the recorded San Francisco make-invocation point.
+
+```sh
+make generate-orbiting
+```
+
+Use `generate-orbiting-global`, `generate-orbiting-observer`, or
+`generate-orbiting-PROJECTION` for a subset. Supply a different profile with
+`ORBITING_PROFILE=/absolute/path/profile.json`.
+`generate-orbiting-artifacts` additionally exports the 12 PDFs and PNGs.
+
+Network refresh is an explicit, atomic action:
+
+```sh
+make fetch-orbiting-data
+```
+
+The refresh acquires OMM CSV groups from CelesTrak and selected-spacecraft
+reference positions from NASA SSCWeb, then rewrites their checksums. It does
+not change the profile's timestamp or location; those must be reviewed with
+the NASA query interval. The
+[implementation notes](orbital-technosphere-implementation-notes.md) cover
+the source feasibility decision, profile schema, category memberships,
+coordinate pipeline, SVG metadata, verification, and operational-use limits.
+
 ## Natural Earth acquisition
 
 [`scripts/fetch-natural-earth-10m.sh`](../scripts/fetch-natural-earth-10m.sh)
@@ -216,7 +253,7 @@ are recorded in the
 
 ## Shared coordinate pipeline
 
-The five whole-map generators use
+The six whole-map generators use
 [`projection-generation-common.h`](../src.generate/projection-generation-common.h)
 to select a production projection, construct its exact frame, and call the
 shared public API in `(latitude, longitude)` order. Projected coordinates use
