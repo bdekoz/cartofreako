@@ -39,6 +39,11 @@ CK_WEB_LAND := $(WEB_DIR)/cartofreako-cahill-keyes-land-110m.geojson
 CK_WEB_SMOKE := $(WEB_DIR)/cahill-keyes-smoke.mjs
 CK_WEB_MODULE := $(WEB_BUILD_DIR)/cartofreako-cahill-keyes.mjs
 CK_WEB_WASM := $(WEB_BUILD_DIR)/cartofreako-cahill-keyes.wasm
+MYRIA_WEB_SOURCE := $(WEB_DIR)/cahill-myriahedral.cc
+MYRIA_WEB_LAND := $(CK_WEB_LAND)
+MYRIA_WEB_SMOKE := $(WEB_DIR)/cahill-myriahedral-smoke.mjs
+MYRIA_WEB_MODULE := $(WEB_BUILD_DIR)/cartofreako-cahill-myriahedral.mjs
+MYRIA_WEB_WASM := $(WEB_BUILD_DIR)/cartofreako-cahill-myriahedral.wasm
 
 GEOMETRY_GENERATOR := $(GENERATOR_SRC_DIR)/generate-geometry
 GRATICULE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-graticules
@@ -199,6 +204,7 @@ NATURAL_EARTH_GENERATOR_HEADER := \
 PUBLIC_TARGETS := all check check-prerequisite clean doxygen list-targets \
 	fetch-natural-earth-10m make-generated \
 	wasm-cahill-keyes check-wasm-cahill-keyes \
+	wasm-cahill-myriahedral check-wasm-cahill-myriahedral \
 	generate-geometry generate-graticules-ck generate-earth-ck \
 	generate-water-ck generate-4-slice generate-8-slice \
 	generate-ck-slices generate-projections generated-projections \
@@ -302,6 +308,29 @@ $(CK_WEB_MODULE) $(CK_WEB_WASM) &: \
 
 check-wasm-cahill-keyes: wasm-cahill-keyes
 	cd "$(WEB_BUILD_DIR)" && "$(NODE)" cahill-keyes-smoke.mjs
+
+wasm-cahill-myriahedral: $(MYRIA_WEB_MODULE) $(MYRIA_WEB_WASM) \
+	$(MYRIA_WEB_LAND) $(MYRIA_WEB_SMOKE)
+
+$(MYRIA_WEB_MODULE) $(MYRIA_WEB_WASM) &: \
+		$(MYRIA_WEB_SOURCE) $(MYRIA_WEB_LAND) $(MYRIA_WEB_SMOKE) \
+		$(PROJECTION_SRC_DIR)/a60-carto-frame.h \
+		$(PROJECTION_SRC_DIR)/a60-carto-projection.h \
+		$(PROJECTION_SRC_DIR)/cart0freak0-myriahedral.h \
+		$(PROJECTION_SRC_DIR)/cart0freak0-myriahedral-tree.inc
+	mkdir -p "$(WEB_BUILD_DIR)"
+	EM_CACHE="$(EM_CACHE)" "$(EMXX)" "$(MYRIA_WEB_SOURCE)" \
+		-I "$(PROJECTION_SRC_DIR)" \
+		-isystem "$(ALPHA60_SRC)" -isystem "$(IZZI_SRC)" \
+		-std=c++20 -O3 -Wall -Wextra -Wpedantic -Werror \
+		--bind --no-entry -fexceptions -sDISABLE_EXCEPTION_CATCHING=0 \
+		-sMODULARIZE=1 -sEXPORT_ES6=1 \
+		-sEXPORT_NAME=createCartofreakoCahillMyriahedralModule \
+		-sENVIRONMENT=web,node -sALLOW_MEMORY_GROWTH=1 -sFILESYSTEM=0 \
+		-o "$(MYRIA_WEB_MODULE)"
+
+check-wasm-cahill-myriahedral: wasm-cahill-myriahedral
+	cd "$(WEB_BUILD_DIR)" && "$(NODE)" cahill-myriahedral-smoke.mjs
 
 $(GEOMETRY_GENERATOR): $(GENERATOR_SRC_DIR)/generate-geometry.cc \
 		$(GENERATOR_HEADERS)
@@ -501,7 +530,8 @@ all: $(GENERATED_ARTIFACTS)
 
 clean:
 	$(RM) $(TEST_BINARIES) $(GENERATOR_BINARIES)
-	$(RM) $(GENERATED_SVGS) $(CK_WEB_MODULE) $(CK_WEB_WASM)
+	$(RM) $(GENERATED_SVGS) $(CK_WEB_MODULE) $(CK_WEB_WASM) \
+		$(MYRIA_WEB_MODULE) $(MYRIA_WEB_WASM)
 	$(RM) -r "$(GENERATED_DIR)/svg" "$(GENERATED_DIR)/png" \
 		"$(GENERATED_DIR)/pdf"
 	$(RM) -r "$(DOXYGEN_OUTPUT_DIR)"

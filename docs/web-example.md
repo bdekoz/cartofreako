@@ -1,4 +1,4 @@
-# Complete Myriahedral WebAssembly example
+# Complete Myriahedral raster-overlay example
 
 [Documentation index](../index.md) ·
 [Web workflow](web-workflow.md) ·
@@ -10,8 +10,11 @@ Myriahedral projection to WebAssembly, generating a projection overlay in the
 browser, and loading the checked-in projection image beneath it.
 
 The files shown here are examples to create locally; they are not additional
-checked-in `src.wasm/` products. The checked-in production adapter is the
-[Cahill-Keyes renderer](../src.wasm/README.md).
+`src.wasm/` products. The production
+[WebAssembly renderers](../src.wasm/README.md) include a separate
+Myriahedral base-map adapter that computes only `ocean` and `land`. This
+example instead demonstrates graticules and city anchors over the checked-in
+raster.
 
 The target frame is exactly `1920 x 1080`. The source raster is `4480 x 2520`,
 so both canvases are 16:9 and the browser scales the raster uniformly by
@@ -706,8 +709,10 @@ coordinate system remains 1920×1080.
 
 ## Production extensions
 
-This example favors an inspectable end-to-end path. A production viewer can
-build on it by:
+For an ocean-and-land vector base map, use
+[`cahill-myriahedral.cc`](../src.wasm/cahill-myriahedral.cc) and
+`make check-wasm-cahill-myriahedral`. This example favors an inspectable
+raster-overlay path. A production viewer can build on it by:
 
 - moving module initialization and generation into a Web Worker;
 - caching the SVG by projection version, frame, and layer settings;

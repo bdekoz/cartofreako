@@ -469,6 +469,50 @@ configured generation layouts are function-local statics and satisfy that
 contract. The ordinary public factory continues to select the reference
 layout.
 
+## WebAssembly land-and-ocean option
+
+[`src.wasm/cahill-myriahedral.cc`](../src.wasm/cahill-myriahedral.cc)
+extends the production browser interface used by Cahill-Keyes to the fixed
+Myriahedral layout. Its Embind class is `MyriahedralProjection`; it accepts any
+valid `16:9` frame, exposes `project(latitude, longitude)`, and returns a
+complete SVG string from `generateBaseMapSvg(landGeoJson)`.
+
+This option deliberately computes only the base-map layers:
+
+```text
+ocean -> all 5,120 registered terminal-face triangles
+land  -> Natural Earth 1:110m polygons clipped into those faces
+```
+
+The SVG therefore contains exactly `<g id="ocean">` followed by
+`<g id="land">`, and its root declares `data-layers="ocean land"`. It omits
+the graticule and every physical overlay layer available to `make all`,
+including bathymetry, rivers, lakes, ice, minor islands, playas, reefs, and a
+separate coastline. The canvas outside the unfolded net is transparent.
+
+The existing 1:110m browser land input remains geographic WGS 84 data. Its
+five `ck_band` pieces form the whole land union, but that property has no
+meaning in the 5,120-face layout and is ignored. To prevent a filled polygon
+from closing across Myriahedral cuts, the adapter clips every ring in two
+stages. It first uses a five-degree geographic grid with half-degree edge
+segmentation, then applies the selected face's affine transform and a convex
+planar-triangle clip. This mirrors the native filled-area strategy without
+bringing GDAL or GEOS into the WASM module. Exact face clipping also means the
+browser does not infer cuts from a screen-distance threshold.
+
+Build and exercise the option with:
+
+```sh
+make wasm-cahill-myriahedral
+make check-wasm-cahill-myriahedral
+```
+
+The smoke test verifies the New York reference coordinate, uniform variable
+frame scaling, coordinate and frame rejection, 5,120 ocean subpaths, exactly
+the two documented groups, absence of optional layers, finite path data, and
+the maximum consecutive land segment. JavaScript usage and the generated
+module names are in the [`src.wasm` README](../src.wasm/README.md).
+
 ## Initialization and complexity
 
 The reference spherical and planar face arrays are initialized once in a

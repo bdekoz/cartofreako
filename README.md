@@ -16,7 +16,7 @@ and artifacts:
 | --- | --- |
 | `src.projections/` | Native C++20 projection API and implementations |
 | `src.generate/` | SVG generator entry points and generation support headers |
-| `src.wasm/` | WebAssembly adapter, geographic input, smoke test, and checked-in build |
+| `src.wasm/` | WebAssembly adapters, geographic input, smoke tests, and generated builds |
 | `tests/` | Standalone algorithm and API tests only |
 | `assets.static/` | Historical, reference, and downloaded source assets |
 | `assets.generated/` | Checked-in SVG, PDF, and PNG renderings |
@@ -42,6 +42,17 @@ make check
 
 The checks build in `tests/` with C++20 and strict compiler warnings. See
 [`index.md`](index.md#choose-a-projection) to select and use a projection.
+
+The optional browser builds include Cahill-Keyes and a Myriahedral base-map
+option restricted to the `ocean` and `land` layers:
+
+```sh
+make check-wasm-cahill-keyes
+make check-wasm-cahill-myriahedral
+```
+
+See the [`src.wasm` README](src.wasm/README.md) for their JavaScript APIs,
+layer contracts, and build requirements.
 
 Generate 24 production whole-earth maps, five exploratory Myriahedral ocean
 perspectives, 12 Cahill-Keyes enlargement slices, and two Myriahedral
