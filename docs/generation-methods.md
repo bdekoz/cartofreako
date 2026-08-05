@@ -1,10 +1,138 @@
-# Generation methods and Stage 7 selection design
+# Generate-pass methods and decision record
 
 [Documentation index](../index.md) ·
 [Generation guide](generation.md) ·
 [Prerequisites](prerequisites.md)
 
-## Outcome
+## Scope and preservation policy
+
+This is the central decision record for work whose proposed deliverable is a
+`src.generate/generate-*.cc` pass or infrastructure that selects
+`generate-*` Make targets. It intentionally excludes projection-algorithm,
+WebAssembly, browser, and general documentation evaluations.
+
+The repository does not retain chat transcripts. It retains two durable forms
+of the generation discussions:
+
+- [`converge-generation.md`](converge-generation.md) is the raw request and
+  stage ledger; and
+- this document and the pass-specific implementation notes summarize
+  evaluation conclusions that can be supported by implemented code, profiles,
+  data snapshots, tests, and committed documentation.
+
+An evaluation request is not treated as an approved design. Where a proposed
+pass has no confirmed plan or implementation in the repository, the ledger
+below says so explicitly. This avoids turning an exploratory prompt into a
+decision after the fact.
+
+## Generate-pass evaluation ledger
+
+| Stage | Proposed pass | Repository status | Preserved evaluation record |
+| --- | --- | --- | --- |
+| 4.1 | `generate-astro` / space and astronomy | **Implemented** | Visualization-grade feasibility, source roles, profile authority, calculation methods, products, and limits are summarized below and detailed in the [astronomy implementation notes](astro-implementation-notes.md) |
+| 4.1a | `generate-cloud-atmosphere` | **Requested; not evaluated to a repository decision** | The raw request identifies timestamped cloud/atmosphere conditions and JAXA Earth data, but no confirmed source contract, profile, product split, or implementation is preserved |
+| 4.2 | `generate-orbiting` / Orbital Technosphere | **Implemented** | Naming, NASA/CelesTrak feasibility, OMM/SGP4, profile authority, products, and limits are summarized below and detailed in the [Orbital Technosphere implementation notes](orbital-technosphere-implementation-notes.md) |
+| 4.4 | `generate-network` | **Requested; not evaluated to a repository decision** | The raw request records variable GeoJSON input, `properties.downloaders`, Alpha60 prior art, and two visual references; no confirmed schema or rendering plan is preserved |
+| 4.5 | `generate-art-agua-roulette` | **Requested; not evaluated to a repository decision** | The raw request proposes mapping bathymetric depth to increasingly complex Izzi roulette curves; no confirmed curve mapping, topology policy, or implementation is preserved |
+| 6 | `generate-world-game` | **Requested; not evaluated to a repository decision** | The raw request identifies World Game and Fuller archival collections; no confirmed digitization, licensing, normalized dataset, layer model, or implementation is preserved |
+| 7 | Configurable `generate-*` selection | **Implemented infrastructure** | JSON profile, validation, safe target expansion, default Make behavior, alternatives, and scope boundaries are recorded in this document |
+
+The unnumbered `solar/high-energy`, `atmosphere/cloud`, and
+`small-body/mission` lines in the raw ledger are taxonomy notes, not separate
+approved passes. Astronomy currently owns the implemented solar,
+high-energy, and representative small-body content. No inference is made
+about a future split.
+
+## Implemented evaluation conclusions
+
+### Stage 4.1: astronomy
+
+The evaluation concluded that an astronomy pass is feasible for
+visualization and atlas placement, provided it does not claim observatory- or
+navigation-grade ephemerides. The implemented choices were:
+
+- use the same six spherical projection implementations as terrestrial maps,
+  with declination mapped to latitude and profile-oriented right ascension
+  mapped to synthetic longitude;
+- produce complementary `all-sky` and observer-filtered products rather than
+  one ambiguous view;
+- make a JSON profile the sole authority for calculation timestamp, observer
+  position, orientation, instrument bands, transient window, source paths,
+  and display budgets;
+- keep normal generation offline through bounded, checked-in snapshots;
+- use NASA Planetary Data for discovery/provenance, not as a universal sky
+  catalog; use Gaia for stars, the NASA Exoplanet Archive for confirmed host
+  systems, JPL elements and SBDB for Solar System bodies, and curated
+  GCN/NSSDC/HEASARC context for persistent and transient high-energy sources;
+  and
+- state the approximation boundary: linear Gaia proper motion, approximate
+  major-planet and lunar elements, two-body small-body propagation, simplified
+  sidereal/visibility calculations, and no atmospheric or terrain model.
+
+JAXA Earth data was evaluated as a possible future atmosphere/cloud context,
+not as a source of celestial coordinates. The implementation, exact formulas,
+source-role table, validation, and deferred precision work are recorded in
+[`astro-implementation-notes.md`](astro-implementation-notes.md).
+
+### Stage 4.2: Orbital Technosphere
+
+The evaluation concluded that a human-made orbit pass is feasible at
+visualization scale, but that no single requested NASA source supplies the
+complete current Earth-orbit population. The implemented choices were:
+
+- use **Orbital Technosphere** for public output and metadata while retaining
+  `generate-orbiting` as the concise Make and source namespace;
+- use CelesTrak OMM CSV as the broad population and category-membership feed,
+  the Vallado/CelesTrak SGP4 reference implementation for propagation, and
+  NASA SSCWeb positions as independent checks for selected spacecraft;
+- treat the supplied Wikipedia pages and Starlink infrastructure essay as
+  terminology and design context, not reproducible catalog truth;
+- store the exact calculation instant, make-invocation reference location,
+  catalog roles, freshness rules, visibility rules, and budgets in a JSON
+  profile rather than reading host time or inferring location;
+- produce a global terrestrial-subpoint product and an above-horizon observer
+  product for every projection; and
+- bound the claim to visualization: public-element age and uncertainty,
+  simplified Earth orientation and illumination, and absence of covariance,
+  maneuvers, photometry, weather, or operational safety guarantees remain
+  explicit limitations.
+
+The naming alternatives, source matrix, OMM/SGP4 conversions, coordinate
+pipeline, detiling layers, tests, and accuracy boundary are recorded in
+[`orbital-technosphere-implementation-notes.md`](orbital-technosphere-implementation-notes.md).
+
+## Unresolved generation-pass proposals
+
+The following entries preserve the useful content of the requests without
+claiming that an evaluation or confirmation occurred:
+
+- **Cloud/atmosphere:** intended as timestamped atmospheric conditions in
+  `generate-cloud-atmosphere.cc`, initially using JAXA Earth data. Before
+  implementation it still needs a concrete product definition, temporal and
+  spatial resolution policy, acquisition and cache contract, observer/global
+  distinction, profile schema, missing-data behavior, and licensing review.
+- **Network:** intended to detile cumulative swarm GeoJSON and visualize
+  `properties.downloaders` using a variable source, starting from the cited
+  Alpha60 results dataset. It still needs a versioned input schema, semantics
+  for cumulative versus instantaneous values, aggregation and privacy rules,
+  projection/seam behavior, visual encoding contract, and test fixture.
+- **Art Agua Roulette:** intended to replace ordinary bathymetric color steps
+  with progressively more complex roulette curves. It still needs a
+  deterministic depth-to-curve parameterization, fill versus stroke rules,
+  clipping and hole behavior, density/performance budgets, palette policy,
+  and a reproducible visual acceptance test.
+- **World Game:** intended to map Fuller's *Inventory of World Resources,
+  Human Trends, and Needs* using BFI, Virginia Tech, Stanford, and California
+  archival holdings. It still needs an accessible machine-readable corpus,
+  rights and citation review, edition/time semantics, normalized resource
+  ontology, geographic registration method, uncertainty policy, and a bounded
+  first product.
+
+These are open design questions, not newly imposed requirements. A future
+evaluation should add its evidence, alternatives, recommendation, and
+confirmation state here before implementation begins.
+
+## Stage 7 configured-selection outcome
 
 Stage 7 adds a project-level JSON preference for the common development case:
 select one or more projections, select one or more generation passes, and let
@@ -21,7 +149,7 @@ individual semantic layers inside one generated SVG. Internal layer sets are
 generator-specific contracts. Selecting them would require a different schema
 and generator API rather than a build-orchestration preference.
 
-## Methods evaluated
+## Stage 7 orchestration methods evaluated
 
 | Method | Benefits | Costs and risks | Decision |
 | --- | --- | --- | --- |
