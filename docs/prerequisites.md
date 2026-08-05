@@ -12,13 +12,13 @@ generation workflow. They do not require the same software:
 | Component | Required for | Purpose |
 | --- | --- | --- |
 | GNU Make | All Makefile targets | Expands the generated projection rules and coordinates builds |
-| C++20 compiler and standard library | Tests and native generators | Builds the projection checks and eight SVG-generation programs |
-| RapidJSON development headers | Astronomy test and generator | Parses the authoritative profile, curated sky, and JPL SBDB snapshots |
+| C++20 compiler and standard library | Tests, profile resolution, and native generators | Builds the projection checks, generation-profile resolver, and nine SVG-generation programs |
+| RapidJSON development headers | Configured generation plus astronomy and Orbital Technosphere tests and generators | Parses the generation preference, authoritative data profiles, astronomy JSON, and NASA SSCWeb references |
 | Alpha60 headers | SVG generation | Supplies `a60-io.h` and shared runtime-resource interfaces |
 | Izzi headers | SVG generation | Supplies `a60-svg.h` and SVG document/path serialization |
 | GDAL development package with OGR | Earth and water generation | Reads Natural Earth Shapefiles and provides vector geometry operations |
 | GEOS support in GDAL | Earth and water generation | Performs polygon intersection, repair, and seam-safe clipping |
-| Bash, `curl`, `unzip`, and `sha256sum` | Natural Earth and astronomy acquisition | Downloads, verifies, and extracts or installs bounded source data |
+| Bash, `curl`, `unzip`, `rg`, and `sha256sum` | Natural Earth, astronomy, and orbital acquisition | Downloads, verifies, and extracts or installs bounded source data |
 | Inkscape | Complete artifact generation and visual review | Exports PDF/PNG and inspects SVG layers, clipping, geometry, and seams |
 | Doxygen | API reference generation | Builds the documented projection-header reference under `docs/doxygen/` |
 | Emscripten, Node.js, and a browser | Optional WebAssembly builds | Builds the production Cahill-Keyes and land/ocean-only Myriahedral adapters, plus the illustrative Myriahedral overlay |
@@ -50,14 +50,17 @@ change the exit status. The check honors the Makefile's tool and source-tree
 overrides; use `EMRUN` and `WEB_BROWSER` to identify those optional tools when
 they are not discoverable at their defaults.
 
-`make check` needs GNU Make, a C++20 compiler, RapidJSON headers, and the
-checked-in astronomy profile and bounded snapshots. The tests provide small
+Bare `make`, `make generation-plan`, and `make check` need GNU Make, a C++20
+compiler, and RapidJSON headers. The check suite also needs the
+checked-in astronomy and Orbital Technosphere profiles and bounded snapshots.
+The tests provide small
 compatibility definitions for the Alpha60 API and do not use GDAL, Natural
 Earth, Izzi, Inkscape, or network access.
 
-`make all` builds 24 production whole-earth maps, 12 astronomy maps, five
+`make all` builds 24 production whole-earth maps, 12 astronomy maps, 12
+Orbital Technosphere maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes slices, and two
-Myriahedral face-group slices, then invokes Inkscape to export all 55 SVGs as
+Myriahedral face-group slices, then invokes Inkscape to export all 67 SVGs as
 PDFs and 3840-pixel-long-side PNGs. It needs
 all native build and data-acquisition dependencies through GEOS plus Inkscape.
 Inkscape may be omitted only when invoking individual SVG generation targets
@@ -155,7 +158,8 @@ per-projection rules with GNU Make's `call`, `eval`, and related expansion
 features.
 
 RapidJSON is header-only; no additional linker library is required. The
-astronomy profile and JPL small-body snapshots use its DOM parser. Verify the
+generation preference, astronomy and Orbital Technosphere profiles, JPL
+small-body snapshots, and NASA SSCWeb response use its DOM parser. Verify the
 header independently when diagnosing a compiler probe failure:
 
 ```sh
@@ -309,6 +313,28 @@ and curated transient snapshot unchanged. See the
 [astronomy implementation notes](astro-implementation-notes.md) for the data
 roles and accuracy boundary.
 
+## Orbital Technosphere input and network access
+
+The Orbital Technosphere SVGs and `make check` run offline from the checked-in
+`assets.static/orbital-technosphere/` profile, OMM CSV snapshots, NASA SSCWeb
+reference, and hashes. The profile is authoritative for the SGP4 instant and
+the observer point captured at make invocation. Deliberately refresh the
+external inputs with:
+
+```sh
+make fetch-orbiting-data
+```
+
+That target needs Bash, `curl`, `rg`, `sha256sum`, Coreutils, and outbound
+HTTPS access. It stages all CelesTrak and NASA responses, checks the OMM
+header, active-catalog size, and NASA success status, and only then installs
+the set and rewrites `SHA256SUMS`. It never changes the profile time or
+location. A complete set less than two hours old is reused in accordance with
+CelesTrak's update policy; HTTP refusals are reported without retrying or
+replacing the old set. See the
+[Orbital Technosphere implementation notes](orbital-technosphere-implementation-notes.md)
+for source roles, SGP4 boundaries, and refresh procedure.
+
 ## Inkscape and visual review
 
 Install Inkscape when reviewing or editing generated artifacts. It is useful
@@ -385,8 +411,9 @@ inkscape --version
 
 Successful generation places six geometry maps, six graticule maps, six
 Earth maps, eleven water maps (six production plus five exploratory
-Myriahedral perspectives), four quadrant slices, eight octant slices, and two
-Myriahedral face-group slices in each of `assets.generated/svg/`,
+Myriahedral perspectives), 12 astronomy maps, 12 Orbital Technosphere maps,
+four quadrant slices, eight octant slices, and two Myriahedral face-group
+slices in each of `assets.generated/svg/`,
 `assets.generated/pdf/`, and `assets.generated/png/`. Every PNG preserves its
 source aspect ratio, has a 3840-pixel longest side, and is flattened against
 opaque white.

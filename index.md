@@ -37,7 +37,9 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | --- | --- |
 | Installation and build dependencies | [Prerequisites](docs/prerequisites.md) |
 | SVG/PDF/PNG generation, Natural Earth, folding, slicing, and review | [Generation guide](docs/generation.md) |
+| Generate-pass evaluation record plus configured, full-suite, family, and exact workflows | [Generate-pass methods and decision record](docs/generation-methods.md) |
 | Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/astro-implementation-notes.md) |
+| Human-made Earth-orbit population and observer generation | [Orbital Technosphere implementation notes](docs/orbital-technosphere-implementation-notes.md) |
 | Natural Earth acquisition, digest, and license | [Natural Earth data note](docs/natural-earth-10m-physical-vectors.md) |
 | Production Cahill-Keyes and Myriahedral browser renderers | [WebAssembly renderer README](src.wasm/README.md) |
 | Illustrative raster-backed Myriahedral overlay | [WebAssembly workflow](docs/web-workflow.md) and [complete example](docs/web-example.md) |
@@ -68,20 +70,29 @@ bibliography records primary sources and attribution.
 
 ## Build and generated artifacts
 
+A bare `make` validates [`generation-profile.json`](generation-profile.json)
+and builds only its selected projection/pass SVG matrix. Preview the
+normalized selection and targets with `make generation-plan`; see the
+[generation methods](docs/generation-methods.md) for schema details and the
+generation-pass and Stage 7 decision records. The explicit `make all`
+workflow below remains the complete release/review build.
+
 Run all standalone projection checks with:
 
 ```sh
 make check
 ```
 
-Generate geometry, labeled graticules, both Natural Earth layer families, and
-both timestamped astronomy products for all six projections with:
+Generate geometry, labeled graticules, both Natural Earth layer families,
+both timestamped astronomy products, and both timestamped Orbital
+Technosphere products for all six projections with:
 
 ```sh
 make all
 ```
 
-The 24 production whole-earth maps, 12 astronomy maps, five exploratory
+The 24 production whole-earth maps, 12 astronomy maps, 12 Orbital
+Technosphere maps, five exploratory
 Myriahedral water perspectives, 12 Cahill-Keyes enlargement slices, and two Myriahedral
 face-group slices are each written as a layered SVG under
 `assets.generated/svg/`, an Inkscape PDF under `assets.generated/pdf/`, and a
@@ -111,9 +122,9 @@ pixels to the longest side.
 Artifact-family targets are also available as
 `generate-geometry-projections`, `generate-graticules-projections`,
 `generate-earth-projections`, `generate-water-projections`, and
-`generate-astro-projections`. Each generic
+`generate-astro-projections`, and `generate-orbiting-projections`. Each generic
 family target includes Cahill-Keyes plus AuthaGraph, Dymaxion, Myriahedral,
-Star-X, and Voronoi. The five whole-map generators accept a projection name on their
+Star-X, and Voronoi. The six whole-map generators accept a projection name on their
 command line. Every generator reopens its SVG to validate the view box,
 required layers, path structure, and finite numeric output.
 
@@ -140,6 +151,19 @@ from the timestamp and San Francisco point stored in the JSON profile:
 | Star-X | [`astro-all-sky-star-x-34-44.png`](assets.generated/png/astro-all-sky-star-x-34-44.png) | [`astro-observer-star-x-34-44.png`](assets.generated/png/astro-observer-star-x-34-44.png) |
 | Voronoi | [`astro-all-sky-voronoi-44-22.916667.png`](assets.generated/png/astro-all-sky-voronoi-44-22.916667.png) | [`astro-observer-voronoi-44-22.916667.png`](assets.generated/png/astro-observer-voronoi-44-22.916667.png) |
 
+The Orbital Technosphere products use the separately pinned propagation time
+and make-invocation observer point. Global maps show terrestrial subpoints;
+observer maps show only the above-horizon topocentric population:
+
+| Projection | Global | Observer |
+| --- | --- | --- |
+| Cahill-Keyes | [`orbital-technosphere-global-ck-44-22.png`](assets.generated/png/orbital-technosphere-global-ck-44-22.png) | [`orbital-technosphere-observer-ck-44-22.png`](assets.generated/png/orbital-technosphere-observer-ck-44-22.png) |
+| AuthaGraph | [`orbital-technosphere-global-authagraph-44-19.052559.png`](assets.generated/png/orbital-technosphere-global-authagraph-44-19.052559.png) | [`orbital-technosphere-observer-authagraph-44-19.052559.png`](assets.generated/png/orbital-technosphere-observer-authagraph-44-19.052559.png) |
+| Dymaxion | [`orbital-technosphere-global-dymaxion-44-20.78461.png`](assets.generated/png/orbital-technosphere-global-dymaxion-44-20.78461.png) | [`orbital-technosphere-observer-dymaxion-44-20.78461.png`](assets.generated/png/orbital-technosphere-observer-dymaxion-44-20.78461.png) |
+| Myriahedral | [`orbital-technosphere-global-myriahedral-44-24.75.png`](assets.generated/png/orbital-technosphere-global-myriahedral-44-24.75.png) | [`orbital-technosphere-observer-myriahedral-44-24.75.png`](assets.generated/png/orbital-technosphere-observer-myriahedral-44-24.75.png) |
+| Star-X | [`orbital-technosphere-global-star-x-34-44.png`](assets.generated/png/orbital-technosphere-global-star-x-34-44.png) | [`orbital-technosphere-observer-star-x-34-44.png`](assets.generated/png/orbital-technosphere-observer-star-x-34-44.png) |
+| Voronoi | [`orbital-technosphere-global-voronoi-44-22.916667.png`](assets.generated/png/orbital-technosphere-global-voronoi-44-22.916667.png) | [`orbital-technosphere-observer-voronoi-44-22.916667.png`](assets.generated/png/orbital-technosphere-observer-voronoi-44-22.916667.png) |
+
 The [SVG generation pipeline](docs/generation.md) explains the generator
 sources and Make targets, Natural Earth acquisition, seam handling, sampling,
 polygon clipping, projected-path folding, layer construction, self-checks,
@@ -148,6 +172,9 @@ authoritative reference for individual `generate-*` targets and the
 ocean/land versus physical-feature layer partition. The
 [astronomy notes](docs/astro-implementation-notes.md) cover the profile,
 source evaluation, calculations, instrument filter, and accuracy boundary.
+The [Orbital Technosphere notes](docs/orbital-technosphere-implementation-notes.md)
+record its naming decision, NASA/CelesTrak feasibility evaluation, OMM and
+SGP4 pipeline, semantic detiling, and non-operational accuracy boundary.
 
 ## AuthaGraph
 
@@ -277,14 +304,20 @@ the `voronoi_source` preset are in the
 | [`docs/web-workflow.md`](docs/web-workflow.md) | Emscripten workflow for an illustrative raster-backed 1920×1080 Myriahedral overlay |
 | [`docs/web-example.md`](docs/web-example.md) | Complete copyable C++, HTML, JavaScript, and build example for that Myriahedral workflow |
 | [`docs/generation.md`](docs/generation.md) | End-to-end SVG generation, seam and folding techniques, data preparation, structural checks, and perceptual considerations |
+| [`docs/generation-methods.md`](docs/generation-methods.md) | Central `generate-*` evaluation ledger, implemented conclusions, unresolved proposals, configured workflows, JSON schema, and Stage 7 decisions |
 | [`docs/prerequisites.md`](docs/prerequisites.md) | Native build, data acquisition, Inkscape review, and optional WebAssembly prerequisites |
 | [`docs/astro-implementation-notes.md`](docs/astro-implementation-notes.md) | Astronomy profile schema, source evaluation, astrometric formulas, instrumentation filter, output contract, verification, and accuracy boundary |
+| [`docs/orbital-technosphere-implementation-notes.md`](docs/orbital-technosphere-implementation-notes.md) | Stage 4.2 feasibility, naming, NASA/CelesTrak source roles, OMM/SGP4 formulas, products, verification, and accuracy boundary |
 | [`src.projections/cart0freak0-star-x.h`](src.projections/cart0freak0-star-x.h) | Star-X group assembly, configurable centered scale, polar-composition geometry, frame validation, public API, and factory |
 | [`tests/test-star-x-projection-api.cc`](tests/test-star-x-projection-api.cc) | Star-X anchors, assembly and scale, global domain, polar helpers, variable-frame, validation, and API tests |
 | [`docs/star-x-context.md`](docs/star-x-context.md) | Star-X octahedral context, face-slot mapping, group rotation, page enlargement, polar composition, and cuts |
 | [`docs/star-x-implementation-notes.md`](docs/star-x-implementation-notes.md) | Star-X gap, scale, and polar formulas, API, safeguards, verification, and provenance |
 | [`docs/star-x-bibliography.md`](docs/star-x-bibliography.md) | Star-X arrangement, Cahill-Keyes geometry, historical, asset, and test sources |
 | [`src.generate/projection-generation-common.h`](src.generate/projection-generation-common.h) | Exact 44-unit frame configurations, projection dispatch, native-cell lookup, cut bisection, and shared seam-safe path projection |
+| [`generation-profile.json`](generation-profile.json) | Checked-in projection and generation-pass preference used by a bare `make` |
+| [`src.generate/generation-profile.h`](src.generate/generation-profile.h) | Strict generation-profile schema, aliases, canonical projection/pass matrix, and safe Make target expansion |
+| [`src.generate/resolve-generation-profile.cc`](src.generate/resolve-generation-profile.cc) | Machine-readable target resolver and human-readable `generation-plan` entry point |
+| [`tests/test-generation-profile.cc`](tests/test-generation-profile.cc) | Profile defaults, aliases, all-selection expansion, duplicate detection, and invalid-schema tests |
 | [`src.generate/projection-area-generation.h`](src.generate/projection-area-generation.h) | Face-local Dymaxion, Myriahedral, and Voronoi transforms plus exact planar-triangle clipping for filled paths |
 | [`src.generate/generate-geometry.cc`](src.generate/generate-geometry.cc) | Izzi SVG generator and structural test for native AuthaGraph, Cahill-Keyes/Star-X, Dymaxion, Myriahedral, and Voronoi faces plus four map quadrants |
 | [`assets.generated/png/geometry-ck-44-22.png`](assets.generated/png/geometry-ck-44-22.png) | PNG preview of the generated layered Cahill-Keyes face geometry in a 44×22 frame |
@@ -302,6 +335,13 @@ the `voronoi_source` preset are in the
 | [`assets.static/astronomy/astro-profile.json`](assets.static/astronomy/astro-profile.json) | Reproducible timestamp, San Francisco reference point, celestial orientation, multi-band instrumentation, event interval, display budgets, and catalog paths |
 | [`assets.static/astronomy/curated-sky.json`](assets.static/astronomy/curated-sky.json) | Provenanced persistent multi-band objects and timestamped GCN/NSSDC transient snapshot |
 | [`scripts/fetch-astro-data.sh`](scripts/fetch-astro-data.sh) | Bounded Gaia DR3, NASA Exoplanet Archive, and JPL SBDB snapshot refresh |
+| [`src.generate/orbiting-data.h`](src.generate/orbiting-data.h) | Orbital Technosphere profile and OMM validation, category membership, SGP4 adapter, frame transforms, illumination, and visibility state |
+| [`src.generate/orbiting-generation.h`](src.generate/orbiting-generation.h) | Global and observer semantic SVG layers, subdued Natural Earth base, representative tracks, markers, metadata, and embedded checks |
+| [`src.generate/generate-orbiting.cc`](src.generate/generate-orbiting.cc) | Thin Orbital Technosphere generator entry point |
+| [`src.generate/third_party/sgp4/`](src.generate/third_party/sgp4/) | Unmodified Vallado/CelesTrak SGP4 C++ reference implementation and provenance |
+| [`tests/test-orbiting-generation.cc`](tests/test-orbiting-generation.cc) | Profile, OMM, large catalog ID, published SGP4 vector, NASA SSCWeb tolerance, and finite-state tests |
+| [`assets.static/orbital-technosphere/orbital-technosphere-profile.json`](assets.static/orbital-technosphere/orbital-technosphere-profile.json) | Pinned propagation time, make-invocation location, source catalog roles, freshness, visibility, and display budgets |
+| [`scripts/fetch-orbiting-data.sh`](scripts/fetch-orbiting-data.sh) | Atomic CelesTrak OMM and NASA SSCWeb snapshot refresh with schema checks and hashes |
 | [`src.generate/generate-4-slice.cc`](src.generate/generate-4-slice.cc) | Four full-height, quarter-width Cahill-Keyes quadrant-pair enlargements |
 | [`src.generate/generate-8-slice.cc`](src.generate/generate-8-slice.cc) | Eight naturally bounded, face-clipped Cahill-Keyes octant enlargements |
 | [`src.generate/generate-myriahedral-slices.cc`](src.generate/generate-myriahedral-slices.cc) | Two complementary, exact-terminal-face Myriahedral water slices |
