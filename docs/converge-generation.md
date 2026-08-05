@@ -118,7 +118,7 @@ small-body/mission
 
 Stage 6 development:
 
-Evaluate feasibility and propose a plan for a new generate pass for "world-game" detailing  all of Buckminister Fuller's World Game resources: 
+Evaluate feasibility and propose a plan for a new generate pass for "world-game" detailing  all of Buckminister Fuller's World Game resources:
 
 from
 Inventory of World Resources, Human Trends, and Needs
