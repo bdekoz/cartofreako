@@ -77,25 +77,27 @@ After confirmation, assume authorized and proceed and finish work without prompt
 
 Stage 4.5 development:
 
-Evaluate feasibility and propose a plan for a new generate pass for "art-agua-rolette" detailing the bathymetry layers, but instead of varying colors use different routlette curves as lines or fills as per the izzi/examples/curves-roulette.cc file that explores the parameter space.
+Evaluate feasibility and propose a plan for a new generate pass for "bathymetry-rolette" detailing the bathymetry layers, but instead of varying colors use different routlette curves as lines or fills as per the izzi/examples/curves-roulette.cc file that explores the parameter space.
 
-Shallow bathymetry layers get less point variation styles
-Deeper bathymetry layers get more point and complex variation styles
+Shallow bathymetry layers get roulettes with less point variation styles
+Deeper bathymetry layers get roulettes more point and complex variation styles
 
 Output file:
-src.generate/generate-art-agua-roulette.cc
+src.generate/generate-bathymetry-roulette.cc
 
 Research, evaulate, and suggest plan before continuing.
 Then detail plan and way for confirmation before implementing.
-After confirmation, assume authorized and proceed and finish work without prompting.
+After confirmation, assume authorized and proceed and finish work without prompting. Documentation and make integration as per other generate passes.
 
 ---
 
 Stage 4.1a development:
 
-Evaluate feasibility and propose a plan for a new generate pass for "cloud/atmosphere" detailing cloud and atmospheric conditions located in
+Evaluate feasibility and propose a plan for a new generate pass for "solar/cloud/atmosphere" detailing cloud and atmospheric conditions located in
 src.generate/generate-cloud-atmosphere.cc
-https://aspace.lib.vt.edu/repositories/2/archival_objects/197582
+
+Is this already covered in the astro generative pass? Don't duplicate but recommend what goes in atmosphere, what goes in astro
+
 Assume timestamp of generative process for calculation of any astronomical property. Ask for any other info necessary to compute.
 
 Use data sources
@@ -149,7 +151,7 @@ After confirmation, assume authorized and proceed and finish work without prompt
 
 ---
 
-Stage 7 development:
+Stage 8 development:
 
 Evaluate feasibility and propose a plan for a new generate pass for "anthropocene" detailing human-originating climate change impact areas located in
 src.generate/generate-anthropocene.cc
@@ -193,3 +195,22 @@ update documention in docs/generation.md
 
 capture generation methods and summarize implementation choices discussed in chat in docs/generation-methods.md
 
+---------
+
+Stage 9 development:
+
+Change existing generate "network" pass to "network-swarm". Update docs and makefiles, Then...
+
+Evaluate feasibility and propose a plan for a new generate pass for "network-infrastructure" detailing network infrastructure in
+src.generate/generate-network-infrastructure.cc
+
+Prior art:
+augment_carto_composite
+alpha60/src/a60-carto-geo.h
+
+Data source 
+https://github.com/bdekoz/cloud_cdn_cache/data
+
+Research, evaulate, and suggest plan before continuing.
+Then detail plan and way for confirmation before implementing.
+After confirmation, assume authorized and proceed and finish work without prompting.

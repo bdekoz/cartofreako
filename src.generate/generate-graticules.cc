@@ -14,6 +14,7 @@
 #include <a60-io.h>
 #include <a60-svg.h>
 
+#include "generation-typography.h"
 #include "projection-generation-common.h"
 
 namespace {
@@ -154,7 +155,8 @@ coordinate_label(const int coordinate, const std::string_view negative,
 svg::typography
 make_label_typography(const svg::color color)
 {
-  svg::typography typography = svg::k::smono_typo;
+  svg::typography typography = generation::with_configured_label_font(
+    svg::k::hyperl_typo);
   typography._M_size = 0.25;
   typography._M_style = {color, 0.95, svg::color::white, 0, 0};
   typography._M_anchor = svg::typography::anchor::middle;
@@ -334,6 +336,7 @@ main(const int argc, char** argv)
                       "every graticule must have one visible label");
   generation::require(token_count(generated, "\u00b0") >= 53,
                       "every graticule line must have a degree label");
+  generation::verify_configured_label_font(generated, "graticule SVG");
   generation::require(generated.find(" nan") == std::string::npos
                       && generated.find(" -nan") == std::string::npos
                       && generated.find(" inf") == std::string::npos

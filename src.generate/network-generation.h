@@ -26,6 +26,7 @@
 #include <a60-io.h>
 #include <a60-svg.h>
 
+#include "generation-typography.h"
 #include "natural-earth-generation.h"
 #include "network-clustering.h"
 #include "network-data.h"
@@ -448,7 +449,8 @@ inline svg::typography
 label_typography(const double size = 0.13,
                  const svg::color_qi color = {225, 230, 225})
 {
-  svg::typography result = svg::k::smono_typo;
+  svg::typography result = generation::with_configured_label_font(
+    svg::k::hyperl_typo);
   result._M_size = size;
   result._M_style = {color, 0.94, {9, 15, 18}, 0.9, 0.01};
   result._M_anchor = svg::typography::anchor::start;
@@ -685,6 +687,7 @@ verify(const std::string& generated,
                     && generated.find(" inf") == std::string::npos
                     && generated.find(" -inf") == std::string::npos,
                   "generated Network SVG has non-finite data");
+  generation::verify_configured_label_font(generated, "Network SVG");
 }
 
 inline int

@@ -70,6 +70,16 @@ case $# in
     ;;
 esac
 
+label_font=${LABEL_FONT:-${CARTOFREAKO_LABEL_FONT:-atkinson_hyperlegible}}
+case "$label_font" in
+  atkinson_hyperlegible|Atkinson\ Hyperlegible)
+    label_font_family='Atkinson Hyperlegible'
+    ;;
+  *)
+    label_font_family=$label_font
+    ;;
+esac
+
 required_failures=0
 optional_missing=0
 
@@ -164,6 +174,20 @@ check_required_file "Izzi roulette header" \
   "$izzi_src/a60-svg-curves-roulette.h"
 check_required_tool "Inkscape" "$inkscape"
 check_required_tool "Doxygen" "$doxygen"
+
+if command_available fc-match; then
+  pass "Fontconfig matcher (fc-match)"
+  matched_font=$(fc-match -f '%{family}' "$label_font_family" 2>/dev/null)
+  matched_primary=${matched_font%%,*}
+  if [ "$matched_primary" = "$label_font_family" ]; then
+    pass "Configured label font ($label_font_family)"
+  else
+    fail "Configured label font ($label_font_family; fc-match selected $matched_primary)"
+  fi
+else
+  fail "Fontconfig matcher (fc-match)"
+  fail "Configured label font ($label_font_family; cannot verify)"
+fi
 
 tmp_root=${TMPDIR:-/tmp}
 tmp_prefix=${tmp_root%/}/cartofreako-prerequisite.

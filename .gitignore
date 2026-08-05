@@ -12,6 +12,7 @@
 /tests/test-voronoi-projection-api
 /tests/test-astro-generation
 /tests/test-generation-profile
+/tests/test-generation-typography
 /tests/test-orbiting-generation
 /tests/test-network-generation
 /tests/test-bathymetry-roulette-style

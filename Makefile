@@ -13,6 +13,7 @@ GDAL_CONFIG ?= gdal-config
 DOXYGEN ?= doxygen
 INKSCAPE ?= inkscape
 PNG_LONG_SIDE ?= 3840
+LABEL_FONT ?= atkinson_hyperlegible
 PNG_EXPORT_BACKGROUND := --export-background=white \
 	--export-background-opacity=255 \
 	--export-png-color-mode=RGB_8
@@ -287,6 +288,7 @@ TEST_BINARIES := \
 	$(TEST_DIR)/test-astro-generation \
 	$(TEST_DIR)/test-bathymetry-roulette-style \
 	$(TEST_DIR)/test-generation-profile \
+	$(TEST_DIR)/test-generation-typography \
 	$(TEST_DIR)/test-network-generation \
 	$(TEST_DIR)/test-orbiting-generation \
 	$(TEST_DIR)/test-cahill-keyes-projection \
@@ -302,6 +304,7 @@ TEST_BINARIES := \
 	$(TEST_DIR)/test-voronoi-projection-api
 
 GENERATOR_HEADERS := \
+	$(GENERATOR_SRC_DIR)/generation-typography.h \
 	$(GENERATOR_SRC_DIR)/projection-generation-common.h \
 	$(GENERATOR_SRC_DIR)/myriahedral-perspective-generation.h \
 	$(wildcard $(GENERATOR_SRC_DIR)/myriahedral-perspective-*-tree.inc) \
@@ -410,6 +413,7 @@ check-prerequisite: $(PREREQUISITE_CHECKER)
 		GDAL_CONFIG="$(GDAL_CONFIG)" INKSCAPE="$(INKSCAPE)" \
 		DOXYGEN="$(DOXYGEN)" EMXX="$(EMXX)" EMRUN="$(EMRUN)" \
 		NODE="$(NODE)" WEB_BROWSER="$(WEB_BROWSER)" \
+		LABEL_FONT="$(LABEL_FONT)" \
 		"$(PREREQUISITE_CHECKER)"
 
 check: $(SGP4_OBJECT) $(NETWORK_GEOJSON)
@@ -425,6 +429,10 @@ check: $(SGP4_OBJECT) $(NETWORK_GEOJSON)
 		$(TEST_DIR)/test-generation-profile.cc \
 		-o $(TEST_DIR)/test-generation-profile
 	$(TEST_DIR)/test-generation-profile
+	$(CXX) $(CPPFLAGS) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$(TEST_DIR)/test-generation-typography.cc \
+		-o $(TEST_DIR)/test-generation-typography
+	$(TEST_DIR)/test-generation-typography
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$(TEST_DIR)/test-network-generation.cc \
 		-lh3 \
@@ -653,6 +661,7 @@ generate-graticules-cahill-keyes: $(CK_GRATICULE_SVG)
 
 $(CK_GRATICULE_SVG): $(GRATICULE_GENERATOR) | $(GENERATED_SVG_DIR)
 	cd "$(GENERATED_SVG_DIR)" && \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(GRATICULE_GENERATOR))" cahill-keyes
 
 generate-earth-ck: $(CK_EARTH_SVG) $(CK_SLICE_SVGS)
@@ -712,6 +721,7 @@ $(2): $(GEOMETRY_GENERATOR) | $(GENERATED_SVG_DIR)
 generate-graticules-$(1): $(3)
 $(3): $(GRATICULE_GENERATOR) | $(GENERATED_SVG_DIR)
 	cd "$(GENERATED_SVG_DIR)" && \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(GRATICULE_GENERATOR))" $(1)
 
 generate-earth-$(1): $(4)
@@ -750,11 +760,13 @@ define ASTRO_PROJECTION_RULES
 generate-astro-$(1): $(2) $(3)
 $(2): $(ASTRO_GENERATOR) $(ASTRO_PROFILE) $(ASTRO_CATALOGS) | $(GENERATED_SVG_DIR)
 	cd "$(GENERATED_SVG_DIR)" && \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(ASTRO_GENERATOR))" $(1) all-sky \
 		"$(abspath $(ASTRO_PROFILE))"
 
 $(3): $(ASTRO_GENERATOR) $(ASTRO_PROFILE) $(ASTRO_CATALOGS) | $(GENERATED_SVG_DIR)
 	cd "$(GENERATED_SVG_DIR)" && \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(ASTRO_GENERATOR))" $(1) observer \
 		"$(abspath $(ASTRO_PROFILE))"
 endef
@@ -790,12 +802,14 @@ $(2): $(ORBITING_GENERATOR) $(ORBITING_PROFILE) $(ORBITING_CATALOGS) \
 		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
 	cd "$(GENERATED_SVG_DIR)" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(ORBITING_GENERATOR))" $(1) global \
 		"$(abspath $(ORBITING_PROFILE))"
 
 $(3): $(ORBITING_GENERATOR) $(ORBITING_PROFILE) $(ORBITING_CATALOGS) \
 		| $(GENERATED_SVG_DIR)
 	cd "$(GENERATED_SVG_DIR)" && \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(ORBITING_GENERATOR))" $(1) observer \
 		"$(abspath $(ORBITING_PROFILE))"
 endef
@@ -833,6 +847,7 @@ $(2): $(NETWORK_GENERATOR) $(NETWORK_PROFILE) $(NETWORK_GEOJSON) \
 		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
 	cd "$(GENERATED_SVG_DIR)" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(NETWORK_GENERATOR))" $(1) \
 		"$(abspath $(NETWORK_PROFILE))" "$(abspath $(NETWORK_GEOJSON))"
 endef
@@ -861,6 +876,7 @@ $(2): $(BATHYMETRY_ROULETTE_GENERATOR) $(NATURAL_EARTH_STAMP) \
 		| $(GENERATED_SVG_DIR)
 	cd "$(GENERATED_SVG_DIR)" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(BATHYMETRY_ROULETTE_GENERATOR))" $(1)
 endef
 

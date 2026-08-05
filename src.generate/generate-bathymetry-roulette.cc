@@ -17,6 +17,7 @@
 #include <a60-svg.h>
 
 #include "bathymetry-roulette-style.h"
+#include "generation-typography.h"
 #include "natural-earth-generation.h"
 
 namespace cart0freak0::bathymetry_roulette_generation {
@@ -161,7 +162,9 @@ key_text_markup(const double x, const double y, const std::string& text)
   std::ostringstream output;
   output << "<text x=\"" << format_number(x)
          << "\" y=\"" << format_number(y)
-         << "\" font-family=\"monospace\" font-size=\"0.17\""
+         << "\" font-family=\""
+         << generation::configured_label_font_family()
+         << "\" font-size=\"0.17\""
          << " fill=\"" << color_text(catalogue::ink_color)
          << "\">" << text << "</text>\n";
   return output.str();
@@ -371,6 +374,8 @@ verify(const std::string& generated,
                      && generated.find(" inf") == std::string::npos
                      && generated.find(" -inf") == std::string::npos,
                    "generated bathymetry roulette SVG has non-finite data");
+  generation::verify_configured_label_font(
+    generated, "Bathymetry Roulette SVG");
 
   for (const natural_earth::layer_spec& source
        : natural_earth::bathymetry_specs)

@@ -103,6 +103,33 @@ The default locations can be overridden:
 | `NETWORK_PROFILE` | `assets.static/network/network-profile.json` | H3 clustering, physical marker dimensions, labels/tethers, fixed scales, and provenance |
 | `INKSCAPE` | `inkscape` | Command-line PDF and PNG exporter |
 | `PNG_LONG_SIDE` | `3840` | Pixel count assigned to each PNG's longest side |
+| `LABEL_FONT` | `atkinson_hyperlegible` | Installed font used for visible labels in graticule, astronomy, Orbital Technosphere, network, and Bathymetry Roulette images |
+
+### Generated label typography
+
+All text-bearing generation passes share
+[`generation-typography.h`](../src.generate/generation-typography.h). The
+default `atkinson_hyperlegible` identifier serializes as the installed SVG
+family `Atkinson Hyperlegible`; font sizes, weights, colors, and label
+placement remain pass-specific. The generators reject unsafe or empty family
+names and reopen each SVG to verify that every visible `<text>` element uses
+the configured family.
+
+Override the font for a deliberate artifact variant with an installed family
+name. Use `-B` when outputs already exist so Make reruns the generators and
+their PDF/PNG exports:
+
+```sh
+make -B LABEL_FONT='Atkinson Hyperlegible Next' generate-graticules-projections
+make -B LABEL_FONT='Atkinson Hyperlegible Next' generate-astro
+make -B LABEL_FONT='Atkinson Hyperlegible Next' generate-orbiting
+make -B LABEL_FONT='Atkinson Hyperlegible Next' generate-network-artifacts
+make -B LABEL_FONT='Atkinson Hyperlegible Next' generate-bathymetry-roulette-artifacts
+```
+
+When invoking a generator binary directly, set
+`CARTOFREAKO_LABEL_FONT` instead. Installation and exact-family validation are
+documented in the [prerequisites](prerequisites.md#label-font).
 
 ### Configured development generation
 

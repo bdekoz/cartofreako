@@ -24,6 +24,7 @@
 #include <a60-io.h>
 #include <a60-svg.h>
 
+#include "generation-typography.h"
 #include "natural-earth-generation.h"
 #include "orbiting-data.h"
 #include "projection-generation-common.h"
@@ -375,7 +376,8 @@ add_marker(svg::group_element& layer,
 inline svg::typography
 label_typography()
 {
-  svg::typography typography = svg::k::smono_typo;
+  svg::typography typography = generation::with_configured_label_font(
+    svg::k::hyperl_typo);
   typography._M_size = 0.15;
   typography._M_style = {
     svg::color::gray05, 0.92, svg::color::midnightblue, 0.8, 0.01,
@@ -701,6 +703,8 @@ verify(const std::string& generated,
                      && generated.find(" inf") == std::string::npos
                      && generated.find(" -inf") == std::string::npos,
                    "generated Orbital Technosphere SVG has non-finite data");
+  generation::verify_configured_label_font(
+    generated, "Orbital Technosphere SVG");
 }
 
 inline product_kind

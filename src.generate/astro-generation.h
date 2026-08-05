@@ -21,6 +21,7 @@
 #include <a60-svg.h>
 
 #include "astro-data.h"
+#include "generation-typography.h"
 #include "projection-generation-common.h"
 
 namespace cart0freak0::astro_generation {
@@ -462,7 +463,8 @@ add_uncertainty(svg::group_element& layer,
 inline svg::typography
 label_typography()
 {
-  svg::typography result = svg::k::smono_typo;
+  svg::typography result = generation::with_configured_label_font(
+    svg::k::hyperl_typo);
   result._M_size = 0.17;
   result._M_style = {
     svg::color::gray05, 0.95, svg::color::midnightblue, 0.75, 0.01,
@@ -727,6 +729,7 @@ verify(const std::string& generated,
                   && generated.find(" inf") == std::string::npos
                   && generated.find(" -inf") == std::string::npos,
                 "generated astronomy SVG contains a non-finite coordinate");
+  generation::verify_configured_label_font(generated, "astronomy SVG");
 }
 
 inline product_kind
