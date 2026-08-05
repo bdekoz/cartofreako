@@ -462,11 +462,12 @@ Every 5-degree geographic cell is densified, mapped separately through each
 candidate face's local transform, repaired with GEOS if necessary, and
 intersected with that face's exact planar triangle. Dymaxion uses Gray's exact
 Fuller face transform and the selected subface registration; Myriahedral uses
-the same 3D-chord affine coordinates as its 5,120-face implementation; and
-Voronoi uses the same face-local gnomonic transform and unfolding affine. Only
-the clipped planar pieces are normalized into the output frame, so a filled
-ring never needs a chord between unrelated net edges. Same-color area
-hairlines hide microscopic cracks along adjacent pieces.
+the same central gnomonic barycentric transform as its 5,120-face
+implementation; and Voronoi uses its face-local gnomonic transform and
+unfolding affine. Only the clipped planar pieces are normalized into the
+output frame, so a filled ring never needs a chord between unrelated net
+edges. Same-color area hairlines hide microscopic cracks along adjacent
+pieces.
 
 ## Geometry generator
 

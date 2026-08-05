@@ -36,7 +36,7 @@
  * land-aware hinge tree. The two groups implemented here form an exact,
  * complementary partition of the reference net: group 1 contains North
  * America, South America, Antarctica, Greenland, and Iceland; group 2
- * contains every remaining face. Starting at tree root 103 in group 2,
+ * contains every remaining face. Starting at Prim root 103 in group 2,
  * crossing any of five selected hinge edges toggles the group assignment.
  * This produces 2722 faces in group 1 and 2398 in group 2.
  *
@@ -180,8 +180,8 @@ make_face_groups()
   std::array<std::uint8_t, face_count> result {};
   std::array<std::uint16_t, face_count> stack {};
   std::size_t stack_size = 0;
-  result[myriahedral_detail::tree_root] = 2;
-  stack[stack_size++] = myriahedral_detail::tree_root;
+  result[myriahedral_detail::mst_root] = 2;
+  stack[stack_size++] = myriahedral_detail::mst_root;
   while (stack_size != 0)
     {
       const std::size_t current = stack[--stack_size];

@@ -25,8 +25,8 @@ require(
 
 const newYork = projection.project(40.7128, -74.006);
 require(
-    Math.abs(newYork.x - 1672.3914750126473) < 1e-9
-        && Math.abs(newYork.y - 673.84652284592642) < 1e-9,
+    Math.abs(newYork.x - 1672.3958573173111) < 1e-9
+        && Math.abs(newYork.y - 673.85401928773956) < 1e-9,
     `incorrect projected point: ${JSON.stringify(newYork)}`
 );
 

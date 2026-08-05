@@ -200,46 +200,19 @@ candidate_faces(const polygon& value,
 
 class face_projection
 {
-  myria::vector_3d source_origin;
-  myria::vector_3d source_edge_0;
-  myria::vector_3d source_edge_1;
-  myria::point_2d target_origin;
-  myria::point_2d target_edge_0;
-  myria::point_2d target_edge_1;
-  double coefficient_a;
-  double coefficient_b;
-  double coefficient_c;
-  double determinant;
+  const myria::spherical_face* source;
+  const myria::planar_face* target;
 
 public:
   face_projection(const myria::projection_layout& layout,
                   const std::size_t face)
-  : source_origin(layout.spherical[face][0]),
-    source_edge_0(layout.spherical[face][1] - source_origin),
-    source_edge_1(layout.spherical[face][2] - source_origin),
-    target_origin(layout.planar[face][0]),
-    target_edge_0(layout.planar[face][1] - target_origin),
-    target_edge_1(layout.planar[face][2] - target_origin),
-    coefficient_a(myria::dot(source_edge_0, source_edge_0)),
-    coefficient_b(myria::dot(source_edge_0, source_edge_1)),
-    coefficient_c(myria::dot(source_edge_1, source_edge_1)),
-    determinant(coefficient_a * coefficient_c
-                - coefficient_b * coefficient_b)
-  { }
+  : source(&layout.spherical.at(face)), target(&layout.planar.at(face)) { }
 
   projected_point
   operator()(const double longitude, const double latitude) const
   {
-    const myria::vector_3d relative
-      = myria::geographic_vector(latitude, longitude) - source_origin;
-    const double r0 = myria::dot(relative, source_edge_0);
-    const double r1 = myria::dot(relative, source_edge_1);
-    const double alpha
-      = (r0 * coefficient_c - r1 * coefficient_b) / determinant;
-    const double beta
-      = (r1 * coefficient_a - r0 * coefficient_b) / determinant;
-    const myria::point_2d value
-      = target_origin + target_edge_0 * alpha + target_edge_1 * beta;
+    const myria::point_2d value = myria::project_on_face(
+      *source, *target, myria::geographic_vector(latitude, longitude));
     return {value.x, value.y};
   }
 };

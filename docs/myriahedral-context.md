@@ -64,9 +64,9 @@ The four children are `(p0,b,a)`, `(b,p1,c)`, `(a,b,c)`, and `(a,c,p2)`.
 Four rounds turn each original face into 256 small faces, for 5120 total.
 
 The triangles are planar chords whose vertices lie on the unit sphere. The
-projection maps each geographic point through the chord triangle associated
-with its spherical region. A finer mesh reduces the visible effect of using a
-piecewise affine transform.
+projection sends a ray from the sphere center through each geographic point
+to the chord plane associated with its spherical region. A finer mesh reduces
+the visible distortion of this piecewise gnomonic transform.
 
 ## Why land influences cuts
 
@@ -92,16 +92,22 @@ Spherical chord face              Planar face
 
        p1                              q1
       /  \                            /  \
-     / g  \       affine map         / q  \
+     / g  \      central ray         / q  \
     /______\          -->            /______\
    p0      p2                       q0      q2
 ```
 
-The 3D point `g` is expressed using coefficients `alpha` and `beta` relative
-to the chord directions `(p1-p0)` and `(p2-p0)`. The same coefficients place
-`q` relative to `(q1-q0)` and `(q2-q0)`. This construction makes neighboring
-faces agree exactly on a retained hinge. Along a cut, each face owns a
-separate planar copy of the shared edge.
+The ray through the 3D direction `g` intersects the face's chord plane. Triple
+products provide barycentric weights `(w0,w1,w2)` for that intersection, and
+the same weights place `q` in `(q0,q1,q2)`. On a shared great-circle edge the
+opposite weight is zero, so neighboring faces agree on a retained hinge.
+Along a cut, each face owns a separate planar copy of the shared edge.
+
+This deliberately differs from the earlier implementation, which projected
+`g` orthogonally into a chord-plane basis. That approximation introduced a
+small false hinge discontinuity and could place a point outside its selected
+planar triangle. The implementation notes preserve the measurements and the
+reason for choosing the cleaner gnomonic construction.
 
 ## Geographic quadrants
 
@@ -195,7 +201,7 @@ instead of stretching the geometry. Any other supported frame must preserve
 that ratio—for example `1600 x 900`, `1920 x 1080`, or a
 `frame::area {16*h/9, h}`.
 
-This is the required ratio of this **raster-compatible configuration**, not a
+This is the required ratio of this **raster-registered configuration**, not a
 law of all Myriahedral projections. Another cut tree can have different raw
 bounds, and another rendering can choose a different crop.
 
@@ -205,7 +211,7 @@ The small-face construction aims to keep local distortion low and to move
 interruptions away from important land connections. It should not be
 described as an exact global equal-area or conformal transform:
 
-- every face uses a finite affine approximation;
+- every face uses a finite central gnomonic approximation;
 - cuts introduce intentional global discontinuities;
 - distance between different branches has no direct geographic meaning;
 - orientation changes abruptly only at cuts, but derivative behavior changes

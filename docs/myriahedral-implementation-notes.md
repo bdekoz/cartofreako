@@ -22,11 +22,17 @@ exploratory trees without making the public projection dependent on runtime
 configuration files. Every choice remains deterministic and suitable for a
 header-oriented library API.
 
+Compatibility is deliberately topological and registrational rather than
+bit-for-bit numerical: face order, cut trees, rotations, and the `16:9` canvas
+are retained, while the historical chord-plane approximation, malformed seed
+embedding, and truncated base constants are not. The resulting coordinate
+changes are subpixel at depth 5 and restore the intended hinge continuity.
+
 The work has four parts:
 
-1. **Forward projection:** reproduce the upstream icosahedron face order,
-   depth-5 subdivision, fixed land-aware cut tree, planar unfolding, and
-   per-face affine transform in C++20.
+1. **Forward projection:** retain the upstream icosahedron face order,
+   depth-5 subdivision, fixed land-aware cut tree, and planar unfolding while
+   using a numerically corrected central gnomonic face transform in C++20.
 2. **Perspective exploration:** preserve complete reference metadata and five
    additional cut trees with independently selected planar registrations.
 3. **Variable frames and slices:** uniformly normalize a selected net to a
@@ -47,7 +53,7 @@ The work has four parts:
 | [`a60-carto-projection.h`](../src.projections/a60-carto-projection.h) | Shared `projection_api`, `projection_base`, and `myriahedral` projection mode |
 | [`a60-carto-frame.h`](../src.projections/a60-carto-frame.h) | `frame` and `frame.frame_area` geometry |
 | [`a60-carto.h`](../src.projections/a60-carto.h) | Umbrella include that exports the projection |
-| [`test-myriahedral-projection-api.cc`](../tests/test-myriahedral-projection-api.cc) | Fixed anchors, upstream-layout checks, variable frames, full-degree sweep, domain validation, and API integration |
+| [`test-myriahedral-projection-api.cc`](../tests/test-myriahedral-projection-api.cc) | Fixed gnomonic anchors, whole-mesh geometric invariants, variable frames, domain validation, and API integration |
 | [`test-myriahedral-slicing.cc`](../tests/test-myriahedral-slicing.cc) | Hinge membership, complementary face counts, registered bounds, frame offsets, and invalid-carrier rejection |
 | [`projection-generation-common.h`](../src.generate/projection-generation-common.h) | Native-cell classification, repeated transition bisection, and seam-safe line generation |
 | [`test-projection-generation-common.cc`](../tests/test-projection-generation-common.cc) | Antimeridian and multi-face source-edge regression coverage |
@@ -235,16 +241,20 @@ not inherit a tiny longitude-dependent component from floating-point
 
 ### 2. Icosahedron and depth-5 subdivision
 
-The initial regular icosahedron has 20 faces. Its twelve vertices use the
-upstream constants:
+The initial regular icosahedron has 20 faces. The historical implementation
+stored ten-decimal approximations of its two coordinates. The production
+mesh instead derives them from the golden ratio:
 
 ```text
-tau = 0.8506508084
-one = 0.5257311121
+golden_ratio = (1 + sqrt(5)) / 2
+one = 1 / hypot(golden_ratio, 1)
+tau = golden_ratio * one
 ```
 
-The initial face order is preserved because every embedded tree index refers
-to that order. For a face `(p0,p1,p2)`, one subdivision computes normalized
+Every constructed base vertex is normalized once more before subdivision.
+This removes the historical maximum unit-length error of about `3.07e-11`
+without changing the initial face order, on which every embedded tree index
+depends. For a face `(p0,p1,p2)`, one subdivision computes normalized
 spherical edge midpoints:
 
 ```text
@@ -293,14 +303,15 @@ formula: it completely specifies which neighboring triangles remain attached.
 
 ### 4. Flatten the first face
 
-Let:
+Face `0` establishes the planar coordinate system independently of Prim's
+minimum-spanning-tree root, face `103`. Let:
 
 ```text
 d0 = p1 - p0
 d1 = p2 - p0
 l0 = |d0|
 l1 = |d1|
-c  = abs((d0 dot d1) / (l0 l1))
+x2 = (d0 dot d1) / l0
 ```
 
 The first chord triangle is placed in the plane as:
@@ -308,11 +319,16 @@ The first chord triangle is placed in the plane as:
 ```text
 q0 = (0, 0)
 q1 = (l0, 0)
-q2 = (c l0, sqrt(1-c^2) l1)
+q2 = (x2, sqrt(l1^2 - x2^2))
 ```
 
-The absolute value and vertex order intentionally match the upstream
-implementation.
+The signed horizontal coordinate preserves all three chord lengths for a
+general triangle. The square-root radicand uses fused multiply-add; a negative
+value is accepted only within a scale-aware roundoff tolerance, otherwise the
+layout is rejected. This intentionally diverges from the inherited
+`abs(c) * l0` formula, whose use of the wrong incident length was nearly hidden
+by the almost-isosceles face `0`. See
+[Forward-projection reassessment](#forward-projection-reassessment-2026-08-04).
 
 ### 5. Unfold every tree neighbor
 
@@ -323,7 +339,7 @@ third vertex along the shared edge is:
 
 ```text
 t = (r_a^2 - r_b^2 + L^2) / (2L)
-h = sqrt(max(0, r_a^2 - t^2))
+h = sqrt(r_a^2 - t^2)
 ```
 
 With edge unit vector `e` and perpendicular `n = (-e_y,e_x)`, the two circle
@@ -335,18 +351,21 @@ c1 = a + t e - h n
 ```
 
 The intersection on the opposite side of `a--b` from the parent's third
-vertex is selected. Traversing all tree edges this way lays out every triangle
-without closing the non-tree cuts.
+vertex is selected. Edge lengths, triangle inequalities, and side orientation
+are validated. A negative height radicand is clamped only when it is consistent
+with floating-point roundoff. Traversing all tree edges this way lays out every
+triangle without closing the non-tree cuts.
 
 After the `335` degree rotation, the canonical raw bounds are:
 
 ```text
-minimum = (-3.794926045715898, -2.925593176288270)
-maximum = ( 2.570969787433996,  1.609508207794985)
+minimum = (-3.794926045751039, -2.925593176139355)
+maximum = ( 2.570969787384746,  1.609508207971013)
 ```
 
-These bounds and representative face vertices are checked against an
-independent reconstruction in the test.
+These bounds and representative face vertices are retained as fixed corrected
+references. Whole-mesh edge, hinge, barycentric, and locator invariants provide
+the independent geometric validation.
 
 ### 6. Locate the spherical face
 
@@ -357,41 +376,43 @@ A point lies on the interior side of each great-circle edge. For edge
 s = sign((a cross b) dot c) * ((a cross b) dot g)
 ```
 
-The selected triangle maximizes its minimum `s` across all three edges. The
-search first considers 20 base faces and then only four children at each of
-four levels. It therefore evaluates 36 small triangle tests rather than
-scanning all 5120 faces. Exact edge ties resolve by stable face order.
+The search tests oriented containment with `long double` triple-product
+intermediates. It selects the first containing base face, then the first
+containing child at each of four levels. If roundoff leaves no containing
+candidate, it falls back to the largest minimum edge margin after normalizing
+each edge-plane normal. It therefore evaluates 36 small triangle tests rather
+than scanning all 5120 faces. Exact edge ties resolve by stable face order.
 
 ### 7. Map within one triangle
 
-Let the selected spherical chord face be `(p0,p1,p2)` and the corresponding
-planar face be `(q0,q1,q2)`. Define:
+Let the selected spherical chord face be `(p0,p1,p2)`, the corresponding
+planar face be `(q0,q1,q2)`, and `g` the unit geographic direction. Central
+gnomonic barycentric weights are oriented triple products:
 
 ```text
-d0 = p1 - p0
-d1 = p2 - p0
-r  = g - p0
-
-A = d0 dot d0
-B = d0 dot d1
-C = d1 dot d1
-R0 = r dot d0
-R1 = r dot d1
-D = A C - B^2
-
-alpha = (R0 C - R1 B) / D
-beta  = (R1 A - R0 B) / D
+w0 = g dot (p1 cross p2)
+w1 = g dot (p2 cross p0)
+w2 = g dot (p0 cross p1)
+s  = w0 + w1 + w2
 ```
 
 The point in the unfolded net is:
 
 ```text
-q = q0 + alpha (q1-q0) + beta (q2-q0)
+q = (w0 q0 + w1 q1 + w2 q2) / s
 ```
 
-This is the affine/chord mapping used by the previous implementation. The
-component normal to the chord face is discarded when solving for `alpha` and
-`beta`.
+These are the barycentric coordinates of the ray from the sphere center where
+it intersects the chord-face plane. A point on a great-circle edge has the
+opposite weight equal to zero, so adjacent retained faces map it to the same
+planar hinge. Triple products, their sum, and the weighted planar combination
+use `long double` intermediates. A parallel or non-finite ray-plane
+intersection is rejected.
+
+The prior implementation instead solved an orthogonal chord-plane projection
+and discarded its normal component. That legacy result is retained only as
+historical evidence: it was not gnomonic, could leave the selected planar
+triangle, and introduced a small false discontinuity at every retained hinge.
 
 ### 8. Normalize and scale the net
 
@@ -408,7 +429,9 @@ v = 1 - (bottom + s(q_y - minimum_y))
 ```
 
 The subtraction from one converts mathematical `y`-up coordinates to screen
-`y`-down coordinates. For frame dimensions `(W,H)`:
+`y`-down coordinates. The computation uses widened intermediates. Values may
+be clamped to `[0,1]` only within `128` double-precision epsilons; any material
+or non-finite canvas excursion is rejected. For frame dimensions `(W,H)`:
 
 ```text
 X = u W
@@ -495,10 +518,10 @@ five `ck_band` pieces form the whole land union, but that property has no
 meaning in the 5,120-face layout and is ignored. To prevent a filled polygon
 from closing across Myriahedral cuts, the adapter clips every ring in two
 stages. It first uses a five-degree geographic grid with half-degree edge
-segmentation, then applies the selected face's affine transform and a convex
-planar-triangle clip. This mirrors the native filled-area strategy without
-bringing GDAL or GEOS into the WASM module. Exact face clipping also means the
-browser does not infer cuts from a screen-distance threshold.
+segmentation, then applies the selected face's central gnomonic transform and
+a convex planar-triangle clip. This mirrors the native filled-area strategy
+without bringing GDAL or GEOS into the WASM module. Exact face clipping also
+means the browser does not infer cuts from a screen-distance threshold.
 
 Build and exercise the option with:
 
@@ -519,11 +542,117 @@ The reference spherical and planar face arrays are initialized once in a
 function-local static object. Each exploratory layout has its own lazy static
 and is unfolded only if selected. The one-time work per selected perspective
 subdivides and unfolds 5120 triangles. A forward query then uses the
-hierarchical face search and a constant-size affine solve. The data footprint
-is dominated by each initialized spherical and planar triangle array; every
-compressed parent tree is about 20 KiB of hexadecimal text.
+hierarchical face search and a constant-size triple-product solve. The data
+footprint is dominated by each initialized spherical and planar triangle
+array; every compressed parent tree is about 20 KiB of hexadecimal text.
 
 Function-local static initialization is thread-safe under C++11 and later.
+
+## Forward-projection reassessment (2026-08-04)
+
+Status: resolved in the production header, native filled-area generator, and
+WebAssembly adapter. The table below preserves the pre-fix measurements so the
+reason for the intentional compatibility divergence remains reviewable.
+
+This review treated both the preserved `myriaworld` implementation and the
+local reconstruction as evidence, not as proof of mathematical correctness.
+That distinction mattered because the pre-audit fixed coordinate, layout, and
+raster tests reproduced the same algorithmic lineage. They were strong
+regression and registration tests, but could not independently validate the
+choice of face-local projection.
+
+The foundational
+[van Wijk paper](https://vanwijk.win.tue.nl/myriahedral/CAJ103.pdf) states that
+large triangles should be subdivided and mapped with a simple gnomonic
+projection. The pinned `myriaworld`
+[`geo.cpp`](https://github.com/temporaer/myriaworld/blob/011d6f8ef0725c0c5f3ba44b66f13d7cf6ac038a/src/geo.cpp)
+instead resolves a three-dimensional point in a chord-plane basis and drops
+the normal coordinate when transferring it to the unfolded plane. The local
+two-by-two Gram solve is algebraically equivalent to that inherited behavior.
+
+### Audit method and results
+
+The deterministic audit covered all `2562` unique mesh vertices, all `7680`
+mesh edges, all `5119` retained tree hinges, a `16`-division grid over every
+terminal face (`783360` points), and `20000` fixed-seed uniform random sphere
+samples. Random face choices were also compared with an exhaustive scan of all
+`5120` terminal faces.
+
+| Pre-fix finding | Numeric evidence | Resolution |
+| --- | --- | --- |
+| The chord-plane transfer was not continuous across retained hinges. | At the spherical midpoint of every retained hinge, the largest distance between its two forced face images was `4.0590889190e-5` raw units, or `0.02255496` pixel in the `4480 × 2520` source frame. Central gnomonic coordinates reduced the all-hinge maximum to `1.41e-15` raw units. | Replaced by the shared central gnomonic transform; all `5119` hinges now agree within `5e-14` at three interior samples. |
+| Orthogonal chord-plane coordinates could place a spherical-face point outside its corresponding planar triangle. | The minimum legacy barycentric coefficient was `-2.8467323e-4` on the complete face grid and `-2.2634238e-4` in the random sample. Gnomonic coefficients were non-negative to about `3.6e-15`. | The production transform now uses gnomonic barycentrics; a deterministic grid over all `5120` faces checks non-negative weights. |
+| Switching the local transform is visually small at depth 5 but topologically important. | The largest legacy-versus-gnomonic displacement was about `0.01162` source pixel in the random sample and `0.01160` source pixel on the complete grid. | The tree and `16:9` registration are retained, but fixed anchors, bounds, SVG/PDF/PNG products, and WebAssembly expectations were regenerated. Exact legacy coordinates are intentionally not preserved. |
+| The inherited initial planar-triangle formula mixed the two incident edge lengths. | Legacy face `0` had a largest side-length error of `1.1793e-12` raw units. Trying the same formula with every possible terminal seed produced a worst error of `0.00439979` raw units, or `6.36%` of that edge. | The signed dot-product construction now preserves all three seed edges and rejects a materially negative height radicand. |
+| The historical icosahedron constants were truncated. | Base and inherited terminal vertices differed from unit length by as much as `3.07381e-11`. | Both coordinates are derived from the golden ratio and every base vertex is normalized; all terminal vertices are unit length within four double-precision epsilons. |
+| Hierarchical face selection was reliable away from floating-point boundaries, but its comparison was not scale-normalized. | All `20000` random selections matched exhaustive normalized-margin selection; every exact edge midpoint chose one of its two adjacent faces; all constructed side probes at angular offsets of approximately `1e-12` radians or more chose the expected face. At approximately `1e-14`, `587` of `15360` probes were roundoff-sensitive. | Selection now uses widened containment-first predicates, stable ordering, and a normalized-margin fallback only when roundoff leaves no containing face. Every `1e-12` edge-side probe and the deterministic exhaustive comparison pass. |
+| The final canvas clamp did not mask a material range error in the audited mesh. | Only one face-grid value preceded the canvas by `2.22e-16`, exactly machine-roundoff scale; no random value was outside. | Normalization now rejects non-finite geometry and any excursion beyond a documented roundoff tolerance before clamping. |
+
+The audited layout had sound fixed-tree topology: `2562` vertices, `7680`
+manifold edges, `5120` faces, and `5119` hinges. Apart from four copies of the
+slightly malformed seed edges, all unfolded planar side lengths agreed with
+their spherical chord lengths within `1e-14` raw units. The legacy two-by-two
+Gram matrix was well-conditioned for these small near-equilateral faces, so
+iteration or a general-purpose linear solver would not have addressed the
+actual problem.
+
+### Implemented numerical replacement
+
+The production face-local transform is central gnomonic barycentric mapping.
+For selected spherical face `(p0,p1,p2)`, geographic unit vector `g`, and its
+unfolded copy `(q0,q1,q2)`, compute oriented triple products:
+
+```text
+w0 = g dot (p1 cross p2)
+w1 = g dot (p2 cross p0)
+w2 = g dot (p0 cross p1)
+s  = w0 + w1 + w2
+
+q = (w0 q0 + w1 q1 + w2 q2) / s
+```
+
+These are the barycentric coordinates of the ray from the sphere center where
+it intersects the chord-face plane. A point on a spherical great-circle edge
+has the opposite weight equal to zero, so both adjacent faces produce exactly
+the same planar edge point when that edge is a retained hinge. `long double`
+intermediates are used for the triple products, sum, and planar weighted
+combination; a parallel or non-finite result is rejected before the final
+point is rounded to `double`.
+
+The completed implementation is:
+
+1. One shared forced-face gnomonic helper in
+   `cart0freak0-myriahedral.h` is used by ordinary point projection and
+   [`projection-area-generation.h`](../src.generate/projection-area-generation.h).
+   [`cahill-myriahedral.cc`](../src.wasm/cahill-myriahedral.cc) calls the same
+   helper instead of maintaining a duplicate transform.
+2. The seed triangle uses signed `x2 = dot(d0,d1) / length(d0)` and
+   `y2 = sqrt(length(d1)^2 - x2^2)`, with a scale-aware tolerance for a tiny
+   negative radicand and rejection of a materially impossible triangle.
+3. Icosahedron constants are derived from the golden ratio, base vertices are
+   normalized, and `mst_root` (`103`) is distinct from `layout_seed_face`
+   (`0`).
+4. Face classification selects the first candidate accepted by widened
+   oriented containment predicates. If roundoff leaves no containing child,
+   the largest normalized margin is the deterministic fallback.
+5. Internally duplicated subdivision vertices are bit-identical, so unfolding
+   matches them exactly instead of through a geometric tolerance. Fused
+   multiply-add, scale-aware radicand checks, and explicit topology and
+   orientation validation prevent silent flattening.
+6. Normalization computes unclamped output with widened intermediates, accepts
+   and clamps only a documented machine-roundoff excursion, and rejects
+   non-finite or materially out-of-frame results.
+7. Raw bounds, fixed coordinate anchors, all affected generate-pass artifacts,
+   slice viewports, perspective metadata, and WebAssembly expectations were
+   regenerated. The legacy implementation and raster remain provenance and
+   registration evidence, not a numerical oracle.
+
+Regression coverage now checks every planar-versus-chord edge length, every
+retained hinge at several interior edge parameters, intentional separation at
+every cut, exhaustive/random locator comparison, edge-and-vertex side probes,
+non-negative gnomonic barycentric coordinates, unit mesh vertices, and canvas
+bounds. A source-raster comparison remains useful for registration, but its
+subpixel legacy differences do not override the geometric invariants.
 
 ## Generator boundary handling
 
@@ -540,6 +669,13 @@ distance(project(p_left), project(p_right)) > max(frame width, frame height) * 1
 
 the transition is a cut and begins a new SVG subpath. Otherwise it is a
 retained tree hinge and the two limiting points remain connected.
+
+Before the correction, this threshold also masked the false hinge
+discontinuity measured above: its `0.02255`-pixel maximum was below the
+`0.0448`-pixel threshold of the `44`-unit generation frame after equivalent
+scaling. The current gnomonic transform makes retained hinges geometrically
+continuous. The tolerance remains useful for bisection termination and for
+distinguishing that roundoff-scale limit pair from an intentional cut.
 
 Densification normally leaves one transition in a source edge, but that is
 not a safe invariant. An edge passing close to a mesh vertex can cross several
@@ -616,14 +752,14 @@ land-adjacent transition for this exact semantic grouping:
 The production implementation no longer repeats the exploratory geographic
 heuristics. It stores those five exact edges in
 [`cart0freak0-myriahedral-slicing.h`](../src.projections/cart0freak0-myriahedral-slicing.h).
-Traversal starts at root face `103` in group 2 and toggles the current label
+Traversal starts at the Prim root face `103` in group 2 and toggles the current label
 whenever it crosses one of the five edges. Every face is consequently assigned
 once, with no overlap and no omitted carrier face:
 
 | Group | Terminal faces | Raw rotated bounds `(min x, min y) ... (max x, max y)` |
 | --- | ---: | --- |
-| 1 | 2722 | `(-3.794926045716, -2.925593176288) ... (0.333633177675, 1.609508207795)` |
-| 2 | 2398 | `(-3.145317798691, -2.245606055383) ... (2.570969787434, 0.706070797167)` |
+| 1 | 2722 | `(-3.794926045751, -2.925593176139) ... (0.333633177765, 1.609508207971)` |
+| 2 | 2398 | `(-3.145317798800, -2.245606055334) ... (2.570969787385, 0.706070797202)` |
 
 ### Carrier-preserving output
 
@@ -643,8 +779,8 @@ exports are self-contained.
 
 | Group | Carrier `viewBox` | Raster size | Ocean artifacts |
 | --- | --- | ---: | --- |
-| 1 | `4.62928339117 0 22.5313244677 24.75` | `3496 × 3840` | [PNG](../assets.generated/png/water-myriahedral-adhoc-slice-1.png) · [SVG](../assets.generated/svg/water-myriahedral-adhoc-slice-1.svg) · [PDF](../assets.generated/pdf/water-myriahedral-adhoc-slice-1.pdf) |
-| 2 | `8.17447516357 4.93044675727 31.1962414453 16.1085708816` | `3840 × 1983` | [PNG](../assets.generated/png/water-myriahedral-adhoc-slice-2.png) · [SVG](../assets.generated/svg/water-myriahedral-adhoc-slice-2.svg) · [PDF](../assets.generated/pdf/water-myriahedral-adhoc-slice-2.pdf) |
+| 1 | `4.62928339131 0 22.5313244683 24.75` | `3496 × 3840` | [PNG](../assets.generated/png/water-myriahedral-adhoc-slice-1.png) · [SVG](../assets.generated/svg/water-myriahedral-adhoc-slice-1.svg) · [PDF](../assets.generated/pdf/water-myriahedral-adhoc-slice-1.pdf) |
+| 2 | `8.17447516329 4.93044675801 31.1962414454 16.1085708814` | `3840 × 1983` | [PNG](../assets.generated/png/water-myriahedral-adhoc-slice-2.png) · [SVG](../assets.generated/svg/water-myriahedral-adhoc-slice-2.svg) · [PDF](../assets.generated/pdf/water-myriahedral-adhoc-slice-2.pdf) |
 
 Generate both slice SVGs with:
 
@@ -663,13 +799,27 @@ resolution property, not a claim about exact regional boundaries.
 
 - the `projection_api` relationship and `myriahedral` mode;
 - source dimensions, raster name, and runtime resource prefix;
-- all 27 positions used by `augment_carto_geo_specific`;
-- independently reconstructed raw net bounds;
+- all 27 fixed gnomonic positions used by `augment_carto_geo_specific`;
+- corrected raw net bounds and representative planar vertices;
+- unit length of every spherical vertex and preservation of all `15360`
+  face-edge chord lengths in the unfolded mesh;
+- exact topology counts of `2562` vertices and `7680` manifold edges;
+- gnomonic barycentric grids over every terminal face;
+- continuity at three interior samples of every retained hinge and separation
+  at the corresponding samples of every cut;
+- exact edge and vertex tie handling, `1e-12` incident-face probes, and
+  deterministic hierarchical versus exhaustive locator comparisons;
+- normalization of every face-grid sample without a material canvas clamp;
 - variable `frame.frame_area` sizes and proportional coordinates;
 - rejection of wrong ratios, non-positive sizes, infinity, and NaN;
 - rejection of out-of-range or non-finite geographic coordinates;
 - a complete whole-degree latitude/longitude sweep;
 - exact equivalence of longitude `-180` and `+180`.
+
+The fixed anchors detect unintended coordinate drift. The whole-mesh
+invariants independently exercise the mathematical properties that motivated
+the divergence, so neither the legacy program nor the reference raster is
+treated as proof of forward-projection correctness.
 
 `tests/test-projection-generation-common.cc` adds path-level regressions for:
 
@@ -698,20 +848,22 @@ make check
 ## Limits and interpretation
 
 - The method and this map are spherical, not ellipsoidal.
-- Coordinates are continuous within each face and across retained tree hinges.
-  Non-tree edges are intentional discontinuities.
+- Central gnomonic coordinates are continuous across retained hinges.
+  Non-tree edges remain intentional discontinuities.
 - A point exactly on a cut has more than one geometrically valid planar image.
   Stable face order chooses one representation.
-- The affine mapping of finite chord triangles is not a globally exact
-  equal-area or conformal formula. Distortion becomes small as mesh faces get
-  finer, but exact preservation should not be claimed.
+- The gnomonic mapping is neither globally equal-area nor conformal.
+  Distortion becomes small as mesh faces get finer, but exact preservation
+  should not be claimed.
 - Coastlines in the PNG are a rendered reference. The raster is not sampled
   during projection, and antialiasing or historical source-data differences
   can produce small visual registration differences at coast edges.
-- The public default remains one fixed raster-compatible configuration. The
-  generation layer adds five compile-time exploratory layouts; accepting an
-  arbitrary untrusted run-time tree would still require a separate validated
-  serialization interface.
+- The public default remains one fixed raster-registered configuration. Its
+  corrected coordinates intentionally differ from the legacy raster generator
+  by at most a small subpixel amount in the audit. The generation layer adds
+  five compile-time exploratory layouts; accepting an arbitrary untrusted
+  run-time tree would still require a separate validated serialization
+  interface.
 
 ## Provenance
 

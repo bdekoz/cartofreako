@@ -95,8 +95,12 @@ The digest is identical to the upstream
 [`samples/black-white-downsampled.png`](https://github.com/temporaer/myriaworld/blob/011d6f8ef0725c0c5f3ba44b66f13d7cf6ac038a/samples/black-white-downsampled.png)
 at the pinned revision.
 
-The raster supplies visual context and the `16:9` compatibility canvas. It is
-not sampled or used as a numeric lookup table by the forward transform.
+The raster supplies visual context and the `16:9` registration canvas. It is
+not sampled or used as a numeric lookup table by the forward transform. The
+current implementation deliberately uses van Wijk's central gnomonic
+face-local method rather than preserving the historical program's orthogonal
+chord-plane approximation, so subpixel coordinate differences from the
+raster's generating lineage are expected and documented.
 
 ## Licensing note
 
