@@ -57,6 +57,8 @@ main()
          != std::string::npos);
   assert(source(profile, "jaxa-gsmap-precipitation").coverage.find(
            "not flood") != std::string::npos);
+  assert(source(profile, "jaxa-gsmap-precipitation").collection
+         == "JAXA.EORC_GSMaP_standard.Gauge.00Z-23Z.v6_daily");
 
   const std::size_t cloud_fraction = atmosphere::layer_index(
     profile, "cloud_fraction");

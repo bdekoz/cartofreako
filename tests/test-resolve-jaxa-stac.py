@@ -34,56 +34,57 @@ documents = {
     },
     BASE + "2026-08/catalog.json": {
         "type": "Catalog",
-        # GSMaP uses DD-HH leaves.  The first leaf is after the cutoff; the
-        # next contains a two-tile observation exactly at the cutoff.
+        # Current JAXA daily products use DD leaves. The first leaf is after
+        # the cutoff; the next contains the latest eligible two-tile
+        # observation.
         "links": [
-            link("child", BASE + "2026-08/05-05/catalog.json"),
-            link("child", BASE + "2026-08/05-04/catalog.json"),
-            link("child", BASE + "2026-08/04-23/catalog.json"),
+            link("child", BASE + "2026-08/05/catalog.json"),
+            link("child", BASE + "2026-08/04/catalog.json"),
+            link("child", BASE + "2026-08/03/catalog.json"),
         ],
     },
-    BASE + "2026-08/05-05/catalog.json": {
+    BASE + "2026-08/05/catalog.json": {
         "type": "Catalog",
-        "links": [link("item", BASE + "2026-08/05-05/future.json")],
+        "links": [link("item", BASE + "2026-08/05/future.json")],
     },
-    BASE + "2026-08/05-04/catalog.json": {
+    BASE + "2026-08/04/catalog.json": {
         "type": "Catalog",
         "links": [
             # Numeric spatial levels overlap; only the most subdivided level
             # is eligible for aggregation.
-            link("child", BASE + "2026-08/05-04/0/catalog.json"),
-            link("child", BASE + "2026-08/05-04/1/catalog.json"),
+            link("child", BASE + "2026-08/04/0/catalog.json"),
+            link("child", BASE + "2026-08/04/1/catalog.json"),
         ],
     },
-    BASE + "2026-08/05-04/0/catalog.json": {
+    BASE + "2026-08/04/0/catalog.json": {
         "type": "Catalog",
-        "links": [link("item", BASE + "2026-08/05-04/0/coarse.json")],
+        "links": [link("item", BASE + "2026-08/04/0/coarse.json")],
     },
-    BASE + "2026-08/05-04/1/catalog.json": {
+    BASE + "2026-08/04/1/catalog.json": {
         "type": "Catalog",
         "links": [
-            link("item", BASE + "2026-08/05-04/1/west.json"),
-            link("item", BASE + "2026-08/05-04/1/east.json"),
+            link("item", BASE + "2026-08/04/1/west.json"),
+            link("item", BASE + "2026-08/04/1/east.json"),
         ],
     },
-    BASE + "2026-08/04-23/catalog.json": {
+    BASE + "2026-08/03/catalog.json": {
         "type": "Catalog",
-        "links": [link("item", BASE + "2026-08/04-23/old.json")],
+        "links": [link("item", BASE + "2026-08/03/old.json")],
     },
-    BASE + "2026-08/05-05/future.json": item(
-        "future", "2026-08-05T05:00:00Z", "2026-08-05T06:00:00Z"
+    BASE + "2026-08/05/future.json": item(
+        "future", "2026-08-05T00:00:00Z", "2026-08-05T23:00:00Z"
     ),
-    BASE + "2026-08/05-04/0/coarse.json": item(
-        "coarse", "2026-08-05T03:00:00Z", "2026-08-05T04:00:00Z"
+    BASE + "2026-08/04/0/coarse.json": item(
+        "coarse", "2026-08-04T00:00:00Z", "2026-08-04T23:00:00Z"
     ),
-    BASE + "2026-08/05-04/1/west.json": item(
-        "west", "2026-08-05T03:00:00Z", "2026-08-05T04:00:00Z"
+    BASE + "2026-08/04/1/west.json": item(
+        "west", "2026-08-04T00:00:00Z", "2026-08-04T23:00:00Z"
     ),
-    BASE + "2026-08/05-04/1/east.json": item(
-        "east", "2026-08-05T03:00:00Z", "2026-08-05T04:00:00Z"
+    BASE + "2026-08/04/1/east.json": item(
+        "east", "2026-08-04T00:00:00Z", "2026-08-04T23:00:00Z"
     ),
-    BASE + "2026-08/04-23/old.json": item(
-        "old", "2026-08-04T22:00:00Z", "2026-08-04T23:00:00Z"
+    BASE + "2026-08/03/old.json": item(
+        "old", "2026-08-03T00:00:00Z", "2026-08-03T23:00:00Z"
     ),
 }
 
@@ -100,4 +101,4 @@ cutoff = MODULE["parse_time"]("2026-08-05T04:00:00Z")
 selected = select_items(fake_load(BASE + "collection.json"), cutoff)
 
 assert [entry["id"] for entry in selected] == ["west", "east"]
-assert MODULE["catalog_id"](BASE + "2026-08/05-04/catalog.json") == "05-04"
+assert MODULE["catalog_id"](BASE + "2026-08/04/catalog.json") == "04"

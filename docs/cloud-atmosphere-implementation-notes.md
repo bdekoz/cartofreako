@@ -57,7 +57,7 @@ The default source split is:
 | Cloud-top height | Same P-Tree observation | 6 h | Valid retrieved height converted to km when necessary |
 | ISCCP cloud type | Same P-Tree observation | 6 h | Modal class among confidently cloudy samples |
 | Aerosol optical depth at 500 nm | GCOM-C/SGLI L3 AROT v3 global daytime daily COGs | 96 h | Column aerosol loading; explicitly not observed smoke and not surface PM2.5 exposure |
-| Gauge-adjusted precipitation rate | GSMaP standard Gauge v6 hourly COGs, 60°S–60°N | 96 h | Source-hour rate field; explicitly not flood, above-average-rainfall, or extreme-event counts |
+| Gauge-adjusted precipitation rate | GSMaP standard Gauge 00Z–23Z v6 daily COGs, 60°S–60°N | 96 h | Daily precipitation-rate field expressed in mm h⁻¹; explicitly not flood, above-average-rainfall, or extreme-event counts |
 | Surface shortwave radiation | JASMES Aqua/MODIS SWR v811 global daily COGs | 336 h | Latest available daily surface field, whose publication lag is visible in the legend |
 
 The public JAXA catalog exposes overlapping numeric spatial-tile levels. The
@@ -65,8 +65,8 @@ resolver walks the static STAC hierarchy, accepts only observations ending no
 later than the process instant, and selects only the most subdivided numeric
 level. This avoids aggregating overlapping levels as if they were independent
 samples. The audited item assets are `AROT`, `PRECIP`, and `swr`, each with
-JAXA's DN-to-value and nodata metadata. The resolver supports both daily `DD`
-and GSMaP hourly `DD-HH` catalog leaves.
+JAXA's DN-to-value and nodata metadata. The resolver supports the current
+daily `DD` catalog leaves and compatible subdaily `DD-HH` leaves.
 
 P-Tree is the default for physical clouds because it supplies COT, cloud-top
 height, cloud type, and a documented cloud-confidence flag at useful

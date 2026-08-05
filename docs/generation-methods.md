@@ -90,7 +90,7 @@ mixed-age mosaic as simultaneous. The confirmed and implemented choices were:
   sharing the exact solar ephemeris with astronomy without duplicating
   celestial sources or observer-horizon layers;
 - use public JAXA Earth STAC COGs for GCOM-C daytime AOD at 500 nm, GSMaP
-  gauge-adjusted hourly precipitation, and JASMES daily surface shortwave
+  daily gauge-adjusted precipitation rate, and JASMES daily surface shortwave
   radiation, while retaining each source interval and a latest-not-after rule;
 - keep AOD distinct from observed smoke and PM2.5 exposure, and precipitation
   distinct from floods and extreme-event counts;

@@ -25,6 +25,20 @@ for command in curl jq gzip sha256sum date python3; do
   fi
 done
 
+profile_source_field()
+{
+  local source_id=$1
+  local field=$2
+  jq -er --arg source_id "$source_id" --arg field "$field" '
+    .sources
+    | map(select(.id == $source_id))
+    | if length == 1 then .[0][$field]
+      else error("profile must contain exactly one source " + $source_id)
+      end
+    | select(type == "string" and length > 0)
+  ' "$profile"
+}
+
 if [[ -n ${SOURCE_DATE_EPOCH:-} ]]; then
   process_start=$(date -u -d "@${SOURCE_DATE_EPOCH}" +%Y-%m-%dT%H:%M:%SZ)
 else
@@ -38,8 +52,12 @@ destination="$raw_root/$stamp"
 temporary_dir=$(mktemp -d)
 trap 'rm -rf "$temporary_dir"' EXIT
 
-ptree_base=${PTREE_BASE_URL:-ftps://ftp.ptree.jaxa.jp:990}
-ptree_product="$ptree_base/pub/himawari/L2/CLP/010"
+if [[ -n ${PTREE_BASE_URL:-} ]]; then
+  ptree_product="${PTREE_BASE_URL%/}/pub/himawari/L2/CLP/010"
+else
+  ptree_product=$(profile_source_field jaxa-ptree-cloud url)
+  ptree_product=${ptree_product%/}
+fi
 # A P-Tree filename records the start of a ten-minute full-disk observation.
 # Require the complete observation interval to end no later than process start,
 # matching the interval checks used by the preparer and renderer.
@@ -111,23 +129,25 @@ jq -n \
             offset:null,nodata:null,asset_key:"CLP"}]}' \
   > "$temporary_dir/ptree.json"
 
-stac_root='https://data.earth.jaxa.jp/stac/cog/v1/catalog.json'
-python3 "$resolver" --root "$stac_root" \
-  --collection 'JAXA.G-Portal_GCOM-C.SGLI_standard.L3-AROT.daytime.v3_global_daily' \
+python3 "$resolver" \
+  --root "$(profile_source_field jaxa-gcom-c-aod url)" \
+  --collection "$(profile_source_field jaxa-gcom-c-aod collection)" \
   --source jaxa-gcom-c-aod \
-  --coverage 'global daily daytime aerosol optical depth at 500 nm' \
+  --coverage "$(profile_source_field jaxa-gcom-c-aod coverage)" \
   --cutoff "$process_start" --output-directory "$temporary_dir" \
   --output-json "$temporary_dir/aod.json"
-python3 "$resolver" --root "$stac_root" \
-  --collection 'JAXA.EORC_GSMaP_standard.Gauge.v6_hourly' \
+python3 "$resolver" \
+  --root "$(profile_source_field jaxa-gsmap-precipitation url)" \
+  --collection "$(profile_source_field jaxa-gsmap-precipitation collection)" \
   --source jaxa-gsmap-precipitation \
-  --coverage '60S to 60N gauge-adjusted hourly precipitation' \
+  --coverage "$(profile_source_field jaxa-gsmap-precipitation coverage)" \
   --cutoff "$process_start" --output-directory "$temporary_dir" \
   --output-json "$temporary_dir/precipitation.json"
-python3 "$resolver" --root "$stac_root" \
-  --collection 'JAXA.JASMES_Aqua.MODIS_swr.v811_global_daily' \
+python3 "$resolver" \
+  --root "$(profile_source_field jaxa-jasmes-swr url)" \
+  --collection "$(profile_source_field jaxa-jasmes-swr collection)" \
   --source jaxa-jasmes-swr \
-  --coverage 'global daily surface shortwave radiation' \
+  --coverage "$(profile_source_field jaxa-jasmes-swr coverage)" \
   --cutoff "$process_start" --output-directory "$temporary_dir" \
   --output-json "$temporary_dir/swr.json"
 

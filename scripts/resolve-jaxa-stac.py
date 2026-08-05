@@ -94,10 +94,10 @@ def select_items(collection: dict, cutoff: dt.datetime) -> list[dict]:
     cutoff_month = cutoff.strftime("%Y-%m")
     for month_url in eligible_catalogs(collection, cutoff_month):
         month = load(month_url)
-        # Leaf identifiers are collection-specific: daily products use DD,
-        # while hourly GSMaP uses DD-HH.  Sort every available leaf newest
-        # first and decide eligibility from STAC observation timestamps,
-        # never from a filename convention.
+        # Leaf identifiers are collection-specific: current daily products
+        # use DD, while compatible subdaily products can use DD-HH. Sort every
+        # available leaf newest first and decide eligibility from STAC
+        # observation timestamps, never from a filename convention.
         leaf_urls = sorted(
             (url for url, _ in links(month, "child")),
             key=catalog_id,

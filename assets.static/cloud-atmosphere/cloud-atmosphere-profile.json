@@ -175,12 +175,12 @@
     },
     {
       "id": "jaxa-gsmap-precipitation",
-      "title": "JAXA GSMaP gauge-adjusted hourly precipitation",
+      "title": "JAXA GSMaP daily gauge-adjusted precipitation rate",
       "access": "public-stac-cog",
       "status": "default-atmosphere",
-      "coverage": "60S to 60N hourly precipitation field; not flood or extreme-event counts",
+      "coverage": "60S to 60N daily precipitation-rate field in mm h-1; not flood or extreme-event counts",
       "url": "https://data.earth.jaxa.jp/stac/cog/v1/catalog.json",
-      "collection": "JAXA.EORC_GSMaP_standard.Gauge.v6_hourly",
+      "collection": "JAXA.EORC_GSMaP_standard.Gauge.00Z-23Z.v6_daily",
       "license_url": "https://earth.jaxa.jp/en/data/policy/"
     },
     {
