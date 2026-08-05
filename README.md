@@ -28,6 +28,12 @@ Install the components listed in
 SVG, PDF, and PNG suite. The self-contained `make check` target needs only GNU
 Make and a C++20 compiler.
 
+List every supported top-level Make target with:
+
+```sh
+make list-targets
+```
+
 Run the standalone algorithm and API compatibility checks with:
 
 ```sh

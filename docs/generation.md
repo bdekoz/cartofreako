@@ -77,6 +77,13 @@ The default locations can be overridden:
 | `INKSCAPE` | `inkscape` | Command-line PDF and PNG exporter |
 | `PNG_LONG_SIDE` | `3840` | Pixel count assigned to each PNG's longest side |
 
+List every supported top-level build, test, generation, export, and cleanup
+target alphabetically with:
+
+```sh
+make list-targets
+```
+
 Run one target normally:
 
 ```sh
