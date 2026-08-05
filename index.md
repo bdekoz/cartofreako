@@ -37,7 +37,7 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | --- | --- |
 | Installation and build dependencies | [Prerequisites](docs/prerequisites.md) |
 | SVG/PDF/PNG generation, Natural Earth, folding, slicing, and review | [Generation guide](docs/generation.md) |
-| Configured, full-suite, family, and exact generation workflows | [Generation methods and Stage 7 selection design](docs/generation-methods.md) |
+| Generate-pass evaluation record plus configured, full-suite, family, and exact workflows | [Generate-pass methods and decision record](docs/generation-methods.md) |
 | Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/astro-implementation-notes.md) |
 | Human-made Earth-orbit population and observer generation | [Orbital Technosphere implementation notes](docs/orbital-technosphere-implementation-notes.md) |
 | Natural Earth acquisition, digest, and license | [Natural Earth data note](docs/natural-earth-10m-physical-vectors.md) |
@@ -74,8 +74,8 @@ A bare `make` validates [`generation-profile.json`](generation-profile.json)
 and builds only its selected projection/pass SVG matrix. Preview the
 normalized selection and targets with `make generation-plan`; see the
 [generation methods](docs/generation-methods.md) for schema details and the
-Stage 7 decision record. The explicit `make all` workflow below remains the
-complete release/review build.
+generation-pass and Stage 7 decision records. The explicit `make all`
+workflow below remains the complete release/review build.
 
 Run all standalone projection checks with:
 
@@ -304,7 +304,7 @@ the `voronoi_source` preset are in the
 | [`docs/web-workflow.md`](docs/web-workflow.md) | Emscripten workflow for an illustrative raster-backed 1920×1080 Myriahedral overlay |
 | [`docs/web-example.md`](docs/web-example.md) | Complete copyable C++, HTML, JavaScript, and build example for that Myriahedral workflow |
 | [`docs/generation.md`](docs/generation.md) | End-to-end SVG generation, seam and folding techniques, data preparation, structural checks, and perceptual considerations |
-| [`docs/generation-methods.md`](docs/generation-methods.md) | Configured and explicit generation workflows, JSON schema, evaluated alternatives, implementation decisions, and extension boundaries |
+| [`docs/generation-methods.md`](docs/generation-methods.md) | Central `generate-*` evaluation ledger, implemented conclusions, unresolved proposals, configured workflows, JSON schema, and Stage 7 decisions |
 | [`docs/prerequisites.md`](docs/prerequisites.md) | Native build, data acquisition, Inkscape review, and optional WebAssembly prerequisites |
 | [`docs/astro-implementation-notes.md`](docs/astro-implementation-notes.md) | Astronomy profile schema, source evaluation, astrometric formulas, instrumentation filter, output contract, verification, and accuracy boundary |
 | [`docs/orbital-technosphere-implementation-notes.md`](docs/orbital-technosphere-implementation-notes.md) | Stage 4.2 feasibility, naming, NASA/CelesTrak source roles, OMM/SGP4 formulas, products, verification, and accuracy boundary |

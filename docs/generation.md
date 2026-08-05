@@ -168,7 +168,8 @@ and the recursive Make retains normal dependency checks, `-j` jobserver
 behavior, and command-line overrides. The
 [generation methods decision record](generation-methods.md) compares this
 design with Make variables, included Make fragments, external JSON tools, and
-generator-runtime filtering.
+generator-runtime filtering. It also centralizes the preserved evaluation
+conclusions and status of proposed `generate-*` passes.
 
 List every supported top-level build, test, generation, export, and cleanup
 target alphabetically with:

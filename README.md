@@ -47,7 +47,8 @@ make
 The checked-in development profile selects Cahill-Keyes plus the Earth and
 water passes (`ocean` is accepted as the legacy alias for `water`). See the
 [generation methods](docs/generation-methods.md) for custom profiles, explicit
-targets, full-suite generation, and the Stage 7 design choices.
+targets, full-suite generation, the central `generate-*` evaluation ledger,
+and the Stage 7 design choices.
 
 Run the standalone algorithm and API compatibility checks with:
 
