@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "description": "Fast Cahill-Keyes terrestrial development profile",
+  "projections": [
+    "cahill_keyes"
+  ],
+  "passes": [
+    "earth",
+    "ocean"
+  ]
+}

@@ -2,18 +2,25 @@
 
 [Documentation index](../index.md) ·
 [Prerequisites](prerequisites.md) ·
+[Generation methods](generation-methods.md) ·
 [Cahill-Keyes context](cahill-keyes-context.md) ·
-[Astronomy notes](astro-implementation-notes.md)
+[Astronomy notes](astro-implementation-notes.md) ·
+[Orbital Technosphere notes](orbital-technosphere-implementation-notes.md)
 
 ## Purpose
 
-The repository contains eight C++20 generation programs under `src.generate/`.
-Five exercise all six production projections through the real Alpha60 and
+The repository contains nine C++20 SVG generation programs under
+`src.generate/`.
+Six exercise all six production projections through the real Alpha60 and
 Izzi APIs. Three derive Cahill-Keyes or Myriahedral slices from an already
 projected whole-earth SVG. They write layered SVGs under
 `assets.generated/svg/`, then reopen those files and verify dimensions, layer
 structure, path counts, and numeric sanity. Inkscape subsequently exports each
 validated SVG as PDF and as a 3840-pixel-long-side PNG.
+
+A separate C++20 profile resolver validates the user-configurable projection
+and pass selection used by a bare `make`. It chooses existing Make targets; it
+does not duplicate generation logic or filter SVG layers after generation.
 
 | Artifact | Generator | Principal input |
 | --- | --- | --- |
@@ -22,12 +29,14 @@ validated SVG as PDF and as a 3840-pixel-long-side PNG.
 | Earth | [`src.generate/generate-earth.cc`](../src.generate/generate-earth.cc) | Natural Earth 1:10m ocean and land |
 | Water | [`src.generate/generate-water.cc`](../src.generate/generate-water.cc) | Every other Natural Earth 1:10m physical layer |
 | Astronomy | [`src.generate/generate-astro.cc`](../src.generate/generate-astro.cc) | Profile timestamp and observer, bounded Gaia/exoplanet/SBDB snapshots, curated multi-band sources and events |
+| Orbital Technosphere | [`src.generate/generate-orbiting.cc`](../src.generate/generate-orbiting.cc) | Profile timestamp and observer, CelesTrak OMM population and memberships, NASA SSCWeb reference positions, and SGP4 |
 | Four slices | [`src.generate/generate-4-slice.cc`](../src.generate/generate-4-slice.cc) | Four full-height, quarter-width quadrant-pair enlargements from the Cahill-Keyes Earth SVG |
 | Eight slices | [`src.generate/generate-8-slice.cc`](../src.generate/generate-8-slice.cc) | Eight exact-octant enlargements from the Cahill-Keyes Earth SVG |
 | Myriahedral groups | [`src.generate/generate-myriahedral-slices.cc`](../src.generate/generate-myriahedral-slices.cc) | Two complementary exact-terminal-face masks from the Myriahedral water SVG |
 
 The aggregate target generates all four terrestrial artifact families and two
-astronomy products for all six production projections, five exploratory
+astronomy and two Orbital Technosphere products for all six production
+projections, five exploratory
 Myriahedral water perspectives, all 12 Cahill-Keyes slices, and two
 Myriahedral face-group slices:
 
@@ -77,11 +86,90 @@ The default locations can be overridden:
 | `ALPHA60_SRC` | `../alpha60/src` | Alpha60 headers |
 | `IZZI_SRC` | `../izzi/src` | Izzi SVG headers |
 | `GDAL_CONFIG` | `gdal-config` | GDAL compiler and linker flags |
+| `GENERATION_PROFILE` | `generation-profile.json` | Projection and generation-pass selection used by `make` and `make configured` |
 | `NATURAL_EARTH_DIR` | `assets.static/natural-earth/10m-physical-vectors` | Extracted shapefiles |
 | `ASTRO_DATA_DIR` | `assets.static/astronomy` | Astronomy profile and bounded catalog snapshots |
 | `ASTRO_PROFILE` | `$(ASTRO_DATA_DIR)/astro-profile.json` | Authoritative timestamp, point of reference, orientation, instrumentation, event window, and catalog paths |
+| `ORBITING_DATA_DIR` | `assets.static/orbital-technosphere` | Orbital Technosphere profile, OMM CSV snapshots, NASA reference, and checksums |
+| `ORBITING_PROFILE` | `$(ORBITING_DATA_DIR)/orbital-technosphere-profile.json` | Authoritative propagation instant, make-invocation reference point, catalog roles, freshness rules, visibility rules, and display budgets |
 | `INKSCAPE` | `inkscape` | Command-line PDF and PNG exporter |
 | `PNG_LONG_SIDE` | `3840` | Pixel count assigned to each PNG's longest side |
+
+### Configured development generation
+
+A bare `make` now reads the checked-in
+[`generation-profile.json`](../generation-profile.json) and builds only the
+selected projection/pass combinations as layered SVGs. The default profile is
+the fast development case requested for Stage 7:
+
+```json
+{
+  "schema_version": 1,
+  "description": "Fast Cahill-Keyes terrestrial development profile",
+  "projections": ["cahill_keyes"],
+  "passes": ["earth", "ocean"]
+}
+```
+
+Inspect the normalized selection and exact Make targets without generating
+anything:
+
+```sh
+make generation-plan
+```
+
+Then build that selection with either equivalent command:
+
+```sh
+make
+make configured
+```
+
+Use another profile without modifying the checked-in preference:
+
+```sh
+make GENERATION_PROFILE=/absolute/path/development.json generation-plan
+make GENERATION_PROFILE=/absolute/path/development.json
+```
+
+Both selectors must be nonempty JSON arrays. The sole value `"all"` expands
+to every supported value. Canonical projections are `cahill-keyes`,
+`authagraph`, `dymaxion`, `myriahedral`, `star-x`, and `voronoi`. Canonical
+passes and their SVG result counts per projection are:
+
+| Profile pass | Result per projection |
+| --- | --- |
+| `geometry` | One native-face geometry SVG |
+| `graticules` | One labeled graticule SVG |
+| `earth` | One Natural Earth `ocean`/`land` base SVG |
+| `water` | One complementary physical-feature SVG |
+| `astronomy` | All-sky and observer SVGs |
+| `orbital-technosphere` | Global and observer SVGs |
+
+Names are case-insensitive, and underscores normalize to hyphens. The
+resolver also accepts `ck`, `starx`, and the established `voroni` spelling as
+projection aliases; `graticule`, `astro`, and `orbiting` are pass aliases.
+For compatibility with the requested `earth, ocean` vocabulary, `ocean`
+normalizes to the current `water` generation pass. It does not mean the
+`ocean` layer inside the Earth base SVG.
+
+Profile `"all"` means the six projections by six selectable passes. It
+produces 48 SVGs because astronomy and Orbital Technosphere each have two
+products. It deliberately excludes Cahill-Keyes slices, exploratory
+Myriahedral perspectives and slices, and PDF/PNG exports. Those products do
+not form a projection/pass cross-product and remain available through their
+explicit targets. `make all` is unchanged: it still builds the complete 67
+SVG, 67 PDF, and 67 PNG suite.
+
+The resolver rejects empty selectors, duplicate aliases or JSON members,
+unknown names or members, a mixed `"all"` selector, and unsupported schema
+versions before recursive Make begins. It emits only whitelisted target names,
+and the recursive Make retains normal dependency checks, `-j` jobserver
+behavior, and command-line overrides. The
+[generation methods decision record](generation-methods.md) compares this
+design with Make variables, included Make fragments, external JSON tools, and
+generator-runtime filtering. It also centralizes the preserved evaluation
+conclusions and status of proposed `generate-*` passes.
 
 List every supported top-level build, test, generation, export, and cleanup
 target alphabetically with:
@@ -105,10 +193,12 @@ make generate-myriahedral-slices
 make generate-star-x
 make generate-voronoi
 make generate-astro
+make generate-orbiting
 make all
 ```
 
-`make` rebuilds only when a declared dependency is newer. Use `make -B`
+Every Make workflow rebuilds only when a declared dependency is newer. Use
+`make -B`
 when an unconditional regeneration is wanted. `make clean` removes the
 generator binaries and generated SVG, PDF, PNG, and WASM build products, but
 deliberately retains the downloaded Natural Earth input and checked-in WASM
@@ -118,7 +208,7 @@ The generators are not part of `make check`; invoking a `generate-*`
 target both writes its artifact and runs that generator's embedded structural
 checks.
 
-The 55 artifacts in each of `assets.generated/svg/`, `assets.generated/pdf/`,
+The 67 artifacts in each of `assets.generated/svg/`, `assets.generated/pdf/`,
 and `assets.generated/png/` are checked in. This makes visual and XML diffs
 reviewable, but it also means that regenerating with a different GDAL, GEOS,
 or Inkscape version can produce ordering, coordinate, or rendering differences
@@ -197,6 +287,37 @@ the curated transient snapshot. The
 profile schema, source evaluation, orbital and observer formulas,
 instrument-band behavior, SVG layers, current limitations, and every output.
 
+## Orbital Technosphere generation
+
+The Orbital Technosphere pass propagates checked-in OMM elements with the
+published Vallado/CelesTrak SGP4 implementation at the exact instant stored in
+its JSON profile. The global family maps Earth subpoints over a subdued
+Natural Earth base; the observer family maps above-horizon topocentric
+positions from the recorded San Francisco make-invocation point.
+
+```sh
+make generate-orbiting
+```
+
+Use `generate-orbiting-global`, `generate-orbiting-observer`, or
+`generate-orbiting-PROJECTION` for a subset. Supply a different profile with
+`ORBITING_PROFILE=/absolute/path/profile.json`.
+`generate-orbiting-artifacts` additionally exports the 12 PDFs and PNGs.
+
+Network refresh is an explicit, atomic action:
+
+```sh
+make fetch-orbiting-data
+```
+
+The refresh acquires OMM CSV groups from CelesTrak and selected-spacecraft
+reference positions from NASA SSCWeb, then rewrites their checksums. It does
+not change the profile's timestamp or location; those must be reviewed with
+the NASA query interval. The
+[implementation notes](orbital-technosphere-implementation-notes.md) cover
+the source feasibility decision, profile schema, category memberships,
+coordinate pipeline, SVG metadata, verification, and operational-use limits.
+
 ## Natural Earth acquisition
 
 [`scripts/fetch-natural-earth-10m.sh`](../scripts/fetch-natural-earth-10m.sh)
@@ -216,7 +337,7 @@ are recorded in the
 
 ## Shared coordinate pipeline
 
-The five whole-map generators use
+The six whole-map generators use
 [`projection-generation-common.h`](../src.generate/projection-generation-common.h)
 to select a production projection, construct its exact frame, and call the
 shared public API in `(latitude, longitude)` order. Projected coordinates use
