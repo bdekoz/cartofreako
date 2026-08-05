@@ -21,6 +21,7 @@ EMRUN ?= $(patsubst %em++,%emrun,$(EMXX))
 NODE ?= node
 WEB_BROWSER ?=
 EM_CACHE ?= /tmp/cartofreako-emscripten-cache
+GENERATION_PROFILE ?= generation-profile.json
 NATURAL_EARTH_DIR ?= $(STATIC_ASSET_DIR)/natural-earth/10m-physical-vectors
 NATURAL_EARTH_FETCHER := scripts/fetch-natural-earth-10m.sh
 ASTRO_DATA_DIR ?= $(STATIC_ASSET_DIR)/astronomy
@@ -62,6 +63,8 @@ MYRIAHEDRAL_SLICE_GENERATOR := \
 	$(GENERATOR_SRC_DIR)/generate-myriahedral-slices
 ASTRO_GENERATOR := $(GENERATOR_SRC_DIR)/generate-astro
 ORBITING_GENERATOR := $(GENERATOR_SRC_DIR)/generate-orbiting
+GENERATION_PROFILE_RESOLVER := \
+	$(GENERATOR_SRC_DIR)/resolve-generation-profile
 SGP4_SOURCE := $(GENERATOR_SRC_DIR)/third_party/sgp4/SGP4.cpp
 SGP4_HEADER := $(GENERATOR_SRC_DIR)/third_party/sgp4/SGP4.h
 SGP4_OBJECT := $(GENERATOR_SRC_DIR)/third_party/sgp4/SGP4.o
@@ -230,6 +233,7 @@ GENERATED_ARTIFACTS := $(GENERATED_SVGS) $(GENERATED_PDFS) \
 
 GENERATOR_BINARIES := \
 	$(ASTRO_GENERATOR) \
+	$(GENERATION_PROFILE_RESOLVER) \
 	$(ORBITING_GENERATOR) \
 	$(EIGHT_SLICE_GENERATOR) \
 	$(EARTH_GENERATOR) \
@@ -240,6 +244,7 @@ GENERATOR_BINARIES := \
 	$(WATER_GENERATOR)
 TEST_BINARIES := \
 	$(TEST_DIR)/test-astro-generation \
+	$(TEST_DIR)/test-generation-profile \
 	$(TEST_DIR)/test-orbiting-generation \
 	$(TEST_DIR)/test-cahill-keyes-projection \
 	$(TEST_DIR)/test-cahill-keyes-projection-api \
@@ -280,9 +285,11 @@ ORBITING_GENERATOR_HEADERS := \
 	$(NATURAL_EARTH_GENERATOR_HEADER) \
 	$(GENERATOR_HEADERS) $(SGP4_HEADER)
 
+.DEFAULT_GOAL := configured
 .DELETE_ON_ERROR:
 
-PUBLIC_TARGETS := all check check-prerequisite clean doxygen list-targets \
+PUBLIC_TARGETS := all check check-prerequisite clean configured doxygen \
+	generation-plan list-targets \
 	fetch-natural-earth-10m fetch-astro-data fetch-orbiting-data make-generated \
 	wasm-cahill-keyes check-wasm-cahill-keyes \
 	wasm-cahill-myriahedral check-wasm-cahill-myriahedral \
@@ -305,6 +312,8 @@ PUBLIC_TARGETS := all check check-prerequisite clean doxygen list-targets \
 	generate-water-myriahedral-perspectives generate-myriahedral-slices \
 	generate-authagraph generate-dymaxion generate-myriahedral generate-star-x \
 	generate-voronoi generate-voroni \
+	generate-geometry-cahill-keyes generate-graticules-cahill-keyes \
+	generate-earth-cahill-keyes generate-water-cahill-keyes \
 	generate-geometry-authagraph generate-graticules-authagraph \
 	generate-earth-authagraph generate-water-authagraph \
 	generate-geometry-dymaxion generate-graticules-dymaxion \
@@ -321,6 +330,15 @@ PUBLIC_TARGETS := all check check-prerequisite clean doxygen list-targets \
 list-targets:
 	@printf '%s\n' $(sort $(PUBLIC_TARGETS))
 
+generation-plan: $(GENERATION_PROFILE_RESOLVER) $(GENERATION_PROFILE)
+	@"$(GENERATION_PROFILE_RESOLVER)" --describe "$(GENERATION_PROFILE)"
+
+configured: $(GENERATION_PROFILE_RESOLVER) $(GENERATION_PROFILE)
+	@targets="$$($(GENERATION_PROFILE_RESOLVER) \
+		"$(GENERATION_PROFILE)")" && \
+		printf 'generation profile: %s\n' "$(GENERATION_PROFILE)" && \
+		$(MAKE) --no-print-directory $$targets
+
 check-prerequisite: $(PREREQUISITE_CHECKER)
 	@MAKE_VERSION="$(MAKE_VERSION)" CXX="$(CXX)" \
 		CPPFLAGS="$(CPPFLAGS)" CXXFLAGS="$(CXXFLAGS)" \
@@ -335,6 +353,10 @@ check: $(SGP4_OBJECT)
 		$(TEST_DIR)/test-astro-generation.cc \
 		-o $(TEST_DIR)/test-astro-generation
 	$(TEST_DIR)/test-astro-generation
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
+		$(TEST_DIR)/test-generation-profile.cc \
+		-o $(TEST_DIR)/test-generation-profile
+	$(TEST_DIR)/test-generation-profile
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-orbiting-generation.cc $(SGP4_OBJECT) \
 		-o $(TEST_DIR)/test-orbiting-generation
@@ -488,6 +510,11 @@ $(ASTRO_GENERATOR): $(GENERATOR_SRC_DIR)/generate-astro.cc \
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$< -o $@
 
+$(GENERATION_PROFILE_RESOLVER): \
+		$(GENERATOR_SRC_DIR)/resolve-generation-profile.cc \
+		$(GENERATOR_SRC_DIR)/generation-profile.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+
 $(SGP4_OBJECT): $(SGP4_SOURCE) $(SGP4_HEADER)
 	$(CXX) -std=c++20 -w -c $(SGP4_SOURCE) -o $@
 
@@ -514,18 +541,21 @@ $(GENERATED_DIR) $(GENERATED_SVG_DIR) $(GENERATED_PNG_DIR) \
 
 # Preserve the original Cahill-Keyes workflow and output names.
 generate-geometry: $(CK_GEOMETRY_SVG)
+generate-geometry-cahill-keyes: $(CK_GEOMETRY_SVG)
 
 $(CK_GEOMETRY_SVG): $(GEOMETRY_GENERATOR) | $(GENERATED_SVG_DIR)
 	cd "$(GENERATED_SVG_DIR)" && \
 		"$(abspath $(GEOMETRY_GENERATOR))" cahill-keyes
 
 generate-graticules-ck: $(CK_GRATICULE_SVG)
+generate-graticules-cahill-keyes: $(CK_GRATICULE_SVG)
 
 $(CK_GRATICULE_SVG): $(GRATICULE_GENERATOR) | $(GENERATED_SVG_DIR)
 	cd "$(GENERATED_SVG_DIR)" && \
 		"$(abspath $(GRATICULE_GENERATOR))" cahill-keyes
 
 generate-earth-ck: $(CK_EARTH_SVG) $(CK_SLICE_SVGS)
+generate-earth-cahill-keyes: $(CK_EARTH_SVG)
 
 $(CK_EARTH_SVG): $(EARTH_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
 	cd "$(GENERATED_SVG_DIR)" && \
@@ -547,6 +577,7 @@ $(CK_EIGHT_SLICE_SVGS) &: $(EIGHT_SLICE_GENERATOR) $(CK_EARTH_SVG) | $(GENERATED
 generate-ck-slices: generate-4-slice generate-8-slice
 
 generate-water-ck: $(CK_WATER_SVG)
+generate-water-cahill-keyes: $(CK_WATER_SVG)
 
 $(CK_WATER_SVG): $(WATER_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
 	cd "$(GENERATED_SVG_DIR)" && \

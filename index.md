@@ -37,6 +37,7 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | --- | --- |
 | Installation and build dependencies | [Prerequisites](docs/prerequisites.md) |
 | SVG/PDF/PNG generation, Natural Earth, folding, slicing, and review | [Generation guide](docs/generation.md) |
+| Configured, full-suite, family, and exact generation workflows | [Generation methods and Stage 7 selection design](docs/generation-methods.md) |
 | Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/astro-implementation-notes.md) |
 | Human-made Earth-orbit population and observer generation | [Orbital Technosphere implementation notes](docs/orbital-technosphere-implementation-notes.md) |
 | Natural Earth acquisition, digest, and license | [Natural Earth data note](docs/natural-earth-10m-physical-vectors.md) |
@@ -68,6 +69,13 @@ bibliography records primary sources and attribution.
 | Voronoi | Regular icosahedron, 20 nearest-site gnomonic faces | `48:25` source canvas | `voronoiproj` | `make_voronoi_projection()` |
 
 ## Build and generated artifacts
+
+A bare `make` validates [`generation-profile.json`](generation-profile.json)
+and builds only its selected projection/pass SVG matrix. Preview the
+normalized selection and targets with `make generation-plan`; see the
+[generation methods](docs/generation-methods.md) for schema details and the
+Stage 7 decision record. The explicit `make all` workflow below remains the
+complete release/review build.
 
 Run all standalone projection checks with:
 
@@ -296,6 +304,7 @@ the `voronoi_source` preset are in the
 | [`docs/web-workflow.md`](docs/web-workflow.md) | Emscripten workflow for an illustrative raster-backed 1920×1080 Myriahedral overlay |
 | [`docs/web-example.md`](docs/web-example.md) | Complete copyable C++, HTML, JavaScript, and build example for that Myriahedral workflow |
 | [`docs/generation.md`](docs/generation.md) | End-to-end SVG generation, seam and folding techniques, data preparation, structural checks, and perceptual considerations |
+| [`docs/generation-methods.md`](docs/generation-methods.md) | Configured and explicit generation workflows, JSON schema, evaluated alternatives, implementation decisions, and extension boundaries |
 | [`docs/prerequisites.md`](docs/prerequisites.md) | Native build, data acquisition, Inkscape review, and optional WebAssembly prerequisites |
 | [`docs/astro-implementation-notes.md`](docs/astro-implementation-notes.md) | Astronomy profile schema, source evaluation, astrometric formulas, instrumentation filter, output contract, verification, and accuracy boundary |
 | [`docs/orbital-technosphere-implementation-notes.md`](docs/orbital-technosphere-implementation-notes.md) | Stage 4.2 feasibility, naming, NASA/CelesTrak source roles, OMM/SGP4 formulas, products, verification, and accuracy boundary |
@@ -305,6 +314,10 @@ the `voronoi_source` preset are in the
 | [`docs/star-x-implementation-notes.md`](docs/star-x-implementation-notes.md) | Star-X gap, scale, and polar formulas, API, safeguards, verification, and provenance |
 | [`docs/star-x-bibliography.md`](docs/star-x-bibliography.md) | Star-X arrangement, Cahill-Keyes geometry, historical, asset, and test sources |
 | [`src.generate/projection-generation-common.h`](src.generate/projection-generation-common.h) | Exact 44-unit frame configurations, projection dispatch, native-cell lookup, cut bisection, and shared seam-safe path projection |
+| [`generation-profile.json`](generation-profile.json) | Checked-in projection and generation-pass preference used by a bare `make` |
+| [`src.generate/generation-profile.h`](src.generate/generation-profile.h) | Strict generation-profile schema, aliases, canonical projection/pass matrix, and safe Make target expansion |
+| [`src.generate/resolve-generation-profile.cc`](src.generate/resolve-generation-profile.cc) | Machine-readable target resolver and human-readable `generation-plan` entry point |
+| [`tests/test-generation-profile.cc`](tests/test-generation-profile.cc) | Profile defaults, aliases, all-selection expansion, duplicate detection, and invalid-schema tests |
 | [`src.generate/projection-area-generation.h`](src.generate/projection-area-generation.h) | Face-local Dymaxion, Myriahedral, and Voronoi transforms plus exact planar-triangle clipping for filled paths |
 | [`src.generate/generate-geometry.cc`](src.generate/generate-geometry.cc) | Izzi SVG generator and structural test for native AuthaGraph, Cahill-Keyes/Star-X, Dymaxion, Myriahedral, and Voronoi faces plus four map quadrants |
 | [`assets.generated/png/geometry-ck-44-22.png`](assets.generated/png/geometry-ck-44-22.png) | PNG preview of the generated layered Cahill-Keyes face geometry in a 44×22 frame |
