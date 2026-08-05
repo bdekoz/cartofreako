@@ -11,6 +11,7 @@
 /tests/test-star-x-projection-api
 /tests/test-voronoi-projection-api
 /tests/test-astro-generation
+/tests/test-orbiting-generation
 
 # Native generator executables.
 /src.generate/generate-geometry
@@ -24,6 +25,8 @@
 /src.generate/generate-8-slice
 /src.generate/generate-myriahedral-slices
 /src.generate/generate-astro
+/src.generate/generate-orbiting
+/src.generate/third_party/sgp4/SGP4.o
 
 # Downloaded inputs and local build products.
 /assets.static/natural-earth/10m-physical-vectors/

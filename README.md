@@ -26,7 +26,8 @@ and artifacts:
 Install the components listed in
 [`docs/prerequisites.md`](docs/prerequisites.md) before building the complete
 SVG, PDF, and PNG suite. The offline `make check` target needs GNU Make, a
-C++20 compiler, RapidJSON headers, and the checked-in astronomy snapshots.
+C++20 compiler, RapidJSON headers, and the checked-in astronomy and Orbital
+Technosphere snapshots.
 
 List every supported top-level Make target with:
 
@@ -54,7 +55,8 @@ make check-wasm-cahill-myriahedral
 See the [`src.wasm` README](src.wasm/README.md) for their JavaScript APIs,
 layer contracts, and build requirements.
 
-Generate 24 production whole-earth maps, 12 timestamped astronomy maps, five
+Generate 24 production whole-earth maps, 12 timestamped astronomy maps, 12
+timestamped Orbital Technosphere maps, five
 exploratory Myriahedral ocean perspectives, 12 Cahill-Keyes enlargement
 slices, and two Myriahedral face-group slices as layered SVG, PDF, and opaque-white,
 3840-pixel-long-side PNG artifacts with:
@@ -80,3 +82,16 @@ See the
 [`astronomy implementation notes`](docs/astro-implementation-notes.md) for the
 San Francisco profile, data sources, formulas, instrumentation model, and
 outputs.
+
+Orbital Technosphere generation is also offline by default. Its JSON profile
+fixes the SGP4 calculation instant and San Francisco reference point, while
+checked-in OMM CSV and NASA SSCWeb snapshots preserve the input state:
+
+```sh
+make generate-orbiting
+make fetch-orbiting-data
+```
+
+See the [Orbital Technosphere implementation notes](docs/orbital-technosphere-implementation-notes.md)
+for source feasibility, naming, propagation, detiling layers, and accuracy
+limits.
