@@ -8,30 +8,40 @@
 
 The implementation replaces the former per-point Node.js subprocess, shared
 temporary file, and fixed-height caches with an in-process C++20 forward
-projection. It ports the coordinate-conversion core of Mary Jo Graça and Gene
-Keyes's `MegamapMaker-prep9.pl`, including:
+projection. Its geometric construction is derived from the
+coordinate-conversion core of Mary Jo Graça and Gene Keyes's
+`MegamapMaker-prep9.pl`, including:
 
 - longitude/latitude normalization into eight octants and sixteen mirrored
   half-octants;
 - the complete A–L piecewise graticule construction;
 - the supple-zone line/circle intersection;
 - all eight rotations and reflections in the standard M-layout; and
-- uniform scaling from the canonical 10,000-unit scaffold to an arbitrary
+- dimensionless construction followed by uniform scaling to an arbitrary
   positive, finite 2:1 map frame.
+
+The C++ implementation is not required to reproduce the Perl program's
+floating-point behavior. In particular, its line and circle intersections,
+intermediate precision, scale handling, and segment traversal intentionally
+diverge where the older techniques are ill-conditioned. The Perl output is a
+useful provenance and coarse-compatibility corpus, not a correctness oracle.
 
 The public class remains `a60::carto::ckproj` and continues to implement
 `a60::carto::projection_api`. Its existing `projection_base` constructor and
 named presets remain available. New code can construct it directly from an
 `a60::carto::frame`.
 
-The work was delivered in three stages:
+The work was delivered in four stages:
 
 1. **Native projection:** translate the forward construction to C++20 and
    verify it against the Perl results and `augment_carto_geo_specific` anchors.
 2. **Variable frames:** derive every length and origin from
    `frame.frame_area`, enforce the projection's 2:1 aspect ratio, and retain
    the named compatibility presets.
-3. **Documentation:** record the geometry, formulas, implementation choices,
+3. **Numerical hardening:** normalize the internal scaffold, replace the
+   unstable intersection formulae, test representable boundary neighborhoods,
+   and remove generator coordinate perturbations.
+4. **Documentation:** record the geometry, formulas, implementation choices,
    usage, verification method, provenance, and bibliography in this
    documentation set.
 
@@ -42,14 +52,16 @@ The work was delivered in three stages:
 | [`cart0freak0-cahill-keyes.h`](../src.projections/cart0freak0-cahill-keyes.h) | Numeric forward projection, frame validation, `projection_api` adapter, screen-coordinate conversion, raster naming, and compatibility presets |
 | [`cart0freak0-cahill-keyes-functions.h`](../src.projections/cart0freak0-cahill-keyes-functions.h) | Scale- and offset-aware splitting of projected paths at wrapped frame edges |
 | [`cart0freak0-cahill-keyes-slicing.h`](../src.projections/cart0freak0-cahill-keyes-slicing.h) | Carrier-frame viewport descriptors, exact-octant clipping, SVG slice wrappers, and verification |
-| [`test-cahill-keyes-projection.cc`](../tests/test-cahill-keyes-projection.cc) | Native reference points, scale invariance, domain sweep, and invalid geographic input |
+| [`test-cahill-keyes-projection.cc`](../tests/test-cahill-keyes-projection.cc) | Compatibility points, representable boundary neighborhoods, scale invariance, continuity, domain sweep, and invalid input |
 | [`test-cahill-keyes-projection-api.cc`](../tests/test-cahill-keyes-projection-api.cc) | Public API anchors, variable frames, invalid frames, raster paths, and compatibility construction |
 | [`test-cahill-keyes-path-functions.cc`](../tests/test-cahill-keyes-path-functions.cc) | Horizontal, vertical, corner, two-edge, variable-frame, stateful, and invalid path cases |
 | [`test-cahill-keyes-slicing.cc`](../tests/test-cahill-keyes-slicing.cc) | Four-strip and exact-octant geometry, metadata, source references, physical units, and invalid carriers |
 
-`ck_native::forward_projection` owns all scale-dependent construction values.
-Its constructor calculates the fixed scaffold geometry once. Calls to
-`operator()` are then stateless and require no cache or external process.
+`ck_native::forward_projection` builds a dimensionless, `long double`
+scaffold with `MG = 1` and stores the requested output altitude separately.
+Calls to `operator()` are stateless: they evaluate the canonical construction,
+assemble the octant, and apply the output scale only once at the end. No cache
+or external process is required.
 
 ## Coordinate conventions
 
@@ -88,25 +100,29 @@ valid = abs(W - 2H) <= tolerance
 This admits arithmetic noise, not approximate 2:1 aspect ratios. For example,
 `2000.001 × 1000` is rejected.
 
-The scaffold altitude and scale factor are:
+The geometric scale represented by a requested frame is:
 
 ```text
-MG = H / 2 = W / 4
-q  = MG / 10000 = H / 20000 = W / 40000
+MGout = H / 2 = W / 4
+qout  = MGout / 10000 = H / 20000 = W / 40000
 ```
 
 The original M-layout spans 40,000 units when `MG = 10,000`, so these formulas
-fit it exactly to the frame width. Every construction length is multiplied by
-`q`; angles and geographic zone boundaries remain unchanged. Important scaled
-constants are:
+fit it exactly to the frame width. The implementation does not repeatedly
+multiply each construction value by `qout`. It instead evaluates an equivalent
+canonical scaffold with `MG = 1` and these dimensionless constants:
 
 | Quantity | Value |
 | --- | ---: |
-| `MA` | `940q` |
-| ordinary latitude spacing | `100q` per degree |
-| polar latitude spacing | `104q` per degree |
-| `AP75` | `1560q` |
-| `AP73` | `1760q` |
+| `MA` | `0.094` |
+| ordinary latitude spacing | `0.01` per degree |
+| polar latitude spacing | `0.0104` per degree |
+| `AP75` | `0.156` |
+| `AP73` | `0.176` |
+
+After octant assembly, the canonical coordinate is multiplied by `MGout`.
+This makes the geometric decisions independent of page or raster size and
+eliminates the former scale-dependent intersection classification.
 
 The standard frame constructor centers the map at `(W/2, H/2)`. After native
 projection returns `(x, y)`, the API result is:
@@ -177,8 +193,16 @@ visible seam longitudes are -111°, -21°, 69°, and 159°.
 
 ## Numeric geometry primitives
 
-The port uses `double`, `std::numbers::pi_v<double>`, `std::hypot`, and four
-small geometry operations.
+Geographic inputs and public outputs remain `double`, but the complete
+dimensionless construction uses `long double`,
+`std::numbers::pi_v<long double>`, the `long double` trigonometric overloads,
+and `std::fma` where it reduces cancellation. Only the final assembled
+coordinate is scaled and rounded to `double`.
+
+`long double` supplies the widest standard floating-point type available on
+the target; the algorithm does not rely on extra precision alone. Canonical
+scaling and the stable geometric formulations are required even on targets
+where `long double` and `double` have the same representation.
 
 For points `P=(Px,Py)` and `Q=(Qx,Qy)`, distance is:
 
@@ -197,32 +221,48 @@ Some calls intentionally use a signed `L`; this preserves the source
 construction's direction near the 73° transition at the outer edge. A zero
 total length is rejected with `std::domain_error`.
 
-For two lines through `P1`, `P2` at angles `θ1`, `θ2`, let
-`a1 = tan(θ1)` and `a2 = tan(θ2)`. Their intersection is:
+For two lines through `P1`, `P2` at angles `θ1`, `θ2`, use unit direction
+vectors `r = (cos θ1, sin θ1)` and `s = (cos θ2, sin θ2)`. With the
+two-dimensional scalar cross product `×`, their intersection is:
 
 ```text
-x = (a1*P1x - a2*P2x - P1y + P2y) / (a1 - a2)
-y = a1 * (x - P1x) + P1y
+t = (P2 - P1) × s / (r × s)
+intersection = P1 + tr
 ```
+
+This avoids tangent slopes, their vertical-line singularity, and division by a
+difference of two rounded tangents. The construction rejects only exactly
+parallel direction vectors; the `m = 0` meridian has its explicit analytic
+limit.
 
 For a circle with center `C`, radius `r`, and a segment from `P0` to `P1`, set
-`d = P1 - P0` and solve `|P0 + td - C|² = r²`:
+`d = P1 - P0` and project the center onto the segment's supporting line:
 
 ```text
-A = d·d
-B = 2 d·(P0 - C)
-Cq = (P0 - C)·(P0 - C) - r²
-t = (-B ± sqrt(B² - 4 A Cq)) / (2A)
+a  = d·d
+t0 = (C - P0)·d / a
+e  = P0 + t0*d - C
+h² = r² - e·e
+dt = sqrt(h² / a)
+t  = t0 ± dt
 ```
 
-Only roots in `[0,1]` are segment intersections. A negative discriminant, a
-zero-length segment, or roots outside the segment report no intersection.
+Only factors in `[0,1]` are segment intersections. Roundoff tolerances are
+derived from `long double` epsilon and the magnitudes of the radial terms and
+segment factors. A negative `h²` or an endpoint factor is clamped only when it
+falls inside that error bound. Accepted roots are ordered along the segment.
+
+This deliberately replaces the Perl routine's expanded quadratic coefficient,
+naïve quadratic roots, exact discriminant sign test, and exact endpoint tests.
+Those choices were responsible for reachable false “no intersection” results
+near the 45° half-octant boundary.
 
 ## Reference half-octant construction
 
 ### Preliminary scaffold
 
-Let `S = MG`. The primary points are:
+Let the canonical scaffold use `S = MG = 1` and `q = 1/10000`. The primary
+points are:
 
 ```text
 M = (0, 0)
@@ -252,13 +292,15 @@ The supple-zone circle is constrained to have center
 `m = 29°, p = 15°`. Equating the two squared radii gives:
 
 ```text
-Cy = (|V|² - |D|²)
+Cy = ((V - D)·(V + D))
      / (2 * (√3(Vx - Dx) + (Vy - Dy)))
 Cx = √3 Cy
 R  = distance(C, D)
 ```
 
-All these values are computed once in the native projection constructor.
+The dot-product difference-of-squares form avoids subtracting two independently
+rounded squared norms. All these values are computed once in the native
+projection constructor.
 
 ### Meridian framework
 
@@ -292,8 +334,9 @@ with a negative `Lf`. `P75` lies on the circle centered at `A` with radius
 
 ### A–L zone dispatch
 
-The conditions are evaluated in the following order, which resolves boundary
-overlap exactly as the Perl implementation does:
+The conditions are evaluated in the following order. This defines which
+geometric formula owns an exact boundary; it is not a promise to reproduce the
+source program's floating-point branch classification:
 
 | Zone | Ordered condition | Construction |
 | --- | --- | --- |
@@ -318,11 +361,15 @@ example, uses:
 l = p * (Lt + Lm + Lf) / 73
 ```
 
-For `m > 29°`, the 15° path length is found by intersecting the supple circle
-with segment `Jt→Jf`. If that segment does not contain the intersection, the
-algorithm tries `Q→Jt` and subtracts the distance back from `Jt`. Failure to
-intersect either segment is a construction error and throws
-`std::domain_error`.
+For `m > 29°`, the 15° path length is found by traversing the meridian in
+geographic order, `Q→Jt→Jf`. The implementation first intersects the circle
+with `Q→Jt`, then with `Jt→Jf`, and converts the accepted segment factor
+directly to cumulative meridian length. A joint hit has the same cumulative
+length from either segment. This ordering intentionally differs from the Perl
+routine's middle-segment-first search and states the desired geometry directly:
+parallel 15 is the first circle crossing encountered poleward from the
+equator. Failure to intersect either segment is a construction error and
+throws `std::domain_error`.
 
 ## Octant assembly
 
@@ -519,24 +566,69 @@ the exported PDF and PNG are self-contained. The complete generation,
 historical printing context, targets, and raster behavior are documented in
 the [generation guide](generation.md#cahill-keyes-enlargement-slices).
 
-## Translation method and compatibility decisions
+## Provenance, compatibility, and intentional divergence
 
 The C++ implementation ports the original mathematical subroutines, not the
 Perl program's interactive “Blocks,” file conversion, coastline generation, or
 alternative area-code layouts. Corresponding design choices are:
 
-- `calculate_preliminaries()` performs the source `Preliminary` work once per
-  projection scale.
+- `calculate_preliminaries()` performs the source `Preliminary` geometry once
+  on the canonical `MG = 1` scaffold.
 - `longitude_latitude_to_meridian()` implements the source `LLtoMP` mapping.
 - `meridian_parallel_to_xy()` implements the A–L portion of `MPtoXY`.
 - `half_octant_to_megamap()` implements the eight standard `MJtoMM` placements.
-- Intermediate named points and signed path lengths are retained so formulas
-  can be compared to the source rather than algebraically collapsed.
-- Double-precision operations replace Perl numeric scalars, with explicit
-  finite/range validation and standard-library trigonometry.
+- Intermediate named points and signed path lengths are retained because they
+  express the published construction clearly.
+- Canonical geometry uses `long double`; output scaling and conversion to
+  `double` happen only after octant assembly.
+- Direction-vector line intersections replace tangent-slope algebra.
+- Closest-approach circle/segment intersections replace the expanded
+  quadratic and naive roots.
+- Parallel 15 is located by traversing `Q→Jt→Jf`, rather than by preferring the
+  middle segment.
+- Roundoff-sized, magnitude-aware tolerances are used only to classify a
+  circle tangency or segment endpoint that is numerically indistinguishable
+  from the boundary.
 - The public one-degree longitude adjustment is retained solely for existing
   raster and `augment_carto_geo_specific` registration.
 - The projection enum spelling is consistently `cahill_keyes`.
+
+These are intentional numerical divergences from
+`MegamapMaker-prep9.pl`. Coordinate agreement with the Perl samples is kept as
+a coarse regression signal, but exact last-bit agreement, exception behavior,
+root preference, and scale-dependent branch behavior are explicitly not
+compatibility requirements.
+
+### Resolved near-cut numerical defect
+
+The former direct port could throw
+`Cahill-Keyes parallel 15 misses its meridian` for valid coordinates a few
+representable values inside a 45° half-octant boundary. One reproduced case
+was public longitude approximately `68.9999999999998°`, latitude `20°`: an
+11-unit scaffold threw while 528-, 1056-, and 3300-unit scaffolds succeeded.
+The exact 69° cut also succeeded because it selected a separate equality
+branch. A geographic construction cannot legitimately change intersection
+existence with output size, so this was classified as a forward-projection
+defect rather than a source-compatibility requirement.
+
+The source of the defect was a combination of scale-dependent intermediate
+coordinates, cancellation in the expanded circle quadratic, and exact tests
+of the discriminant and segment endpoints. Generator path bisection reaches
+these neighborhoods routinely even though a half-degree coordinate sweep does
+not.
+
+Before the numerical correction, Orbital Technosphere generation worked
+around the defect by retrying failed points with latitude and longitude
+offsets. That workaround could move a coordinate across the very cut being
+resolved, concealed unrelated projection exceptions, and made output depend
+on retry order. It has been removed: orbital markers, observer sites, labels,
+and reference paths now use the same exact-coordinate projection path as every
+other generator.
+
+Ocean banding and the Star-X lower-left equatorial notch were different
+failures: they came from SVG ring closure, polygon clipping, and paint order,
+not the point transform. Their fixes remain documented under
+[Natural Earth geometry processing](generation.md#geometry-processing).
 
 There is no subprocess, shell command, JavaScript runtime, temporary output
 file, or global coordinate cache in the forward path.
@@ -551,9 +643,16 @@ make check
 
 The checks cover:
 
-- Perl-derived numeric reference coordinates at a 528-unit scaffold,
-  including nontrivial piecewise cases and all eight octants;
-- exact proportional results at 1056-, 1320-, and 2112-unit scaffolds;
+- Perl-derived compatibility coordinates at a 528-unit scaffold, including
+  nontrivial piecewise cases and all eight octants; these are not treated as
+  the numerical oracle;
+- proportional results at 11-, 528-, 1056-, 1320-, 2112-, and 3300-unit
+  scaffolds;
+- finite, scale-invariant results in representable-value neighborhoods around
+  every native octant cut and the 0°, 15°, 29°, 30°, 45°, 73°, and 75°
+  construction transitions, on both coordinate axes and hemispheres;
+- one-sided continuity at unfolded cuts and two-sided continuity where a
+  construction transition remains within one map face;
 - a half-degree sweep of the complete geographic domain: 361 latitudes by 721
   longitudes, or 260,281 projected points, including integer zone and octant
   boundaries and every A–L dispatch region;
@@ -562,7 +661,7 @@ The checks cover:
 - expected `projection_api` coordinates for those 27 integration anchors;
 - 320×160, 44×22, 4224×2112, 13200×6600, and 1234.5×617.25 frames;
 - rejection of 16:9, approximate 2:1, portrait, zero, negative, and infinite
-  frames;
+  frames, plus invalid or overflow-prone direct scaffold altitudes;
 - preservation of an explicitly offset legacy `projection_base`;
 - the checked-in inverse-raster filename convention;
 - a real projected seam crossing between 158° E and 162° E;
@@ -591,14 +690,18 @@ can be built without the rest of the application dependency graph.
 - Only the standard M-layout forward transform is implemented. The alternative
   Butterfly and arbitrary Perl area-code arrangements are outside this class.
 - There is no inverse `(x,y)` to `(latitude,longitude)` solver.
-- Equality branches at 0°, 15°, 29°, 30°, 45°, 73°, and 75° intentionally
-  reproduce source boundary decisions.
+- Equality branches at 0°, 15°, 29°, 30°, 45°, 73°, and 75° define ownership
+  of exact geometric boundaries. Adjacent representable values are tested for
+  totality and the appropriate one- or two-sided continuity; matching the
+  source program's last-bit branch behavior is not an invariant.
 - A point API cannot preserve both copies of a geographic position lying on a
   cut. Paths and polygons must be split at projection seams before drawing.
 - The fixed one-degree public offset is project registration behavior and must
   be reconsidered if raster assets are re-registered.
 - The required frame aspect ratio is 2:1. Letterboxing or cropping a different
   display area belongs outside the projection.
+- Direct native construction rejects scaffold altitudes greater than half of
+  `double`'s maximum so the complete centered layout remains representable.
 
 ## Provenance and licensing
 

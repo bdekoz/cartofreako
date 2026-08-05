@@ -98,28 +98,6 @@ projection_point(const propagated_object& object, const profile& config,
             - object.equatorial.right_ascension_deg)};
 }
 
-inline svg::point_2t
-safe_project_point(const generation::projection_context& context,
-                   const generation::geographic_point point)
-{
-  constexpr std::array offsets {0.0, 1e-9, -1e-9, 1e-7, -1e-7, 1e-5, -1e-5};
-  std::string last_error;
-  for (const double latitude_offset : offsets)
-    for (const double longitude_offset : offsets)
-      try
-        {
-          return generation::project_point(context, {
-            std::clamp(point.latitude + latitude_offset, -90.0, 90.0),
-            normalize_signed_degrees(point.longitude + longitude_offset),
-          });
-        }
-      catch (const std::exception& error)
-        {
-          last_error = error.what();
-        }
-  throw std::runtime_error("projection fallback failed: " + last_error);
-}
-
 inline std::vector<svg::vrange>
 project_reference_path(const generation::projection_context& context,
                        std::vector<generation::geographic_point> source)
@@ -139,47 +117,10 @@ project_reference_path(const generation::projection_context& context,
     {
       if (piece.size() < 2)
         continue;
-      try
-        {
-          for (svg::vrange& segment
-               : generation::project_path(context, piece, false))
-            if (segment.size() >= 2)
-              result.push_back(std::move(segment));
-        }
-      catch (const std::exception&)
-        {
-          // The legacy Cahill-Keyes parallel construction has a few exact
-          // numeric holes. A point-wise, infinitesimally nudged fallback
-          // preserves a reference line while still splitting visible cuts.
-          svg::vrange segment;
-          const double maximum_jump = std::max(
-            context.map_frame.width(), context.map_frame.height()) / 3.0;
-          for (const generation::geographic_point point : piece)
-            {
-              try
-                {
-                  const svg::point_2t projected = safe_project_point(
-                    context, point);
-                  if (!segment.empty()
-                      && generation::point_distance(segment.back(), projected)
-                           > maximum_jump)
-                    {
-                      if (segment.size() >= 2)
-                        result.push_back(std::move(segment));
-                      segment.clear();
-                    }
-                  segment.push_back(projected);
-                }
-              catch (const std::exception&)
-                {
-                  if (segment.size() >= 2)
-                    result.push_back(std::move(segment));
-                  segment.clear();
-                }
-            }
-          if (segment.size() >= 2)
-            result.push_back(std::move(segment));
-        }
+      for (svg::vrange& segment
+           : generation::project_path(context, piece, false))
+        if (segment.size() >= 2)
+          result.push_back(std::move(segment));
     }
   return result;
 }
@@ -418,7 +359,7 @@ add_marker(svg::group_element& layer,
            const profile& config, const product_kind product,
            const propagated_object& object)
 {
-  const svg::point_2t point = safe_project_point(
+  const svg::point_2t point = generation::project_point(
     context, projection_point(object, config, product));
   svg::circle_element marker;
   marker.start_element();
@@ -451,7 +392,7 @@ add_label(svg::group_element& labels,
           const profile& config, const product_kind product,
           const propagated_object& object)
 {
-  const svg::point_2t point = safe_project_point(
+  const svg::point_2t point = generation::project_point(
     context, projection_point(object, config, product));
   const svg::point_2t label_point {
     std::min(context.map_frame.width() - 0.05,
@@ -577,7 +518,7 @@ add_observer_site(generation::projection_document& document,
   layer.start_element("reference-site");
   if (product == product_kind::global)
     {
-      const svg::point_2t point = safe_project_point(
+      const svg::point_2t point = generation::project_point(
         context, {config.observer.latitude_deg,
                   config.observer.longitude_deg_east});
       svg::circle_element marker;

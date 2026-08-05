@@ -1,6 +1,8 @@
 #include <array>
 #include <cassert>
 #include <cmath>
+#include <cstddef>
+#include <limits>
 #include <stdexcept>
 #include <string>
 #include <tuple>
@@ -90,13 +92,92 @@ near(const double actual, const double expected, const double tolerance = 1e-9)
   return std::abs(actual - expected) <= tolerance;
 }
 
+void
+assert_scale_invariant(const double longitude, const double latitude)
+{
+  constexpr std::array scaffolds {11.0, 528.0, 1056.0, 3300.0};
+  static const std::array projections {
+    projection(scaffolds[0]), projection(scaffolds[1]),
+    projection(scaffolds[2]), projection(scaffolds[3]),
+  };
+  const auto [reference_x, reference_y]
+    = projections.front()(longitude, latitude);
+  assert(std::isfinite(reference_x));
+  assert(std::isfinite(reference_y));
+
+  const double normalized_x = reference_x / scaffolds.front();
+  const double normalized_y = reference_y / scaffolds.front();
+  for (std::size_t index = 0; index != scaffolds.size(); ++index)
+    {
+      const double scaffold = scaffolds[index];
+      const auto [x, y] = projections[index](longitude, latitude);
+      assert(std::isfinite(x));
+      assert(std::isfinite(y));
+      assert(x >= -2 * scaffold && x <= 2 * scaffold);
+      assert(y >= -scaffold && y <= scaffold);
+      assert(near(x / scaffold, normalized_x, 2e-13));
+      assert(near(y / scaffold, normalized_y, 2e-13));
+    }
+}
+
+void
+check_representable_neighborhood(const double longitude,
+                                 const double latitude,
+                                 const int steps)
+{
+  assert_scale_invariant(longitude, latitude);
+  double below = longitude;
+  double above = longitude;
+  for (int step = 0; step != steps; ++step)
+    {
+      below = std::nextafter(below,
+        -std::numeric_limits<double>::infinity());
+      above = std::nextafter(above,
+        std::numeric_limits<double>::infinity());
+      assert_scale_invariant(below, latitude);
+      assert_scale_invariant(above, latitude);
+    }
+}
+
+void
+check_latitude_neighborhood(const double longitude,
+                            const double latitude,
+                            const int steps)
+{
+  assert_scale_invariant(longitude, latitude);
+  double below = latitude;
+  double above = latitude;
+  for (int step = 0; step != steps; ++step)
+    {
+      below = std::nextafter(below,
+        -std::numeric_limits<double>::infinity());
+      above = std::nextafter(above,
+        std::numeric_limits<double>::infinity());
+      assert_scale_invariant(longitude, below);
+      assert_scale_invariant(longitude, above);
+    }
+}
+
+double
+normalized_distance(const double first_longitude, const double first_latitude,
+                    const double second_longitude,
+                    const double second_latitude)
+{
+  constexpr double scaffold = 528;
+  static const projection value(scaffold);
+  const auto [first_x, first_y] = value(first_longitude, first_latitude);
+  const auto [second_x, second_y] = value(second_longitude, second_latitude);
+  return std::hypot(second_x - first_x, second_y - first_y) / scaffold;
+}
+
 } // namespace
 
 int
 main()
 {
-  // Values are from MegamapMaker-prep9.pl evaluated at its canonical
-  // 10,000-unit scale and reduced to a 528-unit scaffold.
+  // Coarse compatibility anchors from MegamapMaker-prep9.pl evaluated at its
+  // 10,000-unit scale and reduced to a 528-unit scaffold. These check the
+  // intended map construction, but are not the numerical correctness oracle.
   constexpr std::array reference {
     expected_point {0, 1, 141.543796515413, 70.7001220457658},
     expected_point {89.9, 1, 502.739752588049, 413.956075719816},
@@ -150,6 +231,82 @@ main()
         }
     }
 
+  // Generator path splitting converges to projection cuts in representable
+  // floating-point steps, rather than in the half-degree increments used by
+  // the broad domain sweep below. Every valid point in those neighborhoods
+  // must remain finite and independent of the requested output scale.
+  constexpr std::array cut_longitudes {-110.0, -20.0, 70.0, 160.0};
+  constexpr std::array representative_latitudes {1.0, 15.0, 20.0, 73.0, 74.0};
+  for (const double longitude : cut_longitudes)
+    for (const double latitude : representative_latitudes)
+      {
+        check_representable_neighborhood(longitude, latitude, 64);
+        check_representable_neighborhood(longitude, -latitude, 64);
+
+        // Exact cuts select the octant to their east. Check that copy against
+        // its one-sided limit; check the western copy between its two nearest
+        // representable samples because a point API cannot return both copies.
+        const double east = std::nextafter(longitude,
+          std::numeric_limits<double>::infinity());
+        const double west = std::nextafter(longitude,
+          -std::numeric_limits<double>::infinity());
+        const double farther_west = std::nextafter(west,
+          -std::numeric_limits<double>::infinity());
+        assert(normalized_distance(longitude, latitude, east, latitude)
+               < 2e-12);
+        assert(normalized_distance(west, latitude, farther_west, latitude)
+               < 2e-12);
+      }
+
+  constexpr std::array center_longitudes {-155.0, -65.0, 25.0, 115.0};
+  for (const double longitude : center_longitudes)
+    for (const double latitude : representative_latitudes)
+      {
+        check_representable_neighborhood(longitude, latitude, 32);
+        check_representable_neighborhood(longitude, -latitude, 32);
+      }
+
+  // The 29/30-degree meridian and 15/73/75-degree parallel transitions use
+  // different construction formulae on either side. Exercise their immediate
+  // floating-point neighborhoods as well as exact equality branches.
+  constexpr std::array transition_longitudes {-5.0, -4.0, 54.0, 55.0};
+  constexpr std::array transition_latitudes {0.0, 15.0, 73.0, 75.0};
+  for (const double longitude : transition_longitudes)
+    for (const double latitude : transition_latitudes)
+      {
+        check_representable_neighborhood(longitude, latitude, 16);
+        check_latitude_neighborhood(longitude, latitude, 16);
+        const double west = std::nextafter(longitude,
+          -std::numeric_limits<double>::infinity());
+        const double east = std::nextafter(longitude,
+          std::numeric_limits<double>::infinity());
+        const double south = std::nextafter(latitude,
+          -std::numeric_limits<double>::infinity());
+        const double north = std::nextafter(latitude,
+          std::numeric_limits<double>::infinity());
+        assert(normalized_distance(longitude, latitude, west, latitude)
+               < 2e-12);
+        assert(normalized_distance(longitude, latitude, east, latitude)
+               < 2e-12);
+        if (latitude == 0)
+          {
+            const double farther_south = std::nextafter(south,
+              -std::numeric_limits<double>::infinity());
+            assert(normalized_distance(longitude, south,
+                                       longitude, farther_south) < 2e-12);
+          }
+        else
+          assert(normalized_distance(longitude, latitude,
+                                     longitude, south) < 2e-12);
+        assert(normalized_distance(longitude, latitude, longitude, north)
+               < 2e-12);
+        if (latitude != 0)
+          {
+            check_representable_neighborhood(longitude, -latitude, 16);
+            check_latitude_neighborhood(longitude, -latitude, 16);
+          }
+      }
+
   // Every location used by augment_carto_geo_specific must produce a finite
   // in-bounds point. Longitudes include ckproj's +1 raster adjustment.
   constexpr std::array specific_locations {
@@ -189,6 +346,24 @@ main()
         assert(x >= -1056 && x <= 1056);
         assert(y >= -528 && y <= 528);
       }
+
+  const auto rejects_scaffold = [](const double scaffold)
+  {
+    bool rejected_scaffold = false;
+    try
+      {
+        static_cast<void>(projection(scaffold));
+      }
+    catch (const std::invalid_argument&)
+      {
+        rejected_scaffold = true;
+      }
+    assert(rejected_scaffold);
+  };
+  rejects_scaffold(0);
+  rejects_scaffold(-1);
+  rejects_scaffold(std::numeric_limits<double>::infinity());
+  rejects_scaffold(std::numeric_limits<double>::max());
 
   bool rejected = false;
   try
