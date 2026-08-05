@@ -408,7 +408,8 @@ Network-swarm resolves to `generate-network-swarm-PROJECTION` and makes the
 one cumulative swarm product. Bathymetry Roulette similarly resolves to
 `generate-bathymetry-roulette-PROJECTION` and makes one monochrome depth map.
 Resources resolves to `generate-resources-PROJECTION` and makes one historical
-production-leader atlas with separate modern context.
+production-leader atlas with separate modern context, stored as a
+deterministic `.svg.gz` archive.
 Anthropocene resolves to `generate-anthropocene-PROJECTION` and makes one
 source-separated observation atlas. Network infrastructure resolves to
 `generate-network-infrastructure-PROJECTION` and makes only the cloud/CDN site
@@ -474,8 +475,9 @@ make generate-ck-slices
 ```
 
 Projection family targets generate SVGs unless their documented target says
-`artifacts`. `generate-orbiting-artifacts`, for example, adds PDF and PNG
-exports for that product family.
+`artifacts`; resources stores those SVGs as deterministic `.svg.gz` archives.
+`generate-orbiting-artifacts`, for example, adds PDF and PNG exports for that
+product family.
 `generate-network-swarm-artifacts` does the same for all six network-swarm
 products.
 `generate-network-infrastructure-artifacts` does the same for the six
@@ -485,8 +487,8 @@ cloud/CDN site products. The separate
 CC BY-NC-SA 3.0 opt-ins and never dependencies of the normal family.
 `generate-anthropocene-artifacts` does the same for all six Anthropocene
 products.
-`generate-resources-artifacts` does the same for all six World Game resources
-products.
+`generate-resources-artifacts` adds PDF and PNG exports to all six compressed
+World Game resources SVG products.
 `generate-bathymetry-roulette-artifacts` does the same for all six roulette
 bathymetry products.
 

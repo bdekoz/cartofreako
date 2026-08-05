@@ -19,7 +19,7 @@ and artifacts:
 | `src.wasm/` | WebAssembly adapters, geographic input, smoke tests, and generated builds |
 | `tests/` | Standalone algorithm and API tests only |
 | `assets.static/` | Historical, reference, and downloaded source assets |
-| `assets.generated/` | Checked-in SVG, PDF, and PNG renderings |
+| `assets.generated/` | Checked-in SVG (gzip-compressed for resources), PDF, and PNG renderings |
 
 ## Build and test
 
@@ -165,6 +165,17 @@ context:
 make generate-resources-cahill-keyes
 make generate-resources
 make generate-resources-artifacts
+```
+
+Resource SVG deliverables are deterministic `*.svg.gz` archives. Plain SVGs
+remain ignored local intermediates for PDF/PNG export. Inspect one without
+changing the checkout with, for example,
+`gzip -cd assets.generated/svg/resources-ck-44-22.svg.gz > /tmp/resources-ck.svg`.
+To decompress every SVG archive in place while keeping each `.svg.gz` file:
+
+```sh
+find assets.generated -type f -name '*.svg.gz' \
+  -exec gzip --decompress --keep -- {} +
 ```
 
 The historical scan is not redistributed or downloaded by Make. See the

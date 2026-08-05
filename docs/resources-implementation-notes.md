@@ -165,14 +165,31 @@ provenance, and configured font.
 Install the normal project prerequisites and fetch Natural Earth once, then:
 
 ```sh
-# One fast SVG
+# One deterministic gzip-compressed SVG
 make generate-resources-cahill-keyes
 
-# All six projection SVGs
+# All six projection SVG archives
 make generate-resources
 
-# All six SVGs plus PDF and 3840-pixel PNG exports
+# All six SVG archives plus PDF and 3840-pixel PNG exports
 make generate-resources-artifacts
+```
+
+The generator first writes a plain SVG for validation and Inkscape export,
+then GNU gzip stores the checked artifact as `*.svg.gz` with compression level
+9 and without a filename or timestamp header. Plain `resources-*.svg` files
+are ignored build intermediates. To inspect an archive:
+
+```sh
+gzip -cd assets.generated/svg/resources-ck-44-22.svg.gz \
+  > /tmp/resources-ck-44-22.svg
+```
+
+Or decompress every checked SVG archive in place while keeping the archives:
+
+```sh
+find assets.generated -type f -name '*.svg.gz' \
+  -exec gzip --decompress --keep -- {} +
 ```
 
 One other projection can be requested directly, for example:
@@ -248,6 +265,7 @@ strict-schema failures, and finite collision layouts on all six projections:
 make check
 cd assets.static/resources && sha256sum -c SHA256SUMS && cd ../..
 make -B generate-resources-cahill-keyes
+gzip -t assets.generated/svg/resources-ck-44-22.svg.gz
 ```
 
 For a visual review, inspect the generated SVG or PNG at full size. In

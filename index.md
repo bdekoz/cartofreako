@@ -19,7 +19,7 @@ WebAssembly requirements.
 | [`src.wasm/`](src.wasm/) | Browser adapters, seam-prepared input, smoke tests, and generated WASM builds | [WebAssembly renderer README](src.wasm/README.md) |
 | [`tests/`](tests/) | Standalone algorithm and public-API tests | [`make check`](Makefile) |
 | [`assets.static/`](assets.static/) | Source plates, historical implementations, reference rasters, and downloaded geographic data | [Myriahedral reconstruction assets](assets.static/myriahedral/README.md) |
-| [`assets.generated/`](assets.generated/) | Generated SVG, PDF, and opaque PNG deliverables | [Preview matrix](#generated-artifact-previews) |
+| [`assets.generated/`](assets.generated/) | Generated SVG (`.svg.gz` for resources), PDF, and opaque PNG deliverables | [Preview matrix](#generated-artifact-previews) |
 
 This separation keeps reproducible inputs distinct from rendered outputs and
 keeps generation programs out of the test suite.

@@ -20,7 +20,7 @@ generation workflow. They do not require the same software:
 | GDAL development package with OGR, GeoTIFF, and NetCDF drivers | Earth, water, Bathymetry Roulette, Cloud-atmosphere, resources, global Orbital Technosphere, Anthropocene, network-swarm, and network-infrastructure generation | Reads Natural Earth/HMS vectors plus JAXA COG and P-Tree NetCDF rasters |
 | GEOS support in GDAL | Natural Earth-backed generation | Performs polygon intersection, repair, and seam-safe clipping |
 | Fontconfig and Atkinson Hyperlegible | Graticule, astronomy, Orbital Technosphere, resources, Anthropocene, network-swarm, network-infrastructure, and Bathymetry Roulette generation and PDF/PNG export | Resolves the default accessible label face and prevents silent font substitution |
-| Git, Bash, Python 3, `curl`, `jq`, `unzip`, `tar`, `gzip`, `rg`, `find`, `sha256sum`, and GNU coreutils including `cmp`, `date`, and `realpath` | Natural Earth, astronomy, Cloud-atmosphere, orbital, Anthropocene, network-swarm, and network-infrastructure source preparation or validation | Resolves static STAC metadata, downloads, verifies commits and files, compares, dates, transforms JSON, and extracts or installs bounded source data |
+| Git, Bash, Python 3, `curl`, `jq`, `unzip`, `tar`, GNU `gzip`, `rg`, `find`, `sha256sum`, and GNU coreutils including `cmp`, `date`, and `realpath` | Natural Earth, astronomy, Cloud-atmosphere, orbital, resources, Anthropocene, network-swarm, and network-infrastructure preparation or validation | Resolves static STAC metadata, downloads, verifies commits and files, compares, dates, transforms JSON, extracts or installs bounded source data, and creates deterministic compressed resource SVGs |
 | Inkscape | Complete artifact generation and visual review | Exports PDF/PNG and inspects SVG layers, clipping, geometry, and seams |
 | Doxygen | API reference generation | Builds the documented projection-header reference under `docs/doxygen/` |
 | Emscripten, Node.js, and a browser | Optional WebAssembly builds | Builds the production Cahill-Keyes and land/ocean-only Myriahedral adapters, plus the illustrative Myriahedral overlay |
@@ -69,7 +69,8 @@ Orbital Technosphere maps, six resources maps, six Anthropocene maps, six networ
 network-infrastructure site maps, six Bathymetry Roulette maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes slices, and two
 Myriahedral face-group slices, then invokes Inkscape to export all 97 SVGs as
-PDFs and 3840-pixel-long-side PNGs. It needs
+PDFs and 3840-pixel-long-side PNGs. The six resources SVGs are retained as
+deterministic `.svg.gz` archives instead of plain checked-in SVGs. It needs
 all native build and data-acquisition dependencies through H3 and GEOS, the
 profile-pinned external cloud/CDN checkout, plus Inkscape. The separately
 licensed TeleGeography topology product is not part of `make all`.
@@ -632,7 +633,8 @@ six resources maps, six Anthropocene maps, six network-swarm maps, six network-i
 maps, six Bathymetry Roulette maps, four quadrant slices, eight
 octant slices, and two Myriahedral face-group
 slices in each of `assets.generated/svg/`,
-`assets.generated/pdf/`, and `assets.generated/png/`. Every PNG preserves its
+`assets.generated/pdf/`, and `assets.generated/png/`; resources use `.svg.gz`
+inside the SVG directory. Every PNG preserves its
 source aspect ratio, has a 3840-pixel longest side, and is flattened against
 opaque white.
 

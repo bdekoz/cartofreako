@@ -57,5 +57,8 @@
 /build/
 __pycache__/
 
+# Resource SVGs are local Inkscape inputs; check in deterministic .svg.gz files.
+/assets.generated/svg/resources-*.svg
+
 # Don't check in generated assets
 #/assets.generated

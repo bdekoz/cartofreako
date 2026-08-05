@@ -25,9 +25,19 @@ make fetch-natural-earth-10m
 make generate-resources-cahill-keyes
 ```
 
-Use `make generate-resources` for all six SVGs or
-`make generate-resources-artifacts` for SVG, PDF, and PNG output. Override the
-profile with `RESOURCES_PROFILE=/absolute/path/profile.json`.
+Use `make generate-resources` for all six deterministic `.svg.gz` archives or
+`make generate-resources-artifacts` for compressed SVG, PDF, and PNG output.
+Plain SVGs are ignored Inkscape intermediates. Inspect one with
+`gzip -cd assets.generated/svg/resources-ck-44-22.svg.gz > /tmp/resources-ck.svg`.
+Override the profile with `RESOURCES_PROFILE=/absolute/path/profile.json`.
+
+Decompress every SVG archive beneath `assets.generated` in place, retaining
+the compressed files:
+
+```sh
+find assets.generated -type f -name '*.svg.gz' \
+  -exec gzip --decompress --keep -- {} +
+```
 
 ## Source and redistribution boundary
 

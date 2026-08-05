@@ -237,7 +237,8 @@ Myriahedral perspectives and slices, and PDF/PNG exports. Those products do
 not form a projection/pass cross-product and remain available through their
 explicit targets. It includes Cloud-atmosphere and therefore requires a
 current locally prepared JAXA snapshot. `make all` retains the credential-free
-97 SVG, 97 PDF, and 97 PNG standard suite and excludes Cloud-atmosphere. The
+97 SVG (six stored as deterministic `.svg.gz` archives), 97 PDF, and 97 PNG
+standard suite and excludes Cloud-atmosphere. The
 six opt-in topology products per format also remain separate.
 
 The resolver rejects empty selectors, duplicate aliases or JSON members,
@@ -499,8 +500,26 @@ make generate-resources
 make generate-resources-artifacts
 ```
 
-Use `generate-resources-PROJECTION` for one SVG and
-`generate-resources-projections` for all six. Supply another audited profile
+Use `generate-resources-PROJECTION` for one gzip-compressed SVG and
+`generate-resources-projections` for all six. The uncompressed SVGs are
+ignored build intermediates used by Inkscape for PDF and PNG export; the
+checked artifacts are `assets.generated/svg/resources-*.svg.gz`. Decompress
+one for inspection without changing the checkout:
+
+```sh
+gzip -cd assets.generated/svg/resources-ck-44-22.svg.gz \
+  > /tmp/resources-ck-44-22.svg
+```
+
+To decompress every SVG archive beneath `assets.generated` beside its archive
+while retaining the compressed files:
+
+```sh
+find assets.generated -type f -name '*.svg.gz' \
+  -exec gzip --decompress --keep -- {} +
+```
+
+Supply another audited profile
 with `RESOURCES_PROFILE=/absolute/path/resources-profile.json`. The generator
 rejects schema drift, invalid source pages, duplicate resources, inconsistent
 nulls, and out-of-range shares before it draws anything.

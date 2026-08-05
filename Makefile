@@ -12,6 +12,7 @@ IZZI_SRC ?= ../izzi/src
 GDAL_CONFIG ?= gdal-config
 DOXYGEN ?= doxygen
 INKSCAPE ?= inkscape
+GZIP ?= gzip
 PNG_LONG_SIDE ?= 3840
 LABEL_FONT ?= atkinson_hyperlegible
 PNG_EXPORT_BACKGROUND := --export-background=white \
@@ -307,6 +308,7 @@ RESOURCES_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PDF_DIR)/%.pdf,$(RESOURCES_SVGS))
 RESOURCES_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PNG_DIR)/%.png,$(RESOURCES_SVGS))
+RESOURCES_SVG_ARCHIVES := $(addsuffix .gz,$(RESOURCES_SVGS))
 
 BATHYMETRY_ROULETTE_SVGS := \
 	$(GENERATED_SVG_DIR)/bathymetry-roulette-ck-44-22.svg \
@@ -403,8 +405,9 @@ PORTRAIT_PNGS := $(STAR_X_PNGS) $(ASTRO_STAR_X_PNGS) \
 	$(MYRIAHEDRAL_PORTRAIT_SLICE_PNG)
 LANDSCAPE_PNGS := $(filter-out $(PORTRAIT_PNGS),\
 	$(GENERATED_PNGS) $(CLOUD_ATMOSPHERE_PNGS))
-GENERATED_ARTIFACTS := $(GENERATED_SVGS) $(GENERATED_PDFS) \
-	$(GENERATED_PNGS)
+GENERATED_ARTIFACTS := \
+	$(filter-out $(RESOURCES_SVGS),$(GENERATED_SVGS)) \
+	$(RESOURCES_SVG_ARCHIVES) $(GENERATED_PDFS) $(GENERATED_PNGS)
 
 GENERATOR_BINARIES := \
 	$(ANTHROPOCENE_GENERATOR) \
@@ -510,7 +513,8 @@ RESOURCES_GENERATOR_HEADERS := \
 .DEFAULT_GOAL := configured
 .DELETE_ON_ERROR:
 
-PUBLIC_TARGETS := all check check-prerequisite clean configured doxygen \
+PUBLIC_TARGETS := all check check-prerequisite \
+	check-resources-svg-archives clean configured doxygen \
 	generation-plan list-targets \
 	fetch-natural-earth-10m fetch-astro-data fetch-orbiting-data \
 	fetch-cloud-atmosphere-data prepare-cloud-atmosphere-data \
@@ -626,9 +630,13 @@ check-prerequisite: $(PREREQUISITE_CHECKER)
 		LABEL_FONT="$(LABEL_FONT)" \
 		"$(PREREQUISITE_CHECKER)"
 
+check-resources-svg-archives:
+	"$(GZIP)" -t $(RESOURCES_SVG_ARCHIVES)
+
 check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
 		$(CLOUD_ATMOSPHERE_PROFILE) $(CLOUD_ATMOSPHERE_FIXTURE) \
-		$(RESOURCES_PROFILE) $(RESOURCES_CHECKSUMS)
+		$(RESOURCES_PROFILE) $(RESOURCES_CHECKSUMS) \
+		check-resources-svg-archives
 	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_PROFILE)" \
 		"$(ANTHROPOCENE_GEOJSON)"
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
@@ -1230,7 +1238,7 @@ generate-anthropocene-artifacts: $(ANTHROPOCENE_SVGS) \
 
 # $(1): command-line projection name; $(2): World Game resources product.
 define RESOURCES_PROJECTION_RULES
-generate-resources-$(1): $(2)
+generate-resources-$(1): $(2).gz
 $(2): $(RESOURCES_GENERATOR) $(RESOURCES_PROFILE) \
 		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
 	cd "$(GENERATED_SVG_DIR)" && \
@@ -1253,9 +1261,13 @@ $(eval $(call RESOURCES_PROJECTION_RULES,star-x,\
 $(eval $(call RESOURCES_PROJECTION_RULES,voronoi,\
 	$(GENERATED_SVG_DIR)/resources-voronoi-44-22.916667.svg))
 
-generate-resources: $(RESOURCES_SVGS)
-generate-resources-projections: $(RESOURCES_SVGS)
-generate-resources-artifacts: $(RESOURCES_SVGS) \
+$(RESOURCES_SVG_ARCHIVES): $(GENERATED_SVG_DIR)/%.svg.gz: \
+		$(GENERATED_SVG_DIR)/%.svg
+	"$(GZIP)" -n -9 -c "$<" > "$@"
+
+generate-resources: $(RESOURCES_SVG_ARCHIVES)
+generate-resources-projections: $(RESOURCES_SVG_ARCHIVES)
+generate-resources-artifacts: $(RESOURCES_SVG_ARCHIVES) \
 	$(RESOURCES_PDFS) $(RESOURCES_PNGS)
 
 # $(1): command-line projection name; $(2): Network-swarm product.
@@ -1439,7 +1451,8 @@ all: $(GENERATED_ARTIFACTS)
 clean:
 	$(RM) $(TEST_BINARIES) $(GENERATOR_BINARIES)
 	$(RM) $(SGP4_OBJECT)
-	$(RM) $(GENERATED_SVGS) $(CK_WEB_MODULE) $(CK_WEB_WASM) \
+	$(RM) $(GENERATED_SVGS) $(RESOURCES_SVG_ARCHIVES) \
+		$(CK_WEB_MODULE) $(CK_WEB_WASM) \
 		$(MYRIA_WEB_MODULE) $(MYRIA_WEB_WASM)
 	$(RM) -r "$(GENERATED_DIR)/svg" "$(GENERATED_DIR)/png" \
 		"$(GENERATED_DIR)/pdf"
