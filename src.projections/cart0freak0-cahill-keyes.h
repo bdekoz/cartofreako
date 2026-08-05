@@ -43,51 +43,54 @@ namespace a60::carto::ck_native {
 /// Native forward Cahill-Keyes projection in scalable Megamap units.
 class forward_projection
 {
+  /// Widest standard floating-point scalar used by the construction.
+  using scalar = long double;
+
   /// Two-dimensional point in the native Megamap scaffold.
   struct xy
   {
-    double x = 0; ///< Horizontal Megamap coordinate.
-    double y = 0; ///< Vertical Megamap coordinate.
+    scalar x = 0; ///< Horizontal Megamap coordinate.
+    scalar y = 0; ///< Vertical Megamap coordinate.
   };
 
   /// Result of intersecting a finite line segment with a circle.
   struct circle_intersection
   {
     bool intersects = false; ///< Whether a segment intersection exists.
-    xy point; ///< First usable intersection point on the segment.
+    scalar factor = 0; ///< Position from segment start in `[0, 1]`.
   };
 
   /// Point and signed distance associated with the 73-degree parallel.
   struct parallel_73_result
   {
     xy point; ///< Constructed 73-degree point.
-    double length = 0; ///< Signed distance from the flex joint.
+    scalar length = 0; ///< Signed distance from the flex joint.
   };
 
   /// Canonical half-octant coordinates and assembly metadata.
   struct meridian
   {
-    double value = 0; ///< Meridian magnitude within a half-octant, in degrees.
-    double parallel = 0; ///< Absolute latitude, in degrees.
-    double sign = 1; ///< Sign used to reflect across the half-octant axis.
+    scalar value = 0; ///< Meridian magnitude within a half-octant, in degrees.
+    scalar parallel = 0; ///< Absolute latitude, in degrees.
+    scalar sign = 1; ///< Sign used to reflect across the half-octant axis.
     int octant = 1; ///< One-based target octant in the complete M-layout.
   };
 
-  static constexpr double pi = std::numbers::pi_v<double>; ///< Pi in radians.
-  static constexpr double radians = pi / 180.0; ///< Radians per degree.
+  static constexpr scalar pi = std::numbers::pi_v<scalar>; ///< Pi in radians.
+  static constexpr scalar radians = pi / 180.0L; ///< Radians per degree.
+  static constexpr scalar length_mg = 1.0L; ///< Canonical scaffold altitude.
 
-  double length_mg; ///< Selected scaffold altitude and primary length unit.
-  double scale; ///< Scale relative to the original 10,000-unit construction.
-  double length_ma; ///< Scaled distance from control point M to A.
-  double latitude_degree_100; ///< Scaled 100-unit latitude increment.
-  double latitude_degree_104; ///< Scaled 104-unit polar latitude increment.
-  double sin_60 = std::sqrt(3.0) / 2.0; ///< Sine of 60 degrees.
-  double cos_60 = 0.5; ///< Cosine of 60 degrees.
-  double y_translate; ///< Vertical translation into the complete M-layout.
+  const scalar output_scale; ///< Requested output altitude per canonical unit.
+  scalar length_ma = 0.094L; ///< Canonical distance from M to A.
+  scalar latitude_degree_100 = 0.01L; ///< Canonical latitude increment.
+  scalar latitude_degree_104 = 0.0104L; ///< Canonical polar increment.
+  scalar sin_60 = std::sqrt(3.0L) / 2.0L; ///< Sine of 60 degrees.
+  scalar cos_60 = 0.5L; ///< Cosine of 60 degrees.
+  scalar y_translate = sin_60; ///< Canonical M-layout translation.
 
   xy point_m {0, 0}; ///< Native scaffold control point M.
-  xy point_g; ///< Native scaffold control point G.
-  xy point_a; ///< Native scaffold control point A.
+  xy point_g {length_mg, 0}; ///< Native scaffold control point G.
+  xy point_a {length_ma, 0}; ///< Native scaffold control point A.
   xy point_b; ///< Derived control point B.
   xy point_c; ///< Center of the 15-degree circular construction.
   xy point_d; ///< Derived control point D.
@@ -95,18 +98,18 @@ class forward_projection
   xy point_f; ///< Derived equatorial control point F.
   xy point_t; ///< Derived 73-degree control point T.
 
-  double length_ab = 0; ///< Distance between control points A and B.
-  double length_gf = 0; ///< Distance between control points G and F.
-  double delta_m_equator = 0; ///< Equatorial distance per meridian degree.
-  double length_ap_73 = 0; ///< Radial distance from A to parallel 73.
-  double length_ap_75 = 0; ///< Radial distance from A to parallel 75.
-  double radius = 0; ///< Radius of the 15-degree circular construction.
+  scalar length_ab = 0; ///< Distance between control points A and B.
+  scalar length_gf = 0; ///< Distance between control points G and F.
+  scalar delta_m_equator = 0; ///< Equatorial distance per meridian degree.
+  scalar length_ap_73 = 0.176L; ///< Radial distance from A to parallel 73.
+  scalar length_ap_75 = 0.156L; ///< Radial distance from A to parallel 75.
+  scalar radius = 0; ///< Radius of the 15-degree circular construction.
 
   /// Compute Euclidean distance between native points.
   /// @param a First point.
   /// @param b Second point.
   /// @return Distance between the points.
-  static double
+  static scalar
   distance(const xy a, const xy b)
   {
     return std::hypot(a.x - b.x, a.y - b.y);
@@ -120,32 +123,59 @@ class forward_projection
   /// @return Interpolated point.
   /// @throws std::domain_error if `total` is zero.
   static xy
-  interpolate(const double length, const double total, const xy start,
+  interpolate(const scalar length, const scalar total, const xy start,
 	      const xy end)
   {
     if (total == 0)
       throw std::domain_error(
 	"Cahill-Keyes interpolation over a zero-length segment");
-    const double ratio = length / total;
-    return {start.x + (end.x - start.x) * ratio,
-	    start.y + (end.y - start.y) * ratio};
+    const scalar ratio = length / total;
+    return {std::fma(end.x - start.x, ratio, start.x),
+	    std::fma(end.y - start.y, ratio, start.y)};
   }
 
-  /// Intersect two infinite lines expressed as points and degree slopes.
+  /// Return the two-dimensional cross product of two vectors.
+  /// @param first First vector.
+  /// @param second Second vector.
+  /// @return Signed scalar cross product.
+  static scalar
+  cross(const xy first, const xy second)
+  { return std::fma(first.x, second.y, -first.y * second.x); }
+
+  /// Return the dot product of two vectors.
+  /// @param first First vector.
+  /// @param second Second vector.
+  /// @return Scalar dot product.
+  static scalar
+  dot(const xy first, const xy second)
+  { return std::fma(first.x, second.x, first.y * second.y); }
+
+  /// Return the unit direction vector for an angle in degrees.
+  /// @param angle Direction angle in degrees.
+  /// @return Unit vector in the requested direction.
+  static xy
+  direction(const scalar angle)
+  { return {std::cos(angle * radians), std::sin(angle * radians)}; }
+
+  /// Intersect two infinite lines expressed as points and direction angles.
   /// @param first Point on the first line.
   /// @param first_slope First line's slope angle in degrees.
   /// @param second Point on the second line.
   /// @param second_slope Second line's slope angle in degrees.
   /// @return Intersection of the two lines.
   static xy
-  line_intersection(const xy first, const double first_slope,
-		    const xy second, const double second_slope)
+  line_intersection(const xy first, const scalar first_slope,
+		    const xy second, const scalar second_slope)
   {
-    const double m1 = std::tan(first_slope * radians);
-    const double m2 = std::tan(second_slope * radians);
-    const double x = (m1 * first.x - m2 * second.x - first.y + second.y)
-		     / (m1 - m2);
-    return {x, m1 * (x - first.x) + first.y};
+    const xy first_direction = direction(first_slope);
+    const xy second_direction = direction(second_slope);
+    const scalar divisor = cross(first_direction, second_direction);
+    if (divisor == 0)
+      throw std::domain_error("parallel Cahill-Keyes construction lines");
+    const xy offset {second.x - first.x, second.y - first.y};
+    const scalar factor = cross(offset, second_direction) / divisor;
+    return {std::fma(factor, first_direction.x, first.x),
+	    std::fma(factor, first_direction.y, first.y)};
   }
 
   /// Intersect a circle with a finite line segment.
@@ -155,33 +185,54 @@ class forward_projection
   /// @param second Segment end point.
   /// @return First intersection whose segment parameter lies in `[0, 1]`.
   static circle_intersection
-  intersect_circle_line(const xy center, const double r, const xy first,
+  intersect_circle_line(const xy center, const scalar r, const xy first,
 			const xy second)
   {
-    const double dx = second.x - first.x;
-    const double dy = second.y - first.y;
-    const double a = dx * dx + dy * dy;
-    if (a == 0)
+    const xy segment {second.x - first.x, second.y - first.y};
+    const scalar segment_squared = dot(segment, segment);
+    if (segment_squared == 0)
       return {};
 
-    const double b = 2 * (dx * (first.x - center.x)
-			  + dy * (first.y - center.y));
-    const double c = center.x * center.x + center.y * center.y
-		     + first.x * first.x + first.y * first.y
-		     - 2 * (center.x * first.x + center.y * first.y)
-		     - r * r;
-    const double determinant = b * b - 4 * a * c;
-    if (determinant < 0)
-      return {};
-
-    const double root = std::sqrt(std::max(0.0, determinant));
-    const std::array<double, 2> factors {
-      (-b + root) / (2 * a),
-      (-b - root) / (2 * a)
+    // Project the circle center onto the supporting line. This geometric
+    // construction avoids both the expanded, cancellation-prone quadratic
+    // coefficient and the unstable quadratic-root formula used by the source
+    // Perl implementation.
+    const xy center_offset {center.x - first.x, center.y - first.y};
+    const scalar closest_factor = dot(center_offset, segment)
+				  / segment_squared;
+    const xy closest_delta {
+      std::fma(closest_factor, segment.x, first.x - center.x),
+      std::fma(closest_factor, segment.y, first.y - center.y),
     };
-    for (const double factor : factors)
-      if (factor >= 0 && factor <= 1)
-	return {true, {first.x + factor * dx, first.y + factor * dy}};
+    const scalar closest_squared = dot(closest_delta, closest_delta);
+    const scalar radius_squared = r * r;
+    scalar radial_remainder = std::fma(r, r, -closest_squared);
+    const scalar radial_tolerance
+      = 64 * std::numeric_limits<scalar>::epsilon()
+	* (std::abs(radius_squared) + std::abs(closest_squared));
+    if (radial_remainder < -radial_tolerance)
+      return {};
+    radial_remainder = std::max(0.0L, radial_remainder);
+
+    const scalar factor_delta
+      = std::sqrt(radial_remainder / segment_squared);
+    std::array<scalar, 2> factors {
+      closest_factor - factor_delta,
+      closest_factor + factor_delta,
+    };
+    if (factors[1] < factors[0])
+      std::swap(factors[0], factors[1]);
+    const scalar factor_tolerance
+      = 64 * std::numeric_limits<scalar>::epsilon()
+	* std::max({1.0L, std::abs(closest_factor),
+		    std::abs(factor_delta)});
+    for (const scalar unbounded_factor : factors)
+      if (unbounded_factor >= -factor_tolerance
+	  && unbounded_factor <= 1 + factor_tolerance)
+	{
+	  const scalar factor = std::clamp(unbounded_factor, 0.0L, 1.0L);
+	  return {true, factor};
+	}
     return {};
   }
 
@@ -206,9 +257,9 @@ class forward_projection
   /// @param m Meridian magnitude in degrees within the half-octant.
   /// @return Point on the piecewise G-F-E equatorial path.
   xy
-  equator(const double m) const
+  equator(const scalar m) const
   {
-    double length = delta_m_equator * m;
+    scalar length = delta_m_equator * m;
     if (length <= length_gf)
       return {point_g.x, length};
     length -= length_gf;
@@ -219,7 +270,7 @@ class forward_projection
   /// @param m Meridian magnitude in degrees.
   /// @return Junction point T for the requested meridian.
   xy
-  joint_t(const double m) const
+  joint_t(const scalar m) const
   {
     return line_intersection(point_m, 2 * m / 3, equator(m), m / 3);
   }
@@ -228,7 +279,7 @@ class forward_projection
   /// @param m Meridian magnitude in degrees.
   /// @return Junction point F for the requested meridian.
   xy
-  joint_f(const double m) const
+  joint_f(const scalar m) const
   {
     if (m == 0)
       return {point_a.x + length_ab, 0};
@@ -238,26 +289,26 @@ class forward_projection
   /// Measure the torrid segment of a constructed meridian.
   /// @param m Meridian magnitude in degrees.
   /// @return Distance from the equator to the T junction.
-  double
-  torrid_length(const double m) const
+  scalar
+  torrid_length(const scalar m) const
   { return distance(equator(m), joint_t(m)); }
 
   /// Measure the middle segment of a constructed meridian.
   /// @param m Meridian magnitude in degrees.
   /// @return Distance from the T junction to the F junction.
-  double
-  middle_length(const double m) const
+  scalar
+  middle_length(const scalar m) const
   { return distance(joint_t(m), joint_f(m)); }
 
   /// Construct the 73-degree parallel and its signed frigid-zone length.
   /// @param m Meridian magnitude in degrees.
   /// @return Parallel point and signed distance from the F junction.
   parallel_73_result
-  parallel_73(const double m) const
+  parallel_73(const scalar m) const
   {
     const xy jf = joint_f(m);
     xy p73;
-    double length = 0;
+    scalar length = 0;
     if (m <= 30)
       {
 	p73 = {point_a.x + length_ap_73 * std::cos(m * radians),
@@ -285,7 +336,7 @@ class forward_projection
   /// @param m Meridian magnitude in degrees.
   /// @return Point on the 75-degree parallel.
   xy
-  parallel_75(const double m) const
+  parallel_75(const scalar m) const
   {
     return {point_a.x + length_ap_75 * std::cos(m * radians),
 	    point_a.y + length_ap_75 * std::sin(m * radians)};
@@ -297,14 +348,14 @@ class forward_projection
   /// @return Meridian magnitude, absolute parallel, reflection sign, and
   /// target octant.
   meridian
-  longitude_latitude_to_meridian(const double longitude,
-				 const double latitude) const
+  longitude_latitude_to_meridian(const scalar longitude,
+				 const scalar latitude) const
   {
     // This is LLtoMP from MegamapMaker-prep9.pl. Octant 1 crosses the
     // antimeridian; southern octants 5-8 mirror northern octants 4,1-3.
     int octant = static_cast<int>((longitude + 200) / 90) + 1;
-    double m = longitude + 200 - 90 * (octant - 1) - 45;
-    const double sign = m < 0 ? -1.0 : 1.0;
+    scalar m = longitude + 200 - 90 * (octant - 1) - 45;
+    const scalar sign = m < 0 ? -1.0L : 1.0L;
     m = std::abs(m);
     if (octant == 5)
       octant = 1;
@@ -321,13 +372,13 @@ class forward_projection
   /// @param p Absolute parallel in degrees.
   /// @return Native half-octant point.
   xy
-  zone_h(const double m, const double p) const
+  zone_h(const scalar m, const scalar p) const
   {
     const xy p75 = parallel_75(45);
     const xy p73 = parallel_73(m).point;
-    const double lf = distance(point_t, point_b);
-    const double lf75 = distance(point_b, p75);
-    double length = (75 - p) * (lf75 + lf) / 2;
+    const scalar lf = distance(point_t, point_b);
+    const scalar lf75 = distance(point_b, p75);
+    scalar length = (75 - p) * (lf75 + lf) / 2;
     if (length <= lf75)
       return interpolate(length, lf75, p75, point_b);
     length -= lf75;
@@ -339,12 +390,12 @@ class forward_projection
   /// @param p Absolute parallel in degrees.
   /// @return Native half-octant point.
   xy
-  zone_i(const double m, const double p) const
+  zone_i(const scalar m, const scalar p) const
   {
     const parallel_73_result p73 = parallel_73(m);
-    const double lt = torrid_length(m);
-    const double lm = middle_length(m);
-    double length = p * (lt + lm + p73.length) / 73;
+    const scalar lt = torrid_length(m);
+    const scalar lm = middle_length(m);
+    scalar length = p * (lt + lm + p73.length) / 73;
     if (length <= lt)
       return interpolate(length, lt, equator(m), joint_t(m));
     if (length <= lt + lm)
@@ -357,12 +408,12 @@ class forward_projection
   /// @param p Absolute parallel in degrees.
   /// @return Native half-octant point.
   xy
-  zone_j(const double m, const double p) const
+  zone_j(const scalar m, const scalar p) const
   {
     const xy p75 = parallel_75(m);
     const parallel_73_result p73 = parallel_73(m);
-    const double lf75 = distance(joint_f(m), p75);
-    double length = (75 - p) * (lf75 - p73.length) / 2;
+    const scalar lf75 = distance(joint_f(m), p75);
+    scalar length = (75 - p) * (lf75 - p73.length) / 2;
     if (length <= lf75)
       return interpolate(length, lf75, p75, joint_f(m));
     length -= lf75;
@@ -375,10 +426,10 @@ class forward_projection
   /// @param length_15 Distance along the meridian at parallel 15.
   /// @return Native half-octant point.
   xy
-  zone_k(const double m, const double p, const double length_15) const
+  zone_k(const scalar m, const scalar p, const scalar length_15) const
   {
-    double length = p * length_15 / 15;
-    const double lt = torrid_length(m);
+    scalar length = p * length_15 / 15;
+    const scalar lt = torrid_length(m);
     if (length <= lt)
       return interpolate(length, lt, equator(m), joint_t(m));
     return interpolate(length - lt, middle_length(m), joint_t(m), joint_f(m));
@@ -390,12 +441,12 @@ class forward_projection
   /// @param length_15 Distance along the meridian at parallel 15.
   /// @return Native half-octant point.
   xy
-  zone_l(const double m, const double p, const double length_15) const
+  zone_l(const scalar m, const scalar p, const scalar length_15) const
   {
     const parallel_73_result p73 = parallel_73(m);
-    const double lt = torrid_length(m);
-    const double lm = middle_length(m);
-    double length = length_15
+    const scalar lt = torrid_length(m);
+    const scalar lm = middle_length(m);
+    scalar length = length_15
 		    + (p - 15) * ((lt + lm + p73.length) - length_15) / 58;
     if (length <= lt)
       return interpolate(length, lt, equator(m), joint_t(m));
@@ -404,12 +455,40 @@ class forward_projection
     return interpolate(length - lt - lm, p73.length, joint_f(m), p73.point);
   }
 
+  /// Locate parallel 15 along the equator-to-pole meridian polyline.
+  /// @param m Meridian magnitude in degrees.
+  /// @return Distance from the equator to the circle crossing.
+  scalar
+  parallel_15_length(const scalar m) const
+  {
+    const xy equatorial = equator(m);
+    const xy jt = joint_t(m);
+    const xy jf = joint_f(m);
+    const scalar lt = distance(equatorial, jt);
+
+    // Traverse in geographic order. A crossing at the shared joint may be
+    // reported by both segments, but both representations have the same
+    // cumulative distance and the torrid segment gives the natural first hit.
+    const circle_intersection torrid
+      = intersect_circle_line(point_c, radius, equatorial, jt);
+    if (torrid.intersects)
+      return torrid.factor * lt;
+
+    const circle_intersection middle
+      = intersect_circle_line(point_c, radius, jt, jf);
+    if (middle.intersects)
+      return lt + middle.factor * distance(jt, jf);
+
+    throw std::domain_error(
+      "Cahill-Keyes parallel 15 does not intersect its meridian");
+  }
+
   /// Evaluate a canonical meridian/parallel intersection.
   /// @param m Meridian magnitude in degrees within a half-octant.
   /// @param p Absolute parallel in degrees.
   /// @return Native point before octant assembly.
   xy
-  meridian_parallel_to_xy(const double m, const double p) const
+  meridian_parallel_to_xy(const scalar m, const scalar p) const
   {
     if (m == 0)
       return p >= 75
@@ -418,7 +497,7 @@ class forward_projection
 
     if (p >= 75)
       {
-	const double length = latitude_degree_104 * (90 - p);
+	const scalar length = latitude_degree_104 * (90 - p);
 	return {point_a.x + length * std::cos(m * radians),
 		point_a.y + length * std::sin(m * radians)};
       }
@@ -428,7 +507,7 @@ class forward_projection
 
     if (p >= 73 && m <= 30)
       {
-	const double length = length_ap_75
+	const scalar length = length_ap_75
 			      + (75 - p) * latitude_degree_100;
 	return {point_a.x + length * std::cos(m * radians),
 		point_a.y + length * std::sin(m * radians)};
@@ -448,21 +527,7 @@ class forward_projection
     if (p >= 73)
       return zone_j(m, p);
 
-    const xy jt = joint_t(m);
-    const xy jf = joint_f(m);
-    circle_intersection p15 = intersect_circle_line(point_c, radius, jt, jf);
-    const double lt = torrid_length(m);
-    double length_15 = 0;
-    if (p15.intersects)
-      length_15 = lt + distance(jt, p15.point);
-    else
-      {
-	p15 = intersect_circle_line(point_c, radius, equator(m), jt);
-	if (!p15.intersects)
-	  throw std::domain_error(
-	    "Cahill-Keyes parallel 15 misses its meridian");
-	length_15 = lt - distance(jt, p15.point);
-      }
+    const scalar length_15 = parallel_15_length(m);
     return p <= 15 ? zone_k(m, p, length_15)
 		   : zone_l(m, p, length_15);
   }
@@ -521,15 +586,15 @@ class forward_projection
     return result;
   }
 
-  /// Derive all scale-dependent control points and segment lengths.
+  /// Derive all canonical control points and segment lengths.
   void
   calculate_preliminaries()
   {
     const xy point_n {length_mg, length_mg * std::tan(30 * radians)};
     point_b = line_intersection(point_m, 30, point_a, 45);
     length_ab = distance(point_a, point_b);
-    const double length_mb = distance(point_m, point_b);
-    const double length_mn = distance(point_m, point_n);
+    const scalar length_mb = distance(point_m, point_b);
+    const scalar length_mn = distance(point_m, point_n);
     point_d = interpolate(length_mb, length_mn, point_n, point_m);
     point_f = {length_mg, point_n.y - length_mb};
     point_e = {point_n.x - length_ma * std::sin(30 * radians),
@@ -541,18 +606,20 @@ class forward_projection
 		      point_a.y + length_ap_73 * std::sin(30 * radians)};
     point_t = line_intersection(point_u, -60, point_b, 30);
 
-    constexpr double m = 29;
-    constexpr double p = 15;
+    constexpr scalar m = 29;
+    constexpr scalar p = 15;
     const parallel_73_result p73 = parallel_73(m);
-    const double lt = torrid_length(m);
-    const double lm = middle_length(m);
-    double length = p * (lt + lm + p73.length) / 73 - lt;
+    const scalar lt = torrid_length(m);
+    const scalar lm = middle_length(m);
+    scalar length = p * (lt + lm + p73.length) / 73 - lt;
     const xy point_v = interpolate(length, lm, joint_t(m), joint_f(m));
-    const double root_three = std::sqrt(3.0);
-    point_c.y = (point_v.x * point_v.x + point_v.y * point_v.y
-		 - point_d.x * point_d.x - point_d.y * point_d.y)
-		/ (2 * (root_three * point_v.x + point_v.y
-			- root_three * point_d.x - point_d.y));
+    const scalar root_three = std::sqrt(3.0L);
+    const xy center_chord {point_v.x - point_d.x,
+			   point_v.y - point_d.y};
+    const xy center_sum {point_v.x + point_d.x,
+			 point_v.y + point_d.y};
+    point_c.y = dot(center_chord, center_sum)
+		/ (2 * (root_three * center_chord.x + center_chord.y));
     point_c.x = root_three * point_c.y;
     radius = distance(point_c, point_d);
   }
@@ -560,23 +627,18 @@ class forward_projection
 public:
   /// Construct the native projection at a requested scaffold scale.
   /// @param scaffold_altitude Positive M-G scaffold altitude in output units.
-  /// @throws std::invalid_argument if the altitude is non-finite or non-positive.
+  /// @throws std::invalid_argument if the altitude is non-finite, non-positive,
+  /// or too large for a finite complete-layout coordinate.
   explicit
   forward_projection(const double scaffold_altitude)
-  : length_mg(scaffold_altitude),
-    scale(scaffold_altitude / 10000.0),
-    length_ma(940 * scale),
-    latitude_degree_100(100 * scale),
-    latitude_degree_104(104 * scale),
-    y_translate(scaffold_altitude * sin_60),
-    point_g {scaffold_altitude, 0},
-    point_a {length_ma, 0},
-    length_ap_73(1760 * scale),
-    length_ap_75(1560 * scale)
+  : output_scale(static_cast<scalar>(scaffold_altitude))
   {
     if (!std::isfinite(scaffold_altitude) || scaffold_altitude <= 0)
       throw std::invalid_argument(
 	"Cahill-Keyes scaffold altitude must be positive");
+    if (scaffold_altitude > std::numeric_limits<double>::max() / 2)
+      throw std::invalid_argument(
+	"Cahill-Keyes scaffold altitude is too large");
     calculate_preliminaries();
   }
 
@@ -600,7 +662,13 @@ public:
     xy point = meridian_parallel_to_xy(mp.value, mp.parallel);
     point.y *= mp.sign;
     point = half_octant_to_megamap(point, mp.octant);
-    return {point.x, point.y};
+    const scalar x = point.x * output_scale;
+    const scalar y = point.y * output_scale;
+    if (!std::isfinite(x) || !std::isfinite(y)
+	|| std::abs(x) > std::numeric_limits<double>::max()
+	|| std::abs(y) > std::numeric_limits<double>::max())
+      throw std::overflow_error("Cahill-Keyes output coordinate overflow");
+    return {static_cast<double>(x), static_cast<double>(y)};
   }
 };
 
