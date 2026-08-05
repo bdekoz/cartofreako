@@ -207,6 +207,10 @@ make generate-network-infrastructure
 make generate-network-infrastructure-artifacts
 ```
 
+`make check-prerequisite` verifies that both `../cloud_cdn_cache/` and
+`../www.submarinecablemap.com/` exist before a complete build. The stricter
+source checks above additionally enforce the pinned commits and digests.
+
 TeleGeography submarine cable and Internet-exchange topology is a separate
 CC BY-NC-SA 3.0 opt-in and is never part of `make all` or generation-profile
 `"all"`:

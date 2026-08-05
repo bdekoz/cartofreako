@@ -15,13 +15,13 @@ usage()
 }
 
 no_argument_mode=0
+script_directory=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+repository_root=$(CDPATH= cd -- "$script_directory/.." && pwd)
+workspace_root=$(CDPATH= cd -- "$repository_root/.." && pwd)
+
 case $# in
   0)
     no_argument_mode=1
-    script_directory=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-    repository_root=$(CDPATH= cd -- "$script_directory/.." && pwd)
-    workspace_root=$(CDPATH= cd -- "$repository_root/.." && pwd)
-
     make_command=${MAKE:-make}
     make_version=${MAKE_VERSION:-}
     if [ -z "$make_version" ]; then
@@ -69,6 +69,9 @@ case $# in
     exit 2
     ;;
 esac
+
+network_infrastructure_cloud_source=${NETWORK_INFRASTRUCTURE_CLOUD_SOURCE:-$workspace_root/cloud_cdn_cache}
+submarine_cable_source=${SUBMARINE_CABLE_SOURCE:-$workspace_root/www.submarinecablemap.com}
 
 label_font=${LABEL_FONT:-${CARTOFREAKO_LABEL_FONT:-atkinson_hyperlegible}}
 case "$label_font" in
@@ -139,6 +142,15 @@ check_required_file()
   fi
 }
 
+check_required_directory()
+{
+  if [ -d "$2" ]; then
+    pass "$1 ($2)"
+  else
+    fail "$1 ($2)"
+  fi
+}
+
 show_log()
 {
   if [ -s "$1" ]; then
@@ -180,6 +192,10 @@ check_required_file "Alpha60 header" "$alpha60_src/a60-io.h"
 check_required_file "Izzi header" "$izzi_src/a60-svg.h"
 check_required_file "Izzi roulette header" \
   "$izzi_src/a60-svg-curves-roulette.h"
+check_required_directory "Cloud/CDN source checkout" \
+  "$network_infrastructure_cloud_source"
+check_required_directory "Submarine-cable source checkout" \
+  "$submarine_cable_source"
 check_required_tool "Inkscape" "$inkscape"
 check_required_tool "Doxygen" "$doxygen"
 

@@ -64,6 +64,13 @@ Cloud-atmosphere fixture, Orbital Technosphere, resources, Anthropocene, network
 and network-infrastructure profiles and bounded snapshots.
 It does not open Natural Earth, invoke Inkscape, or use network access.
 
+`make check-prerequisite` also verifies that the external sibling source roots
+`../cloud_cdn_cache/` and `../www.submarinecablemap.com/` exist. Override those
+checks with `NETWORK_INFRASTRUCTURE_CLOUD_SOURCE` and
+`SUBMARINE_CABLE_SOURCE` when the repositories live elsewhere. Commit and
+digest validation remains in the stricter network-infrastructure source-check
+targets.
+
 `make all` builds 24 production whole-earth maps, 12 astronomy maps, 12
 Orbital Technosphere maps, six resources maps, six Anthropocene maps, six network-swarm maps, six
 network-infrastructure site maps, six Bathymetry Roulette maps, five
@@ -654,6 +661,7 @@ opaque white.
 | Anthropocene normalized checksum or audit mismatch | Restore the checked profile/GeoJSON pair or deliberately promote a reviewed candidate with its checksum, coverage dates, tests, documentation, and all six products |
 | `FIRMS_MAP_KEY` is unset | The checked/default CWFIS fire layer still works; obtain a free NASA FIRMS map key only when deliberately refreshing global and Russian coverage |
 | Network-swarm archive/member checksum mismatch | Restore the checked-in network-swarm archive or deliberately update the archive, profile provenance, hashes, tests, documentation, and all six products together |
+| Cloud/CDN or submarine-cable source checkout is missing | Clone the documented repository beside `cartofreako`, or set `NETWORK_INFRASTRUCTURE_CLOUD_SOURCE` or `SUBMARINE_CABLE_SOURCE`; run `make check-prerequisite` before `make all` |
 | Network-infrastructure checkout, commit, or digest mismatch | Point the Make variables at the profile-pinned external checkouts, restore the consumed tracked paths, or deliberately update the profile, tests, documentation, and artifacts together |
 | Network-infrastructure topology opt-in rejected | Use the checked topology profile with `tele_geography_opt_in: true` and invoke `generate-network-infrastructure-topology`; normal generation intentionally cannot enable TeleGeography layers |
 | Inkscape is slow on an Earth, water, Bathymetry Roulette, orbital, Anthropocene, network-swarm, or network-infrastructure SVG | Close other large documents and inspect one layer family at a time |
