@@ -4,18 +4,18 @@
 #include <exception>
 #include <iostream>
 
-#include "network-generation.h"
+#include "network-swarm-generation.h"
 
 int
 main(const int argc, char** argv)
 {
   try
     {
-      return cart0freak0::network_generation::run(argc, argv);
+      return cart0freak0::network_swarm_generation::run(argc, argv);
     }
   catch (const std::exception& error)
     {
-      std::cerr << "generate-network: " << error.what() << '\n';
+      std::cerr << "generate-network-swarm: " << error.what() << '\n';
       return 1;
     }
 }

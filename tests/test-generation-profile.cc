@@ -71,10 +71,9 @@ main()
   const std::vector<std::string> all_targets = generation::targets(everything);
   assert(everything.all_projections);
   assert(everything.all_passes);
-  assert(all_targets.size() == 48);
+  assert(all_targets.size() == 60);
   assert(all_targets.front() == "generate-geometry-cahill-keyes");
-  assert(all_targets.back()
-         == "generate-bathymetry-roulette-voronoi");
+  assert(all_targets.back() == "generate-anthropocene-voronoi");
   std::vector<std::string> unique_targets = all_targets;
   std::sort(unique_targets.begin(), unique_targets.end());
   assert(std::adjacent_find(unique_targets.begin(), unique_targets.end())
@@ -86,17 +85,39 @@ main()
       "description": "Alias coverage",
       "projections": ["STAR_X", "voroni", "ck"],
       "passes": ["graticule", "astro", "orbiting", "swarm",
-                 "bathymetry_rolette"]
+                 "bathymetry_rolette", "infrastructure", "anthropocene"]
     }
   )json");
   assert((aliases.projections == std::vector<std::string> {
                                    "star-x", "voronoi", "cahill-keyes"}));
   assert((aliases.passes == std::vector<std::string> {
                               "graticules", "astronomy",
-                              "orbital-technosphere", "network",
-                              "bathymetry-roulette"}));
-  assert(generation::targets(aliases).front()
-         == "generate-graticules-star-x");
+                              "orbital-technosphere", "network-swarm",
+                              "bathymetry-roulette",
+                              "network-infrastructure", "anthropocene"}));
+  const std::vector<std::string> alias_targets = generation::targets(aliases);
+  assert(alias_targets.front() == "generate-graticules-star-x");
+  assert(std::find(alias_targets.begin(), alias_targets.end(),
+                   "generate-network-swarm-star-x")
+         != alias_targets.end());
+  assert(std::find(alias_targets.begin(), alias_targets.end(),
+                   "generate-network-infrastructure-star-x")
+         != alias_targets.end());
+  assert(std::find(alias_targets.begin(), alias_targets.end(),
+                   "generate-anthropocene-star-x")
+         != alias_targets.end());
+
+  const generation::profile legacy_network = generation::parse_json(R"json(
+    {
+      "schema_version": 1,
+      "projections": ["ck"],
+      "passes": ["network"]
+    }
+  )json");
+  assert((legacy_network.passes == std::vector<std::string> {
+                                     "network-swarm"}));
+  assert((generation::targets(legacy_network) == std::vector<std::string> {
+            "generate-network-swarm-cahill-keyes"}));
 
   const generation::profile historical = generation::parse_json(R"json(
     {

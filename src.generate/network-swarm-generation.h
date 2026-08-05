@@ -1,8 +1,8 @@
 // Projection-aware cumulative network swarm SVG generation.
 // -*- mode: C++ -*-
 
-#ifndef CART0FREAK0_NETWORK_GENERATION_H
-#define CART0FREAK0_NETWORK_GENERATION_H 1
+#ifndef CART0FREAK0_NETWORK_SWARM_GENERATION_H
+#define CART0FREAK0_NETWORK_SWARM_GENERATION_H 1
 
 #include <algorithm>
 #include <array>
@@ -28,11 +28,11 @@
 
 #include "generation-typography.h"
 #include "natural-earth-generation.h"
-#include "network-clustering.h"
-#include "network-data.h"
+#include "network-swarm-clustering.h"
+#include "network-swarm-data.h"
 #include "projection-generation-common.h"
 
-namespace cart0freak0::network_generation {
+namespace cart0freak0::network_swarm_generation {
 
 namespace generation = cart0freak0::generation;
 namespace natural_earth = cart0freak0::natural_earth_generation;
@@ -139,13 +139,13 @@ add_background(generation::projection_document& document,
                const generation::projection_context& context)
 {
   svg::group_element layer;
-  layer.start_element("network-background");
+  layer.start_element("network-swarm-background");
   svg::rect_element rectangle;
   rectangle.start_element();
   rectangle.add_data({0, 0, context.map_frame.width(),
                       context.map_frame.height()});
   rectangle.add_style({{9, 15, 18}, 1, svg::color::none, 0, 0});
-  rectangle.add_raw("id=\"network-ocean\"");
+  rectangle.add_raw("id=\"network-swarm-ocean\"");
   rectangle.finish_element();
   layer.add_element(rectangle);
   layer.finish_element();
@@ -184,7 +184,7 @@ inline std::string
 feature_attributes(const projected_feature& projected)
 {
   const swarm_feature& feature = *projected.source;
-  std::string result = "data-network-feature=\"true\" data-h3=\""
+  std::string result = "data-network-swarm-feature=\"true\" data-h3=\""
     + h3_string(feature.h3) + "\" data-h3-uint64=\""
     + std::to_string(feature.h3) + "\" data-parent-h3=\""
     + h3_string(projected.parent) + "\" data-projection-cell=\""
@@ -211,7 +211,7 @@ value_attribute(const projected_feature& feature,
 
 inline double
 metric_opacity(const projected_feature& feature,
-               const network_profile& config,
+               const network_swarm_profile& config,
                const downloader_metric metric)
 {
   return scaled_log_opacity(
@@ -222,7 +222,7 @@ metric_opacity(const projected_feature& feature,
 
 inline void
 add_tethers(generation::projection_document& document,
-            const projected_layout& layout, const network_profile& config)
+            const projected_layout& layout, const network_swarm_profile& config)
 {
   svg::group_element layer;
   layer.start_element("cluster-tethers");
@@ -239,7 +239,7 @@ add_tethers(generation::projection_document& document,
 }
 
 inline svg::group_element
-total_layer(const projected_layout& layout, const network_profile& config)
+total_layer(const projected_layout& layout, const network_swarm_profile& config)
 {
   svg::group_element layer;
   layer.start_element("downloaders-total");
@@ -262,7 +262,7 @@ total_layer(const projected_layout& layout, const network_profile& config)
 }
 
 inline svg::group_element
-mobile_layer(const projected_layout& layout, const network_profile& config)
+mobile_layer(const projected_layout& layout, const network_swarm_profile& config)
 {
   svg::group_element layer;
   layer.start_element("downloaders-mobile");
@@ -283,7 +283,7 @@ mobile_layer(const projected_layout& layout, const network_profile& config)
 
 inline svg::group_element
 satellite_layer(const projected_layout& layout,
-                const network_profile& config)
+                const network_swarm_profile& config)
 {
   svg::group_element layer;
   layer.start_element("downloaders-satellite");
@@ -303,7 +303,7 @@ satellite_layer(const projected_layout& layout,
 }
 
 inline svg::group_element
-outline_layer(const projected_layout& layout, const network_profile& config,
+outline_layer(const projected_layout& layout, const network_swarm_profile& config,
               const downloader_metric metric, const std::string_view id,
               const svg::color_qi color, const unsigned sides,
               const double radius_fraction)
@@ -325,7 +325,7 @@ outline_layer(const projected_layout& layout, const network_profile& config,
 }
 
 inline svg::group_element
-ring_layer(const projected_layout& layout, const network_profile& config,
+ring_layer(const projected_layout& layout, const network_swarm_profile& config,
            const downloader_metric metric, const std::string_view id,
            const svg::color_qi color, const double radius_fraction)
 {
@@ -346,7 +346,7 @@ ring_layer(const projected_layout& layout, const network_profile& config,
 }
 
 inline svg::group_element
-corner_layer(const projected_layout& layout, const network_profile& config,
+corner_layer(const projected_layout& layout, const network_swarm_profile& config,
              const downloader_metric metric, const std::string_view id,
              const svg::color_qi color, const double x_sign,
              const double y_sign, const unsigned sides)
@@ -373,7 +373,7 @@ corner_layer(const projected_layout& layout, const network_profile& config,
 }
 
 inline svg::group_element
-slash_layer(const projected_layout& layout, const network_profile& config,
+slash_layer(const projected_layout& layout, const network_swarm_profile& config,
             const downloader_metric metric, const std::string_view id,
             const svg::color_qi color, const bool crossed)
 {
@@ -402,7 +402,7 @@ slash_layer(const projected_layout& layout, const network_profile& config,
 inline void
 add_downloader_layers(generation::projection_document& document,
                       const projected_layout& layout,
-                      const network_profile& config)
+                      const network_swarm_profile& config)
 {
   document.add_element(total_layer(layout, config));
 
@@ -462,7 +462,7 @@ label_typography(const double size = 0.13,
 inline void
 add_labels(generation::projection_document& document,
            const generation::projection_context& context,
-           const projected_layout& layout, const network_profile& config)
+           const projected_layout& layout, const network_swarm_profile& config)
 {
   std::vector<const projected_feature*> ranked;
   ranked.reserve(layout.features.size());
@@ -516,7 +516,7 @@ add_labels(generation::projection_document& document,
 inline void
 add_legend(generation::projection_document& document,
            const generation::projection_context& context,
-           const swarm_dataset& dataset, const network_profile& config)
+           const swarm_dataset& dataset, const network_swarm_profile& config)
 {
   svg::group_element layer;
   layer.start_element("legend-and-provenance");
@@ -529,7 +529,7 @@ add_legend(generation::projection_document& document,
 
   svg::typography title = label_typography(0.22, {247, 188, 62});
   title._M_w = svg::typography::weight::bold;
-  svg::styled_text(layer, xml_escape("NETWORK / " + dataset.id),
+  svg::styled_text(layer, xml_escape("NETWORK SWARM / " + dataset.id),
                    {0.32, 0.24}, title);
   svg::styled_text(layer,
     xml_escape(dataset.datestamp + "  |  "
@@ -554,7 +554,7 @@ total_downloaders(const swarm_dataset& dataset)
   std::uint64_t result = 0;
   for (const swarm_feature& feature : dataset.features)
     {
-      network_require(std::numeric_limits<std::uint64_t>::max() - result
+      network_swarm_require(std::numeric_limits<std::uint64_t>::max() - result
                         >= feature.downloaders.size,
                       "downloaders.size total overflowed uint64");
       result += feature.downloaders.size;
@@ -564,11 +564,11 @@ total_downloaders(const swarm_dataset& dataset)
 
 inline std::string
 metadata_element(const generation::projection_spec& spec,
-                 const network_profile& config,
+                 const network_swarm_profile& config,
                  const swarm_dataset& dataset,
                  const projected_layout& layout)
 {
-  return "<metadata id=\"network-metadata\""
+  return "<metadata id=\"network-swarm-metadata\""
     " data-workflow=\"Network cumulative swarm\""
     " data-profile=\"" + xml_escape(config.path.filename().string()) + "\""
     " data-projection=\"" + std::string(spec.argument) + "\""
@@ -605,14 +605,14 @@ metadata_element(const generation::projection_spec& spec,
 
 inline std::string
 output_basename(const generation::projection_spec& spec)
-{ return generation::output_basename("network", spec); }
+{ return generation::output_basename("network-swarm", spec); }
 
 inline void
 generate(const generation::projection_spec& spec,
-         const network_profile& config, const swarm_dataset& dataset)
+         const network_swarm_profile& config, const swarm_dataset& dataset)
 {
-  network_require(dataset.h3_resolution == config.source_h3_resolution,
-                  "network profile and GeoJSON H3 resolutions differ");
+  network_swarm_require(dataset.h3_resolution == config.source_h3_resolution,
+                  "network-swarm profile and GeoJSON H3 resolutions differ");
   const std::string basename = output_basename(spec);
   const generation::projection_context context(spec, basename);
   const projected_layout layout = make_projected_layout(
@@ -634,7 +634,7 @@ inline std::string
 read_generated(const std::string& basename)
 {
   std::ifstream input {basename + ".svg"};
-  network_require(input.good(), "failed to open generated " + basename
+  network_swarm_require(input.good(), "failed to open generated " + basename
                                   + ".svg");
   return {std::istreambuf_iterator<char>(input),
           std::istreambuf_iterator<char>()};
@@ -656,13 +656,13 @@ token_count(const std::string_view text, const std::string_view token)
 inline void
 verify(const std::string& generated,
        const generation::projection_context& context,
-       const network_profile& config, const swarm_dataset& dataset)
+       const network_swarm_profile& config, const swarm_dataset& dataset)
 {
-  network_require(generated.find(generation::view_box_fragment(context))
+  network_swarm_require(generated.find(generation::view_box_fragment(context))
                     != std::string::npos,
-                  "generated Network SVG has the wrong viewBox");
+                  "generated Network-swarm SVG has the wrong viewBox");
   constexpr std::array layers {
-    "network-background", "terrestrial-land", "cluster-tethers",
+    "network-swarm-background", "terrestrial-land", "cluster-tethers",
     "downloaders-total", "access", "downloaders-mobile",
     "downloaders-satellite", "infrastructure", "downloaders-hosting",
     "downloaders-service", "privacy-routing", "downloaders-vpn",
@@ -670,24 +670,25 @@ verify(const std::string& generated,
     "downloaders-proxy", "labels", "legend-and-provenance",
   };
   for (const std::string_view layer : layers)
-    network_require(generated.find("<g id=\"" + std::string(layer) + "\">")
+    network_swarm_require(generated.find("<g id=\"" + std::string(layer) + "\">")
                       != std::string::npos,
-                    "generated Network SVG is missing layer "
+                    "generated Network-swarm SVG is missing layer "
                       + std::string(layer));
-  network_require(generated.find("id=\"network-metadata\"")
+  network_swarm_require(generated.find("id=\"network-swarm-metadata\"")
                     != std::string::npos
                     && generated.find("data-source-archive-sha256=\""
                       + config.archive_sha256 + "\"") != std::string::npos,
-                  "generated Network SVG is missing provenance metadata");
-  network_require(token_count(generated, "data-network-feature=\"true\"")
+                  "generated Network-swarm SVG is missing provenance metadata");
+  network_swarm_require(token_count(generated,
+                              "data-network-swarm-feature=\"true\"")
                     == dataset.features.size(),
-                  "generated Network SVG has the wrong feature count");
-  network_require(generated.find(" nan") == std::string::npos
+                  "generated Network-swarm SVG has the wrong feature count");
+  network_swarm_require(generated.find(" nan") == std::string::npos
                     && generated.find(" -nan") == std::string::npos
                     && generated.find(" inf") == std::string::npos
                     && generated.find(" -inf") == std::string::npos,
-                  "generated Network SVG has non-finite data");
-  generation::verify_configured_label_font(generated, "Network SVG");
+                  "generated Network-swarm SVG has non-finite data");
+  generation::verify_configured_label_font(generated, "Network-swarm SVG");
 }
 
 inline int
@@ -695,10 +696,10 @@ run(const int argc, char** argv)
 {
   if (argc != 4)
     throw std::invalid_argument(
-      "usage: generate-network PROJECTION PROFILE.json INPUT.geojson");
+      "usage: generate-network-swarm PROJECTION PROFILE.json INPUT.geojson");
   const generation::projection_spec& spec = generation::find_projection_spec(
     argv[1]);
-  const network_profile config = load_network_profile(
+  const network_swarm_profile config = load_network_swarm_profile(
     std::filesystem::absolute(argv[2]));
   const swarm_dataset dataset = load_swarm_dataset(
     std::filesystem::absolute(argv[3]));
@@ -709,6 +710,6 @@ run(const int argc, char** argv)
   return 0;
 }
 
-} // namespace cart0freak0::network_generation
+} // namespace cart0freak0::network_swarm_generation
 
 #endif

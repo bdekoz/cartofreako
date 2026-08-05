@@ -8,16 +8,17 @@
 #include <string>
 #include <vector>
 
-#include "network-clustering.h"
+#include "network-swarm-clustering.h"
 
-namespace network = cart0freak0::network_generation;
+namespace network_swarm = cart0freak0::network_swarm_generation;
 namespace generation = cart0freak0::generation;
 
 int
 main()
 {
-  const network::network_profile profile = network::load_network_profile(
-    "assets.static/network/network-profile.json");
+  const network_swarm::network_swarm_profile profile
+    = network_swarm::load_network_swarm_profile(
+      "assets.static/network-swarm/network-swarm-profile.json");
   assert(profile.source_h3_resolution == 5);
   assert(profile.parent_h3_resolution == 3);
   assert(profile.maximum_labels == 40);
@@ -27,9 +28,10 @@ main()
   assert(profile.geojson_sha256
          == "9fbd453d174df834208718e110396c5a22bff4312aeeff3e42d0175510b0ff69");
 
-  const network::swarm_dataset dataset = network::load_swarm_dataset(
-    "assets.static/network/.prepared/"
-    "house-of-the-dragon-301-cumulative-aggregate.geojson");
+  const network_swarm::swarm_dataset dataset
+    = network_swarm::load_swarm_dataset(
+      "assets.static/network-swarm/.prepared/"
+      "house-of-the-dragon-301-cumulative-aggregate.geojson");
   assert(dataset.id == "house-of-the-dragon-301");
   assert(dataset.datestamp == "2026-06-22-to-2026-07-26");
   assert(dataset.duration_type == "cumulative");
@@ -41,7 +43,7 @@ main()
   assert(dataset.btiha_size == 411);
   assert(dataset.features.size() == 23825);
 
-  const network::swarm_feature& first = dataset.features.front();
+  const network_swarm::swarm_feature& first = dataset.features.front();
   assert(first.country_code == "CHN");
   assert(first.city == "Nanjing");
   assert(first.h3 == 599833147210727423ULL);
@@ -52,7 +54,7 @@ main()
   std::uint64_t total = 0;
   bool overlapping_categories = false;
   std::map<H3Index, std::size_t> parent_sizes;
-  for (const network::swarm_feature& feature : dataset.features)
+  for (const network_swarm::swarm_feature& feature : dataset.features)
     {
       total += feature.downloaders.size;
       const std::uint64_t specialized = feature.downloaders.mobile
@@ -62,7 +64,7 @@ main()
         + feature.downloaders.hosting + feature.downloaders.service;
       overlapping_categories = overlapping_categories
         || specialized > feature.downloaders.size;
-      ++parent_sizes[network::h3_parent(feature.h3, 3)];
+      ++parent_sizes[network_swarm::h3_parent(feature.h3, 3)];
     }
   assert(total == 19187402);
   assert(overlapping_categories);
@@ -76,7 +78,7 @@ main()
   for (std::size_t count = 1; count <= 48; ++count)
     {
       const std::vector<svg::point_2t> offsets
-        = network::honeycomb_offsets(profile.marker_radius, count);
+        = network_swarm::honeycomb_offsets(profile.marker_radius, count);
       assert(offsets.size() == count);
       assert(std::hypot(std::get<0>(offsets.front()),
                         std::get<1>(offsets.front())) < 1e-12);
@@ -95,15 +97,16 @@ main()
       const generation::projection_spec& spec
         = generation::find_projection_spec(name);
       const generation::projection_context context(
-        spec, "test-network-" + std::string(name));
-      const network::projected_layout layout = network::make_projected_layout(
-        context, dataset, profile);
+        spec, "test-network-swarm-" + std::string(name));
+      const network_swarm::projected_layout layout
+        = network_swarm::make_projected_layout(
+          context, dataset, profile);
       assert(layout.features.size() == dataset.features.size());
       assert(layout.cluster_count >= parent_sizes.size());
       assert(layout.largest_cluster <= 48);
       if (name == "cahill-keyes")
         assert(layout.cluster_count == 4418);
-      for (const network::projected_feature& feature : layout.features)
+      for (const network_swarm::projected_feature& feature : layout.features)
         {
           const auto [x, y] = feature.display_point;
           assert(std::isfinite(x) && std::isfinite(y));
@@ -112,7 +115,7 @@ main()
         }
     }
 
-  assert(network::scaled_log_opacity(0, 100, 0.2) == 0);
-  assert(network::scaled_log_opacity(1, 100, 0.2) > 0.2);
-  assert(network::scaled_log_opacity(1000, 100, 0.2) == 1);
+  assert(network_swarm::scaled_log_opacity(0, 100, 0.2) == 0);
+  assert(network_swarm::scaled_log_opacity(1, 100, 0.2) > 0.2);
+  assert(network_swarm::scaled_log_opacity(1000, 100, 0.2) == 1);
 }

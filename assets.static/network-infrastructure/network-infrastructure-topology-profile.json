@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "name": "Cloud, cable, and Internet-exchange topology",
+  "product": "topology",
+  "display": {
+    "marker_radius_inches": 0.028,
+    "collision_cell_inches": 0.17,
+    "minimum_tether_inches": 0.04,
+    "maximum_labels": 64,
+    "maximum_cable_labels": 18,
+    "show_tethers": true,
+    "include_observed_cloud": false
+  },
+  "layers": {
+    "cloud_cdn_sites": true,
+    "submarine_cables": true,
+    "landing_points": true,
+    "internet_exchange_buildings": true,
+    "internet_exchange_membership": true
+  },
+  "licensing": {
+    "tele_geography_opt_in": true,
+    "generated_artifact_license": "CC BY-NC-SA 3.0 Unported; cloud source terms retained"
+  },
+  "sources": {
+    "cloud_cdn": {
+      "repository": "https://github.com/bdekoz/cloud_cdn_cache",
+      "commit": "7af9b774d191c3c22137682ec697856ef85016a0",
+      "license": "ODC-By-1.0 original dataset; source-specific terms retained",
+      "snapshot": "2026-08-04",
+      "manifest": "data/manifest.20260804.json",
+      "manifest_sha256": "c0c506438778af6bef8f7a595e5f6198f59c90799377ffda80dea85d54e8932b",
+      "expected_layers": 19,
+      "expected_records": 15113,
+      "expected_located": 1003
+    },
+    "submarine_cables": {
+      "repository": "https://github.com/telegeography/www.submarinecablemap.com",
+      "commit": "0d684b2aedeae0f7473280270f3f71fa0983f0b3",
+      "license": "CC BY-NC-SA 3.0 Unported",
+      "snapshot": "2022-11-11",
+      "routes": "web/public/api/v3/cable/cable-geo.json",
+      "routes_sha256": "63134a87d7482cb51b5f22d586384e88fbd9ec4315dba9c6899a5e1ff76637f5",
+      "landings": "web/public/api/v3/landing-point/landing-point-geo.json",
+      "landings_sha256": "2a350a8be354886949d1a146de6d973d8aa433e085c245b867c130bd0398c69e",
+      "detail_directory": "web/public/api/v3/cable",
+      "expected_systems": 526,
+      "expected_route_features": 532,
+      "expected_landings": 1436
+    },
+    "internet_exchanges": {
+      "repository": "https://github.com/telegeography/www.internetexchangemap.com",
+      "commit": "2b9c36ad7fad083c0b4db998c4dedadc1ba89027",
+      "license": "CC BY-NC-SA 3.0 Unported",
+      "snapshot": "2022-09-20",
+      "buildings": "public/api/v2/buildings.geojson",
+      "buildings_sha256": "6fdad528d4e0383ed71a0f5495cef4c0576ef3b0e8488fe8affc7978cf97253c",
+      "expected_buildings": 1772,
+      "expected_exchanges": 1103,
+      "expected_memberships": 2581
+    }
+  }
+}

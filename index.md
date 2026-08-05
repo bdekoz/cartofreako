@@ -40,7 +40,9 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Generate-pass evaluation record plus configured, full-suite, family, and exact workflows | [Generate-pass methods and decision record](docs/generation-methods.md) |
 | Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/astro-implementation-notes.md) |
 | Human-made Earth-orbit population and observer generation | [Orbital Technosphere implementation notes](docs/orbital-technosphere-implementation-notes.md) |
-| Cumulative H3 network swarm generation | [Network generation implementation notes](docs/network-implementation-notes.md) |
+| Source-separated climate, weather, fire, smoke, and air-quality atlas | [Anthropocene implementation notes](docs/anthropocene-implementation-notes.md) |
+| Cumulative H3 network-swarm generation | [Network-swarm generation implementation notes](docs/network-swarm-implementation-notes.md) |
+| Cloud/CDN site atlas and opt-in cable/exchange topology | [Network-infrastructure implementation notes](docs/network-infrastructure-implementation-notes.md) |
 | Monochrome roulette-patterned bathymetry generation | [Bathymetry Roulette implementation notes](docs/bathymetry-roulette-implementation-notes.md) |
 | Natural Earth acquisition, digest, and license | [Natural Earth data note](docs/natural-earth-10m-physical-vectors.md) |
 | Production Cahill-Keyes and Myriahedral browser renderers | [WebAssembly renderer README](src.wasm/README.md) |
@@ -87,15 +89,17 @@ make check
 
 Generate geometry, labeled graticules, both Natural Earth layer families,
 both timestamped astronomy products, both timestamped Orbital Technosphere
-products, the cumulative network swarm, and Bathymetry Roulette for all six
-projections with:
+products, the Anthropocene observation atlas, the cumulative network-swarm,
+the cloud/CDN network-infrastructure site atlas, and Bathymetry Roulette for
+all six projections with:
 
 ```sh
 make all
 ```
 
 The 24 production whole-earth maps, 12 astronomy maps, 12 Orbital
-Technosphere maps, six network maps, six Bathymetry Roulette maps, five
+Technosphere maps, six Anthropocene maps, six network-swarm maps, six
+network-infrastructure site maps, six Bathymetry Roulette maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes enlargement
 slices, and two Myriahedral face-group slices are each written as a layered SVG under
 `assets.generated/svg/`, an Inkscape PDF under `assets.generated/pdf/`, and a
@@ -126,10 +130,12 @@ Artifact-family targets are also available as
 `generate-geometry-projections`, `generate-graticules-projections`,
 `generate-earth-projections`, `generate-water-projections`, and
 `generate-astro-projections`, `generate-orbiting-projections`, and
-`generate-network-projections`, and
+`generate-anthropocene-projections`,
+`generate-network-swarm-projections`, and
+`generate-network-infrastructure-projections`, and
 `generate-bathymetry-roulette-projections`. Each generic
 family target includes Cahill-Keyes plus AuthaGraph, Dymaxion, Myriahedral,
-Star-X, and Voronoi. The eight whole-map generators accept a projection name on their
+Star-X, and Voronoi. The ten whole-map generators accept a projection name on their
 command line. Every generator reopens its SVG to validate the view box,
 required layers, path structure, and finite numeric output.
 
@@ -169,18 +175,46 @@ observer maps show only the above-horizon topocentric population:
 | Star-X | [`orbital-technosphere-global-star-x-34-44.png`](assets.generated/png/orbital-technosphere-global-star-x-34-44.png) | [`orbital-technosphere-observer-star-x-34-44.png`](assets.generated/png/orbital-technosphere-observer-star-x-34-44.png) |
 | Voronoi | [`orbital-technosphere-global-voronoi-44-22.916667.png`](assets.generated/png/orbital-technosphere-global-voronoi-44-22.916667.png) | [`orbital-technosphere-observer-voronoi-44-22.916667.png`](assets.generated/png/orbital-technosphere-observer-voronoi-44-22.916667.png) |
 
-The cumulative network pass detiles the pinned resolution-5 H3 swarm into
+The Anthropocene products preserve temperature and precipitation records,
+active fire, observed smoke, flood/heavy-rain and severe-weather reports, and
+EPA PM2.5 exposure as independent H3 cell-day layers. PM2.5 is not used as a
+proxy for smoke, and absent observations do not assert zero:
+
+| Projection | Anthropocene |
+| --- | --- |
+| Cahill-Keyes | [`anthropocene-ck-44-22.png`](assets.generated/png/anthropocene-ck-44-22.png) |
+| AuthaGraph | [`anthropocene-authagraph-44-19.052559.png`](assets.generated/png/anthropocene-authagraph-44-19.052559.png) |
+| Dymaxion | [`anthropocene-dymaxion-44-20.78461.png`](assets.generated/png/anthropocene-dymaxion-44-20.78461.png) |
+| Myriahedral | [`anthropocene-myriahedral-44-24.75.png`](assets.generated/png/anthropocene-myriahedral-44-24.75.png) |
+| Star-X | [`anthropocene-star-x-34-44.png`](assets.generated/png/anthropocene-star-x-34-44.png) |
+| Voronoi | [`anthropocene-voronoi-44-22.916667.png`](assets.generated/png/anthropocene-voronoi-44-22.916667.png) |
+
+The cumulative network-swarm pass detiles the pinned resolution-5 H3 swarm into
 projection-safe resolution-3 Izzi honeycombs while preserving every raw
 downloader field:
 
-| Projection | Network |
+| Projection | Network-swarm |
 | --- | --- |
-| Cahill-Keyes | [`network-ck-44-22.png`](assets.generated/png/network-ck-44-22.png) |
-| AuthaGraph | [`network-authagraph-44-19.052559.png`](assets.generated/png/network-authagraph-44-19.052559.png) |
-| Dymaxion | [`network-dymaxion-44-20.78461.png`](assets.generated/png/network-dymaxion-44-20.78461.png) |
-| Myriahedral | [`network-myriahedral-44-24.75.png`](assets.generated/png/network-myriahedral-44-24.75.png) |
-| Star-X | [`network-star-x-34-44.png`](assets.generated/png/network-star-x-34-44.png) |
-| Voronoi | [`network-voronoi-44-22.916667.png`](assets.generated/png/network-voronoi-44-22.916667.png) |
+| Cahill-Keyes | [`network-swarm-ck-44-22.png`](assets.generated/png/network-swarm-ck-44-22.png) |
+| AuthaGraph | [`network-swarm-authagraph-44-19.052559.png`](assets.generated/png/network-swarm-authagraph-44-19.052559.png) |
+| Dymaxion | [`network-swarm-dymaxion-44-20.78461.png`](assets.generated/png/network-swarm-dymaxion-44-20.78461.png) |
+| Myriahedral | [`network-swarm-myriahedral-44-24.75.png`](assets.generated/png/network-swarm-myriahedral-44-24.75.png) |
+| Star-X | [`network-swarm-star-x-34-44.png`](assets.generated/png/network-swarm-star-x-34-44.png) |
+| Voronoi | [`network-swarm-voronoi-44-22.916667.png`](assets.generated/png/network-swarm-voronoi-44-22.916667.png) |
+
+The ordinary network-infrastructure pass maps located cloud/CDN records. The
+separately generated topology variant adds source-backed TeleGeography cable
+routes and logical exchange/facility incidence. Topology is an explicit CC
+BY-NC-SA 3.0 opt-in and is not part of `make all`:
+
+| Projection | Cloud/CDN sites | Opt-in topology |
+| --- | --- | --- |
+| Cahill-Keyes | [`network-infrastructure-sites-ck-44-22.png`](assets.generated/png/network-infrastructure-sites-ck-44-22.png) | [`network-infrastructure-topology-ck-44-22.png`](assets.generated/png/network-infrastructure-topology-ck-44-22.png) |
+| AuthaGraph | [`network-infrastructure-sites-authagraph-44-19.052559.png`](assets.generated/png/network-infrastructure-sites-authagraph-44-19.052559.png) | [`network-infrastructure-topology-authagraph-44-19.052559.png`](assets.generated/png/network-infrastructure-topology-authagraph-44-19.052559.png) |
+| Dymaxion | [`network-infrastructure-sites-dymaxion-44-20.78461.png`](assets.generated/png/network-infrastructure-sites-dymaxion-44-20.78461.png) | [`network-infrastructure-topology-dymaxion-44-20.78461.png`](assets.generated/png/network-infrastructure-topology-dymaxion-44-20.78461.png) |
+| Myriahedral | [`network-infrastructure-sites-myriahedral-44-24.75.png`](assets.generated/png/network-infrastructure-sites-myriahedral-44-24.75.png) | [`network-infrastructure-topology-myriahedral-44-24.75.png`](assets.generated/png/network-infrastructure-topology-myriahedral-44-24.75.png) |
+| Star-X | [`network-infrastructure-sites-star-x-34-44.png`](assets.generated/png/network-infrastructure-sites-star-x-34-44.png) | [`network-infrastructure-topology-star-x-34-44.png`](assets.generated/png/network-infrastructure-topology-star-x-34-44.png) |
+| Voronoi | [`network-infrastructure-sites-voronoi-44-22.916667.png`](assets.generated/png/network-infrastructure-sites-voronoi-44-22.916667.png) | [`network-infrastructure-topology-voronoi-44-22.916667.png`](assets.generated/png/network-infrastructure-topology-voronoi-44-22.916667.png) |
 
 The Bathymetry Roulette pass uses one pale ground and one dark ink, mapping
 successively deeper Natural Earth thresholds to more variable and complex
@@ -206,9 +240,17 @@ source evaluation, calculations, instrument filter, and accuracy boundary.
 The [Orbital Technosphere notes](docs/orbital-technosphere-implementation-notes.md)
 record its naming decision, NASA/CelesTrak feasibility evaluation, OMM and
 SGP4 pipeline, semantic detiling, and non-operational accuracy boundary.
-The [network notes](docs/network-implementation-notes.md) record the fixed
+The [Anthropocene notes](docs/anthropocene-implementation-notes.md) record the
+feasibility boundary, literal 2026 profile, source classifications, record and
+rainfall formulas, Canada/Russia fire-source evaluation, EPA/smoke separation,
+deferred coral phase, snapshot audit, and interpretation limits.
+The [network-swarm notes](docs/network-swarm-implementation-notes.md) record the fixed
 source audit, variable-input contract, H3/Izzi clustering, independent
 downloader encodings, SVG metadata, and interpretation limits.
+The [network-infrastructure notes](docs/network-infrastructure-implementation-notes.md)
+record the audited external pins, normal site atlas, CC BY-NC-SA 3.0 topology
+opt-in, physical-versus-logical edge boundary, seam handling, Izzi collision
+layout, products, and verification.
 The [Bathymetry Roulette notes](docs/bathymetry-roulette-implementation-notes.md)
 record the confirmed curve catalogue, monochrome pattern and clipping model,
 visible key, accepted moiré, products, and verification.
@@ -385,14 +427,22 @@ the `voronoi_source` preset are in the
 | [`tests/test-orbiting-generation.cc`](tests/test-orbiting-generation.cc) | Profile, OMM, large catalog ID, published SGP4 vector, NASA SSCWeb tolerance, and finite-state tests |
 | [`assets.static/orbital-technosphere/orbital-technosphere-profile.json`](assets.static/orbital-technosphere/orbital-technosphere-profile.json) | Pinned propagation time, make-invocation location, source catalog roles, freshness, visibility, and display budgets |
 | [`scripts/fetch-orbiting-data.sh`](scripts/fetch-orbiting-data.sh) | Atomic CelesTrak OMM and NASA SSCWeb snapshot refresh with schema checks and hashes |
-| [`src.generate/network-data.h`](src.generate/network-data.h) | Strict cumulative swarm GeoJSON and profile validation, 64-bit H3 handling, fixed log scales, and snapshot provenance |
-| [`src.generate/network-clustering.h`](src.generate/network-clustering.h) | H3 parent grouping, native-projection seam partitioning, and canonicalized Izzi radial honeycomb placement |
-| [`src.generate/network-generation.h`](src.generate/network-generation.h) | Dark terrestrial base, independent downloader glyph layers, labels, provenance, and embedded SVG checks |
-| [`src.generate/generate-network.cc`](src.generate/generate-network.cc) | Thin six-projection cumulative network generator entry point |
-| [`tests/test-network-generation.cc`](tests/test-network-generation.cc) | Snapshot totals, overlap semantics, H3 statistics, honeycomb uniqueness, and six-projection layout tests |
-| [`assets.static/network/network-profile.json`](assets.static/network/network-profile.json) | H3 resolutions, physical mark dimensions, label/tether settings, fixed p99 scales, hashes, commit, and license |
-| [`scripts/prepare-network-data.sh`](scripts/prepare-network-data.sh) | Bounded, safe, atomic staging of local ZIP or plain GeoJSON network input |
-| [`docs/network-implementation-notes.md`](docs/network-implementation-notes.md) | Stage 4.4 feasibility, source audit, clustering, visual encodings, products, verification, and limits |
+| [`src.generate/network-swarm-data.h`](src.generate/network-swarm-data.h) | Strict cumulative swarm GeoJSON and profile validation, 64-bit H3 handling, fixed log scales, and snapshot provenance |
+| [`src.generate/network-swarm-clustering.h`](src.generate/network-swarm-clustering.h) | H3 parent grouping, native-projection seam partitioning, and canonicalized Izzi radial honeycomb placement |
+| [`src.generate/network-swarm-generation.h`](src.generate/network-swarm-generation.h) | Dark terrestrial base, independent downloader glyph layers, labels, provenance, and embedded SVG checks |
+| [`src.generate/generate-network-swarm.cc`](src.generate/generate-network-swarm.cc) | Thin six-projection cumulative network-swarm generator entry point |
+| [`tests/test-network-swarm-generation.cc`](tests/test-network-swarm-generation.cc) | Snapshot totals, overlap semantics, H3 statistics, honeycomb uniqueness, and six-projection layout tests |
+| [`assets.static/network-swarm/network-swarm-profile.json`](assets.static/network-swarm/network-swarm-profile.json) | H3 resolutions, physical mark dimensions, label/tether settings, fixed p99 scales, hashes, commit, and license |
+| [`scripts/prepare-network-swarm-data.sh`](scripts/prepare-network-swarm-data.sh) | Bounded, safe, atomic staging of local ZIP or plain GeoJSON network-swarm input |
+| [`docs/network-swarm-implementation-notes.md`](docs/network-swarm-implementation-notes.md) | Stage 4.4 feasibility, source audit, clustering, visual encodings, products, verification, and limits |
+| [`src.generate/network-infrastructure-data.h`](src.generate/network-infrastructure-data.h) | Strict profile, cloud-manifest, submarine-cable, landing, and Internet-exchange parsing with exact source audits |
+| [`src.generate/network-infrastructure-clustering.h`](src.generate/network-infrastructure-clustering.h) | Shared projection-cell-aware Izzi radial-hexagon collision layout for infrastructure point families |
+| [`src.generate/network-infrastructure-generation.h`](src.generate/network-infrastructure-generation.h) | Dark terrestrial base, seam-safe physical and logical topology, semantic point layers, attribution, and embedded SVG checks |
+| [`src.generate/generate-network-infrastructure.cc`](src.generate/generate-network-infrastructure.cc) | Thin six-projection network-infrastructure generator entry point for normal sites and opted-in topology profiles |
+| [`tests/test-network-infrastructure-generation.cc`](tests/test-network-infrastructure-generation.cc) | Profile license gate, seam geometry, honeycomb uniqueness, mixed-model, XML, and six-projection tests |
+| [`assets.static/network-infrastructure/`](assets.static/network-infrastructure/) | Commit/digest/count-pinned sites and topology profiles plus external-source and licensing contract |
+| [`scripts/check-network-infrastructure-sources.sh`](scripts/check-network-infrastructure-sources.sh) | Offline commit, digest, and consumed-path validation for external infrastructure checkouts |
+| [`docs/network-infrastructure-implementation-notes.md`](docs/network-infrastructure-implementation-notes.md) | Stage 9 feasibility, source audit, license boundary, semantics, profiles, rendering, products, verification, and limits |
 | [`src.generate/generate-4-slice.cc`](src.generate/generate-4-slice.cc) | Four full-height, quarter-width Cahill-Keyes quadrant-pair enlargements |
 | [`src.generate/generate-8-slice.cc`](src.generate/generate-8-slice.cc) | Eight naturally bounded, face-clipped Cahill-Keyes octant enlargements |
 | [`src.generate/generate-myriahedral-slices.cc`](src.generate/generate-myriahedral-slices.cc) | Two complementary, exact-terminal-face Myriahedral water slices |

@@ -27,8 +27,8 @@ Install the components listed in
 [`docs/prerequisites.md`](docs/prerequisites.md) before building the complete
 SVG, PDF, and PNG suite. The offline `make check` target needs GNU Make, a
 C++20 compiler, RapidJSON and H3 development files, sibling Alpha60/Izzi
-headers, and the checked-in astronomy, Orbital Technosphere, and network
-snapshots.
+headers, and the checked-in astronomy, Orbital Technosphere, Anthropocene, and
+network-swarm snapshots.
 
 List every supported top-level Make target with:
 
@@ -72,8 +72,9 @@ See the [`src.wasm` README](src.wasm/README.md) for their JavaScript APIs,
 layer contracts, and build requirements.
 
 Generate 24 production whole-earth maps, 12 timestamped astronomy maps, 12
-timestamped Orbital Technosphere maps, six cumulative network maps, six
-monochrome Bathymetry Roulette maps, five
+timestamped Orbital Technosphere maps, six cumulative network-swarm maps, six
+monochrome Bathymetry Roulette maps, six source-separated Anthropocene maps,
+six cloud/CDN network-infrastructure site maps, five
 exploratory Myriahedral ocean perspectives, 12 Cahill-Keyes enlargement
 slices, and two Myriahedral face-group slices as layered SVG, PDF, and opaque-white,
 3840-pixel-long-side PNG artifacts with:
@@ -113,18 +114,61 @@ See the [Orbital Technosphere implementation notes](docs/orbital-technosphere-im
 for source feasibility, naming, propagation, detiling layers, and accuracy
 limits.
 
-Network generation is offline and reproducible from a checked-in cumulative
-GeoJSON archive. Prepare the bounded source and generate the six H3/Izzi
+Anthropocene generation is offline from a profile-fixed, partial 2026 H3
+snapshot. It preserves temperature records, rainfall, fire, smoke, flood,
+severe weather, and EPA PM2.5 exposure as independent layers:
+
+```sh
+make generate-anthropocene
+make generate-anthropocene-artifacts
+```
+
+EPA AirData is the default PM2.5 source and remains distinct from observed
+NOAA HMS smoke. CWFIS supplies public Canada/North America hotspots; an
+optional `FIRMS_MAP_KEY` adds global NASA FIRMS refresh coverage, including
+northern Russia. Coral bleaching stress remains a documented separate
+raster/reef phase. See the
+[Anthropocene implementation notes](docs/anthropocene-implementation-notes.md)
+for classifications, formulas, source research, refresh workflow, and limits.
+
+Network-swarm generation is offline and reproducible from a checked-in
+cumulative GeoJSON archive. Prepare the bounded source and generate the six H3/Izzi
 honeycomb maps with:
 
 ```sh
-make prepare-network-data
-make generate-network
+make prepare-network-swarm-data
+make generate-network-swarm
 ```
 
-See the [network implementation notes](docs/network-implementation-notes.md)
+See the [network-swarm implementation notes](docs/network-swarm-implementation-notes.md)
 for source validation, independent downloader layers, clustering, projection
 cuts, profile overrides, and output previews.
+
+Network-infrastructure generation reads a commit- and digest-pinned external
+`cloud_cdn_cache` checkout and produces six projection variants of the located
+site atlas. The default root is `../cloud_cdn_cache`; override
+`NETWORK_INFRASTRUCTURE_CLOUD_SOURCE` when needed:
+
+```sh
+make check-network-infrastructure-sources
+make generate-network-infrastructure
+make generate-network-infrastructure-artifacts
+```
+
+TeleGeography submarine cable and Internet-exchange topology is a separate
+CC BY-NC-SA 3.0 opt-in and is never part of `make all` or generation-profile
+`"all"`:
+
+```sh
+make check-network-infrastructure-topology-sources
+make generate-network-infrastructure-topology
+make generate-network-infrastructure-topology-artifacts
+```
+
+See the
+[network-infrastructure implementation notes](docs/network-infrastructure-implementation-notes.md)
+for source pins, checkout overrides, physical-versus-logical edge semantics,
+clustering, licensing, and previews.
 
 Bathymetry Roulette generation is offline from the same pinned Natural Earth
 input as the Earth and water maps. Generate the six projection variants, or

@@ -32,13 +32,41 @@ ORBITING_DATA_DIR ?= $(STATIC_ASSET_DIR)/orbital-technosphere
 ORBITING_PROFILE ?= \
 	$(ORBITING_DATA_DIR)/orbital-technosphere-profile.json
 ORBITING_FETCHER := scripts/fetch-orbiting-data.sh
-NETWORK_DATA_DIR ?= $(STATIC_ASSET_DIR)/network
-NETWORK_PROFILE ?= $(NETWORK_DATA_DIR)/network-profile.json
-NETWORK_SOURCE ?= \
-	$(NETWORK_DATA_DIR)/house-of-the-dragon-301-cumulative-aggregate.geojson.zip
-NETWORK_PREPARED_DIR ?= $(NETWORK_DATA_DIR)/.prepared
-NETWORK_GEOJSON ?= $(NETWORK_PREPARED_DIR)/$(patsubst %.zip,%,$(notdir $(NETWORK_SOURCE)))
-NETWORK_PREPARER := scripts/prepare-network-data.sh
+ANTHROPOCENE_DATA_DIR ?= $(STATIC_ASSET_DIR)/anthropocene
+ANTHROPOCENE_PROFILE ?= \
+	$(ANTHROPOCENE_DATA_DIR)/anthropocene-profile.json
+ANTHROPOCENE_GEOJSON ?= \
+	$(ANTHROPOCENE_DATA_DIR)/anthropocene-2026.geojson
+ANTHROPOCENE_FETCHER := scripts/fetch-anthropocene-data.sh
+ANTHROPOCENE_PREPARATION_SCRIPT := scripts/prepare-anthropocene-data.sh
+ANTHROPOCENE_VERIFIER := scripts/verify-anthropocene-data.sh
+NETWORK_SWARM_DATA_DIR ?= $(STATIC_ASSET_DIR)/network-swarm
+NETWORK_SWARM_PROFILE ?= $(NETWORK_SWARM_DATA_DIR)/network-swarm-profile.json
+NETWORK_SWARM_SOURCE ?= \
+	$(NETWORK_SWARM_DATA_DIR)/house-of-the-dragon-301-cumulative-aggregate.geojson.zip
+NETWORK_SWARM_PREPARED_DIR ?= $(NETWORK_SWARM_DATA_DIR)/.prepared
+NETWORK_SWARM_GEOJSON ?= \
+	$(NETWORK_SWARM_PREPARED_DIR)/$(patsubst %.zip,%,$(notdir $(NETWORK_SWARM_SOURCE)))
+NETWORK_SWARM_PREPARER := scripts/prepare-network-swarm-data.sh
+NETWORK_INFRASTRUCTURE_DATA_DIR ?= \
+	$(STATIC_ASSET_DIR)/network-infrastructure
+NETWORK_INFRASTRUCTURE_SITES_PROFILE ?= \
+	$(NETWORK_INFRASTRUCTURE_DATA_DIR)/network-infrastructure-sites-profile.json
+NETWORK_INFRASTRUCTURE_TOPOLOGY_PROFILE ?= \
+	$(NETWORK_INFRASTRUCTURE_DATA_DIR)/network-infrastructure-topology-profile.json
+NETWORK_INFRASTRUCTURE_CLOUD_SOURCE ?= ../cloud_cdn_cache
+SUBMARINE_CABLE_SOURCE ?= ../www.submarinecablemap.com
+INTERNET_EXCHANGE_SOURCE ?= ../www.internetexchangemap.com
+NETWORK_INFRASTRUCTURE_CLOUD_MANIFEST := \
+	$(NETWORK_INFRASTRUCTURE_CLOUD_SOURCE)/data/manifest.20260804.json
+SUBMARINE_CABLE_ROUTES := \
+	$(SUBMARINE_CABLE_SOURCE)/web/public/api/v3/cable/cable-geo.json
+SUBMARINE_CABLE_LANDINGS := \
+	$(SUBMARINE_CABLE_SOURCE)/web/public/api/v3/landing-point/landing-point-geo.json
+INTERNET_EXCHANGE_BUILDINGS := \
+	$(INTERNET_EXCHANGE_SOURCE)/public/api/v2/buildings.geojson
+NETWORK_INFRASTRUCTURE_SOURCE_CHECKER := \
+	scripts/check-network-infrastructure-sources.sh
 PREREQUISITE_CHECKER := scripts/check-prerequisites.sh
 NATURAL_EARTH_STAMP := \
 	$(NATURAL_EARTH_DIR)/.natural-earth-10m-physical-5.1.1
@@ -73,7 +101,11 @@ MYRIAHEDRAL_SLICE_GENERATOR := \
 	$(GENERATOR_SRC_DIR)/generate-myriahedral-slices
 ASTRO_GENERATOR := $(GENERATOR_SRC_DIR)/generate-astro
 ORBITING_GENERATOR := $(GENERATOR_SRC_DIR)/generate-orbiting
-NETWORK_GENERATOR := $(GENERATOR_SRC_DIR)/generate-network
+ANTHROPOCENE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-anthropocene
+ANTHROPOCENE_PREPARER := $(GENERATOR_SRC_DIR)/prepare-anthropocene
+NETWORK_SWARM_GENERATOR := $(GENERATOR_SRC_DIR)/generate-network-swarm
+NETWORK_INFRASTRUCTURE_GENERATOR := \
+	$(GENERATOR_SRC_DIR)/generate-network-infrastructure
 GENERATION_PROFILE_RESOLVER := \
 	$(GENERATOR_SRC_DIR)/resolve-generation-profile
 SGP4_SOURCE := $(GENERATOR_SRC_DIR)/third_party/sgp4/SGP4.cpp
@@ -178,17 +210,59 @@ ORBITING_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 ORBITING_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PNG_DIR)/%.png,$(ORBITING_SVGS))
 
-NETWORK_SVGS := \
-	$(GENERATED_SVG_DIR)/network-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/network-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/network-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/network-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/network-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/network-voronoi-44-22.916667.svg
-NETWORK_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PDF_DIR)/%.pdf,$(NETWORK_SVGS))
-NETWORK_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PNG_DIR)/%.png,$(NETWORK_SVGS))
+NETWORK_SWARM_SVGS := \
+	$(GENERATED_SVG_DIR)/network-swarm-ck-44-22.svg \
+	$(GENERATED_SVG_DIR)/network-swarm-authagraph-44-19.052559.svg \
+	$(GENERATED_SVG_DIR)/network-swarm-dymaxion-44-20.78461.svg \
+	$(GENERATED_SVG_DIR)/network-swarm-myriahedral-44-24.75.svg \
+	$(GENERATED_SVG_DIR)/network-swarm-star-x-34-44.svg \
+	$(GENERATED_SVG_DIR)/network-swarm-voronoi-44-22.916667.svg
+NETWORK_SWARM_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PDF_DIR)/%.pdf,$(NETWORK_SWARM_SVGS))
+NETWORK_SWARM_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PNG_DIR)/%.png,$(NETWORK_SWARM_SVGS))
+
+NETWORK_INFRASTRUCTURE_SITES_SVGS := \
+	$(GENERATED_SVG_DIR)/network-infrastructure-sites-ck-44-22.svg \
+	$(GENERATED_SVG_DIR)/network-infrastructure-sites-authagraph-44-19.052559.svg \
+	$(GENERATED_SVG_DIR)/network-infrastructure-sites-dymaxion-44-20.78461.svg \
+	$(GENERATED_SVG_DIR)/network-infrastructure-sites-myriahedral-44-24.75.svg \
+	$(GENERATED_SVG_DIR)/network-infrastructure-sites-star-x-34-44.svg \
+	$(GENERATED_SVG_DIR)/network-infrastructure-sites-voronoi-44-22.916667.svg
+NETWORK_INFRASTRUCTURE_SITES_PDFS := \
+	$(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PDF_DIR)/%.pdf,$(NETWORK_INFRASTRUCTURE_SITES_SVGS))
+NETWORK_INFRASTRUCTURE_SITES_PNGS := \
+	$(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PNG_DIR)/%.png,$(NETWORK_INFRASTRUCTURE_SITES_SVGS))
+NETWORK_INFRASTRUCTURE_TOPOLOGY_SVGS := \
+	$(GENERATED_SVG_DIR)/network-infrastructure-topology-ck-44-22.svg \
+	$(GENERATED_SVG_DIR)/network-infrastructure-topology-authagraph-44-19.052559.svg \
+	$(GENERATED_SVG_DIR)/network-infrastructure-topology-dymaxion-44-20.78461.svg \
+	$(GENERATED_SVG_DIR)/network-infrastructure-topology-myriahedral-44-24.75.svg \
+	$(GENERATED_SVG_DIR)/network-infrastructure-topology-star-x-34-44.svg \
+	$(GENERATED_SVG_DIR)/network-infrastructure-topology-voronoi-44-22.916667.svg
+NETWORK_INFRASTRUCTURE_TOPOLOGY_PDFS := \
+	$(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PDF_DIR)/%.pdf,$(NETWORK_INFRASTRUCTURE_TOPOLOGY_SVGS))
+NETWORK_INFRASTRUCTURE_TOPOLOGY_PNGS := \
+	$(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PNG_DIR)/%.png,$(NETWORK_INFRASTRUCTURE_TOPOLOGY_SVGS))
+NETWORK_INFRASTRUCTURE_TOPOLOGY_LANDSCAPE_PNGS := \
+	$(filter-out $(GENERATED_PNG_DIR)/network-infrastructure-topology-star-x-34-44.png,\
+	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_PNGS))
+
+ANTHROPOCENE_SVGS := \
+	$(GENERATED_SVG_DIR)/anthropocene-ck-44-22.svg \
+	$(GENERATED_SVG_DIR)/anthropocene-authagraph-44-19.052559.svg \
+	$(GENERATED_SVG_DIR)/anthropocene-dymaxion-44-20.78461.svg \
+	$(GENERATED_SVG_DIR)/anthropocene-myriahedral-44-24.75.svg \
+	$(GENERATED_SVG_DIR)/anthropocene-star-x-34-44.svg \
+	$(GENERATED_SVG_DIR)/anthropocene-voronoi-44-22.916667.svg
+ANTHROPOCENE_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PDF_DIR)/%.pdf,$(ANTHROPOCENE_SVGS))
+ANTHROPOCENE_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PNG_DIR)/%.png,$(ANTHROPOCENE_SVGS))
 
 BATHYMETRY_ROULETTE_SVGS := \
 	$(GENERATED_SVG_DIR)/bathymetry-roulette-ck-44-22.svg \
@@ -236,7 +310,9 @@ GENERATED_SVGS := \
 	$(CK_EARTH_SVG) $(CK_WATER_SVG) $(CK_SLICE_SVGS) \
 	$(REQUESTED_PROJECTION_SVGS) \
 	$(MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS) $(MYRIAHEDRAL_SLICE_SVGS) \
-	$(ASTRO_SVGS) $(ORBITING_SVGS) $(NETWORK_SVGS) \
+	$(ASTRO_SVGS) $(ORBITING_SVGS) $(NETWORK_SWARM_SVGS) \
+	$(NETWORK_INFRASTRUCTURE_SITES_SVGS) \
+	$(ANTHROPOCENE_SVGS) \
 	$(BATHYMETRY_ROULETTE_SVGS)
 GENERATED_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PDF_DIR)/%.pdf,$(GENERATED_SVGS))
@@ -258,13 +334,22 @@ ORBITING_STAR_X_SVGS := \
 	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-star-x-34-44.svg
 ORBITING_STAR_X_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PNG_DIR)/%.png,$(ORBITING_STAR_X_SVGS))
-NETWORK_STAR_X_PNG := $(GENERATED_PNG_DIR)/network-star-x-34-44.png
+NETWORK_SWARM_STAR_X_PNG := $(GENERATED_PNG_DIR)/network-swarm-star-x-34-44.png
+NETWORK_INFRASTRUCTURE_SITES_STAR_X_PNG := \
+	$(GENERATED_PNG_DIR)/network-infrastructure-sites-star-x-34-44.png
+NETWORK_INFRASTRUCTURE_TOPOLOGY_STAR_X_PNG := \
+	$(GENERATED_PNG_DIR)/network-infrastructure-topology-star-x-34-44.png
+ANTHROPOCENE_STAR_X_PNG := \
+	$(GENERATED_PNG_DIR)/anthropocene-star-x-34-44.png
 BATHYMETRY_ROULETTE_STAR_X_PNG := \
 	$(GENERATED_PNG_DIR)/bathymetry-roulette-star-x-34-44.png
 MYRIAHEDRAL_PORTRAIT_SLICE_PNG := \
 	$(GENERATED_PNG_DIR)/water-myriahedral-adhoc-slice-1.png
 PORTRAIT_PNGS := $(STAR_X_PNGS) $(ASTRO_STAR_X_PNGS) \
-	$(ORBITING_STAR_X_PNGS) $(NETWORK_STAR_X_PNG) $(CK_SLICE_PNGS) \
+	$(ORBITING_STAR_X_PNGS) $(NETWORK_SWARM_STAR_X_PNG) \
+	$(NETWORK_INFRASTRUCTURE_SITES_STAR_X_PNG) \
+	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_STAR_X_PNG) \
+	$(ANTHROPOCENE_STAR_X_PNG) $(CK_SLICE_PNGS) \
 	$(BATHYMETRY_ROULETTE_STAR_X_PNG) \
 	$(MYRIAHEDRAL_PORTRAIT_SLICE_PNG)
 LANDSCAPE_PNGS := $(filter-out $(PORTRAIT_PNGS),$(GENERATED_PNGS))
@@ -272,10 +357,13 @@ GENERATED_ARTIFACTS := $(GENERATED_SVGS) $(GENERATED_PDFS) \
 	$(GENERATED_PNGS)
 
 GENERATOR_BINARIES := \
+	$(ANTHROPOCENE_GENERATOR) \
+	$(ANTHROPOCENE_PREPARER) \
 	$(ASTRO_GENERATOR) \
 	$(BATHYMETRY_ROULETTE_GENERATOR) \
 	$(GENERATION_PROFILE_RESOLVER) \
-	$(NETWORK_GENERATOR) \
+	$(NETWORK_INFRASTRUCTURE_GENERATOR) \
+	$(NETWORK_SWARM_GENERATOR) \
 	$(ORBITING_GENERATOR) \
 	$(EIGHT_SLICE_GENERATOR) \
 	$(EARTH_GENERATOR) \
@@ -285,11 +373,13 @@ GENERATOR_BINARIES := \
 	$(MYRIAHEDRAL_SLICE_GENERATOR) \
 	$(WATER_GENERATOR)
 TEST_BINARIES := \
+	$(TEST_DIR)/test-anthropocene-generation \
 	$(TEST_DIR)/test-astro-generation \
 	$(TEST_DIR)/test-bathymetry-roulette-style \
 	$(TEST_DIR)/test-generation-profile \
 	$(TEST_DIR)/test-generation-typography \
-	$(TEST_DIR)/test-network-generation \
+	$(TEST_DIR)/test-network-infrastructure-generation \
+	$(TEST_DIR)/test-network-swarm-generation \
 	$(TEST_DIR)/test-orbiting-generation \
 	$(TEST_DIR)/test-cahill-keyes-projection \
 	$(TEST_DIR)/test-cahill-keyes-projection-api \
@@ -332,10 +422,21 @@ ORBITING_GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/orbiting-generation.h \
 	$(NATURAL_EARTH_GENERATOR_HEADER) \
 	$(GENERATOR_HEADERS) $(SGP4_HEADER)
-NETWORK_GENERATOR_HEADERS := \
-	$(GENERATOR_SRC_DIR)/network-data.h \
-	$(GENERATOR_SRC_DIR)/network-clustering.h \
-	$(GENERATOR_SRC_DIR)/network-generation.h \
+NETWORK_SWARM_GENERATOR_HEADERS := \
+	$(GENERATOR_SRC_DIR)/network-swarm-data.h \
+	$(GENERATOR_SRC_DIR)/network-swarm-clustering.h \
+	$(GENERATOR_SRC_DIR)/network-swarm-generation.h \
+	$(NATURAL_EARTH_GENERATOR_HEADER) \
+	$(GENERATOR_HEADERS)
+NETWORK_INFRASTRUCTURE_GENERATOR_HEADERS := \
+	$(GENERATOR_SRC_DIR)/network-infrastructure-data.h \
+	$(GENERATOR_SRC_DIR)/network-infrastructure-clustering.h \
+	$(GENERATOR_SRC_DIR)/network-infrastructure-generation.h \
+	$(NATURAL_EARTH_GENERATOR_HEADER) \
+	$(GENERATOR_HEADERS)
+ANTHROPOCENE_GENERATOR_HEADERS := \
+	$(GENERATOR_SRC_DIR)/anthropocene-data.h \
+	$(GENERATOR_SRC_DIR)/anthropocene-generation.h \
 	$(NATURAL_EARTH_GENERATOR_HEADER) \
 	$(GENERATOR_HEADERS)
 
@@ -345,7 +446,10 @@ NETWORK_GENERATOR_HEADERS := \
 PUBLIC_TARGETS := all check check-prerequisite clean configured doxygen \
 	generation-plan list-targets \
 	fetch-natural-earth-10m fetch-astro-data fetch-orbiting-data \
-	prepare-network-data make-generated \
+	fetch-anthropocene-data prepare-anthropocene-data \
+	prepare-network-swarm-data make-generated \
+	check-network-infrastructure-sources \
+	check-network-infrastructure-topology-sources \
 	wasm-cahill-keyes check-wasm-cahill-keyes \
 	wasm-cahill-myriahedral check-wasm-cahill-myriahedral \
 	generate-geometry generate-graticules-ck generate-earth-ck \
@@ -364,10 +468,34 @@ PUBLIC_TARGETS := all check check-prerequisite clean configured doxygen \
 	generate-orbiting-cahill-keyes generate-orbiting-authagraph \
 	generate-orbiting-dymaxion generate-orbiting-myriahedral \
 	generate-orbiting-star-x generate-orbiting-voronoi \
-	generate-network generate-network-projections generate-network-artifacts \
-	generate-network-cahill-keyes generate-network-authagraph \
-	generate-network-dymaxion generate-network-myriahedral \
-	generate-network-star-x generate-network-voronoi \
+	generate-anthropocene generate-anthropocene-projections \
+	generate-anthropocene-artifacts \
+	generate-anthropocene-cahill-keyes generate-anthropocene-authagraph \
+	generate-anthropocene-dymaxion generate-anthropocene-myriahedral \
+	generate-anthropocene-star-x generate-anthropocene-voronoi \
+	generate-network-swarm generate-network-swarm-projections \
+	generate-network-swarm-artifacts \
+	generate-network-swarm-cahill-keyes generate-network-swarm-authagraph \
+	generate-network-swarm-dymaxion generate-network-swarm-myriahedral \
+	generate-network-swarm-star-x generate-network-swarm-voronoi \
+	generate-network-infrastructure generate-network-infrastructure-sites \
+	generate-network-infrastructure-projections \
+	generate-network-infrastructure-artifacts \
+	generate-network-infrastructure-cahill-keyes \
+	generate-network-infrastructure-authagraph \
+	generate-network-infrastructure-dymaxion \
+	generate-network-infrastructure-myriahedral \
+	generate-network-infrastructure-star-x \
+	generate-network-infrastructure-voronoi \
+	generate-network-infrastructure-topology \
+	generate-network-infrastructure-topology-projections \
+	generate-network-infrastructure-topology-artifacts \
+	generate-network-infrastructure-topology-cahill-keyes \
+	generate-network-infrastructure-topology-authagraph \
+	generate-network-infrastructure-topology-dymaxion \
+	generate-network-infrastructure-topology-myriahedral \
+	generate-network-infrastructure-topology-star-x \
+	generate-network-infrastructure-topology-voronoi \
 	generate-bathymetry-roulette generate-bathymetry-roulette-projections \
 	generate-bathymetry-roulette-artifacts \
 	generate-bathymetry-roulette-cahill-keyes \
@@ -416,7 +544,16 @@ check-prerequisite: $(PREREQUISITE_CHECKER)
 		LABEL_FONT="$(LABEL_FONT)" \
 		"$(PREREQUISITE_CHECKER)"
 
-check: $(SGP4_OBJECT) $(NETWORK_GEOJSON)
+check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON)
+	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_PROFILE)" \
+		"$(ANTHROPOCENE_GEOJSON)"
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$(TEST_DIR)/test-anthropocene-generation.cc \
+		$(shell $(GDAL_CONFIG) --libs) -lh3 \
+		-o $(TEST_DIR)/test-anthropocene-generation
+	$(TEST_DIR)/test-anthropocene-generation
+	cd "$(ANTHROPOCENE_DATA_DIR)" && sha256sum -c SHA256SUMS
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-astro-generation.cc \
 		-o $(TEST_DIR)/test-astro-generation
@@ -433,15 +570,21 @@ check: $(SGP4_OBJECT) $(NETWORK_GEOJSON)
 		$(TEST_DIR)/test-generation-typography.cc \
 		-o $(TEST_DIR)/test-generation-typography
 	$(TEST_DIR)/test-generation-typography
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$(TEST_DIR)/test-network-infrastructure-generation.cc \
+		$(shell $(GDAL_CONFIG) --libs) \
+		-o $(TEST_DIR)/test-network-infrastructure-generation
+	$(TEST_DIR)/test-network-infrastructure-generation
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
-		$(TEST_DIR)/test-network-generation.cc \
+		$(TEST_DIR)/test-network-swarm-generation.cc \
 		-lh3 \
-		-o $(TEST_DIR)/test-network-generation
-	$(TEST_DIR)/test-network-generation
-	cd "$(NETWORK_DATA_DIR)" && sha256sum -c SHA256SUMS
+		-o $(TEST_DIR)/test-network-swarm-generation
+	$(TEST_DIR)/test-network-swarm-generation
+	cd "$(NETWORK_SWARM_DATA_DIR)" && sha256sum -c SHA256SUMS
 	printf '%s  %s\n' \
 		'9fbd453d174df834208718e110396c5a22bff4312aeeff3e42d0175510b0ff69' \
-		'$(abspath $(NETWORK_GEOJSON))' | sha256sum -c -
+		'$(abspath $(NETWORK_SWARM_GEOJSON))' | sha256sum -c -
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-orbiting-generation.cc $(SGP4_OBJECT) \
 		-o $(TEST_DIR)/test-orbiting-generation
@@ -618,11 +761,42 @@ $(ORBITING_GENERATOR): $(GENERATOR_SRC_DIR)/generate-orbiting.cc \
 		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$< $(SGP4_OBJECT) $(shell $(GDAL_CONFIG) --libs) -o $@
 
-$(NETWORK_GENERATOR): $(GENERATOR_SRC_DIR)/generate-network.cc \
-		$(NETWORK_GENERATOR_HEADERS)
+$(ANTHROPOCENE_GENERATOR): \
+		$(GENERATOR_SRC_DIR)/generate-anthropocene.cc \
+		$(ANTHROPOCENE_GENERATOR_HEADERS)
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
 		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
+
+$(ANTHROPOCENE_PREPARER): \
+		$(GENERATOR_SRC_DIR)/prepare-anthropocene.cc
+	$(CXX) $(CPPFLAGS) $(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
+
+$(NETWORK_SWARM_GENERATOR): $(GENERATOR_SRC_DIR)/generate-network-swarm.cc \
+		$(NETWORK_SWARM_GENERATOR_HEADERS)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
+
+$(NETWORK_INFRASTRUCTURE_GENERATOR): \
+		$(GENERATOR_SRC_DIR)/generate-network-infrastructure.cc \
+		$(NETWORK_INFRASTRUCTURE_GENERATOR_HEADERS)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -o $@
+
+check-network-infrastructure-sources: \
+		$(NETWORK_INFRASTRUCTURE_SOURCE_CHECKER)
+	"$(NETWORK_INFRASTRUCTURE_SOURCE_CHECKER)" sites \
+		"$(abspath $(NETWORK_INFRASTRUCTURE_CLOUD_SOURCE))"
+
+check-network-infrastructure-topology-sources: \
+		$(NETWORK_INFRASTRUCTURE_SOURCE_CHECKER)
+	"$(NETWORK_INFRASTRUCTURE_SOURCE_CHECKER)" topology \
+		"$(abspath $(NETWORK_INFRASTRUCTURE_CLOUD_SOURCE))" \
+		"$(abspath $(SUBMARINE_CABLE_SOURCE))" \
+		"$(abspath $(INTERNET_EXCHANGE_SOURCE))"
 
 fetch-astro-data: $(ASTRO_FETCHER)
 	$(ASTRO_FETCHER) "$(ASTRO_DATA_DIR)"
@@ -630,16 +804,24 @@ fetch-astro-data: $(ASTRO_FETCHER)
 fetch-orbiting-data: $(ORBITING_FETCHER) $(ORBITING_PROFILE)
 	$(ORBITING_FETCHER) "$(ORBITING_DATA_DIR)"
 
+fetch-anthropocene-data: $(ANTHROPOCENE_FETCHER) $(ANTHROPOCENE_PROFILE)
+	$(ANTHROPOCENE_FETCHER) "$(ANTHROPOCENE_DATA_DIR)"
+
+prepare-anthropocene-data: $(ANTHROPOCENE_PREPARER) \
+		$(ANTHROPOCENE_PREPARATION_SCRIPT) $(ANTHROPOCENE_PROFILE)
+	ANTHROPOCENE_PREPARER="$(abspath $(ANTHROPOCENE_PREPARER))" \
+		$(ANTHROPOCENE_PREPARATION_SCRIPT) "$(ANTHROPOCENE_DATA_DIR)"
+
 fetch-natural-earth-10m: $(NATURAL_EARTH_STAMP)
 
-prepare-network-data: $(NETWORK_GEOJSON)
+prepare-network-swarm-data: $(NETWORK_SWARM_GEOJSON)
 
-$(NETWORK_PREPARED_DIR):
+$(NETWORK_SWARM_PREPARED_DIR):
 	mkdir -p "$@"
 
-$(NETWORK_GEOJSON): $(NETWORK_SOURCE) $(NETWORK_PREPARER) \
-		| $(NETWORK_PREPARED_DIR)
-	"$(NETWORK_PREPARER)" "$(NETWORK_SOURCE)" "$@"
+$(NETWORK_SWARM_GEOJSON): $(NETWORK_SWARM_SOURCE) $(NETWORK_SWARM_PREPARER) \
+		| $(NETWORK_SWARM_PREPARED_DIR)
+	"$(NETWORK_SWARM_PREPARER)" "$(NETWORK_SWARM_SOURCE)" "$@"
 
 $(NATURAL_EARTH_STAMP): $(NATURAL_EARTH_FETCHER)
 	$(NATURAL_EARTH_FETCHER) "$(NATURAL_EARTH_DIR)"
@@ -840,34 +1022,149 @@ generate-orbiting-projections: $(ORBITING_SVGS)
 generate-orbiting-artifacts: $(ORBITING_SVGS) $(ORBITING_PDFS) \
 	$(ORBITING_PNGS)
 
-# $(1): command-line projection name; $(2): Network product.
-define NETWORK_PROJECTION_RULES
-generate-network-$(1): $(2)
-$(2): $(NETWORK_GENERATOR) $(NETWORK_PROFILE) $(NETWORK_GEOJSON) \
+# $(1): command-line projection name; $(2): Anthropocene product.
+define ANTHROPOCENE_PROJECTION_RULES
+generate-anthropocene-$(1): $(2)
+$(2): $(ANTHROPOCENE_GENERATOR) $(ANTHROPOCENE_PROFILE) \
+		$(ANTHROPOCENE_GEOJSON) $(ANTHROPOCENE_VERIFIER) \
+		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_PROFILE)" \
+		"$(ANTHROPOCENE_GEOJSON)"
+	cd "$(GENERATED_SVG_DIR)" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
+		"$(abspath $(ANTHROPOCENE_GENERATOR))" $(1) \
+		"$(abspath $(ANTHROPOCENE_PROFILE))" \
+		"$(abspath $(ANTHROPOCENE_GEOJSON))"
+endef
+
+$(eval $(call ANTHROPOCENE_PROJECTION_RULES,cahill-keyes,\
+	$(GENERATED_SVG_DIR)/anthropocene-ck-44-22.svg))
+$(eval $(call ANTHROPOCENE_PROJECTION_RULES,authagraph,\
+	$(GENERATED_SVG_DIR)/anthropocene-authagraph-44-19.052559.svg))
+$(eval $(call ANTHROPOCENE_PROJECTION_RULES,dymaxion,\
+	$(GENERATED_SVG_DIR)/anthropocene-dymaxion-44-20.78461.svg))
+$(eval $(call ANTHROPOCENE_PROJECTION_RULES,myriahedral,\
+	$(GENERATED_SVG_DIR)/anthropocene-myriahedral-44-24.75.svg))
+$(eval $(call ANTHROPOCENE_PROJECTION_RULES,star-x,\
+	$(GENERATED_SVG_DIR)/anthropocene-star-x-34-44.svg))
+$(eval $(call ANTHROPOCENE_PROJECTION_RULES,voronoi,\
+	$(GENERATED_SVG_DIR)/anthropocene-voronoi-44-22.916667.svg))
+
+generate-anthropocene: $(ANTHROPOCENE_SVGS)
+generate-anthropocene-projections: $(ANTHROPOCENE_SVGS)
+generate-anthropocene-artifacts: $(ANTHROPOCENE_SVGS) \
+	$(ANTHROPOCENE_PDFS) $(ANTHROPOCENE_PNGS)
+
+# $(1): command-line projection name; $(2): Network-swarm product.
+define NETWORK_SWARM_PROJECTION_RULES
+generate-network-swarm-$(1): $(2)
+$(2): $(NETWORK_SWARM_GENERATOR) $(NETWORK_SWARM_PROFILE) \
+		$(NETWORK_SWARM_GEOJSON) \
 		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
 	cd "$(GENERATED_SVG_DIR)" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
-		"$(abspath $(NETWORK_GENERATOR))" $(1) \
-		"$(abspath $(NETWORK_PROFILE))" "$(abspath $(NETWORK_GEOJSON))"
+		"$(abspath $(NETWORK_SWARM_GENERATOR))" $(1) \
+		"$(abspath $(NETWORK_SWARM_PROFILE))" "$(abspath $(NETWORK_SWARM_GEOJSON))"
 endef
 
-$(eval $(call NETWORK_PROJECTION_RULES,cahill-keyes,\
-	$(GENERATED_SVG_DIR)/network-ck-44-22.svg))
-$(eval $(call NETWORK_PROJECTION_RULES,authagraph,\
-	$(GENERATED_SVG_DIR)/network-authagraph-44-19.052559.svg))
-$(eval $(call NETWORK_PROJECTION_RULES,dymaxion,\
-	$(GENERATED_SVG_DIR)/network-dymaxion-44-20.78461.svg))
-$(eval $(call NETWORK_PROJECTION_RULES,myriahedral,\
-	$(GENERATED_SVG_DIR)/network-myriahedral-44-24.75.svg))
-$(eval $(call NETWORK_PROJECTION_RULES,star-x,\
-	$(GENERATED_SVG_DIR)/network-star-x-34-44.svg))
-$(eval $(call NETWORK_PROJECTION_RULES,voronoi,\
-	$(GENERATED_SVG_DIR)/network-voronoi-44-22.916667.svg))
+$(eval $(call NETWORK_SWARM_PROJECTION_RULES,cahill-keyes,\
+	$(GENERATED_SVG_DIR)/network-swarm-ck-44-22.svg))
+$(eval $(call NETWORK_SWARM_PROJECTION_RULES,authagraph,\
+	$(GENERATED_SVG_DIR)/network-swarm-authagraph-44-19.052559.svg))
+$(eval $(call NETWORK_SWARM_PROJECTION_RULES,dymaxion,\
+	$(GENERATED_SVG_DIR)/network-swarm-dymaxion-44-20.78461.svg))
+$(eval $(call NETWORK_SWARM_PROJECTION_RULES,myriahedral,\
+	$(GENERATED_SVG_DIR)/network-swarm-myriahedral-44-24.75.svg))
+$(eval $(call NETWORK_SWARM_PROJECTION_RULES,star-x,\
+	$(GENERATED_SVG_DIR)/network-swarm-star-x-34-44.svg))
+$(eval $(call NETWORK_SWARM_PROJECTION_RULES,voronoi,\
+	$(GENERATED_SVG_DIR)/network-swarm-voronoi-44-22.916667.svg))
 
-generate-network: $(NETWORK_SVGS)
-generate-network-projections: $(NETWORK_SVGS)
-generate-network-artifacts: $(NETWORK_SVGS) $(NETWORK_PDFS) $(NETWORK_PNGS)
+generate-network-swarm: $(NETWORK_SWARM_SVGS)
+generate-network-swarm-projections: $(NETWORK_SWARM_SVGS)
+generate-network-swarm-artifacts: $(NETWORK_SWARM_SVGS) \
+	$(NETWORK_SWARM_PDFS) $(NETWORK_SWARM_PNGS)
+
+# $(1): projection; $(2): ordinary cloud/CDN site atlas product.
+define NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES
+generate-network-infrastructure-$(1): $(2)
+$(2): $(NETWORK_INFRASTRUCTURE_GENERATOR) \
+		$(NETWORK_INFRASTRUCTURE_SITES_PROFILE) \
+		$(NETWORK_INFRASTRUCTURE_CLOUD_MANIFEST) \
+		$(NATURAL_EARTH_STAMP) \
+		| check-network-infrastructure-sources $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
+		"$(abspath $(NETWORK_INFRASTRUCTURE_GENERATOR))" $(1) \
+		"$(abspath $(NETWORK_INFRASTRUCTURE_SITES_PROFILE))" \
+		"$(abspath $(NETWORK_INFRASTRUCTURE_CLOUD_SOURCE))"
+endef
+
+$(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,cahill-keyes,\
+	$(GENERATED_SVG_DIR)/network-infrastructure-sites-ck-44-22.svg))
+$(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,authagraph,\
+	$(GENERATED_SVG_DIR)/network-infrastructure-sites-authagraph-44-19.052559.svg))
+$(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,dymaxion,\
+	$(GENERATED_SVG_DIR)/network-infrastructure-sites-dymaxion-44-20.78461.svg))
+$(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,myriahedral,\
+	$(GENERATED_SVG_DIR)/network-infrastructure-sites-myriahedral-44-24.75.svg))
+$(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,star-x,\
+	$(GENERATED_SVG_DIR)/network-infrastructure-sites-star-x-34-44.svg))
+$(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,voronoi,\
+	$(GENERATED_SVG_DIR)/network-infrastructure-sites-voronoi-44-22.916667.svg))
+
+generate-network-infrastructure: $(NETWORK_INFRASTRUCTURE_SITES_SVGS)
+generate-network-infrastructure-sites: $(NETWORK_INFRASTRUCTURE_SITES_SVGS)
+generate-network-infrastructure-projections: \
+	$(NETWORK_INFRASTRUCTURE_SITES_SVGS)
+generate-network-infrastructure-artifacts: \
+	$(NETWORK_INFRASTRUCTURE_SITES_SVGS) \
+	$(NETWORK_INFRASTRUCTURE_SITES_PDFS) \
+	$(NETWORK_INFRASTRUCTURE_SITES_PNGS)
+
+# Explicit CC BY-NC-SA 3.0 opt-in. These products are not part of make all.
+define NETWORK_INFRASTRUCTURE_TOPOLOGY_PROJECTION_RULES
+generate-network-infrastructure-topology-$(1): $(2)
+$(2): $(NETWORK_INFRASTRUCTURE_GENERATOR) \
+		$(NETWORK_INFRASTRUCTURE_TOPOLOGY_PROFILE) \
+		$(NETWORK_INFRASTRUCTURE_CLOUD_MANIFEST) \
+		$(SUBMARINE_CABLE_ROUTES) $(SUBMARINE_CABLE_LANDINGS) \
+		$(INTERNET_EXCHANGE_BUILDINGS) $(NATURAL_EARTH_STAMP) \
+		| check-network-infrastructure-topology-sources $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
+		"$(abspath $(NETWORK_INFRASTRUCTURE_GENERATOR))" $(1) \
+		"$(abspath $(NETWORK_INFRASTRUCTURE_TOPOLOGY_PROFILE))" \
+		"$(abspath $(NETWORK_INFRASTRUCTURE_CLOUD_SOURCE))" \
+		"$(abspath $(SUBMARINE_CABLE_SOURCE))" \
+		"$(abspath $(INTERNET_EXCHANGE_SOURCE))"
+endef
+
+$(eval $(call NETWORK_INFRASTRUCTURE_TOPOLOGY_PROJECTION_RULES,cahill-keyes,\
+	$(GENERATED_SVG_DIR)/network-infrastructure-topology-ck-44-22.svg))
+$(eval $(call NETWORK_INFRASTRUCTURE_TOPOLOGY_PROJECTION_RULES,authagraph,\
+	$(GENERATED_SVG_DIR)/network-infrastructure-topology-authagraph-44-19.052559.svg))
+$(eval $(call NETWORK_INFRASTRUCTURE_TOPOLOGY_PROJECTION_RULES,dymaxion,\
+	$(GENERATED_SVG_DIR)/network-infrastructure-topology-dymaxion-44-20.78461.svg))
+$(eval $(call NETWORK_INFRASTRUCTURE_TOPOLOGY_PROJECTION_RULES,myriahedral,\
+	$(GENERATED_SVG_DIR)/network-infrastructure-topology-myriahedral-44-24.75.svg))
+$(eval $(call NETWORK_INFRASTRUCTURE_TOPOLOGY_PROJECTION_RULES,star-x,\
+	$(GENERATED_SVG_DIR)/network-infrastructure-topology-star-x-34-44.svg))
+$(eval $(call NETWORK_INFRASTRUCTURE_TOPOLOGY_PROJECTION_RULES,voronoi,\
+	$(GENERATED_SVG_DIR)/network-infrastructure-topology-voronoi-44-22.916667.svg))
+
+generate-network-infrastructure-topology: \
+	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_SVGS)
+generate-network-infrastructure-topology-projections: \
+	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_SVGS)
+generate-network-infrastructure-topology-artifacts: \
+	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_SVGS) \
+	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_PDFS) \
+	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_PNGS)
 
 # $(1): command-line projection name; $(2): Bathymetry Roulette product.
 define BATHYMETRY_ROULETTE_PROJECTION_RULES
@@ -903,11 +1200,13 @@ generate-water-myriahedral: generate-water-myriahedral-perspectives \
 generate-myriahedral: generate-water-myriahedral-perspectives \
 	generate-myriahedral-slices
 
-$(GENERATED_PDFS): $(GENERATED_PDF_DIR)/%.pdf: \
+$(GENERATED_PDFS) $(NETWORK_INFRASTRUCTURE_TOPOLOGY_PDFS): \
+		$(GENERATED_PDF_DIR)/%.pdf: \
 		$(GENERATED_SVG_DIR)/%.svg | $(GENERATED_PDF_DIR)
 	"$(INKSCAPE)" --export-area-page --export-filename="$@" "$<"
 
-$(LANDSCAPE_PNGS): $(GENERATED_PNG_DIR)/%.png: \
+$(LANDSCAPE_PNGS) $(NETWORK_INFRASTRUCTURE_TOPOLOGY_LANDSCAPE_PNGS): \
+		$(GENERATED_PNG_DIR)/%.png: \
 		$(GENERATED_SVG_DIR)/%.svg Makefile | $(GENERATED_PNG_DIR)
 	"$(INKSCAPE)" --export-area-page $(PNG_EXPORT_BACKGROUND) \
 		--export-width=$(PNG_LONG_SIDE) \

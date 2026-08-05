@@ -1,17 +1,17 @@
-# Network generation implementation notes
+# Network-swarm generation implementation notes
 
 [Documentation index](../index.md) ·
 [Generation guide](generation.md) ·
 [Generation methods](generation-methods.md) ·
-[Pinned network data](../assets.static/network/README.md)
+[Pinned network-swarm data](../assets.static/network-swarm/README.md)
 
 ## Outcome and claim boundary
 
 Stage 4.4 is implemented as a reproducible, projection-aware
-`generate-network` pass. It detiles cumulative GeoJSON swarm features,
-preserves every raw `properties.downloaders` field, and renders one network
-atlas on each of the six production projections. The result is a density and
-access-characteristics map. It is not a graph: the input contains no
+`generate-network-swarm` pass. It detiles cumulative GeoJSON swarm features,
+preserves every raw `properties.downloaders` field, and renders one
+network-swarm atlas on each of the six production projections. The result is
+a density and access-characteristics map. It is not a graph: the input contains no
 source/destination pairs, routes, peer relationships, or measured edges, so
 the renderer does not invent them.
 
@@ -55,7 +55,7 @@ stacked total.
 
 ## Variable input and bounded preparation
 
-The committed ZIP is the offline default. `scripts/prepare-network-data.sh`
+The committed ZIP is the offline default. `scripts/prepare-network-swarm-data.sh`
 accepts one local `.zip`, `.geojson`, or `.json` file, so another compatible
 source does not require a code change. For ZIP input it requires exactly one
 flat, safely named JSON member, validates the archive CRC, and caps expanded
@@ -63,20 +63,21 @@ content at 64 MiB. Preparation is atomic and does not change the destination
 timestamp when the bytes are already current.
 
 ```sh
-make prepare-network-data
-make generate-network
+make prepare-network-swarm-data
+make generate-network-swarm
 ```
 
 Override the source or the prepared destination explicitly:
 
 ```sh
-make NETWORK_SOURCE=/absolute/path/cumulative.geojson.zip \
-  prepare-network-data generate-network
+make NETWORK_SWARM_SOURCE=/absolute/path/cumulative.geojson.zip \
+  prepare-network-swarm-data generate-network-swarm
 ```
 
-`NETWORK_SOURCE` may point directly to an already uncompressed `.geojson` or
-`.json`; the same bounded staging and content comparison still apply.
-`NETWORK_GEOJSON` changes the staging destination rather than bypassing
+`NETWORK_SWARM_SOURCE` may point directly to an already uncompressed
+`.geojson` or `.json`; the same bounded staging and content comparison still
+apply.
+`NETWORK_SWARM_GEOJSON` changes the staging destination rather than bypassing
 preparation.
 
 The parser intentionally requires the implemented cumulative swarm contract:
@@ -87,8 +88,8 @@ data stops generation rather than silently becoming zero.
 
 ## Configuration profile
 
-[`network-profile.json`](../assets.static/network/network-profile.json) owns
-the decisions that may reasonably change between captures:
+[`network-swarm-profile.json`](../assets.static/network-swarm/network-swarm-profile.json)
+owns the decisions that may reasonably change between captures:
 
 - source and parent H3 resolutions;
 - marker radius and tether threshold in physical inches;
@@ -170,7 +171,7 @@ prior art and extends it to all current object fields.
 All projections contain the same discoverable layer contract:
 
 ```text
-network-background
+network-swarm-background
 terrestrial-land
 cluster-tethers
 downloaders-total
@@ -199,21 +200,23 @@ commit, interval, data version, counts, cluster statistics, and projection.
 
 ## Products
 
-`make generate-network` writes the six layered SVGs. `make
-generate-network-artifacts` adds the matching PDF and 3840-pixel-long-side
-PNG files. Each PNG below links to the generated review artifact:
+`make generate-network-swarm` writes the six layered SVGs. `make
+generate-network-swarm-artifacts` adds the matching PDF and
+3840-pixel-long-side PNG files. Each PNG below links to the generated review
+artifact:
 
-| Projection | Network preview |
+| Projection | Network-swarm preview |
 | --- | --- |
-| Cahill-Keyes | [`network-ck-44-22.png`](../assets.generated/png/network-ck-44-22.png) |
-| AuthaGraph | [`network-authagraph-44-19.052559.png`](../assets.generated/png/network-authagraph-44-19.052559.png) |
-| Dymaxion | [`network-dymaxion-44-20.78461.png`](../assets.generated/png/network-dymaxion-44-20.78461.png) |
-| Myriahedral | [`network-myriahedral-44-24.75.png`](../assets.generated/png/network-myriahedral-44-24.75.png) |
-| Star-X | [`network-star-x-34-44.png`](../assets.generated/png/network-star-x-34-44.png) |
-| Voronoi | [`network-voronoi-44-22.916667.png`](../assets.generated/png/network-voronoi-44-22.916667.png) |
+| Cahill-Keyes | [`network-swarm-ck-44-22.png`](../assets.generated/png/network-swarm-ck-44-22.png) |
+| AuthaGraph | [`network-swarm-authagraph-44-19.052559.png`](../assets.generated/png/network-swarm-authagraph-44-19.052559.png) |
+| Dymaxion | [`network-swarm-dymaxion-44-20.78461.png`](../assets.generated/png/network-swarm-dymaxion-44-20.78461.png) |
+| Myriahedral | [`network-swarm-myriahedral-44-24.75.png`](../assets.generated/png/network-swarm-myriahedral-44-24.75.png) |
+| Star-X | [`network-swarm-star-x-34-44.png`](../assets.generated/png/network-swarm-star-x-34-44.png) |
+| Voronoi | [`network-swarm-voronoi-44-22.916667.png`](../assets.generated/png/network-swarm-voronoi-44-22.916667.png) |
 
-Per-projection targets use `generate-network-PROJECTION`. The pass is also
-available as `network` (alias `swarm`) in the project generation profile.
+Per-projection targets use `generate-network-swarm-PROJECTION`. The canonical
+project-generation profile name is `network-swarm`; the former `network` name
+and short `swarm` name remain input aliases.
 
 ## Verification and limitations
 

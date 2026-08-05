@@ -1,8 +1,8 @@
-// Strict network profile and cumulative swarm GeoJSON ingestion.
+// Strict network-swarm profile and cumulative swarm GeoJSON ingestion.
 // -*- mode: C++ -*-
 
-#ifndef CART0FREAK0_NETWORK_DATA_H
-#define CART0FREAK0_NETWORK_DATA_H 1
+#ifndef CART0FREAK0_NETWORK_SWARM_DATA_H
+#define CART0FREAK0_NETWORK_SWARM_DATA_H 1
 
 #include <algorithm>
 #include <array>
@@ -24,13 +24,13 @@
 #include <rapidjson/document.h>
 #include <rapidjson/error/en.h>
 
-namespace cart0freak0::network_generation {
+namespace cart0freak0::network_swarm_generation {
 
 namespace fs = std::filesystem;
 namespace rj = rapidjson;
 
 inline void
-network_require(const bool condition, const std::string& message)
+network_swarm_require(const bool condition, const std::string& message)
 {
   if (!condition)
     throw std::runtime_error(message);
@@ -155,7 +155,7 @@ struct swarm_dataset
   std::vector<swarm_feature> features;
 };
 
-struct network_profile
+struct network_swarm_profile
 {
   fs::path path;
   std::string name;
@@ -188,7 +188,7 @@ reject_duplicate_members(const rj::Value& value,
         {
           const std::string name(member->name.GetString(),
                                  member->name.GetStringLength());
-          network_require(names.insert(name).second,
+          network_swarm_require(names.insert(name).second,
                           context + " contains duplicate member '" + name
                             + "'");
           reject_duplicate_members(member->value, context + "." + name);
@@ -206,17 +206,17 @@ read_json_document(const fs::path& path,
 {
   std::error_code error;
   const std::uintmax_t size = fs::file_size(path, error);
-  network_require(!error, "failed to stat JSON file " + path.string());
-  network_require(size != 0 && size <= maximum_size,
+  network_swarm_require(!error, "failed to stat JSON file " + path.string());
+  network_swarm_require(size != 0 && size <= maximum_size,
                   "JSON file has an invalid or excessive size: "
                     + path.string());
   std::ifstream input {path, std::ios::binary};
-  network_require(input.good(), "failed to open JSON file " + path.string());
+  network_swarm_require(input.good(), "failed to open JSON file " + path.string());
   const std::string json {
     std::istreambuf_iterator<char>(input), std::istreambuf_iterator<char>()};
   rj::Document document;
   document.Parse(json.data(), json.size());
-  network_require(
+  network_swarm_require(
     !document.HasParseError(),
     "failed to parse " + path.string() + ": "
       + rj::GetParseError_En(document.GetParseError()) + " at byte "
@@ -229,7 +229,7 @@ inline const rj::Value&
 required_member(const rj::Value& object, const char* name,
                 const std::string_view context)
 {
-  network_require(object.IsObject() && object.HasMember(name),
+  network_swarm_require(object.IsObject() && object.HasMember(name),
                   std::string(context) + " is missing '" + name + "'");
   return object[name];
 }
@@ -239,7 +239,7 @@ required_string(const rj::Value& object, const char* name,
                 const std::string_view context)
 {
   const rj::Value& value = required_member(object, name, context);
-  network_require(value.IsString(), std::string(context) + "." + name
+  network_swarm_require(value.IsString(), std::string(context) + "." + name
                                       + " must be a string");
   return {value.GetString(), value.GetStringLength()};
 }
@@ -249,7 +249,7 @@ required_uint64(const rj::Value& object, const char* name,
                 const std::string_view context)
 {
   const rj::Value& value = required_member(object, name, context);
-  network_require(value.IsUint64(), std::string(context) + "." + name
+  network_swarm_require(value.IsUint64(), std::string(context) + "." + name
                                       + " must be an unsigned integer");
   return value.GetUint64();
 }
@@ -259,7 +259,7 @@ required_uint(const rj::Value& object, const char* name,
               const std::string_view context)
 {
   const std::uint64_t value = required_uint64(object, name, context);
-  network_require(value <= std::numeric_limits<unsigned>::max(),
+  network_swarm_require(value <= std::numeric_limits<unsigned>::max(),
                   std::string(context) + "." + name + " is too large");
   return static_cast<unsigned>(value);
 }
@@ -269,7 +269,7 @@ required_number(const rj::Value& object, const char* name,
                 const std::string_view context)
 {
   const rj::Value& value = required_member(object, name, context);
-  network_require(value.IsNumber() && std::isfinite(value.GetDouble()),
+  network_swarm_require(value.IsNumber() && std::isfinite(value.GetDouble()),
                   std::string(context) + "." + name
                     + " must be a finite number");
   return value.GetDouble();
@@ -280,7 +280,7 @@ required_bool(const rj::Value& object, const char* name,
               const std::string_view context)
 {
   const rj::Value& value = required_member(object, name, context);
-  network_require(value.IsBool(), std::string(context) + "." + name
+  network_swarm_require(value.IsBool(), std::string(context) + "." + name
                                     + " must be a boolean");
   return value.GetBool();
 }
@@ -288,7 +288,7 @@ required_bool(const rj::Value& object, const char* name,
 inline downloader_counts
 parse_counts(const rj::Value& value, const std::string& context)
 {
-  network_require(value.IsObject(), context + " must be an object");
+  network_swarm_require(value.IsObject(), context + " must be an object");
   downloader_counts result;
   for (const metric_descriptor descriptor : metric_descriptors)
     metric_value(result, descriptor.metric) = required_uint64(
@@ -300,7 +300,7 @@ inline std::string
 h3_string(const H3Index cell)
 {
   std::array<char, 32> buffer {};
-  network_require(h3ToString(cell, buffer.data(), buffer.size()) == E_SUCCESS,
+  network_swarm_require(h3ToString(cell, buffer.data(), buffer.size()) == E_SUCCESS,
                   "failed to format H3 cell");
   return buffer.data();
 }
@@ -309,7 +309,7 @@ inline H3Index
 h3_parent(const H3Index cell, const int resolution)
 {
   H3Index parent = 0;
-  network_require(cellToParent(cell, resolution, &parent) == E_SUCCESS,
+  network_swarm_require(cellToParent(cell, resolution, &parent) == E_SUCCESS,
                   "failed to compute H3 parent for " + h3_string(cell));
   return parent;
 }
@@ -318,9 +318,9 @@ inline swarm_dataset
 parse_swarm_dataset(const rj::Document& document,
                     const std::string_view context = "swarm GeoJSON")
 {
-  network_require(document.IsObject(),
+  network_swarm_require(document.IsObject(),
                   std::string(context) + " root must be an object");
-  network_require(required_string(document, "type", context)
+  network_swarm_require(required_string(document, "type", context)
                     == "FeatureCollection",
                   std::string(context) + ".type must be FeatureCollection");
 
@@ -338,17 +338,17 @@ parse_swarm_dataset(const rj::Document& document,
   result.reported_swarm_features_size = required_uint64(
     document, "swarm_features_size", context);
   result.btiha_size = required_uint64(document, "btiha_size", context);
-  network_require(result.partition_by == "hexagon",
+  network_swarm_require(result.partition_by == "hexagon",
                   std::string(context)
                     + ".swarm_geo_partition_by must be hexagon");
-  network_require(result.duration_type == "cumulative",
+  network_swarm_require(result.duration_type == "cumulative",
                   std::string(context)
                     + ".duration_type must be cumulative");
-  network_require(result.h3_resolution <= 15,
+  network_swarm_require(result.h3_resolution <= 15,
                   std::string(context) + " has an invalid H3 resolution");
 
   const rj::Value& features = required_member(document, "features", context);
-  network_require(features.IsArray() && !features.Empty(),
+  network_swarm_require(features.IsArray() && !features.Empty(),
                   std::string(context) + ".features must be a nonempty array");
   result.features.reserve(features.Size());
   std::unordered_set<H3Index> seen_cells;
@@ -357,24 +357,24 @@ parse_swarm_dataset(const rj::Document& document,
       const rj::Value& source = features[index];
       const std::string feature_context = std::string(context) + ".features["
         + std::to_string(index) + "]";
-      network_require(source.IsObject(), feature_context + " must be an object");
-      network_require(required_string(source, "type", feature_context)
+      network_swarm_require(source.IsObject(), feature_context + " must be an object");
+      network_swarm_require(required_string(source, "type", feature_context)
                         == "Feature",
                       feature_context + ".type must be Feature");
       const rj::Value& properties = required_member(
         source, "properties", feature_context);
       const rj::Value& geometry = required_member(
         source, "geometry", feature_context);
-      network_require(properties.IsObject(),
+      network_swarm_require(properties.IsObject(),
                       feature_context + ".properties must be an object");
-      network_require(geometry.IsObject(),
+      network_swarm_require(geometry.IsObject(),
                       feature_context + ".geometry must be an object");
-      network_require(required_string(geometry, "type", feature_context
+      network_swarm_require(required_string(geometry, "type", feature_context
                                       + ".geometry") == "Point",
                       feature_context + ".geometry.type must be Point");
       const rj::Value& coordinates = required_member(
         geometry, "coordinates", feature_context + ".geometry");
-      network_require(coordinates.IsArray() && coordinates.Size() >= 2
+      network_swarm_require(coordinates.IsArray() && coordinates.Size() >= 2
                         && coordinates[0].IsNumber()
                         && coordinates[1].IsNumber(),
                       feature_context
@@ -396,22 +396,22 @@ parse_swarm_dataset(const rj::Document& document,
                         feature_context + ".properties"),
         feature_context + ".properties.downloaders");
 
-      network_require(std::isfinite(feature.longitude)
+      network_swarm_require(std::isfinite(feature.longitude)
                         && feature.longitude >= -180
                         && feature.longitude <= 180
                         && std::isfinite(feature.latitude)
                         && feature.latitude >= -90
                         && feature.latitude <= 90,
                       feature_context + " has out-of-range coordinates");
-      network_require(isValidCell(feature.h3) != 0,
+      network_swarm_require(isValidCell(feature.h3) != 0,
                       feature_context + " has an invalid H3 cell");
-      network_require(getResolution(feature.h3)
+      network_swarm_require(getResolution(feature.h3)
                         == static_cast<int>(result.h3_resolution),
                       feature_context + " has the wrong H3 resolution");
-      network_require(seen_cells.insert(feature.h3).second,
+      network_swarm_require(seen_cells.insert(feature.h3).second,
                       feature_context + " repeats H3 cell "
                         + h3_string(feature.h3));
-      network_require(feature.downloaders.size >= result.minimum_size,
+      network_swarm_require(feature.downloaders.size >= result.minimum_size,
                       feature_context
                         + " has fewer downloaders than swarm_size_min");
       result.features.push_back(std::move(feature));
@@ -423,15 +423,16 @@ inline swarm_dataset
 load_swarm_dataset(const fs::path& path)
 { return parse_swarm_dataset(read_json_document(path), path.string()); }
 
-inline network_profile
-parse_network_profile(const rj::Document& document, const fs::path& path)
+inline network_swarm_profile
+parse_network_swarm_profile(const rj::Document& document,
+                            const fs::path& path)
 {
   const std::string context = path.string();
-  network_require(document.IsObject(), context + " root must be an object");
-  network_require(required_uint(document, "schema_version", context) == 1,
+  network_swarm_require(document.IsObject(), context + " root must be an object");
+  network_swarm_require(required_uint(document, "schema_version", context) == 1,
                   context + " uses an unsupported schema version");
 
-  network_profile result;
+  network_swarm_profile result;
   result.path = path;
   result.name = required_string(document, "name", context);
   const rj::Value& clustering = required_member(
@@ -473,24 +474,24 @@ parse_network_profile(const rj::Document& document, const fs::path& path)
     snapshot, "source_commit", snapshot_context);
   result.license = required_string(snapshot, "license", snapshot_context);
 
-  network_require(result.source_h3_resolution <= 15
+  network_swarm_require(result.source_h3_resolution <= 15
                     && result.parent_h3_resolution
                          < result.source_h3_resolution,
                   clustering_context
                     + " must use a coarser valid parent H3 resolution");
-  network_require(result.marker_radius > 0
+  network_swarm_require(result.marker_radius > 0
                     && result.marker_radius <= 0.25,
                   clustering_context + ".marker_radius_inches is invalid");
-  network_require(result.minimum_tether >= 0
+  network_swarm_require(result.minimum_tether >= 0
                     && result.minimum_tether <= 2,
                   clustering_context + ".minimum_tether_inches is invalid");
-  network_require(result.maximum_labels <= 500,
+  network_swarm_require(result.maximum_labels <= 500,
                   display_context + ".maximum_labels is excessive");
-  network_require(result.minimum_nonzero_opacity > 0
+  network_swarm_require(result.minimum_nonzero_opacity > 0
                     && result.minimum_nonzero_opacity < 1,
                   display_context + ".minimum_nonzero_opacity is invalid");
   for (const metric_descriptor descriptor : metric_descriptors)
-    network_require(metric_value(result.scale_reference, descriptor.metric) > 0,
+    network_swarm_require(metric_value(result.scale_reference, descriptor.metric) > 0,
                     context + ".scale_reference_p99."
                       + std::string(descriptor.field) + " must be positive");
   const auto lower_hex = [](const std::string_view value,
@@ -501,22 +502,22 @@ parse_network_profile(const rj::Document& document, const fs::path& path)
              || (character >= 'a' && character <= 'f');
          });
   };
-  network_require(lower_hex(result.archive_sha256, 64),
+  network_swarm_require(lower_hex(result.archive_sha256, 64),
                   snapshot_context + ".archive_sha256 must be 64 lowercase hexadecimal characters");
-  network_require(lower_hex(result.geojson_sha256, 64),
+  network_swarm_require(lower_hex(result.geojson_sha256, 64),
                   snapshot_context + ".geojson_sha256 must be 64 lowercase hexadecimal characters");
-  network_require(lower_hex(result.source_commit, 40),
+  network_swarm_require(lower_hex(result.source_commit, 40),
                   snapshot_context + ".source_commit must be a 40-character lowercase hexadecimal commit");
-  network_require(!result.archive.empty() && !result.geojson_member.empty()
+  network_swarm_require(!result.archive.empty() && !result.geojson_member.empty()
                     && !result.source_repository.empty()
                     && !result.license.empty(),
                   snapshot_context + " contains an empty provenance field");
   return result;
 }
 
-inline network_profile
-load_network_profile(const fs::path& path)
-{ return parse_network_profile(read_json_document(path), path); }
+inline network_swarm_profile
+load_network_swarm_profile(const fs::path& path)
+{ return parse_network_swarm_profile(read_json_document(path), path); }
 
 inline double
 scaled_log_opacity(const std::uint64_t value, const std::uint64_t reference,
@@ -531,6 +532,6 @@ scaled_log_opacity(const std::uint64_t value, const std::uint64_t reference,
   return minimum_nonzero + (1 - minimum_nonzero) * normalized;
 }
 
-} // namespace cart0freak0::network_generation
+} // namespace cart0freak0::network_swarm_generation
 
 #endif

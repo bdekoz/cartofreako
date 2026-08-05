@@ -29,9 +29,10 @@ inline constexpr std::array<std::string_view, 6> supported_projections {
   "voronoi",
 };
 
-inline constexpr std::array<std::string_view, 8> supported_passes {
+inline constexpr std::array<std::string_view, 10> supported_passes {
   "geometry", "graticules", "earth", "water", "astronomy",
-  "orbital-technosphere", "network", "bathymetry-roulette",
+  "orbital-technosphere", "network-swarm", "bathymetry-roulette",
+  "network-infrastructure", "anthropocene",
 };
 
 struct profile
@@ -101,11 +102,15 @@ canonical_pass(const std::string_view input)
     return "astronomy";
   if (value == "orbiting" || value == "orbital-technosphere")
     return "orbital-technosphere";
-  if (value == "network" || value == "swarm")
-    return "network";
+  if (value == "network-swarm" || value == "network" || value == "swarm")
+    return "network-swarm";
+  if (value == "network-infrastructure" || value == "infrastructure")
+    return "network-infrastructure";
   if (value == "bathymetry-roulette" || value == "bathymetry-rolette"
       || value == "art-agua-roulette")
     return "bathymetry-roulette";
+  if (value == "anthropocene")
+    return "anthropocene";
   return std::nullopt;
 }
 
@@ -255,8 +260,8 @@ target_name(const std::string_view projection, const std::string_view pass)
     return "generate-astro-" + std::string(projection);
   if (pass == "orbital-technosphere")
     return "generate-orbiting-" + std::string(projection);
-  if (pass == "network")
-    return "generate-network-" + std::string(projection);
+  if (pass == "network-swarm")
+    return "generate-network-swarm-" + std::string(projection);
   profile_require(std::find(supported_passes.begin(), supported_passes.end(),
                             pass) != supported_passes.end(),
                   "internal error: unsupported canonical pass");

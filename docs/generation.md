@@ -6,14 +6,16 @@
 [Cahill-Keyes context](cahill-keyes-context.md) ·
 [Astronomy notes](astro-implementation-notes.md) ·
 [Orbital Technosphere notes](orbital-technosphere-implementation-notes.md) ·
-[Network notes](network-implementation-notes.md) ·
+[Anthropocene notes](anthropocene-implementation-notes.md) ·
+[Network-swarm notes](network-swarm-implementation-notes.md) ·
+[Network-infrastructure notes](network-infrastructure-implementation-notes.md) ·
 [Bathymetry Roulette notes](bathymetry-roulette-implementation-notes.md)
 
 ## Purpose
 
-The repository contains eleven C++20 SVG generation programs under
+The repository contains thirteen C++20 SVG generation programs under
 `src.generate/`.
-Eight exercise all six production projections through the real Alpha60 and
+Ten exercise all six production projections through the real Alpha60 and
 Izzi APIs. Three derive Cahill-Keyes or Myriahedral slices from an already
 projected whole-earth SVG. They write layered SVGs under
 `assets.generated/svg/`, then reopen those files and verify dimensions, layer
@@ -33,16 +35,18 @@ does not duplicate generation logic or filter SVG layers after generation.
 | Bathymetry Roulette | [`src.generate/generate-bathymetry-roulette.cc`](../src.generate/generate-bathymetry-roulette.cc) | Twelve Natural Earth depth thresholds clipped over deterministic Izzi roulette patterns |
 | Astronomy | [`src.generate/generate-astro.cc`](../src.generate/generate-astro.cc) | Profile timestamp and observer, bounded Gaia/exoplanet/SBDB snapshots, curated multi-band sources and events |
 | Orbital Technosphere | [`src.generate/generate-orbiting.cc`](../src.generate/generate-orbiting.cc) | Profile timestamp and observer, CelesTrak OMM population and memberships, NASA SSCWeb reference positions, and SGP4 |
-| Network | [`src.generate/generate-network.cc`](../src.generate/generate-network.cc) | Validated cumulative swarm GeoJSON, H3 parent clustering, fixed display profile, and Izzi radial honeycombs |
+| Anthropocene | [`src.generate/generate-anthropocene.cc`](../src.generate/generate-anthropocene.cc) | Profile-fixed partial year and checksum-pinned H3 cell-day counts from GSN, EPA AirData, HMS, Storm Events, and CWFIS |
+| Network swarm | [`src.generate/generate-network-swarm.cc`](../src.generate/generate-network-swarm.cc) | Validated cumulative swarm GeoJSON, H3 parent clustering, fixed display profile, and Izzi radial honeycombs |
+| Network infrastructure | [`src.generate/generate-network-infrastructure.cc`](../src.generate/generate-network-infrastructure.cc) | Manifested cloud/CDN sites plus explicitly opted-in TeleGeography cable and Internet-exchange topology |
 | Four slices | [`src.generate/generate-4-slice.cc`](../src.generate/generate-4-slice.cc) | Four full-height, quarter-width quadrant-pair enlargements from the Cahill-Keyes Earth SVG |
 | Eight slices | [`src.generate/generate-8-slice.cc`](../src.generate/generate-8-slice.cc) | Eight exact-octant enlargements from the Cahill-Keyes Earth SVG |
 | Myriahedral groups | [`src.generate/generate-myriahedral-slices.cc`](../src.generate/generate-myriahedral-slices.cc) | Two complementary exact-terminal-face masks from the Myriahedral water SVG |
 
 The aggregate target generates all four terrestrial artifact families, the
-monochrome Bathymetry Roulette family, two
-astronomy and two Orbital Technosphere products, and one cumulative network
-product for all six production
-projections, five exploratory
+monochrome Bathymetry Roulette family, two astronomy and two Orbital
+Technosphere products, one Anthropocene observation atlas, one cumulative
+network-swarm product, and one cloud/CDN infrastructure-site atlas for all six
+production projections, five exploratory
 Myriahedral water perspectives, all 12 Cahill-Keyes slices, and two
 Myriahedral face-group slices:
 
@@ -81,9 +85,10 @@ a general map-rendering command line.
 
 The [top-level Makefile](../Makefile) compiles every generator with C++20 and
 `-Wall -Wextra -Wpedantic -Werror`. The geometry and graticule programs need
-the neighboring Alpha60 and Izzi source trees. The Earth, water, and
-Bathymetry Roulette programs also use GDAL's vector API and require GDAL to
-have GEOS support for polygon intersection.
+the neighboring Alpha60 and Izzi source trees. The Earth, water, Bathymetry
+Roulette, Anthropocene, and network-infrastructure programs also use GDAL's vector API and require
+GDAL to have GEOS support for polygon intersection. Anthropocene normalization
+and generation also use H3.
 
 The default locations can be overridden:
 
@@ -98,12 +103,20 @@ The default locations can be overridden:
 | `ASTRO_PROFILE` | `$(ASTRO_DATA_DIR)/astro-profile.json` | Authoritative timestamp, point of reference, orientation, instrumentation, event window, and catalog paths |
 | `ORBITING_DATA_DIR` | `assets.static/orbital-technosphere` | Orbital Technosphere profile, OMM CSV snapshots, NASA reference, and checksums |
 | `ORBITING_PROFILE` | `$(ORBITING_DATA_DIR)/orbital-technosphere-profile.json` | Authoritative propagation instant, make-invocation reference point, catalog roles, freshness rules, visibility rules, and display budgets |
-| `NETWORK_SOURCE` | `assets.static/network/house-of-the-dragon-301-cumulative-aggregate.geojson.zip` | Local ZIP or plain GeoJSON source prepared for the network pass |
-| `NETWORK_GEOJSON` | `assets.static/network/.prepared/house-of-the-dragon-301-cumulative-aggregate.geojson` | Prepared cumulative swarm staging destination |
-| `NETWORK_PROFILE` | `assets.static/network/network-profile.json` | H3 clustering, physical marker dimensions, labels/tethers, fixed scales, and provenance |
+| `ANTHROPOCENE_DATA_DIR` | `assets.static/anthropocene` | Checked profile, normalized 2026 H3 GeoJSON, checksum, and ignored refresh staging |
+| `ANTHROPOCENE_PROFILE` | `$(ANTHROPOCENE_DATA_DIR)/anthropocene-profile.json` | Literal duration year, snapshot date, source coverage, thresholds, metric enablement, scales, and styles |
+| `ANTHROPOCENE_GEOJSON` | `$(ANTHROPOCENE_DATA_DIR)/anthropocene-2026.geojson` | Checksum-pinned, source-separated H3 cell-day snapshot |
+| `NETWORK_SWARM_SOURCE` | `assets.static/network-swarm/house-of-the-dragon-301-cumulative-aggregate.geojson.zip` | Local ZIP or plain GeoJSON source prepared for the network-swarm pass |
+| `NETWORK_SWARM_GEOJSON` | `assets.static/network-swarm/.prepared/house-of-the-dragon-301-cumulative-aggregate.geojson` | Prepared cumulative swarm staging destination |
+| `NETWORK_SWARM_PROFILE` | `assets.static/network-swarm/network-swarm-profile.json` | H3 clustering, physical marker dimensions, labels/tethers, fixed scales, and provenance |
+| `NETWORK_INFRASTRUCTURE_CLOUD_SOURCE` | `../cloud_cdn_cache` | External checkout at the profile-pinned cloud/CDN commit |
+| `SUBMARINE_CABLE_SOURCE` | `../www.submarinecablemap.com` | External TeleGeography cable checkout used only by topology opt-in targets |
+| `INTERNET_EXCHANGE_SOURCE` | `../www.internetexchangemap.com` | External TeleGeography exchange checkout used only by topology opt-in targets |
+| `NETWORK_INFRASTRUCTURE_SITES_PROFILE` | `assets.static/network-infrastructure/network-infrastructure-sites-profile.json` | Normal cloud/CDN site-atlas sources, counts, detiling, labels, and terms |
+| `NETWORK_INFRASTRUCTURE_TOPOLOGY_PROFILE` | `assets.static/network-infrastructure/network-infrastructure-topology-profile.json` | Explicit TeleGeography topology layers, source pins, and CC BY-NC-SA 3.0 opt-in |
 | `INKSCAPE` | `inkscape` | Command-line PDF and PNG exporter |
 | `PNG_LONG_SIDE` | `3840` | Pixel count assigned to each PNG's longest side |
-| `LABEL_FONT` | `atkinson_hyperlegible` | Installed font used for visible labels in graticule, astronomy, Orbital Technosphere, network, and Bathymetry Roulette images |
+| `LABEL_FONT` | `atkinson_hyperlegible` | Installed font used for visible labels in graticule, astronomy, Orbital Technosphere, Anthropocene, network-swarm, network-infrastructure, and Bathymetry Roulette images |
 
 ### Generated label typography
 
@@ -123,7 +136,9 @@ their PDF/PNG exports:
 make -B LABEL_FONT='Atkinson Hyperlegible Next' generate-graticules-projections
 make -B LABEL_FONT='Atkinson Hyperlegible Next' generate-astro
 make -B LABEL_FONT='Atkinson Hyperlegible Next' generate-orbiting
-make -B LABEL_FONT='Atkinson Hyperlegible Next' generate-network-artifacts
+make -B LABEL_FONT='Atkinson Hyperlegible Next' generate-anthropocene-artifacts
+make -B LABEL_FONT='Atkinson Hyperlegible Next' generate-network-swarm-artifacts
+make -B LABEL_FONT='Atkinson Hyperlegible Next' generate-network-infrastructure-artifacts
 make -B LABEL_FONT='Atkinson Hyperlegible Next' generate-bathymetry-roulette-artifacts
 ```
 
@@ -181,24 +196,28 @@ passes and their SVG result counts per projection are:
 | `water` | One complementary physical-feature SVG |
 | `astronomy` | All-sky and observer SVGs |
 | `orbital-technosphere` | Global and observer SVGs |
-| `network` | One cumulative network SVG |
+| `anthropocene` | One source-separated observation-atlas SVG |
+| `network-swarm` | One cumulative network-swarm SVG |
 | `bathymetry-roulette` | One monochrome roulette-patterned depth SVG |
+| `network-infrastructure` | One cloud/CDN infrastructure-site SVG; never the licensed topology product |
 
 Names are case-insensitive, and underscores normalize to hyphens. The
 resolver also accepts `ck`, `starx`, and the established `voroni` spelling as
-projection aliases; `graticule`, `astro`, `orbiting`, `swarm`,
+projection aliases; `graticule`, `astro`, `orbiting`, and the former `network`
+and short `swarm` names for `network-swarm`, `infrastructure` for
+`network-infrastructure`, plus
 `bathymetry-rolette`, and `art-agua-roulette` are pass aliases.
 For compatibility with the requested `earth, ocean` vocabulary, `ocean`
 normalizes to the current `water` generation pass. It does not mean the
 `ocean` layer inside the Earth base SVG.
 
-Profile `"all"` means the six projections by eight selectable passes. It
-produces 60 SVGs because astronomy and Orbital Technosphere each have two
+Profile `"all"` means the six projections by ten selectable passes. It
+produces 72 SVGs because astronomy and Orbital Technosphere each have two
 products. It deliberately excludes Cahill-Keyes slices, exploratory
 Myriahedral perspectives and slices, and PDF/PNG exports. Those products do
 not form a projection/pass cross-product and remain available through their
-explicit targets. `make all` builds the complete 79 SVG, 79 PDF, and 79 PNG
-suite.
+explicit targets. `make all` builds the complete 91 SVG, 91 PDF, and 91 PNG
+standard suite. The six opt-in topology products per format remain separate.
 
 The resolver rejects empty selectors, duplicate aliases or JSON members,
 unknown names or members, a mixed `"all"` selector, and unsupported schema
@@ -233,8 +252,11 @@ make generate-star-x
 make generate-voronoi
 make generate-astro
 make generate-orbiting
-make prepare-network-data
-make generate-network
+make generate-anthropocene
+make prepare-network-swarm-data
+make generate-network-swarm
+make generate-network-infrastructure
+make generate-network-infrastructure-topology
 make generate-bathymetry-roulette
 make all
 ```
@@ -250,8 +272,9 @@ The full generators are not part of `make check`; invoking a `generate-*`
 target both writes its artifact and runs that generator's embedded structural
 checks.
 
-The 79 artifacts in each of `assets.generated/svg/`, `assets.generated/pdf/`,
-and `assets.generated/png/` are checked in. This makes visual and XML diffs
+The 91 standard artifacts plus six opt-in topology artifacts in each of
+`assets.generated/svg/`, `assets.generated/pdf/`, and `assets.generated/png/`
+are checked in. This makes visual and XML diffs
 reviewable, but it also means that regenerating with a different GDAL, GEOS,
 or Inkscape version can produce ordering, coordinate, or rendering differences
 even though the input archive is pinned.
@@ -360,31 +383,118 @@ the NASA query interval. The
 the source feasibility decision, profile schema, category memberships,
 coordinate pipeline, SVG metadata, verification, and operational-use limits.
 
-## Network generation
+## Anthropocene generation
 
-The network pass reads a strict cumulative swarm FeatureCollection, validates
-all ten `properties.downloaders` values and 64-bit H3 cells, then groups
+The Anthropocene pass maps positive unique-day counts from a checksum-pinned,
+resolution-4 H3 FeatureCollection. Its checked profile fixes the literal 2026
+calendar year, partial snapshot date, per-source coverage, record and
+precipitation thresholds, metric enablement, scales, shapes, and colors. It
+does not read the host clock or calculate a composite climate-attribution
+score.
+
+```sh
+make generate-anthropocene
+make generate-anthropocene-artifacts
+```
+
+Use `generate-anthropocene-PROJECTION` for one SVG and
+`generate-anthropocene-projections` for all six SVGs. Supply a matching pair
+with `ANTHROPOCENE_PROFILE` and `ANTHROPOCENE_GEOJSON`. The loader rejects a
+year, snapshot, H3-resolution, filename, H3-center, or metric-total mismatch.
+The Make rule independently verifies the GeoJSON against the SHA-256 declared
+by the selected profile before generation.
+
+EPA AirData PM2.5 exceedance days are enabled by default in the independent
+`air-quality-exposure` group. They use a cross-square and never become NOAA
+HMS `observed-smoke-days`, which use rings in the `atmosphere` group. Coral
+bleaching stress is recorded in the profile and metadata as a separate future
+raster/reef phase and is not rendered in Stage 8.
+
+Ordinary generation is offline. These explicit targets stage a candidate
+refresh without overwriting the checked GeoJSON:
+
+```sh
+make fetch-anthropocene-data
+make prepare-anthropocene-data
+```
+
+The public CWFIS daily hotspot feed supplies default Canada/North America fire
+coverage. Set `FIRMS_MAP_KEY` to add optional global NASA FIRMS chunks,
+including northern Russia. Copernicus Sentinel-3 fire-radiative-power data and
+Rosleskhoz operational reports remain validation sources. The
+[Anthropocene implementation notes](anthropocene-implementation-notes.md)
+document the feasibility boundary, classifications, exact formulas, source
+audit, Canada/Russia fire evaluation, candidate resource types, SVG contract,
+refresh workflow, and limits.
+
+## Network-swarm generation
+
+The network-swarm pass reads a strict cumulative swarm FeatureCollection,
+validates all ten `properties.downloaders` values and 64-bit H3 cells, then groups
 resolution-5 features under profile-selected resolution-3 parents. Parent
 groups are split again by the selected projection's native cell before Izzi
 radial honeycomb placement, preventing a cluster from crossing an unfolded
 map seam. Thin optional tethers retain each true projected location.
 
 ```sh
-make prepare-network-data
-make generate-network
+make prepare-network-swarm-data
+make generate-network-swarm
 ```
 
-Use `generate-network-PROJECTION` for one SVG or
-`generate-network-artifacts` for all six SVG/PDF/PNG products. A compatible
-local ZIP or plain GeoJSON is selected with `NETWORK_SOURCE`;
-`NETWORK_GEOJSON` changes the staging destination. Normal generation is
+Use `generate-network-swarm-PROJECTION` for one SVG or
+`generate-network-swarm-artifacts` for all six SVG/PDF/PNG products. A
+compatible local ZIP or plain GeoJSON is selected with `NETWORK_SWARM_SOURCE`;
+`NETWORK_SWARM_GEOJSON` changes the staging destination. Normal generation is
 offline from the pinned archive.
 
-The [network implementation notes](network-implementation-notes.md) document
-the source audit and digests, schema validation, H3 resolution decision,
-Izzi lattice canonicalization, independent overlapping fields, visual
+The [network-swarm implementation notes](network-swarm-implementation-notes.md)
+document the source audit and digests, schema validation, H3 resolution
+decision, Izzi lattice canonicalization, independent overlapping fields, visual
 grammar, SVG layers, output previews, verification, and interpretation
 boundary.
+
+## Network-infrastructure generation
+
+The ordinary network-infrastructure product maps the 1,003 located cloud/CDN
+records in an externally checked, commit-pinned manifest. All points enter one
+projection-cell-aware Izzi radial-hexagon collision layout; unlocated source
+records remain represented in provenance totals and are never assigned
+invented coordinates. This non-TeleGeography site atlas is a normal generation
+pass and is included in `make all`:
+
+```sh
+make check-network-infrastructure-sources
+make generate-network-infrastructure
+make generate-network-infrastructure-artifacts
+```
+
+Set `NETWORK_INFRASTRUCTURE_CLOUD_SOURCE` when the pinned `cloud_cdn_cache`
+checkout is not at its default sibling path. The six SVG-only projection
+targets use `generate-network-infrastructure-PROJECTION`.
+
+Submarine cable routes, cable landings, Internet-exchange facilities, and
+logical exchange-to-facility membership are a separate, explicitly opted-in
+product because the source topology is CC BY-NC-SA 3.0:
+
+```sh
+make check-network-infrastructure-topology-sources
+make generate-network-infrastructure-topology
+make generate-network-infrastructure-topology-artifacts
+```
+
+The topology rules also require `SUBMARINE_CABLE_SOURCE` and
+`INTERNET_EXCHANGE_SOURCE`, defaulting to the two documented sibling
+checkouts. They validate all three commits, primary-file digests, and consumed
+tracked paths before generation. Topology is deliberately excluded from
+`make all` and generation-profile `"all"`; its SVGs visibly attribute
+TeleGeography and embed the CC BY-NC-SA 3.0 boundary. Cable paths are
+source-backed physical geometry, while dashed exchange membership spokes are
+logical incidence—not inferred fiber or traffic.
+
+The [network-infrastructure implementation notes](network-infrastructure-implementation-notes.md)
+record the source audit, exact snapshots and counts, license boundary, profile
+schema, seam handling, clustering, layer semantics, previews, verification,
+and known limits.
 
 ## Bathymetry Roulette generation
 
@@ -423,14 +533,15 @@ downloads Natural Earth 5.1.1's complete 1:10m physical-vector archive. It:
 4. extracts only the named physical datasets; and
 5. creates the completion stamp last, so interrupted extraction is retried.
 
-The Earth, water, and Bathymetry Roulette targets depend on that stamp and pass
+The Earth, water, Bathymetry Roulette, and Anthropocene targets depend on that
+stamp and pass
 `NATURAL_EARTH_DIR` to their executables. The archive digest and licensing
 are recorded in the
 [Natural Earth data note](natural-earth-10m-physical-vectors.md).
 
 ## Shared coordinate pipeline
 
-The eight whole-map generators use
+The ten whole-map generators use
 [`projection-generation-common.h`](../src.generate/projection-generation-common.h)
 to select a production projection, construct its exact frame, and call the
 shared public API in `(latitude, longitude)` order. Projected coordinates use

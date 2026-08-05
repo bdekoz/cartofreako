@@ -12,15 +12,15 @@ generation workflow. They do not require the same software:
 | Component | Required for | Purpose |
 | --- | --- | --- |
 | GNU Make | All Makefile targets | Expands the generated projection rules and coordinates builds |
-| C++20 compiler and standard library | Tests, profile resolution, and native generators | Builds the projection checks, generation-profile resolver, and eleven SVG-generation programs |
-| RapidJSON development headers | Configured generation plus astronomy, Orbital Technosphere, and network tests and generators | Parses the generation preference, authoritative data profiles, astronomy JSON, NASA SSCWeb references, and cumulative swarm GeoJSON |
+| C++20 compiler and standard library | Tests, profile resolution, and native generators | Builds the projection checks, generation-profile resolver, thirteen SVG-generation programs, and Anthropocene normalizer |
+| RapidJSON development headers | Configured generation plus astronomy, Orbital Technosphere, Anthropocene, network-swarm, and network-infrastructure tests and generators | Parses the generation preference, authoritative data profiles, astronomy JSON, NASA SSCWeb references, normalized H3 observations, cumulative swarm GeoJSON, and infrastructure source records |
 | Alpha60 headers | SVG generation | Supplies `a60-io.h` and shared runtime-resource interfaces |
 | Izzi headers | SVG generation | Supplies `a60-svg.h`, roulette-curve construction, and SVG document/path serialization |
-| H3 development headers and library | Network tests and generation | Validates 64-bit cells and computes configurable parent clusters with the H3 v4 API |
-| GDAL development package with OGR | Earth, water, Bathymetry Roulette, global Orbital Technosphere, and network generation | Reads Natural Earth Shapefiles and provides vector geometry operations |
+| H3 development headers and library | Network-swarm and Anthropocene tests, normalization, and generation | Validates 64-bit cells, computes configurable parent clusters, aggregates points, and fills smoke polygons with the H3 v4 API |
+| GDAL development package with OGR | Earth, water, Bathymetry Roulette, global Orbital Technosphere, Anthropocene, network-swarm, and network-infrastructure generation | Reads Natural Earth and HMS Shapefiles and provides vector geometry operations |
 | GEOS support in GDAL | Natural Earth-backed generation | Performs polygon intersection, repair, and seam-safe clipping |
-| Fontconfig and Atkinson Hyperlegible | Graticule, astronomy, Orbital Technosphere, network, and Bathymetry Roulette generation and PDF/PNG export | Resolves the default accessible label face and prevents silent font substitution |
-| Bash, `curl`, `unzip`, `rg`, `sha256sum`, and GNU coreutils including `cmp` | Natural Earth, astronomy, orbital, and network preparation | Downloads, verifies, compares, and extracts or installs bounded source data |
+| Fontconfig and Atkinson Hyperlegible | Graticule, astronomy, Orbital Technosphere, Anthropocene, network-swarm, network-infrastructure, and Bathymetry Roulette generation and PDF/PNG export | Resolves the default accessible label face and prevents silent font substitution |
+| Git, Bash, `curl`, `unzip`, `tar`, `gzip`, `rg`, `find`, `sha256sum`, and GNU coreutils including `cmp` and `date` | Natural Earth, astronomy, orbital, Anthropocene, network-swarm, and network-infrastructure source preparation or validation | Downloads, verifies commits and files, compares, dates, and extracts or installs bounded source data |
 | Inkscape | Complete artifact generation and visual review | Exports PDF/PNG and inspects SVG layers, clipping, geometry, and seams |
 | Doxygen | API reference generation | Builds the documented projection-header reference under `docs/doxygen/` |
 | Emscripten, Node.js, and a browser | Optional WebAssembly builds | Builds the production Cahill-Keyes and land/ocean-only Myriahedral adapters, plus the illustrative Myriahedral overlay |
@@ -57,17 +57,21 @@ they are not discoverable at their defaults.
 
 `make generation-plan` needs GNU Make, a C++20 compiler, and RapidJSON
 headers. Bare `make` additionally needs the dependencies of the passes chosen
-by the generation profile. The check suite also needs H3, the sibling
-Izzi/Alpha60 headers, and the checked-in astronomy, Orbital Technosphere, and
-network profiles and bounded snapshots. It does not use GDAL, Natural Earth,
-Inkscape, or network access.
+by the generation profile. The check suite also needs H3, GDAL development
+files, the sibling Izzi/Alpha60 headers, and the checked-in astronomy, Orbital
+Technosphere, Anthropocene, network-swarm, and network-infrastructure profiles
+and bounded snapshots.
+It does not open Natural Earth, invoke Inkscape, or use network access.
 
 `make all` builds 24 production whole-earth maps, 12 astronomy maps, 12
-Orbital Technosphere maps, six network maps, six Bathymetry Roulette maps, five
+Orbital Technosphere maps, six Anthropocene maps, six network-swarm maps, six
+network-infrastructure site maps, six Bathymetry Roulette maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes slices, and two
-Myriahedral face-group slices, then invokes Inkscape to export all 79 SVGs as
+Myriahedral face-group slices, then invokes Inkscape to export all 91 SVGs as
 PDFs and 3840-pixel-long-side PNGs. It needs
-all native build and data-acquisition dependencies through H3 and GEOS plus Inkscape.
+all native build and data-acquisition dependencies through H3 and GEOS, the
+profile-pinned external cloud/CDN checkout, plus Inkscape. The separately
+licensed TeleGeography topology product is not part of `make all`.
 Inkscape may be omitted only when invoking individual SVG generation targets
 or the offline `make check` suite.
 
@@ -80,7 +84,7 @@ Inkscape. Package names may differ on older or derivative distributions.
 
 ```sh
 sudo dnf install \
-  gcc-c++ make git bash curl unzip coreutils fontconfig \
+  gcc-c++ make git bash curl unzip tar gzip findutils ripgrep coreutils fontconfig \
   gdal gdal-devel geos geos-devel rapidjson-devel h3 h3-devel inkscape doxygen
 ```
 
@@ -92,7 +96,7 @@ provide the C++ headers and link metadata used by the Makefile.
 ```sh
 sudo apt-get update
 sudo apt-get install \
-  build-essential git bash curl unzip coreutils fontconfig \
+  build-essential git bash curl unzip tar gzip findutils ripgrep coreutils fontconfig \
   fonts-atkinson-hyperlegible \
   gdal-bin libgdal-dev libgeos-dev rapidjson-dev libh3-dev inkscape doxygen
 ```
@@ -104,7 +108,7 @@ components:
 
 ```sh
 xcode-select --install
-brew install make gdal h3 rapidjson coreutils git doxygen fontconfig
+brew install make gdal h3 rapidjson coreutils git ripgrep doxygen fontconfig
 brew install --cask inkscape font-atkinson-hyperlegible
 ```
 
@@ -122,7 +126,9 @@ GDAL formula includes GEOS support.
 ### Label font
 
 Every visible text element generated by the graticule, astronomy, Orbital
-Technosphere, network, and Bathymetry Roulette passes defaults to the original
+Technosphere, Anthropocene, network-swarm, network-infrastructure, and
+Bathymetry Roulette passes
+defaults to the original
 **Atkinson Hyperlegible** family. The Make-facing identifier is
 `atkinson_hyperlegible`; the SVG serializer maps it to the installed family
 name `Atkinson Hyperlegible`. The font is not embedded in SVG output, so it
@@ -148,6 +154,7 @@ timestamps:
 ```sh
 make -B LABEL_FONT='Atkinson Hyperlegible Next' generate-astro
 make -B LABEL_FONT='Atkinson Hyperlegible Next' generate-orbiting
+make -B LABEL_FONT='Atkinson Hyperlegible Next' generate-network-infrastructure-artifacts
 ```
 
 Direct generator invocations use the equivalent
@@ -201,9 +208,10 @@ per-projection rules with GNU Make's `call`, `eval`, and related expansion
 features.
 
 RapidJSON is header-only; no additional linker library is required. The
-generation preference, astronomy, Orbital Technosphere, and network profiles,
-cumulative swarm GeoJSON, JPL small-body snapshots, and NASA SSCWeb response
-use its DOM parser. Verify the
+generation preference, astronomy, Orbital Technosphere, Anthropocene,
+network-swarm, and network-infrastructure profiles, normalized observation and
+cumulative swarm GeoJSON, infrastructure manifests and GeoJSON, JPL small-body
+snapshots, and NASA SSCWeb response use its DOM parser. Verify the
 header independently when diagnosing a compiler probe failure:
 
 ```sh
@@ -212,10 +220,12 @@ test -r /usr/include/rapidjson/document.h
 
 ## H3 development library
 
-Network generation uses the H3 v4 C API from C++. Both the header and linker
-library are required; installing an H3 command-line program alone is not
-sufficient. The build includes `h3/h3api.h`, links with `-lh3`, validates
-every input cell, and calls `cellToParent()` for clustering.
+Network-swarm and Anthropocene generation use the H3 v4 C API from C++. Both
+the header and linker library are required; installing an H3 command-line
+program alone is not sufficient. The build includes `h3/h3api.h`, links with
+`-lh3`, validates every input cell, calls `cellToParent()` for network
+clustering, maps points with `latLngToCell()`, and fills HMS polygons with
+`polygonToCells()`.
 
 Useful independent checks are:
 
@@ -226,7 +236,7 @@ make check-prerequisite
 ```
 
 Use a development package compatible with the v4 names `getResolution`,
-`isValidCell`, `h3ToString`, and `cellToParent`. The prerequisite checker
+`isValidCell`, `h3ToString`, `cellToParent`, and `polygonToCells`. The prerequisite checker
 compiles, links, and runs a resolution-5 to resolution-3 parent probe, so it
 detects both missing development files and an incompatible API.
 
@@ -290,9 +300,9 @@ separate Alpha60 or Izzi library.
 
 ## GDAL, OGR, and GEOS
 
-Earth, water, and Bathymetry Roulette generation includes `gdal_priv.h`,
-`ogrsf_frmts.h`, and the OGR C API. The Makefile obtains compiler and linker
-arguments from:
+Earth, water, Bathymetry Roulette, and Anthropocene generation includes
+`gdal_priv.h`, `ogrsf_frmts.h`, and the OGR C API. The Makefile obtains
+compiler and linker arguments from:
 
 ```sh
 gdal-config --cflags
@@ -327,7 +337,7 @@ Python GDAL bindings are not used by the active Make targets.
 
 ## Natural Earth input and network access
 
-The Earth, water, and Bathymetry Roulette targets require Natural Earth
+The Earth, water, Bathymetry Roulette, and Anthropocene targets require Natural Earth
 5.1.1's complete 1:10m physical-vector bundle. The repository does not
 require a manual download:
 
@@ -403,31 +413,123 @@ replacing the old set. See the
 [Orbital Technosphere implementation notes](orbital-technosphere-implementation-notes.md)
 for source roles, SGP4 boundaries, and refresh procedure.
 
-## Network input preparation
+## Anthropocene input preparation
 
-Network generation and its tests run offline from the checked-in
-`assets.static/network/` archive and profile. Preparation requires `unzip`,
+Anthropocene generation and `make check` run offline from the checked
+`assets.static/anthropocene/` profile, normalized H3 GeoJSON, and checksum.
+Ordinary builds need no raw NOAA, EPA, CWFIS, or FIRMS files. A deliberate
+refresh uses Bash, `curl`, `tar`, `gzip`, `unzip`, `rg`, `find`, GNU `date`,
+`sha256sum`, GDAL/OGR, H3, and substantial temporary disk space:
+
+```sh
+make fetch-anthropocene-data
+make prepare-anthropocene-data
+```
+
+The fetcher stages mutable annual sources under ignored `.raw/YEAR/`, validates
+containers, records raw digests, and discovers the newest year-specific Storm
+Events files. It fetches every available CWFIS reporting day through the
+profile snapshot boundary and tolerates only HTTP 404 for an absent day. Set a
+free `FIRMS_MAP_KEY` to request five-day global NASA FIRMS chunks, including
+northern Russia; without it, CWFIS remains the public default fire source.
+
+The preparer verifies the raw checksum manifest, expands files in a temporary
+directory, compiles station records, fills smoke polygons, joins event
+locations, excludes dates at or beyond the profile snapshot boundary,
+aggregates unique H3 cell-days, and writes an ignored candidate under
+`.prepared/`. It never overwrites the checked snapshot. Review and promote a
+refresh together with its profile coverage dates, SHA-256, tests,
+documentation, and all six output families. See the
+[Anthropocene implementation notes](anthropocene-implementation-notes.md) for
+the exact source and metric contracts.
+
+## Network-swarm input preparation
+
+Network-swarm generation and its tests run offline from the checked-in
+`assets.static/network-swarm/` archive and profile. Preparation requires `unzip`,
 `sha256sum`, `install`, `mktemp`, `wc`, and `cmp`:
 
 ```sh
-make prepare-network-data
-make generate-network
+make prepare-network-swarm-data
+make generate-network-swarm
 ```
 
 The safe staging script accepts a local `.zip`, `.geojson`, or `.json` through
-`NETWORK_SOURCE`. A ZIP must pass its CRC check, contain exactly one flat JSON
-member, and expand to no more than 64 MiB. The prepared file is reproducible,
+`NETWORK_SWARM_SOURCE`. A ZIP must pass its CRC check, contain exactly one
+flat JSON member, and expand to no more than 64 MiB. The prepared file is reproducible,
 ignored, and retained across normal builds under
-`assets.static/network/.prepared/`. `make check` validates the committed
+`assets.static/network-swarm/.prepared/`. `make check` validates the committed
 archive SHA-256 and the prepared member SHA-256 before exercising dataset,
 H3, clustering, and six-projection layout assertions.
 
-Network rendering also needs H3, GDAL/GEOS, Natural Earth, Alpha60, and Izzi.
-No outbound access is used or required. Override `NETWORK_SOURCE` or
-`NETWORK_PROFILE` only with a deliberately reviewed, schema-compatible input;
-`NETWORK_GEOJSON` controls the staging destination. See the
-[network implementation notes](network-implementation-notes.md) for source
+Network-swarm rendering also needs H3, GDAL/GEOS, Natural Earth, Alpha60, and Izzi.
+No outbound access is used or required. Override `NETWORK_SWARM_SOURCE` or
+`NETWORK_SWARM_PROFILE` only with a deliberately reviewed,
+schema-compatible input;
+`NETWORK_SWARM_GEOJSON` controls the staging destination. See the
+[network-swarm implementation notes](network-swarm-implementation-notes.md) for source
 semantics, profile fields, and interpretation limits.
+
+## Network-infrastructure external sources and topology opt-in
+
+Network-infrastructure generation is offline but intentionally reads pinned
+external Git checkouts instead of vendoring their datasets. The normal site
+atlas needs only the cloud/CDN checkout. With the default sibling layout:
+
+```sh
+git clone https://github.com/bdekoz/cloud_cdn_cache.git ../cloud_cdn_cache
+git -C ../cloud_cdn_cache checkout 7af9b774d191c3c22137682ec697856ef85016a0
+make check-network-infrastructure-sources
+make generate-network-infrastructure
+```
+
+The checker verifies the commit, the 2026-08-04 manifest digest, and clean
+consumed data/schema paths. The manifest is internally consistent at 19
+canonical layers, 15,113 records, and 1,003 located records. A newer checkout
+can legitimately contain more records, but it must not replace this pin until
+its manifest and referenced payload agree and the profile, tests,
+documentation, and artifacts are updated together.
+
+Override a non-sibling checkout without editing the profile:
+
+```sh
+make NETWORK_INFRASTRUCTURE_CLOUD_SOURCE=/data/cloud_cdn_cache \
+  generate-network-infrastructure-artifacts
+```
+
+The topology product adds data from the TeleGeography repositories, which
+state CC BY-NC-SA 3.0 Unported. Clone and pin both sources, then use the
+dedicated opt-in rule:
+
+```sh
+git clone https://github.com/telegeography/www.submarinecablemap.com.git \
+  ../www.submarinecablemap.com
+git -C ../www.submarinecablemap.com checkout \
+  0d684b2aedeae0f7473280270f3f71fa0983f0b3
+git clone https://github.com/telegeography/www.internetexchangemap.com.git \
+  ../www.internetexchangemap.com
+git -C ../www.internetexchangemap.com checkout \
+  2b9c36ad7fad083c0b4db998c4dedadc1ba89027
+make check-network-infrastructure-topology-sources
+make generate-network-infrastructure-topology
+make generate-network-infrastructure-topology-artifacts
+```
+
+Use `SUBMARINE_CABLE_SOURCE` and `INTERNET_EXCHANGE_SOURCE` for other roots.
+The topology checker validates all three commits, primary digests, and clean
+consumed data paths. The topology profile also requires the literal
+`tele_geography_opt_in: true`; ordinary generation, `make all`, and
+generation-profile `"all"` never select it. Generated topology images carry
+visible TeleGeography attribution and the
+[CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/)
+notice. Review those terms before distributing a generated topology artifact.
+
+Both products also require RapidJSON, GDAL/GEOS, Natural Earth, Alpha60, Izzi,
+and Atkinson Hyperlegible. `make check` uses synthetic infrastructure fixtures
+and checked profiles, so the three external checkouts are not required for the
+offline unit suite. See the
+[network-infrastructure implementation notes](network-infrastructure-implementation-notes.md)
+for the precise source contract and claim boundary.
 
 ## Inkscape and visual review
 
@@ -444,9 +546,9 @@ inkscape assets.generated/svg/earth-ck-44-22.svg
 ```
 
 Use Inkscape's Layers and Objects panel to inspect group IDs and toggle dense
-layers. Earth, water, and Bathymetry Roulette files can be large, so opening
-and switching layers may require substantially more memory than viewing
-geometry or graticules.
+layers. Earth, water, Bathymetry Roulette, and Anthropocene files can be
+large, so opening and switching layers may require substantially more memory
+than viewing geometry or graticules.
 Saving from Inkscape can rewrite SVG formatting and metadata; avoid saving
 during a read-only visual review if a serialization diff is not intended.
 
@@ -508,7 +610,8 @@ inkscape --version
 Successful generation places six geometry maps, six graticule maps, six
 Earth maps, eleven water maps (six production plus five exploratory
 Myriahedral perspectives), 12 astronomy maps, 12 Orbital Technosphere maps,
-six network maps, six Bathymetry Roulette maps, four quadrant slices, eight
+six Anthropocene maps, six network-swarm maps, six Bathymetry Roulette maps,
+six network-infrastructure site maps, four quadrant slices, eight
 octant slices, and two Myriahedral face-group
 slices in each of `assets.generated/svg/`,
 `assets.generated/pdf/`, and `assets.generated/png/`. Every PNG preserves its
@@ -528,8 +631,12 @@ opaque white.
 | Missing `ne_10m_*.shp` | Run `make fetch-natural-earth-10m` or set `NATURAL_EARTH_DIR` |
 | `sha256sum: command not found` | Install GNU coreutils and ensure its binaries are on `PATH` |
 | Natural Earth checksum mismatch | Remove only the corrupt downloaded archive, then rerun the fetch target; do not bypass verification |
-| Network archive/member checksum mismatch | Restore the checked-in network archive or deliberately update the archive, profile provenance, hashes, tests, documentation, and all six products together |
-| Inkscape is slow on an Earth, water, Bathymetry Roulette, orbital, or network SVG | Close other large documents and inspect one layer family at a time |
+| Anthropocene normalized checksum or audit mismatch | Restore the checked profile/GeoJSON pair or deliberately promote a reviewed candidate with its checksum, coverage dates, tests, documentation, and all six products |
+| `FIRMS_MAP_KEY` is unset | The checked/default CWFIS fire layer still works; obtain a free NASA FIRMS map key only when deliberately refreshing global and Russian coverage |
+| Network-swarm archive/member checksum mismatch | Restore the checked-in network-swarm archive or deliberately update the archive, profile provenance, hashes, tests, documentation, and all six products together |
+| Network-infrastructure checkout, commit, or digest mismatch | Point the Make variables at the profile-pinned external checkouts, restore the consumed tracked paths, or deliberately update the profile, tests, documentation, and artifacts together |
+| Network-infrastructure topology opt-in rejected | Use the checked topology profile with `tele_geography_opt_in: true` and invoke `generate-network-infrastructure-topology`; normal generation intentionally cannot enable TeleGeography layers |
+| Inkscape is slow on an Earth, water, Bathymetry Roulette, orbital, Anthropocene, network-swarm, or network-infrastructure SVG | Close other large documents and inspect one layer family at a time |
 | `em++: command not found` | Install and activate emsdk, then source its environment script in the current shell |
 
 ## Not required by current native targets

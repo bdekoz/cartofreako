@@ -32,10 +32,12 @@ decision after the fact.
 | 4.1 | `generate-astro` / space and astronomy | **Implemented** | Visualization-grade feasibility, source roles, profile authority, calculation methods, products, and limits are summarized below and detailed in the [astronomy implementation notes](astro-implementation-notes.md) |
 | 4.1a | `generate-cloud-atmosphere` | **Requested; not evaluated to a repository decision** | The raw request identifies timestamped cloud/atmosphere conditions and JAXA Earth data, but no confirmed source contract, profile, product split, or implementation is preserved |
 | 4.2 | `generate-orbiting` / Orbital Technosphere | **Implemented** | Naming, NASA/CelesTrak feasibility, OMM/SGP4, profile authority, products, and limits are summarized below and detailed in the [Orbital Technosphere implementation notes](orbital-technosphere-implementation-notes.md) |
-| 4.4 | `generate-network` | **Implemented** | Confirmed variable-input contract, fixed cumulative snapshot, H3/Izzi clustering, projection-safe components, independent downloader layers, products, and limits are detailed in the [network implementation notes](network-implementation-notes.md) |
+| 4.4 | `generate-network-swarm` | **Implemented** | Confirmed variable-input contract, fixed cumulative snapshot, H3/Izzi clustering, projection-safe components, independent downloader layers, products, and limits are detailed in the [network-swarm implementation notes](network-swarm-implementation-notes.md) |
 | 4.5 | `generate-bathymetry-roulette` | **Implemented** | Confirmed depth-to-curve catalogue, monochrome page-space patterns, Natural Earth clipping, accepted moiré, products, and limits are detailed in the [Bathymetry Roulette implementation notes](bathymetry-roulette-implementation-notes.md) |
 | 6 | `generate-world-game` | **Requested; not evaluated to a repository decision** | The raw request identifies World Game and Fuller archival collections; no confirmed digitization, licensing, normalized dataset, layer model, or implementation is preserved |
 | 7 | Configurable `generate-*` selection | **Implemented infrastructure** | JSON profile, validation, safe target expansion, default Make behavior, alternatives, and scope boundaries are recorded in this document |
+| 8 | `generate-anthropocene` | **Implemented** | Confirmed source-separated indicator atlas, literal 2026 duration, H3 cell-days, EPA PM2.5/smoke separation, Canada/Russia fire-source roles, partial-coverage semantics, deferred coral phase, products, and limits are detailed in the [Anthropocene implementation notes](anthropocene-implementation-notes.md) |
+| 9 | `generate-network-infrastructure` | **Implemented** | Confirmed external-source contract, normal cloud/CDN site atlas, explicit CC BY-NC-SA 3.0 topology opt-in, physical/logical relation boundary, projection-safe paths, Izzi detiling, products, and limits are detailed in the [network-infrastructure implementation notes](network-infrastructure-implementation-notes.md) |
 
 The unnumbered `solar/high-energy`, `atmosphere/cloud`, and
 `small-body/mission` lines in the raw ledger are taxonomy notes, not separate
@@ -101,7 +103,7 @@ The naming alternatives, source matrix, OMM/SGP4 conversions, coordinate
 pipeline, detiling layers, tests, and accuracy boundary are recorded in
 [`orbital-technosphere-implementation-notes.md`](orbital-technosphere-implementation-notes.md).
 
-### Stage 4.4: cumulative network swarm
+### Stage 4.4: cumulative network-swarm
 
 The evaluation concluded that the corrected cumulative aggregate is feasible
 as a density atlas, but not as a graph because its Point features contain no
@@ -117,15 +119,15 @@ edge or route semantics. The confirmed and implemented choices were:
   representing them as traffic links;
 - treat the overlapping specialized counts as independent semantic layers,
   with fixed log/p99 scales and raw values preserved in the SVG;
-- generate one layered network map on each production projection and export
-  all six SVG/PDF/PNG products; and
+- generate one layered network-swarm map on each production projection and
+  export all six SVG/PDF/PNG products; and
 - bound interpretation to cumulative, source-defined aggregate observations,
   not simultaneity, rates, bandwidth, endpoints, causality, or peer flows.
 
 The input audit, visual-reference conclusions, profile, clustering formulas,
 Izzi lattice safeguard, layer grammar, verification, previews, and deferred
 edge-data work are recorded in
-[`network-implementation-notes.md`](network-implementation-notes.md).
+[`network-swarm-implementation-notes.md`](network-swarm-implementation-notes.md).
 
 ### Stage 4.5: Bathymetry Roulette
 
@@ -154,6 +156,70 @@ patterns. The confirmed and implemented choices were:
 The exact twelve-row catalogue, SVG layer contract, products, verification,
 and interpretation boundary are recorded in
 [`bathymetry-roulette-implementation-notes.md`](bathymetry-roulette-implementation-notes.md).
+
+### Stage 8: Anthropocene observation atlas
+
+The evaluation concluded that a multi-source climate-impact observation atlas
+is feasible, but a generic point count cannot attribute each mapped event to
+human-caused climate change. The confirmed and implemented choices were:
+
+- fix the default duration to literal calendar year 2026 in JSON, retain a
+  source-specific partial-snapshot date, and never infer either from the host
+  clock;
+- aggregate positive unique source-reporting days into resolution-4 H3 cells,
+  preserve raw counts and source roles, and define absence as unobserved or
+  unavailable rather than zero;
+- keep temperature highs, temperature lows, precipitation records, heavy
+  precipitation, active fire, observed smoke, flood/heavy-rain reports,
+  severe-weather reports, and PM2.5 exposure as independent semantic layers;
+- use EPA AirData for the enabled-by-default
+  `air-quality-exposure:pm25-exceedance-days` layer and keep it categorically
+  and visually distinct from NOAA HMS observed smoke;
+- use public CWFIS daily hotspots as the default Canada/North America fire
+  feed, support credentialed NASA FIRMS as the global/Russian point source,
+  and retain Copernicus Sentinel-3 and Rosleskhoz as validation sources rather
+  than pretending CAL FIRE supplies northern coverage;
+- keep normal generation offline from a checksum-pinned normalized snapshot,
+  with explicit raw fetch and candidate-preparation targets that cannot
+  overwrite checked data; and
+- classify `ocean-heat:coral-bleaching-stress-days` as scientifically valuable
+  but require a separate reef-mask/raster phase, with Stage 8 verification
+  rejecting an accidental coral metric group.
+
+The source matrix, exact station-record and precipitation formulas, snapshot
+audit, additional resource classifications, fire-source research, SVG layer
+grammar, refresh procedure, products, and interpretation limits are recorded
+in [`anthropocene-implementation-notes.md`](anthropocene-implementation-notes.md).
+
+### Stage 9: network infrastructure
+
+The evaluation concluded that a network-infrastructure atlas is feasible when
+cloud/CDN sites, physical submarine routes, and logical exchange membership
+remain distinct evidence classes. The confirmed and implemented choices were:
+
+- rename the cumulative H3 pass to `network-swarm`, reserving
+  `network-infrastructure` for infrastructure records and topology;
+- read variable external Git checkouts through commit-, path-, digest-, and
+  count-pinned profiles rather than copying upstream data into this repository;
+- make the cloud/CDN site atlas a normal six-projection pass and keep all null
+  geometries in provenance without inventing coordinates;
+- put TeleGeography cable and exchange layers behind the explicit
+  `generate-network-infrastructure-topology` rule, outside `make all` and
+  generation-profile `"all"`, with visible CC BY-NC-SA 3.0 attribution;
+- render submarine paths as source-backed physical routes and exchange spokes
+  as source-backed logical membership, never inferred fiber, peering, traffic,
+  or cross-source connectivity;
+- split and densify routes before shared projection seam processing, while all
+  point families share a deterministic Izzi radial-hexagon collision layout;
+  and
+- reject source drift, malformed geometries, duplicate identifiers, profile
+  count mismatches, topology without the license opt-in, and invalid SVG/XML
+  metadata.
+
+The audited counts, source discrepancy decision, license boundary, spherical
+hub formula, clustering behavior, layer contract, previews, and verification
+are recorded in
+[`network-infrastructure-implementation-notes.md`](network-infrastructure-implementation-notes.md).
 
 ## Unresolved generation-pass proposals
 
@@ -203,7 +269,7 @@ and generator API rather than a build-orchestration preference.
 | Parse JSON with `jq` | Concise query expressions | Adds a tool that is not otherwise a required build dependency; shell quoting and target validation still need code | Rejected |
 | Parse JSON with Python | Good validation libraries and diagnostics | Adds a runtime language to the native C++/Make generation path | Rejected |
 | Generate and include a `.mk` file from JSON | Makes the selected targets visible during Make's parse phase | Requires include-file remakes and Make restarts; stale generated fragments and bootstrap ordering complicate a small feature | Rejected |
-| Filter layers inside every generator | Could eventually control individual SVG layers | Starts expensive generators before work can be excluded; layer vocabulary differs among terrestrial, astronomy, orbital, and network products; duplicates Make's role | Rejected for Stage 7 |
+| Filter layers inside every generator | Could eventually control individual SVG layers | Starts expensive generators before work can be excluded; layer vocabulary differs among terrestrial, astronomy, orbital, and network-swarm products; duplicates Make's role | Rejected for Stage 7 |
 | Validated C++ resolver followed by recursive Make | Durable JSON, strict diagnostics, reuse of the existing C++20/RapidJSON stack, safe fixed targets, normal Make dependencies and parallelism | Builds one small resolver and starts one recursive Make | Selected |
 
 The selected approach has one deliberate limitation: configured generation
@@ -270,7 +336,8 @@ Normalization is limited and deterministic:
 - `graticule` becomes `graticules`;
 - `astro` becomes `astronomy`;
 - `orbiting` becomes `orbital-technosphere`;
-- `swarm` becomes `network`;
+- the former `network` name and short `swarm` name become `network-swarm`;
+- `infrastructure` becomes `network-infrastructure`;
 - `bathymetry-rolette` and `art-agua-roulette` become
   `bathymetry-roulette`; and
 - `ocean` becomes `water`, the current name of the complementary Natural
@@ -282,14 +349,14 @@ twice.
 
 The supported cross-product is:
 
-| Projection selector | Geometry | Graticules | Earth | Water | Astronomy | Orbital Technosphere | Network | Bathymetry Roulette |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `cahill-keyes` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG |
-| `authagraph` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG |
-| `dymaxion` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG |
-| `myriahedral` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG |
-| `star-x` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG |
-| `voronoi` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG |
+| Projection selector | Geometry | Graticules | Earth | Water | Astronomy | Orbital Technosphere | Network-swarm | Bathymetry Roulette | Anthropocene | Network infrastructure |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `cahill-keyes` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
+| `authagraph` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
+| `dymaxion` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
+| `myriahedral` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
+| `star-x` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
+| `voronoi` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
 
 Astronomy resolves to `generate-astro-PROJECTION`, which intentionally makes
 both all-sky and observer products. Orbital Technosphere resolves to
@@ -297,9 +364,13 @@ both all-sky and observer products. Orbital Technosphere resolves to
 products. The four terrestrial passes resolve to uniform
 `generate-PASS-PROJECTION` targets.
 
-Network resolves to `generate-network-PROJECTION` and makes the one cumulative
-swarm product. Bathymetry Roulette similarly resolves to
+Network-swarm resolves to `generate-network-swarm-PROJECTION` and makes the
+one cumulative swarm product. Bathymetry Roulette similarly resolves to
 `generate-bathymetry-roulette-PROJECTION` and makes one monochrome depth map.
+Anthropocene resolves to `generate-anthropocene-PROJECTION` and makes one
+source-separated observation atlas. Network infrastructure resolves to
+`generate-network-infrastructure-PROJECTION` and makes only the cloud/CDN site
+atlas; licensed topology is intentionally not a profile-selectable product.
 
 Stage 7 adds uniform Cahill-Keyes aliases for the terrestrial rule. In
 particular,
@@ -335,8 +406,8 @@ make GENERATION_PROFILE=generation-profile.local.json
 make all
 ```
 
-This remains the release/review build. It creates all 79 layered SVGs and
-exports all 79 PDFs and 79 opaque PNGs, including slice and perspective
+This remains the release/review build. It creates all 91 layered SVGs and
+exports all 91 PDFs and 91 opaque PNGs, including slice and perspective
 families that are outside the configurable matrix. The aliases
 `generate-projections`, `generated-projections`, and `make-generated` retain
 the same full-suite behavior.
@@ -351,7 +422,9 @@ make generate-star-x
 make generate-earth-projections
 make generate-astro-observer
 make generate-orbiting-global
-make generate-network
+make generate-anthropocene
+make generate-network-swarm
+make generate-network-infrastructure
 make generate-bathymetry-roulette
 make generate-water-myriahedral-perspectives
 make generate-ck-slices
@@ -360,7 +433,15 @@ make generate-ck-slices
 Projection family targets generate SVGs unless their documented target says
 `artifacts`. `generate-orbiting-artifacts`, for example, adds PDF and PNG
 exports for that product family.
-`generate-network-artifacts` does the same for all six network products.
+`generate-network-swarm-artifacts` does the same for all six network-swarm
+products.
+`generate-network-infrastructure-artifacts` does the same for the six
+cloud/CDN site products. The separate
+`generate-network-infrastructure-topology` and
+`generate-network-infrastructure-topology-artifacts` targets are explicit
+CC BY-NC-SA 3.0 opt-ins and never dependencies of the normal family.
+`generate-anthropocene-artifacts` does the same for all six Anthropocene
+products.
 `generate-bathymetry-roulette-artifacts` does the same for all six roulette
 bathymetry products.
 
@@ -389,7 +470,11 @@ Acquisition remains explicit because it changes reproducibility inputs:
 make fetch-natural-earth-10m
 make fetch-astro-data
 make fetch-orbiting-data
-make prepare-network-data
+make fetch-anthropocene-data
+make prepare-anthropocene-data
+make prepare-network-swarm-data
+make check-network-infrastructure-sources
+make check-network-infrastructure-topology-sources
 ```
 
 `make check` compiles and runs the native algorithm/API suite, including
@@ -398,9 +483,10 @@ own structural validation whenever their generation target executes.
 
 ## Scope boundaries and future extensions
 
-The generation profile does not override astronomical, orbital, or network
-calculation properties. The astronomy, Orbital Technosphere, and network
-profiles remain the sole authorities for their source state, calculation or
+The generation profile does not override astronomical, orbital,
+Anthropocene, network-swarm, or network-infrastructure calculation
+properties. Their pass-specific
+profiles remain the sole authorities for source state, calculation or
 clustering choices, and display budgets. Stage 7 only decides which Make
 branches to enter.
 
@@ -411,6 +497,7 @@ The following remain explicit rather than configurable in schema version 1:
 - one Orbital Technosphere product instead of both;
 - Cahill-Keyes four- and eight-slice generation;
 - Myriahedral perspective and face-group slice generation; and
+- the CC BY-NC-SA 3.0 network-infrastructure topology product; and
 - semantic layer enable/disable switches inside a generator.
 
 If repeated workflows justify schema version 2, formats and product variants

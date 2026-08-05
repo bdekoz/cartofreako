@@ -1,8 +1,8 @@
 // H3 parent clustering and projection-safe Izzi honeycomb placement.
 // -*- mode: C++ -*-
 
-#ifndef CART0FREAK0_NETWORK_CLUSTERING_H
-#define CART0FREAK0_NETWORK_CLUSTERING_H 1
+#ifndef CART0FREAK0_NETWORK_SWARM_CLUSTERING_H
+#define CART0FREAK0_NETWORK_SWARM_CLUSTERING_H 1
 
 #include <algorithm>
 #include <cmath>
@@ -17,10 +17,10 @@
 
 #include <a60-svg.h>
 
-#include "network-data.h"
+#include "network-swarm-data.h"
 #include "projection-generation-common.h"
 
-namespace cart0freak0::network_generation {
+namespace cart0freak0::network_swarm_generation {
 
 namespace generation = cart0freak0::generation;
 
@@ -52,9 +52,9 @@ struct projected_layout
 inline std::vector<svg::point_2t>
 honeycomb_offsets(const double radius, const std::size_t count)
 {
-  network_require(count > 0
+  network_swarm_require(count > 0
                     && count <= std::numeric_limits<svg::uint>::max(),
-                  "network cluster has an invalid size");
+                  "network-swarm cluster has an invalid size");
   // Izzi intentionally works in floating-point Cartesian coordinates. Its
   // current hash and epsilon equality policies can admit numerically
   // equivalent centers through different BFS paths, so canonicalize the
@@ -74,7 +74,7 @@ honeycomb_offsets(const double radius, const std::size_t count)
       result.clear();
       for (const auto& [x, y] : candidates)
         {
-          network_require(std::isfinite(x) && std::isfinite(y),
+          network_swarm_require(std::isfinite(x) && std::isfinite(y),
                           "Izzi honeycomb returned a non-finite position");
           const long long column = std::llround(x / radius);
           const long long row = std::llround(
@@ -84,7 +84,7 @@ honeycomb_offsets(const double radius, const std::size_t count)
                                 row * std::sqrt(3.0) * radius);
         }
     }
-  network_require(result.size() >= count,
+  network_swarm_require(result.size() >= count,
                   "Izzi honeycomb could not provide enough unique positions");
   std::sort(result.begin(), result.end(), [](const auto left,
                                              const auto right) {
@@ -99,11 +99,11 @@ honeycomb_offsets(const double radius, const std::size_t count)
   std::set<std::pair<long long, long long>> unique;
   for (const auto& [x, y] : result)
     {
-      network_require(std::isfinite(x) && std::isfinite(y),
+      network_swarm_require(std::isfinite(x) && std::isfinite(y),
                       "Izzi honeycomb returned a non-finite position");
       unique.emplace(std::llround(x * 1e9), std::llround(y * 1e9));
     }
-  network_require(unique.size() == result.size(),
+  network_swarm_require(unique.size() == result.size(),
                   "Izzi honeycomb returned duplicate positions");
   return result;
 }
@@ -111,7 +111,7 @@ honeycomb_offsets(const double radius, const std::size_t count)
 inline projected_layout
 make_projected_layout(const generation::projection_context& context,
                       const swarm_dataset& dataset,
-                      const network_profile& config)
+                      const network_swarm_profile& config)
 {
   projected_layout result;
   result.features.reserve(dataset.features.size());
@@ -175,8 +175,9 @@ make_projected_layout(const generation::projection_context& context,
         = config.marker_radius - std::get<1>(*minimum_y);
       const double upper_y = context.map_frame.height() - config.marker_radius
         - std::get<1>(*maximum_y);
-      network_require(lower_x <= upper_x && lower_y <= upper_y,
-                      "network honeycomb cluster does not fit the projection frame");
+      network_swarm_require(lower_x <= upper_x && lower_y <= upper_y,
+                      "network-swarm honeycomb cluster does not fit the "
+                      "projection frame");
       anchor_x = std::clamp(anchor_x, lower_x, upper_x);
       anchor_y = std::clamp(anchor_y, lower_y, upper_y);
       for (std::size_t offset_index = 0; offset_index < indices.size();
@@ -193,6 +194,6 @@ make_projected_layout(const generation::projection_context& context,
   return result;
 }
 
-} // namespace cart0freak0::network_generation
+} // namespace cart0freak0::network_swarm_generation
 
 #endif
