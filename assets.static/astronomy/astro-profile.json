@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "name": "San Francisco multi-band sky",
+  "timestamp": "2026-08-05T01:59:44Z",
+  "products": ["all-sky", "observer"],
+  "reference_point": {
+    "name": "San Francisco, California, USA",
+    "latitude_deg": 37.7749,
+    "longitude_deg_east": -122.4194,
+    "elevation_m": 16.0
+  },
+  "orientation": {
+    "handedness": "celestial",
+    "central_right_ascension_hours": 12.0
+  },
+  "instrumentation": {
+    "mode": "multi-band",
+    "bands": [
+      "radio",
+      "microwave",
+      "infrared",
+      "optical",
+      "ultraviolet",
+      "x-ray",
+      "gamma-ray",
+      "neutrino",
+      "gravitational-wave"
+    ],
+    "night_required_bands": ["infrared", "optical", "ultraviolet"],
+    "optical_limiting_magnitude": 5.5,
+    "minimum_altitude_deg": 0.0,
+    "astronomical_twilight_sun_altitude_deg": -18.0
+  },
+  "dynamic_events": {
+    "lookback_days": 7.0
+  },
+  "display": {
+    "maximum_stars": 500,
+    "maximum_exoplanet_hosts": 250,
+    "maximum_labels": 40,
+    "show_reference_lines": true,
+    "show_below_horizon_reference": true
+  },
+  "catalogs": {
+    "gaia_dr3": "gaia-dr3-bright.csv",
+    "nasa_exoplanets": "nasa-exoplanet-nearby.csv",
+    "curated_sky": "curated-sky.json",
+    "small_bodies": [
+      "sbdb-ceres.json",
+      "sbdb-vesta.json",
+      "sbdb-eros.json",
+      "sbdb-apophis.json",
+      "sbdb-halley.json",
+      "sbdb-encke.json",
+      "sbdb-67p.json"
+    ]
+  }
+}

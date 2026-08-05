@@ -2,17 +2,18 @@
 
 [Documentation index](../index.md) ·
 [Prerequisites](prerequisites.md) ·
-[Cahill-Keyes context](cahill-keyes-context.md)
+[Cahill-Keyes context](cahill-keyes-context.md) ·
+[Astronomy notes](astro-implementation-notes.md)
 
 ## Purpose
 
-The repository contains seven C++20 generation programs under `src.generate/`.
-Four exercise all six production projections through the real Alpha60 and
+The repository contains eight C++20 generation programs under `src.generate/`.
+Five exercise all six production projections through the real Alpha60 and
 Izzi APIs. Three derive Cahill-Keyes or Myriahedral slices from an already
-projected whole-earth SVG. They write layered SVGs under `assets.generated/svg/`, then
-reopen those files and verify dimensions, layer structure, path counts, and
-numeric sanity. Inkscape subsequently exports each validated SVG as PDF and
-as a 3840-pixel-long-side PNG.
+projected whole-earth SVG. They write layered SVGs under
+`assets.generated/svg/`, then reopen those files and verify dimensions, layer
+structure, path counts, and numeric sanity. Inkscape subsequently exports each
+validated SVG as PDF and as a 3840-pixel-long-side PNG.
 
 | Artifact | Generator | Principal input |
 | --- | --- | --- |
@@ -20,13 +21,15 @@ as a 3840-pixel-long-side PNG.
 | Graticules | [`src.generate/generate-graticules.cc`](../src.generate/generate-graticules.cc) | Sampled latitude and longitude lines |
 | Earth | [`src.generate/generate-earth.cc`](../src.generate/generate-earth.cc) | Natural Earth 1:10m ocean and land |
 | Water | [`src.generate/generate-water.cc`](../src.generate/generate-water.cc) | Every other Natural Earth 1:10m physical layer |
+| Astronomy | [`src.generate/generate-astro.cc`](../src.generate/generate-astro.cc) | Profile timestamp and observer, bounded Gaia/exoplanet/SBDB snapshots, curated multi-band sources and events |
 | Four slices | [`src.generate/generate-4-slice.cc`](../src.generate/generate-4-slice.cc) | Four full-height, quarter-width quadrant-pair enlargements from the Cahill-Keyes Earth SVG |
 | Eight slices | [`src.generate/generate-8-slice.cc`](../src.generate/generate-8-slice.cc) | Eight exact-octant enlargements from the Cahill-Keyes Earth SVG |
 | Myriahedral groups | [`src.generate/generate-myriahedral-slices.cc`](../src.generate/generate-myriahedral-slices.cc) | Two complementary exact-terminal-face masks from the Myriahedral water SVG |
 
-The aggregate target generates all four artifact families for all six
-production projections, five exploratory Myriahedral water perspectives, all
-12 Cahill-Keyes slices, and two Myriahedral face-group slices:
+The aggregate target generates all four terrestrial artifact families and two
+astronomy products for all six production projections, five exploratory
+Myriahedral water perspectives, all 12 Cahill-Keyes slices, and two
+Myriahedral face-group slices:
 
 ```sh
 make all
@@ -75,6 +78,8 @@ The default locations can be overridden:
 | `IZZI_SRC` | `../izzi/src` | Izzi SVG headers |
 | `GDAL_CONFIG` | `gdal-config` | GDAL compiler and linker flags |
 | `NATURAL_EARTH_DIR` | `assets.static/natural-earth/10m-physical-vectors` | Extracted shapefiles |
+| `ASTRO_DATA_DIR` | `assets.static/astronomy` | Astronomy profile and bounded catalog snapshots |
+| `ASTRO_PROFILE` | `$(ASTRO_DATA_DIR)/astro-profile.json` | Authoritative timestamp, point of reference, orientation, instrumentation, event window, and catalog paths |
 | `INKSCAPE` | `inkscape` | Command-line PDF and PNG exporter |
 | `PNG_LONG_SIDE` | `3840` | Pixel count assigned to each PNG's longest side |
 
@@ -99,6 +104,7 @@ make generate-water-myriahedral-perspectives
 make generate-myriahedral-slices
 make generate-star-x
 make generate-voronoi
+make generate-astro
 make all
 ```
 
@@ -112,7 +118,7 @@ The generators are not part of `make check`; invoking a `generate-*`
 target both writes its artifact and runs that generator's embedded structural
 checks.
 
-The 43 artifacts in each of `assets.generated/svg/`, `assets.generated/pdf/`,
+The 55 artifacts in each of `assets.generated/svg/`, `assets.generated/pdf/`,
 and `assets.generated/png/` are checked in. This makes visual and XML diffs
 reviewable, but it also means that regenerating with a different GDAL, GEOS,
 or Inkscape version can produce ordering, coordinate, or rendering differences
@@ -154,6 +160,43 @@ assets.generated/
 └── png/
 ```
 
+## Astronomy generation
+
+The astronomy pass maps declination to geographic latitude and right
+ascension to a configurable synthetic longitude before using the same six
+projection implementations as the terrestrial generators. Its checked-in
+profile contains both the calculation timestamp and the reference point; no
+host clock or location is inferred. The default is a pinned San Francisco
+multi-band profile with celestial handedness, RA 12h at the map center, and a
+seven-day transient lookback.
+
+Generate both all-sky and observer-filtered products for all projections with:
+
+```sh
+make generate-astro
+```
+
+The product-family targets are `generate-astro-all-sky` and
+`generate-astro-observer`. Per-projection targets follow the
+`generate-astro-PROJECTION` form. Supply another profile with
+`ASTRO_PROFILE=/absolute/path/profile.json`.
+
+Catalog acquisition is deliberately separate from rendering. The repository
+contains bounded snapshots for reproducible offline generation; refresh Gaia
+DR3, the NASA Exoplanet Archive, and named JPL Small-Body Database records
+with:
+
+```sh
+make fetch-astro-data
+```
+
+That target changes calculation inputs and should be followed by review and
+full artifact regeneration. It does not replace the authoritative profile or
+the curated transient snapshot. The
+[astronomy implementation notes](astro-implementation-notes.md) document the
+profile schema, source evaluation, orbital and observer formulas,
+instrument-band behavior, SVG layers, current limitations, and every output.
+
 ## Natural Earth acquisition
 
 [`scripts/fetch-natural-earth-10m.sh`](../scripts/fetch-natural-earth-10m.sh)
@@ -173,7 +216,7 @@ are recorded in the
 
 ## Shared coordinate pipeline
 
-The four whole-map generators use
+The five whole-map generators use
 [`projection-generation-common.h`](../src.generate/projection-generation-common.h)
 to select a production projection, construct its exact frame, and call the
 shared public API in `(latitude, longitude)` order. Projected coordinates use
@@ -188,7 +231,7 @@ construction, and verification rules.
 
 ```mermaid
 flowchart LR
-  SOURCE["Geographic construction<br/>or WGS84 vector data"]
+  SOURCE["Geographic construction,<br/>celestial catalog, or WGS84 data"]
   CUT["Clip at geographic<br/>registration seams"]
   DENSE["Sample or densify<br/>in geographic space"]
   PROJECT["Selected production<br/>forward projection"]

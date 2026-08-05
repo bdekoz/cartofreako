@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "nasa-planetary-data",
+      "url": "https://planetary.data.nasa.gov/find-data",
+      "role": "Planetary repository discovery and provenance"
+    },
+    {
+      "id": "jaxa-earth-api",
+      "url": "https://data.earth.jaxa.jp/en/",
+      "role": "Optional Earth atmosphere and observer-condition context"
+    },
+    {
+      "id": "nssdc",
+      "url": "https://www.nssdc.ac.cn/nssdc_en/html/index.html",
+      "role": "SVOM, Einstein Probe, ASO-S, and GECAM mission context"
+    },
+    {
+      "id": "nasa-heasarc",
+      "url": "https://heasarc.gsfc.nasa.gov/",
+      "role": "Persistent multi-wavelength source context"
+    },
+    {
+      "id": "nasa-gcn",
+      "url": "https://gcn.nasa.gov/circulars/",
+      "role": "Timestamped transient positions and uncertainty"
+    }
+  ],
+  "objects": [
+    {
+      "id": "m31",
+      "name": "Andromeda Galaxy",
+      "kind": "galaxy",
+      "ra_deg": 10.6847083,
+      "dec_deg": 41.26875,
+      "magnitude": 3.44,
+      "bands": ["radio", "infrared", "optical", "ultraviolet", "x-ray"],
+      "source_url": "https://heasarc.gsfc.nasa.gov/"
+    },
+    {
+      "id": "m42",
+      "name": "Orion Nebula",
+      "kind": "nebula",
+      "ra_deg": 83.8220833,
+      "dec_deg": -5.3911111,
+      "magnitude": 4.0,
+      "bands": ["radio", "infrared", "optical", "ultraviolet", "x-ray"],
+      "source_url": "https://heasarc.gsfc.nasa.gov/"
+    },
+    {
+      "id": "m1",
+      "name": "Crab Nebula",
+      "kind": "supernova-remnant",
+      "ra_deg": 83.6330833,
+      "dec_deg": 22.0145,
+      "magnitude": 8.4,
+      "bands": ["radio", "infrared", "optical", "ultraviolet", "x-ray", "gamma-ray"],
+      "source_url": "https://heasarc.gsfc.nasa.gov/"
+    },
+    {
+      "id": "cas-a",
+      "name": "Cassiopeia A",
+      "kind": "supernova-remnant",
+      "ra_deg": 350.85,
+      "dec_deg": 58.815,
+      "bands": ["radio", "infrared", "optical", "x-ray", "gamma-ray"],
+      "source_url": "https://heasarc.gsfc.nasa.gov/"
+    },
+    {
+      "id": "sgr-a-star",
+      "name": "Sagittarius A*",
+      "kind": "black-hole",
+      "ra_deg": 266.4168371,
+      "dec_deg": -29.0078106,
+      "bands": ["radio", "infrared", "x-ray", "gamma-ray"],
+      "source_url": "https://heasarc.gsfc.nasa.gov/"
+    },
+    {
+      "id": "m87-star",
+      "name": "M87*",
+      "kind": "black-hole",
+      "ra_deg": 187.7059308,
+      "dec_deg": 12.3911231,
+      "bands": ["radio", "infrared", "optical", "ultraviolet", "x-ray", "gamma-ray"],
+      "source_url": "https://heasarc.gsfc.nasa.gov/"
+    },
+    {
+      "id": "cygnus-x-1",
+      "name": "Cygnus X-1",
+      "kind": "x-ray-binary",
+      "ra_deg": 299.590315,
+      "dec_deg": 35.201606,
+      "bands": ["radio", "infrared", "optical", "ultraviolet", "x-ray", "gamma-ray"],
+      "source_url": "https://heasarc.gsfc.nasa.gov/"
+    },
+    {
+      "id": "centaurus-a",
+      "name": "Centaurus A",
+      "kind": "active-galaxy",
+      "ra_deg": 201.365063,
+      "dec_deg": -43.019113,
+      "magnitude": 6.84,
+      "bands": ["radio", "infrared", "optical", "ultraviolet", "x-ray", "gamma-ray"],
+      "source_url": "https://heasarc.gsfc.nasa.gov/"
+    },
+    {
+      "id": "3c-273",
+      "name": "3C 273",
+      "kind": "quasar",
+      "ra_deg": 187.277915,
+      "dec_deg": 2.052388,
+      "magnitude": 12.85,
+      "bands": ["radio", "infrared", "optical", "ultraviolet", "x-ray", "gamma-ray"],
+      "source_url": "https://heasarc.gsfc.nasa.gov/"
+    },
+    {
+      "id": "lmc",
+      "name": "Large Magellanic Cloud",
+      "kind": "galaxy",
+      "ra_deg": 80.89375,
+      "dec_deg": -69.756111,
+      "magnitude": 0.9,
+      "bands": ["radio", "infrared", "optical", "ultraviolet", "x-ray", "gamma-ray"],
+      "source_url": "https://heasarc.gsfc.nasa.gov/"
+    },
+    {
+      "id": "smc",
+      "name": "Small Magellanic Cloud",
+      "kind": "galaxy",
+      "ra_deg": 13.186667,
+      "dec_deg": -72.828611,
+      "magnitude": 2.7,
+      "bands": ["radio", "infrared", "optical", "ultraviolet", "x-ray"],
+      "source_url": "https://heasarc.gsfc.nasa.gov/"
+    }
+  ],
+  "events": [
+    {
+      "id": "grb-260804a",
+      "name": "GRB 260804A",
+      "kind": "gamma-ray-burst",
+      "observed_at": "2026-08-04T03:07:09Z",
+      "ra_deg": 93.8,
+      "dec_deg": 18.0,
+      "uncertainty_deg": 3.6,
+      "bands": ["gamma-ray"],
+      "source_url": "https://gcn.nasa.gov/circulars/45281"
+    },
+    {
+      "id": "grb-260803a",
+      "name": "GRB 260803A",
+      "kind": "gamma-ray-burst",
+      "observed_at": "2026-08-03T17:28:46Z",
+      "ra_deg": 22.1,
+      "dec_deg": 68.7,
+      "uncertainty_deg": 6.7,
+      "bands": ["gamma-ray"],
+      "source_url": "https://gcn.nasa.gov/circulars/45279"
+    },
+    {
+      "id": "grb-260802b",
+      "name": "GRB 260802B",
+      "kind": "gamma-ray-burst",
+      "observed_at": "2026-08-02T08:59:48Z",
+      "ra_deg": 313.4,
+      "dec_deg": -18.52,
+      "uncertainty_deg": 29.68,
+      "bands": ["gamma-ray"],
+      "source_url": "https://gcn.nasa.gov/circulars/45273"
+    },
+    {
+      "id": "grb-260802a",
+      "name": "GRB 260802A / EP J223759.5+531421",
+      "kind": "magnetar-burst-candidate",
+      "observed_at": "2026-08-02T09:23:10Z",
+      "ra_deg": 339.4431,
+      "dec_deg": 53.2195,
+      "uncertainty_deg": 0.162,
+      "bands": ["optical", "x-ray", "gamma-ray"],
+      "source_url": "https://gcn.nasa.gov/circulars/45270"
+    },
+    {
+      "id": "ep-260731a",
+      "name": "EP260731a",
+      "kind": "x-ray-transient",
+      "observed_at": "2026-07-31T00:54:24Z",
+      "ra_deg": 344.4279,
+      "dec_deg": -11.7623,
+      "uncertainty_deg": 0.005556,
+      "bands": ["x-ray"],
+      "source_url": "https://gcn.nasa.gov/circulars/45261"
+    },
+    {
+      "id": "ep-260729a",
+      "name": "EP260729a",
+      "kind": "x-ray-transient",
+      "observed_at": "2026-07-29T17:04:47Z",
+      "ra_deg": 357.5308,
+      "dec_deg": 26.9981,
+      "uncertainty_deg": 0.005556,
+      "bands": ["optical", "x-ray"],
+      "source_url": "https://gcn.nasa.gov/circulars/45253"
+    }
+  ]
+}

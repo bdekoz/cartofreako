@@ -23,6 +23,9 @@ WEB_BROWSER ?=
 EM_CACHE ?= /tmp/cartofreako-emscripten-cache
 NATURAL_EARTH_DIR ?= $(STATIC_ASSET_DIR)/natural-earth/10m-physical-vectors
 NATURAL_EARTH_FETCHER := scripts/fetch-natural-earth-10m.sh
+ASTRO_DATA_DIR ?= $(STATIC_ASSET_DIR)/astronomy
+ASTRO_PROFILE ?= $(ASTRO_DATA_DIR)/astro-profile.json
+ASTRO_FETCHER := scripts/fetch-astro-data.sh
 PREREQUISITE_CHECKER := scripts/check-prerequisites.sh
 NATURAL_EARTH_STAMP := \
 	$(NATURAL_EARTH_DIR)/.natural-earth-10m-physical-5.1.1
@@ -53,6 +56,11 @@ FOUR_SLICE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-4-slice
 EIGHT_SLICE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-8-slice
 MYRIAHEDRAL_SLICE_GENERATOR := \
 	$(GENERATOR_SRC_DIR)/generate-myriahedral-slices
+ASTRO_GENERATOR := $(GENERATOR_SRC_DIR)/generate-astro
+
+ASTRO_PROFILE_DIR := $(dir $(ASTRO_PROFILE))
+ASTRO_CATALOGS := $(filter-out $(ASTRO_PROFILE),\
+	$(wildcard $(ASTRO_PROFILE_DIR)*.csv $(ASTRO_PROFILE_DIR)*.json))
 
 CK_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-ck-44-22.svg
 CK_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-ck-44-22.svg
@@ -108,6 +116,22 @@ VORONOI_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-voronoi-44-22.916667.sv
 VORONOI_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-voronoi-44-22.916667.svg
 VORONOI_WATER_SVG := $(GENERATED_SVG_DIR)/water-voronoi-44-22.916667.svg
 
+ASTRO_ALL_SKY_SVGS := \
+	$(GENERATED_SVG_DIR)/astro-all-sky-ck-44-22.svg \
+	$(GENERATED_SVG_DIR)/astro-all-sky-authagraph-44-19.052559.svg \
+	$(GENERATED_SVG_DIR)/astro-all-sky-dymaxion-44-20.78461.svg \
+	$(GENERATED_SVG_DIR)/astro-all-sky-myriahedral-44-24.75.svg \
+	$(GENERATED_SVG_DIR)/astro-all-sky-star-x-34-44.svg \
+	$(GENERATED_SVG_DIR)/astro-all-sky-voronoi-44-22.916667.svg
+ASTRO_OBSERVER_SVGS := \
+	$(GENERATED_SVG_DIR)/astro-observer-ck-44-22.svg \
+	$(GENERATED_SVG_DIR)/astro-observer-authagraph-44-19.052559.svg \
+	$(GENERATED_SVG_DIR)/astro-observer-dymaxion-44-20.78461.svg \
+	$(GENERATED_SVG_DIR)/astro-observer-myriahedral-44-24.75.svg \
+	$(GENERATED_SVG_DIR)/astro-observer-star-x-34-44.svg \
+	$(GENERATED_SVG_DIR)/astro-observer-voronoi-44-22.916667.svg
+ASTRO_SVGS := $(ASTRO_ALL_SKY_SVGS) $(ASTRO_OBSERVER_SVGS)
+
 REQUESTED_GEOMETRY_SVGS := \
 	$(AUTHAGRAPH_GEOMETRY_SVG) \
 	$(DYMAXION_GEOMETRY_SVG) \
@@ -141,7 +165,8 @@ GENERATED_SVGS := \
 	$(CK_GEOMETRY_SVG) $(CK_GRATICULE_SVG) \
 	$(CK_EARTH_SVG) $(CK_WATER_SVG) $(CK_SLICE_SVGS) \
 	$(REQUESTED_PROJECTION_SVGS) \
-	$(MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS) $(MYRIAHEDRAL_SLICE_SVGS)
+	$(MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS) $(MYRIAHEDRAL_SLICE_SVGS) \
+	$(ASTRO_SVGS)
 GENERATED_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PDF_DIR)/%.pdf,$(GENERATED_SVGS))
 GENERATED_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
@@ -152,15 +177,21 @@ STAR_X_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PNG_DIR)/%.png,$(STAR_X_SVGS))
 CK_SLICE_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PNG_DIR)/%.png,$(CK_SLICE_SVGS))
+ASTRO_STAR_X_SVGS := \
+	$(GENERATED_SVG_DIR)/astro-all-sky-star-x-34-44.svg \
+	$(GENERATED_SVG_DIR)/astro-observer-star-x-34-44.svg
+ASTRO_STAR_X_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PNG_DIR)/%.png,$(ASTRO_STAR_X_SVGS))
 MYRIAHEDRAL_PORTRAIT_SLICE_PNG := \
 	$(GENERATED_PNG_DIR)/water-myriahedral-adhoc-slice-1.png
-PORTRAIT_PNGS := $(STAR_X_PNGS) $(CK_SLICE_PNGS) \
+PORTRAIT_PNGS := $(STAR_X_PNGS) $(ASTRO_STAR_X_PNGS) $(CK_SLICE_PNGS) \
 	$(MYRIAHEDRAL_PORTRAIT_SLICE_PNG)
 LANDSCAPE_PNGS := $(filter-out $(PORTRAIT_PNGS),$(GENERATED_PNGS))
 GENERATED_ARTIFACTS := $(GENERATED_SVGS) $(GENERATED_PDFS) \
 	$(GENERATED_PNGS)
 
 GENERATOR_BINARIES := \
+	$(ASTRO_GENERATOR) \
 	$(EIGHT_SLICE_GENERATOR) \
 	$(EARTH_GENERATOR) \
 	$(FOUR_SLICE_GENERATOR) \
@@ -169,6 +200,7 @@ GENERATOR_BINARIES := \
 	$(MYRIAHEDRAL_SLICE_GENERATOR) \
 	$(WATER_GENERATOR)
 TEST_BINARIES := \
+	$(TEST_DIR)/test-astro-generation \
 	$(TEST_DIR)/test-cahill-keyes-projection \
 	$(TEST_DIR)/test-cahill-keyes-projection-api \
 	$(TEST_DIR)/test-cahill-keyes-path-functions \
@@ -198,11 +230,15 @@ GENERATOR_HEADERS := \
 AREA_GENERATOR_HEADER := $(GENERATOR_SRC_DIR)/projection-area-generation.h
 NATURAL_EARTH_GENERATOR_HEADER := \
 	$(GENERATOR_SRC_DIR)/natural-earth-generation.h
+ASTRO_GENERATOR_HEADERS := \
+	$(GENERATOR_SRC_DIR)/astro-data.h \
+	$(GENERATOR_SRC_DIR)/astro-generation.h \
+	$(GENERATOR_HEADERS)
 
 .DELETE_ON_ERROR:
 
 PUBLIC_TARGETS := all check check-prerequisite clean doxygen list-targets \
-	fetch-natural-earth-10m make-generated \
+	fetch-natural-earth-10m fetch-astro-data make-generated \
 	wasm-cahill-keyes check-wasm-cahill-keyes \
 	wasm-cahill-myriahedral check-wasm-cahill-myriahedral \
 	generate-geometry generate-graticules-ck generate-earth-ck \
@@ -210,6 +246,11 @@ PUBLIC_TARGETS := all check check-prerequisite clean doxygen list-targets \
 	generate-ck-slices generate-projections generated-projections \
 	generate-geometry-projections generate-graticules-projections \
 	generate-earth-projections generate-water-projections \
+	generate-astro generate-astro-projections generate-astro-all-sky \
+	generate-astro-observer generate-astro-cahill-keyes \
+	generate-astro-authagraph generate-astro-dymaxion \
+	generate-astro-myriahedral generate-astro-star-x \
+	generate-astro-voronoi \
 	generate-water-myriahedral-perspectives generate-myriahedral-slices \
 	generate-authagraph generate-dymaxion generate-myriahedral generate-star-x \
 	generate-voronoi generate-voroni \
@@ -239,6 +280,10 @@ check-prerequisite: $(PREREQUISITE_CHECKER)
 		"$(PREREQUISITE_CHECKER)"
 
 check:
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
+		$(TEST_DIR)/test-astro-generation.cc \
+		-o $(TEST_DIR)/test-astro-generation
+	$(TEST_DIR)/test-astro-generation
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-cahill-keyes-projection.cc \
 		-o $(TEST_DIR)/test-cahill-keyes-projection
@@ -382,6 +427,14 @@ $(MYRIAHEDRAL_SLICE_GENERATOR): \
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$< -o $@
 
+$(ASTRO_GENERATOR): $(GENERATOR_SRC_DIR)/generate-astro.cc \
+		$(ASTRO_GENERATOR_HEADERS)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$< -o $@
+
+fetch-astro-data: $(ASTRO_FETCHER)
+	$(ASTRO_FETCHER) "$(ASTRO_DATA_DIR)"
+
 fetch-natural-earth-10m: $(NATURAL_EARTH_STAMP)
 
 $(NATURAL_EARTH_STAMP): $(NATURAL_EARTH_FETCHER)
@@ -491,6 +544,44 @@ $(eval $(call PROJECTION_RULES,star-x,\
 $(eval $(call PROJECTION_RULES,voronoi,\
 	$(VORONOI_GEOMETRY_SVG),$(VORONOI_GRATICULE_SVG),\
 	$(VORONOI_EARTH_SVG),$(VORONOI_WATER_SVG)))
+
+# $(1): command-line projection name; $(2)-$(3): astronomy products.
+define ASTRO_PROJECTION_RULES
+generate-astro-$(1): $(2) $(3)
+$(2): $(ASTRO_GENERATOR) $(ASTRO_PROFILE) $(ASTRO_CATALOGS) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
+		"$(abspath $(ASTRO_GENERATOR))" $(1) all-sky \
+		"$(abspath $(ASTRO_PROFILE))"
+
+$(3): $(ASTRO_GENERATOR) $(ASTRO_PROFILE) $(ASTRO_CATALOGS) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
+		"$(abspath $(ASTRO_GENERATOR))" $(1) observer \
+		"$(abspath $(ASTRO_PROFILE))"
+endef
+
+$(eval $(call ASTRO_PROJECTION_RULES,cahill-keyes,\
+	$(GENERATED_SVG_DIR)/astro-all-sky-ck-44-22.svg,\
+	$(GENERATED_SVG_DIR)/astro-observer-ck-44-22.svg))
+$(eval $(call ASTRO_PROJECTION_RULES,authagraph,\
+	$(GENERATED_SVG_DIR)/astro-all-sky-authagraph-44-19.052559.svg,\
+	$(GENERATED_SVG_DIR)/astro-observer-authagraph-44-19.052559.svg))
+$(eval $(call ASTRO_PROJECTION_RULES,dymaxion,\
+	$(GENERATED_SVG_DIR)/astro-all-sky-dymaxion-44-20.78461.svg,\
+	$(GENERATED_SVG_DIR)/astro-observer-dymaxion-44-20.78461.svg))
+$(eval $(call ASTRO_PROJECTION_RULES,myriahedral,\
+	$(GENERATED_SVG_DIR)/astro-all-sky-myriahedral-44-24.75.svg,\
+	$(GENERATED_SVG_DIR)/astro-observer-myriahedral-44-24.75.svg))
+$(eval $(call ASTRO_PROJECTION_RULES,star-x,\
+	$(GENERATED_SVG_DIR)/astro-all-sky-star-x-34-44.svg,\
+	$(GENERATED_SVG_DIR)/astro-observer-star-x-34-44.svg))
+$(eval $(call ASTRO_PROJECTION_RULES,voronoi,\
+	$(GENERATED_SVG_DIR)/astro-all-sky-voronoi-44-22.916667.svg,\
+	$(GENERATED_SVG_DIR)/astro-observer-voronoi-44-22.916667.svg))
+
+generate-astro-all-sky: $(ASTRO_ALL_SKY_SVGS)
+generate-astro-observer: $(ASTRO_OBSERVER_SVGS)
+generate-astro: $(ASTRO_SVGS)
+generate-astro-projections: $(ASTRO_SVGS)
 
 generate-water-myriahedral: generate-water-myriahedral-perspectives \
 	generate-myriahedral-slices

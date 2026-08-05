@@ -25,8 +25,8 @@ and artifacts:
 
 Install the components listed in
 [`docs/prerequisites.md`](docs/prerequisites.md) before building the complete
-SVG, PDF, and PNG suite. The self-contained `make check` target needs only GNU
-Make and a C++20 compiler.
+SVG, PDF, and PNG suite. The offline `make check` target needs GNU Make, a
+C++20 compiler, RapidJSON headers, and the checked-in astronomy snapshots.
 
 List every supported top-level Make target with:
 
@@ -54,9 +54,9 @@ make check-wasm-cahill-myriahedral
 See the [`src.wasm` README](src.wasm/README.md) for their JavaScript APIs,
 layer contracts, and build requirements.
 
-Generate 24 production whole-earth maps, five exploratory Myriahedral ocean
-perspectives, 12 Cahill-Keyes enlargement slices, and two Myriahedral
-face-group slices as layered SVG, PDF, and opaque-white,
+Generate 24 production whole-earth maps, 12 timestamped astronomy maps, five
+exploratory Myriahedral ocean perspectives, 12 Cahill-Keyes enlargement
+slices, and two Myriahedral face-group slices as layered SVG, PDF, and opaque-white,
 3840-pixel-long-side PNG artifacts with:
 
 ```sh
@@ -65,3 +65,18 @@ make all
 
 Outputs are organized under `assets.generated/svg/`, `assets.generated/pdf/`, and
 `assets.generated/png/`.
+
+Astronomy generation is offline by default and uses a checked-in JSON profile
+as the authority for both the calculation timestamp and point of reference.
+Generate both all-sky and observer-filtered maps, or deliberately refresh the
+bounded external snapshots, with:
+
+```sh
+make generate-astro
+make fetch-astro-data
+```
+
+See the
+[`astronomy implementation notes`](docs/astro-implementation-notes.md) for the
+San Francisco profile, data sources, formulas, instrumentation model, and
+outputs.
