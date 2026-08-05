@@ -23,7 +23,7 @@ src.generate/generate-orbiting.cc
 
 Suggest some more names for "orbiting" that capture the essential nature of this workflow
 
-Assume timestamp of generative process for calculation of any astronomical property, and location of make invocation. Save inputs to a JSON profile, same as previous work for atro.
+Assume timestamp of generative process for calculation of any astronomical property, and location of make invocation. Save inputs to a JSON profile, same as previous work for astro.
 
 Use NASA data sources
 https://planetary.data.nasa.gov/find-data
@@ -118,7 +118,8 @@ small-body/mission
 
 Stage 6 development:
 
-Evaluate feasibility and propose a plan for a new generate pass for "world-game" detailing  all of Buckminister Fuller's World Game resources:
+Evaluate feasibility and propose a plan for a new generate pass for "resources" detailing  all of "Buckminister Fuller's World Game" resources  located in
+src.generate/generate-resources.cc
 
 from
 Inventory of World Resources, Human Trends, and Needs
@@ -136,5 +137,59 @@ University of California resources:
 https://oac.cdlib.org/findaid/ark:/13030/tf109n9832/
 
 Research, evaulate, and suggest plan before continuing.
+
+Examine adding select resource types not covered in the orignal world game design, like world fisheries and agriculture:
+https://www.fao.org/publications/fao-flagship-publications/the-state-of-world-fisheries-and-aquaculture/en
+
+And or installed solar capacity, etc.
+
 Then detail plan and way for confirmation before implementing.
 After confirmation, assume authorized and proceed and finish work without prompting.
+
+
+---
+
+Stage 7 development:
+
+Evaluate feasibility and propose a plan for a new generate pass for "anthropocene" detailing human-originating climate change impact areas located in
+src.generate/generate-anthropocene.cc
+
+
+Have a configurable JSON file with any static generation data or options, for this one of the options is duration, and set the default to the current calendar year (aka 2026). 
+
+Areas to consider:
+- count of new temperature high records by geojson point locations
+- count of new temperature low records by geojson point locations
+- count of days of active fire map by geojson point locations
+- count of days of active smoke map by geojson point locations
+- count of days of flood or above average rainfall by geojson point locations
+- count of days of "extreme weather events" by geojson point locations
+
+Data Sources:
+- for smoke, consider the purple air monitoring website
+  https://map.purpleair.com/air-quality-standards-us-epa-aqi?opt=%2F1%2Flp%2Fa10%2Fp604800%2FcC0#1/25/-30
+- for fire, consider websites like CalFire's website
+  https://www.fire.ca.gov/incidents
+  
+
+Research, evaulate, and suggest plan before continuing.
+
+Examine adding select resource types not covered in the original specification, suggest classification. 
+
+Then detail plan and way for confirmation before implementing.
+After confirmation, assume authorized and proceed and finish work without prompting.
+
+---
+
+Stage 7 development:
+
+Evaluate methods for user-configurable generation layers selection.
+
+Perhaps store preferences in a .json file for: what projection (or all), what generate passes (or all)
+
+Then make only makes what is configured, so development could be speeded up by only specifying "cahill_keyes" and "earth, ocean"
+
+update documention in docs/generation.md
+
+capture generation methods and summarize implementation choices discussed in chat in docs/generation-methods.md
+

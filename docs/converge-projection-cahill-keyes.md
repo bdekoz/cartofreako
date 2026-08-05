@@ -143,3 +143,7 @@ izzi/src.js/izzi-map-leaflet-geojson-v7.4.js
 
 Any rewrites to the javascript should go in a new file:
 izzi/src.js/izzi-map-leaflet-geojson-v7.5.js
+
+Stage 14
+
+Given the errors found with the cahill-keyes projection in the various generate passes and testing, is it worth noting these in the docs/cahill-keyes-implementation-notes.md and or re-evaluating the numerical techniques used in the forward projection? Don't assume prior implementations are fully correct
