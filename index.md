@@ -39,11 +39,12 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | SVG/PDF/PNG generation, Natural Earth, folding, slicing, and review | [Generation guide](docs/generation.md) |
 | Generate-pass evaluation record plus configured, full-suite, family, and exact workflows | [Generate-pass methods and decision record](docs/generation-methods.md) |
 | Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/astro-implementation-notes.md) |
+| Process-start solar illumination and source-timed JAXA physical atmosphere generation | [Cloud-atmosphere implementation notes](docs/cloud-atmosphere-implementation-notes.md) |
 | Human-made Earth-orbit population and observer generation | [Orbital Technosphere implementation notes](docs/orbital-technosphere-implementation-notes.md) |
 | Source-separated climate, weather, fire, smoke, and air-quality atlas | [Anthropocene implementation notes](docs/anthropocene-implementation-notes.md) |
 | Cumulative H3 network-swarm generation | [Network-swarm generation implementation notes](docs/network-swarm-implementation-notes.md) |
 | Cloud/CDN site atlas and opt-in cable/exchange topology | [Network-infrastructure implementation notes](docs/network-infrastructure-implementation-notes.md) |
-| Monochrome roulette-patterned bathymetry generation | [Bathymetry Roulette implementation notes](docs/bathymetry-roulette-implementation-notes.md) |
+| Monochrome, explicitly varied roulette-line-field bathymetry generation | [Bathymetry Roulette implementation notes](docs/bathymetry-roulette-implementation-notes.md) |
 | Natural Earth acquisition, digest, and license | [Natural Earth data note](docs/natural-earth-10m-physical-vectors.md) |
 | Production Cahill-Keyes and Myriahedral browser renderers | [WebAssembly renderer README](src.wasm/README.md) |
 | Illustrative raster-backed Myriahedral overlay | [WebAssembly workflow](docs/web-workflow.md) and [complete example](docs/web-example.md) |
@@ -109,6 +110,11 @@ video. Transparent SVG page regions are flattened against an opaque white
 background. The targets `make generated-projections`, `make
 generate-projections`, and `make make-generated` are equivalent aliases.
 
+The credentialed, source-timed Cloud-atmosphere family is deliberately not
+part of `make all`. After a P-Tree/JAXA refresh and local H3 preparation,
+generate it with `make generate-cloud-atmosphere` or export all three formats
+with `make generate-cloud-atmosphere-artifacts`.
+
 Every print frame preserves the projection's required ratio and has a largest
 dimension of exactly 44 inches:
 
@@ -129,14 +135,15 @@ pixels to the longest side.
 Artifact-family targets are also available as
 `generate-geometry-projections`, `generate-graticules-projections`,
 `generate-earth-projections`, `generate-water-projections`,
-`generate-astro-projections`, `generate-orbiting-projections`,
+`generate-astro-projections`, `generate-cloud-atmosphere-projections`,
+`generate-orbiting-projections`,
 `generate-anthropocene-projections`,
 `generate-network-swarm-projections`,
 `generate-network-infrastructure-projections`, and
 `generate-bathymetry-roulette-projections`. Each generic
 family target includes Cahill-Keyes plus AuthaGraph, Dymaxion, Myriahedral,
-Star-X, and Voronoi. The ten whole-map generators accept a projection name on their
-command line. Every generator reopens its SVG to validate the view box,
+Star-X, and Voronoi. The eleven whole-map generators accept a projection name
+on their command line. Every generator reopens its SVG to validate the view box,
 required layers, path structure, and finite numeric output.
 
 ### Generated artifact previews
@@ -218,7 +225,9 @@ BY-NC-SA 3.0 opt-in and is not part of `make all`:
 
 The Bathymetry Roulette pass uses one pale ground and one dark ink, mapping
 successively deeper Natural Earth thresholds to more variable and complex
-Izzi epitrochoids and hypotrochoids:
+Izzi epitrochoid and hypotrochoid families. Twelve staggered, overlapping
+variations per depth form explicit line fields instead of a repeated-symbol
+grid:
 
 | Projection | Bathymetry Roulette |
 | --- | --- |
@@ -237,6 +246,10 @@ authoritative reference for individual `generate-*` targets and the
 ocean/land versus physical-feature layer partition. The
 [astronomy notes](docs/astro-implementation-notes.md) cover the profile,
 source evaluation, calculations, instrument filter, and accuracy boundary.
+The [Cloud-atmosphere notes](docs/cloud-atmosphere-implementation-notes.md)
+record the astro/atmosphere boundary, P-Tree regional/daytime cloud decision,
+JAXA source timing, raster-to-H3 preparation, QA and missing-data rules,
+terms, products, and verification.
 The [Orbital Technosphere notes](docs/orbital-technosphere-implementation-notes.md)
 record its naming decision, NASA/CelesTrak feasibility evaluation, OMM and
 SGP4 pipeline, semantic detiling, and non-operational accuracy boundary.
@@ -252,8 +265,8 @@ record the audited external pins, normal site atlas, CC BY-NC-SA 3.0 topology
 opt-in, physical-versus-logical edge boundary, seam handling, Izzi collision
 layout, products, and verification.
 The [Bathymetry Roulette notes](docs/bathymetry-roulette-implementation-notes.md)
-record the confirmed curve catalogue, monochrome pattern and clipping model,
-visible key, accepted moiré, products, and verification.
+record the confirmed curve catalogue, explicit varied-line-field and clipping
+model, visible key, accepted moiré, products, and verification.
 
 ## AuthaGraph
 
@@ -387,6 +400,7 @@ the `voronoi_source` preset are in the
 | [`docs/generation-methods.md`](docs/generation-methods.md) | Central `generate-*` evaluation ledger, implemented conclusions, unresolved proposals, configured workflows, JSON schema, and Stage 7 decisions |
 | [`docs/prerequisites.md`](docs/prerequisites.md) | Native build, data acquisition, Inkscape review, and optional WebAssembly prerequisites |
 | [`docs/astro-implementation-notes.md`](docs/astro-implementation-notes.md) | Astronomy profile schema, source evaluation, astrometric formulas, instrumentation filter, output contract, verification, and accuracy boundary |
+| [`docs/cloud-atmosphere-implementation-notes.md`](docs/cloud-atmosphere-implementation-notes.md) | Stage 4.1a feasibility, astronomy boundary, JAXA sources, process time, P-Tree QA, H3 preparation, products, terms, verification, and limits |
 | [`docs/orbital-technosphere-implementation-notes.md`](docs/orbital-technosphere-implementation-notes.md) | Stage 4.2 feasibility, naming, NASA/CelesTrak source roles, OMM/SGP4 formulas, products, verification, and accuracy boundary |
 | [`src.projections/cart0freak0-star-x.h`](src.projections/cart0freak0-star-x.h) | Star-X group assembly, configurable centered scale, polar-composition geometry, frame validation, public API, and factory |
 | [`tests/test-star-x-projection-api.cc`](tests/test-star-x-projection-api.cc) | Star-X anchors, assembly and scale, global domain, polar helpers, variable-frame, validation, and API tests |
@@ -394,6 +408,8 @@ the `voronoi_source` preset are in the
 | [`docs/star-x-implementation-notes.md`](docs/star-x-implementation-notes.md) | Star-X gap, scale, and polar formulas, API, safeguards, verification, and provenance |
 | [`docs/star-x-bibliography.md`](docs/star-x-bibliography.md) | Star-X arrangement, Cahill-Keyes geometry, historical, asset, and test sources |
 | [`src.generate/projection-generation-common.h`](src.generate/projection-generation-common.h) | Exact 44-unit frame configurations, projection dispatch, native-cell lookup, cut bisection, and shared seam-safe path projection |
+| [`src.generate/generation-instant.h`](src.generate/generation-instant.h) | Shared strict UTC parsing, Julian dates, process-start sampling, `SOURCE_DATE_EPOCH`, and source-age calculation |
+| [`src.generate/solar-geometry.h`](src.generate/solar-geometry.h) | Shared astronomy/atmosphere Sun ephemeris, sidereal time, subsolar point, solar altitude, and twilight zones |
 | [`generation-profile.json`](generation-profile.json) | Checked-in projection and generation-pass preference used by a bare `make` |
 | [`src.generate/generation-profile.h`](src.generate/generation-profile.h) | Strict generation-profile schema, aliases, canonical projection/pass matrix, and safe Make target expansion |
 | [`src.generate/resolve-generation-profile.cc`](src.generate/resolve-generation-profile.cc) | Machine-readable target resolver and human-readable `generation-plan` entry point |
@@ -408,8 +424,8 @@ the `voronoi_source` preset are in the
 | [`assets.generated/png/earth-ck-44-22.png`](assets.generated/png/earth-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes ocean-and-land base |
 | [`src.generate/generate-water.cc`](src.generate/generate-water.cc) | Thin generator entry point for every Natural Earth physical layer except `ocean` and `land` |
 | [`assets.generated/png/water-ck-44-22.png`](assets.generated/png/water-ck-44-22.png) | PNG preview of the complementary 44×22 Cahill-Keyes physical-feature overlay |
-| [`src.generate/bathymetry-roulette-style.h`](src.generate/bathymetry-roulette-style.h) | Validated twelve-depth epitrochoid/hypotrochoid catalogue, curve construction, palette, and pattern constants |
-| [`src.generate/generate-bathymetry-roulette.cc`](src.generate/generate-bathymetry-roulette.cc) | Six-projection Natural Earth clip and monochrome page-space roulette-pattern generator with key and embedded SVG checks |
+| [`src.generate/bathymetry-roulette-style.h`](src.generate/bathymetry-roulette-style.h) | Validated twelve-depth epitrochoid/hypotrochoid catalogue, twelve field variations, curve construction, palette, and mosaic constants |
+| [`src.generate/generate-bathymetry-roulette.cc`](src.generate/generate-bathymetry-roulette.cc) | Six-projection Natural Earth clip and explicit monochrome page-space roulette-line-field generator with key and embedded SVG checks |
 | [`tests/test-bathymetry-roulette-style.cc`](tests/test-bathymetry-roulette-style.cc) | Depth ordering, variation, closure period, curve uniqueness, paint transition, and identifier tests |
 | [`assets.generated/png/bathymetry-roulette-ck-44-22.png`](assets.generated/png/bathymetry-roulette-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes roulette bathymetry |
 | [`docs/bathymetry-roulette-implementation-notes.md`](docs/bathymetry-roulette-implementation-notes.md) | Stage 4.5 feasibility, confirmed catalogue, clipping and layering model, products, verification, accepted moiré, and limits |
@@ -420,6 +436,17 @@ the `voronoi_source` preset are in the
 | [`assets.static/astronomy/astro-profile.json`](assets.static/astronomy/astro-profile.json) | Reproducible timestamp, San Francisco reference point, celestial orientation, multi-band instrumentation, event interval, display budgets, and catalog paths |
 | [`assets.static/astronomy/curated-sky.json`](assets.static/astronomy/curated-sky.json) | Provenanced persistent multi-band objects and timestamped GCN/NSSDC transient snapshot |
 | [`scripts/fetch-astro-data.sh`](scripts/fetch-astro-data.sh) | Bounded Gaia DR3, NASA Exoplanet Archive, and JPL SBDB snapshot refresh |
+| [`src.generate/cloud-atmosphere-data.h`](src.generate/cloud-atmosphere-data.h) | Strict source profile and prepared H3 observation loading, QA policy, source timing, and missing-data validation |
+| [`src.generate/cloud-atmosphere-generation.h`](src.generate/cloud-atmosphere-generation.h) | Projection-aware solar/twilight and physical-atmosphere layers, provenance, visible coverage limits, and embedded checks |
+| [`src.generate/generate-cloud-atmosphere.cc`](src.generate/generate-cloud-atmosphere.cc) | Thin six-projection Cloud-atmosphere generator entry point |
+| [`src.generate/prepare-cloud-atmosphere.cc`](src.generate/prepare-cloud-atmosphere.cc) | GDAL NetCDF/COG sampling, scale/QA handling, H3 aggregation, and prepared GeoJSON writer |
+| [`tests/test-cloud-atmosphere-generation.cc`](tests/test-cloud-atmosphere-generation.cc) | Profile, fixture, time, shared-Sun, semantics, H3, and six-projection geometry tests |
+| [`tests/test-resolve-jaxa-stac.py`](tests/test-resolve-jaxa-stac.py) | Offline latest-not-after and nonoverlapping JAXA COG tile-level selection test |
+| [`assets.static/cloud-atmosphere/`](assets.static/cloud-atmosphere/) | Authoritative source/QA profile, terms and workflow note, and visibly synthetic test fixture |
+| [`scripts/fetch-cloud-atmosphere-data.sh`](scripts/fetch-cloud-atmosphere-data.sh) | Credential-safe P-Tree and public JAXA Earth latest-not-after refresh |
+| [`scripts/resolve-jaxa-stac.py`](scripts/resolve-jaxa-stac.py) | Static-STAC traversal, COG-level selection, download, and source manifest helper |
+| [`scripts/prepare-cloud-atmosphere-data.sh`](scripts/prepare-cloud-atmosphere-data.sh) | Atomic raw-to-prepared H3 snapshot workflow |
+| [`scripts/verify-cloud-atmosphere-data.sh`](scripts/verify-cloud-atmosphere-data.sh) | Prepared snapshot checksum and production-schema gate |
 | [`src.generate/orbiting-data.h`](src.generate/orbiting-data.h) | Orbital Technosphere profile and OMM validation, category membership, SGP4 adapter, frame transforms, illumination, and visibility state |
 | [`src.generate/orbiting-generation.h`](src.generate/orbiting-generation.h) | Global and observer semantic SVG layers, subdued Natural Earth base, representative tracks, markers, metadata, and embedded checks |
 | [`src.generate/generate-orbiting.cc`](src.generate/generate-orbiting.cc) | Thin Orbital Technosphere generator entry point |

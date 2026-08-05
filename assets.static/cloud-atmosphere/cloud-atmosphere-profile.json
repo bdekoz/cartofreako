@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "name": "JAXA solar, cloud, and atmosphere snapshot",
+  "description": "A source-timed physical snapshot. Solar geometry is calculated at process start; observed layers are selected latest-not-after that instant.",
+  "time": {
+    "calculation": "process-start",
+    "source_selection": "latest-not-after",
+    "source_date_epoch_override": true
+  },
+  "aggregation": {
+    "spatial_index": "H3",
+    "h3_resolution": 3,
+    "minimum_valid_fraction": 0.2,
+    "maximum_samples_per_axis": 720
+  },
+  "display": {
+    "solar_contour_step_degrees": 1.0,
+    "show_legend": true,
+    "show_cloud_type": true
+  },
+  "data": {
+    "prepared_snapshot": ".prepared/cloud-atmosphere-latest.geojson"
+  },
+  "layers": [
+    {
+      "id": "surface-shortwave-radiation",
+      "property": "shortwave_radiation_w_m2",
+      "title": "Surface shortwave radiation",
+      "unit": "W m-2",
+      "source": "jaxa-jasmes-swr",
+      "enabled": true,
+      "aggregation": "mean",
+      "variable_candidates": ["swr", "SWR", "Band1"],
+      "scale_min": 0.0,
+      "scale_max": 400.0,
+      "maximum_age_hours": 336.0,
+      "opacity": 0.24,
+      "color": "#f0bd45"
+    },
+    {
+      "id": "aerosol-optical-depth",
+      "property": "aerosol_optical_depth_500nm",
+      "title": "Aerosol optical depth at 500 nm",
+      "unit": "1",
+      "source": "jaxa-gcom-c-aod",
+      "enabled": true,
+      "aggregation": "mean",
+      "variable_candidates": ["AROT", "AOT", "Band1"],
+      "scale_min": 0.0,
+      "scale_max": 1.5,
+      "maximum_age_hours": 96.0,
+      "opacity": 0.58,
+      "color": "#b07848"
+    },
+    {
+      "id": "precipitation-rate",
+      "property": "precipitation_rate_mm_h",
+      "title": "Gauge-adjusted precipitation rate",
+      "unit": "mm h-1",
+      "source": "jaxa-gsmap-precipitation",
+      "enabled": true,
+      "aggregation": "mean",
+      "variable_candidates": ["PRECIP", "precipitation", "hourlyPrecipRate", "Band1"],
+      "scale_min": 0.0,
+      "scale_max": 20.0,
+      "maximum_age_hours": 96.0,
+      "opacity": 0.70,
+      "color": "#297fb8"
+    },
+    {
+      "id": "cloud-fraction",
+      "property": "cloud_fraction",
+      "title": "Confident-cloud sample fraction",
+      "unit": "1",
+      "source": "jaxa-ptree-cloud",
+      "enabled": true,
+      "aggregation": "cloud-fraction",
+      "variable_candidates": ["QA", "QA_flag", "quality_flag"],
+      "quality": {
+        "variable_candidates": ["QA", "QA_flag", "quality_flag"],
+        "bit_offset": 3,
+        "bit_width": 2,
+        "accepted_values": [3]
+      },
+      "scale_min": 0.0,
+      "scale_max": 1.0,
+      "maximum_age_hours": 6.0,
+      "opacity": 0.62,
+      "color": "#e9eef2"
+    },
+    {
+      "id": "cloud-optical-thickness",
+      "property": "cloud_optical_thickness",
+      "title": "Cloud optical thickness",
+      "unit": "1",
+      "source": "jaxa-ptree-cloud",
+      "enabled": true,
+      "aggregation": "mean",
+      "variable_candidates": ["CLOT", "COT", "cloud_optical_thickness"],
+      "quality": {
+        "variable_candidates": ["QA", "QA_flag", "quality_flag"],
+        "bit_offset": 0,
+        "bit_width": 3,
+        "accepted_values": [0, 1, 2, 4, 5, 6, 7]
+      },
+      "scale_min": 0.0,
+      "scale_max": 80.0,
+      "maximum_age_hours": 6.0,
+      "opacity": 0.74,
+      "color": "#ffffff"
+    },
+    {
+      "id": "cloud-top-height",
+      "property": "cloud_top_height_km",
+      "title": "Cloud-top height",
+      "unit": "km",
+      "source": "jaxa-ptree-cloud",
+      "enabled": true,
+      "aggregation": "mean",
+      "variable_candidates": ["CLTH", "CTH", "cloud_top_height"],
+      "quality": {
+        "variable_candidates": ["QA", "QA_flag", "quality_flag"],
+        "bit_offset": 0,
+        "bit_width": 3,
+        "accepted_values": [0, 1, 2, 4, 5, 6, 7]
+      },
+      "scale_min": 0.0,
+      "scale_max": 18.0,
+      "maximum_age_hours": 6.0,
+      "opacity": 0.82,
+      "color": "#83a9c1"
+    },
+    {
+      "id": "cloud-type",
+      "property": "cloud_type_isccp",
+      "title": "ISCCP cloud type",
+      "unit": "class",
+      "source": "jaxa-ptree-cloud",
+      "enabled": true,
+      "aggregation": "mode",
+      "variable_candidates": ["CLTYPE", "cloud_type", "ISCCP_cloud_type"],
+      "quality": {
+        "variable_candidates": ["QA", "QA_flag", "quality_flag"],
+        "bit_offset": 3,
+        "bit_width": 2,
+        "accepted_values": [3]
+      },
+      "scale_min": 0.0,
+      "scale_max": 9.0,
+      "maximum_age_hours": 6.0,
+      "opacity": 0.85,
+      "color": "#667d91"
+    }
+  ],
+  "sources": [
+    {
+      "id": "jaxa-ptree-cloud",
+      "title": "JAXA P-Tree Himawari-9 Level-2 Cloud Property 1.0",
+      "access": "credentialed-netrc",
+      "status": "default-cloud",
+      "coverage": "Himawari full disk; 10-minute, approximately 5 km, daytime retrieval only",
+      "url": "ftps://ftp.ptree.jaxa.jp:990/pub/himawari/L2/CLP/010/",
+      "collection": "NC_H09_*_L2CLP010_FLDK.{02401_02401,02801_02401}.nc.gz",
+      "license_url": "https://www.eorc.jaxa.jp/ptree/terms.html"
+    },
+    {
+      "id": "jaxa-gcom-c-aod",
+      "title": "GCOM-C/SGLI daily daytime aerosol optical depth at 500 nm",
+      "access": "public-stac-cog",
+      "status": "default-atmosphere",
+      "coverage": "global daily observed aerosol column loading; not smoke attribution or PM2.5 exposure",
+      "url": "https://data.earth.jaxa.jp/stac/cog/v1/catalog.json",
+      "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-AROT.daytime.v3_global_daily",
+      "license_url": "https://earth.jaxa.jp/en/data/policy/"
+    },
+    {
+      "id": "jaxa-gsmap-precipitation",
+      "title": "JAXA GSMaP gauge-adjusted hourly precipitation",
+      "access": "public-stac-cog",
+      "status": "default-atmosphere",
+      "coverage": "60S to 60N hourly precipitation field; not flood or extreme-event counts",
+      "url": "https://data.earth.jaxa.jp/stac/cog/v1/catalog.json",
+      "collection": "JAXA.EORC_GSMaP_standard.Gauge.v6_hourly",
+      "license_url": "https://earth.jaxa.jp/en/data/policy/"
+    },
+    {
+      "id": "jaxa-jasmes-swr",
+      "title": "JASMES Aqua/MODIS daily surface shortwave radiation",
+      "access": "public-stac-cog",
+      "status": "default-atmosphere",
+      "coverage": "global daily surface shortwave radiation with publication lag",
+      "url": "https://data.earth.jaxa.jp/stac/cog/v1/catalog.json",
+      "collection": "JAXA.JASMES_Aqua.MODIS_swr.v811_global_daily",
+      "license_url": "https://earth.jaxa.jp/en/data/policy/"
+    }
+  ],
+  "future_phases": [
+    {
+      "id": "water-vapor",
+      "classification": "cloud-atmosphere extension",
+      "reason": "Appropriate physical atmosphere data, but not currently a direct collection in the public JAXA Earth API catalog."
+    },
+    {
+      "id": "greenhouse-gases",
+      "classification": "climate-composition or Anthropocene extension",
+      "reason": "GOSAT composition retrievals are sparse climate observations rather than a weather snapshot."
+    },
+    {
+      "id": "earthcare-vertical-profiles",
+      "classification": "separate orbital-profile phase",
+      "reason": "Swath and vertical cloud/aerosol products need altitude-aware rendering rather than global snapshot fills."
+    }
+  ]
+}

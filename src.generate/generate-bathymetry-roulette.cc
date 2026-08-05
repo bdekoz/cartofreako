@@ -1,7 +1,8 @@
-// Generate monochrome roulette-patterned Natural Earth bathymetry.
+// Generate monochrome roulette-line-field Natural Earth bathymetry.
 // -*- mode: C++ -*-
 
 #include <array>
+#include <cmath>
 #include <cstddef>
 #include <exception>
 #include <fstream>
@@ -79,42 +80,6 @@ color_text(const svg::color_qi color)
 { return svg::color_qi::to_string(color); }
 
 std::string
-pattern_markup(const depth_style& style)
-{
-  const std::string path = catalogue::make_pattern_curve_path(style);
-  const bool filled = style.paint == curve_paint::filled;
-  std::ostringstream output;
-  output << "<pattern id=\"" << catalogue::pattern_id(style)
-         << "\" patternUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\""
-         << " width=\"" << format_number(catalogue::pattern_tile_size)
-         << "\" height=\"" << format_number(catalogue::pattern_tile_size)
-         << "\" data-depth-metres=\"" << style.depth_metres
-         << "\" data-roulette-kind=\"" << catalogue::kind_name(style.kind)
-         << "\" data-fixed-radius=\"" << style.fixed_radius
-         << "\" data-rolling-radius=\"" << style.rolling_radius
-         << "\" data-point-distance-ratio=\""
-         << catalogue::ratio_text(style.point_distance_ratio)
-         << "\" data-paint=\""
-         << (filled ? "fill" : "outline") << "\">\n"
-         << "<title>" << catalogue::curve_title(style) << "</title>\n"
-         << "<rect x=\"0\" y=\"0\" width=\""
-         << format_number(catalogue::pattern_tile_size)
-         << "\" height=\"" << format_number(catalogue::pattern_tile_size)
-         << "\" fill=\"" << color_text(catalogue::ground_color)
-         << "\"/>\n"
-         << "<path d=\"" << path << "\" fill=\""
-         << (filled ? color_text(catalogue::ink_color) : "none")
-         << "\" fill-opacity=\"" << (filled ? "0.52" : "0")
-         << "\" fill-rule=\"evenodd\" stroke=\""
-         << color_text(catalogue::ink_color)
-         << "\" stroke-opacity=\"0.96\" stroke-width=\""
-         << format_number(catalogue::pattern_stroke_width)
-         << "\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n"
-         << "</pattern>\n";
-  return output.str();
-}
-
-std::string
 clip_path_markup(const depth_style& style, std::string geometry)
 {
   replace_all(geometry, R"(fill-rule="evenodd")",
@@ -128,20 +93,125 @@ clip_path_markup(const depth_style& style, std::string geometry)
   return output.str();
 }
 
-std::string
-metadata_markup(const generation::projection_spec& spec)
+struct field_grid
 {
+  int first_row;
+  int last_row;
+  int first_column;
+  int last_column;
+
+  std::size_t
+  cell_count() const
+  {
+    return static_cast<std::size_t>(last_row - first_row + 1)
+      * static_cast<std::size_t>(last_column - first_column + 1);
+  }
+};
+
+field_grid
+make_field_grid(const generation::projection_context& context)
+{
+  const int margin_cells = static_cast<int>(std::ceil(
+    catalogue::field_margin / catalogue::field_cell_size)) + 1;
+  return {
+    -margin_cells,
+    static_cast<int>(std::ceil(
+      context.map_frame.height() / catalogue::field_cell_size))
+      + margin_cells,
+    -margin_cells,
+    static_cast<int>(std::ceil(
+      context.map_frame.width() / catalogue::field_cell_size))
+      + margin_cells,
+  };
+}
+
+std::size_t
+cell_variation_index(const std::size_t depth_index,
+                     const std::size_t row_index,
+                     const std::size_t column_index)
+{
+  // A stable two-dimensional mix prevents visible strips while keeping the
+  // assignment reproducible and evenly spread through the twelve variants.
+  const std::size_t mixed
+    = row_index * 17 + column_index * 31 + depth_index * 43
+      + (row_index + 3) * (column_index + 5) * 7;
+  return mixed % catalogue::field_variations.size();
+}
+
+struct roulette_field
+{
+  std::array<std::string, catalogue::field_variations.size()> paths;
+  std::array<std::size_t, catalogue::field_variations.size()> counts {};
+  std::size_t total = 0;
+};
+
+roulette_field
+make_roulette_field(const depth_style& style,
+                    const std::size_t depth_index,
+                    const generation::projection_context& context)
+{
+  const field_grid grid = make_field_grid(context);
+  roulette_field result;
+  for (int row = grid.first_row; row <= grid.last_row; ++row)
+    for (int column = grid.first_column;
+         column <= grid.last_column; ++column)
+      {
+        const std::size_t row_index
+          = static_cast<std::size_t>(row - grid.first_row);
+        const std::size_t column_index
+          = static_cast<std::size_t>(column - grid.first_column);
+        const std::size_t variation_index = cell_variation_index(
+          depth_index, row_index, column_index);
+        const catalogue::field_variation& variation
+          = catalogue::field_variations[variation_index];
+        const double stagger
+          = row_index % 2 == 0 ? 0 : catalogue::field_cell_size / 2;
+        const svg::point_2t origin {
+          column * catalogue::field_cell_size + stagger
+            + variation.offset_x_cells * catalogue::field_cell_size,
+          row * catalogue::field_cell_size
+            + variation.offset_y_cells * catalogue::field_cell_size,
+        };
+        result.paths[variation_index]
+          += catalogue::make_field_curve_path(style, origin, variation);
+        ++result.counts[variation_index];
+        ++result.total;
+      }
+  roulette_require(result.total == grid.cell_count(),
+                   "roulette field mosaic has the wrong cell count");
+  for (const std::size_t count : result.counts)
+    roulette_require(count != 0,
+                     "roulette field variation received no mosaic cells");
+  return result;
+}
+
+std::string
+metadata_markup(const generation::projection_spec& spec,
+                const generation::projection_context& context)
+{
+  const std::size_t cells = make_field_grid(context).cell_count();
   std::ostringstream output;
   output << "<metadata id=\"bathymetry-roulette-metadata\""
          << " data-source=\"Natural Earth 5.1.1 1:10m physical vectors\""
          << " data-projection=\"" << spec.argument << "\""
          << " data-depth-count=\"" << catalogue::depth_styles.size() << "\""
-         << " data-pattern-units=\"userSpaceOnUse\""
-         << " data-curve-space=\"projected-page\""
+         << " data-field-mode=\"explicit-overlapping-mosaic\""
+         << " data-field-space=\"projected-page\""
+         << " data-field-variation-count-per-depth=\""
+         << catalogue::field_variations.size() << "\""
+         << " data-field-cell-size=\""
+         << format_number(catalogue::field_cell_size) << "\""
+         << " data-field-base-diameter=\""
+         << format_number(catalogue::field_base_diameter) << "\""
+         << " data-field-row-stagger-cells=\"0.5\""
+         << " data-field-cell-count-per-depth=\"" << cells << "\""
+         << " data-field-curve-instance-count=\""
+         << cells * catalogue::depth_styles.size() << "\""
          << " data-ground=\"" << color_text(catalogue::ground_color) << "\""
          << " data-ink=\"" << color_text(catalogue::ink_color) << "\""
-         << ">Monochrome depth thresholds use progressively more variable "
-            "and complex Izzi roulette curves.</metadata>\n";
+         << ">Monochrome depth thresholds use explicit overlapping mosaics "
+            "of progressively more variable and complex Izzi roulette "
+            "curves.</metadata>\n";
   return output.str();
 }
 
@@ -153,6 +223,21 @@ curve_style(const depth_style& style, const double stroke_width)
     filled ? catalogue::ink_color : svg::color::none,
     filled ? 0.52 : 0,
     catalogue::ink_color, 0.96, stroke_width,
+  };
+}
+
+svg::style
+field_curve_style(const depth_style& style, const std::size_t index)
+{
+  const bool filled = style.paint == curve_paint::filled;
+  const double stroke_width
+    = catalogue::field_stroke_width * (0.88 + 0.06 * (index % 4));
+  const double fill_opacity
+    = catalogue::field_fill_opacity * (0.82 + 0.06 * (index % 5));
+  return {
+    filled ? catalogue::ink_color : svg::color::none,
+    filled ? fill_opacity : 0,
+    catalogue::ink_color, catalogue::field_stroke_opacity, stroke_width,
   };
 }
 
@@ -186,7 +271,7 @@ add_key(generation::projection_document& document,
 
   svg::group_element key;
   key.start_element("bathymetry-roulette-key");
-  key.add_title("Bathymetry depth to roulette key");
+  key.add_title("Representative bathymetry depth to roulette key");
 
   svg::rect_element background;
   background.start_element();
@@ -245,7 +330,7 @@ generate(const generation::projection_spec& spec)
               "complex monochrome roulette curves in the "
               + std::string(spec.title) + " projection",
     context.map_frame.frame_area);
-  document.add_raw(metadata_markup(spec));
+  document.add_raw(metadata_markup(spec, context));
 
   svg::defs_element definitions;
   definitions.start_element();
@@ -266,7 +351,6 @@ generate(const generation::projection_spec& spec)
       roulette_require(!geometry.empty(),
                        "bathymetry clip geometry is empty");
       definitions.add_raw(clip_path_markup(style, geometry.str()));
-      definitions.add_raw(pattern_markup(style));
       layer_stats.push_back(stats);
       std::cout << source.id << ": " << stats.source_features
                 << " features, " << stats.paths << " clip paths, "
@@ -279,25 +363,69 @@ generate(const generation::projection_spec& spec)
   svg::group_element bathymetry;
   bathymetry.start_element("bathymetry-roulette");
   bathymetry.add_title(
-    "Twelve nested Natural Earth depth thresholds with roulette patterns");
-  for (const depth_style& style : catalogue::depth_styles)
+    "Twelve nested Natural Earth depth thresholds with varied roulette fields");
+  for (std::size_t depth_index = 0;
+       depth_index != catalogue::depth_styles.size(); ++depth_index)
     {
+      const depth_style& style = catalogue::depth_styles[depth_index];
+      const roulette_field field = make_roulette_field(
+        style, depth_index, context);
       svg::group_element layer;
       layer.start_element(std::string(style.layer_id));
       layer.add_title(catalogue::curve_title(style));
-      svg::rect_element field;
-      field.start_element();
-      field.add_data({0, 0, context.map_frame.width(),
-                      context.map_frame.height()});
-      field.add_fill(catalogue::pattern_id(style));
-      field.add_raw(
+
+      svg::rect_element ground;
+      ground.start_element();
+      ground.add_data({0, 0, context.map_frame.width(),
+                       context.map_frame.height()});
+      ground.add_style({catalogue::ground_color, 1,
+                        svg::color::none, 0, 0});
+      ground.add_raw(
         "id=\"" + std::string(style.layer_id)
-          + "-roulette-field\" clip-path=\"url(#"
+          + "-roulette-ground\" clip-path=\"url(#"
           + catalogue::clip_id(style) + ")\"");
-      field.finish_element();
-      layer.add_element(field);
+      ground.finish_element();
+      layer.add_element(ground);
+
+      for (std::size_t variation_index = 0;
+           variation_index != catalogue::field_variations.size();
+           ++variation_index)
+        {
+          const catalogue::field_variation& variation
+            = catalogue::field_variations[variation_index];
+          const std::string id
+            = catalogue::field_variation_id(style, variation_index);
+          svg::group_element variation_group;
+          variation_group.start_element(id);
+          variation_group.add_title(
+            catalogue::field_variation_title(style, variation_index));
+          const std::string attributes
+            = "clip-path=\"url(#" + catalogue::clip_id(style)
+              + ")\" fill-rule=\"evenodd\" stroke-linecap=\"round\""
+                " stroke-linejoin=\"round\" data-instance-count=\""
+              + std::to_string(field.counts[variation_index])
+              + "\" data-diameter-factor=\""
+              + catalogue::ratio_text(variation.diameter_factor)
+              + "\" data-point-distance-factor=\""
+              + catalogue::ratio_text(variation.point_distance_factor)
+              + "\" data-phase-turns=\""
+              + catalogue::ratio_text(variation.phase_turns)
+              + "\" data-offset-x-cells=\""
+              + catalogue::ratio_text(variation.offset_x_cells)
+              + "\" data-offset-y-cells=\""
+              + catalogue::ratio_text(variation.offset_y_cells) + "\"";
+          variation_group.add_element(svg::make_path(
+            field.paths[variation_index],
+            field_curve_style(style, variation_index), id + "-lines", true,
+            attributes));
+          variation_group.finish_element();
+          layer.add_element(variation_group);
+        }
       layer.finish_element();
       bathymetry.add_element(layer);
+      std::cout << style.layer_id << ": " << field.total
+                << " explicit field curves across "
+                << catalogue::field_variations.size() << " variations\n";
     }
   bathymetry.finish_element();
   document.add_element(bathymetry);
@@ -328,22 +456,40 @@ verify(const std::string& generated,
                    "generated bathymetry roulette SVG has the wrong viewBox");
   roulette_require(generated.find("id=\"bathymetry-roulette-metadata\"")
                      != std::string::npos
-                     && generated.find("data-curve-space=\"projected-page\"")
+                     && generated.find(
+                          "data-field-mode=\"explicit-overlapping-mosaic\"")
                           != std::string::npos,
                    "generated bathymetry roulette SVG lacks metadata");
+  const std::size_t cells = make_field_grid(context).cell_count();
+  roulette_require(
+    generated.find("data-field-base-diameter=\""
+                   + format_number(catalogue::field_base_diameter) + "\"")
+        != std::string::npos
+      && generated.find("data-field-row-stagger-cells=\"0.5\"")
+           != std::string::npos
+      && generated.find("data-field-cell-count-per-depth=\""
+                   + std::to_string(cells) + "\"") != std::string::npos
+      && generated.find("data-field-curve-instance-count=\""
+                        + std::to_string(
+                          cells * catalogue::depth_styles.size()) + "\"")
+           != std::string::npos,
+    "generated bathymetry roulette SVG has incorrect field counts");
   roulette_require(generated.find("<g id=\"bathymetry-roulette\">")
                      != std::string::npos
                      && generated.find("<g id=\"bathymetry-roulette-key\">")
                           != std::string::npos,
                    "generated bathymetry roulette SVG lacks semantic groups");
   roulette_require(
-    token_count(generated, "<pattern id=\"bathymetry-roulette-pattern-")
-      == catalogue::depth_styles.size()
-      && token_count(generated,
-                     "<clipPath id=\"bathymetry-roulette-clip-")
+    token_count(generated,
+                "<clipPath id=\"bathymetry-roulette-clip-")
            == catalogue::depth_styles.size()
-      && token_count(generated, "patternUnits=\"userSpaceOnUse\"")
-           == catalogue::depth_styles.size(),
+      && token_count(generated, "-roulette-variation-")
+           == 2 * catalogue::depth_styles.size()
+                * catalogue::field_variations.size()
+      && token_count(generated, "data-instance-count=\"")
+           == catalogue::depth_styles.size()
+                * catalogue::field_variations.size()
+      && generated.find("<pattern") == std::string::npos,
     "generated bathymetry roulette SVG has incomplete definitions");
 
   std::size_t previous_position = 0;
@@ -358,11 +504,23 @@ verify(const std::string& generated,
                        "out of paint order");
       previous_position = position;
       roulette_require(
-        generated.find("fill=\"url(#" + catalogue::pattern_id(style) + ")\"")
-          != std::string::npos
+        generated.find("id=\"" + std::string(style.layer_id)
+                       + "-roulette-ground\"") != std::string::npos
           && generated.find("clip-path=\"url(#" + catalogue::clip_id(style)
                             + ")\"") != std::string::npos,
-        "bathymetry roulette depth does not reference its pattern and clip");
+        "bathymetry roulette depth does not contain its ground and clip");
+      for (std::size_t variation_index = 0;
+           variation_index != catalogue::field_variations.size();
+           ++variation_index)
+        {
+          const std::string id
+            = catalogue::field_variation_id(style, variation_index);
+          roulette_require(generated.find("<g id=\"" + id + "\">")
+                             != std::string::npos
+                             && generated.find("id=\"" + id + "-lines\"")
+                                  != std::string::npos,
+                           "bathymetry roulette field variation is missing");
+        }
     }
 
   roulette_require(token_count(generated, "clip-rule=\"evenodd\"") > 100,

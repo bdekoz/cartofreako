@@ -17,6 +17,7 @@
 /tests/test-network-swarm-generation
 /tests/test-bathymetry-roulette-style
 /tests/test-anthropocene-generation
+/tests/test-cloud-atmosphere-generation
 
 # Native generator executables.
 /src.generate/generate-geometry
@@ -35,6 +36,8 @@
 /src.generate/generate-bathymetry-roulette
 /src.generate/generate-anthropocene
 /src.generate/prepare-anthropocene
+/src.generate/generate-cloud-atmosphere
+/src.generate/prepare-cloud-atmosphere
 /src.generate/resolve-generation-profile
 /src.generate/third_party/sgp4/SGP4.o
 
@@ -46,5 +49,8 @@
 /assets.static/network-swarm/.prepared/
 /assets.static/anthropocene/.raw/
 /assets.static/anthropocene/.prepared/
+/assets.static/cloud-atmosphere/.raw/
+/assets.static/cloud-atmosphere/.prepared/
 /docs/doxygen/
 /build/
+__pycache__/

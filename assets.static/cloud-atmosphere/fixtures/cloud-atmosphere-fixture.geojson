@@ -1,0 +1,159 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "schema": "cartofreako-cloud-atmosphere-snapshot-v1",
+    "fixture": true,
+    "prepared_at_utc": "2026-08-05T03:55:00Z",
+    "source_selection_process_start_utc": "2026-08-05T04:00:00Z",
+    "h3_resolution": 3,
+    "missing_semantics": "unobserved-not-zero",
+    "observations": [
+      {
+        "source": "jaxa-ptree-cloud",
+        "start_utc": "2026-08-05T03:40:00Z",
+        "end_utc": "2026-08-05T03:50:00Z",
+        "fetched_at_utc": "2026-08-05T03:55:00Z",
+        "source_url": "fixture://jaxa-ptree-cloud",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "coverage": "synthetic Himawari daytime fixture"
+      },
+      {
+        "source": "jaxa-gcom-c-aod",
+        "start_utc": "2026-08-03T00:00:21Z",
+        "end_utc": "2026-08-04T00:03:39Z",
+        "fetched_at_utc": "2026-08-05T03:55:00Z",
+        "source_url": "fixture://jaxa-gcom-c-aod",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "coverage": "synthetic global AOD fixture"
+      },
+      {
+        "source": "jaxa-gsmap-precipitation",
+        "start_utc": "2026-08-05T02:00:00Z",
+        "end_utc": "2026-08-05T03:00:00Z",
+        "fetched_at_utc": "2026-08-05T03:55:00Z",
+        "source_url": "fixture://jaxa-gsmap-precipitation",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "coverage": "synthetic 60S-60N precipitation fixture"
+      },
+      {
+        "source": "jaxa-jasmes-swr",
+        "start_utc": "2026-07-31T00:00:00Z",
+        "end_utc": "2026-08-01T00:00:00Z",
+        "fetched_at_utc": "2026-08-05T03:55:00Z",
+        "source_url": "fixture://jaxa-jasmes-swr",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "coverage": "synthetic global shortwave-radiation fixture"
+      }
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [140.141719263, 35.838798151]},
+      "properties": {
+        "h3": "832f5afffffffff",
+        "values": {"shortwave_radiation_w_m2": 305.0, "aerosol_optical_depth_500nm": 0.34, "precipitation_rate_mm_h": 0.7, "cloud_fraction": 0.73, "cloud_optical_thickness": 31.0, "cloud_top_height_km": 9.8, "cloud_type_isccp": 7.0},
+        "valid_fraction": {"shortwave_radiation_w_m2": 0.94, "aerosol_optical_depth_500nm": 0.82, "precipitation_rate_mm_h": 1.0, "cloud_fraction": 0.91, "cloud_optical_thickness": 0.76, "cloud_top_height_km": 0.75, "cloud_type_isccp": 0.88}
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [124.734760093, 15.300071424]},
+      "properties": {
+        "h3": "834a94fffffffff",
+        "values": {"shortwave_radiation_w_m2": 218.0, "aerosol_optical_depth_500nm": 0.21, "precipitation_rate_mm_h": 13.5, "cloud_fraction": 0.96, "cloud_optical_thickness": 68.0, "cloud_top_height_km": 15.2, "cloud_type_isccp": 9.0},
+        "valid_fraction": {"shortwave_radiation_w_m2": 0.86, "aerosol_optical_depth_500nm": 0.74, "precipitation_rate_mm_h": 1.0, "cloud_fraction": 0.97, "cloud_optical_thickness": 0.82, "cloud_top_height_km": 0.81, "cloud_type_isccp": 0.95}
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [119.948558313, -4.470321577]},
+      "properties": {
+        "h3": "839505fffffffff",
+        "values": {"shortwave_radiation_w_m2": 265.0, "aerosol_optical_depth_500nm": 0.61, "precipitation_rate_mm_h": 3.4, "cloud_fraction": 0.67, "cloud_optical_thickness": 24.0, "cloud_top_height_km": 12.4, "cloud_type_isccp": 8.0},
+        "valid_fraction": {"shortwave_radiation_w_m2": 0.91, "aerosol_optical_depth_500nm": 0.88, "precipitation_rate_mm_h": 1.0, "cloud_fraction": 0.89, "cloud_optical_thickness": 0.78, "cloud_top_height_km": 0.79, "cloud_type_isccp": 0.86}
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [135.227167776, -24.931578112]},
+      "properties": {
+        "h3": "83b8a2fffffffff",
+        "values": {"shortwave_radiation_w_m2": 348.0, "aerosol_optical_depth_500nm": 0.13, "precipitation_rate_mm_h": 0.0, "cloud_fraction": 0.18, "cloud_optical_thickness": 5.0, "cloud_top_height_km": 2.1, "cloud_type_isccp": 1.0},
+        "valid_fraction": {"shortwave_radiation_w_m2": 0.96, "aerosol_optical_depth_500nm": 0.71, "precipitation_rate_mm_h": 1.0, "cloud_fraction": 0.93, "cloud_optical_thickness": 0.54, "cloud_top_height_km": 0.53, "cloud_type_isccp": 0.91}
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [-169.957865936, -0.147860703]},
+      "properties": {
+        "h3": "8370f5fffffffff",
+        "values": {"shortwave_radiation_w_m2": 287.0, "aerosol_optical_depth_500nm": 0.08, "precipitation_rate_mm_h": 6.2},
+        "valid_fraction": {"shortwave_radiation_w_m2": 0.90, "aerosol_optical_depth_500nm": 0.68, "precipitation_rate_mm_h": 1.0}
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [-154.546097734, 19.728193493]},
+      "properties": {
+        "h3": "835d11fffffffff",
+        "values": {"shortwave_radiation_w_m2": 321.0, "aerosol_optical_depth_500nm": 0.11, "precipitation_rate_mm_h": 0.2},
+        "valid_fraction": {"shortwave_radiation_w_m2": 0.95, "aerosol_optical_depth_500nm": 0.79, "precipitation_rate_mm_h": 1.0}
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [-150.235385737, 54.657163144]},
+      "properties": {
+        "h3": "831d84fffffffff",
+        "values": {"shortwave_radiation_w_m2": 184.0, "aerosol_optical_depth_500nm": 0.27, "precipitation_rate_mm_h": 2.1},
+        "valid_fraction": {"shortwave_radiation_w_m2": 0.83, "aerosol_optical_depth_500nm": 0.62, "precipitation_rate_mm_h": 1.0}
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [115.583008979, 40.119439315]},
+      "properties": {
+        "h3": "833185fffffffff",
+        "values": {"shortwave_radiation_w_m2": 332.0, "aerosol_optical_depth_500nm": 0.92, "precipitation_rate_mm_h": 0.0, "cloud_fraction": 0.29, "cloud_optical_thickness": 8.0, "cloud_top_height_km": 4.2, "cloud_type_isccp": 3.0},
+        "valid_fraction": {"shortwave_radiation_w_m2": 0.92, "aerosol_optical_depth_500nm": 0.91, "precipitation_rate_mm_h": 1.0, "cloud_fraction": 0.88, "cloud_optical_thickness": 0.66, "cloud_top_height_km": 0.64, "cloud_type_isccp": 0.84}
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [79.605626869, 19.532311493]},
+      "properties": {
+        "h3": "8360b2fffffffff",
+        "values": {"shortwave_radiation_w_m2": 201.0, "aerosol_optical_depth_500nm": 0.76, "precipitation_rate_mm_h": 9.1, "cloud_fraction": 0.84, "cloud_optical_thickness": 42.0, "cloud_top_height_km": 13.6, "cloud_type_isccp": 8.0},
+        "valid_fraction": {"shortwave_radiation_w_m2": 0.78, "aerosol_optical_depth_500nm": 0.86, "precipitation_rate_mm_h": 1.0, "cloud_fraction": 0.94, "cloud_optical_thickness": 0.79, "cloud_top_height_km": 0.78, "cloud_type_isccp": 0.91}
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [174.478311902, -40.222064971]},
+      "properties": {
+        "h3": "83bb76fffffffff",
+        "values": {"shortwave_radiation_w_m2": 146.0, "aerosol_optical_depth_500nm": 0.17, "precipitation_rate_mm_h": 4.8, "cloud_fraction": 0.89, "cloud_optical_thickness": 36.0, "cloud_top_height_km": 8.7, "cloud_type_isccp": 6.0},
+        "valid_fraction": {"shortwave_radiation_w_m2": 0.81, "aerosol_optical_depth_500nm": 0.72, "precipitation_rate_mm_h": 1.0, "cloud_fraction": 0.96, "cloud_optical_thickness": 0.83, "cloud_top_height_km": 0.82, "cloud_type_isccp": 0.93}
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [140.547323284, 55.148691967]},
+      "properties": {
+        "h3": "8314edfffffffff",
+        "values": {"shortwave_radiation_w_m2": 226.0, "aerosol_optical_depth_500nm": 0.43, "precipitation_rate_mm_h": 1.6, "cloud_fraction": 0.58, "cloud_optical_thickness": 19.0, "cloud_top_height_km": 7.4, "cloud_type_isccp": 5.0},
+        "valid_fraction": {"shortwave_radiation_w_m2": 0.85, "aerosol_optical_depth_500nm": 0.76, "precipitation_rate_mm_h": 1.0, "cloud_fraction": 0.87, "cloud_optical_thickness": 0.69, "cloud_top_height_km": 0.68, "cloud_type_isccp": 0.84}
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [144.935859764, -5.569361184]},
+      "properties": {
+        "h3": "8372dbfffffffff",
+        "values": {"shortwave_radiation_w_m2": 173.0, "aerosol_optical_depth_500nm": 0.19, "precipitation_rate_mm_h": 17.8, "cloud_fraction": 0.98, "cloud_optical_thickness": 77.0, "cloud_top_height_km": 16.3, "cloud_type_isccp": 9.0},
+        "valid_fraction": {"shortwave_radiation_w_m2": 0.74, "aerosol_optical_depth_500nm": 0.67, "precipitation_rate_mm_h": 1.0, "cloud_fraction": 0.99, "cloud_optical_thickness": 0.86, "cloud_top_height_km": 0.85, "cloud_type_isccp": 0.97}
+      }
+    }
+  ]
+}

@@ -108,7 +108,7 @@ interchangeable catalogs:
 | Source | Role in this pass |
 | --- | --- |
 | [NASA Planetary Data](https://planetary.data.nasa.gov/find-data) | Repository discovery and planetary-data provenance; JPL Solar System Dynamics supplies the calculation-ready elements |
-| [JAXA Earth API](https://data.earth.jaxa.jp/en/) | Candidate future atmosphere, cloud, and observer-condition context; it does not provide celestial source coordinates and is not downloaded by this pass |
+| [JAXA Earth API](https://data.earth.jaxa.jp/en/) | Physical atmosphere and cloud observations owned by the separate Cloud-atmosphere pass; it does not provide celestial source coordinates and is not downloaded by astronomy |
 | [China NSSDC](https://www.nssdc.ac.cn/nssdc_en/html/index.html) | Mission context for SVOM, Einstein Probe, ASO-S, and GECAM observations represented in the transient layer |
 | [Gaia DR3](https://gea.esac.esa.int/archive/) | Bright-star positions, proper motions, magnitudes, and color indices |
 | [NASA Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/docs/program_interfaces.html) | Confirmed planets and host-system sky positions |
@@ -338,5 +338,7 @@ decisions.
 The implementation is deliberately staged so those improvements have clear
 attachment points: SOFA/IERS for time and reference frames, SPICE or Horizons
 for precision Solar System state, automated GCN/NSSDC ingestion for events,
-JAXA products for optional local cloud and atmospheric context, and calibrated
-bandpass/sensitivity profiles for specific instruments.
+and calibrated bandpass/sensitivity profiles for specific instruments. JAXA
+physical cloud and atmospheric context is implemented independently by
+[`generate-cloud-atmosphere.cc`](../src.generate/generate-cloud-atmosphere.cc),
+while both passes share the same time and solar-geometry headers.

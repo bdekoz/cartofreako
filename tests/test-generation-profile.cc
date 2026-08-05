@@ -71,9 +71,9 @@ main()
   const std::vector<std::string> all_targets = generation::targets(everything);
   assert(everything.all_projections);
   assert(everything.all_passes);
-  assert(all_targets.size() == 60);
+  assert(all_targets.size() == 66);
   assert(all_targets.front() == "generate-geometry-cahill-keyes");
-  assert(all_targets.back() == "generate-anthropocene-voronoi");
+  assert(all_targets.back() == "generate-cloud-atmosphere-voronoi");
   std::vector<std::string> unique_targets = all_targets;
   std::sort(unique_targets.begin(), unique_targets.end());
   assert(std::adjacent_find(unique_targets.begin(), unique_targets.end())
@@ -85,7 +85,8 @@ main()
       "description": "Alias coverage",
       "projections": ["STAR_X", "voroni", "ck"],
       "passes": ["graticule", "astro", "orbiting", "swarm",
-                 "bathymetry_rolette", "infrastructure", "anthropocene"]
+                 "bathymetry_rolette", "infrastructure", "anthropocene",
+                 "solar/cloud/atmosphere"]
     }
   )json");
   assert((aliases.projections == std::vector<std::string> {
@@ -94,7 +95,8 @@ main()
                               "graticules", "astronomy",
                               "orbital-technosphere", "network-swarm",
                               "bathymetry-roulette",
-                              "network-infrastructure", "anthropocene"}));
+                              "network-infrastructure", "anthropocene",
+                              "cloud-atmosphere"}));
   const std::vector<std::string> alias_targets = generation::targets(aliases);
   assert(alias_targets.front() == "generate-graticules-star-x");
   assert(std::find(alias_targets.begin(), alias_targets.end(),
@@ -106,6 +108,22 @@ main()
   assert(std::find(alias_targets.begin(), alias_targets.end(),
                    "generate-anthropocene-star-x")
          != alias_targets.end());
+  assert(std::find(alias_targets.begin(), alias_targets.end(),
+                   "generate-cloud-atmosphere-star-x")
+         != alias_targets.end());
+
+  const generation::profile atmosphere_aliases = generation::parse_json(R"json(
+    {
+      "schema_version": 1,
+      "projections": ["ck"],
+      "passes": ["clouds"]
+    }
+  )json");
+  assert((atmosphere_aliases.passes == std::vector<std::string> {
+                                           "cloud-atmosphere"}));
+  assert((generation::targets(atmosphere_aliases)
+          == std::vector<std::string> {
+               "generate-cloud-atmosphere-cahill-keyes"}));
 
   const generation::profile legacy_network = generation::parse_json(R"json(
     {

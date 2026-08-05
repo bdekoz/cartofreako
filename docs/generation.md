@@ -5,6 +5,7 @@
 [Generation methods](generation-methods.md) ·
 [Cahill-Keyes context](cahill-keyes-context.md) ·
 [Astronomy notes](astro-implementation-notes.md) ·
+[Cloud-atmosphere notes](cloud-atmosphere-implementation-notes.md) ·
 [Orbital Technosphere notes](orbital-technosphere-implementation-notes.md) ·
 [Anthropocene notes](anthropocene-implementation-notes.md) ·
 [Network-swarm notes](network-swarm-implementation-notes.md) ·
@@ -13,9 +14,9 @@
 
 ## Purpose
 
-The repository contains thirteen C++20 SVG generation programs under
+The repository contains fourteen C++20 SVG generation programs under
 `src.generate/`.
-Ten exercise all six production projections through the real Alpha60 and
+Eleven exercise all six production projections through the real Alpha60 and
 Izzi APIs. Three derive Cahill-Keyes or Myriahedral slices from an already
 projected whole-earth SVG. They write layered SVGs under
 `assets.generated/svg/`, then reopen those files and verify dimensions, layer
@@ -32,8 +33,9 @@ does not duplicate generation logic or filter SVG layers after generation.
 | Graticules | [`src.generate/generate-graticules.cc`](../src.generate/generate-graticules.cc) | Sampled latitude and longitude lines |
 | Earth | [`src.generate/generate-earth.cc`](../src.generate/generate-earth.cc) | Natural Earth 1:10m ocean and land |
 | Water | [`src.generate/generate-water.cc`](../src.generate/generate-water.cc) | Every other Natural Earth 1:10m physical layer |
-| Bathymetry Roulette | [`src.generate/generate-bathymetry-roulette.cc`](../src.generate/generate-bathymetry-roulette.cc) | Twelve Natural Earth depth thresholds clipped over deterministic Izzi roulette patterns |
+| Bathymetry Roulette | [`src.generate/generate-bathymetry-roulette.cc`](../src.generate/generate-bathymetry-roulette.cc) | Twelve Natural Earth depth thresholds clipped over explicit, varied Izzi roulette line fields |
 | Astronomy | [`src.generate/generate-astro.cc`](../src.generate/generate-astro.cc) | Profile timestamp and observer, bounded Gaia/exoplanet/SBDB snapshots, curated multi-band sources and events |
+| Cloud-atmosphere | [`src.generate/generate-cloud-atmosphere.cc`](../src.generate/generate-cloud-atmosphere.cc) | Process-start solar geometry plus prepared, source-timed JAXA P-Tree cloud and JAXA Earth atmosphere observations |
 | Orbital Technosphere | [`src.generate/generate-orbiting.cc`](../src.generate/generate-orbiting.cc) | Profile timestamp and observer, CelesTrak OMM population and memberships, NASA SSCWeb reference positions, and SGP4 |
 | Anthropocene | [`src.generate/generate-anthropocene.cc`](../src.generate/generate-anthropocene.cc) | Profile-fixed partial year and checksum-pinned H3 cell-day counts from GSN, EPA AirData, HMS, Storm Events, and CWFIS |
 | Network swarm | [`src.generate/generate-network-swarm.cc`](../src.generate/generate-network-swarm.cc) | Validated cumulative swarm GeoJSON, H3 parent clustering, fixed display profile, and Izzi radial honeycombs |
@@ -86,9 +88,11 @@ a general map-rendering command line.
 The [top-level Makefile](../Makefile) compiles every generator with C++20 and
 `-Wall -Wextra -Wpedantic -Werror`. The geometry and graticule programs need
 the neighboring Alpha60 and Izzi source trees. The Earth, water, Bathymetry
-Roulette, Anthropocene, and network-infrastructure programs also use GDAL's vector API and require
-GDAL to have GEOS support for polygon intersection. Anthropocene normalization
-and generation also use H3.
+Roulette, Cloud-atmosphere, Anthropocene, and network-infrastructure programs
+also use GDAL. Natural Earth vector clipping requires GEOS;
+Cloud-atmosphere preparation additionally requires the GDAL GeoTIFF and
+NetCDF raster drivers. Cloud-atmosphere and Anthropocene normalization and
+generation also use H3.
 
 The default locations can be overridden:
 
@@ -101,6 +105,9 @@ The default locations can be overridden:
 | `NATURAL_EARTH_DIR` | `assets.static/natural-earth/10m-physical-vectors` | Extracted shapefiles |
 | `ASTRO_DATA_DIR` | `assets.static/astronomy` | Astronomy profile and bounded catalog snapshots |
 | `ASTRO_PROFILE` | `$(ASTRO_DATA_DIR)/astro-profile.json` | Authoritative timestamp, point of reference, orientation, instrumentation, event window, and catalog paths |
+| `CLOUD_ATMOSPHERE_DATA_DIR` | `assets.static/cloud-atmosphere` | JAXA source profile plus ignored raw and prepared refresh staging |
+| `CLOUD_ATMOSPHERE_PROFILE` | `$(CLOUD_ATMOSPHERE_DATA_DIR)/cloud-atmosphere-profile.json` | Process-time, latest-not-after, source, freshness, QA, H3 aggregation, and display contract |
+| `CLOUD_ATMOSPHERE_GEOJSON` | `$(CLOUD_ATMOSPHERE_DATA_DIR)/.prepared/cloud-atmosphere-latest.geojson` | Locally prepared, checksum-verified H3 observation snapshot |
 | `ORBITING_DATA_DIR` | `assets.static/orbital-technosphere` | Orbital Technosphere profile, OMM CSV snapshots, NASA reference, and checksums |
 | `ORBITING_PROFILE` | `$(ORBITING_DATA_DIR)/orbital-technosphere-profile.json` | Authoritative propagation instant, make-invocation reference point, catalog roles, freshness rules, visibility rules, and display budgets |
 | `ANTHROPOCENE_DATA_DIR` | `assets.static/anthropocene` | Checked profile, normalized 2026 H3 GeoJSON, checksum, and ignored refresh staging |
@@ -116,7 +123,7 @@ The default locations can be overridden:
 | `NETWORK_INFRASTRUCTURE_TOPOLOGY_PROFILE` | `assets.static/network-infrastructure/network-infrastructure-topology-profile.json` | Explicit TeleGeography topology layers, source pins, and CC BY-NC-SA 3.0 opt-in |
 | `INKSCAPE` | `inkscape` | Command-line PDF and PNG exporter |
 | `PNG_LONG_SIDE` | `3840` | Pixel count assigned to each PNG's longest side |
-| `LABEL_FONT` | `atkinson_hyperlegible` | Installed font used for visible labels in graticule, astronomy, Orbital Technosphere, Anthropocene, network-swarm, network-infrastructure, and Bathymetry Roulette images |
+| `LABEL_FONT` | `atkinson_hyperlegible` | Installed font used for visible labels in graticule, astronomy, Cloud-atmosphere, Orbital Technosphere, Anthropocene, network-swarm, network-infrastructure, and Bathymetry Roulette images |
 
 ### Generated label typography
 
@@ -195,29 +202,33 @@ passes and their SVG result counts per projection are:
 | `earth` | One Natural Earth `ocean`/`land` base SVG |
 | `water` | One complementary physical-feature SVG |
 | `astronomy` | All-sky and observer SVGs |
+| `cloud-atmosphere` | One process-start solar and source-timed physical-atmosphere SVG |
 | `orbital-technosphere` | Global and observer SVGs |
 | `anthropocene` | One source-separated observation-atlas SVG |
 | `network-swarm` | One cumulative network-swarm SVG |
-| `bathymetry-roulette` | One monochrome roulette-patterned depth SVG |
+| `bathymetry-roulette` | One monochrome, explicitly varied roulette-line-field depth SVG |
 | `network-infrastructure` | One cloud/CDN infrastructure-site SVG; never the licensed topology product |
 
 Names are case-insensitive, and underscores normalize to hyphens. The
 resolver also accepts `ck`, `starx`, and the established `voroni` spelling as
 projection aliases; `graticule`, `astro`, `orbiting`, and the former `network`
 and short `swarm` names for `network-swarm`, `infrastructure` for
-`network-infrastructure`, plus
+`network-infrastructure`, `clouds`, `atmosphere`, `solar-atmosphere`, and
+`solar/cloud/atmosphere` for `cloud-atmosphere`, plus
 `bathymetry-rolette`, and `art-agua-roulette` are pass aliases.
 For compatibility with the requested `earth, ocean` vocabulary, `ocean`
 normalizes to the current `water` generation pass. It does not mean the
 `ocean` layer inside the Earth base SVG.
 
-Profile `"all"` means the six projections by ten selectable passes. It
-produces 72 SVGs because astronomy and Orbital Technosphere each have two
+Profile `"all"` means the six projections by eleven selectable passes. It
+produces 78 SVGs because astronomy and Orbital Technosphere each have two
 products. It deliberately excludes Cahill-Keyes slices, exploratory
 Myriahedral perspectives and slices, and PDF/PNG exports. Those products do
 not form a projection/pass cross-product and remain available through their
-explicit targets. `make all` builds the complete 91 SVG, 91 PDF, and 91 PNG
-standard suite. The six opt-in topology products per format remain separate.
+explicit targets. It includes Cloud-atmosphere and therefore requires a
+current locally prepared JAXA snapshot. `make all` retains the credential-free
+91 SVG, 91 PDF, and 91 PNG standard suite and excludes Cloud-atmosphere. The
+six opt-in topology products per format also remain separate.
 
 The resolver rejects empty selectors, duplicate aliases or JSON members,
 unknown names or members, a mixed `"all"` selector, and unsupported schema
@@ -251,6 +262,9 @@ make generate-myriahedral-slices
 make generate-star-x
 make generate-voronoi
 make generate-astro
+make fetch-cloud-atmosphere-data
+make prepare-cloud-atmosphere-data
+make generate-cloud-atmosphere
 make generate-orbiting
 make generate-anthropocene
 make prepare-network-swarm-data
@@ -277,7 +291,8 @@ The 91 standard artifacts plus six opt-in topology artifacts in each of
 are checked in. This makes visual and XML diffs
 reviewable, but it also means that regenerating with a different GDAL, GEOS,
 or Inkscape version can produce ordering, coordinate, or rendering differences
-even though the input archive is pinned.
+even though the input archive is pinned. Cloud-atmosphere artifacts are local,
+source-timed opt-in products and are not checked in by the standard suite.
 
 ## PDF and 4K PNG export
 
@@ -351,6 +366,34 @@ the curated transient snapshot. The
 [astronomy implementation notes](astro-implementation-notes.md) document the
 profile schema, source evaluation, orbital and observer formulas,
 instrument-band behavior, SVG layers, current limitations, and every output.
+
+## Cloud-atmosphere generation
+
+The Cloud-atmosphere pass calculates the terrestrial subsolar point and five
+illumination zones once at generator process start, then overlays a prepared
+H3 snapshot of JAXA physical observations. P-Tree supplies regional/daytime
+Himawari cloud fraction, optical thickness, top height, and ISCCP type;
+GCOM-C, GSMaP, and JASMES supply AOD, precipitation, and shortwave radiation.
+Every source remains independently timed and missing values mean unobserved.
+
+Refresh and render explicitly:
+
+```sh
+make fetch-cloud-atmosphere-data
+make prepare-cloud-atmosphere-data
+make verify-cloud-atmosphere-data
+make generate-cloud-atmosphere
+```
+
+The fetch requires an existing P-Tree `.netrc` entry. Use
+`generate-cloud-atmosphere-PROJECTION` for one SVG,
+`generate-cloud-atmosphere-projections` for all six SVGs, or
+`generate-cloud-atmosphere-artifacts` for SVG/PDF/PNG output. This family is
+excluded from `make all` because an offline build cannot assume credentials
+or a current snapshot. The
+[Cloud-atmosphere implementation notes](cloud-atmosphere-implementation-notes.md)
+document the astro boundary, exact sources, time and QA rules, H3
+preparation, source terms, layer contract, and tests.
 
 ## Orbital Technosphere generation
 
@@ -499,11 +542,14 @@ and known limits.
 ## Bathymetry Roulette generation
 
 The Bathymetry Roulette pass reuses the twelve nested Natural Earth depth
-polygons as projection-safe clip paths. Each clip reveals a globally aligned
-`userSpaceOnUse` pattern containing a deterministic Izzi epitrochoid or
-hypotrochoid. One pale ground and one dark ink remain constant while point
-distance, radius ratio, closure period, and finally outline versus even-odd
-fill become more complex with depth.
+polygons as projection-safe clip paths. Each depth paints an opaque pale ground
+and an explicit projected-page mosaic of Izzi epitrochoid or hypotrochoid
+lines. Twelve staggered, overlapping phase/size/point-distance variations per
+depth replace the former grid of one repeated symbol. One dark ink remains
+constant while the base point distance, radius ratio, closure period, and
+finally outline versus low-opacity even-odd fill become more complex with
+depth. Every curve instance is serialized; output size is intentionally not a
+generation constraint.
 
 ```sh
 make generate-bathymetry-roulette
@@ -533,7 +579,7 @@ downloads Natural Earth 5.1.1's complete 1:10m physical-vector archive. It:
 4. extracts only the named physical datasets; and
 5. creates the completion stamp last, so interrupted extraction is retried.
 
-The Earth, water, Bathymetry Roulette, and Anthropocene targets depend on that
+The Earth, water, Bathymetry Roulette, Cloud-atmosphere, and Anthropocene targets depend on that
 stamp and pass
 `NATURAL_EARTH_DIR` to their executables. The archive digest and licensing
 are recorded in the
@@ -541,7 +587,7 @@ are recorded in the
 
 ## Shared coordinate pipeline
 
-The ten whole-map generators use
+The eleven whole-map generators use
 [`projection-generation-common.h`](../src.generate/projection-generation-common.h)
 to select a production projection, construct its exact frame, and call the
 shared public API in `(latitude, longitude)` order. Projected coordinates use

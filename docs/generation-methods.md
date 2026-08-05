@@ -30,20 +30,20 @@ decision after the fact.
 | Stage | Proposed pass | Repository status | Preserved evaluation record |
 | --- | --- | --- | --- |
 | 4.1 | `generate-astro` / space and astronomy | **Implemented** | Visualization-grade feasibility, source roles, profile authority, calculation methods, products, and limits are summarized below and detailed in the [astronomy implementation notes](astro-implementation-notes.md) |
-| 4.1a | `generate-cloud-atmosphere` | **Requested; not evaluated to a repository decision** | The raw request identifies timestamped cloud/atmosphere conditions and JAXA Earth data, but no confirmed source contract, profile, product split, or implementation is preserved |
+| 4.1a | `generate-cloud-atmosphere` | **Implemented** | Confirmed P-Tree physical-cloud contract, regional/daytime coverage, process-start solar calculation, source-timed JAXA atmosphere layers, H3 preparation, products, and limits are detailed in the [Cloud-atmosphere implementation notes](cloud-atmosphere-implementation-notes.md) |
 | 4.2 | `generate-orbiting` / Orbital Technosphere | **Implemented** | Naming, NASA/CelesTrak feasibility, OMM/SGP4, profile authority, products, and limits are summarized below and detailed in the [Orbital Technosphere implementation notes](orbital-technosphere-implementation-notes.md) |
 | 4.4 | `generate-network-swarm` | **Implemented** | Confirmed variable-input contract, fixed cumulative snapshot, H3/Izzi clustering, projection-safe components, independent downloader layers, products, and limits are detailed in the [network-swarm implementation notes](network-swarm-implementation-notes.md) |
-| 4.5 | `generate-bathymetry-roulette` | **Implemented** | Confirmed depth-to-curve catalogue, monochrome page-space patterns, Natural Earth clipping, accepted moiré, products, and limits are detailed in the [Bathymetry Roulette implementation notes](bathymetry-roulette-implementation-notes.md) |
+| 4.5 | `generate-bathymetry-roulette` | **Implemented** | Confirmed depth-to-curve catalogue, explicit varied page-space line fields, Natural Earth clipping, accepted moiré, products, and limits are detailed in the [Bathymetry Roulette implementation notes](bathymetry-roulette-implementation-notes.md) |
 | 6 | `generate-world-game` | **Requested; not evaluated to a repository decision** | The raw request identifies World Game and Fuller archival collections; no confirmed digitization, licensing, normalized dataset, layer model, or implementation is preserved |
 | 7 | Configurable `generate-*` selection | **Implemented infrastructure** | JSON profile, validation, safe target expansion, default Make behavior, alternatives, and scope boundaries are recorded in this document |
 | 8 | `generate-anthropocene` | **Implemented** | Confirmed source-separated indicator atlas, literal 2026 duration, H3 cell-days, EPA PM2.5/smoke separation, Canada/Russia fire-source roles, partial-coverage semantics, deferred coral phase, products, and limits are detailed in the [Anthropocene implementation notes](anthropocene-implementation-notes.md) |
 | 9 | `generate-network-infrastructure` | **Implemented** | Confirmed external-source contract, normal cloud/CDN site atlas, explicit CC BY-NC-SA 3.0 topology opt-in, physical/logical relation boundary, projection-safe paths, Izzi detiling, products, and limits are detailed in the [network-infrastructure implementation notes](network-infrastructure-implementation-notes.md) |
 
 The unnumbered `solar/high-energy`, `atmosphere/cloud`, and
-`small-body/mission` lines in the raw ledger are taxonomy notes, not separate
-approved passes. Astronomy currently owns the implemented solar,
-high-energy, and representative small-body content. No inference is made
-about a future split.
+`small-body/mission` lines in the raw ledger are taxonomy notes, not extra
+passes beyond the numbered stages. Astronomy owns celestial solar,
+high-energy, and representative small-body content; Cloud-atmosphere owns
+terrestrial solar illumination and physical atmosphere observations.
 
 ## Implemented evaluation conclusions
 
@@ -71,10 +71,38 @@ navigation-grade ephemerides. The implemented choices were:
   major-planet and lunar elements, two-body small-body propagation, simplified
   sidereal/visibility calculations, and no atmospheric or terrain model.
 
-JAXA Earth data was evaluated as a possible future atmosphere/cloud context,
-not as a source of celestial coordinates. The implementation, exact formulas,
+JAXA Earth data is not a source of celestial coordinates and is now consumed
+by the separate Stage 4.1a pass. The astronomy implementation, exact formulas,
 source-role table, validation, and deferred precision work are recorded in
 [`astro-implementation-notes.md`](astro-implementation-notes.md).
+
+### Stage 4.1a: Cloud-atmosphere
+
+The evaluation concluded that a physical atmosphere pass is feasible if it
+preserves source coverage and time rather than filling gaps or presenting a
+mixed-age mosaic as simultaneous. The confirmed and implemented choices were:
+
+- use credentialed P-Tree Himawari-9 L2 Cloud Property 1.0 for physical cloud
+  fraction, optical thickness, top height, and ISCCP type;
+- keep P-Tree's regional and daytime-only coverage visible, with missing cells
+  defined as unobserved rather than clear or zero;
+- calculate subsolar position and twilight at one process-start instant,
+  sharing the exact solar ephemeris with astronomy without duplicating
+  celestial sources or observer-horizon layers;
+- use public JAXA Earth STAC COGs for GCOM-C daytime AOD at 500 nm, GSMaP
+  gauge-adjusted hourly precipitation, and JASMES daily surface shortwave
+  radiation, while retaining each source interval and a latest-not-after rule;
+- keep AOD distinct from observed smoke and PM2.5 exposure, and precipitation
+  distinct from floods and extreme-event counts;
+- normalize QA-filtered raster samples into resolution-3 H3 cells before the
+  six shared projection implementations; and
+- keep credentialed network refresh and large local observations outside
+  `make all`, with explicit fetch, prepare, verify, SVG, and artifact targets.
+
+The source matrix, QA bits, profile schema, time contract, acquisition and
+preparation workflow, layer contract, terms, validation, and deferred
+water-vapor/GOSAT/EarthCARE classifications are recorded in
+[`cloud-atmosphere-implementation-notes.md`](cloud-atmosphere-implementation-notes.md).
 
 ### Stage 4.2: Orbital Technosphere
 
@@ -133,8 +161,8 @@ edge-data work are recorded in
 
 The evaluation concluded that a monochrome roulette bathymetry pass is
 feasible by reusing the twelve nested Natural Earth depth polygons as
-projection-safe SVG clips and Izzi's closed roulette paths as page-space
-patterns. The confirmed and implemented choices were:
+projection-safe SVG clips and Izzi's closed roulette paths as explicit
+page-space line fields. The confirmed and implemented choices were:
 
 - use the canonical name `bathymetry-roulette`, while accepting the requested
   `bathymetry-rolette` spelling and historical `art-agua-roulette` name as
@@ -144,10 +172,15 @@ patterns. The confirmed and implemented choices were:
 - increase point-distance ratio strictly with depth, progress from simple
   1:1 curves through 5:2 and 11:7 curves, and use outline motifs through
   -6,000 m followed by even-odd filled motifs;
-- register 1.20-unit patterns in projected page space so symbol size is
-  consistent and adjacent polygons share the same grid;
-- paint nested thresholds shallow to deep with a common opaque tile
-  background, making visible exclusive bands without polygon differences;
+- expand each representative depth curve into twelve deterministic diameter,
+  point-distance, phase, and center-offset variations;
+- place those curves on staggered 1.10-unit projected-page cells with
+  overlapping diameters, producing a continuous field rather than an icon
+  grid;
+- serialize every curve instance instead of using SVG pattern references, with
+  no artifact-size constraint on this generative pass;
+- paint nested thresholds shallow to deep with a common opaque ground,
+  making visible exclusive bands without polygon differences;
 - retain the six-production-projection topology and a complete visible key;
   and
 - accept dense interference and moiré as intentional artwork while making
@@ -226,11 +259,6 @@ are recorded in
 The following entries preserve the useful content of the requests without
 claiming that an evaluation or confirmation occurred:
 
-- **Cloud/atmosphere:** intended as timestamped atmospheric conditions in
-  `generate-cloud-atmosphere.cc`, initially using JAXA Earth data. Before
-  implementation it still needs a concrete product definition, temporal and
-  spatial resolution policy, acquisition and cache contract, observer/global
-  distinction, profile schema, missing-data behavior, and licensing review.
 - **World Game:** intended to map Fuller's *Inventory of World Resources,
   Human Trends, and Needs* using BFI, Virginia Tech, Stanford, and California
   archival holdings. It still needs an accessible machine-readable corpus,

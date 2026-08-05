@@ -6,15 +6,12 @@
 
 #include <algorithm>
 #include <array>
-#include <chrono>
 #include <cmath>
 #include <cstddef>
-#include <ctime>
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <limits>
-#include <numbers>
 #include <optional>
 #include <sstream>
 #include <stdexcept>
@@ -28,133 +25,34 @@
 #include <rapidjson/document.h>
 #include <rapidjson/error/en.h>
 
+#include "generation-instant.h"
+#include "solar-geometry.h"
+
 namespace cart0freak0::astro_generation {
 
 namespace fs = std::filesystem;
 namespace rj = rapidjson;
 
 inline constexpr double degrees_per_hour = 15.0;
-inline constexpr double julian_unix_epoch = 2440587.5;
-inline constexpr double julian_j2000 = 2451545.0;
 inline constexpr double julian_gaia_dr3_epoch = 2457388.5;
-inline constexpr double seconds_per_day = 86400.0;
 inline constexpr double days_per_julian_year = 365.25;
+
+using generation_time::instant;
+using generation_time::julian_j2000;
+using generation_time::make_instant;
+using generation_time::parse_timestamp;
+using generation_time::seconds_per_day;
+using solar_geometry::degrees_to_radians;
+using solar_geometry::greenwich_mean_sidereal_time;
+using solar_geometry::normalize_degrees;
+using solar_geometry::normalize_signed_degrees;
+using solar_geometry::radians_to_degrees;
 
 inline void
 astro_require(const bool condition, const std::string& message)
 {
   if (!condition)
     throw std::runtime_error(message);
-}
-
-inline double
-degrees_to_radians(const double degrees)
-{ return degrees * std::numbers::pi / 180.0; }
-
-inline double
-radians_to_degrees(const double radians)
-{ return radians * 180.0 / std::numbers::pi; }
-
-inline double
-normalize_degrees(double degrees)
-{
-  degrees = std::fmod(degrees, 360.0);
-  if (degrees < 0)
-    degrees += 360.0;
-  return degrees;
-}
-
-inline double
-normalize_signed_degrees(const double degrees)
-{
-  double result = normalize_degrees(degrees);
-  if (result > 180.0)
-    result -= 360.0;
-  return result;
-}
-
-struct instant
-{
-  std::chrono::sys_seconds value;
-  std::string iso_utc;
-  double julian_date;
-};
-
-inline int
-parse_decimal_component(const std::string_view text, const std::size_t offset,
-                        const std::size_t count,
-                        const std::string_view component)
-{
-  astro_require(offset + count <= text.size(),
-                "timestamp is missing " + std::string(component));
-  int result = 0;
-  for (std::size_t index = offset; index < offset + count; ++index)
-    {
-      astro_require(text[index] >= '0' && text[index] <= '9',
-                    "timestamp has a nondecimal "
-                      + std::string(component));
-      result = result * 10 + (text[index] - '0');
-    }
-  return result;
-}
-
-inline std::string
-format_utc(const std::chrono::sys_seconds value)
-{
-  const std::time_t time = std::chrono::system_clock::to_time_t(value);
-  std::tm utc {};
-  astro_require(gmtime_r(&time, &utc) != nullptr,
-                "failed to format astronomy timestamp");
-  std::array<char, 32> buffer {};
-  astro_require(std::strftime(buffer.data(), buffer.size(),
-                              "%Y-%m-%dT%H:%M:%SZ", &utc) != 0,
-                "failed to serialize astronomy timestamp");
-  return buffer.data();
-}
-
-inline instant
-make_instant(const std::chrono::sys_seconds value)
-{
-  const double unix_seconds = static_cast<double>(
-    value.time_since_epoch().count());
-  return {value, format_utc(value),
-          julian_unix_epoch + unix_seconds / seconds_per_day};
-}
-
-inline instant
-parse_timestamp(const std::string_view timestamp)
-{
-  if (timestamp == "now")
-    return make_instant(std::chrono::floor<std::chrono::seconds>(
-      std::chrono::system_clock::now()));
-
-  astro_require(timestamp.size() == 20
-                  && timestamp[4] == '-' && timestamp[7] == '-'
-                  && timestamp[10] == 'T' && timestamp[13] == ':'
-                  && timestamp[16] == ':' && timestamp[19] == 'Z',
-                "timestamp must be 'now' or YYYY-MM-DDTHH:MM:SSZ");
-  const int year = parse_decimal_component(timestamp, 0, 4, "year");
-  const unsigned month = static_cast<unsigned>(
-    parse_decimal_component(timestamp, 5, 2, "month"));
-  const unsigned day = static_cast<unsigned>(
-    parse_decimal_component(timestamp, 8, 2, "day"));
-  const int hour = parse_decimal_component(timestamp, 11, 2, "hour");
-  const int minute = parse_decimal_component(timestamp, 14, 2, "minute");
-  const int second = parse_decimal_component(timestamp, 17, 2, "second");
-  const std::chrono::year_month_day calendar {
-    std::chrono::year {year}, std::chrono::month {month},
-    std::chrono::day {day},
-  };
-  astro_require(calendar.ok(), "timestamp has an invalid calendar date");
-  astro_require(hour >= 0 && hour <= 23
-                  && minute >= 0 && minute <= 59
-                  && second >= 0 && second <= 59,
-                "timestamp has an invalid clock time");
-  const std::chrono::sys_seconds value
-    = std::chrono::sys_days {calendar}
-      + std::chrono::hours {hour} + std::chrono::minutes {minute}
-      + std::chrono::seconds {second};
-  return make_instant(value);
 }
 
 inline rj::Document
@@ -980,12 +878,16 @@ make_solar_system(const profile& config)
   const vector_3d earth = planet_heliocentric_vector(
     earth_model, julian_date);
   std::vector<sky_object> result;
-  result.push_back(object_from_vector(
+  const solar_geometry::equatorial_position sun
+    = solar_geometry::sun_equatorial_position(julian_date);
+  result.push_back({
     "sun", "Sun", "sun",
     {"radio", "infrared", "optical", "ultraviolet", "x-ray", "gamma-ray"},
-    -earth, -26.74,
+    sun.right_ascension_deg, sun.declination_deg, -26.74,
+    std::nullopt, std::nullopt, std::nullopt,
     "https://ssd.jpl.nasa.gov/planets/approx_pos.html",
-    "JPL approximate geocentric solar position"));
+    "Shared low-precision geocentric solar position",
+  });
   result.push_back(approximate_moon(julian_date));
   for (const planet_model& model : planet_models)
     {
@@ -1023,17 +925,6 @@ load_catalogs(const profile& config)
     std::move(curated.events),
     make_solar_system(config),
   };
-}
-
-inline double
-greenwich_mean_sidereal_time(const double julian_date)
-{
-  const double days = julian_date - julian_j2000;
-  const double centuries = days / 36525.0;
-  return normalize_degrees(
-    280.46061837 + 360.98564736629 * days
-      + 0.000387933 * centuries * centuries
-      - centuries * centuries * centuries / 38710000.0);
 }
 
 inline double

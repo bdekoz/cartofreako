@@ -27,8 +27,8 @@ Install the components listed in
 [`docs/prerequisites.md`](docs/prerequisites.md) before building the complete
 SVG, PDF, and PNG suite. The offline `make check` target needs GNU Make, a
 C++20 compiler, RapidJSON and H3 development files, sibling Alpha60/Izzi
-headers, and the checked-in astronomy, Orbital Technosphere, Anthropocene, and
-network-swarm snapshots.
+headers, and the checked-in astronomy, Cloud-atmosphere fixture, Orbital
+Technosphere, Anthropocene, and network-swarm snapshots.
 
 List every supported top-level Make target with:
 
@@ -100,6 +100,26 @@ See the
 [`astronomy implementation notes`](docs/astro-implementation-notes.md) for the
 San Francisco profile, data sources, formulas, instrumentation model, and
 outputs.
+
+Cloud-atmosphere generation is a source-timed opt-in outside `make all`.
+P-Tree supplies physical Himawari clouds with regional/daytime coverage;
+public JAXA Earth COGs supply AOD, precipitation, and shortwave radiation.
+Refresh requires the existing P-Tree `.netrc` entry, then preparation converts
+all observed layers to a common H3 snapshot:
+
+```sh
+make fetch-cloud-atmosphere-data
+make prepare-cloud-atmosphere-data
+make verify-cloud-atmosphere-data
+make generate-cloud-atmosphere
+```
+
+Solar illumination is calculated once at generator process start. AOD remains
+distinct from smoke and PM2.5, precipitation is not an event count, and
+missing data means unobserved. See the
+[Cloud-atmosphere implementation notes](docs/cloud-atmosphere-implementation-notes.md)
+for the astronomy boundary, source and QA contracts, terms, layers, and
+limitations.
 
 Orbital Technosphere generation is also offline by default. Its JSON profile
 fixes the SGP4 calculation instant and San Francisco reference point, while
@@ -180,5 +200,6 @@ make generate-bathymetry-roulette-artifacts
 ```
 
 See the [Bathymetry Roulette implementation notes](docs/bathymetry-roulette-implementation-notes.md)
-for the confirmed depth-to-curve catalogue, monochrome clipping model,
-accepted moiré, layer contract, and previews.
+for the confirmed depth-to-curve catalogue, explicit overlapping line-field
+variations, monochrome clipping model, accepted moiré, layer contract, and
+previews.

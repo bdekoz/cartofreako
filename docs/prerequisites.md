@@ -12,15 +12,15 @@ generation workflow. They do not require the same software:
 | Component | Required for | Purpose |
 | --- | --- | --- |
 | GNU Make | All Makefile targets | Expands the generated projection rules and coordinates builds |
-| C++20 compiler and standard library | Tests, profile resolution, and native generators | Builds the projection checks, generation-profile resolver, thirteen SVG-generation programs, and Anthropocene normalizer |
-| RapidJSON development headers | Configured generation plus astronomy, Orbital Technosphere, Anthropocene, network-swarm, and network-infrastructure tests and generators | Parses the generation preference, authoritative data profiles, astronomy JSON, NASA SSCWeb references, normalized H3 observations, cumulative swarm GeoJSON, and infrastructure source records |
+| C++20 compiler and standard library | Tests, profile resolution, and native generators | Builds the projection checks, generation-profile resolver, fourteen SVG-generation programs, and the Anthropocene and Cloud-atmosphere preparers |
+| RapidJSON development headers | Configured generation plus astronomy, Cloud-atmosphere, Orbital Technosphere, Anthropocene, network-swarm, and network-infrastructure tests and generators | Parses the generation preference, authoritative data profiles, astronomy JSON, NASA SSCWeb references, normalized H3 observations, cumulative swarm GeoJSON, and infrastructure source records |
 | Alpha60 headers | SVG generation | Supplies `a60-io.h` and shared runtime-resource interfaces |
 | Izzi headers | SVG generation | Supplies `a60-svg.h`, roulette-curve construction, and SVG document/path serialization |
-| H3 development headers and library | Network-swarm and Anthropocene tests, normalization, and generation | Validates 64-bit cells, computes configurable parent clusters, aggregates points, and fills smoke polygons with the H3 v4 API |
-| GDAL development package with OGR | Earth, water, Bathymetry Roulette, global Orbital Technosphere, Anthropocene, network-swarm, and network-infrastructure generation | Reads Natural Earth and HMS Shapefiles and provides vector geometry operations |
+| H3 development headers and library | Cloud-atmosphere, Network-swarm, and Anthropocene tests, normalization, and generation | Validates 64-bit cells, aggregates raster and point observations, computes configurable parent clusters, and creates cell boundaries with the H3 v4 API |
+| GDAL development package with OGR, GeoTIFF, and NetCDF drivers | Earth, water, Bathymetry Roulette, Cloud-atmosphere, global Orbital Technosphere, Anthropocene, network-swarm, and network-infrastructure generation | Reads Natural Earth/HMS vectors plus JAXA COG and P-Tree NetCDF rasters |
 | GEOS support in GDAL | Natural Earth-backed generation | Performs polygon intersection, repair, and seam-safe clipping |
 | Fontconfig and Atkinson Hyperlegible | Graticule, astronomy, Orbital Technosphere, Anthropocene, network-swarm, network-infrastructure, and Bathymetry Roulette generation and PDF/PNG export | Resolves the default accessible label face and prevents silent font substitution |
-| Git, Bash, `curl`, `unzip`, `tar`, `gzip`, `rg`, `find`, `sha256sum`, and GNU coreutils including `cmp` and `date` | Natural Earth, astronomy, orbital, Anthropocene, network-swarm, and network-infrastructure source preparation or validation | Downloads, verifies commits and files, compares, dates, and extracts or installs bounded source data |
+| Git, Bash, Python 3, `curl`, `jq`, `unzip`, `tar`, `gzip`, `rg`, `find`, `sha256sum`, and GNU coreutils including `cmp`, `date`, and `realpath` | Natural Earth, astronomy, Cloud-atmosphere, orbital, Anthropocene, network-swarm, and network-infrastructure source preparation or validation | Resolves static STAC metadata, downloads, verifies commits and files, compares, dates, transforms JSON, and extracts or installs bounded source data |
 | Inkscape | Complete artifact generation and visual review | Exports PDF/PNG and inspects SVG layers, clipping, geometry, and seams |
 | Doxygen | API reference generation | Builds the documented projection-header reference under `docs/doxygen/` |
 | Emscripten, Node.js, and a browser | Optional WebAssembly builds | Builds the production Cahill-Keyes and land/ocean-only Myriahedral adapters, plus the illustrative Myriahedral overlay |
@@ -47,7 +47,8 @@ Corresponding environment variables such as `CXX`, `ALPHA60_SRC`, `EMXX`,
 
 The target verifies the native commands and sibling headers, compiles and runs
 C++20/RapidJSON and H3 link/runtime probes, and compiles a GDAL probe that
-checks OGR, GEOS, and the ESRI Shapefile driver. It uses `fc-match` to reject
+checks OGR, GEOS, and the ESRI Shapefile, GeoTIFF, and NetCDF drivers. It uses
+`fc-match` to reject
 a missing configured label family instead of accepting Fontconfig's fallback.
 Missing native prerequisites make the target fail. Optional
 WebAssembly tools and a browser are always checked and reported, but do not
@@ -58,9 +59,9 @@ they are not discoverable at their defaults.
 `make generation-plan` needs GNU Make, a C++20 compiler, and RapidJSON
 headers. Bare `make` additionally needs the dependencies of the passes chosen
 by the generation profile. The check suite also needs H3, GDAL development
-files, the sibling Izzi/Alpha60 headers, and the checked-in astronomy, Orbital
-Technosphere, Anthropocene, network-swarm, and network-infrastructure profiles
-and bounded snapshots.
+files, the sibling Izzi/Alpha60 headers, and the checked-in astronomy,
+Cloud-atmosphere fixture, Orbital Technosphere, Anthropocene, network-swarm,
+and network-infrastructure profiles and bounded snapshots.
 It does not open Natural Earth, invoke Inkscape, or use network access.
 
 `make all` builds 24 production whole-earth maps, 12 astronomy maps, 12
@@ -75,6 +76,14 @@ licensed TeleGeography topology product is not part of `make all`.
 Inkscape may be omitted only when invoking individual SVG generation targets
 or the offline `make check` suite.
 
+Cloud-atmosphere generation is an opt-in workflow outside `make all`. Its
+refresh step needs network access and a registered P-Tree account available
+through the user's `.netrc`; its public JAXA Earth sources need no credential.
+Preparation needs H3 plus GDAL's GeoTIFF and NetCDF drivers. After installing
+those dependencies, use the explicit fetch, prepare, verify, and generate
+targets documented in the
+[Cloud-atmosphere notes](cloud-atmosphere-implementation-notes.md).
+
 ## Install the system packages
 
 The commands below install a full native contributor workstation, including
@@ -84,19 +93,21 @@ Inkscape. Package names may differ on older or derivative distributions.
 
 ```sh
 sudo dnf install \
-  gcc-c++ make git bash curl unzip tar gzip findutils ripgrep coreutils fontconfig \
+  gcc-c++ make git bash python3 curl jq unzip tar gzip findutils ripgrep coreutils fontconfig \
   gdal gdal-devel geos geos-devel rapidjson-devel h3 h3-devel inkscape doxygen
 ```
 
 The `-devel` packages are important: the runtime-only GDAL package does not
-provide the C++ headers and link metadata used by the Makefile.
+provide the C++ headers and link metadata used by the Makefile. Some Fedora
+releases package the NetCDF driver separately; install the matching GDAL
+NetCDF plugin if `make check-prerequisite` reports it missing.
 
 ### Debian and Ubuntu
 
 ```sh
 sudo apt-get update
 sudo apt-get install \
-  build-essential git bash curl unzip tar gzip findutils ripgrep coreutils fontconfig \
+  build-essential git bash python3 jq curl unzip tar gzip findutils ripgrep coreutils fontconfig \
   fonts-atkinson-hyperlegible \
   gdal-bin libgdal-dev libgeos-dev rapidjson-dev libh3-dev inkscape doxygen
 ```
@@ -108,7 +119,7 @@ components:
 
 ```sh
 xcode-select --install
-brew install make gdal h3 rapidjson coreutils git ripgrep doxygen fontconfig
+brew install make gdal h3 rapidjson coreutils git ripgrep jq python doxygen fontconfig
 brew install --cask inkscape font-atkinson-hyperlegible
 ```
 
@@ -125,7 +136,8 @@ GDAL formula includes GEOS support.
 
 ### Label font
 
-Every visible text element generated by the graticule, astronomy, Orbital
+Every visible text element generated by the graticule, astronomy,
+Cloud-atmosphere, Orbital
 Technosphere, Anthropocene, network-swarm, network-infrastructure, and
 Bathymetry Roulette passes
 defaults to the original

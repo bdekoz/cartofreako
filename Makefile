@@ -28,6 +28,18 @@ NATURAL_EARTH_FETCHER := scripts/fetch-natural-earth-10m.sh
 ASTRO_DATA_DIR ?= $(STATIC_ASSET_DIR)/astronomy
 ASTRO_PROFILE ?= $(ASTRO_DATA_DIR)/astro-profile.json
 ASTRO_FETCHER := scripts/fetch-astro-data.sh
+CLOUD_ATMOSPHERE_DATA_DIR ?= $(STATIC_ASSET_DIR)/cloud-atmosphere
+CLOUD_ATMOSPHERE_PROFILE ?= \
+	$(CLOUD_ATMOSPHERE_DATA_DIR)/cloud-atmosphere-profile.json
+CLOUD_ATMOSPHERE_GEOJSON ?= \
+	$(CLOUD_ATMOSPHERE_DATA_DIR)/.prepared/cloud-atmosphere-latest.geojson
+CLOUD_ATMOSPHERE_FIXTURE := \
+	$(CLOUD_ATMOSPHERE_DATA_DIR)/fixtures/cloud-atmosphere-fixture.geojson
+CLOUD_ATMOSPHERE_FETCHER := scripts/fetch-cloud-atmosphere-data.sh
+CLOUD_ATMOSPHERE_STAC_RESOLVER := scripts/resolve-jaxa-stac.py
+CLOUD_ATMOSPHERE_PREPARATION_SCRIPT := \
+	scripts/prepare-cloud-atmosphere-data.sh
+CLOUD_ATMOSPHERE_VERIFIER := scripts/verify-cloud-atmosphere-data.sh
 ORBITING_DATA_DIR ?= $(STATIC_ASSET_DIR)/orbital-technosphere
 ORBITING_PROFILE ?= \
 	$(ORBITING_DATA_DIR)/orbital-technosphere-profile.json
@@ -100,6 +112,10 @@ EIGHT_SLICE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-8-slice
 MYRIAHEDRAL_SLICE_GENERATOR := \
 	$(GENERATOR_SRC_DIR)/generate-myriahedral-slices
 ASTRO_GENERATOR := $(GENERATOR_SRC_DIR)/generate-astro
+CLOUD_ATMOSPHERE_GENERATOR := \
+	$(GENERATOR_SRC_DIR)/generate-cloud-atmosphere
+CLOUD_ATMOSPHERE_PREPARER := \
+	$(GENERATOR_SRC_DIR)/prepare-cloud-atmosphere
 ORBITING_GENERATOR := $(GENERATOR_SRC_DIR)/generate-orbiting
 ANTHROPOCENE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-anthropocene
 ANTHROPOCENE_PREPARER := $(GENERATOR_SRC_DIR)/prepare-anthropocene
@@ -189,6 +205,18 @@ ASTRO_OBSERVER_SVGS := \
 	$(GENERATED_SVG_DIR)/astro-observer-star-x-34-44.svg \
 	$(GENERATED_SVG_DIR)/astro-observer-voronoi-44-22.916667.svg
 ASTRO_SVGS := $(ASTRO_ALL_SKY_SVGS) $(ASTRO_OBSERVER_SVGS)
+
+CLOUD_ATMOSPHERE_SVGS := \
+	$(GENERATED_SVG_DIR)/cloud-atmosphere-ck-44-22.svg \
+	$(GENERATED_SVG_DIR)/cloud-atmosphere-authagraph-44-19.052559.svg \
+	$(GENERATED_SVG_DIR)/cloud-atmosphere-dymaxion-44-20.78461.svg \
+	$(GENERATED_SVG_DIR)/cloud-atmosphere-myriahedral-44-24.75.svg \
+	$(GENERATED_SVG_DIR)/cloud-atmosphere-star-x-34-44.svg \
+	$(GENERATED_SVG_DIR)/cloud-atmosphere-voronoi-44-22.916667.svg
+CLOUD_ATMOSPHERE_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PDF_DIR)/%.pdf,$(CLOUD_ATMOSPHERE_SVGS))
+CLOUD_ATMOSPHERE_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PNG_DIR)/%.png,$(CLOUD_ATMOSPHERE_SVGS))
 
 ORBITING_GLOBAL_SVGS := \
 	$(GENERATED_SVG_DIR)/orbital-technosphere-global-ck-44-22.svg \
@@ -343,6 +371,8 @@ ANTHROPOCENE_STAR_X_PNG := \
 	$(GENERATED_PNG_DIR)/anthropocene-star-x-34-44.png
 BATHYMETRY_ROULETTE_STAR_X_PNG := \
 	$(GENERATED_PNG_DIR)/bathymetry-roulette-star-x-34-44.png
+CLOUD_ATMOSPHERE_STAR_X_PNG := \
+	$(GENERATED_PNG_DIR)/cloud-atmosphere-star-x-34-44.png
 MYRIAHEDRAL_PORTRAIT_SLICE_PNG := \
 	$(GENERATED_PNG_DIR)/water-myriahedral-adhoc-slice-1.png
 PORTRAIT_PNGS := $(STAR_X_PNGS) $(ASTRO_STAR_X_PNGS) \
@@ -351,8 +381,10 @@ PORTRAIT_PNGS := $(STAR_X_PNGS) $(ASTRO_STAR_X_PNGS) \
 	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_STAR_X_PNG) \
 	$(ANTHROPOCENE_STAR_X_PNG) $(CK_SLICE_PNGS) \
 	$(BATHYMETRY_ROULETTE_STAR_X_PNG) \
+	$(CLOUD_ATMOSPHERE_STAR_X_PNG) \
 	$(MYRIAHEDRAL_PORTRAIT_SLICE_PNG)
-LANDSCAPE_PNGS := $(filter-out $(PORTRAIT_PNGS),$(GENERATED_PNGS))
+LANDSCAPE_PNGS := $(filter-out $(PORTRAIT_PNGS),\
+	$(GENERATED_PNGS) $(CLOUD_ATMOSPHERE_PNGS))
 GENERATED_ARTIFACTS := $(GENERATED_SVGS) $(GENERATED_PDFS) \
 	$(GENERATED_PNGS)
 
@@ -360,6 +392,8 @@ GENERATOR_BINARIES := \
 	$(ANTHROPOCENE_GENERATOR) \
 	$(ANTHROPOCENE_PREPARER) \
 	$(ASTRO_GENERATOR) \
+	$(CLOUD_ATMOSPHERE_GENERATOR) \
+	$(CLOUD_ATMOSPHERE_PREPARER) \
 	$(BATHYMETRY_ROULETTE_GENERATOR) \
 	$(GENERATION_PROFILE_RESOLVER) \
 	$(NETWORK_INFRASTRUCTURE_GENERATOR) \
@@ -375,6 +409,7 @@ GENERATOR_BINARIES := \
 TEST_BINARIES := \
 	$(TEST_DIR)/test-anthropocene-generation \
 	$(TEST_DIR)/test-astro-generation \
+	$(TEST_DIR)/test-cloud-atmosphere-generation \
 	$(TEST_DIR)/test-bathymetry-roulette-style \
 	$(TEST_DIR)/test-generation-profile \
 	$(TEST_DIR)/test-generation-typography \
@@ -394,6 +429,8 @@ TEST_BINARIES := \
 	$(TEST_DIR)/test-voronoi-projection-api
 
 GENERATOR_HEADERS := \
+	$(GENERATOR_SRC_DIR)/generation-instant.h \
+	$(GENERATOR_SRC_DIR)/solar-geometry.h \
 	$(GENERATOR_SRC_DIR)/generation-typography.h \
 	$(GENERATOR_SRC_DIR)/projection-generation-common.h \
 	$(GENERATOR_SRC_DIR)/myriahedral-perspective-generation.h \
@@ -416,6 +453,11 @@ BATHYMETRY_ROULETTE_STYLE_HEADER := \
 ASTRO_GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/astro-data.h \
 	$(GENERATOR_SRC_DIR)/astro-generation.h \
+	$(GENERATOR_HEADERS)
+CLOUD_ATMOSPHERE_GENERATOR_HEADERS := \
+	$(GENERATOR_SRC_DIR)/cloud-atmosphere-data.h \
+	$(GENERATOR_SRC_DIR)/cloud-atmosphere-generation.h \
+	$(NATURAL_EARTH_GENERATOR_HEADER) \
 	$(GENERATOR_HEADERS)
 ORBITING_GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/orbiting-data.h \
@@ -446,6 +488,8 @@ ANTHROPOCENE_GENERATOR_HEADERS := \
 PUBLIC_TARGETS := all check check-prerequisite clean configured doxygen \
 	generation-plan list-targets \
 	fetch-natural-earth-10m fetch-astro-data fetch-orbiting-data \
+	fetch-cloud-atmosphere-data prepare-cloud-atmosphere-data \
+	verify-cloud-atmosphere-data \
 	fetch-anthropocene-data prepare-anthropocene-data \
 	prepare-network-swarm-data make-generated \
 	check-network-infrastructure-sources \
@@ -462,6 +506,14 @@ PUBLIC_TARGETS := all check check-prerequisite clean configured doxygen \
 	generate-astro-authagraph generate-astro-dymaxion \
 	generate-astro-myriahedral generate-astro-star-x \
 	generate-astro-voronoi \
+	generate-cloud-atmosphere generate-cloud-atmosphere-projections \
+	generate-cloud-atmosphere-artifacts \
+	generate-cloud-atmosphere-cahill-keyes \
+	generate-cloud-atmosphere-authagraph \
+	generate-cloud-atmosphere-dymaxion \
+	generate-cloud-atmosphere-myriahedral \
+	generate-cloud-atmosphere-star-x \
+	generate-cloud-atmosphere-voronoi \
 	generate-orbiting generate-orbiting-projections \
 	generate-orbiting-artifacts \
 	generate-orbiting-global generate-orbiting-observer \
@@ -544,7 +596,8 @@ check-prerequisite: $(PREREQUISITE_CHECKER)
 		LABEL_FONT="$(LABEL_FONT)" \
 		"$(PREREQUISITE_CHECKER)"
 
-check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON)
+check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
+		$(CLOUD_ATMOSPHERE_PROFILE) $(CLOUD_ATMOSPHERE_FIXTURE)
 	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_PROFILE)" \
 		"$(ANTHROPOCENE_GEOJSON)"
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
@@ -558,6 +611,13 @@ check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON)
 		$(TEST_DIR)/test-astro-generation.cc \
 		-o $(TEST_DIR)/test-astro-generation
 	$(TEST_DIR)/test-astro-generation
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$(TEST_DIR)/test-cloud-atmosphere-generation.cc \
+		$(shell $(GDAL_CONFIG) --libs) -lh3 \
+		-o $(TEST_DIR)/test-cloud-atmosphere-generation
+	$(TEST_DIR)/test-cloud-atmosphere-generation
+	python3 $(TEST_DIR)/test-resolve-jaxa-stac.py
 	$(CXX) $(CPPFLAGS) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$(TEST_DIR)/test-bathymetry-roulette-style.cc \
 		-o $(TEST_DIR)/test-bathymetry-roulette-style
@@ -747,6 +807,20 @@ $(ASTRO_GENERATOR): $(GENERATOR_SRC_DIR)/generate-astro.cc \
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$< -o $@
 
+$(CLOUD_ATMOSPHERE_GENERATOR): \
+		$(GENERATOR_SRC_DIR)/generate-cloud-atmosphere.cc \
+		$(CLOUD_ATMOSPHERE_GENERATOR_HEADERS)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
+
+$(CLOUD_ATMOSPHERE_PREPARER): \
+		$(GENERATOR_SRC_DIR)/prepare-cloud-atmosphere.cc \
+		$(GENERATOR_SRC_DIR)/cloud-atmosphere-data.h \
+		$(GENERATOR_SRC_DIR)/generation-instant.h
+	$(CXX) $(CPPFLAGS) $(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
+
 $(GENERATION_PROFILE_RESOLVER): \
 		$(GENERATOR_SRC_DIR)/resolve-generation-profile.cc \
 		$(GENERATOR_SRC_DIR)/generation-profile.h
@@ -800,6 +874,26 @@ check-network-infrastructure-topology-sources: \
 
 fetch-astro-data: $(ASTRO_FETCHER)
 	$(ASTRO_FETCHER) "$(ASTRO_DATA_DIR)"
+
+fetch-cloud-atmosphere-data: $(CLOUD_ATMOSPHERE_FETCHER) \
+		$(CLOUD_ATMOSPHERE_STAC_RESOLVER) $(CLOUD_ATMOSPHERE_PROFILE)
+	$(CLOUD_ATMOSPHERE_FETCHER) "$(CLOUD_ATMOSPHERE_DATA_DIR)"
+
+prepare-cloud-atmosphere-data: $(CLOUD_ATMOSPHERE_PREPARER) \
+		$(CLOUD_ATMOSPHERE_PREPARATION_SCRIPT) \
+		$(CLOUD_ATMOSPHERE_PROFILE)
+	CLOUD_ATMOSPHERE_PREPARER="$(abspath $(CLOUD_ATMOSPHERE_PREPARER))" \
+		$(CLOUD_ATMOSPHERE_PREPARATION_SCRIPT) \
+		"$(CLOUD_ATMOSPHERE_DATA_DIR)"
+
+verify-cloud-atmosphere-data: $(CLOUD_ATMOSPHERE_VERIFIER)
+	$(CLOUD_ATMOSPHERE_VERIFIER) "$(CLOUD_ATMOSPHERE_DATA_DIR)"
+
+$(CLOUD_ATMOSPHERE_GEOJSON):
+	@printf '%s\n' \
+		'missing prepared cloud-atmosphere snapshot: $@' \
+		'run make fetch-cloud-atmosphere-data prepare-cloud-atmosphere-data' >&2
+	@exit 1
 
 fetch-orbiting-data: $(ORBITING_FETCHER) $(ORBITING_PROFILE)
 	$(ORBITING_FETCHER) "$(ORBITING_DATA_DIR)"
@@ -976,6 +1070,39 @@ generate-astro-all-sky: $(ASTRO_ALL_SKY_SVGS)
 generate-astro-observer: $(ASTRO_OBSERVER_SVGS)
 generate-astro: $(ASTRO_SVGS)
 generate-astro-projections: $(ASTRO_SVGS)
+
+# $(1): command-line projection name; $(2): cloud-atmosphere product.
+define CLOUD_ATMOSPHERE_PROJECTION_RULES
+generate-cloud-atmosphere-$(1): $(2)
+$(2): $(CLOUD_ATMOSPHERE_GENERATOR) $(CLOUD_ATMOSPHERE_PROFILE) \
+		$(CLOUD_ATMOSPHERE_GEOJSON) $(CLOUD_ATMOSPHERE_VERIFIER) \
+		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+	$(CLOUD_ATMOSPHERE_VERIFIER) "$(CLOUD_ATMOSPHERE_DATA_DIR)"
+	cd "$(GENERATED_SVG_DIR)" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
+		"$(abspath $(CLOUD_ATMOSPHERE_GENERATOR))" $(1) \
+		"$(abspath $(CLOUD_ATMOSPHERE_PROFILE))" \
+		"$(abspath $(CLOUD_ATMOSPHERE_GEOJSON))"
+endef
+
+$(eval $(call CLOUD_ATMOSPHERE_PROJECTION_RULES,cahill-keyes,\
+	$(GENERATED_SVG_DIR)/cloud-atmosphere-ck-44-22.svg))
+$(eval $(call CLOUD_ATMOSPHERE_PROJECTION_RULES,authagraph,\
+	$(GENERATED_SVG_DIR)/cloud-atmosphere-authagraph-44-19.052559.svg))
+$(eval $(call CLOUD_ATMOSPHERE_PROJECTION_RULES,dymaxion,\
+	$(GENERATED_SVG_DIR)/cloud-atmosphere-dymaxion-44-20.78461.svg))
+$(eval $(call CLOUD_ATMOSPHERE_PROJECTION_RULES,myriahedral,\
+	$(GENERATED_SVG_DIR)/cloud-atmosphere-myriahedral-44-24.75.svg))
+$(eval $(call CLOUD_ATMOSPHERE_PROJECTION_RULES,star-x,\
+	$(GENERATED_SVG_DIR)/cloud-atmosphere-star-x-34-44.svg))
+$(eval $(call CLOUD_ATMOSPHERE_PROJECTION_RULES,voronoi,\
+	$(GENERATED_SVG_DIR)/cloud-atmosphere-voronoi-44-22.916667.svg))
+
+generate-cloud-atmosphere: $(CLOUD_ATMOSPHERE_SVGS)
+generate-cloud-atmosphere-projections: $(CLOUD_ATMOSPHERE_SVGS)
+generate-cloud-atmosphere-artifacts: $(CLOUD_ATMOSPHERE_SVGS) \
+	$(CLOUD_ATMOSPHERE_PDFS) $(CLOUD_ATMOSPHERE_PNGS)
 
 # $(1): command-line projection name; $(2)-$(3): Orbital Technosphere products.
 define ORBITING_PROJECTION_RULES
@@ -1200,7 +1327,8 @@ generate-water-myriahedral: generate-water-myriahedral-perspectives \
 generate-myriahedral: generate-water-myriahedral-perspectives \
 	generate-myriahedral-slices
 
-$(GENERATED_PDFS) $(NETWORK_INFRASTRUCTURE_TOPOLOGY_PDFS): \
+$(GENERATED_PDFS) $(NETWORK_INFRASTRUCTURE_TOPOLOGY_PDFS) \
+		$(CLOUD_ATMOSPHERE_PDFS): \
 		$(GENERATED_PDF_DIR)/%.pdf: \
 		$(GENERATED_SVG_DIR)/%.svg | $(GENERATED_PDF_DIR)
 	"$(INKSCAPE)" --export-area-page --export-filename="$@" "$<"

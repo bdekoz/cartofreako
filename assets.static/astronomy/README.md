@@ -24,9 +24,10 @@ catalog may change results because the upstream archives evolve.
 
 `curated-sky.json` adds a small multi-wavelength deep-sky collection and the
 GCN transient snapshot associated with the checked-in timestamp. Its source
-URLs preserve provenance for every item. JAXA Earth API is recorded as the
-optional source for future atmosphere/cloud observer context; it is not used as
-a celestial-position catalog.
+URLs preserve provenance for every item. JAXA Earth data is owned by the
+separate Cloud-atmosphere generator and is not used as a celestial-position
+catalog. Astronomy and Cloud-atmosphere share the solar ephemeris, but not
+their observations or coordinate domains.
 
 The Solar System calculations are visualization-grade. Major-planet positions
 use the JPL Solar System Dynamics approximate Keplerian elements valid from

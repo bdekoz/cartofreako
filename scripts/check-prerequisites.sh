@@ -165,6 +165,8 @@ check_required_tool "curl" "curl"
 check_required_tool "unzip" "unzip"
 check_required_tool "tar" "tar"
 check_required_tool "gzip" "gzip"
+check_required_tool "jq" "jq"
+check_required_tool "Python 3" "python3"
 check_required_tool "ripgrep" "rg"
 check_required_tool "find" "find"
 check_required_tool "GNU-compatible date" "date"
@@ -173,6 +175,7 @@ check_required_tool "Coreutils install" "install"
 check_required_tool "Coreutils mktemp" "mktemp"
 check_required_tool "Coreutils wc" "wc"
 check_required_tool "Coreutils cmp" "cmp"
+check_required_tool "Coreutils realpath" "realpath"
 check_required_file "Alpha60 header" "$alpha60_src/a60-io.h"
 check_required_file "Izzi header" "$izzi_src/a60-svg.h"
 check_required_file "Izzi roulette header" \
@@ -313,6 +316,10 @@ main()
     status |= 1;
   if (GetGDALDriverManager()->GetDriverByName("ESRI Shapefile") == nullptr)
     status |= 2;
+  if (GetGDALDriverManager()->GetDriverByName("GTiff") == nullptr)
+    status |= 4;
+  if (GetGDALDriverManager()->GetDriverByName("netCDF") == nullptr)
+    status |= 8;
   return status;
 }
 EOF
@@ -322,45 +329,56 @@ EOF
       pass "GDAL development headers and libraries"
       "$tmp_dir/gdal" >"$tmp_dir/gdal-run.log" 2>&1
       gdal_status=$?
-      case "$gdal_status" in
-        0)
+      if [ "$gdal_status" -le 15 ]; then
+        if [ $((gdal_status & 1)) -eq 0 ]; then
           pass "GEOS support in GDAL"
-          pass "GDAL ESRI Shapefile driver"
-          ;;
-        1)
+        else
           fail "GEOS support in GDAL"
+        fi
+        if [ $((gdal_status & 2)) -eq 0 ]; then
           pass "GDAL ESRI Shapefile driver"
-          ;;
-        2)
-          pass "GEOS support in GDAL"
+        else
           fail "GDAL ESRI Shapefile driver"
-          ;;
-        3)
-          fail "GEOS support in GDAL"
-          fail "GDAL ESRI Shapefile driver"
-          ;;
-        *)
-          fail "GEOS support in GDAL (runtime probe failed)"
-          fail "GDAL ESRI Shapefile driver (runtime probe failed)"
-          show_log "$tmp_dir/gdal-run.log"
-          ;;
-      esac
+        fi
+        if [ $((gdal_status & 4)) -eq 0 ]; then
+          pass "GDAL GeoTIFF driver"
+        else
+          fail "GDAL GeoTIFF driver"
+        fi
+        if [ $((gdal_status & 8)) -eq 0 ]; then
+          pass "GDAL NetCDF driver"
+        else
+          fail "GDAL NetCDF driver"
+        fi
+      else
+        fail "GEOS support in GDAL (runtime probe failed)"
+        fail "GDAL ESRI Shapefile driver (runtime probe failed)"
+        fail "GDAL GeoTIFF driver (runtime probe failed)"
+        fail "GDAL NetCDF driver (runtime probe failed)"
+        show_log "$tmp_dir/gdal-run.log"
+      fi
     else
       fail "GDAL development headers and libraries"
       show_log "$tmp_dir/gdal-build.log"
       fail "GEOS support in GDAL (compile probe unavailable)"
       fail "GDAL ESRI Shapefile driver (compile probe unavailable)"
+      fail "GDAL GeoTIFF driver (compile probe unavailable)"
+      fail "GDAL NetCDF driver (compile probe unavailable)"
     fi
   else
     fail "GDAL development headers and libraries (compiler or flags unavailable)"
     fail "GEOS support in GDAL (compile probe unavailable)"
     fail "GDAL ESRI Shapefile driver (compile probe unavailable)"
+    fail "GDAL GeoTIFF driver (compile probe unavailable)"
+    fail "GDAL NetCDF driver (compile probe unavailable)"
   fi
 else
   fail "OGR support in GDAL (gdal-config unavailable)"
   fail "GDAL development headers and libraries (gdal-config unavailable)"
   fail "GEOS support in GDAL (gdal-config unavailable)"
   fail "GDAL ESRI Shapefile driver (gdal-config unavailable)"
+  fail "GDAL GeoTIFF driver (gdal-config unavailable)"
+  fail "GDAL NetCDF driver (gdal-config unavailable)"
 fi
 
 printf '\n%s\n' 'Checking optional WebAssembly prerequisites:'
