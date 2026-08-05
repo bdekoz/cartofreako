@@ -16,7 +16,7 @@ WebAssembly requirements.
 | --- | --- | --- |
 | [`src.projections/`](src.projections/) | Projection interface, frame abstraction, and native implementations | [`a60-carto-projection.h`](src.projections/a60-carto-projection.h) |
 | [`src.generate/`](src.generate/) | Native SVG generators and their shared generation support | [Generation guide](docs/generation.md) |
-| [`src.wasm/`](src.wasm/) | Browser adapter, seam-prepared input, smoke test, and checked-in WASM build | [Cahill-Keyes WASM README](src.wasm/README.md) |
+| [`src.wasm/`](src.wasm/) | Browser adapters, seam-prepared input, smoke tests, and generated WASM builds | [WebAssembly renderer README](src.wasm/README.md) |
 | [`tests/`](tests/) | Standalone algorithm and public-API tests | [`make check`](Makefile) |
 | [`assets.static/`](assets.static/) | Source plates, historical implementations, reference rasters, and downloaded geographic data | [Myriahedral reconstruction assets](assets.static/myriahedral/README.md) |
 | [`assets.generated/`](assets.generated/) | Generated SVG, PDF, and opaque PNG deliverables | [Preview matrix](#generated-artifact-previews) |
@@ -38,8 +38,8 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Installation and build dependencies | [Prerequisites](docs/prerequisites.md) |
 | SVG/PDF/PNG generation, Natural Earth, folding, slicing, and review | [Generation guide](docs/generation.md) |
 | Natural Earth acquisition, digest, and license | [Natural Earth data note](docs/natural-earth-10m-physical-vectors.md) |
-| Production Cahill-Keyes browser renderer | [Cahill-Keyes WebAssembly README](src.wasm/README.md) |
-| Illustrative Myriahedral browser build | [WebAssembly workflow](docs/web-workflow.md) and [complete example](docs/web-example.md) |
+| Production Cahill-Keyes and Myriahedral browser renderers | [WebAssembly renderer README](src.wasm/README.md) |
+| Illustrative raster-backed Myriahedral overlay | [WebAssembly workflow](docs/web-workflow.md) and [complete example](docs/web-example.md) |
 
 Each projection has three complementary documents. Context explains the
 geometry and cuts, implementation notes describe formulas and code, and the
@@ -211,6 +211,9 @@ are in the
 The same notes record the
 [perspective configurations](docs/myriahedral-implementation-notes.md#perspective-configuration-metadata)
 and [Myriahedral slicing](docs/myriahedral-implementation-notes.md#myriahedral-slicing).
+The production
+[WebAssembly base-map option](docs/myriahedral-implementation-notes.md#webassembly-land-and-ocean-option)
+emits only the `ocean` and `land` layers.
 
 ## Icosahedral Voronoi
 
@@ -247,11 +250,15 @@ the `voronoi_source` preset are in the
 | [`src.projections/a60-carto-projection-dymaxion.h`](src.projections/a60-carto-projection-dymaxion.h) | Exact Fuller face transform, 23-piece Airocean net, frame validation, public API, factory, and native-size preset |
 | [`tests/test-dymaxion-projection-api.cc`](tests/test-dymaxion-projection-api.cc) | Dymaxion edge scale, Gray reference coordinates, topology, variable-frame, domain, and API tests |
 | [`src.wasm/cahill-keyes-web.cc`](src.wasm/cahill-keyes-web.cc) | Emscripten/Embind adapter that projects points and generates the browser SVG with the native C++20 Cahill-Keyes implementation |
-| [`src.wasm/cartofreako-cahill-keyes.mjs`](src.wasm/cartofreako-cahill-keyes.mjs) | Generated ES-module loader for the checked-in Cahill-Keyes WebAssembly binary |
-| [`src.wasm/cartofreako-cahill-keyes.wasm`](src.wasm/cartofreako-cahill-keyes.wasm) | Generated, checked-in Cahill-Keyes WebAssembly binary |
+| [`src.wasm/cartofreako-cahill-keyes.mjs`](src.wasm/cartofreako-cahill-keyes.mjs) | Generated ES-module loader for the Cahill-Keyes WebAssembly binary |
+| [`src.wasm/cartofreako-cahill-keyes.wasm`](src.wasm/cartofreako-cahill-keyes.wasm) | Generated Cahill-Keyes WebAssembly binary |
 | [`src.wasm/cahill-keyes-smoke.mjs`](src.wasm/cahill-keyes-smoke.mjs) | Node smoke test for projection identity, reference coordinates, variable frames, validation, land input, and generated SVG structure |
-| [`src.wasm/README.md`](src.wasm/README.md) | Browser build, output artifacts, runtime map architecture, seam-prepared Natural Earth input, and provenance |
-| [`docs/web-workflow.md`](docs/web-workflow.md) | Emscripten workflow for an illustrative 1920×1080 Myriahedral browser map |
+| [`src.wasm/cahill-myriahedral.cc`](src.wasm/cahill-myriahedral.cc) | Emscripten/Embind Myriahedral adapter with exact terminal-face clipping and an ocean/land-only SVG contract |
+| [`src.wasm/cahill-myriahedral-smoke.mjs`](src.wasm/cahill-myriahedral-smoke.mjs) | Node smoke test for the Myriahedral API, 16:9 frames, all 5,120 ocean faces, exact two-layer output, and seam-safe land |
+| [`src.wasm/cartofreako-cahill-myriahedral.mjs`](src.wasm/cartofreako-cahill-myriahedral.mjs) | Generated ES-module loader for the Myriahedral WebAssembly binary |
+| [`src.wasm/cartofreako-cahill-myriahedral.wasm`](src.wasm/cartofreako-cahill-myriahedral.wasm) | Generated Myriahedral WebAssembly binary |
+| [`src.wasm/README.md`](src.wasm/README.md) | Browser builds, layer choices, output artifacts, runtime clipping, shared Natural Earth input, and provenance |
+| [`docs/web-workflow.md`](docs/web-workflow.md) | Emscripten workflow for an illustrative raster-backed 1920×1080 Myriahedral overlay |
 | [`docs/web-example.md`](docs/web-example.md) | Complete copyable C++, HTML, JavaScript, and build example for that Myriahedral workflow |
 | [`docs/generation.md`](docs/generation.md) | End-to-end SVG generation, seam and folding techniques, data preparation, structural checks, and perceptual considerations |
 | [`docs/prerequisites.md`](docs/prerequisites.md) | Native build, data acquisition, Inkscape review, and optional WebAssembly prerequisites |

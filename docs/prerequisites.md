@@ -20,7 +20,7 @@ generation workflow. They do not require the same software:
 | Bash, `curl`, `unzip`, and `sha256sum` | Natural Earth acquisition | Downloads, verifies, and extracts the pinned input archive |
 | Inkscape | Complete artifact generation and visual review | Exports PDF/PNG and inspects SVG layers, clipping, geometry, and seams |
 | Doxygen | API reference generation | Builds the documented projection-header reference under `docs/doxygen/` |
-| Emscripten, Node.js, and a browser | Optional WebAssembly builds | Builds the production Cahill-Keyes adapter and exercises the Myriahedral example |
+| Emscripten, Node.js, and a browser | Optional WebAssembly builds | Builds the production Cahill-Keyes and land/ocean-only Myriahedral adapters, plus the illustrative Myriahedral overlay |
 
 Check the complete installed toolchain from the repository root with:
 
@@ -302,26 +302,29 @@ during a read-only visual review if a serialization diff is not intended.
 
 ## Optional WebAssembly workflows
 
-The production Cahill-Keyes browser adapter and the documented Myriahedral
-example are separate from native SVG generation. They require:
+The production Cahill-Keyes and Myriahedral browser adapters, and the
+documented Myriahedral overlay example, are separate from native SVG
+generation. They require:
 
 - an Emscripten SDK providing `em++` and `emrun`;
 - Node.js for the non-browser smoke test;
 - a modern browser with WebAssembly and ES-module support; and
 - a local HTTP server, provided by `emrun` in the documented workflow.
 
-The Cahill-Keyes target defaults to the sibling SDK path
+The WASM targets default to the sibling SDK path
 `../emsdk/upstream/emscripten/em++`; override `EMXX` when the checkout lives
-elsewhere. Build its ES module and WASM binary beside the geographic input and
-Node smoke test with:
+elsewhere. Build both ES modules and WASM binaries beside the geographic input
+and Node smoke tests with:
 
 ```sh
 make check-wasm-cahill-keyes
+make check-wasm-cahill-myriahedral
 ```
 
-See the [Cahill-Keyes WebAssembly renderer](../src.wasm/README.md) for
-its runtime SVG architecture and data provenance. The separate reproducible
-Myriahedral example uses the Emscripten release identified in
+See the [WebAssembly renderer README](../src.wasm/README.md) for runtime SVG
+architecture, data provenance, and the Myriahedral option that emits only the
+`ocean` and `land` groups. The separate reproducible Myriahedral raster-overlay
+example uses the Emscripten release identified in
 [`docs/web-workflow.md`](web-workflow.md). After activating the SDK, verify:
 
 ```sh
@@ -330,10 +333,11 @@ emrun --help
 node --version
 ```
 
-Neither browser build needs GDAL, GEOS, Boost.Graph, Google S2, or the
-historical Myriahedral preprocessing programs. The Cahill-Keyes runtime map
-reads the checked-in, seam-prepared Natural Earth GeoJSON; it does not run
-GDAL or download data during the WASM build.
+Neither production browser build needs GDAL, GEOS, Boost.Graph, Google S2, or
+the historical Myriahedral preprocessing programs. Both runtime maps read the
+checked-in, seam-prepared Natural Earth GeoJSON and do not run GDAL or download
+data during the WASM build. The Myriahedral adapter performs its additional
+five-degree grid and terminal-face clipping directly in C++/WASM.
 
 ## End-to-end verification
 

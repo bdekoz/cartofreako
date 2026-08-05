@@ -1,4 +1,4 @@
-# Myriahedral WebAssembly workflow
+# Illustrative Myriahedral WebAssembly overlay
 
 [Documentation index](../index.md) ·
 [Prerequisites](prerequisites.md) ·
@@ -19,11 +19,13 @@ Emscripten. The example:
 - turns the generated SVG string into a Blob URL; and
 - layers the SVG over the raster in one responsive 16:9 viewport.
 
-This is an illustrative, copyable workflow. The production WebAssembly files
-checked into [`src.wasm/`](../src.wasm/) implement Cahill-Keyes and are
-documented by that directory's [README](../src.wasm/README.md). The
-Myriahedral source and outputs below are not checked in, avoiding a second
-generated binary that could be mistaken for the production browser adapter.
+This is an illustrative, copyable raster-overlay workflow. The production
+adapters in [`src.wasm/`](../src.wasm/) now implement both Cahill-Keyes and
+Myriahedral and are documented by that directory's
+[README](../src.wasm/README.md). The production Myriahedral option generates
+only `ocean` and `land`; this separate example keeps its graticule and city
+anchors over the checked-in raster. The example filenames and outputs below
+remain local so they cannot collide with the production module.
 
 The build produces:
 
@@ -145,8 +147,8 @@ The official Emscripten instructions describe the same
 
 ## Prepare the example files
 
-From the cartofreako repository root, create these source locations beside the
-checked-in Cahill-Keyes WebAssembly artifacts:
+From the cartofreako repository root, create these local example sources
+beside the production WebAssembly adapters:
 
 ```text
 src.wasm/
@@ -349,10 +351,11 @@ to floating-point precision, so this threshold is well above roundoff and
 well below a visible jump.
 
 The fixed sampling step makes the example readable and deterministic. It
-assumes no more than one face transition between adjacent samples. A
-production renderer should adaptively subdivide any interval that can cross
-multiple faces or whose projected chord error exceeds a display-space
-tolerance.
+assumes no more than one face transition between adjacent samples. The
+production ocean-and-land renderer instead clips filled geometry to exact
+terminal-face triangles. This example's line renderer should adaptively
+subdivide any interval that can cross multiple faces or whose projected chord
+error exceeds a display-space tolerance.
 
 The example calls `myriahedral_detail::containing_face()` to expose the cut
 topology. That is an implementation-detail dependency. The point transform
