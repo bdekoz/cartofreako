@@ -28,7 +28,8 @@ namespace a60::carto {
       cahill_keyes,
       myriahedral,
       voronoi,
-      star_x
+      star_x,
+      dymaxion
     };
 
 

@@ -30,6 +30,7 @@
 #include "a60-io.h"
 #include "a60-carto-frame.h"
 #include "a60-carto-projection.h"
+#include "a60-carto-projection-dymaxion.h"
 #include "cart0freak0-authagraph.h"
 #include "cart0freak0-cahill-keyes.h"
 #include "cart0freak0-myriahedral.h"

@@ -1,4 +1,4 @@
-// Face-local clipping for filled Myriahedral and Voronoi generator paths.
+// Face-local clipping for filled polyhedral generator paths.
 // -*- mode: C++ -*-
 
 #ifndef CART0FREAK0_TESTS_PROJECTION_AREA_GENERATION_H
@@ -39,7 +39,18 @@ inline bool
 uses_native_face_clipping(const projection_context& context)
 {
   return context.spec.kind == projection_kind::myriahedral
-         || context.spec.kind == projection_kind::voronoi;
+         || context.spec.kind == projection_kind::voronoi
+         || context.spec.kind == projection_kind::dymaxion;
+}
+
+inline raw_point
+project_on_dymaxion_face(const std::size_t face_index,
+                         const double latitude, const double longitude)
+{
+  using namespace a60::carto::dymaxion_detail;
+  const point_2d point = project_on_face(
+    face_index, geographic_vector(latitude, longitude));
+  return {point.x, point.y};
 }
 
 inline raw_point
@@ -89,6 +100,8 @@ project_on_native_face(const projection_context& context,
   if (context.spec.kind == projection_kind::myriahedral)
     return project_on_myriahedral_face(
       context, face_index, latitude, longitude);
+  if (context.spec.kind == projection_kind::dymaxion)
+    return project_on_dymaxion_face(face_index, latitude, longitude);
   if (context.spec.kind == projection_kind::voronoi)
     return project_on_voronoi_face(face_index, latitude, longitude);
   throw std::logic_error("native-face projection requested for another net");
@@ -107,6 +120,14 @@ normalize_native_face_point(const projection_context& context,
         = std::get<myriaproj>(context.projection).layout();
       const point_2d normalized = normalize_planar_point(
         projection, {point.x, point.y});
+      x = normalized.x * context.map_frame.width();
+      y = normalized.y * context.map_frame.height();
+    }
+  else if (context.spec.kind == projection_kind::dymaxion)
+    {
+      const auto normalized
+        = a60::carto::dymaxion_detail::normalize_planar_point(
+            {point.x, point.y});
       x = normalized.x * context.map_frame.width();
       y = normalized.y * context.map_frame.height();
     }
@@ -192,6 +213,15 @@ native_face_triangle(const projection_context& context,
     {
       const auto& triangle = std::get<myriaproj>(
         context.projection).layout().planar[face_index];
+      return {{{triangle[0].x, triangle[0].y},
+               {triangle[1].x, triangle[1].y},
+               {triangle[2].x, triangle[2].y}}};
+    }
+
+  if (context.spec.kind == projection_kind::dymaxion)
+    {
+      constexpr auto planar = a60::carto::dymaxion_detail::planar_faces();
+      const auto& triangle = planar[face_index];
       return {{{triangle[0].x, triangle[0].y},
                {triangle[1].x, triangle[1].y},
                {triangle[2].x, triangle[2].y}}};
@@ -328,7 +358,7 @@ project_native_face_area(const OGRGeometry& geographic_geometry,
                          const double east, const double north)
 {
   require(uses_native_face_clipping(context),
-          "native-face area clipping requires Myriahedral or Voronoi");
+          "native-face area clipping requires a polyhedral net");
   std::set<std::size_t> faces;
   collect_geometry_faces(faces, geographic_geometry, context);
   constexpr double candidate_step = 1;

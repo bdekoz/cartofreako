@@ -23,6 +23,7 @@
 
 #include "a60-carto-frame.h"
 #include "a60-carto-projection.h"
+#include "a60-carto-projection-dymaxion.h"
 #include "cart0freak0-authagraph.h"
 #include "cart0freak0-cahill-keyes.h"
 #include "cart0freak0-myriahedral.h"
@@ -34,6 +35,7 @@ namespace cart0freak0::generation {
 
 using a60::carto::agproj;
 using a60::carto::ckproj;
+using a60::carto::dymaxionproj;
 using a60::carto::frame;
 using a60::carto::myriaproj;
 using a60::carto::starxproj;
@@ -62,6 +64,7 @@ enum class projection_kind
 {
   cahill_keyes,
   authagraph,
+  dymaxion,
   myriahedral,
   star_x,
   voronoi,
@@ -88,6 +91,11 @@ inline constexpr std::array projection_specs {
     projection_kind::authagraph,
     "authagraph", "AuthaGraph", "authagraph-44-19.052559",
     44, 44 / a60::carto::authagraph_width_to_height_ratio,
+  },
+  projection_spec {
+    projection_kind::dymaxion,
+    "dymaxion", "Dymaxion", "dymaxion-44-20.78461",
+    44, 44 / a60::carto::dymaxion_width_to_height_ratio,
   },
   projection_spec {
     projection_kind::myriahedral,
@@ -187,6 +195,8 @@ has_valid_frame(const projection_spec& spec, const frame& candidate)
       return a60::carto::is_cahill_keyes_frame(candidate);
     case projection_kind::authagraph:
       return a60::carto::is_authagraph_frame(candidate);
+    case projection_kind::dymaxion:
+      return a60::carto::is_dymaxion_frame(candidate);
     case projection_kind::myriahedral:
       return a60::carto::is_myriahedral_frame(candidate);
     case projection_kind::star_x:
@@ -205,7 +215,7 @@ output_basename(const std::string_view artifact,
 }
 
 using projection_variant = std::variant<
-  ckproj, agproj, myriaproj, starxproj, voronoiproj>;
+  ckproj, agproj, dymaxionproj, myriaproj, starxproj, voronoiproj>;
 
 inline projection_variant
 make_projection(const projection_spec& spec, const frame& map_frame,
@@ -218,6 +228,8 @@ make_projection(const projection_spec& spec, const frame& map_frame,
         map_frame, raster_name);
     case projection_kind::authagraph:
       return a60::carto::make_authagraph_projection(map_frame, raster_name);
+    case projection_kind::dymaxion:
+      return a60::carto::make_dymaxion_projection(map_frame, raster_name);
     case projection_kind::myriahedral:
       return a60::carto::make_myriahedral_projection(
         map_frame,
@@ -349,6 +361,10 @@ projection_cell(const projection_context& context,
       return cahill_keyes_cell(point);
     case projection_kind::authagraph:
       return authagraph_cell(point);
+    case projection_kind::dymaxion:
+      return a60::carto::dymaxion_detail::containing_face(
+        a60::carto::dymaxion_detail::geographic_vector(
+          point.latitude, point.longitude));
     case projection_kind::myriahedral:
       return a60::carto::myriahedral_detail::containing_face(
         a60::carto::myriahedral_detail::geographic_vector(

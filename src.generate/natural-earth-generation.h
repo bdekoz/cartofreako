@@ -352,8 +352,7 @@ append_gridded_band(std::string& path_data, std::size_t& point_count,
           if (clipped->IsEmpty())
             continue;
           clipped->segmentize(spec.maximum_segment);
-          if (context.spec.kind == generation::projection_kind::myriahedral
-              || context.spec.kind == generation::projection_kind::voronoi)
+          if (generation::area::uses_native_face_clipping(context))
             {
               for (const svg::vrange& points
                    : generation::area::project_native_face_area(

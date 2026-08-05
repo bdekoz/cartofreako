@@ -1,8 +1,8 @@
 # cartofreako
 
 This repository contains native C++20 forward implementations of the
-AuthaGraph, Cahill-Keyes, Star-X, Myriahedral, and icosahedral Voronoi
-projections for the shared `a60::carto::projection_api`.
+AuthaGraph, Cahill-Keyes, Dymaxion, Star-X, Myriahedral, and icosahedral
+Voronoi projections for the shared `a60::carto::projection_api`.
 
 The authoritative project documentation is [`index.md`](index.md). It contains
 the projection comparison, aspect-ratio requirements, public APIs, usage
@@ -43,7 +43,7 @@ make check
 The checks build in `tests/` with C++20 and strict compiler warnings. See
 [`index.md`](index.md#choose-a-projection) to select and use a projection.
 
-Generate 20 production whole-earth maps, five exploratory Myriahedral ocean
+Generate 24 production whole-earth maps, five exploratory Myriahedral ocean
 perspectives, 12 Cahill-Keyes enlargement slices, and two Myriahedral
 face-group slices as layered SVG, PDF, and opaque-white,
 3840-pixel-long-side PNG artifacts with:

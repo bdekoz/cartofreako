@@ -31,7 +31,8 @@ GENERATED_PNG_DIR := $(GENERATED_DIR)/png
 GENERATED_PDF_DIR := $(GENERATED_DIR)/pdf
 DOXYGEN_CONFIG := Doxyfile
 DOXYGEN_OUTPUT_DIR := docs/doxygen
-DOXYGEN_HEADERS := $(wildcard $(PROJECTION_SRC_DIR)/cart0freak0*.h)
+DOXYGEN_HEADERS := $(wildcard $(PROJECTION_SRC_DIR)/cart0freak0*.h) \
+	$(PROJECTION_SRC_DIR)/a60-carto-projection-dymaxion.h
 WEB_BUILD_DIR := $(WEB_DIR)
 CK_WEB_SOURCE := $(WEB_DIR)/cahill-keyes-web.cc
 CK_WEB_LAND := $(WEB_DIR)/cartofreako-cahill-keyes-land-110m.geojson
@@ -73,6 +74,11 @@ AUTHAGRAPH_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-authagraph-44-19.052
 AUTHAGRAPH_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-authagraph-44-19.052559.svg
 AUTHAGRAPH_WATER_SVG := $(GENERATED_SVG_DIR)/water-authagraph-44-19.052559.svg
 
+DYMAXION_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-dymaxion-44-20.78461.svg
+DYMAXION_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-dymaxion-44-20.78461.svg
+DYMAXION_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-dymaxion-44-20.78461.svg
+DYMAXION_WATER_SVG := $(GENERATED_SVG_DIR)/water-dymaxion-44-20.78461.svg
+
 MYRIAHEDRAL_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-myriahedral-44-24.75.svg
 MYRIAHEDRAL_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-myriahedral-44-24.75.svg
 MYRIAHEDRAL_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-myriahedral-44-24.75.svg
@@ -99,21 +105,25 @@ VORONOI_WATER_SVG := $(GENERATED_SVG_DIR)/water-voronoi-44-22.916667.svg
 
 REQUESTED_GEOMETRY_SVGS := \
 	$(AUTHAGRAPH_GEOMETRY_SVG) \
+	$(DYMAXION_GEOMETRY_SVG) \
 	$(MYRIAHEDRAL_GEOMETRY_SVG) \
 	$(STAR_X_GEOMETRY_SVG) \
 	$(VORONOI_GEOMETRY_SVG)
 REQUESTED_GRATICULE_SVGS := \
 	$(AUTHAGRAPH_GRATICULE_SVG) \
+	$(DYMAXION_GRATICULE_SVG) \
 	$(MYRIAHEDRAL_GRATICULE_SVG) \
 	$(STAR_X_GRATICULE_SVG) \
 	$(VORONOI_GRATICULE_SVG)
 REQUESTED_EARTH_SVGS := \
 	$(AUTHAGRAPH_EARTH_SVG) \
+	$(DYMAXION_EARTH_SVG) \
 	$(MYRIAHEDRAL_EARTH_SVG) \
 	$(STAR_X_EARTH_SVG) \
 	$(VORONOI_EARTH_SVG)
 REQUESTED_WATER_SVGS := \
 	$(AUTHAGRAPH_WATER_SVG) \
+	$(DYMAXION_WATER_SVG) \
 	$(MYRIAHEDRAL_WATER_SVG) \
 	$(STAR_X_WATER_SVG) \
 	$(VORONOI_WATER_SVG)
@@ -159,6 +169,7 @@ TEST_BINARIES := \
 	$(TEST_DIR)/test-cahill-keyes-path-functions \
 	$(TEST_DIR)/test-cahill-keyes-slicing \
 	$(TEST_DIR)/test-authagraph-projection-api \
+	$(TEST_DIR)/test-dymaxion-projection-api \
 	$(TEST_DIR)/test-myriahedral-projection-api \
 	$(TEST_DIR)/test-myriahedral-slicing \
 	$(TEST_DIR)/test-projection-generation-common \
@@ -171,6 +182,7 @@ GENERATOR_HEADERS := \
 	$(wildcard $(GENERATOR_SRC_DIR)/myriahedral-perspective-*-tree.inc) \
 	$(PROJECTION_SRC_DIR)/a60-carto-frame.h \
 	$(PROJECTION_SRC_DIR)/a60-carto-projection.h \
+	$(PROJECTION_SRC_DIR)/a60-carto-projection-dymaxion.h \
 	$(PROJECTION_SRC_DIR)/cart0freak0-authagraph.h \
 	$(PROJECTION_SRC_DIR)/cart0freak0-cahill-keyes.h \
 	$(PROJECTION_SRC_DIR)/cart0freak0-cahill-keyes-functions.h \
@@ -193,10 +205,12 @@ PUBLIC_TARGETS := all check check-prerequisite clean doxygen list-targets \
 	generate-geometry-projections generate-graticules-projections \
 	generate-earth-projections generate-water-projections \
 	generate-water-myriahedral-perspectives generate-myriahedral-slices \
-	generate-authagraph generate-myriahedral generate-star-x \
+	generate-authagraph generate-dymaxion generate-myriahedral generate-star-x \
 	generate-voronoi generate-voroni \
 	generate-geometry-authagraph generate-graticules-authagraph \
 	generate-earth-authagraph generate-water-authagraph \
+	generate-geometry-dymaxion generate-graticules-dymaxion \
+	generate-earth-dymaxion generate-water-dymaxion \
 	generate-geometry-myriahedral generate-graticules-myriahedral \
 	generate-earth-myriahedral generate-water-myriahedral \
 	generate-geometry-star-x generate-graticules-star-x \
@@ -239,6 +253,10 @@ check:
 		$(TEST_DIR)/test-authagraph-projection-api.cc \
 		-o $(TEST_DIR)/test-authagraph-projection-api
 	$(TEST_DIR)/test-authagraph-projection-api
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
+		$(TEST_DIR)/test-dymaxion-projection-api.cc \
+		-o $(TEST_DIR)/test-dymaxion-projection-api
+	$(TEST_DIR)/test-dymaxion-projection-api
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-myriahedral-projection-api.cc \
 		-o $(TEST_DIR)/test-myriahedral-projection-api
@@ -432,6 +450,9 @@ endef
 $(eval $(call PROJECTION_RULES,authagraph,\
 	$(AUTHAGRAPH_GEOMETRY_SVG),$(AUTHAGRAPH_GRATICULE_SVG),\
 	$(AUTHAGRAPH_EARTH_SVG),$(AUTHAGRAPH_WATER_SVG)))
+$(eval $(call PROJECTION_RULES,dymaxion,\
+	$(DYMAXION_GEOMETRY_SVG),$(DYMAXION_GRATICULE_SVG),\
+	$(DYMAXION_EARTH_SVG),$(DYMAXION_WATER_SVG)))
 $(eval $(call PROJECTION_RULES,myriahedral,\
 	$(MYRIAHEDRAL_GEOMETRY_SVG),$(MYRIAHEDRAL_GRATICULE_SVG),\
 	$(MYRIAHEDRAL_EARTH_SVG),$(MYRIAHEDRAL_WATER_SVG)))

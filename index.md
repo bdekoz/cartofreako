@@ -1,8 +1,8 @@
 # Cartographic projection documentation
 
 This repository contains native C++20 forward implementations of the
-AuthaGraph, Cahill-Keyes, Star-X, Myriahedral, and icosahedral Voronoi
-projections for `a60::carto::projection_api`. All five accept variable-size
+AuthaGraph, Cahill-Keyes, Dymaxion, Star-X, Myriahedral, and icosahedral
+Voronoi projections for `a60::carto::projection_api`. All six accept variable-size
 `a60::carto::frame` values while enforcing the aspect ratio required by the
 selected geometry or source-canvas registration.
 
@@ -24,10 +24,12 @@ WebAssembly requirements.
 This separation keeps reproducible inputs distinct from rendered outputs and
 keeps generation programs out of the test suite.
 
-Projection-specific headers use the `cart0freak0-*.h` basename. The shared
-Alpha60-compatible interface and frame headers retain their established
-`a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`, `web/`,
-and `assets/` layout are no longer canonical.
+Most projection-specific headers use the `cart0freak0-*.h` basename. The
+Dymaxion header uses its requested
+[`a60-carto-projection-dymaxion.h`](src.projections/a60-carto-projection-dymaxion.h)
+name. The shared Alpha60-compatible interface and frame headers retain their
+established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
+`web/`, and `assets/` layout are no longer canonical.
 
 ## Documentation map
 
@@ -47,6 +49,7 @@ bibliography records primary sources and attribution.
 | --- | --- | --- | --- |
 | AuthaGraph | [Context](docs/authagraph-context.md) | [Notes](docs/authagraph-implementation-notes.md) | [Sources](docs/authagraph-bibliography.md) |
 | Cahill-Keyes | [Context](docs/cahill-keyes-context.md) | [Notes](docs/cahill-keyes-implementation-notes.md) | [Sources](docs/cahill-keyes-bibliography.md) |
+| Dymaxion | [Context](docs/dymaxion-context.md) | [Notes](docs/dymaxion-implementation-notes.md) | [Sources](docs/dymaxion-bibliography.md) |
 | Star-X | [Context](docs/star-x-context.md) | [Notes](docs/star-x-implementation-notes.md) | [Sources](docs/star-x-bibliography.md) |
 | Myriahedral | [Context](docs/myriahedral-context.md) | [Notes](docs/myriahedral-implementation-notes.md) | [Sources](docs/myriahedral-bibliography.md) |
 | Icosahedral Voronoi | [Context](docs/voronoi-context.md) | [Notes](docs/voronoi-implementation-notes.md) | [Sources](docs/voronoi-bibliography.md) |
@@ -57,6 +60,7 @@ bibliography records primary sources and attribution.
 | --- | --- | ---: | --- | --- |
 | AuthaGraph | Oblique tetrahedron, 24 symmetric sectors, periodic rectangle | `4:sqrt(3)` | `agproj` | `make_authagraph_projection()` |
 | Cahill-Keyes | Octahedron, 8 octants, M-shaped rectangular layout | `2:1` | `ckproj` | `make_cahill_keyes_projection()` |
+| Dymaxion | Fuller-oriented icosahedron, exact 20-face transform, 23-piece Airocean net | `11/(3sqrt(3))` | `dymaxionproj` | `make_dymaxion_projection()` |
 | Star-X | Cahill-Keyes octants, two stacked four-face groups, polar-centered X | `17:22` | `starxproj` | `make_star_x_projection()` |
 | Myriahedral | Depth-5 icosahedral mesh, land-aware spanning-tree net | `16:9` source canvas | `myriaproj` | `make_myriahedral_projection()` |
 | Voronoi | Regular icosahedron, 20 nearest-site gnomonic faces | `48:25` source canvas | `voronoiproj` | `make_voronoi_projection()` |
@@ -70,13 +74,13 @@ make check
 ```
 
 Generate geometry, labeled graticules, the Natural Earth ocean-and-land base,
-and its complementary physical-feature overlay for all five projections with:
+and its complementary physical-feature overlay for all six projections with:
 
 ```sh
 make all
 ```
 
-The 20 production whole-earth maps, five exploratory Myriahedral water
+The 24 production whole-earth maps, five exploratory Myriahedral water
 perspectives, 12 Cahill-Keyes enlargement slices, and two Myriahedral
 face-group slices are each written as a layered SVG under
 `assets.generated/svg/`, an Inkscape PDF under `assets.generated/pdf/`, and a
@@ -93,6 +97,7 @@ dimension of exactly 44 inches:
 | --- | ---: | --- |
 | Cahill-Keyes | `44 × 22` | `make generate-geometry generate-graticules-ck generate-earth-ck generate-water-ck` |
 | AuthaGraph | `44 × 19.052559` (`44 × 11√3`) | `make generate-authagraph` |
+| Dymaxion | `44 × 20.78461` (`44 × 3√3/11`) | `make generate-dymaxion` |
 | Myriahedral | `44 × 24.75` | `make generate-myriahedral` |
 | Star-X | `34 × 44` | `make generate-star-x` |
 | Voronoi | `44 × 22.916667` (`44 × 275/12`) | `make generate-voronoi` |
@@ -105,8 +110,8 @@ pixels to the longest side.
 Artifact-family targets are also available as
 `generate-geometry-projections`, `generate-graticules-projections`,
 `generate-earth-projections`, and `generate-water-projections`. Each generic
-family target includes Cahill-Keyes plus AuthaGraph, Myriahedral, Star-X, and
-Voronoi. The four whole-map generators accept a projection name on their
+family target includes Cahill-Keyes plus AuthaGraph, Dymaxion, Myriahedral,
+Star-X, and Voronoi. The four whole-map generators accept a projection name on their
 command line. Every generator reopens its SVG to validate the view box,
 required layers, path structure, and finite numeric output.
 
@@ -116,6 +121,7 @@ required layers, path structure, and finite numeric output.
 | --- | --- | --- | --- | --- |
 | Cahill-Keyes | [`geometry-ck-44-22.png`](assets.generated/png/geometry-ck-44-22.png) | [`graticules-ck-44-22.png`](assets.generated/png/graticules-ck-44-22.png) | [`earth-ck-44-22.png`](assets.generated/png/earth-ck-44-22.png) | [`water-ck-44-22.png`](assets.generated/png/water-ck-44-22.png) |
 | AuthaGraph | [`geometry-authagraph-44-19.052559.png`](assets.generated/png/geometry-authagraph-44-19.052559.png) | [`graticules-authagraph-44-19.052559.png`](assets.generated/png/graticules-authagraph-44-19.052559.png) | [`earth-authagraph-44-19.052559.png`](assets.generated/png/earth-authagraph-44-19.052559.png) | [`water-authagraph-44-19.052559.png`](assets.generated/png/water-authagraph-44-19.052559.png) |
+| Dymaxion | [`geometry-dymaxion-44-20.78461.png`](assets.generated/png/geometry-dymaxion-44-20.78461.png) | [`graticules-dymaxion-44-20.78461.png`](assets.generated/png/graticules-dymaxion-44-20.78461.png) | [`earth-dymaxion-44-20.78461.png`](assets.generated/png/earth-dymaxion-44-20.78461.png) | [`water-dymaxion-44-20.78461.png`](assets.generated/png/water-dymaxion-44-20.78461.png) |
 | Myriahedral | [`geometry-myriahedral-44-24.75.png`](assets.generated/png/geometry-myriahedral-44-24.75.png) | [`graticules-myriahedral-44-24.75.png`](assets.generated/png/graticules-myriahedral-44-24.75.png) | [`earth-myriahedral-44-24.75.png`](assets.generated/png/earth-myriahedral-44-24.75.png) | [`water-myriahedral-44-24.75.png`](assets.generated/png/water-myriahedral-44-24.75.png) |
 | Star-X | [`geometry-star-x-34-44.png`](assets.generated/png/geometry-star-x-34-44.png) | [`graticules-star-x-34-44.png`](assets.generated/png/graticules-star-x-34-44.png) | [`earth-star-x-34-44.png`](assets.generated/png/earth-star-x-34-44.png) | [`water-star-x-34-44.png`](assets.generated/png/water-star-x-34-44.png) |
 | Voronoi | [`geometry-voronoi-44-22.916667.png`](assets.generated/png/geometry-voronoi-44-22.916667.png) | [`graticules-voronoi-44-22.916667.png`](assets.generated/png/graticules-voronoi-44-22.916667.png) | [`earth-voronoi-44-22.916667.png`](assets.generated/png/earth-voronoi-44-22.916667.png) | [`water-voronoi-44-22.916667.png`](assets.generated/png/water-voronoi-44-22.916667.png) |
@@ -168,6 +174,22 @@ Construction examples and `star_x_layout` configuration are in the
 The signed gap and page-centered enlargement default to `-9/88` of frame
 height and `1.2`. The central star and unified Antarctica remain layer-aware
 SVG composition helpers, not hidden changes to the point transform.
+
+## Dymaxion
+
+The Dymaxion implementation uses Fuller's geographic icosahedron orientation
+and Robert W. Gray's exact sphere-to-equilateral-face equations. It places the
+result through the 23-piece horizontal Airocean net: 18 complete faces, two
+pieces of the Australia parent face, and three pieces of the Japan parent
+face. The local transform preserves uniform scale along every facet edge and
+is intentionally distinct from a radial, gnomonic projection.
+
+The public frame may have any finite positive size that retains the exact
+`11/(3sqrt(3))` net ratio. Construction examples, formulas, face selection,
+split-face registration, generator behavior, and verification are in the
+[Dymaxion implementation notes](docs/dymaxion-implementation-notes.md). The
+[geometric context](docs/dymaxion-context.md) illustrates the facets, cuts,
+screen quadrants, graticules, and resulting Earth map.
 
 ## Myriahedral
 
@@ -222,6 +244,8 @@ the `voronoi_source` preset are in the
 | [`tests/test-cahill-keyes-projection-api.cc`](tests/test-cahill-keyes-projection-api.cc) | Cahill-Keyes public API, frame, raster, and integration-anchor tests |
 | [`tests/test-cahill-keyes-path-functions.cc`](tests/test-cahill-keyes-path-functions.cc) | Cahill-Keyes path seam, scaling, offset, state, and validation tests |
 | [`tests/test-cahill-keyes-slicing.cc`](tests/test-cahill-keyes-slicing.cc) | Four-strip and exact-octant geometry, metadata, SVG linkage, physical-size, and invalid-carrier tests |
+| [`src.projections/a60-carto-projection-dymaxion.h`](src.projections/a60-carto-projection-dymaxion.h) | Exact Fuller face transform, 23-piece Airocean net, frame validation, public API, factory, and native-size preset |
+| [`tests/test-dymaxion-projection-api.cc`](tests/test-dymaxion-projection-api.cc) | Dymaxion edge scale, Gray reference coordinates, topology, variable-frame, domain, and API tests |
 | [`src.wasm/cahill-keyes-web.cc`](src.wasm/cahill-keyes-web.cc) | Emscripten/Embind adapter that projects points and generates the browser SVG with the native C++20 Cahill-Keyes implementation |
 | [`src.wasm/cartofreako-cahill-keyes.mjs`](src.wasm/cartofreako-cahill-keyes.mjs) | Generated ES-module loader for the checked-in Cahill-Keyes WebAssembly binary |
 | [`src.wasm/cartofreako-cahill-keyes.wasm`](src.wasm/cartofreako-cahill-keyes.wasm) | Generated, checked-in Cahill-Keyes WebAssembly binary |
@@ -237,8 +261,8 @@ the `voronoi_source` preset are in the
 | [`docs/star-x-implementation-notes.md`](docs/star-x-implementation-notes.md) | Star-X gap, scale, and polar formulas, API, safeguards, verification, and provenance |
 | [`docs/star-x-bibliography.md`](docs/star-x-bibliography.md) | Star-X arrangement, Cahill-Keyes geometry, historical, asset, and test sources |
 | [`src.generate/projection-generation-common.h`](src.generate/projection-generation-common.h) | Exact 44-unit frame configurations, projection dispatch, native-cell lookup, cut bisection, and shared seam-safe path projection |
-| [`src.generate/projection-area-generation.h`](src.generate/projection-area-generation.h) | Face-local Myriahedral and Voronoi area transforms plus exact planar-triangle clipping for filled paths |
-| [`src.generate/generate-geometry.cc`](src.generate/generate-geometry.cc) | Izzi SVG generator and structural test for native AuthaGraph, Cahill-Keyes/Star-X, Myriahedral, and Voronoi faces plus four map quadrants |
+| [`src.generate/projection-area-generation.h`](src.generate/projection-area-generation.h) | Face-local Dymaxion, Myriahedral, and Voronoi transforms plus exact planar-triangle clipping for filled paths |
+| [`src.generate/generate-geometry.cc`](src.generate/generate-geometry.cc) | Izzi SVG generator and structural test for native AuthaGraph, Cahill-Keyes/Star-X, Dymaxion, Myriahedral, and Voronoi faces plus four map quadrants |
 | [`assets.generated/png/geometry-ck-44-22.png`](assets.generated/png/geometry-ck-44-22.png) | PNG preview of the generated layered Cahill-Keyes face geometry in a 44×22 frame |
 | [`src.generate/generate-graticules.cc`](src.generate/generate-graticules.cc) | Izzi SVG generator and structural test for grouped, degree-labeled, discontinuity-split 10° latitude and longitude lines |
 | [`assets.generated/png/graticules-ck-44-22.png`](assets.generated/png/graticules-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes graticule with 17 latitudes and 36 longitudes |
@@ -259,7 +283,7 @@ the `voronoi_source` preset are in the
 | [`src.projections/cart0freak0-myriahedral-slicing.h`](src.projections/cart0freak0-myriahedral-slicing.h) | Five-hinge semantic partition, exact face masks, SVG wrappers, and validation |
 | [`tests/test-myriahedral-projection-api.cc`](tests/test-myriahedral-projection-api.cc) | Myriahedral topology, reference-coordinate, variable-frame, domain, and API tests |
 | [`tests/test-myriahedral-slicing.cc`](tests/test-myriahedral-slicing.cc) | Complementary face counts, hinge boundaries, registered viewports, and carrier validation |
-| [`tests/test-projection-generation-common.cc`](tests/test-projection-generation-common.cc) | Seam-safe path regressions plus exploratory Myriahedral metadata and layout checks |
+| [`tests/test-projection-generation-common.cc`](tests/test-projection-generation-common.cc) | Seam-safe path regressions, Dymaxion generator dispatch, and exploratory Myriahedral metadata/layout checks |
 | [`src.projections/cart0freak0-voronoi.h`](src.projections/cart0freak0-voronoi.h) | Icosahedral Voronoi geometry, gnomonic face projection, affine unfolding, frame validation, API, and source-canvas preset |
 | [`tests/test-voronoi-projection-api.cc`](tests/test-voronoi-projection-api.cc) | Voronoi topology, independent D3 reference coordinates, variable-frame, global-domain, seam, and API tests |
 | [`src.projections/a60-carto-projection.h`](src.projections/a60-carto-projection.h) | Common projection interface and state |
@@ -280,6 +304,14 @@ by Mary Jo Graça. Its source header permits non-commercial use with attribution
 to Graça and Keyes and asks commercial users to contact Gene Keyes. See the
 [Cahill-Keyes provenance and licensing note](docs/cahill-keyes-implementation-notes.md#provenance-and-licensing)
 and [bibliography](docs/cahill-keyes-bibliography.md).
+
+The Dymaxion map is R. Buckminster Fuller's icosahedral world-map design. The
+exact face equations follow Robert W. Gray's published work; the spherical
+subface and horizontal net tables derive from PROJ 9.6.2 under its retained
+MIT-style notice. Gray's separately distributed reference C program is not
+incorporated. See the
+[Dymaxion provenance and licensing note](docs/dymaxion-implementation-notes.md#provenance-and-licensing)
+and [bibliography](docs/dymaxion-bibliography.md).
 
 Star-X retains that Cahill-Keyes construction and its terms, then applies
 Benjamin De Kosnik's two-group arrangement. See the

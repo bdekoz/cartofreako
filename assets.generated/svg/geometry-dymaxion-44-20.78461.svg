@@ -1,0 +1,47 @@
+<svg xml:space="preserve"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:html="http://www.w3.org/1999/xhtml"
+id="geometry-dymaxion-44-20.78461" x="0in" y="0in"
+width="44.000000in" height="20.784610in"
+viewBox="0 0 44.000000 20.784610" enable-background="new 0 0 44.000000 20.784610" role="img">
+s
+<title>
+geometry-dymaxion-44-20.78461
+</title>
+<desc>
+Dymaxion native projection geometry
+</desc>
+<g id="triangular-faces">
+<path id="triangular-face-1" d="M 20 6.9282 L 12 6.9282 L 16 0 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-2" d="M 20 6.9282 L 16 13.8564 L 12 6.9282 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-3" d="M 20 6.9282 L 24 13.8564 L 16 13.8564 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-4" d="M 20 6.9282 L 28 6.9282 L 24 13.8564 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-5" d="M 20 6.9282 L 16 0 L 24 0 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-6" d="M 16 0 L 12 6.9282 L 8 0 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-7" d="M 4 6.9282 L 12 6.9282 L 8 13.8564 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-8" d="M 8 13.8564 L 12 6.9282 L 16 13.8564 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-9" d="M 24 13.8564 L 20 20.7846 L 16 13.8564 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-10" d="M 24 13.8564 L 32 13.8564 L 28 20.7846 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-11" d="M 24 13.8564 L 28 6.9282 L 32 13.8564 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-12" d="M 32 13.8564 L 28 6.9282 L 36 6.9282 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-13" d="M 36 6.9282 L 28 6.9282 L 32 0 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-14" d="M 44 6.9282 L 36 6.9282 L 40 0 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-15" d="M 4 20.7846 L 8 13.8564 L 12 20.7846 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-16" d="M 36 20.7846 L 28 20.7846 L 32 13.8564 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-17" d="M 40 13.8564 L 32 13.8564 L 36 6.9282 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-18" d="M 40 13.8564 L 36 6.9282 L 44 6.9282 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-19" d="M 8 13.8564 L 6 17.3205 L 0 13.8564 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-20" d="M 40 13.8564 L 44 6.9282 L 44 13.8564 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-21" d="M 12 20.7846 L 8 13.8564 L 12 16.1658 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-22" d="M 8 13.8564 L 16 13.8564 L 12 16.1658 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+<path id="triangular-face-23" d="M 20 20.7846 L 16 18.4752 L 16 13.8564 Z" style="fill:rgb(242,242,242); fill-opacity:0.55; stroke:rgb(128,128,128); stroke-opacity:0.6; stroke-width:0.04" />
+</g>
+<g id="quadrants">
+<path id="quadrant-1" d="M 0 0 L 11 0 L 11 20.7846 L 0 20.7846 Z" style="fill:rgb(1,0,0); fill-opacity:0; stroke:rgb(0,0,255); stroke-opacity:0.65; stroke-width:0.08" />
+<path id="quadrant-2" d="M 11 0 L 22 0 L 22 20.7846 L 11 20.7846 Z" style="fill:rgb(1,0,0); fill-opacity:0; stroke:rgb(0,0,255); stroke-opacity:0.65; stroke-width:0.08" />
+<path id="quadrant-3" d="M 22 0 L 33 0 L 33 20.7846 L 22 20.7846 Z" style="fill:rgb(1,0,0); fill-opacity:0; stroke:rgb(0,0,255); stroke-opacity:0.65; stroke-width:0.08" />
+<path id="quadrant-4" d="M 33 0 L 44 0 L 44 20.7846 L 33 20.7846 Z" style="fill:rgb(1,0,0); fill-opacity:0; stroke:rgb(0,0,255); stroke-opacity:0.65; stroke-width:0.08" />
+</g>
+</svg>
+

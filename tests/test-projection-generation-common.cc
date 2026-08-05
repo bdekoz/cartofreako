@@ -68,6 +68,28 @@ main()
   assert(porcupine_paths.size() == 2);
   assert(maximum_segment(porcupine_paths) < 0.75);
 
+  // Dymaxion participates in the shared generator dispatch with its exact
+  // frame, public projection type, output tag, and antimeridian tie rule.
+  const generation::projection_spec& dymaxion_spec
+    = generation::find_projection_spec("dymaxion");
+  assert(dymaxion_spec.kind == generation::projection_kind::dymaxion);
+  assert(dymaxion_spec.output_tag == "dymaxion-44-20.78461");
+  const generation::projection_context dymaxion_context(dymaxion_spec, "");
+  assert(generation::has_valid_frame(
+    dymaxion_spec, dymaxion_context.map_frame));
+  assert(std::holds_alternative<a60::carto::dymaxionproj>(
+    dymaxion_context.projection));
+  const svg::point_2t fuller_point = generation::project_point(
+    dymaxion_context, geographic_point {40.7128, -74.0060});
+  assert(std::get<0>(fuller_point) >= 0);
+  assert(std::get<0>(fuller_point) <= dymaxion_context.map_frame.width());
+  assert(std::get<1>(fuller_point) >= 0);
+  assert(std::get<1>(fuller_point) <= dymaxion_context.map_frame.height());
+  assert(generation::projection_cell(
+           dymaxion_context, geographic_point {12.5, -180})
+         == generation::projection_cell(
+           dymaxion_context, geographic_point {12.5, 180}));
+
   // The five exploratory Myriahedral perspectives have immutable, complete
   // generation metadata and use their own cut trees and registrations.
   namespace myria = cart0freak0::myriahedral_generation;

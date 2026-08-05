@@ -7,7 +7,7 @@
 ## Purpose
 
 The repository contains seven C++20 generation programs under `src.generate/`.
-Four exercise all five production projections through the real Alpha60 and
+Four exercise all six production projections through the real Alpha60 and
 Izzi APIs. Three derive Cahill-Keyes or Myriahedral slices from an already
 projected whole-earth SVG. They write layered SVGs under `assets.generated/svg/`, then
 reopen those files and verify dimensions, layer structure, path counts, and
@@ -24,7 +24,7 @@ as a 3840-pixel-long-side PNG.
 | Eight slices | [`src.generate/generate-8-slice.cc`](../src.generate/generate-8-slice.cc) | Eight exact-octant enlargements from the Cahill-Keyes Earth SVG |
 | Myriahedral groups | [`src.generate/generate-myriahedral-slices.cc`](../src.generate/generate-myriahedral-slices.cc) | Two complementary exact-terminal-face masks from the Myriahedral water SVG |
 
-The aggregate target generates all four artifact families for all five
+The aggregate target generates all four artifact families for all six
 production projections, five exploratory Myriahedral water perspectives, all
 12 Cahill-Keyes slices, and two Myriahedral face-group slices:
 
@@ -43,6 +43,7 @@ projection's exact aspect-ratio contract:
 | --- | ---: | --- |
 | Cahill-Keyes | `44 × 22` | `2:1` |
 | AuthaGraph | `44 × 19.052559` | height `= 11√3` |
+| Dymaxion | `44 × 20.78461` | height `= 44 × 3√3/11`, ratio `11/(3√3)` |
 | Myriahedral | `44 × 24.75` | `16:9` |
 | Star-X | `34 × 44` | `17:22` |
 | Voronoi | `44 × 22.916667` | height `= 275/12`, ratio `48:25` |
@@ -92,6 +93,7 @@ make generate-graticules-ck
 make generate-earth-ck
 make generate-water-ck
 make generate-authagraph
+make generate-dymaxion
 make generate-myriahedral
 make generate-water-myriahedral-perspectives
 make generate-myriahedral-slices
@@ -110,7 +112,7 @@ The generators are not part of `make check`; invoking a `generate-*`
 target both writes its artifact and runs that generator's embedded structural
 checks.
 
-The 39 artifacts in each of `assets.generated/svg/`, `assets.generated/pdf/`,
+The 43 artifacts in each of `assets.generated/svg/`, `assets.generated/pdf/`,
 and `assets.generated/png/` are checked in. This makes visual and XML diffs
 reviewable, but it also means that regenerating with a different GDAL, GEOS,
 or Inkscape version can produce ordering, coordinate, or rendering differences
@@ -127,12 +129,12 @@ flattening transparent page regions without changing the layered SVG or PDF
 sources.
 
 The default `PNG_LONG_SIDE=3840` follows UHD 4K video's horizontal pixel
-resolution. Landscape Cahill-Keyes, AuthaGraph, Myriahedral, and Voronoi maps
-set their PNG width to 3840 pixels. Portrait Star-X maps, Cahill-Keyes slices,
-and Myriahedral group 1 set their PNG height to 3840 pixels; Myriahedral group
-2 is landscape. Supplying only the longer dimension lets Inkscape derive the
-other dimension without anisotropic scaling. Override the resolution when
-needed:
+resolution. Landscape Cahill-Keyes, AuthaGraph, Dymaxion, Myriahedral, and
+Voronoi maps set their PNG width to 3840 pixels. Portrait Star-X maps,
+Cahill-Keyes slices, and Myriahedral group 1 set their PNG height to 3840
+pixels; Myriahedral group 2 is landscape. Supplying only the longer dimension
+lets Inkscape derive the other dimension without anisotropic scaling. Override
+the resolution when needed:
 
 ```sh
 make -B PNG_LONG_SIDE=7680 all
@@ -259,6 +261,7 @@ distance. Instead it assigns every geographic sample to a native cell:
 - eight registered octants for Cahill-Keyes and Star-X;
 - the nearest tetrahedron vertex plus one of six local sectors for
   AuthaGraph;
+- one of 23 Fuller/Airocean faces or subfaces for Dymaxion;
 - one of 5,120 subdivided spherical triangles for Myriahedral; or
 - one of twenty rotated nearest-site faces for Voronoi.
 
@@ -268,9 +271,9 @@ limits agree within `44 × 10^-5`, the edge is joined in the planar net and both
 limits stay in the same path. Otherwise the edge is a cut and a new subpath
 begins. The search then resumes just inside the new cell and repeats until the
 endpoint cell is reached, with a defensive limit of 64 transitions per source
-edge. This tests the assembled net itself: tree-connected Myriahedral and
-Voronoi faces remain joined, while their non-tree edges split without a
-hard-coded list of thousands of relationships.
+edge. This tests the assembled net itself: retained Dymaxion hinges and
+tree-connected Myriahedral and Voronoi faces remain joined, while exterior or
+non-tree edges split without a hard-coded list of relationships.
 
 Myriahedral cell lookup and point projection both canonicalize exact
 longitude `+180` to `-180`. Without that shared tie rule, an endpoint on the
@@ -289,16 +292,17 @@ used by Cahill-Keyes. Cahill-Keyes and Star-X can then close those face-safe
 pieces directly. AuthaGraph additionally uses a 5-degree geographic grid and
 rejects any fragment whose projected closing edge exceeds 2.5 frame units.
 
-Myriahedral and Voronoi use exact native-face clipping from
+Dymaxion, Myriahedral, and Voronoi use exact native-face clipping from
 [`projection-area-generation.h`](../src.generate/projection-area-generation.h).
 Every 5-degree geographic cell is densified, mapped separately through each
 candidate face's local transform, repaired with GEOS if necessary, and
-intersected with that face's exact planar triangle. Myriahedral uses the same
-3D-chord affine coordinates as its 5,120-face implementation; Voronoi uses
-the same face-local gnomonic transform and unfolding affine. Only the clipped
-planar pieces are normalized into the output frame, so a filled ring never
-needs a chord between unrelated net edges. Same-color area hairlines hide
-microscopic cracks along adjacent pieces.
+intersected with that face's exact planar triangle. Dymaxion uses Gray's exact
+Fuller face transform and the selected subface registration; Myriahedral uses
+the same 3D-chord affine coordinates as its 5,120-face implementation; and
+Voronoi uses the same face-local gnomonic transform and unfolding affine. Only
+the clipped planar pieces are normalized into the output frame, so a filled
+ring never needs a chord between unrelated net edges. Same-color area
+hairlines hide microscopic cracks along adjacent pieces.
 
 ## Geometry generator
 
@@ -311,6 +315,7 @@ native topology:
 | --- | --- | ---: |
 | AuthaGraph | Exact 24-sector planar assembly table, cyclically shifted and clipped at the periodic frame edges | at least 24 |
 | Cahill-Keyes | Sampled registered octants | 8 |
+| Dymaxion | Exact planar triangles from the horizontal Airocean net | 23 |
 | Myriahedral | Normalized planar triangles from the fixed depth-5 layout | 5,120 |
 | Star-X | Sampled Cahill-Keyes octants assembled into the two stacked groups | 8 |
 | Voronoi | Twenty face-local gnomonic triangles transformed through the fixed unfolding tree | 20 |
@@ -403,11 +408,12 @@ For each shapefile, the program:
 5. intersects the feature with every relevant seam-safe longitude band;
 6. for Star-X, further clips filled areas into northern and southern pieces
    so closing a projected ring cannot bridge an exterior equatorial notch;
-7. for AuthaGraph, Myriahedral, and Voronoi, further clips areas to a
+7. for AuthaGraph, Dymaxion, Myriahedral, and Voronoi, further clips areas to a
    5-degree geographic grid;
 8. densifies each surviving piece with `segmentize()`;
 9. projects lines with repeated native-cell bisection and areas either
-   directly or by exact Myriahedral/Voronoi face-local triangle intersection;
+   directly or by exact Dymaxion/Myriahedral/Voronoi face-local triangle
+   intersection;
    and
 10. serializes the result as one named Izzi path per source feature and band,
     with a hemisphere suffix on Star-X area paths.
