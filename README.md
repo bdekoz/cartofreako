@@ -72,9 +72,9 @@ See the [`src.wasm` README](src.wasm/README.md) for their JavaScript APIs,
 layer contracts, and build requirements.
 
 Generate 24 production whole-earth maps, 12 timestamped astronomy maps, 12
-timestamped Orbital Technosphere maps, six cumulative network-swarm maps, six
-monochrome Bathymetry Roulette maps, six source-separated Anthropocene maps,
-six cloud/CDN network-infrastructure site maps, five
+timestamped Orbital Technosphere maps, six World Game resources maps, six
+cumulative network-swarm maps, six monochrome Bathymetry Roulette maps, six
+source-separated Anthropocene maps, six cloud/CDN network-infrastructure site maps, five
 exploratory Myriahedral ocean perspectives, 12 Cahill-Keyes enlargement
 slices, and two Myriahedral face-group slices as layered SVG, PDF, and opaque-white,
 3840-pixel-long-side PNG artifacts with:
@@ -155,6 +155,22 @@ northern Russia. Coral bleaching stress remains a documented separate
 raster/reef phase. See the
 [Anthropocene implementation notes](docs/anthropocene-implementation-notes.md)
 for classifications, formulas, source research, refresh workflow, and limits.
+
+World Game resources generation is offline from a strict profile containing
+all 40 headings and marked 1960 production leaders in Fuller and McHale's 1963
+inventory. Its four FAO/IRENA indicators are explicitly separate modern
+context:
+
+```sh
+make generate-resources-cahill-keyes
+make generate-resources
+make generate-resources-artifacts
+```
+
+The historical scan is not redistributed or downloaded by Make. See the
+[resources implementation notes](docs/resources-implementation-notes.md) for
+the easy workflow, source/rights audit, exact scope, profile and SVG contracts,
+and authorized-copy transcription procedure.
 
 Network-swarm generation is offline and reproducible from a checked-in
 cumulative GeoJSON archive. Prepare the bounded source and generate the six H3/Izzi

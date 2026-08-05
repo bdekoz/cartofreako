@@ -18,6 +18,7 @@
 /tests/test-bathymetry-roulette-style
 /tests/test-anthropocene-generation
 /tests/test-cloud-atmosphere-generation
+/tests/test-resources-generation
 
 # Native generator executables.
 /src.generate/generate-geometry
@@ -38,6 +39,7 @@
 /src.generate/prepare-anthropocene
 /src.generate/generate-cloud-atmosphere
 /src.generate/prepare-cloud-atmosphere
+/src.generate/generate-resources
 /src.generate/resolve-generation-profile
 /src.generate/third_party/sgp4/SGP4.o
 

@@ -12,14 +12,14 @@ generation workflow. They do not require the same software:
 | Component | Required for | Purpose |
 | --- | --- | --- |
 | GNU Make | All Makefile targets | Expands the generated projection rules and coordinates builds |
-| C++20 compiler and standard library | Tests, profile resolution, and native generators | Builds the projection checks, generation-profile resolver, fourteen SVG-generation programs, and the Anthropocene and Cloud-atmosphere preparers |
-| RapidJSON development headers | Configured generation plus astronomy, Cloud-atmosphere, Orbital Technosphere, Anthropocene, network-swarm, and network-infrastructure tests and generators | Parses the generation preference, authoritative data profiles, astronomy JSON, NASA SSCWeb references, normalized H3 observations, cumulative swarm GeoJSON, and infrastructure source records |
+| C++20 compiler and standard library | Tests, profile resolution, and native generators | Builds the projection checks, generation-profile resolver, fifteen SVG-generation programs, and the Anthropocene and Cloud-atmosphere preparers |
+| RapidJSON development headers | Configured generation plus astronomy, Cloud-atmosphere, Orbital Technosphere, resources, Anthropocene, network-swarm, and network-infrastructure tests and generators | Parses the generation preference, authoritative data profiles, astronomy JSON, NASA SSCWeb references, normalized H3 observations, cumulative swarm GeoJSON, and infrastructure source records |
 | Alpha60 headers | SVG generation | Supplies `a60-io.h` and shared runtime-resource interfaces |
 | Izzi headers | SVG generation | Supplies `a60-svg.h`, roulette-curve construction, and SVG document/path serialization |
 | H3 development headers and library | Cloud-atmosphere, Network-swarm, and Anthropocene tests, normalization, and generation | Validates 64-bit cells, aggregates raster and point observations, computes configurable parent clusters, and creates cell boundaries with the H3 v4 API |
-| GDAL development package with OGR, GeoTIFF, and NetCDF drivers | Earth, water, Bathymetry Roulette, Cloud-atmosphere, global Orbital Technosphere, Anthropocene, network-swarm, and network-infrastructure generation | Reads Natural Earth/HMS vectors plus JAXA COG and P-Tree NetCDF rasters |
+| GDAL development package with OGR, GeoTIFF, and NetCDF drivers | Earth, water, Bathymetry Roulette, Cloud-atmosphere, resources, global Orbital Technosphere, Anthropocene, network-swarm, and network-infrastructure generation | Reads Natural Earth/HMS vectors plus JAXA COG and P-Tree NetCDF rasters |
 | GEOS support in GDAL | Natural Earth-backed generation | Performs polygon intersection, repair, and seam-safe clipping |
-| Fontconfig and Atkinson Hyperlegible | Graticule, astronomy, Orbital Technosphere, Anthropocene, network-swarm, network-infrastructure, and Bathymetry Roulette generation and PDF/PNG export | Resolves the default accessible label face and prevents silent font substitution |
+| Fontconfig and Atkinson Hyperlegible | Graticule, astronomy, Orbital Technosphere, resources, Anthropocene, network-swarm, network-infrastructure, and Bathymetry Roulette generation and PDF/PNG export | Resolves the default accessible label face and prevents silent font substitution |
 | Git, Bash, Python 3, `curl`, `jq`, `unzip`, `tar`, `gzip`, `rg`, `find`, `sha256sum`, and GNU coreutils including `cmp`, `date`, and `realpath` | Natural Earth, astronomy, Cloud-atmosphere, orbital, Anthropocene, network-swarm, and network-infrastructure source preparation or validation | Resolves static STAC metadata, downloads, verifies commits and files, compares, dates, transforms JSON, and extracts or installs bounded source data |
 | Inkscape | Complete artifact generation and visual review | Exports PDF/PNG and inspects SVG layers, clipping, geometry, and seams |
 | Doxygen | API reference generation | Builds the documented projection-header reference under `docs/doxygen/` |
@@ -60,15 +60,15 @@ they are not discoverable at their defaults.
 headers. Bare `make` additionally needs the dependencies of the passes chosen
 by the generation profile. The check suite also needs H3, GDAL development
 files, the sibling Izzi/Alpha60 headers, and the checked-in astronomy,
-Cloud-atmosphere fixture, Orbital Technosphere, Anthropocene, network-swarm,
+Cloud-atmosphere fixture, Orbital Technosphere, resources, Anthropocene, network-swarm,
 and network-infrastructure profiles and bounded snapshots.
 It does not open Natural Earth, invoke Inkscape, or use network access.
 
 `make all` builds 24 production whole-earth maps, 12 astronomy maps, 12
-Orbital Technosphere maps, six Anthropocene maps, six network-swarm maps, six
+Orbital Technosphere maps, six resources maps, six Anthropocene maps, six network-swarm maps, six
 network-infrastructure site maps, six Bathymetry Roulette maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes slices, and two
-Myriahedral face-group slices, then invokes Inkscape to export all 91 SVGs as
+Myriahedral face-group slices, then invokes Inkscape to export all 97 SVGs as
 PDFs and 3840-pixel-long-side PNGs. It needs
 all native build and data-acquisition dependencies through H3 and GEOS, the
 profile-pinned external cloud/CDN checkout, plus Inkscape. The separately
@@ -83,6 +83,13 @@ Preparation needs H3 plus GDAL's GeoTIFF and NetCDF drivers. After installing
 those dependencies, use the explicit fetch, prepare, verify, and generate
 targets documented in the
 [Cloud-atmosphere notes](cloud-atmosphere-implementation-notes.md).
+
+Normal resources generation needs only the ordinary profile, RapidJSON, GDAL,
+Natural Earth, and label font. Re-auditing an authorized Fuller scan is an
+optional maintainer workflow that additionally needs Poppler's `pdftoppm`, the
+Python OpenCV module, and Tesseract. Those OCR-only tools are not checked by
+`make check-prerequisite`; see the
+[resources notes](resources-implementation-notes.md#re-auditing-an-authorized-scan).
 
 ## Install the system packages
 
@@ -621,7 +628,7 @@ inkscape --version
 Successful generation places six geometry maps, six graticule maps, six
 Earth maps, eleven water maps (six production plus five exploratory
 Myriahedral perspectives), 12 astronomy maps, 12 Orbital Technosphere maps,
-six Anthropocene maps, six network-swarm maps, six network-infrastructure site
+six resources maps, six Anthropocene maps, six network-swarm maps, six network-infrastructure site
 maps, six Bathymetry Roulette maps, four quadrant slices, eight
 octant slices, and two Myriahedral face-group
 slices in each of `assets.generated/svg/`,

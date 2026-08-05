@@ -41,6 +41,7 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/astro-implementation-notes.md) |
 | Process-start solar illumination and source-timed JAXA physical atmosphere generation | [Cloud-atmosphere implementation notes](docs/cloud-atmosphere-implementation-notes.md) |
 | Human-made Earth-orbit population and observer generation | [Orbital Technosphere implementation notes](docs/orbital-technosphere-implementation-notes.md) |
+| Fuller and McHale 1960 production leaders with separate modern resource context | [World Game resources implementation notes](docs/resources-implementation-notes.md) |
 | Source-separated climate, weather, fire, smoke, and air-quality atlas | [Anthropocene implementation notes](docs/anthropocene-implementation-notes.md) |
 | Cumulative H3 network-swarm generation | [Network-swarm generation implementation notes](docs/network-swarm-implementation-notes.md) |
 | Cloud/CDN site atlas and opt-in cable/exchange topology | [Network-infrastructure implementation notes](docs/network-infrastructure-implementation-notes.md) |
@@ -137,12 +138,13 @@ Artifact-family targets are also available as
 `generate-earth-projections`, `generate-water-projections`,
 `generate-astro-projections`, `generate-cloud-atmosphere-projections`,
 `generate-orbiting-projections`,
+`generate-resources-projections`,
 `generate-anthropocene-projections`,
 `generate-network-swarm-projections`,
 `generate-network-infrastructure-projections`, and
 `generate-bathymetry-roulette-projections`. Each generic
 family target includes Cahill-Keyes plus AuthaGraph, Dymaxion, Myriahedral,
-Star-X, and Voronoi. The eleven whole-map generators accept a projection name
+Star-X, and Voronoi. The twelve whole-map generators accept a projection name
 on their command line. Every generator reopens its SVG to validate the view box,
 required layers, path structure, and finite numeric output.
 
@@ -195,6 +197,19 @@ proxy for smoke, and absent observations do not assert zero:
 | Myriahedral | [`anthropocene-myriahedral-44-24.75.png`](assets.generated/png/anthropocene-myriahedral-44-24.75.png) |
 | Star-X | [`anthropocene-star-x-34-44.png`](assets.generated/png/anthropocene-star-x-34-44.png) |
 | Voronoi | [`anthropocene-voronoi-44-22.916667.png`](assets.generated/png/anthropocene-voronoi-44-22.916667.png) |
+
+The World Game resources pass preserves all 40 headings and marked leaders in
+the source's 1960 production matrix. The bottom band keeps selected modern
+FAO/IRENA indicators outside that historical evidence class:
+
+| Projection | World Game resources |
+| --- | --- |
+| Cahill-Keyes | [`resources-ck-44-22.png`](assets.generated/png/resources-ck-44-22.png) |
+| AuthaGraph | [`resources-authagraph-44-19.052559.png`](assets.generated/png/resources-authagraph-44-19.052559.png) |
+| Dymaxion | [`resources-dymaxion-44-20.78461.png`](assets.generated/png/resources-dymaxion-44-20.78461.png) |
+| Myriahedral | [`resources-myriahedral-44-24.75.png`](assets.generated/png/resources-myriahedral-44-24.75.png) |
+| Star-X | [`resources-star-x-34-44.png`](assets.generated/png/resources-star-x-34-44.png) |
+| Voronoi | [`resources-voronoi-44-22.916667.png`](assets.generated/png/resources-voronoi-44-22.916667.png) |
 
 The cumulative network-swarm pass detiles the pinned resolution-5 H3 swarm into
 projection-safe resolution-3 Izzi honeycombs while preserving every raw
@@ -257,6 +272,9 @@ The [Anthropocene notes](docs/anthropocene-implementation-notes.md) record the
 feasibility boundary, literal 2026 profile, source classifications, record and
 rainfall formulas, Canada/Russia fire-source evaluation, EPA/smoke separation,
 deferred coral phase, snapshot audit, and interpretation limits.
+The [World Game resources notes](docs/resources-implementation-notes.md) record
+the bounded source decision, archive and rights review, exact 40-row profile,
+separate modern context, authorized-copy transcription workflow, and limits.
 The [network-swarm notes](docs/network-swarm-implementation-notes.md) record the fixed
 source audit, variable-input contract, H3/Izzi clustering, independent
 downloader encodings, SVG metadata, and interpretation limits.
@@ -397,12 +415,13 @@ the `voronoi_source` preset are in the
 | [`docs/web-workflow.md`](docs/web-workflow.md) | Emscripten workflow for an illustrative raster-backed 1920×1080 Myriahedral overlay |
 | [`docs/web-example.md`](docs/web-example.md) | Complete copyable C++, HTML, JavaScript, and build example for that Myriahedral workflow |
 | [`docs/generation.md`](docs/generation.md) | End-to-end SVG generation, seam and folding techniques, data preparation, structural checks, and perceptual considerations |
-| [`docs/generation-methods.md`](docs/generation-methods.md) | Central `generate-*` evaluation ledger, implemented conclusions, unresolved proposals, configured workflows, JSON schema, and Stage 7 decisions |
+| [`docs/generation-methods.md`](docs/generation-methods.md) | Central `generate-*` evaluation ledger, implemented conclusions, configured workflows, JSON schema, and Stage 7 decisions |
 | [`docs/prerequisites.md`](docs/prerequisites.md) | Native build, data acquisition, Inkscape review, and optional WebAssembly prerequisites |
 | [`docs/astro-implementation-notes.md`](docs/astro-implementation-notes.md) | Astronomy profile schema, source evaluation, astrometric formulas, instrumentation filter, output contract, verification, and accuracy boundary |
 | [`docs/cloud-atmosphere-implementation-notes.md`](docs/cloud-atmosphere-implementation-notes.md) | Stage 4.1a feasibility, astronomy boundary, JAXA sources, process time, P-Tree QA, H3 preparation, products, terms, verification, and limits |
 | [`docs/ptree-production-download.md`](docs/ptree-production-download.md) | Quick-start P-Tree registration, secure credentials, connection test, reproducible production refresh, expected files, and troubleshooting |
 | [`docs/orbital-technosphere-implementation-notes.md`](docs/orbital-technosphere-implementation-notes.md) | Stage 4.2 feasibility, naming, NASA/CelesTrak source roles, OMM/SGP4 formulas, products, verification, and accuracy boundary |
+| [`docs/resources-implementation-notes.md`](docs/resources-implementation-notes.md) | Stage 6 feasibility, source and rights audit, 1960 production-leader profile, modern context, SVG contract, workflow, and limitations |
 | [`src.projections/cart0freak0-star-x.h`](src.projections/cart0freak0-star-x.h) | Star-X group assembly, configurable centered scale, polar-composition geometry, frame validation, public API, and factory |
 | [`tests/test-star-x-projection-api.cc`](tests/test-star-x-projection-api.cc) | Star-X anchors, assembly and scale, global domain, polar helpers, variable-frame, validation, and API tests |
 | [`docs/star-x-context.md`](docs/star-x-context.md) | Star-X octahedral context, face-slot mapping, group rotation, page enlargement, polar composition, and cuts |
@@ -448,6 +467,12 @@ the `voronoi_source` preset are in the
 | [`scripts/resolve-jaxa-stac.py`](scripts/resolve-jaxa-stac.py) | Static-STAC traversal, COG-level selection, download, and source manifest helper |
 | [`scripts/prepare-cloud-atmosphere-data.sh`](scripts/prepare-cloud-atmosphere-data.sh) | Atomic raw-to-prepared H3 snapshot workflow |
 | [`scripts/verify-cloud-atmosphere-data.sh`](scripts/verify-cloud-atmosphere-data.sh) | Prepared snapshot checksum and production-schema gate |
+| [`src.generate/resources-data.h`](src.generate/resources-data.h) | Strict historical and modern-context profile loading, source-year and page validation, missing-value semantics, and count invariants |
+| [`src.generate/resources-generation.h`](src.generate/resources-generation.h) | Six-projection resource rendering, deterministic collision layout, semantic metadata, and embedded SVG checks |
+| [`src.generate/generate-resources.cc`](src.generate/generate-resources.cc) | Thin six-projection World Game resources generator entry point |
+| [`tests/test-resources-generation.cc`](tests/test-resources-generation.cc) | Profile facts, source provenance, null semantics, strict-schema failures, metadata, and six-projection layout tests |
+| [`assets.static/resources/resources-profile.json`](assets.static/resources/resources-profile.json) | Audited 1960 production leaders and independently sourced modern resource context |
+| [`scripts/transcribe-fuller-minerals.py`](scripts/transcribe-fuller-minerals.py) | Conservative OCR workbench for manually re-auditing pages from an authorized local scan |
 | [`src.generate/orbiting-data.h`](src.generate/orbiting-data.h) | Orbital Technosphere profile and OMM validation, category membership, SGP4 adapter, frame transforms, illumination, and visibility state |
 | [`src.generate/orbiting-generation.h`](src.generate/orbiting-generation.h) | Global and observer semantic SVG layers, subdued Natural Earth base, representative tracks, markers, metadata, and embedded checks |
 | [`src.generate/generate-orbiting.cc`](src.generate/generate-orbiting.cc) | Thin Orbital Technosphere generator entry point |

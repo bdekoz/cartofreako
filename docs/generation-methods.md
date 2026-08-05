@@ -34,7 +34,7 @@ decision after the fact.
 | 4.2 | `generate-orbiting` / Orbital Technosphere | **Implemented** | Naming, NASA/CelesTrak feasibility, OMM/SGP4, profile authority, products, and limits are summarized below and detailed in the [Orbital Technosphere implementation notes](orbital-technosphere-implementation-notes.md) |
 | 4.4 | `generate-network-swarm` | **Implemented** | Confirmed variable-input contract, fixed cumulative snapshot, H3/Izzi clustering, projection-safe components, independent downloader layers, products, and limits are detailed in the [network-swarm implementation notes](network-swarm-implementation-notes.md) |
 | 4.5 | `generate-bathymetry-roulette` | **Implemented** | Confirmed depth-to-curve catalogue, explicit varied page-space line fields, Natural Earth clipping, accepted moiré, products, and limits are detailed in the [Bathymetry Roulette implementation notes](bathymetry-roulette-implementation-notes.md) |
-| 6 | `generate-world-game` | **Requested; not evaluated to a repository decision** | The raw request identifies World Game and Fuller archival collections; no confirmed digitization, licensing, normalized dataset, layer model, or implementation is preserved |
+| 6 | `generate-resources` / World Game | **Implemented** | Confirmed bounded 1960 production-leader transcription, page and digest provenance, conservative source-rights boundary, representative geography, separate FAO/IRENA context, products, and limits are detailed in the [resources implementation notes](resources-implementation-notes.md) |
 | 7 | Configurable `generate-*` selection | **Implemented infrastructure** | JSON profile, validation, safe target expansion, default Make behavior, alternatives, and scope boundaries are recorded in this document |
 | 8 | `generate-anthropocene` | **Implemented** | Confirmed source-separated indicator atlas, literal 2026 duration, H3 cell-days, EPA PM2.5/smoke separation, Canada/Russia fire-source roles, partial-coverage semantics, deferred coral phase, products, and limits are detailed in the [Anthropocene implementation notes](anthropocene-implementation-notes.md) |
 | 9 | `generate-network-infrastructure` | **Implemented** | Confirmed external-source contract, normal cloud/CDN site atlas, explicit CC BY-NC-SA 3.0 topology opt-in, physical/logical relation boundary, projection-safe paths, Izzi detiling, products, and limits are detailed in the [network-infrastructure implementation notes](network-infrastructure-implementation-notes.md) |
@@ -190,6 +190,31 @@ The exact twelve-row catalogue, SVG layer contract, products, verification,
 and interpretation boundary are recorded in
 [`bathymetry-roulette-implementation-notes.md`](bathymetry-roulette-implementation-notes.md).
 
+### Stage 6: World Game resources
+
+The evaluation found an inspectable primary scan for Fuller and McHale's 1963
+*Inventory of World Resources, Human Trends, and Needs*, but no licensed,
+machine-readable corpus covering every World Game archival resource. The
+confirmed and implemented bounded product therefore:
+
+- transcribes all 40 headings, world totals, and asterisk-marked leaders from
+  the report's explicitly selected 1960 production matrix;
+- retains source units and page pointers, preserves Thorium's `N.A.` as null,
+  and does not infer values from blank country cells;
+- records historical country labels while mapping only documented
+  representative points, never extraction sites or modern boundary claims;
+- checks in the factual profile but neither the rights-restricted scan nor its
+  page images, and provides no automated BFI fetch;
+- treats OCR as a human-audit aid rather than profile authority; and
+- adds selected fisheries, aquatic production, primary-crop, and installed
+  solar indicators as visibly separate, year- and source-labelled modern
+  context rather than a continuation of the 1960 matrix.
+
+The archive findings, rights decision, exact 40-row data contract, modern
+source facts, collision layout, SVG grammar, easy workflow, re-audit procedure,
+and limitations are recorded in
+[`resources-implementation-notes.md`](resources-implementation-notes.md).
+
 ### Stage 8: Anthropocene observation atlas
 
 The evaluation concluded that a multi-source climate-impact observation atlas
@@ -253,22 +278,6 @@ The audited counts, source discrepancy decision, license boundary, spherical
 hub formula, clustering behavior, layer contract, previews, and verification
 are recorded in
 [`network-infrastructure-implementation-notes.md`](network-infrastructure-implementation-notes.md).
-
-## Unresolved generation-pass proposals
-
-The following entries preserve the useful content of the requests without
-claiming that an evaluation or confirmation occurred:
-
-- **World Game:** intended to map Fuller's *Inventory of World Resources,
-  Human Trends, and Needs* using BFI, Virginia Tech, Stanford, and California
-  archival holdings. It still needs an accessible machine-readable corpus,
-  rights and citation review, edition/time semantics, normalized resource
-  ontology, geographic registration method, uncertainty policy, and a bounded
-  first product.
-
-These are open design questions, not newly imposed requirements. A future
-evaluation should add its evidence, alternatives, recommendation, and
-confirmation state here before implementation begins.
 
 ## Stage 7 configured-selection outcome
 
@@ -334,7 +343,8 @@ The recursion is a useful boundary rather than a second build system:
   a fixed projection/pass table;
 - Make still decides whether each artifact is current;
 - command-line settings such as `NATURAL_EARTH_DIR`, `ASTRO_PROFILE`,
-  `ORBITING_PROFILE`, compiler options, `-B`, and `-j` propagate normally; and
+  `ORBITING_PROFILE`, `RESOURCES_PROFILE`, compiler options, `-B`, and `-j`
+  propagate normally; and
 - explicit targets and `make all` do not read or depend on the selection
   profile.
 
@@ -366,6 +376,8 @@ Normalization is limited and deterministic:
 - `orbiting` becomes `orbital-technosphere`;
 - the former `network` name and short `swarm` name become `network-swarm`;
 - `infrastructure` becomes `network-infrastructure`;
+- `resource`, `world-game`, `world-game-resources`, and the historical request
+  typo `resouces` become `resources`;
 - `bathymetry-rolette` and `art-agua-roulette` become
   `bathymetry-roulette`; and
 - `ocean` becomes `water`, the current name of the complementary Natural
@@ -377,14 +389,14 @@ twice.
 
 The supported cross-product is:
 
-| Projection selector | Geometry | Graticules | Earth | Water | Astronomy | Orbital Technosphere | Network-swarm | Bathymetry Roulette | Anthropocene | Network infrastructure |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `cahill-keyes` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
-| `authagraph` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
-| `dymaxion` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
-| `myriahedral` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
-| `star-x` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
-| `voronoi` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
+| Projection selector | Geometry | Graticules | Earth | Water | Astronomy | Orbital Technosphere | Network-swarm | Resources | Bathymetry Roulette | Anthropocene | Network infrastructure |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `cahill-keyes` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
+| `authagraph` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
+| `dymaxion` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
+| `myriahedral` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
+| `star-x` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
+| `voronoi` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
 
 Astronomy resolves to `generate-astro-PROJECTION`, which intentionally makes
 both all-sky and observer products. Orbital Technosphere resolves to
@@ -395,6 +407,8 @@ products. The four terrestrial passes resolve to uniform
 Network-swarm resolves to `generate-network-swarm-PROJECTION` and makes the
 one cumulative swarm product. Bathymetry Roulette similarly resolves to
 `generate-bathymetry-roulette-PROJECTION` and makes one monochrome depth map.
+Resources resolves to `generate-resources-PROJECTION` and makes one historical
+production-leader atlas with separate modern context.
 Anthropocene resolves to `generate-anthropocene-PROJECTION` and makes one
 source-separated observation atlas. Network infrastructure resolves to
 `generate-network-infrastructure-PROJECTION` and makes only the cloud/CDN site
@@ -434,8 +448,8 @@ make GENERATION_PROFILE=generation-profile.local.json
 make all
 ```
 
-This remains the release/review build. It creates all 91 layered SVGs and
-exports all 91 PDFs and 91 opaque PNGs, including slice and perspective
+This remains the release/review build. It creates all 97 layered SVGs and
+exports all 97 PDFs and 97 opaque PNGs, including slice and perspective
 families that are outside the configurable matrix. The aliases
 `generate-projections`, `generated-projections`, and `make-generated` retain
 the same full-suite behavior.
@@ -451,6 +465,7 @@ make generate-earth-projections
 make generate-astro-observer
 make generate-orbiting-global
 make generate-anthropocene
+make generate-resources
 make generate-network-swarm
 make generate-network-infrastructure
 make generate-bathymetry-roulette
@@ -469,6 +484,8 @@ cloud/CDN site products. The separate
 `generate-network-infrastructure-topology-artifacts` targets are explicit
 CC BY-NC-SA 3.0 opt-ins and never dependencies of the normal family.
 `generate-anthropocene-artifacts` does the same for all six Anthropocene
+products.
+`generate-resources-artifacts` does the same for all six World Game resources
 products.
 `generate-bathymetry-roulette-artifacts` does the same for all six roulette
 bathymetry products.
@@ -505,13 +522,18 @@ make check-network-infrastructure-sources
 make check-network-infrastructure-topology-sources
 ```
 
+There is intentionally no `fetch-resources-data` target. Normal resources
+generation is offline from the checked factual profile; source-scan re-audits
+follow the manual authorized-copy workflow in the
+[resources notes](resources-implementation-notes.md).
+
 `make check` compiles and runs the native algorithm/API suite, including
 generation-profile schema and alias tests. SVG generators instead run their
 own structural validation whenever their generation target executes.
 
 ## Scope boundaries and future extensions
 
-The generation profile does not override astronomical, orbital,
+The generation profile does not override astronomical, orbital, resources,
 Anthropocene, network-swarm, or network-infrastructure calculation
 properties. Their pass-specific
 profiles remain the sole authorities for source state, calculation or

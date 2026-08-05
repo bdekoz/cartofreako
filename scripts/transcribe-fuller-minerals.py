@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Transcribe Fuller's 1965/1966 mineral matrix from supplied page images.
+"""Transcribe Fuller's 1960 mineral-production matrix from page images.
 
 This is a maintainer tool, not part of a normal build.  It expects images made
-from pages 63--73 of the BFI Phase I report plus a rendering of PDF page 73.
+at 150 DPI from PDF pages 62--73 of the 1963 BFI Phase I report, using the
+``cartofreako-minerals-NNN.png`` names produced by ``pdftoppm``.
 The page order in the scan is non-linear for the final country block; the
 explicit table below records that archival fact.  Every accepted number is
 reported in the source with three decimal places and is reconstructed from the
@@ -88,7 +89,7 @@ PAGES = (
     Page(1, 20, 9, "cartofreako-minerals-068.png", 314.5, 1375, 194, 103.5),
     Page(1, 29, 11, "cartofreako-minerals-069.png", 231, 1306.5, -26, 103.7),
     Page(2, 0, 9, "cartofreako-minerals-072.png", 366, 1420, 222, 104.0),
-    Page(2, 9, 11, "cartofreako-probe-073.png", 227, 1247, -15, 104.7),
+    Page(2, 9, 11, "cartofreako-minerals-073.png", 227, 1247, -15, 104.7),
     Page(2, 20, 9, "cartofreako-minerals-070.png", 315, 1380.5, 255, 105.1),
     Page(2, 29, 11, "cartofreako-minerals-071.png", 234.5, 1315, -10, 104.8),
 )
@@ -126,16 +127,17 @@ def _best_rule(line_image, expected: float, horizontal: bool) -> int:
 
 
 def _png_cell(gray, x0: int, x1: int, y0: int, y1: int) -> bytes:
-    x0, x1 = max(0, x0 + 10), min(gray.shape[1], x1 - 10)
+    # Stay inside the rules instead of removing them morphologically.  The
+    # latter also removed long horizontal strokes from this condensed typeface
+    # (notably changing 3 to 8 and making otherwise clear cells unreadable).
+    x0, x1 = max(0, x0 + 8), min(gray.shape[1], x1 - 8)
     y0, y1 = max(0, y0 + 3), min(gray.shape[0], y1 - 3)
     cell = gray[y0:y1, x0:x1]
     if cell.size == 0:
         return b""
-    ink = cv2.threshold(cell, 190, 255, cv2.THRESH_BINARY_INV)[1]
-    horizontal = cv2.morphologyEx(
-        ink, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_RECT, (30, 1)))
-    ink = cv2.bitwise_and(ink, cv2.bitwise_not(horizontal))
-    cell = cv2.resize(cv2.bitwise_not(ink), None, fx=5, fy=5,
+    cell = cv2.copyMakeBorder(cell, 5, 5, 5, 5, cv2.BORDER_CONSTANT,
+                              value=255)
+    cell = cv2.resize(cell, None, fx=5, fy=5,
                       interpolation=cv2.INTER_CUBIC)
     return cv2.imencode(".png", cell)[1].tobytes()
 
@@ -144,20 +146,33 @@ def _ocr(payload: bytes) -> str:
     if not payload:
         return ""
     result = subprocess.run(
-        ("tesseract", "stdin", "stdout", "--psm", "7", "-l", "eng",
+        ("tesseract", "stdin", "stdout", "--psm", "6", "-l", "eng",
          "-c", "tessedit_char_whitelist=0123456789.NA*.,"),
         input=payload, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
         check=False,
     )
     if result.returncode != 0:
         return ""
-    return result.stdout.decode("utf-8", "replace").strip().replace(" ", "")
+    text = result.stdout.decode("utf-8", "replace").strip().replace(" ", "")
+    # Dust and isolated rule fragments are commonly recognized as punctuation;
+    # they are blank cells, not ambiguous numeric observations.
+    if re.fullmatch(r"[.,*]+", text):
+        return ""
+    return text
 
 
 def _parse(raw: str):
     upper = raw.upper().replace(",", ".")
     if "NA" in upper or "N.A" in upper:
         return {"status": "not-applicable", "raw_ocr": raw}
+    # On bold leader cells Tesseract often recognizes the final asterisk as a
+    # fourth fractional digit.  The source grammar always has exactly three
+    # fractional digits, so retain the mark without admitting a fourth digit.
+    decimal = re.search(r"([0-9]{1,3})\.([0-9]{4})", upper)
+    inferred_leader = decimal is not None
+    if decimal is not None:
+        upper = (upper[:decimal.start()] + decimal.group(1) + "."
+                 + decimal.group(2)[:3] + "*" + upper[decimal.end():])
     digits = "".join(re.findall(r"[0-9]", upper))
     if not 3 <= len(digits) <= 6:
         return None
@@ -167,7 +182,7 @@ def _parse(raw: str):
     return {
         "status": "reported",
         "percent_world_total": value,
-        "leading_producer": "*" in upper,
+        "leading_producer": "*" in upper or inferred_leader,
         "raw_ocr": raw,
     }
 
@@ -179,6 +194,15 @@ def transcribe(image_directory: pathlib.Path):
         gray = cv2.imread(str(path), cv2.IMREAD_GRAYSCALE)
         if gray is None:
             raise RuntimeError(f"failed to read {path}")
+        # Several source pages are cropped through the final table column, so
+        # its extrapolated outer rule may legitimately sit just off-canvas.
+        required_width = round(page.left + page.column_step
+                               * page.resource_count) - 70
+        required_height = round(page.last_center) + 15
+        if gray.shape[1] < required_width or gray.shape[0] < required_height:
+            raise RuntimeError(
+                f"{path} is {gray.shape[1]}x{gray.shape[0]}; expected a "
+                "150-DPI page render (image is too small for the table grid)")
         pattern = ROW_PATTERNS[page.country_block]
         source_first, source_last = pattern[0], pattern[-1]
         centers = [page.first_center + (value - source_first)
@@ -233,8 +257,16 @@ def transcribe(image_directory: pathlib.Path):
 
     return {
         "schema": "cartofreako-fuller-mineral-matrix-transcription-v1",
-        "source_year": 1965,
-        "revision_year": 1966,
+        "publication_year": 1963,
+        "production_year": 1960,
+        "source": {
+            "title": "Inventory of World Resources, Human Trends, and Needs",
+            "authors": ["R. Buckminster Fuller", "John McHale"],
+            "publisher": "World Resources Inventory, Southern Illinois University",
+            "url": ("https://www.bfi.org/wp-content/uploads/2014/01/"
+                    "wdsd_phase1_doc1_inventory.pdf"),
+            "pdf_pages": "62-73",
+        },
         "missing_semantics": "null means blank or unverified; never zero",
         "countries": list(COUNTRIES),
         "resources": list(RESOURCES),

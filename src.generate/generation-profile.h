@@ -29,10 +29,11 @@ inline constexpr std::array<std::string_view, 6> supported_projections {
   "voronoi",
 };
 
-inline constexpr std::array<std::string_view, 11> supported_passes {
+inline constexpr std::array<std::string_view, 12> supported_passes {
   "geometry", "graticules", "earth", "water", "astronomy",
   "orbital-technosphere", "network-swarm", "bathymetry-roulette",
-  "network-infrastructure", "anthropocene", "cloud-atmosphere",
+  "network-infrastructure", "resources", "anthropocene",
+  "cloud-atmosphere",
 };
 
 struct profile
@@ -111,6 +112,9 @@ canonical_pass(const std::string_view input)
     return "bathymetry-roulette";
   if (value == "anthropocene")
     return "anthropocene";
+  if (value == "resources" || value == "resource" || value == "resouces"
+      || value == "world-game" || value == "world-game-resources")
+    return "resources";
   if (value == "cloud-atmosphere" || value == "clouds"
       || value == "atmosphere" || value == "solar-atmosphere"
       || value == "solar/cloud/atmosphere")
