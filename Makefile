@@ -31,6 +31,13 @@ ORBITING_DATA_DIR ?= $(STATIC_ASSET_DIR)/orbital-technosphere
 ORBITING_PROFILE ?= \
 	$(ORBITING_DATA_DIR)/orbital-technosphere-profile.json
 ORBITING_FETCHER := scripts/fetch-orbiting-data.sh
+NETWORK_DATA_DIR ?= $(STATIC_ASSET_DIR)/network
+NETWORK_PROFILE ?= $(NETWORK_DATA_DIR)/network-profile.json
+NETWORK_SOURCE ?= \
+	$(NETWORK_DATA_DIR)/house-of-the-dragon-301-cumulative-aggregate.geojson.zip
+NETWORK_PREPARED_DIR ?= $(NETWORK_DATA_DIR)/.prepared
+NETWORK_GEOJSON ?= $(NETWORK_PREPARED_DIR)/$(patsubst %.zip,%,$(notdir $(NETWORK_SOURCE)))
+NETWORK_PREPARER := scripts/prepare-network-data.sh
 PREREQUISITE_CHECKER := scripts/check-prerequisites.sh
 NATURAL_EARTH_STAMP := \
 	$(NATURAL_EARTH_DIR)/.natural-earth-10m-physical-5.1.1
@@ -57,12 +64,15 @@ GEOMETRY_GENERATOR := $(GENERATOR_SRC_DIR)/generate-geometry
 GRATICULE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-graticules
 EARTH_GENERATOR := $(GENERATOR_SRC_DIR)/generate-earth
 WATER_GENERATOR := $(GENERATOR_SRC_DIR)/generate-water
+BATHYMETRY_ROULETTE_GENERATOR := \
+	$(GENERATOR_SRC_DIR)/generate-bathymetry-roulette
 FOUR_SLICE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-4-slice
 EIGHT_SLICE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-8-slice
 MYRIAHEDRAL_SLICE_GENERATOR := \
 	$(GENERATOR_SRC_DIR)/generate-myriahedral-slices
 ASTRO_GENERATOR := $(GENERATOR_SRC_DIR)/generate-astro
 ORBITING_GENERATOR := $(GENERATOR_SRC_DIR)/generate-orbiting
+NETWORK_GENERATOR := $(GENERATOR_SRC_DIR)/generate-network
 GENERATION_PROFILE_RESOLVER := \
 	$(GENERATOR_SRC_DIR)/resolve-generation-profile
 SGP4_SOURCE := $(GENERATOR_SRC_DIR)/third_party/sgp4/SGP4.cpp
@@ -167,6 +177,30 @@ ORBITING_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 ORBITING_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PNG_DIR)/%.png,$(ORBITING_SVGS))
 
+NETWORK_SVGS := \
+	$(GENERATED_SVG_DIR)/network-ck-44-22.svg \
+	$(GENERATED_SVG_DIR)/network-authagraph-44-19.052559.svg \
+	$(GENERATED_SVG_DIR)/network-dymaxion-44-20.78461.svg \
+	$(GENERATED_SVG_DIR)/network-myriahedral-44-24.75.svg \
+	$(GENERATED_SVG_DIR)/network-star-x-34-44.svg \
+	$(GENERATED_SVG_DIR)/network-voronoi-44-22.916667.svg
+NETWORK_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PDF_DIR)/%.pdf,$(NETWORK_SVGS))
+NETWORK_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PNG_DIR)/%.png,$(NETWORK_SVGS))
+
+BATHYMETRY_ROULETTE_SVGS := \
+	$(GENERATED_SVG_DIR)/bathymetry-roulette-ck-44-22.svg \
+	$(GENERATED_SVG_DIR)/bathymetry-roulette-authagraph-44-19.052559.svg \
+	$(GENERATED_SVG_DIR)/bathymetry-roulette-dymaxion-44-20.78461.svg \
+	$(GENERATED_SVG_DIR)/bathymetry-roulette-myriahedral-44-24.75.svg \
+	$(GENERATED_SVG_DIR)/bathymetry-roulette-star-x-34-44.svg \
+	$(GENERATED_SVG_DIR)/bathymetry-roulette-voronoi-44-22.916667.svg
+BATHYMETRY_ROULETTE_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PDF_DIR)/%.pdf,$(BATHYMETRY_ROULETTE_SVGS))
+BATHYMETRY_ROULETTE_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PNG_DIR)/%.png,$(BATHYMETRY_ROULETTE_SVGS))
+
 REQUESTED_GEOMETRY_SVGS := \
 	$(AUTHAGRAPH_GEOMETRY_SVG) \
 	$(DYMAXION_GEOMETRY_SVG) \
@@ -201,7 +235,8 @@ GENERATED_SVGS := \
 	$(CK_EARTH_SVG) $(CK_WATER_SVG) $(CK_SLICE_SVGS) \
 	$(REQUESTED_PROJECTION_SVGS) \
 	$(MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS) $(MYRIAHEDRAL_SLICE_SVGS) \
-	$(ASTRO_SVGS) $(ORBITING_SVGS)
+	$(ASTRO_SVGS) $(ORBITING_SVGS) $(NETWORK_SVGS) \
+	$(BATHYMETRY_ROULETTE_SVGS)
 GENERATED_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PDF_DIR)/%.pdf,$(GENERATED_SVGS))
 GENERATED_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
@@ -222,10 +257,14 @@ ORBITING_STAR_X_SVGS := \
 	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-star-x-34-44.svg
 ORBITING_STAR_X_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PNG_DIR)/%.png,$(ORBITING_STAR_X_SVGS))
+NETWORK_STAR_X_PNG := $(GENERATED_PNG_DIR)/network-star-x-34-44.png
+BATHYMETRY_ROULETTE_STAR_X_PNG := \
+	$(GENERATED_PNG_DIR)/bathymetry-roulette-star-x-34-44.png
 MYRIAHEDRAL_PORTRAIT_SLICE_PNG := \
 	$(GENERATED_PNG_DIR)/water-myriahedral-adhoc-slice-1.png
 PORTRAIT_PNGS := $(STAR_X_PNGS) $(ASTRO_STAR_X_PNGS) \
-	$(ORBITING_STAR_X_PNGS) $(CK_SLICE_PNGS) \
+	$(ORBITING_STAR_X_PNGS) $(NETWORK_STAR_X_PNG) $(CK_SLICE_PNGS) \
+	$(BATHYMETRY_ROULETTE_STAR_X_PNG) \
 	$(MYRIAHEDRAL_PORTRAIT_SLICE_PNG)
 LANDSCAPE_PNGS := $(filter-out $(PORTRAIT_PNGS),$(GENERATED_PNGS))
 GENERATED_ARTIFACTS := $(GENERATED_SVGS) $(GENERATED_PDFS) \
@@ -233,7 +272,9 @@ GENERATED_ARTIFACTS := $(GENERATED_SVGS) $(GENERATED_PDFS) \
 
 GENERATOR_BINARIES := \
 	$(ASTRO_GENERATOR) \
+	$(BATHYMETRY_ROULETTE_GENERATOR) \
 	$(GENERATION_PROFILE_RESOLVER) \
+	$(NETWORK_GENERATOR) \
 	$(ORBITING_GENERATOR) \
 	$(EIGHT_SLICE_GENERATOR) \
 	$(EARTH_GENERATOR) \
@@ -244,7 +285,9 @@ GENERATOR_BINARIES := \
 	$(WATER_GENERATOR)
 TEST_BINARIES := \
 	$(TEST_DIR)/test-astro-generation \
+	$(TEST_DIR)/test-bathymetry-roulette-style \
 	$(TEST_DIR)/test-generation-profile \
+	$(TEST_DIR)/test-network-generation \
 	$(TEST_DIR)/test-orbiting-generation \
 	$(TEST_DIR)/test-cahill-keyes-projection \
 	$(TEST_DIR)/test-cahill-keyes-projection-api \
@@ -275,6 +318,8 @@ GENERATOR_HEADERS := \
 AREA_GENERATOR_HEADER := $(GENERATOR_SRC_DIR)/projection-area-generation.h
 NATURAL_EARTH_GENERATOR_HEADER := \
 	$(GENERATOR_SRC_DIR)/natural-earth-generation.h
+BATHYMETRY_ROULETTE_STYLE_HEADER := \
+	$(GENERATOR_SRC_DIR)/bathymetry-roulette-style.h
 ASTRO_GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/astro-data.h \
 	$(GENERATOR_SRC_DIR)/astro-generation.h \
@@ -284,13 +329,20 @@ ORBITING_GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/orbiting-generation.h \
 	$(NATURAL_EARTH_GENERATOR_HEADER) \
 	$(GENERATOR_HEADERS) $(SGP4_HEADER)
+NETWORK_GENERATOR_HEADERS := \
+	$(GENERATOR_SRC_DIR)/network-data.h \
+	$(GENERATOR_SRC_DIR)/network-clustering.h \
+	$(GENERATOR_SRC_DIR)/network-generation.h \
+	$(NATURAL_EARTH_GENERATOR_HEADER) \
+	$(GENERATOR_HEADERS)
 
 .DEFAULT_GOAL := configured
 .DELETE_ON_ERROR:
 
 PUBLIC_TARGETS := all check check-prerequisite clean configured doxygen \
 	generation-plan list-targets \
-	fetch-natural-earth-10m fetch-astro-data fetch-orbiting-data make-generated \
+	fetch-natural-earth-10m fetch-astro-data fetch-orbiting-data \
+	prepare-network-data make-generated \
 	wasm-cahill-keyes check-wasm-cahill-keyes \
 	wasm-cahill-myriahedral check-wasm-cahill-myriahedral \
 	generate-geometry generate-graticules-ck generate-earth-ck \
@@ -309,6 +361,18 @@ PUBLIC_TARGETS := all check check-prerequisite clean configured doxygen \
 	generate-orbiting-cahill-keyes generate-orbiting-authagraph \
 	generate-orbiting-dymaxion generate-orbiting-myriahedral \
 	generate-orbiting-star-x generate-orbiting-voronoi \
+	generate-network generate-network-projections generate-network-artifacts \
+	generate-network-cahill-keyes generate-network-authagraph \
+	generate-network-dymaxion generate-network-myriahedral \
+	generate-network-star-x generate-network-voronoi \
+	generate-bathymetry-roulette generate-bathymetry-roulette-projections \
+	generate-bathymetry-roulette-artifacts \
+	generate-bathymetry-roulette-cahill-keyes \
+	generate-bathymetry-roulette-authagraph \
+	generate-bathymetry-roulette-dymaxion \
+	generate-bathymetry-roulette-myriahedral \
+	generate-bathymetry-roulette-star-x \
+	generate-bathymetry-roulette-voronoi \
 	generate-water-myriahedral-perspectives generate-myriahedral-slices \
 	generate-authagraph generate-dymaxion generate-myriahedral generate-star-x \
 	generate-voronoi generate-voroni \
@@ -348,15 +412,28 @@ check-prerequisite: $(PREREQUISITE_CHECKER)
 		NODE="$(NODE)" WEB_BROWSER="$(WEB_BROWSER)" \
 		"$(PREREQUISITE_CHECKER)"
 
-check: $(SGP4_OBJECT)
+check: $(SGP4_OBJECT) $(NETWORK_GEOJSON)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-astro-generation.cc \
 		-o $(TEST_DIR)/test-astro-generation
 	$(TEST_DIR)/test-astro-generation
+	$(CXX) $(CPPFLAGS) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$(TEST_DIR)/test-bathymetry-roulette-style.cc \
+		-o $(TEST_DIR)/test-bathymetry-roulette-style
+	$(TEST_DIR)/test-bathymetry-roulette-style
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-generation-profile.cc \
 		-o $(TEST_DIR)/test-generation-profile
 	$(TEST_DIR)/test-generation-profile
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$(TEST_DIR)/test-network-generation.cc \
+		-lh3 \
+		-o $(TEST_DIR)/test-network-generation
+	$(TEST_DIR)/test-network-generation
+	cd "$(NETWORK_DATA_DIR)" && sha256sum -c SHA256SUMS
+	printf '%s  %s\n' \
+		'9fbd453d174df834208718e110396c5a22bff4312aeeff3e42d0175510b0ff69' \
+		'$(abspath $(NETWORK_GEOJSON))' | sha256sum -c -
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-orbiting-generation.cc $(SGP4_OBJECT) \
 		-o $(TEST_DIR)/test-orbiting-generation
@@ -479,6 +556,15 @@ $(WATER_GENERATOR): $(GENERATOR_SRC_DIR)/generate-water.cc \
 		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$< $(shell $(GDAL_CONFIG) --libs) -o $@
 
+$(BATHYMETRY_ROULETTE_GENERATOR): \
+		$(GENERATOR_SRC_DIR)/generate-bathymetry-roulette.cc \
+		$(BATHYMETRY_ROULETTE_STYLE_HEADER) \
+		$(NATURAL_EARTH_GENERATOR_HEADER) $(GENERATOR_HEADERS) \
+		$(AREA_GENERATOR_HEADER)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -o $@
+
 $(FOUR_SLICE_GENERATOR): $(GENERATOR_SRC_DIR)/generate-4-slice.cc \
 		$(PROJECTION_SRC_DIR)/cart0freak0-cahill-keyes-slicing.h \
 		$(PROJECTION_SRC_DIR)/cart0freak0-cahill-keyes.h \
@@ -524,6 +610,12 @@ $(ORBITING_GENERATOR): $(GENERATOR_SRC_DIR)/generate-orbiting.cc \
 		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$< $(SGP4_OBJECT) $(shell $(GDAL_CONFIG) --libs) -o $@
 
+$(NETWORK_GENERATOR): $(GENERATOR_SRC_DIR)/generate-network.cc \
+		$(NETWORK_GENERATOR_HEADERS)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
+
 fetch-astro-data: $(ASTRO_FETCHER)
 	$(ASTRO_FETCHER) "$(ASTRO_DATA_DIR)"
 
@@ -531,6 +623,15 @@ fetch-orbiting-data: $(ORBITING_FETCHER) $(ORBITING_PROFILE)
 	$(ORBITING_FETCHER) "$(ORBITING_DATA_DIR)"
 
 fetch-natural-earth-10m: $(NATURAL_EARTH_STAMP)
+
+prepare-network-data: $(NETWORK_GEOJSON)
+
+$(NETWORK_PREPARED_DIR):
+	mkdir -p "$@"
+
+$(NETWORK_GEOJSON): $(NETWORK_SOURCE) $(NETWORK_PREPARER) \
+		| $(NETWORK_PREPARED_DIR)
+	"$(NETWORK_PREPARER)" "$(NETWORK_SOURCE)" "$@"
 
 $(NATURAL_EARTH_STAMP): $(NATURAL_EARTH_FETCHER)
 	$(NATURAL_EARTH_FETCHER) "$(NATURAL_EARTH_DIR)"
@@ -724,6 +825,62 @@ generate-orbiting: $(ORBITING_SVGS)
 generate-orbiting-projections: $(ORBITING_SVGS)
 generate-orbiting-artifacts: $(ORBITING_SVGS) $(ORBITING_PDFS) \
 	$(ORBITING_PNGS)
+
+# $(1): command-line projection name; $(2): Network product.
+define NETWORK_PROJECTION_RULES
+generate-network-$(1): $(2)
+$(2): $(NETWORK_GENERATOR) $(NETWORK_PROFILE) $(NETWORK_GEOJSON) \
+		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		"$(abspath $(NETWORK_GENERATOR))" $(1) \
+		"$(abspath $(NETWORK_PROFILE))" "$(abspath $(NETWORK_GEOJSON))"
+endef
+
+$(eval $(call NETWORK_PROJECTION_RULES,cahill-keyes,\
+	$(GENERATED_SVG_DIR)/network-ck-44-22.svg))
+$(eval $(call NETWORK_PROJECTION_RULES,authagraph,\
+	$(GENERATED_SVG_DIR)/network-authagraph-44-19.052559.svg))
+$(eval $(call NETWORK_PROJECTION_RULES,dymaxion,\
+	$(GENERATED_SVG_DIR)/network-dymaxion-44-20.78461.svg))
+$(eval $(call NETWORK_PROJECTION_RULES,myriahedral,\
+	$(GENERATED_SVG_DIR)/network-myriahedral-44-24.75.svg))
+$(eval $(call NETWORK_PROJECTION_RULES,star-x,\
+	$(GENERATED_SVG_DIR)/network-star-x-34-44.svg))
+$(eval $(call NETWORK_PROJECTION_RULES,voronoi,\
+	$(GENERATED_SVG_DIR)/network-voronoi-44-22.916667.svg))
+
+generate-network: $(NETWORK_SVGS)
+generate-network-projections: $(NETWORK_SVGS)
+generate-network-artifacts: $(NETWORK_SVGS) $(NETWORK_PDFS) $(NETWORK_PNGS)
+
+# $(1): command-line projection name; $(2): Bathymetry Roulette product.
+define BATHYMETRY_ROULETTE_PROJECTION_RULES
+generate-bathymetry-roulette-$(1): $(2)
+$(2): $(BATHYMETRY_ROULETTE_GENERATOR) $(NATURAL_EARTH_STAMP) \
+		| $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		"$(abspath $(BATHYMETRY_ROULETTE_GENERATOR))" $(1)
+endef
+
+$(eval $(call BATHYMETRY_ROULETTE_PROJECTION_RULES,cahill-keyes,\
+	$(GENERATED_SVG_DIR)/bathymetry-roulette-ck-44-22.svg))
+$(eval $(call BATHYMETRY_ROULETTE_PROJECTION_RULES,authagraph,\
+	$(GENERATED_SVG_DIR)/bathymetry-roulette-authagraph-44-19.052559.svg))
+$(eval $(call BATHYMETRY_ROULETTE_PROJECTION_RULES,dymaxion,\
+	$(GENERATED_SVG_DIR)/bathymetry-roulette-dymaxion-44-20.78461.svg))
+$(eval $(call BATHYMETRY_ROULETTE_PROJECTION_RULES,myriahedral,\
+	$(GENERATED_SVG_DIR)/bathymetry-roulette-myriahedral-44-24.75.svg))
+$(eval $(call BATHYMETRY_ROULETTE_PROJECTION_RULES,star-x,\
+	$(GENERATED_SVG_DIR)/bathymetry-roulette-star-x-34-44.svg))
+$(eval $(call BATHYMETRY_ROULETTE_PROJECTION_RULES,voronoi,\
+	$(GENERATED_SVG_DIR)/bathymetry-roulette-voronoi-44-22.916667.svg))
+
+generate-bathymetry-roulette: $(BATHYMETRY_ROULETTE_SVGS)
+generate-bathymetry-roulette-projections: $(BATHYMETRY_ROULETTE_SVGS)
+generate-bathymetry-roulette-artifacts: $(BATHYMETRY_ROULETTE_SVGS) \
+	$(BATHYMETRY_ROULETTE_PDFS) $(BATHYMETRY_ROULETTE_PNGS)
 
 generate-water-myriahedral: generate-water-myriahedral-perspectives \
 	generate-myriahedral-slices

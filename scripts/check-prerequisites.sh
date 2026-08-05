@@ -157,8 +157,11 @@ check_required_tool "sha256sum" "sha256sum"
 check_required_tool "Coreutils install" "install"
 check_required_tool "Coreutils mktemp" "mktemp"
 check_required_tool "Coreutils wc" "wc"
+check_required_tool "Coreutils cmp" "cmp"
 check_required_file "Alpha60 header" "$alpha60_src/a60-io.h"
 check_required_file "Izzi header" "$izzi_src/a60-svg.h"
+check_required_file "Izzi roulette header" \
+  "$izzi_src/a60-svg-curves-roulette.h"
 check_required_tool "Inkscape" "$inkscape"
 check_required_tool "Doxygen" "$doxygen"
 
@@ -216,6 +219,34 @@ EOF
   fi
 else
   fail "C++20 compiler ($cxx)"
+fi
+
+if [ "$compiler_available" -eq 1 ]; then
+  cat > "$tmp_dir/h3.cc" <<'EOF'
+#include <h3/h3api.h>
+
+int
+main()
+{
+  H3Index cell = 0;
+  H3Index parent = 0;
+  return stringToH3("85283473fffffff", &cell) == E_SUCCESS
+      && isValidCell(cell) != 0 && getResolution(cell) == 5
+      && cellToParent(cell, 3, &parent) == E_SUCCESS
+      && isValidCell(parent) != 0 && getResolution(parent) == 3
+    ? 0 : 1;
+}
+EOF
+  if $cxx $cppflags $cxxflags "$tmp_dir/h3.cc" -lh3 \
+      -o "$tmp_dir/h3" >"$tmp_dir/h3.log" 2>&1 \
+      && "$tmp_dir/h3" >>"$tmp_dir/h3.log" 2>&1; then
+    pass "H3 development headers and library"
+  else
+    fail "H3 development headers and library (-lh3)"
+    show_log "$tmp_dir/h3.log"
+  fi
+else
+  fail "H3 development headers and library (compiler unavailable)"
 fi
 
 gdal_available=0

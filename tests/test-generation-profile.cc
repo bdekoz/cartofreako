@@ -71,9 +71,10 @@ main()
   const std::vector<std::string> all_targets = generation::targets(everything);
   assert(everything.all_projections);
   assert(everything.all_passes);
-  assert(all_targets.size() == 36);
+  assert(all_targets.size() == 48);
   assert(all_targets.front() == "generate-geometry-cahill-keyes");
-  assert(all_targets.back() == "generate-orbiting-voronoi");
+  assert(all_targets.back()
+         == "generate-bathymetry-roulette-voronoi");
   std::vector<std::string> unique_targets = all_targets;
   std::sort(unique_targets.begin(), unique_targets.end());
   assert(std::adjacent_find(unique_targets.begin(), unique_targets.end())
@@ -84,16 +85,30 @@ main()
       "schema_version": 1,
       "description": "Alias coverage",
       "projections": ["STAR_X", "voroni", "ck"],
-      "passes": ["graticule", "astro", "orbiting"]
+      "passes": ["graticule", "astro", "orbiting", "swarm",
+                 "bathymetry_rolette"]
     }
   )json");
   assert((aliases.projections == std::vector<std::string> {
                                    "star-x", "voronoi", "cahill-keyes"}));
   assert((aliases.passes == std::vector<std::string> {
                               "graticules", "astronomy",
-                              "orbital-technosphere"}));
+                              "orbital-technosphere", "network",
+                              "bathymetry-roulette"}));
   assert(generation::targets(aliases).front()
          == "generate-graticules-star-x");
+
+  const generation::profile historical = generation::parse_json(R"json(
+    {
+      "schema_version": 1,
+      "projections": ["ck"],
+      "passes": ["art-agua-roulette"]
+    }
+  )json");
+  assert((historical.passes == std::vector<std::string> {
+                                  "bathymetry-roulette"}));
+  assert((generation::targets(historical) == std::vector<std::string> {
+            "generate-bathymetry-roulette-cahill-keyes"}));
 
   expect_invalid(R"json({
     "schema_version": 1,

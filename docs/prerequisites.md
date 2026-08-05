@@ -12,13 +12,14 @@ generation workflow. They do not require the same software:
 | Component | Required for | Purpose |
 | --- | --- | --- |
 | GNU Make | All Makefile targets | Expands the generated projection rules and coordinates builds |
-| C++20 compiler and standard library | Tests, profile resolution, and native generators | Builds the projection checks, generation-profile resolver, and nine SVG-generation programs |
-| RapidJSON development headers | Configured generation plus astronomy and Orbital Technosphere tests and generators | Parses the generation preference, authoritative data profiles, astronomy JSON, and NASA SSCWeb references |
+| C++20 compiler and standard library | Tests, profile resolution, and native generators | Builds the projection checks, generation-profile resolver, and eleven SVG-generation programs |
+| RapidJSON development headers | Configured generation plus astronomy, Orbital Technosphere, and network tests and generators | Parses the generation preference, authoritative data profiles, astronomy JSON, NASA SSCWeb references, and cumulative swarm GeoJSON |
 | Alpha60 headers | SVG generation | Supplies `a60-io.h` and shared runtime-resource interfaces |
-| Izzi headers | SVG generation | Supplies `a60-svg.h` and SVG document/path serialization |
-| GDAL development package with OGR | Earth and water generation | Reads Natural Earth Shapefiles and provides vector geometry operations |
-| GEOS support in GDAL | Earth and water generation | Performs polygon intersection, repair, and seam-safe clipping |
-| Bash, `curl`, `unzip`, `rg`, and `sha256sum` | Natural Earth, astronomy, and orbital acquisition | Downloads, verifies, and extracts or installs bounded source data |
+| Izzi headers | SVG generation | Supplies `a60-svg.h`, roulette-curve construction, and SVG document/path serialization |
+| H3 development headers and library | Network tests and generation | Validates 64-bit cells and computes configurable parent clusters with the H3 v4 API |
+| GDAL development package with OGR | Earth, water, Bathymetry Roulette, global Orbital Technosphere, and network generation | Reads Natural Earth Shapefiles and provides vector geometry operations |
+| GEOS support in GDAL | Natural Earth-backed generation | Performs polygon intersection, repair, and seam-safe clipping |
+| Bash, `curl`, `unzip`, `rg`, `sha256sum`, and GNU coreutils including `cmp` | Natural Earth, astronomy, orbital, and network preparation | Downloads, verifies, compares, and extracts or installs bounded source data |
 | Inkscape | Complete artifact generation and visual review | Exports PDF/PNG and inspects SVG layers, clipping, geometry, and seams |
 | Doxygen | API reference generation | Builds the documented projection-header reference under `docs/doxygen/` |
 | Emscripten, Node.js, and a browser | Optional WebAssembly builds | Builds the production Cahill-Keyes and land/ocean-only Myriahedral adapters, plus the illustrative Myriahedral overlay |
@@ -43,28 +44,28 @@ discovery. Corresponding environment variables such as `CXX`, `ALPHA60_SRC`,
 `EMXX`, and `WEB_BROWSER` override those defaults.
 
 The target verifies the native commands and sibling headers, compiles and runs
-a C++20 and RapidJSON probe, and compiles a GDAL probe that checks OGR, GEOS,
-and the ESRI Shapefile driver. Missing native prerequisites make the target fail. Optional
+C++20/RapidJSON and H3 link/runtime probes, and compiles a GDAL probe that
+checks OGR, GEOS, and the ESRI Shapefile driver. Missing native prerequisites make the target fail. Optional
 WebAssembly tools and a browser are always checked and reported, but do not
 change the exit status. The check honors the Makefile's tool and source-tree
 overrides; use `EMRUN` and `WEB_BROWSER` to identify those optional tools when
 they are not discoverable at their defaults.
 
-Bare `make`, `make generation-plan`, and `make check` need GNU Make, a C++20
-compiler, and RapidJSON headers. The check suite also needs the
-checked-in astronomy and Orbital Technosphere profiles and bounded snapshots.
-The tests provide small
-compatibility definitions for the Alpha60 API and do not use GDAL, Natural
-Earth, Izzi, Inkscape, or network access.
+`make generation-plan` needs GNU Make, a C++20 compiler, and RapidJSON
+headers. Bare `make` additionally needs the dependencies of the passes chosen
+by the generation profile. The check suite also needs H3, the sibling
+Izzi/Alpha60 headers, and the checked-in astronomy, Orbital Technosphere, and
+network profiles and bounded snapshots. It does not use GDAL, Natural Earth,
+Inkscape, or network access.
 
 `make all` builds 24 production whole-earth maps, 12 astronomy maps, 12
-Orbital Technosphere maps, five
+Orbital Technosphere maps, six network maps, six Bathymetry Roulette maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes slices, and two
-Myriahedral face-group slices, then invokes Inkscape to export all 67 SVGs as
+Myriahedral face-group slices, then invokes Inkscape to export all 79 SVGs as
 PDFs and 3840-pixel-long-side PNGs. It needs
-all native build and data-acquisition dependencies through GEOS plus Inkscape.
+all native build and data-acquisition dependencies through H3 and GEOS plus Inkscape.
 Inkscape may be omitted only when invoking individual SVG generation targets
-or the self-contained `make check` suite.
+or the offline `make check` suite.
 
 ## Install the system packages
 
@@ -76,7 +77,7 @@ Inkscape. Package names may differ on older or derivative distributions.
 ```sh
 sudo dnf install \
   gcc-c++ make git bash curl unzip coreutils \
-  gdal gdal-devel geos geos-devel rapidjson-devel inkscape doxygen
+  gdal gdal-devel geos geos-devel rapidjson-devel h3 h3-devel inkscape doxygen
 ```
 
 The `-devel` packages are important: the runtime-only GDAL package does not
@@ -88,7 +89,7 @@ provide the C++ headers and link metadata used by the Makefile.
 sudo apt-get update
 sudo apt-get install \
   build-essential git bash curl unzip coreutils \
-  gdal-bin libgdal-dev libgeos-dev rapidjson-dev inkscape doxygen
+  gdal-bin libgdal-dev libgeos-dev rapidjson-dev libh3-dev inkscape doxygen
 ```
 
 ### macOS with Homebrew
@@ -98,7 +99,7 @@ components:
 
 ```sh
 xcode-select --install
-brew install make gdal rapidjson coreutils git doxygen
+brew install make gdal h3 rapidjson coreutils git doxygen
 brew install --cask inkscape
 ```
 
@@ -145,7 +146,7 @@ Select another compiler on the Make command line:
 make CXX=clang++ check
 ```
 
-Confirm the basic toolchain, then run the self-contained checks:
+Confirm the basic toolchain, then run the native checks:
 
 ```sh
 make --version
@@ -158,13 +159,34 @@ per-projection rules with GNU Make's `call`, `eval`, and related expansion
 features.
 
 RapidJSON is header-only; no additional linker library is required. The
-generation preference, astronomy and Orbital Technosphere profiles, JPL
-small-body snapshots, and NASA SSCWeb response use its DOM parser. Verify the
+generation preference, astronomy, Orbital Technosphere, and network profiles,
+cumulative swarm GeoJSON, JPL small-body snapshots, and NASA SSCWeb response
+use its DOM parser. Verify the
 header independently when diagnosing a compiler probe failure:
 
 ```sh
 test -r /usr/include/rapidjson/document.h
 ```
+
+## H3 development library
+
+Network generation uses the H3 v4 C API from C++. Both the header and linker
+library are required; installing an H3 command-line program alone is not
+sufficient. The build includes `h3/h3api.h`, links with `-lh3`, validates
+every input cell, and calls `cellToParent()` for clustering.
+
+Useful independent checks are:
+
+```sh
+test -r /usr/include/h3/h3api.h
+ldconfig -p | grep libh3
+make check-prerequisite
+```
+
+Use a development package compatible with the v4 names `getResolution`,
+`isValidCell`, `h3ToString`, and `cellToParent`. The prerequisite checker
+compiles, links, and runs a resolution-5 to resolution-3 parent probe, so it
+detects both missing development files and an incompatible API.
 
 ## Doxygen API reference
 
@@ -192,7 +214,9 @@ workspace/
 ├── alpha60/
 │   └── src/a60-io.h
 ├── izzi/
-│   └── src/a60-svg.h
+│   └── src/
+│       ├── a60-svg.h
+│       └── a60-svg-curves-roulette.h
 └── cartofreako/
     ├── Makefile
     ├── src.projections/
@@ -224,8 +248,9 @@ separate Alpha60 or Izzi library.
 
 ## GDAL, OGR, and GEOS
 
-Earth and water generation includes `gdal_priv.h`, `ogrsf_frmts.h`, and the
-OGR C API. The Makefile obtains compiler and linker arguments from:
+Earth, water, and Bathymetry Roulette generation includes `gdal_priv.h`,
+`ogrsf_frmts.h`, and the OGR C API. The Makefile obtains compiler and linker
+arguments from:
 
 ```sh
 gdal-config --cflags
@@ -260,8 +285,9 @@ Python GDAL bindings are not used by the active Make targets.
 
 ## Natural Earth input and network access
 
-The Earth and water targets require Natural Earth 5.1.1's complete 1:10m
-physical-vector bundle. The repository does not require a manual download:
+The Earth, water, and Bathymetry Roulette targets require Natural Earth
+5.1.1's complete 1:10m physical-vector bundle. The repository does not
+require a manual download:
 
 ```sh
 make fetch-natural-earth-10m
@@ -335,6 +361,32 @@ replacing the old set. See the
 [Orbital Technosphere implementation notes](orbital-technosphere-implementation-notes.md)
 for source roles, SGP4 boundaries, and refresh procedure.
 
+## Network input preparation
+
+Network generation and its tests run offline from the checked-in
+`assets.static/network/` archive and profile. Preparation requires `unzip`,
+`sha256sum`, `install`, `mktemp`, `wc`, and `cmp`:
+
+```sh
+make prepare-network-data
+make generate-network
+```
+
+The safe staging script accepts a local `.zip`, `.geojson`, or `.json` through
+`NETWORK_SOURCE`. A ZIP must pass its CRC check, contain exactly one flat JSON
+member, and expand to no more than 64 MiB. The prepared file is reproducible,
+ignored, and retained across normal builds under
+`assets.static/network/.prepared/`. `make check` validates the committed
+archive SHA-256 and the prepared member SHA-256 before exercising dataset,
+H3, clustering, and six-projection layout assertions.
+
+Network rendering also needs H3, GDAL/GEOS, Natural Earth, Alpha60, and Izzi.
+No outbound access is used or required. Override `NETWORK_SOURCE` or
+`NETWORK_PROFILE` only with a deliberately reviewed, schema-compatible input;
+`NETWORK_GEOJSON` controls the staging destination. See the
+[network implementation notes](network-implementation-notes.md) for source
+semantics, profile fields, and interpretation limits.
+
 ## Inkscape and visual review
 
 Install Inkscape when reviewing or editing generated artifacts. It is useful
@@ -350,8 +402,9 @@ inkscape assets.generated/svg/earth-ck-44-22.svg
 ```
 
 Use Inkscape's Layers and Objects panel to inspect group IDs and toggle dense
-layers. Earth and water files can be large, so opening and switching layers
-may require substantially more memory than viewing geometry or graticules.
+layers. Earth, water, and Bathymetry Roulette files can be large, so opening
+and switching layers may require substantially more memory than viewing
+geometry or graticules.
 Saving from Inkscape can rewrite SVG formatting and metadata; avoid saving
 during a read-only visual review if a serialization diff is not intended.
 
@@ -402,6 +455,7 @@ order:
 ```sh
 test -f ../alpha60/src/a60-io.h
 test -f ../izzi/src/a60-svg.h
+test -f ../izzi/src/a60-svg-curves-roulette.h
 gdal-config --ogr-enabled
 make check
 make fetch-natural-earth-10m
@@ -412,7 +466,8 @@ inkscape --version
 Successful generation places six geometry maps, six graticule maps, six
 Earth maps, eleven water maps (six production plus five exploratory
 Myriahedral perspectives), 12 astronomy maps, 12 Orbital Technosphere maps,
-four quadrant slices, eight octant slices, and two Myriahedral face-group
+six network maps, six Bathymetry Roulette maps, four quadrant slices, eight
+octant slices, and two Myriahedral face-group
 slices in each of `assets.generated/svg/`,
 `assets.generated/pdf/`, and `assets.generated/png/`. Every PNG preserves its
 source aspect ratio, has a 3840-pixel longest side, and is flattened against
@@ -425,12 +480,14 @@ opaque white.
 | `a60-io.h: No such file or directory` | Clone Alpha60 beside cartofreako or set `ALPHA60_SRC` |
 | `a60-svg.h: No such file or directory` | Clone Izzi beside cartofreako or set `IZZI_SRC` |
 | `gdal-config: command not found` | Install the GDAL development package or set `GDAL_CONFIG` |
+| `h3/h3api.h: No such file or directory` or `cannot find -lh3` | Install the H3 development package, not only an H3 runtime/CLI package |
 | `gdal_priv.h: No such file or directory` | A runtime GDAL package is present without development headers |
 | `GDAL must be built with GEOS support` | Install a GEOS-enabled GDAL build and its matching development package |
 | Missing `ne_10m_*.shp` | Run `make fetch-natural-earth-10m` or set `NATURAL_EARTH_DIR` |
 | `sha256sum: command not found` | Install GNU coreutils and ensure its binaries are on `PATH` |
 | Natural Earth checksum mismatch | Remove only the corrupt downloaded archive, then rerun the fetch target; do not bypass verification |
-| Inkscape is slow on an Earth or water SVG | Close other large documents and inspect one layer family at a time |
+| Network archive/member checksum mismatch | Restore the checked-in network archive or deliberately update the archive, profile provenance, hashes, tests, documentation, and all six products together |
+| Inkscape is slow on an Earth, water, Bathymetry Roulette, orbital, or network SVG | Close other large documents and inspect one layer family at a time |
 | `em++: command not found` | Install and activate emsdk, then source its environment script in the current shell |
 
 ## Not required by current native targets

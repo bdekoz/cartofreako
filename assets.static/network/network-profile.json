@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "name": "House of the Dragon 301 cumulative network swarm",
+  "clustering": {
+    "source_h3_resolution": 5,
+    "parent_h3_resolution": 3,
+    "marker_radius_inches": 0.026,
+    "minimum_tether_inches": 0.035
+  },
+  "display": {
+    "maximum_labels": 40,
+    "minimum_nonzero_opacity": 0.18,
+    "show_tethers": true
+  },
+  "scale_reference_p99": {
+    "size": 12240,
+    "mobile": 4150,
+    "satellite": 2524,
+    "tor": 365,
+    "tor_exit_nodes": 178,
+    "vpn": 5822,
+    "relay": 1169,
+    "proxy": 385,
+    "hosting": 35867,
+    "service": 35225
+  },
+  "snapshot": {
+    "archive": "house-of-the-dragon-301-cumulative-aggregate.geojson.zip",
+    "archive_sha256": "ec51be8cafcdc2e009874e2aebd84927dc5c3d87ec589c0fe5d8d1df0818e0b8",
+    "geojson_member": "house-of-the-dragon-301-cumulative-aggregate.geojson",
+    "geojson_sha256": "9fbd453d174df834208718e110396c5a22bff4312aeeff3e42d0175510b0ff69",
+    "source_repository": "https://github.com/alpha60-devops/alpha60-results-dragons",
+    "source_commit": "0eafe44b18215e368074ce78d2354ec881298777",
+    "license": "GPL-3.0-or-later"
+  }
+}

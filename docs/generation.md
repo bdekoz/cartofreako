@@ -5,13 +5,15 @@
 [Generation methods](generation-methods.md) ·
 [Cahill-Keyes context](cahill-keyes-context.md) ·
 [Astronomy notes](astro-implementation-notes.md) ·
-[Orbital Technosphere notes](orbital-technosphere-implementation-notes.md)
+[Orbital Technosphere notes](orbital-technosphere-implementation-notes.md) ·
+[Network notes](network-implementation-notes.md) ·
+[Bathymetry Roulette notes](bathymetry-roulette-implementation-notes.md)
 
 ## Purpose
 
-The repository contains nine C++20 SVG generation programs under
+The repository contains eleven C++20 SVG generation programs under
 `src.generate/`.
-Six exercise all six production projections through the real Alpha60 and
+Eight exercise all six production projections through the real Alpha60 and
 Izzi APIs. Three derive Cahill-Keyes or Myriahedral slices from an already
 projected whole-earth SVG. They write layered SVGs under
 `assets.generated/svg/`, then reopen those files and verify dimensions, layer
@@ -28,14 +30,18 @@ does not duplicate generation logic or filter SVG layers after generation.
 | Graticules | [`src.generate/generate-graticules.cc`](../src.generate/generate-graticules.cc) | Sampled latitude and longitude lines |
 | Earth | [`src.generate/generate-earth.cc`](../src.generate/generate-earth.cc) | Natural Earth 1:10m ocean and land |
 | Water | [`src.generate/generate-water.cc`](../src.generate/generate-water.cc) | Every other Natural Earth 1:10m physical layer |
+| Bathymetry Roulette | [`src.generate/generate-bathymetry-roulette.cc`](../src.generate/generate-bathymetry-roulette.cc) | Twelve Natural Earth depth thresholds clipped over deterministic Izzi roulette patterns |
 | Astronomy | [`src.generate/generate-astro.cc`](../src.generate/generate-astro.cc) | Profile timestamp and observer, bounded Gaia/exoplanet/SBDB snapshots, curated multi-band sources and events |
 | Orbital Technosphere | [`src.generate/generate-orbiting.cc`](../src.generate/generate-orbiting.cc) | Profile timestamp and observer, CelesTrak OMM population and memberships, NASA SSCWeb reference positions, and SGP4 |
+| Network | [`src.generate/generate-network.cc`](../src.generate/generate-network.cc) | Validated cumulative swarm GeoJSON, H3 parent clustering, fixed display profile, and Izzi radial honeycombs |
 | Four slices | [`src.generate/generate-4-slice.cc`](../src.generate/generate-4-slice.cc) | Four full-height, quarter-width quadrant-pair enlargements from the Cahill-Keyes Earth SVG |
 | Eight slices | [`src.generate/generate-8-slice.cc`](../src.generate/generate-8-slice.cc) | Eight exact-octant enlargements from the Cahill-Keyes Earth SVG |
 | Myriahedral groups | [`src.generate/generate-myriahedral-slices.cc`](../src.generate/generate-myriahedral-slices.cc) | Two complementary exact-terminal-face masks from the Myriahedral water SVG |
 
-The aggregate target generates all four terrestrial artifact families and two
-astronomy and two Orbital Technosphere products for all six production
+The aggregate target generates all four terrestrial artifact families, the
+monochrome Bathymetry Roulette family, two
+astronomy and two Orbital Technosphere products, and one cumulative network
+product for all six production
 projections, five exploratory
 Myriahedral water perspectives, all 12 Cahill-Keyes slices, and two
 Myriahedral face-group slices:
@@ -75,9 +81,9 @@ a general map-rendering command line.
 
 The [top-level Makefile](../Makefile) compiles every generator with C++20 and
 `-Wall -Wextra -Wpedantic -Werror`. The geometry and graticule programs need
-the neighboring Alpha60 and Izzi source trees. The Earth and water programs
-also use GDAL's vector API and require GDAL to have GEOS support for polygon
-intersection.
+the neighboring Alpha60 and Izzi source trees. The Earth, water, and
+Bathymetry Roulette programs also use GDAL's vector API and require GDAL to
+have GEOS support for polygon intersection.
 
 The default locations can be overridden:
 
@@ -92,6 +98,9 @@ The default locations can be overridden:
 | `ASTRO_PROFILE` | `$(ASTRO_DATA_DIR)/astro-profile.json` | Authoritative timestamp, point of reference, orientation, instrumentation, event window, and catalog paths |
 | `ORBITING_DATA_DIR` | `assets.static/orbital-technosphere` | Orbital Technosphere profile, OMM CSV snapshots, NASA reference, and checksums |
 | `ORBITING_PROFILE` | `$(ORBITING_DATA_DIR)/orbital-technosphere-profile.json` | Authoritative propagation instant, make-invocation reference point, catalog roles, freshness rules, visibility rules, and display budgets |
+| `NETWORK_SOURCE` | `assets.static/network/house-of-the-dragon-301-cumulative-aggregate.geojson.zip` | Local ZIP or plain GeoJSON source prepared for the network pass |
+| `NETWORK_GEOJSON` | `assets.static/network/.prepared/house-of-the-dragon-301-cumulative-aggregate.geojson` | Prepared cumulative swarm staging destination |
+| `NETWORK_PROFILE` | `assets.static/network/network-profile.json` | H3 clustering, physical marker dimensions, labels/tethers, fixed scales, and provenance |
 | `INKSCAPE` | `inkscape` | Command-line PDF and PNG exporter |
 | `PNG_LONG_SIDE` | `3840` | Pixel count assigned to each PNG's longest side |
 
@@ -145,21 +154,24 @@ passes and their SVG result counts per projection are:
 | `water` | One complementary physical-feature SVG |
 | `astronomy` | All-sky and observer SVGs |
 | `orbital-technosphere` | Global and observer SVGs |
+| `network` | One cumulative network SVG |
+| `bathymetry-roulette` | One monochrome roulette-patterned depth SVG |
 
 Names are case-insensitive, and underscores normalize to hyphens. The
 resolver also accepts `ck`, `starx`, and the established `voroni` spelling as
-projection aliases; `graticule`, `astro`, and `orbiting` are pass aliases.
+projection aliases; `graticule`, `astro`, `orbiting`, `swarm`,
+`bathymetry-rolette`, and `art-agua-roulette` are pass aliases.
 For compatibility with the requested `earth, ocean` vocabulary, `ocean`
 normalizes to the current `water` generation pass. It does not mean the
 `ocean` layer inside the Earth base SVG.
 
-Profile `"all"` means the six projections by six selectable passes. It
-produces 48 SVGs because astronomy and Orbital Technosphere each have two
+Profile `"all"` means the six projections by eight selectable passes. It
+produces 60 SVGs because astronomy and Orbital Technosphere each have two
 products. It deliberately excludes Cahill-Keyes slices, exploratory
 Myriahedral perspectives and slices, and PDF/PNG exports. Those products do
 not form a projection/pass cross-product and remain available through their
-explicit targets. `make all` is unchanged: it still builds the complete 67
-SVG, 67 PDF, and 67 PNG suite.
+explicit targets. `make all` builds the complete 79 SVG, 79 PDF, and 79 PNG
+suite.
 
 The resolver rejects empty selectors, duplicate aliases or JSON members,
 unknown names or members, a mixed `"all"` selector, and unsupported schema
@@ -194,6 +206,9 @@ make generate-star-x
 make generate-voronoi
 make generate-astro
 make generate-orbiting
+make prepare-network-data
+make generate-network
+make generate-bathymetry-roulette
 make all
 ```
 
@@ -204,11 +219,11 @@ generator binaries and generated SVG, PDF, PNG, and WASM build products, but
 deliberately retains the downloaded Natural Earth input and checked-in WASM
 sources.
 
-The generators are not part of `make check`; invoking a `generate-*`
+The full generators are not part of `make check`; invoking a `generate-*`
 target both writes its artifact and runs that generator's embedded structural
 checks.
 
-The 67 artifacts in each of `assets.generated/svg/`, `assets.generated/pdf/`,
+The 79 artifacts in each of `assets.generated/svg/`, `assets.generated/pdf/`,
 and `assets.generated/png/` are checked in. This makes visual and XML diffs
 reviewable, but it also means that regenerating with a different GDAL, GEOS,
 or Inkscape version can produce ordering, coordinate, or rendering differences
@@ -304,7 +319,7 @@ Use `generate-orbiting-global`, `generate-orbiting-observer`, or
 `ORBITING_PROFILE=/absolute/path/profile.json`.
 `generate-orbiting-artifacts` additionally exports the 12 PDFs and PNGs.
 
-Network refresh is an explicit, atomic action:
+Orbital refresh is an explicit, atomic action:
 
 ```sh
 make fetch-orbiting-data
@@ -318,6 +333,57 @@ the NASA query interval. The
 the source feasibility decision, profile schema, category memberships,
 coordinate pipeline, SVG metadata, verification, and operational-use limits.
 
+## Network generation
+
+The network pass reads a strict cumulative swarm FeatureCollection, validates
+all ten `properties.downloaders` values and 64-bit H3 cells, then groups
+resolution-5 features under profile-selected resolution-3 parents. Parent
+groups are split again by the selected projection's native cell before Izzi
+radial honeycomb placement, preventing a cluster from crossing an unfolded
+map seam. Thin optional tethers retain each true projected location.
+
+```sh
+make prepare-network-data
+make generate-network
+```
+
+Use `generate-network-PROJECTION` for one SVG or
+`generate-network-artifacts` for all six SVG/PDF/PNG products. A compatible
+local ZIP or plain GeoJSON is selected with `NETWORK_SOURCE`;
+`NETWORK_GEOJSON` changes the staging destination. Normal generation is
+offline from the pinned archive.
+
+The [network implementation notes](network-implementation-notes.md) document
+the source audit and digests, schema validation, H3 resolution decision,
+Izzi lattice canonicalization, independent overlapping fields, visual
+grammar, SVG layers, output previews, verification, and interpretation
+boundary.
+
+## Bathymetry Roulette generation
+
+The Bathymetry Roulette pass reuses the twelve nested Natural Earth depth
+polygons as projection-safe clip paths. Each clip reveals a globally aligned
+`userSpaceOnUse` pattern containing a deterministic Izzi epitrochoid or
+hypotrochoid. One pale ground and one dark ink remain constant while point
+distance, radius ratio, closure period, and finally outline versus even-odd
+fill become more complex with depth.
+
+```sh
+make generate-bathymetry-roulette
+```
+
+Use `generate-bathymetry-roulette-PROJECTION` for one SVG,
+`generate-bathymetry-roulette-projections` for the six SVGs, or
+`generate-bathymetry-roulette-artifacts` for all six SVG/PDF/PNG products.
+The source catalogue is deterministic and needs no profile beyond the common
+Natural Earth input. `bathymetry-roulette`, `bathymetry-rolette`, and
+`art-agua-roulette` select the pass in a generation profile.
+
+The [Bathymetry Roulette implementation notes](bathymetry-roulette-implementation-notes.md)
+record the exact twelve curve parameter sets, nested-paint model, visible key,
+SVG contract, verification, previews, accepted moiré, and interpretation
+limits.
+
 ## Natural Earth acquisition
 
 [`scripts/fetch-natural-earth-10m.sh`](../scripts/fetch-natural-earth-10m.sh)
@@ -330,14 +396,14 @@ downloads Natural Earth 5.1.1's complete 1:10m physical-vector archive. It:
 4. extracts only the named physical datasets; and
 5. creates the completion stamp last, so interrupted extraction is retried.
 
-The Earth and water targets depend on that stamp and pass
+The Earth, water, and Bathymetry Roulette targets depend on that stamp and pass
 `NATURAL_EARTH_DIR` to their executables. The archive digest and licensing
 are recorded in the
 [Natural Earth data note](natural-earth-10m-physical-vectors.md).
 
 ## Shared coordinate pipeline
 
-The six whole-map generators use
+The eight whole-map generators use
 [`projection-generation-common.h`](../src.generate/projection-generation-common.h)
 to select a production projection, construct its exact frame, and call the
 shared public API in `(latitude, longitude)` order. Projected coordinates use
@@ -352,7 +418,7 @@ construction, and verification rules.
 
 ```mermaid
 flowchart LR
-  SOURCE["Geographic construction,<br/>celestial catalog, or WGS84 data"]
+  SOURCE["Geographic construction,<br/>celestial/orbital catalog,<br/>H3 swarm, or WGS84 data"]
   CUT["Clip at geographic<br/>registration seams"]
   DENSE["Sample or densify<br/>in geographic space"]
   PROJECT["Selected production<br/>forward projection"]

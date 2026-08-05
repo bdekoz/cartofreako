@@ -13,6 +13,8 @@
 /tests/test-astro-generation
 /tests/test-generation-profile
 /tests/test-orbiting-generation
+/tests/test-network-generation
+/tests/test-bathymetry-roulette-style
 
 # Native generator executables.
 /src.generate/generate-geometry
@@ -27,6 +29,8 @@
 /src.generate/generate-myriahedral-slices
 /src.generate/generate-astro
 /src.generate/generate-orbiting
+/src.generate/generate-network
+/src.generate/generate-bathymetry-roulette
 /src.generate/resolve-generation-profile
 /src.generate/third_party/sgp4/SGP4.o
 
@@ -35,5 +39,6 @@
 
 # Downloaded inputs and local build products.
 /assets.static/natural-earth/10m-physical-vectors/
+/assets.static/network/.prepared/
 /docs/doxygen/
 /build/

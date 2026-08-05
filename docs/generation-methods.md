@@ -32,8 +32,8 @@ decision after the fact.
 | 4.1 | `generate-astro` / space and astronomy | **Implemented** | Visualization-grade feasibility, source roles, profile authority, calculation methods, products, and limits are summarized below and detailed in the [astronomy implementation notes](astro-implementation-notes.md) |
 | 4.1a | `generate-cloud-atmosphere` | **Requested; not evaluated to a repository decision** | The raw request identifies timestamped cloud/atmosphere conditions and JAXA Earth data, but no confirmed source contract, profile, product split, or implementation is preserved |
 | 4.2 | `generate-orbiting` / Orbital Technosphere | **Implemented** | Naming, NASA/CelesTrak feasibility, OMM/SGP4, profile authority, products, and limits are summarized below and detailed in the [Orbital Technosphere implementation notes](orbital-technosphere-implementation-notes.md) |
-| 4.4 | `generate-network` | **Requested; not evaluated to a repository decision** | The raw request records variable GeoJSON input, `properties.downloaders`, Alpha60 prior art, and two visual references; no confirmed schema or rendering plan is preserved |
-| 4.5 | `generate-art-agua-roulette` | **Requested; not evaluated to a repository decision** | The raw request proposes mapping bathymetric depth to increasingly complex Izzi roulette curves; no confirmed curve mapping, topology policy, or implementation is preserved |
+| 4.4 | `generate-network` | **Implemented** | Confirmed variable-input contract, fixed cumulative snapshot, H3/Izzi clustering, projection-safe components, independent downloader layers, products, and limits are detailed in the [network implementation notes](network-implementation-notes.md) |
+| 4.5 | `generate-bathymetry-roulette` | **Implemented** | Confirmed depth-to-curve catalogue, monochrome page-space patterns, Natural Earth clipping, accepted moiré, products, and limits are detailed in the [Bathymetry Roulette implementation notes](bathymetry-roulette-implementation-notes.md) |
 | 6 | `generate-world-game` | **Requested; not evaluated to a repository decision** | The raw request identifies World Game and Fuller archival collections; no confirmed digitization, licensing, normalized dataset, layer model, or implementation is preserved |
 | 7 | Configurable `generate-*` selection | **Implemented infrastructure** | JSON profile, validation, safe target expansion, default Make behavior, alternatives, and scope boundaries are recorded in this document |
 
@@ -101,6 +101,60 @@ The naming alternatives, source matrix, OMM/SGP4 conversions, coordinate
 pipeline, detiling layers, tests, and accuracy boundary are recorded in
 [`orbital-technosphere-implementation-notes.md`](orbital-technosphere-implementation-notes.md).
 
+### Stage 4.4: cumulative network swarm
+
+The evaluation concluded that the corrected cumulative aggregate is feasible
+as a density atlas, but not as a graph because its Point features contain no
+edge or route semantics. The confirmed and implemented choices were:
+
+- pin the corrected `house-of-the-dragon-301` ZIP and both compressed and
+  uncompressed SHA-256 digests while retaining a variable local source;
+- validate the cumulative FeatureCollection, all ten unsigned downloader
+  fields, unique resolution-5 H3 cells, coordinates, and source metadata;
+- group under H3 resolution-3 parents, split groups at projection-native
+  cells, and use Izzi center-filled radial hexagon positions;
+- attach optional displacement tethers to true projected coordinates without
+  representing them as traffic links;
+- treat the overlapping specialized counts as independent semantic layers,
+  with fixed log/p99 scales and raw values preserved in the SVG;
+- generate one layered network map on each production projection and export
+  all six SVG/PDF/PNG products; and
+- bound interpretation to cumulative, source-defined aggregate observations,
+  not simultaneity, rates, bandwidth, endpoints, causality, or peer flows.
+
+The input audit, visual-reference conclusions, profile, clustering formulas,
+Izzi lattice safeguard, layer grammar, verification, previews, and deferred
+edge-data work are recorded in
+[`network-implementation-notes.md`](network-implementation-notes.md).
+
+### Stage 4.5: Bathymetry Roulette
+
+The evaluation concluded that a monochrome roulette bathymetry pass is
+feasible by reusing the twelve nested Natural Earth depth polygons as
+projection-safe SVG clips and Izzi's closed roulette paths as page-space
+patterns. The confirmed and implemented choices were:
+
+- use the canonical name `bathymetry-roulette`, while accepting the requested
+  `bathymetry-rolette` spelling and historical `art-agua-roulette` name as
+  generation-profile aliases;
+- keep one pale ground and one dark ink for every depth so curve structure,
+  rather than a changing color ramp, carries the encoding;
+- increase point-distance ratio strictly with depth, progress from simple
+  1:1 curves through 5:2 and 11:7 curves, and use outline motifs through
+  -6,000 m followed by even-odd filled motifs;
+- register 1.20-unit patterns in projected page space so symbol size is
+  consistent and adjacent polygons share the same grid;
+- paint nested thresholds shallow to deep with a common opaque tile
+  background, making visible exclusive bands without polygon differences;
+- retain the six-production-projection topology and a complete visible key;
+  and
+- accept dense interference and moiré as intentional artwork while making
+  clear that neither encodes additional bathymetric measurements.
+
+The exact twelve-row catalogue, SVG layer contract, products, verification,
+and interpretation boundary are recorded in
+[`bathymetry-roulette-implementation-notes.md`](bathymetry-roulette-implementation-notes.md).
+
 ## Unresolved generation-pass proposals
 
 The following entries preserve the useful content of the requests without
@@ -111,16 +165,6 @@ claiming that an evaluation or confirmation occurred:
   implementation it still needs a concrete product definition, temporal and
   spatial resolution policy, acquisition and cache contract, observer/global
   distinction, profile schema, missing-data behavior, and licensing review.
-- **Network:** intended to detile cumulative swarm GeoJSON and visualize
-  `properties.downloaders` using a variable source, starting from the cited
-  Alpha60 results dataset. It still needs a versioned input schema, semantics
-  for cumulative versus instantaneous values, aggregation and privacy rules,
-  projection/seam behavior, visual encoding contract, and test fixture.
-- **Art Agua Roulette:** intended to replace ordinary bathymetric color steps
-  with progressively more complex roulette curves. It still needs a
-  deterministic depth-to-curve parameterization, fill versus stroke rules,
-  clipping and hole behavior, density/performance budgets, palette policy,
-  and a reproducible visual acceptance test.
 - **World Game:** intended to map Fuller's *Inventory of World Resources,
   Human Trends, and Needs* using BFI, Virginia Tech, Stanford, and California
   archival holdings. It still needs an accessible machine-readable corpus,
@@ -159,7 +203,7 @@ and generator API rather than a build-orchestration preference.
 | Parse JSON with `jq` | Concise query expressions | Adds a tool that is not otherwise a required build dependency; shell quoting and target validation still need code | Rejected |
 | Parse JSON with Python | Good validation libraries and diagnostics | Adds a runtime language to the native C++/Make generation path | Rejected |
 | Generate and include a `.mk` file from JSON | Makes the selected targets visible during Make's parse phase | Requires include-file remakes and Make restarts; stale generated fragments and bootstrap ordering complicate a small feature | Rejected |
-| Filter layers inside every generator | Could eventually control individual SVG layers | Starts expensive generators before work can be excluded; layer vocabulary differs among terrestrial, astronomy, and orbital products; duplicates Make's role | Rejected for Stage 7 |
+| Filter layers inside every generator | Could eventually control individual SVG layers | Starts expensive generators before work can be excluded; layer vocabulary differs among terrestrial, astronomy, orbital, and network products; duplicates Make's role | Rejected for Stage 7 |
 | Validated C++ resolver followed by recursive Make | Durable JSON, strict diagnostics, reuse of the existing C++20/RapidJSON stack, safe fixed targets, normal Make dependencies and parallelism | Builds one small resolver and starts one recursive Make | Selected |
 
 The selected approach has one deliberate limitation: configured generation
@@ -225,7 +269,10 @@ Normalization is limited and deterministic:
 - `voroni` remains accepted as an alias for `voronoi`;
 - `graticule` becomes `graticules`;
 - `astro` becomes `astronomy`;
-- `orbiting` becomes `orbital-technosphere`; and
+- `orbiting` becomes `orbital-technosphere`;
+- `swarm` becomes `network`;
+- `bathymetry-rolette` and `art-agua-roulette` become
+  `bathymetry-roulette`; and
 - `ocean` becomes `water`, the current name of the complementary Natural
   Earth physical-feature generation pass.
 
@@ -235,14 +282,14 @@ twice.
 
 The supported cross-product is:
 
-| Projection selector | Geometry | Graticules | Earth | Water | Astronomy | Orbital Technosphere |
-| --- | --- | --- | --- | --- | --- | --- |
-| `cahill-keyes` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs |
-| `authagraph` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs |
-| `dymaxion` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs |
-| `myriahedral` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs |
-| `star-x` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs |
-| `voronoi` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs |
+| Projection selector | Geometry | Graticules | Earth | Water | Astronomy | Orbital Technosphere | Network | Bathymetry Roulette |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `cahill-keyes` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG |
+| `authagraph` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG |
+| `dymaxion` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG |
+| `myriahedral` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG |
+| `star-x` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG |
+| `voronoi` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG |
 
 Astronomy resolves to `generate-astro-PROJECTION`, which intentionally makes
 both all-sky and observer products. Orbital Technosphere resolves to
@@ -250,7 +297,12 @@ both all-sky and observer products. Orbital Technosphere resolves to
 products. The four terrestrial passes resolve to uniform
 `generate-PASS-PROJECTION` targets.
 
-Stage 7 adds uniform Cahill-Keyes aliases for that last rule. In particular,
+Network resolves to `generate-network-PROJECTION` and makes the one cumulative
+swarm product. Bathymetry Roulette similarly resolves to
+`generate-bathymetry-roulette-PROJECTION` and makes one monochrome depth map.
+
+Stage 7 adds uniform Cahill-Keyes aliases for the terrestrial rule. In
+particular,
 `generate-earth-cahill-keyes` produces only the whole-map Earth SVG, whereas
 the older `generate-earth-ck` compatibility target also produces 12
 Cahill-Keyes slices.
@@ -283,8 +335,8 @@ make GENERATION_PROFILE=generation-profile.local.json
 make all
 ```
 
-This remains the release/review build. It creates all 67 layered SVGs and
-exports all 67 PDFs and 67 opaque PNGs, including slice and perspective
+This remains the release/review build. It creates all 79 layered SVGs and
+exports all 79 PDFs and 79 opaque PNGs, including slice and perspective
 families that are outside the configurable matrix. The aliases
 `generate-projections`, `generated-projections`, and `make-generated` retain
 the same full-suite behavior.
@@ -299,6 +351,8 @@ make generate-star-x
 make generate-earth-projections
 make generate-astro-observer
 make generate-orbiting-global
+make generate-network
+make generate-bathymetry-roulette
 make generate-water-myriahedral-perspectives
 make generate-ck-slices
 ```
@@ -306,6 +360,9 @@ make generate-ck-slices
 Projection family targets generate SVGs unless their documented target says
 `artifacts`. `generate-orbiting-artifacts`, for example, adds PDF and PNG
 exports for that product family.
+`generate-network-artifacts` does the same for all six network products.
+`generate-bathymetry-roulette-artifacts` does the same for all six roulette
+bathymetry products.
 
 ### Exact targets and artifact paths
 
@@ -332,6 +389,7 @@ Acquisition remains explicit because it changes reproducibility inputs:
 make fetch-natural-earth-10m
 make fetch-astro-data
 make fetch-orbiting-data
+make prepare-network-data
 ```
 
 `make check` compiles and runs the native algorithm/API suite, including
@@ -340,10 +398,11 @@ own structural validation whenever their generation target executes.
 
 ## Scope boundaries and future extensions
 
-The generation profile does not override astronomical or orbital calculation
-properties. The astronomy and Orbital Technosphere profiles remain the sole
-authorities for timestamp, observer location, source snapshots, and display
-budgets. Stage 7 only decides which Make branches to enter.
+The generation profile does not override astronomical, orbital, or network
+calculation properties. The astronomy, Orbital Technosphere, and network
+profiles remain the sole authorities for their source state, calculation or
+clustering choices, and display budgets. Stage 7 only decides which Make
+branches to enter.
 
 The following remain explicit rather than configurable in schema version 1:
 

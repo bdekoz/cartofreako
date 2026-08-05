@@ -7,7 +7,7 @@ Voronoi projections for `a60::carto::projection_api`. All six accept variable-si
 selected geometry or source-canvas registration.
 
 Before building, see [Prerequisites](docs/prerequisites.md) for the compiler,
-GNU Make, Alpha60, Izzi, GDAL/GEOS, Natural Earth, Inkscape, and optional
+GNU Make, Alpha60, Izzi, H3, GDAL/GEOS, Natural Earth, Inkscape, and optional
 WebAssembly requirements.
 
 ## Repository layout
@@ -40,6 +40,8 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Generate-pass evaluation record plus configured, full-suite, family, and exact workflows | [Generate-pass methods and decision record](docs/generation-methods.md) |
 | Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/astro-implementation-notes.md) |
 | Human-made Earth-orbit population and observer generation | [Orbital Technosphere implementation notes](docs/orbital-technosphere-implementation-notes.md) |
+| Cumulative H3 network swarm generation | [Network generation implementation notes](docs/network-implementation-notes.md) |
+| Monochrome roulette-patterned bathymetry generation | [Bathymetry Roulette implementation notes](docs/bathymetry-roulette-implementation-notes.md) |
 | Natural Earth acquisition, digest, and license | [Natural Earth data note](docs/natural-earth-10m-physical-vectors.md) |
 | Production Cahill-Keyes and Myriahedral browser renderers | [WebAssembly renderer README](src.wasm/README.md) |
 | Illustrative raster-backed Myriahedral overlay | [WebAssembly workflow](docs/web-workflow.md) and [complete example](docs/web-example.md) |
@@ -84,17 +86,18 @@ make check
 ```
 
 Generate geometry, labeled graticules, both Natural Earth layer families,
-both timestamped astronomy products, and both timestamped Orbital
-Technosphere products for all six projections with:
+both timestamped astronomy products, both timestamped Orbital Technosphere
+products, the cumulative network swarm, and Bathymetry Roulette for all six
+projections with:
 
 ```sh
 make all
 ```
 
 The 24 production whole-earth maps, 12 astronomy maps, 12 Orbital
-Technosphere maps, five exploratory
-Myriahedral water perspectives, 12 Cahill-Keyes enlargement slices, and two Myriahedral
-face-group slices are each written as a layered SVG under
+Technosphere maps, six network maps, six Bathymetry Roulette maps, five
+exploratory Myriahedral water perspectives, 12 Cahill-Keyes enlargement
+slices, and two Myriahedral face-group slices are each written as a layered SVG under
 `assets.generated/svg/`, an Inkscape PDF under `assets.generated/pdf/`, and a
 PNG under `assets.generated/png/`. PNGs preserve the source aspect ratio and
 have a longest side of 3840 pixels, the horizontal resolution of UHD 4K
@@ -122,9 +125,11 @@ pixels to the longest side.
 Artifact-family targets are also available as
 `generate-geometry-projections`, `generate-graticules-projections`,
 `generate-earth-projections`, `generate-water-projections`, and
-`generate-astro-projections`, and `generate-orbiting-projections`. Each generic
+`generate-astro-projections`, `generate-orbiting-projections`, and
+`generate-network-projections`, and
+`generate-bathymetry-roulette-projections`. Each generic
 family target includes Cahill-Keyes plus AuthaGraph, Dymaxion, Myriahedral,
-Star-X, and Voronoi. The six whole-map generators accept a projection name on their
+Star-X, and Voronoi. The eight whole-map generators accept a projection name on their
 command line. Every generator reopens its SVG to validate the view box,
 required layers, path structure, and finite numeric output.
 
@@ -164,6 +169,32 @@ observer maps show only the above-horizon topocentric population:
 | Star-X | [`orbital-technosphere-global-star-x-34-44.png`](assets.generated/png/orbital-technosphere-global-star-x-34-44.png) | [`orbital-technosphere-observer-star-x-34-44.png`](assets.generated/png/orbital-technosphere-observer-star-x-34-44.png) |
 | Voronoi | [`orbital-technosphere-global-voronoi-44-22.916667.png`](assets.generated/png/orbital-technosphere-global-voronoi-44-22.916667.png) | [`orbital-technosphere-observer-voronoi-44-22.916667.png`](assets.generated/png/orbital-technosphere-observer-voronoi-44-22.916667.png) |
 
+The cumulative network pass detiles the pinned resolution-5 H3 swarm into
+projection-safe resolution-3 Izzi honeycombs while preserving every raw
+downloader field:
+
+| Projection | Network |
+| --- | --- |
+| Cahill-Keyes | [`network-ck-44-22.png`](assets.generated/png/network-ck-44-22.png) |
+| AuthaGraph | [`network-authagraph-44-19.052559.png`](assets.generated/png/network-authagraph-44-19.052559.png) |
+| Dymaxion | [`network-dymaxion-44-20.78461.png`](assets.generated/png/network-dymaxion-44-20.78461.png) |
+| Myriahedral | [`network-myriahedral-44-24.75.png`](assets.generated/png/network-myriahedral-44-24.75.png) |
+| Star-X | [`network-star-x-34-44.png`](assets.generated/png/network-star-x-34-44.png) |
+| Voronoi | [`network-voronoi-44-22.916667.png`](assets.generated/png/network-voronoi-44-22.916667.png) |
+
+The Bathymetry Roulette pass uses one pale ground and one dark ink, mapping
+successively deeper Natural Earth thresholds to more variable and complex
+Izzi epitrochoids and hypotrochoids:
+
+| Projection | Bathymetry Roulette |
+| --- | --- |
+| Cahill-Keyes | [`bathymetry-roulette-ck-44-22.png`](assets.generated/png/bathymetry-roulette-ck-44-22.png) |
+| AuthaGraph | [`bathymetry-roulette-authagraph-44-19.052559.png`](assets.generated/png/bathymetry-roulette-authagraph-44-19.052559.png) |
+| Dymaxion | [`bathymetry-roulette-dymaxion-44-20.78461.png`](assets.generated/png/bathymetry-roulette-dymaxion-44-20.78461.png) |
+| Myriahedral | [`bathymetry-roulette-myriahedral-44-24.75.png`](assets.generated/png/bathymetry-roulette-myriahedral-44-24.75.png) |
+| Star-X | [`bathymetry-roulette-star-x-34-44.png`](assets.generated/png/bathymetry-roulette-star-x-34-44.png) |
+| Voronoi | [`bathymetry-roulette-voronoi-44-22.916667.png`](assets.generated/png/bathymetry-roulette-voronoi-44-22.916667.png) |
+
 The [SVG generation pipeline](docs/generation.md) explains the generator
 sources and Make targets, Natural Earth acquisition, seam handling, sampling,
 polygon clipping, projected-path folding, layer construction, self-checks,
@@ -175,6 +206,12 @@ source evaluation, calculations, instrument filter, and accuracy boundary.
 The [Orbital Technosphere notes](docs/orbital-technosphere-implementation-notes.md)
 record its naming decision, NASA/CelesTrak feasibility evaluation, OMM and
 SGP4 pipeline, semantic detiling, and non-operational accuracy boundary.
+The [network notes](docs/network-implementation-notes.md) record the fixed
+source audit, variable-input contract, H3/Izzi clustering, independent
+downloader encodings, SVG metadata, and interpretation limits.
+The [Bathymetry Roulette notes](docs/bathymetry-roulette-implementation-notes.md)
+record the confirmed curve catalogue, monochrome pattern and clipping model,
+visible key, accepted moiré, products, and verification.
 
 ## AuthaGraph
 
@@ -329,6 +366,11 @@ the `voronoi_source` preset are in the
 | [`assets.generated/png/earth-ck-44-22.png`](assets.generated/png/earth-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes ocean-and-land base |
 | [`src.generate/generate-water.cc`](src.generate/generate-water.cc) | Thin generator entry point for every Natural Earth physical layer except `ocean` and `land` |
 | [`assets.generated/png/water-ck-44-22.png`](assets.generated/png/water-ck-44-22.png) | PNG preview of the complementary 44×22 Cahill-Keyes physical-feature overlay |
+| [`src.generate/bathymetry-roulette-style.h`](src.generate/bathymetry-roulette-style.h) | Validated twelve-depth epitrochoid/hypotrochoid catalogue, curve construction, palette, and pattern constants |
+| [`src.generate/generate-bathymetry-roulette.cc`](src.generate/generate-bathymetry-roulette.cc) | Six-projection Natural Earth clip and monochrome page-space roulette-pattern generator with key and embedded SVG checks |
+| [`tests/test-bathymetry-roulette-style.cc`](tests/test-bathymetry-roulette-style.cc) | Depth ordering, variation, closure period, curve uniqueness, paint transition, and identifier tests |
+| [`assets.generated/png/bathymetry-roulette-ck-44-22.png`](assets.generated/png/bathymetry-roulette-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes roulette bathymetry |
+| [`docs/bathymetry-roulette-implementation-notes.md`](docs/bathymetry-roulette-implementation-notes.md) | Stage 4.5 feasibility, confirmed catalogue, clipping and layering model, products, verification, accepted moiré, and limits |
 | [`src.generate/astro-data.h`](src.generate/astro-data.h) | Validated JSON profile and catalog ingestion, proper motion, Solar System approximation, sidereal time, altitude, event window, and band filtering |
 | [`src.generate/astro-generation.h`](src.generate/astro-generation.h) | Projection-aware astronomy layers, metadata, markers, spherical uncertainty contours, labels, and embedded SVG checks |
 | [`src.generate/generate-astro.cc`](src.generate/generate-astro.cc) | Thin all-sky and observer astronomy generator entry point |
@@ -343,6 +385,14 @@ the `voronoi_source` preset are in the
 | [`tests/test-orbiting-generation.cc`](tests/test-orbiting-generation.cc) | Profile, OMM, large catalog ID, published SGP4 vector, NASA SSCWeb tolerance, and finite-state tests |
 | [`assets.static/orbital-technosphere/orbital-technosphere-profile.json`](assets.static/orbital-technosphere/orbital-technosphere-profile.json) | Pinned propagation time, make-invocation location, source catalog roles, freshness, visibility, and display budgets |
 | [`scripts/fetch-orbiting-data.sh`](scripts/fetch-orbiting-data.sh) | Atomic CelesTrak OMM and NASA SSCWeb snapshot refresh with schema checks and hashes |
+| [`src.generate/network-data.h`](src.generate/network-data.h) | Strict cumulative swarm GeoJSON and profile validation, 64-bit H3 handling, fixed log scales, and snapshot provenance |
+| [`src.generate/network-clustering.h`](src.generate/network-clustering.h) | H3 parent grouping, native-projection seam partitioning, and canonicalized Izzi radial honeycomb placement |
+| [`src.generate/network-generation.h`](src.generate/network-generation.h) | Dark terrestrial base, independent downloader glyph layers, labels, provenance, and embedded SVG checks |
+| [`src.generate/generate-network.cc`](src.generate/generate-network.cc) | Thin six-projection cumulative network generator entry point |
+| [`tests/test-network-generation.cc`](tests/test-network-generation.cc) | Snapshot totals, overlap semantics, H3 statistics, honeycomb uniqueness, and six-projection layout tests |
+| [`assets.static/network/network-profile.json`](assets.static/network/network-profile.json) | H3 resolutions, physical mark dimensions, label/tether settings, fixed p99 scales, hashes, commit, and license |
+| [`scripts/prepare-network-data.sh`](scripts/prepare-network-data.sh) | Bounded, safe, atomic staging of local ZIP or plain GeoJSON network input |
+| [`docs/network-implementation-notes.md`](docs/network-implementation-notes.md) | Stage 4.4 feasibility, source audit, clustering, visual encodings, products, verification, and limits |
 | [`src.generate/generate-4-slice.cc`](src.generate/generate-4-slice.cc) | Four full-height, quarter-width Cahill-Keyes quadrant-pair enlargements |
 | [`src.generate/generate-8-slice.cc`](src.generate/generate-8-slice.cc) | Eight naturally bounded, face-clipped Cahill-Keyes octant enlargements |
 | [`src.generate/generate-myriahedral-slices.cc`](src.generate/generate-myriahedral-slices.cc) | Two complementary, exact-terminal-face Myriahedral water slices |
