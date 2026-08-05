@@ -83,6 +83,14 @@ slices, and two Myriahedral face-group slices as layered SVG, PDF, and opaque-wh
 make all
 ```
 
+On a memory-constrained machine, run the same complete artifact graph with
+only one recipe at a time. This remains serial even when an outer Make was
+started with `-j`:
+
+```sh
+make assets-single
+```
+
 Outputs are organized under `assets.generated/svg/`, `assets.generated/pdf/`, and
 `assets.generated/png/`.
 

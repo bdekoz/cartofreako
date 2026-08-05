@@ -60,6 +60,15 @@ Myriahedral face-group slices:
 make all
 ```
 
+Use `make assets-single` for the identical artifact set with a forced
+single-job recursive build. It is the first workaround when concurrent
+generators or Inkscape exports exhaust memory, and it overrides an inherited
+or command-line `-j` setting for the generated-asset sub-build:
+
+```sh
+make assets-single
+```
+
 `make generated-projections`, `make generate-projections`, and
 `make make-generated` are equivalent aliases. The original individual
 Cahill-Keyes targets also remain available.

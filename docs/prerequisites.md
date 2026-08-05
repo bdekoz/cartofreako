@@ -634,6 +634,11 @@ make all
 inkscape --version
 ```
 
+If parallel generation or Inkscape export exceeds available memory, replace
+`make all` with `make assets-single`. It builds the same generated assets while
+forcing the complete sub-build to run one recipe at a time, even if the outer
+Make inherited a `-j` setting.
+
 Successful generation places six geometry maps, six graticule maps, six
 Earth maps, eleven water maps (six production plus five exploratory
 Myriahedral perspectives), 12 astronomy maps, 12 Orbital Technosphere maps,

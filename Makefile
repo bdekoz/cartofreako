@@ -513,7 +513,7 @@ RESOURCES_GENERATOR_HEADERS := \
 .DEFAULT_GOAL := configured
 .DELETE_ON_ERROR:
 
-PUBLIC_TARGETS := all check check-prerequisite \
+PUBLIC_TARGETS := all assets-single check check-prerequisite \
 	check-resources-svg-archives clean configured doxygen \
 	generation-plan list-targets \
 	fetch-natural-earth-10m fetch-astro-data fetch-orbiting-data \
@@ -1457,6 +1457,12 @@ generate-projections: $(GENERATED_ARTIFACTS)
 generated-projections: $(GENERATED_ARTIFACTS)
 make-generated: $(GENERATED_ARTIFACTS)
 all: $(GENERATED_ARTIFACTS)
+
+# Run the complete generated-asset graph through a single-job recursive Make.
+# An explicit job count here overrides a parallel outer invocation such as
+# `make -j32 assets-single` while preserving ordinary variable overrides.
+assets-single:
+	+$(MAKE) --no-print-directory --jobs=1 all
 
 clean:
 	$(RM) $(TEST_BINARIES) $(GENERATOR_BINARIES)
