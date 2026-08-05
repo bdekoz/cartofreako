@@ -35,6 +35,20 @@ List every supported top-level Make target with:
 make list-targets
 ```
 
+A bare `make` uses [`generation-profile.json`](generation-profile.json) to
+build only the configured projection/pass SVG matrix. Inspect its normalized
+selection first with:
+
+```sh
+make generation-plan
+make
+```
+
+The checked-in development profile selects Cahill-Keyes plus the Earth and
+water passes (`ocean` is accepted as the legacy alias for `water`). See the
+[generation methods](docs/generation-methods.md) for custom profiles, explicit
+targets, full-suite generation, and the Stage 7 design choices.
+
 Run the standalone algorithm and API compatibility checks with:
 
 ```sh

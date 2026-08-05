@@ -11,6 +11,7 @@
 /tests/test-star-x-projection-api
 /tests/test-voronoi-projection-api
 /tests/test-astro-generation
+/tests/test-generation-profile
 /tests/test-orbiting-generation
 
 # Native generator executables.
@@ -26,7 +27,11 @@
 /src.generate/generate-myriahedral-slices
 /src.generate/generate-astro
 /src.generate/generate-orbiting
+/src.generate/resolve-generation-profile
 /src.generate/third_party/sgp4/SGP4.o
+
+# Optional local generation preference (the default profile is checked in).
+/generation-profile.local.json
 
 # Downloaded inputs and local build products.
 /assets.static/natural-earth/10m-physical-vectors/

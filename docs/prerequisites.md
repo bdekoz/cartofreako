@@ -12,8 +12,8 @@ generation workflow. They do not require the same software:
 | Component | Required for | Purpose |
 | --- | --- | --- |
 | GNU Make | All Makefile targets | Expands the generated projection rules and coordinates builds |
-| C++20 compiler and standard library | Tests and native generators | Builds the projection checks and nine SVG-generation programs |
-| RapidJSON development headers | Astronomy and Orbital Technosphere tests and generators | Parses authoritative profiles, astronomy JSON, and NASA SSCWeb references |
+| C++20 compiler and standard library | Tests, profile resolution, and native generators | Builds the projection checks, generation-profile resolver, and nine SVG-generation programs |
+| RapidJSON development headers | Configured generation plus astronomy and Orbital Technosphere tests and generators | Parses the generation preference, authoritative data profiles, astronomy JSON, and NASA SSCWeb references |
 | Alpha60 headers | SVG generation | Supplies `a60-io.h` and shared runtime-resource interfaces |
 | Izzi headers | SVG generation | Supplies `a60-svg.h` and SVG document/path serialization |
 | GDAL development package with OGR | Earth and water generation | Reads Natural Earth Shapefiles and provides vector geometry operations |
@@ -50,7 +50,8 @@ change the exit status. The check honors the Makefile's tool and source-tree
 overrides; use `EMRUN` and `WEB_BROWSER` to identify those optional tools when
 they are not discoverable at their defaults.
 
-`make check` needs GNU Make, a C++20 compiler, RapidJSON headers, and the
+Bare `make`, `make generation-plan`, and `make check` need GNU Make, a C++20
+compiler, and RapidJSON headers. The check suite also needs the
 checked-in astronomy and Orbital Technosphere profiles and bounded snapshots.
 The tests provide small
 compatibility definitions for the Alpha60 API and do not use GDAL, Natural
@@ -157,8 +158,8 @@ per-projection rules with GNU Make's `call`, `eval`, and related expansion
 features.
 
 RapidJSON is header-only; no additional linker library is required. The
-astronomy and Orbital Technosphere profiles, JPL small-body snapshots, and
-NASA SSCWeb response use its DOM parser. Verify the
+generation preference, astronomy and Orbital Technosphere profiles, JPL
+small-body snapshots, and NASA SSCWeb response use its DOM parser. Verify the
 header independently when diagnosing a compiler probe failure:
 
 ```sh
