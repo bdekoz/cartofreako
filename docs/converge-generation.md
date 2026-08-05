@@ -1,6 +1,6 @@
 Stage 4.1 development:
 
-Evaluate feasibility and propose a plan for a new generate pass for "space/astronomy" detailing natually-occuring stars, suns, planets, etc, visible with instrumentation in the night sky located in
+Evaluate feasibility and propose a plan for a new generate pass for "space/astronomy" detailing natually-occuring stars, suns, comets, asteroids, planets, cosmic phenomena, etc, visible with instrumentation in the night sky located in
 src.generate/generate-astro.cc
 
 Assume timestamp of generative process for calculation of any astronomical property. Ask for any other info necessary to compute.
@@ -21,7 +21,7 @@ Stage 4.2 development:
 Evaluate feasibility and propose a plan for a new generate pass for "orbiting" detiling superconstellations, megaconstellations, and human-made space objects, located in
 src.generate/generate-orbiting.cc
 
-Suggest a better name for "orbiting"
+Suggest some more names for "orbiting" that capture the essential nature of this workflow
 
 Assume timestamp of generative process for calculation of any astronomical property. Use NASA data sources
 https://planetary.data.nasa.gov/find-data
@@ -65,6 +65,22 @@ Visual sources prior art for network properties layering style:
 
 - Metropolitan World Atlas, Arjen van Susteren, 010 Publishers, Rotterdam 2005
 - Lucille Tenazas "MNL to NY" graphic as from the bottom center image here: https://2023.agi-open.com/speakers/lucille-tenazas
+
+Research, evaulate, and suggest plan before continuing.
+Then detail plan and way for confirmation before implementing.
+
+
+---------
+
+Stage 4.5 development:
+
+Evaluate feasibility and propose a plan for a new generate pass for "art-agua-rolette" detailing the bathymetry layers, but instead of varying colors use different routlette curves as lines or fills as per the izzi/examples/curves-roulette.cc file that explores the parameter space.
+
+Shallow bathymetry layers get less point variation styles
+Deeper bathymetry layers get more point and complex variation styles
+
+Output file:
+src.generate/generate-art-agua-roulette.cc
 
 Research, evaulate, and suggest plan before continuing.
 Then detail plan and way for confirmation before implementing.
