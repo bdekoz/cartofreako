@@ -54,3 +54,6 @@
 /docs/doxygen/
 /build/
 __pycache__/
+
+# Don't check in generated assets
+#/assets.generated
