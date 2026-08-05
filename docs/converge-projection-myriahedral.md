@@ -77,3 +77,6 @@ docs/myriahedral-implementation-notes.md
 That describes this slicing
 
 
+---
+
+can you re-assess the myriahedral forward projection for possible errors or numerical improvements?

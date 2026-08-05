@@ -74,14 +74,14 @@ main()
 
   // These bounds register the reference topology, 335-degree rotation,
   // 16:9 normalization, and five-hinge partition together.
-  assert(near(slices[0].source_view.x, 4.62928339117, 1e-8));
+  assert(near(slices[0].source_view.x, 4.62928339131, 1e-8));
   assert(near(slices[0].source_view.y, 0, 1e-8));
-  assert(near(slices[0].source_view.width, 22.5313244677, 1e-8));
+  assert(near(slices[0].source_view.width, 22.5313244683, 1e-8));
   assert(near(slices[0].source_view.height, 24.75, 1e-8));
-  assert(near(slices[1].source_view.x, 8.17447516357, 1e-8));
-  assert(near(slices[1].source_view.y, 4.93044675727, 1e-8));
-  assert(near(slices[1].source_view.width, 31.1962414453, 1e-8));
-  assert(near(slices[1].source_view.height, 16.1085708816, 1e-8));
+  assert(near(slices[1].source_view.x, 8.17447516329, 1e-8));
+  assert(near(slices[1].source_view.y, 4.93044675801, 1e-8));
+  assert(near(slices[1].source_view.width, 31.1962414454, 1e-8));
+  assert(near(slices[1].source_view.height, 16.1085708814, 1e-8));
 
   bool rejected = false;
   try

@@ -89,8 +89,10 @@ inline constexpr std::size_t base_face_count = 20;
 inline constexpr std::size_t subdivision_levels = 4;
 /// Number of terminal spherical faces in the depth-5 mesh.
 inline constexpr std::size_t face_count = 5120;
-/// Root face shared by the reconstructed and exploratory spanning trees.
-inline constexpr std::size_t tree_root = 103;
+/// Prim root shared by the reconstructed and exploratory spanning trees.
+inline constexpr std::size_t mst_root = 103;
+/// Face used to establish the planar coordinate system before unfolding.
+inline constexpr std::size_t layout_seed_face = 0;
 /// Rotation applied to the unfolded planar tree before registration.
 inline constexpr double layout_rotation_degrees = 335;
 
@@ -242,21 +244,24 @@ subdivide(const spherical_face& value)
 inline std::array<spherical_face, base_face_count>
 make_icosahedron()
 {
-  // Constants and face order are retained from myriaworld's SPHEmesh.cpp.
-  constexpr double tau = 0.8506508084;
-  constexpr double one = 0.5257311121;
-  const vector_3d za {tau, one, 0};
-  const vector_3d zb {-tau, one, 0};
-  const vector_3d zc {-tau, -one, 0};
-  const vector_3d zd {tau, -one, 0};
-  const vector_3d ya {one, 0, tau};
-  const vector_3d yb {one, 0, -tau};
-  const vector_3d yc {-one, 0, -tau};
-  const vector_3d yd {-one, 0, tau};
-  const vector_3d xa {0, tau, one};
-  const vector_3d xb {0, -tau, one};
-  const vector_3d xc {0, -tau, -one};
-  const vector_3d xd {0, tau, -one};
+  // Preserve myriaworld's face order while deriving unit vertices rather than
+  // inheriting its ten-decimal approximations of the golden-ratio constants.
+  const double golden_ratio = (1 + std::sqrt(5.0)) / 2;
+  const double unit_scale = 1 / std::hypot(golden_ratio, 1.0);
+  const double tau = golden_ratio * unit_scale;
+  const double one = unit_scale;
+  const vector_3d za = normalized({tau, one, 0});
+  const vector_3d zb = normalized({-tau, one, 0});
+  const vector_3d zc = normalized({-tau, -one, 0});
+  const vector_3d zd = normalized({tau, -one, 0});
+  const vector_3d ya = normalized({one, 0, tau});
+  const vector_3d yb = normalized({one, 0, -tau});
+  const vector_3d yc = normalized({-one, 0, -tau});
+  const vector_3d yd = normalized({-one, 0, tau});
+  const vector_3d xa = normalized({0, tau, one});
+  const vector_3d xb = normalized({0, -tau, one});
+  const vector_3d xc = normalized({0, -tau, -one});
+  const vector_3d xd = normalized({0, tau, -one});
   return {{{ya, xa, yd}, {ya, yd, xb}, {yb, yc, xd}, {yb, xc, yc},
            {za, ya, zd}, {za, zd, yb}, {zc, yd, zb}, {zc, zb, yc},
            {xa, za, xd}, {xa, xd, zb}, {xb, xc, zd}, {xb, zc, xc},
@@ -372,16 +377,26 @@ make_tree_adjacency(const char* encoded_tree)
   };
 
   std::size_t edges = 0;
+  std::size_t roots = 0;
   for (std::size_t face = 0; face < face_count; ++face)
     {
       const std::size_t parent = tree_parent(encoded_tree, face);
+      if (parent >= face_count)
+        throw std::logic_error(
+          "Myriahedral spanning tree parent is out of range");
       if (parent == face)
-        continue;
+        {
+          ++roots;
+          if (face != mst_root)
+            throw std::logic_error(
+              "Myriahedral spanning tree has an unexpected Prim root");
+          continue;
+        }
       add(face, parent);
       add(parent, face);
       ++edges;
     }
-  if (edges + 1 != face_count)
+  if (roots != 1 || edges + 1 != face_count)
     throw std::logic_error("Myriahedral spanning tree has the wrong size");
   return result;
 }
@@ -392,20 +407,17 @@ inline tree_adjacency
 make_tree_adjacency()
 { return make_tree_adjacency(spanning_tree_parent_hex); }
 
-/// Test whether two independently produced spherical vertices coincide.
+/// Test whether two internally generated spherical vertices coincide.
 /// @param left First vertex.
 /// @param right Second vertex.
-/// @return `true` when squared separation is below the fixed tolerance.
-inline bool
+/// @return `true` when all components have the same generated value.
+inline constexpr bool
 same_vertex(const vector_3d& left, const vector_3d& right)
-{
-  const vector_3d difference = left - right;
-  return dot(difference, difference) < 1e-20;
-}
+{ return left.x == right.x && left.y == right.y && left.z == right.z; }
 
-/// Embed a root spherical triangle in the plane while preserving edge lengths.
-/// @param value Root spherical triangle.
-/// @return Planar root triangle with its first edge on the x axis.
+/// Embed the layout-seed triangle in the plane while preserving edge lengths.
+/// @param value Spherical layout-seed triangle.
+/// @return Planar seed triangle with its first edge on the x axis.
 inline planar_face
 initial_planar_face(const spherical_face& value)
 {
@@ -413,12 +425,21 @@ initial_planar_face(const spherical_face& value)
   const vector_3d d1 = value[2] - value[0];
   const double length0 = length(d0);
   const double length1 = length(d1);
-  const double cosine = std::clamp(
-    std::abs(dot(d0, d1) / (length0 * length1)), 0.0, 1.0);
+  if (!std::isfinite(length0) || !std::isfinite(length1)
+      || length0 <= 0 || length1 <= 0)
+    throw std::logic_error("Myriahedral seed face has an invalid edge");
+
+  const double x = dot(d0, d1) / length0;
+  double height_squared = std::fma(-x, x, length1 * length1);
+  const double tolerance = 64 * std::numeric_limits<double>::epsilon()
+                           * std::max(length1 * length1, x * x);
+  if (height_squared < -tolerance)
+    throw std::logic_error(
+      "Myriahedral seed face violates the triangle inequality");
+  height_squared = std::max(0.0, height_squared);
   return {{{0, 0},
            {length0, 0},
-           {cosine * length0,
-            std::sqrt(std::max(0.0, 1 - cosine * cosine)) * length1}}};
+           {x, std::sqrt(height_squared)}}};
 }
 
 /// Unfold a child face across its edge shared with a positioned parent.
@@ -464,16 +485,31 @@ unfold_child(const spherical_face& parent,
   const point_2d b = parent_planar[parent_shared[1]];
   const point_2d edge = b - a;
   const double edge_length = length(edge);
+  if (!std::isfinite(edge_length) || edge_length <= 0)
+    throw std::logic_error("Myriahedral unfolding has an invalid hinge");
   const double distance_a = length(
     child[child_third] - child[child_shared[0]]);
   const double distance_b = length(
     child[child_third] - child[child_shared[1]]);
-  const double along = (distance_a * distance_a
-                        - distance_b * distance_b
-                        + edge_length * edge_length)
+  if (!std::isfinite(distance_a) || !std::isfinite(distance_b)
+      || distance_a <= 0 || distance_b <= 0)
+    throw std::logic_error(
+      "Myriahedral unfolding has an invalid child edge");
+  const double difference_of_squares = std::fma(
+    distance_a, distance_a, -distance_b * distance_b);
+  const double edge_squared = edge_length * edge_length;
+  const double along = (difference_of_squares + edge_squared)
                        / (2 * edge_length);
-  const double height = std::sqrt(std::max(
-    0.0, distance_a * distance_a - along * along));
+  double height_squared = std::fma(
+    -along, along, distance_a * distance_a);
+  const double height_tolerance
+    = 128 * std::numeric_limits<double>::epsilon()
+      * std::max(distance_a * distance_a, along * along);
+  if (height_squared < -height_tolerance)
+    throw std::logic_error(
+      "Myriahedral unfolding violates the triangle inequality");
+  height_squared = std::max(0.0, height_squared);
+  const double height = std::sqrt(height_squared);
   const point_2d unit = edge * (1 / edge_length);
   const point_2d perpendicular {-unit.y, unit.x};
   const point_2d candidate0 = a + unit * along + perpendicular * height;
@@ -481,6 +517,14 @@ unfold_child(const spherical_face& parent,
   const double parent_side = cross(
     edge, parent_planar[parent_third] - a);
   const double candidate_side = cross(edge, candidate0 - a);
+  const double side_tolerance
+    = 128 * std::numeric_limits<double>::epsilon()
+      * edge_length
+      * std::max(length(parent_planar[parent_third] - a), height);
+  if (std::abs(parent_side) <= side_tolerance
+      || std::abs(candidate_side) <= side_tolerance)
+    throw std::logic_error(
+      "Myriahedral unfolding cannot orient a child face");
   const point_2d selected = candidate_side * parent_side < 0
                               ? candidate0 : candidate1;
 
@@ -517,9 +561,10 @@ make_projection_layout(const char* encoded_tree,
   std::array<std::uint16_t, face_count> stack {};
   std::size_t stack_size = 0;
 
-  result.planar[0] = initial_planar_face(result.spherical[0]);
-  positioned[0] = true;
-  stack[stack_size++] = 0;
+  result.planar[layout_seed_face]
+    = initial_planar_face(result.spherical[layout_seed_face]);
+  positioned[layout_seed_face] = true;
+  stack[stack_size++] = static_cast<std::uint16_t>(layout_seed_face);
   while (stack_size != 0)
     {
       const std::size_t current = stack[--stack_size];
@@ -559,7 +604,7 @@ make_projection_layout(const char* encoded_tree,
   return result;
 }
 
-/// Build the source-raster-compatible projection layout.
+/// Build the source-raster-registered projection layout.
 /// @return Fully positioned reference layout.
 inline projection_layout
 make_projection_layout()
@@ -585,17 +630,42 @@ inline point_2d
 normalize_planar_point(const projection_layout& projection,
                        const point_2d raw)
 {
-  const double extent_x = projection.maximum_x - projection.minimum_x;
-  const double extent_y = projection.maximum_y - projection.minimum_y;
-  const double scale = std::min(myriahedral_width_to_height_ratio / extent_x,
-                                1 / extent_y);
-  const double left = (myriahedral_width_to_height_ratio
-                       - extent_x * scale) / 2;
-  const double bottom = (1 - extent_y * scale) / 2;
-  const double x = (left + (raw.x - projection.minimum_x) * scale)
-                   / myriahedral_width_to_height_ratio;
-  const double y = 1 - (bottom + (raw.y - projection.minimum_y) * scale);
-  return {std::clamp(x, 0.0, 1.0), std::clamp(y, 0.0, 1.0)};
+  if (!std::isfinite(raw.x) || !std::isfinite(raw.y)
+      || !std::isfinite(projection.minimum_x)
+      || !std::isfinite(projection.minimum_y)
+      || !std::isfinite(projection.maximum_x)
+      || !std::isfinite(projection.maximum_y))
+    throw std::logic_error(
+      "Myriahedral normalization received non-finite geometry");
+
+  const long double extent_x
+    = static_cast<long double>(projection.maximum_x)
+      - projection.minimum_x;
+  const long double extent_y
+    = static_cast<long double>(projection.maximum_y)
+      - projection.minimum_y;
+  if (extent_x <= 0 || extent_y <= 0)
+    throw std::logic_error("Myriahedral layout has invalid bounds");
+
+  constexpr long double ratio = 16.0L / 9.0L;
+  const long double scale = std::min(ratio / extent_x, 1.0L / extent_y);
+  const long double left = (ratio - extent_x * scale) / 2;
+  const long double bottom = (1 - extent_y * scale) / 2;
+  const long double x
+    = (left + (static_cast<long double>(raw.x) - projection.minimum_x)
+              * scale) / ratio;
+  const long double y
+    = 1 - (bottom + (static_cast<long double>(raw.y)
+                     - projection.minimum_y) * scale);
+  constexpr long double tolerance
+    = 128 * std::numeric_limits<double>::epsilon();
+  if (!std::isfinite(x) || !std::isfinite(y)
+      || x < -tolerance || x > 1 + tolerance
+      || y < -tolerance || y > 1 + tolerance)
+    throw std::logic_error(
+      "Myriahedral projection lies outside its registered canvas");
+  return {static_cast<double>(std::clamp(x, 0.0L, 1.0L)),
+          static_cast<double>(std::clamp(y, 0.0L, 1.0L))};
 }
 
 /// Convert geographic degrees to a unit Cartesian vector.
@@ -621,41 +691,200 @@ geographic_vector(const double latitude, const double longitude)
           std::sin(phi)};
 }
 
-/// Measure how far a point lies inside a spherical face's half-spaces.
-/// @param face Candidate spherical triangle.
-/// @param value Unit vector to test.
-/// @return Minimum signed edge margin; larger values indicate better fit.
-inline double
-containment_margin(const spherical_face& face, const vector_3d& value)
+/// Evaluate the oriented volume of three vectors with widened intermediates.
+/// @param first First column of the determinant.
+/// @param second Second column of the determinant.
+/// @param third Third column of the determinant.
+/// @return Scalar triple product `first dot (second cross third)`.
+inline long double
+triple_product(const vector_3d& first,
+               const vector_3d& second,
+               const vector_3d& third)
 {
-  double margin = std::numeric_limits<double>::infinity();
-  for (std::size_t edge = 0; edge < 3; ++edge)
-    {
-      const vector_3d normal = cross(face[edge], face[(edge + 1) % 3]);
-      const double reference = dot(normal, face[(edge + 2) % 3]);
-      const double side = reference < 0 ? -dot(normal, value)
-                                        : dot(normal, value);
-      margin = std::min(margin, side);
-    }
-  return margin;
+  const long double cross_x
+    = static_cast<long double>(second.y) * third.z
+      - static_cast<long double>(second.z) * third.y;
+  const long double cross_y
+    = static_cast<long double>(second.z) * third.x
+      - static_cast<long double>(second.x) * third.z;
+  const long double cross_z
+    = static_cast<long double>(second.x) * third.y
+      - static_cast<long double>(second.y) * third.x;
+  return std::fma(static_cast<long double>(first.x), cross_x,
+                  std::fma(static_cast<long double>(first.y), cross_y,
+                           static_cast<long double>(first.z) * cross_z));
 }
 
-/// Select a terminal face by hierarchical maximum-margin descent.
+/// Central-projection barycentric coordinates within one spherical face.
+struct barycentric_coordinates
+{
+  long double first;  ///< Weight of face vertex zero.
+  long double second; ///< Weight of face vertex one.
+  long double third;  ///< Weight of face vertex two.
+};
+
+/// Intersect a ray from the sphere center with one chord-face plane.
+/// @param face Spherical chord triangle.
+/// @param value Direction of the geographic point from the sphere center.
+/// @return Barycentric coordinates whose sum is one.
+/// @throws std::logic_error if the ray is parallel to the face plane.
+inline barycentric_coordinates
+gnomonic_barycentric(const spherical_face& face, const vector_3d& value)
+{
+  const long double first = triple_product(value, face[1], face[2]);
+  const long double second = triple_product(value, face[2], face[0]);
+  const long double third = triple_product(value, face[0], face[1]);
+  const long double denominator = first + second + third;
+  const long double magnitude
+    = std::abs(first) + std::abs(second) + std::abs(third);
+  const long double tolerance
+    = 64 * std::numeric_limits<long double>::epsilon() * magnitude;
+  if (!std::isfinite(first) || !std::isfinite(second)
+      || !std::isfinite(third) || !std::isfinite(denominator)
+      || magnitude == 0 || std::abs(denominator) <= tolerance)
+    throw std::logic_error(
+      "Myriahedral gnomonic ray is parallel to its face plane");
+  return {first / denominator,
+          second / denominator,
+          third / denominator};
+}
+
+/// Project a direction centrally into a specific unfolded face.
+/// @param source Spherical chord triangle.
+/// @param target Matching unfolded planar triangle.
+/// @param value Direction of the geographic point from the sphere center.
+/// @return Gnomonic point in the unnormalized unfolded net.
+inline point_2d
+project_on_face(const spherical_face& source,
+                const planar_face& target,
+                const vector_3d& value)
+{
+  const barycentric_coordinates weights
+    = gnomonic_barycentric(source, value);
+  const long double x
+    = std::fma(weights.first, static_cast<long double>(target[0].x),
+               std::fma(weights.second,
+                        static_cast<long double>(target[1].x),
+                        weights.third * target[2].x));
+  const long double y
+    = std::fma(weights.first, static_cast<long double>(target[0].y),
+               std::fma(weights.second,
+                        static_cast<long double>(target[1].y),
+                        weights.third * target[2].y));
+  if (!std::isfinite(x) || !std::isfinite(y))
+    throw std::logic_error(
+      "Myriahedral gnomonic projection produced a non-finite point");
+  return {static_cast<double>(x), static_cast<double>(y)};
+}
+
+/// Project a direction centrally into one indexed unfolded face.
+/// @param projection Complete spherical and planar layout.
+/// @param face_index Terminal face to use without classifying the point.
+/// @param value Direction of the geographic point from the sphere center.
+/// @return Gnomonic point in the unnormalized unfolded net.
+/// @throws std::out_of_range if `face_index` is invalid.
+inline point_2d
+project_on_face(const projection_layout& projection,
+                const std::size_t face_index,
+                const vector_3d& value)
+{
+  if (face_index >= face_count)
+    throw std::out_of_range("Myriahedral face index is out of range");
+  return project_on_face(projection.spherical[face_index],
+                         projection.planar[face_index], value);
+}
+
+/// Measure how far a point lies inside a spherical face's half-spaces.
+/// Edge-plane normals are normalized so margins from differently shaped faces
+/// are comparable.
+/// @param face Candidate spherical triangle.
+/// @param value Unit vector to test.
+/// @return Minimum signed angular edge margin; larger values indicate fit.
+inline long double
+containment_margin_wide(const spherical_face& face,
+                        const vector_3d& value)
+{
+  const long double orientation
+    = triple_product(face[0], face[1], face[2]);
+  if (!std::isfinite(orientation) || orientation == 0)
+    throw std::logic_error("Myriahedral face has invalid orientation");
+  const long double direction = orientation < 0 ? -1 : 1;
+  const std::array<long double, 3> sides {
+    direction * triple_product(value, face[1], face[2]),
+    direction * triple_product(value, face[2], face[0]),
+    direction * triple_product(value, face[0], face[1]),
+  };
+  const std::array<vector_3d, 3> normals {
+    cross(face[1], face[2]),
+    cross(face[2], face[0]),
+    cross(face[0], face[1]),
+  };
+  long double result = std::numeric_limits<long double>::infinity();
+  for (std::size_t edge = 0; edge < 3; ++edge)
+    {
+      const long double normal_length = std::sqrt(
+        static_cast<long double>(dot(normals[edge], normals[edge])));
+      if (!std::isfinite(normal_length) || normal_length <= 0)
+        throw std::logic_error("Myriahedral face has an invalid edge plane");
+      result = std::min(result, sides[edge] / normal_length);
+    }
+  return result;
+}
+
+/// Double-precision adapter for diagnostics and existing callers.
+/// @param face Candidate spherical triangle.
+/// @param value Unit vector to test.
+/// @return Minimum normalized edge margin rounded to `double`.
+inline double
+containment_margin(const spherical_face& face, const vector_3d& value)
+{ return static_cast<double>(containment_margin_wide(face, value)); }
+
+/// Test spherical half-spaces with widened orientation predicates.
+/// @param face Candidate spherical triangle.
+/// @param value Unit vector to test.
+/// @return `true` when the point is inside or at roundoff distance from it.
+inline bool
+contains(const spherical_face& face, const vector_3d& value)
+{
+  const long double orientation
+    = triple_product(face[0], face[1], face[2]);
+  if (!std::isfinite(orientation) || orientation == 0)
+    throw std::logic_error("Myriahedral face has invalid orientation");
+  const long double direction = orientation < 0 ? -1 : 1;
+  constexpr long double tolerance
+    = 64 * std::numeric_limits<long double>::epsilon();
+  return direction * triple_product(value, face[1], face[2]) >= -tolerance
+         && direction * triple_product(value, face[2], face[0]) >= -tolerance
+         && direction * triple_product(value, face[0], face[1]) >= -tolerance;
+}
+
+/// Select a terminal face by hierarchical containment-first descent.
 /// @param value Geographic unit vector.
 /// @return Stable terminal face index in `[0, face_count)`.
 inline std::size_t
 containing_face(const vector_3d& value)
 {
   const auto base = make_icosahedron();
-  std::size_t selected = 0;
-  double best_margin = containment_margin(base[0], value);
-  for (std::size_t index = 1; index < base.size(); ++index)
+  std::size_t selected = base.size();
+  for (std::size_t index = 0; index < base.size(); ++index)
+    if (contains(base[index], value))
+      {
+        selected = index;
+        break;
+      }
+  if (selected == base.size())
     {
-      const double margin = containment_margin(base[index], value);
-      if (margin > best_margin)
+      selected = 0;
+      long double best_margin = containment_margin_wide(base[0], value);
+      for (std::size_t index = 1; index < base.size(); ++index)
         {
-          selected = index;
-          best_margin = margin;
+          const long double margin
+            = containment_margin_wide(base[index], value);
+          if (margin > best_margin)
+            {
+              selected = index;
+              best_margin = margin;
+            }
         }
     }
 
@@ -663,15 +892,27 @@ containing_face(const vector_3d& value)
   for (std::size_t level = 0; level < subdivision_levels; ++level)
     {
       const auto children = subdivide(current);
-      std::size_t child_index = 0;
-      best_margin = containment_margin(children[0], value);
-      for (std::size_t index = 1; index < children.size(); ++index)
+      std::size_t child_index = children.size();
+      for (std::size_t index = 0; index < children.size(); ++index)
+        if (contains(children[index], value))
+          {
+            child_index = index;
+            break;
+          }
+      if (child_index == children.size())
         {
-          const double margin = containment_margin(children[index], value);
-          if (margin > best_margin)
+          child_index = 0;
+          long double best_margin
+            = containment_margin_wide(children[0], value);
+          for (std::size_t index = 1; index < children.size(); ++index)
             {
-              child_index = index;
-              best_margin = margin;
+              const long double margin
+                = containment_margin_wide(children[index], value);
+              if (margin > best_margin)
+                {
+                  child_index = index;
+                  best_margin = margin;
+                }
             }
         }
       selected = selected * 4 + child_index;
@@ -680,7 +921,7 @@ containing_face(const vector_3d& value)
   return selected;
 }
 
-/// Map a geographic coordinate affinely into a supplied unfolded layout.
+/// Map a geographic coordinate gnomonically into a supplied unfolded layout.
 /// @param projection Complete layout to use.
 /// @param latitude Latitude in degrees.
 /// @param longitude Longitude in degrees.
@@ -691,22 +932,7 @@ project_to_unfolded_net(const projection_layout& projection,
 {
   const vector_3d value = geographic_vector(latitude, longitude);
   const std::size_t index = containing_face(value);
-  const auto& source = projection.spherical[index];
-  const auto& target = projection.planar[index];
-
-  const vector_3d d0 = source[1] - source[0];
-  const vector_3d d1 = source[2] - source[0];
-  const vector_3d relative = value - source[0];
-  const double a = dot(d0, d0);
-  const double b = dot(d0, d1);
-  const double c = dot(d1, d1);
-  const double r0 = dot(relative, d0);
-  const double r1 = dot(relative, d1);
-  const double determinant = a * c - b * b;
-  const double alpha = (r0 * c - r1 * b) / determinant;
-  const double beta = (r1 * a - r0 * b) / determinant;
-  return target[0] + (target[1] - target[0]) * alpha
-                   + (target[2] - target[0]) * beta;
+  return project_on_face(projection, index, value);
 }
 
 /// Map a geographic coordinate into the reference unfolded layout.
@@ -721,7 +947,7 @@ project_to_unfolded_net(const double latitude, const double longitude)
 /// @param projection Complete layout to use.
 /// @param latitude Latitude in degrees.
 /// @param longitude Longitude in degrees.
-/// @return Screen-oriented point clamped to the unit square.
+/// @return Screen-oriented point, with roundoff-only canvas clamping.
 inline point_2d
 project_to_normalized_map(const projection_layout& projection,
                           const double latitude, const double longitude)
@@ -734,7 +960,7 @@ project_to_normalized_map(const projection_layout& projection,
 /// Normalize the reference layout into its registered 16:9 canvas.
 /// @param latitude Latitude in degrees.
 /// @param longitude Longitude in degrees.
-/// @return Screen-oriented point clamped to the unit square.
+/// @return Screen-oriented point, with roundoff-only canvas clamping.
 inline point_2d
 project_to_normalized_map(const double latitude, const double longitude)
 { return project_to_normalized_map(layout(), latitude, longitude); }
@@ -777,8 +1003,8 @@ make_myriahedral_projection_base(const frame& map_frame, string raster_name)
    Variable-size depth-5 Myriahedral projection.
 
    The forward transform selects one of 5120 spherical triangles, maps the
-   point affinely into a fixed land-aware spanning-tree net, and uniformly
-   scales the net into a 16:9 frame.
+   point centrally and gnomonically into a fixed land-aware spanning-tree net,
+   and uniformly scales the net into a 16:9 frame.
 */
 struct myriaproj : public projection_base, public projection_api
 {

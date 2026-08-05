@@ -61,21 +61,8 @@ project_on_myriahedral_face(const projection_context& context,
   using namespace a60::carto::myriahedral_detail;
   const vector_3d value = geographic_vector(latitude, longitude);
   const auto& projection = std::get<myriaproj>(context.projection).layout();
-  const auto& source = projection.spherical[face_index];
-  const auto& target = projection.planar[face_index];
-  const vector_3d d0 = source[1] - source[0];
-  const vector_3d d1 = source[2] - source[0];
-  const vector_3d relative = value - source[0];
-  const double a = dot(d0, d0);
-  const double b = dot(d0, d1);
-  const double c = dot(d1, d1);
-  const double r0 = dot(relative, d0);
-  const double r1 = dot(relative, d1);
-  const double determinant = a * c - b * b;
-  const double alpha = (r0 * c - r1 * b) / determinant;
-  const double beta = (r1 * a - r0 * b) / determinant;
-  const point_2d projected = target[0] + (target[1] - target[0]) * alpha
-                                      + (target[2] - target[0]) * beta;
+  const point_2d projected = project_on_face(
+    projection, face_index, value);
   return {projected.x, projected.y};
 }
 

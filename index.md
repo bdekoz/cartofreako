@@ -242,13 +242,14 @@ registered for the checked-in source raster. Compact embedded
 minimum-spanning trees specify which of the 5120 small faces stay attached;
 the generation layer also includes five exploratory perspectives and two
 exact complementary face-group slices.
-The projection locates a spherical face, transfers the point affinely into its
-unfolded planar copy, and scales the complete net to a variable frame. It has
+The projection locates a spherical face, intersects its central ray with the
+face plane, transfers the gnomonic barycentric coordinates to the unfolded
+planar copy, and scales the complete net to a variable frame. It has
 no runtime dependency on the historical generator, Boost.Graph, S2, GDAL, or
 Natural Earth.
 
 Construction examples, the `myriahedral_source` preset, and the distinction
-between this raster-compatible 16:9 net and other possible Myriahedral nets
+between this raster-registered 16:9 net and other possible Myriahedral nets
 are in the
 [Myriahedral public API notes](docs/myriahedral-implementation-notes.md#public-api-and-use).
 The same notes record the

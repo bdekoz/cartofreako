@@ -84,7 +84,7 @@ uses the same strategy as the native filled-area generator:
 1. clip each geographic ring to a five-degree longitude/latitude cell;
 2. segment cell edges at no more than half-degree intervals;
 3. collect every terminal face sampled by that cell;
-4. map the cell geometry through each face's affine transform; and
+4. map the cell geometry through each face's central gnomonic transform; and
 5. clip the result to that face's exact planar triangle.
 
 The output pieces share an `evenodd` land path. A same-color hairline stroke
