@@ -75,9 +75,6 @@ inline constexpr double star_x_maximum_group_gap_ratio = 0;
 */
 inline constexpr double star_x_default_enlargement_factor = 1.2;
 
-/// Southern latitude at which the optional unified Antarctic inset begins.
-inline constexpr double star_x_antarctic_cutoff_latitude = -60;
-
 /// Outer radius of the eight-point North-pole star as a fraction of height.
 inline constexpr double star_x_polar_star_outer_radius_ratio = 1.25 / 44.0;
 /// Inner radius of the North-pole star relative to its outer radius.
@@ -164,6 +161,20 @@ enum class face_group
   two ///< Upper, rotated group assembled from the non-negative-x half.
 };
 
+/// The four practical Star-X page quadrants in geographic sector order.
+enum class quadrant : std::size_t
+{
+  lower_left = 0, ///< Pacific sector, source Q1.
+  lower_right = 1, ///< Americas sector, source Q2.
+  upper_right = 2, ///< Europe/Africa sector, rotated source Q3.
+  upper_left = 3, ///< Asia/Australia sector, rotated source Q4.
+};
+
+/// Public longitudes through the centers of the four Star-X quadrants.
+inline constexpr std::array<double, 4> quadrant_center_longitudes {
+  -156, -66, 24, 114,
+};
+
 /// Normalized Star-X point paired with its selected face group.
 struct assembled_point
 {
@@ -240,30 +251,127 @@ project_to_normalized_map(const double latitude, const double longitude,
   return assemble_native_point(x, y, layout);
 }
 
-/**
-   Project a South-polar coordinate into a local, unified Antarctic inset.
+/// Select the Star-X quadrant containing a public geographic longitude.
+/// @param longitude Finite longitude in `[-180, 180]`.
+/// @return The quadrant selected by the registered Cahill-Keyes sector cuts.
+inline quadrant
+quadrant_for_longitude(const double longitude)
+{
+  if (!std::isfinite(longitude) || longitude < -180 || longitude > 180)
+    throw std::invalid_argument(
+      "Star-X quadrant longitude must be finite and within [-180, 180]");
+  if (longitude >= 159 || longitude < -111)
+    return quadrant::lower_left;
+  if (longitude < -21)
+    return quadrant::lower_right;
+  if (longitude < 69)
+    return quadrant::upper_right;
+  return quadrant::upper_left;
+}
 
-   This helper is deliberately separate from the ordinary point projection:
-   callers apply it only to Antarctic land and ice geometry, so ocean and
-   bathymetry retain the Star-X face topology. At the canonical scale, one
-   degree from the South Pole occupies frame-height / 400; the configured
-   post-assembly enlargement scales the inset identically to the main map.
+/// Return the center longitude of a Star-X quadrant.
+/// @param value Practical page quadrant.
+/// @return Public geographic longitude through its center.
+inline double
+quadrant_center_longitude(const quadrant value)
+{
+  return quadrant_center_longitudes[static_cast<std::size_t>(value)];
+}
 
-   @param latitude Latitude in `[-90, star_x_antarctic_cutoff_latitude]`.
-   @param longitude Longitude in degrees.
-   @param frame_height Complete Star-X frame height.
-   @param enlargement_factor Post-assembly enlargement used by the main map.
-   @return Coordinate relative to the inset's South-pole origin.
+/// Project directly into a concrete Star-X frame without constructing an API
+/// adapter. This is used by the layer-aware polar-cap compositor.
+/// @param latitude Geographic latitude.
+/// @param longitude Geographic longitude.
+/// @param map_frame Complete Star-X output frame.
+/// @param layout Star-X carrier configuration.
+/// @return Point in concrete output-frame coordinates.
+inline point_2d
+project_to_frame(const double latitude, const double longitude,
+                 const frame& map_frame,
+                 const star_x_layout layout = {})
+{
+  const point_2d normalized
+    = project_to_normalized_map(latitude, longitude, layout).point;
+  return {normalized.x * map_frame.width(),
+          normalized.y * map_frame.height()};
+}
+
+/// Return the outer South-Pole tip for one practical page quadrant.
+/// @param value Practical page quadrant.
+/// @param map_frame Complete Star-X output frame.
+/// @param layout Star-X carrier configuration.
+/// @return Projected South-Pole tip in output-frame coordinates.
+inline point_2d
+antarctic_source_tip(const quadrant value, const frame& map_frame,
+                     const star_x_layout layout = {})
+{
+  return project_to_frame(
+    -90, quadrant_center_longitude(value), map_frame, layout);
+}
+
+/// Measure a point in one Antarctic fragment from its outer quadrant tip.
+/// @param latitude Geographic latitude.
+/// @param longitude Geographic longitude.
+/// @param map_frame Complete Star-X output frame.
+/// @param layout Star-X carrier configuration.
+/// @return Euclidean source-frame distance from the selected South-Pole tip.
+inline double
+antarctic_source_radius(const double latitude, const double longitude,
+                         const frame& map_frame,
+                         const star_x_layout layout = {})
+{
+  const point_2d point
+    = project_to_frame(latitude, longitude, map_frame, layout);
+  const point_2d tip = antarctic_source_tip(
+    quadrant_for_longitude(longitude), map_frame, layout);
+  return std::hypot(point.x - tip.x, point.y - tip.y);
+}
+
+/** Reassemble one Star-X Antarctic fragment around a common local pole.
+
+    Cahill-Keyes octant edges bend outside its small polar construction zone,
+    so one constant rigid rotation per quadrant cannot make the complete cap
+    seamless. This mapping retains each point's exact distance from its
+    original outer South-Pole tip and normalizes only its geographic bearing.
+    Neighboring quadrant edges therefore coincide at every latitude while
+    the cap keeps the source projection's radial scale.
+
+    @param latitude Geographic latitude.
+    @param longitude Geographic longitude in `[-180, 180]`.
+    @param map_frame Complete Star-X output frame.
+    @param bearing_offset Rotation of the assembled cap in degrees.
+    @param layout Star-X carrier configuration.
+    @return Point relative to the common South Pole.
 */
 inline point_2d
-project_antarctic_inset_local(
-  const double latitude, const double longitude, const double frame_height,
-  const double enlargement_factor = star_x_default_enlargement_factor)
+project_antarctic_fragment_local(
+  const double latitude, const double longitude, const frame& map_frame,
+  const double bearing_offset = 0, const star_x_layout layout = {})
 {
   const double radius
-    = (latitude + 90) * frame_height * enlargement_factor / 400;
-  const double radians = longitude * std::numbers::pi_v<double> / 180;
+    = antarctic_source_radius(latitude, longitude, map_frame, layout);
+  const double radians = (longitude + bearing_offset)
+                         * std::numbers::pi_v<double> / 180;
   return {radius * std::sin(radians), -radius * std::cos(radians)};
+}
+
+/// Reassemble one fragment point and translate it to a shared page pole.
+/// @param latitude Geographic latitude.
+/// @param longitude Geographic longitude.
+/// @param map_frame Complete Star-X output frame.
+/// @param target_pole Destination South Pole in output-frame coordinates.
+/// @param bearing_offset Rotation of the assembled cap in degrees.
+/// @param layout Star-X carrier configuration.
+/// @return Reassembled point in output-frame coordinates.
+inline point_2d
+project_antarctic_fragment(
+  const double latitude, const double longitude, const frame& map_frame,
+  const point_2d target_pole, const double bearing_offset = 0,
+  const star_x_layout layout = {})
+{
+  const point_2d local = project_antarctic_fragment_local(
+    latitude, longitude, map_frame, bearing_offset, layout);
+  return {target_pole.x + local.x, target_pole.y + local.y};
 }
 
 /**

@@ -144,27 +144,29 @@ snap at exactly 90 degrees latitude.
 The South Pole does not occupy the center. Group 2 carries its southern
 vertices toward the top edge after rotation, while group 1 carries them
 toward the bottom edge. The map can therefore be turned 180 degrees without
-giving one half a permanent visual “top.” Stage 6 then adds a single
-South-polar rendering of the Antarctic continent at the lower end. It is a
-layer-aware presentation, not a collapse of the point projection's polar
-copies.
+giving one half a permanent visual “top.” Stages 6 and 7 add a single
+South-polar cap at the lower end. It is an explicit layer-aware cut and
+reassembly, not a collapse of the point projection's polar copies.
 
 ## Polar marks and Antarctica
 
 The finished presentation uses two different kinds of polar context. The
 North Pole is a symbolic eight-point star over the central locus. Antarctica
-is geographic source geometry: land, ice, and coastline south of 60 degrees
-south are clipped before projection and redrawn in a continuous South-polar
-view.
+is geographic source geometry. Natural Earth mainland vertices determine
+`ant_r`, the maximum ordinary Star-X distance from the relevant outer
+South-Pole tip. A circle of that radius is cut from each practical quadrant,
+and all content inside those four cuts is reassembled around one South Pole
+at bottom center.
 
 This distinction is perceptual as well as numerical. The star makes the
 rotation center immediately legible without pretending that all cut copies
-of the North Pole are one topological vertex. The Antarctic inset restores a
+of the North Pole are one topological vertex. The Antarctic cap restores a
 recognizable continent where the ordinary octahedral net would divide it
-among outer faces. Its scale follows the Cahill-Keyes construction and the
-same page enlargement as the X; only its placement is composed separately.
-Ocean and bathymetry remain on the X, preventing a second polar ocean from
-obscuring the unfolded map.
+among outer faces. Every point keeps its original distance from its quadrant
+tip, so no independent inset scale is introduced. Geographic bearing is
+normalized around the shared pole to join Cahill-Keyes's bent octant edges.
+Ocean, land, bathymetry, ice, linework, and graticules all use the same cap;
+the source circles are removed, so nothing is duplicated.
 
 ## Quadrants in the final carrier
 
@@ -246,7 +248,7 @@ flowchart TD
   GAP["apply symmetric<br/>signed group gap"]
   ENLARGE["uniformly enlarge about<br/>the page center"]
   FRAME["scale into<br/>frame.frame_area"]
-  COMPOSE["SVG composition:<br/>central star + unified Antarctica"]
+  COMPOSE["SVG composition:<br/>central star + unified ant_r cap"]
 
   LL --> CK --> M --> SIDE
   SIDE -- yes --> LOWER --> GAP

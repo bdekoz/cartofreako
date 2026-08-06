@@ -15,6 +15,7 @@
 #include <iterator>
 #include <limits>
 #include <memory>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -489,111 +490,133 @@ render_source(svg::group_element& output, const layer_spec& spec,
   return stats;
 }
 
-struct cartesian_bounds
+struct antarctic_cap
 {
-  double minimum_x = std::numeric_limits<double>::infinity();
-  double minimum_y = std::numeric_limits<double>::infinity();
-  double maximum_x = -std::numeric_limits<double>::infinity();
-  double maximum_y = -std::numeric_limits<double>::infinity();
+  a60::carto::frame map_frame;
+  a60::carto::star_x_layout layout;
+  double radius = 0;
+  double farthest_land_longitude = 0;
+  double bearing_offset = 0;
+  a60::carto::star_x_detail::point_2d target_pole {0, 0};
 
-  void
-  include(const double x, const double y)
+  double
+  source_radius(const geographic_point point) const
   {
-    minimum_x = std::min(minimum_x, x);
-    minimum_y = std::min(minimum_y, y);
-    maximum_x = std::max(maximum_x, x);
-    maximum_y = std::max(maximum_y, y);
+    return a60::carto::star_x_detail::antarctic_source_radius(
+      point.latitude, point.longitude, map_frame, layout);
   }
 
   bool
-  empty() const noexcept
-  { return !std::isfinite(minimum_x); }
+  contains(const geographic_point point) const
+  {
+    constexpr double tolerance = 1e-10;
+    return source_radius(point) <= radius + tolerance;
+  }
+
+  svg::point_2t
+  project(const geographic_point point) const
+  {
+    const auto projected
+      = a60::carto::star_x_detail::project_antarctic_fragment(
+          point.latitude, point.longitude, map_frame, target_pole,
+          bearing_offset, layout);
+    return {projected.x, projected.y};
+  }
+
+  double
+  boundary_latitude(const double longitude) const
+  {
+    double inside = -90;
+    double outside = 0;
+    require(source_radius({outside, longitude}) > radius,
+            "Antarctic cap reaches the equator");
+    for (int iteration = 0; iteration != 56; ++iteration)
+      {
+        const double middle = (inside + outside) / 2;
+        if (source_radius({middle, longitude}) <= radius)
+          inside = middle;
+        else
+          outside = middle;
+      }
+    return (inside + outside) / 2;
+  }
 };
 
-struct antarctic_placement
-{
-  double x = 0;
-  double y = 0;
-};
-
-double
-star_x_enlargement(const projection_context& context)
+a60::carto::star_x_layout
+star_x_layout_for(const projection_context& context)
 {
   require(context.spec.kind == generation::projection_kind::star_x,
-          "Antarctic inset requires a Star-X projection");
-  return std::get<a60::carto::starxproj>(context.projection)
-    .enlargement_factor();
+          "Antarctic cap requires a Star-X projection");
+  const auto& projection
+    = std::get<a60::carto::starxproj>(context.projection);
+  return {
+    .group_gap_ratio = projection.group_gap_ratio(),
+    .enlargement_factor = projection.enlargement_factor(),
+  };
 }
 
-geometry_ptr
-clip_antarctic_geometry(const OGRGeometry& source, const layer_spec& spec)
+struct antarctic_land_extent
 {
-  geometry_ptr prepared = prepare_geometry(source, spec);
-  geometry_ptr cap = make_clip_rectangle(
-    -180, -90, 180, a60::carto::star_x_antarctic_cutoff_latitude);
-  geometry_ptr clipped(prepared->Intersection(cap.get()));
-  require(clipped != nullptr,
-          "GDAL failed to isolate Antarctic source geometry");
-  if (!clipped->IsEmpty())
-    clipped->segmentize(spec.maximum_segment);
-  return clipped;
-}
+  double radius = -std::numeric_limits<double>::infinity();
+  double longitude = 0;
+};
 
 void
-include_antarctic_line_bounds(cartesian_bounds& bounds,
-                              const OGRLineString& line,
-                              const projection_context& context)
+include_antarctic_land_ring(antarctic_land_extent& extent,
+                            const OGRLineString& ring,
+                            const projection_context& context,
+                            const a60::carto::star_x_layout layout)
 {
-  const double enlargement = star_x_enlargement(context);
-  for (int index = 0; index != line.getNumPoints(); ++index)
+  for (int index = 0; index != ring.getNumPoints(); ++index)
     {
-      const auto point
-        = a60::carto::star_x_detail::project_antarctic_inset_local(
-            line.getY(index), line.getX(index),
-            context.map_frame.height(), enlargement);
-      bounds.include(point.x, point.y);
+      const double longitude = ring.getX(index);
+      const double radius
+        = a60::carto::star_x_detail::antarctic_source_radius(
+            ring.getY(index), longitude, context.map_frame, layout);
+      if (radius > extent.radius)
+        {
+          extent.radius = radius;
+          extent.longitude = longitude;
+        }
     }
 }
 
 void
-include_antarctic_bounds(cartesian_bounds& bounds,
-                         const OGRGeometry& geometry,
-                         const projection_context& context)
+include_antarctic_land(antarctic_land_extent& extent,
+                       const OGRGeometry& geometry,
+                       const projection_context& context,
+                       const a60::carto::star_x_layout layout)
 {
   switch (wkbFlatten(geometry.getGeometryType()))
     {
-    case wkbLineString:
-      include_antarctic_line_bounds(
-        bounds, *geometry.toLineString(), context);
-      return;
-
     case wkbPolygon:
       {
         const OGRPolygon* polygon = geometry.toPolygon();
+        OGREnvelope envelope;
+        polygon->getEnvelope(&envelope);
+        // The Natural Earth mainland polygon is the polar component. This
+        // excludes sub-Antarctic islands and every non-Antarctic land mass.
+        if (envelope.MinY > -89.999999 || envelope.MaxY > -50)
+          return;
         if (const OGRLinearRing* exterior = polygon->getExteriorRing())
-          include_antarctic_line_bounds(bounds, *exterior, context);
-        for (int index = 0; index != polygon->getNumInteriorRings(); ++index)
-          include_antarctic_line_bounds(
-            bounds, *polygon->getInteriorRing(index), context);
+          include_antarctic_land_ring(
+            extent, *exterior, context, layout);
         return;
       }
 
-    case wkbMultiLineString:
     case wkbMultiPolygon:
     case wkbGeometryCollection:
       {
         const OGRGeometryCollection* collection
           = geometry.toGeometryCollection();
         for (int index = 0; index != collection->getNumGeometries(); ++index)
-          include_antarctic_bounds(
-            bounds, *collection->getGeometryRef(index), context);
+          include_antarctic_land(
+            extent, *collection->getGeometryRef(index), context, layout);
         return;
       }
 
     default:
-      throw std::runtime_error(
-        "unsupported Antarctic geometry type "
-        + std::string(OGRGeometryTypeToName(geometry.getGeometryType())));
+      return;
     }
 }
 
@@ -613,9 +636,9 @@ star_x_content_bottom(const projection_context& context)
   return bottom;
 }
 
-antarctic_placement
-make_antarctic_placement(const projection_context& context,
-                          const layer_spec& reference_spec)
+antarctic_cap
+make_antarctic_cap(const projection_context& context,
+                   const layer_spec& reference_spec)
 {
   const std::filesystem::path path
     = natural_earth_directory() / reference_spec.shapefile;
@@ -624,61 +647,78 @@ make_antarctic_placement(const projection_context& context,
   require(layer != nullptr,
           "Natural Earth land shapefile has no vector layer");
 
-  cartesian_bounds local;
+  const a60::carto::star_x_layout layout = star_x_layout_for(context);
+  antarctic_land_extent extent;
   layer->ResetReading();
   while (feature_ptr feature {layer->GetNextFeature()})
     if (const OGRGeometry* source = feature->GetGeometryRef())
-      {
-        geometry_ptr clipped
-          = clip_antarctic_geometry(*source, reference_spec);
-        if (!clipped->IsEmpty())
-          include_antarctic_bounds(local, *clipped, context);
-      }
-  require(!local.empty(),
-          "Natural Earth land contains no Antarctic geometry");
+      include_antarctic_land(extent, *source, context, layout);
+  require(std::isfinite(extent.radius) && extent.radius > 0,
+          "Natural Earth land contains no polar Antarctic mainland");
 
   const double content_bottom = star_x_content_bottom(context);
-  const antarctic_placement result {
-    context.map_frame.width() / 2
-      - (local.minimum_x + local.maximum_x) / 2,
-    content_bottom - local.maximum_y,
+  const antarctic_cap result {
+    .map_frame = context.map_frame,
+    .layout = layout,
+    .radius = extent.radius,
+    .farthest_land_longitude = extent.longitude,
+    .bearing_offset = 180 - extent.longitude,
+    .target_pole = {
+      context.map_frame.width() / 2, content_bottom - extent.radius,
+    },
   };
   constexpr double tolerance = 1e-9;
-  const double centered_x
-    = (local.minimum_x + result.x + local.maximum_x + result.x) / 2;
-  require(std::abs(centered_x - context.map_frame.width() / 2) < tolerance,
-          "Antarctic inset is not centered on the Star-X page axis");
-  require(std::abs(local.maximum_y + result.y - content_bottom) < tolerance,
-          "Antarctic inset is not aligned with the lowest Star-X octant");
-  require(local.minimum_x + result.x >= -tolerance
-            && local.maximum_x + result.x
+  require(std::abs(result.target_pole.x
+                   - context.map_frame.width() / 2) < tolerance,
+          "Antarctic cap is not centered on the Star-X page axis");
+  require(std::abs(result.target_pole.y + result.radius
+                   - content_bottom) < tolerance,
+          "Antarctic cap is not aligned with the lowest Star-X octant");
+  require(result.target_pole.x - result.radius >= -tolerance
+            && result.target_pole.x + result.radius
                  <= context.map_frame.width() + tolerance
-            && local.minimum_y + result.y >= -tolerance
-            && local.maximum_y + result.y
+            && result.target_pole.y - result.radius >= -tolerance
+            && result.target_pole.y + result.radius
                  <= context.map_frame.height() + tolerance,
-          "Antarctic inset does not fit the Star-X frame");
+          "Antarctic cap does not fit the Star-X frame");
   return result;
 }
 
+geometry_ptr
+make_antarctic_cap_polygon(const antarctic_cap& cap,
+                            const longitude_band band)
+{
+  auto ring = std::make_unique<OGRLinearRing>();
+  ring->addPoint(band.west, -90);
+  constexpr double longitude_step = 0.25;
+  for (double longitude = band.west; longitude < band.east;
+       longitude += longitude_step)
+    ring->addPoint(
+      longitude, cap.boundary_latitude(longitude));
+  ring->addPoint(band.east, cap.boundary_latitude(band.east));
+  ring->addPoint(band.east, -90);
+  ring->closeRings();
+
+  auto polygon = std::make_unique<OGRPolygon>();
+  polygon->addRingDirectly(ring.release());
+  require(polygon->IsValid(),
+          "computed Antarctic cap polygon is invalid");
+  return geometry_ptr(polygon.release());
+}
+
 void
-append_antarctic_linestring(std::string& path_data,
-                            std::size_t& point_count,
-                            const OGRLineString& line,
-                            const projection_context& context,
-                            const antarctic_placement placement,
-                            const bool close)
+append_antarctic_cap_linestring(std::string& path_data,
+                                std::size_t& point_count,
+                                const OGRLineString& line,
+                                const antarctic_cap& cap,
+                                const bool close)
 {
   svg::vrange points;
   points.reserve(static_cast<std::size_t>(line.getNumPoints()));
-  const double enlargement = star_x_enlargement(context);
   for (int index = 0; index != line.getNumPoints(); ++index)
     {
-      const auto local
-        = a60::carto::star_x_detail::project_antarctic_inset_local(
-            line.getY(index), line.getX(index),
-            context.map_frame.height(), enlargement);
       generation::append_unique(
-        points, {placement.x + local.x, placement.y + local.y});
+        points, cap.project({line.getY(index), line.getX(index)}));
     }
   const std::size_t minimum_points = close ? 3 : 2;
   if (points.size() < minimum_points)
@@ -690,30 +730,28 @@ append_antarctic_linestring(std::string& path_data,
 }
 
 void
-append_antarctic_geometry(std::string& path_data,
-                          std::size_t& point_count,
-                          const OGRGeometry& geometry,
-                          const projection_context& context,
-                          const antarctic_placement placement)
+append_antarctic_cap_geometry(std::string& path_data,
+                              std::size_t& point_count,
+                              const OGRGeometry& geometry,
+                              const antarctic_cap& cap)
 {
   switch (wkbFlatten(geometry.getGeometryType()))
     {
     case wkbLineString:
-      append_antarctic_linestring(
-        path_data, point_count, *geometry.toLineString(), context,
-        placement, false);
+      append_antarctic_cap_linestring(
+        path_data, point_count, *geometry.toLineString(), cap, false);
       return;
 
     case wkbPolygon:
       {
         const OGRPolygon* polygon = geometry.toPolygon();
         if (const OGRLinearRing* exterior = polygon->getExteriorRing())
-          append_antarctic_linestring(
-            path_data, point_count, *exterior, context, placement, true);
+          append_antarctic_cap_linestring(
+            path_data, point_count, *exterior, cap, true);
         for (int index = 0; index != polygon->getNumInteriorRings(); ++index)
-          append_antarctic_linestring(
+          append_antarctic_cap_linestring(
             path_data, point_count, *polygon->getInteriorRing(index),
-            context, placement, true);
+            cap, true);
         return;
       }
 
@@ -724,9 +762,8 @@ append_antarctic_geometry(std::string& path_data,
         const OGRGeometryCollection* collection
           = geometry.toGeometryCollection();
         for (int index = 0; index != collection->getNumGeometries(); ++index)
-          append_antarctic_geometry(
-            path_data, point_count, *collection->getGeometryRef(index),
-            context, placement);
+          append_antarctic_cap_geometry(
+            path_data, point_count, *collection->getGeometryRef(index), cap);
         return;
       }
 
@@ -738,9 +775,9 @@ append_antarctic_geometry(std::string& path_data,
 }
 
 render_stats
-render_antarctic_source(svg::group_element& output, const layer_spec& spec,
-                         const projection_context& context,
-                         const antarctic_placement placement)
+render_star_x_source(svg::group_element& output, const layer_spec& spec,
+                     const projection_context& context,
+                     const antarctic_cap& cap)
 {
   const std::filesystem::path path
     = natural_earth_directory() / spec.shapefile;
@@ -748,6 +785,11 @@ render_antarctic_source(svg::group_element& output, const layer_spec& spec,
   OGRLayer* layer = dataset->GetLayer(0);
   require(layer != nullptr,
           "Natural Earth shapefile has no vector layer: " + path.string());
+
+  std::array<geometry_ptr, longitude_bands.size()> cap_polygons;
+  for (std::size_t index = 0; index != longitude_bands.size(); ++index)
+    cap_polygons[index]
+      = make_antarctic_cap_polygon(cap, longitude_bands[index]);
 
   render_stats stats;
   layer->ResetReading();
@@ -761,52 +803,104 @@ render_antarctic_source(svg::group_element& output, const layer_spec& spec,
               "Natural Earth layer contains an empty geometry: "
                 + path.string() + " feature "
                 + std::to_string(sequential_feature));
-      geometry_ptr clipped = clip_antarctic_geometry(*source, spec);
-      if (clipped->IsEmpty())
-        continue;
+      geometry_ptr prepared = prepare_geometry(*source, spec);
+      bool rendered_feature = false;
+      for (std::size_t band_index = 0;
+           band_index != longitude_bands.size(); ++band_index)
+        {
+          const longitude_band band = longitude_bands[band_index];
+          for (const bool north : {false, true})
+            {
+              geometry_ptr rectangle = make_clip_rectangle(
+                band.west, north ? 0 : -90,
+                band.east, north ? 90 : -seam_epsilon);
+              geometry_ptr clipped(prepared->Intersection(rectangle.get()));
+              require(clipped != nullptr,
+                      "GDAL failed to quadrant-clip " + path.string());
+              if (!north && !clipped->IsEmpty())
+                {
+                  geometry_ptr outside(
+                    clipped->Difference(cap_polygons[band_index].get()));
+                  require(outside != nullptr,
+                          "GDAL failed to remove the Star-X cap from "
+                            + path.string());
+                  clipped = std::move(outside);
+                }
+              if (clipped->IsEmpty())
+                continue;
+              clipped->segmentize(spec.maximum_segment);
+              std::string path_data;
+              std::size_t point_count = 0;
+              append_geometry(
+                path_data, point_count, *clipped, context, spec.role);
+              if (path_data.empty())
+                continue;
+              const std::string id
+                = std::string(spec.id) + "-feature-"
+                  + std::to_string(sequential_feature) + "-band-"
+                  + std::to_string(band_index + 1)
+                  + (north ? "-north" : "-south");
+              const std::string attributes
+                = spec.role == geometry_role::area
+                    ? R"(fill-rule="evenodd")" : std::string {};
+              output.add_element(svg::make_path(
+                path_data, spec.style, id, true, attributes));
+              rendered_feature = true;
+              ++stats.paths;
+              stats.points += point_count;
+            }
 
-      std::string path_data;
-      std::size_t point_count = 0;
-      append_antarctic_geometry(
-        path_data, point_count, *clipped, context, placement);
-      if (path_data.empty())
-        continue;
-      const std::string id
-        = std::string(spec.id) + "-antarctic-feature-"
-          + std::to_string(sequential_feature);
-      const std::string attributes
-        = spec.role == geometry_role::area
-            ? R"(fill-rule="evenodd")" : std::string {};
-      output.add_element(svg::make_path(
-        path_data, spec.style, id, true, attributes));
-      ++stats.paths;
-      stats.points += point_count;
+          geometry_ptr clipped(
+            prepared->Intersection(cap_polygons[band_index].get()));
+          require(clipped != nullptr,
+                  "GDAL failed to isolate the Star-X Antarctic cap from "
+                    + path.string());
+          if (clipped->IsEmpty())
+            continue;
+          clipped->segmentize(spec.maximum_segment);
+          std::string path_data;
+          std::size_t point_count = 0;
+          append_antarctic_cap_geometry(
+            path_data, point_count, *clipped, cap);
+          if (path_data.empty())
+            continue;
+          const std::string id
+            = std::string(spec.id) + "-antarctic-fragment-"
+              + std::to_string(band_index + 1) + "-feature-"
+              + std::to_string(sequential_feature);
+          const std::string attributes
+            = spec.role == geometry_role::area
+                ? R"(fill-rule="evenodd")" : std::string {};
+          output.add_element(svg::make_path(
+            path_data, spec.style, id, true, attributes));
+          rendered_feature = true;
+          ++stats.paths;
+          stats.points += point_count;
+        }
+      require(rendered_feature,
+              "Natural Earth geometry produced no Star-X path: "
+                + path.string() + " feature "
+                + std::to_string(sequential_feature));
     }
 
-  require(stats.paths != 0,
-          "Natural Earth layer has no Antarctic paths: " + path.string());
+  require(stats.source_features != 0 && stats.paths != 0,
+          "Natural Earth layer produced no Star-X paths: " + path.string());
   return stats;
 }
 
 render_stats
 add_layer(svg::svg_element& document, const layer_spec& spec,
           const projection_context& context,
-          const antarctic_placement* polar_placement = nullptr)
+          const antarctic_cap* cap = nullptr)
 {
   svg::group_element layer;
   layer.start_element(std::string(spec.id));
   layer.add_title(std::string(spec.title));
   render_stats stats;
-  if (polar_placement == nullptr)
+  if (cap == nullptr)
     stats = render_source(layer, spec, context);
   else
-    {
-      stats = render_source(
-        layer, spec, context,
-        {a60::carto::star_x_antarctic_cutoff_latitude, 90});
-      stats += render_antarctic_source(
-        layer, spec, context, *polar_placement);
-    }
+    stats = render_star_x_source(layer, spec, context, *cap);
   layer.finish_element();
   document.add_element(layer);
   std::cout << spec.id << ": " << stats.source_features << " features, "
@@ -817,22 +911,16 @@ add_layer(svg::svg_element& document, const layer_spec& spec,
 render_stats
 add_nested_layer(svg::group_element& parent, const layer_spec& spec,
                  const projection_context& context,
-                 const antarctic_placement* polar_placement = nullptr)
+                 const antarctic_cap* cap = nullptr)
 {
   svg::group_element layer;
   layer.start_element(std::string(spec.id));
   layer.add_title(std::string(spec.title));
   render_stats stats;
-  if (polar_placement == nullptr)
+  if (cap == nullptr)
     stats = render_source(layer, spec, context);
   else
-    {
-      stats = render_source(
-        layer, spec, context,
-        {a60::carto::star_x_antarctic_cutoff_latitude, 90});
-      stats += render_antarctic_source(
-        layer, spec, context, *polar_placement);
-    }
+    stats = render_star_x_source(layer, spec, context, *cap);
   layer.finish_element();
   parent.add_element(layer);
   std::cout << spec.id << ": " << stats.source_features << " features, "
@@ -994,7 +1082,8 @@ print_total(const render_stats total)
 
 void
 add_octahedral_ocean_background(svg::group_element& layer,
-                                 const projection_context& context)
+                                 const projection_context& context,
+                                 const antarctic_cap* cap = nullptr)
 {
   require(context.spec.kind == generation::projection_kind::cahill_keyes
             || context.spec.kind == generation::projection_kind::star_x,
@@ -1013,8 +1102,24 @@ add_octahedral_ocean_background(svg::group_element& layer,
 
         std::string path_data;
         std::size_t point_count = 0;
-        append_geometry(path_data, point_count, *face, context,
-                        geometry_role::area);
+        if (!north && cap != nullptr)
+          {
+            geometry_ptr cap_polygon
+              = make_antarctic_cap_polygon(*cap, band);
+            geometry_ptr outside(face->Difference(cap_polygon.get()));
+            geometry_ptr inside(face->Intersection(cap_polygon.get()));
+            require(outside != nullptr && inside != nullptr,
+                    "GDAL failed to split a Star-X ocean background cap");
+            if (!outside->IsEmpty())
+              append_geometry(path_data, point_count, *outside, context,
+                              geometry_role::area);
+            if (!inside->IsEmpty())
+              append_antarctic_cap_geometry(
+                path_data, point_count, *inside, *cap);
+          }
+        else
+          append_geometry(path_data, point_count, *face, context,
+                          geometry_role::area);
         require(!path_data.empty() && point_count >= 3,
                 "octahedral ocean background produced no face path");
         const std::string id
@@ -1028,7 +1133,8 @@ add_octahedral_ocean_background(svg::group_element& layer,
 
 render_stats
 add_ocean_layer(svg::svg_element& document,
-                const projection_context& context)
+                const projection_context& context,
+                const antarctic_cap* cap = nullptr)
 {
   svg::group_element layer;
   layer.start_element(std::string(ocean_spec.id));
@@ -1050,9 +1156,12 @@ add_ocean_layer(svg::svg_element& document,
     }
   else if (context.spec.kind == generation::projection_kind::cahill_keyes
            || context.spec.kind == generation::projection_kind::star_x)
-    add_octahedral_ocean_background(layer, context);
+    add_octahedral_ocean_background(layer, context, cap);
 
-  const render_stats stats = render_source(layer, ocean_spec, context);
+  const render_stats stats
+    = cap == nullptr
+        ? render_source(layer, ocean_spec, context)
+        : render_star_x_source(layer, ocean_spec, context, *cap);
   layer.finish_element();
   document.add_element(layer);
   std::cout << ocean_spec.id << ": " << stats.source_features
@@ -1064,18 +1173,15 @@ add_ocean_layer(svg::svg_element& document,
 render_stats
 add_star_x_land_layer(svg::svg_element& document,
                       const projection_context& context,
-                      const antarctic_placement placement)
+                      const antarctic_cap& cap)
 {
   svg::group_element layer;
   layer.start_element(std::string(land_spec.id));
   layer.add_title(
     "Land with a unified projection-scale Antarctic polar representation");
 
-  render_stats stats = render_source(
-    layer, land_spec, context,
-    {a60::carto::star_x_antarctic_cutoff_latitude, 90});
-  stats += render_antarctic_source(
-    layer, land_spec, context, placement);
+  render_stats stats = render_star_x_source(
+    layer, land_spec, context, cap);
 
   svg::vrange star;
   for (const auto point
@@ -1107,15 +1213,17 @@ generate_earth(const projection_spec& spec)
     context.map_frame.frame_area);
 
   render_stats total;
-  total += add_ocean_layer(document, context);
   if (spec.kind == generation::projection_kind::star_x)
     {
-      const antarctic_placement placement
-        = make_antarctic_placement(context, land_spec);
-      total += add_star_x_land_layer(document, context, placement);
+      const antarctic_cap cap = make_antarctic_cap(context, land_spec);
+      total += add_ocean_layer(document, context, &cap);
+      total += add_star_x_land_layer(document, context, cap);
     }
   else
-    total += add_layer(document, land_spec, context);
+    {
+      total += add_ocean_layer(document, context);
+      total += add_layer(document, land_spec, context);
+    }
   print_total(total);
 }
 
@@ -1131,39 +1239,34 @@ generate_water(const projection_spec& spec)
     context.map_frame.frame_area);
 
   render_stats total;
-  antarctic_placement polar_placement;
-  const antarctic_placement* polar_layers = nullptr;
+  std::optional<antarctic_cap> polar_cap;
   if (spec.kind == generation::projection_kind::star_x)
-    {
-      polar_placement = make_antarctic_placement(context, land_spec);
-      polar_layers = &polar_placement;
-    }
+    polar_cap.emplace(make_antarctic_cap(context, land_spec));
+  const antarctic_cap* cap
+    = polar_cap.has_value() ? &*polar_cap : nullptr;
   svg::group_element bathymetry;
   bathymetry.start_element("bathymetry");
   bathymetry.add_title("Bathymetry: nested Natural Earth depth polygons");
   for (const layer_spec& spec : bathymetry_specs)
-    total += add_nested_layer(bathymetry, spec, context);
+    total += add_nested_layer(bathymetry, spec, context, cap);
   bathymetry.finish_element();
   document.add_element(bathymetry);
 
-  total += add_layer(
-    document, minor_islands_spec, context, polar_layers);
+  total += add_layer(document, minor_islands_spec, context, cap);
 
   svg::group_element ice;
   ice.start_element("ice");
   ice.add_title("Ice: glaciated areas and Antarctic ice shelves");
-  total += add_nested_layer(
-    ice, glaciated_areas_spec, context, polar_layers);
-  total += add_nested_layer(
-    ice, antarctic_ice_shelves_spec, context, polar_layers);
+  total += add_nested_layer(ice, glaciated_areas_spec, context, cap);
+  total += add_nested_layer(ice, antarctic_ice_shelves_spec, context, cap);
   ice.finish_element();
   document.add_element(ice);
 
-  total += add_layer(document, lakes_spec, context);
-  total += add_layer(document, playas_spec, context);
-  total += add_layer(document, rivers_spec, context);
-  total += add_layer(document, reefs_spec, context);
-  total += add_layer(document, coastline_spec, context, polar_layers);
+  total += add_layer(document, lakes_spec, context, cap);
+  total += add_layer(document, playas_spec, context, cap);
+  total += add_layer(document, rivers_spec, context, cap);
+  total += add_layer(document, reefs_spec, context, cap);
+  total += add_layer(document, coastline_spec, context, cap);
   print_total(total);
 }
 
@@ -1254,7 +1357,7 @@ verify_earth(const std::string& generated,
       require(generated.find("id=\"north-pole-star\"")
                 != std::string::npos,
               "generated Star-X earth SVG is missing its polar star");
-      require(generated.find("id=\"land-antarctic-feature-")
+      require(generated.find("id=\"land-antarctic-fragment-")
                 != std::string::npos,
               "generated Star-X earth SVG is missing unified Antarctica");
     }
@@ -1282,11 +1385,12 @@ verify_water(const std::string& generated,
           "generated water SVG contains too few Natural Earth paths");
   if (context.spec.kind == generation::projection_kind::star_x)
     {
-      require(generated.find("id=\"coastline-antarctic-feature-")
+      require(generated.find("id=\"coastline-antarctic-fragment-")
                 != std::string::npos,
               "generated Star-X water SVG is missing unified Antarctic "
               "coastline");
-      require(generated.find("id=\"antarctic-ice-shelves-antarctic-feature-")
+      require(generated.find(
+                "id=\"antarctic-ice-shelves-antarctic-fragment-")
                 != std::string::npos,
               "generated Star-X water SVG is missing unified ice shelves");
     }

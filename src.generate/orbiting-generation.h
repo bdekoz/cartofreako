@@ -177,13 +177,10 @@ add_subdued_land(generation::projection_document& document,
   layer.add_title(std::string(land.title));
   if (context.spec.kind == generation::projection_kind::star_x)
     {
-      const natural_earth::antarctic_placement placement
-        = natural_earth::make_antarctic_placement(context, land);
-      static_cast<void>(natural_earth::render_source(
-        layer, land, context,
-        {a60::carto::star_x_antarctic_cutoff_latitude, 90}));
-      static_cast<void>(natural_earth::render_antarctic_source(
-        layer, land, context, placement));
+      const natural_earth::antarctic_cap cap
+        = natural_earth::make_antarctic_cap(context, land);
+      static_cast<void>(natural_earth::render_star_x_source(
+        layer, land, context, cap));
     }
   else
     static_cast<void>(natural_earth::render_source(layer, land, context));

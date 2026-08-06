@@ -650,8 +650,8 @@ downloads Natural Earth 5.1.1's complete 1:10m physical-vector archive. It:
 4. extracts only the named physical datasets; and
 5. creates the completion stamp last, so interrupted extraction is retried.
 
-The Earth, water, Bathymetry Roulette, Cloud-atmosphere, resources, and
-Anthropocene targets depend on that
+The Earth, water, Star-X graticule, Bathymetry Roulette, Cloud-atmosphere,
+resources, and Anthropocene targets depend on that
 stamp and pass
 `NATURAL_EARTH_DIR` to their executables. The archive digest and licensing
 are recorded in the
@@ -859,6 +859,16 @@ distant octants. Splitting a meridian at the equator reflects the fact that
 its northern and southern halves belong to different octahedral faces even
 though they touch geographically.
 
+Star-X adds the Stage 7 Antarctic cap after those ordinary splits. The
+generator computes `ant_r` from Natural Earth mainland land, bisects each
+graticule edge at the four source circles, leaves the outside subpaths on the
+X, and maps the inside subpaths around one bottom-center South Pole without
+changing their source-pole radius. The visible
+`antarctic-cap-boundaries` layer draws the four source cut arcs and the
+unified destination circle, making the operation directly inspectable in
+`graticules-star-x-34-44.png`. Consequently the Star-X graticule target, unlike
+the other graticule targets, depends on the prepared Natural Earth dataset.
+
 Each line is a named SVG subgroup with paths, a title, and one visible degree
 label. Multiples of 30 degrees receive stronger styling. The label is placed
 at the midpoint sample of the longest projected subpath, which keeps it on a
@@ -894,7 +904,8 @@ For each shapefile, the program:
 4. skips clipping bands that cannot overlap the feature envelope;
 5. intersects the feature with every relevant seam-safe longitude band;
 6. for Star-X, further clips filled areas into northern and southern pieces
-   so closing a projected ring cannot bridge an exterior equatorial notch;
+   so closing a projected ring cannot bridge an exterior equatorial notch,
+   then splits every physical layer against the data-derived Antarctic cap;
 7. for AuthaGraph, Dymaxion, Myriahedral, and Voronoi, further clips areas to a
    5-degree geographic grid;
 8. densifies each surviving piece with `segmentize()`;
@@ -959,20 +970,22 @@ stack without duplicating a group.
 
 Star-X adds a layer-aware polar composition while preserving those public
 group counts. Its default point transform first closes the central group gap
-and enlarges the complete X 120 percent about the 34-by-44 page center. For
-land, minor islands, glaciated areas, Antarctic ice shelves, and coastline,
-the generator then splits the source at 60 degrees south. The northern part
-uses the ordinary X; the southern part is a single South-polar shape centered
-at the bottom and aligned with the lowest octant. Ocean and bathymetry stay in
-the unfolded net. The Earth `land` group also contains the central
-`north-pole-star` path, so Earth still has exactly two top-level groups and
-water still has 22.
+and enlarges the complete X 120 percent about the 34-by-44 page center. The
+generator then measures the maximum ordinary projected mainland distance
+from the four South-Pole tips (`ant_r`), intersects each practical quadrant
+with its `ant_r` circle, and moves the four inside fragments around one
+bottom-center pole. This applies to ocean, land, all bathymetry levels, minor
+islands, ice, lakes, playas, rivers, reefs, and coastline. The source caps are
+removed, so no physical content is duplicated. The Earth `land` group also
+contains the central `north-pole-star` path, so Earth still has exactly two
+top-level groups and water still has 22.
 
-The Antarctic radial scale is derived from the Cahill-Keyes scaffold rather
-than from the concept artwork. Its coastline distance from the South Pole is
-linear in co-latitude and receives the same 1.2 enlargement as the main X.
-This keeps the continent at the map's scale while resolving the perceptual
-problem of recognizing its fragments across separate octants.
+The Antarctic mapping reuses each point's exact distance from its ordinary
+Star-X source tip; it introduces no separate radial scale. Geographic bearing
+is normalized around the shared pole because the Cahill-Keyes quadrant edges
+are bent and cannot all be joined with one rigid rotation per fragment. This
+keeps the continent at the map's radial scale while resolving the perceptual
+and topological problem of recognizing its four separated pieces.
 
 Within the water overlay, the twelve bathymetry polygons run from 0 m through
 -10,000 m. Progressively deeper polygons are painted over shallower ones with

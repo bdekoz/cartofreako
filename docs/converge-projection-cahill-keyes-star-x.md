@@ -72,7 +72,9 @@ Clarification of the Star-X projection. Instead of placing a pre-computed antart
 
 Compute the maximum land distance from the pole to the antartica continent, and call that ant_r. For each of the star-x quadrants, take the tip furthest from the center point of the projection in the quadrant and draw a circle of ant_r.
   - the part of the projection inside the quadrant and the circle is mapped to the center part of the page as before
-  - do for each quadrant, and place each quadrant's fragment such that the antartica continent is a unified mass, rotated such that each piece fits together, seamless. Unify. 
+  - do for each quadrant, and place each quadrant's fragment such that the antartica continent is a unified mass, rotated such that each piece fits together, seamless. Unify.
   - the unified antarctica continent is correctly scaled with the other continents.
-  
+
   Re-assess the current implementation and conform to this new definition.
+
+this version should be visible in graticules-star-x-34-44.png

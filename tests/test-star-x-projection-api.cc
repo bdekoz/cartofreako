@@ -423,9 +423,8 @@ main()
     .enlargement_factor = std::numeric_limits<double>::quiet_NaN(),
   });
 
-  // Composition helpers keep the central mark and South-polar inset at the
-  // same physical scale as the enlarged Star-X map without changing the
-  // projection of ocean or bathymetry.
+  // Composition helpers derive both the central mark and each Antarctic
+  // source radius from the enlarged Star-X frame.
   const auto polar_star = star_x_detail::make_north_pole_star(reference_frame);
   const double star_outer_radius
     = reference_frame.height() * star_x_polar_star_outer_radius_ratio;
@@ -448,21 +447,84 @@ main()
          < 1e-9);
   assert(polar_star.front().y < reference_frame.height() / 2);
 
-  const auto south_pole = star_x_detail::project_antarctic_inset_local(
-    -90, 0, reference_frame.height());
-  assert(std::abs(south_pole.x) < 1e-12);
-  assert(std::abs(south_pole.y) < 1e-12);
-  const double cap_radius
-    = 30 * reference_frame.height()
-      * star_x_default_enlargement_factor / 400;
-  const auto prime_meridian = star_x_detail::project_antarctic_inset_local(
-    star_x_antarctic_cutoff_latitude, 0, reference_frame.height());
-  const auto east_meridian = star_x_detail::project_antarctic_inset_local(
-    star_x_antarctic_cutoff_latitude, 90, reference_frame.height());
-  assert(std::abs(prime_meridian.x) < 1e-12);
-  assert(std::abs(prime_meridian.y + cap_radius) < 1e-9);
-  assert(std::abs(east_meridian.x - cap_radius) < 1e-9);
-  assert(std::abs(east_meridian.y) < 1e-9);
+  // Reassembly preserves each source radius while normalizing geographic
+  // bearing, so the bent neighboring Cahill-Keyes edges coincide throughout
+  // the complete Antarctic cap.
+  constexpr std::array quadrants {
+    star_x_detail::quadrant::lower_left,
+    star_x_detail::quadrant::lower_right,
+    star_x_detail::quadrant::upper_right,
+    star_x_detail::quadrant::upper_left,
+  };
+  for (const auto quadrant : quadrants)
+    {
+      const double longitude
+        = star_x_detail::quadrant_center_longitude(quadrant);
+      assert(star_x_detail::quadrant_for_longitude(longitude) == quadrant);
+      const auto source_tip = star_x_detail::antarctic_source_tip(
+        quadrant, reference_frame);
+      const double tip_distance = std::hypot(
+        source_tip.x - reference_frame.width() / 2,
+        source_tip.y - reference_frame.height() / 2);
+      for (int latitude = -90; latitude <= 90; latitude += 2)
+        for (int offset = -44; offset <= 44; offset += 2)
+          {
+            double sample_longitude = longitude + offset;
+            if (sample_longitude > 180)
+              sample_longitude -= 360;
+            else if (sample_longitude < -180)
+              sample_longitude += 360;
+            const auto sample = star_x_detail::project_to_frame(
+              latitude, sample_longitude, reference_frame);
+            const double sample_distance = std::hypot(
+              sample.x - reference_frame.width() / 2,
+              sample.y - reference_frame.height() / 2);
+            assert(sample_distance <= tip_distance + 1e-9);
+          }
+      const auto point = star_x_detail::project_to_frame(
+        -75, longitude, reference_frame);
+      const double radius = std::hypot(
+        point.x - source_tip.x, point.y - source_tip.y);
+      const auto local
+        = star_x_detail::project_antarctic_fragment_local(
+            -75, longitude, reference_frame);
+      assert(std::abs(std::hypot(local.x, local.y) - radius) < 1e-9);
+    }
+
+  struct quadrant_seam
+  {
+    double longitude;
+    star_x_detail::quadrant west;
+    star_x_detail::quadrant east;
+  };
+  constexpr std::array quadrant_seams {
+    quadrant_seam {-111, star_x_detail::quadrant::lower_left,
+                   star_x_detail::quadrant::lower_right},
+    quadrant_seam {-21, star_x_detail::quadrant::lower_right,
+                   star_x_detail::quadrant::upper_right},
+    quadrant_seam {69, star_x_detail::quadrant::upper_right,
+                   star_x_detail::quadrant::upper_left},
+    quadrant_seam {159, star_x_detail::quadrant::upper_left,
+                   star_x_detail::quadrant::lower_left},
+  };
+  constexpr double seam_epsilon = 1e-8;
+  for (const quadrant_seam seam : quadrant_seams)
+    for (const double latitude : {-89.0, -80.0, -70.0})
+      {
+        assert(star_x_detail::quadrant_for_longitude(
+                 seam.longitude - seam_epsilon) == seam.west);
+        assert(star_x_detail::quadrant_for_longitude(
+                 seam.longitude + seam_epsilon) == seam.east);
+        const auto west
+          = star_x_detail::project_antarctic_fragment_local(
+              latitude, seam.longitude - seam_epsilon, reference_frame);
+        const auto east
+          = star_x_detail::project_antarctic_fragment_local(
+              latitude, seam.longitude + seam_epsilon, reference_frame);
+        const double separation
+          = std::hypot(west.x - east.x, west.y - east.y);
+        assert(separation < 1e-5);
+      }
 
   assert(api.image_filename(projection_base::filled) == "star-x.svg");
   a60::io::get_run_time_resources().data = "/opt/alpha60-data";

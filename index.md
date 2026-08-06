@@ -322,11 +322,19 @@ the complete X 120 percent about the page center, adds a central North-pole
 star, and composes Natural Earth Antarctica once at the lower end at the
 projection's geographic scale.
 
+The Stage 7 compositor measures that scale as `ant_r`, the maximum ordinary
+Star-X mainland distance from a South-Pole tip, cuts the matching circle from
+all four page quadrants, and reunites every physical and graticule fragment
+around one bottom-center pole. The source cuts and unified circle are visible
+in [`graticules-star-x-34-44.png`](assets.generated/png/graticules-star-x-34-44.png).
+
 Construction examples and `star_x_layout` configuration are in the
 [Star-X public API notes](docs/star-x-implementation-notes.md#public-c-api).
 The signed gap and page-centered enlargement default to `-9/88` of frame
 height and `1.2`. The central star and unified Antarctica remain layer-aware
-SVG composition helpers, not hidden changes to the point transform.
+SVG composition helpers, not hidden changes to the point transform; cap
+points preserve their ordinary source-tip radius while normalizing bearing so
+all four bent Cahill-Keyes edges meet.
 
 ## Dymaxion
 
@@ -422,8 +430,8 @@ the `voronoi_source` preset are in the
 | [`docs/ptree-production-download.md`](docs/ptree-production-download.md) | Quick-start P-Tree registration, secure credentials, connection test, reproducible production refresh, expected files, and troubleshooting |
 | [`docs/orbital-technosphere-implementation-notes.md`](docs/orbital-technosphere-implementation-notes.md) | Stage 4.2 feasibility, naming, NASA/CelesTrak source roles, OMM/SGP4 formulas, products, verification, and accuracy boundary |
 | [`docs/resources-implementation-notes.md`](docs/resources-implementation-notes.md) | Stage 6 feasibility, source and rights audit, 1960 production-leader profile, modern context, SVG contract, workflow, and limitations |
-| [`src.projections/cart0freak0-star-x.h`](src.projections/cart0freak0-star-x.h) | Star-X group assembly, configurable centered scale, polar-composition geometry, frame validation, public API, and factory |
-| [`tests/test-star-x-projection-api.cc`](tests/test-star-x-projection-api.cc) | Star-X anchors, assembly and scale, global domain, polar helpers, variable-frame, validation, and API tests |
+| [`src.projections/cart0freak0-star-x.h`](src.projections/cart0freak0-star-x.h) | Star-X group assembly, configurable centered scale, Stage 7 cap-radius geometry, frame validation, public API, and factory |
+| [`tests/test-star-x-projection-api.cc`](tests/test-star-x-projection-api.cc) | Star-X anchors, assembly and scale, global domain, cap invariants, variable-frame, validation, and API tests |
 | [`docs/star-x-context.md`](docs/star-x-context.md) | Star-X octahedral context, face-slot mapping, group rotation, page enlargement, polar composition, and cuts |
 | [`docs/star-x-implementation-notes.md`](docs/star-x-implementation-notes.md) | Star-X gap, scale, and polar formulas, API, safeguards, verification, and provenance |
 | [`docs/star-x-bibliography.md`](docs/star-x-bibliography.md) | Star-X arrangement, Cahill-Keyes geometry, historical, asset, and test sources |

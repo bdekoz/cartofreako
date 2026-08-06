@@ -7,6 +7,7 @@
 #include <cstddef>
 #include <fstream>
 #include <iterator>
+#include <optional>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -15,11 +16,13 @@
 #include <a60-svg.h>
 
 #include "generation-typography.h"
+#include "natural-earth-generation.h"
 #include "projection-generation-common.h"
 
 namespace {
 
 namespace generation = cart0freak0::generation;
+namespace natural_earth = cart0freak0::natural_earth_generation;
 using generation::geographic_point;
 using generation::projection_context;
 using generation::projection_kind;
@@ -73,6 +76,91 @@ sample_meridian(const double longitude, const double south,
   return result;
 }
 
+geographic_point
+interpolate_cap_edge(const geographic_point left,
+                     geographic_point right, const double fraction)
+{
+  if (right.longitude - left.longitude > 180)
+    right.longitude -= 360;
+  else if (right.longitude - left.longitude < -180)
+    right.longitude += 360;
+  return {
+    left.latitude + fraction * (right.latitude - left.latitude),
+    canonical_longitude(
+      left.longitude + fraction * (right.longitude - left.longitude)),
+  };
+}
+
+struct cap_path_piece
+{
+  bool inside = false;
+  std::vector<geographic_point> points;
+};
+
+std::vector<cap_path_piece>
+split_at_antarctic_cap(const natural_earth::antarctic_cap& cap,
+                       const std::vector<geographic_point>& source)
+{
+  std::vector<cap_path_piece> result;
+  if (source.empty())
+    return result;
+  result.push_back({cap.contains(source.front()), {source.front()}});
+  for (std::size_t index = 1; index < source.size(); ++index)
+    {
+      const geographic_point right = source[index];
+      if (cap.contains(right) == result.back().inside)
+        {
+          result.back().points.push_back(right);
+          continue;
+        }
+
+      geographic_point same_side = source[index - 1];
+      geographic_point other_side = right;
+      for (int iteration = 0; iteration != 56; ++iteration)
+        {
+          const geographic_point middle
+            = interpolate_cap_edge(same_side, other_side, 0.5);
+          if (cap.contains(middle) == result.back().inside)
+            same_side = middle;
+          else
+            other_side = middle;
+        }
+      result.back().points.push_back(same_side);
+      result.push_back({!result.back().inside, {other_side, right}});
+    }
+  return result;
+}
+
+std::vector<svg::vrange>
+project_cap_path(const projection_context& context,
+                 const natural_earth::antarctic_cap* cap,
+                 const std::vector<geographic_point>& source)
+{
+  if (cap == nullptr)
+    return generation::project_path(context, source, false);
+
+  std::vector<svg::vrange> result;
+  for (const cap_path_piece& piece : split_at_antarctic_cap(*cap, source))
+    {
+      if (!piece.inside)
+        {
+          std::vector<svg::vrange> outside
+            = generation::project_path(context, piece.points, false);
+          for (svg::vrange& points : outside)
+            if (points.size() >= 2)
+              result.push_back(std::move(points));
+          continue;
+        }
+      svg::vrange projected;
+      projected.reserve(piece.points.size());
+      for (const geographic_point point : piece.points)
+        generation::append_unique(projected, cap->project(point));
+      if (projected.size() >= 2)
+        result.push_back(std::move(projected));
+    }
+  return result;
+}
+
 void
 append_segments(std::vector<svg::vrange>& destination,
                 std::vector<svg::vrange> source)
@@ -84,18 +172,19 @@ append_segments(std::vector<svg::vrange>& destination,
 
 std::vector<svg::vrange>
 make_parallel_segments(const projection_context& context,
-                       const double latitude)
+                       const double latitude,
+                       const natural_earth::antarctic_cap* cap)
 {
   std::vector<svg::vrange> result;
   if (context.spec.kind == projection_kind::cahill_keyes
       || context.spec.kind == projection_kind::star_x)
     {
       for (const longitude_sector sector : cahill_keyes_sectors)
-        append_segments(result, generation::project_path(
+        append_segments(result, project_cap_path(
           context,
+          cap,
           sample_parallel(latitude, sector.west + seam_epsilon,
-                          sector.east - seam_epsilon),
-          false));
+                          sector.east - seam_epsilon)));
     }
   else
     append_segments(result, generation::project_path(
@@ -106,14 +195,15 @@ make_parallel_segments(const projection_context& context,
 
 std::vector<svg::vrange>
 make_meridian_segments(const projection_context& context,
-                       const double longitude)
+                       const double longitude,
+                       const natural_earth::antarctic_cap* cap)
 {
   std::vector<svg::vrange> result;
   if (context.spec.kind == projection_kind::cahill_keyes
       || context.spec.kind == projection_kind::star_x)
     {
-      append_segments(result, generation::project_path(
-        context, sample_meridian(longitude, -90, 0), false));
+      append_segments(result, project_cap_path(
+        context, cap, sample_meridian(longitude, -90, 0)));
       append_segments(result, generation::project_path(
         context, sample_meridian(longitude, 0, 90), false));
     }
@@ -121,6 +211,50 @@ make_meridian_segments(const projection_context& context,
     append_segments(result, generation::project_path(
       context, sample_meridian(longitude, -90, 90), false));
   return result;
+}
+
+void
+add_antarctic_cap_boundaries(
+  generation::projection_document& document,
+  const projection_context& context,
+  const natural_earth::antarctic_cap& cap)
+{
+  const svg::style style {
+    svg::color::none, 0, svg::color::gray50, 0.55, 0.022,
+  };
+  svg::group_element layer;
+  layer.start_element("antarctic-cap-boundaries");
+  layer.add_title(
+    "Stage 7 Antarctic source cuts and unified cap boundary; ant_r="
+    + std::to_string(cap.radius));
+
+  svg::vrange unified;
+  for (double longitude = -180; longitude < 180; longitude += 0.25)
+    unified.push_back(cap.project(
+      {cap.boundary_latitude(longitude), longitude}));
+  unified.push_back(unified.front());
+  layer.add_element(svg::make_path(
+    svg::make_path_data_from_points(unified), style,
+    "antarctic-unified-cap-boundary"));
+
+  for (std::size_t index = 0; index != natural_earth::longitude_bands.size();
+       ++index)
+    {
+      const natural_earth::longitude_band band
+        = natural_earth::longitude_bands[index];
+      svg::vrange source;
+      for (double longitude = band.west; longitude < band.east;
+           longitude += 0.25)
+        source.push_back(generation::project_point(
+          context, {cap.boundary_latitude(longitude), longitude}));
+      source.push_back(generation::project_point(
+        context, {cap.boundary_latitude(band.east), band.east}));
+      layer.add_element(svg::make_path(
+        svg::make_path_data_from_points(source), style,
+        "antarctic-source-cap-boundary-" + std::to_string(index + 1)));
+    }
+  layer.finish_element();
+  document.add_element(layer);
 }
 
 std::string
@@ -245,6 +379,15 @@ generate_graticules(const projection_spec& spec)
   const std::string basename = generation::output_basename(
     "graticules", spec);
   const projection_context context(spec, basename);
+  std::optional<natural_earth::antarctic_cap> polar_cap;
+  if (spec.kind == projection_kind::star_x)
+    {
+      natural_earth::initialize_gdal();
+      polar_cap.emplace(natural_earth::make_antarctic_cap(
+        context, natural_earth::land_spec));
+    }
+  const natural_earth::antarctic_cap* cap
+    = polar_cap.has_value() ? &*polar_cap : nullptr;
   const svg::style latitude_style {
     svg::color::none, 0, svg::color::steelblue, 0.55, 0.025,
   };
@@ -275,7 +418,7 @@ generate_graticules(const projection_spec& spec)
         "latitude", latitude, "south", "north");
       add_labeled_line(
         latitude_layer, id, coordinate_label(latitude, "S", "N"),
-        make_parallel_segments(context, latitude),
+        make_parallel_segments(context, latitude, cap),
         latitude % 30 == 0 ? latitude_major_style : latitude_style,
         latitude_typography);
     }
@@ -291,12 +434,15 @@ generate_graticules(const projection_spec& spec)
       add_labeled_line(
         longitude_layer, id,
         coordinate_label(longitude, "W", "E", true),
-        make_meridian_segments(context, longitude),
+        make_meridian_segments(context, longitude, cap),
         longitude % 30 == 0 ? longitude_major_style : longitude_style,
         longitude_typography);
     }
   longitude_layer.finish_element();
   document.add_element(longitude_layer);
+
+  if (cap != nullptr)
+    add_antarctic_cap_boundaries(document, context, *cap);
 }
 
 } // namespace
@@ -336,6 +482,13 @@ main(const int argc, char** argv)
                       "every graticule must have one visible label");
   generation::require(token_count(generated, "\u00b0") >= 53,
                       "every graticule line must have a degree label");
+  if (spec.kind == projection_kind::star_x)
+    generation::require(
+      generated.find("id=\"antarctic-cap-boundaries\"")
+            != std::string::npos
+        && generated.find("id=\"antarctic-unified-cap-boundary\"")
+             != std::string::npos,
+      "Star-X graticules are missing their Stage 7 Antarctic cap guides");
   generation::verify_configured_label_font(generated, "graticule SVG");
   generation::require(generated.find(" nan") == std::string::npos
                       && generated.find(" -nan") == std::string::npos
