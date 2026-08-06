@@ -14,10 +14,23 @@ DOXYGEN ?= doxygen
 INKSCAPE ?= inkscape
 GZIP ?= gzip
 PNG_LONG_SIDE ?= 3840
+ASSET_JOBS ?= 2
 LABEL_FONT ?= atkinson_hyperlegible
 PNG_EXPORT_BACKGROUND := --export-background=white \
 	--export-background-opacity=255 \
 	--export-png-color-mode=RGB_8
+
+.DELETE_ON_ERROR:
+
+INKSCAPE_SUPPORTS_APP_ID_TAG := $(shell \
+	"$(INKSCAPE)" --help-all 2>/dev/null | \
+	grep -q -- '--app-id-tag' && printf '%s' yes)
+
+ifeq ($(INKSCAPE_SUPPORTS_APP_ID_TAG),yes)
+INKSCAPE_INSTANCE_ARGS = --app-id-tag=cartofreako_$$$$
+else
+INKSCAPE_INSTANCE_ARGS =
+endif
 EMXX ?= ../emsdk/upstream/emscripten/em++
 EMRUN ?= $(patsubst %em++,%emrun,$(EMXX))
 NODE ?= node
@@ -623,10 +636,9 @@ RESOURCES_GENERATOR_HEADERS := \
 	$(GENERATOR_HEADERS)
 
 .DEFAULT_GOAL := configured
-.DELETE_ON_ERROR:
 
-PUBLIC_TARGETS := all assets-single check check-prerequisite \
-	check-resources-svg-archives clean configured doxygen \
+PUBLIC_TARGETS := all assets-single assets-resilient check check-prerequisite \
+	check-resources-svg-archives clean clean-failed-generated configured doxygen \
 	generation-plan list-targets \
 	fetch-natural-earth-10m fetch-astro-data fetch-orbiting-data \
 	fetch-cloud-atmosphere-data prepare-cloud-atmosphere-data \
@@ -1762,24 +1774,51 @@ generate-water-myriahedral: generate-water-myriahedral-perspectives \
 generate-myriahedral: generate-water-myriahedral-perspectives \
 	generate-myriahedral-slices
 
+define EXPORT_PDF
+	@tmp="$@.tmp.$$$$.pdf"; \
+	rm -f "$$tmp"; \
+	if "$(INKSCAPE)" $(INKSCAPE_INSTANCE_ARGS) \
+		--export-area-page \
+		--export-filename="$$tmp" "$<" && \
+		test -s "$$tmp"; then \
+		mv -f "$$tmp" "$@"; \
+	else \
+		status=$$?; \
+		rm -f "$$tmp"; \
+		exit "$$status"; \
+	fi
+endef
+
+define EXPORT_PNG
+	@tmp="$@.tmp.$$$$.png"; \
+	rm -f "$$tmp"; \
+	if "$(INKSCAPE)" $(INKSCAPE_INSTANCE_ARGS) \
+		--export-area-page $(PNG_EXPORT_BACKGROUND) \
+		$(1)=$(PNG_LONG_SIDE) \
+		--export-filename="$$tmp" "$<" && \
+		test -s "$$tmp"; then \
+		mv -f "$$tmp" "$@"; \
+	else \
+		status=$$?; \
+		rm -f "$$tmp"; \
+		exit "$$status"; \
+	fi
+endef
+
 $(GENERATED_PDFS) $(NETWORK_INFRASTRUCTURE_TOPOLOGY_PDFS) \
 		$(CLOUD_ATMOSPHERE_PDFS): \
 		$(GENERATED_PDF_DIR)/%.pdf: \
 		$(GENERATED_SVG_DIR)/%.svg | $(GENERATED_PDF_DIR)
-	"$(INKSCAPE)" --export-area-page --export-filename="$@" "$<"
+	$(EXPORT_PDF)
 
 $(LANDSCAPE_PNGS) $(NETWORK_INFRASTRUCTURE_TOPOLOGY_LANDSCAPE_PNGS): \
 		$(GENERATED_PNG_DIR)/%.png: \
 		$(GENERATED_SVG_DIR)/%.svg Makefile | $(GENERATED_PNG_DIR)
-	"$(INKSCAPE)" --export-area-page $(PNG_EXPORT_BACKGROUND) \
-		--export-width=$(PNG_LONG_SIDE) \
-		--export-filename="$@" "$<"
+	$(call EXPORT_PNG,--export-width)
 
 $(PORTRAIT_PNGS): $(GENERATED_PNG_DIR)/%.png: \
 		$(GENERATED_SVG_DIR)/%.svg Makefile | $(GENERATED_PNG_DIR)
-	"$(INKSCAPE)" --export-area-page $(PNG_EXPORT_BACKGROUND) \
-		--export-height=$(PNG_LONG_SIDE) \
-		--export-filename="$@" "$<"
+	$(call EXPORT_PNG,--export-height)
 
 generate-voroni: generate-voronoi
 
@@ -1801,6 +1840,36 @@ all: $(GENERATED_ARTIFACTS)
 # `make -j32 assets-single` while preserving ordinary variable overrides.
 assets-single:
 	+$(MAKE) --no-print-directory --jobs=1 all
+
+# Finish as much of the graph as possible with moderate parallelism, then
+# retry only missing or failed outputs with a single active job.
+assets-resilient:
+	+status=0; \
+	$(MAKE) --no-print-directory \
+		--keep-going \
+		--jobs=$(ASSET_JOBS) \
+		--output-sync=target \
+		PNG_LONG_SIDE=$(PNG_LONG_SIDE) \
+		all || status=$$?; \
+	case "$$status" in \
+	0|2) ;; \
+	*) exit "$$status" ;; \
+	esac
+	+$(MAKE) --no-print-directory \
+		--jobs=1 \
+		--output-sync=target \
+		PNG_LONG_SIDE=$(PNG_LONG_SIDE) \
+		all
+
+clean-failed-generated:
+	@if test -d "$(GENERATED_DIR)"; then \
+		find "$(GENERATED_DIR)" -type f \
+			\( -name '*.png' -o -name '*.pdf' \) \
+			-size 0 -print -delete; \
+		find "$(GENERATED_DIR)" -type f \
+			\( -name '*.tmp.*.png' -o -name '*.tmp.*.pdf' \) \
+			-print -delete; \
+	fi
 
 clean:
 	$(RM) $(TEST_BINARIES) $(GENERATOR_BINARIES)
