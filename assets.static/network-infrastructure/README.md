@@ -4,8 +4,9 @@ The generator reads all network-infrastructure data from external source
 repositories. No TeleGeography or cloud/CDN source dataset is copied into
 cartofreako.
 
-The checked profiles pin the source commits, primary-file SHA-256 digests,
-snapshot dates, expected schemas, and exact record counts:
+The checked profiles pin source provenance, primary-file and referenced cable
+detail SHA-256 digests, snapshot versions, expected schemas, and exact record
+counts:
 
 - `network-infrastructure-sites-profile.json` enables only located cloud/CDN
   site records;
@@ -33,6 +34,11 @@ snapshots can retain source-specific terms. Both TeleGeography map repositories
 state CC BY-NC-SA 3.0 Unported. Accordingly, topology generation is opt-in,
 its outputs carry visible attribution and CC metadata, and topology targets are
 not dependencies of `make all`.
+
+The submarine-cable profile uses the content snapshot `v3.20260805`: 697
+cable systems, 718 route features, and 1,922 landing points. Its exact content
+digests are authoritative; the cable source directory does not need to be a
+clean Git checkout.
 
 Validate and generate the ordinary product with:
 

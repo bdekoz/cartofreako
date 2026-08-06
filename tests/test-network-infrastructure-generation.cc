@@ -38,6 +38,10 @@ main()
          != std::string::npos);
   assert(topology.include_submarine_cables
          && topology.include_exchange_membership);
+  assert(topology.cables.snapshot == "v3.20260805");
+  assert(topology.cables.expected_systems == 697);
+  assert(topology.cables.expected_route_features == 718);
+  assert(topology.cables.expected_landings == 1922);
 
   auto unlicensed_topology = infrastructure::read_json_document(
     "assets.static/network-infrastructure/"

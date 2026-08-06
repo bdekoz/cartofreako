@@ -55,6 +55,39 @@ check_digest()
     || fail "$label digest is $actual; expected $expected"
 }
 
+check_cable_details_digest()
+{
+  local label=$1
+  local root=$2
+  local routes_relative=$3
+  local details_relative=$4
+  local expected=$5
+  local routes_path=$root/$routes_relative
+  local details_path=$root/$details_relative
+  test -d "$details_path" \
+    || fail "$label detail directory is missing: $details_path"
+  local cable_ids
+  cable_ids=$(jq -er '[.features[].properties.id] | unique[]' "$routes_path") \
+    || fail "$label route index does not contain readable cable ids"
+  test -n "$cable_ids" || fail "$label route index contains no cable ids"
+  local actual
+  actual=$(
+    while IFS= read -r cable_id; do
+      [[ $cable_id =~ ^[a-z0-9-]+$ ]] \
+        || fail "$label route index contains unsafe cable id: $cable_id"
+      local detail=$details_path/$cable_id.json
+      test -f "$detail" || fail "$label detail file is missing: $detail"
+      local digest
+      digest=$(sha256sum "$detail")
+      digest=${digest%% *}
+      printf '%s  %s.json\n' "$digest" "$cable_id"
+    done <<< "$cable_ids" | sha256sum
+  )
+  actual=${actual%% *}
+  test "$actual" = "$expected" \
+    || fail "$label detail digest is $actual; expected $expected"
+}
+
 test $# -ge 2 || usage
 mode=$1
 cloud_root=$2
@@ -76,16 +109,16 @@ case "$mode" in
     test $# -eq 4 || usage
     submarine_root=$3
     exchange_root=$4
-    check_repo submarine-cable "$submarine_root" \
-      0d684b2aedeae0f7473280270f3f71fa0983f0b3
-    check_tracked_clean submarine-cable "$submarine_root" \
-      web/public/api/v3/cable web/public/api/v3/landing-point/landing-point-geo.json
     check_digest submarine-cable "$submarine_root" \
       web/public/api/v3/cable/cable-geo.json \
-      63134a87d7482cb51b5f22d586384e88fbd9ec4315dba9c6899a5e1ff76637f5
+      d41a3dfb3e4107740a895a7f178dfee43c874f432c59120679e0dad94803f874
     check_digest submarine-cable "$submarine_root" \
       web/public/api/v3/landing-point/landing-point-geo.json \
-      2a350a8be354886949d1a146de6d973d8aa433e085c245b867c130bd0398c69e
+      d4f3ecac61f34bbc7910c04f74917ac3fae0fb7b40d09e7cc12711c98c7307a0
+    check_cable_details_digest submarine-cable "$submarine_root" \
+      web/public/api/v3/cable/cable-geo.json \
+      web/public/api/v3/cable \
+      bd97f641df1a6d62b1f901090751bc626834833056c0e1679f98bc4b3542f757
     check_repo internet-exchange "$exchange_root" \
       2b9c36ad7fad083c0b4db998c4dedadc1ba89027
     check_tracked_clean internet-exchange "$exchange_root" \
@@ -97,4 +130,4 @@ case "$mode" in
   *) usage ;;
 esac
 
-printf 'network-infrastructure %s sources: pinned and clean\n' "$mode"
+printf 'network-infrastructure %s sources: pinned and validated\n' "$mode"

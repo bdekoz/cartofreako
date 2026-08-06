@@ -757,7 +757,8 @@ add_legend(generation::projection_document& document,
   attribution._M_anchor = svg::typography::anchor::end;
   attribution._M_align = svg::typography::align::right;
   const std::string notice = topology
-    ? "TeleGeography map data: CC BY-NC-SA 3.0 · noncommercial/share-alike · 2022 snapshots"
+    ? "TeleGeography map data: CC BY-NC-SA 3.0 · cable "
+      + profile.cables.snapshot + " · IX " + profile.exchanges.snapshot
     : "cloud_cdn_cache: ODC-By 1.0; source-specific terms retained · "
       + profile.cloud.snapshot + " snapshot";
   svg::styled_text(layer, notice,
@@ -801,7 +802,8 @@ metadata_element(const generation::projection_spec& spec,
       + xml_escape(profile.cables.license) + "\" data-cable-source-snapshot=\""
       + xml_escape(profile.cables.snapshot) + "\" data-cable-routes-sha256=\""
       + profile.cables.routes_sha256 + "\" data-cable-landings-sha256=\""
-      + profile.cables.landings_sha256 + "\" data-cable-system-count=\""
+      + profile.cables.landings_sha256 + "\" data-cable-details-sha256=\""
+      + profile.cables.details_sha256 + "\" data-cable-system-count=\""
       + std::to_string(dataset.cables.systems.size())
       + "\" data-cable-route-feature-count=\""
       + std::to_string(dataset.cables.routes.size())
@@ -960,6 +962,8 @@ verify(const std::string& generated,
              != std::string::npos
         && generated.find("data-cable-landings-sha256=\""
           + profile.cables.landings_sha256 + "\"") != std::string::npos
+        && generated.find("data-cable-details-sha256=\""
+          + profile.cables.details_sha256 + "\"") != std::string::npos
         && generated.find("data-internet-exchange-buildings-sha256=\""
           + profile.exchanges.buildings_sha256 + "\"") != std::string::npos
         && generated.find("CC BY-NC-SA 3.0") != std::string::npos,

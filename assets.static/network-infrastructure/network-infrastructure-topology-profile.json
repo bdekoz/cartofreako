@@ -36,17 +36,18 @@
     },
     "submarine_cables": {
       "repository": "https://github.com/telegeography/www.submarinecablemap.com",
-      "commit": "0d684b2aedeae0f7473280270f3f71fa0983f0b3",
+      "commit": "4d98b5472152a7c2272c49d8d0125b1ae0419984",
       "license": "CC BY-NC-SA 3.0 Unported",
-      "snapshot": "2022-11-11",
+      "snapshot": "v3.20260805",
       "routes": "web/public/api/v3/cable/cable-geo.json",
-      "routes_sha256": "63134a87d7482cb51b5f22d586384e88fbd9ec4315dba9c6899a5e1ff76637f5",
+      "routes_sha256": "d41a3dfb3e4107740a895a7f178dfee43c874f432c59120679e0dad94803f874",
       "landings": "web/public/api/v3/landing-point/landing-point-geo.json",
-      "landings_sha256": "2a350a8be354886949d1a146de6d973d8aa433e085c245b867c130bd0398c69e",
+      "landings_sha256": "d4f3ecac61f34bbc7910c04f74917ac3fae0fb7b40d09e7cc12711c98c7307a0",
       "detail_directory": "web/public/api/v3/cable",
-      "expected_systems": 526,
-      "expected_route_features": 532,
-      "expected_landings": 1436
+      "details_sha256": "bd97f641df1a6d62b1f901090751bc626834833056c0e1679f98bc4b3542f757",
+      "expected_systems": 697,
+      "expected_route_features": 718,
+      "expected_landings": 1922
     },
     "internet_exchanges": {
       "repository": "https://github.com/telegeography/www.internetexchangemap.com",

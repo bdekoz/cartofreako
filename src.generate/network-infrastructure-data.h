@@ -228,6 +228,7 @@ struct cable_source_pin
   fs::path landings;
   std::string landings_sha256;
   fs::path detail_directory;
+  std::string details_sha256;
   std::size_t expected_systems = 0;
   std::size_t expected_route_features = 0;
   std::size_t expected_landings = 0;
@@ -368,6 +369,8 @@ parse_infrastructure_profile(const rj::Document& document,
     cables, "landings_sha256", cables_context);
   result.cables.detail_directory = required_string(
     cables, "detail_directory", cables_context);
+  result.cables.details_sha256 = required_string(
+    cables, "details_sha256", cables_context);
   result.cables.expected_systems = required_size(
     cables, "expected_systems", cables_context);
   result.cables.expected_route_features = required_size(
@@ -411,6 +414,8 @@ parse_infrastructure_profile(const rj::Document& document,
             result.cables.routes_sha256);
   infrastructure_require(lower_hex(result.cables.landings_sha256, 64),
     cables_context + ".landings_sha256 must be lowercase SHA-256");
+  infrastructure_require(lower_hex(result.cables.details_sha256, 64),
+    cables_context + ".details_sha256 must be lowercase SHA-256");
   check_pin(exchanges_context, result.exchanges.commit,
             result.exchanges.buildings_sha256);
   infrastructure_require(safe_relative_path(result.cloud.manifest)

@@ -30,12 +30,12 @@ separate:
 | Source | Pinned snapshot | Implemented evidence |
 | --- | --- | --- |
 | [`bdekoz/cloud_cdn_cache`](https://github.com/bdekoz/cloud_cdn_cache) | commit `1be1eb04e73320e0337a74a99686cd532f09ad9b`, manifest dated 2026-08-05 | 28 canonical layers, 27,378 records, 1,003 rendered provider-declared Point records |
-| [TeleGeography Submarine Cable Map](https://github.com/telegeography/www.submarinecablemap.com) | commit `0d684b2aedeae0f7473280270f3f71fa0983f0b3`, 2022-11-11 | 526 cable systems, 532 route features, 1,458 route parts, 11,590 vertices, and 1,436 landing points |
+| [TeleGeography Submarine Cable Map](https://github.com/telegeography/www.submarinecablemap.com) | content snapshot `v3.20260805` | 697 cable systems, 718 route features, 1,930 route parts, 28,150 vertices, and 1,922 landing points |
 | [TeleGeography Internet Exchange Map](https://github.com/telegeography/www.internetexchangemap.com) | commit `2b9c36ad7fad083c0b4db998c4dedadc1ba89027`, 2022-09-20 | 1,772 geolocated facilities, 1,103 exchanges, and 2,581 source membership entries |
 
 The cable source's `MultiLineString` features are source-drawn physical route
 geometry. Cable detail records supply the source's planned flag, RFS year, and
-landing memberships. The snapshot contains 65 systems marked planned and 461
+landing memberships. The snapshot contains 91 systems marked planned and 606
 not marked planned. The generator preserves that source status and does not
 reinterpret it using the current date.
 
@@ -104,15 +104,17 @@ make \
 [`network-infrastructure-sites-profile.json`](../assets.static/network-infrastructure/network-infrastructure-sites-profile.json)
 and
 [`network-infrastructure-topology-profile.json`](../assets.static/network-infrastructure/network-infrastructure-topology-profile.json)
-pin source commits, relative paths, primary-file SHA-256 digests, snapshot
-dates, exact counts, layer switches, physical marker dimensions, label limits,
-and artifact-license notices.
+pin source provenance, relative paths, primary-file SHA-256 digests, the
+aggregate digest of all referenced cable detail records, snapshot versions,
+exact counts, layer switches, physical marker dimensions, label limits, and
+artifact-license notices.
 
 Before generation, `scripts/check-network-infrastructure-sources.sh` checks the
-expected commits, verifies primary digests, and rejects modifications to the
-tracked data paths. Unrelated documentation changes and untracked files in an
-external checkout do not invalidate the source snapshot. The C++ parser then
-validates manifest/layer counts and every consumed GeoJSON structure.
+cloud and Internet-exchange revisions and verifies all content digests. The
+submarine `v3.20260805` source is accepted by content and does not need to be a
+Git checkout: the route index, landing index, and deterministic aggregate of
+all referenced cable details must match exactly. The C++ parser then validates
+the configured counts and every consumed GeoJSON structure.
 
 The current committed cloud snapshot is used deliberately. Relative to the
 preceding audited commit, it grows from 27 to 28 canonical layers and from
@@ -296,14 +298,15 @@ contract, exact source mark counts, route counts, logical-membership counts,
 provenance, license metadata, configured font, invalid XML controls, and
 non-finite output.
 
-The TeleGeography snapshots are historical 2022 views and must not be
-presented as current infrastructure state. A route feature does not encode
+The cable data is the bounded `v3.20260805` view, while the Internet-exchange
+data remains a historical 2022 view. Neither should be presented as live
+infrastructure state. A route feature does not encode
 capacity, traffic, latency, ownership of each segment, or present operational
 health. An IX membership does not enumerate participant ASNs or peering
 relationships. Cloud records combine unlike entity types and coverage
 methods; 1,003 plotted records are not 1,003 distinct physical buildings.
 
-Useful future work includes a licensed/current TeleGeography refresh,
+Useful future work includes periodic licensed TeleGeography refreshes,
 participant/ASN evidence from a source with compatible rights, temporal
 comparison profiles, capacity fields with explicit units and provenance, and
 a separate opt-in co-location-candidate analysis. None should be represented

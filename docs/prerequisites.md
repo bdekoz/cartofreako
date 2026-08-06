@@ -524,15 +524,12 @@ make NETWORK_INFRASTRUCTURE_CLOUD_SOURCE=/data/cloud_cdn_cache \
   generate-network-infrastructure-artifacts
 ```
 
-The topology product adds data from the TeleGeography repositories, which
-state CC BY-NC-SA 3.0 Unported. Clone and pin both sources, then use the
-dedicated opt-in rule:
+The topology product adds data from the TeleGeography sources, which state
+CC BY-NC-SA 3.0 Unported. Place the Submarine Cable Map `v3.20260805` export
+at the configured source root. That source is content-pinned and need not be a
+Git checkout. The Internet Exchange Map remains revision-pinned:
 
 ```sh
-git clone https://github.com/telegeography/www.submarinecablemap.com.git \
-  ../www.submarinecablemap.com
-git -C ../www.submarinecablemap.com checkout \
-  0d684b2aedeae0f7473280270f3f71fa0983f0b3
 git clone https://github.com/telegeography/www.internetexchangemap.com.git \
   ../www.internetexchangemap.com
 git -C ../www.internetexchangemap.com checkout \
@@ -543,8 +540,10 @@ make generate-network-infrastructure-topology-artifacts
 ```
 
 Use `SUBMARINE_CABLE_SOURCE` and `INTERNET_EXCHANGE_SOURCE` for other roots.
-The topology checker validates all three commits, primary digests, and clean
-consumed data paths. The topology profile also requires the literal
+The topology checker validates cloud and Internet-exchange revisions, the
+cable route and landing digests, and an aggregate digest of every referenced
+cable detail record. It does not inspect the cable source's Git status. The
+topology profile also requires the literal
 `tele_geography_opt_in: true`; ordinary generation, `make all`, and
 generation-profile `"all"` never select it. Generated topology images carry
 visible TeleGeography attribution and the
