@@ -1,14 +1,20 @@
-# World Game resources implementation notes
+# Transitional Stage 6a resources implementation notes
 
 [Documentation index](../index.md) ·
 [Generation pipeline](generation.md) ·
 [Generation methods](generation-methods.md) ·
+[Stage 6b enrichment plan](resources-enrichment-plan.md) ·
 [Static profile](../assets.static/resources/resources-profile.json) ·
 [Profile README](../assets.static/resources/README.md)
 
+> **Retirement status:** this file describes the checked pre-Stage 6b code
+> only. Stage 6b replaces the profile, parser, renderer, tests, targets, and
+> generated artifacts; it does not retain a legacy product. After that cutover,
+> the historical feasibility result remains only in `generation-methods.md`.
+
 ## Outcome
 
-Stage 6 is implemented as `generate-resources`. The pass is feasible as a
+Stage 6a is implemented as `generate-resources`. The pass is feasible as a
 historical production-leader atlas, but the accessible archival material does
 not support a defensible claim that every resource concept ever used in
 Fuller's World Game has been digitized. The implemented scope is therefore

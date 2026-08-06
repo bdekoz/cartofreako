@@ -7,23 +7,29 @@
 
 ## Status and recommendation
 
-This document is a **proposed Stage 8b design**, not a description of the
-currently implemented data contract. The checked pass still produces one
-partial-2026 observation atlas from the sources and filenames described in the
-[Stage 8 implementation notes](anthropocene-implementation-notes.md).
+Stage 8b is now an **incremental implementation**. The original checked pass
+still produces one partial-2026 observation atlas from the sources and
+filenames described in the
+[Stage 8 implementation notes](anthropocene-implementation-notes.md). The first
+Stage 8b increment additionally implements independently pinned 2025
+complete-year and 2026 partial-year NOAA CPC temperature fields, year-bearing
+targets, explicit global H3 coverage/missing semantics, and a hard global-FIRMS
+release gate. CAMS, PurpleAir, and ocean products below remain planned.
 
-Stage 8b should produce independently pinned **2025 complete-year** and **2026
-partial-year** bundles. The first implementation increment should be:
+The completed and planned sequence is:
 
-1. require global NASA FIRMS fire input instead of silently publishing a
-   regional-only fire layer;
-2. retain station observations but add NOAA CPC gridded daily maximum and
-   minimum temperature as the primary non-sparse temperature field;
-3. add globally complete CAMS analysis fields for modeled PM2.5 and smoke
+1. **Implemented:** require global NASA FIRMS fire input instead of silently
+   publishing a regional-only refresh; source-date and world-region audits
+   prevent promotion without actual global rows. A checked global fire
+   snapshot still requires a maintainer-provided free map key.
+2. **Implemented:** add NOAA CPC gridded daily maximum and minimum temperature
+   as the primary non-sparse temperature field while retaining the original
+   observation atlas as a separate product.
+3. **Planned:** add globally complete CAMS analysis fields for modeled PM2.5 and smoke
    context without relabeling either one as a ground observation;
-4. add NOAA OISST marine-heatwave and Coral Reef Watch reef-heat-stress
+4. **Planned:** add NOAA OISST marine-heatwave and Coral Reef Watch reef-heat-stress
    products as a separate ocean theme; and
-5. keep PurpleAir in a separately generated, permission-gated community-sensor
+5. **Planned:** keep PurpleAir in a separately generated, permission-gated community-sensor
    product.
 
 The pass should not solve sparse observations by treating missing cells as
@@ -123,7 +129,7 @@ observation tier without becoming hard dependencies for worldwide coverage.
 
 | Region | Temperature | PM2.5 | Stage 8b role |
 | --- | --- | --- | --- |
-| Europe | [E-OBS](https://www.ecad.eu/) daily 0.1 degree TX/TN and ECA&D station data | [EEA AQ e-Reporting](https://aqportal.discomap.eea.europa.eu/download-data/) current and verified station downloads | E-OBS v33 currently ends 31 December 2025, so use it for the 2025 product and validation, not as the 2026 near-real-time backbone |
+| Europe | [E-OBS](https://surfobs.climate.copernicus.eu/dataaccess/access_eobs.php) daily 0.1 degree TX/TN and ECA&D station data | [EEA AQ e-Reporting](https://aqportal.discomap.eea.europa.eu/download-data/) current and verified station downloads | E-OBS v33 is complete through 31 December 2025; replaceable provisional monthly 2026 files exist, but its non-commercial research/education terms and mutable running-year products require a separate rights and snapshot gate |
 | China | [CMA daily surface climate V3.0](https://m.data.cma.cn/data/detail/dataCode/SURF_CLI_CHN_MUL_DAY_V3.0.html) | Direct CNEMC data where a documented bulk/reuse agreement is obtained; [TAP](https://acp.copernicus.org/articles/22/13229/2022/) 1 km PM2.5 as a modeled regional validation field | Registration, automation, update latency, and redistribution must be verified before promotion; CPC and CAMS provide the no-gap defaults |
 | Japan | [JMA AMeDAS](https://www.jma.go.jp/jma/en/Activities/amedas/amedas.html), with about 840 temperature stations and a manual [historical CSV service](https://ds.data.jma.go.jp/gmd/risk/obsdl/) | Ministry of Environment/NIES [air-monitoring portal](https://www.env.go.jp/air/portal.html) and [download archive](https://tenbou.nies.go.jp/download/) | High-value station enrichment; require a stable bulk method and confirmed reuse terms before automated inclusion |
 | Australia | GHCNd plus CPC global field | Government monitor providers discovered through OpenAQ, with direct state feeds preferred | FIRMS and CAMS immediately repair fire and PM2.5 context; provider-specific point licenses still need audit |
@@ -286,32 +292,34 @@ Use year-bearing profiles and filenames; do not let two runs overwrite the same
 `anthropocene-ck-44-22.*` path:
 
 ```text
-assets.static/anthropocene/anthropocene-2025-profile.json
-assets.static/anthropocene/anthropocene-2025.geojson
-assets.static/anthropocene/anthropocene-2026-profile.json
-assets.static/anthropocene/anthropocene-2026.geojson
-assets.generated/png/anthropocene-observations-2025-ck-44-22.png
-assets.generated/png/anthropocene-observations-2026-ck-44-22.png
+assets.static/anthropocene/anthropocene-temperature-2025-profile.json
+assets.static/anthropocene/anthropocene-temperature-2025.geojson
+assets.static/anthropocene/anthropocene-temperature-2026-profile.json
+assets.static/anthropocene/anthropocene-temperature-2026.geojson
+assets.generated/png/anthropocene-temperature-2025-ck-44-22.png
+assets.generated/png/anthropocene-temperature-2026-ck-44-22.png
 ```
 
-Proposed aggregate targets are:
+Implemented temperature-field targets are:
 
 ```sh
 make generate-anthropocene-2025
 make generate-anthropocene-2026
 make generate-anthropocene-years
-make generate-anthropocene-artifacts YEARS='2025 2026'
-make generate-anthropocene-purpleair YEARS='2025 2026'  # opt-in
+make generate-anthropocene-year-artifacts
 ```
 
-These target names are part of the plan and do not exist yet. For visual
-year-to-year comparisons, also support a 2025 window truncated to the same
-month/day as the 2026 snapshot or render rates per 100 valid days. Keep the
-canonical 2025 artifact complete and label the comparison window separately.
+The aliases currently generate the implemented CPC temperature theme across
+all six projections; future fire/air, ocean, and permission-gated PurpleAir
+themes can join the aliases without changing their names. For visual
+year-to-year comparisons, a later product should also support a 2025 window
+truncated to the same month/day as the 2026 snapshot or render rates per 100
+valid days. The canonical 2025 artifact remains complete and the comparison
+window must be labelled separately.
 
 ## Implementation sequence
 
-### 1. Dual-year and schema plumbing
+### 1. Dual-year and schema plumbing — implemented for CPC
 
 - Split the single profile path into explicit 2025 and 2026 profiles.
 - Add year-bearing normalized and generated filenames plus per-year checksum
@@ -322,17 +330,21 @@ canonical 2025 artifact complete and label the comparison window separately.
   versions, local/UTC reporting-day rules, and partial/complete status.
 - Preserve v1 loading for the checked 2026 artifact during migration.
 
-### 2. Highest-value geographic repairs
+### 2. Highest-value geographic repairs — CPC implemented; FIRMS gated
 
-- Make a missing/empty FIRMS capture a release error. Permit an explicit
-  `regional-development-only` override that watermarks the output, never a
-  silent fallback.
-- Acquire all relevant VIIRS platforms, union detections by H3 cell and source
-  reporting day, and audit sensor/platform contribution without counting the
-  same cell-day twice.
+- **Implemented:** make a missing/empty FIRMS capture a release error. An
+  explicit `regional-development-only` override exists for pipeline debugging
+  but cannot pass the global row/date/region audits.
+- **Implemented infrastructure:** query FIRMS-advertised availability so
+  standard S-NPP data and its NRT tail do not leave a multi-month hole, union
+  detections by H3 cell and reporting day, and allow an explicit multi-sensor
+  source list. A checked refresh remains pending the required map key.
 - Replace GSN-only ingestion with full eligible GHCNd for the observation tier.
-- Implement the CPC H3 field and generate both 2025 and 2026 temperature
-  artifacts before adding regional station adapters.
+- **Implemented:** sample CPC to an explicit resolution-3 global H3 domain,
+  retain valid-day denominators, distinguish covered zero from missing, and
+  generate complete-2025 and partial-2026 temperature artifacts. Both checked
+  products serialize 41,162 cells and contain 11,945 covered land-domain
+  cells, with nonzero regional audits outside North America.
 
 ### 3. Global atmosphere
 
@@ -399,8 +411,11 @@ should require:
   field-observed bleaching.
 - Do not calculate an Anthropocene severity score from unlike source values.
 
-The recommended confirmation point after design review is the end of step 2:
-two year-bearing, source-pinned products with global FIRMS fire and CPC
-temperature fields. That increment directly fixes the most conspicuous map
-gaps and establishes the data contract needed by CAMS, PurpleAir, and ocean
-fields without prematurely committing to their calibration choices.
+The first confirmation point is partly complete: two year-bearing,
+source-pinned CPC temperature products now provide broad land coverage, and a
+global observation refresh cannot silently omit FIRMS. Promotion of a new
+global fire snapshot is intentionally still blocked until a maintainer supplies
+`FIRMS_MAP_KEY` and the staged rows pass date and region audits. This increment
+repairs the temperature gap and establishes the field contract needed by CAMS,
+PurpleAir, and ocean products without prematurely committing to their
+calibration choices.

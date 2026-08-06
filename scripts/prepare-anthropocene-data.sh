@@ -4,13 +4,13 @@
 
 set -euo pipefail
 
-if [[ $# -gt 1 ]]; then
-  echo "usage: $0 [anthropocene-data-directory]" >&2
+if [[ $# -gt 2 ]]; then
+  echo "usage: $0 [anthropocene-data-directory [profile]]" >&2
   exit 2
 fi
 
 data_dir=${1:-assets.static/anthropocene}
-profile="$data_dir/anthropocene-profile.json"
+profile=${2:-$data_dir/anthropocene-profile.json}
 year=$(sed -n '/"duration"[[:space:]]*:/,/^[[:space:]]*}/ {
   s/^[[:space:]]*"year"[[:space:]]*:[[:space:]]*\([0-9][0-9]*\).*/\1/p
 }' "$profile" | sed -n '1p')
@@ -72,10 +72,22 @@ arguments=(
   --storm-locations "$temporary_dir/storm/locations.csv"
   --cwfis-dir "$raw_dir/cwfis"
 )
+firms_count=0
 if [[ -d $raw_dir/firms ]]; then
   while IFS= read -r -d '' path; do
     arguments+=(--firms "$path")
+    ((firms_count += 1))
   done < <(find "$raw_dir/firms" -type f -name '*.csv' -print0 | sort -z)
+fi
+if ((firms_count == 0)); then
+  if [[ ${ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY:-0} == 1 ]]; then
+    echo "preparing regional-development-only data without FIRMS" >&2
+  else
+    echo "global Anthropocene preparation requires staged NASA FIRMS CSVs" >&2
+    exit 1
+  fi
+else
+  arguments+=(--require-firms)
 fi
 
 "$preparer" "${arguments[@]}"

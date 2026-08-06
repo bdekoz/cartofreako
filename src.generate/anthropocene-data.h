@@ -135,6 +135,15 @@ struct source_statistics
   std::uint64_t cwfis_files = 0;
   std::uint64_t cwfis_rows = 0;
   std::uint64_t firms_rows = 0;
+  std::uint64_t firms_files = 0;
+  std::uint64_t firms_unique_days = 0;
+  std::uint64_t firms_north_america_rows = 0;
+  std::uint64_t firms_south_america_rows = 0;
+  std::uint64_t firms_europe_rows = 0;
+  std::uint64_t firms_africa_rows = 0;
+  std::uint64_t firms_northern_asia_rows = 0;
+  std::uint64_t firms_east_asia_rows = 0;
+  std::uint64_t firms_oceania_rows = 0;
 };
 
 struct anthropocene_dataset
@@ -522,6 +531,24 @@ parse_source_statistics(const rj::Value& value)
   result.cwfis_files = required_uint64(value, "cwfis_files", "source_statistics");
   result.cwfis_rows = required_uint64(value, "cwfis_rows", "source_statistics");
   result.firms_rows = required_uint64(value, "firms_rows", "source_statistics");
+  result.firms_files = optional_count(
+    value, "firms_files", "source_statistics");
+  result.firms_unique_days = optional_count(
+    value, "firms_unique_days", "source_statistics");
+  result.firms_north_america_rows = optional_count(
+    value, "firms_north_america_rows", "source_statistics");
+  result.firms_south_america_rows = optional_count(
+    value, "firms_south_america_rows", "source_statistics");
+  result.firms_europe_rows = optional_count(
+    value, "firms_europe_rows", "source_statistics");
+  result.firms_africa_rows = optional_count(
+    value, "firms_africa_rows", "source_statistics");
+  result.firms_northern_asia_rows = optional_count(
+    value, "firms_northern_asia_rows", "source_statistics");
+  result.firms_east_asia_rows = optional_count(
+    value, "firms_east_asia_rows", "source_statistics");
+  result.firms_oceania_rows = optional_count(
+    value, "firms_oceania_rows", "source_statistics");
   return result;
 }
 

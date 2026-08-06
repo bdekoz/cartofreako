@@ -86,6 +86,7 @@ struct configuration
   int pm25_aqi_threshold_exclusive = 100;
   std::string snapshot_as_of;
   int snapshot_date_key = 20260101;
+  bool partial_year = true;
 };
 
 struct inputs
@@ -100,6 +101,7 @@ struct inputs
   fs::path storm_locations_csv;
   fs::path cwfis_directory;
   std::vector<fs::path> firms_csvs;
+  bool require_firms = false;
 };
 
 struct source_statistics
@@ -116,6 +118,15 @@ struct source_statistics
   std::uint64_t cwfis_files = 0;
   std::uint64_t cwfis_rows = 0;
   std::uint64_t firms_rows = 0;
+  std::uint64_t firms_files = 0;
+  std::uint64_t firms_unique_days = 0;
+  std::uint64_t firms_north_america_rows = 0;
+  std::uint64_t firms_south_america_rows = 0;
+  std::uint64_t firms_europe_rows = 0;
+  std::uint64_t firms_africa_rows = 0;
+  std::uint64_t firms_northern_asia_rows = 0;
+  std::uint64_t firms_east_asia_rows = 0;
+  std::uint64_t firms_oceania_rows = 0;
 };
 
 using metric_days = std::array<std::unordered_set<int>,
@@ -257,6 +268,12 @@ member(const rj::Value& object, const char* name, const std::string& context)
 std::optional<int>
 iso_date_key(std::string_view value, int expected_year);
 
+std::optional<std::chrono::sys_days>
+make_day(int year, unsigned month, unsigned day);
+
+int
+sys_day_key(std::chrono::sys_days day);
+
 configuration
 load_configuration(const fs::path& path)
 {
@@ -312,6 +329,9 @@ load_configuration(const fs::path& path)
   require(member(snapshot, "as_of_utc", "snapshot").IsString(),
           "snapshot.as_of_utc must be a string");
   result.snapshot_as_of = snapshot["as_of_utc"].GetString();
+  require(member(snapshot, "partial_year", "snapshot").IsBool(),
+          "snapshot.partial_year must be Boolean");
+  result.partial_year = snapshot["partial_year"].GetBool();
   require(result.year >= 1800 && result.year <= 2500,
           "duration.year is outside the supported range");
   require(result.h3_resolution >= 0 && result.h3_resolution <= 15,
@@ -324,10 +344,30 @@ load_configuration(const fs::path& path)
           "heavy-precipitation percentile must be in (0, 1]");
   require(result.baseline_start <= result.baseline_end,
           "heavy-precipitation baseline range is reversed");
-  const auto snapshot_date = iso_date_key(result.snapshot_as_of, result.year);
-  require(snapshot_date.has_value(),
-          "snapshot.as_of_utc must begin with a valid duration-year date");
-  result.snapshot_date_key = *snapshot_date;
+  if (snapshot.HasMember("data_through"))
+    {
+      require(snapshot["data_through"].IsString(),
+              "snapshot.data_through must be a string");
+      const std::string through = snapshot["data_through"].GetString();
+      const auto last_key = iso_date_key(through, result.year);
+      require(last_key.has_value(),
+              "snapshot.data_through must be a valid duration-year date");
+      const auto last = make_day(
+        *last_key / 10000,
+        static_cast<unsigned>((*last_key / 100) % 100),
+        static_cast<unsigned>(*last_key % 100));
+      require(last.has_value(), "snapshot.data_through is invalid");
+      result.snapshot_date_key = sys_day_key(
+        *last + std::chrono::days {1});
+    }
+  else
+    {
+      const auto snapshot_date = iso_date_key(
+        result.snapshot_as_of, result.year);
+      require(snapshot_date.has_value(),
+              "snapshot.as_of_utc must begin with a valid duration-year date");
+      result.snapshot_date_key = *snapshot_date;
+    }
   return result;
 }
 
@@ -339,13 +379,18 @@ parse_arguments(const int argc, char** argv)
       "usage: prepare-anthropocene PROFILE.json OUTPUT.geojson "
       "--ghcn-dir DIR --stations FILE --epa FILE --hms FILE "
       "--storm-details FILE --storm-locations FILE --cwfis-dir DIR "
-      "[--firms FILE]...");
+      "[--firms FILE]... [--require-firms]");
   inputs result;
   result.profile = argv[1];
   result.output = argv[2];
   for (int index = 3; index < argc; ++index)
     {
       const std::string option = argv[index];
+      if (option == "--require-firms")
+        {
+          result.require_firms = true;
+          continue;
+        }
       require(index + 1 < argc, "missing value after " + option);
       const fs::path value = argv[++index];
       if (option == "--ghcn-dir") result.ghcn_directory = value;
@@ -372,6 +417,8 @@ parse_arguments(const int argc, char** argv)
           "--cwfis-dir is not a directory");
   for (const fs::path& path : result.firms_csvs)
     require(fs::is_regular_file(path), "--firms is not a file: " + path.string());
+  require(!result.require_firms || !result.firms_csvs.empty(),
+          "--require-firms needs at least one --firms CSV");
   return result;
 }
 
@@ -1013,9 +1060,40 @@ process_storm_events(const inputs& paths, const configuration& config,
     }
 }
 
+bool
+inside(const double latitude, const double longitude,
+       const double minimum_latitude, const double maximum_latitude,
+       const double minimum_longitude, const double maximum_longitude)
+{
+  return latitude >= minimum_latitude && latitude <= maximum_latitude
+    && longitude >= minimum_longitude && longitude <= maximum_longitude;
+}
+
+void
+audit_firms_row(const double latitude, const double longitude,
+                source_statistics& statistics)
+{
+  if (inside(latitude, longitude, 10, 85, -170, -50))
+    ++statistics.firms_north_america_rows;
+  if (inside(latitude, longitude, -60, 15, -85, -30))
+    ++statistics.firms_south_america_rows;
+  if (inside(latitude, longitude, 35, 72, -15, 45))
+    ++statistics.firms_europe_rows;
+  if (inside(latitude, longitude, -40, 38, -20, 55))
+    ++statistics.firms_africa_rows;
+  if (inside(latitude, longitude, 45, 85, 45, 180))
+    ++statistics.firms_northern_asia_rows;
+  if (inside(latitude, longitude, 15, 55, 95, 150))
+    ++statistics.firms_east_asia_rows;
+  if (inside(latitude, longitude, -50, 0, 110, 180))
+    ++statistics.firms_oceania_rows;
+}
+
 void
 process_fire_csv(const fs::path& path, const configuration& config,
-                 observations& output, std::uint64_t& row_count)
+                 observations& output, std::uint64_t& row_count,
+                 source_statistics* firms_statistics = nullptr,
+                 std::unordered_set<int>* firms_days = nullptr)
 {
   std::ifstream input {path};
   require(input.good(), "failed to open " + path.string());
@@ -1041,9 +1119,16 @@ process_fire_csv(const fs::path& path, const configuration& config,
         trim(csv_field(fields, header, date_name)), config.year);
       if (latitude && longitude && day
           && *day < config.snapshot_date_key)
-        add_point_observation(output, *latitude, *longitude,
-                              config.h3_resolution,
-                              metric::active_fire_days, *day);
+        {
+          add_point_observation(output, *latitude, *longitude,
+                                config.h3_resolution,
+                                metric::active_fire_days, *day);
+          if (firms_statistics != nullptr && firms_days != nullptr)
+            {
+              firms_days->insert(*day);
+              audit_firms_row(*latitude, *longitude, *firms_statistics);
+            }
+        }
     }
 }
 
@@ -1060,8 +1145,12 @@ process_fire_sources(const inputs& paths, const configuration& config,
   statistics.cwfis_files = cwfis_files.size();
   for (const fs::path& path : cwfis_files)
     process_fire_csv(path, config, output, statistics.cwfis_rows);
+  std::unordered_set<int> firms_days;
+  statistics.firms_files = paths.firms_csvs.size();
   for (const fs::path& path : paths.firms_csvs)
-    process_fire_csv(path, config, output, statistics.firms_rows);
+    process_fire_csv(path, config, output, statistics.firms_rows,
+                     &statistics, &firms_days);
+  statistics.firms_unique_days = firms_days.size();
 }
 
 std::string
@@ -1098,6 +1187,15 @@ write_statistics(Writer& writer,
   value("cwfis_files", statistics.cwfis_files);
   value("cwfis_rows", statistics.cwfis_rows);
   value("firms_rows", statistics.firms_rows);
+  value("firms_files", statistics.firms_files);
+  value("firms_unique_days", statistics.firms_unique_days);
+  value("firms_north_america_rows", statistics.firms_north_america_rows);
+  value("firms_south_america_rows", statistics.firms_south_america_rows);
+  value("firms_europe_rows", statistics.firms_europe_rows);
+  value("firms_africa_rows", statistics.firms_africa_rows);
+  value("firms_northern_asia_rows", statistics.firms_northern_asia_rows);
+  value("firms_east_asia_rows", statistics.firms_east_asia_rows);
+  value("firms_oceania_rows", statistics.firms_oceania_rows);
   writer.EndObject();
 }
 
@@ -1140,7 +1238,7 @@ write_geojson(const fs::path& path, const configuration& config,
   writer.Key("snapshot_as_of_utc");
   writer.String(config.snapshot_as_of.c_str());
   writer.Key("partial_year");
-  writer.Bool(true);
+  writer.Bool(config.partial_year);
   writer.Key("h3_resolution");
   writer.Int(config.h3_resolution);
   writer.Key("count_mode");
@@ -1227,6 +1325,30 @@ run(const int argc, char** argv)
   process_storm_events(paths, config, data, statistics);
   std::cerr << "preparing active-fire feeds\n";
   process_fire_sources(paths, config, data, statistics);
+  if (paths.require_firms)
+    {
+      require(statistics.firms_rows > 0 && statistics.firms_unique_days > 0,
+              "required NASA FIRMS inputs contained no usable data rows");
+      require(statistics.firms_north_america_rows > 0
+                && statistics.firms_south_america_rows > 0
+                && statistics.firms_europe_rows > 0
+                && statistics.firms_africa_rows > 0
+                && statistics.firms_northern_asia_rows > 0
+                && statistics.firms_east_asia_rows > 0
+                && statistics.firms_oceania_rows > 0,
+              "required NASA FIRMS input failed the global region audit");
+      const std::chrono::sys_days first {
+        std::chrono::year {config.year} / std::chrono::January / 1};
+      const auto snapshot = make_day(
+        config.snapshot_date_key / 10000,
+        static_cast<unsigned>((config.snapshot_date_key / 100) % 100),
+        static_cast<unsigned>(config.snapshot_date_key % 100));
+      require(snapshot.has_value(), "invalid configured snapshot date");
+      const std::uint64_t expected_days = static_cast<std::uint64_t>(
+        (*snapshot - first).count());
+      require(statistics.firms_unique_days * 100 >= expected_days * 95,
+              "required NASA FIRMS input covers fewer than 95% of snapshot days");
+    }
   std::cerr << "writing " << data.size() << " H3 cells\n";
   write_geojson(paths.output, config, data, statistics);
   return 0;

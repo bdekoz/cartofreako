@@ -17,6 +17,7 @@
 /tests/test-network-swarm-generation
 /tests/test-bathymetry-roulette-style
 /tests/test-anthropocene-generation
+/tests/test-anthropocene-temperature-generation
 /tests/test-cloud-atmosphere-generation
 /tests/test-resources-generation
 
@@ -37,6 +38,8 @@
 /src.generate/generate-bathymetry-roulette
 /src.generate/generate-anthropocene
 /src.generate/prepare-anthropocene
+/src.generate/generate-anthropocene-temperature
+/src.generate/prepare-anthropocene-temperature
 /src.generate/generate-cloud-atmosphere
 /src.generate/prepare-cloud-atmosphere
 /src.generate/generate-resources

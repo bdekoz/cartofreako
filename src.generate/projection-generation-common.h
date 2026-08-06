@@ -19,6 +19,12 @@
 #include <variant>
 #include <vector>
 
+#if __has_include(<a60-numeric.h>)
+#include <a60-numeric.h>
+#endif
+#if __has_include(<a60-countries.h>)
+#include <a60-countries.h>
+#endif
 #include <a60-io.h>
 #include <a60-svg.h>
 

@@ -72,9 +72,9 @@ See the [`src.wasm` README](src.wasm/README.md) for their JavaScript APIs,
 layer contracts, and build requirements.
 
 Generate 24 production whole-earth maps, 12 timestamped astronomy maps, 12
-timestamped Orbital Technosphere maps, six World Game resources maps, six
-cumulative network-swarm maps, six monochrome Bathymetry Roulette maps, six
-source-separated Anthropocene maps, six cloud/CDN network-infrastructure site maps, five
+timestamped Orbital Technosphere maps, six transitional Stage 6a resources
+maps, six cumulative network-swarm maps, six monochrome Bathymetry Roulette maps, 18
+source-separated Anthropocene observation and temperature maps, six cloud/CDN network-infrastructure site maps, five
 exploratory Myriahedral ocean perspectives, 12 Cahill-Keyes enlargement
 slices, and two Myriahedral face-group slices as layered SVG, PDF, and opaque-white,
 3840-pixel-long-side PNG artifacts with:
@@ -147,54 +147,58 @@ See the [Orbital Technosphere implementation notes](docs/orbital-technosphere-im
 for source feasibility, naming, propagation, detiling layers, and accuracy
 limits.
 
-Anthropocene generation is offline from a profile-fixed, partial 2026 H3
-snapshot. It preserves temperature records, rainfall, fire, smoke, flood,
-severe weather, and EPA PM2.5 exposure as independent layers:
+The original Anthropocene observation atlas remains offline from its
+profile-fixed, partial-2026 H3 snapshot. It preserves station temperature
+records, rainfall, fire, smoke, flood, severe weather, and EPA PM2.5 exposure
+as independent layers:
 
 ```sh
 make generate-anthropocene
 make generate-anthropocene-artifacts
 ```
 
-EPA AirData is the default PM2.5 source and remains distinct from observed
-NOAA HMS smoke. CWFIS supplies public Canada/North America hotspots; an
-optional `FIRMS_MAP_KEY` adds global NASA FIRMS refresh coverage, including
-northern Russia. Coral bleaching stress remains a documented separate
-raster/reef phase. See the
-[Anthropocene implementation notes](docs/anthropocene-implementation-notes.md)
-for classifications, formulas, source research, refresh workflow, and limits.
-The proposed
-[Stage 8b enrichment plan](docs/anthropocene-enrichment-plan.md) evaluates the
-current North American bias and defines separate complete-2025 and
-partial-2026 products, including a non-sparse global-field option. Those
-dual-year targets are not implemented yet.
-
-World Game resources generation is offline from a strict profile containing
-all 40 headings and marked 1960 production leaders in Fuller and McHale's 1963
-inventory. Its four FAO/IRENA indicators are explicitly separate modern
-context:
+Stage 8b adds separately pinned, broad-coverage NOAA CPC temperature fields for
+the complete 2025 calendar year and partial 2026 through August 4:
 
 ```sh
-make generate-resources-cahill-keyes
-make generate-resources
-make generate-resources-artifacts
+make generate-anthropocene-2025
+make generate-anthropocene-2026
+make generate-anthropocene-year-artifacts
 ```
 
-Resource SVG deliverables are deterministic `*.svg.gz` archives. Plain SVGs
-remain ignored local intermediates for PDF/PNG export. Inspect one without
-changing the checkout with, for example,
-`gzip -cd assets.generated/svg/resources-ck-44-22.svg.gz > /tmp/resources-ck.svg`.
-To decompress every SVG archive in place while keeping each `.svg.gz` file:
+Those aliases currently build the CPC temperature theme across all six
+projections. A release refresh of the observation atlas now requires
+`FIRMS_MAP_KEY` and audits NASA FIRMS acquisition dates plus world regions;
+`ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY=1` is an explicit local-pipeline
+override, not a global release path. EPA AirData remains distinct from NOAA HMS
+smoke, and CWFIS remains Canadian QA rather than global fire coverage. See the
+[Anthropocene implementation notes](docs/anthropocene-implementation-notes.md)
+for classifications, formulas, source research, refresh workflow, and limits.
+[Stage 8b enrichment plan](docs/anthropocene-enrichment-plan.md) evaluates the
+current North American bias, records the implemented CPC/FIRMS-gate increment,
+and specifies the remaining CAMS, permission-gated PurpleAir, and ocean work.
+
+Resources is being redesigned for Stage 6b as five current-source families:
+energy, food, flora, mineral, and human. Each family will produce
+metric-specific artifacts backed by country, grid, or facility evidence and a
+quantified non-sparse coverage gate. The proposed targets and v2 snapshots are
+not implemented yet. The checked Stage 6a target is scheduled for removal at
+the cutover, with no legacy generated product; its historical feasibility
+result is retained in the [generation methods](docs/generation-methods.md).
+
+The [Stage 6b resources enrichment plan](docs/resources-enrichment-plan.md)
+defines current authoritative source candidates, critical-mineral expansion,
+human-metric definitions and substitutions, offline snapshot preparation,
+coverage QA, and the implementation sequence.
+
+Stage 6b SVG deliverables will continue to be deterministic `*.svg.gz`
+archives. To decompress every SVG archive in place while keeping each
+`.svg.gz` file:
 
 ```sh
 find assets.generated -type f -name '*.svg.gz' \
   -exec gzip --decompress --keep -- {} +
 ```
-
-The historical scan is not redistributed or downloaded by Make. See the
-[resources implementation notes](docs/resources-implementation-notes.md) for
-the easy workflow, source/rights audit, exact scope, profile and SVG contracts,
-and authorized-copy transcription procedure.
 
 Network-swarm generation is offline and reproducible from a checked-in
 cumulative GeoJSON archive. Prepare the bounded source and generate the six H3/Izzi

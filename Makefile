@@ -53,6 +53,17 @@ ANTHROPOCENE_GEOJSON ?= \
 ANTHROPOCENE_FETCHER := scripts/fetch-anthropocene-data.sh
 ANTHROPOCENE_PREPARATION_SCRIPT := scripts/prepare-anthropocene-data.sh
 ANTHROPOCENE_VERIFIER := scripts/verify-anthropocene-data.sh
+ANTHROPOCENE_TEMPERATURE_PROFILE_2025 ?= \
+	$(ANTHROPOCENE_DATA_DIR)/anthropocene-temperature-2025-profile.json
+ANTHROPOCENE_TEMPERATURE_PROFILE_2026 ?= \
+	$(ANTHROPOCENE_DATA_DIR)/anthropocene-temperature-2026-profile.json
+ANTHROPOCENE_TEMPERATURE_GEOJSON_2025 ?= \
+	$(ANTHROPOCENE_DATA_DIR)/anthropocene-temperature-2025.geojson
+ANTHROPOCENE_TEMPERATURE_GEOJSON_2026 ?= \
+	$(ANTHROPOCENE_DATA_DIR)/anthropocene-temperature-2026.geojson
+ANTHROPOCENE_CPC_FETCHER := scripts/fetch-anthropocene-cpc-data.sh
+ANTHROPOCENE_TEMPERATURE_PREPARATION_SCRIPT := \
+	scripts/prepare-anthropocene-temperature-data.sh
 RESOURCES_DATA_DIR ?= $(STATIC_ASSET_DIR)/resources
 RESOURCES_PROFILE ?= $(RESOURCES_DATA_DIR)/resources-profile.json
 RESOURCES_CHECKSUMS := $(RESOURCES_DATA_DIR)/SHA256SUMS
@@ -123,6 +134,10 @@ CLOUD_ATMOSPHERE_PREPARER := \
 ORBITING_GENERATOR := $(GENERATOR_SRC_DIR)/generate-orbiting
 ANTHROPOCENE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-anthropocene
 ANTHROPOCENE_PREPARER := $(GENERATOR_SRC_DIR)/prepare-anthropocene
+ANTHROPOCENE_TEMPERATURE_GENERATOR := \
+	$(GENERATOR_SRC_DIR)/generate-anthropocene-temperature
+ANTHROPOCENE_TEMPERATURE_PREPARER := \
+	$(GENERATOR_SRC_DIR)/prepare-anthropocene-temperature
 RESOURCES_GENERATOR := $(GENERATOR_SRC_DIR)/generate-resources
 NETWORK_SWARM_GENERATOR := $(GENERATOR_SRC_DIR)/generate-network-swarm
 NETWORK_INFRASTRUCTURE_GENERATOR := \
@@ -296,6 +311,29 @@ ANTHROPOCENE_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PDF_DIR)/%.pdf,$(ANTHROPOCENE_SVGS))
 ANTHROPOCENE_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PNG_DIR)/%.png,$(ANTHROPOCENE_SVGS))
+ANTHROPOCENE_TEMPERATURE_2025_SVGS := \
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-ck-44-22.svg \
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-authagraph-44-19.052559.svg \
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-dymaxion-44-20.78461.svg \
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-myriahedral-44-24.75.svg \
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-star-x-34-44.svg \
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-voronoi-44-22.916667.svg
+ANTHROPOCENE_TEMPERATURE_2026_SVGS := \
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-ck-44-22.svg \
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-authagraph-44-19.052559.svg \
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-dymaxion-44-20.78461.svg \
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-myriahedral-44-24.75.svg \
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-star-x-34-44.svg \
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-voronoi-44-22.916667.svg
+ANTHROPOCENE_TEMPERATURE_SVGS := \
+	$(ANTHROPOCENE_TEMPERATURE_2025_SVGS) \
+	$(ANTHROPOCENE_TEMPERATURE_2026_SVGS)
+ANTHROPOCENE_TEMPERATURE_PDFS := \
+	$(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PDF_DIR)/%.pdf,$(ANTHROPOCENE_TEMPERATURE_SVGS))
+ANTHROPOCENE_TEMPERATURE_PNGS := \
+	$(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(GENERATED_PNG_DIR)/%.png,$(ANTHROPOCENE_TEMPERATURE_SVGS))
 
 RESOURCES_SVGS := \
 	$(GENERATED_SVG_DIR)/resources-ck-44-22.svg \
@@ -358,7 +396,8 @@ GENERATED_SVGS := \
 	$(MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS) $(MYRIAHEDRAL_SLICE_SVGS) \
 	$(ASTRO_SVGS) $(ORBITING_SVGS) $(NETWORK_SWARM_SVGS) \
 	$(NETWORK_INFRASTRUCTURE_SITES_SVGS) \
-	$(ANTHROPOCENE_SVGS) $(RESOURCES_SVGS) \
+	$(ANTHROPOCENE_SVGS) $(ANTHROPOCENE_TEMPERATURE_SVGS) \
+	$(RESOURCES_SVGS) \
 	$(BATHYMETRY_ROULETTE_SVGS)
 GENERATED_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PDF_DIR)/%.pdf,$(GENERATED_SVGS))
@@ -387,6 +426,9 @@ NETWORK_INFRASTRUCTURE_TOPOLOGY_STAR_X_PNG := \
 	$(GENERATED_PNG_DIR)/network-infrastructure-topology-star-x-34-44.png
 ANTHROPOCENE_STAR_X_PNG := \
 	$(GENERATED_PNG_DIR)/anthropocene-star-x-34-44.png
+ANTHROPOCENE_TEMPERATURE_STAR_X_PNGS := \
+	$(GENERATED_PNG_DIR)/anthropocene-temperature-2025-star-x-34-44.png \
+	$(GENERATED_PNG_DIR)/anthropocene-temperature-2026-star-x-34-44.png
 RESOURCES_STAR_X_PNG := \
 	$(GENERATED_PNG_DIR)/resources-star-x-34-44.png
 BATHYMETRY_ROULETTE_STAR_X_PNG := \
@@ -399,7 +441,8 @@ PORTRAIT_PNGS := $(STAR_X_PNGS) $(ASTRO_STAR_X_PNGS) \
 	$(ORBITING_STAR_X_PNGS) $(NETWORK_SWARM_STAR_X_PNG) \
 	$(NETWORK_INFRASTRUCTURE_SITES_STAR_X_PNG) \
 	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_STAR_X_PNG) \
-	$(ANTHROPOCENE_STAR_X_PNG) $(RESOURCES_STAR_X_PNG) $(CK_SLICE_PNGS) \
+	$(ANTHROPOCENE_STAR_X_PNG) $(ANTHROPOCENE_TEMPERATURE_STAR_X_PNGS) \
+	$(RESOURCES_STAR_X_PNG) $(CK_SLICE_PNGS) \
 	$(BATHYMETRY_ROULETTE_STAR_X_PNG) \
 	$(CLOUD_ATMOSPHERE_STAR_X_PNG) \
 	$(MYRIAHEDRAL_PORTRAIT_SLICE_PNG)
@@ -412,6 +455,8 @@ GENERATED_ARTIFACTS := \
 GENERATOR_BINARIES := \
 	$(ANTHROPOCENE_GENERATOR) \
 	$(ANTHROPOCENE_PREPARER) \
+	$(ANTHROPOCENE_TEMPERATURE_GENERATOR) \
+	$(ANTHROPOCENE_TEMPERATURE_PREPARER) \
 	$(RESOURCES_GENERATOR) \
 	$(ASTRO_GENERATOR) \
 	$(CLOUD_ATMOSPHERE_GENERATOR) \
@@ -430,6 +475,7 @@ GENERATOR_BINARIES := \
 	$(WATER_GENERATOR)
 TEST_BINARIES := \
 	$(TEST_DIR)/test-anthropocene-generation \
+	$(TEST_DIR)/test-anthropocene-temperature-generation \
 	$(TEST_DIR)/test-resources-generation \
 	$(TEST_DIR)/test-astro-generation \
 	$(TEST_DIR)/test-cloud-atmosphere-generation \
@@ -506,6 +552,11 @@ ANTHROPOCENE_GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/anthropocene-generation.h \
 	$(NATURAL_EARTH_GENERATOR_HEADER) \
 	$(GENERATOR_HEADERS)
+ANTHROPOCENE_TEMPERATURE_GENERATOR_HEADERS := \
+	$(GENERATOR_SRC_DIR)/anthropocene-temperature-data.h \
+	$(GENERATOR_SRC_DIR)/anthropocene-temperature-generation.h \
+	$(NATURAL_EARTH_GENERATOR_HEADER) \
+	$(GENERATOR_HEADERS)
 RESOURCES_GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/resources-data.h \
 	$(GENERATOR_SRC_DIR)/resources-generation.h \
@@ -522,6 +573,7 @@ PUBLIC_TARGETS := all assets-single check check-prerequisite \
 	fetch-cloud-atmosphere-data prepare-cloud-atmosphere-data \
 	verify-cloud-atmosphere-data \
 	fetch-anthropocene-data prepare-anthropocene-data \
+	fetch-anthropocene-cpc-data prepare-anthropocene-temperature-data \
 	prepare-network-swarm-data make-generated \
 	check-network-infrastructure-sources \
 	check-network-infrastructure-topology-sources \
@@ -556,6 +608,12 @@ PUBLIC_TARGETS := all assets-single check check-prerequisite \
 	generate-anthropocene-cahill-keyes generate-anthropocene-authagraph \
 	generate-anthropocene-dymaxion generate-anthropocene-myriahedral \
 	generate-anthropocene-star-x generate-anthropocene-voronoi \
+	generate-anthropocene-2025 generate-anthropocene-2026 \
+	generate-anthropocene-years generate-anthropocene-year-artifacts \
+	generate-anthropocene-temperature-2025 \
+	generate-anthropocene-temperature-2026 \
+	generate-anthropocene-temperature-years \
+	generate-anthropocene-temperature-artifacts \
 	generate-resources generate-resources-projections \
 	generate-resources-artifacts \
 	generate-resources-cahill-keyes generate-resources-authagraph \
@@ -638,17 +696,29 @@ check-resources-svg-archives:
 	"$(GZIP)" -t $(RESOURCES_SVG_ARCHIVES)
 
 check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
+		$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2025) \
+		$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2026) \
 		$(CLOUD_ATMOSPHERE_PROFILE) $(CLOUD_ATMOSPHERE_FIXTURE) \
 		$(RESOURCES_PROFILE) $(RESOURCES_CHECKSUMS) \
 		check-resources-svg-archives
 	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_PROFILE)" \
 		"$(ANTHROPOCENE_GEOJSON)"
+	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_TEMPERATURE_PROFILE_2025)" \
+		"$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2025)"
+	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_TEMPERATURE_PROFILE_2026)" \
+		"$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2026)"
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
 		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$(TEST_DIR)/test-anthropocene-generation.cc \
 		$(shell $(GDAL_CONFIG) --libs) -lh3 \
 		-o $(TEST_DIR)/test-anthropocene-generation
 	$(TEST_DIR)/test-anthropocene-generation
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$(TEST_DIR)/test-anthropocene-temperature-generation.cc \
+		$(shell $(GDAL_CONFIG) --libs) -lh3 \
+		-o $(TEST_DIR)/test-anthropocene-temperature-generation
+	$(TEST_DIR)/test-anthropocene-temperature-generation
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
 		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$(TEST_DIR)/test-resources-generation.cc \
@@ -898,6 +968,18 @@ $(ANTHROPOCENE_PREPARER): \
 	$(CXX) $(CPPFLAGS) $(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
 
+$(ANTHROPOCENE_TEMPERATURE_GENERATOR): \
+		$(GENERATOR_SRC_DIR)/generate-anthropocene-temperature.cc \
+		$(ANTHROPOCENE_TEMPERATURE_GENERATOR_HEADERS)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
+
+$(ANTHROPOCENE_TEMPERATURE_PREPARER): \
+		$(GENERATOR_SRC_DIR)/prepare-anthropocene-temperature.cc
+	$(CXX) $(CPPFLAGS) $(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
+
 $(RESOURCES_GENERATOR): \
 		$(GENERATOR_SRC_DIR)/generate-resources.cc \
 		$(RESOURCES_GENERATOR_HEADERS)
@@ -957,12 +1039,26 @@ fetch-orbiting-data: $(ORBITING_FETCHER) $(ORBITING_PROFILE)
 	$(ORBITING_FETCHER) "$(ORBITING_DATA_DIR)"
 
 fetch-anthropocene-data: $(ANTHROPOCENE_FETCHER) $(ANTHROPOCENE_PROFILE)
-	$(ANTHROPOCENE_FETCHER) "$(ANTHROPOCENE_DATA_DIR)"
+	$(ANTHROPOCENE_FETCHER) "$(ANTHROPOCENE_DATA_DIR)" \
+		"$(ANTHROPOCENE_PROFILE)"
 
 prepare-anthropocene-data: $(ANTHROPOCENE_PREPARER) \
 		$(ANTHROPOCENE_PREPARATION_SCRIPT) $(ANTHROPOCENE_PROFILE)
 	ANTHROPOCENE_PREPARER="$(abspath $(ANTHROPOCENE_PREPARER))" \
-		$(ANTHROPOCENE_PREPARATION_SCRIPT) "$(ANTHROPOCENE_DATA_DIR)"
+		$(ANTHROPOCENE_PREPARATION_SCRIPT) "$(ANTHROPOCENE_DATA_DIR)" \
+		"$(ANTHROPOCENE_PROFILE)"
+
+fetch-anthropocene-cpc-data: $(ANTHROPOCENE_CPC_FETCHER)
+	$(ANTHROPOCENE_CPC_FETCHER) "$(ANTHROPOCENE_DATA_DIR)" 1979 2026
+
+prepare-anthropocene-temperature-data: \
+		$(ANTHROPOCENE_TEMPERATURE_PREPARER) \
+		$(ANTHROPOCENE_TEMPERATURE_PREPARATION_SCRIPT) \
+		$(ANTHROPOCENE_TEMPERATURE_PROFILE_2025) \
+		$(ANTHROPOCENE_TEMPERATURE_PROFILE_2026)
+	ANTHROPOCENE_TEMPERATURE_PREPARER="$(abspath $(ANTHROPOCENE_TEMPERATURE_PREPARER))" \
+		$(ANTHROPOCENE_TEMPERATURE_PREPARATION_SCRIPT) \
+		"$(ANTHROPOCENE_DATA_DIR)"
 
 fetch-natural-earth-10m: $(NATURAL_EARTH_STAMP)
 
@@ -1250,6 +1346,70 @@ generate-anthropocene: $(ANTHROPOCENE_SVGS)
 generate-anthropocene-projections: $(ANTHROPOCENE_SVGS)
 generate-anthropocene-artifacts: $(ANTHROPOCENE_SVGS) \
 	$(ANTHROPOCENE_PDFS) $(ANTHROPOCENE_PNGS)
+
+# $(1): projection; $(2): 2025 SVG; $(3): 2026 SVG.
+define ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES
+$(2): $(ANTHROPOCENE_TEMPERATURE_GENERATOR) \
+		$(ANTHROPOCENE_TEMPERATURE_PROFILE_2025) \
+		$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2025) \
+		$(ANTHROPOCENE_VERIFIER) $(NATURAL_EARTH_STAMP) \
+		| $(GENERATED_SVG_DIR)
+	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_TEMPERATURE_PROFILE_2025)" \
+		"$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2025)"
+	cd "$(GENERATED_SVG_DIR)" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
+		"$(abspath $(ANTHROPOCENE_TEMPERATURE_GENERATOR))" $(1) \
+		"$(abspath $(ANTHROPOCENE_TEMPERATURE_PROFILE_2025))" \
+		"$(abspath $(ANTHROPOCENE_TEMPERATURE_GEOJSON_2025))"
+$(3): $(ANTHROPOCENE_TEMPERATURE_GENERATOR) \
+		$(ANTHROPOCENE_TEMPERATURE_PROFILE_2026) \
+		$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2026) \
+		$(ANTHROPOCENE_VERIFIER) $(NATURAL_EARTH_STAMP) \
+		| $(GENERATED_SVG_DIR)
+	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_TEMPERATURE_PROFILE_2026)" \
+		"$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2026)"
+	cd "$(GENERATED_SVG_DIR)" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
+		"$(abspath $(ANTHROPOCENE_TEMPERATURE_GENERATOR))" $(1) \
+		"$(abspath $(ANTHROPOCENE_TEMPERATURE_PROFILE_2026))" \
+		"$(abspath $(ANTHROPOCENE_TEMPERATURE_GEOJSON_2026))"
+endef
+
+$(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,cahill-keyes,\
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-ck-44-22.svg,\
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-ck-44-22.svg))
+$(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,authagraph,\
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-authagraph-44-19.052559.svg,\
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-authagraph-44-19.052559.svg))
+$(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,dymaxion,\
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-dymaxion-44-20.78461.svg,\
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-dymaxion-44-20.78461.svg))
+$(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,myriahedral,\
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-myriahedral-44-24.75.svg,\
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-myriahedral-44-24.75.svg))
+$(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,star-x,\
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-star-x-34-44.svg,\
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-star-x-34-44.svg))
+$(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,voronoi,\
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-voronoi-44-22.916667.svg,\
+	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-voronoi-44-22.916667.svg))
+
+# These year targets are the implemented Stage 8b temperature-field theme.
+# Additional observation, fire/air, and ocean themes can join each dependency
+# list without changing the public target names.
+generate-anthropocene-temperature-2025: $(ANTHROPOCENE_TEMPERATURE_2025_SVGS)
+generate-anthropocene-temperature-2026: $(ANTHROPOCENE_TEMPERATURE_2026_SVGS)
+generate-anthropocene-temperature-years: $(ANTHROPOCENE_TEMPERATURE_SVGS)
+generate-anthropocene-temperature-artifacts: \
+	$(ANTHROPOCENE_TEMPERATURE_SVGS) $(ANTHROPOCENE_TEMPERATURE_PDFS) \
+	$(ANTHROPOCENE_TEMPERATURE_PNGS)
+generate-anthropocene-2025: generate-anthropocene-temperature-2025
+generate-anthropocene-2026: generate-anthropocene-temperature-2026
+generate-anthropocene-years: generate-anthropocene-temperature-years
+generate-anthropocene-year-artifacts: \
+	generate-anthropocene-temperature-artifacts
 
 # $(1): command-line projection name; $(2): World Game resources product.
 define RESOURCES_PROJECTION_RULES

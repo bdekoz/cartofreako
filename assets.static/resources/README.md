@@ -1,4 +1,10 @@
-# World Game resources profile
+# Transitional Stage 6a resources profile
+
+> This v1 profile is scheduled for replacement by the
+> [Stage 6b resources design](../../docs/resources-enrichment-plan.md). Stage
+> 6b does not reuse these values and will remove the old generated product;
+> only the historical method decision remains in
+> [`generation-methods.md`](../../docs/generation-methods.md).
 
 `resources-profile.json` is the complete offline input to the
 `generate-resources` pass. It contains two deliberately separate collections:
@@ -79,6 +85,8 @@ column sum, and the page image itself. OCR output is never an authoritative
 replacement for `resources-profile.json`; promotion requires a human
 side-by-side audit and an updated source digest and page citation.
 
-The [resources implementation notes](../../docs/resources-implementation-notes.md)
-record the feasibility decision, archive and rights review, exact data and SVG
-contracts, modern-source boundary, workflow, and limitations.
+The [transitional implementation notes](../../docs/resources-implementation-notes.md)
+record the checked code until replacement. The durable historical conclusion
+will remain in [generation methods](../../docs/generation-methods.md), while
+the [Stage 6b plan](../../docs/resources-enrichment-plan.md) defines the sole
+future resources product.

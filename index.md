@@ -41,9 +41,9 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/astro-implementation-notes.md) |
 | Process-start solar illumination and source-timed JAXA physical atmosphere generation | [Cloud-atmosphere implementation notes](docs/cloud-atmosphere-implementation-notes.md) |
 | Human-made Earth-orbit population and observer generation | [Orbital Technosphere implementation notes](docs/orbital-technosphere-implementation-notes.md) |
-| Fuller and McHale 1960 production leaders with separate modern resource context | [World Game resources implementation notes](docs/resources-implementation-notes.md) |
+| Proposed current, non-sparse energy, food, flora, mineral, and human resource families | [Resources Stage 6b enrichment plan](docs/resources-enrichment-plan.md) |
 | Source-separated climate, weather, fire, smoke, and air-quality atlas | [Anthropocene implementation notes](docs/anthropocene-implementation-notes.md) |
-| Proposed global, non-sparse, dual-year Anthropocene enrichment | [Anthropocene Stage 8b enrichment plan](docs/anthropocene-enrichment-plan.md) |
+| Implemented dual-year CPC field plus planned atmosphere, PurpleAir, and ocean enrichment | [Anthropocene Stage 8b enrichment plan](docs/anthropocene-enrichment-plan.md) |
 | Cumulative H3 network-swarm generation | [Network-swarm generation implementation notes](docs/network-swarm-implementation-notes.md) |
 | Cloud/CDN site atlas and opt-in cable/exchange topology | [Network-infrastructure implementation notes](docs/network-infrastructure-implementation-notes.md) |
 | Monochrome, explicitly varied roulette-line-field bathymetry generation | [Bathymetry Roulette implementation notes](docs/bathymetry-roulette-implementation-notes.md) |
@@ -92,7 +92,7 @@ make check
 
 Generate geometry, labeled graticules, both Natural Earth layer families,
 both timestamped astronomy products, both timestamped Orbital Technosphere
-products, the Anthropocene observation atlas, the cumulative network-swarm,
+products, the Anthropocene observation and dual-year temperature atlases, the cumulative network-swarm,
 the cloud/CDN network-infrastructure site atlas, and Bathymetry Roulette for
 all six projections with:
 
@@ -101,7 +101,7 @@ make all
 ```
 
 The 24 production whole-earth maps, 12 astronomy maps, 12 Orbital
-Technosphere maps, six Anthropocene maps, six network-swarm maps, six
+Technosphere maps, 18 Anthropocene maps, six network-swarm maps, six
 network-infrastructure site maps, six Bathymetry Roulette maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes enlargement
 slices, and two Myriahedral face-group slices are each written as a layered SVG under
@@ -199,18 +199,25 @@ proxy for smoke, and absent observations do not assert zero:
 | Star-X | [`anthropocene-star-x-34-44.png`](assets.generated/png/anthropocene-star-x-34-44.png) |
 | Voronoi | [`anthropocene-voronoi-44-22.916667.png`](assets.generated/png/anthropocene-voronoi-44-22.916667.png) |
 
-The World Game resources pass preserves all 40 headings and marked leaders in
-the source's 1960 production matrix. The bottom band keeps selected modern
-FAO/IRENA indicators outside that historical evidence class:
+The Stage 8b temperature field provides a non-sparse global H3 domain with
+explicit CPC land coverage for the complete 2025 and partial 2026 calendar
+products. Neutral covered cells had no strict record; blank cells are missing
+or outside the CPC land domain:
 
-| Projection | World Game resources |
-| --- | --- |
-| Cahill-Keyes | [`resources-ck-44-22.png`](assets.generated/png/resources-ck-44-22.png) |
-| AuthaGraph | [`resources-authagraph-44-19.052559.png`](assets.generated/png/resources-authagraph-44-19.052559.png) |
-| Dymaxion | [`resources-dymaxion-44-20.78461.png`](assets.generated/png/resources-dymaxion-44-20.78461.png) |
-| Myriahedral | [`resources-myriahedral-44-24.75.png`](assets.generated/png/resources-myriahedral-44-24.75.png) |
-| Star-X | [`resources-star-x-34-44.png`](assets.generated/png/resources-star-x-34-44.png) |
-| Voronoi | [`resources-voronoi-44-22.916667.png`](assets.generated/png/resources-voronoi-44-22.916667.png) |
+| Projection | Complete 2025 | Partial 2026 |
+| --- | --- | --- |
+| Cahill-Keyes | [`anthropocene-temperature-2025-ck-44-22.png`](assets.generated/png/anthropocene-temperature-2025-ck-44-22.png) | [`anthropocene-temperature-2026-ck-44-22.png`](assets.generated/png/anthropocene-temperature-2026-ck-44-22.png) |
+| AuthaGraph | [`anthropocene-temperature-2025-authagraph-44-19.052559.png`](assets.generated/png/anthropocene-temperature-2025-authagraph-44-19.052559.png) | [`anthropocene-temperature-2026-authagraph-44-19.052559.png`](assets.generated/png/anthropocene-temperature-2026-authagraph-44-19.052559.png) |
+| Dymaxion | [`anthropocene-temperature-2025-dymaxion-44-20.78461.png`](assets.generated/png/anthropocene-temperature-2025-dymaxion-44-20.78461.png) | [`anthropocene-temperature-2026-dymaxion-44-20.78461.png`](assets.generated/png/anthropocene-temperature-2026-dymaxion-44-20.78461.png) |
+| Myriahedral | [`anthropocene-temperature-2025-myriahedral-44-24.75.png`](assets.generated/png/anthropocene-temperature-2025-myriahedral-44-24.75.png) | [`anthropocene-temperature-2026-myriahedral-44-24.75.png`](assets.generated/png/anthropocene-temperature-2026-myriahedral-44-24.75.png) |
+| Star-X | [`anthropocene-temperature-2025-star-x-34-44.png`](assets.generated/png/anthropocene-temperature-2025-star-x-34-44.png) | [`anthropocene-temperature-2026-star-x-34-44.png`](assets.generated/png/anthropocene-temperature-2026-star-x-34-44.png) |
+| Voronoi | [`anthropocene-temperature-2025-voronoi-44-22.916667.png`](assets.generated/png/anthropocene-temperature-2025-voronoi-44-22.916667.png) | [`anthropocene-temperature-2026-voronoi-44-22.916667.png`](assets.generated/png/anthropocene-temperature-2026-voronoi-44-22.916667.png) |
+
+Resources previews are deferred until the first Stage 6b snapshots pass their
+coverage and source-rights gates. The new design produces metric-specific
+energy, food, flora, mineral, and human artifacts; it does not retain a legacy
+generated product. See the
+[Stage 6b enrichment plan](docs/resources-enrichment-plan.md).
 
 The cumulative network-swarm pass detiles the pinned resolution-5 H3 swarm into
 projection-safe resolution-3 Izzi honeycombs while preserving every raw
@@ -273,12 +280,15 @@ The [Anthropocene notes](docs/anthropocene-implementation-notes.md) record the
 feasibility boundary, literal 2026 profile, source classifications, record and
 rainfall formulas, Canada/Russia fire-source evaluation, EPA/smoke separation,
 deferred coral phase, snapshot audit, and interpretation limits.
-The proposed [Stage 8b enrichment plan](docs/anthropocene-enrichment-plan.md)
-documents the coverage diagnosis and a source-separated path to complete-2025
-and partial-2026 products, including global field, PurpleAir, and ocean themes.
-The [World Game resources notes](docs/resources-implementation-notes.md) record
-the bounded source decision, archive and rights review, exact 40-row profile,
-separate modern context, authorized-copy transcription workflow, and limits.
+The [Stage 8b enrichment plan](docs/anthropocene-enrichment-plan.md) documents
+the coverage diagnosis, the implemented complete-2025/partial-2026 CPC field
+and FIRMS release gate, and the remaining CAMS, PurpleAir, and ocean themes.
+The proposed [Resources Stage 6b enrichment plan](docs/resources-enrichment-plan.md)
+defines the five target families, source and metric choices, non-sparse
+coverage gates, current critical-mineral scope, corrected human-measure
+semantics, normalized data contract, migration, and release checks. The prior
+feasibility result remains only in the
+[generation-methods record](docs/generation-methods.md#stage-6a-world-game-resources-historical-method-record).
 The [network-swarm notes](docs/network-swarm-implementation-notes.md) record the fixed
 source audit, variable-input contract, H3/Izzi clustering, independent
 downloader encodings, SVG metadata, and interpretation limits.
@@ -433,7 +443,7 @@ the `voronoi_source` preset are in the
 | [`docs/cloud-atmosphere-implementation-notes.md`](docs/cloud-atmosphere-implementation-notes.md) | Stage 4.1a feasibility, astronomy boundary, JAXA sources, process time, P-Tree QA, H3 preparation, products, terms, verification, and limits |
 | [`docs/ptree-production-download.md`](docs/ptree-production-download.md) | Quick-start P-Tree registration, secure credentials, connection test, reproducible production refresh, expected files, and troubleshooting |
 | [`docs/orbital-technosphere-implementation-notes.md`](docs/orbital-technosphere-implementation-notes.md) | Stage 4.2 feasibility, naming, NASA/CelesTrak source roles, OMM/SGP4 formulas, products, verification, and accuracy boundary |
-| [`docs/resources-implementation-notes.md`](docs/resources-implementation-notes.md) | Stage 6 feasibility, source and rights audit, 1960 production-leader profile, modern context, SVG contract, workflow, and limitations |
+| [`docs/resources-enrichment-plan.md`](docs/resources-enrichment-plan.md) | Stage 6b five-family taxonomy, source evaluation, non-sparse options, schema, migration sequence, and release QA |
 | [`src.projections/cart0freak0-star-x.h`](src.projections/cart0freak0-star-x.h) | Star-X group assembly, configurable centered scale, Stage 7 cap-radius geometry, frame validation, public API, and factory |
 | [`tests/test-star-x-projection-api.cc`](tests/test-star-x-projection-api.cc) | Star-X anchors, assembly and scale, global domain, cap invariants, variable-frame, validation, and API tests |
 | [`docs/star-x-context.md`](docs/star-x-context.md) | Star-X octahedral context, face-slot mapping, group rotation, page enlargement, polar composition, and cuts |
@@ -479,12 +489,12 @@ the `voronoi_source` preset are in the
 | [`scripts/resolve-jaxa-stac.py`](scripts/resolve-jaxa-stac.py) | Static-STAC traversal, COG-level selection, download, and source manifest helper |
 | [`scripts/prepare-cloud-atmosphere-data.sh`](scripts/prepare-cloud-atmosphere-data.sh) | Atomic raw-to-prepared H3 snapshot workflow |
 | [`scripts/verify-cloud-atmosphere-data.sh`](scripts/verify-cloud-atmosphere-data.sh) | Prepared snapshot checksum and production-schema gate |
-| [`src.generate/resources-data.h`](src.generate/resources-data.h) | Strict historical and modern-context profile loading, source-year and page validation, missing-value semantics, and count invariants |
-| [`src.generate/resources-generation.h`](src.generate/resources-generation.h) | Six-projection resource rendering, deterministic collision layout, semantic metadata, and embedded SVG checks |
-| [`src.generate/generate-resources.cc`](src.generate/generate-resources.cc) | Thin six-projection World Game resources generator entry point |
-| [`tests/test-resources-generation.cc`](tests/test-resources-generation.cc) | Profile facts, source provenance, null semantics, strict-schema failures, metadata, and six-projection layout tests |
-| [`assets.static/resources/resources-profile.json`](assets.static/resources/resources-profile.json) | Audited 1960 production leaders and independently sourced modern resource context |
-| [`scripts/transcribe-fuller-minerals.py`](scripts/transcribe-fuller-minerals.py) | Conservative OCR workbench for manually re-auditing pages from an authorized local scan |
+| [`src.generate/resources-data.h`](src.generate/resources-data.h) | Transitional Stage 6a profile loader scheduled for replacement by the Stage 6b normalized data contract |
+| [`src.generate/resources-generation.h`](src.generate/resources-generation.h) | Transitional Stage 6a renderer scheduled for replacement by metric-specific Stage 6b products |
+| [`src.generate/generate-resources.cc`](src.generate/generate-resources.cc) | Current resource-generator entry point to be replaced at the Stage 6b cutover |
+| [`tests/test-resources-generation.cc`](tests/test-resources-generation.cc) | Transitional focused tests to be rewritten for Stage 6b source, coverage, schema, and rendering contracts |
+| [`assets.static/resources/resources-profile.json`](assets.static/resources/resources-profile.json) | Transitional v1 profile excluded from the proposed Stage 6b values and schema |
+| [`scripts/transcribe-fuller-minerals.py`](scripts/transcribe-fuller-minerals.py) | Stage 6a audit workbench scheduled for removal at the Stage 6b cutover |
 | [`src.generate/orbiting-data.h`](src.generate/orbiting-data.h) | Orbital Technosphere profile and OMM validation, category membership, SGP4 adapter, frame transforms, illumination, and visibility state |
 | [`src.generate/orbiting-generation.h`](src.generate/orbiting-generation.h) | Global and observer semantic SVG layers, subdued Natural Earth base, representative tracks, markers, metadata, and embedded checks |
 | [`src.generate/generate-orbiting.cc`](src.generate/generate-orbiting.cc) | Thin Orbital Technosphere generator entry point |

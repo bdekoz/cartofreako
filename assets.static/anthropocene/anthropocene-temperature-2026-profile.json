@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "product": "anthropocene-temperature-field",
+  "name": "Anthropocene temperature 2026 partial-year field",
+  "description": "Non-sparse NOAA CPC daily land-temperature analysis on an explicit global H3 domain; blank cells are outside coverage or missing, never inferred zero.",
+  "duration": {
+    "type": "calendar-year",
+    "year": 2026
+  },
+  "snapshot": {
+    "as_of_utc": "2026-08-06T00:00:00Z",
+    "data_through": "2026-08-04",
+    "partial_year": true
+  },
+  "aggregation": {
+    "spatial_index": "H3",
+    "h3_resolution": 3,
+    "source_grid_aggregation": "mean-of-valid-grid-cell-centers"
+  },
+  "records": {
+    "baseline_start": 1979,
+    "baseline_end": 2025,
+    "minimum_history_years": 30,
+    "comparison": "strict"
+  },
+  "display": {
+    "high_scale_days": 32,
+    "low_scale_days": 16,
+    "minimum_nonzero_opacity": 0.34,
+    "show_legend": true
+  },
+  "source": {
+    "id": "noaa-cpc-global-temperature",
+    "title": "NOAA CPC Global Unified Temperature V1.0",
+    "url": "https://psl.noaa.gov/data/gridded/data.cpc.globaltemp.html",
+    "evidence_class": "observation-interpolated-analysis-field",
+    "usage": "No usage restrictions; NOAA PSL acknowledgment requested.",
+    "manifest_sha256": "9e8507f1ad63332b3af55b5a5ab76e26209baabd97f6f644df55b5cd2faa0bee"
+  },
+  "data": {
+    "geojson": "anthropocene-temperature-2026.geojson",
+    "sha256": "5953eba7ed3e73ecc0d77961a17759336f1833118d7850a5891a316369c9bde2"
+  }
+}

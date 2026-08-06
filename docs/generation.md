@@ -8,7 +8,8 @@
 [Cloud-atmosphere notes](cloud-atmosphere-implementation-notes.md) ·
 [P-Tree download quick start](ptree-production-download.md) ·
 [Orbital Technosphere notes](orbital-technosphere-implementation-notes.md) ·
-[World Game resources notes](resources-implementation-notes.md) ·
+[Transitional Stage 6a resources notes](resources-implementation-notes.md) ·
+[Resources Stage 6b plan](resources-enrichment-plan.md) ·
 [Anthropocene notes](anthropocene-implementation-notes.md) ·
 [Anthropocene Stage 8b plan](anthropocene-enrichment-plan.md) ·
 [Network-swarm notes](network-swarm-implementation-notes.md) ·
@@ -40,7 +41,7 @@ does not duplicate generation logic or filter SVG layers after generation.
 | Astronomy | [`src.generate/generate-astro.cc`](../src.generate/generate-astro.cc) | Profile timestamp and observer, bounded Gaia/exoplanet/SBDB snapshots, curated multi-band sources and events |
 | Cloud-atmosphere | [`src.generate/generate-cloud-atmosphere.cc`](../src.generate/generate-cloud-atmosphere.cc) | Process-start solar geometry plus prepared, source-timed JAXA P-Tree cloud and JAXA Earth atmosphere observations |
 | Orbital Technosphere | [`src.generate/generate-orbiting.cc`](../src.generate/generate-orbiting.cc) | Profile timestamp and observer, CelesTrak OMM population and memberships, NASA SSCWeb reference positions, and SGP4 |
-| World Game resources | [`src.generate/generate-resources.cc`](../src.generate/generate-resources.cc) | Strict offline profile of all 40 commodity headings and 1960 production leaders from Fuller and McHale's 1963 inventory, plus source-separated modern context |
+| Resources (transitional Stage 6a) | [`src.generate/generate-resources.cc`](../src.generate/generate-resources.cc) | Strict offline historical profile scheduled for replacement by the current-source Stage 6b families |
 | Anthropocene | [`src.generate/generate-anthropocene.cc`](../src.generate/generate-anthropocene.cc) | Profile-fixed partial year and checksum-pinned H3 cell-day counts from GSN, EPA AirData, HMS, Storm Events, and CWFIS |
 | Network swarm | [`src.generate/generate-network-swarm.cc`](../src.generate/generate-network-swarm.cc) | Validated cumulative swarm GeoJSON, H3 parent clustering, fixed display profile, and Izzi radial honeycombs |
 | Network infrastructure | [`src.generate/generate-network-infrastructure.cc`](../src.generate/generate-network-infrastructure.cc) | Manifested cloud/CDN sites plus explicitly opted-in TeleGeography cable and Internet-exchange topology |
@@ -50,8 +51,9 @@ does not duplicate generation logic or filter SVG layers after generation.
 
 The aggregate target generates all four terrestrial artifact families, the
 monochrome Bathymetry Roulette family, two astronomy and two Orbital
-Technosphere products, one World Game resources atlas, one Anthropocene
-observation atlas, one cumulative
+Technosphere products, one transitional Stage 6a resources atlas, one
+Anthropocene observation atlas, two year-bearing Anthropocene temperature
+atlases, one cumulative
 network-swarm product, and one cloud/CDN infrastructure-site atlas for all six
 production projections, five exploratory
 Myriahedral water perspectives, all 12 Cahill-Keyes slices, and two
@@ -124,9 +126,11 @@ The default locations can be overridden:
 | `CLOUD_ATMOSPHERE_GEOJSON` | `$(CLOUD_ATMOSPHERE_DATA_DIR)/.prepared/cloud-atmosphere-latest.geojson` | Locally prepared, checksum-verified H3 observation snapshot |
 | `ORBITING_DATA_DIR` | `assets.static/orbital-technosphere` | Orbital Technosphere profile, OMM CSV snapshots, NASA reference, and checksums |
 | `ORBITING_PROFILE` | `$(ORBITING_DATA_DIR)/orbital-technosphere-profile.json` | Authoritative propagation instant, make-invocation reference point, catalog roles, freshness rules, visibility rules, and display budgets |
-| `ANTHROPOCENE_DATA_DIR` | `assets.static/anthropocene` | Checked profile, normalized 2026 H3 GeoJSON, checksum, and ignored refresh staging |
+| `ANTHROPOCENE_DATA_DIR` | `assets.static/anthropocene` | Checked observation and dual-year CPC profiles, normalized H3 GeoJSON files, checksums, and ignored refresh staging |
 | `ANTHROPOCENE_PROFILE` | `$(ANTHROPOCENE_DATA_DIR)/anthropocene-profile.json` | Literal duration year, snapshot date, source coverage, thresholds, metric enablement, scales, and styles |
 | `ANTHROPOCENE_GEOJSON` | `$(ANTHROPOCENE_DATA_DIR)/anthropocene-2026.geojson` | Checksum-pinned, source-separated H3 cell-day snapshot |
+| `ANTHROPOCENE_TEMPERATURE_PROFILE_2025`, `ANTHROPOCENE_TEMPERATURE_PROFILE_2026` | Year-bearing files in `$(ANTHROPOCENE_DATA_DIR)` | Complete-2025 and partial-2026 CPC field, record-baseline, coverage, and display contracts |
+| `ANTHROPOCENE_TEMPERATURE_GEOJSON_2025`, `ANTHROPOCENE_TEMPERATURE_GEOJSON_2026` | Year-bearing files in `$(ANTHROPOCENE_DATA_DIR)` | Checksum-pinned global-domain resolution-3 H3 temperature fields |
 | `RESOURCES_DATA_DIR` | `assets.static/resources` | Checked historical and modern-context profile plus source-workflow README |
 | `RESOURCES_PROFILE` | `$(RESOURCES_DATA_DIR)/resources-profile.json` | Source years, 40 historical commodity records, page pointers, representative leader points, modern context, and display contract |
 | `NETWORK_SWARM_SOURCE` | `assets.static/network-swarm/house-of-the-dragon-301-cumulative-aggregate.geojson.zip` | Local ZIP or plain GeoJSON source prepared for the network-swarm pass |
@@ -472,6 +476,27 @@ year, snapshot, H3-resolution, filename, H3-center, or metric-total mismatch.
 The Make rule independently verifies the GeoJSON against the SHA-256 declared
 by the selected profile before generation.
 
+The Stage 8b non-sparse option is a separate NOAA CPC temperature family. Its
+complete 2025 and partial 2026 profiles serialize every resolution-3 global H3
+cell and preserve TMAX/TMIN valid-day denominators, so an analyzed cell with no
+strict record is not confused with missing or ocean-domain data:
+
+```sh
+make generate-anthropocene-2025
+make generate-anthropocene-2026
+make generate-anthropocene-years
+make generate-anthropocene-year-artifacts
+```
+
+The year aliases currently generate this implemented temperature theme across
+all six projections. Stage its ignored NOAA archive and prepare both candidates
+without replacing checked files with:
+
+```sh
+make fetch-anthropocene-cpc-data
+make prepare-anthropocene-temperature-data
+```
+
 EPA AirData PM2.5 exceedance days are enabled by default in the independent
 `air-quality-exposure` group. They use a cross-square and never become NOAA
 HMS `observed-smoke-days`, which use rings in the `atmosphere` group. Coral
@@ -486,16 +511,26 @@ make fetch-anthropocene-data
 make prepare-anthropocene-data
 ```
 
-The public CWFIS daily hotspot feed supplies default Canada/North America fire
-coverage. Set `FIRMS_MAP_KEY` to add optional global NASA FIRMS chunks,
-including northern Russia. Copernicus Sentinel-3 fire-radiative-power data and
-Rosleskhoz operational reports remain validation sources. The
+The original checked snapshot retains public CWFIS Canada/North America fire
+coverage and zero FIRMS rows. A new global refresh requires `FIRMS_MAP_KEY`;
+the fetcher joins advertised standard-processing dates to the NRT tail, and
+the preparer rejects missing dates or absent world regions. Set
+`ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY=1` only to debug the regional pipeline.
+Copernicus Sentinel-3 fire-radiative-power data and Rosleskhoz operational
+reports remain validation sources. The
 [Anthropocene implementation notes](anthropocene-implementation-notes.md)
 document the feasibility boundary, classifications, exact formulas, source
 audit, Canada/Russia fire evaluation, candidate resource types, SVG contract,
 refresh workflow, and limits.
 
-## World Game resources generation
+## Transitional Stage 6a resources generation
+
+This section documents the checked target until the Stage 6b cutover. It is
+not a current resource-data product. The cutover described in the
+[Stage 6b resources enrichment plan](resources-enrichment-plan.md) replaces
+these rules and generated artifacts without retaining a legacy target; the
+historical feasibility decision then remains only in
+[generation methods](generation-methods.md#stage-6a-world-game-resources-historical-method-record).
 
 The resources pass is an offline historical atlas. Its strict checked profile
 preserves all 40 commodity headings, world totals, and marked leading-producer
@@ -537,10 +572,10 @@ nulls, and out-of-range shares before it draws anything.
 Normal generation never downloads the historical scan. The source's current
 rights and access terms require a manual, authorized maintainer workflow; the
 optional OCR program is only an audit aid and cannot overwrite the checked
-profile. The [resources implementation notes](resources-implementation-notes.md)
-give the easy generation commands, source and archive findings, rights
-boundary, complete schema/SVG contract, modern indicators, and step-by-step
-re-audit procedure.
+profile. The
+[transitional implementation notes](resources-implementation-notes.md) record
+the checked schema and source boundary while the replacement is being
+developed.
 
 ## Network-swarm generation
 

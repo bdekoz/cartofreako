@@ -31,6 +31,10 @@ The implementation consists of:
   projection, semantic SVG layers, legends, metadata, and verification;
 - [`prepare-anthropocene.cc`](../src.generate/prepare-anthropocene.cc), the
   deterministic source normalizer;
+- [`prepare-anthropocene-temperature.cc`](../src.generate/prepare-anthropocene-temperature.cc),
+  the CPC daily-grid to global-H3 field normalizer;
+- [`generate-anthropocene-temperature.cc`](../src.generate/generate-anthropocene-temperature.cc),
+  the complete-2025/partial-2026 Stage 8b field renderer;
 - explicit [fetch](../scripts/fetch-anthropocene-data.sh) and
   [prepare](../scripts/prepare-anthropocene-data.sh) scripts plus a
   profile-aware [checksum verifier](../scripts/verify-anthropocene-data.sh);
@@ -80,7 +84,7 @@ cell-day count.
 | Climate records | `climate-records:temperature-record-low-days` | GSN station day whose TMIN strictly falls below every prior valid value for that calendar day | NOAA GHCN/GSN |
 | Hydrology | `hydrology:precipitation-record-days` | GSN station day whose precipitation strictly exceeds every prior valid value for that calendar day | NOAA GHCN/GSN |
 | Hydrology | `hydrology:heavy-precipitation-days` | At least 10 mm and above that station/month's 1991–2020 wet-day 95th percentile | NOAA GHCN/GSN |
-| Fire | `fire:active-fire-days` | Day with one or more satellite hotspot detections in the cell | CWFIS by default; NASA FIRMS optional |
+| Fire | `fire:active-fire-days` | Day with one or more satellite hotspot detections in the cell | Checked v1: CWFIS; new global refresh: NASA FIRMS required, CWFIS regional QA |
 | Atmosphere | `atmosphere:observed-smoke-days` | Day an HMS analyst polygon covers the cell center, with a centroid fallback for sub-cell polygons | NOAA HMS |
 | Hydrology | `hydrology:flood-event-days` | Located Storm Events day classified as flood, heavy rain, or excessive rainfall | NOAA Storm Events |
 | Severe weather | `severe-weather:extreme-event-days` | Located day represented in the NOAA Storm Events database | NOAA Storm Events |
@@ -130,16 +134,19 @@ The selected fire-source roles are:
 | Source | Role | Evaluation |
 | --- | --- | --- |
 | [Canadian Wildland Fire Information System daily hotspots](https://cwfis.cfs.nrcan.gc.ca/downloads/hotspots/) | **Included default** | Public daily CSVs, no credential, useful Canada and North America coverage; the checked snapshot includes 167 available reporting files through August 4 |
-| [NASA FIRMS area API](https://firms.modaps.eosdis.nasa.gov/api/area/) | **Configured optional global source** | Global MODIS/VIIRS point detections cover Canada and northern Russia; requires a free `FIRMS_MAP_KEY`; standard-processing sources are preferred for analysis when available |
+| [NASA FIRMS area API](https://firms.modaps.eosdis.nasa.gov/api/area/) | **Required for a new global refresh** | Global VIIRS point detections cover every world region; requires a free `FIRMS_MAP_KEY`; the fetcher joins advertised standard-processing availability to the NRT tail |
 | [Copernicus Sentinel-3 FRP](https://cds.climate.copernicus.eu/datasets/satellite-fire-radiative-power) | **Validation-only / future alternative** | Global fire-radiative-power points and grids add valuable high-latitude cross-checking, but CDS acquisition and a second sensor/product harmonization contract are outside the bounded default |
 | [Rosleskhoz operational reports](https://rosleshoz.gov.ru/activity/forest-security-and-protection/fires/operative-information/) | **Administrative validation** | Confirms regions, counts, and affected area in Russia; no stable documented point-vector API was found, so prose reports are not scraped into H3 cells |
 | [GWIS](https://gwis.jrc.ec.europa.eu/applications) | **Map-level QA** | Useful global visual comparison, but its active-fire layer substantially derives from FIRMS and is not treated as an independent default observation feed |
 
 The checked snapshot has zero FIRMS input rows, which means **unknown global
 FIRMS coverage**, not zero Russian fires. This is explicit in GeoJSON source
-statistics and profile source status. Set `FIRMS_MAP_KEY` before a refresh to
-obtain global five-day chunks. Active-fire detections are thermal anomalies,
-not automatically wildfire incidents, burned area, cause, or impact.
+statistics and profile source status. A new global refresh now fails without
+`FIRMS_MAP_KEY`, without at least 95% of expected FIRMS reporting dates, or
+without rows in each audited world region. The explicit
+`ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY=1` override is for local pipeline
+debugging, not promotion. Active-fire detections are thermal anomalies, not
+automatically wildfire incidents, burned area, cause, or impact.
 
 ## Smoke, flood, severe weather, and EPA methods
 
@@ -266,9 +273,11 @@ make prepare-anthropocene-data
 
 The fetch target validates TAR/ZIP/GZIP containers, discovers the latest
 year-specific Storm Events files, records all raw SHA-256 values, tolerates
-documented missing CWFIS days, and optionally requests NASA FIRMS. The prepare
-target verifies that raw manifest, extracts into a temporary directory, and
-writes only an ignored candidate. It never overwrites checked data. After
+documented missing CWFIS days, and requires NASA FIRMS for a global refresh.
+It reads the FIRMS availability endpoint before requesting five-day chunks and
+does not print the map key. The prepare target verifies that raw manifest,
+extracts into a temporary directory, audits FIRMS dates and regions, and writes
+only an ignored candidate. It never overwrites checked data. After
 review, update the checked GeoJSON, its `SHA256SUMS`, profile checksum and
 coverage dates, test fixtures, and this audit together.
 
@@ -312,9 +321,32 @@ United-States-only, and the temperature layer uses the intentionally sparse
 GSN subset. This is a source-coverage limitation rather than a projection
 failure.
 
-The proposed [Stage 8b enrichment plan](anthropocene-enrichment-plan.md)
-specifies separate complete-2025 and partial-2026 products, a non-sparse global
-field option, required global fire coverage, broader temperature and PM2.5
-sources, a permission-gated PurpleAir product, and ocean heat-stress themes.
-Those profiles, sources, targets, and artifacts are proposed work; they are not
-part of the implemented Stage 8 contract described above.
+The first [Stage 8b enrichment](anthropocene-enrichment-plan.md) increment is
+implemented alongside, rather than blended into, the v1 observation atlas.
+NOAA CPC daily TMAX/TMIN fields are normalized onto every resolution-3 global
+H3 cell with valid-day denominators and distinct covered-zero/missing
+semantics. The complete-2025 field compares strict daily records with
+1979–2024; the partial-2026 field runs through August 4 and compares with
+1979–2025. Both serialize 41,162 global cells and cover the same 11,945-cell
+land-analysis domain. The checked totals are 178,896 high and 59,806 low
+record cell-days in 2025, and 105,041 high and 40,943 low record cell-days in
+2026. Region gates confirm coverage in Europe, Siberia, China/Japan,
+Australia/Oceania, Africa, and South America as well as North America.
+H3 rings are split explicitly at the antimeridian before projection. In the
+Cahill-Keyes render, 21 of 11,945 covered cells would otherwise close across
+an outer topology cut; those cells use a small centered hexagon and the SVG
+records the fallback count on each affected path. The other five projections
+need no fallback cells.
+Generate all six projections with:
+
+```sh
+make generate-anthropocene-2025
+make generate-anthropocene-2026
+make generate-anthropocene-years
+```
+
+The global FIRMS gate is also implemented, but the original checked v1
+snapshot is not retroactively relabelled: it still has zero FIRMS rows. A new
+global fire snapshot cannot be promoted until credentialed raw acquisition
+passes its audits. Broader GHCNd, CAMS PM2.5/smoke context, permission-gated
+PurpleAir, and OISST/Coral Reef Watch ocean themes remain planned.

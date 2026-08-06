@@ -34,9 +34,10 @@ decision after the fact.
 | 4.2 | `generate-orbiting` / Orbital Technosphere | **Implemented** | Naming, NASA/CelesTrak feasibility, OMM/SGP4, profile authority, products, and limits are summarized below and detailed in the [Orbital Technosphere implementation notes](orbital-technosphere-implementation-notes.md) |
 | 4.4 | `generate-network-swarm` | **Implemented** | Confirmed variable-input contract, fixed cumulative snapshot, H3/Izzi clustering, projection-safe components, independent downloader layers, products, and limits are detailed in the [network-swarm implementation notes](network-swarm-implementation-notes.md) |
 | 4.5 | `generate-bathymetry-roulette` | **Implemented** | Confirmed depth-to-curve catalogue, explicit varied page-space line fields, Natural Earth clipping, accepted moiré, products, and limits are detailed in the [Bathymetry Roulette implementation notes](bathymetry-roulette-implementation-notes.md) |
-| 6 | `generate-resources` / World Game | **Implemented** | Confirmed bounded 1960 production-leader transcription, page and digest provenance, conservative source-rights boundary, representative geography, separate FAO/IRENA context, products, and limits are detailed in the [resources implementation notes](resources-implementation-notes.md) |
+| 6a | `generate-resources` / World Game | **Implemented; scheduled for removal** | Historical feasibility result: a bounded 1960 production-leader transcription was possible, but it is not a current resources atlas and no legacy output will remain after the Stage 6b cutover |
+| 6b | `resources-energy`, `resources-food`, `resources-flora`, `resources-mineral`, `resources-human` | **Planned** | Current-source, metric-specific product families, non-sparse coverage gates, source candidates, schema, migration, and release QA are defined in the [Stage 6b enrichment plan](resources-enrichment-plan.md) |
 | 7 | Configurable `generate-*` selection | **Implemented infrastructure** | JSON profile, validation, safe target expansion, default Make behavior, alternatives, and scope boundaries are recorded in this document |
-| 8 | `generate-anthropocene` | **Implemented; Stage 8b planned** | The checked source-separated partial-2026 atlas is detailed in the [Anthropocene implementation notes](anthropocene-implementation-notes.md); the proposed global, non-sparse, complete-2025 plus partial-2026 design is detailed in the [Stage 8b enrichment plan](anthropocene-enrichment-plan.md) |
+| 8 / 8b | `generate-anthropocene`; `generate-anthropocene-{2025,2026}` | **Implemented observation atlas and first Stage 8b field increment** | The checked source-separated partial-2026 atlas remains; complete-2025 and partial-2026 CPC temperature fields plus a required-global-FIRMS refresh gate are implemented, while CAMS, PurpleAir, and ocean themes remain planned in the [Stage 8b enrichment plan](anthropocene-enrichment-plan.md) |
 | 9 | `generate-network-infrastructure` | **Implemented** | Confirmed external-source contract, normal cloud/CDN site atlas, explicit CC BY-NC-SA 3.0 topology opt-in, physical/logical relation boundary, projection-safe paths, Izzi detiling, products, and limits are detailed in the [network-infrastructure implementation notes](network-infrastructure-implementation-notes.md) |
 
 The unnumbered `solar/high-energy`, `atmosphere/cloud`, and
@@ -190,7 +191,7 @@ The exact twelve-row catalogue, SVG layer contract, products, verification,
 and interpretation boundary are recorded in
 [`bathymetry-roulette-implementation-notes.md`](bathymetry-roulette-implementation-notes.md).
 
-### Stage 6: World Game resources
+### Stage 6a: World Game resources (historical method record)
 
 The evaluation found an inspectable primary scan for Fuller and McHale's 1963
 *Inventory of World Resources, Human Trends, and Needs*, but no licensed,
@@ -210,10 +211,41 @@ confirmed and implemented bounded product therefore:
   solar indicators as visibly separate, year- and source-labelled modern
   context rather than a continuation of the 1960 matrix.
 
-The archive findings, rights decision, exact 40-row data contract, modern
-source facts, collision layout, SVG grammar, easy workflow, re-audit procedure,
-and limitations are recorded in
-[`resources-implementation-notes.md`](resources-implementation-notes.md).
+This result is retained here only as the historical method and feasibility
+record. Stage 6b does not reuse its 1960 values, categories, representative
+leader points, profile, or rendering model. At the Stage 6b cutover, the old
+generated SVG/PDF/PNG files and generation rules are removed rather than kept
+as an opt-in compatibility product.
+
+### Stage 6b: current resources enrichment
+
+The re-evaluation concluded that “resources” is not one comparable scalar and
+must not be represented by a collection of country-leader points. Stage 6b is
+therefore planned as five target families:
+
+- `resources-energy` for capacity, generation, extraction, refining, and
+  explicitly scoped processing;
+- `resources-food` for crops, livestock, fisheries, aquaculture, and separately
+  defined dietary-energy or protein supply;
+- `resources-flora` for land cover, forest density and change, biome classes,
+  and sampling-aware plant biodiversity;
+- `resources-mineral` for current mine/refined production, reserves,
+  processing, and trade by commodity; and
+- `resources-human` for literacy, ISCED attainment, age structure, patents,
+  equality, mobility, and defensibly named quality-of-life measures.
+
+The canonical flora spelling is `resources-flora`; `ressources-flora` is a
+planned input alias only. Each family produces metric-specific artifacts so
+unlike units are not combined into an invented score. Country choropleths and
+global fields provide the non-sparse baseline; audited facilities, deposits,
+occurrences, and legal-policy observations are supplemental unless they pass a
+documented coverage gate.
+
+The proposed source catalogue, correction of travel/books/fracking claims,
+current critical-mineral shortlist, normalized schema, explicit acquisition
+workflow, implementation sequence, and release thresholds are recorded in the
+[`Resources Stage 6b enrichment plan`](resources-enrichment-plan.md). None of
+the proposed targets or v2 snapshots exists yet.
 
 ### Stage 8: Anthropocene observation atlas
 
@@ -248,6 +280,16 @@ The source matrix, exact station-record and precipitation formulas, snapshot
 audit, additional resource classifications, fire-source research, SVG layer
 grammar, refresh procedure, products, and interpretation limits are recorded
 in [`anthropocene-implementation-notes.md`](anthropocene-implementation-notes.md).
+
+The first Stage 8b increment retains that v1 product and adds a separate NOAA
+CPC analysis-field family. Complete-2025 and partial-2026 profiles serialize
+all resolution-3 global H3 cells, retain valid-day denominators, and distinguish
+an analyzed zero-record cell from missing/outside-domain cells. Year aliases
+generate all six projections. Observation refreshes now require credentialed
+NASA FIRMS input and pass reporting-date plus world-region audits; the checked
+v1 snapshot, which has zero FIRMS rows, is not relabelled as global. Remaining
+CAMS atmosphere, PurpleAir, and ocean decisions are tracked in the
+[`Stage 8b enrichment plan`](anthropocene-enrichment-plan.md).
 
 ### Stage 9: network infrastructure
 
@@ -488,7 +530,8 @@ CC BY-NC-SA 3.0 opt-ins and never dependencies of the normal family.
 `generate-anthropocene-artifacts` does the same for all six Anthropocene
 products.
 `generate-resources-artifacts` adds PDF and PNG exports to all six compressed
-World Game resources SVG products.
+Stage 6a resources SVG products. This transitional target is removed, not
+retained under a legacy name, when Stage 6b replaces the pass.
 `generate-bathymetry-roulette-artifacts` does the same for all six roulette
 bathymetry products.
 
@@ -524,10 +567,10 @@ make check-network-infrastructure-sources
 make check-network-infrastructure-topology-sources
 ```
 
-There is intentionally no `fetch-resources-data` target. Normal resources
-generation is offline from the checked factual profile; source-scan re-audits
-follow the manual authorized-copy workflow in the
-[resources notes](resources-implementation-notes.md).
+There is intentionally no `fetch-resources-data` target in the checked Stage
+6a implementation. The Stage 6b plan proposes explicit fetch, prepare, check,
+and promote operations while keeping normal generation offline; see the
+[resources enrichment plan](resources-enrichment-plan.md).
 
 `make check` compiles and runs the native algorithm/API suite, including
 generation-profile schema and alias tests. SVG generators instead run their
