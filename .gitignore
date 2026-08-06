@@ -69,8 +69,7 @@ __pycache__/
 /src.wasm/cartofreako-cahill-myriahedral.mjs
 /src.wasm/cartofreako-cahill-myriahedral.wasm
 
-# Resource SVGs are local Inkscape inputs; check in deterministic .svg.gz files.
-/assets.generated/svg/resources-*.svg
-
-# Don't check in generated assets
-#/assets.generated
+# Generated render trees and bundles are static release assets, not Git
+# content. Extracting a published bundle should leave the source tree clean.
+/assets.generated/
+/assets.generated.v*.tar.xz

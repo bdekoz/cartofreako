@@ -495,7 +495,7 @@ make GENERATION_PROFILE=generation-profile.local.json generation-plan
 make GENERATION_PROFILE=generation-profile.local.json
 ```
 
-### Complete checked-in artifact suite
+### Complete release artifact suite
 
 ```sh
 make all
@@ -505,7 +505,9 @@ This remains the release/review build. It creates the complete layered SVG,
 PDF, and opaque-PNG suite, including Stage 6b defaults plus slice and
 perspective families outside the configurable matrix. The aliases
 `generate-projections`, `generated-projections`, and `make-generated` retain
-the same full-suite behavior.
+the same full-suite behavior. Use `make assets-resilient` for the bounded
+parallel first pass plus serial completion workflow used to prepare a static
+release bundle.
 
 ### Projection, pass, and product families
 

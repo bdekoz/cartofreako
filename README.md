@@ -19,7 +19,7 @@ and artifacts:
 | `src.wasm/` | WebAssembly adapters, geographic input, smoke tests, and generated builds |
 | `tests/` | Standalone algorithm and API tests only |
 | `assets.static/` | Historical, reference, and downloaded source assets |
-| `assets.generated/` | Checked-in SVG (gzip-compressed for resources), PDF, and PNG renderings |
+| `assets.generated/` | Locally generated or release-extracted SVG, PDF, and PNG renderings |
 
 ## Build and test
 
@@ -88,6 +88,13 @@ slices, and two Myriahedral face-group slices as layered SVG, PDF, and opaque-wh
 make all
 ```
 
+For a release build, run the same graph with bounded concurrency, keep-going
+failure isolation, and an automatic serial completion pass:
+
+```sh
+make assets-resilient
+```
+
 On a memory-constrained machine, run the same complete artifact graph with
 only one recipe at a time. This remains serial even when an outer Make was
 started with `-j`:
@@ -97,7 +104,11 @@ make assets-single
 ```
 
 Outputs are organized under `assets.generated/svg/`, `assets.generated/pdf/`, and
-`assets.generated/png/`.
+`assets.generated/png/`. The
+[`v20260806` generated-assets release notes](docs/releases/v20260806.md)
+record the static-bundle manifest, render host, hardware sizing, verification,
+and source commit. Maintainers publish source tags and large generated bundles
+with the [release runbook](docs/releases/README.md).
 
 Astronomy generation is offline by default and uses a checked-in JSON profile
 as the authority for both the calculation timestamp and point of reference.

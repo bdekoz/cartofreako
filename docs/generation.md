@@ -64,6 +64,22 @@ Myriahedral face-group slices:
 make all
 ```
 
+The preferred long-running release workflow bounds its first pass to two
+concurrent recipes by default, keeps independent targets moving after a
+failure, and then reruns the unfinished graph with one active recipe:
+
+```sh
+make assets-resilient
+make ASSET_JOBS=4 assets-resilient  # only after sizing the host for four jobs
+```
+
+`ASSET_JOBS` affects only the keep-going first pass; the completion pass is
+always serial. PDF and PNG exports write a process-specific temporary file,
+require a nonempty result, and atomically rename it over the destination.
+`.DELETE_ON_ERROR` removes ordinary failed targets, while `make
+clean-failed-generated` removes zero-length PDF/PNG files and abandoned export
+temporaries without deleting successful artifacts.
+
 Use `make assets-single` for the identical artifact set with a forced
 single-job recursive build. It is the first workaround when concurrent
 generators or Inkscape exports exhaust memory, and it overrides an inherited
@@ -146,6 +162,7 @@ The default locations can be overridden:
 | `NETWORK_INFRASTRUCTURE_TOPOLOGY_PROFILE` | `assets.static/network-infrastructure/network-infrastructure-topology-profile.json` | Explicit TeleGeography topology layers, source pins, and CC BY-NC-SA 3.0 opt-in |
 | `INKSCAPE` | `inkscape` | Command-line PDF and PNG exporter |
 | `PNG_LONG_SIDE` | `3840` | Pixel count assigned to each PNG's longest side |
+| `ASSET_JOBS` | `2` | Concurrent recipes in the keep-going first phase of `assets-resilient`; its second phase is always serial |
 | `LABEL_FONT` | `atkinson_hyperlegible` | Installed font used for visible labels in graticule, astronomy, Cloud-atmosphere, Orbital Technosphere, resources, Anthropocene, network-swarm, network-infrastructure, and Bathymetry Roulette images |
 
 ### Generated label typography
@@ -324,14 +341,15 @@ The full generators are not part of `make check`; invoking a `generate-*`
 target both writes its artifact and runs that generator's embedded structural
 checks.
 
-The 133 standard products plus six opt-in topology products in each of
-`assets.generated/svg/`, `assets.generated/pdf/`, and `assets.generated/png/`
-are checked in; the 30 resource SVGs are represented by `.svg.gz` files in the
-SVG directory. This makes visual and XML diffs
-reviewable, but it also means that regenerating with a different GDAL, GEOS,
-or Inkscape version can produce ordering, coordinate, or rendering differences
-even though the input archive is pinned. Cloud-atmosphere artifacts are local,
-source-timed opt-in products and are not checked in by the standard suite.
+The 133 standard products plus six opt-in topology products can be generated
+in each of `assets.generated/svg/`, `assets.generated/pdf/`, and
+`assets.generated/png/`; the 30 resource products also have deterministic
+`.svg.gz` companions in the SVG directory. Large standard suites are released
+as versioned static bundles instead of being stored in Git. Regenerating with
+a different GDAL, GEOS, font, or Inkscape version can still produce ordering,
+coordinate, or rendering differences even though the input snapshots are
+pinned. Cloud-atmosphere artifacts remain local, source-timed opt-in products
+outside the standard suite.
 
 ## PDF and 4K PNG export
 

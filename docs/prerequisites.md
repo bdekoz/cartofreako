@@ -78,13 +78,51 @@ network-infrastructure site maps, six Bathymetry Roulette maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes slices, and two
 Myriahedral face-group slices, then invokes Inkscape to export all 133 SVG
 products as PDFs and 3840-pixel-long-side PNGs. The 30 resources SVGs are
-retained as deterministic `.svg.gz` archives instead of plain checked-in
-SVGs. It needs all native build and data-acquisition dependencies through H3
-and GEOS, the
+also retained as deterministic `.svg.gz` companions. It needs all native build
+and data-acquisition dependencies through H3 and GEOS, the
 profile-pinned external cloud/CDN checkout, plus Inkscape. The separately
 licensed TeleGeography topology product is not part of `make all`.
 Inkscape may be omitted only when invoking individual SVG generation targets
 or the offline `make check` suite.
+
+## Generated-asset hardware sizing
+
+Hardware requirements differ sharply between consuming a release bundle and
+regenerating it. The `v20260806` static asset is 846,260,036 bytes and expands
+to a 2,152,698,354-byte file payload. A download-and-extract workflow therefore
+needs at least 3.0 GB free while retaining both copies; reserve 4 GB for useful
+filesystem headroom. No particular CPU architecture or GPU is required to
+view the PDFs and opaque 3840-pixel PNGs.
+
+The release-qualified render host for that bundle was a Framework Desktop
+with an AMD Ryzen AI Max+ 395 and Radeon 8060S, 16 physical cores/32 threads,
+131,150,248 kB kernel-visible memory (about 125.1 GiB from a 128 GB-class
+configuration), and 8 GiB swap. It ran `make assets-resilient` with the
+Makefile's `ASSET_JOBS=2` and `PNG_LONG_SIDE=3840` defaults. The graphics
+processor is recorded for provenance; Inkscape and the native generators do
+not require GPU acceleration.
+
+The Makefile does not enable `-march=native`, so the reference host's AVX2 and
+AVX-512 flags are not requirements. A supported 64-bit C++20/GDAL/GEOS/H3 and
+Inkscape platform is the practical CPU boundary. Sixteen cores shorten the
+build but are not required by the two-job workflow.
+
+No smaller minimum RAM has been release-qualified. In particular, the largest
+SVG in `v20260806` is 118,097,662 bytes and Inkscape can use much more memory
+than the serialized input size. Use a 128 GB-class machine for the same
+release-production envelope, or measure and document a lower-memory host.
+`make assets-resilient` finishes its incomplete graph serially after a
+keep-going first pass; `make ASSET_JOBS=1 assets-resilient` and `make
+assets-single` avoid concurrent export peaks on smaller machines. Reserve at
+least 4 GB beyond the source and input-data checkouts for generated outputs and
+atomic export temporaries, plus about 0.85 GB when packaging the XZ file in the
+same workspace.
+
+See the [`v20260806` release notes](releases/v20260806.md) for the complete
+hardware record, byte manifest, validation results, and extraction procedure.
+The source-only checkout does not contain `assets.generated/`; extract the
+release asset before `make check` when satisfying its generated-resource gzip
+gate from the published bundle rather than by local regeneration.
 
 Cloud-atmosphere generation is an opt-in workflow outside `make all`. Its
 refresh step needs network access and a registered P-Tree account available
