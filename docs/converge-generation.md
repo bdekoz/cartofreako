@@ -238,3 +238,7 @@ Here are some issues
 - there was previous talk of coral bleaching and other signs of oceianic distress. Re-evaluate implementing these and or other inputs.
 
 Propose a plan for improving enrichment, update docs
+
+provide non-sparse data options
+
+generate anthropocene pass for both years: 2026 and 2025
