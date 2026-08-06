@@ -119,6 +119,25 @@ MYRIA_WEB_LAND := $(CK_WEB_LAND)
 MYRIA_WEB_SMOKE := $(WEB_DIR)/cahill-myriahedral-smoke.mjs
 MYRIA_WEB_MODULE := $(WEB_BUILD_DIR)/cartofreako-cahill-myriahedral.mjs
 MYRIA_WEB_WASM := $(WEB_BUILD_DIR)/cartofreako-cahill-myriahedral.wasm
+PROJECTIONS_WEB_SOURCE := $(WEB_DIR)/cartofreako-projections-web.cc
+PROJECTIONS_WEB_SMOKE := $(WEB_DIR)/cartofreako-projections-smoke.mjs
+PROJECTIONS_WEB_BROWSER_SMOKE := $(WEB_DIR)/cartofreako-browser-smoke.html
+PROJECTIONS_WEB_BROWSER_RUNNER := scripts/run-wasm-browser-smoke.py
+PROJECTIONS_WEB_MODULE := $(WEB_BUILD_DIR)/cartofreako-projections.mjs
+PROJECTIONS_WEB_WASM := $(WEB_BUILD_DIR)/cartofreako-projections.wasm
+PROJECTIONS_WEB_JS := \
+	$(WEB_DIR)/cartofreako-web.mjs \
+	$(WEB_DIR)/cartofreako-svg.mjs \
+	$(WEB_DIR)/cartofreako-canvas.mjs \
+	$(WEB_DIR)/cartofreako-d3.mjs \
+	$(WEB_DIR)/cartofreako-projections-worker.mjs \
+	$(WEB_DIR)/cartofreako-worker-client.mjs
+PROJECTION_RUNTIME_HEADERS := \
+	$(PROJECTION_SRC_DIR)/cart0freak0-projection-runtime.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-projection-slicing.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-projection-geometry.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-myriahedral-perspectives.h \
+	$(wildcard $(PROJECTION_SRC_DIR)/cart0freak0-myriahedral-perspective-*-tree.inc)
 
 GEOMETRY_GENERATOR := $(GENERATOR_SRC_DIR)/generate-geometry
 GRATICULE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-graticules
@@ -533,6 +552,7 @@ TEST_BINARIES := \
 	$(TEST_DIR)/test-myriahedral-projection-api \
 	$(TEST_DIR)/test-myriahedral-slicing \
 	$(TEST_DIR)/test-projection-generation-common \
+	$(TEST_DIR)/test-projection-runtime \
 	$(TEST_DIR)/test-star-x-projection-api \
 	$(TEST_DIR)/test-voronoi-projection-api
 
@@ -542,7 +562,7 @@ GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/generation-typography.h \
 	$(GENERATOR_SRC_DIR)/projection-generation-common.h \
 	$(GENERATOR_SRC_DIR)/myriahedral-perspective-generation.h \
-	$(wildcard $(GENERATOR_SRC_DIR)/myriahedral-perspective-*-tree.inc) \
+	$(PROJECTION_RUNTIME_HEADERS) \
 	$(PROJECTION_SRC_DIR)/a60-carto.h \
 	$(PROJECTION_SRC_DIR)/a60-carto-frame.h \
 	$(PROJECTION_SRC_DIR)/a60-carto-projection.h \
@@ -619,6 +639,8 @@ PUBLIC_TARGETS := all assets-single check check-prerequisite \
 	check-network-infrastructure-topology-sources \
 	wasm-cahill-keyes check-wasm-cahill-keyes \
 	wasm-cahill-myriahedral check-wasm-cahill-myriahedral \
+	wasm-projections check-wasm-projections \
+	check-wasm-projections-browser wasm check-wasm \
 	generate-geometry generate-graticules-ck generate-earth-ck \
 	generate-water-ck generate-4-slice generate-8-slice \
 	generate-ck-slices generate-projections generated-projections \
@@ -870,6 +892,10 @@ check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
 		$(TEST_DIR)/test-projection-generation-common.cc \
 		-o $(TEST_DIR)/test-projection-generation-common
 	$(TEST_DIR)/test-projection-generation-common
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$(TEST_DIR)/test-projection-runtime.cc \
+		-o $(TEST_DIR)/test-projection-runtime
+	$(TEST_DIR)/test-projection-runtime
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-star-x-projection-api.cc \
 		-o $(TEST_DIR)/test-star-x-projection-api
@@ -926,6 +952,35 @@ $(MYRIA_WEB_MODULE) $(MYRIA_WEB_WASM) &: \
 
 check-wasm-cahill-myriahedral: wasm-cahill-myriahedral
 	cd "$(WEB_BUILD_DIR)" && "$(NODE)" cahill-myriahedral-smoke.mjs
+
+wasm-projections: $(PROJECTIONS_WEB_MODULE) $(PROJECTIONS_WEB_WASM) \
+	$(PROJECTIONS_WEB_JS) $(PROJECTIONS_WEB_SMOKE)
+
+$(PROJECTIONS_WEB_MODULE) $(PROJECTIONS_WEB_WASM) &: \
+		$(PROJECTIONS_WEB_SOURCE) $(PROJECTION_RUNTIME_HEADERS)
+	mkdir -p "$(WEB_BUILD_DIR)"
+	EM_CACHE="$(EM_CACHE)" "$(EMXX)" "$(PROJECTIONS_WEB_SOURCE)" \
+		-I "$(PROJECTION_SRC_DIR)" \
+		-isystem "$(ALPHA60_SRC)" -isystem "$(IZZI_SRC)" \
+		-std=c++20 -O3 -Wall -Wextra -Wpedantic -Werror \
+		--bind --no-entry -fexceptions -sDISABLE_EXCEPTION_CATCHING=0 \
+		-sMODULARIZE=1 -sEXPORT_ES6=1 \
+		-sEXPORT_NAME=createCartofreakoProjectionModule \
+		-sENVIRONMENT=web,node -sALLOW_MEMORY_GROWTH=1 -sFILESYSTEM=0 \
+		-o "$(PROJECTIONS_WEB_MODULE)"
+
+check-wasm-projections: wasm-projections
+	cd "$(WEB_BUILD_DIR)" && "$(NODE)" cartofreako-projections-smoke.mjs
+
+check-wasm-projections-browser: wasm-projections \
+		$(PROJECTIONS_WEB_BROWSER_SMOKE) $(PROJECTIONS_WEB_BROWSER_RUNNER)
+	python3 "$(PROJECTIONS_WEB_BROWSER_RUNNER)" \
+		--browser "$(WEB_BROWSER)" "$(PROJECTIONS_WEB_BROWSER_SMOKE)"
+
+wasm: wasm-projections wasm-cahill-keyes wasm-cahill-myriahedral
+check-wasm: check-wasm-projections check-wasm-projections-browser \
+	check-wasm-cahill-keyes \
+	check-wasm-cahill-myriahedral
 
 $(GEOMETRY_GENERATOR): $(GENERATOR_SRC_DIR)/generate-geometry.cc \
 		$(GENERATOR_HEADERS)
@@ -1752,7 +1807,8 @@ clean:
 	$(RM) $(SGP4_OBJECT)
 	$(RM) $(GENERATED_SVGS) $(RESOURCES_SVG_ARCHIVES) \
 		$(CK_WEB_MODULE) $(CK_WEB_WASM) \
-		$(MYRIA_WEB_MODULE) $(MYRIA_WEB_WASM)
+		$(MYRIA_WEB_MODULE) $(MYRIA_WEB_WASM) \
+		$(PROJECTIONS_WEB_MODULE) $(PROJECTIONS_WEB_WASM)
 	$(RM) -r "$(GENERATED_DIR)/svg" "$(GENERATED_DIR)/png" \
 		"$(GENERATED_DIR)/pdf"
 	$(RM) -r "$(DOXYGEN_OUTPUT_DIR)"

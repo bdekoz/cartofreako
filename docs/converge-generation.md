@@ -1,3 +1,11 @@
+# Converged generation request ledger
+
+> This is the chronological request ledger, not current implementation
+> documentation. See the
+> [2026-08-06 convergence status](pages/converge-generation.status-20260806.md),
+> [Stage 10 WebAssembly implementation](pages/stage-10-webassembly.md), and
+> [Stage 11 documentation proposal](pages/stage-11-documentation-plan.md).
+
 Stage 4.1 development:
 
 Evaluate feasibility and propose a plan for a new generate pass for "space/astronomy" detailing natually-occuring stars, suns, comets, asteroids, planets, cosmic phenomena, etc, visible with instrumentation in the night sky located in
@@ -263,4 +271,3 @@ resources-human has: percentage of population that is literate, percentage of po
 Propose a plan for improving enrichment, update docs
 
 provide non-sparse data options
-

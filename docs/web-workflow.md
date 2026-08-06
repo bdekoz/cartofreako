@@ -19,13 +19,13 @@ Emscripten. The example:
 - turns the generated SVG string into a Blob URL; and
 - layers the SVG over the raster in one responsive 16:9 viewport.
 
-This is an illustrative, copyable raster-overlay workflow. The production
-adapters in [`src.wasm/`](../src.wasm/) now implement both Cahill-Keyes and
-Myriahedral and are documented by that directory's
-[README](../src.wasm/README.md). The production Myriahedral option generates
-only `ocean` and `land`; this separate example keeps its graticule and city
-anchors over the checked-in raster. The example filenames and outputs below
-remain local so they cannot collide with the production module.
+This is an illustrative, copyable raster-overlay workflow. The current
+[all-projection quick start](pages/webassembly-quick-start.md) covers the
+production runtime, typed geometry, slices, Canvas/SVG/D3, and workers. The
+older Myriahedral compatibility option still generates only `ocean` and
+`land`; this separate example keeps its graticule and city anchors over the
+checked-in raster. The example filenames and outputs below remain local so
+they cannot collide with either production module.
 
 The build produces:
 

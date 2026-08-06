@@ -60,16 +60,21 @@ make check
 The checks build in `tests/` with C++20 and strict compiler warnings. See
 [`index.md`](index.md#choose-a-projection) to select and use a projection.
 
-The optional browser builds include Cahill-Keyes and a Myriahedral base-map
-option restricted to the `ocean` and `land` layers:
+The production browser build exposes all six projections, topology-safe
+GeoJSON, slices, workers, and SVG/Canvas/D3 adapters. The original
+Cahill-Keyes and ocean/land-only Myriahedral builds remain compatibility
+targets:
 
 ```sh
+make check-wasm-projections
+make check-wasm-projections-browser
 make check-wasm-cahill-keyes
 make check-wasm-cahill-myriahedral
 ```
 
-See the [`src.wasm` README](src.wasm/README.md) for their JavaScript APIs,
-layer contracts, and build requirements.
+See the [web-developer quick start](docs/pages/webassembly-quick-start.md) and
+[`src.wasm` README](src.wasm/README.md) for API, deployment paths, slices,
+compatibility contracts, and build requirements.
 
 Generate 24 production whole-earth maps, 12 timestamped astronomy maps, 12
 timestamped Orbital Technosphere maps, 30 Stage 6b resources maps, six

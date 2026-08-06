@@ -1,131 +1,213 @@
-# WebAssembly renderers
+# WebAssembly projection runtime
 
 [Documentation index](../index.md) ·
-[Myriahedral implementation notes](../docs/myriahedral-implementation-notes.md#webassembly-land-and-ocean-option) ·
-[Illustrative Myriahedral overlay](../docs/web-workflow.md)
+[Web-developer quick start](../docs/pages/webassembly-quick-start.md) ·
+[Stage 10 implementation notes](../docs/pages/stage-10-webassembly.md) ·
+[Slice examples](examples/README.md)
 
-This directory contains production Emscripten/Embind adapters for the C++20
-Cahill-Keyes and Myriahedral projections. Both expose a variable-size forward
-projection and `generateBaseMapSvg(landGeoJson)` to JavaScript.
+The production browser runtime exposes all six Cartofreako projection models
+through one ES-module API. It transforms points, lines, polygon rings,
+multi-geometries, finite carrier faces, and slices into a shared typed-array
+command buffer. The same buffer feeds the supplied SVG, Canvas, and D3 stream
+adapters, either on the main thread or in a Web Worker.
 
-| Adapter | Frame | Generated SVG layers | Build target |
-| --- | --- | --- | --- |
-| [`cahill-keyes-web.cc`](cahill-keyes-web.cc) | `2:1` | ocean faces, graticules, land | `make check-wasm-cahill-keyes` |
-| [`cahill-myriahedral.cc`](cahill-myriahedral.cc) | `16:9` | **ocean and land only** | `make check-wasm-cahill-myriahedral` |
-
-The Myriahedral choice is intentionally a base-map option. It does not
-compute or serialize graticules, bathymetry, rivers, lakes, ice, minor
-islands, reefs, playas, or coastlines as separate layers. Its SVG has exactly
-these two groups, in paint order:
-
-```xml
-<g id="ocean">...</g>
-<g id="land">...</g>
-```
+The older Cahill-Keyes and land/ocean-only Myriahedral modules remain available
+as compatibility builds. New applications should start with
+[`cartofreako-web.mjs`](cartofreako-web.mjs).
 
 ## Build and test
 
 From the repository root:
 
 ```sh
-make wasm-cahill-keyes
-make check-wasm-cahill-keyes
-make wasm-cahill-myriahedral
-make check-wasm-cahill-myriahedral
+make wasm-projections
+make check-wasm-projections
+make check-wasm-projections-browser
 ```
 
-The targets write ES-module loaders and their companion binaries beside the
-sources:
+`check-wasm-projections` exercises all six models, all checked Myriahedral
+layouts, points, lines, holes, multipolygons, carrier geometry, all four slice
+kinds, SVG, Canvas, D3 replay, and the common Cahill-Keyes/Myriahedral Natural
+Earth base maps under Node. The browser check serves the files with the proper
+MIME types and runs the module, Canvas adapter, slices, and worker in headless
+Chrome/Chromium.
 
-```text
-cartofreako-cahill-keyes.mjs
-cartofreako-cahill-keyes.wasm
-cartofreako-cahill-myriahedral.mjs
-cartofreako-cahill-myriahedral.wasm
+Build and check every new and compatibility module with:
+
+```sh
+make wasm
+make check-wasm
 ```
 
-The Node smoke tests check reference coordinates, frame scaling, invalid
-input, finite SVG output, and seam safety. The Myriahedral test additionally
-requires all 5,120 terminal ocean faces, exactly two SVG groups, no optional
-physical layers, and land segments short enough to rule out cut-spanning
-closing chords.
+The generated files are intentionally untracked build artifacts.
 
-## Myriahedral JavaScript API
+## Runtime paths
+
+Deploy these files at the same relative paths, or provide Emscripten's
+`locateFile` option when the binary lives elsewhere:
+
+| Path | Role |
+| --- | --- |
+| `src.wasm/cartofreako-projections.mjs` | Generated Emscripten ES-module loader |
+| `src.wasm/cartofreako-projections.wasm` | Generated all-projection binary |
+| `src.wasm/cartofreako-web.mjs` | Stable high-level API and GeoJSON flattener |
+| `src.wasm/cartofreako-svg.mjs` | SVG path/document and base-map renderer |
+| `src.wasm/cartofreako-canvas.mjs` | Canvas and OffscreenCanvas command replay |
+| `src.wasm/cartofreako-d3.mjs` | D3-compatible synchronous stream adapter |
+| `src.wasm/cartofreako-projections-worker.mjs` | ES-module worker hosting one WASM runtime |
+| `src.wasm/cartofreako-worker-client.mjs` | Promise-based main-thread worker client |
+
+Source and verification paths are:
+
+| Path | Role |
+| --- | --- |
+| `src.wasm/cartofreako-projections-web.cc` | Thin Embind boundary for the shared C++ runtime |
+| `src.projections/cart0freak0-projection-runtime.h` | Projection/layout registry, frame validation, native cells, and seam routing |
+| `src.projections/cart0freak0-projection-geometry.h` | Flat geometry protocol, sampling, clipping, and command buffers |
+| `src.projections/cart0freak0-projection-slicing.h` | Generic slice descriptors and built-in catalogs |
+| `tests/test-projection-runtime.cc` | Native all-model geometry and slice checks |
+| `src.wasm/cartofreako-projections-smoke.mjs` | Node integration smoke test |
+| `src.wasm/cartofreako-browser-smoke.html` | Real-browser main-thread/worker smoke page |
+| `scripts/run-wasm-browser-smoke.py` | Ephemeral local server and Chrome DevTools runner |
+
+Serve `.mjs` as JavaScript and `.wasm` as `application/wasm`. Do not open the
+examples through `file://`; module and WASM loading require HTTP(S).
+
+## Minimal API
 
 ```js
-import createModule from './cartofreako-cahill-myriahedral.mjs';
+import createCartofreako from './cartofreako-web.mjs';
 
-const module = await createModule();
-const response = await fetch('./cartofreako-cahill-keyes-land-110m.geojson');
-const land = await response.json();
+const runtime = await createCartofreako();
+const projection = runtime.createProjection({
+  id: 'dymaxion',
+  width: 1200
+});
 
-const projection = new module.MyriahedralProjection(1920, 1080);
-const newYork = projection.project(40.7128, -74.0060);
-const svg = projection.generateBaseMapSvg(land);
+const tokyo = projection.project(139.6917, 35.6895); // longitude, latitude
+const geometry = projection.projectGeometry(geojson, {
+  tolerancePx: 0.35,
+  slice: null
+});
 
-projection.delete();
+console.log(runtime.manifest, runtime.licenses);
+projection.dispose();
 ```
 
-Any finite, positive `16:9` frame is valid. The SVG root records
-`data-layers="ocean land"` and remains transparent outside the unfolded net.
-The ocean path is assembled directly from the registered planar triangles in
-the selected fixed layout.
+Omit `height` to derive it from the selected projection's exact native frame
+ratio. If both dimensions are supplied, the C++ constructor rejects an
+incorrect ratio. Unlike the two compatibility adapters, the high-level
+`project(longitude, latitude)` method follows GeoJSON coordinate order.
 
-### Filled-land cuts
+Available reference identifiers are:
 
-The shared geographic input was originally clipped into five non-wrapping
-Cahill-Keyes longitude bands. Those pieces still form the complete land
-union, and the Myriahedral adapter ignores their `ck_band` metadata.
+```text
+cahill-keyes  authagraph  dymaxion  myriahedral  star-x  voronoi
+```
 
-Closing those polygons after projecting their vertices directly would draw
-false fills across thousands of Myriahedral cuts. The WASM adapter instead
-uses the same strategy as the native filled-area generator:
+The checked alternate layouts are `myriahedral-americas`,
+`myriahedral-atlantic`, `myriahedral-afro-eur-asia`,
+`myriahedral-pacific`, and `myriahedral-antarctic`.
 
-1. clip each geographic ring to a five-degree longitude/latitude cell;
-2. segment cell edges at no more than half-degree intervals;
-3. collect every terminal face sampled by that cell;
-4. map the cell geometry through each face's central gnomonic transform; and
-5. clip the result to that face's exact planar triangle.
+## Command-buffer ABI 1
 
-The output pieces share an `evenodd` land path. A same-color hairline stroke
-covers antialiasing cracks between retained neighboring pieces without
-connecting geometric cuts. This processing is implemented in C++ and needs
-no GDAL, GEOS, S2, Boost, or virtual filesystem in the browser.
+`projectGeometry()` accepts GeoJSON or the already flattened form emitted by
+`flattenGeoJSON()`. Its output owns normal JavaScript typed arrays; no view
+points into growable WASM memory.
 
-## Cahill-Keyes geographic source
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `coordinates` | `Float64Array` | Interleaved local output `x,y` pairs |
+| `partOffsets` | `Uint32Array` | Point offsets; length is part count plus one |
+| `partTypes` | `Uint8Array` | `0` point, `1` line, `2` ring |
+| `featureIds` | `Uint32Array` | Original flattened GeoJSON feature index |
+| `nativeCells` | `Uint32Array` | Canonical topology cell for each output part |
+| `componentIds` | `Uint32Array` | Disconnected projected component identifier |
+| `ringRoles` | `Uint8Array` | `0` none, `1` exterior, `2` hole |
+| `closed` | `Uint8Array` | Whether a renderer closes the part |
+| `frame` | object | Source origin plus local output width and height |
+| `diagnostics` | object | Sampling, transition, cut, wrap, clip, and drop counts |
 
+GeoJSON is flattened in JavaScript before one batched call into WASM. Filled
+Cahill-Keyes/Star-X rings are clipped to their geographic octants;
+Dymaxion/Myriahedral/Voronoi rings are transformed face-locally and clipped to
+exact registered planar triangles; AuthaGraph rings are clipped in its
+periodic finite carrier. Exterior and hole pieces retain their roles and are
+rendered with the even-odd rule.
+
+## Slices
+
+A slice is always applied to a valid complete carrier. The slice output is
+translated into local coordinates by subtracting `sourceView.x/y`; it is never
+passed back as a new, wrong-ratio projection frame.
+
+The four kinds are:
+
+| Kind | Stage | Meaning |
+| --- | --- | --- |
+| `carrier-viewport` | after projection | Rectangular view of the finite carrier |
+| `native-cell-mask` | topology/face stage | Exact retained octants, sectors, or faces |
+| `geographic-preclip` | before projection | WGS 84 source subset |
+| `planar-tile` | after projection | Non-wrapping finite-carrier delivery tile |
+
+Named catalogs reproduce the four Cahill-Keyes strips, eight exact octants,
+and two Myriahedral reference-layout face groups:
+
+```js
+const slices = projection.listSlices();
+const result = projection.projectGeometry(geojson, {slice: 'ck-octant-7'});
+
+const geographic = projection.projectGeometry(geojson, {
+  slice: {kind: 'geographic-preclip', bounds: [100, 0, 150, 50]}
+});
+
+const tile = projection.projectGeometry(geojson, {
+  slice: {kind: 'planar-tile', view: [300, 100, 400, 300]}
+});
+```
+
+See the [runnable slice examples](examples/README.md) and the
+[quick start](../docs/pages/webassembly-quick-start.md#use-a-slice) for exact
+carrier/ocean plus feature usage.
+
+## Compatibility modules
+
+These Stage 4.3 targets and APIs remain unchanged:
+
+| Adapter | Generated paths | JavaScript class | Layers |
+| --- | --- | --- | --- |
+| `cahill-keyes-web.cc` | `cartofreako-cahill-keyes.mjs/.wasm` | `CahillKeyesProjection` | ocean faces, graticules, land |
+| `cahill-myriahedral.cc` | `cartofreako-cahill-myriahedral.mjs/.wasm` | `MyriahedralProjection` | exactly ocean and land |
+
+The shared all-projection runtime can reproduce both ocean/land base maps with
+`carrierGeometry()` plus `projectGeometry()` and `renderBaseMapSvg()`. Keep the
+compatibility modules only for older callers that require
+`generateBaseMapSvg(landGeoJson)` or its established serialized styling.
+
+The checked-in
 [`cartofreako-cahill-keyes-land-110m.geojson`](cartofreako-cahill-keyes-land-110m.geojson)
-derives from Natural Earth's public-domain `ne_110m_land` physical-vector
-release. The downloaded source archive used here has SHA-256:
+derives from Natural Earth's public-domain `ne_110m_land` release. Its five
+`ck_band` pieces remain a complete WGS 84 land union; the all-projection
+runtime ignores that compatibility property.
 
-```text
-1926c621afd6ac67c3f36639bb1236134a48d82226dc675d3e3df53d02d2a3de
-```
+## Boundaries and licenses
 
-Source URL:
+ABI 1 has no inverse projection. For picking, retain feature IDs and build a
+planar index over the projected command buffer. There is no built-in WebGL
+triangulator or XYZ geographic tile scheme; finite-carrier planar tiles are
+the supported delivery unit. Input polygon edges should follow RFC 7946's
+antimeridian-cut guidance.
 
-```text
-https://naciscdn.org/naturalearth/110m/physical/ne_110m_land.zip
-```
-
-Before export, GDAL clipped the geographic polygons at Cahill-Keyes cut
-meridians `-111`, `-21`, `69`, and `159` degrees. Coordinates remain WGS 84
-longitude/latitude. Each polygon feature carries a zero-based `ck_band`
-property; the Cahill-Keyes adapter uses it to bias an exact eastern-cut vertex
-west by `1e-7` degrees and prevent a false Antarctica chord.
-
-The native Cahill-Keyes forward construction derives from
-`MegamapMaker-prep9.pl` by Mary Jo Graça and Gene Keyes. Its non-commercial
-attribution terms are recorded in
-[`cart0freak0-cahill-keyes.h`](../src.projections/cart0freak0-cahill-keyes.h);
-commercial users should contact Gene Keyes.
-
-The [illustrative Myriahedral workflow](../docs/web-workflow.md) remains useful
-when a page needs a raster-backed graticule and city-anchor overlay. It is a
-separate example, not the land-and-ocean production base-map adapter above.
+The runtime manifest publishes the repository's GPL-3.0-or-later license and
+the additional Cahill-Keyes/Star-X notice. The Cahill-Keyes forward
+construction derives from work by Mary Jo Graça and Gene Keyes, distributed
+for non-commercial use with attribution; commercial users should contact Gene
+Keyes. Natural Earth is public domain and applies only when that optional data
+asset is deployed.
 
 ---
 
 [Documentation index](../index.md) ·
-[Myriahedral implementation notes](../docs/myriahedral-implementation-notes.md#webassembly-land-and-ocean-option) ·
-[Illustrative Myriahedral overlay](../docs/web-workflow.md)
+[Web-developer quick start](../docs/pages/webassembly-quick-start.md) ·
+[Stage 10 implementation notes](../docs/pages/stage-10-webassembly.md) ·
+[Slice examples](examples/README.md)

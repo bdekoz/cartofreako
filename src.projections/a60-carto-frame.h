@@ -19,6 +19,7 @@
 #ifndef a60_CARTOGRAPHY_FRAME_H
 #define a60_CARTOGRAPHY_FRAME_H 1
 
+#include <a60-numeric.h>
 #include <a60-svg.h>
 
 namespace a60::carto {
@@ -79,6 +80,7 @@ struct frame
   : frame_area(f.frame_area), moriginx(x), moriginy(y) { }
 
   frame(const frame&) = default;
+  frame& operator=(const frame&) = default;
 
   void
   center(const frame& pf)

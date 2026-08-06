@@ -16,7 +16,7 @@ WebAssembly requirements.
 | --- | --- | --- |
 | [`src.projections/`](src.projections/) | Projection interface, frame abstraction, and native implementations | [`a60-carto-projection.h`](src.projections/a60-carto-projection.h) |
 | [`src.generate/`](src.generate/) | Native SVG generators and their shared generation support | [Generation guide](docs/generation.md) |
-| [`src.wasm/`](src.wasm/) | Browser adapters, seam-prepared input, smoke tests, and generated WASM builds | [WebAssembly renderer README](src.wasm/README.md) |
+| [`src.wasm/`](src.wasm/) | All-projection browser runtime, workers, SVG/Canvas/D3 adapters, compatibility modules, examples, and smoke tests | [WebAssembly quick start](docs/pages/webassembly-quick-start.md) |
 | [`tests/`](tests/) | Standalone algorithm and public-API tests | [`make check`](Makefile) |
 | [`assets.static/`](assets.static/) | Source plates, historical implementations, reference rasters, and downloaded geographic data | [Myriahedral reconstruction assets](assets.static/myriahedral/README.md) |
 | [`assets.generated/`](assets.generated/) | Generated SVG (`.svg.gz` for resources), PDF, and opaque PNG deliverables | [Preview matrix](#generated-artifact-previews) |
@@ -48,7 +48,9 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Cloud/CDN site atlas and opt-in cable/exchange topology | [Network-infrastructure implementation notes](docs/network-infrastructure-implementation-notes.md) |
 | Monochrome, explicitly varied roulette-line-field bathymetry generation | [Bathymetry Roulette implementation notes](docs/bathymetry-roulette-implementation-notes.md) |
 | Natural Earth acquisition, digest, and license | [Natural Earth data note](docs/natural-earth-10m-physical-vectors.md) |
-| Production Cahill-Keyes and Myriahedral browser renderers | [WebAssembly renderer README](src.wasm/README.md) |
+| All-six-projection browser runtime, slices, workers, SVG, Canvas, and D3 | [WebAssembly quick start](docs/pages/webassembly-quick-start.md) and [runtime reference](src.wasm/README.md) |
+| Stage 10 browser architecture and verification | [Stage 10 implementation notes](docs/pages/stage-10-webassembly.md) |
+| Proposed nested documentation structure | [Stage 11 documentation plan](docs/pages/stage-11-documentation-plan.md) |
 | Illustrative raster-backed Myriahedral overlay | [WebAssembly workflow](docs/web-workflow.md) and [complete example](docs/web-example.md) |
 
 Each projection has three complementary documents. Context explains the
@@ -425,6 +427,17 @@ the `voronoi_source` preset are in the
 | [`tests/test-cahill-keyes-slicing.cc`](tests/test-cahill-keyes-slicing.cc) | Four-strip and exact-octant geometry, metadata, SVG linkage, physical-size, and invalid-carrier tests |
 | [`src.projections/a60-carto-projection-dymaxion.h`](src.projections/a60-carto-projection-dymaxion.h) | Exact Fuller face transform, 23-piece Airocean net, frame validation, public API, factory, and native-size preset |
 | [`tests/test-dymaxion-projection-api.cc`](tests/test-dymaxion-projection-api.cc) | Dymaxion edge scale, Gray reference coordinates, topology, variable-frame, domain, and API tests |
+| [`src.projections/cart0freak0-projection-runtime.h`](src.projections/cart0freak0-projection-runtime.h) | All-model registry, layouts, frame validation, native-cell classification, and shared seam-safe paths |
+| [`src.projections/cart0freak0-projection-geometry.h`](src.projections/cart0freak0-projection-geometry.h) | Batched flat geometry protocol, adaptive sampling, filled clipping, carrier geometry, and ABI 1 buffers |
+| [`src.projections/cart0freak0-projection-slicing.h`](src.projections/cart0freak0-projection-slicing.h) | Generic viewport, native-cell, geographic, and planar-tile descriptors plus CK/Myria catalogs |
+| [`src.wasm/cartofreako-projections-web.cc`](src.wasm/cartofreako-projections-web.cc) | Thin all-projection Emscripten/Embind boundary |
+| `src.wasm/cartofreako-projections.mjs` / `.wasm` | Generated all-projection ES-module loader and companion binary from `make wasm-projections` |
+| [`src.wasm/cartofreako-web.mjs`](src.wasm/cartofreako-web.mjs) | Stable high-level runtime, projection lifecycle, and GeoJSON flattener |
+| [`src.wasm/cartofreako-svg.mjs`](src.wasm/cartofreako-svg.mjs) | Shared command-buffer SVG renderer |
+| [`src.wasm/cartofreako-canvas.mjs`](src.wasm/cartofreako-canvas.mjs) | Shared command-buffer Canvas/OffscreenCanvas renderer |
+| [`src.wasm/cartofreako-d3.mjs`](src.wasm/cartofreako-d3.mjs) | D3-compatible topology-safe stream adapter |
+| [`src.wasm/cartofreako-projections-worker.mjs`](src.wasm/cartofreako-projections-worker.mjs) | Module-worker WASM host and transferable buffer protocol |
+| [`tests/test-projection-runtime.cc`](tests/test-projection-runtime.cc) | Native all-model buffers, holes, multipolygons, carriers, and slices |
 | [`src.wasm/cahill-keyes-web.cc`](src.wasm/cahill-keyes-web.cc) | Emscripten/Embind adapter that projects points and generates the browser SVG with the native C++20 Cahill-Keyes implementation |
 | [`src.wasm/cartofreako-cahill-keyes.mjs`](src.wasm/cartofreako-cahill-keyes.mjs) | Generated ES-module loader for the Cahill-Keyes WebAssembly binary |
 | [`src.wasm/cartofreako-cahill-keyes.wasm`](src.wasm/cartofreako-cahill-keyes.wasm) | Generated Cahill-Keyes WebAssembly binary |
@@ -528,7 +541,7 @@ the `voronoi_source` preset are in the
 | [`docs/natural-earth-10m-physical-vectors.md`](docs/natural-earth-10m-physical-vectors.md) | Natural Earth source, checksum, extracted-dataset, and licensing note |
 | [`src.projections/cart0freak0-myriahedral.h`](src.projections/cart0freak0-myriahedral.h) | Myriahedral mesh, unfolding, forward transform, frame validation, API, and source-raster preset |
 | [`src.projections/cart0freak0-myriahedral-tree.inc`](src.projections/cart0freak0-myriahedral-tree.inc) | Compact fixed parent tree for the 5120-face net |
-| [`src.generate/myriahedral-perspective-generation.h`](src.generate/myriahedral-perspective-generation.h) | Five exploratory tree configurations, raw bounds, registrations, and lazy layouts |
+| [`src.projections/cart0freak0-myriahedral-perspectives.h`](src.projections/cart0freak0-myriahedral-perspectives.h) | Five exploratory tree configurations, raw bounds, registrations, and lazy layouts shared by native and WASM clients |
 | [`assets.static/myriahedral/perspective-configurations.json`](assets.static/myriahedral/perspective-configurations.json) | Machine-readable Myriahedral preprocessing and perspective metadata |
 | [`src.projections/cart0freak0-myriahedral-slicing.h`](src.projections/cart0freak0-myriahedral-slicing.h) | Five-hinge semantic partition, exact face masks, SVG wrappers, and validation |
 | [`tests/test-myriahedral-projection-api.cc`](tests/test-myriahedral-projection-api.cc) | Myriahedral topology, reference-coordinate, variable-frame, domain, and API tests |

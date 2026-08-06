@@ -99,7 +99,7 @@
       "rotation_selection": "largest centered 16:9 occupancy with local north up and east right near 0N 0E",
       "raw_bounds": [-4.120600449364141, -2.402506571690628, 2.9997163078759614, 1.9224228381356712],
       "tree_sha256": "a0c22c68f9c48a7f0d11d802c42702660f037220dde29372bf6f4a7e31b12a2c",
-      "embedded_parent_data": "src.generate/myriahedral-perspective-americas-tree.inc",
+      "embedded_parent_data": "src.projections/cart0freak0-myriahedral-perspective-americas-tree.inc",
       "embedded_parent_sha256": "30dc362622ed5ee971a62509ba4721df8bde67c4fcf599800808ae7f27381dbb"
     },
     {
@@ -123,7 +123,7 @@
       "rotation_selection": "largest centered 16:9 occupancy with local north up and east right near 0N 0E",
       "raw_bounds": [-2.7488319467091444, -3.4832056483272673, 3.1859146167774228, 1.6607341095728247],
       "tree_sha256": "ded9c5b12a71eddb04ab028b51f8a98416f563eb3b9efeac79ae034bbe2bcad5",
-      "embedded_parent_data": "src.generate/myriahedral-perspective-atlantic-tree.inc",
+      "embedded_parent_data": "src.projections/cart0freak0-myriahedral-perspective-atlantic-tree.inc",
       "embedded_parent_sha256": "5af1647356663ee9affd7d7c87eacd8a3ed2575952a5c9b882c2e149f0b964dd"
     },
     {
@@ -147,7 +147,7 @@
       "rotation_selection": "largest centered 16:9 occupancy with local north up and east right near 0N 0E",
       "raw_bounds": [-3.8222780456944685, -3.0183800092019233, 2.0414123593593536, 2.3162192769933005],
       "tree_sha256": "3a62d8d2addae901944a776f4341b0776eb9ad89e758100f3ff3f76b62e6f499",
-      "embedded_parent_data": "src.generate/myriahedral-perspective-afro-eur-asia-tree.inc",
+      "embedded_parent_data": "src.projections/cart0freak0-myriahedral-perspective-afro-eur-asia-tree.inc",
       "embedded_parent_sha256": "a802f449429e340f7461ee665d67a56a742433ece4c86e18e5c71bdd2d7e3471"
     },
     {
@@ -171,7 +171,7 @@
       "rotation_selection": "largest centered 16:9 occupancy with local north up and east right near 0N 0E",
       "raw_bounds": [-3.3202431859518331, -2.561948089153983, 4.1983393519258669, 2.4960126305827903],
       "tree_sha256": "b3acc26737648b70ad649a52c254f3b4265aff6053e14fae22fd6b18faff4744",
-      "embedded_parent_data": "src.generate/myriahedral-perspective-pacific-tree.inc",
+      "embedded_parent_data": "src.projections/cart0freak0-myriahedral-perspective-pacific-tree.inc",
       "embedded_parent_sha256": "b0350cd818f935685f2e85aebd927ac418ca5bcd0f310b6164d8e85215aa132f"
     },
     {
@@ -195,7 +195,7 @@
       "rotation_selection": "largest centered 16:9 occupancy with local north up and east right near 0N 0E",
       "raw_bounds": [-4.9728021838085237, -3.8525081071848595, 1.6145189107314191, 0.80794382518396302],
       "tree_sha256": "6eb3c760cdf927669d97eacea2816dd4ccf430f140724fb8f21135d930b98151",
-      "embedded_parent_data": "src.generate/myriahedral-perspective-antarctic-tree.inc",
+      "embedded_parent_data": "src.projections/cart0freak0-myriahedral-perspective-antarctic-tree.inc",
       "embedded_parent_sha256": "05fd9fde482bf9f0ec9c702fe182a2c9f35c8a9f5e725348a8036c59eddc5d3f"
     }
   ]

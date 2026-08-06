@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cartofreako browser smoke test</title>
+</head>
+<body>
+  <main>
+    <h1>Cartofreako browser smoke test</h1>
+    <canvas id="map" width="440" height="248"></canvas>
+    <pre id="result" data-status="running">RUNNING</pre>
+  </main>
+  <script type="module">
+    import createCartofreako from './cartofreako-web.mjs';
+    import {drawCommandBuffer} from './cartofreako-canvas.mjs';
+    import CartofreakoWorkerClient from './cartofreako-worker-client.mjs';
+
+    const result = document.querySelector('#result');
+    const requireCondition = (condition, message) => {
+      if (!condition) throw new Error(message);
+    };
+
+    try {
+      const runtime = await createCartofreako();
+      requireCondition(runtime.abiVersion === 1, 'wrong ABI');
+      requireCondition(new Set(runtime.manifest.map(({family}) => family)).size === 6,
+        'missing projection family');
+      for (const id of ['cahill-keyes', 'authagraph', 'dymaxion',
+                         'myriahedral', 'star-x', 'voronoi']) {
+        const projection = runtime.createProjection({id, width: 440});
+        const point = projection.project(139.6917, 35.6895);
+        requireCondition(Number.isFinite(point.x) && Number.isFinite(point.y),
+          `${id} point is not finite`);
+        projection.dispose();
+      }
+
+      const projection = runtime.createProjection({id: 'myriahedral', width: 440});
+      const geometry = projection.projectGeometry({
+        type: 'Polygon',
+        coordinates: [[[-10, -10], [10, -10], [10, 10], [-10, 10], [-10, -10]]]
+      });
+      requireCondition(geometry.partTypes.length > 0, 'main-thread geometry is empty');
+      drawCommandBuffer(document.querySelector('#map').getContext('2d'), geometry);
+      projection.dispose();
+
+      const worker = new CartofreakoWorkerClient();
+      const workerManifest = await worker.manifest();
+      requireCondition(workerManifest.abiVersion === 1, 'worker ABI is wrong');
+      const land = await fetch('./cartofreako-cahill-keyes-land-110m.geojson')
+        .then(response => response.json());
+      const workerGeometry = await worker.projectGeometry(
+        {id: 'cahill-keyes', width: 440},
+        land,
+        {slice: 'ck-strip-1'}
+      );
+      requireCondition(workerGeometry.partTypes.length > 20, 'worker Natural Earth geometry is empty');
+      requireCondition(workerGeometry.frame.width === 110, 'worker slice frame is wrong');
+      worker.terminate();
+
+      result.dataset.status = 'pass';
+      result.textContent = `PASS ABI ${runtime.abiVersion}; six projections; worker; Canvas; slices`;
+    } catch (error) {
+      result.dataset.status = 'fail';
+      result.textContent = `FAIL ${error.stack ?? error}`;
+    }
+  </script>
+</body>
+</html>

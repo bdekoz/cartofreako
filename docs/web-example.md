@@ -10,11 +10,11 @@ Myriahedral projection to WebAssembly, generating a projection overlay in the
 browser, and loading the checked-in projection image beneath it.
 
 The files shown here are examples to create locally; they are not additional
-`src.wasm/` products. The production
-[WebAssembly renderers](../src.wasm/README.md) include a separate
-Myriahedral base-map adapter that computes only `ocean` and `land`. This
-example instead demonstrates graticules and city anchors over the checked-in
-raster.
+`src.wasm/` products. Start new applications with the production
+[all-projection quick start](pages/webassembly-quick-start.md). A separate
+Myriahedral compatibility adapter still computes only `ocean` and `land`;
+this example instead demonstrates graticules and city anchors over the
+checked-in raster.
 
 The target frame is exactly `1920 x 1080`. The source raster is `4480 x 2520`,
 so both canvases are 16:9 and the browser scales the raster uniformly by

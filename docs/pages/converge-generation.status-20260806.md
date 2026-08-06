@@ -5,9 +5,10 @@
 **Related decision record:** [`docs/generation-methods.md`](../generation-methods.md)
 
 > **Snapshot scope:** this review describes the current working tree on the
-> status date, including work not necessarily committed to Git. The full
-> `make check` suite passed in this working tree during the immediately
-> preceding Stage 8b work; this report adds documentation only.
+> status date, including work not necessarily committed to Git. Stage 10 was
+> implemented after the initial audit on the same date; this report now links
+> to that implementation record. The historical Stage 1–9 evaluation below is
+> otherwise retained.
 
 ## Executive assessment
 
@@ -20,22 +21,25 @@ The concise verdict is:
 
 - the ten original stage requests through Stage 9 have concrete
   implementations, documentation, build integration, and tests, although the
-  old Stage 6 resource product is now intentionally scheduled for retirement;
+  old Stage 6 resource interpretation is now intentionally historical and
+  superseded by Stage 6b;
 - Stage 7 implements projection/pass selection, but not literal selection of
   semantic layers inside an SVG;
 - Stage 8b is partially complete: the global temperature field and global
   FIRMS release gate are implemented, while CAMS, PurpleAir, and ocean themes
   remain planned;
-- Stage 6b is a strong design, but is not implemented; and
-- Stage 4.3 is complete as originally requested for Cahill-Keyes and
-  Myriahedral, but its two projection-specific WebAssembly adapters should now
-  converge into an all-projection, topology-aware browser API.
+- Stage 6b now has one checked, non-sparse current-source default in each of
+  its five resource families; and
+- Stage 4.3 remains complete as originally requested, and the follow-on
+  all-projection, topology-aware WebAssembly convergence is now implemented as
+  Stage 10 ABI 1.
 
 The ledger should therefore not yet be marked simply “complete.” It is more
 accurate to call it **implemented through the first convergence pass, with
-Stage 6b and the remaining Stage 8b themes open**. The proposed browser work
-below is a promising new stage rather than an unfulfilled part of the original
-Stage 4.3 request.
+the remaining Stage 8b themes and Stage 7 layer wording open**. The browser work originally
+proposed below became Stage 10 rather than a retroactive expansion of the original
+Stage 4.3 request. See the
+[`Stage 10 implementation notes`](stage-10-webassembly.md).
 
 ## How completion was evaluated
 
@@ -61,15 +65,16 @@ it does not imply scientific completeness or live data.
 | 4.1 astronomy | **Complete** | [`generate-astro.cc`](../../src.generate/generate-astro.cc), checked profiles and snapshots, all-sky and observer products, all six projections, and [`astro-implementation-notes.md`](../astro-implementation-notes.md). It remains visualization-grade rather than an observatory ephemeris. |
 | 4.1a cloud/atmosphere | **Complete, bounded** | [`generate-cloud-atmosphere.cc`](../../src.generate/generate-cloud-atmosphere.cc), preparation, JAXA/P-Tree source contracts, H3 fixture, all six projections, shared solar geometry, and [`cloud-atmosphere-implementation-notes.md`](../cloud-atmosphere-implementation-notes.md). It is not a seamless forecast or global physical-cloud composite. |
 | 4.2 orbiting | **Complete** | [`generate-orbiting.cc`](../../src.generate/generate-orbiting.cc), OMM acquisition, SGP4 propagation, global and observer products, and [`orbital-technosphere-implementation-notes.md`](../orbital-technosphere-implementation-notes.md). It is a reproducible snapshot, not conjunction-grade orbit determination. |
-| 4.3 browser Myriahedral | **Complete against the request** | [`cahill-myriahedral.cc`](../../src.wasm/cahill-myriahedral.cc) emits exactly ocean and land, has a Node smoke test, and is documented in the [`src.wasm` README](../../src.wasm/README.md). Cahill-Keyes remains a separate adapter. Generalization to all projections is not yet implemented. |
+| 4.3 browser Myriahedral | **Complete against the request** | [`cahill-myriahedral.cc`](../../src.wasm/cahill-myriahedral.cc) still emits exactly ocean and land as a compatibility adapter. The separate Stage 10 runtime now generalizes geometry and slices to all six projections. |
 | 4.4 network | **Complete under the later name `network-swarm`** | [`generate-network-swarm.cc`](../../src.generate/generate-network-swarm.cc), variable pinned input, H3/Izzi detiling, all projections, and [`network-swarm-implementation-notes.md`](../network-swarm-implementation-notes.md). No unsupported graph edges are inferred. |
 | 4.5 bathymetry roulette | **Complete** | [`generate-bathymetry-roulette.cc`](../../src.generate/generate-bathymetry-roulette.cc), a checked depth/roulette catalogue, projection-safe clips, all projections, artifact targets, and [`bathymetry-roulette-implementation-notes.md`](../bathymetry-roulette-implementation-notes.md). Large explicit SVGs and moiré are accepted properties of the artwork. |
-| 6 original World Game resources | **Complete historically; obsolete by design** | [`generate-resources.cc`](../../src.generate/generate-resources.cc) and [`resources-implementation-notes.md`](../resources-implementation-notes.md) preserve the bounded 1960 interpretation. The product is explicitly not a current resource atlas and is scheduled to be replaced, not extended. |
+| 6 original World Game resources | **Complete historically; superseded** | The bounded 1960 interpretation remains historical documentation and is not a current-resource fallback. Stage 6b's five current-source families now own the production `resources` selectors and artifacts. |
 | 7 configurable generation | **Complete infrastructure, with one scope mismatch** | `generation-profile.json`, the resolver, Make expansion, validation, and documentation select a projection/pass cross-product. They do **not** select semantic groups such as `land`, `labels`, or an individual data metric inside a generated product. That narrower interpretation is documented, but the raw request used the word “layers.” |
 | 8 Anthropocene | **Complete first observation atlas** | [`generate-anthropocene.cc`](../../src.generate/generate-anthropocene.cc), a year/profile contract, source-separated metrics, preparation and validation, all projections, and [`anthropocene-implementation-notes.md`](../anthropocene-implementation-notes.md). Its station and regional-source coverage is deliberately sparse and North-America-heavy. |
 | 9 network infrastructure | **Complete** | Rename compatibility, cloud/CDN atlas, opt-in licensed topology, source pinning, seam-safe routes, all projections, tests, and [`network-infrastructure-implementation-notes.md`](../network-infrastructure-implementation-notes.md). The current snapshots are not live network state. |
 | 8b Anthropocene enrichment | **Partial** | Complete-2025 and partial-2026 global CPC temperature fields, explicit zero/missing semantics, balanced regional audits, year-bearing artifacts, and a hard global-FIRMS gate are implemented. A checked global FIRMS snapshot still needs a map key; CAMS fire/air, optional PurpleAir, OISST marine heat, and Coral Reef Watch heat stress remain planned in [`anthropocene-enrichment-plan.md`](../anthropocene-enrichment-plan.md). |
-| 6b resource families | **Planned only** | [`resources-enrichment-plan.md`](../resources-enrichment-plan.md) defines `resources-energy`, `resources-food`, `resources-flora`, `resources-mineral`, and `resources-human`, current sources, schemas, non-sparse gates, and migration. The five generators, prepared data, profiles, tests, targets, and cutover do not yet exist. |
+| 6b resource families | **Complete first release** | [`resources-implementation-notes.md`](../resources-implementation-notes.md) records five independently generated families, a v2 profile/value schema, current IRENA/FAO-WDI/USGS/World Bank-UN inputs, one checked non-sparse default per family, all-six-projection targets, and tests. Additional catalog metrics remain future increments, not release blockers. |
+| 10 projection-neutral browser renderer | **Complete for ABI 1** | One registry and command-buffer API covers all six projections, polygons/holes, SVG/Canvas/D3, workers, four slice kinds, compatibility base maps, license metadata, Node tests, and a real-browser smoke. See [`stage-10-webassembly.md`](stage-10-webassembly.md). |
 
 ## What is still missing from the convergence record
 
@@ -86,19 +91,15 @@ This dated report fills that gap without rewriting the historical ledger. A
 small link near the top of `converge-generation.md` to this report would make
 the relationship unambiguous.
 
-### 2. Stage 6b has not crossed from research to production
+### 2. Stage 6b has crossed from research to production
 
-This is the largest unfinished generation stage. The next meaningful work is
-not another source survey; it is one thin vertical product with a current
-snapshot, normalization, coverage audit, rendering, and all-six-projection
-test. A good first candidate is a globally available country/grid metric such
-as installed solar or wind capacity, crop production, tree cover, or an
-education indicator. Starting with one metric proves the family schema and
-cutover before multiplying sources.
-
-The legacy 1960 product should remain visibly historical until that vertical
-slice passes. It should not be silently relabeled or used to fill missing
-modern values.
+The five-family design now has one current, checked, non-sparse vertical
+product per family: installed solar capacity, food production index, forest
+area, rare-earth mine production, and population under 30. The v2 profile,
+normalized values, coverage gates, generation targets, and tests are
+implemented. The next work is selective catalog expansion, not proving the
+family architecture. The older 1960 interpretation remains historical and is
+not used to fill missing modern values.
 
 ### 3. Stage 8b has a field architecture but not yet a complete bundle
 
@@ -150,9 +151,9 @@ for example:
 The default must remain each pass's complete validated layer contract. A
 partial layer selection should never weaken data/provenance validation.
 
-### 5. The browser pipeline is duplicated and too high-level
+### 5. Before Stage 10, the browser pipeline was duplicated and too high-level
 
-The two production adapters both expose:
+The two Stage 4.3 compatibility adapters both expose:
 
 - a projection-specific JavaScript class;
 - `project(latitude, longitude)`;
@@ -164,7 +165,7 @@ handle cuts, serialize XML, choose styling, and hard-code layer vocabulary.
 This worked for Stage 4.3, but it does not scale to six projections, arbitrary
 data layers, Canvas/WebGL output, or slices.
 
-The missing abstraction is not merely a common point projection. It is a
+The abstraction Stage 10 supplied is not merely a common point projection. It is a
 **projection plus spherical-geometry/topology pipeline**.
 
 ## Context: existing browser cartography
@@ -491,8 +492,9 @@ metadata on hover/click. That is the lower-risk first milestone.
 
 ### High priority: finish the open data stages
 
-- Implement one Stage 6b metric end to end, then retire the legacy resource
-  default only after the replacement passes non-sparse coverage gates.
+- Expand Stage 6b only with metrics that satisfy its existing source,
+  semantics, and non-sparse release gates; keep each metric as a separate
+  artifact rather than a combined resource score.
 - Acquire a credentialed global FIRMS snapshot and complete the fire/air
   product before adding another regional fire source.
 - Implement OISST before reef heat stress; it gives defensible global ocean
@@ -542,87 +544,84 @@ need matched-date windows or rate normalization.
 - MapLibre custom-layer proof only after the command-buffer/WebGL renderer is
   stable; do not couple the core to MapLibre's current projection lifecycle.
 
-## Proposed implementation sequence: a new browser convergence stage
+## Stage 10 implementation record
 
-Treat this as a new **Stage 10: projection-neutral browser renderer**, not a
-retroactive expansion of Stage 4.3.
+This became **Stage 10: projection-neutral browser renderer**, not a
+retroactive expansion of Stage 4.3. ABI 1 is implemented and documented in
+[`stage-10-webassembly.md`](stage-10-webassembly.md); the sequence below is
+retained to show what shipped and what remains optional.
 
 ### Milestone 1 — extract and describe
 
-- Add a browser-safe projection registry for all six models.
-- Move frame validation and native-cell topology behind that registry.
-- Publish a JSON/JavaScript capability and license manifest.
-- Keep the two existing adapters passing unchanged as compatibility clients.
+- **Complete:** browser-safe registry for all six models and five alternate
+  Myriahedral layouts.
+- **Complete:** shared frame validation, native-cell topology, and seam router.
+- **Complete:** JavaScript capability and license manifests.
+- **Complete:** both existing adapters remain compatibility builds.
 
 ### Milestone 2 — batched geometry
 
-- Define flat point/line/ring buffers and projected command buffers.
-- Implement points and open seam-safe lines for all six projections.
-- Add native/WASM parity tests for reference coordinates and known cuts.
-- Run projection in one Web Worker.
+- **Complete:** flat point/line/ring input and ABI 1 typed command buffers.
+- **Complete:** batched points and seam-safe lines for all six projections.
+- **Complete:** native shared-core and WASM cut/frame/geometry checks.
+- **Complete:** ordinary ES-module worker with transferable output buffers.
 
 ### Milestone 3 — filled geometry and D3
 
-- Generalize exact face-local polygon clipping without GDAL/GEOS in the browser.
-- Preserve holes, multipolygons, feature IDs, and cut diagnostics.
-- Add the D3-compatible stream adapter plus SVG and Canvas demonstrations.
-- Compare selected output against D3 polyhedral projections as a non-authority
-  differential test.
+- **Complete:** browser-safe exact triangle-face clipping without GDAL/GEOS.
+- **Complete:** holes, multipolygons, feature IDs, cell IDs, and diagnostics.
+- **Complete:** D3-compatible stream, SVG, and Canvas adapters.
+- **Deferred:** an automated differential suite against `d3-geo-polygon` is a
+  useful non-authority follow-on; existing native reference fixtures remain
+  authoritative.
 
 ### Milestone 4 — slices and finite-map interaction
 
-- Expose viewport, geographic, and native-cell slice descriptors.
-- Reproduce the existing Cahill-Keyes and Myriahedral slices from the common
-  protocol before defining new slice families.
-- Add a Leaflet `CRS.Simple` or OpenLayers finite-carrier viewer with no wrap.
-- Add planar feature hit testing; defer global inverse projection unless a
-  real interaction needs it.
+- **Complete:** viewport, geographic, native-cell, and planar-tile descriptors.
+- **Complete:** existing Cahill-Keyes and Myriahedral slices use the common
+  protocol and have runnable examples.
+- **Documented integration:** Leaflet `CRS.Simple` and OpenLayers should host
+  the finite carrier; no framework dependency was added to the core.
+- **Deferred:** planar feature hit testing and face-qualified inverse
+  candidates remain demand-driven follow-ons.
 
 ### Milestone 5 — performance and optional WebGL
 
-- Establish bundle-size, startup, peak-memory, projection-time, and frame-time
-  budgets on representative mobile and desktop browsers.
-- Add Canvas/OffscreenCanvas and WebGL consumers of the same command buffer.
-- Add planar carrier LOD/tiles only when measurements show whole-scene buffers
-  are inadequate.
+- **Complete:** Canvas/OffscreenCanvas consumes the shared buffer.
+- **Complete foundation:** explicit planar-tile slices are available.
+- **Deferred pending measurement:** device performance budgets, WebGL
+  triangulation/rendering, and multi-level LOD publishing.
 
 ## Acceptance criteria for the generalized browser pipeline
 
-The work should not be called complete until:
-
-- one public API constructs all six projections and rejects invalid frame
-  ratios;
-- every WASM point fixture agrees with the native implementation within a
-  declared tolerance;
-- seam fixtures prove no page-spanning false chords for open lines or filled
-  rings;
-- polygon holes and multipolygons survive all six projections;
-- topology transition counts and fallback diagnostics are inspectable;
-- existing Cahill-Keyes and Myriahedral base maps can be reproduced without
-  projection-specific JavaScript;
-- existing Cahill-Keyes and Myriahedral slices can be reproduced through the
-  common slice protocol;
-- SVG and Canvas outputs consume the same projected geometry;
-- the worker path does not block main-thread interaction during a representative
-  Natural Earth render;
-- module/license metadata is visible in the application and generated output;
-  and
-- Node tests plus at least one real-browser smoke test run in CI.
+ABI 1 satisfies the acceptance list: one API constructs all six models and
+rejects invalid frames; native and WASM use the same projection/topology core;
+line and filled-ring fixtures reject page-spanning chords; holes,
+multipolygons, feature IDs, and diagnostics survive all models; the common API
+reproduces Cahill-Keyes and Myriahedral ocean/land maps and their slices; SVG
+and Canvas consume the same buffer; a real Chrome worker projects the Natural
+Earth fixture; license metadata is inspectable; and both Node and browser
+checks have Make targets. The exact evidence matrix is in
+[`stage-10-webassembly.md#verification`](stage-10-webassembly.md#verification).
 
 ## Final recommendation
 
 Keep `converge-generation.md` as the historical request ledger and use dated
 status reports such as this one for reconciliation. Do not declare the whole
-ledger closed until Stage 6b has at least one production family, the intended
-Stage 8b minimum bundle is explicitly accepted or completed, and Stage 7's
+ledger closed until the intended Stage 8b minimum bundle is explicitly
+accepted or completed, and Stage 7's
 “layer” wording is resolved.
 
-Proceed with an all-projection WebAssembly convergence stage. Reuse the
-existing runtime `projection_variant` model, but extract topology and geometry
-processing into a renderer-neutral core. Make D3 stream compatibility the
-first web integration, keep Leaflet/OpenLayers as finite-carrier shells, and
-treat MapLibre as an optional custom WebGL consumer.
+The all-projection WebAssembly convergence recommendation has been carried
+out. The runtime uses the existing `projection_variant` model behind a stable
+registry, and topology/geometry now live in renderer-neutral projection
+headers. D3 is the first stream integration; Leaflet/OpenLayers remain
+finite-carrier shells; MapLibre remains an optional custom WebGL consumer.
 
 Most importantly, make slicing a first-class topology/view protocol. A slice
 is a viewport, a native-cell mask, a geographic preclip, or a planar delivery
 tile—not a projection with an invalid replacement frame.
+
+The next documentation-level convergence is proposed as
+[`Stage 11`](stage-11-documentation-plan.md): migrate the flat documentation
+into nested topic pages only after adding link and redirect safety nets.

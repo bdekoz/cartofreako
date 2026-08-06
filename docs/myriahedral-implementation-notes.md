@@ -46,7 +46,7 @@ The work has four parts:
 | --- | --- |
 | [`cart0freak0-myriahedral.h`](../src.projections/cart0freak0-myriahedral.h) | Mesh generation, unfolding, forward transform, frame validation, API adapter, and source-raster preset |
 | [`cart0freak0-myriahedral-tree.inc`](../src.projections/cart0freak0-myriahedral-tree.inc) | Compact parent indices for the fixed 5120-face spanning tree |
-| [`myriahedral-perspective-generation.h`](../src.generate/myriahedral-perspective-generation.h) | Reference and exploratory configuration metadata, immutable cut trees, and lazy layouts |
+| [`cart0freak0-myriahedral-perspectives.h`](../src.projections/cart0freak0-myriahedral-perspectives.h) | Reference and exploratory configuration metadata, immutable cut trees, and lazy layouts shared by generators and browser runtime |
 | [`perspective-configurations.json`](../assets.static/myriahedral/perspective-configurations.json) | Machine-readable preprocessing, registration, digest, and artifact metadata |
 | [`cart0freak0-myriahedral-slicing.h`](../src.projections/cart0freak0-myriahedral-slicing.h) | Exact two-group terminal-face partition, clip geometry, and SVG verification |
 | [`generate-myriahedral-slices.cc`](../src.generate/generate-myriahedral-slices.cc) | Ad-hoc water-slice wrapper generator |
@@ -125,7 +125,7 @@ needs enough metadata to reproduce both the topology and its presentation:
 The complete machine-readable record is
 [`perspective-configurations.json`](../assets.static/myriahedral/perspective-configurations.json).
 The corresponding compile-time records and parent arrays are in
-[`myriahedral-perspective-generation.h`](../src.generate/myriahedral-perspective-generation.h).
+[`cart0freak0-myriahedral-perspectives.h`](../src.projections/cart0freak0-myriahedral-perspectives.h).
 The JSON records full raw bounds and SHA-256 digests; the embedded tree is the
 authoritative runtime topology.
 
@@ -535,6 +535,15 @@ frame scaling, coordinate and frame rejection, 5,120 ocean subpaths, exactly
 the two documented groups, absence of optional layers, finite path data, and
 the maximum consecutive land segment. JavaScript usage and the generated
 module names are in the [`src.wasm` README](../src.wasm/README.md).
+
+Stage 10 subsequently added the projection-neutral
+[`cartofreako-web.mjs`](../src.wasm/cartofreako-web.mjs) API. It reproduces
+this ocean/land product with `carrierGeometry()` plus `projectGeometry()`,
+supports all six projection families and all checked Myriahedral layouts, and
+returns the same geometry buffer to SVG, Canvas, D3, and worker consumers. The
+adapter described above remains a compatibility contract for callers that
+need its `MyriahedralProjection` class and pre-styled SVG string. See the
+[WebAssembly quick start](pages/webassembly-quick-start.md).
 
 ## Initialization and complexity
 

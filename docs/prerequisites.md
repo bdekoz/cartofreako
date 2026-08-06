@@ -23,7 +23,7 @@ generation workflow. They do not require the same software:
 | Git, Bash, Python 3, `curl`, `jq`, `unzip`, `tar`, GNU `gzip`, `rg`, `find`, `sha256sum`, and GNU coreutils including `cmp`, `date`, and `realpath` | Natural Earth, astronomy, Cloud-atmosphere, orbital, resources, Anthropocene, network-swarm, and network-infrastructure preparation or validation | Resolves static STAC metadata, downloads, verifies commits and files, compares, dates, transforms JSON, extracts or installs bounded source data, and creates deterministic compressed resource SVGs |
 | Inkscape | Complete artifact generation and visual review | Exports PDF/PNG and inspects SVG layers, clipping, geometry, and seams |
 | Doxygen | API reference generation | Builds the documented projection-header reference under `docs/doxygen/` |
-| Emscripten, Node.js, and a browser | Optional WebAssembly builds | Builds the production Cahill-Keyes and land/ocean-only Myriahedral adapters, plus the illustrative Myriahedral overlay |
+| Emscripten, Node.js, and Chrome/Chromium | Optional WebAssembly builds | Builds and tests the all-six-projection runtime, worker and adapters, the compatibility modules, and the illustrative Myriahedral overlay |
 
 Check the complete installed toolchain from the repository root with:
 
@@ -581,28 +581,37 @@ during a read-only visual review if a serialization diff is not intended.
 
 ## Optional WebAssembly workflows
 
-The production Cahill-Keyes and Myriahedral browser adapters, and the
-documented Myriahedral overlay example, are separate from native SVG
+The all-six-projection browser runtime, its two compatibility adapters, and
+the documented Myriahedral overlay example are separate from native SVG
 generation. They require:
 
 - an Emscripten SDK providing `em++` and `emrun`;
 - Node.js for the non-browser smoke test;
 - a modern browser with WebAssembly and ES-module support; and
-- a local HTTP server, provided by `emrun` in the documented workflow.
+- a local HTTP server; the browser smoke runner supplies an ephemeral one and
+  `emrun` remains available for interactive development.
 
 The WASM targets default to the sibling SDK path
 `../emsdk/upstream/emscripten/em++`; override `EMXX` when the checkout lives
-elsewhere. Build both ES modules and WASM binaries beside the geographic input
-and Node smoke tests with:
+elsewhere. Build and test the omnibus module, including its real-browser
+worker check, with:
+
+```sh
+make check-wasm-projections
+make check-wasm-projections-browser
+```
+
+The two Stage 4.3 compatibility modules remain available with:
 
 ```sh
 make check-wasm-cahill-keyes
 make check-wasm-cahill-myriahedral
 ```
 
-See the [WebAssembly renderer README](../src.wasm/README.md) for runtime SVG
-architecture, data provenance, and the Myriahedral option that emits only the
-`ocean` and `land` groups. The separate reproducible Myriahedral raster-overlay
+See the [WebAssembly quick start](pages/webassembly-quick-start.md) and
+[runtime README](../src.wasm/README.md) for deployment, command buffers,
+slices, workers, provenance, and the compatibility Myriahedral option that
+emits only the `ocean` and `land` groups. The separate reproducible Myriahedral raster-overlay
 example uses the Emscripten release identified in
 [`docs/web-workflow.md`](web-workflow.md). After activating the SDK, verify:
 
@@ -612,11 +621,11 @@ emrun --help
 node --version
 ```
 
-Neither production browser build needs GDAL, GEOS, Boost.Graph, Google S2, or
-the historical Myriahedral preprocessing programs. Both runtime maps read the
-checked-in, seam-prepared Natural Earth GeoJSON and do not run GDAL or download
-data during the WASM build. The Myriahedral adapter performs its additional
-five-degree grid and terminal-face clipping directly in C++/WASM.
+No production browser build needs GDAL, GEOS, Boost.Graph, Google S2, or the
+historical Myriahedral preprocessing programs. The checked-in Natural Earth
+fixture is not downloaded during the WASM build. The omnibus runtime performs
+octant, periodic-carrier, and exact terminal-face clipping directly in
+C++/WASM.
 
 ## End-to-end verification
 

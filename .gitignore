@@ -8,6 +8,7 @@
 /tests/test-myriahedral-projection-api
 /tests/test-myriahedral-slicing
 /tests/test-projection-generation-common
+/tests/test-projection-runtime
 /tests/test-star-x-projection-api
 /tests/test-voronoi-projection-api
 /tests/test-astro-generation
@@ -59,6 +60,14 @@
 /docs/doxygen/
 /build/
 __pycache__/
+
+# Generated Emscripten loaders and companion binaries.
+/src.wasm/cartofreako-projections.mjs
+/src.wasm/cartofreako-projections.wasm
+/src.wasm/cartofreako-cahill-keyes.mjs
+/src.wasm/cartofreako-cahill-keyes.wasm
+/src.wasm/cartofreako-cahill-myriahedral.mjs
+/src.wasm/cartofreako-cahill-myriahedral.wasm
 
 # Resource SVGs are local Inkscape inputs; check in deterministic .svg.gz files.
 /assets.generated/svg/resources-*.svg

@@ -65,7 +65,7 @@ captured by `exact-fractions.txt`, the selected tree, and the legacy planar
 baseline.
 
 The five exploratory trees are embedded under `src.generate/` and selected by
-`myriahedral-perspective-generation.h`. They reuse the exact fractions and
+`cart0freak0-myriahedral-perspectives.h`. They reuse the exact fractions and
 historical weighting program recorded here; their complete parameters, raw
 bounds, rotations, parent-data paths, and source-tree digests are recorded in
 `perspective-configurations.json`.
