@@ -62,3 +62,17 @@ this has two further modifications:
 The reference image does not have antarctica to correct scale, use it as a guide to the concept instead of strict measurements, keep the correct scale in the final implementation
 
 add these changes to the star-x algorithm to docs/star-x-implementation-notes.md
+
+
+---
+
+Stage 7
+
+Clarification of the Star-X projection. Instead of placing a pre-computed antartica continent are per Stage 6 item 2, instead do the following
+
+Compute the maximum land distance from the pole to the antartica continent, and call that ant_r. For each of the star-x quadrants, take the tip furthest from the center point of the projection in the quadrant and draw a circle of ant_r.
+  - the part of the projection inside the quadrant and the circle is mapped to the center part of the page as before
+  - do for each quadrant, and place each quadrant's fragment such that the antartica continent is a unified mass, rotated such that each piece fits together, seamless. Unify. 
+  - the unified antarctica continent is correctly scaled with the other continents.
+  
+  Re-assess the current implementation and conform to this new definition.
