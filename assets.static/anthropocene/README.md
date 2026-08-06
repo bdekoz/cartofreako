@@ -16,6 +16,11 @@ property means unavailable or unobserved and must not be interpreted as zero.
 The profile's literal `duration.year` is the sole year authority; the generator
 does not read the host clock.
 
+The proposed [Stage 8b enrichment plan](../../docs/anthropocene-enrichment-plan.md)
+adds independently pinned complete-2025 and partial-2026 bundles plus a
+separate, globally complete field tier. It is a plan, not a description of the
+checked files in this directory.
+
 ## Checked normalization
 
 The 2026 snapshot was normalized on 2026-08-05 from:
@@ -44,5 +49,7 @@ The checked snapshot has no FIRMS rows and therefore does not claim Russian
 fire coverage. CWFIS supplies the default public Canada/North America layer.
 
 See the [Anthropocene implementation notes](../../docs/anthropocene-implementation-notes.md)
-for source roles, formulas, coverage boundaries, refresh commands, and
-interpretation limits.
+for current source roles, formulas, coverage boundaries, refresh commands, and
+interpretation limits, and the
+[Stage 8b enrichment plan](../../docs/anthropocene-enrichment-plan.md) for the
+proposed global-coverage design.

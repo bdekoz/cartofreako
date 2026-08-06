@@ -689,6 +689,25 @@ cahill_keyes_registered_longitude(const double longitude)
   return adjusted;
 }
 
+/// Select the northern geographic octant used by the native forward
+/// projection after applying the shared one-degree registration.
+///
+/// The registration is deliberately evaluated in `double` before promotion
+/// to the native scalar type.  This is the same ordering used by the public
+/// forward projections and keeps one-ULP neighbors of a registered seam on
+/// the same side in both path topology and point projection.
+/// @param longitude Public geographic longitude in `[-180, 180]`.
+/// @return One-based northern octant in `[1, 4]`.
+inline int
+cahill_keyes_registered_octant(const double longitude)
+{
+  const long double registered = cahill_keyes_registered_longitude(longitude);
+  int octant = static_cast<int>((registered + 200.0L) / 90.0L) + 1;
+  if (octant == 5)
+    octant = 1;
+  return octant;
+}
+
 /// Required width-to-height ratio of the complete Cahill-Keyes M-layout.
 inline constexpr double cahill_keyes_width_to_height_ratio = 2.0;
 

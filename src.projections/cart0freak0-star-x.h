@@ -260,13 +260,8 @@ quadrant_for_longitude(const double longitude)
   if (!std::isfinite(longitude) || longitude < -180 || longitude > 180)
     throw std::invalid_argument(
       "Star-X quadrant longitude must be finite and within [-180, 180]");
-  if (longitude >= 159 || longitude < -111)
-    return quadrant::lower_left;
-  if (longitude < -21)
-    return quadrant::lower_right;
-  if (longitude < 69)
-    return quadrant::upper_right;
-  return quadrant::upper_left;
+  return static_cast<quadrant>(
+    cahill_keyes_registered_octant(longitude) - 1);
 }
 
 /// Return the center longitude of a Star-X quadrant.

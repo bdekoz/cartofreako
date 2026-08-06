@@ -3,6 +3,7 @@
 [Documentation index](../index.md) ·
 [Generation guide](generation.md) ·
 [Generate-pass decisions](generation-methods.md) ·
+[Stage 8b enrichment plan](anthropocene-enrichment-plan.md) ·
 [Snapshot assets](../assets.static/anthropocene/README.md)
 
 ## Outcome and claim boundary
@@ -302,3 +303,18 @@ Important remaining limitations are:
 - no population exposure, damages, emissions, burned area, return period, or
   trend normalization is inferred; and
 - none of the layers alone establishes anthropogenic causation.
+
+## Stage 8b coverage work
+
+The current snapshot audit explains the North American visual bias: FIRMS
+contributed zero rows, CWFIS and HMS are regional, EPA AirData is
+United-States-only, and the temperature layer uses the intentionally sparse
+GSN subset. This is a source-coverage limitation rather than a projection
+failure.
+
+The proposed [Stage 8b enrichment plan](anthropocene-enrichment-plan.md)
+specifies separate complete-2025 and partial-2026 products, a non-sparse global
+field option, required global fire coverage, broader temperature and PM2.5
+sources, a permission-gated PurpleAir product, and ocean heat-stress themes.
+Those profiles, sources, targets, and artifacts are proposed work; they are not
+part of the implemented Stage 8 contract described above.

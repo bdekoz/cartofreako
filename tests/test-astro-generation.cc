@@ -116,6 +116,33 @@ main()
     assert(maximum_segment(reference)
            < cahill_keyes_context.map_frame.width() / 2);
 
+  const generation::projection_context star_x_context(
+    generation::find_projection_spec("star-x"), "");
+  const auto star_x_equator = astro::project_celestial_path(
+    star_x_context, config, astro::celestial_equator());
+  assert(star_x_equator.size() == 5);
+  assert(maximum_segment(star_x_equator)
+         < star_x_context.map_frame.width() / 4);
+  bool found_star_x_group_fold = false;
+  for (std::size_t index = 1; index < star_x_equator.size(); ++index)
+    {
+      const svg::point_2t exit = star_x_equator[index - 1].back();
+      const svg::point_2t entry = star_x_equator[index].front();
+      if (near(std::get<0>(exit), std::get<0>(entry), 1e-12)
+          && std::abs(std::get<1>(exit) - std::get<1>(entry))
+               > star_x_context.map_frame.height() / 4)
+        found_star_x_group_fold = true;
+    }
+  assert(found_star_x_group_fold);
+  for (const auto& reference : {
+         astro::project_celestial_path(
+           star_x_context, config, astro::ecliptic_line()),
+         astro::project_celestial_path(
+           star_x_context, config, astro::galactic_equator()),
+       })
+    assert(maximum_segment(reference)
+           < star_x_context.map_frame.width() / 4);
+
   const double sidereal = astro::local_sidereal_time(config);
   assert(near(astro::altitude_degrees(
                 sidereal, config.observer.latitude_deg,

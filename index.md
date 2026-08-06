@@ -43,6 +43,7 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Human-made Earth-orbit population and observer generation | [Orbital Technosphere implementation notes](docs/orbital-technosphere-implementation-notes.md) |
 | Fuller and McHale 1960 production leaders with separate modern resource context | [World Game resources implementation notes](docs/resources-implementation-notes.md) |
 | Source-separated climate, weather, fire, smoke, and air-quality atlas | [Anthropocene implementation notes](docs/anthropocene-implementation-notes.md) |
+| Proposed global, non-sparse, dual-year Anthropocene enrichment | [Anthropocene Stage 8b enrichment plan](docs/anthropocene-enrichment-plan.md) |
 | Cumulative H3 network-swarm generation | [Network-swarm generation implementation notes](docs/network-swarm-implementation-notes.md) |
 | Cloud/CDN site atlas and opt-in cable/exchange topology | [Network-infrastructure implementation notes](docs/network-infrastructure-implementation-notes.md) |
 | Monochrome, explicitly varied roulette-line-field bathymetry generation | [Bathymetry Roulette implementation notes](docs/bathymetry-roulette-implementation-notes.md) |
@@ -272,6 +273,9 @@ The [Anthropocene notes](docs/anthropocene-implementation-notes.md) record the
 feasibility boundary, literal 2026 profile, source classifications, record and
 rainfall formulas, Canada/Russia fire-source evaluation, EPA/smoke separation,
 deferred coral phase, snapshot audit, and interpretation limits.
+The proposed [Stage 8b enrichment plan](docs/anthropocene-enrichment-plan.md)
+documents the coverage diagnosis and a source-separated path to complete-2025
+and partial-2026 products, including global field, PurpleAir, and ocean themes.
 The [World Game resources notes](docs/resources-implementation-notes.md) record
 the bounded source decision, archive and rights review, exact 40-row profile,
 separate modern context, authorized-copy transcription workflow, and limits.

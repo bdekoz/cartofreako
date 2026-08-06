@@ -242,3 +242,25 @@ Propose a plan for improving enrichment, update docs
 provide non-sparse data options
 
 generate anthropocene pass for both years: 2026 and 2025
+
+
+---
+
+Stage 6b development:
+
+Revaluate the resources pass. Move away from Buckminister Fuller World Game categories and re-organize: Split into resources-energy, resources-food, resources-mineral, resources-human
+
+resources-energy has: solar power, nuclear, oil wells, petroleum refining, petroleum processing, wind power, natural gas refining, natural gas fracking
+
+resources-food has: fish, food, livestock, and other edible nutrition production
+
+ressources-flora has: measures of plant biodiversity, plant life, density of forest cover, savanna, tropical rainforest, etc
+
+resources-mineral: update data here, suggest mineral improvements given the current focus on rare earth minerals, uranium, etc. Current data looks way off, don't use the older 1960 data for this, update and beef this up.
+
+resources-human has: percentage of population that is literate, percentage of population that has HS or equivalent degree, percentage college, percentage advanced degree, per capital patents, % population under 30 years old, % population over 60 years old, suggest quality of life metrics like % of population that took 1 international trip in the current year duration, median number of books read in one calendar year, gender equality, sexual freedom, drug decriminalization, social mobility
+
+Propose a plan for improving enrichment, update docs
+
+provide non-sparse data options
+

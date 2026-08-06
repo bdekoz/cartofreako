@@ -31,6 +31,7 @@
 #include "cart0freak0-cahill-keyes.h"
 #include "cart0freak0-myriahedral.h"
 #include "cart0freak0-star-x.h"
+#include "cart0freak0-star-x-functions.h"
 #include "cart0freak0-voronoi.h"
 #include "myriahedral-perspective-generation.h"
 
@@ -344,21 +345,12 @@ inline std::uint64_t
 cahill_keyes_cell(const geographic_point point)
 {
   // Classify through the same one-degree registration and native octant
-  // formula as ckproj::meridians_to_point_2d().  Repeatedly adding and
+  // formula as the public forward projections. Repeatedly adding and
   // subtracting 360 here used to round values immediately below a seam onto
-  // the seam itself.  The cell classifier would then select one octant while
+  // the seam itself. The cell classifier would then select one octant while
   // the forward projection selected the other.
   const double longitude = std::clamp(point.longitude, -180.0, 180.0);
-  const double registered
-    = a60::carto::cahill_keyes_registered_longitude(longitude);
-  // The native forward projection promotes the registered double to its
-  // long-double scalar before applying the octant formula.  Match that
-  // promotion so a one-ULP neighbor cannot be rounded onto the seam here.
-  const long double native_longitude = registered;
-  int octant = static_cast<int>(
-    (native_longitude + 200.0L) / 90.0L) + 1;
-  if (octant == 5)
-    octant = 1;
+  const int octant = a60::carto::cahill_keyes_registered_octant(longitude);
   const auto sector = static_cast<std::uint64_t>(octant - 1);
   return sector + (point.latitude < 0 ? 4 : 0);
 }
@@ -370,8 +362,10 @@ projection_cell(const projection_context& context,
   switch (context.spec.kind)
     {
     case projection_kind::cahill_keyes:
-    case projection_kind::star_x:
       return cahill_keyes_cell(point);
+    case projection_kind::star_x:
+      return a60::carto::star_x_path_detail::path_cell(
+        {point.latitude, point.longitude});
     case projection_kind::authagraph:
       return authagraph_cell(point);
     case projection_kind::dymaxion:
@@ -514,6 +508,36 @@ project_path(const projection_context& context,
               for (const svg::point_2t point : folded[folded_index])
                 append_unique(current, point);
             }
+          continue;
+        }
+
+      if (context.spec.kind == projection_kind::star_x)
+        {
+          const auto& star_x_projection
+            = std::get<starxproj>(context.projection);
+          a60::carto::star_x_path_detail::geographic_coordinate
+            star_x_left {left.latitude, left.longitude};
+          const a60::carto::star_x_path_detail::geographic_coordinate
+            star_x_right {right.latitude, right.longitude};
+          constexpr std::size_t maximum_transitions_per_edge = 64;
+          std::size_t transition_count = 0;
+          while (const auto transition
+                 = a60::carto::star_x_path_detail::first_edge_transition(
+                   star_x_projection, star_x_left, star_x_right))
+            {
+              require(++transition_count <= maximum_transitions_per_edge,
+                      "Star-X path edge crosses too many topology cells");
+              append_unique(current, transition->exit);
+              if (transition->is_fold())
+                {
+                  if (current.size() >= 2)
+                    result.push_back(std::move(current));
+                  current.clear();
+                }
+              append_unique(current, transition->entry);
+              star_x_left = transition->geographic_entry;
+            }
+          append_unique(current, projected_right);
           continue;
         }
 

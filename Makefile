@@ -468,6 +468,7 @@ GENERATOR_HEADERS := \
 	$(PROJECTION_SRC_DIR)/cart0freak0-myriahedral.h \
 	$(PROJECTION_SRC_DIR)/cart0freak0-myriahedral-tree.inc \
 	$(PROJECTION_SRC_DIR)/cart0freak0-star-x.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-star-x-functions.h \
 	$(PROJECTION_SRC_DIR)/cart0freak0-voronoi.h
 AREA_GENERATOR_HEADER := $(GENERATOR_SRC_DIR)/projection-area-generation.h
 NATURAL_EARTH_GENERATOR_HEADER := \

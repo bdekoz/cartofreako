@@ -10,6 +10,7 @@
 [Orbital Technosphere notes](orbital-technosphere-implementation-notes.md) ·
 [World Game resources notes](resources-implementation-notes.md) ·
 [Anthropocene notes](anthropocene-implementation-notes.md) ·
+[Anthropocene Stage 8b plan](anthropocene-enrichment-plan.md) ·
 [Network-swarm notes](network-swarm-implementation-notes.md) ·
 [Network-infrastructure notes](network-infrastructure-implementation-notes.md) ·
 [Bathymetry Roulette notes](bathymetry-roulette-implementation-notes.md)
@@ -760,6 +761,17 @@ endpoint cell is reached, with a defensive limit of 64 transitions per source
 edge. This tests the assembled net itself: retained Dymaxion hinges and
 tree-connected Myriahedral and Voronoi faces remain joined, while exterior or
 non-tree edges split without a hard-coded list of relationships.
+
+Cahill-Keyes and Star-X add topology-specific routing before that generic
+fallback. Cahill-Keyes applies its 2:1 rectangular frame fold to each original
+adjacent pair. Star-X cannot use that rectangle: its lower four-face square
+and rotated upper square have internal paired edges. The Star-X router bisects
+the registered transition in geographic space, terminates at the outgoing
+face-edge copy, and resumes at its paired incoming copy. The `-21 degrees`
+and `159 degrees` boundaries always fold between groups; other longitude and
+equatorial transitions remain joined only when their one-sided projected
+limits coincide. The router consumes multiple folds per source edge and
+treats canonical `+180/-180` neighbors as one continuous short arc.
 
 Myriahedral cell lookup and point projection both canonicalize exact
 longitude `+180` to `-180`. Without that shared tie rule, an endpoint on the

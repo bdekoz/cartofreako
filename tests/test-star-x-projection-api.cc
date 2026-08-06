@@ -72,7 +72,7 @@ end_path(const string& value)
 } // namespace a60
 
 #include "a60-carto-projection.h"
-#include "cart0freak0-star-x.h"
+#include "cart0freak0-star-x-functions.h"
 
 namespace {
 
@@ -107,6 +107,14 @@ is_second_group(const double longitude)
   const double adjusted
     = a60::carto::cahill_keyes_registered_longitude(longitude);
   return adjusted >= -20 && adjusted < 160;
+}
+
+bool
+near_point(const a60::point_2t left, const a60::point_2t right,
+           const double tolerance)
+{
+  return std::hypot(std::get<0>(right) - std::get<0>(left),
+                    std::get<1>(right) - std::get<1>(left)) <= tolerance;
 }
 
 } // namespace
@@ -357,6 +365,84 @@ main()
           assert(y >= 0 && y <= map_frame.height());
         }
     }
+
+  // Star-X path routing follows the assembled net's actual topology. The
+  // -21/159-degree boundaries always cross between the lower and rotated
+  // upper square groups. The -111/69-degree boundaries either retain a
+  // coincident hinge or fold between two separated copies within one group.
+  namespace star_path = star_x_path_detail;
+  struct path_seam
+  {
+    double longitude;
+    star_path::edge_kind folded_kind;
+  };
+  constexpr std::array path_seams {
+    path_seam {-111, star_path::edge_kind::intra_group_fold},
+    path_seam {-21, star_path::edge_kind::inter_group_fold},
+    path_seam {69, star_path::edge_kind::intra_group_fold},
+    path_seam {159, star_path::edge_kind::inter_group_fold},
+  };
+  const double path_tolerance = reference_frame.height() * 1e-10;
+  assert(star_path::classify_edge(
+           reference, 1, 2, {17, 22}, {17, 22})
+         == star_path::edge_kind::inter_group_fold);
+  assert(star_path::classify_edge(
+           reference, 0, 1, {17, 22}, {17, 22})
+         == star_path::edge_kind::retained_hinge);
+  for (const path_seam seam : path_seams)
+    for (const double latitude : {-30.0, 80.0})
+      {
+        const star_path::geographic_coordinate west {
+          latitude, seam.longitude - 1,
+        };
+        const star_path::geographic_coordinate east {
+          latitude, seam.longitude + 1,
+        };
+        const auto west_to_east
+          = star_path::first_edge_transition(reference, west, east);
+        const auto east_to_west
+          = star_path::first_edge_transition(reference, east, west);
+        assert(west_to_east && east_to_west);
+        assert(west_to_east->is_fold() && east_to_west->is_fold());
+        assert(west_to_east->kind == seam.folded_kind);
+        assert(east_to_west->kind == seam.folded_kind);
+        assert(near_point(west_to_east->exit, east_to_west->entry,
+                          path_tolerance));
+        assert(near_point(west_to_east->entry, east_to_west->exit,
+                          path_tolerance));
+        assert(star_path::path_cell(west_to_east->geographic_entry)
+               != star_path::path_cell(west));
+        assert(star_path::path_cell(east_to_west->geographic_entry)
+               != star_path::path_cell(east));
+      }
+
+  for (const double seam : {-111.0, 69.0})
+    {
+      const auto hinge = star_path::first_edge_transition(
+        reference, {40, seam - 1}, {40, seam + 1});
+      assert(hinge);
+      assert(!hinge->is_fold());
+      assert(hinge->kind == star_path::edge_kind::retained_hinge);
+      assert(near_point(hinge->exit, hinge->entry, path_tolerance));
+    }
+  for (const double longitude
+       : star_x_detail::quadrant_center_longitudes)
+    {
+      const auto equatorial_hinge = star_path::first_edge_transition(
+        reference, {-1, longitude}, {1, longitude});
+      assert(equatorial_hinge);
+      assert(!equatorial_hinge->is_fold());
+      assert(equatorial_hinge->kind
+             == star_path::edge_kind::retained_hinge);
+      assert(near_point(equatorial_hinge->exit, equatorial_hinge->entry,
+                        path_tolerance));
+    }
+  const auto equatorial_fold = star_path::first_edge_transition(
+    reference, {-1, -111}, {1, -111});
+  assert(equatorial_fold);
+  assert(equatorial_fold->is_fold());
+  assert(equatorial_fold->kind
+         == star_path::edge_kind::intra_group_fold);
 
   // Only frame_area controls the map projection. Placement remains the
   // responsibility of the surrounding cartography object.

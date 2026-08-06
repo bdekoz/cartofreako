@@ -34,6 +34,7 @@ numerically identical to the tested Cahill-Keyes implementation.
 | Component | Responsibility |
 | --- | --- |
 | [`cart0freak0-star-x.h`](../src.projections/cart0freak0-star-x.h) | Frame contract, configurable group spacing and enlargement, polar-composition geometry, public API adapter, validation, and factory |
+| [`cart0freak0-star-x-functions.h`](../src.projections/cart0freak0-star-x-functions.h) | Eight-cell seam topology, retained-hinge detection, and paired boundary routing for projected paths |
 | [`cart0freak0-cahill-keyes.h`](../src.projections/cart0freak0-cahill-keyes.h) | Shared native half-octant formulas, M-layout assembly, and raster-registration longitude adjustment |
 | [`a60-carto-projection.h`](../src.projections/a60-carto-projection.h) | Shared interface, projection state, and `star_x` mode |
 | [`a60-carto-frame.h`](../src.projections/a60-carto-frame.h) | `frame` and `frame.frame_area` dimensions |
@@ -407,16 +408,35 @@ join two projected samples across a cut with a straight SVG segment.
 
 The existing `cart0freak0-cahill-keyes-functions.h` helper is specific to a
 2:1 M-layout rectangle and must not be applied to a 17:22 Star-X frame. The
-shared generators instead split geographic paths by registered octant and
-group before projection. Filled Natural Earth geometry receives an additional
-equatorial clip: northern and southern rings are closed separately before
-projection. This matters at the cyclic `159 degrees E / 201 degrees W`
-octant, where one ring spanning both hemispheres otherwise bridges the
-lower-left exterior notch when SVG applies its fill rule. Stable `-north` and
-`-south` path-ID suffixes make the split testable. In Stage 7, each longitude
-band is split against its
+Star-X router in `cart0freak0-star-x-functions.h` operates in geographic
+space instead. Its eight cells are the four registered longitude sectors and
+their southern partners. For each original source edge it locates the first
+cell transition, bisects to the two one-sided geographic limits, projects
+both, and classifies their relationship in the assembled net:
+
+- transitions at `-21 degrees` and `159 degrees` cross between the lower
+  group and the 180-degree-rotated upper group and are inter-group folds;
+- separated copies at `-111 degrees`, `69 degrees`, or the equator are
+  intra-group folds; and
+- coincident copies are retained hinges and stay in one SVG subpath.
+
+A fold ends the current path at the first boundary copy and resumes it at the
+paired copy. Those points lie on the actual face edges of the assembled X;
+they are not extended to the rectangular page boundary. The shared generator
+repeats this operation until the source endpoint is reached, so one coarse
+edge may cross several folds. It interprets a `+180/-180` change as the short
+continuous antimeridian arc; an intentionally long route needs an
+intermediate waypoint.
+
+Filled Natural Earth geometry receives an additional equatorial clip:
+northern and southern rings are closed separately before projection. This
+matters at the cyclic `159 degrees E / 201 degrees W` octant, where one ring
+spanning both hemispheres otherwise bridges the lower-left exterior notch
+when SVG applies its fill rule. Stable `-north` and `-south` path-ID suffixes
+make the split testable. In Stage 7, each longitude band is split against its
 data-derived source circle before the inside portion receives the continuous
-radius-preserving cap transform.
+radius-preserving cap transform. The cap projection is a separate continuous
+mapping and is not passed through ordinary Star-X edge routing.
 
 ## Numeric safeguards
 
@@ -456,6 +476,12 @@ static initialization and is safe for concurrent read-only calls.
   its practical quadrant;
 - exact Antarctic source-radius preservation and agreement of all four cap
   seams at several southern latitudes;
+- forward and reverse paired-edge routing at all four registered seams in
+  both hemispheres, including inter-group folds, intra-group folds, retained
+  hinges, and equatorial transitions;
+- shared-generator segmentation of multi-fold paths, astronomy reference
+  curves, and a synthetic submarine-cable group crossing without a center
+  chord;
 - strict aspect-ratio, gap-ratio, enlargement, and geographic-domain
   rejection; and
 - raster-name behavior with and without a runtime data prefix.

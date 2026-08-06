@@ -92,6 +92,86 @@ main()
   assert(maximum_segment(equator_paths)
          < cahill_keyes_context.map_frame.width() / 4);
 
+  const generation::projection_context star_x_context(
+    generation::find_projection_spec("star-x"), "");
+  struct star_x_seam
+  {
+    double longitude;
+    double southern_latitude;
+    double northern_latitude;
+  };
+  constexpr std::array star_x_seams {
+    star_x_seam {-111, -30, 80},
+    star_x_seam {-21, -30, 30},
+    star_x_seam {69, -30, 80},
+    star_x_seam {159, -30, 30},
+  };
+  // Every separated Star-X edge must end on one boundary copy and resume on
+  // its paired copy, in either traversal direction and in both hemispheres.
+  for (const star_x_seam seam : star_x_seams)
+    for (const double latitude
+         : {seam.southern_latitude, seam.northern_latitude})
+      for (const bool eastward : {false, true})
+        {
+          const geographic_point west {latitude, seam.longitude - 1};
+          const geographic_point east {latitude, seam.longitude + 1};
+          const std::vector source
+            = eastward ? std::vector {west, east}
+                       : std::vector {east, west};
+          const auto folded
+            = generation::project_path(star_x_context, source, false);
+          assert(folded.size() == 2);
+          assert(folded.front().size() == 2);
+          assert(folded.back().size() == 2);
+          assert(maximum_segment(folded)
+                 < star_x_context.map_frame.width() / 4);
+          assert(generation::point_distance(
+                   folded.front().back(), folded.back().front()) > 0.1);
+        }
+
+  // The joined middle portions of the two within-group seams remain hinges.
+  // They must not be fragmented merely because their native cell changes.
+  for (const double seam : {-111.0, 69.0})
+    {
+      const auto retained = generation::project_path(
+        star_x_context,
+        std::vector {geographic_point {40, seam - 1},
+                     geographic_point {40, seam + 1}},
+        false);
+      assert(retained.size() == 1);
+      assert(retained.front().size() == 3);
+      assert(maximum_segment(retained)
+             < star_x_context.map_frame.width() / 4);
+    }
+
+  // A coarse edge can cross more than one registered boundary. Topology
+  // scanning must emit both paired folds instead of drawing one chord across
+  // the X. Reverse traversal must produce the same segmentation.
+  for (const std::vector<geographic_point>& source : {
+         std::vector {geographic_point {-30, -120},
+                      geographic_point {-30, 0}},
+         std::vector {geographic_point {-30, 0},
+                      geographic_point {-30, -120}},
+       })
+    {
+      const auto folded
+        = generation::project_path(star_x_context, source, false);
+      assert(folded.size() == 3);
+      assert(maximum_segment(folded)
+             < star_x_context.map_frame.width() / 3);
+    }
+
+  // Canonical +180/-180 neighbors are one continuous part of quadrant one,
+  // not a request to traverse the other three quadrants.
+  const auto antimeridian_continuation = generation::project_path(
+    star_x_context,
+    std::vector {geographic_point {-30, 179.75},
+                 geographic_point {-30, -179.75}},
+    false);
+  assert(antimeridian_continuation.size() == 1);
+  assert(maximum_segment(antimeridian_continuation)
+         < star_x_context.map_frame.width() / 20);
+
   const generation::projection_context context(
     generation::find_projection_spec("myriahedral"), "");
 

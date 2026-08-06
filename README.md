@@ -163,6 +163,11 @@ northern Russia. Coral bleaching stress remains a documented separate
 raster/reef phase. See the
 [Anthropocene implementation notes](docs/anthropocene-implementation-notes.md)
 for classifications, formulas, source research, refresh workflow, and limits.
+The proposed
+[Stage 8b enrichment plan](docs/anthropocene-enrichment-plan.md) evaluates the
+current North American bias and defines separate complete-2025 and
+partial-2026 products, including a non-sparse global-field option. Those
+dual-year targets are not implemented yet.
 
 World Game resources generation is offline from a strict profile containing
 all 40 headings and marked 1960 production leaders in Fuller and McHale's 1963

@@ -137,6 +137,19 @@ main()
       assert(!route.empty());
     }
 
+  // A physical route crossing the Star-X group boundary must serialize as
+  // two paired-edge subpaths, never as one fiber chord through the center.
+  const generation::projection_context star_x_context(
+    generation::find_projection_spec("star-x"), "");
+  const std::string folded_route = infrastructure::project_open_path(
+    star_x_context, {{-30, -22}, {-30, -20}});
+  std::size_t move_count = 0;
+  for (std::size_t position = 0;
+       (position = folded_route.find("M ", position)) != std::string::npos;
+       position += 2)
+    ++move_count;
+  assert(move_count == 2);
+
   assert(infrastructure::multi_building_exchange_count(dataset.exchanges) == 1);
   infrastructure::exchange_dataset colocated;
   colocated.buildings = {
