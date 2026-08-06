@@ -10,6 +10,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -21,10 +22,12 @@
 #include <a60-io.h>
 #include <a60-svg.h>
 
+#include "a60-carto.h"
 #include "a60-carto-frame.h"
 #include "a60-carto-projection.h"
 #include "a60-carto-projection-dymaxion.h"
 #include "cart0freak0-authagraph.h"
+#include "cart0freak0-cahill-keyes-functions.h"
 #include "cart0freak0-cahill-keyes.h"
 #include "cart0freak0-myriahedral.h"
 #include "cart0freak0-star-x.h"
@@ -340,13 +343,23 @@ authagraph_cell(const geographic_point point)
 inline std::uint64_t
 cahill_keyes_cell(const geographic_point point)
 {
-  double longitude = point.longitude;
-  while (longitude < 159)
-    longitude += 360;
-  while (longitude >= 519)
-    longitude -= 360;
-  const auto sector = static_cast<std::uint64_t>(
-    std::clamp(static_cast<int>((longitude - 159) / 90), 0, 3));
+  // Classify through the same one-degree registration and native octant
+  // formula as ckproj::meridians_to_point_2d().  Repeatedly adding and
+  // subtracting 360 here used to round values immediately below a seam onto
+  // the seam itself.  The cell classifier would then select one octant while
+  // the forward projection selected the other.
+  const double longitude = std::clamp(point.longitude, -180.0, 180.0);
+  const double registered
+    = a60::carto::cahill_keyes_registered_longitude(longitude);
+  // The native forward projection promotes the registered double to its
+  // long-double scalar before applying the octant formula.  Match that
+  // promotion so a one-ULP neighbor cannot be rounded onto the seam here.
+  const long double native_longitude = registered;
+  int octant = static_cast<int>(
+    (native_longitude + 200.0L) / 90.0L) + 1;
+  if (octant == 5)
+    octant = 1;
+  const auto sector = static_cast<std::uint64_t>(octant - 1);
   return sector + (point.latitude < 0 ? 4 : 0);
 }
 
@@ -461,6 +474,15 @@ project_path(const projection_context& context,
   if (source.empty())
     return result;
 
+  // Cahill-Keyes outer-frame folds must inspect the original adjacent
+  // projected endpoints.  Once generic native-cell splitting has separated a
+  // pair, the relationship needed to extend both pieces to opposite frame
+  // edges has been lost.
+  std::optional<a60::carto::cartography<ckproj>> cahill_keyes_cartography;
+  if (context.spec.kind == projection_kind::cahill_keyes)
+    cahill_keyes_cartography.emplace(
+      context.map_frame, std::get<ckproj>(context.projection));
+
   svg::vrange current;
   append_unique(current, project_point(context, source.front()));
   const std::size_t edge_count = closed ? source.size() : source.size() - 1;
@@ -468,7 +490,33 @@ project_path(const projection_context& context,
     {
       geographic_point left = source[index];
       const geographic_point right = source[(index + 1) % source.size()];
+      const svg::point_2t projected_left = project_point(context, left);
       const svg::point_2t projected_right = project_point(context, right);
+
+      if (cahill_keyes_cartography
+          && a60::carto::cahill_keyes_path_detail::first_edge_transition(
+            *cahill_keyes_cartography, projected_left, projected_right))
+        {
+          const a60::vvranges folded = a60::carto::fold_path_edges(
+            *cahill_keyes_cartography,
+            svg::vrange {projected_left, projected_right});
+          require(folded.size() > 1,
+                  "Cahill-Keyes edge transition did not produce a fold");
+          for (std::size_t folded_index = 0;
+               folded_index < folded.size(); ++folded_index)
+            {
+              if (folded_index != 0)
+                {
+                  if (current.size() >= 2)
+                    result.push_back(std::move(current));
+                  current.clear();
+                }
+              for (const svg::point_2t point : folded[folded_index])
+                append_unique(current, point);
+            }
+          continue;
+        }
+
       std::uint64_t left_cell = projection_cell(context, left);
       const std::uint64_t right_cell = projection_cell(context, right);
 

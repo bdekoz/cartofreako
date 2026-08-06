@@ -2,6 +2,8 @@
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
+#include <cmath>
+#include <limits>
 #include <string_view>
 #include <vector>
 
@@ -29,6 +31,67 @@ int
 main()
 {
   using generation::geographic_point;
+
+  const generation::projection_context cahill_keyes_context(
+    generation::find_projection_spec("cahill-keyes"), "");
+
+  // The classifier must make the same one-sided seam choice as the native
+  // forward projection, including for the immediately adjacent floating-point
+  // values found by transition bisection.
+  struct cahill_keyes_seam
+  {
+    double longitude;
+    std::uint64_t preceding_cell;
+    std::uint64_t following_cell;
+  };
+  constexpr std::array cahill_keyes_seams {
+    cahill_keyes_seam {-111, 0, 1},
+    cahill_keyes_seam {-21, 1, 2},
+    cahill_keyes_seam {69, 2, 3},
+    cahill_keyes_seam {159, 3, 0},
+  };
+  for (const cahill_keyes_seam seam : cahill_keyes_seams)
+    {
+      const double before = std::nextafter(
+        seam.longitude, -std::numeric_limits<double>::infinity());
+      const double after = std::nextafter(
+        seam.longitude, std::numeric_limits<double>::infinity());
+      assert(generation::cahill_keyes_cell({0, before})
+             == seam.preceding_cell);
+      assert(generation::cahill_keyes_cell({0, seam.longitude})
+             == seam.following_cell);
+      assert(generation::cahill_keyes_cell({0, after})
+             == seam.following_cell);
+      assert(generation::cahill_keyes_cell({-1, before})
+             == seam.preceding_cell + 4);
+      assert(generation::cahill_keyes_cell({-1, seam.longitude})
+             == seam.following_cell + 4);
+    }
+
+  // A sampled celestial equator crosses the registered 159-degree cut.  It
+  // must leave and re-enter at opposite frame edges instead of retaining the
+  // almost-full-width chord between the two octant copies.
+  std::vector<geographic_point> equator;
+  for (int longitude = 180; longitude >= -180; --longitude)
+    equator.push_back({0, static_cast<double>(longitude)});
+  const auto equator_paths = generation::project_path(
+    cahill_keyes_context, equator, false);
+  assert(equator_paths.size() >= 2);
+  bool found_frame_fold = false;
+  for (std::size_t index = 1; index < equator_paths.size(); ++index)
+    {
+      const svg::point_2t exit = equator_paths[index - 1].back();
+      const svg::point_2t entry = equator_paths[index].front();
+      if (std::abs(std::get<0>(exit)) < 1e-12
+          && std::abs(std::get<0>(entry)
+                      - cahill_keyes_context.map_frame.width()) < 1e-12
+          && std::abs(std::get<1>(exit) - std::get<1>(entry)) < 1e-12)
+        found_frame_fold = true;
+    }
+  assert(found_frame_fold);
+  assert(maximum_segment(equator_paths)
+         < cahill_keyes_context.map_frame.width() / 4);
+
   const generation::projection_context context(
     generation::find_projection_spec("myriahedral"), "");
 

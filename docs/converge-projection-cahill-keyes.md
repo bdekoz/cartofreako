@@ -147,3 +147,19 @@ izzi/src.js/izzi-map-leaflet-geojson-v7.5.js
 Stage 14
 
 Given the errors found with the cahill-keyes projection in the various generate passes and testing, is it worth noting these in the docs/cahill-keyes-implementation-notes.md and or re-evaluating the numerical techniques used in the forward projection? Don't assume prior implementations are fully correct
+
+
+Stage 15
+
+For the cahill-keyes projection:
+
+Examine the way the fiber lines are correctly folded across the edges and not through the center in:
+assets.static/adhoc/star-x-2024-08.png
+
+As compared to:
+astro-all-sky-ck-44-22.png
+
+Re-evaulate fold_path_edges in
+src.projections/cart0freak0-cahill-keyes-functions.h
+
+With this in mind. Is it not being applied for the astro-all-sky-ck image? Diagnose.

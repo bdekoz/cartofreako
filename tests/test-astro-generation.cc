@@ -5,11 +5,12 @@
 #include <string>
 #include <string_view>
 
-#include "astro-data.h"
+#include "astro-generation.h"
 
 namespace {
 
 namespace astro = cart0freak0::astro_generation;
+namespace generation = cart0freak0::generation;
 
 bool
 near(const double left, const double right, const double tolerance)
@@ -38,6 +39,18 @@ check_coordinates(const std::vector<astro::sky_object>& objects)
       assert(std::isfinite(object.altitude_deg));
       assert(object.altitude_deg >= -90 && object.altitude_deg <= 90);
     }
+}
+
+double
+maximum_segment(const std::vector<svg::vrange>& paths)
+{
+  double result = 0;
+  for (const svg::vrange& path : paths)
+    for (std::size_t index = 1; index < path.size(); ++index)
+      result = std::max(
+        result,
+        generation::point_distance(path[index - 1], path[index]));
+  return result;
 }
 
 } // namespace
@@ -74,6 +87,34 @@ main()
               1e-12));
   const astro::orientation terrestrial {false, 180};
   assert(near(astro::celestial_longitude(terrestrial, 90), -90, 1e-12));
+
+  const generation::projection_context cahill_keyes_context(
+    generation::find_projection_spec("cahill-keyes"), "");
+  const auto celestial_equator = astro::project_celestial_path(
+    cahill_keyes_context, config, astro::celestial_equator());
+  assert(celestial_equator.size() >= 2);
+  bool found_frame_fold = false;
+  for (std::size_t index = 1; index < celestial_equator.size(); ++index)
+    {
+      const svg::point_2t exit = celestial_equator[index - 1].back();
+      const svg::point_2t entry = celestial_equator[index].front();
+      if (near(std::get<0>(exit), 0, 1e-12)
+          && near(std::get<0>(entry),
+                  cahill_keyes_context.map_frame.width(), 1e-12)
+          && near(std::get<1>(exit), std::get<1>(entry), 1e-12))
+        found_frame_fold = true;
+    }
+  assert(found_frame_fold);
+  assert(maximum_segment(celestial_equator)
+         < cahill_keyes_context.map_frame.width() / 4);
+  for (const auto& reference : {
+         astro::project_celestial_path(
+           cahill_keyes_context, config, astro::ecliptic_line()),
+         astro::project_celestial_path(
+           cahill_keyes_context, config, astro::galactic_equator()),
+       })
+    assert(maximum_segment(reference)
+           < cahill_keyes_context.map_frame.width() / 2);
 
   const double sidereal = astro::local_sidereal_time(config);
   assert(near(astro::altitude_degrees(

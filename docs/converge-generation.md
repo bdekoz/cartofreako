@@ -157,7 +157,7 @@ Evaluate feasibility and propose a plan for a new generate pass for "anthropocen
 src.generate/generate-anthropocene.cc
 
 
-Have a configurable JSON file with any static generation data or options, for this one of the options is duration, and set the default to the current calendar year (aka 2026). 
+Have a configurable JSON file with any static generation data or options, for this one of the options is duration, and set the default to the current calendar year (aka 2026).
 
 Areas to consider:
 - count of new temperature high records by geojson point locations
@@ -172,11 +172,11 @@ Data Sources:
   https://map.purpleair.com/air-quality-standards-us-epa-aqi?opt=%2F1%2Flp%2Fa10%2Fp604800%2FcC0#1/25/-30
 - for fire, consider websites like CalFire's website
   https://www.fire.ca.gov/incidents
-  
+
 
 Research, evaulate, and suggest plan before continuing.
 
-Examine adding select resource types not covered in the original specification, suggest classification. 
+Examine adding select resource types not covered in the original specification, suggest classification.
 
 Then detail plan and way for confirmation before implementing.
 After confirmation, assume authorized and proceed and finish work without prompting.
@@ -208,9 +208,33 @@ Prior art:
 augment_carto_composite
 alpha60/src/a60-carto-geo.h
 
-Data source 
+Data source
 https://github.com/bdekoz/cloud_cdn_cache/data
 
 Research, evaulate, and suggest plan before continuing.
 Then detail plan and way for confirmation before implementing.
 After confirmation, assume authorized and proceed and finish work without prompting.
+
+
+---
+
+Stage 8b development:
+
+Evaluate and suggest methods to improve coverage in the anthropocene pass.
+
+Given the generated output
+
+assets.generated/png/anthropocene-ck-44-22.png
+
+Coverage is great for North America and weak everywhere else.
+
+Here are some issues
+- only coverage for USA for smoke and fire. Yet most of Russia Siberia was burning last year. Australia also had fire and pm25 issues, China had pm25 issues, etc. None of this is visible. Suggest data sources that can capture this.
+
+- same with temperature. Most coverage in the USA. There has got to be better sources of information for EU and China/Japan, find them. Suggest improvements.
+
+- re-evaluate using Purple air. Sketch an optional pass assuming license permissions solved.
+
+- there was previous talk of coral bleaching and other signs of oceianic distress. Re-evaluate implementing these and or other inputs.
+
+Propose a plan for improving enrichment, update docs

@@ -481,6 +481,23 @@ while (!projected.empty())
 Repeated calls produce exactly the same segmentation as
 `fold_path_edges()`.
 
+The shared generation path applies this fold automatically for Cahill-Keyes.
+It tests each original adjacent projected-point pair before generic native-cell
+splitting, because splitting first would discard the relationship needed to
+extend an exit and entry to opposite carrier edges. A detected outer-frame
+wrap is rendered through `fold_path_edges()`; all other pairs retain the
+shared native-cell transition logic used by the other projections. This is
+the path used by astronomy reference curves, graticules, Natural Earth
+geometry, orbital tracks, atmosphere contours, and network paths.
+
+Native-cell classification uses the same operations as the forward
+projection: the public one-degree longitude registration is performed in
+`double`, then the registered value is promoted to `long double` before the
+native octant formula is evaluated. This ordering matters immediately beside
+the visible seams at -111°, -21°, 69°, and 159°. A former add-360/subtract-360
+normalization could round a one-ULP neighbor onto the seam for classification
+while the forward projection still selected the opposite planar copy.
+
 ### Detection and edge-intersection formulas
 
 Let the projection frame have width `W`, height `H`, and drawing origin
@@ -665,10 +682,14 @@ The checks cover:
 - preservation of an explicitly offset legacy `projection_base`;
 - the checked-in inverse-raster filename convention;
 - a real projected seam crossing between 158° E and 162° E;
+- forward-consistent native-cell ownership on both sides of all four visible
+  seams, including immediately adjacent floating-point values;
 - horizontal and vertical path folds in both directions;
 - simultaneous corner crossings and ordered two-edge crossings;
 - preservation of unrecognized jumps and of the incremental remainder;
 - agreement between the non-mutating and stateful path APIs;
+- shared-generation edge routing for a sampled celestial equator, ecliptic,
+  and galactic equator without almost-full-width interior chords;
 - scale and nonzero-origin path behavior; and
 - rejection of invalid path sizes, aspect ratios, origins, and points;
 - exact four-strip carrier partitioning and official octant-pair metadata;

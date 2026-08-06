@@ -458,6 +458,7 @@ GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/projection-generation-common.h \
 	$(GENERATOR_SRC_DIR)/myriahedral-perspective-generation.h \
 	$(wildcard $(GENERATOR_SRC_DIR)/myriahedral-perspective-*-tree.inc) \
+	$(PROJECTION_SRC_DIR)/a60-carto.h \
 	$(PROJECTION_SRC_DIR)/a60-carto-frame.h \
 	$(PROJECTION_SRC_DIR)/a60-carto-projection.h \
 	$(PROJECTION_SRC_DIR)/a60-carto-projection-dymaxion.h \
@@ -655,7 +656,7 @@ check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
 	$(TEST_DIR)/test-resources-generation
 	cd "$(RESOURCES_DATA_DIR)" && sha256sum -c SHA256SUMS
 	cd "$(ANTHROPOCENE_DATA_DIR)" && sha256sum -c SHA256SUMS
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$(TEST_DIR)/test-astro-generation.cc \
 		-o $(TEST_DIR)/test-astro-generation
 	$(TEST_DIR)/test-astro-generation
