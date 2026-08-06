@@ -72,13 +72,15 @@ digest validation remains in the stricter network-infrastructure source-check
 targets.
 
 `make all` builds 24 production whole-earth maps, 12 astronomy maps, 12
-Orbital Technosphere maps, six resources maps, six Anthropocene maps, six network-swarm maps, six
+Orbital Technosphere maps, 30 Stage 6b resource maps, six Anthropocene maps,
+12 Anthropocene temperature maps, six network-swarm maps, six
 network-infrastructure site maps, six Bathymetry Roulette maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes slices, and two
-Myriahedral face-group slices, then invokes Inkscape to export all 97 SVGs as
-PDFs and 3840-pixel-long-side PNGs. The six resources SVGs are retained as
-deterministic `.svg.gz` archives instead of plain checked-in SVGs. It needs
-all native build and data-acquisition dependencies through H3 and GEOS, the
+Myriahedral face-group slices, then invokes Inkscape to export all 133 SVG
+products as PDFs and 3840-pixel-long-side PNGs. The 30 resources SVGs are
+retained as deterministic `.svg.gz` archives instead of plain checked-in
+SVGs. It needs all native build and data-acquisition dependencies through H3
+and GEOS, the
 profile-pinned external cloud/CDN checkout, plus Inkscape. The separately
 licensed TeleGeography topology product is not part of `make all`.
 Inkscape may be omitted only when invoking individual SVG generation targets
@@ -92,12 +94,11 @@ those dependencies, use the explicit fetch, prepare, verify, and generate
 targets documented in the
 [Cloud-atmosphere notes](cloud-atmosphere-implementation-notes.md).
 
-Normal resources generation needs only the ordinary profile, RapidJSON, GDAL,
-Natural Earth, and label font. Re-auditing an authorized Fuller scan is an
-optional maintainer workflow that additionally needs Poppler's `pdftoppm`, the
-Python OpenCV module, and Tesseract. Those OCR-only tools are not checked by
-`make check-prerequisite`; see the
-[resources notes](resources-implementation-notes.md#re-auditing-an-authorized-scan).
+Normal resources generation needs only the checked profile, normalized values,
+compact country geometry, RapidJSON, GDAL, Natural Earth, and label font. An
+explicit `make refresh-resources-data` maintainer refresh additionally needs
+Python 3, `curl`, `unzip`, and Poppler's `pdftotext`; it is never run by normal
+generation. See the [resources notes](resources-implementation-notes.md).
 
 ## Install the system packages
 
@@ -641,8 +642,9 @@ Make inherited a `-j` setting.
 Successful generation places six geometry maps, six graticule maps, six
 Earth maps, eleven water maps (six production plus five exploratory
 Myriahedral perspectives), 12 astronomy maps, 12 Orbital Technosphere maps,
-six resources maps, six Anthropocene maps, six network-swarm maps, six network-infrastructure site
-maps, six Bathymetry Roulette maps, four quadrant slices, eight
+30 resources maps, six Anthropocene maps, 12 Anthropocene temperature maps,
+six network-swarm maps, six network-infrastructure site maps, six Bathymetry
+Roulette maps, four quadrant slices, eight
 octant slices, and two Myriahedral face-group
 slices in each of `assets.generated/svg/`,
 `assets.generated/pdf/`, and `assets.generated/png/`; resources use `.svg.gz`

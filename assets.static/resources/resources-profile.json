@@ -1,76 +1,1105 @@
 {
-  "schema": "cartofreako-resources-profile-v1",
-  "name": "World Game resources / 1960 production leaders",
-  "description": "A bounded transcription of all 40 commodity columns in Fuller and McHale's 1963 report, kept separate from selected modern context.",
-  "display": {
-    "marker_radius": 0.115,
-    "cluster_step": 0.285,
-    "show_legend": true
+  "schema": "cartofreako-resources-profile-v2",
+  "name": "Resources Stage 6b current-source atlas",
+  "description": "Five independent resource families with explicit metric units, evidence classes, observation periods, and non-sparse coverage gates.",
+  "snapshot_as_of": "2026-08-06",
+  "missing_semantics": "Missing is unknown and is never rendered as observed zero.",
+  "country_geometry": {
+    "path": "countries-110m.geojson",
+    "sha256": "fd67a70b3c88f491969cc738f05a60d62e21899f12b45fdb8b6ae9f640342efb",
+    "source_id": "natural-earth-admin0"
   },
-  "historical": {
-    "publication_year": 1963,
-    "production_year": 1960,
-    "record_count": 40,
-    "source_title": "Inventory of World Resources, Human Trends, and Needs, Phase I, Document 1",
-    "source_authors": "R. Buckminster Fuller and John McHale",
-    "source_publisher": "World Resources Inventory, Southern Illinois University",
-    "source_page_url": "https://www.bfi.org/resource/phase-i-document-1-inventory-of-world-resources-human-trends-and-needs-1963/",
-    "source_pdf_url": "https://www.bfi.org/wp-content/uploads/2014/01/wdsd_phase1_doc1_inventory.pdf",
-    "source_pdf_sha256": "11f0a4f7617a34b58bf620bba62ddbfe01a6389dffc348e95142b86db964f816",
-    "source_pdf_pages": "62-73 (one-based PDF pages)",
-    "scope": "Every commodity heading, reported world total, and asterisk-marked leading producer/share in the report's 1960 production matrix; not the complete country-by-commodity matrix.",
-    "missing_semantics": "A missing leader or total means the report prints N.A.; it is never zero.",
-    "geography_semantics": "Marker coordinates are documented representative points for the report's historical country labels, not mines, wells, fields, facilities, or boundary claims.",
-    "records": [
-      {"index": 1, "id": "aluminum", "label": "Aluminum", "category": "metals", "world_total": 6080000, "source_unit": "S.T.", "header_pdf_page": 62, "leader_pdf_page": 72, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 38.035}},
-      {"index": 2, "id": "antimony", "label": "Antimony", "category": "metals", "world_total": 61600, "source_unit": "S.T.", "header_pdf_page": 62, "leader_pdf_page": 62, "leader": {"historical_label": "China", "modern_area": "China", "longitude": 103.833333, "latitude": 35.0, "share_percent": 26.785}},
-      {"index": 3, "id": "asbestos", "label": "Asbestos", "category": "industrial-materials", "world_total": 3210000, "source_unit": "S.T.", "header_pdf_page": 62, "leader_pdf_page": 62, "leader": {"historical_label": "Canada", "modern_area": "Canada", "longitude": -106.0, "latitude": 56.0, "share_percent": 39.769}},
-      {"index": 4, "id": "bauxite", "label": "Bauxite", "category": "industrial-materials", "world_total": 30220000, "source_unit": "L.T.", "header_pdf_page": 62, "leader_pdf_page": 66, "leader": {"historical_label": "Jamaica", "modern_area": "Jamaica", "longitude": -77.3, "latitude": 18.15, "share_percent": 22.842}},
-      {"index": 5, "id": "cement", "label": "Cement", "category": "industrial-materials", "world_total": 2209950000, "source_unit": "BBLS.", "header_pdf_page": 62, "leader_pdf_page": 72, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 16.670}},
-      {"index": 6, "id": "chromite", "label": "Chromite", "category": "industrial-materials", "world_total": 4355000, "source_unit": "S.T.", "header_pdf_page": 62, "leader_pdf_page": 72, "leader": {"historical_label": "USSR", "modern_area": "Former USSR", "longitude": 90.0, "latitude": 60.0, "share_percent": 31.113}},
-      {"index": 7, "id": "coal-anthracite", "label": "Coal — anthracite", "category": "energy-feedstocks", "world_total": 2140349000, "source_unit": "S.T.", "header_pdf_page": 62, "leader_pdf_page": 72, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 22.168}},
-      {"index": 8, "id": "coal-lignite", "label": "Coal — lignite", "category": "energy-feedstocks", "world_total": 786321000, "source_unit": "S.T.", "header_pdf_page": 62, "leader_pdf_page": 62, "leader": {"historical_label": "Germany (East)", "modern_area": "Germany", "longitude": 12.5, "latitude": 52.0, "share_percent": 35.663}},
-      {"index": 9, "id": "cobalt", "label": "Cobalt", "category": "metals", "world_total": 12900, "source_unit": "S.T.", "header_pdf_page": 62, "leader_pdf_page": 62, "leader": {"historical_label": "Congo (Leopoldville)", "modern_area": "Democratic Republic of the Congo", "longitude": 23.65, "latitude": -2.88, "share_percent": 63.031}},
-      {"index": 10, "id": "copper-mined", "label": "Copper (mined)", "category": "metals", "world_total": 5210000, "source_unit": "S.T.", "header_pdf_page": 63, "leader_pdf_page": 73, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 23.285}},
-      {"index": 11, "id": "industrial-diamonds", "label": "Industrial diamonds", "category": "industrial-materials", "world_total": 30067000, "source_unit": "C.", "header_pdf_page": 63, "leader_pdf_page": 63, "leader": {"historical_label": "Congo (Leopoldville)", "modern_area": "Democratic Republic of the Congo", "longitude": 23.65, "latitude": -2.88, "share_percent": 48.119}},
-      {"index": 12, "id": "feldspar", "label": "Feldspar", "category": "industrial-materials", "world_total": 1690000, "source_unit": "L.T.", "header_pdf_page": 63, "leader_pdf_page": 73, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 32.482}},
-      {"index": 13, "id": "fluorspar", "label": "Fluorspar", "category": "industrial-materials", "world_total": 2340000, "source_unit": "S.T.", "header_pdf_page": 63, "leader_pdf_page": 67, "leader": {"historical_label": "Mexico", "modern_area": "Mexico", "longitude": -102.0, "latitude": 23.0, "share_percent": 46.001}},
-      {"index": 14, "id": "gold", "label": "Gold", "category": "metals", "world_total": 44200000, "source_unit": "T.O.", "header_pdf_page": 63, "leader_pdf_page": 73, "leader": {"historical_label": "South Africa", "modern_area": "South Africa", "longitude": 24.0, "latitude": -29.0, "share_percent": 62.062}},
-      {"index": 15, "id": "gypsum", "label": "Gypsum", "category": "industrial-materials", "world_total": 49900000, "source_unit": "S.T.", "header_pdf_page": 63, "leader_pdf_page": 73, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 23.135}},
-      {"index": 16, "id": "iron-ore", "label": "Iron ore", "category": "metals", "world_total": 513661000, "source_unit": "L.T.", "header_pdf_page": 63, "leader_pdf_page": 73, "leader": {"historical_label": "USSR", "modern_area": "Former USSR", "longitude": 90.0, "latitude": 60.0, "share_percent": 26.341}},
-      {"index": 17, "id": "lead", "label": "Lead", "category": "metals", "world_total": 2805000, "source_unit": "S.T.", "header_pdf_page": 63, "leader_pdf_page": 63, "leader": {"historical_label": "Australia", "modern_area": "Australia", "longitude": 134.0, "latitude": -25.0, "share_percent": 16.383}},
-      {"index": 18, "id": "magnesite", "label": "Magnesite", "category": "industrial-materials", "world_total": 9200000, "source_unit": "S.T.", "header_pdf_page": 63, "leader_pdf_page": 73, "leader": {"historical_label": "USSR", "modern_area": "Former USSR", "longitude": 90.0, "latitude": 60.0, "share_percent": 32.391}},
-      {"index": 19, "id": "manganese", "label": "Manganese", "category": "metals", "world_total": 16138000, "source_unit": "S.T.", "header_pdf_page": 63, "leader_pdf_page": 73, "leader": {"historical_label": "USSR", "modern_area": "Former USSR", "longitude": 90.0, "latitude": 60.0, "share_percent": 45.513}},
-      {"index": 20, "id": "mercury", "label": "Mercury", "category": "metals", "world_total": 239000, "source_unit": "F.", "header_pdf_page": 63, "leader_pdf_page": 73, "leader": {"historical_label": "Spain", "modern_area": "Spain", "longitude": -3.7, "latitude": 40.0, "share_percent": 23.830}},
-      {"index": 21, "id": "mica", "label": "Mica", "category": "industrial-materials", "world_total": 400000000, "source_unit": "LBS.", "header_pdf_page": 64, "leader_pdf_page": 70, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 54.687}},
-      {"index": 22, "id": "molybdenum", "label": "Molybdenum", "category": "metals", "world_total": 90900000, "source_unit": "LBS.", "header_pdf_page": 64, "leader_pdf_page": 70, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 71.519}},
-      {"index": 23, "id": "natural-gas", "label": "Natural gas", "category": "energy-feedstocks", "world_total": 21916478, "source_unit": "MIL. CU. FT.", "header_pdf_page": 64, "leader_pdf_page": 70, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 67.285}},
-      {"index": 24, "id": "nickel", "label": "Nickel", "category": "metals", "world_total": 395000, "source_unit": "S.T.", "header_pdf_page": 64, "leader_pdf_page": 64, "leader": {"historical_label": "Canada", "modern_area": "Canada", "longitude": -106.0, "latitude": 56.0, "share_percent": 55.681}},
-      {"index": 25, "id": "nitrogen", "label": "Nitrogen", "category": "industrial-materials", "world_total": 19881000, "source_unit": "S.T.", "header_pdf_page": 64, "leader_pdf_page": 70, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 28.665}},
-      {"index": 26, "id": "petroleum", "label": "Petroleum", "category": "energy-feedstocks", "world_total": 9537420000, "source_unit": "BBLS.", "header_pdf_page": 64, "leader_pdf_page": 70, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 28.862}},
-      {"index": 27, "id": "phosphate-rock", "label": "Phosphate rock", "category": "industrial-materials", "world_total": 50390000, "source_unit": "L.T.", "header_pdf_page": 64, "leader_pdf_page": 70, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 39.246}},
-      {"index": 28, "id": "platinum", "label": "Platinum", "category": "metals", "world_total": 1545000, "source_unit": "T.O.", "header_pdf_page": 64, "leader_pdf_page": 70, "leader": {"historical_label": "USSR", "modern_area": "Former USSR", "longitude": 90.0, "latitude": 60.0, "share_percent": 51.779}},
-      {"index": 29, "id": "potash", "label": "Potash", "category": "industrial-materials", "world_total": 12100000, "source_unit": "S.T.", "header_pdf_page": 64, "leader_pdf_page": 70, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 23.669}},
-      {"index": 30, "id": "salt", "label": "Salt", "category": "industrial-materials", "world_total": 104700000, "source_unit": "S.T.", "header_pdf_page": 65, "leader_pdf_page": 71, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 29.273}},
-      {"index": 31, "id": "silver", "label": "Silver", "category": "metals", "world_total": 250800000, "source_unit": "T.O.", "header_pdf_page": 65, "leader_pdf_page": 69, "leader": {"historical_label": "Mexico", "modern_area": "Mexico", "longitude": -102.0, "latitude": 23.0, "share_percent": 17.049}},
-      {"index": 32, "id": "steel", "label": "Steel", "category": "metals", "world_total": 425470000, "source_unit": "S.T.", "header_pdf_page": 65, "leader_pdf_page": 71, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 25.680}},
-      {"index": 33, "id": "sulfur", "label": "Sulfur", "category": "industrial-materials", "world_total": 12600000, "source_unit": "L.T.", "header_pdf_page": 65, "leader_pdf_page": 71, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 46.259}},
-      {"index": 34, "id": "thorium", "label": "Thorium", "category": "energy-feedstocks", "world_total": null, "source_unit": "N.A.", "header_pdf_page": 65, "leader_pdf_page": null, "leader": null},
-      {"index": 35, "id": "tin-mined", "label": "Tin (mined)", "category": "metals", "world_total": 190315, "source_unit": "L.T.", "header_pdf_page": 65, "leader_pdf_page": 69, "leader": {"historical_label": "Malaysia", "modern_area": "Malaysia", "longitude": 102.0, "latitude": 4.0, "share_percent": 31.498}},
-      {"index": 36, "id": "titanium", "label": "Titanium", "category": "metals", "world_total": 2408600, "source_unit": "S.T.", "header_pdf_page": 65, "leader_pdf_page": 65, "leader": {"historical_label": "Australia", "modern_area": "Australia", "longitude": 134.0, "latitude": -25.0, "share_percent": 18.125}},
-      {"index": 37, "id": "tungsten", "label": "Tungsten", "category": "metals", "world_total": 64600, "source_unit": "S.T.", "header_pdf_page": 65, "leader_pdf_page": 65, "leader": {"historical_label": "China", "modern_area": "China", "longitude": 103.833333, "latitude": 35.0, "share_percent": 38.544}},
-      {"index": 38, "id": "uranium", "label": "Uranium", "category": "metals", "world_total": 30200, "source_unit": "S.T.", "header_pdf_page": 65, "leader_pdf_page": 71, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 47.079}},
-      {"index": 39, "id": "vanadium", "label": "Vanadium", "category": "metals", "world_total": 7155, "source_unit": "S.T.", "header_pdf_page": 65, "leader_pdf_page": 71, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 53.850}},
-      {"index": 40, "id": "zinc", "label": "Zinc", "category": "metals", "world_total": 4020000, "source_unit": "S.T.", "header_pdf_page": 65, "leader_pdf_page": 71, "leader": {"historical_label": "USA", "modern_area": "United States of America", "longitude": -98.583333, "latitude": 39.833333, "share_percent": 13.165}}
-    ]
+  "values": {
+    "path": "resources-values.json",
+    "sha256": "f48962c3e460b63770732e6707d70dec8314739a13ffd466b04bd3c8b8bd9303"
   },
-  "modern_context": {
-    "separation": "These records are modern comparison indicators, not updates of Fuller's unlike commodity definitions and not a time series.",
-    "records": [
-      {"id": "capture-fisheries", "label": "Capture fisheries", "reference_year": 2022, "world_total": 92300000, "unit": "tonnes", "leader": null, "source_organization": "FAO", "source_title": "The State of World Fisheries and Aquaculture 2024", "source_url": "https://www.fao.org/newsroom/detail/fao-report-global-fisheries-and-aquaculture-reaches-a-new-record-high/", "scope_note": "Global capture fisheries total; the cited summary does not publish a matching country share."},
-      {"id": "aquatic-animal-production", "label": "Aquatic animal production", "reference_year": 2022, "world_total": 185400000, "unit": "tonnes", "leader": {"historical_label": "China", "modern_area": "China", "longitude": 103.833333, "latitude": 35.0, "share_percent": 36.0}, "source_organization": "FAO", "source_title": "The State of World Fisheries and Aquaculture 2024", "source_url": "https://www.fao.org/newsroom/detail/fao-report-global-fisheries-and-aquaculture-reaches-a-new-record-high/", "scope_note": "Capture plus aquaculture aquatic animals; excludes algae."},
-      {"id": "primary-crops", "label": "Primary crops", "reference_year": 2023, "world_total": 9900000000, "unit": "tonnes", "leader": null, "source_organization": "FAO", "source_title": "Agricultural production statistics 2010-2023", "source_url": "https://www.fao.org/statistics/highlights-archive/highlights-detail/agricultural-production-statistics-2010-2023/en", "scope_note": "Global aggregate only; no country-share claim is inferred from the release."},
-      {"id": "installed-solar-capacity", "label": "Installed solar capacity", "reference_year": 2025, "world_total": 2391584, "unit": "MW", "leader": {"historical_label": "China", "modern_area": "China", "longitude": 103.833333, "latitude": 35.0, "share_percent": 50.267}, "source_organization": "IRENA", "source_title": "Renewable Capacity Statistics 2026", "source_url": "https://www.irena.org/Publications/2026/Mar/Renewable-capacity-statistics-2026", "scope_note": "End-of-year solar energy generating capacity; China's 1,202,179 MW divided by the 2,391,584 MW world total."}
-    ]
-  }
+  "sources": [
+    {
+      "id": "natural-earth-admin0",
+      "organization": "Natural Earth",
+      "title": "Admin 0 – Countries, 1:110m",
+      "release": "5.1.1",
+      "url": "https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip",
+      "retrieved_at": "2026-08-06",
+      "license": "Public domain",
+      "sha256": "0f243aeac8ac6cf26f0417285b0bd33ac47f1b5bdb719fd3e0df37d03ea37110"
+    },
+    {
+      "id": "irena-rsc-2026",
+      "organization": "IRENA",
+      "title": "Renewable Capacity Statistics 2026",
+      "release": "2026-03",
+      "url": "https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2026/Mar/IRENA_DAT_RE_capacity_statistics_2026.pdf",
+      "retrieved_at": "2026-08-06",
+      "license": "IRENA publication; normalized factual extract",
+      "sha256": "fc580bd4f4ee39ef20de6b1ce3926005a4e3e3b8e2c92fd6a16d175a52515921"
+    },
+    {
+      "id": "usgs-mcs-2026",
+      "organization": "U.S. Geological Survey",
+      "title": "Mineral Commodity Summaries 2026",
+      "release": "2026",
+      "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026.pdf",
+      "retrieved_at": "2026-08-06",
+      "license": "U.S. Government work; normalized factual extract",
+      "sha256": "595e6e66674236dea40125a03eb1ea6b347f331c0bcf3411a1e77eba53c0d391"
+    },
+    {
+      "id": "wdi-2026-07-13",
+      "organization": "World Bank",
+      "title": "World Development Indicators",
+      "release": "2026-07-13",
+      "url": "https://databank.worldbank.org/source/world-development-indicators",
+      "retrieved_at": "2026-08-06",
+      "license": "CC BY 4.0",
+      "sha256": "5c767ba4ab7b4bd81d9b35c386d565838803eae9102037bc9615b1a3d979d31b"
+    },
+    {
+      "id": "iaea-pris",
+      "organization": "IAEA",
+      "title": "Power Reactor Information System",
+      "release": "current snapshot required",
+      "url": "https://pris.iaea.org/PRIS/home.aspx",
+      "retrieved_at": "2026-08-06",
+      "license": "Review before promotion",
+      "sha256": "not-yet-ingested"
+    },
+    {
+      "id": "fao-faostat",
+      "organization": "FAO",
+      "title": "FAOSTAT production and food balances",
+      "release": "current snapshot required",
+      "url": "https://www.fao.org/faostat/en/#home",
+      "retrieved_at": "2026-08-06",
+      "license": "FAOSTAT terms apply",
+      "sha256": "not-yet-ingested"
+    },
+    {
+      "id": "uis",
+      "organization": "UNESCO Institute for Statistics",
+      "title": "UIS education data",
+      "release": "2026 refresh",
+      "url": "https://databrowser.uis.unesco.org/",
+      "retrieved_at": "2026-08-06",
+      "license": "Review export terms before promotion",
+      "sha256": "not-yet-ingested"
+    },
+    {
+      "id": "wipo",
+      "organization": "WIPO",
+      "title": "Intellectual Property Statistics",
+      "release": "current snapshot required",
+      "url": "https://www.wipo.int/en/web/ip-statistics/about",
+      "retrieved_at": "2026-08-06",
+      "license": "Review export terms before promotion",
+      "sha256": "not-yet-ingested"
+    },
+    {
+      "id": "world-bank-wbl-2026",
+      "organization": "World Bank",
+      "title": "Women, Business and the Law 2026",
+      "release": "2026",
+      "url": "https://wbl.worldbank.org/en/data/download-data",
+      "retrieved_at": "2026-08-06",
+      "license": "Review workbook terms before promotion",
+      "sha256": "not-yet-ingested"
+    },
+    {
+      "id": "world-bank-gdim",
+      "organization": "World Bank",
+      "title": "Global Database on Intergenerational Mobility",
+      "release": "current snapshot required",
+      "url": "https://www.worldbank.org/en/topic/poverty/brief/what-is-the-global-database-on-intergenerational-mobility-gdim",
+      "retrieved_at": "2026-08-06",
+      "license": "Review before promotion",
+      "sha256": "not-yet-ingested"
+    }
+  ],
+  "families": [
+    {
+      "id": "resources-energy",
+      "title": "Energy resources",
+      "default_metric": "solar-capacity",
+      "palette": {
+        "low": [
+          255,
+          241,
+          168
+        ],
+        "high": [
+          177,
+          61,
+          32
+        ],
+        "missing": [
+          211,
+          208,
+          198
+        ]
+      },
+      "metrics": [
+        {
+          "id": "solar-capacity",
+          "title": "Installed solar generating capacity",
+          "unit": "MW",
+          "reference_period": "2025",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "irena-rsc-2026"
+          ],
+          "status": "default",
+          "scale": "log1p",
+          "output_tag": "solar-capacity-2025",
+          "coverage": {
+            "covered_countries": 169,
+            "mapped_countries": 176,
+            "country_percent": 96.023,
+            "population_percent": 99.996,
+            "output_percent": 99.832,
+            "passes_non_sparse": true
+          },
+          "notes": "End-of-year capacity; not generation."
+        },
+        {
+          "id": "wind-capacity",
+          "title": "Installed wind generating capacity",
+          "unit": "MW",
+          "reference_period": "2025",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "irena-rsc-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Separate onshore and offshore when ingested."
+        },
+        {
+          "id": "nuclear-operating-capacity",
+          "title": "Operating nuclear net electrical capacity",
+          "unit": "MW",
+          "reference_period": "snapshot",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "iaea-pris"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Exclude shutdown and under-construction reactors."
+        },
+        {
+          "id": "oil-field-production",
+          "title": "Crude oil and lease-condensate production",
+          "unit": "defined source unit",
+          "reference_period": "annual",
+          "evidence_class": "reported-statistic",
+          "source_ids": [],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Global well-level coverage is not claimed; fields are supplemental."
+        },
+        {
+          "id": "petroleum-refinery-capacity",
+          "title": "Petroleum refinery capacity",
+          "unit": "barrels/day",
+          "reference_period": "annual",
+          "evidence_class": "reported-statistic",
+          "source_ids": [],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Capacity is not throughput or extraction."
+        },
+        {
+          "id": "petroleum-refinery-throughput",
+          "title": "Petroleum refinery throughput",
+          "unit": "barrels/day",
+          "reference_period": "annual",
+          "evidence_class": "reported-statistic",
+          "source_ids": [],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Kept separate from capacity."
+        },
+        {
+          "id": "gas-processing-and-lng",
+          "title": "Natural-gas processing and LNG capacity",
+          "unit": "defined source unit",
+          "reference_period": "annual",
+          "evidence_class": "reported-statistic",
+          "source_ids": [],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Processing plants, LNG terminals, and pipelines remain distinct."
+        },
+        {
+          "id": "unconventional-gas-production",
+          "title": "Explicitly reported unconventional-gas production",
+          "unit": "defined source unit",
+          "reference_period": "annual",
+          "evidence_class": "reported-statistic",
+          "source_ids": [],
+          "status": "supplemental",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Never infer fracking from generic gas production or facility presence."
+        }
+      ]
+    },
+    {
+      "id": "resources-food",
+      "title": "Food resources",
+      "default_metric": "food-production-index",
+      "palette": {
+        "low": [
+          246,
+          236,
+          180
+        ],
+        "high": [
+          45,
+          126,
+          70
+        ],
+        "missing": [
+          211,
+          208,
+          198
+        ]
+      },
+      "metrics": [
+        {
+          "id": "food-production-index",
+          "title": "Food production index",
+          "unit": "index, 2014–2016=100",
+          "reference_period": "latest accepted through 2025",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "wdi-2026-07-13"
+          ],
+          "status": "default",
+          "scale": "linear",
+          "output_tag": "food-production-index-latest-2026",
+          "coverage": {
+            "covered_countries": 168,
+            "mapped_countries": 176,
+            "country_percent": 95.455,
+            "population_percent": 99.999,
+            "output_percent": null,
+            "passes_non_sparse": true
+          },
+          "notes": "Country observations retain their individual years."
+        },
+        {
+          "id": "crop-production",
+          "title": "Primary crop production",
+          "unit": "tonnes",
+          "reference_period": "annual",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "fao-faostat"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Keep tonnes, harvested area, and yield separate."
+        },
+        {
+          "id": "livestock-production",
+          "title": "Livestock production",
+          "unit": "commodity-specific",
+          "reference_period": "annual",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "fao-faostat"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Animal counts, biomass, meat, milk, and eggs are not interchangeable."
+        },
+        {
+          "id": "capture-fisheries",
+          "title": "Capture fisheries production",
+          "unit": "tonnes",
+          "reference_period": "annual",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "fao-faostat"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Separate wild capture from aquaculture."
+        },
+        {
+          "id": "aquaculture",
+          "title": "Aquaculture production",
+          "unit": "tonnes",
+          "reference_period": "annual",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "fao-faostat"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Separate aquatic animals and plants."
+        },
+        {
+          "id": "dietary-energy-supply",
+          "title": "Dietary energy supply",
+          "unit": "kcal/person/day",
+          "reference_period": "annual",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "fao-faostat"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Food supply is not production, intake, or a nutrition outcome."
+        }
+      ]
+    },
+    {
+      "id": "resources-flora",
+      "title": "Flora resources",
+      "default_metric": "forest-area-percent",
+      "palette": {
+        "low": [
+          238,
+          229,
+          171
+        ],
+        "high": [
+          26,
+          102,
+          59
+        ],
+        "missing": [
+          211,
+          208,
+          198
+        ]
+      },
+      "metrics": [
+        {
+          "id": "forest-area-percent",
+          "title": "Forest area",
+          "unit": "% of land area",
+          "reference_period": "latest accepted through 2025",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "wdi-2026-07-13"
+          ],
+          "status": "default",
+          "scale": "linear",
+          "output_tag": "forest-area-percent-latest-2026",
+          "coverage": {
+            "covered_countries": 169,
+            "mapped_countries": 176,
+            "country_percent": 96.023,
+            "population_percent": 100.0,
+            "output_percent": null,
+            "passes_non_sparse": true
+          },
+          "notes": "National statistic; not a remotely sensed density field."
+        },
+        {
+          "id": "land-cover",
+          "title": "Plant life and land-cover class",
+          "unit": "class",
+          "reference_period": "2020",
+          "evidence_class": "remote-sensed-field",
+          "source_ids": [],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Copernicus global field; land cover is not biodiversity."
+        },
+        {
+          "id": "forest-cover-density",
+          "title": "Tree-cover density",
+          "unit": "%",
+          "reference_period": "source-specific",
+          "evidence_class": "remote-sensed-field",
+          "source_ids": [],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Declare the product domain and masks."
+        },
+        {
+          "id": "savanna-mask",
+          "title": "Savanna class mask",
+          "unit": "class",
+          "reference_period": "source-specific",
+          "evidence_class": "derived-statistic",
+          "source_ids": [],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Requires a pinned land-cover/ecological-zone crosswalk."
+        },
+        {
+          "id": "tropical-rainforest-mask",
+          "title": "Tropical rainforest class mask",
+          "unit": "class",
+          "reference_period": "source-specific",
+          "evidence_class": "derived-statistic",
+          "source_ids": [],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Not a simple tree-percentage threshold."
+        },
+        {
+          "id": "plant-biodiversity",
+          "title": "Sampling-adjusted vascular-plant richness",
+          "unit": "modeled richness",
+          "reference_period": "source-specific",
+          "evidence_class": "modeled-field",
+          "source_ids": [],
+          "status": "supplemental",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Raw occurrence counts are dominated by sampling effort."
+        }
+      ]
+    },
+    {
+      "id": "resources-mineral",
+      "title": "Mineral resources",
+      "default_metric": "rare-earth-mine-production",
+      "palette": {
+        "low": [
+          226,
+          216,
+          201
+        ],
+        "high": [
+          91,
+          65,
+          125
+        ],
+        "missing": [
+          211,
+          208,
+          198
+        ]
+      },
+      "metrics": [
+        {
+          "id": "rare-earth-mine-production",
+          "title": "Rare-earth mine production",
+          "unit": "metric tonnes REO equivalent",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "default",
+          "scale": "log1p",
+          "output_tag": "rare-earth-mine-production-2025",
+          "coverage": {
+            "covered_countries": 12,
+            "mapped_countries": 176,
+            "country_percent": 6.818,
+            "population_percent": 50.574,
+            "output_percent": 99.682,
+            "passes_non_sparse": true
+          },
+          "notes": "Mine production; reserves and processing are separate."
+        },
+        {
+          "id": "uranium",
+          "title": "Uranium",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "lithium",
+          "title": "Lithium",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "cobalt",
+          "title": "Cobalt",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "nickel",
+          "title": "Nickel",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "natural-graphite",
+          "title": "Natural graphite",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "manganese",
+          "title": "Manganese",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "copper",
+          "title": "Copper",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "bauxite-aluminum",
+          "title": "Bauxite and aluminum",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "gallium",
+          "title": "Gallium",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "germanium",
+          "title": "Germanium",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "indium",
+          "title": "Indium",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "tellurium",
+          "title": "Tellurium",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "silicon-metal",
+          "title": "Silicon metal",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "antimony",
+          "title": "Antimony",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "tungsten",
+          "title": "Tungsten",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "tin",
+          "title": "Tin",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "tantalum",
+          "title": "Tantalum",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "niobium",
+          "title": "Niobium",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "titanium",
+          "title": "Titanium",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "vanadium",
+          "title": "Vanadium",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "platinum-group-metals",
+          "title": "Platinum-group metals",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "phosphate-rock",
+          "title": "Phosphate rock",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        },
+        {
+          "id": "potash",
+          "title": "Potash",
+          "unit": "commodity-specific",
+          "reference_period": "2025 estimate",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "usgs-mcs-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
+        }
+      ]
+    },
+    {
+      "id": "resources-human",
+      "title": "Human resources and capabilities",
+      "default_metric": "population-under-30",
+      "palette": {
+        "low": [
+          219,
+          229,
+          239
+        ],
+        "high": [
+          32,
+          95,
+          142
+        ],
+        "missing": [
+          211,
+          208,
+          198
+        ]
+      },
+      "metrics": [
+        {
+          "id": "population-under-30",
+          "title": "Population under age 30",
+          "unit": "% of population",
+          "reference_period": "2024",
+          "evidence_class": "derived-statistic",
+          "source_ids": [
+            "wdi-2026-07-13"
+          ],
+          "status": "default",
+          "scale": "linear",
+          "output_tag": "population-under-30-2024",
+          "coverage": {
+            "covered_countries": 169,
+            "mapped_countries": 176,
+            "country_percent": 96.023,
+            "population_percent": 100.0,
+            "output_percent": null,
+            "passes_non_sparse": true
+          },
+          "notes": "Derived from age 0–14 and sex-specific five-year age bands using matched population denominators."
+        },
+        {
+          "id": "population-over-60",
+          "title": "Population age 60 and older",
+          "unit": "% of population",
+          "reference_period": "2024",
+          "evidence_class": "derived-statistic",
+          "source_ids": [
+            "wdi-2026-07-13"
+          ],
+          "status": "available",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Derived from age 60–64 and age 65+ using matched population denominators."
+        },
+        {
+          "id": "adult-literacy",
+          "title": "Adult literacy, age 15+",
+          "unit": "%",
+          "reference_period": "latest accepted",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "uis"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Expose each country's observation year."
+        },
+        {
+          "id": "upper-secondary-attainment",
+          "title": "Completed ISCED 3 or higher, age 25+",
+          "unit": "%",
+          "reference_period": "latest accepted",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "uis"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Do not substitute enrollment."
+        },
+        {
+          "id": "bachelors-attainment",
+          "title": "Completed ISCED 6 or higher, age 25+",
+          "unit": "%",
+          "reference_period": "latest accepted",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "uis"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Keep short-cycle ISCED 5 separate."
+        },
+        {
+          "id": "advanced-degree-attainment",
+          "title": "Completed ISCED 7 or 8, age 25+",
+          "unit": "%",
+          "reference_period": "latest accepted",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "uis"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Preserve sex disaggregation where coverage permits."
+        },
+        {
+          "id": "resident-patent-applications-per-million",
+          "title": "Resident patent applications",
+          "unit": "three-year mean per million residents",
+          "reference_period": "latest accepted",
+          "evidence_class": "derived-statistic",
+          "source_ids": [
+            "wipo",
+            "wdi-2026-07-13"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Applications are not grants or patent quality."
+        },
+        {
+          "id": "international-departures-per-capita",
+          "title": "International departures",
+          "unit": "departures per resident",
+          "reference_period": "annual",
+          "evidence_class": "derived-statistic",
+          "source_ids": [
+            "wdi-2026-07-13"
+          ],
+          "status": "supplemental",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "A flow proxy; not percentage of unique people taking a trip."
+        },
+        {
+          "id": "books-read-median",
+          "title": "Books read in one calendar year",
+          "unit": "median books/person",
+          "reference_period": "annual",
+          "evidence_class": "reported-statistic",
+          "source_ids": [],
+          "status": "research-gap",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "No harmonized non-sparse global source identified."
+        },
+        {
+          "id": "gender-equality-law",
+          "title": "Gender-equality legal framework",
+          "unit": "dimension-specific score",
+          "reference_period": "2026",
+          "evidence_class": "legal-policy-observation",
+          "source_ids": [
+            "world-bank-wbl-2026"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Law, supportive framework, enforcement, and outcomes remain separate."
+        },
+        {
+          "id": "consensual-same-sex-activity-law",
+          "title": "Consensual same-sex activity legal status",
+          "unit": "reviewed legal category",
+          "reference_period": "reviewed snapshot",
+          "evidence_class": "legal-policy-observation",
+          "source_ids": [],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Use a reviewed legal dataset; never label one dimension 'sexual freedom'."
+        },
+        {
+          "id": "drug-possession-penalty",
+          "title": "Personal drug-possession legal response",
+          "unit": "substance- and conduct-specific category",
+          "reference_period": "reviewed snapshot",
+          "evidence_class": "legal-policy-observation",
+          "source_ids": [],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Decriminalization must be substance-, quantity-, conduct-, and enforcement-specific."
+        },
+        {
+          "id": "intergenerational-mobility",
+          "title": "Intergenerational mobility",
+          "unit": "cohort estimate",
+          "reference_period": "source cohort",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "world-bank-gdim"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "notes": "Cohort estimates are not current-year behavior."
+        }
+      ]
+    }
+  ]
 }

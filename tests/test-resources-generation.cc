@@ -6,9 +6,12 @@
 #include <filesystem>
 #include <fstream>
 #include <iterator>
+#include <numeric>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <string_view>
+#include <vector>
 
 #include "resources-generation.h"
 
@@ -39,8 +42,20 @@ void
 expect_invalid(std::string json, const std::string_view message)
 {
   static unsigned sequence = 0;
+  replace_once(
+    json, "\"path\": \"countries-110m.geojson\"",
+    "\"path\": \""
+      + std::filesystem::absolute(
+          "assets.static/resources/countries-110m.geojson").string()
+      + "\"");
+  replace_once(
+    json, "\"path\": \"resources-values.json\"",
+    "\"path\": \""
+      + std::filesystem::absolute(
+          "assets.static/resources/resources-values.json").string()
+      + "\"");
   const std::filesystem::path path = std::filesystem::temp_directory_path()
-    / ("cartofreako-invalid-resources-" + std::to_string(++sequence)
+    / ("cartofreako-invalid-resources-v2-" + std::to_string(++sequence)
        + ".json");
   {
     std::ofstream output {path, std::ios::binary};
@@ -62,6 +77,18 @@ expect_invalid(std::string json, const std::string_view message)
   assert(rejected);
 }
 
+const resources::metric_definition&
+find_metric(const resources::resource_family& family,
+            const std::string_view id)
+{
+  const auto metric = std::find_if(family.metrics.begin(), family.metrics.end(),
+    [&](const resources::metric_definition& candidate) {
+      return candidate.id == id;
+    });
+  assert(metric != family.metrics.end());
+  return *metric;
+}
+
 } // namespace
 
 int
@@ -71,44 +98,99 @@ main()
     = "assets.static/resources/resources-profile.json";
   const resources::resources_profile profile
     = resources::load_resources_profile(profile_path);
-  assert(profile.name == "World Game resources / 1960 production leaders");
-  assert(profile.publication_year == 1963);
-  assert(profile.production_year == 1960);
-  assert(profile.historical.size() == 40);
-  assert(profile.modern.size() == 4);
-  assert(profile.source_pdf_sha256
-         == "11f0a4f7617a34b58bf620bba62ddbfe01a6389dffc348e95142b86db964f816");
-  assert(profile.historical.front().id == "aluminum");
-  assert(profile.historical.front().world_total == 6080000);
-  assert(profile.historical.front().leader.has_value());
-  assert(std::abs(profile.historical.front().leader->share_percent - 38.035)
-         < 1e-12);
-  assert(profile.historical.back().id == "zinc");
-  const resources::historical_resource& thorium = profile.historical[33];
-  assert(thorium.id == "thorium");
-  assert(!thorium.world_total.has_value());
-  assert(!thorium.leader.has_value());
-  assert(!thorium.leader_pdf_page.has_value());
-  assert(thorium.source_unit == "N.A.");
-  assert(profile.modern.front().id == "capture-fisheries");
-  assert(!profile.modern.front().leader.has_value());
-  assert(profile.modern.back().id == "installed-solar-capacity");
-  assert(profile.modern.back().reference_year == 2025);
-  assert(profile.modern.back().world_total == 2391584);
-  assert(profile.modern.back().leader.has_value());
-  assert(std::abs(profile.modern.back().leader->share_percent - 50.267)
-         < 1e-12);
+  assert(profile.name == "Resources Stage 6b current-source atlas");
+  assert(profile.snapshot_as_of == "2026-08-06");
+  assert(profile.families.size() == 5);
+  assert(profile.values.size() == 856);
+  assert(profile.name.find("1960") == std::string::npos);
+  assert(profile.description.find("World Game") == std::string::npos);
+  assert(std::filesystem::is_regular_file(profile.country_geometry_path));
+  assert(std::filesystem::is_regular_file(profile.values_path));
 
-  assert(std::count_if(profile.historical.begin(), profile.historical.end(),
-    [](const auto& record) { return record.leader.has_value(); }) == 39);
-  assert(std::count_if(profile.modern.begin(), profile.modern.end(),
-    [](const auto& record) { return record.leader.has_value(); }) == 2);
-  for (const resources::resource_category category : {
-         resources::resource_category::metals,
-         resources::resource_category::industrial_materials,
-         resources::resource_category::energy_feedstocks})
-    assert(std::any_of(profile.historical.begin(), profile.historical.end(),
-      [category](const auto& record) { return record.category == category; }));
+  const std::array expected_families {
+    std::pair {std::string_view {"resources-energy"}, std::size_t {169}},
+    std::pair {std::string_view {"resources-food"}, std::size_t {168}},
+    std::pair {std::string_view {"resources-flora"}, std::size_t {169}},
+    std::pair {std::string_view {"resources-mineral"}, std::size_t {12}},
+    std::pair {std::string_view {"resources-human"}, std::size_t {169}},
+  };
+  for (std::size_t index = 0; index != expected_families.size(); ++index)
+    {
+      const resources::resource_family& family = profile.families[index];
+      assert(family.id == expected_families[index].first);
+      const resources::metric_definition& metric
+        = resources::default_resource_metric(family);
+      assert(metric.status == resources::metric_status::default_metric);
+      assert(metric.coverage.has_value());
+      assert(metric.coverage->passes_non_sparse);
+      assert(metric.coverage->covered_countries
+             == expected_families[index].second);
+      assert(metric.coverage->mapped_countries == 176);
+      const auto values = resources::resource_metric_values(
+        profile, family, metric);
+      assert(values.size() == expected_families[index].second);
+      assert(std::all_of(values.begin(), values.end(),
+        [](const resources::country_value* value) {
+          return resources::is_iso3(value->iso3)
+                 && std::isfinite(value->value) && value->value >= 0;
+        }));
+    }
+
+  const resources::resource_family& energy
+    = resources::find_resource_family(profile, "energy");
+  assert(resources::default_resource_metric(energy).id == "solar-capacity");
+  assert(find_metric(energy, "wind-capacity").status
+         == resources::metric_status::planned);
+  assert(find_metric(energy, "nuclear-operating-capacity").title
+         .find("nuclear") != std::string::npos);
+  assert(find_metric(energy, "unconventional-gas-production").status
+         == resources::metric_status::supplemental);
+
+  const resources::resource_family& food
+    = resources::find_resource_family(profile, "resources_food");
+  assert(find_metric(food, "capture-fisheries").unit == "tonnes");
+  assert(find_metric(food, "livestock-production").notes.find("counts")
+         != std::string::npos);
+
+  const resources::resource_family& flora
+    = resources::find_resource_family(profile, "ressources-flora");
+  assert(flora.id == "resources-flora");
+  assert(find_metric(flora, "plant-biodiversity").status
+         == resources::metric_status::supplemental);
+
+  const resources::resource_family& mineral
+    = resources::find_resource_family(profile, "minerals");
+  assert(mineral.metrics.size() >= 20);
+  assert(find_metric(mineral, "rare-earth-mine-production").reference_period
+         == "2025 estimate");
+  assert(find_metric(mineral, "uranium").status
+         == resources::metric_status::planned);
+  const auto mineral_values = resources::resource_metric_values(
+    profile, mineral, resources::default_resource_metric(mineral));
+  const auto china = std::find_if(mineral_values.begin(), mineral_values.end(),
+    [](const resources::country_value* value) { return value->iso3 == "CHN"; });
+  assert(china != mineral_values.end() && (*china)->value == 270000);
+  assert(resources::default_resource_metric(mineral).coverage->output_percent
+         > 99.0);
+
+  const resources::resource_family& human
+    = resources::find_resource_family(profile, "human");
+  assert(resources::default_resource_metric(human).id == "population-under-30");
+  assert(find_metric(human, "population-over-60").status
+         == resources::metric_status::available);
+  assert(resources::resource_metric_values(
+    profile, human, find_metric(human, "population-over-60")).size() == 169);
+  assert(find_metric(human, "books-read-median").status
+         == resources::metric_status::research_gap);
+  assert(find_metric(human, "consensual-same-sex-activity-law").notes
+         .find("never label") != std::string::npos);
+  assert(find_metric(human, "drug-possession-penalty").notes
+         .find("substance") != std::string::npos);
+
+  assert(resources::canonical_resource_family("resources").has_value() == false);
+  assert(resources::canonical_resource_family("world-game").has_value() == false);
+  assert(resources::canonical_resource_family("ressources_flora")
+         == std::optional<std::string> {"resources-flora"});
 
   constexpr std::array projection_names {
     "cahill-keyes", "authagraph", "dymaxion", "myriahedral", "star-x",
@@ -118,36 +200,37 @@ main()
     {
       const generation::projection_spec& spec
         = generation::find_projection_spec(name);
-      const generation::projection_context context(
-        spec, "test-resources-" + std::string(name));
-      const resources::resources_layout layout
-        = resources::layout_resource_points(context, profile);
-      assert(layout.historical.size() == profile.historical.size());
-      assert(layout.modern.size() == profile.modern.size());
-      assert(std::count_if(layout.historical.begin(), layout.historical.end(),
-        [](const auto& point) { return point.has_value(); }) == 39);
-      assert(std::count_if(layout.modern.begin(), layout.modern.end(),
-        [](const auto& point) { return point.has_value(); }) == 2);
-      const auto check_point = [&](const auto& optional_point) {
-        if (!optional_point.has_value())
-          return;
-        const auto [x, y] = optional_point->display;
-        assert(std::isfinite(x) && std::isfinite(y));
-        assert(x >= 0 && x <= context.map_frame.width());
-        assert(y >= 0 && y <= context.map_frame.height());
-      };
-      std::for_each(layout.historical.begin(), layout.historical.end(),
-                    check_point);
-      std::for_each(layout.modern.begin(), layout.modern.end(), check_point);
-      assert(resources::resources_output_basename(spec).starts_with(
-        "resources-"));
-      const std::string metadata
-        = resources::resources_metadata_element(spec, profile);
-      assert(resources::resources_token_count(
-        metadata, "data-resource-catalog-record=\"true\"") == 40);
-      assert(resources::resources_token_count(
-        metadata, "data-modern-context-catalog-record=\"true\"") == 4);
+      for (const resources::resource_family& family : profile.families)
+        {
+          const resources::metric_definition& metric
+            = resources::default_resource_metric(family);
+          const std::string basename
+            = resources::resources_output_basename(spec, family, metric);
+          assert(basename.starts_with(family.id + "-"));
+          assert(basename.ends_with(spec.output_tag));
+        }
     }
+
+  const resources::metric_definition& energy_metric
+    = resources::default_resource_metric(energy);
+  const auto energy_values = resources::resource_metric_values(
+    profile, energy, energy_metric);
+  const std::string metadata = resources::resources_metadata_element(
+    generation::find_projection_spec("cahill-keyes"), profile, energy,
+    energy_metric, energy_values);
+  const std::size_t metric_count = std::accumulate(
+    profile.families.begin(), profile.families.end(), std::size_t {0},
+    [](const std::size_t count, const resources::resource_family& family) {
+      return count + family.metrics.size();
+    });
+  assert(resources::resources_token_count(
+    metadata, "data-resource-value-record=\"true\"") == energy_values.size());
+  assert(resources::resources_token_count(
+    metadata, "data-resource-metric-catalog=\"true\"") == metric_count);
+  assert(metadata.find("Resources Stage 6b") != std::string::npos);
+  assert(metadata.find("data-missing-is-zero=\"false\"")
+         != std::string::npos);
+  assert(metadata.find("1960") == std::string::npos);
 
   const std::string valid_json = read_file(profile_path);
   {
@@ -157,25 +240,21 @@ main()
   }
   {
     std::string invalid = valid_json;
-    replace_once(invalid, "\"marker_radius\": 0.115",
-                 "\"marker_radius\": 0.115, \"unknown\": true");
-    expect_invalid(std::move(invalid), "unknown member 'unknown'");
+    replace_once(invalid, "cartofreako-resources-profile-v2",
+                 "cartofreako-resources-profile-v1");
+    expect_invalid(std::move(invalid), "unsupported resources profile schema");
   }
   {
     std::string invalid = valid_json;
-    replace_once(invalid, "\"record_count\": 40", "\"record_count\": 39");
-    expect_invalid(std::move(invalid), "required 40 records");
+    replace_once(invalid, "\"passes_non_sparse\": true",
+                 "\"passes_non_sparse\": false");
+    expect_invalid(std::move(invalid),
+                   "non-sparse result disagrees with its percentages");
   }
   {
     std::string invalid = valid_json;
-    replace_once(invalid, "\"share_percent\": 38.035",
-                 "\"share_percent\": 0.0");
-    expect_invalid(std::move(invalid), "must be in (0, 100]");
-  }
-  {
-    std::string invalid = valid_json;
-    replace_once(invalid, "\"world_total\": null, \"source_unit\": \"N.A.\"",
-                 "\"world_total\": 1, \"source_unit\": \"N.A.\"");
-    expect_invalid(std::move(invalid), "world_total and leader availability differ");
+    replace_once(invalid, "\"resources-energy\"",
+                 "\"resources-entropy\"");
+    expect_invalid(std::move(invalid), "unknown family id");
   }
 }

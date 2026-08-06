@@ -6,16 +6,7 @@
 
 ## Status and recommendation
 
-This document is a **proposed Stage 6b design**, not a description of the
-currently implemented generator or Make targets. The checked
-`generate-resources` pass remains the bounded Stage 6a World Game artifact
-recorded in [generation methods](generation-methods.md). Its 1960 production
-leaders must not be relabelled as current resource data, and the Stage 6b
-cutover must remove that generated product rather than preserve a legacy
-variant.
-
-Stage 6b should replace that default with five independently sourced product
-families:
+Stage 6b is implemented as five independently sourced product families:
 
 - `resources-energy`;
 - `resources-food`;
@@ -24,43 +15,32 @@ families:
 - `resources-human`.
 
 `resources-flora` is the canonical spelling. The requested
-`ressources-flora` spelling can be retained only as an input alias during the
-migration.
+`ressources-flora` spelling is retained only as an input alias.
 
-The first implementation increment should establish the normalized schema and
-one non-sparse primary layer for every family:
+The first implementation increment establishes the normalized v2 schema and
+one released, non-sparse primary layer for every family:
 
-1. renewable and nuclear capacity or generation by country for energy;
-2. crop, livestock, fisheries, and food-supply measures by country, with
-   SPAM and GLW as optional spatial detail;
-3. global land cover plus forest statistics for flora;
-4. current USGS/BGS mine production by country for a critical-mineral
-   shortlist; and
-5. UN population age structure plus education, literacy, patents, and a
-   separately named equality measure for human resources.
+1. IRENA 2025 installed solar capacity for energy;
+2. the FAO/WDI food production index for food;
+3. FAO/WDI forest area percentage for flora;
+4. USGS 2025 estimated rare-earth mine production for mineral; and
+5. 2024 population under age 30, derived from UN/WDI age/sex bands, for human.
+
+The v2 catalogue also records wind, nuclear, extraction/refining, crops,
+livestock, fisheries, land cover, biodiversity, a broad critical-mineral
+shortlist, education, literacy, patents, age 60+, equality, legal-policy,
+travel, reading, and social-mobility measures with honest lifecycle status.
+Age 60+ values are normalized and available; the remaining measures are
+planned, supplemental, or a named research gap until their own data and gate
+are accepted.
 
 Facility, deposit, biodiversity-occurrence, travel, and legal-policy layers
 can enrich those global baselines. They must not be used to make a sparse point
 inventory look globally complete.
 
-## Why the checked pass is not a Stage 6b foundation
-
-The current profile is internally consistent with its stated historical
-scope, but it does not satisfy the new scope:
-
-| Checked input | Current content | Stage 6b consequence |
-| --- | --- | --- |
-| Historical table | 40 commodity headings and marked 1960 country leaders | Retire the generated artifact; retain only a historical method note and exclude all values from Stage 6b |
-| Modern context | Four global or country facts from FAO and IRENA | Too small to define the new taxonomy or a global atlas |
-| Geographic marks | 39 representative historical-country points and two modern country points | Leader points are not production fields, facilities, country rates, or coverage |
-| Categories | Metals, industrial materials, and energy feedstocks | Replace with energy, food, flora, mineral, and human product families |
-| Missing-data model | Appropriate null semantics for the historical table | Extend to explicit coverage, observation status, uncertainty, and source-period fields |
-
-Only two of the four modern context records currently create a geographic
-mark. Adding more leader dots would preserve the same sparsity and would
-continue to confuse a representative country point with the geography of a
-resource. Stage 6b needs country polygons, global grids, and facility or field
-geometries selected per metric.
+The superseded feasibility work is not a v2 data source and is documented only
+in [generation methods](generation-methods.md). The v2 files, parser, renderer,
+tests, Make rules, and generated names contain no legacy values or output path.
 
 ## Product and artifact contract
 
@@ -70,15 +50,15 @@ another. A static PNG or PDF should display one metric and unit. A layered SVG
 may retain compatible supporting layers such as a country field and audited
 facility points, but it must not create a cross-metric resource score.
 
-Proposed artifact names carry family, metric, reference period, and
+Released artifact names carry family, metric, reference period, and
 projection:
 
 ```text
 resources-energy-solar-capacity-2025-ck-44-22.svg.gz
-resources-food-crop-production-2024-star-x-34-44.svg.gz
-resources-flora-tree-cover-2020-voronoi-44-22.916667.svg.gz
-resources-mineral-lithium-mine-production-2025-ck-44-22.svg.gz
-resources-human-adult-literacy-latest-2026-ck-44-22.svg.gz
+resources-food-food-production-index-latest-2026-star-x-34-44.svg.gz
+resources-flora-forest-area-percent-latest-2026-voronoi-44-22.916667.svg.gz
+resources-mineral-rare-earth-mine-production-2025-ck-44-22.svg.gz
+resources-human-population-under-30-2024-ck-44-22.svg.gz
 ```
 
 The `latest-2026` form means “latest accepted observation not later than the
@@ -86,7 +66,7 @@ The `latest-2026` form means “latest accepted observation not later than the
 2026. The legend and SVG metadata must expose the observation year for every
 country. Prefer a common complete year when the source supports it.
 
-Proposed target semantics are:
+Implemented target semantics are:
 
 ```sh
 make generate-resources-energy
@@ -97,11 +77,10 @@ make generate-resources-human
 make generate-resources-stage6b
 ```
 
-Those targets do not exist yet. Make the cutover atomic: after all five first
-snapshots pass release gates, change the generic `generate-resources` and
-generation-profile selector to expand to the Stage 6b families, remove the
-World Game rules and generated artifacts, and replace the v1 implementation
-and tests. Do not add a `generate-resources-world-game` compatibility target.
+`generate-resources` and the generation-profile selector `resources` expand
+to all five. `generate-resources-FAMILY-PROJECTION` builds one default, while
+`generate-resources-PROJECTION` builds all five defaults for that projection.
+There is no compatibility target for the superseded product.
 
 Continue the existing deterministic compression rule: validate and export
 from a plain SVG intermediate, then store the checked SVG as GNU gzip level 9
@@ -220,8 +199,8 @@ effort/coverage layer beside any derived richness estimate.
 
 ### `resources-mineral`
 
-The 1960 matrix must not supply Stage 6b mineral values. The primary current
-sources should be:
+The retired dataset must not supply Stage 6b mineral values. The primary
+current sources should be:
 
 - the [USGS Mineral Commodity Summaries 2026](https://pubs.usgs.gov/publication/mcs2026),
   which reports 2025 world production, reserves, and context for more than 90
@@ -317,62 +296,51 @@ version, component definitions, and source methodology.
 
 ## Normalized data contract
 
-Stage 6b should use a long-form metric catalogue plus three geographic stores,
-rather than extending the v1 historical JSON structure:
+The implemented country baseline uses a long-form metric catalogue and one
+normalized country-value store:
 
 ```text
-assets.static/resources/v2/resources-profile.json
-assets.static/resources/v2/resources-catalog.json
-assets.static/resources/v2/resources-country.json
-assets.static/resources/v2/resources-grid-res3.geojson.gz
-assets.static/resources/v2/resources-facilities.geojson.gz
-assets.static/resources/v2/SHA256SUMS
+assets.static/resources/resources-profile.json
+assets.static/resources/resources-values.json
+assets.static/resources/countries-110m.geojson
+assets.static/resources/SHA256SUMS
 ```
 
-The exact storage encoding can change after fixtures establish realistic file
-sizes. The semantic contract should not. Every value needs:
+The profile contains the source register, complete five-family metric
+catalogue, palettes, default selection, artifact tags, and coverage. Every
+normalized value contains:
 
 ```json
 {
-  "metric_id": "human:population-under-30-percent",
   "family": "resources-human",
-  "evidence_class": "modeled-estimate",
-  "geography_kind": "country",
-  "geography_id": "UNM49:840",
+  "metric": "population-under-30",
+  "iso3": "USA",
+  "year": 2024,
   "value": 38.2,
-  "unit": "percent",
-  "reference_period": "2025",
-  "source_release": "WPP2024",
-  "source_id": "un-wpp",
-  "value_state": "present",
-  "quality_flags": []
+  "state": "derived"
 }
 ```
 
-Required catalogue metadata includes title, exact definition, numerator,
-denominator, unit, allowed evidence classes, domain, preferred color scale,
-snapshot cutoff, source release and URL, retrieval time, raw digest, license,
-redistribution decision, derivation formula, and known limitations.
+Catalogue metadata includes title, definition notes, unit, evidence class,
+scale, snapshot/reference period, source release/URL/retrieval time/digest or
+ingestion status, license boundary, lifecycle status, and coverage.
 
-Required geography rules are:
+Implemented geography rules are:
 
-- use UN M49 as the stable country key and retain source-native codes for
-  audit;
+- use normalized ISO3 `RESOURCE_A3` keys and retain Natural Earth source codes
+  in the checked geometry;
 - pin the boundary dataset and record aggregation for territories and disputed
   areas;
 - never join by display name;
-- keep source estimates, modeled estimates, reported values, zeros, missing,
-  withheld, and not-applicable states distinct;
-- store numerator and denominator whenever a percentage or per-capita value is
-  derived;
-- include uncertainty bounds or source quality flags when available; and
-- emit a machine-readable coverage report for every metric and source.
+- keep reported/estimated/derived values, zeros, and missing distinct; and
+- emit machine-readable country, population, and output coverage for every
+  released default.
 
-H3 resolution 3 is a sensible default display grid for global raster fields,
-but preparation should area-weight source pixels and retain valid-area
-fractions. High-resolution source rasters remain source inputs; checking one
-SVG polygon per 10 m pixel into the repository is neither necessary nor
-tractable.
+Future grid and facility stores remain separate extensions. H3 resolution 3
+is a sensible default display grid for global raster fields, but preparation
+must area-weight source pixels and retain valid-area fractions. High-resolution
+source rasters remain source inputs; checking one SVG polygon per 10 m pixel
+into the repository is neither necessary nor tractable.
 
 ## Acquisition and reproducibility
 
@@ -380,59 +348,45 @@ Normal generation remains offline. Acquisition is an explicit maintainer
 operation:
 
 ```sh
-make fetch-resources-data       # explicit network/form/API step
-make prepare-resources-data     # raw to normalized candidates
-make check-resources-data       # schema, hashes, coverage, rights manifest
-make promote-resources-data     # reviewed snapshot only
+make refresh-resources-data     # explicit network plus deterministic preparation
+make check                      # schemas, hashes, joins, coverage, renderer tests
+git diff -- assets.static/resources
 ```
 
-These are proposed targets. Fetchers must write to ignored staging paths,
-never overwrite a promoted snapshot in place, and never run as a dependency of
-`make`, `make all`, or a generation-profile target. A maintainer reviews
-license and source changes, compares coverage and totals with the previous
-snapshot, then promotes an immutable version with checksums.
+The implemented fetcher writes upstream files to an automatically removed
+temporary directory and never runs as a dependency of `make`, `make all`, or a
+generation-profile target. The deterministic preparer can also be invoked
+against audited local inputs. A maintainer reviews license and source changes,
+compares coverage and totals with the previous snapshot, and accepts the
+checked v2 files and checksums only after review.
 
 APIs, forms, credentials, and manual downloads need source-specific adapters.
 The repository should not bypass a download form, invent an API, or treat
 interactive access as permission to redistribute a full raw dataset.
 
-## Implementation sequence
+## Implementation sequence and status
 
-### 1. Record and retire Stage 6a
+### 1. V2 cutover — complete
 
-- Retain a concise historical method and feasibility record in
-  `generation-methods.md`.
-- Remove the World Game generated SVG, PDF, and PNG artifacts at the Stage 6b
-  cutover; do not retain an opt-in generation target.
-- Replace the v1 profile, parser, renderer, and focused tests with the v2
-  implementation instead of maintaining parallel legacy code.
-- Do not copy any 1960 value into v2 and do not use “modern context” as a seed
-  schema.
+- The profile, normalized values, parser, renderer, focused tests, Make rules,
+  selectors, and artifact names are v2-only.
+- The metric catalogue, source manifest, ISO3 concordance, value states,
+  derived-age formulas, and country/population/output coverage are checked.
+- Five non-sparse defaults generate across all six projections and are stored
+  as deterministic `.svg.gz` archives.
 
-### 2. Build v2 schema and coverage QA
+### 2. Broaden each family — next
 
-- Implement the metric catalogue, UN M49 concordance, long-form values,
-  explicit value states, source manifest, and derived-value formulas.
-- Add fixture tests for zero versus missing, units, source periods, country
-  joins, duplicate records, withheld values, and coverage denominators.
-- Make every candidate emit country count, covered population or production,
-  regional gaps, reference-year distribution, and source/evidence-class
-  totals.
+- Energy: promote IRENA wind, PRIS nuclear, and defensible country petroleum,
+  refining, gas-processing, and explicitly unconventional-gas measures.
+- Food: promote FAOSTAT crops, fisheries, aquaculture, balances, and livestock.
+- Flora: add Copernicus/MODIS land cover plus FRA forest variables.
+- Mineral: add current USGS commodities and BGS trend cross-checks for the
+  catalogued critical-mineral shortlist.
+- Human: promote age 60+, then coverage-gated UIS literacy/attainment, WIPO
+  resident applications, and separately named WBL/GII dimensions.
 
-### 3. Seed five non-sparse products
-
-- Energy: IRENA solar/wind, PRIS nuclear, and EIA country petroleum/gas.
-- Food: FAOSTAT crops, fisheries, aquaculture, food balances, and livestock.
-- Flora: Copernicus or MODIS land cover plus FRA forest statistics.
-- Mineral: USGS 2025 values with BGS 2020–2024 cross-checks for the critical
-  shortlist.
-- Human: WPP age shares, UIS literacy/attainment, WIPO resident applications,
-  and WBL/GII as separate equality layers.
-
-Generate one metric-specific Cahill-Keyes fixture per family before expanding
-to six projections or checking in full artifact families.
-
-### 4. Add spatial enrichment
+### 3. Add spatial enrichment
 
 - Add SPAM crops, GLW livestock, land-cover H3 fields, PRIS reactors, GEM
   energy facilities/fields, and audited mineral points.
@@ -440,7 +394,7 @@ to six projections or checking in full artifact families.
   quality, lifecycle/status values, last review, and known geographic gaps.
 - Add GBIF plant richness only with sampling effort and sensitivity tests.
 
-### 5. Add policy and quality-of-life dimensions
+### 4. Add policy and quality-of-life dimensions
 
 - Add travel departures only under the corrected label.
 - Implement legal dimensions rather than a sexual-freedom or drug-freedom
@@ -449,13 +403,10 @@ to six projections or checking in full artifact families.
 - Omit books-read median until a source passes definition, country, population,
   recency, and redistribution gates.
 
-### 6. Switch the default
+### 5. Promote additional defaults
 
-- Add five pass selectors plus the `ressources-flora` input alias.
-- Make `resources` expand to all five only when every family has at least one
-  released non-sparse metric.
-- Remove the World Game product from generic `resources`, `all`, default
-  profiles, exact targets, and checked generated artifacts.
+- Keep one metric/unit per static artifact and add a metric-bearing output tag.
+- Require the appropriate coverage gate before a metric becomes a default.
 - Generate all six projections, deterministic `.svg.gz` files, PDFs, and PNGs;
   compare coverage reports and visual fixtures before promotion.
 
@@ -468,7 +419,7 @@ Every Stage 6b snapshot and metric should require:
 - exact metric definitions and units, including commodity-specific conversion
   rules;
 - the relevant non-sparse coverage gate or an explicit `supplemental` status;
-- no 1960 values in Stage 6b and no missing-to-zero conversion;
+- no values from retired datasets and no missing-to-zero conversion;
 - country-name-independent joins and a reviewed territory concordance;
 - per-country observation years for rolling-latest metrics;
 - separate evidence classes and no unlike-source composite score;
@@ -481,7 +432,7 @@ Every Stage 6b snapshot and metric should require:
 
 ## Deferred or rejected shortcuts
 
-- Do not rename the 1960 World Game categories and call the result current.
+- Do not relabel retired categories and call the result current.
 - Do not use mine, well, reactor, plant, GBIF, or survey points as a substitute
   for a coverage denominator.
 - Do not imply that GOGET extraction areas enumerate individual oil or fracked

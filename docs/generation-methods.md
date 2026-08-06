@@ -34,8 +34,8 @@ decision after the fact.
 | 4.2 | `generate-orbiting` / Orbital Technosphere | **Implemented** | Naming, NASA/CelesTrak feasibility, OMM/SGP4, profile authority, products, and limits are summarized below and detailed in the [Orbital Technosphere implementation notes](orbital-technosphere-implementation-notes.md) |
 | 4.4 | `generate-network-swarm` | **Implemented** | Confirmed variable-input contract, fixed cumulative snapshot, H3/Izzi clustering, projection-safe components, independent downloader layers, products, and limits are detailed in the [network-swarm implementation notes](network-swarm-implementation-notes.md) |
 | 4.5 | `generate-bathymetry-roulette` | **Implemented** | Confirmed depth-to-curve catalogue, explicit varied page-space line fields, Natural Earth clipping, accepted moiré, products, and limits are detailed in the [Bathymetry Roulette implementation notes](bathymetry-roulette-implementation-notes.md) |
-| 6a | `generate-resources` / World Game | **Implemented; scheduled for removal** | Historical feasibility result: a bounded 1960 production-leader transcription was possible, but it is not a current resources atlas and no legacy output will remain after the Stage 6b cutover |
-| 6b | `resources-energy`, `resources-food`, `resources-flora`, `resources-mineral`, `resources-human` | **Planned** | Current-source, metric-specific product families, non-sparse coverage gates, source candidates, schema, migration, and release QA are defined in the [Stage 6b enrichment plan](resources-enrichment-plan.md) |
+| 6a | `generate-resources` / World Game | **Historical method only; implementation retired** | A bounded 1960 production-leader transcription was feasible, but it was not a current resources atlas; its data, renderer, targets, and generated products were removed at the Stage 6b cutover |
+| 6b | `resources-energy`, `resources-food`, `resources-flora`, `resources-mineral`, `resources-human` | **Implemented first increment** | Five current-source, metric-specific product families, v2 normalized values, non-sparse coverage gates, deterministic archives, source refresh, and six-projection rules are implemented; planned enrichment remains in the [Stage 6b plan](resources-enrichment-plan.md) |
 | 7 | Configurable `generate-*` selection | **Implemented infrastructure** | JSON profile, validation, safe target expansion, default Make behavior, alternatives, and scope boundaries are recorded in this document |
 | 8 / 8b | `generate-anthropocene`; `generate-anthropocene-{2025,2026}` | **Implemented observation atlas and first Stage 8b field increment** | The checked source-separated partial-2026 atlas remains; complete-2025 and partial-2026 CPC temperature fields plus a required-global-FIRMS refresh gate are implemented, while CAMS, PurpleAir, and ocean themes remain planned in the [Stage 8b enrichment plan](anthropocene-enrichment-plan.md) |
 | 9 | `generate-network-infrastructure` | **Implemented** | Confirmed external-source contract, normal cloud/CDN site atlas, explicit CC BY-NC-SA 3.0 topology opt-in, physical/logical relation boundary, projection-safe paths, Izzi detiling, products, and limits are detailed in the [network-infrastructure implementation notes](network-infrastructure-implementation-notes.md) |
@@ -212,16 +212,16 @@ confirmed and implemented bounded product therefore:
   context rather than a continuation of the 1960 matrix.
 
 This result is retained here only as the historical method and feasibility
-record. Stage 6b does not reuse its 1960 values, categories, representative
-leader points, profile, or rendering model. At the Stage 6b cutover, the old
-generated SVG/PDF/PNG files and generation rules are removed rather than kept
-as an opt-in compatibility product.
+record. Stage 6b does not reuse its values, categories, representative leader
+points, profile, or rendering model. The cutover removed the old generated
+files and generation rules rather than retaining an opt-in compatibility
+product.
 
 ### Stage 6b: current resources enrichment
 
 The re-evaluation concluded that “resources” is not one comparable scalar and
 must not be represented by a collection of country-leader points. Stage 6b is
-therefore planned as five target families:
+implemented as five target families:
 
 - `resources-energy` for capacity, generation, extraction, refining, and
   explicitly scoped processing;
@@ -234,18 +234,23 @@ therefore planned as five target families:
 - `resources-human` for literacy, ISCED attainment, age structure, patents,
   equality, mobility, and defensibly named quality-of-life measures.
 
-The canonical flora spelling is `resources-flora`; `ressources-flora` is a
-planned input alias only. Each family produces metric-specific artifacts so
+The canonical flora spelling is `resources-flora`; `ressources-flora` is an
+input alias only. Each family produces metric-specific artifacts so
 unlike units are not combined into an invented score. Country choropleths and
 global fields provide the non-sparse baseline; audited facilities, deposits,
 occurrences, and legal-policy observations are supplemental unless they pass a
 documented coverage gate.
 
-The proposed source catalogue, correction of travel/books/fracking claims,
-current critical-mineral shortlist, normalized schema, explicit acquisition
-workflow, implementation sequence, and release thresholds are recorded in the
-[`Resources Stage 6b enrichment plan`](resources-enrichment-plan.md). None of
-the proposed targets or v2 snapshots exists yet.
+The first released defaults are 2025 installed solar capacity, the latest
+accepted food-production index and forest-area percentage, 2025 estimated
+rare-earth mine production, and derived 2024 population under age 30. The v2
+catalogue also holds an available age-60+ series and explicitly planned,
+supplemental, or research-gap status for the remaining requested concepts.
+The source catalogue, travel/books/fracking boundaries, current
+critical-mineral shortlist, normalized schema, explicit refresh workflow,
+implementation sequence, and release thresholds are recorded in the
+[`Resources Stage 6b enrichment plan`](resources-enrichment-plan.md) and
+[`implementation notes`](resources-implementation-notes.md).
 
 ### Stage 8: Anthropocene observation atlas
 
@@ -418,8 +423,12 @@ Normalization is limited and deterministic:
 - `orbiting` becomes `orbital-technosphere`;
 - the former `network` name and short `swarm` name become `network-swarm`;
 - `infrastructure` becomes `network-infrastructure`;
-- `resource`, `world-game`, `world-game-resources`, and the historical request
-  typo `resouces` become `resources`;
+- `resource` and the historical request typo `resouces` expand to the five
+  `resources-*` family passes;
+- `energy`, `food`, `flora`, `mineral`/`minerals`, and `human`, plus the
+  corresponding `resource-*` spellings, normalize to their canonical family;
+  the requested
+  `ressources-flora` spelling becomes `resources-flora`;
 - `bathymetry-rolette` and `art-agua-roulette` become
   `bathymetry-roulette`; and
 - `ocean` becomes `water`, the current name of the complementary Natural
@@ -431,14 +440,14 @@ twice.
 
 The supported cross-product is:
 
-| Projection selector | Geometry | Graticules | Earth | Water | Astronomy | Orbital Technosphere | Network-swarm | Resources | Bathymetry Roulette | Anthropocene | Network infrastructure |
+| Projection selector | Geometry | Graticules | Earth | Water | Astronomy | Orbital Technosphere | Network-swarm | Stage 6b resource families | Bathymetry Roulette | Anthropocene | Network infrastructure |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `cahill-keyes` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
-| `authagraph` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
-| `dymaxion` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
-| `myriahedral` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
-| `star-x` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
-| `voronoi` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 1 SVG |
+| `cahill-keyes` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 5 SVG.gz | 1 SVG | 1 SVG | 1 SVG |
+| `authagraph` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 5 SVG.gz | 1 SVG | 1 SVG | 1 SVG |
+| `dymaxion` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 5 SVG.gz | 1 SVG | 1 SVG | 1 SVG |
+| `myriahedral` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 5 SVG.gz | 1 SVG | 1 SVG | 1 SVG |
+| `star-x` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 5 SVG.gz | 1 SVG | 1 SVG | 1 SVG |
+| `voronoi` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 5 SVG.gz | 1 SVG | 1 SVG | 1 SVG |
 
 Astronomy resolves to `generate-astro-PROJECTION`, which intentionally makes
 both all-sky and observer products. Orbital Technosphere resolves to
@@ -449,9 +458,10 @@ products. The four terrestrial passes resolve to uniform
 Network-swarm resolves to `generate-network-swarm-PROJECTION` and makes the
 one cumulative swarm product. Bathymetry Roulette similarly resolves to
 `generate-bathymetry-roulette-PROJECTION` and makes one monochrome depth map.
-Resources resolves to `generate-resources-PROJECTION` and makes one historical
-production-leader atlas with separate modern context, stored as a
-deterministic `.svg.gz` archive.
+Each canonical resource-family selector resolves to
+`generate-resources-FAMILY-PROJECTION` and makes its one metric-specific
+default as a deterministic `.svg.gz` archive. The aggregate `resources`
+selector expands to all five canonical passes before targets are emitted.
 Anthropocene resolves to `generate-anthropocene-PROJECTION` and makes one
 source-separated observation atlas. Network infrastructure resolves to
 `generate-network-infrastructure-PROJECTION` and makes only the cloud/CDN site
@@ -491,9 +501,9 @@ make GENERATION_PROFILE=generation-profile.local.json
 make all
 ```
 
-This remains the release/review build. It creates all 97 layered SVGs and
-exports all 97 PDFs and 97 opaque PNGs, including slice and perspective
-families that are outside the configurable matrix. The aliases
+This remains the release/review build. It creates the complete layered SVG,
+PDF, and opaque-PNG suite, including Stage 6b defaults plus slice and
+perspective families outside the configurable matrix. The aliases
 `generate-projections`, `generated-projections`, and `make-generated` retain
 the same full-suite behavior.
 
@@ -529,9 +539,8 @@ cloud/CDN site products. The separate
 CC BY-NC-SA 3.0 opt-ins and never dependencies of the normal family.
 `generate-anthropocene-artifacts` does the same for all six Anthropocene
 products.
-`generate-resources-artifacts` adds PDF and PNG exports to all six compressed
-Stage 6a resources SVG products. This transitional target is removed, not
-retained under a legacy name, when Stage 6b replaces the pass.
+`generate-resources-artifacts` adds PDF and PNG exports to all 30 compressed
+Stage 6b default SVG products.
 `generate-bathymetry-roulette-artifacts` does the same for all six roulette
 bathymetry products.
 
@@ -562,15 +571,16 @@ make fetch-astro-data
 make fetch-orbiting-data
 make fetch-anthropocene-data
 make prepare-anthropocene-data
+make refresh-resources-data
 make prepare-network-swarm-data
 make check-network-infrastructure-sources
 make check-network-infrastructure-topology-sources
 ```
 
-There is intentionally no `fetch-resources-data` target in the checked Stage
-6a implementation. The Stage 6b plan proposes explicit fetch, prepare, check,
-and promote operations while keeping normal generation offline; see the
-[resources enrichment plan](resources-enrichment-plan.md).
+`refresh-resources-data` is an explicit network-and-preparation maintainer
+operation. It stages upstream files in a temporary directory and rewrites the
+checked v2 candidates; normal generation never depends on it. See the
+[resources implementation notes](resources-implementation-notes.md).
 
 `make check` compiles and runs the native algorithm/API suite, including
 generation-profile schema and alias tests. SVG generators instead run their

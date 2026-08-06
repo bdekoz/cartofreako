@@ -29,10 +29,16 @@ inline constexpr std::array<std::string_view, 6> supported_projections {
   "voronoi",
 };
 
-inline constexpr std::array<std::string_view, 12> supported_passes {
+inline constexpr std::array<std::string_view, 5> resource_passes {
+  "resources-energy", "resources-food", "resources-flora",
+  "resources-mineral", "resources-human",
+};
+
+inline constexpr std::array<std::string_view, 16> supported_passes {
   "geometry", "graticules", "earth", "water", "astronomy",
   "orbital-technosphere", "network-swarm", "bathymetry-roulette",
-  "network-infrastructure", "resources", "anthropocene",
+  "network-infrastructure", "resources-energy", "resources-food",
+  "resources-flora", "resources-mineral", "resources-human", "anthropocene",
   "cloud-atmosphere",
 };
 
@@ -112,9 +118,25 @@ canonical_pass(const std::string_view input)
     return "bathymetry-roulette";
   if (value == "anthropocene")
     return "anthropocene";
-  if (value == "resources" || value == "resource" || value == "resouces"
-      || value == "world-game" || value == "world-game-resources")
+  if (value == "resources" || value == "resource" || value == "resouces")
     return "resources";
+  if (value == "energy" || value == "resources-energy"
+      || value == "resource-energy")
+    return "resources-energy";
+  if (value == "food" || value == "resources-food"
+      || value == "resource-food")
+    return "resources-food";
+  if (value == "flora" || value == "resources-flora"
+      || value == "resource-flora"
+      || value == "ressources-flora")
+    return "resources-flora";
+  if (value == "mineral" || value == "minerals"
+      || value == "resources-mineral" || value == "resource-mineral"
+      || value == "resources-minerals")
+    return "resources-mineral";
+  if (value == "human" || value == "resources-human"
+      || value == "resource-human")
+    return "resources-human";
   if (value == "cloud-atmosphere" || value == "clouds"
       || value == "atmosphere" || value == "solar-atmosphere"
       || value == "solar/cloud/atmosphere")
@@ -178,12 +200,20 @@ read_selector(const rj::Value& document, const char* member_name,
                         + " contains unknown value '" + std::string(raw)
                         + "'; choose all or one of: "
                         + allowed_values(supported));
-      profile_require(std::find(result.begin(), result.end(), *canonical)
-                        == result.end(),
-                      std::string(context) + "." + member_name
-                        + " contains duplicate selection '" + *canonical
-                        + "'");
-      result.push_back(*canonical);
+      const auto append = [&](const std::string_view selection) {
+        profile_require(std::find(result.begin(), result.end(), selection)
+                          == result.end(),
+                        std::string(context) + "." + member_name
+                          + " contains duplicate selection '"
+                          + std::string(selection) + "'");
+        result.emplace_back(selection);
+      };
+      if (std::string_view(member_name) == "passes"
+          && *canonical == "resources")
+        for (const std::string_view resource_pass : resource_passes)
+          append(resource_pass);
+      else
+        append(*canonical);
     }
   return result;
 }

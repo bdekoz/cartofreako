@@ -1,92 +1,84 @@
-# Transitional Stage 6a resources profile
+# Resources Stage 6b snapshot
 
-> This v1 profile is scheduled for replacement by the
-> [Stage 6b resources design](../../docs/resources-enrichment-plan.md). Stage
-> 6b does not reuse these values and will remove the old generated product;
-> only the historical method decision remains in
-> [`generation-methods.md`](../../docs/generation-methods.md).
+This directory contains the checked, offline inputs for the five-family
+resources generate pass:
 
-`resources-profile.json` is the complete offline input to the
-`generate-resources` pass. It contains two deliberately separate collections:
+- `resources-profile.json` — strict `cartofreako-resources-profile-v2`
+  catalogue, source register, palettes, default metrics, and declared coverage;
+- `resources-values.json` — normalized ISO3 country observations using
+  `cartofreako-resources-values-v2`;
+- `countries-110m.geojson` — Natural Earth 5.1.1 Admin-0 geometry with the
+  normalized `RESOURCE_A3` join key; and
+- `SHA256SUMS` — digests for all three checked inputs.
 
-- all 40 commodity headings, world totals, and asterisk-marked leading
-  producer shares from the 1960 production matrix in R. Buckminster Fuller and
-  John McHale's 1963 *Inventory of World Resources, Human Trends, and Needs*;
-- four source- and year-labelled modern comparison indicators from FAO and
-  IRENA.
+Ordinary generation does not use the network. `make check` validates both
+JSON contracts, source/metric references, five family defaults, record counts,
+coverage declarations, geometry joins, and these digests.
 
-The historical collection is a bounded factual transcription, not the full
-126-country-by-40-commodity matrix. Thirty-nine commodities have a reported
-leader. Thorium is the one source column printed `N.A.`; the profile preserves
-that as null and the generator never turns it into zero. Source unit
-abbreviations are retained without conversion.
+## Released family defaults
 
-`SHA256SUMS` pins the complete profile used by `make check`, independently of
-the historical source-PDF digest embedded inside the profile.
+The first Stage 6b increment releases one non-sparse country metric per family.
+It also catalogues the requested follow-on metrics without pretending that
+unreleased data are present.
 
-Normal generation is offline and does not need the historical scan:
+| Family | Default artifact metric | Source period | Checked country records | Release gate |
+| --- | --- | ---: | ---: | --- |
+| `resources-energy` | Installed solar capacity | IRENA 2025 | 169 | 99.832% of the IRENA world total represented |
+| `resources-food` | Food production index | FAO via WDI, 2022 observations | 168 | 95%+ mapped countries and 99%+ mapped population |
+| `resources-flora` | Forest area as percentage of land | FAO via WDI, 2023 observations | 169 | 95%+ mapped countries and effectively all mapped population |
+| `resources-mineral` | Rare-earth mine production | USGS 2025 estimate | 12 producer countries | 99%+ of the rounded USGS world total represented |
+| `resources-human` | Population under age 30 | UN/WDI 2024 inputs | 169 | 95%+ mapped countries and effectively all mapped population |
 
-```sh
-make fetch-natural-earth-10m
-make generate-resources-cahill-keyes
-```
+`resources-human` also carries a normalized, available age-60-and-older
+series. It is not mixed into the under-30 static artifact.
 
-Use `make generate-resources` for all six deterministic `.svg.gz` archives or
-`make generate-resources-artifacts` for compressed SVG, PDF, and PNG output.
-Plain SVGs are ignored Inkscape intermediates. Inspect one with
-`gzip -cd assets.generated/svg/resources-ck-44-22.svg.gz > /tmp/resources-ck.svg`.
-Override the profile with `RESOURCES_PROFILE=/absolute/path/profile.json`.
+Missing means unknown, never zero. Every country path stores the metric,
+observation year, value state, and source-facing unit in SVG metadata or data
+attributes. Reported, estimated, derived, remotely sensed, facility, and legal
+evidence classes remain separate.
 
-Decompress every SVG archive beneath `assets.generated` in place, retaining
-the compressed files:
+## Source boundary
 
-```sh
-find assets.generated -type f -name '*.svg.gz' \
-  -exec gzip --decompress --keep -- {} +
-```
+The checked snapshot is a normalized factual extract, not a redistribution of
+the upstream reports. The profile records each source URL, release, retrieval
+date, license note, and, where a source file was inspected directly, its
+SHA-256 digest. The WDI entry is one deterministic digest over the exact
+ZIP/JSON input selected for every indicator code.
 
-## Source and redistribution boundary
+- Natural Earth 5.1.1 Admin-0 geometry is public domain.
+- IRENA *Renewable Capacity Statistics 2026* supplies 2025 solar capacity.
+- USGS *Mineral Commodity Summaries 2026* supplies estimated 2025 rare-earth
+  mine production in metric tonnes of rare-earth-oxide equivalent.
+- World Development Indicators, refreshed 2026-07-13 under CC BY 4.0, supplies
+  the FAO forest/food series and UN population age inputs.
 
-The source is the Buckminster Fuller Institute's
-[Phase I, Document 1 catalog page](https://www.bfi.org/resource/phase-i-document-1-inventory-of-world-resources-human-trends-and-needs-1963/).
-The transcribed table is on one-based PDF pages 62–73. The source PDF used for
-the audit had SHA-256:
+## Explicit refresh workflow
 
-```text
-11f0a4f7617a34b58bf620bba62ddbfe01a6389dffc348e95142b86db964f816
-```
-
-The scan is not redistributed and there is no automated fetch target. BFI's
-[legal terms](https://www.bfi.org/about-bfi/legal/) reserve rights in site
-content and limit site access, while its
-[licensing page](https://www.bfi.org/about-bfi/contact/licensing/) directs
-permission requests for Fuller publications to the Fuller Estate. Maintainers
-must obtain an authorized source copy and review the current terms before
-re-auditing it. The checked profile records factual values and provenance; it
-does not grant rights to the underlying publication or its page images.
-
-## Maintainer transcription aid
-
-[`scripts/transcribe-fuller-minerals.py`](../../scripts/transcribe-fuller-minerals.py)
-is an audit aid for an authorized local copy. It requires Poppler,
-Python OpenCV, and Tesseract, none of which are needed for normal generation.
-Render the source pages at exactly 150 DPI:
+Refresh is a maintainer action and can change source observations, geometry,
+coverage, output names, and visual diffs:
 
 ```sh
-mkdir -p /tmp/cartofreako-fuller-pages
-pdftoppm -f 62 -l 73 -r 150 -png authorized-inventory.pdf \
-  /tmp/cartofreako-fuller-pages/cartofreako-minerals
-python3 -B scripts/transcribe-fuller-minerals.py \
-  /tmp/cartofreako-fuller-pages /tmp/full-resource-matrix-audit.json
+make refresh-resources-data
+make check
+git diff -- assets.static/resources
 ```
 
-Review `audit.unparsed_nonblank_cells`, every inferred leader mark, every
-column sum, and the page image itself. OCR output is never an authoritative
-replacement for `resources-profile.json`; promotion requires a human
-side-by-side audit and an updated source digest and page citation.
+`scripts/fetch-resources-data.sh` downloads the pinned Natural Earth, IRENA,
+USGS, and World Bank inputs into a temporary directory. It then invokes
+`scripts/prepare-resources-data.py`, which performs the deterministic joins,
+derivations, coverage calculations, schema emission, and checksums. The
+preparer itself never downloads data and can be run against an audited local
+source set.
 
-The [transitional implementation notes](../../docs/resources-implementation-notes.md)
-record the checked code until replacement. The durable historical conclusion
-will remain in [generation methods](../../docs/generation-methods.md), while
-the [Stage 6b plan](../../docs/resources-enrichment-plan.md) defines the sole
-future resources product.
+Before accepting a refresh, review:
+
+1. upstream release names, URLs, licenses, and file digests;
+2. every IRENA country-name join and the solar world-total check;
+3. the USGS rare-earth table transcription and rounded world total;
+4. the fixed 2024 inputs and formula for under-30 and over-60 percentages;
+5. every default metric's non-sparse gate; and
+6. generated SVG/PNG visual diffs for all six projections.
+
+The USGS transcription lives visibly in the preparer because PDF footnote
+layout is not a stable machine-readable table. A new MCS release requires a
+reviewed code/data change; silently scraping shifted PDF columns is rejected.

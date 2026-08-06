@@ -352,6 +352,18 @@ append_gridded_band(std::string& path_data, std::size_t& point_count,
                   "GDAL failed to grid-clip " + error_context);
           if (clipped->IsEmpty())
             continue;
+          const int required_dimension
+            = spec.role == geometry_role::area ? 2 : 1;
+          if (clipped->getDimension() < required_dimension)
+            continue;
+          geometry_ptr dimension_filtered(
+            OGRGeometryFactory::removeLowerDimensionSubGeoms(clipped.get()));
+          require(dimension_filtered != nullptr,
+                  "GDAL failed to remove lower-dimensional grid intersections from "
+                    + error_context);
+          clipped = std::move(dimension_filtered);
+          if (clipped->IsEmpty())
+            continue;
           clipped->segmentize(spec.maximum_segment);
           if (generation::area::uses_native_face_clipping(context))
             {

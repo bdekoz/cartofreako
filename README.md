@@ -72,8 +72,8 @@ See the [`src.wasm` README](src.wasm/README.md) for their JavaScript APIs,
 layer contracts, and build requirements.
 
 Generate 24 production whole-earth maps, 12 timestamped astronomy maps, 12
-timestamped Orbital Technosphere maps, six transitional Stage 6a resources
-maps, six cumulative network-swarm maps, six monochrome Bathymetry Roulette maps, 18
+timestamped Orbital Technosphere maps, 30 Stage 6b resources maps, six
+cumulative network-swarm maps, six monochrome Bathymetry Roulette maps, 18
 source-separated Anthropocene observation and temperature maps, six cloud/CDN network-infrastructure site maps, five
 exploratory Myriahedral ocean perspectives, 12 Cahill-Keyes enlargement
 slices, and two Myriahedral face-group slices as layered SVG, PDF, and opaque-white,
@@ -178,21 +178,24 @@ for classifications, formulas, source research, refresh workflow, and limits.
 current North American bias, records the implemented CPC/FIRMS-gate increment,
 and specifies the remaining CAMS, permission-gated PurpleAir, and ocean work.
 
-Resources is being redesigned for Stage 6b as five current-source families:
-energy, food, flora, mineral, and human. Each family will produce
-metric-specific artifacts backed by country, grid, or facility evidence and a
-quantified non-sparse coverage gate. The proposed targets and v2 snapshots are
-not implemented yet. The checked Stage 6a target is scheduled for removal at
-the cutover, with no legacy generated product; its historical feasibility
-result is retained in the [generation methods](docs/generation-methods.md).
+Resources Stage 6b is implemented as five current-source families: energy,
+food, flora, mineral, and human. The first release maps one independently
+defined, non-sparse country metric per family across all six projections and
+catalogues requested follow-on metrics without combining unlike units:
+
+```sh
+make generate-resources-energy-cahill-keyes
+make generate-resources-energy
+make generate-resources
+```
 
 The [Stage 6b resources enrichment plan](docs/resources-enrichment-plan.md)
-defines current authoritative source candidates, critical-mineral expansion,
-human-metric definitions and substitutions, offline snapshot preparation,
-coverage QA, and the implementation sequence.
+and [implementation notes](docs/resources-implementation-notes.md) define the
+current sources, critical-mineral expansion, human-metric substitutions, v2
+contracts, offline snapshot preparation, coverage QA, and extension sequence.
 
-Stage 6b SVG deliverables will continue to be deterministic `*.svg.gz`
-archives. To decompress every SVG archive in place while keeping each
+Stage 6b SVG deliverables are deterministic `*.svg.gz` archives. To decompress
+every SVG archive in place while keeping each
 `.svg.gz` file:
 
 ```sh

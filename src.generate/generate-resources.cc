@@ -1,4 +1,4 @@
-// World Game resources generator entry point.
+// Stage 6b resources generator entry point.
 // -*- mode: C++ -*-
 
 #include <exception>

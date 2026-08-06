@@ -71,7 +71,7 @@ main()
   const std::vector<std::string> all_targets = generation::targets(everything);
   assert(everything.all_projections);
   assert(everything.all_passes);
-  assert(all_targets.size() == 72);
+  assert(all_targets.size() == 96);
   assert(all_targets.front() == "generate-geometry-cahill-keyes");
   assert(all_targets.back() == "generate-cloud-atmosphere-voronoi");
   std::vector<std::string> unique_targets = all_targets;
@@ -86,7 +86,7 @@ main()
       "projections": ["STAR_X", "voroni", "ck"],
       "passes": ["graticule", "astro", "orbiting", "swarm",
                  "bathymetry_rolette", "infrastructure", "anthropocene",
-                 "world-game", "solar/cloud/atmosphere"]
+                 "resources", "solar/cloud/atmosphere"]
     }
   )json");
   assert((aliases.projections == std::vector<std::string> {
@@ -96,7 +96,9 @@ main()
                               "orbital-technosphere", "network-swarm",
                               "bathymetry-roulette",
                               "network-infrastructure", "anthropocene",
-                              "resources", "cloud-atmosphere"}));
+                              "resources-energy", "resources-food",
+                              "resources-flora", "resources-mineral",
+                              "resources-human", "cloud-atmosphere"}));
   const std::vector<std::string> alias_targets = generation::targets(aliases);
   assert(alias_targets.front() == "generate-graticules-star-x");
   assert(std::find(alias_targets.begin(), alias_targets.end(),
@@ -109,7 +111,7 @@ main()
                    "generate-anthropocene-star-x")
          != alias_targets.end());
   assert(std::find(alias_targets.begin(), alias_targets.end(),
-                   "generate-resources-star-x")
+                   "generate-resources-energy-star-x")
          != alias_targets.end());
   assert(std::find(alias_targets.begin(), alias_targets.end(),
                    "generate-cloud-atmosphere-star-x")
@@ -135,10 +137,39 @@ main()
       "passes": ["resouces"]
     }
   )json");
-  assert((resource_aliases.passes == std::vector<std::string> {"resources"}));
+  assert((resource_aliases.passes == std::vector<std::string> {
+                                           "resources-energy",
+                                           "resources-food",
+                                           "resources-flora",
+                                           "resources-mineral",
+                                           "resources-human"}));
   assert((generation::targets(resource_aliases)
           == std::vector<std::string> {
-               "generate-resources-cahill-keyes"}));
+               "generate-resources-energy-cahill-keyes",
+               "generate-resources-food-cahill-keyes",
+               "generate-resources-flora-cahill-keyes",
+               "generate-resources-mineral-cahill-keyes",
+               "generate-resources-human-cahill-keyes"}));
+
+  const generation::profile resource_family_aliases
+    = generation::parse_json(R"json(
+    {
+      "schema_version": 1,
+      "projections": ["ck"],
+      "passes": ["energy", "ressources-flora", "minerals", "human"]
+    }
+  )json");
+  assert((resource_family_aliases.passes == std::vector<std::string> {
+                                                "resources-energy",
+                                                "resources-flora",
+                                                "resources-mineral",
+                                                "resources-human"}));
+  assert((generation::targets(resource_family_aliases)
+          == std::vector<std::string> {
+               "generate-resources-energy-cahill-keyes",
+               "generate-resources-flora-cahill-keyes",
+               "generate-resources-mineral-cahill-keyes",
+               "generate-resources-human-cahill-keyes"}));
 
   const generation::profile legacy_network = generation::parse_json(R"json(
     {
@@ -201,4 +232,9 @@ main()
     "projections": ["voronoi"],
     "passes": ["earth"]
   })json", "duplicate member 'projections'");
+  expect_invalid(R"json({
+    "schema_version": 1,
+    "projections": ["cahill-keyes"],
+    "passes": ["world-game"]
+  })json", "unknown value 'world-game'");
 }
