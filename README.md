@@ -110,8 +110,10 @@ Outputs are organized under `assets.generated/svg/`, `assets.generated/pdf/`, an
 the [generated snapshot](docs/generated-snapshot-ck.md). The
 [`v20260807` generated-assets release notes](docs/releases/v20260807.md)
 record the static-bundle manifest, render host, hardware sizing, verification,
-and source commit. Maintainers publish source tags and large generated bundles
-with the [release runbook](docs/releases/README.md).
+and source commit. The [S3 v12 publication notes](docs/releases/s3-v12.md)
+document the public extracted tree used by that snapshot. Maintainers publish
+source tags and large generated bundles with the
+[release runbook](docs/releases/README.md).
 
 Astronomy generation is offline by default and uses a checked-in JSON profile
 as the authority for both the calculation timestamp and point of reference.

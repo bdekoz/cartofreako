@@ -4,6 +4,7 @@
 [Generation pipeline](../generation.md) ·
 [Prerequisites and hardware](../prerequisites.md) ·
 [`v20260807` release notes](v20260807.md) ·
+[`v12` S3 publication](s3-v12.md) ·
 [`v20260806` release notes](v20260806.md)
 
 Cartofreako releases have two deliberately separate parts:
@@ -15,6 +16,16 @@ Cartofreako releases have two deliberately separate parts:
 Treat release assets as immutable snapshots. Never replace an uploaded file
 with different bytes under the same tag and filename. Publish a new tag and
 asset name when either the source or generated payload changes.
+
+The browser-facing mirror of generated assets v12 is separately published at
+the immutable Berkeley S3 prefix `cartofreako/v12/`. It exposes the extracted
+tree for GitHub Pages while retaining the XZ recovery package, manifest, and a
+last-written completion marker. Follow the [S3 v12 publication and
+implementation notes](s3-v12.md); the GitHub source tag remains unchanged.
+Successful applied uploads now finish by generating the Devastation Pacific
+Active Archive HTML/PDF report and rendered QA pages. Reports are local delivery
+artifacts outside the immutable prefix and Git; their verification and delivery
+record belongs in the versioned publication notes.
 
 ## `v20260807` release procedure
 

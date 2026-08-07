@@ -73,3 +73,6 @@ __pycache__/
 # content. Extracting a published bundle should leave the source tree clean.
 /assets.generated/
 /assets.generated.v*.tar.xz
+
+# Generated release reports and visual-QA renders are delivery artifacts.
+/reports/
