@@ -25,7 +25,10 @@ unlike measurements into synthetic scores:
 - `make authorize-external` validates local authorization for optional
   P-Tree, NASA FIRMS, and licensed network-topology workflows; and
 - `make generate-snapshot-ck` creates the 28-thumbnail Cahill–Keyes contact
-  sheet documented in [`generated-snapshot-ck.md`](generated-snapshot-ck.md).
+  sheet documented in [`generated-snapshot-ck.md`](generated-snapshot-ck.md);
+- the thumbnail targets retain their 480-pixel width when invoked through
+  `assets-single` or `assets-resilient`, even though those recursive release
+  targets forward the 3840-pixel full-size export setting; and
 - Star-X Natural Earth compositing now paints every transformed Antarctic
   fragment after the ordinary quadrant paths in the same thematic layer, so
   the unified polar projection remains on top instead of being clipped by a

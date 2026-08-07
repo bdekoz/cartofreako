@@ -1890,7 +1890,10 @@ $(PORTRAIT_PNGS): $(GENERATED_PNG_DIR)/%.png: \
 		$(GENERATED_SVG_DIR)/%.svg Makefile | $(GENERATED_PNG_DIR)
 	$(call EXPORT_PNG,--export-height)
 
-$(CK_SNAPSHOT_THUMBNAILS): PNG_LONG_SIDE=$(CK_SNAPSHOT_WIDTH)
+# Recursive release targets pass PNG_LONG_SIDE on the command line. Keep the
+# snapshot contract at 480 pixels even when the full-size export setting is
+# inherited by assets-single or assets-resilient.
+$(CK_SNAPSHOT_THUMBNAILS): override PNG_LONG_SIDE=$(CK_SNAPSHOT_WIDTH)
 $(CK_SNAPSHOT_THUMBNAILS): $(CK_SNAPSHOT_THUMBNAIL_DIR)/%.png: \
 		$(GENERATED_SVG_DIR)/%.svg Makefile | $(CK_SNAPSHOT_THUMBNAIL_DIR)
 	$(call EXPORT_PNG,--export-width)

@@ -64,6 +64,10 @@ test "$(git rev-list -n 1 v20260806)" = "$release_commit"
 
 Publish the source tag and static bundle as one GitHub release:
 
+The notes file intentionally begins with body text rather than repeating the
+release title as a Markdown heading. GitHub renders the `--title` value above
+the notes body.
+
 ```sh
 gh release create v20260806 \
   --repo bdekoz/cartofreako \
