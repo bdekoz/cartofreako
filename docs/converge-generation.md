@@ -290,4 +290,6 @@ Stage 12
 
 - try harder to create resources-human, try 3-5 passes
 
+- add a generated-snapshot-ck.md file that has lower-resolution thumbnails of all the cahill-keys projection passes, link to it from documentation
+
 - document impementation notes
