@@ -4,13 +4,17 @@
 
 # {{ page.projection_name }} generated snapshot
 
-[Documentation index](../index.md) ·
-[AuthaGraph](generated-snapshot-authagraph.md) ·
-[Cahill–Keyes](generated-snapshot-ck.md) ·
-[Dymaxion](generated-snapshot-dymaxion.md) ·
-[Myriahedral](generated-snapshot-myriahedral.md) ·
-[Star-X](generated-snapshot-star-x.md) ·
-[Voronoi](generated-snapshot-voronoi.md)
+[Documentation index](../index.html) ·
+[AuthaGraph](generated-snapshot-authagraph.html) ·
+[Cahill–Keyes](generated-snapshot-ck.html) ·
+[Dymaxion](generated-snapshot-dymaxion.html) ·
+[Myriahedral](generated-snapshot-myriahedral.html) ·
+[Star-X](generated-snapshot-star-x.html) ·
+[Voronoi](generated-snapshot-voronoi.html)
+
+[Generation guide](generation.html) ·
+[Stage 12 implementation notes](stage-12-implementation-notes.html) ·
+[S3 v12 publication](releases/s3-v12.html)
 
 This contact sheet covers every credential-free {{ page.projection_name }}
 whole-map pass in the Stage 12 release graph, plus the explicitly retained
