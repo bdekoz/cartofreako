@@ -117,13 +117,30 @@ source tags and large generated bundles with the
 
 Astronomy generation is offline by default and uses a checked-in JSON profile
 as the authority for both the calculation timestamp and point of reference.
-Generate both all-sky and observer-filtered maps, or deliberately refresh the
-bounded external snapshots, with:
+For normal generation, run only:
 
 ```sh
 make generate-astro
-make fetch-astro-data
 ```
+
+That target reads the checked-in profile and bounded catalogs, produces both
+all-sky and observer-filtered SVGs for all six projections, and performs no
+network access. It does not call `fetch-astro-data`; `make all` includes the
+same offline generation automatically.
+
+`fetch-astro-data` is a separate, optional maintainer operation. Run it only
+when deliberately replacing the checked-in Gaia, NASA Exoplanet Archive, and
+JPL SBDB snapshots, then review the input diff and regenerate:
+
+```sh
+make fetch-astro-data
+git diff -- assets.static/astronomy
+make generate-astro
+make check
+```
+
+Neither target calls the other: fetching changes source snapshots but creates
+no maps, while generation consumes the snapshots but never refreshes them.
 
 See the
 [`astronomy implementation notes`](docs/astro-implementation-notes.md) for the
@@ -137,6 +154,8 @@ Refresh requires the existing P-Tree `.netrc` entry, then preparation converts
 all observed layers to a common H3 snapshot:
 
 ```sh
+make install-jaxa-certificate
+make EXTERNAL_PASSES=jaxa-ptree authorize-external
 make fetch-cloud-atmosphere-data
 make prepare-cloud-atmosphere-data
 make verify-cloud-atmosphere-data
@@ -236,8 +255,24 @@ validate the local credentials and authorization without fetching generation
 data or printing secrets:
 
 ```sh
+make install-jaxa-certificate
 make authorize-external
 ```
+
+After that read-only check succeeds, the mutating companion can run the
+selected acquisition and full-artifact workflows:
+
+```sh
+make EXTERNAL_PASSES='jaxa-ptree network-topology' \
+  NETWORK_TOPOLOGY_LICENSE_ACCEPTED=CC-BY-NC-SA-3.0 \
+  generate-authorized-external
+```
+
+All selected passes must authorize before any fetch or render starts. P-Tree
+produces its six SVG/PDF/PNG sets and topology produces its licensed six sets.
+NASA FIRMS deliberately stops at the ignored Anthropocene review candidate;
+release rendering remains blocked until that candidate is audited and
+promoted with its profile checksum and coverage documentation.
 
 See [Prerequisites](docs/prerequisites.md#optional-external-authorization) for
 the per-provider variables and selective checks.

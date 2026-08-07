@@ -52,6 +52,23 @@ destination="$raw_root/$stamp"
 temporary_dir=$(mktemp -d)
 trap 'rm -rf "$temporary_dir"' EXIT
 
+ptree_cacert=${PTREE_CACERT:-}
+if [[ -z $ptree_cacert ]]; then
+  data_home=${XDG_DATA_HOME:-${HOME:?HOME is required}/.local/share}
+  installed_cacert=$data_home/cartofreako/certs/secom-tls-rsa-root-ca-2024.pem
+  if [[ -r $installed_cacert ]]; then
+    ptree_cacert=$installed_cacert
+  fi
+fi
+ptree_ca_arguments=()
+if [[ -n $ptree_cacert ]]; then
+  [[ $ptree_cacert = /* ]] \
+    || { echo 'PTREE_CACERT must be an absolute path' >&2; exit 1; }
+  [[ -r $ptree_cacert ]] \
+    || { echo "P-Tree CA certificate is not readable: $ptree_cacert" >&2; exit 1; }
+  ptree_ca_arguments=(--cacert "$ptree_cacert")
+fi
+
 if [[ -n ${PTREE_BASE_URL:-} ]]; then
   ptree_product="${PTREE_BASE_URL%/}/pub/himawari/L2/CLP/010"
 else
@@ -75,7 +92,8 @@ for hours_back in 0 1 2 3 4 5 6; do
   remote_directory="$ptree_product/$year_month/$day/$hour/"
   listing="$temporary_dir/ptree-$year_month$day$hour.txt"
   if curl -sS --fail --netrc --list-only --connect-timeout 30 \
-      --max-time 90 "$remote_directory" -o "$listing"; then
+      --max-time 90 "${ptree_ca_arguments[@]}" \
+      "$remote_directory" -o "$listing"; then
     filename=$(sed -n \
       '/NC_H09_[0-9]\{8\}_[0-9]\{4\}_L2CLP010_FLDK\.\(02401_02401\|02801_02401\)\.nc\.gz$/p' \
       "$listing" | sort | while IFS= read -r entry; do
@@ -100,7 +118,8 @@ if [[ -z $ptree_filename ]]; then
 fi
 echo "fetching P-Tree $ptree_filename"
 curl -sS --fail --netrc --remove-on-error --connect-timeout 30 \
-  --max-time 900 -o "$temporary_dir/$ptree_filename" \
+  --max-time 900 "${ptree_ca_arguments[@]}" \
+  -o "$temporary_dir/$ptree_filename" \
   "$ptree_remote_directory$ptree_filename"
 gzip -t "$temporary_dir/$ptree_filename"
 ptree_nc=${ptree_filename%.gz}

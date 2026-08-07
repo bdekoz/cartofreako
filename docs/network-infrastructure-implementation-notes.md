@@ -144,12 +144,17 @@ Topology is an explicit license opt-in:
 ```sh
 make generate-network-infrastructure-topology
 make generate-network-infrastructure-topology-artifacts
+make EXTERNAL_PASSES=network-topology \
+  NETWORK_TOPOLOGY_LICENSE_ACCEPTED=CC-BY-NC-SA-3.0 \
+  generate-authorized-external
 ```
 
 The requested new rule is `generate-network-infrastructure-topology`. Its
 `-artifacts` companion adds all PDFs and PNGs, while
 `generate-network-infrastructure-topology-PROJECTION` builds one SVG. Source
-checks can be run independently:
+The authorized wrapper first validates the acknowledgement and every pinned
+source, then invokes the `-artifacts` target. Source checks can be run
+independently:
 
 ```sh
 make check-network-infrastructure-sources

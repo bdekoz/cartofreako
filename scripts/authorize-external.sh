@@ -41,8 +41,23 @@ authorize_ptree()
     tolower($1) == "machine" && $2 == "ftp.ptree.jaxa.jp" { found = 1 }
     END { exit found ? 0 : 1 }
   ' "$netrc" || fail "P-Tree netrc has no ftp.ptree.jaxa.jp machine entry"
+
+  local cacert=${PTREE_CACERT:-}
+  if [[ -z $cacert ]]; then
+    local data_home=${XDG_DATA_HOME:-${HOME:?HOME is required}/.local/share}
+    local installed_cacert=$data_home/cartofreako/certs/secom-tls-rsa-root-ca-2024.pem
+    if [[ -r $installed_cacert ]]; then
+      cacert=$installed_cacert
+    fi
+  fi
+  local -a ca_arguments=()
+  if [[ -n $cacert ]]; then
+    [[ $cacert = /* ]] || fail 'PTREE_CACERT must be an absolute path'
+    [[ -r $cacert ]] || fail "P-Tree CA certificate is not readable: $cacert"
+    ca_arguments=(--cacert "$cacert")
+  fi
   curl --fail --silent --show-error --ssl-reqd --netrc-file "$netrc" \
-    --list-only --connect-timeout 20 --max-time 60 \
+    "${ca_arguments[@]}" --list-only --connect-timeout 20 --max-time 60 \
     'ftps://ftp.ptree.jaxa.jp:990/pub/himawari/L2/CLP/010/' \
     --output "$temporary_dir/ptree-listing"
   test -s "$temporary_dir/ptree-listing" \

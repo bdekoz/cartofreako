@@ -86,8 +86,12 @@ RESOURCES_CHECKSUMS := $(RESOURCES_DATA_DIR)/SHA256SUMS
 RESOURCES_FETCHER := scripts/fetch-resources-data.sh
 RESOURCES_PREPARER := scripts/prepare-resources-data.py
 EXTERNAL_AUTHORIZER := scripts/authorize-external.sh
+EXTERNAL_GENERATOR := scripts/generate-authorized-external.sh
+EXTERNAL_MAKE_COMMAND ?= $(firstword $(MAKE))
+JAXA_CERTIFICATE_INSTALLER := scripts/install-jaxa-certificate.sh
 EXTERNAL_PASSES ?= jaxa-ptree nasa-firms network-topology
 PTREE_NETRC ?= $(HOME)/.netrc
+PTREE_CACERT ?=
 NETWORK_TOPOLOGY_LICENSE_ACCEPTED ?=
 NETWORK_SWARM_DATA_DIR ?= $(STATIC_ASSET_DIR)/network-swarm
 NETWORK_SWARM_PROFILE ?= $(NETWORK_SWARM_DATA_DIR)/network-swarm-profile.json
@@ -662,7 +666,9 @@ RESOURCE_METRIC_PUBLIC_TARGETS := \
 
 PUBLIC_TARGETS := all assets-single assets-resilient check check-prerequisite \
 	check-resources-svg-archives clean clean-failed-generated configured doxygen \
-	generation-plan list-targets authorize-external generate-snapshot-ck \
+	generation-plan list-targets authorize-external \
+	generate-authorized-external generate-snapshot-ck \
+	install-jaxa-certificate \
 	fetch-natural-earth-10m fetch-astro-data fetch-orbiting-data \
 	fetch-cloud-atmosphere-data prepare-cloud-atmosphere-data \
 	verify-cloud-atmosphere-data \
@@ -874,6 +880,7 @@ check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
 		-o $(TEST_DIR)/test-cloud-atmosphere-generation
 	$(TEST_DIR)/test-cloud-atmosphere-generation
 	python3 $(TEST_DIR)/test-resolve-jaxa-stac.py
+	$(TEST_DIR)/test-generate-authorized-external.sh
 	$(CXX) $(CPPFLAGS) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$(TEST_DIR)/test-bathymetry-roulette-style.cc \
 		-o $(TEST_DIR)/test-bathymetry-roulette-style
@@ -1181,9 +1188,13 @@ check-network-infrastructure-topology-sources: \
 		"$(abspath $(SUBMARINE_CABLE_SOURCE))" \
 		"$(abspath $(INTERNET_EXCHANGE_SOURCE))"
 
+install-jaxa-certificate: $(JAXA_CERTIFICATE_INSTALLER)
+	PTREE_CACERT="$(PTREE_CACERT)" "$(JAXA_CERTIFICATE_INSTALLER)"
+
 authorize-external: $(EXTERNAL_AUTHORIZER) \
 		$(NETWORK_INFRASTRUCTURE_SOURCE_CHECKER)
 	PTREE_NETRC="$(abspath $(PTREE_NETRC))" \
+	PTREE_CACERT="$(PTREE_CACERT)" \
 	NETWORK_TOPOLOGY_LICENSE_ACCEPTED="$(NETWORK_TOPOLOGY_LICENSE_ACCEPTED)" \
 	NETWORK_INFRASTRUCTURE_SOURCE_CHECKER="$(abspath $(NETWORK_INFRASTRUCTURE_SOURCE_CHECKER))" \
 	NETWORK_INFRASTRUCTURE_CLOUD_SOURCE="$(abspath $(NETWORK_INFRASTRUCTURE_CLOUD_SOURCE))" \
@@ -1191,12 +1202,30 @@ authorize-external: $(EXTERNAL_AUTHORIZER) \
 	INTERNET_EXCHANGE_SOURCE="$(abspath $(INTERNET_EXCHANGE_SOURCE))" \
 		"$(EXTERNAL_AUTHORIZER)" $(EXTERNAL_PASSES)
 
+# Mutating opt-in companion to authorize-external. Authorization for every
+# selected pass completes before this driver fetches or renders anything.
+generate-authorized-external: authorize-external $(EXTERNAL_GENERATOR)
+	PTREE_NETRC="$(abspath $(PTREE_NETRC))" \
+	PTREE_CACERT="$(PTREE_CACERT)" \
+	CLOUD_ATMOSPHERE_DATA_DIR="$(abspath $(CLOUD_ATMOSPHERE_DATA_DIR))" \
+	CLOUD_ATMOSPHERE_PROFILE="$(abspath $(CLOUD_ATMOSPHERE_PROFILE))" \
+	CLOUD_ATMOSPHERE_GEOJSON="$(abspath $(CLOUD_ATMOSPHERE_GEOJSON))" \
+	ANTHROPOCENE_DATA_DIR="$(abspath $(ANTHROPOCENE_DATA_DIR))" \
+	ANTHROPOCENE_PROFILE="$(abspath $(ANTHROPOCENE_PROFILE))" \
+	NETWORK_TOPOLOGY_LICENSE_ACCEPTED="$(NETWORK_TOPOLOGY_LICENSE_ACCEPTED)" \
+	NETWORK_INFRASTRUCTURE_CLOUD_SOURCE="$(abspath $(NETWORK_INFRASTRUCTURE_CLOUD_SOURCE))" \
+	SUBMARINE_CABLE_SOURCE="$(abspath $(SUBMARINE_CABLE_SOURCE))" \
+	INTERNET_EXCHANGE_SOURCE="$(abspath $(INTERNET_EXCHANGE_SOURCE))" \
+	MAKE_COMMAND="$(EXTERNAL_MAKE_COMMAND)" \
+		"$(EXTERNAL_GENERATOR)" $(EXTERNAL_PASSES)
+
 fetch-astro-data: $(ASTRO_FETCHER)
 	$(ASTRO_FETCHER) "$(ASTRO_DATA_DIR)"
 
 fetch-cloud-atmosphere-data: $(CLOUD_ATMOSPHERE_FETCHER) \
 		$(CLOUD_ATMOSPHERE_STAC_RESOLVER) $(CLOUD_ATMOSPHERE_PROFILE)
-	$(CLOUD_ATMOSPHERE_FETCHER) "$(CLOUD_ATMOSPHERE_DATA_DIR)"
+	PTREE_CACERT="$(PTREE_CACERT)" \
+		$(CLOUD_ATMOSPHERE_FETCHER) "$(CLOUD_ATMOSPHERE_DATA_DIR)"
 
 prepare-cloud-atmosphere-data: $(CLOUD_ATMOSPHERE_PREPARER) \
 		$(CLOUD_ATMOSPHERE_PREPARATION_SCRIPT) \

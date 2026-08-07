@@ -104,8 +104,11 @@ workflow, start with the
 
 P-Tree requires a registered account. The fetcher uses implicit FTPS on port
 990 and `curl --netrc`; it never accepts credentials as command-line
-arguments or writes them into a manifest. The existing user entry is expected
-to resemble:
+arguments or writes them into a manifest. `make install-jaxa-certificate`
+downloads and fingerprint-verifies the current SECOM root into private
+per-user data; authorization and production fetching discover it automatically.
+An explicit absolute `PTREE_CACERT` overrides that location. The existing user
+entry is expected to resemble:
 
 ```text
 machine ftp.ptree.jaxa.jp
@@ -212,6 +215,7 @@ rules are integrated into the top-level Makefile. Useful targets include:
 make generate-cloud-atmosphere-cahill-keyes
 make generate-cloud-atmosphere-projections
 make generate-cloud-atmosphere-artifacts
+make EXTERNAL_PASSES=jaxa-ptree generate-authorized-external
 ```
 
 `generate-cloud-atmosphere` and `generate-cloud-atmosphere-projections`
@@ -219,6 +223,11 @@ produce six SVGs. `generate-cloud-atmosphere-artifacts` additionally exports
 the corresponding PDF and PNG set. The generation-profile resolver accepts
 `cloud-atmosphere` plus `clouds`, `atmosphere`, `solar-atmosphere`, and the
 literal requested alias `solar/cloud/atmosphere`.
+
+The last command is the credentialed end-to-end path: its prerequisite first
+validates P-Tree access, then it fetches, prepares, verifies, and exports all
+six SVG/PDF/PNG sets. The narrower targets remain useful for working from an
+already prepared snapshot.
 
 The family is deliberately absent from `make all`: a standard offline build
 cannot assume a P-Tree account or a current local observation snapshot. It is

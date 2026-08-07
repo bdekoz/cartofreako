@@ -123,6 +123,12 @@ snapshots: 500 Gaia DR3 stars brighter than G 5.5, 250 nearby confirmed-planet
 rows, and seven named JPL SBDB records. The script checks row counts and writes
 `SHA256SUMS`. It does not modify the profile or the curated transient file.
 
+This refresh target is not a prerequisite of `generate-astro` and is never
+called by `generate-astro` or `make all`. Conversely, it does not invoke a
+generator or create an SVG, PDF, or PNG. Normal users should generate directly
+from the checked-in snapshots; maintainers use the fetch target only to propose
+and review an intentional source-data update.
+
 Normal generation is offline. Keeping acquisition separate avoids an
 unreviewed upstream change altering a map during `make all`; a deliberate
 refresh can instead be inspected together with its generated diff.
@@ -287,6 +293,20 @@ Use the checked-in profile by default:
 ```sh
 make generate-astro
 ```
+
+This is the complete normal astronomy command. It works offline and does not
+need a preceding `make fetch-astro-data`. For an intentional catalog refresh,
+use the distinct sequence:
+
+```sh
+make fetch-astro-data
+git diff -- assets.static/astronomy
+make generate-astro
+make check
+```
+
+The first command changes bounded, reproducibility-sensitive inputs; the later
+commands review their effect, render from them, and run the repository checks.
 
 Select one product or projection with `generate-astro-all-sky`,
 `generate-astro-observer`, `generate-astro-cahill-keyes`,

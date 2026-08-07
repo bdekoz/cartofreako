@@ -561,7 +561,11 @@ bathymetry products.
 thumbnails and their Cahill-Keyes SVG prerequisites. `authorize-external`
 performs read-only credential/terms-boundary checks for selected optional
 P-Tree, NASA FIRMS, and network-topology passes; it does not fetch source data
-or accept provider terms.
+or accept provider terms. Its explicit mutating companion,
+`generate-authorized-external`, authorizes the entire selection first, then
+runs the P-Tree and licensed-topology full-artifact workflows and stages the
+FIRMS-backed Anthropocene review candidate. It never promotes or renders that
+candidate automatically.
 
 ### Exact targets and artifact paths
 
@@ -595,6 +599,11 @@ make prepare-network-swarm-data
 make check-network-infrastructure-sources
 make check-network-infrastructure-topology-sources
 ```
+
+These are maintainer acquisition/preparation operations, not prerequisites
+automatically pulled into generation. In particular, normal astronomy uses
+the checked-in snapshots with `make generate-astro`; `fetch-astro-data` neither
+runs before it nor invokes it afterward.
 
 `refresh-resources-data` is an explicit network-and-preparation maintainer
 operation. It stages upstream files in a temporary directory and rewrites the

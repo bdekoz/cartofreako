@@ -23,7 +23,9 @@ unlike measurements into synthetic scores:
   fields; the earlier source-separated observation atlas remains available
   through `generate-anthropocene-atlas*` targets;
 - `make authorize-external` validates local authorization for optional
-  P-Tree, NASA FIRMS, and licensed network-topology workflows; and
+  P-Tree, NASA FIRMS, and licensed network-topology workflows;
+- `make generate-authorized-external` authorizes every selected workflow
+  before running its bounded acquisition and artifact pipeline; and
 - `make generate-snapshot-ck` creates the 28-thumbnail Cahill–Keyes contact
   sheet documented in [`generated-snapshot-ck.md`](generated-snapshot-ck.md);
 - the thumbnail targets retain their 480-pixel width when invoked through
@@ -145,8 +147,10 @@ make authorize-external
 The rule:
 
 1. requires a P-Tree `ftp.ptree.jaxa.jp` entry in `PTREE_NETRC` (default
-   `~/.netrc`), rejects group/other-readable permissions, and performs a
-   read-only implicit-FTPS listing;
+   `~/.netrc`), rejects group/other-readable permissions, loads the verified
+   per-user SECOM root installed by `make install-jaxa-certificate` (or an
+   explicit absolute `PTREE_CACERT`), and performs a read-only implicit-FTPS
+   listing;
 2. requires `FIRMS_MAP_KEY`, keeps it out of printed commands and output, and
    validates the live NASA FIRMS availability CSV header; and
 3. requires the exact topology license acknowledgement and runs the existing
@@ -165,6 +169,33 @@ Secrets are never copied into the repository or generated metadata. This
 rule confirms working access and an operator-provided license assertion; it
 does not register accounts, accept terms on anyone's behalf, grant a
 commercial TeleGeography license, or make legal advice.
+
+The explicit mutating companion uses the same selection:
+
+```sh
+make EXTERNAL_PASSES=jaxa-ptree generate-authorized-external
+make EXTERNAL_PASSES=network-topology \
+  NETWORK_TOPOLOGY_LICENSE_ACCEPTED=CC-BY-NC-SA-3.0 \
+  generate-authorized-external
+FIRMS_MAP_KEY='…' make EXTERNAL_PASSES=nasa-firms \
+  generate-authorized-external
+```
+
+`generate-authorized-external` first completes `authorize-external` for the
+whole requested set. It then runs, in canonical order:
+
+1. P-Tree fetch, preparation, verification, and all six SVG/PDF/PNG exports;
+2. the global Anthropocene fetch and preparation with NASA FIRMS; and
+3. all six licensed network-topology SVG/PDF/PNG exports.
+
+The FIRMS workflow intentionally ends at
+`assets.static/anthropocene/.prepared/anthropocene-<year>.geojson`. The
+candidate must be audited and deliberately promoted with its digest, profile,
+coverage dates, tests, and documentation before the observation-atlas release
+artifacts are regenerated. Rendering it automatically would bypass the
+existing data-review gate. Requested but unavailable passes fail instead of
+being silently omitted, and a later failure does not undo earlier completed
+downloads or artifacts.
 
 ## Hardware requirements
 

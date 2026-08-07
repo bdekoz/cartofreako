@@ -49,24 +49,50 @@ machine block; do not replace the existing file. Never put `.netrc`, the
 account, or the password inside this repository, a command line, a shell
 transcript, or an issue report.
 
-## 3. Test only the P-Tree login
+## 3. Install the JAXA certificate root
 
-This read-only command uses the same implicit FTPS endpoint and `.netrc`
-lookup as the fetcher:
+JAXA P-Tree's current FTPS chain terminates at `SECOM TLS RSA Root CA 2024`,
+which may not yet be present in the operating-system CA bundle. Install the
+official root in private per-user Cartofreako data:
 
 ```sh
-curl --silent --show-error --fail --netrc --list-only \
-  --connect-timeout 30 --max-time 90 \
-  ftps://ftp.ptree.jaxa.jp:990/pub/himawari/L2/CLP/010/
+make install-jaxa-certificate
 ```
 
-Success normally prints product directories or files and returns to the prompt
-without an authentication error. The
-[P-Tree FAQ](https://www.eorc.jaxa.jp/ptree/faq.html) confirms FTPS port 990
-and notes that a web browser is not an FTP client. Do not work around
-certificate failures with `--insecure`.
+The installer downloads the PEM certificate only from SECOM's HTTPS root
+repository, verifies that its certificate SHA-256 is exactly
+`1435f225c5d252d7a21948cc3ce62aecfa88001e3dd72d1cc3555100eb372f93`,
+checks that it is a current self-signed trust anchor, and installs it with mode
+`600` beneath `${XDG_DATA_HOME:-~/.local/share}/cartofreako/certs/`. It does
+not modify the system trust store. `authorize-external` and the production
+fetcher discover that location automatically.
 
-## 4. Fetch, prepare, verify, and render
+Set `PTREE_CACERT` to an absolute path when a different private destination is
+required:
+
+```sh
+make PTREE_CACERT=/absolute/path/secom-tls-rsa-root-ca-2024.pem \
+  install-jaxa-certificate
+```
+
+Do not download a similarly named certificate from an unverified mirror and
+do not work around certificate failures with `--insecure`.
+
+## 4. Test only the P-Tree login
+
+The repository check uses the same implicit FTPS endpoint, private certificate,
+and `.netrc` lookup as the fetcher:
+
+```sh
+make EXTERNAL_PASSES=jaxa-ptree authorize-external
+```
+
+Success reports that JAXA P-Tree and the requested optional passes are ready.
+The
+[P-Tree FAQ](https://www.eorc.jaxa.jp/ptree/faq.html) confirms FTPS port 990
+and notes that a web browser is not an FTP client.
+
+## 5. Fetch, prepare, verify, and render
 
 First confirm the local compiler, H3, GDAL NetCDF/GeoTIFF drivers, utilities,
 font, and rendering tools:
@@ -101,7 +127,18 @@ command with:
 make generate-cloud-atmosphere-artifacts
 ```
 
-## 5. Confirm the result
+Or run the same complete credentialed sequence—including the authorization
+check—with one target:
+
+```sh
+make EXTERNAL_PASSES=jaxa-ptree generate-authorized-external
+```
+
+That wrapper runs the fetch, preparation, verification, and full SVG/PDF/PNG
+artifact target. It is intentionally separate from `authorize-external`,
+which remains read-only.
+
+## 6. Confirm the result
 
 The fetch stage writes ignored operational inputs under:
 
@@ -141,7 +178,7 @@ downloaded successfully.
 | --- | --- |
 | `curl: (67)` or login denied | Confirm the completion email arrived, the machine name is exactly `ftp.ptree.jaxa.jp`, the login/password block is in the current user's `~/.netrc`, and the file mode is `600`. |
 | Timeout or connection refused | Confirm outbound TCP port 990 is allowed. Check the [P-Tree FAQ and site status](https://www.eorc.jaxa.jp/ptree/faq.html) and retry later; JAXA notes that traffic can become busy. |
-| TLS certificate failure | Update the system CA bundle or fix the intercepting proxy. Do not add `--insecure` to the script. |
+| `curl: (60)` with `unable to get local issuer certificate` | Run `make install-jaxa-certificate`, confirm its published SHA-256 check passes, and retry. Use `PTREE_CACERT=/absolute/path` only for an intentional alternate private location. Do not add `--insecure`. |
 | `P-Tree supplied no H09 CLP file ... within six hours` | Check the machine's UTC clock and `SOURCE_DATE_EPOCH`. A current observation may be delayed; retry with a new current timestamp instead of weakening the six-hour profile limit. |
 | A public JAXA collection cannot be resolved | Retry in case the static catalog is temporarily unavailable, then compare the collection IDs in the [source profile](../assets.static/cloud-atmosphere/cloud-atmosphere-profile.json) with the [live JAXA Earth STAC root](https://data.earth.jaxa.jp/stac/cog/v1/catalog.json). |
 | Missing GDAL NetCDF or GeoTIFF support | Run `make check-prerequisite` and install the missing GDAL drivers before preparation. |

@@ -275,6 +275,9 @@ A deliberate refresh is two-stage:
 ```sh
 make fetch-anthropocene-data
 make prepare-anthropocene-data
+# equivalent authorized wrapper for the complete two-step refresh
+FIRMS_MAP_KEY='…' make EXTERNAL_PASSES=nasa-firms \
+  generate-authorized-external
 ```
 
 The fetch target validates TAR/ZIP/GZIP containers, discovers the latest
@@ -286,6 +289,11 @@ extracts into a temporary directory, audits FIRMS dates and regions, and writes
 only an ignored candidate. It never overwrites checked data. After
 review, update the checked GeoJSON, its `SHA256SUMS`, profile checksum and
 coverage dates, test fixtures, and this audit together.
+
+The wrapper intentionally does not invoke either Anthropocene artifact
+target: `generate-anthropocene-artifacts` is the independent 2025/2026 CPC
+temperature family, and rendering the observation-atlas candidate before
+promotion would bypass its source-coverage review gate.
 
 Supply another already-normalized, matching dataset with Make variables:
 

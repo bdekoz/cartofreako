@@ -79,4 +79,6 @@ Credentialed P-Tree cloud-atmosphere and licensed network-topology products
 are intentionally excluded from this default sheet. After the operator has
 completed the provider-side account or terms step, `make authorize-external`
 verifies the local P-Tree, NASA FIRMS, and topology authorization boundary;
-the optional products remain separate generation targets.
+`make generate-authorized-external` is the separate mutating workflow. P-Tree
+and topology artifacts remain outside this default sheet, while FIRMS data
+remains an unrendered review candidate until deliberate promotion.

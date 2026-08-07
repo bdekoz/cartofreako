@@ -331,6 +331,7 @@ make generate-resources-fauna-reefs-cahill-keyes
 make generate-resources-human-over-60
 make generate-snapshot-ck
 make authorize-external
+make EXTERNAL_PASSES=jaxa-ptree generate-authorized-external
 make generate-resources-mineral-cahill-keyes
 make prepare-network-swarm-data
 make generate-network-swarm
@@ -428,9 +429,11 @@ with:
 make fetch-astro-data
 ```
 
-That target changes calculation inputs and should be followed by review and
-full artifact regeneration. It does not replace the authoritative profile or
-the curated transient snapshot. The
+That target is optional and is not called by `generate-astro` or `make all`.
+It changes calculation inputs and should be followed by review and full
+artifact regeneration; it neither replaces the authoritative profile or the
+curated transient snapshot nor calls a generator. For ordinary offline use,
+run only `make generate-astro`. The
 [astronomy implementation notes](astro-implementation-notes.md) document the
 profile schema, source evaluation, orbital and observer formulas,
 instrument-band behavior, SVG layers, current limitations, and every output.

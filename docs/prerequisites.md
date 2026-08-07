@@ -148,18 +148,40 @@ After completing provider registration and reviewing the applicable external
 terms, validate all optional authorization boundaries with:
 
 ```sh
+make install-jaxa-certificate
+
 FIRMS_MAP_KEY='…' \
 NETWORK_TOPOLOGY_LICENSE_ACCEPTED=CC-BY-NC-SA-3.0 \
 make authorize-external
 ```
 
 The check requires a private `PTREE_NETRC` (default `~/.netrc`) with a P-Tree
-machine entry, a working NASA FIRMS key, and the three pinned topology source
-roots. It performs read-only live P-Tree/FIRMS checks and offline topology
-commit/digest checks. Use `EXTERNAL_PASSES='jaxa-ptree nasa-firms'` or another
-subset when only selected optional passes are needed. It does not register an
-account, accept legal terms, fetch production data, or generate artifacts; see
+machine entry, the verified JAXA certificate installed by the command above, a
+working NASA FIRMS key, and the three pinned topology source roots. It performs
+read-only live P-Tree/FIRMS checks and offline topology commit/digest checks.
+The installer uses private per-user data by default; `PTREE_CACERT` selects an
+explicit absolute certificate path. Use
+`EXTERNAL_PASSES='jaxa-ptree nasa-firms'` or another subset when only selected
+optional passes are needed. It does not register an account, accept legal
+terms, fetch production data, or generate artifacts; see
 the [Stage 12 authorization notes](stage-12-implementation-notes.md#optional-external-authorization).
+
+To perform the mutating workflows after authorization, use the same pass
+selection with:
+
+```sh
+FIRMS_MAP_KEY='…' \
+NETWORK_TOPOLOGY_LICENSE_ACCEPTED=CC-BY-NC-SA-3.0 \
+make generate-authorized-external
+```
+
+The target authorizes every selected pass before changing anything and does
+not silently skip an unavailable requested integration. It fetches, prepares,
+verifies, and exports all cloud-atmosphere formats; prepares a global
+FIRMS-backed Anthropocene candidate for required human review; and exports all
+licensed topology formats. The FIRMS candidate is not rendered or promoted
+automatically. A failure stops the remaining sequence but does not roll back a
+source snapshot or artifact that an earlier step completed.
 
 ## Install the system packages
 
@@ -465,9 +487,12 @@ archive URL, checksum, dataset list, and license.
 
 The astronomy SVGs and `make check` run offline from the checked-in
 `assets.static/astronomy/` profile and bounded catalog snapshots. The profile
-is authoritative for both the timestamp and the observer point. Refresh the
-external Gaia DR3, NASA Exoplanet Archive, and JPL SBDB snapshots only when an
-upstream update is intended:
+is authoritative for both the timestamp and the observer point. Normal users
+run `make generate-astro` without fetching anything first. That target and
+`make all` never call `fetch-astro-data`.
+
+Refresh the external Gaia DR3, NASA Exoplanet Archive, and JPL SBDB snapshots
+only when an upstream update is intended:
 
 ```sh
 make fetch-astro-data
@@ -476,7 +501,9 @@ make fetch-astro-data
 That target needs Bash, `curl`, `sha256sum`, standard Coreutils, and outbound
 HTTPS access. It checks the expected row counts and replaces the bounded CSV
 and JSON files before writing new hashes. It intentionally leaves the profile
-and curated transient snapshot unchanged. See the
+and curated transient snapshot unchanged, and it does not generate maps. After
+reviewing the input diff, run `make generate-astro` and `make check`; neither
+command is invoked automatically. See the
 [astronomy implementation notes](astro-implementation-notes.md) for the data
 roles and accuracy boundary.
 
@@ -597,9 +624,8 @@ git clone https://github.com/telegeography/www.internetexchangemap.com.git \
 git -C ../www.internetexchangemap.com checkout \
   2b9c36ad7fad083c0b4db998c4dedadc1ba89027
 make EXTERNAL_PASSES=network-topology \
-  NETWORK_TOPOLOGY_LICENSE_ACCEPTED=CC-BY-NC-SA-3.0 authorize-external
-make generate-network-infrastructure-topology
-make generate-network-infrastructure-topology-artifacts
+  NETWORK_TOPOLOGY_LICENSE_ACCEPTED=CC-BY-NC-SA-3.0 \
+  generate-authorized-external
 ```
 
 Use `SUBMARINE_CABLE_SOURCE` and `INTERNET_EXCHANGE_SOURCE` for other roots.
@@ -741,11 +767,11 @@ opaque white.
 | Natural Earth checksum mismatch | Remove only the corrupt downloaded archive, then rerun the fetch target; do not bypass verification |
 | Anthropocene normalized checksum or audit mismatch | Restore the checked profile/GeoJSON pair or deliberately promote a reviewed candidate with its checksum, coverage dates, tests, documentation, and all six products |
 | `FIRMS_MAP_KEY` is unset | The checked/default CWFIS fire layer still works; obtain a free NASA FIRMS map key only when deliberately refreshing global and Russian coverage |
-| `authorize-external` rejects P-Tree | Put the registered credentials in the `ftp.ptree.jaxa.jp` entry of `PTREE_NETRC`, restrict the file to owner-only access, and retry the read-only check |
+| `authorize-external` rejects P-Tree | Put the registered credentials in the `ftp.ptree.jaxa.jp` entry of `PTREE_NETRC`, restrict the file to owner-only access, run `make install-jaxa-certificate`, and retry the read-only check |
 | Network-swarm archive/member checksum mismatch | Restore the checked-in network-swarm archive or deliberately update the archive, profile provenance, hashes, tests, documentation, and all six products together |
 | Cloud/CDN or submarine-cable source checkout is missing | Clone the documented repository beside `cartofreako`, or set `NETWORK_INFRASTRUCTURE_CLOUD_SOURCE` or `SUBMARINE_CABLE_SOURCE`; run `make check-prerequisite` before `make all` |
 | Network-infrastructure checkout, commit, or digest mismatch | Point the Make variables at the profile-pinned external checkouts, restore the consumed tracked paths, or deliberately update the profile, tests, documentation, and artifacts together |
-| Network-infrastructure topology opt-in rejected | Review the source terms, set `NETWORK_TOPOLOGY_LICENSE_ACCEPTED=CC-BY-NC-SA-3.0`, run `make EXTERNAL_PASSES=network-topology authorize-external`, and then invoke the explicit topology target |
+| Network-infrastructure topology opt-in rejected | Review the source terms, set `NETWORK_TOPOLOGY_LICENSE_ACCEPTED=CC-BY-NC-SA-3.0`, then run either the read-only `make EXTERNAL_PASSES=network-topology authorize-external` check or the mutating `generate-authorized-external` target |
 | Inkscape is slow on an Earth, water, Bathymetry Roulette, orbital, Anthropocene, network-swarm, or network-infrastructure SVG | Close other large documents and inspect one layer family at a time |
 | `em++: command not found` | Install and activate emsdk, then source its environment script in the current shell |
 
