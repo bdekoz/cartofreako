@@ -3,6 +3,7 @@
 [Documentation index](../../index.md) ·
 [Generation pipeline](../generation.md) ·
 [Prerequisites and hardware](../prerequisites.md) ·
+[`v20260807` release notes](v20260807.md) ·
 [`v20260806` release notes](v20260806.md)
 
 Cartofreako releases have two deliberately separate parts:
@@ -15,11 +16,82 @@ Treat release assets as immutable snapshots. Never replace an uploaded file
 with different bytes under the same tag and filename. Publish a new tag and
 asset name when either the source or generated payload changes.
 
+## `v20260807` release procedure
+
+The Stage 12 release keeps the date-based source tag and independently
+versions the generated static bundle:
+
+```text
+tag:       v20260807
+commit:    2bd3d760fef540addfcbb4f8002ef7b283d8000f
+asset:     assets.generated.v12.tar.xz
+sha256:    dc1d761def31d77a05a7cc42f9bc0705ee864046f2e235f50c701c9c42fe960a
+```
+
+Run the immutable-object and package preflight from the repository root:
+
+```sh
+test "$(git rev-parse \
+  2bd3d760fef540addfcbb4f8002ef7b283d8000f^{commit})" = \
+  2bd3d760fef540addfcbb4f8002ef7b283d8000f
+test -f assets.generated.v12.tar.xz
+printf '%s  %s\n' \
+  dc1d761def31d77a05a7cc42f9bc0705ee864046f2e235f50c701c9c42fe960a \
+  assets.generated.v12.tar.xz | sha256sum --check -
+xz --test assets.generated.v12.tar.xz
+test "$(tar --list --file=assets.generated.v12.tar.xz | wc -l)" -eq 679
+test "$(tar --list --file=assets.generated.v12.tar.xz | sed -n '1p')" = \
+  'assets.generated/'
+```
+
+Create and push the lightweight tag at the pinned source revision. Fetch only
+the branch here: historical local tags may intentionally differ from their
+remote counterparts and are outside this release's scope.
+
+```sh
+release_commit=2bd3d760fef540addfcbb4f8002ef7b283d8000f
+git fetch --no-tags origin main
+git tag v20260807 "$release_commit"
+git push origin refs/tags/v20260807
+test "$(git rev-list -n 1 v20260807)" = "$release_commit"
+```
+
+The notes file intentionally begins with body text. The GitHub release name
+supplies the single displayed title:
+
+```sh
+gh release create v20260807 \
+  --repo bdekoz/cartofreako \
+  --verify-tag \
+  --title 'v20260807 — generated assets v12 and Stage 12' \
+  --notes-file docs/releases/v20260807.md \
+  'assets.generated.v12.tar.xz#Generated SVG, PDF, PNG, and Cahill-Keyes thumbnail bundle (XZ)'
+```
+
+Download the uploaded bytes into a new directory and verify them independently
+of the source copy:
+
+```sh
+release_verify_dir=$(mktemp -d /tmp/cartofreako-v20260807.XXXXXX)
+gh release download v20260807 \
+  --repo bdekoz/cartofreako \
+  --pattern 'assets.generated.v12.tar.xz' \
+  --dir "$release_verify_dir"
+printf '%s  %s\n' \
+  dc1d761def31d77a05a7cc42f9bc0705ee864046f2e235f50c701c9c42fe960a \
+  "$release_verify_dir/assets.generated.v12.tar.xz" | sha256sum --check -
+xz --test "$release_verify_dir/assets.generated.v12.tar.xz"
+```
+
+Do not move `v20260807` after publication. Later documentation commits may
+describe the release, but the tag, announcement, and manifest must continue to
+identify `2bd3d760fef540addfcbb4f8002ef7b283d8000f`.
+
 ## `v20260806` release procedure
 
-The next tag follows the existing lightweight, date-based tag convention. It
-must resolve to the requested source commit, even if this runbook is committed
-later:
+This historical tag follows the existing lightweight, date-based convention.
+It must continue to resolve to its pinned source commit even though the
+runbook was committed later:
 
 ```text
 tag:       v20260806

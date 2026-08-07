@@ -108,7 +108,7 @@ Outputs are organized under `assets.generated/svg/`, `assets.generated/pdf/`, an
 `assets.generated/png/`; contact-sheet thumbnails are under
 `assets.generated/thumbnail/cahill-keyes/`. Review all Cahill-Keyes passes in
 the [generated snapshot](docs/generated-snapshot-ck.md). The
-[`v20260806` generated-assets release notes](docs/releases/v20260806.md)
+[`v20260807` generated-assets release notes](docs/releases/v20260807.md)
 record the static-bundle manifest, render host, hardware sizing, verification,
 and source commit. Maintainers publish source tags and large generated bundles
 with the [release runbook](docs/releases/README.md).

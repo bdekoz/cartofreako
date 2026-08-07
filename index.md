@@ -39,7 +39,7 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | SVG/PDF/PNG generation, Natural Earth, folding, slicing, and review | [Generation guide](docs/generation.md) |
 | Stage 12 resource, authorization, default-year, snapshot, and Star-X integration | [Stage 12 implementation notes](docs/stage-12-implementation-notes.md) |
 | Low-resolution thumbnails of every Cahill-Keyes projection pass | [Generated Cahill-Keyes snapshot](docs/generated-snapshot-ck.md) |
-| Static generated-asset releases, manifests, render hardware, and publishing | [`v20260806` release notes](docs/releases/v20260806.md) and [release runbook](docs/releases/README.md) |
+| Static generated-asset releases, manifests, render hardware, and publishing | [`v20260807` release notes](docs/releases/v20260807.md) and [release runbook](docs/releases/README.md) |
 | Generate-pass evaluation record plus configured, full-suite, family, and exact workflows | [Generate-pass methods and decision record](docs/generation-methods.md) |
 | Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/astro-implementation-notes.md) |
 | Process-start solar illumination and source-timed JAXA physical atmosphere generation | [Cloud-atmosphere implementation notes](docs/cloud-atmosphere-implementation-notes.md) |
