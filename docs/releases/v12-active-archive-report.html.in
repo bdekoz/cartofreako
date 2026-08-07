@@ -4,7 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="Cartofreako">
-  <meta name="description" content="Verified deposit report for Cartofreako generated assets v12 in UCB Active Archive Object Storage.">
+  <meta name="description" content="Verified Active Archive check-in report for Cartofreako generated assets v12 in UCB Active Archive Object Storage.">
+  <meta name="devastation-pacific-house-style" content="Summer 2026 v1.1 canonical">
+  <meta name="document-kind" content="active-archive-check-in">
   <title>cartofreako v12 checked in to UCB Active Archive Object Storage</title>
   <style>
     @font-face {

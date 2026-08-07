@@ -9,6 +9,7 @@ readonly default_output_dir=$repository_root/reports
 readonly template_path=$repository_root/docs/releases/v12-active-archive-report.html.in
 readonly report_stem=cartofreako-v12-ucb-active-archive-check-in
 readonly report_title='cartofreako v12 checked in to UCB Active Archive Object Storage'
+readonly report_style='Devastation Pacific Summer 2026 v1.1 canonical Active Archive check-in'
 
 data_root=$default_data_root
 output_dir=$default_output_dir
@@ -90,6 +91,17 @@ for command_name in cp find google-chrome grep jq mktemp pdfinfo pdffonts \
 done
 if [[ ! -f $template_path ]]; then
   printf 'Report template not found: %s\n' "$template_path" >&2
+  exit 1
+fi
+if ! grep -Fq \
+  '<meta name="devastation-pacific-house-style" content="Summer 2026 v1.1 canonical">' \
+  "$template_path" ||
+   ! grep -Fq \
+  '<meta name="document-kind" content="active-archive-check-in">' \
+  "$template_path" ||
+   ! grep -Fq '<title>cartofreako v12 checked in to UCB Active Archive Object Storage</title>' \
+  "$template_path"; then
+  printf 'The report template is not the canonical Active Archive check-in template.\n' >&2
   exit 1
 fi
 for required_path in SHA256SUMS release.json; do
@@ -222,6 +234,11 @@ for font_name in AtkinsonHyperlegibleNext-Bold \
     exit 1
   fi
 done
+if grep -Eq 'LiberationSans|DejaVuSans' "$pdffonts_temp"; then
+  printf 'Generic deposit-report fonts were found in the Active Archive PDF.\n' >&2
+  cat "$pdffonts_temp" >&2
+  exit 1
+fi
 if awk 'NR > 2 && $0 !~ /yes[[:space:]]+yes[[:space:]]+yes/ { exit 1 }' \
   "$pdffonts_temp"; then
   :
@@ -230,7 +247,8 @@ else
   cat "$pdffonts_temp" >&2
   exit 1
 fi
-for required_text in "$report_title" '2,039,067,910' \
+for required_text in "$report_title" \
+  'CARTOFREAKO · ACTIVE ARCHIVE CHECK-IN · RELEASE V12' '2,039,067,910' \
   '2,322,788,028' 'DecompressionStream("gzip")'; do
   if ! grep -Fq "$required_text" "$normalized_text_temp"; then
     printf 'Required report text is absent after PDF extraction: %s\n' \
@@ -257,6 +275,7 @@ mv -- "$html_temp" "$html_path"
 mv -- "$pdf_temp" "$pdf_path"
 
 printf 'Built Devastation Pacific Active Archive report:\n'
+printf '  Style: %s\n' "$report_style"
 printf '  HTML: %s\n' "$html_path"
 printf '  PDF:  %s\n' "$pdf_path"
 printf '  QA:   %s\n' "$qa_dir"

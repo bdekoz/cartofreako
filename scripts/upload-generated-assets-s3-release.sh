@@ -686,6 +686,8 @@ if [[ $verify_download == true ]]; then
 fi
 printf '[stage 9/9] Building the Devastation Pacific Active Archive report...\n'
 "$report_builder" "${report_args[@]}"
+printf 'Active Archive delivery PDF: %s\n' \
+  "$repository_root/reports/cartofreako-v12-ucb-active-archive-check-in.pdf"
 
 printf 'Upload complete and verified: %s files, %s bytes at %s\n' \
   "$remote_count" "$remote_bytes" "$destination_label"
