@@ -3,6 +3,7 @@
 [Documentation index](../index.md) ·
 [Generation methods](generation-methods.md) ·
 [Generation guide](generation.md) ·
+[Metric catalog](resources-metric-catalog.md) ·
 [Stage 12 implementation](stage-12-implementation-notes.md)
 
 ## Status and recommendation
@@ -26,6 +27,10 @@ source class, and country or spatial release gate. The catalogue continues to
 record crops, livestock, land cover, biodiversity, critical minerals, legal
 policy, travel, reading, and mobility candidates with honest lifecycle
 status.
+
+See the [resource metric catalog](resources-metric-catalog.md) for the complete
+59-entry lifecycle view and the explicit distinction between standard,
+optional, and exploration-only passes.
 
 Facility, deposit, biodiversity-occurrence, travel, and legal-policy layers
 can enrich those global baselines. They must not be used to make a sparse point

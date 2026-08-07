@@ -235,11 +235,15 @@ make generate-resources-human
 make generate-resources
 ```
 
-The [Stage 12 implementation notes](docs/stage-12-implementation-notes.md),
+The [resource metric catalog](docs/resources-metric-catalog.md) distinguishes
+the 14 standard release passes from optional-pass infrastructure and 45
+exploration-only definitions, including the unreleased LGBTQIA-related and
+drug-policy candidates. The
+[Stage 12 implementation notes](docs/stage-12-implementation-notes.md),
 [resources implementation notes](docs/resources-implementation-notes.md),
 and [enrichment plan](docs/resources-enrichment-plan.md) define source roles,
 the v3 country/spatial contracts, offline snapshot preparation, reef
-normalization, coverage QA, and rejected human candidates.
+normalization, coverage QA, and candidate promotion rules.
 
 Stage 12 resource SVG deliverables are deterministic `*.svg.gz` archives. To decompress
 every SVG archive in place while keeping each

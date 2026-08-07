@@ -4,6 +4,7 @@
 [Stage 12 overview](stage-12-implementation-notes.md) ·
 [Projection snapshots](../index.md#generated-artifact-previews) ·
 [Generation guide](generation.md) ·
+[Metric catalog](resources-metric-catalog.md) ·
 [Enrichment plan](resources-enrichment-plan.md)
 
 ## Implemented scope
@@ -14,6 +15,11 @@ Resources are six independent families: `resources-energy`,
 `resources`, `resource`, and `resouces` expand to all six. `fisheries` and
 `reefs` select fauna; `ressources-flora` remains a spelling alias for flora.
 There is no combined resource score.
+
+The [resource metric catalog](resources-metric-catalog.md) is the visible
+lifecycle index for all 59 definitions. It separates the 14 standard passes
+below from optional-pass infrastructure and 45 exploration-only entries.
+`Supplemental` catalog status does not mean an implemented optional pass.
 
 The checked snapshot releases 14 separate metric products:
 

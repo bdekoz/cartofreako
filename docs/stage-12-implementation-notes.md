@@ -4,6 +4,7 @@
 [Generation guide](generation.md) ·
 [Projection snapshots](../index.md#generated-artifact-previews) ·
 [Resources details](resources-implementation-notes.md) ·
+[Resource metric catalog](resources-metric-catalog.md) ·
 [Prerequisites and hardware](prerequisites.md)
 
 ## Release scope

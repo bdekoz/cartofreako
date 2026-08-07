@@ -237,27 +237,30 @@ make GENERATION_PROFILE=/absolute/path/development.json
 Both selectors must be nonempty JSON arrays. The sole value `"all"` expands
 to every supported value. Canonical projections are `cahill-keyes`,
 `authagraph`, `dymaxion`, `myriahedral`, `star-x`, and `voronoi`. Canonical
-passes and their SVG result counts per projection are:
+passes and their SVG result counts per projection are shown below. Profile
+vocabulary and default-graph membership are separate: the credentialed
+Cloud-atmosphere pass is selectable but optional, while exploration-only
+candidates are not accepted as generation-profile passes at all.
 
-| Profile pass | Result per projection |
-| --- | --- |
-| `geometry` | One native-face geometry SVG |
-| `graticules` | One labeled graticule SVG |
-| `earth` | One Natural Earth `ocean`/`land` base SVG |
-| `water` | One complementary physical-feature SVG |
-| `astronomy` | All-sky and observer SVGs |
-| `cloud-atmosphere` | One process-start solar and source-timed physical-atmosphere SVG |
-| `orbital-technosphere` | Global and observer SVGs |
-| `anthropocene` | Two temperature-field SVGs, 2025 and 2026 |
-| `resources-energy` | Four country products: solar, wind, nuclear, and refinery throughput |
-| `resources-food` | One food-production-index country choropleth |
-| `resources-fauna` | Fisheries country choropleth and coral-reef threat field |
-| `resources-flora` | One forest-area country choropleth |
-| `resources-mineral` | One rare-earth mine-production country choropleth |
-| `resources-human` | Five country products: under 30, over 60, two attainment levels, and patents |
-| `network-swarm` | One cumulative network-swarm SVG |
-| `bathymetry-roulette` | One monochrome, explicitly varied roulette-line-field depth SVG |
-| `network-infrastructure` | One cloud/CDN infrastructure-site SVG; never the licensed topology product |
+| Profile pass | Result per projection | Pass class |
+| --- | --- | --- |
+| `geometry` | One native-face geometry SVG | Standard |
+| `graticules` | One labeled graticule SVG | Standard |
+| `earth` | One Natural Earth `ocean`/`land` base SVG | Standard |
+| `water` | One complementary physical-feature SVG | Standard |
+| `astronomy` | All-sky and observer SVGs | Standard |
+| `cloud-atmosphere` | One process-start solar and source-timed physical-atmosphere SVG | Optional; P-Tree credentials required for production data |
+| `orbital-technosphere` | Global and observer SVGs | Standard |
+| `anthropocene` | Two temperature-field SVGs, 2025 and 2026 | Standard |
+| `resources-energy` | Four country products: solar, wind, nuclear, and refinery throughput | Standard |
+| `resources-food` | One food-production-index country choropleth | Standard |
+| `resources-fauna` | Fisheries country choropleth and coral-reef threat field | Standard |
+| `resources-flora` | One forest-area country choropleth | Standard |
+| `resources-mineral` | One rare-earth mine-production country choropleth | Standard |
+| `resources-human` | Five country products: under 30, over 60, two attainment levels, and patents | Standard |
+| `network-swarm` | One cumulative network-swarm SVG | Standard |
+| `bathymetry-roulette` | One monochrome, explicitly varied roulette-line-field depth SVG | Standard |
+| `network-infrastructure` | One cloud/CDN infrastructure-site SVG; never the licensed topology product | Standard; licensed topology is a separate optional pass |
 
 Names are case-insensitive, and underscores normalize to hyphens. The
 resolver also accepts `ck`, `starx`, and the established `voroni` spelling as
@@ -268,6 +271,9 @@ and short `swarm` names for `network-swarm`, `infrastructure` for
 `fauna`, `fisheries`, `reefs`, `flora`, `mineral`, `minerals`, and `human` for their corresponding resource
 families. `resources`, `resource`, and the legacy typo `resouces` expand to all
 six Stage 12 resource families; `ressources-flora` remains a spelling alias.
+See the [resource metric catalog](resources-metric-catalog.md) for the exact
+standard/optional/exploration-only definitions. In particular, catalog status
+`supplemental` is exploration-only and does not authorize a generation target.
 The retired historical selector names are rejected. `bathymetry-rolette` and
 `art-agua-roulette` are aliases for `bathymetry-roulette`.
 For compatibility with the requested `earth, ocean` vocabulary, `ocean`
@@ -583,6 +589,10 @@ solar, wind, nuclear, and refinery-throughput maps; `resources-fauna` builds
 fisheries and coral-reef-threat maps; and `resources-human` builds five
 separate demographic, attainment, and patent maps. Food, flora, and mineral
 currently contribute one released map each.
+
+The [resource metric catalog](resources-metric-catalog.md) lists all 59
+definitions: 14 standard products and 45 exploration-only candidates. There
+are currently no optional resource metrics.
 
 Build all released products for a family/projection pair, one family across
 all projections, all families for one projection, or the entire 84-map

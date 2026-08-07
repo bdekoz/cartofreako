@@ -45,6 +45,7 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Process-start solar illumination and source-timed JAXA physical atmosphere generation | [Cloud-atmosphere implementation notes](docs/cloud-atmosphere-implementation-notes.md) |
 | Human-made Earth-orbit population and observer generation | [Orbital Technosphere implementation notes](docs/orbital-technosphere-implementation-notes.md) |
 | Implemented energy, food, fauna, flora, mineral, and human resource families | [Resources Stage 12 implementation notes](docs/resources-implementation-notes.md) and [enrichment plan](docs/resources-enrichment-plan.md) |
+| Standard, optional, and exploration-only resource metrics | [Resources metric catalog](docs/resources-metric-catalog.md) |
 | Source-separated climate, weather, fire, smoke, and air-quality atlas | [Anthropocene implementation notes](docs/anthropocene-implementation-notes.md) |
 | Implemented dual-year CPC field plus planned atmosphere, PurpleAir, and ocean enrichment | [Anthropocene Stage 8b enrichment plan](docs/anthropocene-enrichment-plan.md) |
 | Cumulative H3 network-swarm generation | [Network-swarm generation implementation notes](docs/network-swarm-implementation-notes.md) |
@@ -215,6 +216,32 @@ and [enrichment plan](docs/resources-enrichment-plan.md) define the six
 implemented target families, v3 country/spatial contracts, non-sparse
 coverage gates, actual reef geometry, corrected human-measure semantics,
 refresh workflow, and rejected-candidate audit.
+The [resources metric catalog](docs/resources-metric-catalog.md) makes all 59
+catalog entries and their lifecycle visible, including the unreleased
+LGBTQIA-related and drug-policy definitions.
+
+### Resource metric catalog and pass classes
+
+The resource catalog distinguishes production behavior from research status:
+
+| Pass class | Meaning | Current resource count |
+| --- | --- | ---: |
+| **Standard pass** | Released, offline, included in `make all`, and present in public previews | 14 |
+| **Optional pass** | Fully implemented but deliberately opt-in because of credentials, license acceptance, or an operator decision | 0 |
+| **Exploration only** | Cataloged or source-tested, but without a production output tag and released artifact | 45 |
+
+No resource metric is currently optional. Project-wide optional passes are the
+credentialed P-Tree Cloud-atmosphere product and licensed network topology.
+NASA FIRMS has an optional authorization boundary, but remains an unrendered
+exploration input rather than an optional released pass.
+
+The 45 exploration-only entries comprise 41 `planned`, three `supplemental`,
+and one `research-gap` metric. `Supplemental` means a possible supporting
+product; it does **not** mean an implemented optional pass. The complete
+[human-readable catalog](docs/resources-metric-catalog.md) maps every metric
+to its class and promotion boundary, while
+[`resources-profile.json`](assets.static/resources/resources-profile.json)
+remains the machine-readable authority.
 The [network-swarm notes](docs/network-swarm-implementation-notes.md) record the fixed
 source audit, variable-input contract, H3/Izzi clustering, independent
 downloader encodings, SVG metadata, and interpretation limits.
@@ -433,6 +460,7 @@ the `voronoi_source` preset are in the
 | [`src.generate/resources-generation.h`](src.generate/resources-generation.h) | Metric-specific country choropleths and spatial reef fields, missing-data layers, catalogue metadata, legends, and embedded SVG checks |
 | [`src.generate/generate-resources.cc`](src.generate/generate-resources.cc) | Six-family, fourteen-metric resource-generator entry point |
 | [`tests/test-resources-generation.cc`](tests/test-resources-generation.cc) | Stage 12 source, coverage, spatial schema, derivation, catalogue, alias, and naming tests |
+| [`docs/resources-metric-catalog.md`](docs/resources-metric-catalog.md) | Human-readable classification of all 59 standard and exploration-only resource metrics, plus the optional-pass boundary |
 | [`assets.static/resources/resources-profile.json`](assets.static/resources/resources-profile.json) | Checked v3 family/source/metric/coverage/spatial catalogue |
 | [`assets.static/resources/resources-values.json`](assets.static/resources/resources-values.json) | Checked normalized country observations for released/default and available metrics |
 | [`assets.static/resources/countries-110m.geojson`](assets.static/resources/countries-110m.geojson) | Natural Earth Admin-0 country geometry with normalized resource join keys |
