@@ -271,3 +271,21 @@ resources-human has: percentage of population that is literate, percentage of po
 Propose a plan for improving enrichment, update docs
 
 provide non-sparse data options
+
+
+-- 
+
+Stage 12
+
+
+- add "over 60" to resource pass, to go along with "under 30"
+
+- add "nuclear, wind, petrochemical" energy passes like existing "energy-solar"
+
+- add "fisheries" to "resources fauna" like "resources-flora" and include reef data
+
+- default generate anthropocene passes for year 2025 and year 2026
+
+- implement a new make rule "make authorize-external" that completes external authorization for optional passes.
+
+- document impementation notes
