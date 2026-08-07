@@ -273,7 +273,7 @@ Propose a plan for improving enrichment, update docs
 provide non-sparse data options
 
 
--- 
+--
 
 Stage 12
 
@@ -287,5 +287,7 @@ Stage 12
 - default generate anthropocene passes for year 2025 and year 2026
 
 - implement a new make rule "make authorize-external" that completes external authorization for optional passes.
+
+- try harder to create resources-human, try 3-5 passes
 
 - document impementation notes
