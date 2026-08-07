@@ -779,6 +779,7 @@ opaque white.
 | Anthropocene normalized checksum or audit mismatch | Restore the checked profile/GeoJSON pair or deliberately promote a reviewed candidate with its checksum, coverage dates, tests, documentation, and all six products |
 | `FIRMS_MAP_KEY` is unset | The checked/default CWFIS fire layer still works; obtain a free NASA FIRMS map key only when deliberately refreshing global and Russian coverage |
 | `authorize-external` rejects P-Tree | Put the registered credentials in the `ftp.ptree.jaxa.jp` entry of `PTREE_NETRC`, restrict the file to owner-only access, run `make install-jaxa-certificate`, and retry the read-only check |
+| P-Tree fetch reports `curl: (9)` for a current date directory | Update to the latest resolver; it traverses only server-advertised directories and uses the last published observation while recording its source date |
 | Network-swarm archive/member checksum mismatch | Restore the checked-in network-swarm archive or deliberately update the archive, profile provenance, hashes, tests, documentation, and all six products together |
 | Cloud/CDN or submarine-cable source checkout is missing | Clone the documented repository beside `cartofreako`, or set `NETWORK_INFRASTRUCTURE_CLOUD_SOURCE` or `SUBMARINE_CABLE_SOURCE`; run `make check-prerequisite` before `make all` |
 | Network-infrastructure checkout, commit, or digest mismatch | Point the Make variables at the profile-pinned external checkouts, restore the consumed tracked paths, or deliberately update the profile, tests, documentation, and artifacts together |

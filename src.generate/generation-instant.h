@@ -82,12 +82,24 @@ parse_timestamp(const std::string_view timestamp)
     return make_instant(std::chrono::floor<std::chrono::seconds>(
       std::chrono::system_clock::now()));
 
-  instant_require(timestamp.size() == 20
+  instant_require(timestamp.size() >= 20
                     && timestamp[4] == '-' && timestamp[7] == '-'
                     && timestamp[10] == 'T' && timestamp[13] == ':'
-                    && timestamp[16] == ':' && timestamp[19] == 'Z',
+                    && timestamp[16] == ':',
                   "timestamp must be 'now', 'process-start', or "
-                  "YYYY-MM-DDTHH:MM:SSZ");
+                  "YYYY-MM-DDTHH:MM:SS[.fraction]Z");
+  if (timestamp.size() == 20)
+    instant_require(timestamp[19] == 'Z',
+                    "whole-second timestamp must end in Z");
+  else
+    {
+      instant_require(timestamp.size() >= 22 && timestamp[19] == '.'
+                        && timestamp.back() == 'Z',
+                      "fractional timestamp must end in .digitsZ");
+      for (std::size_t index = 20; index + 1 < timestamp.size(); ++index)
+        instant_require(timestamp[index] >= '0' && timestamp[index] <= '9',
+                        "timestamp has a nondecimal fractional second");
+    }
   const int year = parse_decimal_component(timestamp, 0, 4, "year");
   const unsigned month = static_cast<unsigned>(
     parse_decimal_component(timestamp, 5, 2, "month"));
@@ -105,6 +117,8 @@ parse_timestamp(const std::string_view timestamp)
                     && minute >= 0 && minute <= 59
                     && second >= 0 && second <= 59,
                   "timestamp has an invalid clock time");
+  // The generation model intentionally uses whole-second process instants.
+  // Fractional source timestamps are accepted and floored to that precision.
   return make_instant(
     std::chrono::sys_days {calendar} + std::chrono::hours {hour}
       + std::chrono::minutes {minute} + std::chrono::seconds {second});

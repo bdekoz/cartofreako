@@ -54,6 +54,12 @@ enum class aggregation_kind
   cloud_fraction,
 };
 
+enum class freshness_policy
+{
+  maximum_age,
+  latest_available,
+};
+
 struct quality_rule
 {
   std::vector<std::string> variable_candidates;
@@ -76,6 +82,7 @@ struct layer_definition
   double scale_min;
   double scale_max;
   double maximum_age_hours;
+  freshness_policy freshness;
   double opacity;
   rgb_color color;
 };
@@ -266,6 +273,21 @@ parse_aggregation(const std::string_view value, const std::string& context)
                            + std::string(value) + "'");
 }
 
+inline freshness_policy
+parse_freshness_policy(const rj::Value& value, const std::string& context)
+{
+  if (!value.HasMember("freshness_policy"))
+    return freshness_policy::maximum_age;
+  const std::string policy = required_string(
+    value, "freshness_policy", context);
+  if (policy == "maximum-age")
+    return freshness_policy::maximum_age;
+  if (policy == "latest-available")
+    return freshness_policy::latest_available;
+  throw std::runtime_error(context + " has unsupported freshness policy '"
+                           + policy + "'");
+}
+
 inline quality_rule
 parse_quality_rule(const rj::Value& value, const std::string& context)
 {
@@ -306,6 +328,7 @@ parse_layer(const rj::Value& value, const std::string& context)
     required_number(value, "scale_min", context),
     required_number(value, "scale_max", context),
     required_number(value, "maximum_age_hours", context),
+    parse_freshness_policy(value, context),
     required_number(value, "opacity", context),
     parse_color(required_string(value, "color", context), context + ".color"),
   };
@@ -622,7 +645,8 @@ validate_observation_times(const atmosphere_profile& profile,
                            + " ends after the generation process instant");
       const double age = generation_time::age_hours(
         process_start, observation.end);
-      if (enforce_freshness)
+      if (enforce_freshness
+          && layer.freshness == freshness_policy::maximum_age)
         atmosphere_require(age <= layer.maximum_age_hours,
                            "source " + layer.source_id + " is stale for layer "
                              + layer.id + " (" + std::to_string(age)

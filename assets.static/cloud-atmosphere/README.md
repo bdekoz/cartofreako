@@ -31,5 +31,7 @@ Refresh workflow:
 5. Run `make generate-cloud-atmosphere`.
 
 The process-start UTC instant controls calculated solar geometry. Each source
-observation retains its own interval. A missing cell or property means
+observation retains its own interval. P-Tree uses the latest published
+observation ending no later than process start; its exact end UTC and age are
+shown even when publication exceeds the preferred six-hour target. A missing cell or property means
 unobserved, not clear sky and not zero.

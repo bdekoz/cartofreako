@@ -51,12 +51,12 @@ The authoritative configuration is
 [`cloud-atmosphere-profile.json`](../assets.static/cloud-atmosphere/cloud-atmosphere-profile.json).
 The default source split is:
 
-| Layer | Source and coverage | Freshness ceiling | Interpretation boundary |
-| --- | --- | ---: | --- |
-| Confident-cloud sample fraction | P-Tree Himawari-9 L2 CLP 1.0, 10-minute, about 5 km, 60°S–60°N and the Himawari disk | 6 h | Fraction of sampled QA pixels marked confidently cloudy; not a global cloud climatology |
-| Cloud optical thickness | Same P-Tree observation | 6 h | Valid retrieved COT only |
-| Cloud-top height | Same P-Tree observation | 6 h | Valid retrieved height converted to km when necessary |
-| ISCCP cloud type | Same P-Tree observation | 6 h | Modal class among confidently cloudy samples |
+| Layer | Source and coverage | Freshness policy | Interpretation boundary |
+| --- | --- | --- | --- |
+| Confident-cloud sample fraction | P-Tree Himawari-9 L2 CLP 1.0, 10-minute, about 5 km, 60°S–60°N and the Himawari disk | Latest published observation ending no later than process start; 6 h is the preferred target, while an older latest-available source is accepted and dated | Fraction of sampled QA pixels marked confidently cloudy; not a global cloud climatology |
+| Cloud optical thickness | Same P-Tree observation | Latest published; exact end UTC and age shown | Valid retrieved COT only |
+| Cloud-top height | Same P-Tree observation | Latest published; exact end UTC and age shown | Valid retrieved height converted to km when necessary |
+| ISCCP cloud type | Same P-Tree observation | Latest published; exact end UTC and age shown | Modal class among confidently cloudy samples |
 | Aerosol optical depth at 500 nm | GCOM-C/SGLI L3 AROT v3 global daytime daily COGs | 96 h | Column aerosol loading; explicitly not observed smoke and not surface PM2.5 exposure |
 | Gauge-adjusted precipitation rate | GSMaP standard Gauge 00Z–23Z v6 daily COGs, 60°S–60°N | 96 h | Daily precipitation-rate field expressed in mm h⁻¹; explicitly not flood, above-average-rainfall, or extreme-event counts |
 | Surface shortwave radiation | JASMES Aqua/MODIS SWR v811 global daily COGs | 336 h | Latest available daily surface field, whose publication lag is visible in the legend |
@@ -74,7 +74,10 @@ height, cloud type, and a documented cloud-confidence flag at useful
 10-minute cadence. Its limitations are also material: the retrieval depends
 on solar radiance, has no nighttime values, and covers the Himawari disk
 rather than the whole Earth. The generator says so visibly instead of
-interpolating or substituting model cloud.
+interpolating or substituting model cloud. The archive can lag the current
+month; the resolver therefore walks only directories advertised by P-Tree,
+accepts both current `.nc` and legacy `.nc.gz` objects, and chooses the newest
+complete interval ending no later than process start.
 
 ## Time contract
 
@@ -88,11 +91,14 @@ The time contract has four independent rules:
 1. Calculated illumination is valid at process start.
 2. Each source observation has its own start and end.
 3. An observation ending after process start is rejected.
-4. Each enabled layer rejects an observation older than its configured
-   freshness ceiling.
+4. Maximum-age sources reject observations older than their configured
+   freshness ceiling. P-Tree cloud layers instead use the latest published
+   observation and expose its age against the preferred six-hour target.
 
 This is a latest-not-after source mosaic, not a claim that all instruments
-observed simultaneously. The SVG legend prints each layer's age, while root
+observed simultaneously. The SVG legend prints each layer's exact source end
+UTC and age, adding `latest available` when P-Tree exceeds its preferred
+target, while root
 metadata records the generation process instant, the fetch-selection process
 instant, source endpoints, subsolar point, selection rule, and fixture status.
 
@@ -143,10 +149,13 @@ make generate-cloud-atmosphere
 ```
 
 `fetch-cloud-atmosphere-data` captures the process instant, finds the newest
-complete P-Tree H09 L2 CLP ten-minute interval within six hours, resolves the
-three public STAC
+published P-Tree H09 L2 CLP ten-minute interval ending no later than that
+instant, resolves the three public STAC
 collections, downloads their NetCDF/GeoTIFF assets, records source URLs and
-observation intervals, and computes SHA-256 digests. Files are staged below
+observation intervals and selection age, and computes SHA-256 digests. The
+P-Tree resolver accepts both the current uncompressed `.nc` delivery and
+legacy `.nc.gz`; a lagged latest publication is retained rather than
+misreported as a credential failure. Files are staged below
 `assets.static/cloud-atmosphere/.raw/`; an interrupted refresh never replaces
 the prepared snapshot.
 

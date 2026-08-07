@@ -639,9 +639,10 @@ run(const int argc, char** argv)
         manifest, layer.source_id);
       const double age = cart0freak0::generation_time::age_hours(
         manifest.process_start, observation.end);
-      atmosphere::atmosphere_require(
-        age <= layer.maximum_age_hours,
-        "fetch source " + layer.source_id + " is stale for " + layer.id);
+      if (layer.freshness == atmosphere::freshness_policy::maximum_age)
+        atmosphere::atmosphere_require(
+          age <= layer.maximum_age_hours,
+          "fetch source " + layer.source_id + " is stale for " + layer.id);
       for (const input_file& file : observation.files)
         sample_file(profile, layer, file, aggregates[layer_index]);
       std::cout << layer.id << ": " << aggregates[layer_index].size()

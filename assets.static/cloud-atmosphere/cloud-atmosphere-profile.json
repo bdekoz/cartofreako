@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "name": "JAXA solar, cloud, and atmosphere snapshot",
-  "description": "A source-timed physical snapshot. Solar geometry is calculated at process start; observed layers are selected latest-not-after that instant.",
+  "description": "A source-timed physical snapshot. Solar geometry is calculated at process start; observed layers are selected latest-not-after that instant, with P-Tree using and labeling its latest published observation when publication lags.",
   "time": {
     "calculation": "process-start",
     "source_selection": "latest-not-after",
@@ -85,6 +85,7 @@
       "scale_min": 0.0,
       "scale_max": 1.0,
       "maximum_age_hours": 6.0,
+      "freshness_policy": "latest-available",
       "opacity": 0.62,
       "color": "#e9eef2"
     },
@@ -106,6 +107,7 @@
       "scale_min": 0.0,
       "scale_max": 80.0,
       "maximum_age_hours": 6.0,
+      "freshness_policy": "latest-available",
       "opacity": 0.74,
       "color": "#ffffff"
     },
@@ -127,6 +129,7 @@
       "scale_min": 0.0,
       "scale_max": 18.0,
       "maximum_age_hours": 6.0,
+      "freshness_policy": "latest-available",
       "opacity": 0.82,
       "color": "#83a9c1"
     },
@@ -148,6 +151,7 @@
       "scale_min": 0.0,
       "scale_max": 9.0,
       "maximum_age_hours": 6.0,
+      "freshness_policy": "latest-available",
       "opacity": 0.85,
       "color": "#667d91"
     }
@@ -160,7 +164,7 @@
       "status": "default-cloud",
       "coverage": "Himawari full disk; 10-minute, approximately 5 km, daytime retrieval only",
       "url": "ftps://ftp.ptree.jaxa.jp:990/pub/himawari/L2/CLP/010/",
-      "collection": "NC_H09_*_L2CLP010_FLDK.{02401_02401,02801_02401}.nc.gz",
+      "collection": "NC_H09_*_L2CLP010_FLDK.{02401_02401,02801_02401}.nc with legacy .nc.gz accepted",
       "license_url": "https://www.eorc.jaxa.jp/ptree/terms.html"
     },
     {

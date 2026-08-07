@@ -73,6 +73,8 @@ main()
   assert(profile.layers[cloud_fraction].quality.has_value());
   assert(profile.layers[cloud_fraction].quality->bit_offset == 3);
   assert(profile.layers[cloud_fraction].quality->bit_width == 2);
+  assert(profile.layers[cloud_fraction].freshness
+         == atmosphere::freshness_policy::latest_available);
   assert(profile.layers[cloud_optical_thickness].quality.has_value());
   assert(profile.layers[cloud_optical_thickness].variable_candidates.front()
          == "CLOT");
@@ -83,6 +85,8 @@ main()
            profile, "cloud_type_isccp")].variable_candidates.front()
          == "CLTYPE");
   assert(profile.layers[aerosol].source_id == "jaxa-gcom-c-aod");
+  assert(profile.layers[aerosol].freshness
+         == atmosphere::freshness_policy::maximum_age);
   assert(profile.layers[precipitation].source_id
          == "jaxa-gsmap-precipitation");
   assert(profile.layers[precipitation].variable_candidates.front()
@@ -110,6 +114,9 @@ main()
 
   const time_model::instant process_start = time_model::parse_timestamp(
     "2026-08-05T04:00:00Z");
+  const time_model::instant fractional = time_model::parse_timestamp(
+    "2026-08-07T00:03:25.200000Z");
+  assert(fractional.iso_utc == "2026-08-07T00:03:25Z");
   atmosphere::validate_observation_times(profile, dataset, process_start);
   atmosphere::atmosphere_dataset future = dataset;
   future.observations.front().end = time_model::parse_timestamp(
@@ -140,11 +147,15 @@ main()
         "source selection occurred after") != std::string_view::npos;
     }
   assert(future_selection_rejected);
+  // P-Tree uses the last published observation even beyond its preferred
+  // six-hour target; the other physical sources retain hard age ceilings.
+  atmosphere::validate_observation_times(
+    profile, dataset, time_model::parse_timestamp("2026-08-06T04:00:00Z"));
   bool stale_rejected = false;
   try
     {
       atmosphere::validate_observation_times(
-        profile, dataset, time_model::parse_timestamp("2026-08-06T04:00:00Z"));
+        profile, dataset, time_model::parse_timestamp("2026-08-10T04:00:00Z"));
     }
   catch (const std::runtime_error& error)
     {
@@ -190,6 +201,18 @@ main()
     "cahill-keyes", "authagraph", "dymaxion", "myriahedral", "star-x",
     "voronoi",
   };
+  const LatLng dateline_center {
+    0.0, 179.99 * std::numbers::pi / 180.0,
+  };
+  H3Index dateline_cell = H3_NULL;
+  assert(latLngToCell(&dateline_center, 3, &dateline_cell) == E_SUCCESS);
+  const auto dateline_polygons = atmosphere::h3_polygons(dateline_cell);
+  assert(dateline_polygons.size() == 2);
+  for (const auto& polygon : dateline_polygons)
+    for (std::size_t index = 0; index < polygon.size(); ++index)
+      assert(std::abs(polygon[index].longitude
+                      - polygon[(index + 1) % polygon.size()].longitude)
+             <= 180.0);
   for (const std::string_view name : projection_names)
     {
       const generation::projection_spec& spec
@@ -207,19 +230,23 @@ main()
           }
       for (const atmosphere::atmosphere_cell& cell : dataset.cells)
         {
-          const std::vector<generation::geographic_point> boundary
-            = atmosphere::h3_polygon(cell.h3);
-          assert(boundary.size() >= 5);
-          const auto projected = generation::project_path(
-            context, boundary, true);
-          assert(!projected.empty());
-          for (const auto& segment : projected)
-            for (const auto& point : segment)
-              {
-                assert(std::isfinite(std::get<0>(point)));
-                assert(std::isfinite(std::get<1>(point)));
-              }
+          for (const std::vector<generation::geographic_point>& boundary
+               : atmosphere::h3_polygons(cell.h3))
+            {
+              assert(boundary.size() >= 3);
+              const auto projected = generation::project_path(
+                context, boundary, true);
+              assert(!projected.empty());
+              for (const auto& segment : projected)
+                for (const auto& point : segment)
+                  {
+                    assert(std::isfinite(std::get<0>(point)));
+                    assert(std::isfinite(std::get<1>(point)));
+                  }
+            }
         }
+      for (const auto& boundary : dateline_polygons)
+        assert(!generation::project_path(context, boundary, true).empty());
     }
 
   const generation::projection_spec& ck
@@ -235,5 +262,10 @@ main()
          != std::string::npos);
   assert(metadata.find("data-precipitation-is-event-count=\"false\"")
          != std::string::npos);
+  assert(metadata.find(
+           "data-observation-jaxa-ptree-cloud-end=\"2026-08-05T03:50:00Z\"")
+         != std::string::npos);
+  assert(atmosphere::short_observation_time(
+           dataset.observations.front().end) == "2026-08-05 03:50Z");
   assert(metadata.find("celestial-reference") == std::string::npos);
 }

@@ -151,7 +151,9 @@ The rule:
    `~/.netrc`), rejects group/other-readable permissions, loads the verified
    per-user SECOM root installed by `make install-jaxa-certificate` (or an
    explicit absolute `PTREE_CACERT`), and performs a read-only implicit-FTPS
-   listing;
+   listing; the mutating workflow then selects the latest advertised H09 CLP
+   observation not after process start and records its exact source date even
+   when P-Tree publication lags;
 2. requires `FIRMS_MAP_KEY`, keeps it out of printed commands and output, and
    validates the live NASA FIRMS availability CSV header; and
 3. requires the exact topology license acknowledgement and runs the existing

@@ -50,6 +50,7 @@ CLOUD_ATMOSPHERE_GEOJSON ?= \
 CLOUD_ATMOSPHERE_FIXTURE := \
 	$(CLOUD_ATMOSPHERE_DATA_DIR)/fixtures/cloud-atmosphere-fixture.geojson
 CLOUD_ATMOSPHERE_FETCHER := scripts/fetch-cloud-atmosphere-data.sh
+CLOUD_ATMOSPHERE_PTREE_RESOLVER := scripts/resolve-jaxa-ptree.sh
 CLOUD_ATMOSPHERE_STAC_RESOLVER := scripts/resolve-jaxa-stac.py
 CLOUD_ATMOSPHERE_PREPARATION_SCRIPT := \
 	scripts/prepare-cloud-atmosphere-data.sh
@@ -879,6 +880,7 @@ check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
 		$(shell $(GDAL_CONFIG) --libs) -lh3 \
 		-o $(TEST_DIR)/test-cloud-atmosphere-generation
 	$(TEST_DIR)/test-cloud-atmosphere-generation
+	$(TEST_DIR)/test-resolve-jaxa-ptree.sh
 	python3 $(TEST_DIR)/test-resolve-jaxa-stac.py
 	$(TEST_DIR)/test-generate-authorized-external.sh
 	$(CXX) $(CPPFLAGS) -I$(IZZI_SRC) $(CXXFLAGS) \
@@ -1232,7 +1234,9 @@ fetch-astro-data: $(ASTRO_FETCHER)
 	$(ASTRO_FETCHER) "$(ASTRO_DATA_DIR)"
 
 fetch-cloud-atmosphere-data: $(CLOUD_ATMOSPHERE_FETCHER) \
+		$(CLOUD_ATMOSPHERE_PTREE_RESOLVER) \
 		$(CLOUD_ATMOSPHERE_STAC_RESOLVER) $(CLOUD_ATMOSPHERE_PROFILE)
+	PTREE_NETRC="$(abspath $(PTREE_NETRC))" \
 	PTREE_CACERT="$(PTREE_CACERT)" \
 		$(CLOUD_ATMOSPHERE_FETCHER) "$(CLOUD_ATMOSPHERE_DATA_DIR)"
 

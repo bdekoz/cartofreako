@@ -12,7 +12,8 @@ fi
 data_dir=${1:-assets.static/cloud-atmosphere}
 profile="$data_dir/cloud-atmosphere-profile.json"
 resolver=$(dirname "$0")/resolve-jaxa-stac.py
-for path in "$profile" "$resolver"; do
+ptree_resolver=$(dirname "$0")/resolve-jaxa-ptree.sh
+for path in "$profile" "$resolver" "$ptree_resolver"; do
   if [[ ! -f $path ]]; then
     echo "missing cloud-atmosphere input: $path" >&2
     exit 1
@@ -60,13 +61,11 @@ if [[ -z $ptree_cacert ]]; then
     ptree_cacert=$installed_cacert
   fi
 fi
-ptree_ca_arguments=()
 if [[ -n $ptree_cacert ]]; then
   [[ $ptree_cacert = /* ]] \
     || { echo 'PTREE_CACERT must be an absolute path' >&2; exit 1; }
   [[ -r $ptree_cacert ]] \
     || { echo "P-Tree CA certificate is not readable: $ptree_cacert" >&2; exit 1; }
-  ptree_ca_arguments=(--cacert "$ptree_cacert")
 fi
 
 if [[ -n ${PTREE_BASE_URL:-} ]]; then
@@ -75,78 +74,10 @@ else
   ptree_product=$(profile_source_field jaxa-ptree-cloud url)
   ptree_product=${ptree_product%/}
 fi
-# A P-Tree filename records the start of a ten-minute full-disk observation.
-# Require the complete observation interval to end no later than process start,
-# matching the interval checks used by the preparer and renderer.
-ptree_start_cutoff=$(date -u -d "$process_start - 10 minutes" +%Y%m%d%H%M)
-ptree_filename=
-ptree_remote_directory=
-
-# Query at most seven hourly directories, then choose the newest 10-minute
-# cloud product whose nominal observation time is not in the future.
-for hours_back in 0 1 2 3 4 5 6; do
-  candidate=$(date -u -d "$process_start - $hours_back hour" +%Y-%m-%dT%H:00:00Z)
-  year_month=$(date -u -d "$candidate" +%Y%m)
-  day=$(date -u -d "$candidate" +%d)
-  hour=$(date -u -d "$candidate" +%H)
-  remote_directory="$ptree_product/$year_month/$day/$hour/"
-  listing="$temporary_dir/ptree-$year_month$day$hour.txt"
-  if curl -sS --fail --netrc --list-only --connect-timeout 30 \
-      --max-time 90 "${ptree_ca_arguments[@]}" \
-      "$remote_directory" -o "$listing"; then
-    filename=$(sed -n \
-      '/NC_H09_[0-9]\{8\}_[0-9]\{4\}_L2CLP010_FLDK\.\(02401_02401\|02801_02401\)\.nc\.gz$/p' \
-      "$listing" | sort | while IFS= read -r entry; do
-        nominal=$(sed -n \
-          's/^NC_H09_\([0-9]\{8\}\)_\([0-9]\{4\}\)_.*/\1\2/p' \
-          <<<"$entry")
-        if [[ -n $nominal && $nominal -le $ptree_start_cutoff ]]; then
-          printf '%s\n' "$entry"
-        fi
-      done | tail -n 1)
-    if [[ -n $filename ]]; then
-      ptree_filename=$filename
-      ptree_remote_directory=$remote_directory
-      break
-    fi
-  fi
-done
-if [[ -z $ptree_filename ]]; then
-  echo "P-Tree supplied no H09 CLP file not after $process_start within six hours" >&2
-  echo "verify that .netrc contains an entry for ftp.ptree.jaxa.jp" >&2
-  exit 1
-fi
-echo "fetching P-Tree $ptree_filename"
-curl -sS --fail --netrc --remove-on-error --connect-timeout 30 \
-  --max-time 900 "${ptree_ca_arguments[@]}" \
-  -o "$temporary_dir/$ptree_filename" \
-  "$ptree_remote_directory$ptree_filename"
-gzip -t "$temporary_dir/$ptree_filename"
-ptree_nc=${ptree_filename%.gz}
-gzip -cd "$temporary_dir/$ptree_filename" > "$temporary_dir/$ptree_nc"
-ptree_nominal=$(sed -n \
-  's/^NC_H09_\([0-9]\{8\}\)_\([0-9]\{4\}\)_.*/\1\2/p' \
-  <<<"$ptree_filename")
-ptree_start=$(date -u -d \
-  "${ptree_nominal:0:4}-${ptree_nominal:4:2}-${ptree_nominal:6:2} ${ptree_nominal:8:2}:${ptree_nominal:10:2}:00Z" \
-  +%Y-%m-%dT%H:%M:%SZ)
-ptree_end=$(date -u -d "$ptree_start + 10 minutes" +%Y-%m-%dT%H:%M:%SZ)
-fetched_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)
-jq -n \
-  --arg source jaxa-ptree-cloud \
-  --arg collection 'Himawari-9 L2CLP010' \
-  --arg start "$ptree_start" --arg end "$ptree_end" \
-  --arg fetched "$fetched_at" \
-  --arg source_url "$ptree_remote_directory$ptree_filename" \
-  --arg coverage 'Himawari full disk; daytime cloud retrieval only' \
-  --arg path "$ptree_nc" \
-  --arg file_url "$ptree_remote_directory$ptree_filename" \
-  --arg sha "$(sha256sum "$temporary_dir/$ptree_nc" | sed 's/[[:space:]].*//')" \
-  '{source:$source,collection:$collection,start_utc:$start,end_utc:$end,
-    fetched_at_utc:$fetched,source_url:$source_url,coverage:$coverage,
-    files:[{path:$path,source_url:$file_url,sha256:$sha,scale:null,
-            offset:null,nodata:null,asset_key:"CLP"}]}' \
-  > "$temporary_dir/ptree.json"
+PTREE_NETRC="${PTREE_NETRC:-${HOME:?HOME is required}/.netrc}" \
+PTREE_CACERT="$ptree_cacert" \
+  "$ptree_resolver" "$ptree_product" "$process_start" \
+  "$temporary_dir" "$temporary_dir/ptree.json"
 
 python3 "$resolver" \
   --root "$(profile_source_field jaxa-gcom-c-aod url)" \
@@ -170,6 +101,7 @@ python3 "$resolver" \
   --cutoff "$process_start" --output-directory "$temporary_dir" \
   --output-json "$temporary_dir/swr.json"
 
+fetched_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 mkdir -p "$destination"
 find "$temporary_dir" -maxdepth 1 -type f \
   ! -name '*.json' ! -name 'ptree-*.txt' \

@@ -116,9 +116,12 @@ unset SOURCE_DATE_EPOCH
 ```
 
 The fixed instant is optional but recommended. Without it, fetch and render
-sample their own process-start clocks. Do not reuse an old timestamp merely
-to bypass freshness checks: P-Tree cloud observations must be no more than
-six hours old at the selected process instant.
+sample their own process-start clocks. P-Tree selection uses the newest
+published observation ending no later than that instant, even when archive
+publication lags the preferred six-hour target. The fetch log, manifest, SVG
+legend, and SVG metadata retain its exact source interval and age. AOD,
+precipitation, and shortwave-radiation layers keep their hard freshness
+ceilings.
 
 To export SVG, PDF, and PNG after verification, replace the final generation
 command with:
@@ -181,11 +184,13 @@ downloaded successfully.
 | `curl: (67)` or login denied | Confirm the completion email arrived, the machine name is exactly `ftp.ptree.jaxa.jp`, the login/password block is in the current user's `~/.netrc`, and the file mode is `600`. |
 | Timeout or connection refused | Confirm outbound TCP port 990 is allowed. Check the [P-Tree FAQ and site status](https://www.eorc.jaxa.jp/ptree/faq.html) and retry later; JAXA notes that traffic can become busy. |
 | `curl: (60)` with `unable to get local issuer certificate` | Run `make install-jaxa-certificate`, confirm its published SHA-256 check passes, and retry. Use `PTREE_CACERT=/absolute/path` only for an intentional alternate private location. Do not add `--insecure`. |
-| `P-Tree supplied no H09 CLP file ... within six hours` | Check the machine's UTC clock and `SOURCE_DATE_EPOCH`. A current observation may be delayed; retry with a new current timestamp instead of weakening the six-hour profile limit. |
+| `curl: (9) Server denied you to change to the given directory` from an older checkout | Update to the latest resolver. It follows the month/day/hour directories actually advertised by P-Tree instead of guessing that the current UTC directory already exists. |
+| `P-Tree supplied no matching H09 CLP NetCDF` | Confirm the product-root listing contains H09 L2CLP010 data and that `SOURCE_DATE_EPOCH` is not before the archive. This is distinct from authorization, which is checked first. |
+| The selected P-Tree source is older than six hours | This is allowed for the newest published P-Tree observation. Review the exact source interval and age printed during fetch and embedded in the generated legend; other JAXA layers retain hard freshness limits. |
 | A public JAXA collection cannot be resolved | Retry in case the static catalog is temporarily unavailable, then compare the collection IDs in the [source profile](../assets.static/cloud-atmosphere/cloud-atmosphere-profile.json) with the [live JAXA Earth STAC root](https://data.earth.jaxa.jp/stac/cog/v1/catalog.json). |
 | Missing GDAL NetCDF or GeoTIFF support | Run `make check-prerequisite` and install the missing GDAL drivers before preparation. |
 | Checksum mismatch during preparation or verification | Treat the staged data as incomplete or modified. Rerun fetch/preparation; do not edit the digest or snapshot to force acceptance. |
-| Snapshot is stale during generation | Start a new run with a new current `SOURCE_DATE_EPOCH`, or use the same exported timestamp consistently across all four stages if the original observations are still within their configured freshness limits. |
+| A non-P-Tree snapshot layer is stale during generation | Start a new run with a new current `SOURCE_DATE_EPOCH`, or use the same exported timestamp consistently across all four stages if AOD, precipitation, and SWR remain within their configured freshness limits. |
 
 An interrupted fetch is safe to rerun. The workflow stages downloads before
 replacing the active raw manifest, and preparation installs the verified

@@ -12,6 +12,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iterator>
+#include <limits>
 #include <numbers>
 #include <sstream>
 #include <string>
@@ -100,18 +101,101 @@ append_projected_polygon(std::string& path_data,
 }
 
 inline std::vector<generation::geographic_point>
-h3_polygon(const H3Index cell)
+clip_h3_longitude(
+  const std::vector<generation::geographic_point>& source,
+  const double boundary, const bool keep_greater)
+{
+  std::vector<generation::geographic_point> result;
+  if (source.empty())
+    return result;
+  const auto inside = [&](const generation::geographic_point point) {
+    return keep_greater ? point.longitude >= boundary
+                        : point.longitude <= boundary;
+  };
+  const auto append_unique = [&](const generation::geographic_point point) {
+    if (result.empty()
+        || result.back().latitude != point.latitude
+        || result.back().longitude != point.longitude)
+      result.push_back(point);
+  };
+  generation::geographic_point left = source.back();
+  bool left_inside = inside(left);
+  for (const generation::geographic_point right : source)
+    {
+      const bool right_inside = inside(right);
+      if (left_inside != right_inside)
+        {
+          const double fraction = (boundary - left.longitude)
+            / (right.longitude - left.longitude);
+          append_unique({
+            left.latitude + fraction * (right.latitude - left.latitude),
+            boundary,
+          });
+        }
+      if (right_inside)
+        append_unique(right);
+      left = right;
+      left_inside = right_inside;
+    }
+  if (result.size() > 1
+      && result.front().latitude == result.back().latitude
+      && result.front().longitude == result.back().longitude)
+    result.pop_back();
+  return result;
+}
+
+inline std::vector<std::vector<generation::geographic_point>>
+h3_polygons(const H3Index cell)
 {
   CellBoundary boundary {};
   atmosphere_require(cellToBoundary(cell, &boundary) == E_SUCCESS,
                      "failed to calculate H3 atmosphere-cell boundary");
-  std::vector<generation::geographic_point> result;
-  result.reserve(static_cast<std::size_t>(boundary.numVerts));
+  std::vector<generation::geographic_point> unwrapped;
+  unwrapped.reserve(static_cast<std::size_t>(boundary.numVerts));
   for (int index = 0; index < boundary.numVerts; ++index)
-    result.push_back({
-      boundary.verts[index].lat * 180.0 / std::numbers::pi,
-      boundary.verts[index].lng * 180.0 / std::numbers::pi,
+    {
+      generation::geographic_point point {
+        boundary.verts[index].lat * 180.0 / std::numbers::pi,
+        boundary.verts[index].lng * 180.0 / std::numbers::pi,
+      };
+      if (!unwrapped.empty())
+        {
+          while (point.longitude - unwrapped.back().longitude > 180)
+            point.longitude -= 360;
+          while (point.longitude - unwrapped.back().longitude < -180)
+            point.longitude += 360;
+        }
+      unwrapped.push_back(point);
+    }
+
+  const auto [minimum, maximum] = std::minmax_element(
+    unwrapped.begin(), unwrapped.end(),
+    [](const generation::geographic_point left,
+       const generation::geographic_point right) {
+      return left.longitude < right.longitude;
     });
+  const int first_band = static_cast<int>(
+    std::floor((minimum->longitude + 180) / 360));
+  const int last_band = static_cast<int>(
+    std::floor((std::nextafter(maximum->longitude,
+                               -std::numeric_limits<double>::infinity())
+                + 180) / 360));
+  std::vector<std::vector<generation::geographic_point>> result;
+  for (int band = first_band; band <= last_band; ++band)
+    {
+      const double shift = 360.0 * band;
+      std::vector<generation::geographic_point> clipped
+        = clip_h3_longitude(unwrapped, -180 + shift, true);
+      clipped = clip_h3_longitude(clipped, 180 + shift, false);
+      if (clipped.size() < 3)
+        continue;
+      for (generation::geographic_point& point : clipped)
+        point.longitude = std::clamp(
+          point.longitude - shift, -180.0, 180.0);
+      result.push_back(std::move(clipped));
+    }
+  atmosphere_require(!result.empty(),
+                     "failed to split H3 atmosphere-cell boundary");
   return result;
 }
 
@@ -309,7 +393,9 @@ add_observation_layer(generation::projection_document& document,
     if (cell.values[layer_number].has_value())
       {
         const unsigned bin = value_bin(*cell.values[layer_number], definition);
-        append_projected_polygon(paths[bin], context, h3_polygon(cell.h3));
+        for (std::vector<generation::geographic_point>& polygon
+             : h3_polygons(cell.h3))
+          append_projected_polygon(paths[bin], context, std::move(polygon));
         ++counts[bin];
       }
 
@@ -387,6 +473,15 @@ short_layer_title(const layer_definition& layer)
   return layer.title;
 }
 
+inline std::string
+short_observation_time(const generation_time::instant& observation)
+{
+  const std::string& value = observation.iso_utc;
+  if (value.size() == 20 && value[10] == 'T' && value[19] == 'Z')
+    return value.substr(0, 10) + " " + value.substr(11, 5) + "Z";
+  return value;
+}
+
 inline void
 add_legend(generation::projection_document& document,
            const generation::projection_context& context,
@@ -440,9 +535,14 @@ add_legend(generation::projection_document& document,
           dataset, definition.source_id);
         const double age = generation_time::age_hours(
           process_start, observation.end);
+        std::string timing = short_observation_time(observation.end)
+          + " · " + format_number(age, 1) + " h";
+        if (definition.freshness == freshness_policy::latest_available
+            && age > definition.maximum_age_hours)
+          timing += " · latest available";
         svg::styled_text(layer,
-          xml_escape(short_layer_title(definition) + " (" + format_number(age, 1)
-            + " h)"), {x + 0.07, y},
+          xml_escape(short_layer_title(definition) + " (" + timing + ")"),
+          {x + 0.07, y},
           label_typography(0.097, {45, 52, 57}));
         ++position;
       }
