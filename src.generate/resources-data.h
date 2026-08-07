@@ -1,4 +1,4 @@
-// Strict Stage 6b resources profile and normalized country-value ingestion.
+// Strict Stage 12 resources profile and normalized country/spatial ingestion.
 // -*- mode: C++ -*-
 
 #ifndef CART0FREAK0_RESOURCES_DATA_H
@@ -38,14 +38,15 @@ resources_require(const bool condition, const std::string& message)
     throw std::runtime_error(message);
 }
 
-inline constexpr std::array<std::string_view, 5> resource_family_ids {
-  "resources-energy", "resources-food", "resources-flora",
+inline constexpr std::array<std::string_view, 6> resource_family_ids {
+  "resources-energy", "resources-food", "resources-fauna", "resources-flora",
   "resources-mineral", "resources-human",
 };
 
 enum class metric_status
 {
   default_metric,
+  released,
   available,
   planned,
   supplemental,
@@ -80,6 +81,18 @@ struct coverage_definition
   bool passes_non_sparse = false;
 };
 
+struct spatial_definition
+{
+  fs::path path;
+  std::string sha256;
+  std::size_t source_features = 0;
+  std::size_t source_polygons = 0;
+  std::size_t mapped_features = 0;
+  double resolution_degrees = 0;
+  std::string class_property;
+  bool passes_non_sparse = false;
+};
+
 struct metric_definition
 {
   std::string id;
@@ -92,6 +105,7 @@ struct metric_definition
   metric_scale scale = metric_scale::linear;
   std::string output_tag;
   std::optional<coverage_definition> coverage;
+  std::optional<spatial_definition> spatial;
   std::string notes;
 };
 
@@ -306,6 +320,7 @@ inline metric_status
 parse_metric_status(const std::string_view value)
 {
   if (value == "default") return metric_status::default_metric;
+  if (value == "released") return metric_status::released;
   if (value == "available") return metric_status::available;
   if (value == "planned") return metric_status::planned;
   if (value == "supplemental") return metric_status::supplemental;
@@ -320,6 +335,7 @@ metric_status_name(const metric_status value)
   switch (value)
     {
     case metric_status::default_metric: return "default";
+    case metric_status::released: return "released";
     case metric_status::available: return "available";
     case metric_status::planned: return "planned";
     case metric_status::supplemental: return "supplemental";
@@ -396,6 +412,41 @@ parse_coverage(const rj::Value& value, const std::string_view context)
   return result;
 }
 
+inline spatial_definition
+parse_spatial(const rj::Value& value, const fs::path& profile_directory,
+              const std::string_view context)
+{
+  require_members(value,
+    {"path", "sha256", "source_features", "source_polygons",
+     "mapped_features", "resolution_degrees", "class_property",
+     "passes_non_sparse"}, {}, context);
+  spatial_definition result;
+  result.path = profile_directory / required_string(value, "path", context);
+  result.sha256 = required_string(value, "sha256", context);
+  result.source_features = required_size(value, "source_features", context);
+  result.source_polygons = required_size(value, "source_polygons", context);
+  result.mapped_features = required_size(value, "mapped_features", context);
+  result.resolution_degrees = required_number(
+    value, "resolution_degrees", context);
+  result.class_property = required_string(value, "class_property", context);
+  const rj::Value& passes = required_member(
+    value, "passes_non_sparse", context);
+  resources_require(passes.IsBool(), std::string(context)
+                                      + ".passes_non_sparse must be boolean");
+  result.passes_non_sparse = passes.GetBool();
+  resources_require(is_hex_digest(result.sha256),
+                    std::string(context) + " has an invalid SHA-256");
+  resources_require(result.source_features != 0
+                      && result.source_polygons != 0
+                      && result.mapped_features != 0
+                      && result.resolution_degrees > 0
+                      && result.resolution_degrees <= 5,
+                    std::string(context) + " has invalid spatial statistics");
+  resources_require(fs::is_regular_file(result.path),
+                    "missing resources spatial data " + result.path.string());
+  return result;
+}
+
 inline resources_profile
 load_resources_profile(const fs::path& configured_path)
 {
@@ -405,7 +456,7 @@ load_resources_profile(const fs::path& configured_path)
     {"schema", "name", "description", "snapshot_as_of", "missing_semantics",
      "country_geometry", "values", "sources", "families"}, {}, path.string());
   resources_require(required_string(document, "schema", path.string())
-                      == "cartofreako-resources-profile-v2",
+                      == "cartofreako-resources-profile-v3",
                     "unsupported resources profile schema");
 
   resources_profile result;
@@ -474,7 +525,7 @@ load_resources_profile(const fs::path& configured_path)
   const rj::Value& families = document["families"];
   resources_require(families.IsArray()
                       && families.Size() == resource_family_ids.size(),
-                    "resources.families must contain exactly five families");
+                    "resources.families must contain exactly six families");
   std::unordered_set<std::string> family_ids;
   for (rj::SizeType family_index = 0;
        family_index != families.Size(); ++family_index)
@@ -517,7 +568,7 @@ load_resources_profile(const fs::path& configured_path)
           require_members(item,
             {"id", "title", "unit", "reference_period", "evidence_class",
              "source_ids", "status", "scale", "output_tag", "coverage",
-             "notes"}, {}, metric_context);
+             "spatial", "notes"}, {}, metric_context);
           metric_definition parsed_metric;
           parsed_metric.id = required_string(item, "id", metric_context);
           parsed_metric.title = required_string(item, "title", metric_context);
@@ -564,24 +615,48 @@ load_resources_profile(const fs::path& configured_path)
           else
             parsed_metric.coverage = parse_coverage(
               item["coverage"], metric_context + ".coverage");
+          if (item["spatial"].IsNull())
+            parsed_metric.spatial = std::nullopt;
+          else
+            parsed_metric.spatial = parse_spatial(
+              item["spatial"], path.parent_path(),
+              metric_context + ".spatial");
           if (parsed_metric.status == metric_status::default_metric)
             {
               ++default_count;
               resources_require(parsed_metric.id == parsed.default_metric,
                                 context + " default status/id mismatch");
+            }
+          const bool released
+            = parsed_metric.status == metric_status::default_metric
+              || parsed_metric.status == metric_status::released;
+          if (released)
+            {
               resources_require(!parsed_metric.output_tag.empty()
                                   && is_identifier(parsed_metric.output_tag),
                                 metric_context + " needs a valid output_tag");
               resources_require(parsed_metric.coverage.has_value()
-                                  && parsed_metric.coverage->passes_non_sparse,
+                                  != parsed_metric.spatial.has_value(),
                                 metric_context
-                                  + " must pass the non-sparse release gate");
+                                  + " needs exactly one release definition");
+              resources_require(
+                (parsed_metric.coverage.has_value()
+                   && parsed_metric.coverage->passes_non_sparse)
+                  || (parsed_metric.spatial.has_value()
+                      && parsed_metric.spatial->passes_non_sparse),
+                metric_context + " must pass the non-sparse release gate");
               resources_require(!parsed_metric.source_ids.empty(),
                                 metric_context + " needs a source");
             }
           else
-            resources_require(parsed_metric.output_tag.empty(), metric_context
-                               + " non-default metric must not select an output_tag");
+            {
+              resources_require(parsed_metric.output_tag.empty(), metric_context
+                               + " unreleased metric must not select an output_tag");
+              resources_require(!parsed_metric.coverage.has_value()
+                                  && !parsed_metric.spatial.has_value(),
+                                metric_context
+                                  + " unreleased metric has release metadata");
+            }
           parsed.metrics.push_back(std::move(parsed_metric));
         }
       resources_require(default_count == 1,
@@ -599,7 +674,7 @@ load_resources_profile(const fs::path& configured_path)
                   result.values_path.string());
   resources_require(required_string(values_document, "schema",
                                      result.values_path.string())
-                      == "cartofreako-resources-values-v2",
+                      == "cartofreako-resources-values-v3",
                     "unsupported resources values schema");
   resources_require(required_string(values_document, "snapshot_as_of",
                                      result.values_path.string())
@@ -639,6 +714,7 @@ load_resources_profile(const fs::path& configured_path)
       resources_require(metric != family->metrics.end(),
                         context + " references unknown metric '" + parsed.metric + "'");
       resources_require(metric->status == metric_status::default_metric
+                          || metric->status == metric_status::released
                           || metric->status == metric_status::available,
                         context + " supplies values for an unreleased metric");
       resources_require(parsed.value >= 0,
@@ -654,22 +730,24 @@ load_resources_profile(const fs::path& configured_path)
     }
 
   for (const resource_family& family : result.families)
-    {
-      const auto metric = std::find_if(family.metrics.begin(), family.metrics.end(),
-        [&](const metric_definition& candidate) {
-          return candidate.id == family.default_metric;
-        });
-      resources_require(metric != family.metrics.end()
-                          && metric->coverage.has_value(),
-                        family.id + " lacks a covered default metric");
-      const std::size_t actual = static_cast<std::size_t>(std::count_if(
-        result.values.begin(), result.values.end(),
-        [&](const country_value& value) {
-          return value.family == family.id && value.metric == metric->id;
-        }));
-      resources_require(actual == metric->coverage->covered_countries,
-                        family.id + " default value count disagrees with coverage");
-    }
+    for (const metric_definition& metric : family.metrics)
+      if (metric.status == metric_status::default_metric
+          || metric.status == metric_status::released)
+        {
+          const std::size_t actual = static_cast<std::size_t>(std::count_if(
+            result.values.begin(), result.values.end(),
+            [&](const country_value& value) {
+              return value.family == family.id && value.metric == metric.id;
+            }));
+          if (metric.coverage.has_value())
+            resources_require(actual == metric.coverage->covered_countries,
+                              family.id + "/" + metric.id
+                                + " value count disagrees with coverage");
+          else
+            resources_require(actual == 0 && metric.spatial.has_value(),
+                              family.id + "/" + metric.id
+                                + " spatial metric has country values");
+        }
   return result;
 }
 
@@ -685,6 +763,9 @@ canonical_resource_family(const std::string_view input)
     return "resources-energy";
   if (value == "food" || value == "resources-food")
     return "resources-food";
+  if (value == "fauna" || value == "resources-fauna"
+      || value == "fisheries" || value == "reefs")
+    return "resources-fauna";
   if (value == "flora" || value == "resources-flora"
       || value == "ressources-flora")
     return "resources-flora";
@@ -719,6 +800,24 @@ default_resource_metric(const resource_family& family)
     });
   resources_require(metric != family.metrics.end(),
                     family.id + " omits its default metric");
+  return *metric;
+}
+
+inline const metric_definition&
+find_resource_metric(const resource_family& family,
+                     const std::string_view metric_id)
+{
+  const auto metric = std::find_if(
+    family.metrics.begin(), family.metrics.end(),
+    [&](const metric_definition& candidate) {
+      return candidate.id == metric_id;
+    });
+  resources_require(metric != family.metrics.end(),
+                    family.id + " has no metric '"
+                      + std::string(metric_id) + "'");
+  resources_require(metric->status == metric_status::default_metric
+                      || metric->status == metric_status::released,
+                    family.id + "/" + metric->id + " is not released");
   return *metric;
 }
 

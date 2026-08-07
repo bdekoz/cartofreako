@@ -81,9 +81,14 @@ RESOURCES_DATA_DIR ?= $(STATIC_ASSET_DIR)/resources
 RESOURCES_PROFILE ?= $(RESOURCES_DATA_DIR)/resources-profile.json
 RESOURCES_VALUES ?= $(RESOURCES_DATA_DIR)/resources-values.json
 RESOURCES_COUNTRIES ?= $(RESOURCES_DATA_DIR)/countries-110m.geojson
+RESOURCES_REEFS ?= $(RESOURCES_DATA_DIR)/coral-reefs-025deg.geojson
 RESOURCES_CHECKSUMS := $(RESOURCES_DATA_DIR)/SHA256SUMS
 RESOURCES_FETCHER := scripts/fetch-resources-data.sh
 RESOURCES_PREPARER := scripts/prepare-resources-data.py
+EXTERNAL_AUTHORIZER := scripts/authorize-external.sh
+EXTERNAL_PASSES ?= jaxa-ptree nasa-firms network-topology
+PTREE_NETRC ?= $(HOME)/.netrc
+NETWORK_TOPOLOGY_LICENSE_ACCEPTED ?=
 NETWORK_SWARM_DATA_DIR ?= $(STATIC_ASSET_DIR)/network-swarm
 NETWORK_SWARM_PROFILE ?= $(NETWORK_SWARM_DATA_DIR)/network-swarm-profile.json
 NETWORK_SWARM_SOURCE ?= \
@@ -371,44 +376,41 @@ ANTHROPOCENE_TEMPERATURE_PNGS := \
 	$(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PNG_DIR)/%.png,$(ANTHROPOCENE_TEMPERATURE_SVGS))
 
-RESOURCES_ENERGY_SVGS := \
-	$(GENERATED_SVG_DIR)/resources-energy-solar-capacity-2025-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/resources-energy-solar-capacity-2025-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/resources-energy-solar-capacity-2025-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/resources-energy-solar-capacity-2025-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/resources-energy-solar-capacity-2025-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/resources-energy-solar-capacity-2025-voronoi-44-22.916667.svg
-RESOURCES_FOOD_SVGS := \
-	$(GENERATED_SVG_DIR)/resources-food-food-production-index-latest-2026-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/resources-food-food-production-index-latest-2026-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/resources-food-food-production-index-latest-2026-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/resources-food-food-production-index-latest-2026-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/resources-food-food-production-index-latest-2026-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/resources-food-food-production-index-latest-2026-voronoi-44-22.916667.svg
-RESOURCES_FLORA_SVGS := \
-	$(GENERATED_SVG_DIR)/resources-flora-forest-area-percent-latest-2026-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/resources-flora-forest-area-percent-latest-2026-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/resources-flora-forest-area-percent-latest-2026-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/resources-flora-forest-area-percent-latest-2026-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/resources-flora-forest-area-percent-latest-2026-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/resources-flora-forest-area-percent-latest-2026-voronoi-44-22.916667.svg
-RESOURCES_MINERAL_SVGS := \
-	$(GENERATED_SVG_DIR)/resources-mineral-rare-earth-mine-production-2025-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/resources-mineral-rare-earth-mine-production-2025-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/resources-mineral-rare-earth-mine-production-2025-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/resources-mineral-rare-earth-mine-production-2025-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/resources-mineral-rare-earth-mine-production-2025-voronoi-44-22.916667.svg
-RESOURCES_HUMAN_SVGS := \
-	$(GENERATED_SVG_DIR)/resources-human-population-under-30-2024-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/resources-human-population-under-30-2024-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/resources-human-population-under-30-2024-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/resources-human-population-under-30-2024-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/resources-human-population-under-30-2024-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/resources-human-population-under-30-2024-voronoi-44-22.916667.svg
+RESOURCE_OUTPUT_SUFFIXES := ck-44-22 authagraph-44-19.052559 \
+	dymaxion-44-20.78461 myriahedral-44-24.75 star-x-34-44 \
+	voronoi-44-22.916667
+resource_metric_svgs = $(addprefix $(GENERATED_SVG_DIR)/$(1)-$(2)-,\
+	$(addsuffix .svg,$(RESOURCE_OUTPUT_SUFFIXES)))
+
+RESOURCES_ENERGY_SOLAR_SVGS := $(call resource_metric_svgs,resources-energy,solar-capacity-2025)
+RESOURCES_ENERGY_WIND_SVGS := $(call resource_metric_svgs,resources-energy,wind-capacity-2025)
+RESOURCES_ENERGY_NUCLEAR_SVGS := $(call resource_metric_svgs,resources-energy,nuclear-operating-capacity-2024)
+RESOURCES_ENERGY_PETROCHEMICAL_SVGS := $(call resource_metric_svgs,resources-energy,petrochemical-refinery-throughput-latest-2024)
+RESOURCES_ENERGY_SVGS := $(RESOURCES_ENERGY_SOLAR_SVGS) \
+	$(RESOURCES_ENERGY_WIND_SVGS) $(RESOURCES_ENERGY_NUCLEAR_SVGS) \
+	$(RESOURCES_ENERGY_PETROCHEMICAL_SVGS)
+
+RESOURCES_FOOD_SVGS := $(call resource_metric_svgs,resources-food,food-production-index-2022)
+RESOURCES_FAUNA_FISHERIES_SVGS := $(call resource_metric_svgs,resources-fauna,fisheries-production-latest-2024)
+RESOURCES_FAUNA_REEFS_SVGS := $(call resource_metric_svgs,resources-fauna,coral-reef-threat-2011)
+RESOURCES_FAUNA_SVGS := $(RESOURCES_FAUNA_FISHERIES_SVGS) \
+	$(RESOURCES_FAUNA_REEFS_SVGS)
+RESOURCES_FLORA_SVGS := $(call resource_metric_svgs,resources-flora,forest-area-percent-2023)
+RESOURCES_MINERAL_SVGS := $(call resource_metric_svgs,resources-mineral,rare-earth-mine-production-2025)
+
+RESOURCES_HUMAN_UNDER_30_SVGS := $(call resource_metric_svgs,resources-human,population-under-30-2024)
+RESOURCES_HUMAN_OVER_60_SVGS := $(call resource_metric_svgs,resources-human,population-over-60-2024)
+RESOURCES_HUMAN_UPPER_SECONDARY_SVGS := $(call resource_metric_svgs,resources-human,upper-secondary-attainment-latest-2025)
+RESOURCES_HUMAN_BACHELORS_SVGS := $(call resource_metric_svgs,resources-human,bachelors-attainment-latest-2024)
+RESOURCES_HUMAN_PATENTS_SVGS := $(call resource_metric_svgs,resources-human,resident-patent-applications-per-million-2019-2021)
+RESOURCES_HUMAN_SVGS := $(RESOURCES_HUMAN_UNDER_30_SVGS) \
+	$(RESOURCES_HUMAN_OVER_60_SVGS) \
+	$(RESOURCES_HUMAN_UPPER_SECONDARY_SVGS) \
+	$(RESOURCES_HUMAN_BACHELORS_SVGS) $(RESOURCES_HUMAN_PATENTS_SVGS)
+
 RESOURCES_SVGS := $(RESOURCES_ENERGY_SVGS) $(RESOURCES_FOOD_SVGS) \
-	$(RESOURCES_FLORA_SVGS) $(RESOURCES_MINERAL_SVGS) \
-	$(RESOURCES_HUMAN_SVGS)
+	$(RESOURCES_FAUNA_SVGS) $(RESOURCES_FLORA_SVGS) \
+	$(RESOURCES_MINERAL_SVGS) $(RESOURCES_HUMAN_SVGS)
 RESOURCES_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PDF_DIR)/%.pdf,$(RESOURCES_SVGS))
 RESOURCES_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
@@ -470,6 +472,17 @@ GENERATED_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PDF_DIR)/%.pdf,$(GENERATED_SVGS))
 GENERATED_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
 	$(GENERATED_PNG_DIR)/%.png,$(GENERATED_SVGS))
+CK_SNAPSHOT_SVGS := \
+	$(CK_GEOMETRY_SVG) $(CK_GRATICULE_SVG) $(CK_EARTH_SVG) $(CK_WATER_SVG) \
+	$(filter %-ck-44-22.svg,$(ASTRO_SVGS) $(ORBITING_SVGS) \
+		$(NETWORK_SWARM_SVGS) $(NETWORK_INFRASTRUCTURE_SITES_SVGS) \
+		$(ANTHROPOCENE_SVGS) $(ANTHROPOCENE_TEMPERATURE_SVGS) \
+		$(RESOURCES_SVGS) $(BATHYMETRY_ROULETTE_SVGS))
+CK_SNAPSHOT_THUMBNAIL_DIR := \
+	$(GENERATED_DIR)/thumbnail/cahill-keyes
+CK_SNAPSHOT_WIDTH ?= 480
+CK_SNAPSHOT_THUMBNAILS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
+	$(CK_SNAPSHOT_THUMBNAIL_DIR)/%.png,$(CK_SNAPSHOT_SVGS))
 STAR_X_SVGS := $(STAR_X_GEOMETRY_SVG) $(STAR_X_GRATICULE_SVG) \
 	$(STAR_X_EARTH_SVG) $(STAR_X_WATER_SVG)
 STAR_X_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
@@ -496,12 +509,7 @@ ANTHROPOCENE_STAR_X_PNG := \
 ANTHROPOCENE_TEMPERATURE_STAR_X_PNGS := \
 	$(GENERATED_PNG_DIR)/anthropocene-temperature-2025-star-x-34-44.png \
 	$(GENERATED_PNG_DIR)/anthropocene-temperature-2026-star-x-34-44.png
-RESOURCES_STAR_X_PNGS := \
-	$(GENERATED_PNG_DIR)/resources-energy-solar-capacity-2025-star-x-34-44.png \
-	$(GENERATED_PNG_DIR)/resources-food-food-production-index-latest-2026-star-x-34-44.png \
-	$(GENERATED_PNG_DIR)/resources-flora-forest-area-percent-latest-2026-star-x-34-44.png \
-	$(GENERATED_PNG_DIR)/resources-mineral-rare-earth-mine-production-2025-star-x-34-44.png \
-	$(GENERATED_PNG_DIR)/resources-human-population-under-30-2024-star-x-34-44.png
+RESOURCES_STAR_X_PNGS := $(filter %-star-x-34-44.png,$(RESOURCES_PNGS))
 BATHYMETRY_ROULETTE_STAR_X_PNG := \
 	$(GENERATED_PNG_DIR)/bathymetry-roulette-star-x-34-44.png
 CLOUD_ATMOSPHERE_STAR_X_PNG := \
@@ -521,7 +529,8 @@ LANDSCAPE_PNGS := $(filter-out $(PORTRAIT_PNGS),\
 	$(GENERATED_PNGS) $(CLOUD_ATMOSPHERE_PNGS))
 GENERATED_ARTIFACTS := \
 	$(filter-out $(RESOURCES_SVGS),$(GENERATED_SVGS)) \
-	$(RESOURCES_SVG_ARCHIVES) $(GENERATED_PDFS) $(GENERATED_PNGS)
+	$(RESOURCES_SVG_ARCHIVES) $(GENERATED_PDFS) $(GENERATED_PNGS) \
+	$(CK_SNAPSHOT_THUMBNAILS)
 
 GENERATOR_BINARIES := \
 	$(ANTHROPOCENE_GENERATOR) \
@@ -637,9 +646,23 @@ RESOURCES_GENERATOR_HEADERS := \
 
 .DEFAULT_GOAL := configured
 
+RESOURCE_PROJECTION_NAMES := cahill-keyes authagraph dymaxion myriahedral \
+	star-x voronoi
+RESOURCE_METRIC_TARGET_STEMS := resources-energy-solar resources-energy-wind \
+	resources-energy-nuclear resources-energy-petrochemical \
+	resources-food-production resources-fauna-fisheries resources-fauna-reefs \
+	resources-flora-forest resources-mineral-rare-earth \
+	resources-human-under-30 resources-human-over-60 \
+	resources-human-upper-secondary resources-human-bachelors \
+	resources-human-patents
+RESOURCE_METRIC_PUBLIC_TARGETS := \
+	$(foreach stem,$(RESOURCE_METRIC_TARGET_STEMS),generate-$(stem) \
+		$(foreach projection,$(RESOURCE_PROJECTION_NAMES),\
+			generate-$(stem)-$(projection)))
+
 PUBLIC_TARGETS := all assets-single assets-resilient check check-prerequisite \
 	check-resources-svg-archives clean clean-failed-generated configured doxygen \
-	generation-plan list-targets \
+	generation-plan list-targets authorize-external generate-snapshot-ck \
 	fetch-natural-earth-10m fetch-astro-data fetch-orbiting-data \
 	fetch-cloud-atmosphere-data prepare-cloud-atmosphere-data \
 	verify-cloud-atmosphere-data \
@@ -679,6 +702,13 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-prerequisite \
 	generate-orbiting-star-x generate-orbiting-voronoi \
 	generate-anthropocene generate-anthropocene-projections \
 	generate-anthropocene-artifacts \
+	generate-anthropocene-atlas generate-anthropocene-atlas-projections \
+	generate-anthropocene-atlas-artifacts \
+	generate-anthropocene-atlas-cahill-keyes \
+	generate-anthropocene-atlas-authagraph \
+	generate-anthropocene-atlas-dymaxion \
+	generate-anthropocene-atlas-myriahedral \
+	generate-anthropocene-atlas-star-x generate-anthropocene-atlas-voronoi \
 	generate-anthropocene-cahill-keyes generate-anthropocene-authagraph \
 	generate-anthropocene-dymaxion generate-anthropocene-myriahedral \
 	generate-anthropocene-star-x generate-anthropocene-voronoi \
@@ -689,8 +719,10 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-prerequisite \
 	generate-anthropocene-temperature-years \
 	generate-anthropocene-temperature-artifacts \
 	generate-resources generate-resources-projections \
-	generate-resources-stage6b generate-resources-artifacts \
+	generate-resources-stage6b generate-resources-stage12 \
+	generate-resources-artifacts \
 	generate-resources-energy generate-resources-food \
+	generate-resources-fauna \
 	generate-resources-flora generate-resources-mineral \
 	generate-resources-human \
 	generate-resources-cahill-keyes generate-resources-authagraph \
@@ -704,6 +736,10 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-prerequisite \
 	generate-resources-food-authagraph generate-resources-food-dymaxion \
 	generate-resources-food-myriahedral generate-resources-food-star-x \
 	generate-resources-food-voronoi \
+	generate-resources-fauna-cahill-keyes \
+	generate-resources-fauna-authagraph generate-resources-fauna-dymaxion \
+	generate-resources-fauna-myriahedral generate-resources-fauna-star-x \
+	generate-resources-fauna-voronoi \
 	generate-resources-flora-cahill-keyes \
 	generate-resources-flora-authagraph generate-resources-flora-dymaxion \
 	generate-resources-flora-myriahedral generate-resources-flora-star-x \
@@ -761,7 +797,8 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-prerequisite \
 	generate-geometry-star-x generate-graticules-star-x \
 	generate-earth-star-x generate-water-star-x \
 	generate-geometry-voronoi generate-graticules-voronoi \
-	generate-earth-voronoi generate-water-voronoi
+	generate-earth-voronoi generate-water-voronoi \
+	$(RESOURCE_METRIC_PUBLIC_TARGETS)
 
 .PHONY: $(PUBLIC_TARGETS)
 
@@ -797,6 +834,7 @@ check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
 		$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2026) \
 		$(CLOUD_ATMOSPHERE_PROFILE) $(CLOUD_ATMOSPHERE_FIXTURE) \
 		$(RESOURCES_PROFILE) $(RESOURCES_VALUES) $(RESOURCES_COUNTRIES) \
+		$(RESOURCES_REEFS) \
 		$(RESOURCES_CHECKSUMS) \
 		check-resources-svg-archives
 	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_PROFILE)" \
@@ -1143,6 +1181,16 @@ check-network-infrastructure-topology-sources: \
 		"$(abspath $(SUBMARINE_CABLE_SOURCE))" \
 		"$(abspath $(INTERNET_EXCHANGE_SOURCE))"
 
+authorize-external: $(EXTERNAL_AUTHORIZER) \
+		$(NETWORK_INFRASTRUCTURE_SOURCE_CHECKER)
+	PTREE_NETRC="$(abspath $(PTREE_NETRC))" \
+	NETWORK_TOPOLOGY_LICENSE_ACCEPTED="$(NETWORK_TOPOLOGY_LICENSE_ACCEPTED)" \
+	NETWORK_INFRASTRUCTURE_SOURCE_CHECKER="$(abspath $(NETWORK_INFRASTRUCTURE_SOURCE_CHECKER))" \
+	NETWORK_INFRASTRUCTURE_CLOUD_SOURCE="$(abspath $(NETWORK_INFRASTRUCTURE_CLOUD_SOURCE))" \
+	SUBMARINE_CABLE_SOURCE="$(abspath $(SUBMARINE_CABLE_SOURCE))" \
+	INTERNET_EXCHANGE_SOURCE="$(abspath $(INTERNET_EXCHANGE_SOURCE))" \
+		"$(EXTERNAL_AUTHORIZER)" $(EXTERNAL_PASSES)
+
 fetch-astro-data: $(ASTRO_FETCHER)
 	$(ASTRO_FETCHER) "$(ASTRO_DATA_DIR)"
 
@@ -1219,7 +1267,7 @@ $(NATURAL_EARTH_STAMP): $(NATURAL_EARTH_FETCHER)
 	$(NATURAL_EARTH_FETCHER) "$(NATURAL_EARTH_DIR)"
 
 $(GENERATED_DIR) $(GENERATED_SVG_DIR) $(GENERATED_PNG_DIR) \
-		$(GENERATED_PDF_DIR):
+		$(GENERATED_PDF_DIR) $(CK_SNAPSHOT_THUMBNAIL_DIR):
 	mkdir -p "$@"
 
 # Preserve the original Cahill-Keyes workflow and output names.
@@ -1451,7 +1499,7 @@ generate-orbiting-artifacts: $(ORBITING_SVGS) $(ORBITING_PDFS) \
 
 # $(1): command-line projection name; $(2): Anthropocene product.
 define ANTHROPOCENE_PROJECTION_RULES
-generate-anthropocene-$(1): $(2)
+generate-anthropocene-atlas-$(1): $(2)
 $(2): $(ANTHROPOCENE_GENERATOR) $(ANTHROPOCENE_PROFILE) \
 		$(ANTHROPOCENE_GEOJSON) $(ANTHROPOCENE_VERIFIER) \
 		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
@@ -1478,9 +1526,9 @@ $(eval $(call ANTHROPOCENE_PROJECTION_RULES,star-x,\
 $(eval $(call ANTHROPOCENE_PROJECTION_RULES,voronoi,\
 	$(GENERATED_SVG_DIR)/anthropocene-voronoi-44-22.916667.svg))
 
-generate-anthropocene: $(ANTHROPOCENE_SVGS)
-generate-anthropocene-projections: $(ANTHROPOCENE_SVGS)
-generate-anthropocene-artifacts: $(ANTHROPOCENE_SVGS) \
+generate-anthropocene-atlas: $(ANTHROPOCENE_SVGS)
+generate-anthropocene-atlas-projections: $(ANTHROPOCENE_SVGS)
+generate-anthropocene-atlas-artifacts: $(ANTHROPOCENE_SVGS) \
 	$(ANTHROPOCENE_PDFS) $(ANTHROPOCENE_PNGS)
 
 # $(1): projection; $(2): 2025 SVG; $(3): 2026 SVG.
@@ -1532,6 +1580,19 @@ $(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,voronoi,\
 	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-voronoi-44-22.916667.svg,\
 	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-voronoi-44-22.916667.svg))
 
+# Stage 12 defaults generate the paired 2025 and 2026 Anthropocene passes.
+generate-anthropocene-cahill-keyes: $(word 1,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) $(word 1,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
+generate-anthropocene-authagraph: $(word 2,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) $(word 2,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
+generate-anthropocene-dymaxion: $(word 3,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) $(word 3,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
+generate-anthropocene-myriahedral: $(word 4,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) $(word 4,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
+generate-anthropocene-star-x: $(word 5,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) $(word 5,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
+generate-anthropocene-voronoi: $(word 6,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) $(word 6,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
+generate-anthropocene: $(ANTHROPOCENE_TEMPERATURE_SVGS)
+generate-anthropocene-projections: $(ANTHROPOCENE_TEMPERATURE_SVGS)
+generate-anthropocene-artifacts: \
+	$(ANTHROPOCENE_TEMPERATURE_SVGS) $(ANTHROPOCENE_TEMPERATURE_PDFS) \
+	$(ANTHROPOCENE_TEMPERATURE_PNGS)
+
 # These year targets are the implemented Stage 8b temperature-field theme.
 # Additional observation, fire/air, and ocean themes can join each dependency
 # list without changing the public target names.
@@ -1547,73 +1608,80 @@ generate-anthropocene-years: generate-anthropocene-temperature-years
 generate-anthropocene-year-artifacts: \
 	generate-anthropocene-temperature-artifacts
 
-# $(1): Stage 6b family; $(2): projection; $(3): default metric product.
-define RESOURCES_FAMILY_PROJECTION_RULES
-generate-$(1)-$(2): $(3).gz
-$(3): $(RESOURCES_GENERATOR) $(RESOURCES_PROFILE) $(RESOURCES_VALUES) \
-		$(RESOURCES_COUNTRIES) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
-		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
-		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
-		"$(abspath $(RESOURCES_GENERATOR))" "$(1)" "$(2)" \
-		"$(abspath $(RESOURCES_PROFILE))"
+# $(1): family; $(2): profile metric id; $(3): public metric alias;
+# $(4): six projection SVGs in RESOURCE_OUTPUT_SUFFIXES order.
+define RESOURCES_METRIC_RULES
+generate-$(1)-$(3): $(addsuffix .gz,$(4))
+generate-$(1)-$(3)-cahill-keyes: $(word 1,$(4)).gz
+generate-$(1)-$(3)-authagraph: $(word 2,$(4)).gz
+generate-$(1)-$(3)-dymaxion: $(word 3,$(4)).gz
+generate-$(1)-$(3)-myriahedral: $(word 4,$(4)).gz
+generate-$(1)-$(3)-star-x: $(word 5,$(4)).gz
+generate-$(1)-$(3)-voronoi: $(word 6,$(4)).gz
+$(word 1,$(4)): $(RESOURCES_GENERATOR) $(RESOURCES_PROFILE) \
+		$(RESOURCES_VALUES) $(RESOURCES_COUNTRIES) $(RESOURCES_REEFS) \
+		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" cahill-keyes "$(abspath $(RESOURCES_PROFILE))" "$(2)"
+$(word 2,$(4)): $(RESOURCES_GENERATOR) $(RESOURCES_PROFILE) \
+		$(RESOURCES_VALUES) $(RESOURCES_COUNTRIES) $(RESOURCES_REEFS) \
+		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" authagraph "$(abspath $(RESOURCES_PROFILE))" "$(2)"
+$(word 3,$(4)): $(RESOURCES_GENERATOR) $(RESOURCES_PROFILE) \
+		$(RESOURCES_VALUES) $(RESOURCES_COUNTRIES) $(RESOURCES_REEFS) \
+		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" dymaxion "$(abspath $(RESOURCES_PROFILE))" "$(2)"
+$(word 4,$(4)): $(RESOURCES_GENERATOR) $(RESOURCES_PROFILE) \
+		$(RESOURCES_VALUES) $(RESOURCES_COUNTRIES) $(RESOURCES_REEFS) \
+		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" myriahedral "$(abspath $(RESOURCES_PROFILE))" "$(2)"
+$(word 5,$(4)): $(RESOURCES_GENERATOR) $(RESOURCES_PROFILE) \
+		$(RESOURCES_VALUES) $(RESOURCES_COUNTRIES) $(RESOURCES_REEFS) \
+		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" star-x "$(abspath $(RESOURCES_PROFILE))" "$(2)"
+$(word 6,$(4)): $(RESOURCES_GENERATOR) $(RESOURCES_PROFILE) \
+		$(RESOURCES_VALUES) $(RESOURCES_COUNTRIES) $(RESOURCES_REEFS) \
+		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+	cd "$(GENERATED_SVG_DIR)" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" voronoi "$(abspath $(RESOURCES_PROFILE))" "$(2)"
 endef
 
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-energy,cahill-keyes,$(word 1,$(RESOURCES_ENERGY_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-energy,authagraph,$(word 2,$(RESOURCES_ENERGY_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-energy,dymaxion,$(word 3,$(RESOURCES_ENERGY_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-energy,myriahedral,$(word 4,$(RESOURCES_ENERGY_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-energy,star-x,$(word 5,$(RESOURCES_ENERGY_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-energy,voronoi,$(word 6,$(RESOURCES_ENERGY_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-food,cahill-keyes,$(word 1,$(RESOURCES_FOOD_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-food,authagraph,$(word 2,$(RESOURCES_FOOD_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-food,dymaxion,$(word 3,$(RESOURCES_FOOD_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-food,myriahedral,$(word 4,$(RESOURCES_FOOD_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-food,star-x,$(word 5,$(RESOURCES_FOOD_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-food,voronoi,$(word 6,$(RESOURCES_FOOD_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-flora,cahill-keyes,$(word 1,$(RESOURCES_FLORA_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-flora,authagraph,$(word 2,$(RESOURCES_FLORA_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-flora,dymaxion,$(word 3,$(RESOURCES_FLORA_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-flora,myriahedral,$(word 4,$(RESOURCES_FLORA_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-flora,star-x,$(word 5,$(RESOURCES_FLORA_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-flora,voronoi,$(word 6,$(RESOURCES_FLORA_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-mineral,cahill-keyes,$(word 1,$(RESOURCES_MINERAL_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-mineral,authagraph,$(word 2,$(RESOURCES_MINERAL_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-mineral,dymaxion,$(word 3,$(RESOURCES_MINERAL_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-mineral,myriahedral,$(word 4,$(RESOURCES_MINERAL_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-mineral,star-x,$(word 5,$(RESOURCES_MINERAL_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-mineral,voronoi,$(word 6,$(RESOURCES_MINERAL_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-human,cahill-keyes,$(word 1,$(RESOURCES_HUMAN_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-human,authagraph,$(word 2,$(RESOURCES_HUMAN_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-human,dymaxion,$(word 3,$(RESOURCES_HUMAN_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-human,myriahedral,$(word 4,$(RESOURCES_HUMAN_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-human,star-x,$(word 5,$(RESOURCES_HUMAN_SVGS))))
-$(eval $(call RESOURCES_FAMILY_PROJECTION_RULES,resources-human,voronoi,$(word 6,$(RESOURCES_HUMAN_SVGS))))
+$(eval $(call RESOURCES_METRIC_RULES,resources-energy,solar-capacity,solar,$(RESOURCES_ENERGY_SOLAR_SVGS)))
+$(eval $(call RESOURCES_METRIC_RULES,resources-energy,wind-capacity,wind,$(RESOURCES_ENERGY_WIND_SVGS)))
+$(eval $(call RESOURCES_METRIC_RULES,resources-energy,nuclear-operating-capacity,nuclear,$(RESOURCES_ENERGY_NUCLEAR_SVGS)))
+$(eval $(call RESOURCES_METRIC_RULES,resources-energy,petroleum-refinery-throughput,petrochemical,$(RESOURCES_ENERGY_PETROCHEMICAL_SVGS)))
+$(eval $(call RESOURCES_METRIC_RULES,resources-food,food-production-index,production,$(RESOURCES_FOOD_SVGS)))
+$(eval $(call RESOURCES_METRIC_RULES,resources-fauna,fisheries-production,fisheries,$(RESOURCES_FAUNA_FISHERIES_SVGS)))
+$(eval $(call RESOURCES_METRIC_RULES,resources-fauna,coral-reef-threat,reefs,$(RESOURCES_FAUNA_REEFS_SVGS)))
+$(eval $(call RESOURCES_METRIC_RULES,resources-flora,forest-area-percent,forest,$(RESOURCES_FLORA_SVGS)))
+$(eval $(call RESOURCES_METRIC_RULES,resources-mineral,rare-earth-mine-production,rare-earth,$(RESOURCES_MINERAL_SVGS)))
+$(eval $(call RESOURCES_METRIC_RULES,resources-human,population-under-30,under-30,$(RESOURCES_HUMAN_UNDER_30_SVGS)))
+$(eval $(call RESOURCES_METRIC_RULES,resources-human,population-over-60,over-60,$(RESOURCES_HUMAN_OVER_60_SVGS)))
+$(eval $(call RESOURCES_METRIC_RULES,resources-human,upper-secondary-attainment,upper-secondary,$(RESOURCES_HUMAN_UPPER_SECONDARY_SVGS)))
+$(eval $(call RESOURCES_METRIC_RULES,resources-human,bachelors-attainment,bachelors,$(RESOURCES_HUMAN_BACHELORS_SVGS)))
+$(eval $(call RESOURCES_METRIC_RULES,resources-human,resident-patent-applications-per-million,patents,$(RESOURCES_HUMAN_PATENTS_SVGS)))
 
-generate-resources-cahill-keyes: \
-	generate-resources-energy-cahill-keyes \
-	generate-resources-food-cahill-keyes generate-resources-flora-cahill-keyes \
-	generate-resources-mineral-cahill-keyes generate-resources-human-cahill-keyes
-generate-resources-authagraph: \
-	generate-resources-energy-authagraph generate-resources-food-authagraph \
-	generate-resources-flora-authagraph generate-resources-mineral-authagraph \
-	generate-resources-human-authagraph
-generate-resources-dymaxion: \
-	generate-resources-energy-dymaxion generate-resources-food-dymaxion \
-	generate-resources-flora-dymaxion generate-resources-mineral-dymaxion \
-	generate-resources-human-dymaxion
-generate-resources-myriahedral: \
-	generate-resources-energy-myriahedral generate-resources-food-myriahedral \
-	generate-resources-flora-myriahedral generate-resources-mineral-myriahedral \
-	generate-resources-human-myriahedral
-generate-resources-star-x: \
-	generate-resources-energy-star-x generate-resources-food-star-x \
-	generate-resources-flora-star-x generate-resources-mineral-star-x \
-	generate-resources-human-star-x
-generate-resources-voronoi: \
-	generate-resources-energy-voronoi generate-resources-food-voronoi \
-	generate-resources-flora-voronoi generate-resources-mineral-voronoi \
-	generate-resources-human-voronoi
+# $(1): family; $(2): all released family SVGs.
+define RESOURCES_FAMILY_AGGREGATES
+generate-$(1)-cahill-keyes: $(addsuffix .gz,$(filter %-ck-44-22.svg,$(2)))
+generate-$(1)-authagraph: $(addsuffix .gz,$(filter %-authagraph-44-19.052559.svg,$(2)))
+generate-$(1)-dymaxion: $(addsuffix .gz,$(filter %-dymaxion-44-20.78461.svg,$(2)))
+generate-$(1)-myriahedral: $(addsuffix .gz,$(filter %-myriahedral-44-24.75.svg,$(2)))
+generate-$(1)-star-x: $(addsuffix .gz,$(filter %-star-x-34-44.svg,$(2)))
+generate-$(1)-voronoi: $(addsuffix .gz,$(filter %-voronoi-44-22.916667.svg,$(2)))
+endef
+
+$(eval $(call RESOURCES_FAMILY_AGGREGATES,resources-energy,$(RESOURCES_ENERGY_SVGS)))
+$(eval $(call RESOURCES_FAMILY_AGGREGATES,resources-food,$(RESOURCES_FOOD_SVGS)))
+$(eval $(call RESOURCES_FAMILY_AGGREGATES,resources-fauna,$(RESOURCES_FAUNA_SVGS)))
+$(eval $(call RESOURCES_FAMILY_AGGREGATES,resources-flora,$(RESOURCES_FLORA_SVGS)))
+$(eval $(call RESOURCES_FAMILY_AGGREGATES,resources-mineral,$(RESOURCES_MINERAL_SVGS)))
+$(eval $(call RESOURCES_FAMILY_AGGREGATES,resources-human,$(RESOURCES_HUMAN_SVGS)))
+
+generate-resources-cahill-keyes: $(addsuffix .gz,$(filter %-ck-44-22.svg,$(RESOURCES_SVGS)))
+generate-resources-authagraph: $(addsuffix .gz,$(filter %-authagraph-44-19.052559.svg,$(RESOURCES_SVGS)))
+generate-resources-dymaxion: $(addsuffix .gz,$(filter %-dymaxion-44-20.78461.svg,$(RESOURCES_SVGS)))
+generate-resources-myriahedral: $(addsuffix .gz,$(filter %-myriahedral-44-24.75.svg,$(RESOURCES_SVGS)))
+generate-resources-star-x: $(addsuffix .gz,$(filter %-star-x-34-44.svg,$(RESOURCES_SVGS)))
+generate-resources-voronoi: $(addsuffix .gz,$(filter %-voronoi-44-22.916667.svg,$(RESOURCES_SVGS)))
 
 $(RESOURCES_SVG_ARCHIVES): $(GENERATED_SVG_DIR)/%.svg.gz: \
 		$(GENERATED_SVG_DIR)/%.svg
@@ -1621,11 +1689,13 @@ $(RESOURCES_SVG_ARCHIVES): $(GENERATED_SVG_DIR)/%.svg.gz: \
 
 generate-resources-energy: $(addsuffix .gz,$(RESOURCES_ENERGY_SVGS))
 generate-resources-food: $(addsuffix .gz,$(RESOURCES_FOOD_SVGS))
+generate-resources-fauna: $(addsuffix .gz,$(RESOURCES_FAUNA_SVGS))
 generate-resources-flora: $(addsuffix .gz,$(RESOURCES_FLORA_SVGS))
 generate-resources-mineral: $(addsuffix .gz,$(RESOURCES_MINERAL_SVGS))
 generate-resources-human: $(addsuffix .gz,$(RESOURCES_HUMAN_SVGS))
 generate-resources: $(RESOURCES_SVG_ARCHIVES)
 generate-resources-stage6b: generate-resources
+generate-resources-stage12: generate-resources
 generate-resources-projections: $(RESOURCES_SVG_ARCHIVES)
 generate-resources-artifacts: $(RESOURCES_SVG_ARCHIVES) \
 	$(RESOURCES_PDFS) $(RESOURCES_PNGS)
@@ -1820,6 +1890,13 @@ $(PORTRAIT_PNGS): $(GENERATED_PNG_DIR)/%.png: \
 		$(GENERATED_SVG_DIR)/%.svg Makefile | $(GENERATED_PNG_DIR)
 	$(call EXPORT_PNG,--export-height)
 
+$(CK_SNAPSHOT_THUMBNAILS): PNG_LONG_SIDE=$(CK_SNAPSHOT_WIDTH)
+$(CK_SNAPSHOT_THUMBNAILS): $(CK_SNAPSHOT_THUMBNAIL_DIR)/%.png: \
+		$(GENERATED_SVG_DIR)/%.svg Makefile | $(CK_SNAPSHOT_THUMBNAIL_DIR)
+	$(call EXPORT_PNG,--export-width)
+
+generate-snapshot-ck: $(CK_SNAPSHOT_THUMBNAILS)
+
 generate-voroni: generate-voronoi
 
 generate-geometry-projections: \
@@ -1879,5 +1956,5 @@ clean:
 		$(MYRIA_WEB_MODULE) $(MYRIA_WEB_WASM) \
 		$(PROJECTIONS_WEB_MODULE) $(PROJECTIONS_WEB_WASM)
 	$(RM) -r "$(GENERATED_DIR)/svg" "$(GENERATED_DIR)/png" \
-		"$(GENERATED_DIR)/pdf"
+		"$(GENERATED_DIR)/pdf" "$(CK_SNAPSHOT_THUMBNAIL_DIR)"
 	$(RM) -r "$(DOXYGEN_OUTPUT_DIR)"

@@ -1,61 +1,71 @@
-# Resources Stage 6b snapshot
+# Resources Stage 12 snapshot
 
-This directory contains the checked, offline inputs for the five-family
-resources generate pass:
+This directory contains the checked, offline inputs for the six resource
+families documented in
+[`docs/resources-implementation-notes.md`](../../docs/resources-implementation-notes.md).
 
-- `resources-profile.json` — strict `cartofreako-resources-profile-v2`
-  catalogue, source register, palettes, default metrics, and declared coverage;
-- `resources-values.json` — normalized ISO3 country observations using
-  `cartofreako-resources-values-v2`;
-- `countries-110m.geojson` — Natural Earth 5.1.1 Admin-0 geometry with the
-  normalized `RESOURCE_A3` join key; and
-- `SHA256SUMS` — digests for all three checked inputs.
+- `resources-profile.json` is the strict
+  `cartofreako-resources-profile-v3` source/metric catalogue and release-gate
+  contract.
+- `resources-values.json` is the
+  `cartofreako-resources-values-v3` store with 1,679 normalized country
+  records.
+- `countries-110m.geojson` is Natural Earth 5.1.1 Admin-0 geometry with the
+  normalized `RESOURCE_A3` join key.
+- `coral-reefs-025deg.geojson` contains 7,215 quarter-degree cells derived
+  from actual WRI reef polygons and their integrated local-threat classes.
+- `SHA256SUMS` authenticates all four checked data files.
 
-Ordinary generation does not use the network. `make check` validates both
-JSON contracts, source/metric references, five family defaults, record counts,
-coverage declarations, geometry joins, and these digests.
+Ordinary generation is network-free. `make check` validates both JSON
+contracts, six family defaults, all 14 released metrics, country and spatial
+release gates, record counts, geometry joins, reef statistics, and digests.
 
-## Released family defaults
+## Released products
 
-The first Stage 6b increment releases one non-sparse country metric per family.
-It also catalogues the requested follow-on metrics without pretending that
-unreleased data are present.
+| Family | Products |
+| --- | --- |
+| `resources-energy` | Solar and wind installed capacity; operating nuclear capacity; petroleum refinery throughput (public alias `petrochemical`) |
+| `resources-food` | Food production index |
+| `resources-fauna` | Total fisheries production; coral-reef integrated local threat |
+| `resources-flora` | Forest area as a percentage of land |
+| `resources-mineral` | Rare-earth mine production |
+| `resources-human` | Population under 30; population 60+; upper-secondary attainment; bachelor’s attainment; resident patent applications per million person-years |
 
-| Family | Default artifact metric | Source period | Checked country records | Release gate |
-| --- | --- | ---: | ---: | --- |
-| `resources-energy` | Installed solar capacity | IRENA 2025 | 169 | 99.832% of the IRENA world total represented |
-| `resources-food` | Food production index | FAO via WDI, 2022 observations | 168 | 95%+ mapped countries and 99%+ mapped population |
-| `resources-flora` | Forest area as percentage of land | FAO via WDI, 2023 observations | 169 | 95%+ mapped countries and effectively all mapped population |
-| `resources-mineral` | Rare-earth mine production | USGS 2025 estimate | 12 producer countries | 99%+ of the rounded USGS world total represented |
-| `resources-human` | Population under age 30 | UN/WDI 2024 inputs | 169 | 95%+ mapped countries and effectively all mapped population |
+Country metrics pass either the broad country/population gate or the
+source-world-output gate appropriate to producer and count-activity
+statistics. The patent rate uses the latter and separately discloses its
+country/population coverage. The reef field passes its separate
+spatial-domain gate. Missing always means unknown, never zero.
 
-`resources-human` also carries a normalized, available age-60-and-older
-series. It is not mixed into the under-30 static artifact.
-
-Missing means unknown, never zero. Every country path stores the metric,
-observation year, value state, and source-facing unit in SVG metadata or data
-attributes. Reported, estimated, derived, remotely sensed, facility, and legal
-evidence classes remain separate.
+The coral-reef preparation audits 24 WRI source features and 63,383 reef
+polygons, assigns each polygon by an interior point to a 0.25° cell, and keeps
+the highest Low/Medium/High/Very High threat class where polygons overlap.
+The result indicates reef presence and threat class, not fractional reef area
+within each cell.
 
 ## Source boundary
 
-The checked snapshot is a normalized factual extract, not a redistribution of
-the upstream reports. The profile records each source URL, release, retrieval
-date, license note, and, where a source file was inspected directly, its
-SHA-256 digest. The WDI entry is one deterministic digest over the exact
-ZIP/JSON input selected for every indicator code.
+The snapshot is a normalized factual extract, not a redistribution of the
+upstream reports. The profile records source URL, release, retrieval date,
+license note, and SHA-256 digest/status.
 
 - Natural Earth 5.1.1 Admin-0 geometry is public domain.
-- IRENA *Renewable Capacity Statistics 2026* supplies 2025 solar capacity.
+- IRENA *Renewable Capacity Statistics 2026* supplies 2025 solar and wind
+  capacity.
+- IAEA RDS-2/45 supplies operating nuclear capacity at 31 December 2024.
+- UN Energy Statistics supplies current petroleum refinery throughput; rows
+  older than 2018 are excluded from the rendered product.
 - USGS *Mineral Commodity Summaries 2026* supplies estimated 2025 rare-earth
-  mine production in metric tonnes of rare-earth-oxide equivalent.
-- World Development Indicators, refreshed 2026-07-13 under CC BY 4.0, supplies
-  the FAO forest/food series and UN population age inputs.
+  mine production.
+- World Development Indicators supplies the FAO food, forest, and fisheries
+  series plus population, education, and patent inputs under CC BY 4.0.
+- WRI *Reefs at Risk Revisited* supplies the 500 m reef/threat geometry under
+  CC BY 3.0.
 
 ## Explicit refresh workflow
 
-Refresh is a maintainer action and can change source observations, geometry,
-coverage, output names, and visual diffs:
+A refresh can change observations, geometry, coverage, names, and visual
+output and is therefore a maintainer action:
 
 ```sh
 make refresh-resources-data
@@ -63,22 +73,12 @@ make check
 git diff -- assets.static/resources
 ```
 
-`scripts/fetch-resources-data.sh` downloads the pinned Natural Earth, IRENA,
-USGS, and World Bank inputs into a temporary directory. It then invokes
-`scripts/prepare-resources-data.py`, which performs the deterministic joins,
-derivations, coverage calculations, schema emission, and checksums. The
-preparer itself never downloads data and can be run against an audited local
-source set.
+`scripts/fetch-resources-data.sh` downloads the pinned inputs into a temporary
+directory. `scripts/prepare-resources-data.py` performs deterministic joins,
+age/rate derivations, reef reduction, release-gate calculations, schema
+emission, and checksums; the preparer itself never downloads data.
 
-Before accepting a refresh, review:
-
-1. upstream release names, URLs, licenses, and file digests;
-2. every IRENA country-name join and the solar world-total check;
-3. the USGS rare-earth table transcription and rounded world total;
-4. the fixed 2024 inputs and formula for under-30 and over-60 percentages;
-5. every default metric's non-sparse gate; and
-6. generated SVG/PNG visual diffs for all six projections.
-
-The USGS transcription lives visibly in the preparer because PDF footnote
-layout is not a stable machine-readable table. A new MCS release requires a
-reviewed code/data change; silently scraping shifted PDF columns is rejected.
+Before accepting a refresh, review source names, URLs, terms, and digests;
+IRENA/IAEA/USGS table anchors and totals; all country-name joins; the human
+age and patent formulas; current-year filters; country/output/spatial gates;
+and generated visual/XML diffs in all six projections.

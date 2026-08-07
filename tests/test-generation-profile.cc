@@ -71,7 +71,7 @@ main()
   const std::vector<std::string> all_targets = generation::targets(everything);
   assert(everything.all_projections);
   assert(everything.all_passes);
-  assert(all_targets.size() == 96);
+  assert(all_targets.size() == 102);
   assert(all_targets.front() == "generate-geometry-cahill-keyes");
   assert(all_targets.back() == "generate-cloud-atmosphere-voronoi");
   std::vector<std::string> unique_targets = all_targets;
@@ -97,7 +97,7 @@ main()
                               "bathymetry-roulette",
                               "network-infrastructure", "anthropocene",
                               "resources-energy", "resources-food",
-                              "resources-flora", "resources-mineral",
+                              "resources-fauna", "resources-flora", "resources-mineral",
                               "resources-human", "cloud-atmosphere"}));
   const std::vector<std::string> alias_targets = generation::targets(aliases);
   assert(alias_targets.front() == "generate-graticules-star-x");
@@ -140,6 +140,7 @@ main()
   assert((resource_aliases.passes == std::vector<std::string> {
                                            "resources-energy",
                                            "resources-food",
+                                           "resources-fauna",
                                            "resources-flora",
                                            "resources-mineral",
                                            "resources-human"}));
@@ -147,6 +148,7 @@ main()
           == std::vector<std::string> {
                "generate-resources-energy-cahill-keyes",
                "generate-resources-food-cahill-keyes",
+               "generate-resources-fauna-cahill-keyes",
                "generate-resources-flora-cahill-keyes",
                "generate-resources-mineral-cahill-keyes",
                "generate-resources-human-cahill-keyes"}));
@@ -156,17 +158,19 @@ main()
     {
       "schema_version": 1,
       "projections": ["ck"],
-      "passes": ["energy", "ressources-flora", "minerals", "human"]
+      "passes": ["energy", "reefs", "ressources-flora", "minerals", "human"]
     }
   )json");
   assert((resource_family_aliases.passes == std::vector<std::string> {
                                                 "resources-energy",
+                                                "resources-fauna",
                                                 "resources-flora",
                                                 "resources-mineral",
                                                 "resources-human"}));
   assert((generation::targets(resource_family_aliases)
           == std::vector<std::string> {
                "generate-resources-energy-cahill-keyes",
+               "generate-resources-fauna-cahill-keyes",
                "generate-resources-flora-cahill-keyes",
                "generate-resources-mineral-cahill-keyes",
                "generate-resources-human-cahill-keyes"}));

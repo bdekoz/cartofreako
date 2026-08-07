@@ -1,4 +1,4 @@
-// Stage 6b resources generator entry point.
+// Stage 12 resources generator entry point.
 // -*- mode: C++ -*-
 
 #include <exception>

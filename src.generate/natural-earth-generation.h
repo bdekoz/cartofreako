@@ -803,6 +803,13 @@ render_star_x_source(svg::group_element& output, const layer_spec& spec,
     cap_polygons[index]
       = make_antarctic_cap_polygon(cap, longitude_bands[index]);
 
+  // SVG paint order is document order. Keep the ordinary Star-X quadrant
+  // paths and the reassembled Antarctic cap in separate queues, then append
+  // the cap last. Emitting each cap fragment inside the feature/band loop
+  // allowed later quadrant paths to paint over it and visibly clip the
+  // transformed polar projection.
+  std::vector<std::string> quadrant_paths;
+  std::vector<std::string> antarctic_paths;
   render_stats stats;
   layer->ResetReading();
   std::size_t sequential_feature = 0;
@@ -855,8 +862,8 @@ render_star_x_source(svg::group_element& output, const layer_spec& spec,
               const std::string attributes
                 = spec.role == geometry_role::area
                     ? R"(fill-rule="evenodd")" : std::string {};
-              output.add_element(svg::make_path(
-                path_data, spec.style, id, true, attributes));
+              quadrant_paths.push_back(svg::make_path(
+                path_data, spec.style, id, true, attributes).str());
               rendered_feature = true;
               ++stats.paths;
               stats.points += point_count;
@@ -883,8 +890,8 @@ render_star_x_source(svg::group_element& output, const layer_spec& spec,
           const std::string attributes
             = spec.role == geometry_role::area
                 ? R"(fill-rule="evenodd")" : std::string {};
-          output.add_element(svg::make_path(
-            path_data, spec.style, id, true, attributes));
+          antarctic_paths.push_back(svg::make_path(
+            path_data, spec.style, id, true, attributes).str());
           rendered_feature = true;
           ++stats.paths;
           stats.points += point_count;
@@ -894,6 +901,11 @@ render_star_x_source(svg::group_element& output, const layer_spec& spec,
                 + path.string() + " feature "
                 + std::to_string(sequential_feature));
     }
+
+  for (const std::string& path : quadrant_paths)
+    output.add_raw(path);
+  for (const std::string& path : antarctic_paths)
+    output.add_raw(path);
 
   require(stats.source_features != 0 && stats.paths != 0,
           "Natural Earth layer produced no Star-X paths: " + path.string());
@@ -1325,6 +1337,24 @@ reject_layer(const std::string& generated, const std::string_view layer)
 }
 
 void
+require_star_x_antarctic_overlay(const std::string& generated,
+                                 const std::string_view layer)
+{
+  const std::string quadrant_id
+    = "id=\"" + std::string(layer) + "-feature-";
+  const std::string antarctic_id
+    = "id=\"" + std::string(layer) + "-antarctic-fragment-";
+  const std::size_t last_quadrant = generated.rfind(quadrant_id);
+  const std::size_t first_antarctic = generated.find(antarctic_id);
+  require(first_antarctic != std::string::npos
+            && (last_quadrant == std::string::npos
+                || last_quadrant < first_antarctic),
+          "generated Star-X " + std::string(layer)
+            + " Antarctic projection must paint above every ordinary "
+              "quadrant path");
+}
+
+void
 verify_earth(const std::string& generated,
              const projection_context& context)
 {
@@ -1372,6 +1402,7 @@ verify_earth(const std::string& generated,
       require(generated.find("id=\"land-antarctic-fragment-")
                 != std::string::npos,
               "generated Star-X earth SVG is missing unified Antarctica");
+      require_star_x_antarctic_overlay(generated, "land");
     }
 }
 
@@ -1405,6 +1436,8 @@ verify_water(const std::string& generated,
                 "id=\"antarctic-ice-shelves-antarctic-fragment-")
                 != std::string::npos,
               "generated Star-X water SVG is missing unified ice shelves");
+      require_star_x_antarctic_overlay(generated, "coastline");
+      require_star_x_antarctic_overlay(generated, "antarctic-ice-shelves");
     }
 }
 

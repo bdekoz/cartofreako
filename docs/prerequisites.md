@@ -72,13 +72,14 @@ digest validation remains in the stricter network-infrastructure source-check
 targets.
 
 `make all` builds 24 production whole-earth maps, 12 astronomy maps, 12
-Orbital Technosphere maps, 30 Stage 6b resource maps, six Anthropocene maps,
+Orbital Technosphere maps, 84 Stage 12 resource maps, six Anthropocene maps,
 12 Anthropocene temperature maps, six network-swarm maps, six
 network-infrastructure site maps, six Bathymetry Roulette maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes slices, and two
-Myriahedral face-group slices, then invokes Inkscape to export all 133 SVG
-products as PDFs and 3840-pixel-long-side PNGs. The 30 resources SVGs are
-also retained as deterministic `.svg.gz` companions. It needs all native build
+Myriahedral face-group slices, then invokes Inkscape to export all 187 SVG
+products as PDFs and 3840-pixel-long-side PNGs and adds 28 lower-resolution
+Cahill–Keyes thumbnails. The 84 resources SVGs are also retained as
+deterministic `.svg.gz` companions. It needs all native build
 and data-acquisition dependencies through H3 and GEOS, the
 profile-pinned external cloud/CDN checkout, plus Inkscape. The separately
 licensed TeleGeography topology product is not part of `make all`.
@@ -116,7 +117,9 @@ keep-going first pass; `make ASSET_JOBS=1 assets-resilient` and `make
 assets-single` avoid concurrent export peaks on smaller machines. Reserve at
 least 4 GB beyond the source and input-data checkouts for generated outputs and
 atomic export temporaries, plus about 0.85 GB when packaging the XZ file in the
-same workspace.
+same workspace. That is the measured `v20260806` envelope; Stage 12 adds 54
+resource maps and 28 thumbnails, so its exact higher disk requirement must be
+recorded from the completed release bundle rather than inferred here.
 
 See the [`v20260806` release notes](releases/v20260806.md) for the complete
 hardware record, byte manifest, validation results, and extraction procedure.
@@ -133,10 +136,30 @@ targets documented in the
 [Cloud-atmosphere notes](cloud-atmosphere-implementation-notes.md).
 
 Normal resources generation needs only the checked profile, normalized values,
-compact country geometry, RapidJSON, GDAL, Natural Earth, and label font. An
+compact country and reef geometry, RapidJSON, GDAL, Natural Earth, and label font. An
 explicit `make refresh-resources-data` maintainer refresh additionally needs
-Python 3, `curl`, `unzip`, and Poppler's `pdftotext`; it is never run by normal
-generation. See the [resources notes](resources-implementation-notes.md).
+Python 3 with GDAL/OGR bindings, `curl`, `unzip`, and Poppler's `pdftotext`;
+it is never run by normal generation. See the
+[resources notes](resources-implementation-notes.md).
+
+## Optional external authorization
+
+After completing provider registration and reviewing the applicable external
+terms, validate all optional authorization boundaries with:
+
+```sh
+FIRMS_MAP_KEY='…' \
+NETWORK_TOPOLOGY_LICENSE_ACCEPTED=CC-BY-NC-SA-3.0 \
+make authorize-external
+```
+
+The check requires a private `PTREE_NETRC` (default `~/.netrc`) with a P-Tree
+machine entry, a working NASA FIRMS key, and the three pinned topology source
+roots. It performs read-only live P-Tree/FIRMS checks and offline topology
+commit/digest checks. Use `EXTERNAL_PASSES='jaxa-ptree nasa-firms'` or another
+subset when only selected optional passes are needed. It does not register an
+account, accept legal terms, fetch production data, or generate artifacts; see
+the [Stage 12 authorization notes](stage-12-implementation-notes.md#optional-external-authorization).
 
 ## Install the system packages
 
@@ -573,7 +596,8 @@ git clone https://github.com/telegeography/www.internetexchangemap.com.git \
   ../www.internetexchangemap.com
 git -C ../www.internetexchangemap.com checkout \
   2b9c36ad7fad083c0b4db998c4dedadc1ba89027
-make check-network-infrastructure-topology-sources
+make EXTERNAL_PASSES=network-topology \
+  NETWORK_TOPOLOGY_LICENSE_ACCEPTED=CC-BY-NC-SA-3.0 authorize-external
 make generate-network-infrastructure-topology
 make generate-network-infrastructure-topology-artifacts
 ```
@@ -689,13 +713,16 @@ Make inherited a `-j` setting.
 Successful generation places six geometry maps, six graticule maps, six
 Earth maps, eleven water maps (six production plus five exploratory
 Myriahedral perspectives), 12 astronomy maps, 12 Orbital Technosphere maps,
-30 resources maps, six Anthropocene maps, 12 Anthropocene temperature maps,
+84 Stage 12 resources maps, six legacy Anthropocene observation maps, 12
+default Anthropocene temperature maps,
 six network-swarm maps, six network-infrastructure site maps, six Bathymetry
 Roulette maps, four quadrant slices, eight
 octant slices, and two Myriahedral face-group
 slices in each of `assets.generated/svg/`,
 `assets.generated/pdf/`, and `assets.generated/png/`; resources use `.svg.gz`
-inside the SVG directory. Every PNG preserves its
+inside the SVG directory. The graph also writes 28 480-pixel-wide Cahill-Keyes
+thumbnails under `assets.generated/thumbnail/cahill-keyes/`. Every full-size
+PNG preserves its
 source aspect ratio, has a 3840-pixel longest side, and is flattened against
 opaque white.
 
@@ -714,10 +741,11 @@ opaque white.
 | Natural Earth checksum mismatch | Remove only the corrupt downloaded archive, then rerun the fetch target; do not bypass verification |
 | Anthropocene normalized checksum or audit mismatch | Restore the checked profile/GeoJSON pair or deliberately promote a reviewed candidate with its checksum, coverage dates, tests, documentation, and all six products |
 | `FIRMS_MAP_KEY` is unset | The checked/default CWFIS fire layer still works; obtain a free NASA FIRMS map key only when deliberately refreshing global and Russian coverage |
+| `authorize-external` rejects P-Tree | Put the registered credentials in the `ftp.ptree.jaxa.jp` entry of `PTREE_NETRC`, restrict the file to owner-only access, and retry the read-only check |
 | Network-swarm archive/member checksum mismatch | Restore the checked-in network-swarm archive or deliberately update the archive, profile provenance, hashes, tests, documentation, and all six products together |
 | Cloud/CDN or submarine-cable source checkout is missing | Clone the documented repository beside `cartofreako`, or set `NETWORK_INFRASTRUCTURE_CLOUD_SOURCE` or `SUBMARINE_CABLE_SOURCE`; run `make check-prerequisite` before `make all` |
 | Network-infrastructure checkout, commit, or digest mismatch | Point the Make variables at the profile-pinned external checkouts, restore the consumed tracked paths, or deliberately update the profile, tests, documentation, and artifacts together |
-| Network-infrastructure topology opt-in rejected | Use the checked topology profile with `tele_geography_opt_in: true` and invoke `generate-network-infrastructure-topology`; normal generation intentionally cannot enable TeleGeography layers |
+| Network-infrastructure topology opt-in rejected | Review the source terms, set `NETWORK_TOPOLOGY_LICENSE_ACCEPTED=CC-BY-NC-SA-3.0`, run `make EXTERNAL_PASSES=network-topology authorize-external`, and then invoke the explicit topology target |
 | Inkscape is slow on an Earth, water, Bathymetry Roulette, orbital, Anthropocene, network-swarm, or network-infrastructure SVG | Close other large documents and inspect one layer family at a time |
 | `em++: command not found` | Install and activate emsdk, then source its environment script in the current shell |
 

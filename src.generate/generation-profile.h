@@ -29,16 +29,17 @@ inline constexpr std::array<std::string_view, 6> supported_projections {
   "voronoi",
 };
 
-inline constexpr std::array<std::string_view, 5> resource_passes {
-  "resources-energy", "resources-food", "resources-flora",
+inline constexpr std::array<std::string_view, 6> resource_passes {
+  "resources-energy", "resources-food", "resources-fauna", "resources-flora",
   "resources-mineral", "resources-human",
 };
 
-inline constexpr std::array<std::string_view, 16> supported_passes {
+inline constexpr std::array<std::string_view, 17> supported_passes {
   "geometry", "graticules", "earth", "water", "astronomy",
   "orbital-technosphere", "network-swarm", "bathymetry-roulette",
   "network-infrastructure", "resources-energy", "resources-food",
-  "resources-flora", "resources-mineral", "resources-human", "anthropocene",
+  "resources-fauna", "resources-flora", "resources-mineral",
+  "resources-human", "anthropocene",
   "cloud-atmosphere",
 };
 
@@ -126,6 +127,10 @@ canonical_pass(const std::string_view input)
   if (value == "food" || value == "resources-food"
       || value == "resource-food")
     return "resources-food";
+  if (value == "fauna" || value == "resources-fauna"
+      || value == "resource-fauna" || value == "fisheries"
+      || value == "reefs")
+    return "resources-fauna";
   if (value == "flora" || value == "resources-flora"
       || value == "resource-flora"
       || value == "ressources-flora")

@@ -35,10 +35,11 @@ decision after the fact.
 | 4.4 | `generate-network-swarm` | **Implemented** | Confirmed variable-input contract, fixed cumulative snapshot, H3/Izzi clustering, projection-safe components, independent downloader layers, products, and limits are detailed in the [network-swarm implementation notes](network-swarm-implementation-notes.md) |
 | 4.5 | `generate-bathymetry-roulette` | **Implemented** | Confirmed depth-to-curve catalogue, explicit varied page-space line fields, Natural Earth clipping, accepted moiré, products, and limits are detailed in the [Bathymetry Roulette implementation notes](bathymetry-roulette-implementation-notes.md) |
 | 6a | `generate-resources` / World Game | **Historical method only; implementation retired** | A bounded 1960 production-leader transcription was feasible, but it was not a current resources atlas; its data, renderer, targets, and generated products were removed at the Stage 6b cutover |
-| 6b | `resources-energy`, `resources-food`, `resources-flora`, `resources-mineral`, `resources-human` | **Implemented first increment** | Five current-source, metric-specific product families, v2 normalized values, non-sparse coverage gates, deterministic archives, source refresh, and six-projection rules are implemented; planned enrichment remains in the [Stage 6b plan](resources-enrichment-plan.md) |
+| 6b | `resources-energy`, `resources-food`, `resources-flora`, `resources-mineral`, `resources-human` | **Implemented historical first increment; superseded by Stage 12** | The five-family v2 baseline established metric separation, non-sparse coverage gates, deterministic archives, source refresh, and six-projection rules |
 | 7 | Configurable `generate-*` selection | **Implemented infrastructure** | JSON profile, validation, safe target expansion, default Make behavior, alternatives, and scope boundaries are recorded in this document |
 | 8 / 8b | `generate-anthropocene`; `generate-anthropocene-{2025,2026}` | **Implemented observation atlas and first Stage 8b field increment** | The checked source-separated partial-2026 atlas remains; complete-2025 and partial-2026 CPC temperature fields plus a required-global-FIRMS refresh gate are implemented, while CAMS, PurpleAir, and ocean themes remain planned in the [Stage 8b enrichment plan](anthropocene-enrichment-plan.md) |
 | 9 | `generate-network-infrastructure` | **Implemented** | Confirmed external-source contract, normal cloud/CDN site atlas, explicit CC BY-NC-SA 3.0 topology opt-in, physical/logical relation boundary, projection-safe paths, Izzi detiling, products, and limits are detailed in the [network-infrastructure implementation notes](network-infrastructure-implementation-notes.md) |
+| 12 | Expanded resources, dual-year Anthropocene defaults, external authorization, and Cahill-Keyes snapshot | **Implemented** | Six resource families and 14 v3 country/spatial products, five released human products plus two rejected coverage attempts, fisheries plus actual reef geometry, 2025/2026 default fields, `authorize-external`, 28 thumbnails, and Star-X Antarctic paint order are detailed in the [Stage 12 notes](stage-12-implementation-notes.md) |
 
 The unnumbered `solar/high-energy`, `atmosphere/cloud`, and
 `small-body/mission` lines in the raw ledger are taxonomy notes, not extra
@@ -217,16 +218,19 @@ points, profile, or rendering model. The cutover removed the old generated
 files and generation rules rather than retaining an opt-in compatibility
 product.
 
-### Stage 6b: current resources enrichment
+### Stage 6b baseline and Stage 12 resources expansion
 
 The re-evaluation concluded that “resources” is not one comparable scalar and
-must not be represented by a collection of country-leader points. Stage 6b is
-implemented as five target families:
+must not be represented by a collection of country-leader points. Stage 12
+retains the Stage 6b metric-separation rule and implements six target
+families:
 
 - `resources-energy` for capacity, generation, extraction, refining, and
   explicitly scoped processing;
 - `resources-food` for crops, livestock, fisheries, aquaculture, and separately
   defined dietary-energy or protein supply;
+- `resources-fauna` for fisheries and spatially explicit reef condition or
+  threat data;
 - `resources-flora` for land cover, forest density and change, biome classes,
   and sampling-aware plant biodiversity;
 - `resources-mineral` for current mine/refined production, reserves,
@@ -241,16 +245,17 @@ global fields provide the non-sparse baseline; audited facilities, deposits,
 occurrences, and legal-policy observations are supplemental unless they pass a
 documented coverage gate.
 
-The first released defaults are 2025 installed solar capacity, the latest
-accepted food-production index and forest-area percentage, 2025 estimated
-rare-earth mine production, and derived 2024 population under age 30. The v2
-catalogue also holds an available age-60+ series and explicitly planned,
-supplemental, or research-gap status for the remaining requested concepts.
-The source catalogue, travel/books/fracking boundaries, current
-critical-mineral shortlist, normalized schema, explicit refresh workflow,
-implementation sequence, and release thresholds are recorded in the
-[`Resources Stage 6b enrichment plan`](resources-enrichment-plan.md) and
-[`implementation notes`](resources-implementation-notes.md).
+The released v3 catalogue contains four energy products (solar, wind,
+nuclear, and precisely labelled petroleum-refinery throughput), food
+production, fisheries production, a 7,215-cell field derived from actual WRI
+reef geometry, forest-area percentage, rare-earth mine production, and five
+human products: population under 30, population over 60, upper-secondary
+attainment, bachelor's attainment, and resident patent applications per
+million. Literacy and advanced-degree candidates remain documented failed
+coverage attempts rather than sparse release maps. The source catalogue,
+normalized country/spatial schema, explicit refresh workflow, and release
+thresholds are recorded in the [`Resources Stage 12 enrichment plan`](resources-enrichment-plan.md)
+and [`implementation notes`](resources-implementation-notes.md).
 
 ### Stage 8: Anthropocene observation atlas
 
@@ -423,10 +428,11 @@ Normalization is limited and deterministic:
 - `orbiting` becomes `orbital-technosphere`;
 - the former `network` name and short `swarm` name become `network-swarm`;
 - `infrastructure` becomes `network-infrastructure`;
-- `resource` and the historical request typo `resouces` expand to the five
+- `resource` and the historical request typo `resouces` expand to the six
   `resources-*` family passes;
-- `energy`, `food`, `flora`, `mineral`/`minerals`, and `human`, plus the
+- `energy`, `food`, `fauna`, `flora`, `mineral`/`minerals`, and `human`, plus the
   corresponding `resource-*` spellings, normalize to their canonical family;
+  `fisheries` and `reefs` normalize to `resources-fauna`;
   the requested
   `ressources-flora` spelling becomes `resources-flora`;
 - `bathymetry-rolette` and `art-agua-roulette` become
@@ -440,14 +446,14 @@ twice.
 
 The supported cross-product is:
 
-| Projection selector | Geometry | Graticules | Earth | Water | Astronomy | Orbital Technosphere | Network-swarm | Stage 6b resource families | Bathymetry Roulette | Anthropocene | Network infrastructure |
+| Projection selector | Geometry | Graticules | Earth | Water | Astronomy | Orbital Technosphere | Network-swarm | Stage 12 resources aggregate | Bathymetry Roulette | Anthropocene defaults | Network infrastructure |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `cahill-keyes` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 5 SVG.gz | 1 SVG | 1 SVG | 1 SVG |
-| `authagraph` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 5 SVG.gz | 1 SVG | 1 SVG | 1 SVG |
-| `dymaxion` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 5 SVG.gz | 1 SVG | 1 SVG | 1 SVG |
-| `myriahedral` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 5 SVG.gz | 1 SVG | 1 SVG | 1 SVG |
-| `star-x` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 5 SVG.gz | 1 SVG | 1 SVG | 1 SVG |
-| `voronoi` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 5 SVG.gz | 1 SVG | 1 SVG | 1 SVG |
+| `cahill-keyes` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 2 SVGs | 1 SVG |
+| `authagraph` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 2 SVGs | 1 SVG |
+| `dymaxion` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 2 SVGs | 1 SVG |
+| `myriahedral` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 2 SVGs | 1 SVG |
+| `star-x` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 2 SVGs | 1 SVG |
+| `voronoi` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 2 SVGs | 1 SVG |
 
 Astronomy resolves to `generate-astro-PROJECTION`, which intentionally makes
 both all-sky and observer products. Orbital Technosphere resolves to
@@ -459,11 +465,13 @@ Network-swarm resolves to `generate-network-swarm-PROJECTION` and makes the
 one cumulative swarm product. Bathymetry Roulette similarly resolves to
 `generate-bathymetry-roulette-PROJECTION` and makes one monochrome depth map.
 Each canonical resource-family selector resolves to
-`generate-resources-FAMILY-PROJECTION` and makes its one metric-specific
-default as a deterministic `.svg.gz` archive. The aggregate `resources`
-selector expands to all five canonical passes before targets are emitted.
-Anthropocene resolves to `generate-anthropocene-PROJECTION` and makes one
-source-separated observation atlas. Network infrastructure resolves to
+`generate-resources-FAMILY-PROJECTION` and makes every released metric in
+that family as a deterministic `.svg.gz` archive. The aggregate `resources`
+selector expands to all six canonical passes and all 14 products before
+targets are emitted. Anthropocene resolves to
+`generate-anthropocene-PROJECTION` and makes the 2025 and 2026 temperature
+fields; the source-separated observation atlas remains under explicit
+`generate-anthropocene-atlas-PROJECTION` targets. Network infrastructure resolves to
 `generate-network-infrastructure-PROJECTION` and makes only the cloud/CDN site
 atlas; licensed topology is intentionally not a profile-selectable product.
 
@@ -502,8 +510,10 @@ make all
 ```
 
 This remains the release/review build. It creates the complete layered SVG,
-PDF, and opaque-PNG suite, including Stage 6b defaults plus slice and
-perspective families outside the configurable matrix. The aliases
+PDF, and opaque-PNG suite, including all 84 Stage 12 resource maps plus slice
+and perspective families outside the configurable matrix. It also makes the
+28 lower-resolution Cahill-Keyes thumbnails linked from the
+[generated snapshot](generated-snapshot-ck.md). The aliases
 `generate-projections`, `generated-projections`, and `make-generated` retain
 the same full-suite behavior. Use `make assets-resilient` for the bounded
 parallel first pass plus serial completion workflow used to prepare a static
@@ -539,12 +549,19 @@ cloud/CDN site products. The separate
 `generate-network-infrastructure-topology` and
 `generate-network-infrastructure-topology-artifacts` targets are explicit
 CC BY-NC-SA 3.0 opt-ins and never dependencies of the normal family.
-`generate-anthropocene-artifacts` does the same for all six Anthropocene
-products.
-`generate-resources-artifacts` adds PDF and PNG exports to all 30 compressed
-Stage 6b default SVG products.
+`generate-anthropocene-artifacts` does the same for all twelve default 2025
+and 2026 Anthropocene products; `generate-anthropocene-atlas-artifacts`
+exports the six legacy observation-atlas products.
+`generate-resources-artifacts` adds PDF and PNG exports to all 84 compressed
+Stage 12 SVG products.
 `generate-bathymetry-roulette-artifacts` does the same for all six roulette
 bathymetry products.
+
+`generate-snapshot-ck` builds only the 28 480-pixel-wide contact-sheet
+thumbnails and their Cahill-Keyes SVG prerequisites. `authorize-external`
+performs read-only credential/terms-boundary checks for selected optional
+P-Tree, NASA FIRMS, and network-topology passes; it does not fetch source data
+or accept provider terms.
 
 ### Exact targets and artifact paths
 

@@ -1,120 +1,123 @@
-# Resources Stage 6b implementation notes
+# Resources Stage 12 implementation notes
 
 [Documentation index](../index.md) ·
+[Stage 12 overview](stage-12-implementation-notes.md) ·
+[Cahill–Keyes snapshot](generated-snapshot-ck.md) ·
 [Generation guide](generation.md) ·
-[Enrichment and source plan](resources-enrichment-plan.md) ·
-[Generation methods](generation-methods.md)
+[Enrichment plan](resources-enrichment-plan.md)
 
 ## Implemented scope
 
-The resources pass is now five independent current-source families:
+Resources are six independent families: `resources-energy`,
+`resources-food`, `resources-fauna`, `resources-flora`,
+`resources-mineral`, and `resources-human`. The aggregate profile selectors
+`resources`, `resource`, and `resouces` expand to all six. `fisheries` and
+`reefs` select fauna; `ressources-flora` remains a spelling alias for flora.
+There is no combined resource score.
 
-- `resources-energy`;
-- `resources-food`;
-- `resources-flora`;
-- `resources-mineral`; and
-- `resources-human`.
+The checked snapshot releases 14 separate metric products:
 
-`resources-flora` is canonical; `ressources-flora` is accepted only as a
-selector/CLI alias. The aggregate generation-profile values `resources`,
-`resource`, and `resouces` expand to all five families. Each family has its own
-metric catalogue, units, evidence classes, palette, coverage statement, and
-default artifact. There is no combined resource score.
-
-The first released increment maps one non-sparse default per family:
-
-| Family | Default | Artifact stem |
+| Family | Metric | Artifact stem |
 | --- | --- | --- |
-| Energy | IRENA installed solar capacity, 2025 | `resources-energy-solar-capacity-2025` |
-| Food | FAO/WDI food production index, latest accepted snapshot | `resources-food-food-production-index-latest-2026` |
-| Flora | FAO/WDI forest area percentage, latest accepted snapshot | `resources-flora-forest-area-percent-latest-2026` |
-| Mineral | USGS rare-earth mine production, 2025 estimate | `resources-mineral-rare-earth-mine-production-2025` |
-| Human | Derived population under age 30, 2024 | `resources-human-population-under-30-2024` |
+| Energy | Installed solar capacity, 2025 | `resources-energy-solar-capacity-2025` |
+| Energy | Installed wind capacity, 2025 | `resources-energy-wind-capacity-2025` |
+| Energy | Operating nuclear net capacity, 2024 | `resources-energy-nuclear-operating-capacity-2024` |
+| Energy | Petroleum refinery throughput, latest 2018–2024 | `resources-energy-petrochemical-refinery-throughput-latest-2024` |
+| Food | Food production index, 2022 | `resources-food-food-production-index-2022` |
+| Fauna | Total fisheries production, 2024 | `resources-fauna-fisheries-production-latest-2024` |
+| Fauna | Coral-reef integrated local threat, 2011 | `resources-fauna-coral-reef-threat-2011` |
+| Flora | Forest area, 2023 | `resources-flora-forest-area-percent-2023` |
+| Mineral | Rare-earth mine production, 2025 estimate | `resources-mineral-rare-earth-mine-production-2025` |
+| Human | Population under 30, 2024 | `resources-human-population-under-30-2024` |
+| Human | Population 60+, 2024 | `resources-human-population-over-60-2024` |
+| Human | Upper-secondary attainment, latest 2018–2025 | `resources-human-upper-secondary-attainment-latest-2025` |
+| Human | Bachelor’s attainment, latest 2018–2024 | `resources-human-bachelors-attainment-latest-2024` |
+| Human | Resident patent applications per million, 2019–2021 | `resources-human-resident-patent-applications-per-million-2019-2021` |
 
-The normalized values also include population age 60 and older as an
-`available` human metric. Static files still display one metric and unit at a
-time; future promotion of that metric gets its own artifact rather than being
-overpainted on the under-30 map.
+The public term `petrochemical` is only a convenient Make-target alias for the
+precisely labeled refinery-throughput metric. The map is not nameplate
+capacity, extraction, chemical-plant capacity, or all petrochemical output.
 
-## Data contract
+## Data contract and gates
 
 [`resources-profile.json`](../assets.static/resources/resources-profile.json)
-uses `cartofreako-resources-profile-v2`. It defines:
-
-- the snapshot date and missing-value semantics;
-- the checked country-geometry and values files plus their SHA-256 digests;
-- a source register with organization, release, URL, retrieval date, license
-  note, and source digest/status (the WDI digest covers the ordered set of
-  selected indicator ZIP/JSON inputs);
-- exactly five families and one default metric for each;
-- metric title, unit, reference period, evidence class, source IDs, lifecycle
-  status, transform, artifact tag, notes, and optional coverage; and
-- low, high, and missing colors for each family.
+uses `cartofreako-resources-profile-v3`. It defines the source register,
+country geometry and values digests, six families, palettes, metrics, one
+default per family, and either a country coverage definition or a spatial
+definition for every released product.
 
 [`resources-values.json`](../assets.static/resources/resources-values.json)
-uses `cartofreako-resources-values-v2`. Every record contains a family,
-metric, ISO3 join key, observation year, finite nonnegative value, and value
-state (`reported-or-estimated`, `estimated`, or `derived`). Duplicate
-family/metric/country keys are rejected.
+uses `cartofreako-resources-values-v3`. Its 1,679 records contain family,
+metric, ISO3 key, observation year, finite nonnegative value, and value state.
+[`coral-reefs-025deg.geojson`](../assets.static/resources/coral-reefs-025deg.geojson)
+is the separately digested spatial input.
 
-The C++ loader rejects unknown or duplicate JSON members, wrong schemas,
-unknown source or metric references, invalid identifiers/digests/colors,
-duplicate catalog IDs, unreleased metrics carrying values, invalid coverage
-arithmetic, default metrics without passing coverage, snapshot-date drift,
-missing input files, and declared/actual record-count drift.
+The loader rejects unknown/duplicate JSON members, wrong schemas, unknown
+sources or metrics, invalid IDs/digests/colors, values attached to unreleased
+metrics, country and spatial release metadata on the same metric, failed
+gates, missing files, duplicate country keys, and declared/actual count drift.
 
-## Non-sparse release gates
+- Broad country statistics require at least 80% of mapped countries and 90%
+  of mapped population.
+- Production and capacity statistics require at least 90% of the source world
+  total. Country/population coverage remains visible so a producer metric
+  cannot be mistaken for a household statistic.
+- A rate derived from a count-based activity may use the same output-share
+  gate when the source publishes a compatible world numerator. The patent
+  map therefore gates on 95.814% of resident applications while disclosing
+  that its rate denominator covers 93 countries and 81.743% of mapped
+  population; missing countries remain unknown, not zero.
+- A released spatial field must declare a nonempty, checked domain and pass
+  its source-specific gate. The reef gate requires at least 7,000 mapped
+  quarter-degree cells.
+- A source zero is rendered as zero. An absent record or cell is unknown and
+  is never imputed.
 
-Defaults are accepted only when the checked profile says the release gate
-passes and the loader independently confirms the covered-country count.
+Exact release counts and percentages live in the profile and are repeated in
+SVG metadata and legends. The Stage 12 summary records the
+[complete table and rejected human candidates](stage-12-implementation-notes.md#resource-release-definitions).
 
-- Country human/environment/food statistics require at least 80% of mapped
-  countries and 90% of mapped population.
-- Production/capacity statistics require at least 90% of the source world
-  total. The profile also exposes country and population coverage so a narrow
-  producer set cannot be mistaken for a worldwide household statistic.
-- Missing country features are always rendered with the explicit missing
-  color. A numeric zero is rendered only when the source supplies a covered
-  zero record.
+## Human derivations
 
-The released metrics exceed those thresholds. Exact counts and percentages
-are stored beside each default in the profile and repeated in the SVG legend
-and root metadata.
-
-## Human age derivation
-
-The 2024 under-30 percentage uses matched World Bank/UN inputs:
+The 2024 age metrics use matched World Bank/UN sex and age bands:
 
 ```text
 under30 = population(0–14)
-        + female_population × [female%(15–19)+female%(20–24)+female%(25–29)] / 100
-        + male_population   × [male%(15–19)+male%(20–24)+male%(25–29)] / 100
+        + female_population × female%(15–29) / 100
+        + male_population   × male%(15–29) / 100
 
-under30_percent = 100 × under30 / total_population
-```
-
-The available over-60 series is derived separately:
-
-```text
 over60 = population(65+)
        + female_population × female%(60–64) / 100
        + male_population   × male%(60–64) / 100
-
-over60_percent = 100 × over60 / total_population
 ```
 
-All components are fixed to 2024. The generator labels the result `derived`;
-it does not describe it as a direct survey observation.
+Each becomes a percentage of matched total population. The patent product is
+the sum of resident applications in 2019–2021 divided by matched total
+person-years and multiplied by one million. It measures applications, not
+grants, invention quality, or 2026 activity.
+
+The attainment metrics use the latest accepted observation from 2018 onward.
+ISCED 3+ means completed upper secondary or higher; ISCED 6+ means completed
+bachelor’s or equivalent, excluding short-cycle ISCED 5. Adult literacy and
+advanced degrees were tested but remain planned because they miss the current
+non-sparse gate.
+
+## Reef derivation
+
+The WRI KMZ contains six regional layers, each with four integrated
+local-threat features. Preparation checks all 24 source features and 63,383
+polygons. An interior point assigns each polygon to a 0.25° grid cell;
+overlaps retain the highest threat rank. The checked result has 7,215 cells:
+1,493 Low, 1,967 Medium, 1,433 High, and 2,322 Very High.
+
+The reduction is intentionally coarse enough for the six projection products
+and thumbnail review. A filled cell means at least one source reef polygon
+was assigned there; it does not claim full-cell coral area.
 
 ## Rendering contract
 
-The renderer joins values to Natural Earth 5.1.1 Admin-0 geometry through the
-prepared `RESOURCE_A3` field. It uses compact 1:110m country polygons, clips
-them across every projection seam, and uses gridded native-face clipping for
-the non-Cahill-Keyes/non-Star-X nets. Star-X retains the shared Stage 7
-unified-Antarctica construction beneath the country coverage.
-
-Every SVG contains these checked groups:
+Country products join the `RESOURCE_A3` field in compact Natural Earth 1:110m
+geometry and contain:
 
 1. `resources-background`;
 2. `terrestrial-land`;
@@ -123,53 +126,40 @@ Every SVG contains these checked groups:
 5. `resource-country-values`; and
 6. `resource-legend`.
 
-Country paths expose ISO3, family, metric, value, observation year, value
-state, and missingness. RDF metadata contains the complete source and metric
-catalogues plus one catalogue record per mapped default value. After writing,
-the generator reopens the SVG and verifies its viewBox, layers, catalogue
-counts, Stage 6b provenance, non-sparse status, missing-is-not-zero semantics,
-finite coordinates, and configured font.
+The reef product replaces the three country sublayers with
+`resource-spatial-coverage` above subdued 1:10m land. It uses categorical
+Low/Medium/High/Very High colors and a no-mapped-reef swatch. Both branches
+clip across all projection seams and use native-face area clipping where
+required.
+
+Every SVG embeds the complete source and metric catalogues, selected metric,
+units, period, profile/value/geometry digests, gate statistics, Stage 12
+workflow version, and `missing-is-zero=false`. Country paths expose ISO3,
+value, year, and state; reef paths expose threat rank and label. The generator
+reopens and checks the viewBox, branch-specific layers, catalogue counts,
+spatial path count, metadata, finite output, and configured label font.
 
 ## Generate and inspect
 
-Generate one family/projection default, all projections for one family, or the
-complete five-family matrix:
+Family/projection targets build every released metric in that family. Metric
+aliases address one product:
 
 ```sh
-make generate-resources-energy-cahill-keyes
-make generate-resources-energy
-make generate-resources
+make generate-resources-energy-cahill-keyes  # four maps
+make generate-resources-fauna                # fisheries + reefs, six projections
+make generate-resources-human                # five maps, six projections
+make generate-resources-energy-wind
+make generate-resources-fauna-reefs-star-x
+make generate-resources-human-over-60-cahill-keyes
+make generate-resources-stage12              # all 84 maps
 ```
 
-Aggregate projection targets build all five defaults for that projection:
+`make generate-resources-artifacts` adds PDFs and PNGs. Released SVGs are
+stored as deterministic `gzip -n -9` files; their plain SVGs are ignored
+generation/export intermediates. `generate-resources-stage6b` remains a
+compatibility alias for the current full resource graph.
 
-```sh
-make generate-resources-cahill-keyes
-make generate-resources-star-x
-```
-
-`make generate-resources-artifacts` additionally exports PDF and PNG files.
-The checked SVG form is deterministic GNU gzip (`gzip -n -9`); the plain SVG
-is an ignored build/export intermediate.
-
-Inspect one archive without changing it:
-
-```sh
-gzip -cd \
-  assets.generated/svg/resources-energy-solar-capacity-2025-ck-44-22.svg.gz \
-  > /tmp/resources-energy-solar-capacity-2025-ck-44-22.svg
-```
-
-Decompress every generated SVG archive in place while retaining the archives:
-
-```sh
-find assets.generated -type f -name '*.svg.gz' \
-  -exec gzip --decompress --keep -- {} +
-```
-
-## Refresh and extension boundary
-
-Ordinary builds are offline. A maintainer can deliberately refresh candidates:
+Ordinary generation is offline. Refresh and review are explicit:
 
 ```sh
 make refresh-resources-data
@@ -177,22 +167,7 @@ make check
 git diff -- assets.static/resources
 ```
 
-The fetcher stages upstream files in a temporary directory. The preparer never
-downloads; it checks source table anchors/totals, normalizes country joins,
-derives ages, calculates coverage, writes both v2 documents, and regenerates
-`SHA256SUMS`.
-
-New metrics should be promoted in this order:
-
-1. define one comparable unit and evidence class;
-2. pin an auditable release and redistribution boundary;
-3. normalize observation years and missing/zero states;
-4. calculate a relevant country/population/output/domain gate;
-5. add values with `available` status and tests;
-6. give a static default its own metric-bearing artifact tag only after the
-   gate passes; and
-7. generate all six projections and inspect visual/XML diffs.
-
-Facility, deposit, occurrence, and legal-policy data stay supplemental unless
-their own coverage supports the precise claim. They never fill absent country
-statistics by implication.
+The fetcher stages upstream files in a temporary directory. The Python
+preparer validates source anchors/totals, names, time windows, age/rate
+formulas, reef geometry/counts, and gates before atomically installing the v3
+documents and `SHA256SUMS`.

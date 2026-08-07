@@ -1,7 +1,7 @@
 {
-  "schema": "cartofreako-resources-profile-v2",
-  "name": "Resources Stage 6b current-source atlas",
-  "description": "Five independent resource families with explicit metric units, evidence classes, observation periods, and non-sparse coverage gates.",
+  "schema": "cartofreako-resources-profile-v3",
+  "name": "Resources Stage 12 current-source atlas",
+  "description": "Six independent resource families with fourteen released country or spatial products, explicit units, observation periods, and non-sparse coverage gates.",
   "snapshot_as_of": "2026-08-06",
   "missing_semantics": "Missing is unknown and is never rendered as observed zero.",
   "country_geometry": {
@@ -11,7 +11,7 @@
   },
   "values": {
     "path": "resources-values.json",
-    "sha256": "f48962c3e460b63770732e6707d70dec8314739a13ffd466b04bd3c8b8bd9303"
+    "sha256": "6741c29564223d4b4aa4a91f0e035fa1cae3731622f42addae33e502dfbe6678"
   },
   "sources": [
     {
@@ -52,17 +52,37 @@
       "url": "https://databank.worldbank.org/source/world-development-indicators",
       "retrieved_at": "2026-08-06",
       "license": "CC BY 4.0",
-      "sha256": "5c767ba4ab7b4bd81d9b35c386d565838803eae9102037bc9615b1a3d979d31b"
+      "sha256": "de0875434fb357201eaf122fd24e1a9aa2599785006a408286666e3b64c74ab9"
     },
     {
-      "id": "iaea-pris",
+      "id": "iaea-rds-2-45",
       "organization": "IAEA",
-      "title": "Power Reactor Information System",
-      "release": "current snapshot required",
-      "url": "https://pris.iaea.org/PRIS/home.aspx",
+      "title": "Operating Experience with Nuclear Power Stations in Member States in 2024",
+      "release": "RDS No. 2/45, 2025",
+      "url": "https://www-pub.iaea.org/MTCD/publications/PDF/RDS-2-45_web.pdf",
       "retrieved_at": "2026-08-06",
-      "license": "Review before promotion",
-      "sha256": "not-yet-ingested"
+      "license": "IAEA publication; normalized factual extract",
+      "sha256": "13d54c9049491f7701e4e42dc657f4707c3d5aed1c890e9c044864a08d971204"
+    },
+    {
+      "id": "unsd-energy-2025",
+      "organization": "United Nations Statistics Division",
+      "title": "Energy Statistics Database — total refinery throughput",
+      "release": "UNdata update 2025-12-15",
+      "url": "https://data.un.org/Handlers/DownloadHandler.ashx?DataFilter=cmID%3aGR%3btrID%3a086&DataMartId=EDATA&Format=csv",
+      "retrieved_at": "2026-08-06",
+      "license": "UNdata terms; normalized factual extract",
+      "sha256": "02df64a916d2bfa000a7b9fc602a8d85e6d5eb29e6da3410c85189a75af09f0b"
+    },
+    {
+      "id": "wri-reefs-at-risk-2011",
+      "organization": "World Resources Institute",
+      "title": "Reefs at Risk Revisited — present reefs and integrated local threat",
+      "release": "2011 global 500 m KML",
+      "url": "https://wriorg.s3.amazonaws.com/s3fs-public/reefs_at_risk_revisited_present.kmz",
+      "retrieved_at": "2026-08-06",
+      "license": "CC BY 3.0",
+      "sha256": "e0a8ae274f212dc8e7dc05bd50054a8b6fa67786d0b201579ee71cd46cac4bcd"
     },
     {
       "id": "fao-faostat",
@@ -158,6 +178,7 @@
             "output_percent": 99.832,
             "passes_non_sparse": true
           },
+          "spatial": null,
           "notes": "End-of-year capacity; not generation."
         },
         {
@@ -169,26 +190,42 @@
           "source_ids": [
             "irena-rsc-2026"
           ],
-          "status": "planned",
-          "scale": "linear",
-          "output_tag": "",
-          "coverage": null,
-          "notes": "Separate onshore and offshore when ingested."
+          "status": "released",
+          "scale": "log1p",
+          "output_tag": "wind-capacity-2025",
+          "coverage": {
+            "covered_countries": 124,
+            "mapped_countries": 176,
+            "country_percent": 70.455,
+            "population_percent": 87.373,
+            "output_percent": 100.0,
+            "passes_non_sparse": true
+          },
+          "spatial": null,
+          "notes": "End-of-year onshore and offshore capacity combined; not generation."
         },
         {
           "id": "nuclear-operating-capacity",
           "title": "Operating nuclear net electrical capacity",
-          "unit": "MW",
-          "reference_period": "snapshot",
+          "unit": "MW(e)",
+          "reference_period": "31 December 2024",
           "evidence_class": "reported-statistic",
           "source_ids": [
-            "iaea-pris"
+            "iaea-rds-2-45"
           ],
-          "status": "planned",
-          "scale": "linear",
-          "output_tag": "",
-          "coverage": null,
-          "notes": "Exclude shutdown and under-construction reactors."
+          "status": "released",
+          "scale": "log1p",
+          "output_tag": "nuclear-operating-capacity-2024",
+          "coverage": {
+            "covered_countries": 32,
+            "mapped_countries": 176,
+            "country_percent": 18.182,
+            "population_percent": 57.969,
+            "output_percent": 100.0,
+            "passes_non_sparse": true
+          },
+          "spatial": null,
+          "notes": "Operating capacity only; suspended, shutdown, and under-construction reactors are excluded."
         },
         {
           "id": "oil-field-production",
@@ -201,6 +238,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Global well-level coverage is not claimed; fields are supplemental."
         },
         {
@@ -214,20 +252,31 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Capacity is not throughput or extraction."
         },
         {
           "id": "petroleum-refinery-throughput",
           "title": "Petroleum refinery throughput",
-          "unit": "barrels/day",
-          "reference_period": "annual",
+          "unit": "thousand metric tonnes/year",
+          "reference_period": "latest reported from 2018–2024",
           "evidence_class": "reported-statistic",
-          "source_ids": [],
-          "status": "planned",
-          "scale": "linear",
-          "output_tag": "",
-          "coverage": null,
-          "notes": "Kept separate from capacity."
+          "source_ids": [
+            "unsd-energy-2025"
+          ],
+          "status": "released",
+          "scale": "log1p",
+          "output_tag": "petrochemical-refinery-throughput-latest-2024",
+          "coverage": {
+            "covered_countries": 106,
+            "mapped_countries": 176,
+            "country_percent": 60.227,
+            "population_percent": 89.034,
+            "output_percent": 98.629,
+            "passes_non_sparse": true
+          },
+          "spatial": null,
+          "notes": "The public petrochemical target selects this comparable refinery-processing measure. It is throughput, not nameplate capacity, extraction, or total petrochemical output; observations before 2018 are excluded."
         },
         {
           "id": "gas-processing-and-lng",
@@ -240,6 +289,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Processing plants, LNG terminals, and pipelines remain distinct."
         },
         {
@@ -253,6 +303,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Never infer fracking from generic gas production or facility presence."
         }
       ]
@@ -283,14 +334,14 @@
           "id": "food-production-index",
           "title": "Food production index",
           "unit": "index, 2014–2016=100",
-          "reference_period": "latest accepted through 2025",
+          "reference_period": "2022",
           "evidence_class": "reported-statistic",
           "source_ids": [
             "wdi-2026-07-13"
           ],
           "status": "default",
           "scale": "linear",
-          "output_tag": "food-production-index-latest-2026",
+          "output_tag": "food-production-index-2022",
           "coverage": {
             "covered_countries": 168,
             "mapped_countries": 176,
@@ -299,7 +350,8 @@
             "output_percent": null,
             "passes_non_sparse": true
           },
-          "notes": "Country observations retain their individual years."
+          "spatial": null,
+          "notes": "Latest published WDI country observations in the pinned snapshot."
         },
         {
           "id": "crop-production",
@@ -314,6 +366,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Keep tonnes, harvested area, and yield separate."
         },
         {
@@ -329,37 +382,8 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Animal counts, biomass, meat, milk, and eggs are not interchangeable."
-        },
-        {
-          "id": "capture-fisheries",
-          "title": "Capture fisheries production",
-          "unit": "tonnes",
-          "reference_period": "annual",
-          "evidence_class": "reported-statistic",
-          "source_ids": [
-            "fao-faostat"
-          ],
-          "status": "planned",
-          "scale": "linear",
-          "output_tag": "",
-          "coverage": null,
-          "notes": "Separate wild capture from aquaculture."
-        },
-        {
-          "id": "aquaculture",
-          "title": "Aquaculture production",
-          "unit": "tonnes",
-          "reference_period": "annual",
-          "evidence_class": "reported-statistic",
-          "source_ids": [
-            "fao-faostat"
-          ],
-          "status": "planned",
-          "scale": "linear",
-          "output_tag": "",
-          "coverage": null,
-          "notes": "Separate aquatic animals and plants."
         },
         {
           "id": "dietary-energy-supply",
@@ -374,7 +398,112 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Food supply is not production, intake, or a nutrition outcome."
+        }
+      ]
+    },
+    {
+      "id": "resources-fauna",
+      "title": "Fauna resources",
+      "default_metric": "fisheries-production",
+      "palette": {
+        "low": [
+          190,
+          231,
+          232
+        ],
+        "high": [
+          13,
+          82,
+          121
+        ],
+        "missing": [
+          211,
+          208,
+          198
+        ]
+      },
+      "metrics": [
+        {
+          "id": "fisheries-production",
+          "title": "Total fisheries production",
+          "unit": "metric tonnes",
+          "reference_period": "latest accepted through 2024",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "wdi-2026-07-13"
+          ],
+          "status": "default",
+          "scale": "log1p",
+          "output_tag": "fisheries-production-latest-2024",
+          "coverage": {
+            "covered_countries": 169,
+            "mapped_countries": 176,
+            "country_percent": 96.023,
+            "population_percent": 100.0,
+            "output_percent": null,
+            "passes_non_sparse": true
+          },
+          "spatial": null,
+          "notes": "FAO-supplied World Development Indicator; capture fisheries and aquaculture are combined in this released total."
+        },
+        {
+          "id": "coral-reef-threat",
+          "title": "Coral reef integrated local threat",
+          "unit": "four-class spatial field",
+          "reference_period": "Reefs at Risk Revisited 2011",
+          "evidence_class": "derived-spatial-field",
+          "source_ids": [
+            "wri-reefs-at-risk-2011"
+          ],
+          "status": "released",
+          "scale": "linear",
+          "output_tag": "coral-reef-threat-2011",
+          "coverage": null,
+          "spatial": {
+            "path": "coral-reefs-025deg.geojson",
+            "sha256": "ec40c7448f54ac6c2e8ae0ecc8b62eaf57cf135cf05a57f1ccc210412412a24b",
+            "source_features": 24,
+            "source_polygons": 63383,
+            "mapped_features": 7215,
+            "resolution_degrees": 0.25,
+            "class_property": "threat_rank",
+            "passes_non_sparse": true
+          },
+          "notes": "Actual 500 m reef polygons are normalized to a 0.25 degree presence grid; overlaps retain the highest source threat class. This is a historical baseline, not current reef condition."
+        },
+        {
+          "id": "capture-fisheries",
+          "title": "Capture fisheries production",
+          "unit": "tonnes",
+          "reference_period": "annual",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "fao-faostat"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "spatial": null,
+          "notes": "Separate wild capture from aquaculture in a later fauna increment."
+        },
+        {
+          "id": "aquaculture",
+          "title": "Aquaculture production",
+          "unit": "tonnes",
+          "reference_period": "annual",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "fao-faostat"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "spatial": null,
+          "notes": "Separate aquatic animals and plants in a later fauna increment."
         }
       ]
     },
@@ -404,14 +533,14 @@
           "id": "forest-area-percent",
           "title": "Forest area",
           "unit": "% of land area",
-          "reference_period": "latest accepted through 2025",
+          "reference_period": "2023",
           "evidence_class": "reported-statistic",
           "source_ids": [
             "wdi-2026-07-13"
           ],
           "status": "default",
           "scale": "linear",
-          "output_tag": "forest-area-percent-latest-2026",
+          "output_tag": "forest-area-percent-2023",
           "coverage": {
             "covered_countries": 169,
             "mapped_countries": 176,
@@ -420,7 +549,8 @@
             "output_percent": null,
             "passes_non_sparse": true
           },
-          "notes": "National statistic; not a remotely sensed density field."
+          "spatial": null,
+          "notes": "Latest published WDI country observations in the pinned snapshot; not a remotely sensed density field."
         },
         {
           "id": "land-cover",
@@ -433,6 +563,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Copernicus global field; land cover is not biodiversity."
         },
         {
@@ -446,6 +577,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Declare the product domain and masks."
         },
         {
@@ -459,6 +591,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Requires a pinned land-cover/ecological-zone crosswalk."
         },
         {
@@ -472,6 +605,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Not a simple tree-percentage threshold."
         },
         {
@@ -485,6 +619,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Raw occurrence counts are dominated by sampling effort."
         }
       ]
@@ -531,6 +666,7 @@
             "output_percent": 99.682,
             "passes_non_sparse": true
           },
+          "spatial": null,
           "notes": "Mine production; reserves and processing are separate."
         },
         {
@@ -546,6 +682,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -561,6 +698,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -576,6 +714,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -591,6 +730,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -606,6 +746,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -621,6 +762,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -636,6 +778,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -651,6 +794,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -666,6 +810,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -681,6 +826,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -696,6 +842,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -711,6 +858,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -726,6 +874,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -741,6 +890,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -756,6 +906,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -771,6 +922,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -786,6 +938,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -801,6 +954,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -816,6 +970,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -831,6 +986,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -846,6 +1002,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -861,6 +1018,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         },
         {
@@ -876,6 +1034,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Preserve mine/refined production, reserves, resources, and trade as separate measures."
         }
       ]
@@ -922,6 +1081,7 @@
             "output_percent": null,
             "passes_non_sparse": true
           },
+          "spatial": null,
           "notes": "Derived from age 0–14 and sex-specific five-year age bands using matched population denominators."
         },
         {
@@ -933,87 +1093,120 @@
           "source_ids": [
             "wdi-2026-07-13"
           ],
-          "status": "available",
+          "status": "released",
           "scale": "linear",
-          "output_tag": "",
-          "coverage": null,
+          "output_tag": "population-over-60-2024",
+          "coverage": {
+            "covered_countries": 169,
+            "mapped_countries": 176,
+            "country_percent": 96.023,
+            "population_percent": 100.0,
+            "output_percent": null,
+            "passes_non_sparse": true
+          },
+          "spatial": null,
           "notes": "Derived from age 60–64 and age 65+ using matched population denominators."
         },
         {
           "id": "adult-literacy",
           "title": "Adult literacy, age 15+",
           "unit": "%",
-          "reference_period": "latest accepted",
+          "reference_period": "latest accepted through 2024",
           "evidence_class": "reported-statistic",
           "source_ids": [
-            "uis"
-          ],
-          "status": "planned",
-          "scale": "linear",
-          "output_tag": "",
-          "coverage": null,
-          "notes": "Expose each country's observation year."
-        },
-        {
-          "id": "upper-secondary-attainment",
-          "title": "Completed ISCED 3 or higher, age 25+",
-          "unit": "%",
-          "reference_period": "latest accepted",
-          "evidence_class": "reported-statistic",
-          "source_ids": [
-            "uis"
-          ],
-          "status": "planned",
-          "scale": "linear",
-          "output_tag": "",
-          "coverage": null,
-          "notes": "Do not substitute enrollment."
-        },
-        {
-          "id": "bachelors-attainment",
-          "title": "Completed ISCED 6 or higher, age 25+",
-          "unit": "%",
-          "reference_period": "latest accepted",
-          "evidence_class": "reported-statistic",
-          "source_ids": [
-            "uis"
-          ],
-          "status": "planned",
-          "scale": "linear",
-          "output_tag": "",
-          "coverage": null,
-          "notes": "Keep short-cycle ISCED 5 separate."
-        },
-        {
-          "id": "advanced-degree-attainment",
-          "title": "Completed ISCED 7 or 8, age 25+",
-          "unit": "%",
-          "reference_period": "latest accepted",
-          "evidence_class": "reported-statistic",
-          "source_ids": [
-            "uis"
-          ],
-          "status": "planned",
-          "scale": "linear",
-          "output_tag": "",
-          "coverage": null,
-          "notes": "Preserve sex disaggregation where coverage permits."
-        },
-        {
-          "id": "resident-patent-applications-per-million",
-          "title": "Resident patent applications",
-          "unit": "three-year mean per million residents",
-          "reference_period": "latest accepted",
-          "evidence_class": "derived-statistic",
-          "source_ids": [
-            "wipo",
             "wdi-2026-07-13"
           ],
           "status": "planned",
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
-          "notes": "Applications are not grants or patent quality."
+          "spatial": null,
+          "notes": "Stage 12 tested the WDI/UIS series, but its 144 mapped countries cover only 89.432% of mapped population and therefore miss the 90% population gate."
+        },
+        {
+          "id": "upper-secondary-attainment",
+          "title": "Completed ISCED 3 or higher, age 25+",
+          "unit": "%",
+          "reference_period": "latest observation from 2018–2025",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "wdi-2026-07-13"
+          ],
+          "status": "released",
+          "scale": "linear",
+          "output_tag": "upper-secondary-attainment-latest-2025",
+          "coverage": {
+            "covered_countries": 150,
+            "mapped_countries": 176,
+            "country_percent": 85.227,
+            "population_percent": 97.566,
+            "output_percent": null,
+            "passes_non_sparse": true
+          },
+          "spatial": null,
+          "notes": "Educational attainment, not enrollment; every released observation is from 2018 or later."
+        },
+        {
+          "id": "bachelors-attainment",
+          "title": "Completed ISCED 6 or higher, age 25+",
+          "unit": "%",
+          "reference_period": "latest observation from 2018–2024",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "wdi-2026-07-13"
+          ],
+          "status": "released",
+          "scale": "linear",
+          "output_tag": "bachelors-attainment-latest-2024",
+          "coverage": {
+            "covered_countries": 149,
+            "mapped_countries": 176,
+            "country_percent": 84.659,
+            "population_percent": 96.326,
+            "output_percent": null,
+            "passes_non_sparse": true
+          },
+          "spatial": null,
+          "notes": "At least bachelor's or equivalent; short-cycle ISCED 5 is excluded and every released observation is from 2018 or later."
+        },
+        {
+          "id": "advanced-degree-attainment",
+          "title": "Completed ISCED 7 or higher, age 25+",
+          "unit": "%",
+          "reference_period": "latest observation from 2018–2024",
+          "evidence_class": "reported-statistic",
+          "source_ids": [
+            "wdi-2026-07-13"
+          ],
+          "status": "planned",
+          "scale": "linear",
+          "output_tag": "",
+          "coverage": null,
+          "spatial": null,
+          "notes": "Stage 12 tested the master's-or-equivalent WDI/UIS series; 126 mapped countries cover 90.335% of population but miss the 80% country gate."
+        },
+        {
+          "id": "resident-patent-applications-per-million",
+          "title": "Resident patent applications",
+          "unit": "2019–2021 applications per million person-years",
+          "reference_period": "2019–2021 mean",
+          "evidence_class": "derived-statistic",
+          "source_ids": [
+            "wdi-2026-07-13"
+          ],
+          "status": "released",
+          "scale": "log1p",
+          "output_tag": "resident-patent-applications-per-million-2019-2021",
+          "coverage": {
+            "covered_countries": 93,
+            "mapped_countries": 176,
+            "country_percent": 52.841,
+            "population_percent": 81.743,
+            "output_percent": 95.814,
+            "passes_non_sparse": true
+          },
+          "spatial": null,
+          "notes": "A matched three-year resident-application rate; applications are not grants, invention quality, or current 2026 activity."
         },
         {
           "id": "international-departures-per-capita",
@@ -1028,6 +1221,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "A flow proxy; not percentage of unique people taking a trip."
         },
         {
@@ -1041,6 +1235,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "No harmonized non-sparse global source identified."
         },
         {
@@ -1056,6 +1251,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Law, supportive framework, enforcement, and outcomes remain separate."
         },
         {
@@ -1069,6 +1265,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Use a reviewed legal dataset; never label one dimension 'sexual freedom'."
         },
         {
@@ -1082,6 +1279,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Decriminalization must be substance-, quantity-, conduct-, and enforcement-specific."
         },
         {
@@ -1097,6 +1295,7 @@
           "scale": "linear",
           "output_tag": "",
           "coverage": null,
+          "spatial": null,
           "notes": "Cohort estimates are not current-year behavior."
         }
       ]

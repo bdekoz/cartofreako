@@ -54,8 +54,14 @@ expect_invalid(std::string json, const std::string_view message)
       + std::filesystem::absolute(
           "assets.static/resources/resources-values.json").string()
       + "\"");
+  replace_once(
+    json, "\"path\": \"coral-reefs-025deg.geojson\"",
+    "\"path\": \""
+      + std::filesystem::absolute(
+          "assets.static/resources/coral-reefs-025deg.geojson").string()
+      + "\"");
   const std::filesystem::path path = std::filesystem::temp_directory_path()
-    / ("cartofreako-invalid-resources-v2-" + std::to_string(++sequence)
+    / ("cartofreako-invalid-resources-v3-" + std::to_string(++sequence)
        + ".json");
   {
     std::ofstream output {path, std::ios::binary};
@@ -98,10 +104,10 @@ main()
     = "assets.static/resources/resources-profile.json";
   const resources::resources_profile profile
     = resources::load_resources_profile(profile_path);
-  assert(profile.name == "Resources Stage 6b current-source atlas");
+  assert(profile.name == "Resources Stage 12 current-source atlas");
   assert(profile.snapshot_as_of == "2026-08-06");
-  assert(profile.families.size() == 5);
-  assert(profile.values.size() == 856);
+  assert(profile.families.size() == 6);
+  assert(profile.values.size() == 1679);
   assert(profile.name.find("1960") == std::string::npos);
   assert(profile.description.find("World Game") == std::string::npos);
   assert(std::filesystem::is_regular_file(profile.country_geometry_path));
@@ -110,6 +116,7 @@ main()
   const std::array expected_families {
     std::pair {std::string_view {"resources-energy"}, std::size_t {169}},
     std::pair {std::string_view {"resources-food"}, std::size_t {168}},
+    std::pair {std::string_view {"resources-fauna"}, std::size_t {169}},
     std::pair {std::string_view {"resources-flora"}, std::size_t {169}},
     std::pair {std::string_view {"resources-mineral"}, std::size_t {12}},
     std::pair {std::string_view {"resources-human"}, std::size_t {169}},
@@ -140,17 +147,38 @@ main()
     = resources::find_resource_family(profile, "energy");
   assert(resources::default_resource_metric(energy).id == "solar-capacity");
   assert(find_metric(energy, "wind-capacity").status
-         == resources::metric_status::planned);
+         == resources::metric_status::released);
+  assert(resources::resource_metric_values(
+    profile, energy, find_metric(energy, "wind-capacity")).size() == 124);
+  assert(find_metric(energy, "nuclear-operating-capacity").status
+         == resources::metric_status::released);
   assert(find_metric(energy, "nuclear-operating-capacity").title
          .find("nuclear") != std::string::npos);
+  assert(resources::resource_metric_values(
+    profile, energy,
+    find_metric(energy, "petroleum-refinery-throughput")).size() == 106);
   assert(find_metric(energy, "unconventional-gas-production").status
          == resources::metric_status::supplemental);
 
   const resources::resource_family& food
     = resources::find_resource_family(profile, "resources_food");
-  assert(find_metric(food, "capture-fisheries").unit == "tonnes");
   assert(find_metric(food, "livestock-production").notes.find("counts")
          != std::string::npos);
+
+  const resources::resource_family& fauna
+    = resources::find_resource_family(profile, "fisheries");
+  assert(fauna.id == "resources-fauna");
+  assert(resources::default_resource_metric(fauna).id
+         == "fisheries-production");
+  const resources::metric_definition& reefs
+    = find_metric(fauna, "coral-reef-threat");
+  assert(reefs.status == resources::metric_status::released);
+  assert(!reefs.coverage.has_value() && reefs.spatial.has_value());
+  assert(reefs.spatial->source_features == 24);
+  assert(reefs.spatial->source_polygons == 63383);
+  assert(reefs.spatial->mapped_features == 7215);
+  assert(reefs.spatial->resolution_degrees == 0.25);
+  assert(std::filesystem::is_regular_file(reefs.spatial->path));
 
   const resources::resource_family& flora
     = resources::find_resource_family(profile, "ressources-flora");
@@ -177,11 +205,25 @@ main()
     = resources::find_resource_family(profile, "human");
   assert(resources::default_resource_metric(human).id == "population-under-30");
   assert(find_metric(human, "population-over-60").status
-         == resources::metric_status::available);
+         == resources::metric_status::released);
   assert(resources::resource_metric_values(
     profile, human, find_metric(human, "population-over-60")).size() == 169);
   assert(find_metric(human, "books-read-median").status
          == resources::metric_status::research_gap);
+  assert(resources::resource_metric_values(
+    profile, human, find_metric(human, "upper-secondary-attainment")).size()
+         == 150);
+  assert(resources::resource_metric_values(
+    profile, human, find_metric(human, "bachelors-attainment")).size()
+         == 149);
+  assert(resources::resource_metric_values(
+    profile, human,
+    find_metric(human, "resident-patent-applications-per-million")).size()
+         == 93);
+  assert(find_metric(human, "adult-literacy").status
+         == resources::metric_status::planned);
+  assert(find_metric(human, "advanced-degree-attainment").status
+         == resources::metric_status::planned);
   assert(find_metric(human, "consensual-same-sex-activity-law").notes
          .find("never label") != std::string::npos);
   assert(find_metric(human, "drug-possession-penalty").notes
@@ -191,6 +233,8 @@ main()
   assert(resources::canonical_resource_family("world-game").has_value() == false);
   assert(resources::canonical_resource_family("ressources_flora")
          == std::optional<std::string> {"resources-flora"});
+  assert(resources::canonical_resource_family("reefs")
+         == std::optional<std::string> {"resources-fauna"});
 
   constexpr std::array projection_names {
     "cahill-keyes", "authagraph", "dymaxion", "myriahedral", "star-x",
@@ -201,14 +245,15 @@ main()
       const generation::projection_spec& spec
         = generation::find_projection_spec(name);
       for (const resources::resource_family& family : profile.families)
-        {
-          const resources::metric_definition& metric
-            = resources::default_resource_metric(family);
+        for (const resources::metric_definition& metric : family.metrics)
+          if (metric.status == resources::metric_status::default_metric
+              || metric.status == resources::metric_status::released)
+          {
           const std::string basename
             = resources::resources_output_basename(spec, family, metric);
           assert(basename.starts_with(family.id + "-"));
           assert(basename.ends_with(spec.output_tag));
-        }
+          }
     }
 
   const resources::metric_definition& energy_metric
@@ -227,10 +272,25 @@ main()
     metadata, "data-resource-value-record=\"true\"") == energy_values.size());
   assert(resources::resources_token_count(
     metadata, "data-resource-metric-catalog=\"true\"") == metric_count);
-  assert(metadata.find("Resources Stage 6b") != std::string::npos);
+  assert(metadata.find("Resources Stage 12") != std::string::npos);
+  assert(metadata.find("data-coverage-kind=\"country\"")
+         != std::string::npos);
   assert(metadata.find("data-missing-is-zero=\"false\"")
          != std::string::npos);
   assert(metadata.find("1960") == std::string::npos);
+
+  const auto no_values = resources::resource_metric_values(
+    profile, fauna, reefs);
+  assert(no_values.empty());
+  const std::string reef_metadata = resources::resources_metadata_element(
+    generation::find_projection_spec("cahill-keyes"), profile, fauna,
+    reefs, no_values);
+  assert(reef_metadata.find("data-coverage-kind=\"spatial\"")
+         != std::string::npos);
+  assert(reef_metadata.find("data-source-polygons=\"63383\"")
+         != std::string::npos);
+  assert(resources::resources_token_count(
+    reef_metadata, "data-resource-value-record=\"true\"") == 0);
 
   const std::string valid_json = read_file(profile_path);
   {
@@ -240,8 +300,8 @@ main()
   }
   {
     std::string invalid = valid_json;
-    replace_once(invalid, "cartofreako-resources-profile-v2",
-                 "cartofreako-resources-profile-v1");
+    replace_once(invalid, "cartofreako-resources-profile-v3",
+                 "cartofreako-resources-profile-v2");
     expect_invalid(std::move(invalid), "unsupported resources profile schema");
   }
   {

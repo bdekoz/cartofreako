@@ -65,10 +65,16 @@ and
 Generate their SVG families or all exported artifacts with:
 
 ```sh
+make generate-anthropocene
+make generate-anthropocene-artifacts
 make generate-anthropocene-2025
 make generate-anthropocene-2026
 make generate-anthropocene-year-artifacts
 ```
+
+The unqualified targets build both 2025 and 2026. The source-separated
+partial-2026 observation atlas remains available through
+`generate-anthropocene-atlas` and `generate-anthropocene-atlas-artifacts`.
 
 The ignored raw archive is staged and candidates are prepared explicitly:
 

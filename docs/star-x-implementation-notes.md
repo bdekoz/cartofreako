@@ -327,6 +327,13 @@ islands, ice, lakes, playas, rivers, reefs, and coastline, so neither source
 geometry nor a polar ocean is duplicated. The graticule generator applies
 the identical membership test and mapping; its `antarctic-cap-boundaries`
 layer draws the four source cut arcs and the unified destination circle. The
+Natural Earth compositor queues ordinary quadrant paths separately from cap
+paths and serializes every transformed Antarctic fragment last within its
+thematic layer. Because SVG uses document paint order, this makes the unified
+cap visibly topmost instead of allowing a later source feature or longitude
+band to clip it. Layers that contain only Antarctic geometry satisfy the same
+contract vacuously.
+The
 checked-in
 [`geometry-star-x-34-44.with-poles.svg`](../assets.static/adhoc/geometry-star-x-34-44.with-poles.svg)
 establishes this visual intent only—none of its Antarctic path coordinates or
@@ -494,8 +501,9 @@ historical raster the implementation.
 The geometry generator additionally asserts one `north-pole-star` path. The
 graticule generator requires its Stage 7 source and unified cap guides. The
 Natural Earth generators assert the unified land, ice-shelf, and coastline
-fragments while retaining exactly two Earth layer groups and 22 water-overlay
-groups.
+fragments, require every ordinary quadrant path to precede the first
+Antarctic fragment in each applicable layer, and retain exactly two Earth
+layer groups and 22 water-overlay groups.
 
 ## Provenance and limitations
 

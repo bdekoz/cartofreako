@@ -37,12 +37,14 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | --- | --- |
 | Installation and build dependencies | [Prerequisites](docs/prerequisites.md) |
 | SVG/PDF/PNG generation, Natural Earth, folding, slicing, and review | [Generation guide](docs/generation.md) |
+| Stage 12 resource, authorization, default-year, snapshot, and Star-X integration | [Stage 12 implementation notes](docs/stage-12-implementation-notes.md) |
+| Low-resolution thumbnails of every Cahill-Keyes projection pass | [Generated Cahill-Keyes snapshot](docs/generated-snapshot-ck.md) |
 | Static generated-asset releases, manifests, render hardware, and publishing | [`v20260806` release notes](docs/releases/v20260806.md) and [release runbook](docs/releases/README.md) |
 | Generate-pass evaluation record plus configured, full-suite, family, and exact workflows | [Generate-pass methods and decision record](docs/generation-methods.md) |
 | Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/astro-implementation-notes.md) |
 | Process-start solar illumination and source-timed JAXA physical atmosphere generation | [Cloud-atmosphere implementation notes](docs/cloud-atmosphere-implementation-notes.md) |
 | Human-made Earth-orbit population and observer generation | [Orbital Technosphere implementation notes](docs/orbital-technosphere-implementation-notes.md) |
-| Implemented current, non-sparse energy, food, flora, mineral, and human resource families | [Resources Stage 6b implementation notes](docs/resources-implementation-notes.md) and [enrichment plan](docs/resources-enrichment-plan.md) |
+| Implemented energy, food, fauna, flora, mineral, and human resource families | [Resources Stage 12 implementation notes](docs/resources-implementation-notes.md) and [enrichment plan](docs/resources-enrichment-plan.md) |
 | Source-separated climate, weather, fire, smoke, and air-quality atlas | [Anthropocene implementation notes](docs/anthropocene-implementation-notes.md) |
 | Implemented dual-year CPC field plus planned atmosphere, PurpleAir, and ocean enrichment | [Anthropocene Stage 8b enrichment plan](docs/anthropocene-enrichment-plan.md) |
 | Cumulative H3 network-swarm generation | [Network-swarm generation implementation notes](docs/network-swarm-implementation-notes.md) |
@@ -95,7 +97,8 @@ make check
 
 Generate geometry, labeled graticules, both Natural Earth layer families,
 both timestamped astronomy products, both timestamped Orbital Technosphere
-products, the Anthropocene observation and dual-year temperature atlases, the cumulative network-swarm,
+products, all 14 Stage 12 resource products, the Anthropocene observation and
+dual-year temperature atlases, the cumulative network-swarm,
 the cloud/CDN network-infrastructure site atlas, and Bathymetry Roulette for
 all six projections with:
 
@@ -104,15 +107,19 @@ make all
 ```
 
 The 24 production whole-earth maps, 12 astronomy maps, 12 Orbital
-Technosphere maps, 18 Anthropocene maps, six network-swarm maps, six
+Technosphere maps, 84 resources maps, 18 Anthropocene maps, six network-swarm maps, six
 network-infrastructure site maps, six Bathymetry Roulette maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes enlargement
-slices, and two Myriahedral face-group slices are each written as a layered SVG under
-`assets.generated/svg/`, an Inkscape PDF under `assets.generated/pdf/`, and a
-PNG under `assets.generated/png/`. PNGs preserve the source aspect ratio and
+slices, and two Myriahedral face-group slices total 187 products. All 187
+layered SVGs are written under `assets.generated/svg/`; the 84 resource SVGs
+also receive deterministic `.svg.gz` release archives. All 187 have an
+Inkscape PDF under `assets.generated/pdf/` and a PNG under
+`assets.generated/png/`. PNGs preserve the source aspect ratio and
 have a longest side of 3840 pixels, the horizontal resolution of UHD 4K
 video. Transparent SVG page regions are flattened against an opaque white
-background. The targets `make generated-projections`, `make
+background. The graph also creates 28 480-pixel-wide Cahill-Keyes thumbnails;
+review them in the [generated snapshot](docs/generated-snapshot-ck.md). The
+targets `make generated-projections`, `make
 generate-projections`, and `make make-generated` are equivalent aliases.
 
 The credentialed, source-timed Cloud-atmosphere family is deliberately not
@@ -188,7 +195,7 @@ observer maps show only the above-horizon topocentric population:
 | Star-X | [`orbital-technosphere-global-star-x-34-44.png`](assets.generated/png/orbital-technosphere-global-star-x-34-44.png) | [`orbital-technosphere-observer-star-x-34-44.png`](assets.generated/png/orbital-technosphere-observer-star-x-34-44.png) |
 | Voronoi | [`orbital-technosphere-global-voronoi-44-22.916667.png`](assets.generated/png/orbital-technosphere-global-voronoi-44-22.916667.png) | [`orbital-technosphere-observer-voronoi-44-22.916667.png`](assets.generated/png/orbital-technosphere-observer-voronoi-44-22.916667.png) |
 
-The Anthropocene products preserve temperature and precipitation records,
+The legacy Anthropocene observation-atlas products preserve temperature and precipitation records,
 active fire, observed smoke, flood/heavy-rain and severe-weather reports, and
 EPA PM2.5 exposure as independent H3 cell-day layers. PM2.5 is not used as a
 proxy for smoke, and absent observations do not assert zero:
@@ -205,7 +212,9 @@ proxy for smoke, and absent observations do not assert zero:
 The Stage 8b temperature field provides a non-sparse global H3 domain with
 explicit CPC land coverage for the complete 2025 and partial 2026 calendar
 products. Neutral covered cells had no strict record; blank cells are missing
-or outside the CPC land domain:
+or outside the CPC land domain. These two year-bearing fields are the current
+`generate-anthropocene*` defaults; the observation atlas uses the explicit
+`generate-anthropocene-atlas*` targets:
 
 | Projection | Complete 2025 | Partial 2026 |
 | --- | --- | --- |
@@ -216,11 +225,13 @@ or outside the CPC land domain:
 | Star-X | [`anthropocene-temperature-2025-star-x-34-44.png`](assets.generated/png/anthropocene-temperature-2025-star-x-34-44.png) | [`anthropocene-temperature-2026-star-x-34-44.png`](assets.generated/png/anthropocene-temperature-2026-star-x-34-44.png) |
 | Voronoi | [`anthropocene-temperature-2025-voronoi-44-22.916667.png`](assets.generated/png/anthropocene-temperature-2025-voronoi-44-22.916667.png) | [`anthropocene-temperature-2026-voronoi-44-22.916667.png`](assets.generated/png/anthropocene-temperature-2026-voronoi-44-22.916667.png) |
 
-Resources Stage 6b now produces metric-specific energy, food, flora, mineral,
-and human artifacts from the checked v2 snapshot. All five defaults pass their
-declared coverage gates, render across all six projections, and are stored as
-deterministic `.svg.gz` files. See the
-[implementation notes](docs/resources-implementation-notes.md) and
+Resources Stage 12 produces 14 metric-specific energy, food, fauna, flora,
+mineral, and human artifacts from the checked v3 snapshot. Country products
+pass their declared population/output gates, the reef product renders 7,215
+cells derived from the actual WRI geometry, and every metric runs across all
+six projections as a deterministic `.svg.gz` file. Review the Cahill-Keyes
+variants in the [generated snapshot](docs/generated-snapshot-ck.md), and see
+the [implementation notes](docs/resources-implementation-notes.md) and
 [enrichment plan](docs/resources-enrichment-plan.md).
 
 The cumulative network-swarm pass detiles the pinned resolution-5 H3 swarm into
@@ -287,11 +298,11 @@ deferred coral phase, snapshot audit, and interpretation limits.
 The [Stage 8b enrichment plan](docs/anthropocene-enrichment-plan.md) documents
 the coverage diagnosis, the implemented complete-2025/partial-2026 CPC field
 and FIRMS release gate, and the remaining CAMS, PurpleAir, and ocean themes.
-The [Resources Stage 6b implementation notes](docs/resources-implementation-notes.md)
-and [enrichment plan](docs/resources-enrichment-plan.md) define the five
-implemented target families, v2 source/value contracts, non-sparse coverage
-gates, current critical-mineral scope, corrected human-measure semantics,
-refresh workflow, and next enrichment increments.
+The [Resources Stage 12 implementation notes](docs/resources-implementation-notes.md)
+and [enrichment plan](docs/resources-enrichment-plan.md) define the six
+implemented target families, v3 country/spatial contracts, non-sparse
+coverage gates, actual reef geometry, corrected human-measure semantics,
+refresh workflow, and rejected-candidate audit.
 The [network-swarm notes](docs/network-swarm-implementation-notes.md) record the fixed
 source audit, variable-input contract, H3/Izzi clustering, independent
 downloader encodings, SVG metadata, and interpretation limits.
@@ -457,7 +468,9 @@ the `voronoi_source` preset are in the
 | [`docs/cloud-atmosphere-implementation-notes.md`](docs/cloud-atmosphere-implementation-notes.md) | Stage 4.1a feasibility, astronomy boundary, JAXA sources, process time, P-Tree QA, H3 preparation, products, terms, verification, and limits |
 | [`docs/ptree-production-download.md`](docs/ptree-production-download.md) | Quick-start P-Tree registration, secure credentials, connection test, reproducible production refresh, expected files, and troubleshooting |
 | [`docs/orbital-technosphere-implementation-notes.md`](docs/orbital-technosphere-implementation-notes.md) | Stage 4.2 feasibility, naming, NASA/CelesTrak source roles, OMM/SGP4 formulas, products, verification, and accuracy boundary |
-| [`docs/resources-enrichment-plan.md`](docs/resources-enrichment-plan.md) | Stage 6b five-family taxonomy, source evaluation, non-sparse options, schema, migration sequence, and release QA |
+| [`docs/stage-12-implementation-notes.md`](docs/stage-12-implementation-notes.md) | Stage 12 resource expansion, Anthropocene defaults, external authorization, render hardware, Cahill-Keyes snapshot, and Star-X paint-order integration |
+| [`docs/generated-snapshot-ck.md`](docs/generated-snapshot-ck.md) | Linked low-resolution thumbnail matrix for all 28 Cahill-Keyes projection passes |
+| [`docs/resources-enrichment-plan.md`](docs/resources-enrichment-plan.md) | Stage 12 six-family taxonomy, source evaluation, non-sparse options, v3 schema, migration sequence, and release QA |
 | [`src.projections/cart0freak0-star-x.h`](src.projections/cart0freak0-star-x.h) | Star-X group assembly, configurable centered scale, Stage 7 cap-radius geometry, frame validation, public API, and factory |
 | [`tests/test-star-x-projection-api.cc`](tests/test-star-x-projection-api.cc) | Star-X anchors, assembly and scale, global domain, cap invariants, variable-frame, validation, and API tests |
 | [`docs/star-x-context.md`](docs/star-x-context.md) | Star-X octahedral context, face-slot mapping, group rotation, page enlargement, polar composition, and cuts |
@@ -503,15 +516,17 @@ the `voronoi_source` preset are in the
 | [`scripts/resolve-jaxa-stac.py`](scripts/resolve-jaxa-stac.py) | Static-STAC traversal, COG-level selection, download, and source manifest helper |
 | [`scripts/prepare-cloud-atmosphere-data.sh`](scripts/prepare-cloud-atmosphere-data.sh) | Atomic raw-to-prepared H3 snapshot workflow |
 | [`scripts/verify-cloud-atmosphere-data.sh`](scripts/verify-cloud-atmosphere-data.sh) | Prepared snapshot checksum and production-schema gate |
-| [`src.generate/resources-data.h`](src.generate/resources-data.h) | Strict Stage 6b v2 source catalogue, five-family profile, coverage, and normalized country-value loader |
-| [`src.generate/resources-generation.h`](src.generate/resources-generation.h) | Metric-specific country choropleths, missing-data layer, catalogue metadata, legend, and embedded SVG checks |
-| [`src.generate/generate-resources.cc`](src.generate/generate-resources.cc) | Five-family resource-generator entry point |
-| [`tests/test-resources-generation.cc`](tests/test-resources-generation.cc) | Stage 6b source, coverage, schema, derivation, catalogue, alias, and naming tests |
-| [`assets.static/resources/resources-profile.json`](assets.static/resources/resources-profile.json) | Checked v2 family/source/metric/coverage catalogue |
+| [`src.generate/resources-data.h`](src.generate/resources-data.h) | Strict Stage 12 v3 source catalogue, six-family country/spatial profile, coverage, and normalized-value loader |
+| [`src.generate/resources-generation.h`](src.generate/resources-generation.h) | Metric-specific country choropleths and spatial reef fields, missing-data layers, catalogue metadata, legends, and embedded SVG checks |
+| [`src.generate/generate-resources.cc`](src.generate/generate-resources.cc) | Six-family, fourteen-metric resource-generator entry point |
+| [`tests/test-resources-generation.cc`](tests/test-resources-generation.cc) | Stage 12 source, coverage, spatial schema, derivation, catalogue, alias, and naming tests |
+| [`assets.static/resources/resources-profile.json`](assets.static/resources/resources-profile.json) | Checked v3 family/source/metric/coverage/spatial catalogue |
 | [`assets.static/resources/resources-values.json`](assets.static/resources/resources-values.json) | Checked normalized country observations for released/default and available metrics |
 | [`assets.static/resources/countries-110m.geojson`](assets.static/resources/countries-110m.geojson) | Natural Earth Admin-0 country geometry with normalized resource join keys |
+| [`assets.static/resources/coral-reefs-025deg.geojson`](assets.static/resources/coral-reefs-025deg.geojson) | Checked 0.25-degree WRI Reefs at Risk threat-cell geometry |
 | [`scripts/fetch-resources-data.sh`](scripts/fetch-resources-data.sh) | Explicit primary-source refresh staging workflow; never an ordinary build dependency |
-| [`scripts/prepare-resources-data.py`](scripts/prepare-resources-data.py) | Deterministic source parsing, country normalization, age derivation, coverage, schema, and checksum preparation |
+| [`scripts/prepare-resources-data.py`](scripts/prepare-resources-data.py) | Deterministic source parsing, country normalization, human derivation, reef-cell normalization, coverage, schema, and checksum preparation |
+| [`scripts/authorize-external.sh`](scripts/authorize-external.sh) | Secret-safe read-only authorization checks for optional P-Tree, NASA FIRMS, and licensed topology passes |
 | [`src.generate/orbiting-data.h`](src.generate/orbiting-data.h) | Orbital Technosphere profile and OMM validation, category membership, SGP4 adapter, frame transforms, illumination, and visibility state |
 | [`src.generate/orbiting-generation.h`](src.generate/orbiting-generation.h) | Global and observer semantic SVG layers, subdued Natural Earth base, representative tracks, markers, metadata, and embedded checks |
 | [`src.generate/generate-orbiting.cc`](src.generate/generate-orbiting.cc) | Thin Orbital Technosphere generator entry point |

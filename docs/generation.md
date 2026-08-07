@@ -8,7 +8,9 @@
 [Cloud-atmosphere notes](cloud-atmosphere-implementation-notes.md) ·
 [P-Tree download quick start](ptree-production-download.md) ·
 [Orbital Technosphere notes](orbital-technosphere-implementation-notes.md) ·
-[Resources Stage 6b implementation](resources-implementation-notes.md) ·
+[Resources Stage 12 implementation](resources-implementation-notes.md) ·
+[Stage 12 overview](stage-12-implementation-notes.md) ·
+[Cahill–Keyes snapshot](generated-snapshot-ck.md) ·
 [Resources enrichment plan](resources-enrichment-plan.md) ·
 [Anthropocene notes](anthropocene-implementation-notes.md) ·
 [Anthropocene Stage 8b plan](anthropocene-enrichment-plan.md) ·
@@ -41,7 +43,7 @@ does not duplicate generation logic or filter SVG layers after generation.
 | Astronomy | [`src.generate/generate-astro.cc`](../src.generate/generate-astro.cc) | Profile timestamp and observer, bounded Gaia/exoplanet/SBDB snapshots, curated multi-band sources and events |
 | Cloud-atmosphere | [`src.generate/generate-cloud-atmosphere.cc`](../src.generate/generate-cloud-atmosphere.cc) | Process-start solar geometry plus prepared, source-timed JAXA P-Tree cloud and JAXA Earth atmosphere observations |
 | Orbital Technosphere | [`src.generate/generate-orbiting.cc`](../src.generate/generate-orbiting.cc) | Profile timestamp and observer, CelesTrak OMM population and memberships, NASA SSCWeb reference positions, and SGP4 |
-| Resources Stage 6b | [`src.generate/generate-resources.cc`](../src.generate/generate-resources.cc) | Pinned current-source country values for energy, food, flora, mineral, and human families |
+| Resources Stage 12 | [`src.generate/generate-resources.cc`](../src.generate/generate-resources.cc) | Pinned current-source country and reef fields for energy, food, fauna, flora, mineral, and human families |
 | Anthropocene | [`src.generate/generate-anthropocene.cc`](../src.generate/generate-anthropocene.cc) | Profile-fixed partial year and checksum-pinned H3 cell-day counts from GSN, EPA AirData, HMS, Storm Events, and CWFIS |
 | Anthropocene temperature | [`src.generate/generate-anthropocene-temperature.cc`](../src.generate/generate-anthropocene-temperature.cc) | Complete-2025 and partial-2026 CPC temperature fields on a global H3 domain |
 | Network swarm | [`src.generate/generate-network-swarm.cc`](../src.generate/generate-network-swarm.cc) | Validated cumulative swarm GeoJSON, H3 parent clustering, fixed display profile, and Izzi radial honeycombs |
@@ -52,7 +54,7 @@ does not duplicate generation logic or filter SVG layers after generation.
 
 The aggregate target generates all four terrestrial artifact families, the
 monochrome Bathymetry Roulette family, two astronomy and two Orbital
-Technosphere products, five Stage 6b resource-family atlases, one
+Technosphere products, 14 Stage 12 resource products, one
 Anthropocene observation atlas, two year-bearing Anthropocene temperature
 atlases, one cumulative
 network-swarm product, and one cloud/CDN infrastructure-site atlas for all six
@@ -148,10 +150,11 @@ The default locations can be overridden:
 | `ANTHROPOCENE_GEOJSON` | `$(ANTHROPOCENE_DATA_DIR)/anthropocene-2026.geojson` | Checksum-pinned, source-separated H3 cell-day snapshot |
 | `ANTHROPOCENE_TEMPERATURE_PROFILE_2025`, `ANTHROPOCENE_TEMPERATURE_PROFILE_2026` | Year-bearing files in `$(ANTHROPOCENE_DATA_DIR)` | Complete-2025 and partial-2026 CPC field, record-baseline, coverage, and display contracts |
 | `ANTHROPOCENE_TEMPERATURE_GEOJSON_2025`, `ANTHROPOCENE_TEMPERATURE_GEOJSON_2026` | Year-bearing files in `$(ANTHROPOCENE_DATA_DIR)` | Checksum-pinned global-domain resolution-3 H3 temperature fields |
-| `RESOURCES_DATA_DIR` | `assets.static/resources` | Checked Stage 6b profile, values, compact country geometry, checksums, and source-workflow README |
-| `RESOURCES_PROFILE` | `$(RESOURCES_DATA_DIR)/resources-profile.json` | Five resource families, source catalogue, metric catalogue, coverage gates, defaults, scales, and palettes |
+| `RESOURCES_DATA_DIR` | `assets.static/resources` | Checked Stage 12 profile, values, country/reef geometry, checksums, and source-workflow README |
+| `RESOURCES_PROFILE` | `$(RESOURCES_DATA_DIR)/resources-profile.json` | Six resource families, source/metric catalogues, country/spatial gates, defaults, scales, and palettes |
 | `RESOURCES_VALUES` | `$(RESOURCES_DATA_DIR)/resources-values.json` | Normalized country values for implemented metrics |
 | `RESOURCES_COUNTRIES` | `$(RESOURCES_DATA_DIR)/countries-110m.geojson` | Compact Natural Earth country geometry keyed by `RESOURCE_A3` |
+| `RESOURCES_REEFS` | `$(RESOURCES_DATA_DIR)/coral-reefs-025deg.geojson` | Checked quarter-degree coral-reef presence/threat cells derived from WRI geometry |
 | `NETWORK_SWARM_SOURCE` | `assets.static/network-swarm/house-of-the-dragon-301-cumulative-aggregate.geojson.zip` | Local ZIP or plain GeoJSON source prepared for the network-swarm pass |
 | `NETWORK_SWARM_GEOJSON` | `assets.static/network-swarm/.prepared/house-of-the-dragon-301-cumulative-aggregate.geojson` | Prepared cumulative swarm staging destination |
 | `NETWORK_SWARM_PROFILE` | `assets.static/network-swarm/network-swarm-profile.json` | H3 clustering, physical marker dimensions, labels/tethers, fixed scales, and provenance |
@@ -245,12 +248,13 @@ passes and their SVG result counts per projection are:
 | `astronomy` | All-sky and observer SVGs |
 | `cloud-atmosphere` | One process-start solar and source-timed physical-atmosphere SVG |
 | `orbital-technosphere` | Global and observer SVGs |
-| `anthropocene` | One source-separated observation-atlas SVG |
-| `resources-energy` | One solar-capacity country choropleth |
+| `anthropocene` | Two temperature-field SVGs, 2025 and 2026 |
+| `resources-energy` | Four country products: solar, wind, nuclear, and refinery throughput |
 | `resources-food` | One food-production-index country choropleth |
+| `resources-fauna` | Fisheries country choropleth and coral-reef threat field |
 | `resources-flora` | One forest-area country choropleth |
 | `resources-mineral` | One rare-earth mine-production country choropleth |
-| `resources-human` | One population-under-30 country choropleth |
+| `resources-human` | Five country products: under 30, over 60, two attainment levels, and patents |
 | `network-swarm` | One cumulative network-swarm SVG |
 | `bathymetry-roulette` | One monochrome, explicitly varied roulette-line-field depth SVG |
 | `network-infrastructure` | One cloud/CDN infrastructure-site SVG; never the licensed topology product |
@@ -261,24 +265,25 @@ projection aliases; `graticule`, `astro`, `orbiting`, and the former `network`
 and short `swarm` names for `network-swarm`, `infrastructure` for
 `network-infrastructure`, `clouds`, `atmosphere`, `solar-atmosphere`, and
 `solar/cloud/atmosphere` for `cloud-atmosphere`, plus `energy`, `food`,
-`flora`, `mineral`, `minerals`, and `human` for their corresponding resource
+`fauna`, `fisheries`, `reefs`, `flora`, `mineral`, `minerals`, and `human` for their corresponding resource
 families. `resources`, `resource`, and the legacy typo `resouces` expand to all
-five Stage 6b resource families; `ressources-flora` remains a spelling alias.
+six Stage 12 resource families; `ressources-flora` remains a spelling alias.
 The retired historical selector names are rejected. `bathymetry-rolette` and
 `art-agua-roulette` are aliases for `bathymetry-roulette`.
 For compatibility with the requested `earth, ocean` vocabulary, `ocean`
 normalizes to the current `water` generation pass. It does not mean the
 `ocean` layer inside the Earth base SVG.
 
-Profile `"all"` means the six projections by sixteen selectable passes. It
-produces 108 SVGs because astronomy and Orbital Technosphere each have two
-products. It deliberately excludes Cahill-Keyes slices, exploratory
+Profile `"all"` means the six projections by 17 selectable passes. It
+produces 168 SVGs because astronomy, Orbital Technosphere, Anthropocene, and
+several resource families produce multiple products. It deliberately excludes Cahill-Keyes slices, exploratory
 Myriahedral perspectives and slices, and PDF/PNG exports. Those products do
 not form a projection/pass cross-product and remain available through their
 explicit targets. It includes Cloud-atmosphere and therefore requires a
 current locally prepared JAXA snapshot. `make all` retains the credential-free
-133 SVG products (30 stored as deterministic `.svg.gz` archives), 133 PDF,
-and 133 PNG products and excludes Cloud-atmosphere. The six opt-in topology
+187 SVG products (84 stored as deterministic `.svg.gz` archives), 187 PDF,
+187 full-size PNG products, and 28 Cahill–Keyes thumbnails; it excludes
+Cloud-atmosphere. The six opt-in topology
 products per format also remain separate.
 
 The resolver rejects empty selectors, duplicate aliases or JSON members,
@@ -318,9 +323,14 @@ make prepare-cloud-atmosphere-data
 make generate-cloud-atmosphere
 make generate-orbiting
 make generate-anthropocene
+make generate-anthropocene-atlas
 make refresh-resources-data
 make generate-resources
 make generate-resources-energy
+make generate-resources-fauna-reefs-cahill-keyes
+make generate-resources-human-over-60
+make generate-snapshot-ck
+make authorize-external
 make generate-resources-mineral-cahill-keyes
 make prepare-network-swarm-data
 make generate-network-swarm
@@ -341,10 +351,11 @@ The full generators are not part of `make check`; invoking a `generate-*`
 target both writes its artifact and runs that generator's embedded structural
 checks.
 
-The 133 standard products plus six opt-in topology products can be generated
+The 187 standard products plus six opt-in topology products can be generated
 in each of `assets.generated/svg/`, `assets.generated/pdf/`, and
-`assets.generated/png/`; the 30 resource products also have deterministic
-`.svg.gz` companions in the SVG directory. Large standard suites are released
+`assets.generated/png/`; the 84 resource products also have deterministic
+`.svg.gz` companions in the SVG directory, and the Cahill–Keyes contact sheet
+adds 28 lower-resolution PNGs. Large standard suites are released
 as versioned static bundles instead of being stored in Git. Regenerating with
 a different GDAL, GEOS, font, or Inkscape version can still produce ordering,
 coordinate, or rendering differences even though the input snapshots are
@@ -488,27 +499,20 @@ coordinate pipeline, SVG metadata, verification, and operational-use limits.
 
 ## Anthropocene generation
 
-The Anthropocene pass maps positive unique-day counts from a checksum-pinned,
-resolution-4 H3 FeatureCollection. Its checked profile fixes the literal 2026
-calendar year, partial snapshot date, per-source coverage, record and
-precipitation thresholds, metric enablement, scales, shapes, and colors. It
-does not read the host clock or calculate a composite climate-attribution
-score.
+Stage 12 makes the complete-2025 and partial-2026 NOAA CPC temperature fields
+the default Anthropocene pair:
 
 ```sh
 make generate-anthropocene
 make generate-anthropocene-artifacts
 ```
 
-Use `generate-anthropocene-PROJECTION` for one SVG and
-`generate-anthropocene-projections` for all six SVGs. Supply a matching pair
-with `ANTHROPOCENE_PROFILE` and `ANTHROPOCENE_GEOJSON`. The loader rejects a
-year, snapshot, H3-resolution, filename, H3-center, or metric-total mismatch.
-The Make rule independently verifies the GeoJSON against the SHA-256 declared
-by the selected profile before generation.
+Use `generate-anthropocene-PROJECTION` for both year-bearing SVGs in one
+projection and `generate-anthropocene-projections` for all 12. The loader
+rejects a year, snapshot, H3-resolution, filename, H3-center, or metric-total
+mismatch, and Make verifies each GeoJSON against its profile SHA-256.
 
-The Stage 8b non-sparse option is a separate NOAA CPC temperature family. Its
-complete 2025 and partial 2026 profiles serialize every resolution-3 global H3
+The two profiles serialize every resolution-3 global H3
 cell and preserve TMAX/TMIN valid-day denominators, so an analyzed cell with no
 strict record is not confused with missing or ocean-domain data:
 
@@ -519,14 +523,28 @@ make generate-anthropocene-years
 make generate-anthropocene-year-artifacts
 ```
 
-The year aliases currently generate this implemented temperature theme across
-all six projections. Stage its ignored NOAA archive and prepare both candidates
+The explicit year aliases select one member of the default pair across all six
+projections. Stage the ignored NOAA archive and prepare both candidates
 without replacing checked files with:
 
 ```sh
 make fetch-anthropocene-cpc-data
 make prepare-anthropocene-temperature-data
 ```
+
+The earlier source-separated observation atlas maps positive unique-day counts
+from the checked resolution-4 H3 FeatureCollection and remains explicitly
+available:
+
+```sh
+make generate-anthropocene-atlas
+make generate-anthropocene-atlas-cahill-keyes
+make generate-anthropocene-atlas-artifacts
+```
+
+Its profile fixes the literal 2026 duration year, partial snapshot, per-source
+coverage, thresholds, metric enablement, scales, shapes, and colors. It does
+not read the host clock or calculate a composite climate-attribution score.
 
 EPA AirData PM2.5 exceedance days are enabled by default in the independent
 `air-quality-exposure` group. They use a cross-square and never become NOAA
@@ -554,28 +572,26 @@ document the feasibility boundary, classifications, exact formulas, source
 audit, Canada/Russia fire evaluation, candidate resource types, SVG contract,
 refresh workflow, and limits.
 
-## Stage 6b resources generation
+## Stage 12 resources generation
 
-The resources pass is a strict, offline country choropleth pipeline split into
-five independent families. Each family currently has one default metric that
-passes its declared coverage gate:
+The resources pass is a strict, offline country/spatial pipeline split into
+six independent families and 14 released metrics. `resources-energy` builds
+solar, wind, nuclear, and refinery-throughput maps; `resources-fauna` builds
+fisheries and coral-reef-threat maps; and `resources-human` builds five
+separate demographic, attainment, and patent maps. Food, flora, and mineral
+currently contribute one released map each.
 
-| Family | Default metric | Snapshot |
-| --- | --- | --- |
-| `resources-energy` | Installed solar generating capacity | IRENA 2025 |
-| `resources-food` | Food production index | Latest World Bank value in the pinned 2026 refresh |
-| `resources-flora` | Forest area as a percentage of land | Latest World Bank value in the pinned 2026 refresh |
-| `resources-mineral` | Rare-earth mine production | USGS 2025 estimate |
-| `resources-human` | Population under 30 | UN-derived World Bank age bands for 2024 |
-
-Build one exact family/projection pair, one family across all projections, all
-five families for one projection, or the entire 30-map matrix:
+Build all released products for a family/projection pair, one family across
+all projections, all families for one projection, or the entire 84-map
+matrix. Metric aliases select a single product:
 
 ```sh
 make generate-resources-energy-cahill-keyes
-make generate-resources-mineral
-make generate-resources-star-x
-make generate-resources
+make generate-resources-fauna
+make generate-resources-human-over-60
+make generate-resources-energy-petrochemical-star-x
+make generate-resources-cahill-keyes
+make generate-resources-stage12
 ```
 
 Every checked resource SVG is stored as a deterministic gzip archive. The
@@ -584,8 +600,8 @@ Inspect one without changing the checkout:
 
 ```sh
 gzip -cd \
-  assets.generated/svg/resources-energy-solar-capacity-2025-ck-44-22.svg.gz \
-  > /tmp/resources-energy.svg
+  assets.generated/svg/resources-fauna-coral-reef-threat-2011-ck-44-22.svg.gz \
+  > /tmp/resources-fauna-reefs.svg
 ```
 
 To decompress all `svg.gz` files anywhere beneath `assets.generated` beside
@@ -596,26 +612,24 @@ find assets.generated -type f -name '*.svg.gz' \
   -exec gzip --decompress --keep -- {} +
 ```
 
-The profile selector `resources` expands to all five family passes. Select a
-single family directly when a smaller configured build is wanted:
+The profile selector `resources` expands to all six family passes. Select a
+smaller subset directly:
 
 ```json
 {
   "schema_version": 1,
   "projections": ["cahill-keyes"],
-  "passes": ["resources-energy", "resources-mineral"]
+  "passes": ["resources-fauna", "resources-human"]
 }
 ```
 
-Normal generation reads only the checked profile, values, compact country
-geometry, and Natural Earth files. It never downloads. Maintainers can perform
-an explicit source refresh with `make refresh-resources-data`; review the
-resulting source years, coverage gates, and checksum diff before accepting it.
-The [implementation notes](resources-implementation-notes.md) document the
-schema, derivations, non-sparse defaults, metric catalogue, refresh workflow,
-and current limitations. The
-[enrichment plan](resources-enrichment-plan.md) records the next metrics to
-promote as stable current-source inputs become available.
+Normal generation reads only checked v3 profile/values, country and reef
+geometry, and Natural Earth files. It never downloads. Maintainers can run
+`make refresh-resources-data`, then review source periods, country/output/
+spatial gates, checksums, and all projection diffs. The
+[implementation notes](resources-implementation-notes.md) document exact
+metrics, derivations, schemas, reef reduction, target names, and limitations;
+the [enrichment plan](resources-enrichment-plan.md) records future products.
 
 ## Network-swarm generation
 

@@ -28,7 +28,7 @@ Install the components listed in
 SVG, PDF, and PNG suite. The offline `make check` target needs GNU Make, a
 C++20 compiler, RapidJSON and H3 development files, sibling Alpha60/Izzi
 headers, and the checked-in astronomy, Cloud-atmosphere fixture, Orbital
-Technosphere, Anthropocene, and network-swarm snapshots.
+Technosphere, Anthropocene, resources, and network-swarm snapshots.
 
 List every supported top-level Make target with:
 
@@ -77,12 +77,13 @@ See the [web-developer quick start](docs/pages/webassembly-quick-start.md) and
 compatibility contracts, and build requirements.
 
 Generate 24 production whole-earth maps, 12 timestamped astronomy maps, 12
-timestamped Orbital Technosphere maps, 30 Stage 6b resources maps, six
+timestamped Orbital Technosphere maps, 84 Stage 12 resources maps, six
 cumulative network-swarm maps, six monochrome Bathymetry Roulette maps, 18
 source-separated Anthropocene observation and temperature maps, six cloud/CDN network-infrastructure site maps, five
 exploratory Myriahedral ocean perspectives, 12 Cahill-Keyes enlargement
 slices, and two Myriahedral face-group slices as layered SVG, PDF, and opaque-white,
-3840-pixel-long-side PNG artifacts with:
+3840-pixel-long-side PNG artifacts. The same graph also makes 28
+480-pixel-wide Cahill-Keyes thumbnails with:
 
 ```sh
 make all
@@ -104,7 +105,9 @@ make assets-single
 ```
 
 Outputs are organized under `assets.generated/svg/`, `assets.generated/pdf/`, and
-`assets.generated/png/`. The
+`assets.generated/png/`; contact-sheet thumbnails are under
+`assets.generated/thumbnail/cahill-keyes/`. Review all Cahill-Keyes passes in
+the [generated snapshot](docs/generated-snapshot-ck.md). The
 [`v20260806` generated-assets release notes](docs/releases/v20260806.md)
 record the static-bundle manifest, render host, hardware sizing, verification,
 and source commit. Maintainers publish source tags and large generated bundles
@@ -163,27 +166,29 @@ See the [Orbital Technosphere implementation notes](docs/orbital-technosphere-im
 for source feasibility, naming, propagation, detiling layers, and accuracy
 limits.
 
-The original Anthropocene observation atlas remains offline from its
-profile-fixed, partial-2026 H3 snapshot. It preserves station temperature
-records, rainfall, fire, smoke, flood, severe weather, and EPA PM2.5 exposure
-as independent layers:
+Anthropocene generation defaults to the separately pinned, broad-coverage
+NOAA CPC temperature fields for the complete 2025 calendar year and partial
+2026 through August 4:
 
 ```sh
 make generate-anthropocene
 make generate-anthropocene-artifacts
+make generate-anthropocene-cahill-keyes
 ```
 
-Stage 8b adds separately pinned, broad-coverage NOAA CPC temperature fields for
-the complete 2025 calendar year and partial 2026 through August 4:
+The original profile-fixed, partial-2026 observation atlas remains available
+as an explicit legacy product. It preserves station temperature records,
+rainfall, fire, smoke, flood, severe weather, and EPA PM2.5 exposure as
+independent layers:
 
 ```sh
-make generate-anthropocene-2025
-make generate-anthropocene-2026
-make generate-anthropocene-year-artifacts
+make generate-anthropocene-atlas
+make generate-anthropocene-atlas-artifacts
 ```
 
-Those aliases currently build the CPC temperature theme across all six
-projections. A release refresh of the observation atlas now requires
+The explicit `generate-anthropocene-2025`, `generate-anthropocene-2026`, and
+`generate-anthropocene-year-artifacts` aliases remain available. A release
+refresh of the observation atlas requires
 `FIRMS_MAP_KEY` and audits NASA FIRMS acquisition dates plus world regions;
 `ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY=1` is an explicit local-pipeline
 override, not a global release path. EPA AirData remains distinct from NOAA HMS
@@ -194,23 +199,27 @@ for classifications, formulas, source research, refresh workflow, and limits.
 current North American bias, records the implemented CPC/FIRMS-gate increment,
 and specifies the remaining CAMS, permission-gated PurpleAir, and ocean work.
 
-Resources Stage 6b is implemented as five current-source families: energy,
-food, flora, mineral, and human. The first release maps one independently
-defined, non-sparse country metric per family across all six projections and
-catalogues requested follow-on metrics without combining unlike units:
+Resources Stage 12 implements six current-source families: energy, food,
+fauna, flora, mineral, and human. Fourteen independently defined products run
+across all six projections: solar, wind, nuclear, petroleum-refinery
+throughput, food production, fisheries, actual reef-threat geometry, forest
+area, rare-earth production, and five human measures. Unlike units are never
+combined into a synthetic score:
 
 ```sh
-make generate-resources-energy-cahill-keyes
-make generate-resources-energy
+make generate-resources-energy-wind-cahill-keyes
+make generate-resources-fauna
+make generate-resources-human
 make generate-resources
 ```
 
-The [Stage 6b resources enrichment plan](docs/resources-enrichment-plan.md)
-and [implementation notes](docs/resources-implementation-notes.md) define the
-current sources, critical-mineral expansion, human-metric substitutions, v2
-contracts, offline snapshot preparation, coverage QA, and extension sequence.
+The [Stage 12 implementation notes](docs/stage-12-implementation-notes.md),
+[resources implementation notes](docs/resources-implementation-notes.md),
+and [enrichment plan](docs/resources-enrichment-plan.md) define source roles,
+the v3 country/spatial contracts, offline snapshot preparation, reef
+normalization, coverage QA, and rejected human candidates.
 
-Stage 6b SVG deliverables are deterministic `*.svg.gz` archives. To decompress
+Stage 12 resource SVG deliverables are deterministic `*.svg.gz` archives. To decompress
 every SVG archive in place while keeping each
 `.svg.gz` file:
 
@@ -218,6 +227,18 @@ every SVG archive in place while keeping each
 find assets.generated -type f -name '*.svg.gz' \
   -exec gzip --decompress --keep -- {} +
 ```
+
+Optional P-Tree, NASA FIRMS, and licensed network-topology passes require
+provider-side registration or terms acceptance. After completing that step,
+validate the local credentials and authorization without fetching generation
+data or printing secrets:
+
+```sh
+make authorize-external
+```
+
+See [Prerequisites](docs/prerequisites.md#optional-external-authorization) for
+the per-provider variables and selective checks.
 
 Network-swarm generation is offline and reproducible from a checked-in
 cumulative GeoJSON archive. Prepare the bounded source and generate the six H3/Izzi

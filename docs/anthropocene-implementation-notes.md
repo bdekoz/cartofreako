@@ -3,6 +3,7 @@
 [Documentation index](../index.md) ·
 [Generation guide](generation.md) ·
 [Generate-pass decisions](generation-methods.md) ·
+[Stage 12 implementation](stage-12-implementation-notes.md) ·
 [Stage 8b enrichment plan](anthropocene-enrichment-plan.md) ·
 [Snapshot assets](../assets.static/anthropocene/README.md)
 
@@ -257,12 +258,17 @@ shape distinction, and absence of a coral group.
 
 ## Acquisition and refresh
 
-Ordinary generation is offline:
+The observation-atlas compatibility family is offline and explicit in Stage
+12:
 
 ```sh
-make generate-anthropocene
-make generate-anthropocene-artifacts
+make generate-anthropocene-atlas
+make generate-anthropocene-atlas-artifacts
 ```
+
+The unqualified `generate-anthropocene` and
+`generate-anthropocene-artifacts` targets now build both year-bearing CPC
+fields described below.
 
 A deliberate refresh is two-stage:
 
@@ -286,7 +292,7 @@ Supply another already-normalized, matching dataset with Make variables:
 ```sh
 make ANTHROPOCENE_PROFILE=/absolute/path/profile.json \
      ANTHROPOCENE_GEOJSON=/absolute/path/observations.geojson \
-     generate-anthropocene-cahill-keyes
+     generate-anthropocene-atlas-cahill-keyes
 ```
 
 The generation rule verifies that the selected profile names the selected
@@ -337,9 +343,11 @@ Cahill-Keyes render, 21 of 11,945 covered cells would otherwise close across
 an outer topology cut; those cells use a small centered hexagon and the SVG
 records the fallback count on each affected path. The other five projections
 need no fallback cells.
-Generate all six projections with:
+Generate both years by default, or either explicit year, across all six
+projections with:
 
 ```sh
+make generate-anthropocene
 make generate-anthropocene-2025
 make generate-anthropocene-2026
 make generate-anthropocene-years

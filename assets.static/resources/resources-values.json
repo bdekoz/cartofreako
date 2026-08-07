@@ -1,7 +1,1111 @@
 {
-  "schema": "cartofreako-resources-values-v2",
+  "schema": "cartofreako-resources-values-v3",
   "snapshot_as_of": "2026-08-06",
   "records": [
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "ARE",
+      "year": 2024,
+      "value": 5348,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "ARG",
+      "year": 2024,
+      "value": 1641,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "ARM",
+      "year": 2024,
+      "value": 416,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "BEL",
+      "year": 2024,
+      "value": 3908,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "BGR",
+      "year": 2024,
+      "value": 2006,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "BLR",
+      "year": 2024,
+      "value": 2220,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "BRA",
+      "year": 2024,
+      "value": 1884,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "CAN",
+      "year": 2024,
+      "value": 12714,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "CHE",
+      "year": 2024,
+      "value": 2973,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "CHN",
+      "year": 2024,
+      "value": 55320,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "CZE",
+      "year": 2024,
+      "value": 3963,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "ESP",
+      "year": 2024,
+      "value": 7123,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "FIN",
+      "year": 2024,
+      "value": 4369,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "FRA",
+      "year": 2024,
+      "value": 63000,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "GBR",
+      "year": 2024,
+      "value": 5883,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "HUN",
+      "year": 2024,
+      "value": 1916,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "IND",
+      "year": 2024,
+      "value": 6920,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "IRN",
+      "year": 2024,
+      "value": 915,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "JPN",
+      "year": 2024,
+      "value": 12631,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "KOR",
+      "year": 2024,
+      "value": 25609,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "MEX",
+      "year": 2024,
+      "value": 1552,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "NLD",
+      "year": 2024,
+      "value": 482,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "PAK",
+      "year": 2024,
+      "value": 3262,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "ROU",
+      "year": 2024,
+      "value": 1300,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "RUS",
+      "year": 2024,
+      "value": 26802,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "SVK",
+      "year": 2024,
+      "value": 2302,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "SVN",
+      "year": 2024,
+      "value": 696,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "SWE",
+      "year": 2024,
+      "value": 7008,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "TWN",
+      "year": 2024,
+      "value": 938,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "UKR",
+      "year": 2024,
+      "value": 13107,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "USA",
+      "year": 2024,
+      "value": 96952,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "nuclear-operating-capacity",
+      "iso3": "ZAF",
+      "year": 2024,
+      "value": 1854,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "AFG",
+      "year": 2024,
+      "value": 20.25,
+      "state": "estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "AGO",
+      "year": 2023,
+      "value": 2166.843,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "ALB",
+      "year": 2024,
+      "value": 144.06,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "ARE",
+      "year": 2023,
+      "value": 45507.565,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "ARG",
+      "year": 2024,
+      "value": 27245.495,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "AUS",
+      "year": 2024,
+      "value": 12473.721,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "AUT",
+      "year": 2024,
+      "value": 8549.327,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "AZE",
+      "year": 2023,
+      "value": 6239.1,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "BEL",
+      "year": 2024,
+      "value": 31577.6,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "BGD",
+      "year": 2024,
+      "value": 1307.678,
+      "state": "estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "BGR",
+      "year": 2023,
+      "value": 6792.308,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "BIH",
+      "year": 2023,
+      "value": 16.586,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "BLR",
+      "year": 2023,
+      "value": 15224.07,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "BOL",
+      "year": 2023,
+      "value": 1777.017,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "BRA",
+      "year": 2024,
+      "value": 105401.092502,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "BRN",
+      "year": 2023,
+      "value": 8006.15,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "CAN",
+      "year": 2024,
+      "value": 113387.401,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "CHE",
+      "year": 2024,
+      "value": 2623.062,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "CHL",
+      "year": 2024,
+      "value": 11522.712,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "CHN",
+      "year": 2023,
+      "value": 902972.492,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "CIV",
+      "year": 2023,
+      "value": 5215.337,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "CMR",
+      "year": 2019,
+      "value": 696.342,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "COG",
+      "year": 2023,
+      "value": 1085.057,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "COL",
+      "year": 2024,
+      "value": 20907.184,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "CUB",
+      "year": 2023,
+      "value": 1400.02,
+      "state": "estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "CZE",
+      "year": 2024,
+      "value": 6808.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "DEU",
+      "year": 2024,
+      "value": 93073.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "DNK",
+      "year": 2024,
+      "value": 7635.496,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "DOM",
+      "year": 2023,
+      "value": 1277.22,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "DZA",
+      "year": 2023,
+      "value": 31076.416,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "ECU",
+      "year": 2023,
+      "value": 8201.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "EGY",
+      "year": 2023,
+      "value": 29716.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "ESP",
+      "year": 2024,
+      "value": 65014.254,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "FIN",
+      "year": 2024,
+      "value": 10430.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "FRA",
+      "year": 2024,
+      "value": 46921.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "GAB",
+      "year": 2023,
+      "value": 970.008,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "GBR",
+      "year": 2024,
+      "value": 51608.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "GEO",
+      "year": 2023,
+      "value": 51.576,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "GHA",
+      "year": 2024,
+      "value": 360.55,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "GRC",
+      "year": 2024,
+      "value": 29800.102,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "GTM",
+      "year": 2023,
+      "value": 100.289598,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "HRV",
+      "year": 2024,
+      "value": 101.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "HUN",
+      "year": 2024,
+      "value": 7228.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "IDN",
+      "year": 2023,
+      "value": 48186.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "IND",
+      "year": 2023,
+      "value": 301103.587,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "IRL",
+      "year": 2024,
+      "value": 2076.905,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "IRN",
+      "year": 2023,
+      "value": 111982.097,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "IRQ",
+      "year": 2023,
+      "value": 39000.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "ISR",
+      "year": 2024,
+      "value": 14369.177,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "ITA",
+      "year": 2024,
+      "value": 68602.132,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "JAM",
+      "year": 2024,
+      "value": 820.0,
+      "state": "estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "JOR",
+      "year": 2023,
+      "value": 1800.996,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "JPN",
+      "year": 2024,
+      "value": 120404.978,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "KAZ",
+      "year": 2024,
+      "value": 17815.82,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "KGZ",
+      "year": 2024,
+      "value": 563.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "KOR",
+      "year": 2024,
+      "value": 168197.384,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "KWT",
+      "year": 2024,
+      "value": 54500.0,
+      "state": "estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "LBY",
+      "year": 2023,
+      "value": 6962.596,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "LKA",
+      "year": 2023,
+      "value": 1211.057,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "LTU",
+      "year": 2024,
+      "value": 9010.4,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "MDA",
+      "year": 2023,
+      "value": 2.6,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "MEX",
+      "year": 2024,
+      "value": 52276.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "MMR",
+      "year": 2023,
+      "value": 194.31,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "MYS",
+      "year": 2023,
+      "value": 25613.758,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "NER",
+      "year": 2023,
+      "value": 921.389,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "NGA",
+      "year": 2023,
+      "value": 343.789,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "NIC",
+      "year": 2023,
+      "value": 796.438,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "NLD",
+      "year": 2024,
+      "value": 56186.736,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "NOR",
+      "year": 2024,
+      "value": 10230.572,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "NZL",
+      "year": 2022,
+      "value": 1142.999,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "OMN",
+      "year": 2023,
+      "value": 14159.826,
+      "state": "estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "PAK",
+      "year": 2023,
+      "value": 11500.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "PER",
+      "year": 2023,
+      "value": 8836.376,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "PHL",
+      "year": 2023,
+      "value": 6960.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "PNG",
+      "year": 2024,
+      "value": 1464.9,
+      "state": "estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "POL",
+      "year": 2024,
+      "value": 28858.714,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "PRK",
+      "year": 2023,
+      "value": 532.192,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "PRT",
+      "year": 2024,
+      "value": 12184.388,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "QAT",
+      "year": 2023,
+      "value": 17513.721,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "ROU",
+      "year": 2023,
+      "value": 11163.172,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "RUS",
+      "year": 2023,
+      "value": 259243.805,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "SAU",
+      "year": 2023,
+      "value": 132685.166295,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "SDN",
+      "year": 2023,
+      "value": 1913.252,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "SEN",
+      "year": 2023,
+      "value": 1242.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "SRB",
+      "year": 2023,
+      "value": 4127.238,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "SSD",
+      "year": 2022,
+      "value": 163.899,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "SUR",
+      "year": 2023,
+      "value": 685.48,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "SVK",
+      "year": 2024,
+      "value": 5259.084,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "SWE",
+      "year": 2024,
+      "value": 21456.815,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "SYR",
+      "year": 2023,
+      "value": 2728.087,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "TCD",
+      "year": 2024,
+      "value": 730.0,
+      "state": "estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "THA",
+      "year": 2024,
+      "value": 55359.4666991,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "TJK",
+      "year": 2024,
+      "value": 16.1,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "TKM",
+      "year": 2023,
+      "value": 7590.985,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "TTO",
+      "year": 2018,
+      "value": 5373.188,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "TUN",
+      "year": 2023,
+      "value": 1079.917,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "TUR",
+      "year": 2024,
+      "value": 39459.204,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "UKR",
+      "year": 2022,
+      "value": 3647.238,
+      "state": "estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "URY",
+      "year": 2024,
+      "value": 1306.3,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "USA",
+      "year": 2024,
+      "value": 832789.369,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "UZB",
+      "year": 2023,
+      "value": 4497.3,
+      "state": "estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "VEN",
+      "year": 2023,
+      "value": 18590.668,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "VNM",
+      "year": 2023,
+      "value": 15674.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "YEM",
+      "year": 2023,
+      "value": 809.015,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "ZAF",
+      "year": 2023,
+      "value": 8341.477,
+      "state": "estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "petroleum-refinery-throughput",
+      "iso3": "ZMB",
+      "year": 2023,
+      "value": 104.448,
+      "state": "reported-or-estimated"
+    },
     {
       "family": "resources-energy",
       "metric": "solar-capacity",
@@ -1352,6 +2456,2350 @@
       "iso3": "ZWE",
       "year": 2025,
       "value": 105,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "AFG",
+      "year": 2025,
+      "value": 0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "ARE",
+      "year": 2025,
+      "value": 110,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "ARG",
+      "year": 2025,
+      "value": 4497,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "ARM",
+      "year": 2025,
+      "value": 3,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "AUS",
+      "year": 2025,
+      "value": 16348,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "AUT",
+      "year": 2025,
+      "value": 4292,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "AZE",
+      "year": 2025,
+      "value": 64,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "BEL",
+      "year": 2025,
+      "value": 5851,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "BGD",
+      "year": 2025,
+      "value": 63,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "BGR",
+      "year": 2025,
+      "value": 706,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "BHS",
+      "year": 2025,
+      "value": 0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "BIH",
+      "year": 2025,
+      "value": 244,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "BLR",
+      "year": 2025,
+      "value": 122,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "BLZ",
+      "year": 2025,
+      "value": 0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "BOL",
+      "year": 2025,
+      "value": 135,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "BRA",
+      "year": 2025,
+      "value": 34866,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "BTN",
+      "year": 2025,
+      "value": 1,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "CAN",
+      "year": 2025,
+      "value": 17745,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "CHE",
+      "year": 2025,
+      "value": 111,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "CHL",
+      "year": 2025,
+      "value": 5884,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "CHN",
+      "year": 2025,
+      "value": 640626,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "COL",
+      "year": 2025,
+      "value": 34,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "CRI",
+      "year": 2025,
+      "value": 437,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "CUB",
+      "year": 2025,
+      "value": 16,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "CYP",
+      "year": 2025,
+      "value": 170,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "CZE",
+      "year": 2025,
+      "value": 369,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "DEU",
+      "year": 2025,
+      "value": 77808,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "DJI",
+      "year": 2025,
+      "value": 80,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "DNK",
+      "year": 2025,
+      "value": 7547,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "DOM",
+      "year": 2025,
+      "value": 482,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "DZA",
+      "year": 2025,
+      "value": 10,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "ECU",
+      "year": 2025,
+      "value": 71,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "EGY",
+      "year": 2025,
+      "value": 3028,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "ERI",
+      "year": 2025,
+      "value": 1,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "ESP",
+      "year": 2025,
+      "value": 33301,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "EST",
+      "year": 2025,
+      "value": 705,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "ETH",
+      "year": 2025,
+      "value": 504,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "FIN",
+      "year": 2025,
+      "value": 9383,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "FJI",
+      "year": 2025,
+      "value": 10,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "FRA",
+      "year": 2025,
+      "value": 25655,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "GBR",
+      "year": 2025,
+      "value": 33396,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "GEO",
+      "year": 2025,
+      "value": 21,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "GHA",
+      "year": 2025,
+      "value": 0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "GMB",
+      "year": 2025,
+      "value": 1,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "GRC",
+      "year": 2025,
+      "value": 5706,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "GRL",
+      "year": 2025,
+      "value": 0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "GTM",
+      "year": 2025,
+      "value": 107,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "GUY",
+      "year": 2025,
+      "value": 0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "HND",
+      "year": 2025,
+      "value": 242,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "HRV",
+      "year": 2025,
+      "value": 1375,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "HTI",
+      "year": 2025,
+      "value": 0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "HUN",
+      "year": 2025,
+      "value": 325,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "IDN",
+      "year": 2025,
+      "value": 152,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "IND",
+      "year": 2025,
+      "value": 54511,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "IRL",
+      "year": 2025,
+      "value": 5128,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "IRN",
+      "year": 2025,
+      "value": 378,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "ISL",
+      "year": 2025,
+      "value": 4,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "ISR",
+      "year": 2025,
+      "value": 347,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "ITA",
+      "year": 2025,
+      "value": 13568,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "JAM",
+      "year": 2025,
+      "value": 102,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "JOR",
+      "year": 2025,
+      "value": 631,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "JPN",
+      "year": 2025,
+      "value": 6238,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "KAZ",
+      "year": 2025,
+      "value": 1909,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "KEN",
+      "year": 2025,
+      "value": 436,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "KHM",
+      "year": 2025,
+      "value": 0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "KOR",
+      "year": 2025,
+      "value": 2451,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "KWT",
+      "year": 2025,
+      "value": 12,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "LAO",
+      "year": 2025,
+      "value": 1150,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "LBN",
+      "year": 2025,
+      "value": 3,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "LKA",
+      "year": 2025,
+      "value": 267,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "LTU",
+      "year": 2025,
+      "value": 2510,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "LUX",
+      "year": 2025,
+      "value": 232,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "LVA",
+      "year": 2025,
+      "value": 133,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "MAR",
+      "year": 2025,
+      "value": 2452,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "MDA",
+      "year": 2025,
+      "value": 247,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "MDG",
+      "year": 2025,
+      "value": 0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "MEX",
+      "year": 2025,
+      "value": 7512,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "MKD",
+      "year": 2025,
+      "value": 103,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "MMR",
+      "year": 2025,
+      "value": 0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "MNE",
+      "year": 2025,
+      "value": 118,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "MNG",
+      "year": 2025,
+      "value": 155,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "MRT",
+      "year": 2025,
+      "value": 137,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "NAM",
+      "year": 2025,
+      "value": 6,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "NIC",
+      "year": 2025,
+      "value": 186,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "NLD",
+      "year": 2025,
+      "value": 11783,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "NOR",
+      "year": 2025,
+      "value": 5158,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "NPL",
+      "year": 2025,
+      "value": 0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "NZL",
+      "year": 2025,
+      "value": 1263,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "OMN",
+      "year": 2025,
+      "value": 50,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "PAK",
+      "year": 2025,
+      "value": 1845,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "PAN",
+      "year": 2025,
+      "value": 336,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "PER",
+      "year": 2025,
+      "value": 1340,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "PHL",
+      "year": 2025,
+      "value": 518,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "POL",
+      "year": 2025,
+      "value": 10602,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "PRI",
+      "year": 2025,
+      "value": 128,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "PRK",
+      "year": 2025,
+      "value": 2,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "PRT",
+      "year": 2025,
+      "value": 5605,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "PRY",
+      "year": 2025,
+      "value": 0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "ROU",
+      "year": 2025,
+      "value": 3283,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "RUS",
+      "year": 2025,
+      "value": 2880,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "SAU",
+      "year": 2025,
+      "value": 400,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "SEN",
+      "year": 2025,
+      "value": 159,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "SLV",
+      "year": 2025,
+      "value": 54,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "SOM",
+      "year": 2025,
+      "value": 4,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "SRB",
+      "year": 2025,
+      "value": 803,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "SVK",
+      "year": 2025,
+      "value": 4,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "SVN",
+      "year": 2025,
+      "value": 4,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "SWE",
+      "year": 2025,
+      "value": 17381,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "SYR",
+      "year": 2025,
+      "value": 5,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "TCD",
+      "year": 2025,
+      "value": 1,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "THA",
+      "year": 2025,
+      "value": 1544,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "TTO",
+      "year": 2025,
+      "value": 0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "TUN",
+      "year": 2025,
+      "value": 245,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "TUR",
+      "year": 2025,
+      "value": 14781,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "TWN",
+      "year": 2025,
+      "value": 4517,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "TZA",
+      "year": 2025,
+      "value": 2,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "UKR",
+      "year": 2025,
+      "value": 1761,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "URY",
+      "year": 2025,
+      "value": 1516,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "USA",
+      "year": 2025,
+      "value": 158826,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "UZB",
+      "year": 2025,
+      "value": 1652,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "VEN",
+      "year": 2025,
+      "value": 50,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "VNM",
+      "year": 2025,
+      "value": 6239,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "VUT",
+      "year": 2025,
+      "value": 3,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-energy",
+      "metric": "wind-capacity",
+      "iso3": "ZAF",
+      "year": 2025,
+      "value": 4326,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "AFG",
+      "year": 2024,
+      "value": 14170.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "AGO",
+      "year": 2024,
+      "value": 631824.39,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "ALB",
+      "year": 2024,
+      "value": 16452.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "ARE",
+      "year": 2024,
+      "value": 60641.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "ARG",
+      "year": 2024,
+      "value": 918105.247,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "ARM",
+      "year": 2024,
+      "value": 26999.999,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "AUS",
+      "year": 2024,
+      "value": 344817.064,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "AUT",
+      "year": 2024,
+      "value": 5357.769,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "AZE",
+      "year": 2024,
+      "value": 67315.7,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "BDI",
+      "year": 2024,
+      "value": 19500.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "BEL",
+      "year": 2024,
+      "value": 17371.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "BEN",
+      "year": 2024,
+      "value": 64021.1,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "BFA",
+      "year": 2024,
+      "value": 33064.92,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "BGD",
+      "year": 2024,
+      "value": 5019069.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "BGR",
+      "year": 2024,
+      "value": 18290.919,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "BHS",
+      "year": 2024,
+      "value": 8881.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "BIH",
+      "year": 2024,
+      "value": 5237.3,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "BLR",
+      "year": 2024,
+      "value": 9577.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "BLZ",
+      "year": 2024,
+      "value": 209190.375,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "BOL",
+      "year": 2024,
+      "value": 29805.27,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "BRA",
+      "year": 2024,
+      "value": 1603339.036,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "BRN",
+      "year": 2024,
+      "value": 17696.5,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "BTN",
+      "year": 2024,
+      "value": 63.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "BWA",
+      "year": 2024,
+      "value": 196.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "CAF",
+      "year": 2024,
+      "value": 29410.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "CAN",
+      "year": 2024,
+      "value": 842251.093,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "CHE",
+      "year": 2024,
+      "value": 4090.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "CHL",
+      "year": 2024,
+      "value": 3948273.393,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "CHN",
+      "year": 2024,
+      "value": 95211994.681,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "CIV",
+      "year": 2024,
+      "value": 95130.248,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "CMR",
+      "year": 2024,
+      "value": 250200.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "COD",
+      "year": 2024,
+      "value": 271765.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "COG",
+      "year": 2024,
+      "value": 55451.847,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "COL",
+      "year": 2024,
+      "value": 704070.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "CRI",
+      "year": 2024,
+      "value": 44308.298,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "CUB",
+      "year": 2024,
+      "value": 22329.9,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "CYP",
+      "year": 2024,
+      "value": 10216.588,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "CZE",
+      "year": 2024,
+      "value": 22135.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "DEU",
+      "year": 2024,
+      "value": 219045.5,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "DJI",
+      "year": 2024,
+      "value": 3386.9,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "DNK",
+      "year": 2024,
+      "value": 496186.089,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "DOM",
+      "year": 2024,
+      "value": 24044.473,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "DZA",
+      "year": 2024,
+      "value": 97945.208,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "ECU",
+      "year": 2024,
+      "value": 2020949.818,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "EGY",
+      "year": 2024,
+      "value": 2025635.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "ERI",
+      "year": 2024,
+      "value": 2485.366,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "ESP",
+      "year": 2024,
+      "value": 1010662.769,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "EST",
+      "year": 2024,
+      "value": 66314.354,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "ETH",
+      "year": 2024,
+      "value": 255458.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "FIN",
+      "year": 2024,
+      "value": 127944.4,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "FJI",
+      "year": 2024,
+      "value": 35542.85,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "FRA",
+      "year": 2024,
+      "value": 669691.871,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "GAB",
+      "year": 2024,
+      "value": 30243.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "GBR",
+      "year": 2024,
+      "value": 981329.286,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "GEO",
+      "year": 2024,
+      "value": 203029.7,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "GHA",
+      "year": 2024,
+      "value": 617968.661,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "GIN",
+      "year": 2024,
+      "value": 392475.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "GMB",
+      "year": 2024,
+      "value": 55138.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "GNB",
+      "year": 2024,
+      "value": 54128.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "GNQ",
+      "year": 2024,
+      "value": 7274.452,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "GRC",
+      "year": 2024,
+      "value": 184065.857,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "GRL",
+      "year": 2024,
+      "value": 331315.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "GTM",
+      "year": 2024,
+      "value": 39980.206,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "GUY",
+      "year": 2024,
+      "value": 38729.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "HND",
+      "year": 2024,
+      "value": 98203.652,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "HRV",
+      "year": 2024,
+      "value": 72225.508,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "HTI",
+      "year": 2024,
+      "value": 16743.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "HUN",
+      "year": 2024,
+      "value": 24179.017,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "IDN",
+      "year": 2024,
+      "value": 23571754.022,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "IND",
+      "year": 2024,
+      "value": 18450686.714,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "IRL",
+      "year": 2024,
+      "value": 283261.359,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "IRN",
+      "year": 2024,
+      "value": 1498619.993,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "IRQ",
+      "year": 2024,
+      "value": 56635.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "ISL",
+      "year": 2024,
+      "value": 1063593.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "ISR",
+      "year": 2024,
+      "value": 16915.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "ITA",
+      "year": 2024,
+      "value": 231868.507,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "JAM",
+      "year": 2024,
+      "value": 13444.824,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "JOR",
+      "year": 2024,
+      "value": 3378.8,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "JPN",
+      "year": 2024,
+      "value": 3650432.155,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "KAZ",
+      "year": 2024,
+      "value": 65012.601,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "KEN",
+      "year": 2024,
+      "value": 174483.439,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "KGZ",
+      "year": 2024,
+      "value": 19428.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "KHM",
+      "year": 2024,
+      "value": 926936.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "KOR",
+      "year": 2024,
+      "value": 3555275.096,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "KWT",
+      "year": 2024,
+      "value": 2912.24,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "LAO",
+      "year": 2024,
+      "value": 232299.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "LBN",
+      "year": 2024,
+      "value": 3693.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "LBR",
+      "year": 2024,
+      "value": 28114.442,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "LBY",
+      "year": 2024,
+      "value": 33108.863,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "LKA",
+      "year": 2024,
+      "value": 412019.9,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "LSO",
+      "year": 2024,
+      "value": 2181.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "LTU",
+      "year": 2024,
+      "value": 81742.554,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "LUX",
+      "year": 2024,
+      "value": 8.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "LVA",
+      "year": 2024,
+      "value": 57109.758,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "MAR",
+      "year": 2024,
+      "value": 1431831.425,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "MDA",
+      "year": 2024,
+      "value": 12757.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "MDG",
+      "year": 2024,
+      "value": 179617.205,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "MEX",
+      "year": 2024,
+      "value": 2194566.075,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "MKD",
+      "year": 2024,
+      "value": 2474.99,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "MLI",
+      "year": 2024,
+      "value": 113268.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "MMR",
+      "year": 2024,
+      "value": 2947779.85,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "MNE",
+      "year": 2024,
+      "value": 2409.06,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "MNG",
+      "year": 2024,
+      "value": 31.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "MOZ",
+      "year": 2024,
+      "value": 502895.06,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "MRT",
+      "year": 2024,
+      "value": 640321.907,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "MWI",
+      "year": 2024,
+      "value": 194890.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "MYS",
+      "year": 2024,
+      "value": 1917947.59,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "NAM",
+      "year": 2024,
+      "value": 381570.096,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "NCL",
+      "year": 2024,
+      "value": 5322.565,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "NER",
+      "year": 2024,
+      "value": 51194.001,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "NGA",
+      "year": 2024,
+      "value": 1113540.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "NIC",
+      "year": 2024,
+      "value": 76170.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "NLD",
+      "year": 2024,
+      "value": 330214.257,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "NOR",
+      "year": 2024,
+      "value": 3996534.779,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "NPL",
+      "year": 2024,
+      "value": 123403.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "NZL",
+      "year": 2024,
+      "value": 423324.548,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "OMN",
+      "year": 2024,
+      "value": 732505.478,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "PAK",
+      "year": 2024,
+      "value": 711083.001,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "PAN",
+      "year": 2024,
+      "value": 294836.337,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "PER",
+      "year": 2024,
+      "value": 5882321.072,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "PHL",
+      "year": 2024,
+      "value": 3848253.775,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "PNG",
+      "year": 2024,
+      "value": 345360.244,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "POL",
+      "year": 2024,
+      "value": 184294.216,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "PRI",
+      "year": 2024,
+      "value": 2140.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "PRK",
+      "year": 2024,
+      "value": 894065.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "PRT",
+      "year": 2024,
+      "value": 261340.565,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "PRY",
+      "year": 2024,
+      "value": 39560.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "PSE",
+      "year": 2024,
+      "value": 282.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "QAT",
+      "year": 2024,
+      "value": 21116.065,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "ROU",
+      "year": 2024,
+      "value": 15816.21,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "RUS",
+      "year": 2024,
+      "value": 5361159.595,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "RWA",
+      "year": 2024,
+      "value": 43062.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "SAU",
+      "year": 2024,
+      "value": 247207.373,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "SDN",
+      "year": 2024,
+      "value": 46510.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "SEN",
+      "year": 2024,
+      "value": 502151.371,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "SLB",
+      "year": 2024,
+      "value": 99950.025,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "SLE",
+      "year": 2024,
+      "value": 208995.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "SLV",
+      "year": 2024,
+      "value": 68991.15,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "SOM",
+      "year": 2024,
+      "value": 97871.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "SRB",
+      "year": 2024,
+      "value": 9365.17,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "SSD",
+      "year": 2024,
+      "value": 55034.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "SUR",
+      "year": 2024,
+      "value": 32196.927,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "SVK",
+      "year": 2024,
+      "value": 3960.61,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "SVN",
+      "year": 2024,
+      "value": 1324.853,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "SWE",
+      "year": 2024,
+      "value": 149653.956,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "SWZ",
+      "year": 2024,
+      "value": 90.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "SYR",
+      "year": 2024,
+      "value": 6000.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "TCD",
+      "year": 2024,
+      "value": 109115.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "TGO",
+      "year": 2024,
+      "value": 23498.521,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "THA",
+      "year": 2024,
+      "value": 2652236.98,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "TJK",
+      "year": 2024,
+      "value": 5483.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "TKM",
+      "year": 2024,
+      "value": 16165.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "TLS",
+      "year": 2024,
+      "value": 9130.81,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "TTO",
+      "year": 2024,
+      "value": 12942.574,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "TUN",
+      "year": 2024,
+      "value": 104773.873,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "TUR",
+      "year": 2024,
+      "value": 933118.5,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "TZA",
+      "year": 2024,
+      "value": 669539.481,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "UGA",
+      "year": 2024,
+      "value": 641580.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "UKR",
+      "year": 2024,
+      "value": 53556.574,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "URY",
+      "year": 2024,
+      "value": 48410.369,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "USA",
+      "year": 2024,
+      "value": 4681397.1,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "UZB",
+      "year": 2024,
+      "value": 199432.228,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "VEN",
+      "year": 2024,
+      "value": 284460.118,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "VNM",
+      "year": 2024,
+      "value": 9080444.16,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "VUT",
+      "year": 2024,
+      "value": 44428.051,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "YEM",
+      "year": 2024,
+      "value": 152440.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "ZAF",
+      "year": 2024,
+      "value": 530377.337,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "ZMB",
+      "year": 2024,
+      "value": 211913.0,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-fauna",
+      "metric": "fisheries-production",
+      "iso3": "ZWE",
+      "year": 2024,
+      "value": 113130.01,
       "state": "reported-or-estimated"
     },
     {
@@ -4048,6 +7496,1198 @@
       "iso3": "ZWE",
       "year": 2022,
       "value": 121.68,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "AFG",
+      "year": 2022,
+      "value": 3.98425007,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "AGO",
+      "year": 2023,
+      "value": 6.64222002,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "ALB",
+      "year": 2023,
+      "value": 17.50548935,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "ARE",
+      "year": 2024,
+      "value": 52.6613884,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "ARG",
+      "year": 2022,
+      "value": 10.85558987,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "ARM",
+      "year": 2023,
+      "value": 25.91263962,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "AUS",
+      "year": 2024,
+      "value": 36.78314843,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "AUT",
+      "year": 2021,
+      "value": 14.87917995,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "AZE",
+      "year": 2023,
+      "value": 17.67338943,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "BEL",
+      "year": 2023,
+      "value": 37.41103379,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "BEN",
+      "year": 2022,
+      "value": 3.85361004,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "BFA",
+      "year": 2024,
+      "value": 2.49695045,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "BGD",
+      "year": 2023,
+      "value": 7.50281362,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "BGR",
+      "year": 2023,
+      "value": 26.36885401,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "BHS",
+      "year": 2022,
+      "value": 16.90549088,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "BIH",
+      "year": 2023,
+      "value": 11.27602983,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "BLR",
+      "year": 2019,
+      "value": 28.30353928,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "BLZ",
+      "year": 2022,
+      "value": 7.01167011,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "BOL",
+      "year": 2024,
+      "value": 18.7775898,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "BRA",
+      "year": 2024,
+      "value": 17.19367981,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "BRN",
+      "year": 2023,
+      "value": 18.51115306,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "BTN",
+      "year": 2022,
+      "value": 8.48408985,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "BWA",
+      "year": 2023,
+      "value": 7.44430017,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "CAF",
+      "year": 2019,
+      "value": 1.81203997,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "CAN",
+      "year": 2024,
+      "value": 34.6594142,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "CHE",
+      "year": 2024,
+      "value": 41.61428241,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "CHL",
+      "year": 2024,
+      "value": 22.26723692,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "CHN",
+      "year": 2020,
+      "value": 7.67750978,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "CIV",
+      "year": 2021,
+      "value": 4.97927999,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "CMR",
+      "year": 2018,
+      "value": 6.42238998,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "COD",
+      "year": 2023,
+      "value": 9.1510601,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "COL",
+      "year": 2024,
+      "value": 17.67552948,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "CRI",
+      "year": 2024,
+      "value": 16.83161926,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "CUB",
+      "year": 2019,
+      "value": 15.32876968,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "CYP",
+      "year": 2023,
+      "value": 34.71650998,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "CZE",
+      "year": 2023,
+      "value": 21.95810058,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "DEU",
+      "year": 2023,
+      "value": 30.52945416,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "DNK",
+      "year": 2023,
+      "value": 33.62156694,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "DOM",
+      "year": 2024,
+      "value": 19.2073307,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "DZA",
+      "year": 2019,
+      "value": 11.43593025,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "ECU",
+      "year": 2024,
+      "value": 7.98544979,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "EGY",
+      "year": 2023,
+      "value": 18.05229085,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "ESP",
+      "year": 2023,
+      "value": 25.04265603,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "EST",
+      "year": 2023,
+      "value": 32.94372764,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "ETH",
+      "year": 2022,
+      "value": 3.79061007,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "FIN",
+      "year": 2023,
+      "value": 29.8881474,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "FJI",
+      "year": 2021,
+      "value": 10.01976967,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "FRA",
+      "year": 2023,
+      "value": 24.35462126,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "GBR",
+      "year": 2021,
+      "value": 39.59365845,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "GEO",
+      "year": 2024,
+      "value": 33.69229889,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "GHA",
+      "year": 2024,
+      "value": 5.17058992,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "GIN",
+      "year": 2018,
+      "value": 6.20741987,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "GMB",
+      "year": 2023,
+      "value": 2.51042008,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "GNB",
+      "year": 2022,
+      "value": 2.62069011,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "GRC",
+      "year": 2024,
+      "value": 28.93603601,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "GTM",
+      "year": 2024,
+      "value": 5.07850981,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "GUY",
+      "year": 2019,
+      "value": 4.46917009,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "HND",
+      "year": 2024,
+      "value": 7.38915014,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "HRV",
+      "year": 2023,
+      "value": 21.96183809,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "HUN",
+      "year": 2023,
+      "value": 26.35251272,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "IDN",
+      "year": 2023,
+      "value": 9.3268374,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "IND",
+      "year": 2023,
+      "value": 14.87930012,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "IRL",
+      "year": 2023,
+      "value": 41.85235705,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "IRN",
+      "year": 2023,
+      "value": 17.9231829,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "IRQ",
+      "year": 2021,
+      "value": 10.93899217,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "ISL",
+      "year": 2023,
+      "value": 34.46369626,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "ISR",
+      "year": 2023,
+      "value": 38.29997873,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "ITA",
+      "year": 2023,
+      "value": 17.58163982,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "JAM",
+      "year": 2022,
+      "value": 10.94981003,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "JOR",
+      "year": 2023,
+      "value": 23.22691917,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "JPN",
+      "year": 2020,
+      "value": 25.54039955,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "KAZ",
+      "year": 2024,
+      "value": 32.98102188,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "KEN",
+      "year": 2024,
+      "value": 6.75540018,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "KGZ",
+      "year": 2023,
+      "value": 23.92830086,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "KHM",
+      "year": 2023,
+      "value": 5.81718502,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "KOR",
+      "year": 2024,
+      "value": 36.45737201,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "KWT",
+      "year": 2018,
+      "value": 11.11633015,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "LAO",
+      "year": 2023,
+      "value": 6.27000999,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "LBN",
+      "year": 2019,
+      "value": 22.14185816,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "LBR",
+      "year": 2019,
+      "value": 5.06449986,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "LKA",
+      "year": 2023,
+      "value": 5.36011982,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "LSO",
+      "year": 2018,
+      "value": 3.93763995,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "LTU",
+      "year": 2023,
+      "value": 41.30705485,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "LUX",
+      "year": 2023,
+      "value": 41.85196041,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "LVA",
+      "year": 2023,
+      "value": 33.20188149,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "MDA",
+      "year": 2024,
+      "value": 22.56207085,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "MDG",
+      "year": 2021,
+      "value": 2.9273901,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "MEX",
+      "year": 2024,
+      "value": 18.37708092,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "MKD",
+      "year": 2024,
+      "value": 20.03321966,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "MLI",
+      "year": 2022,
+      "value": 2.33424997,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "MMR",
+      "year": 2019,
+      "value": 9.34652996,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "MNE",
+      "year": 2020,
+      "value": 19.57697685,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "MNG",
+      "year": 2024,
+      "value": 35.52479935,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "MOZ",
+      "year": 2022,
+      "value": 3.03772998,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "MWI",
+      "year": 2020,
+      "value": 1.32095003,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "MYS",
+      "year": 2022,
+      "value": 14.56196022,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "NAM",
+      "year": 2023,
+      "value": 8.58005047,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "NCL",
+      "year": 2019,
+      "value": 15.18865967,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "NER",
+      "year": 2022,
+      "value": 0.97130001,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "NGA",
+      "year": 2024,
+      "value": 10.56690979,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "NLD",
+      "year": 2023,
+      "value": 36.5573314,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "NOR",
+      "year": 2023,
+      "value": 32.18682557,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "NZL",
+      "year": 2020,
+      "value": 32.28327179,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "OMN",
+      "year": 2022,
+      "value": 19.11449051,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "PAK",
+      "year": 2021,
+      "value": 9.92868042,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "PAN",
+      "year": 2024,
+      "value": 14.59849498,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "PHL",
+      "year": 2022,
+      "value": 18.07571983,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "PNG",
+      "year": 2022,
+      "value": 3.13966266,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "POL",
+      "year": 2021,
+      "value": 27.72372055,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "PRI",
+      "year": 2024,
+      "value": 29.56999016,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "PRT",
+      "year": 2024,
+      "value": 24.90816302,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "PRY",
+      "year": 2024,
+      "value": 16.15860939,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "PSE",
+      "year": 2024,
+      "value": 22.78815496,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "QAT",
+      "year": 2022,
+      "value": 30.39337921,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "ROU",
+      "year": 2023,
+      "value": 14.60108933,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "RUS",
+      "year": 2021,
+      "value": 41.21763992,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "RWA",
+      "year": 2024,
+      "value": 6.50115156,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "SAU",
+      "year": 2024,
+      "value": 36.03942108,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "SDN",
+      "year": 2022,
+      "value": 8.07872009,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "SEN",
+      "year": 2023,
+      "value": 3.81153011,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "SLE",
+      "year": 2019,
+      "value": 1.95823002,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "SLV",
+      "year": 2023,
+      "value": 7.27050018,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "SOM",
+      "year": 2022,
+      "value": 4.27464008,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "SRB",
+      "year": 2024,
+      "value": 19.99110139,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "SUR",
+      "year": 2022,
+      "value": 8.93062019,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "SVK",
+      "year": 2023,
+      "value": 25.28862783,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "SVN",
+      "year": 2023,
+      "value": 22.04160355,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "SWE",
+      "year": 2023,
+      "value": 34.88302721,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "SWZ",
+      "year": 2022,
+      "value": 6.40754986,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "TCD",
+      "year": 2019,
+      "value": 1.75650001,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "TGO",
+      "year": 2022,
+      "value": 4.4426899,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "THA",
+      "year": 2022,
+      "value": 17.35051918,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "TJK",
+      "year": 2023,
+      "value": 16.3421402,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "TKM",
+      "year": 2022,
+      "value": 9.59288025,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "TLS",
+      "year": 2022,
+      "value": 20.37054062,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "TTO",
+      "year": 2022,
+      "value": 10.13990974,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "TUN",
+      "year": 2023,
+      "value": 12.80282974,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "TUR",
+      "year": 2023,
+      "value": 21.86433912,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "TZA",
+      "year": 2022,
+      "value": 2.31976008,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "UGA",
+      "year": 2024,
+      "value": 4.24473,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "UKR",
+      "year": 2019,
+      "value": 34.74760056,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "URY",
+      "year": 2024,
+      "value": 12.92967987,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "USA",
+      "year": 2024,
+      "value": 39.05939102,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "UZB",
+      "year": 2022,
+      "value": 16.85121918,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "VNM",
+      "year": 2023,
+      "value": 11.32098252,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "VUT",
+      "year": 2023,
+      "value": 3.33517003,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "ZAF",
+      "year": 2024,
+      "value": 14.35101032,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "ZMB",
+      "year": 2024,
+      "value": 3.2260499,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "bachelors-attainment",
+      "iso3": "ZWE",
+      "year": 2023,
+      "value": 1.13487348,
       "state": "reported-or-estimated"
     },
     {
@@ -6753,6 +11393,1950 @@
       "year": 2024,
       "value": 68.71693107,
       "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "ARE",
+      "year": 2021,
+      "value": 5.73499906,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "ARG",
+      "year": 2021,
+      "value": 13.12393003,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "ARM",
+      "year": 2021,
+      "value": 24.19454666,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "AUS",
+      "year": 2021,
+      "value": 103.96574199,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "AUT",
+      "year": 2021,
+      "value": 226.59495919,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "AZE",
+      "year": 2021,
+      "value": 11.76659025,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "BEL",
+      "year": 2021,
+      "value": 73.29451084,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "BGD",
+      "year": 2021,
+      "value": 0.36482455,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "BGR",
+      "year": 2021,
+      "value": 29.98771571,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "BIH",
+      "year": 2021,
+      "value": 14.96492999,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "BLR",
+      "year": 2021,
+      "value": 31.70559558,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "BRA",
+      "year": 2021,
+      "value": 24.62973111,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "BRN",
+      "year": 2021,
+      "value": 11.17897161,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "BWA",
+      "year": 2021,
+      "value": 0.98599632,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "CAN",
+      "year": 2021,
+      "value": 117.66049113,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "CHE",
+      "year": 2021,
+      "value": 155.91485035,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "CHL",
+      "year": 2021,
+      "value": 20.88765574,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "CHN",
+      "year": 2021,
+      "value": 948.90911691,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "COL",
+      "year": 2021,
+      "value": 8.06057466,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "CRI",
+      "year": 2021,
+      "value": 2.84884033,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "CUB",
+      "year": 2021,
+      "value": 2.41781171,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "CYP",
+      "year": 2021,
+      "value": 1.79201055,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "CZE",
+      "year": 2021,
+      "value": 62.08530062,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "DEU",
+      "year": 2021,
+      "value": 515.9913647,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "DNK",
+      "year": 2021,
+      "value": 211.51192806,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "DOM",
+      "year": 2021,
+      "value": 1.2111736,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "DZA",
+      "year": 2021,
+      "value": 4.11816293,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "ECU",
+      "year": 2021,
+      "value": 1.84521008,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "EGY",
+      "year": 2021,
+      "value": 8.80346968,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "ESP",
+      "year": 2021,
+      "value": 28.37479184,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "EST",
+      "year": 2021,
+      "value": 19.31106158,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "FIN",
+      "year": 2021,
+      "value": 269.16317014,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "FRA",
+      "year": 2021,
+      "value": 198.49527956,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "GBR",
+      "year": 2021,
+      "value": 177.90722051,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "GEO",
+      "year": 2021,
+      "value": 22.95657969,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "GRC",
+      "year": 2021,
+      "value": 35.9483845,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "GTM",
+      "year": 2021,
+      "value": 0.44179981,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "HRV",
+      "year": 2021,
+      "value": 33.12731098,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "HUN",
+      "year": 2021,
+      "value": 44.4196519,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "IDN",
+      "year": 2021,
+      "value": 7.03708931,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "IND",
+      "year": 2021,
+      "value": 16.37290175,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "IRL",
+      "year": 2021,
+      "value": 13.75044061,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "IRN",
+      "year": 2021,
+      "value": 126.03019044,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "ISL",
+      "year": 2021,
+      "value": 113.68328383,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "ISR",
+      "year": 2021,
+      "value": 166.49481739,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "ITA",
+      "year": 2021,
+      "value": 165.8486637,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "JAM",
+      "year": 2021,
+      "value": 4.71048644,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "JOR",
+      "year": 2021,
+      "value": 2.51506933,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "JPN",
+      "year": 2021,
+      "value": 1836.28319642,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "KEN",
+      "year": 2021,
+      "value": 5.07535378,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "KGZ",
+      "year": 2021,
+      "value": 11.80085453,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "KOR",
+      "year": 2021,
+      "value": 3464.78033811,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "LKA",
+      "year": 2021,
+      "value": 14.80008501,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "LTU",
+      "year": 2021,
+      "value": 31.55458029,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "LUX",
+      "year": 2021,
+      "value": 189.3694948,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "LVA",
+      "year": 2021,
+      "value": 48.95801035,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "MAR",
+      "year": 2021,
+      "value": 6.40549335,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "MDA",
+      "year": 2021,
+      "value": 29.63840012,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "MEX",
+      "year": 2021,
+      "value": 9.34746135,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "MNG",
+      "year": 2021,
+      "value": 25.95549805,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "MOZ",
+      "year": 2021,
+      "value": 0.85520171,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "MYS",
+      "year": 2021,
+      "value": 28.96295697,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "NLD",
+      "year": 2021,
+      "value": 124.35153617,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "NOR",
+      "year": 2021,
+      "value": 172.47479516,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "NZL",
+      "year": 2021,
+      "value": 66.23786135,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "OMN",
+      "year": 2021,
+      "value": 5.21515757,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "PAK",
+      "year": 2021,
+      "value": 1.52705212,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "PAN",
+      "year": 2021,
+      "value": 7.06885829,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "PER",
+      "year": 2021,
+      "value": 3.61627782,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "PHL",
+      "year": 2021,
+      "value": 4.3662417,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "POL",
+      "year": 2021,
+      "value": 100.24649755,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "PRT",
+      "year": 2021,
+      "value": 68.15278957,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "PRY",
+      "year": 2021,
+      "value": 1.41392868,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "QAT",
+      "year": 2021,
+      "value": 21.03880021,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "ROU",
+      "year": 2021,
+      "value": 42.7639301,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "RUS",
+      "year": 2021,
+      "value": 153.09618718,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "SAU",
+      "year": 2021,
+      "value": 41.99102751,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "SLV",
+      "year": 2021,
+      "value": 0.37407604,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "SRB",
+      "year": 2021,
+      "value": 21.47138259,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "SVK",
+      "year": 2021,
+      "value": 34.10711872,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "SWE",
+      "year": 2021,
+      "value": 171.89435502,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "SYR",
+      "year": 2021,
+      "value": 4.74363719,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "THA",
+      "year": 2021,
+      "value": 12.07588475,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "TTO",
+      "year": 2021,
+      "value": 0.97602207,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "TUR",
+      "year": 2021,
+      "value": 96.05718232,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "UGA",
+      "year": 2021,
+      "value": 0.30742072,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "UKR",
+      "year": 2021,
+      "value": 35.53933236,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "USA",
+      "year": 2021,
+      "value": 821.95321831,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "UZB",
+      "year": 2021,
+      "value": 11.3398742,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "VNM",
+      "year": 2021,
+      "value": 9.54151556,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "YEM",
+      "year": 2021,
+      "value": 1.29167377,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "ZAF",
+      "year": 2021,
+      "value": 16.03608033,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "resident-patent-applications-per-million",
+      "iso3": "ZMB",
+      "year": 2021,
+      "value": 0.55966716,
+      "state": "derived"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "AFG",
+      "year": 2022,
+      "value": 12.59733009,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "AGO",
+      "year": 2023,
+      "value": 26.89921951,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "ALB",
+      "year": 2023,
+      "value": 53.96833038,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "ARE",
+      "year": 2024,
+      "value": 76.9019165,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "ARG",
+      "year": 2022,
+      "value": 54.65626907,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "ARM",
+      "year": 2023,
+      "value": 92.76673889,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "AUS",
+      "year": 2024,
+      "value": 79.91271823,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "AUT",
+      "year": 2023,
+      "value": 82.55929276,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "AZE",
+      "year": 2023,
+      "value": 91.80567169,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "BDI",
+      "year": 2020,
+      "value": 9.3111647,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "BEL",
+      "year": 2023,
+      "value": 74.42323743,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "BEN",
+      "year": 2022,
+      "value": 6.41501999,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "BFA",
+      "year": 2024,
+      "value": 5.15915696,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "BGD",
+      "year": 2021,
+      "value": 33.65613937,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "BGR",
+      "year": 2023,
+      "value": 80.19313185,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "BHS",
+      "year": 2023,
+      "value": 90.90411529,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "BIH",
+      "year": 2023,
+      "value": 72.04738752,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "BLR",
+      "year": 2023,
+      "value": 97.89066818,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "BLZ",
+      "year": 2022,
+      "value": 42.88684845,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "BOL",
+      "year": 2024,
+      "value": 53.13222122,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "BRA",
+      "year": 2024,
+      "value": 61.73277763,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "BRN",
+      "year": 2023,
+      "value": 67.87249239,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "BTN",
+      "year": 2022,
+      "value": 19.2258091,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "BWA",
+      "year": 2023,
+      "value": 43.01227951,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "CAF",
+      "year": 2019,
+      "value": 5.61245012,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "CAN",
+      "year": 2024,
+      "value": 89.87155047,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "CHE",
+      "year": 2024,
+      "value": 84.38237848,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "CHL",
+      "year": 2024,
+      "value": 69.84161781,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "CHN",
+      "year": 2020,
+      "value": 31.76979065,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "CIV",
+      "year": 2021,
+      "value": 16.80690956,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "CMR",
+      "year": 2018,
+      "value": 14.25786972,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "COD",
+      "year": 2023,
+      "value": 30.37232971,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "COL",
+      "year": 2024,
+      "value": 58.81578827,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "CRI",
+      "year": 2024,
+      "value": 43.34460831,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "CUB",
+      "year": 2019,
+      "value": 55.33081818,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "CYP",
+      "year": 2023,
+      "value": 78.28669094,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "CZE",
+      "year": 2023,
+      "value": 91.38803085,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "DEU",
+      "year": 2023,
+      "value": 81.86753991,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "DNK",
+      "year": 2023,
+      "value": 78.06092164,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "DOM",
+      "year": 2024,
+      "value": 49.40711975,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "DZA",
+      "year": 2019,
+      "value": 24.10832024,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "ECU",
+      "year": 2024,
+      "value": 46.15359116,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "EGY",
+      "year": 2023,
+      "value": 55.69237029,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "ESP",
+      "year": 2024,
+      "value": 55.68384326,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "EST",
+      "year": 2023,
+      "value": 86.61715375,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "ETH",
+      "year": 2022,
+      "value": 9.91870022,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "FIN",
+      "year": 2023,
+      "value": 82.07472151,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "FRA",
+      "year": 2023,
+      "value": 78.03966552,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "GBR",
+      "year": 2021,
+      "value": 80.46420288,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "GEO",
+      "year": 2024,
+      "value": 93.50007629,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "GHA",
+      "year": 2024,
+      "value": 22.61408997,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "GIN",
+      "year": 2018,
+      "value": 7.3884902,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "GMB",
+      "year": 2023,
+      "value": 24.80443001,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "GNB",
+      "year": 2022,
+      "value": 14.12436962,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "GRC",
+      "year": 2024,
+      "value": 70.12231302,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "GTM",
+      "year": 2024,
+      "value": 17.93670082,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "GUY",
+      "year": 2019,
+      "value": 35.22610092,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "HND",
+      "year": 2024,
+      "value": 22.24836922,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "HRV",
+      "year": 2023,
+      "value": 81.3520408,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "HUN",
+      "year": 2023,
+      "value": 83.87873126,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "IDN",
+      "year": 2023,
+      "value": 39.10462216,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "IND",
+      "year": 2023,
+      "value": 41.33800125,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "IRL",
+      "year": 2023,
+      "value": 82.9957894,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "IRN",
+      "year": 2023,
+      "value": 45.67809982,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "IRQ",
+      "year": 2021,
+      "value": 22.92859416,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "ISL",
+      "year": 2023,
+      "value": 80.16425444,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "ISR",
+      "year": 2023,
+      "value": 85.22856044,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "ITA",
+      "year": 2023,
+      "value": 55.27036018,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "JAM",
+      "year": 2022,
+      "value": 56.36552048,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "JOR",
+      "year": 2023,
+      "value": 42.55638123,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "JPN",
+      "year": 2020,
+      "value": 85.17671204,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "KAZ",
+      "year": 2019,
+      "value": 94.31471252,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "KEN",
+      "year": 2024,
+      "value": 39.24034119,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "KHM",
+      "year": 2023,
+      "value": 10.44651051,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "KOR",
+      "year": 2024,
+      "value": 81.46790739,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "KWT",
+      "year": 2018,
+      "value": 31.19643021,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "LAO",
+      "year": 2023,
+      "value": 20.61813927,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "LBN",
+      "year": 2019,
+      "value": 42.44205665,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "LBR",
+      "year": 2019,
+      "value": 26.1559391,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "LKA",
+      "year": 2024,
+      "value": 65.30149841,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "LSO",
+      "year": 2024,
+      "value": 26.39904022,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "LTU",
+      "year": 2023,
+      "value": 92.47040795,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "LUX",
+      "year": 2023,
+      "value": 77.21978505,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "LVA",
+      "year": 2023,
+      "value": 89.23612442,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "MDA",
+      "year": 2024,
+      "value": 75.29122162,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "MDG",
+      "year": 2021,
+      "value": 8.87337017,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "MEX",
+      "year": 2025,
+      "value": 42.47733692,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "MKD",
+      "year": 2024,
+      "value": 68.69253233,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "MLI",
+      "year": 2022,
+      "value": 7.23940992,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "MMR",
+      "year": 2019,
+      "value": 22.76491928,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "MNE",
+      "year": 2020,
+      "value": 81.92177235,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "MNG",
+      "year": 2024,
+      "value": 84.04493713,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "MOZ",
+      "year": 2022,
+      "value": 11.63644028,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "MWI",
+      "year": 2020,
+      "value": 12.14766979,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "MYS",
+      "year": 2022,
+      "value": 69.80458069,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "NAM",
+      "year": 2023,
+      "value": 37.47200012,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "NCL",
+      "year": 2019,
+      "value": 62.79302979,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "NER",
+      "year": 2022,
+      "value": 1.72214997,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "NGA",
+      "year": 2024,
+      "value": 48.07279968,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "NLD",
+      "year": 2023,
+      "value": 74.11978721,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "NOR",
+      "year": 2023,
+      "value": 81.91460773,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "NPL",
+      "year": 2021,
+      "value": 12.84918976,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "NZL",
+      "year": 2020,
+      "value": 75.11358643,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "OMN",
+      "year": 2022,
+      "value": 63.49689865,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "PAK",
+      "year": 2018,
+      "value": 26.06400493,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "PAN",
+      "year": 2024,
+      "value": 49.4015693,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "PER",
+      "year": 2024,
+      "value": 58.27214813,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "PHL",
+      "year": 2022,
+      "value": 34.46080017,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "PNG",
+      "year": 2022,
+      "value": 19.60700194,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "POL",
+      "year": 2021,
+      "value": 87.37242126,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "PRI",
+      "year": 2024,
+      "value": 81.77735138,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "PRT",
+      "year": 2024,
+      "value": 48.56428522,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "PRY",
+      "year": 2024,
+      "value": 46.18088913,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "PSE",
+      "year": 2024,
+      "value": 45.8946585,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "QAT",
+      "year": 2022,
+      "value": 51.43320847,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "ROU",
+      "year": 2023,
+      "value": 72.76746737,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "RUS",
+      "year": 2024,
+      "value": 92.90735944,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "RWA",
+      "year": 2024,
+      "value": 16.28107275,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "SAU",
+      "year": 2024,
+      "value": 76.01187134,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "SDN",
+      "year": 2022,
+      "value": 20.68392944,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "SEN",
+      "year": 2023,
+      "value": 8.44915962,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "SLE",
+      "year": 2019,
+      "value": 12.09269047,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "SLV",
+      "year": 2023,
+      "value": 33.80532074,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "SOM",
+      "year": 2022,
+      "value": 9.80751991,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "SRB",
+      "year": 2024,
+      "value": 77.11539398,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "SUR",
+      "year": 2022,
+      "value": 26.82695007,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "SVK",
+      "year": 2023,
+      "value": 90.07788305,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "SVN",
+      "year": 2023,
+      "value": 82.33910104,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "SWE",
+      "year": 2023,
+      "value": 84.74377429,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "SWZ",
+      "year": 2022,
+      "value": 35.80654907,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "TCD",
+      "year": 2019,
+      "value": 4.55690002,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "TGO",
+      "year": 2022,
+      "value": 10.9790802,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "THA",
+      "year": 2024,
+      "value": 39.11489911,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "TKM",
+      "year": 2022,
+      "value": 98.38391876,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "TLS",
+      "year": 2022,
+      "value": 63.45832825,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "TTO",
+      "year": 2022,
+      "value": 63.4034996,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "TUN",
+      "year": 2023,
+      "value": 19.44028091,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "TUR",
+      "year": 2023,
+      "value": 41.06257844,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "TZA",
+      "year": 2022,
+      "value": 6.54216003,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "UGA",
+      "year": 2024,
+      "value": 13.18840981,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "UKR",
+      "year": 2021,
+      "value": 72.48267636,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "URY",
+      "year": 2024,
+      "value": 35.00925827,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "USA",
+      "year": 2024,
+      "value": 91.61560059,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "UZB",
+      "year": 2022,
+      "value": 96.83795166,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "VNM",
+      "year": 2023,
+      "value": 39.47475615,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "VUT",
+      "year": 2023,
+      "value": 12.23888016,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "YEM",
+      "year": 2023,
+      "value": 25.60951996,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "ZAF",
+      "year": 2024,
+      "value": 47.96324158,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "ZMB",
+      "year": 2024,
+      "value": 24.3801899,
+      "state": "reported-or-estimated"
+    },
+    {
+      "family": "resources-human",
+      "metric": "upper-secondary-attainment",
+      "iso3": "ZWE",
+      "year": 2019,
+      "value": 13.27429962,
+      "state": "reported-or-estimated"
     },
     {
       "family": "resources-mineral",
