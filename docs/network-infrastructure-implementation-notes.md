@@ -275,23 +275,17 @@ Normal site-atlas previews:
 
 | Projection | PNG |
 | --- | --- |
-| Cahill-Keyes | [`network-infrastructure-sites-ck-44-22.png`](../assets.generated/png/network-infrastructure-sites-ck-44-22.png) |
-| AuthaGraph | [`network-infrastructure-sites-authagraph-44-19.052559.png`](../assets.generated/png/network-infrastructure-sites-authagraph-44-19.052559.png) |
-| Dymaxion | [`network-infrastructure-sites-dymaxion-44-20.78461.png`](../assets.generated/png/network-infrastructure-sites-dymaxion-44-20.78461.png) |
-| Myriahedral | [`network-infrastructure-sites-myriahedral-44-24.75.png`](../assets.generated/png/network-infrastructure-sites-myriahedral-44-24.75.png) |
-| Star-X | [`network-infrastructure-sites-star-x-34-44.png`](../assets.generated/png/network-infrastructure-sites-star-x-34-44.png) |
-| Voronoi | [`network-infrastructure-sites-voronoi-44-22.916667.png`](../assets.generated/png/network-infrastructure-sites-voronoi-44-22.916667.png) |
+| Cahill-Keyes | [`network-infrastructure-sites-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-infrastructure-sites-ck-44-22.png) |
+| AuthaGraph | [`network-infrastructure-sites-authagraph-44-19.052559.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-infrastructure-sites-authagraph-44-19.052559.png) |
+| Dymaxion | [`network-infrastructure-sites-dymaxion-44-20.78461.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-infrastructure-sites-dymaxion-44-20.78461.png) |
+| Myriahedral | [`network-infrastructure-sites-myriahedral-44-24.75.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-infrastructure-sites-myriahedral-44-24.75.png) |
+| Star-X | [`network-infrastructure-sites-star-x-34-44.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-infrastructure-sites-star-x-34-44.png) |
+| Voronoi | [`network-infrastructure-sites-voronoi-44-22.916667.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-infrastructure-sites-voronoi-44-22.916667.png) |
 
-Opt-in topology previews, distributed under the documented CC/source terms:
-
-| Projection | PNG |
-| --- | --- |
-| Cahill-Keyes | [`network-infrastructure-topology-ck-44-22.png`](../assets.generated/png/network-infrastructure-topology-ck-44-22.png) |
-| AuthaGraph | [`network-infrastructure-topology-authagraph-44-19.052559.png`](../assets.generated/png/network-infrastructure-topology-authagraph-44-19.052559.png) |
-| Dymaxion | [`network-infrastructure-topology-dymaxion-44-20.78461.png`](../assets.generated/png/network-infrastructure-topology-dymaxion-44-20.78461.png) |
-| Myriahedral | [`network-infrastructure-topology-myriahedral-44-24.75.png`](../assets.generated/png/network-infrastructure-topology-myriahedral-44-24.75.png) |
-| Star-X | [`network-infrastructure-topology-star-x-34-44.png`](../assets.generated/png/network-infrastructure-topology-star-x-34-44.png) |
-| Voronoi | [`network-infrastructure-topology-voronoi-44-22.916667.png`](../assets.generated/png/network-infrastructure-topology-voronoi-44-22.916667.png) |
+Opt-in topology PNGs are local authorized-generation products. They were not
+included in the credential-free v12 S3 object release, so the GitHub Pages
+documentation does not publish preview links for them. A future topology
+release must upload and verify those objects before adding public URLs.
 
 ## Verification and limitations
 

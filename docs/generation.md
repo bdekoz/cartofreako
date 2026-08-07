@@ -10,7 +10,7 @@
 [Orbital Technosphere notes](orbital-technosphere-implementation-notes.md) ·
 [Resources Stage 12 implementation](resources-implementation-notes.md) ·
 [Stage 12 overview](stage-12-implementation-notes.md) ·
-[Cahill–Keyes snapshot](generated-snapshot-ck.md) ·
+[Projection snapshots](../index.md#generated-artifact-previews) ·
 [Resources enrichment plan](resources-enrichment-plan.md) ·
 [Anthropocene notes](anthropocene-implementation-notes.md) ·
 [Anthropocene Stage 8b plan](anthropocene-enrichment-plan.md) ·

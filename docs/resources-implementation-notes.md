@@ -2,7 +2,7 @@
 
 [Documentation index](../index.md) ·
 [Stage 12 overview](stage-12-implementation-notes.md) ·
-[Cahill–Keyes snapshot](generated-snapshot-ck.md) ·
+[Projection snapshots](../index.md#generated-artifact-previews) ·
 [Generation guide](generation.md) ·
 [Enrichment plan](resources-enrichment-plan.md)
 

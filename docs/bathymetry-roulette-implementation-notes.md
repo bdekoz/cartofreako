@@ -140,12 +140,12 @@ make generate-bathymetry-roulette-artifacts
 
 | Projection | Preview |
 | --- | --- |
-| Cahill-Keyes | [`bathymetry-roulette-ck-44-22.png`](../assets.generated/png/bathymetry-roulette-ck-44-22.png) |
-| AuthaGraph | [`bathymetry-roulette-authagraph-44-19.052559.png`](../assets.generated/png/bathymetry-roulette-authagraph-44-19.052559.png) |
-| Dymaxion | [`bathymetry-roulette-dymaxion-44-20.78461.png`](../assets.generated/png/bathymetry-roulette-dymaxion-44-20.78461.png) |
-| Myriahedral | [`bathymetry-roulette-myriahedral-44-24.75.png`](../assets.generated/png/bathymetry-roulette-myriahedral-44-24.75.png) |
-| Star-X | [`bathymetry-roulette-star-x-34-44.png`](../assets.generated/png/bathymetry-roulette-star-x-34-44.png) |
-| Voronoi | [`bathymetry-roulette-voronoi-44-22.916667.png`](../assets.generated/png/bathymetry-roulette-voronoi-44-22.916667.png) |
+| Cahill-Keyes | [`bathymetry-roulette-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/bathymetry-roulette-ck-44-22.png) |
+| AuthaGraph | [`bathymetry-roulette-authagraph-44-19.052559.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/bathymetry-roulette-authagraph-44-19.052559.png) |
+| Dymaxion | [`bathymetry-roulette-dymaxion-44-20.78461.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/bathymetry-roulette-dymaxion-44-20.78461.png) |
+| Myriahedral | [`bathymetry-roulette-myriahedral-44-24.75.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/bathymetry-roulette-myriahedral-44-24.75.png) |
+| Star-X | [`bathymetry-roulette-star-x-34-44.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/bathymetry-roulette-star-x-34-44.png) |
+| Voronoi | [`bathymetry-roulette-voronoi-44-22.916667.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/bathymetry-roulette-voronoi-44-22.916667.png) |
 
 The pass is also selectable through `generation-profile.json` as
 `bathymetry-roulette` or either compatibility alias.

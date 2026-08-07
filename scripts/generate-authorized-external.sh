@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# Run the mutating workflows for optional passes after Make has authorized all
-# of them. This script is the recipe driver; use the public Make target so the
-# read-only authorization prerequisite cannot be skipped accidentally.
+# Select locally configured optional passes, install the pinned JAXA trust
+# anchor when needed, authorize the complete selection, and only then run the
+# mutating source and artifact workflows.
 
 set -euo pipefail
 
@@ -22,6 +22,12 @@ fail()
 
 test $# -gt 0 || usage
 
+selection_mode=${EXTERNAL_SELECTION_MODE:-strict}
+case "$selection_mode" in
+  auto|strict) ;;
+  *) fail 'EXTERNAL_SELECTION_MODE must be auto or strict' ;;
+esac
+
 make_command=${MAKE_COMMAND:-make}
 [[ $make_command != *[[:space:]]* ]] \
   || fail 'MAKE_COMMAND must name one executable without shell arguments'
@@ -35,6 +41,10 @@ fi
 repository_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)
 cd "$repository_root"
 
+external_authorizer=${EXTERNAL_AUTHORIZER:-scripts/authorize-external.sh}
+[[ -x $external_authorizer ]] \
+  || fail "external authorizer is unavailable: $external_authorizer"
+
 declare -A requested=()
 for pass in "$@"; do
   case "$pass" in
@@ -45,6 +55,49 @@ for pass in "$@"; do
   esac
 done
 
+declare -A selected=()
+if [[ $selection_mode == strict ]]; then
+  for pass in jaxa-ptree nasa-firms network-topology; do
+    [[ -n ${requested[$pass]:-} ]] && selected[$pass]=1
+  done
+else
+  netrc=${PTREE_NETRC:-${HOME:?HOME is required}/.netrc}
+  if [[ -n ${requested[jaxa-ptree]:-} ]]; then
+    if [[ -f $netrc ]] && awk '
+      tolower($1) == "machine" && $2 == "ftp.ptree.jaxa.jp" { found = 1 }
+      END { exit found ? 0 : 1 }
+    ' "$netrc"; then
+      selected[jaxa-ptree]=1
+    else
+      printf '%s\n' \
+        'external generation: skipping jaxa-ptree (no P-Tree netrc entry)'
+    fi
+  fi
+  if [[ -n ${requested[nasa-firms]:-} ]]; then
+    if [[ -n ${FIRMS_MAP_KEY:-} ]]; then
+      selected[nasa-firms]=1
+    else
+      printf '%s\n' \
+        'external generation: skipping nasa-firms (FIRMS_MAP_KEY is unset)'
+    fi
+  fi
+  if [[ -n ${requested[network-topology]:-} ]]; then
+    if [[ ${NETWORK_TOPOLOGY_LICENSE_ACCEPTED:-} == CC-BY-NC-SA-3.0 ]]; then
+      selected[network-topology]=1
+    else
+      printf '%s\n' \
+        'external generation: skipping network-topology (license acknowledgement is unset)'
+    fi
+  fi
+fi
+
+selected_passes=()
+for pass in jaxa-ptree nasa-firms network-topology; do
+  [[ -n ${selected[$pass]:-} ]] && selected_passes+=("$pass")
+done
+((${#selected_passes[@]} > 0)) \
+  || fail 'no optional external workflows are locally configured'
+
 run_make()
 {
   local description=$1
@@ -53,8 +106,31 @@ run_make()
   "$make_command" --no-print-directory "$@"
 }
 
+if [[ -n ${selected[jaxa-ptree]:-} ]]; then
+  cacert=${PTREE_CACERT:-}
+  if [[ -z $cacert ]]; then
+    data_home=${XDG_DATA_HOME:-${HOME:?HOME is required}/.local/share}
+    cacert=$data_home/cartofreako/certs/secom-tls-rsa-root-ca-2024.pem
+  fi
+  if [[ ! -r $cacert ]]; then
+    certificate_installer=${JAXA_CERTIFICATE_INSTALLER:-scripts/install-jaxa-certificate.sh}
+    [[ -x $certificate_installer ]] \
+      || fail "JAXA certificate installer is unavailable: $certificate_installer"
+    printf '%s\n' \
+      'external generation: installing the verified JAXA P-Tree trust anchor'
+    "$certificate_installer"
+    [[ -r $cacert ]] \
+      || fail "certificate installer did not create a readable file: $cacert"
+  fi
+fi
+
+printf 'external generation: authorizing'
+printf ' %s' "${selected_passes[@]}"
+printf '\n'
+"$external_authorizer" "${selected_passes[@]}"
+
 for pass in jaxa-ptree nasa-firms network-topology; do
-  [[ -n ${requested[$pass]:-} ]] || continue
+  [[ -n ${selected[$pass]:-} ]] || continue
   case "$pass" in
     jaxa-ptree)
       run_make 'fetching the JAXA P-Tree snapshot' \

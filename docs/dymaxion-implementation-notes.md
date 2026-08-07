@@ -54,7 +54,7 @@ The production previews are:
 
 | Geometry | Graticules | Earth | Water |
 | --- | --- | --- | --- |
-| [PNG](../assets.generated/png/geometry-dymaxion-44-20.78461.png) | [PNG](../assets.generated/png/graticules-dymaxion-44-20.78461.png) | [PNG](../assets.generated/png/earth-dymaxion-44-20.78461.png) | [PNG](../assets.generated/png/water-dymaxion-44-20.78461.png) |
+| [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/geometry-dymaxion-44-20.78461.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/graticules-dymaxion-44-20.78461.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/earth-dymaxion-44-20.78461.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/water-dymaxion-44-20.78461.png) |
 
 Each also has a layered SVG under `assets.generated/svg/` and a print-size PDF
 under `assets.generated/pdf/` with the same basename.

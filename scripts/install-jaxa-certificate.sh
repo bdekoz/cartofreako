@@ -47,7 +47,7 @@ trap cleanup EXIT HUP INT TERM
 
 printf 'Downloading the official JAXA P-Tree trust anchor...\n'
 curl --fail --silent --show-error --location \
-  --proto '=https' --tlsv1.2 \
+  --proto '=https' --tlsv1.2 --connect-timeout 30 --max-time 90 \
   --output "$downloaded_certificate" "$certificate_url"
 
 openssl x509 -in "$downloaded_certificate" -noout -checkend 0 >/dev/null \

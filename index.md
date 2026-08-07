@@ -19,7 +19,7 @@ WebAssembly requirements.
 | [`src.wasm/`](src.wasm/) | All-projection browser runtime, workers, SVG/Canvas/D3 adapters, compatibility modules, examples, and smoke tests | [WebAssembly quick start](docs/pages/webassembly-quick-start.md) |
 | [`tests/`](tests/) | Standalone algorithm and public-API tests | [`make check`](Makefile) |
 | [`assets.static/`](assets.static/) | Source plates, historical implementations, reference rasters, and downloaded geographic data | [Myriahedral reconstruction assets](assets.static/myriahedral/README.md) |
-| [`assets.generated/`](assets.generated/) | Locally generated or release-extracted SVG (`.svg.gz` companions for resources), PDF, and opaque PNG deliverables | [Preview matrix](#generated-artifact-previews) |
+| `assets.generated/` | Locally generated or release-extracted SVG (`.svg.gz` companions for resources), PDF, and opaque PNG deliverables | [S3 v12 publication](docs/releases/s3-v12.md) and [projection snapshot catalog](#generated-artifact-previews) |
 
 This separation keeps reproducible inputs distinct from rendered outputs and
 keeps generation programs out of the test suite.
@@ -38,7 +38,7 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Installation and build dependencies | [Prerequisites](docs/prerequisites.md) |
 | SVG/PDF/PNG generation, Natural Earth, folding, slicing, and review | [Generation guide](docs/generation.md) |
 | Stage 12 resource, authorization, default-year, snapshot, and Star-X integration | [Stage 12 implementation notes](docs/stage-12-implementation-notes.md) |
-| Low-resolution thumbnails of every Cahill-Keyes projection pass | [Generated Cahill-Keyes snapshot](docs/generated-snapshot-ck.md) |
+| Visual contact sheets for every projection and released pass | [Generated projection snapshots](#generated-artifact-previews) |
 | Static generated-asset releases, manifests, render hardware, and publishing | [`v20260807` release notes](docs/releases/v20260807.md), [S3 v12 publication](docs/releases/s3-v12.md), and [release runbook](docs/releases/README.md) |
 | Generate-pass evaluation record plus configured, full-suite, family, and exact workflows | [Generate-pass methods and decision record](docs/generation-methods.md) |
 | Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/astro-implementation-notes.md) |
@@ -117,8 +117,9 @@ Inkscape PDF under `assets.generated/pdf/` and a PNG under
 `assets.generated/png/`. PNGs preserve the source aspect ratio and
 have a longest side of 3840 pixels, the horizontal resolution of UHD 4K
 video. Transparent SVG page regions are flattened against an opaque white
-background. The graph also creates 28 480-pixel-wide Cahill-Keyes thumbnails;
-review them in the [generated snapshot](docs/generated-snapshot-ck.md). The
+background. The graph also creates 28 480-pixel-wide Cahill-Keyes thumbnails.
+Review the complete all-projection release in the
+[generated snapshot catalog](#generated-artifact-previews). The
 targets `make generated-projections`, `make
 generate-projections`, and `make make-generated` are equivalent aliases.
 
@@ -161,120 +162,31 @@ required layers, path structure, and finite numeric output.
 
 ### Generated artifact previews
 
-| Projection | Geometry | Graticules | Earth | Water |
-| --- | --- | --- | --- | --- |
-| Cahill-Keyes | [`geometry-ck-44-22.png`](assets.generated/png/geometry-ck-44-22.png) | [`graticules-ck-44-22.png`](assets.generated/png/graticules-ck-44-22.png) | [`earth-ck-44-22.png`](assets.generated/png/earth-ck-44-22.png) | [`water-ck-44-22.png`](assets.generated/png/water-ck-44-22.png) |
-| AuthaGraph | [`geometry-authagraph-44-19.052559.png`](assets.generated/png/geometry-authagraph-44-19.052559.png) | [`graticules-authagraph-44-19.052559.png`](assets.generated/png/graticules-authagraph-44-19.052559.png) | [`earth-authagraph-44-19.052559.png`](assets.generated/png/earth-authagraph-44-19.052559.png) | [`water-authagraph-44-19.052559.png`](assets.generated/png/water-authagraph-44-19.052559.png) |
-| Dymaxion | [`geometry-dymaxion-44-20.78461.png`](assets.generated/png/geometry-dymaxion-44-20.78461.png) | [`graticules-dymaxion-44-20.78461.png`](assets.generated/png/graticules-dymaxion-44-20.78461.png) | [`earth-dymaxion-44-20.78461.png`](assets.generated/png/earth-dymaxion-44-20.78461.png) | [`water-dymaxion-44-20.78461.png`](assets.generated/png/water-dymaxion-44-20.78461.png) |
-| Myriahedral | [`geometry-myriahedral-44-24.75.png`](assets.generated/png/geometry-myriahedral-44-24.75.png) | [`graticules-myriahedral-44-24.75.png`](assets.generated/png/graticules-myriahedral-44-24.75.png) | [`earth-myriahedral-44-24.75.png`](assets.generated/png/earth-myriahedral-44-24.75.png) | [`water-myriahedral-44-24.75.png`](assets.generated/png/water-myriahedral-44-24.75.png) |
-| Star-X | [`geometry-star-x-34-44.png`](assets.generated/png/geometry-star-x-34-44.png) | [`graticules-star-x-34-44.png`](assets.generated/png/graticules-star-x-34-44.png) | [`earth-star-x-34-44.png`](assets.generated/png/earth-star-x-34-44.png) | [`water-star-x-34-44.png`](assets.generated/png/water-star-x-34-44.png) |
-| Voronoi | [`geometry-voronoi-44-22.916667.png`](assets.generated/png/geometry-voronoi-44-22.916667.png) | [`graticules-voronoi-44-22.916667.png`](assets.generated/png/graticules-voronoi-44-22.916667.png) | [`earth-voronoi-44-22.916667.png`](assets.generated/png/earth-voronoi-44-22.916667.png) | [`water-voronoi-44-22.916667.png`](assets.generated/png/water-voronoi-44-22.916667.png) |
+The v12 visual catalog is organized by projection. Each contact sheet presents
+the same 28 credential-free whole-map passes as labeled previews, grouped into
+projection foundations, sky and orbital work, networks and Anthropocene,
+Stage 12 resources, and the Bathymetry Roulette art pass. Select any preview to
+open its full-resolution layered SVG in the immutable S3 viewer.
 
-The same frames carry an all-sky atlas and the observer-filtered view computed
-from the timestamp and San Francisco point stored in the JSON profile:
+- [AuthaGraph snapshot](docs/generated-snapshot-authagraph.md) — `44 × 19.052559`
+- [Cahill–Keyes snapshot](docs/generated-snapshot-ck.md) — `44 × 22`
+- [Dymaxion snapshot](docs/generated-snapshot-dymaxion.md) — `44 × 20.78461`
+- [Myriahedral snapshot](docs/generated-snapshot-myriahedral.md) — `44 × 24.75`
+- [Star-X snapshot](docs/generated-snapshot-star-x.md) — `34 × 44`
+- [Voronoi snapshot](docs/generated-snapshot-voronoi.md) — `44 × 22.916667`
 
-| Projection | All sky | Observer |
-| --- | --- | --- |
-| Cahill-Keyes | [`astro-all-sky-ck-44-22.png`](assets.generated/png/astro-all-sky-ck-44-22.png) | [`astro-observer-ck-44-22.png`](assets.generated/png/astro-observer-ck-44-22.png) |
-| AuthaGraph | [`astro-all-sky-authagraph-44-19.052559.png`](assets.generated/png/astro-all-sky-authagraph-44-19.052559.png) | [`astro-observer-authagraph-44-19.052559.png`](assets.generated/png/astro-observer-authagraph-44-19.052559.png) |
-| Dymaxion | [`astro-all-sky-dymaxion-44-20.78461.png`](assets.generated/png/astro-all-sky-dymaxion-44-20.78461.png) | [`astro-observer-dymaxion-44-20.78461.png`](assets.generated/png/astro-observer-dymaxion-44-20.78461.png) |
-| Myriahedral | [`astro-all-sky-myriahedral-44-24.75.png`](assets.generated/png/astro-all-sky-myriahedral-44-24.75.png) | [`astro-observer-myriahedral-44-24.75.png`](assets.generated/png/astro-observer-myriahedral-44-24.75.png) |
-| Star-X | [`astro-all-sky-star-x-34-44.png`](assets.generated/png/astro-all-sky-star-x-34-44.png) | [`astro-observer-star-x-34-44.png`](assets.generated/png/astro-observer-star-x-34-44.png) |
-| Voronoi | [`astro-all-sky-voronoi-44-22.916667.png`](assets.generated/png/astro-all-sky-voronoi-44-22.916667.png) | [`astro-observer-voronoi-44-22.916667.png`](assets.generated/png/astro-observer-voronoi-44-22.916667.png) |
+All preview and viewer links resolve against the completed
+`cartofreako/v12/` public S3 release, so GitHub Pages does not depend on the
+untracked local `assets.generated/` directory. The sealed v12 inventory
+contains dedicated 480-pixel thumbnails for Cahill–Keyes; the other sheets
+lazy-load their immutable full-size PNGs at contact-sheet width.
 
-The Orbital Technosphere products use the separately pinned propagation time
-and make-invocation observer point. Global maps show terrestrial subpoints;
-observer maps show only the above-horizon topocentric population:
-
-| Projection | Global | Observer |
-| --- | --- | --- |
-| Cahill-Keyes | [`orbital-technosphere-global-ck-44-22.png`](assets.generated/png/orbital-technosphere-global-ck-44-22.png) | [`orbital-technosphere-observer-ck-44-22.png`](assets.generated/png/orbital-technosphere-observer-ck-44-22.png) |
-| AuthaGraph | [`orbital-technosphere-global-authagraph-44-19.052559.png`](assets.generated/png/orbital-technosphere-global-authagraph-44-19.052559.png) | [`orbital-technosphere-observer-authagraph-44-19.052559.png`](assets.generated/png/orbital-technosphere-observer-authagraph-44-19.052559.png) |
-| Dymaxion | [`orbital-technosphere-global-dymaxion-44-20.78461.png`](assets.generated/png/orbital-technosphere-global-dymaxion-44-20.78461.png) | [`orbital-technosphere-observer-dymaxion-44-20.78461.png`](assets.generated/png/orbital-technosphere-observer-dymaxion-44-20.78461.png) |
-| Myriahedral | [`orbital-technosphere-global-myriahedral-44-24.75.png`](assets.generated/png/orbital-technosphere-global-myriahedral-44-24.75.png) | [`orbital-technosphere-observer-myriahedral-44-24.75.png`](assets.generated/png/orbital-technosphere-observer-myriahedral-44-24.75.png) |
-| Star-X | [`orbital-technosphere-global-star-x-34-44.png`](assets.generated/png/orbital-technosphere-global-star-x-34-44.png) | [`orbital-technosphere-observer-star-x-34-44.png`](assets.generated/png/orbital-technosphere-observer-star-x-34-44.png) |
-| Voronoi | [`orbital-technosphere-global-voronoi-44-22.916667.png`](assets.generated/png/orbital-technosphere-global-voronoi-44-22.916667.png) | [`orbital-technosphere-observer-voronoi-44-22.916667.png`](assets.generated/png/orbital-technosphere-observer-voronoi-44-22.916667.png) |
-
-The legacy Anthropocene observation-atlas products preserve temperature and precipitation records,
-active fire, observed smoke, flood/heavy-rain and severe-weather reports, and
-EPA PM2.5 exposure as independent H3 cell-day layers. PM2.5 is not used as a
-proxy for smoke, and absent observations do not assert zero:
-
-| Projection | Anthropocene |
-| --- | --- |
-| Cahill-Keyes | [`anthropocene-ck-44-22.png`](assets.generated/png/anthropocene-ck-44-22.png) |
-| AuthaGraph | [`anthropocene-authagraph-44-19.052559.png`](assets.generated/png/anthropocene-authagraph-44-19.052559.png) |
-| Dymaxion | [`anthropocene-dymaxion-44-20.78461.png`](assets.generated/png/anthropocene-dymaxion-44-20.78461.png) |
-| Myriahedral | [`anthropocene-myriahedral-44-24.75.png`](assets.generated/png/anthropocene-myriahedral-44-24.75.png) |
-| Star-X | [`anthropocene-star-x-34-44.png`](assets.generated/png/anthropocene-star-x-34-44.png) |
-| Voronoi | [`anthropocene-voronoi-44-22.916667.png`](assets.generated/png/anthropocene-voronoi-44-22.916667.png) |
-
-The Stage 8b temperature field provides a non-sparse global H3 domain with
-explicit CPC land coverage for the complete 2025 and partial 2026 calendar
-products. Neutral covered cells had no strict record; blank cells are missing
-or outside the CPC land domain. These two year-bearing fields are the current
-`generate-anthropocene*` defaults; the observation atlas uses the explicit
-`generate-anthropocene-atlas*` targets:
-
-| Projection | Complete 2025 | Partial 2026 |
-| --- | --- | --- |
-| Cahill-Keyes | [`anthropocene-temperature-2025-ck-44-22.png`](assets.generated/png/anthropocene-temperature-2025-ck-44-22.png) | [`anthropocene-temperature-2026-ck-44-22.png`](assets.generated/png/anthropocene-temperature-2026-ck-44-22.png) |
-| AuthaGraph | [`anthropocene-temperature-2025-authagraph-44-19.052559.png`](assets.generated/png/anthropocene-temperature-2025-authagraph-44-19.052559.png) | [`anthropocene-temperature-2026-authagraph-44-19.052559.png`](assets.generated/png/anthropocene-temperature-2026-authagraph-44-19.052559.png) |
-| Dymaxion | [`anthropocene-temperature-2025-dymaxion-44-20.78461.png`](assets.generated/png/anthropocene-temperature-2025-dymaxion-44-20.78461.png) | [`anthropocene-temperature-2026-dymaxion-44-20.78461.png`](assets.generated/png/anthropocene-temperature-2026-dymaxion-44-20.78461.png) |
-| Myriahedral | [`anthropocene-temperature-2025-myriahedral-44-24.75.png`](assets.generated/png/anthropocene-temperature-2025-myriahedral-44-24.75.png) | [`anthropocene-temperature-2026-myriahedral-44-24.75.png`](assets.generated/png/anthropocene-temperature-2026-myriahedral-44-24.75.png) |
-| Star-X | [`anthropocene-temperature-2025-star-x-34-44.png`](assets.generated/png/anthropocene-temperature-2025-star-x-34-44.png) | [`anthropocene-temperature-2026-star-x-34-44.png`](assets.generated/png/anthropocene-temperature-2026-star-x-34-44.png) |
-| Voronoi | [`anthropocene-temperature-2025-voronoi-44-22.916667.png`](assets.generated/png/anthropocene-temperature-2025-voronoi-44-22.916667.png) | [`anthropocene-temperature-2026-voronoi-44-22.916667.png`](assets.generated/png/anthropocene-temperature-2026-voronoi-44-22.916667.png) |
-
-Resources Stage 12 produces 14 metric-specific energy, food, fauna, flora,
-mineral, and human artifacts from the checked v3 snapshot. Country products
-pass their declared population/output gates, the reef product renders 7,215
-cells derived from the actual WRI geometry, and every metric runs across all
-six projections as a deterministic `.svg.gz` file. Review the Cahill-Keyes
-variants in the [generated snapshot](docs/generated-snapshot-ck.md), and see
-the [implementation notes](docs/resources-implementation-notes.md) and
-[enrichment plan](docs/resources-enrichment-plan.md).
-
-The cumulative network-swarm pass detiles the pinned resolution-5 H3 swarm into
-projection-safe resolution-3 Izzi honeycombs while preserving every raw
-downloader field:
-
-| Projection | Network-swarm |
-| --- | --- |
-| Cahill-Keyes | [`network-swarm-ck-44-22.png`](assets.generated/png/network-swarm-ck-44-22.png) |
-| AuthaGraph | [`network-swarm-authagraph-44-19.052559.png`](assets.generated/png/network-swarm-authagraph-44-19.052559.png) |
-| Dymaxion | [`network-swarm-dymaxion-44-20.78461.png`](assets.generated/png/network-swarm-dymaxion-44-20.78461.png) |
-| Myriahedral | [`network-swarm-myriahedral-44-24.75.png`](assets.generated/png/network-swarm-myriahedral-44-24.75.png) |
-| Star-X | [`network-swarm-star-x-34-44.png`](assets.generated/png/network-swarm-star-x-34-44.png) |
-| Voronoi | [`network-swarm-voronoi-44-22.916667.png`](assets.generated/png/network-swarm-voronoi-44-22.916667.png) |
-
-The ordinary network-infrastructure pass maps located cloud/CDN records. The
-separately generated topology variant adds source-backed TeleGeography cable
-routes and logical exchange/facility incidence. Topology is an explicit CC
-BY-NC-SA 3.0 opt-in and is not part of `make all`:
-
-| Projection | Cloud/CDN sites | Opt-in topology |
-| --- | --- | --- |
-| Cahill-Keyes | [`network-infrastructure-sites-ck-44-22.png`](assets.generated/png/network-infrastructure-sites-ck-44-22.png) | [`network-infrastructure-topology-ck-44-22.png`](assets.generated/png/network-infrastructure-topology-ck-44-22.png) |
-| AuthaGraph | [`network-infrastructure-sites-authagraph-44-19.052559.png`](assets.generated/png/network-infrastructure-sites-authagraph-44-19.052559.png) | [`network-infrastructure-topology-authagraph-44-19.052559.png`](assets.generated/png/network-infrastructure-topology-authagraph-44-19.052559.png) |
-| Dymaxion | [`network-infrastructure-sites-dymaxion-44-20.78461.png`](assets.generated/png/network-infrastructure-sites-dymaxion-44-20.78461.png) | [`network-infrastructure-topology-dymaxion-44-20.78461.png`](assets.generated/png/network-infrastructure-topology-dymaxion-44-20.78461.png) |
-| Myriahedral | [`network-infrastructure-sites-myriahedral-44-24.75.png`](assets.generated/png/network-infrastructure-sites-myriahedral-44-24.75.png) | [`network-infrastructure-topology-myriahedral-44-24.75.png`](assets.generated/png/network-infrastructure-topology-myriahedral-44-24.75.png) |
-| Star-X | [`network-infrastructure-sites-star-x-34-44.png`](assets.generated/png/network-infrastructure-sites-star-x-34-44.png) | [`network-infrastructure-topology-star-x-34-44.png`](assets.generated/png/network-infrastructure-topology-star-x-34-44.png) |
-| Voronoi | [`network-infrastructure-sites-voronoi-44-22.916667.png`](assets.generated/png/network-infrastructure-sites-voronoi-44-22.916667.png) | [`network-infrastructure-topology-voronoi-44-22.916667.png`](assets.generated/png/network-infrastructure-topology-voronoi-44-22.916667.png) |
-
-The Bathymetry Roulette pass uses one pale ground and one dark ink, mapping
-successively deeper Natural Earth thresholds to more variable and complex
-Izzi epitrochoid and hypotrochoid families. Twelve staggered, overlapping
-variations per depth form explicit line fields instead of a repeated-symbol
-grid:
-
-| Projection | Bathymetry Roulette |
-| --- | --- |
-| Cahill-Keyes | [`bathymetry-roulette-ck-44-22.png`](assets.generated/png/bathymetry-roulette-ck-44-22.png) |
-| AuthaGraph | [`bathymetry-roulette-authagraph-44-19.052559.png`](assets.generated/png/bathymetry-roulette-authagraph-44-19.052559.png) |
-| Dymaxion | [`bathymetry-roulette-dymaxion-44-20.78461.png`](assets.generated/png/bathymetry-roulette-dymaxion-44-20.78461.png) |
-| Myriahedral | [`bathymetry-roulette-myriahedral-44-24.75.png`](assets.generated/png/bathymetry-roulette-myriahedral-44-24.75.png) |
-| Star-X | [`bathymetry-roulette-star-x-34-44.png`](assets.generated/png/bathymetry-roulette-star-x-34-44.png) |
-| Voronoi | [`bathymetry-roulette-voronoi-44-22.916667.png`](assets.generated/png/bathymetry-roulette-voronoi-44-22.916667.png) |
+The current Anthropocene defaults are the complete 2025 and partial 2026 CPC
+temperature fields; the legacy observation atlas remains available as an
+explicitly labeled pass. The sheets also distinguish the ordinary cloud/CDN
+site atlas from the licensed topology product. Credentialed P-Tree
+cloud-atmosphere, licensed network topology, and unpromoted FIRMS candidates
+remain outside the default public catalog.
 
 The [SVG generation pipeline](docs/generation.md) explains the generator
 sources and Make targets, Natural Earth acquisition, seam handling, sampling,
@@ -354,7 +266,7 @@ The Stage 7 compositor measures that scale as `ant_r`, the maximum ordinary
 Star-X mainland distance from a South-Pole tip, cuts the matching circle from
 all four page quadrants, and reunites every physical and graticule fragment
 around one bottom-center pole. The source cuts and unified circle are visible
-in [`graticules-star-x-34-44.png`](assets.generated/png/graticules-star-x-34-44.png).
+in [`graticules-star-x-34-44.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/graticules-star-x-34-44.png).
 
 Construction examples and `star_x_layout` configuration are in the
 [Star-X public API notes](docs/star-x-implementation-notes.md#public-c-api).
@@ -468,8 +380,9 @@ the `voronoi_source` preset are in the
 | [`docs/cloud-atmosphere-implementation-notes.md`](docs/cloud-atmosphere-implementation-notes.md) | Stage 4.1a feasibility, astronomy boundary, JAXA sources, process time, P-Tree QA, H3 preparation, products, terms, verification, and limits |
 | [`docs/ptree-production-download.md`](docs/ptree-production-download.md) | Quick-start P-Tree registration, secure credentials, connection test, reproducible production refresh, expected files, and troubleshooting |
 | [`docs/orbital-technosphere-implementation-notes.md`](docs/orbital-technosphere-implementation-notes.md) | Stage 4.2 feasibility, naming, NASA/CelesTrak source roles, OMM/SGP4 formulas, products, verification, and accuracy boundary |
-| [`docs/stage-12-implementation-notes.md`](docs/stage-12-implementation-notes.md) | Stage 12 resource expansion, Anthropocene defaults, external authorization, render hardware, Cahill-Keyes snapshot, and Star-X paint-order integration |
-| [`docs/generated-snapshot-ck.md`](docs/generated-snapshot-ck.md) | Linked low-resolution thumbnail matrix for all 28 Cahill-Keyes projection passes |
+| [`docs/stage-12-implementation-notes.md`](docs/stage-12-implementation-notes.md) | Stage 12 resource expansion, Anthropocene defaults, external authorization, render hardware, generated snapshots, and Star-X paint-order integration |
+| [Generated projection snapshots](#generated-artifact-previews) | Six projection-specific contact sheets sharing one 28-pass release template |
+| `_includes/generated-snapshot.md` | Canonical contact-sheet taxonomy, viewer links, labels, and exclusion policy used by all six snapshot pages |
 | [`docs/resources-enrichment-plan.md`](docs/resources-enrichment-plan.md) | Stage 12 six-family taxonomy, source evaluation, non-sparse options, v3 schema, migration sequence, and release QA |
 | [`src.projections/cart0freak0-star-x.h`](src.projections/cart0freak0-star-x.h) | Star-X group assembly, configurable centered scale, Stage 7 cap-radius geometry, frame validation, public API, and factory |
 | [`tests/test-star-x-projection-api.cc`](tests/test-star-x-projection-api.cc) | Star-X anchors, assembly and scale, global domain, cap invariants, variable-frame, validation, and API tests |
@@ -485,18 +398,18 @@ the `voronoi_source` preset are in the
 | [`tests/test-generation-profile.cc`](tests/test-generation-profile.cc) | Profile defaults, aliases, all-selection expansion, duplicate detection, and invalid-schema tests |
 | [`src.generate/projection-area-generation.h`](src.generate/projection-area-generation.h) | Face-local Dymaxion, Myriahedral, and Voronoi transforms plus exact planar-triangle clipping for filled paths |
 | [`src.generate/generate-geometry.cc`](src.generate/generate-geometry.cc) | Izzi SVG generator and structural test for native AuthaGraph, Cahill-Keyes/Star-X, Dymaxion, Myriahedral, and Voronoi faces plus four map quadrants |
-| [`assets.generated/png/geometry-ck-44-22.png`](assets.generated/png/geometry-ck-44-22.png) | PNG preview of the generated layered Cahill-Keyes face geometry in a 44×22 frame |
+| [`geometry-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/geometry-ck-44-22.png) | PNG preview of the generated layered Cahill-Keyes face geometry in a 44×22 frame |
 | [`src.generate/generate-graticules.cc`](src.generate/generate-graticules.cc) | Izzi SVG generator and structural test for grouped, degree-labeled, discontinuity-split 10° latitude and longitude lines |
-| [`assets.generated/png/graticules-ck-44-22.png`](assets.generated/png/graticules-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes graticule with 17 latitudes and 36 longitudes |
+| [`graticules-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/graticules-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes graticule with 17 latitudes and 36 longitudes |
 | [`src.generate/natural-earth-generation.h`](src.generate/natural-earth-generation.h) | Shared GDAL/Izzi renderer and structural checks for the complementary Natural Earth base and overlay layer sets |
 | [`src.generate/generate-earth.cc`](src.generate/generate-earth.cc) | Thin generator entry point for the `ocean` and `land` base layers |
-| [`assets.generated/png/earth-ck-44-22.png`](assets.generated/png/earth-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes ocean-and-land base |
+| [`earth-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/earth-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes ocean-and-land base |
 | [`src.generate/generate-water.cc`](src.generate/generate-water.cc) | Thin generator entry point for every Natural Earth physical layer except `ocean` and `land` |
-| [`assets.generated/png/water-ck-44-22.png`](assets.generated/png/water-ck-44-22.png) | PNG preview of the complementary 44×22 Cahill-Keyes physical-feature overlay |
+| [`water-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/water-ck-44-22.png) | PNG preview of the complementary 44×22 Cahill-Keyes physical-feature overlay |
 | [`src.generate/bathymetry-roulette-style.h`](src.generate/bathymetry-roulette-style.h) | Validated twelve-depth epitrochoid/hypotrochoid catalogue, twelve field variations, curve construction, palette, and mosaic constants |
 | [`src.generate/generate-bathymetry-roulette.cc`](src.generate/generate-bathymetry-roulette.cc) | Six-projection Natural Earth clip and explicit monochrome page-space roulette-line-field generator with key and embedded SVG checks |
 | [`tests/test-bathymetry-roulette-style.cc`](tests/test-bathymetry-roulette-style.cc) | Depth ordering, variation, closure period, curve uniqueness, paint transition, and identifier tests |
-| [`assets.generated/png/bathymetry-roulette-ck-44-22.png`](assets.generated/png/bathymetry-roulette-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes roulette bathymetry |
+| [`bathymetry-roulette-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/bathymetry-roulette-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes roulette bathymetry |
 | [`docs/bathymetry-roulette-implementation-notes.md`](docs/bathymetry-roulette-implementation-notes.md) | Stage 4.5 feasibility, confirmed catalogue, clipping and layering model, products, verification, accepted moiré, and limits |
 | [`src.generate/astro-data.h`](src.generate/astro-data.h) | Validated JSON profile and catalog ingestion, proper motion, Solar System approximation, sidereal time, altitude, event window, and band filtering |
 | [`src.generate/astro-generation.h`](src.generate/astro-generation.h) | Projection-aware astronomy layers, metadata, markers, spherical uncertainty contours, labels, and embedded SVG checks |

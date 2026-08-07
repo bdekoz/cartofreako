@@ -166,22 +166,33 @@ optional passes are needed. It does not register an account, accept legal
 terms, fetch production data, or generate artifacts; see
 the [Stage 12 authorization notes](stage-12-implementation-notes.md#optional-external-authorization).
 
-To perform the mutating workflows after authorization, use the same pass
-selection with:
+To authorize and then perform the mutating workflows, use the same pass
+selection or let the target discover locally configured providers:
 
 ```sh
 FIRMS_MAP_KEY='…' \
 NETWORK_TOPOLOGY_LICENSE_ACCEPTED=CC-BY-NC-SA-3.0 \
 make generate-authorized-external
+
+# Explicit selections are strict.
+make EXTERNAL_PASSES=jaxa-ptree generate-authorized-external
 ```
 
-The target authorizes every selected pass before changing anything and does
-not silently skip an unavailable requested integration. It fetches, prepares,
-verifies, and exports all cloud-atmosphere formats; prepares a global
-FIRMS-backed Anthropocene candidate for required human review; and exports all
-licensed topology formats. The FIRMS candidate is not rendered or promoted
-automatically. A failure stops the remaining sequence but does not roll back a
-source snapshot or artifact that an earlier step completed.
+Without an `EXTERNAL_PASSES` override, the target selects P-Tree when
+`PTREE_NETRC` contains its machine entry, FIRMS when `FIRMS_MAP_KEY` is set,
+and topology when `NETWORK_TOPOLOGY_LICENSE_ACCEPTED` has the exact required
+value. It reports each unconfigured provider that it skips. If selected
+P-Tree trust is absent, it first runs the pinned, fingerprint-verified
+per-user certificate installer. An explicit pass list disables discovery and
+is strict.
+
+The target authorizes the complete resulting selection before fetching
+production sources or rendering. It fetches, prepares, verifies, and exports
+all cloud-atmosphere formats; prepares a global FIRMS-backed Anthropocene
+candidate for required human review; and exports all licensed topology
+formats. The FIRMS candidate is not rendered or promoted automatically. A
+failure stops the remaining sequence but does not roll back a source snapshot
+or artifact that an earlier step completed.
 
 ## Install the system packages
 

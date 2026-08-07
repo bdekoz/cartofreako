@@ -105,9 +105,10 @@ make assets-single
 ```
 
 Outputs are organized under `assets.generated/svg/`, `assets.generated/pdf/`, and
-`assets.generated/png/`; contact-sheet thumbnails are under
-`assets.generated/thumbnail/cahill-keyes/`. Review all Cahill-Keyes passes in
-the [generated snapshot](docs/generated-snapshot-ck.md). The
+`assets.generated/png/`; the release's dedicated contact-sheet thumbnails are
+under `assets.generated/thumbnail/cahill-keyes/`. Review all 28 public passes
+for each of the six projections in the
+[generated snapshot catalog](index.md#generated-artifact-previews). The
 [`v20260807` generated-assets release notes](docs/releases/v20260807.md)
 record the static-bundle manifest, render host, hardware sizing, verification,
 and source commit. The [S3 v12 publication notes](docs/releases/s3-v12.md)
@@ -259,18 +260,26 @@ make install-jaxa-certificate
 make authorize-external
 ```
 
-After that read-only check succeeds, the mutating companion can run the
-selected acquisition and full-artifact workflows:
+The mutating companion performs its own authorization check before running the
+locally configured acquisition and full-artifact workflows:
 
 ```sh
+make generate-authorized-external
+
+# strict selection instead of automatic local discovery
 make EXTERNAL_PASSES='jaxa-ptree network-topology' \
   NETWORK_TOPOLOGY_LICENSE_ACCEPTED=CC-BY-NC-SA-3.0 \
   generate-authorized-external
 ```
 
-All selected passes must authorize before any fetch or render starts. P-Tree
-produces its six SVG/PDF/PNG sets and topology produces its licensed six sets.
-NASA FIRMS deliberately stops at the ignored Anthropocene review candidate;
+With no `EXTERNAL_PASSES` override, the target selects P-Tree when its netrc
+entry exists, FIRMS when `FIRMS_MAP_KEY` is set, and topology when the exact
+license acknowledgement is set; every skipped provider is reported. A
+configured P-Tree pass installs the pinned, fingerprint-verified per-user
+certificate if it is missing. An explicit pass list is strict. Every resulting
+selection must authorize before any fetch or render starts. P-Tree produces
+its six SVG/PDF/PNG sets and topology produces its licensed six sets. NASA
+FIRMS deliberately stops at the ignored Anthropocene review candidate;
 release rendering remains blocked until that candidate is audited and
 promoted with its profile checksum and coverage documentation.
 

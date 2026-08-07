@@ -207,12 +207,12 @@ artifact:
 
 | Projection | Network-swarm preview |
 | --- | --- |
-| Cahill-Keyes | [`network-swarm-ck-44-22.png`](../assets.generated/png/network-swarm-ck-44-22.png) |
-| AuthaGraph | [`network-swarm-authagraph-44-19.052559.png`](../assets.generated/png/network-swarm-authagraph-44-19.052559.png) |
-| Dymaxion | [`network-swarm-dymaxion-44-20.78461.png`](../assets.generated/png/network-swarm-dymaxion-44-20.78461.png) |
-| Myriahedral | [`network-swarm-myriahedral-44-24.75.png`](../assets.generated/png/network-swarm-myriahedral-44-24.75.png) |
-| Star-X | [`network-swarm-star-x-34-44.png`](../assets.generated/png/network-swarm-star-x-34-44.png) |
-| Voronoi | [`network-swarm-voronoi-44-22.916667.png`](../assets.generated/png/network-swarm-voronoi-44-22.916667.png) |
+| Cahill-Keyes | [`network-swarm-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-swarm-ck-44-22.png) |
+| AuthaGraph | [`network-swarm-authagraph-44-19.052559.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-swarm-authagraph-44-19.052559.png) |
+| Dymaxion | [`network-swarm-dymaxion-44-20.78461.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-swarm-dymaxion-44-20.78461.png) |
+| Myriahedral | [`network-swarm-myriahedral-44-24.75.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-swarm-myriahedral-44-24.75.png) |
+| Star-X | [`network-swarm-star-x-34-44.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-swarm-star-x-34-44.png) |
+| Voronoi | [`network-swarm-voronoi-44-22.916667.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-swarm-voronoi-44-22.916667.png) |
 
 Per-projection targets use `generate-network-swarm-PROJECTION`. The canonical
 project-generation profile name is `network-swarm`; the former `network` name

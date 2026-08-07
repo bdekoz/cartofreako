@@ -2,7 +2,7 @@
 
 [Documentation index](../index.md) ·
 [Generation guide](generation.md) ·
-[Cahill–Keyes snapshot](generated-snapshot-ck.md) ·
+[Projection snapshots](../index.md#generated-artifact-previews) ·
 [Resources details](resources-implementation-notes.md) ·
 [Prerequisites and hardware](prerequisites.md)
 
@@ -181,8 +181,15 @@ FIRMS_MAP_KEY='…' make EXTERNAL_PASSES=nasa-firms \
   generate-authorized-external
 ```
 
-`generate-authorized-external` first completes `authorize-external` for the
-whole requested set. It then runs, in canonical order:
+`generate-authorized-external` first performs the same checks as
+`authorize-external` for the whole selected set. With no `EXTERNAL_PASSES`
+override, local discovery
+selects P-Tree from its netrc machine entry, FIRMS from a nonempty map key,
+and topology from the exact license acknowledgement; unconfigured providers
+are reported and skipped. A selected P-Tree account automatically installs
+the pinned, fingerprint-verified per-user trust anchor when it is absent.
+Supplying `EXTERNAL_PASSES` makes every named pass mandatory. After setup and
+authorization, the target runs, in canonical order:
 
 1. P-Tree fetch, preparation, verification, and all six SVG/PDF/PNG exports;
 2. the global Anthropocene fetch and preparation with NASA FIRMS; and
@@ -193,9 +200,9 @@ The FIRMS workflow intentionally ends at
 candidate must be audited and deliberately promoted with its digest, profile,
 coverage dates, tests, and documentation before the observation-atlas release
 artifacts are regenerated. Rendering it automatically would bypass the
-existing data-review gate. Requested but unavailable passes fail instead of
-being silently omitted, and a later failure does not undo earlier completed
-downloads or artifacts.
+existing data-review gate. Explicitly requested but unavailable passes fail,
+configured passes that fail live authorization fail, and a later failure does
+not undo earlier completed downloads or artifacts.
 
 ## Hardware requirements
 

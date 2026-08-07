@@ -224,10 +224,10 @@ the corresponding PDF and PNG set. The generation-profile resolver accepts
 `cloud-atmosphere` plus `clouds`, `atmosphere`, `solar-atmosphere`, and the
 literal requested alias `solar/cloud/atmosphere`.
 
-The last command is the credentialed end-to-end path: its prerequisite first
-validates P-Tree access, then it fetches, prepares, verifies, and exports all
-six SVG/PDF/PNG sets. The narrower targets remain useful for working from an
-already prepared snapshot.
+The last command is the credentialed end-to-end path: it installs the pinned
+per-user certificate when missing, validates P-Tree access, then fetches,
+prepares, verifies, and exports all six SVG/PDF/PNG sets. The narrower targets
+remain useful for working from an already prepared snapshot.
 
 The family is deliberately absent from `make all`: a standard offline build
 cannot assume a P-Tree account or a current local observation snapshot. It is

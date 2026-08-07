@@ -1202,9 +1202,14 @@ authorize-external: $(EXTERNAL_AUTHORIZER) \
 	INTERNET_EXCHANGE_SOURCE="$(abspath $(INTERNET_EXCHANGE_SOURCE))" \
 		"$(EXTERNAL_AUTHORIZER)" $(EXTERNAL_PASSES)
 
-# Mutating opt-in companion to authorize-external. Authorization for every
-# selected pass completes before this driver fetches or renders anything.
-generate-authorized-external: authorize-external $(EXTERNAL_GENERATOR)
+# Mutating opt-in companion to authorize-external. With the default pass list,
+# the driver reports and skips locally unconfigured providers. An explicit
+# EXTERNAL_PASSES override is strict. A configured P-Tree pass installs the
+# pinned per-user trust anchor when it is absent, then every selected pass is
+# authorized before source fetching or rendering begins.
+generate-authorized-external: $(EXTERNAL_GENERATOR) $(EXTERNAL_AUTHORIZER) \
+		$(JAXA_CERTIFICATE_INSTALLER) \
+		$(NETWORK_INFRASTRUCTURE_SOURCE_CHECKER)
 	PTREE_NETRC="$(abspath $(PTREE_NETRC))" \
 	PTREE_CACERT="$(PTREE_CACERT)" \
 	CLOUD_ATMOSPHERE_DATA_DIR="$(abspath $(CLOUD_ATMOSPHERE_DATA_DIR))" \
@@ -1216,6 +1221,10 @@ generate-authorized-external: authorize-external $(EXTERNAL_GENERATOR)
 	NETWORK_INFRASTRUCTURE_CLOUD_SOURCE="$(abspath $(NETWORK_INFRASTRUCTURE_CLOUD_SOURCE))" \
 	SUBMARINE_CABLE_SOURCE="$(abspath $(SUBMARINE_CABLE_SOURCE))" \
 	INTERNET_EXCHANGE_SOURCE="$(abspath $(INTERNET_EXCHANGE_SOURCE))" \
+	NETWORK_INFRASTRUCTURE_SOURCE_CHECKER="$(abspath $(NETWORK_INFRASTRUCTURE_SOURCE_CHECKER))" \
+	EXTERNAL_AUTHORIZER="$(abspath $(EXTERNAL_AUTHORIZER))" \
+	JAXA_CERTIFICATE_INSTALLER="$(abspath $(JAXA_CERTIFICATE_INSTALLER))" \
+	EXTERNAL_SELECTION_MODE="$(if $(filter file,$(origin EXTERNAL_PASSES)),auto,strict)" \
 	MAKE_COMMAND="$(EXTERNAL_MAKE_COMMAND)" \
 		"$(EXTERNAL_GENERATOR)" $(EXTERNAL_PASSES)
 

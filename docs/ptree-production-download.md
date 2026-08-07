@@ -135,8 +135,10 @@ make EXTERNAL_PASSES=jaxa-ptree generate-authorized-external
 ```
 
 That wrapper runs the fetch, preparation, verification, and full SVG/PDF/PNG
-artifact target. It is intentionally separate from `authorize-external`,
-which remains read-only.
+artifact target. If the per-user certificate is missing, the wrapper installs
+and fingerprint-verifies it before authorization. It is intentionally separate
+from `authorize-external`, which remains read-only and therefore expects the
+certificate to have been installed already.
 
 ## 6. Confirm the result
 

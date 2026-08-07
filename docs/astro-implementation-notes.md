@@ -325,12 +325,12 @@ files. Representative checked-in previews are:
 
 | Projection | All sky | San Francisco observer |
 | --- | --- | --- |
-| Cahill-Keyes | [PNG](../assets.generated/png/astro-all-sky-ck-44-22.png) | [PNG](../assets.generated/png/astro-observer-ck-44-22.png) |
-| AuthaGraph | [PNG](../assets.generated/png/astro-all-sky-authagraph-44-19.052559.png) | [PNG](../assets.generated/png/astro-observer-authagraph-44-19.052559.png) |
-| Dymaxion | [PNG](../assets.generated/png/astro-all-sky-dymaxion-44-20.78461.png) | [PNG](../assets.generated/png/astro-observer-dymaxion-44-20.78461.png) |
-| Myriahedral | [PNG](../assets.generated/png/astro-all-sky-myriahedral-44-24.75.png) | [PNG](../assets.generated/png/astro-observer-myriahedral-44-24.75.png) |
-| Star-X | [PNG](../assets.generated/png/astro-all-sky-star-x-34-44.png) | [PNG](../assets.generated/png/astro-observer-star-x-34-44.png) |
-| Voronoi | [PNG](../assets.generated/png/astro-all-sky-voronoi-44-22.916667.png) | [PNG](../assets.generated/png/astro-observer-voronoi-44-22.916667.png) |
+| Cahill-Keyes | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-all-sky-ck-44-22.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-observer-ck-44-22.png) |
+| AuthaGraph | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-all-sky-authagraph-44-19.052559.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-observer-authagraph-44-19.052559.png) |
+| Dymaxion | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-all-sky-dymaxion-44-20.78461.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-observer-dymaxion-44-20.78461.png) |
+| Myriahedral | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-all-sky-myriahedral-44-24.75.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-observer-myriahedral-44-24.75.png) |
+| Star-X | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-all-sky-star-x-34-44.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-observer-star-x-34-44.png) |
+| Voronoi | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-all-sky-voronoi-44-22.916667.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-observer-voronoi-44-22.916667.png) |
 
 The command-line program itself accepts
 `generate-astro PROJECTION PRODUCT PROFILE.json`. Each invocation reopens its

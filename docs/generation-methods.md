@@ -565,7 +565,10 @@ or accept provider terms. Its explicit mutating companion,
 `generate-authorized-external`, authorizes the entire selection first, then
 runs the P-Tree and licensed-topology full-artifact workflows and stages the
 FIRMS-backed Anthropocene review candidate. It never promotes or renders that
-candidate automatically.
+candidate automatically. Its default pass list is filtered by local netrc,
+map-key, and license-acknowledgement presence with explicit skip notices;
+overriding `EXTERNAL_PASSES` requests strict behavior. A discovered P-Tree
+account gets the pinned per-user trust anchor automatically when missing.
 
 ### Exact targets and artifact paths
 
