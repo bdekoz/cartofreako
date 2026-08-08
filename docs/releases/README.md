@@ -3,7 +3,8 @@
 [Documentation index](../../index.md) ·
 [Generation pipeline](../generation.md) ·
 [Prerequisites and hardware](../prerequisites.md) ·
-[`v20260808` release notes](v20260808.md) ·
+[`v20260808.1` corrected release notes](v20260808.1.md) ·
+[`v20260808` superseded attempt](v20260808.md) ·
 [`v13` S3 publication](s3-v13.md) ·
 [`v20260807` release notes](v20260807.md) ·
 [`v12` S3 publication](s3-v12.md) ·
@@ -29,21 +30,26 @@ Active Archive HTML/PDF report and rendered QA pages. Reports are local delivery
 artifacts outside the immutable prefix and Git; their verification and delivery
 record belongs in the versioned publication notes.
 
-## `v20260808` release procedure
+## `v20260808.1` corrective release procedure
 
-Stage 13 uses source tag `v20260808`, static asset
-`assets.generated.v13.tar.xz`, and the projection-first 885-file artifact
+Stage 13 uses corrective source tag `v20260808.1`, static asset
+`assets.generated.v13.tar.xz`, and the projection-first 909-file artifact
 tree. Before packaging, run the native, browser/WebAssembly, and exact artifact
-checks recorded in the [release notes](v20260808.md). The release render must
-contain 205 SVGs, 84 adjacent resource SVG gzip companions, 205 PDFs, 205
-full-size PNGs, and 186 thumbnails.
+checks recorded in the [corrected release notes](v20260808.1.md). The release
+render must contain 211 SVGs, 84 adjacent resource SVG gzip companions, 211
+PDFs, 211 full-size PNGs, and 192 thumbnails. Every projection and format must
+contain exactly one Cloud-atmosphere and one Fiber Synthesized product.
+
+The immutable `v20260808` attempt contains only the 885-file clean graph. It
+was stopped before S3 publication and is marked superseded; do not replace its
+GitHub asset or move its tag.
 
 Create the reproducible archive only after the source commit is final. The
 archive timestamp is the tagged commit time; ownership and modes are
 normalized, and every member remains under `assets.generated/`:
 
 ```sh
-release_tag=v20260808
+release_tag=v20260808.1
 release_commit=$(git rev-parse "$release_tag^{commit}")
 source_date_epoch=$(git show -s --format=%ct "$release_commit")
 tar --sort=name \
@@ -62,14 +68,14 @@ compression resources; the normalized archive members and reproducibility
 contract are unchanged.
 
 Preflight the sealed package and record its digest and byte counts in
-`v20260808.md`:
+`v20260808.1.md`:
 
 ```sh
 xz --test assets.generated.v13.tar.xz
 test "$(tar --list --file=assets.generated.v13.tar.xz | sed -n '1p')" = \
   'assets.generated/'
 test "$(tar --list --file=assets.generated.v13.tar.xz | \
-  sed -n '/\/$/!p' | wc -l)" -eq 885
+  sed -n '/\/$/!p' | wc -l)" -eq 909
 sha256sum assets.generated.v13.tar.xz
 ```
 
@@ -78,12 +84,12 @@ begin with body text; GitHub supplies the one and only announcement title:
 
 ```sh
 git push origin main
-git push origin refs/tags/v20260808
-gh release create v20260808 \
+git push origin refs/tags/v20260808.1
+gh release create v20260808.1 \
   --repo bdekoz/cartofreako \
   --verify-tag \
-  --title 'v20260808 — generated assets v13 and Stage 13' \
-  --notes-file docs/releases/v20260808.md \
+  --title 'v20260808.1 — complete generated assets v13 and Stage 13' \
+  --notes-file docs/releases/v20260808.1.md \
   'assets.generated.v13.tar.xz#Projection-organized SVG, PDF, PNG, and thumbnail bundle (XZ)'
 ```
 
@@ -91,8 +97,8 @@ Download the GitHub object into a fresh directory and compare it to the local
 package before constructing the S3 release:
 
 ```sh
-release_verify_dir=$(mktemp -d /tmp/cartofreako-v20260808.XXXXXX)
-gh release download v20260808 \
+release_verify_dir=$(mktemp -d /tmp/cartofreako-v20260808.1.XXXXXX)
+gh release download v20260808.1 \
   --repo bdekoz/cartofreako \
   --pattern 'assets.generated.v13.tar.xz' \
   --dir "$release_verify_dir"
@@ -112,9 +118,9 @@ scripts/upload-generated-assets-s3-release.sh --validate-only
 scripts/upload-generated-assets-s3-release.sh --apply --verify-download
 ```
 
-Do not move `v20260808` or replace either public artifact after publication.
-A correction requires a new source tag, generated-assets version, and S3
-prefix.
+Do not move `v20260808.1` or replace either public artifact after publication.
+A later correction requires a new source tag, generated-assets version, and
+S3 prefix.
 
 ## `v20260807` release procedure
 

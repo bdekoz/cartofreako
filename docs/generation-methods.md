@@ -541,8 +541,10 @@ make all
 
 This remains the release/review build. It creates the complete layered SVG,
 PDF, and opaque-PNG suite, including all 84 Stage 12 resource maps plus slice
-and perspective families outside the configurable matrix. It also makes the
-31 lower-resolution Cahill-Keyes thumbnails linked from the
+and perspective families outside the configurable matrix. A clean checkout
+makes 31 lower-resolution thumbnails per projection. Locally recorded JAXA or
+topology authorization adds the corresponding optional preview; the complete
+Stage 13 JAXA graph makes 32 per projection, including those linked from the
 [generated snapshot](generated-snapshot-ck.md). The aliases
 `generate-projections`, `generated-projections`, and `make-generated` retain
 the same full-suite behavior. Use `make assets-resilient` for the bounded
@@ -596,8 +598,10 @@ bathymetry products.
 `generate-bathymetry-hamonshu-artifacts` does the same for all six Hamonshū
 bathymetry products.
 
-`generate-snapshot-ck` builds only the 31 480-pixel-wide contact-sheet
-thumbnails and their Cahill-Keyes SVG prerequisites. `authorize-external`
+`generate-snapshot-ck` builds the 31 clean-graph 480-pixel-wide contact-sheet
+thumbnails and their Cahill-Keyes SVG prerequisites. Recorded JAXA or topology
+authorization extends the sheet with the corresponding optional product; the
+complete Stage 13 JAXA graph therefore has 32. `authorize-external`
 performs read-only credential/terms-boundary checks for selected optional
 P-Tree, NASA FIRMS, and network-topology passes; it does not fetch source data
 or accept provider terms. Its explicit mutating companion,

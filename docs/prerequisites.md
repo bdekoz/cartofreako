@@ -77,9 +77,12 @@ Orbital Technosphere maps, 84 Stage 12 resource maps, six Anthropocene maps,
 network-infrastructure site maps, six Fiber Synthesized maps, six Bathymetry Roulette maps, six
 Bathymetry Hamonshū maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes slices, and two
-Myriahedral face-group slices, then invokes Inkscape to export all 205 SVG
-products as PDFs and 3840-pixel-long-side PNGs and adds 31 lower-resolution
-Cahill–Keyes thumbnails. The 84 resources SVGs are also retained as
+Myriahedral face-group slices, then invokes Inkscape to export all 205 clean
+SVG products as PDFs and 3840-pixel-long-side PNGs and adds 31
+lower-resolution thumbnails per projection. A recorded `jaxa-ptree`
+authorization adds the six Cloud-atmosphere products in all three formats and
+one thumbnail per projection; the complete Stage 13 graph is therefore 211
+full-size products and 192 thumbnails. The 84 resources SVGs are also retained as
 deterministic `.svg.gz` companions. It needs all native build
 and data-acquisition dependencies through H3 and GEOS, the
 profile-pinned external cloud/CDN checkout, plus Inkscape. The separately
@@ -771,8 +774,10 @@ Roulette maps, six Bathymetry Hamonshū maps, four quadrant slices, eight
 octant slices, and two Myriahedral face-group
 slices in projection-first `assets.generated/PROJECTION/svg/`, `pdf/`, and
 `png/` directories; resources use `.svg.gz` inside each SVG directory. The
-graph also writes 31 480-pixel-wide thumbnails per projection under the six
-`thumbnail/` directories, 186 total. Every full-size
+clean graph writes 31 480-pixel-wide thumbnails per projection under the six
+`thumbnail/` directories, 186 total. The complete Stage 13 graph additionally
+writes all six authorized Cloud-atmosphere full-size products and thumbnails,
+for 211 SVG/PDF/PNG products and 192 thumbnails. Every full-size
 PNG preserves its
 source aspect ratio, has a 3840-pixel longest side, and is flattened against
 opaque white.
