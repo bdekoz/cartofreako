@@ -448,6 +448,11 @@ printf 'Testing access to the exact bucket and prefix...\n'
 if ! rclone lsf "$remote_path" --max-depth 1 \
   "${rclone_common[@]}" "${rclone_probe[@]}" >/dev/null; then
   printf '[error] Quick access check failed for %s\n' "$destination_label" >&2
+  if grep -Fq 'SignatureDoesNotMatch' "$log_file"; then
+    printf '[error] Cloudian rejected the request signature. Re-enter the access-key ID and secret exactly.\n' >&2
+    printf '[error] Leave the optional session token empty unless UCB issued a three-part temporary credential.\n' >&2
+    printf '[ok] No object upload was attempted.\n' >&2
+  fi
   printf 'See the sanitized rclone log: %s\n' "$log_file" >&2
   exit 1
 fi
