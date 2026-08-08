@@ -1,0 +1,52 @@
+{
+  "schema_version": 2,
+  "name": "Hubble Space Telescope observer sky",
+  "timestamp": "2026-08-05T01:59:44Z",
+  "products": ["observer"],
+  "observer": {
+    "id": "hubble",
+    "name": "Hubble Space Telescope",
+    "kind": "orbiting",
+    "norad_id": "20580",
+    "omm_catalog": "../orbital-technosphere/celestrak-science.csv",
+    "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=science&FORMAT=csv",
+    "maximum_element_age_days": 7.0,
+    "earth_limb_avoidance_deg": 20.0,
+    "sun_avoidance_deg": 60.3
+  },
+  "orientation": {
+    "handedness": "celestial",
+    "central_right_ascension_hours": 12.0
+  },
+  "instrumentation": {
+    "id": "hst-composite",
+    "name": "HST UV-optical-near-IR composite",
+    "mode": "hst-composite",
+    "bands": ["infrared", "optical", "ultraviolet"],
+    "night_required_bands": []
+  },
+  "dynamic_events": {
+    "lookback_days": 7.0
+  },
+  "display": {
+    "maximum_stars": 500,
+    "maximum_exoplanet_hosts": 250,
+    "maximum_labels": 40,
+    "show_reference_lines": true,
+    "show_below_horizon_reference": true
+  },
+  "catalogs": {
+    "gaia_dr3": "gaia-dr3-bright.csv",
+    "nasa_exoplanets": "nasa-exoplanet-nearby.csv",
+    "curated_sky": "curated-sky.json",
+    "small_bodies": [
+      "sbdb-ceres.json",
+      "sbdb-vesta.json",
+      "sbdb-eros.json",
+      "sbdb-apophis.json",
+      "sbdb-halley.json",
+      "sbdb-encke.json",
+      "sbdb-67p.json"
+    ]
+  }
+}

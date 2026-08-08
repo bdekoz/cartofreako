@@ -15,6 +15,9 @@ main()
   assert(catalogue::field_variations.size() == 12);
   assert(catalogue::depth_styles.front().depth_metres == 0);
   assert(catalogue::depth_styles.back().depth_metres == -10000);
+  assert(catalogue::depth_styles.front().point_distance_ratio == 1);
+  assert(catalogue::field_graphic_opacity == 0.30);
+  assert(catalogue::field_voronoi_site_count == 24);
   const auto smallest = std::min_element(
     catalogue::field_variations.begin(), catalogue::field_variations.end(),
     [](const auto& left, const auto& right) {
@@ -27,6 +30,7 @@ main()
   std::set<std::string> paths;
   std::set<std::string> field_ids;
   std::set<std::string> clip_ids;
+  std::set<std::string> depth_colors;
   std::size_t filled = 0;
   for (const catalogue::depth_style& style : catalogue::depth_styles)
     {
@@ -38,8 +42,10 @@ main()
                * catalogue::samples_per_turn));
       assert(paths.insert(path).second);
       assert(clip_ids.insert(catalogue::clip_id(style)).second);
+      assert(depth_colors.insert(svg::color_qi::to_string(style.color)).second);
       assert(catalogue::curve_title(style).find("d/r=")
              != std::string::npos);
+      assert(style.point_distance_ratio >= 1);
 
       std::set<std::string> variation_paths;
       for (std::size_t index = 0;
@@ -65,15 +71,21 @@ main()
   assert(field_ids.size()
          == catalogue::depth_styles.size()
               * catalogue::field_variations.size());
+  assert(depth_colors.size() == catalogue::depth_styles.size());
 
-  for (std::size_t index = 1;
-       index != catalogue::depth_styles.size(); ++index)
-    assert(catalogue::depth_styles[index - 1].point_distance_ratio
-             * catalogue::field_variations.back().point_distance_factor
-           < catalogue::depth_styles[index].point_distance_ratio
-               * catalogue::field_variations.front().point_distance_factor);
+  for (std::size_t depth_index = 0;
+       depth_index != catalogue::depth_styles.size(); ++depth_index)
+    {
+      std::array<std::size_t, catalogue::field_variations.size()> counts {};
+      for (std::size_t site_index = 0;
+           site_index != catalogue::field_voronoi_site_count; ++site_index)
+        ++counts[catalogue::field_voronoi_variation_index(
+          depth_index, site_index)];
+      for (const std::size_t count : counts)
+        assert(count == 2);
+    }
 
-  assert(filled == 4);
+  assert(filled == catalogue::depth_styles.size());
   assert(catalogue::completion_turns(catalogue::depth_styles[7]) == 1);
   assert(catalogue::completion_turns(catalogue::depth_styles[8]) == 2);
   assert(catalogue::completion_turns(catalogue::depth_styles[10]) == 7);

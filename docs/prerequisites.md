@@ -12,14 +12,14 @@ generation workflow. They do not require the same software:
 | Component | Required for | Purpose |
 | --- | --- | --- |
 | GNU Make | All Makefile targets | Expands the generated projection rules and coordinates builds |
-| C++20 compiler and standard library | Tests, profile resolution, and native generators | Builds the projection checks, generation-profile resolver, fifteen SVG-generation programs, and the Anthropocene and Cloud-atmosphere preparers |
+| C++20 compiler and standard library | Tests, profile resolution, and native generators | Builds the projection checks, generation-profile resolver, sixteen SVG-generation programs, and the Anthropocene and Cloud-atmosphere preparers |
 | RapidJSON development headers | Configured generation plus astronomy, Cloud-atmosphere, Orbital Technosphere, resources, Anthropocene, network-swarm, and network-infrastructure tests and generators | Parses the generation preference, authoritative data profiles, astronomy JSON, NASA SSCWeb references, normalized H3 observations, cumulative swarm GeoJSON, and infrastructure source records |
 | Alpha60 headers | SVG generation | Supplies `a60-io.h` and shared runtime-resource interfaces |
-| Izzi headers | SVG generation | Supplies `a60-svg.h`, roulette-curve construction, and SVG document/path serialization |
+| Izzi headers | SVG generation | Supplies `a60-svg.h`, roulette and Hamonshū curve construction, and SVG document/path serialization |
 | H3 development headers and library | Cloud-atmosphere, Network-swarm, and Anthropocene tests, normalization, and generation | Validates 64-bit cells, aggregates raster and point observations, computes configurable parent clusters, and creates cell boundaries with the H3 v4 API |
-| GDAL development package with OGR, GeoTIFF, and NetCDF drivers | Earth, water, Bathymetry Roulette, Cloud-atmosphere, resources, global Orbital Technosphere, Anthropocene, network-swarm, and network-infrastructure generation | Reads Natural Earth/HMS vectors plus JAXA COG and P-Tree NetCDF rasters |
+| GDAL development package with OGR, GeoTIFF, and NetCDF drivers | Earth, water, both bathymetry-art passes, Cloud-atmosphere, resources, global Orbital Technosphere, Anthropocene, network-swarm, and network-infrastructure generation | Reads Natural Earth/HMS vectors plus JAXA COG and P-Tree NetCDF rasters |
 | GEOS support in GDAL | Natural Earth-backed generation | Performs polygon intersection, repair, and seam-safe clipping |
-| Fontconfig and Atkinson Hyperlegible | Graticule, astronomy, Orbital Technosphere, resources, Anthropocene, network-swarm, network-infrastructure, and Bathymetry Roulette generation and PDF/PNG export | Resolves the default accessible label face and prevents silent font substitution |
+| Fontconfig and Atkinson Hyperlegible | Graticule, astronomy, Orbital Technosphere, resources, Anthropocene, network-swarm, network-infrastructure, and both bathymetry-art families | Resolves the default accessible label face and prevents silent font substitution |
 | Git, Bash, Python 3, `curl`, `jq`, `unzip`, `tar`, GNU `gzip`, `rg`, `find`, `sha256sum`, and GNU coreutils including `cmp`, `date`, and `realpath` | Natural Earth, astronomy, Cloud-atmosphere, orbital, resources, Anthropocene, network-swarm, and network-infrastructure preparation or validation | Resolves static STAC metadata, downloads, verifies commits and files, compares, dates, transforms JSON, extracts or installs bounded source data, and creates deterministic compressed resource SVGs |
 | Inkscape | Complete artifact generation and visual review | Exports PDF/PNG and inspects SVG layers, clipping, geometry, and seams |
 | Doxygen | API reference generation | Builds the documented projection-header reference under `docs/doxygen/` |
@@ -71,13 +71,14 @@ checks with `NETWORK_INFRASTRUCTURE_CLOUD_SOURCE` and
 digest validation remains in the stricter network-infrastructure source-check
 targets.
 
-`make all` builds 24 production whole-earth maps, 12 astronomy maps, 12
+`make all` builds 24 production whole-earth maps, 18 astronomy maps, 12
 Orbital Technosphere maps, 84 Stage 12 resource maps, six Anthropocene maps,
 12 Anthropocene temperature maps, six network-swarm maps, six
-network-infrastructure site maps, six Bathymetry Roulette maps, five
+network-infrastructure site maps, six Fiber Synthesized maps, six Bathymetry Roulette maps, six
+Bathymetry Hamonshū maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes slices, and two
-Myriahedral face-group slices, then invokes Inkscape to export all 187 SVG
-products as PDFs and 3840-pixel-long-side PNGs and adds 28 lower-resolution
+Myriahedral face-group slices, then invokes Inkscape to export all 205 SVG
+products as PDFs and 3840-pixel-long-side PNGs and adds 31 lower-resolution
 Cahill–Keyes thumbnails. The 84 resources SVGs are also retained as
 deterministic `.svg.gz` companions. It needs all native build
 and data-acquisition dependencies through H3 and GEOS, the
@@ -123,9 +124,11 @@ recorded from the completed release bundle rather than inferred here.
 
 See the [`v20260806` release notes](releases/v20260806.md) for the complete
 hardware record, byte manifest, validation results, and extraction procedure.
-The source-only checkout does not contain `assets.generated/`; extract the
-release asset before `make check` when satisfying its generated-resource gzip
-gate from the published bundle rather than by local regeneration.
+The source-only checkout does not contain `assets.generated/`, and `make
+check` therefore verifies source, checked inputs, and native behavior without
+requiring a generated release. After rendering or extracting a release, run
+`make check-resources-svg-archives` to require and validate all 84 deterministic
+resource gzip companions in the projection-first tree.
 
 Cloud-atmosphere generation is an opt-in workflow outside `make all`. Its
 refresh step needs network access and a registered P-Tree account available
@@ -194,6 +197,15 @@ formats. The FIRMS candidate is not rendered or promoted automatically. A
 failure stops the remaining sequence but does not roll back a source snapshot
 or artifact that an earlier step completed.
 
+After every selected workflow completes, the driver atomically merges its
+canonical names into `.cartofreako/authorized-external-passes`, writes the
+file with mode `0600`, and prints its path. No state is written after a failed
+run. Subsequent `make all` invocations include Cloud-atmosphere for a recorded
+`jaxa-ptree` pass and licensed topology for a recorded `network-topology`
+pass. `nasa-firms` remains refresh/review-only. Override the state path with
+`EXTERNAL_AUTHORIZATION_STATE`; use
+`make AUTHORIZED_EXTERNAL_PASSES= all` for a one-run standard-only build.
+
 ## Install the system packages
 
 The commands below install a full native contributor workstation, including
@@ -248,8 +260,8 @@ GDAL formula includes GEOS support.
 
 Every visible text element generated by the graticule, astronomy,
 Cloud-atmosphere, Orbital
-Technosphere, Anthropocene, network-swarm, network-infrastructure, and
-Bathymetry Roulette passes
+Technosphere, Anthropocene, network-swarm, network-infrastructure, and both
+bathymetry-art passes
 defaults to the original
 **Atkinson Hyperlegible** family. The Make-facing identifier is
 `atkinson_hyperlegible`; the SVG serializer maps it to the installed family
@@ -422,7 +434,7 @@ separate Alpha60 or Izzi library.
 
 ## GDAL, OGR, and GEOS
 
-Earth, water, Bathymetry Roulette, and Anthropocene generation includes
+Earth, water, both bathymetry-art passes, and Anthropocene generation includes
 `gdal_priv.h`, `ogrsf_frmts.h`, and the OGR C API. The Makefile obtains
 compiler and linker arguments from:
 
@@ -459,7 +471,7 @@ Python GDAL bindings are not used by the active Make targets.
 
 ## Natural Earth input and network access
 
-The Earth, water, Bathymetry Roulette, and Anthropocene targets require Natural Earth
+The Earth, water, both bathymetry-art passes, and Anthropocene targets require Natural Earth
 5.1.1's complete 1:10m physical-vector bundle. The repository does not
 require a manual download:
 
@@ -496,11 +508,12 @@ archive URL, checksum, dataset list, and license.
 
 ## Astronomy input and network access
 
-The astronomy SVGs and `make check` run offline from the checked-in
-`assets.static/astronomy/` profile and bounded catalog snapshots. The profile
-is authoritative for both the timestamp and the observer point. Normal users
-run `make generate-astro` without fetching anything first. That target and
-`make all` never call `fetch-astro-data`.
+The astronomy SVGs and `make check` run offline from the checked-in ground and
+Hubble profiles, bounded astronomy catalogs, and the checked Orbital
+Technosphere CelesTrak science OMM. The profiles are authoritative for the
+timestamp, platform, and instrument. Normal users run `make generate-astro`
+without fetching anything first. That target and `make all` never call
+`fetch-astro-data` or `fetch-orbiting-data`.
 
 Refresh the external Gaia DR3, NASA Exoplanet Archive, and JPL SBDB snapshots
 only when an upstream update is intended:
@@ -668,11 +681,11 @@ Verify the installation and open an artifact with:
 
 ```sh
 inkscape --version
-inkscape assets.generated/svg/earth-ck-44-22.svg
+inkscape assets.generated/cahill-keyes/svg/earth-ck-44-22.svg
 ```
 
 Use Inkscape's Layers and Objects panel to inspect group IDs and toggle dense
-layers. Earth, water, Bathymetry Roulette, and Anthropocene files can be
+layers. Earth, water, both bathymetry-art families, and Anthropocene files can be
 large, so opening and switching layers may require substantially more memory
 than viewing geometry or graticules.
 Saving from Inkscape can rewrite SVG formatting and metadata; avoid saving
@@ -749,16 +762,17 @@ Make inherited a `-j` setting.
 
 Successful generation places six geometry maps, six graticule maps, six
 Earth maps, eleven water maps (six production plus five exploratory
-Myriahedral perspectives), 12 astronomy maps, 12 Orbital Technosphere maps,
+Myriahedral perspectives), 18 astronomy maps, 12 Orbital Technosphere maps,
 84 Stage 12 resources maps, six legacy Anthropocene observation maps, 12
 default Anthropocene temperature maps,
-six network-swarm maps, six network-infrastructure site maps, six Bathymetry
-Roulette maps, four quadrant slices, eight
+six network-swarm maps, six network-infrastructure site maps, six Fiber
+Synthesized maps, six Bathymetry
+Roulette maps, six Bathymetry Hamonshū maps, four quadrant slices, eight
 octant slices, and two Myriahedral face-group
-slices in each of `assets.generated/svg/`,
-`assets.generated/pdf/`, and `assets.generated/png/`; resources use `.svg.gz`
-inside the SVG directory. The graph also writes 28 480-pixel-wide Cahill-Keyes
-thumbnails under `assets.generated/thumbnail/cahill-keyes/`. Every full-size
+slices in projection-first `assets.generated/PROJECTION/svg/`, `pdf/`, and
+`png/` directories; resources use `.svg.gz` inside each SVG directory. The
+graph also writes 31 480-pixel-wide thumbnails per projection under the six
+`thumbnail/` directories, 186 total. Every full-size
 PNG preserves its
 source aspect ratio, has a 3840-pixel longest side, and is flattened against
 opaque white.
@@ -784,7 +798,7 @@ opaque white.
 | Cloud/CDN or submarine-cable source checkout is missing | Clone the documented repository beside `cartofreako`, or set `NETWORK_INFRASTRUCTURE_CLOUD_SOURCE` or `SUBMARINE_CABLE_SOURCE`; run `make check-prerequisite` before `make all` |
 | Network-infrastructure checkout, commit, or digest mismatch | Point the Make variables at the profile-pinned external checkouts, restore the consumed tracked paths, or deliberately update the profile, tests, documentation, and artifacts together |
 | Network-infrastructure topology opt-in rejected | Review the source terms, set `NETWORK_TOPOLOGY_LICENSE_ACCEPTED=CC-BY-NC-SA-3.0`, then run either the read-only `make EXTERNAL_PASSES=network-topology authorize-external` check or the mutating `generate-authorized-external` target |
-| Inkscape is slow on an Earth, water, Bathymetry Roulette, orbital, Anthropocene, network-swarm, or network-infrastructure SVG | Close other large documents and inspect one layer family at a time |
+| Inkscape is slow on an Earth, water, bathymetry-art, orbital, Anthropocene, network-swarm, or network-infrastructure SVG | Close other large documents and inspect one layer family at a time |
 | `em++: command not found` | Install and activate emsdk, then source its environment script in the current shell |
 
 ## Not required by current native targets

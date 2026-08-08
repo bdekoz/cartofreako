@@ -258,6 +258,19 @@ main()
   assert(metadata.find(
            "data-source-selection-process-start-utc=\"2026-08-05T04:00:00Z\"")
          != std::string::npos);
+
+  generation::projection_document background_document(
+    "test-cloud-atmosphere-background", "hidden background test",
+    generation::make_frame(ck).frame_area, false);
+  const generation::projection_context background_context(
+    ck, "test-cloud-atmosphere-background");
+  atmosphere::add_background(background_document, background_context);
+  const std::string background = background_document.str();
+  assert(background.find(
+           "id=\"cloud-atmosphere-background\" style=\"display:none\" "
+           "data-default-visible=\"false\"") != std::string::npos);
+  assert(background.find("id=\"cloud-atmosphere-ground\"")
+         != std::string::npos);
   assert(metadata.find("data-aod-is-smoke=\"false\"")
          != std::string::npos);
   assert(metadata.find("data-precipitation-is-event-count=\"false\"")

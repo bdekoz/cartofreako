@@ -41,6 +41,7 @@ NATURAL_EARTH_DIR ?= $(STATIC_ASSET_DIR)/natural-earth/10m-physical-vectors
 NATURAL_EARTH_FETCHER := scripts/fetch-natural-earth-10m.sh
 ASTRO_DATA_DIR ?= $(STATIC_ASSET_DIR)/astronomy
 ASTRO_PROFILE ?= $(ASTRO_DATA_DIR)/astro-profile.json
+ASTRO_HUBBLE_PROFILE ?= $(ASTRO_DATA_DIR)/astro-hubble-profile.json
 ASTRO_FETCHER := scripts/fetch-astro-data.sh
 CLOUD_ATMOSPHERE_DATA_DIR ?= $(STATIC_ASSET_DIR)/cloud-atmosphere
 CLOUD_ATMOSPHERE_PROFILE ?= \
@@ -89,6 +90,7 @@ RESOURCES_PREPARER := scripts/prepare-resources-data.py
 EXTERNAL_AUTHORIZER := scripts/authorize-external.sh
 EXTERNAL_GENERATOR := scripts/generate-authorized-external.sh
 EXTERNAL_MAKE_COMMAND ?= $(firstword $(MAKE))
+EXTERNAL_AUTHORIZATION_STATE ?= .cartofreako/authorized-external-passes
 JAXA_CERTIFICATE_INSTALLER := scripts/install-jaxa-certificate.sh
 EXTERNAL_PASSES ?= jaxa-ptree nasa-firms network-topology
 PTREE_NETRC ?= $(HOME)/.netrc
@@ -121,12 +123,55 @@ INTERNET_EXCHANGE_BUILDINGS := \
 	$(INTERNET_EXCHANGE_SOURCE)/public/api/v2/buildings.geojson
 NETWORK_INFRASTRUCTURE_SOURCE_CHECKER := \
 	scripts/check-network-infrastructure-sources.sh
+FIBER_SYNTHESIZED_DATA_DIR ?= $(STATIC_ASSET_DIR)/fiber-synthesized
+FIBER_SYNTHESIZED_MANIFEST := \
+	$(FIBER_SYNTHESIZED_DATA_DIR)/manifest.json
+FIBER_SYNTHESIZED_ROUTES := \
+	$(FIBER_SYNTHESIZED_DATA_DIR)/routes.geojson
+FIBER_SYNTHESIZED_LANDINGS := \
+	$(FIBER_SYNTHESIZED_DATA_DIR)/landings.geojson
+FIBER_SYNTHESIZED_CHECKSUMS := \
+	$(FIBER_SYNTHESIZED_DATA_DIR)/SHA256SUMS
+FIBER_SYNTHESIZER := scripts/synthesize-submarine-cable-snapshots.py
+FIBER_SYNTHESIZED_OLD_SOURCE ?= \
+	$(SUBMARINE_CABLE_SOURCE)/web/public/api/v3.2022
+FIBER_SYNTHESIZED_NEW_SOURCE ?= \
+	$(SUBMARINE_CABLE_SOURCE)/web/public/api/v3.20260805
+FIBER_SYNTHESIZED_SOURCE_COMMIT ?= \
+	4d98b5472152a7c2272c49d8d0125b1ae0419984
 PREREQUISITE_CHECKER := scripts/check-prerequisites.sh
 NATURAL_EARTH_STAMP := \
 	$(NATURAL_EARTH_DIR)/.natural-earth-10m-physical-5.1.1
-GENERATED_SVG_DIR := $(GENERATED_DIR)/svg
-GENERATED_PNG_DIR := $(GENERATED_DIR)/png
-GENERATED_PDF_DIR := $(GENERATED_DIR)/pdf
+PROJECTION_NAMES := cahill-keyes authagraph dymaxion myriahedral star-x voronoi
+GENERATED_PROJECTION_DIRS := $(addprefix $(GENERATED_DIR)/,$(PROJECTION_NAMES))
+GENERATED_SVG_DIRS := $(addsuffix /svg,$(GENERATED_PROJECTION_DIRS))
+GENERATED_PNG_DIRS := $(addsuffix /png,$(GENERATED_PROJECTION_DIRS))
+GENERATED_PDF_DIRS := $(addsuffix /pdf,$(GENERATED_PROJECTION_DIRS))
+GENERATED_THUMBNAIL_DIRS := \
+	$(addsuffix /thumbnail,$(GENERATED_PROJECTION_DIRS))
+
+# Release artifacts are grouped by projection first.  Keep the projection tag
+# in every basename as a stable, self-describing download name, then derive
+# its owning directory from that tag.
+projection_for_artifact = $(strip \
+	$(if $(findstring -authagraph-,$(notdir $(1))),authagraph,\
+	$(if $(findstring -dymaxion-,$(notdir $(1))),dymaxion,\
+	$(if $(findstring -myriahedral-,$(notdir $(1))),myriahedral,\
+	$(if $(findstring -star-x-,$(notdir $(1))),star-x,\
+	$(if $(findstring -voronoi-,$(notdir $(1))),voronoi,\
+	$(if $(findstring -ck-,$(notdir $(1))),cahill-keyes)))))))
+generated_artifact = $(GENERATED_DIR)/$(call projection_for_artifact,$(1))/$(2)/$(notdir $(1))
+generated_svg = $(call generated_artifact,$(1),svg)
+generated_pdf = $(call generated_artifact,$(1),pdf)
+generated_png = $(call generated_artifact,$(1),png)
+generated_thumbnail = $(call generated_artifact,$(1),thumbnail)
+svg_to_pdf = $(foreach artifact,$(1),\
+	$(call generated_pdf,$(patsubst %.svg,%.pdf,$(notdir $(artifact)))))
+svg_to_png = $(foreach artifact,$(1),\
+	$(call generated_png,$(patsubst %.svg,%.png,$(notdir $(artifact)))))
+svg_to_thumbnail = $(foreach artifact,$(1),\
+	$(call generated_thumbnail,$(patsubst %.svg,%.png,$(notdir $(artifact)))))
+artifact_directory = $(patsubst %/,%,$(dir $(1)))
 DOXYGEN_CONFIG := Doxyfile
 DOXYGEN_OUTPUT_DIR := docs/doxygen
 DOXYGEN_HEADERS := $(wildcard $(PROJECTION_SRC_DIR)/cart0freak0*.h) \
@@ -168,6 +213,8 @@ EARTH_GENERATOR := $(GENERATOR_SRC_DIR)/generate-earth
 WATER_GENERATOR := $(GENERATOR_SRC_DIR)/generate-water
 BATHYMETRY_ROULETTE_GENERATOR := \
 	$(GENERATOR_SRC_DIR)/generate-bathymetry-roulette
+BATHYMETRY_HAMONSHU_GENERATOR := \
+	$(GENERATOR_SRC_DIR)/generate-bathymetry-hamonshu
 FOUR_SLICE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-4-slice
 EIGHT_SLICE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-8-slice
 MYRIAHEDRAL_SLICE_GENERATOR := \
@@ -188,6 +235,8 @@ RESOURCES_GENERATOR := $(GENERATOR_SRC_DIR)/generate-resources
 NETWORK_SWARM_GENERATOR := $(GENERATOR_SRC_DIR)/generate-network-swarm
 NETWORK_INFRASTRUCTURE_GENERATOR := \
 	$(GENERATOR_SRC_DIR)/generate-network-infrastructure
+FIBER_SYNTHESIZED_GENERATOR := \
+	$(GENERATOR_SRC_DIR)/generate-fiber-synthesized
 GENERATION_PROFILE_RESOLVER := \
 	$(GENERATOR_SRC_DIR)/resolve-generation-profile
 SGP4_SOURCE := $(GENERATOR_SRC_DIR)/third_party/sgp4/SGP4.cpp
@@ -195,197 +244,205 @@ SGP4_HEADER := $(GENERATOR_SRC_DIR)/third_party/sgp4/SGP4.h
 SGP4_OBJECT := $(GENERATOR_SRC_DIR)/third_party/sgp4/SGP4.o
 
 ASTRO_PROFILE_DIR := $(dir $(ASTRO_PROFILE))
-ASTRO_CATALOGS := $(filter-out $(ASTRO_PROFILE),\
+ASTRO_CATALOGS := $(filter-out $(ASTRO_PROFILE) $(ASTRO_HUBBLE_PROFILE),\
 	$(wildcard $(ASTRO_PROFILE_DIR)*.csv $(ASTRO_PROFILE_DIR)*.json))
+ASTRO_HUBBLE_OMM := $(ORBITING_DATA_DIR)/celestrak-science.csv
 ORBITING_PROFILE_DIR := $(dir $(ORBITING_PROFILE))
 ORBITING_CATALOGS := $(filter-out $(ORBITING_PROFILE),\
 	$(wildcard $(ORBITING_PROFILE_DIR)*.csv $(ORBITING_PROFILE_DIR)*.json \
 		$(ORBITING_PROFILE_DIR)SHA256SUMS))
 
-CK_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-ck-44-22.svg
-CK_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-ck-44-22.svg
-CK_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-ck-44-22.svg
-CK_WATER_SVG := $(GENERATED_SVG_DIR)/water-ck-44-22.svg
+CK_GEOMETRY_SVG := $(call generated_svg,geometry-ck-44-22.svg)
+CK_GRATICULE_SVG := $(call generated_svg,graticules-ck-44-22.svg)
+CK_EARTH_SVG := $(call generated_svg,earth-ck-44-22.svg)
+CK_WATER_SVG := $(call generated_svg,water-ck-44-22.svg)
 CK_FOUR_SLICE_SVGS := \
-	$(GENERATED_SVG_DIR)/earth-ck-4-slice-1.svg \
-	$(GENERATED_SVG_DIR)/earth-ck-4-slice-2.svg \
-	$(GENERATED_SVG_DIR)/earth-ck-4-slice-3.svg \
-	$(GENERATED_SVG_DIR)/earth-ck-4-slice-4.svg
+	$(call generated_svg,earth-ck-4-slice-1.svg) \
+	$(call generated_svg,earth-ck-4-slice-2.svg) \
+	$(call generated_svg,earth-ck-4-slice-3.svg) \
+	$(call generated_svg,earth-ck-4-slice-4.svg)
 CK_EIGHT_SLICE_SVGS := \
-	$(GENERATED_SVG_DIR)/earth-ck-8-slice-1.svg \
-	$(GENERATED_SVG_DIR)/earth-ck-8-slice-2.svg \
-	$(GENERATED_SVG_DIR)/earth-ck-8-slice-3.svg \
-	$(GENERATED_SVG_DIR)/earth-ck-8-slice-4.svg \
-	$(GENERATED_SVG_DIR)/earth-ck-8-slice-5.svg \
-	$(GENERATED_SVG_DIR)/earth-ck-8-slice-6.svg \
-	$(GENERATED_SVG_DIR)/earth-ck-8-slice-7.svg \
-	$(GENERATED_SVG_DIR)/earth-ck-8-slice-8.svg
+	$(call generated_svg,earth-ck-8-slice-1.svg) \
+	$(call generated_svg,earth-ck-8-slice-2.svg) \
+	$(call generated_svg,earth-ck-8-slice-3.svg) \
+	$(call generated_svg,earth-ck-8-slice-4.svg) \
+	$(call generated_svg,earth-ck-8-slice-5.svg) \
+	$(call generated_svg,earth-ck-8-slice-6.svg) \
+	$(call generated_svg,earth-ck-8-slice-7.svg) \
+	$(call generated_svg,earth-ck-8-slice-8.svg)
 CK_SLICE_SVGS := $(CK_FOUR_SLICE_SVGS) $(CK_EIGHT_SLICE_SVGS)
 
-AUTHAGRAPH_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-authagraph-44-19.052559.svg
-AUTHAGRAPH_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-authagraph-44-19.052559.svg
-AUTHAGRAPH_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-authagraph-44-19.052559.svg
-AUTHAGRAPH_WATER_SVG := $(GENERATED_SVG_DIR)/water-authagraph-44-19.052559.svg
+AUTHAGRAPH_GEOMETRY_SVG := $(call generated_svg,geometry-authagraph-44-19.052559.svg)
+AUTHAGRAPH_GRATICULE_SVG := $(call generated_svg,graticules-authagraph-44-19.052559.svg)
+AUTHAGRAPH_EARTH_SVG := $(call generated_svg,earth-authagraph-44-19.052559.svg)
+AUTHAGRAPH_WATER_SVG := $(call generated_svg,water-authagraph-44-19.052559.svg)
 
-DYMAXION_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-dymaxion-44-20.78461.svg
-DYMAXION_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-dymaxion-44-20.78461.svg
-DYMAXION_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-dymaxion-44-20.78461.svg
-DYMAXION_WATER_SVG := $(GENERATED_SVG_DIR)/water-dymaxion-44-20.78461.svg
+DYMAXION_GEOMETRY_SVG := $(call generated_svg,geometry-dymaxion-44-20.78461.svg)
+DYMAXION_GRATICULE_SVG := $(call generated_svg,graticules-dymaxion-44-20.78461.svg)
+DYMAXION_EARTH_SVG := $(call generated_svg,earth-dymaxion-44-20.78461.svg)
+DYMAXION_WATER_SVG := $(call generated_svg,water-dymaxion-44-20.78461.svg)
 
-MYRIAHEDRAL_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-myriahedral-44-24.75.svg
-MYRIAHEDRAL_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-myriahedral-44-24.75.svg
-MYRIAHEDRAL_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-myriahedral-44-24.75.svg
-MYRIAHEDRAL_WATER_SVG := $(GENERATED_SVG_DIR)/water-myriahedral-44-24.75.svg
+MYRIAHEDRAL_GEOMETRY_SVG := $(call generated_svg,geometry-myriahedral-44-24.75.svg)
+MYRIAHEDRAL_GRATICULE_SVG := $(call generated_svg,graticules-myriahedral-44-24.75.svg)
+MYRIAHEDRAL_EARTH_SVG := $(call generated_svg,earth-myriahedral-44-24.75.svg)
+MYRIAHEDRAL_WATER_SVG := $(call generated_svg,water-myriahedral-44-24.75.svg)
 MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS := \
-	$(GENERATED_SVG_DIR)/water-myriahedral-americas-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/water-myriahedral-atlantic-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/water-myriahedral-afro-eur-asia-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/water-myriahedral-pacific-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/water-myriahedral-antarctic-44-24.75.svg
+	$(call generated_svg,water-myriahedral-americas-44-24.75.svg) \
+	$(call generated_svg,water-myriahedral-atlantic-44-24.75.svg) \
+	$(call generated_svg,water-myriahedral-afro-eur-asia-44-24.75.svg) \
+	$(call generated_svg,water-myriahedral-pacific-44-24.75.svg) \
+	$(call generated_svg,water-myriahedral-antarctic-44-24.75.svg)
 MYRIAHEDRAL_SLICE_SVGS := \
-	$(GENERATED_SVG_DIR)/water-myriahedral-adhoc-slice-1.svg \
-	$(GENERATED_SVG_DIR)/water-myriahedral-adhoc-slice-2.svg
+	$(call generated_svg,water-myriahedral-adhoc-slice-1.svg) \
+	$(call generated_svg,water-myriahedral-adhoc-slice-2.svg)
 
-STAR_X_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-star-x-34-44.svg
-STAR_X_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-star-x-34-44.svg
-STAR_X_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-star-x-34-44.svg
-STAR_X_WATER_SVG := $(GENERATED_SVG_DIR)/water-star-x-34-44.svg
+STAR_X_GEOMETRY_SVG := $(call generated_svg,geometry-star-x-34-44.svg)
+STAR_X_GRATICULE_SVG := $(call generated_svg,graticules-star-x-34-44.svg)
+STAR_X_EARTH_SVG := $(call generated_svg,earth-star-x-34-44.svg)
+STAR_X_WATER_SVG := $(call generated_svg,water-star-x-34-44.svg)
 
-VORONOI_GEOMETRY_SVG := $(GENERATED_SVG_DIR)/geometry-voronoi-44-22.916667.svg
-VORONOI_GRATICULE_SVG := $(GENERATED_SVG_DIR)/graticules-voronoi-44-22.916667.svg
-VORONOI_EARTH_SVG := $(GENERATED_SVG_DIR)/earth-voronoi-44-22.916667.svg
-VORONOI_WATER_SVG := $(GENERATED_SVG_DIR)/water-voronoi-44-22.916667.svg
+VORONOI_GEOMETRY_SVG := $(call generated_svg,geometry-voronoi-44-22.916667.svg)
+VORONOI_GRATICULE_SVG := $(call generated_svg,graticules-voronoi-44-22.916667.svg)
+VORONOI_EARTH_SVG := $(call generated_svg,earth-voronoi-44-22.916667.svg)
+VORONOI_WATER_SVG := $(call generated_svg,water-voronoi-44-22.916667.svg)
 
 ASTRO_ALL_SKY_SVGS := \
-	$(GENERATED_SVG_DIR)/astro-all-sky-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/astro-all-sky-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/astro-all-sky-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/astro-all-sky-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/astro-all-sky-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/astro-all-sky-voronoi-44-22.916667.svg
-ASTRO_OBSERVER_SVGS := \
-	$(GENERATED_SVG_DIR)/astro-observer-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/astro-observer-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/astro-observer-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/astro-observer-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/astro-observer-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/astro-observer-voronoi-44-22.916667.svg
+	$(call generated_svg,astro-all-sky-ck-44-22.svg) \
+	$(call generated_svg,astro-all-sky-authagraph-44-19.052559.svg) \
+	$(call generated_svg,astro-all-sky-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,astro-all-sky-myriahedral-44-24.75.svg) \
+	$(call generated_svg,astro-all-sky-star-x-34-44.svg) \
+	$(call generated_svg,astro-all-sky-voronoi-44-22.916667.svg)
+ASTRO_GROUND_OBSERVER_SVGS := \
+	$(call generated_svg,astro-observer-ground-multiband-ck-44-22.svg) \
+	$(call generated_svg,astro-observer-ground-multiband-authagraph-44-19.052559.svg) \
+	$(call generated_svg,astro-observer-ground-multiband-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,astro-observer-ground-multiband-myriahedral-44-24.75.svg) \
+	$(call generated_svg,astro-observer-ground-multiband-star-x-34-44.svg) \
+	$(call generated_svg,astro-observer-ground-multiband-voronoi-44-22.916667.svg)
+ASTRO_HUBBLE_OBSERVER_SVGS := \
+	$(call generated_svg,astro-observer-hubble-ck-44-22.svg) \
+	$(call generated_svg,astro-observer-hubble-authagraph-44-19.052559.svg) \
+	$(call generated_svg,astro-observer-hubble-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,astro-observer-hubble-myriahedral-44-24.75.svg) \
+	$(call generated_svg,astro-observer-hubble-star-x-34-44.svg) \
+	$(call generated_svg,astro-observer-hubble-voronoi-44-22.916667.svg)
+ASTRO_OBSERVER_SVGS := $(ASTRO_GROUND_OBSERVER_SVGS) \
+	$(ASTRO_HUBBLE_OBSERVER_SVGS)
 ASTRO_SVGS := $(ASTRO_ALL_SKY_SVGS) $(ASTRO_OBSERVER_SVGS)
+ASTRO_PDFS := $(call svg_to_pdf,$(ASTRO_SVGS))
+ASTRO_PNGS := $(call svg_to_png,$(ASTRO_SVGS))
 
 CLOUD_ATMOSPHERE_SVGS := \
-	$(GENERATED_SVG_DIR)/cloud-atmosphere-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/cloud-atmosphere-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/cloud-atmosphere-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/cloud-atmosphere-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/cloud-atmosphere-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/cloud-atmosphere-voronoi-44-22.916667.svg
-CLOUD_ATMOSPHERE_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PDF_DIR)/%.pdf,$(CLOUD_ATMOSPHERE_SVGS))
-CLOUD_ATMOSPHERE_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PNG_DIR)/%.png,$(CLOUD_ATMOSPHERE_SVGS))
+	$(call generated_svg,cloud-atmosphere-ck-44-22.svg) \
+	$(call generated_svg,cloud-atmosphere-authagraph-44-19.052559.svg) \
+	$(call generated_svg,cloud-atmosphere-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,cloud-atmosphere-myriahedral-44-24.75.svg) \
+	$(call generated_svg,cloud-atmosphere-star-x-34-44.svg) \
+	$(call generated_svg,cloud-atmosphere-voronoi-44-22.916667.svg)
+CLOUD_ATMOSPHERE_PDFS := $(call svg_to_pdf,$(CLOUD_ATMOSPHERE_SVGS))
+CLOUD_ATMOSPHERE_PNGS := $(call svg_to_png,$(CLOUD_ATMOSPHERE_SVGS))
 
 ORBITING_GLOBAL_SVGS := \
-	$(GENERATED_SVG_DIR)/orbital-technosphere-global-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/orbital-technosphere-global-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/orbital-technosphere-global-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/orbital-technosphere-global-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/orbital-technosphere-global-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/orbital-technosphere-global-voronoi-44-22.916667.svg
+	$(call generated_svg,orbital-technosphere-global-ck-44-22.svg) \
+	$(call generated_svg,orbital-technosphere-global-authagraph-44-19.052559.svg) \
+	$(call generated_svg,orbital-technosphere-global-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,orbital-technosphere-global-myriahedral-44-24.75.svg) \
+	$(call generated_svg,orbital-technosphere-global-star-x-34-44.svg) \
+	$(call generated_svg,orbital-technosphere-global-voronoi-44-22.916667.svg)
 ORBITING_OBSERVER_SVGS := \
-	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-voronoi-44-22.916667.svg
+	$(call generated_svg,orbital-technosphere-observer-ck-44-22.svg) \
+	$(call generated_svg,orbital-technosphere-observer-authagraph-44-19.052559.svg) \
+	$(call generated_svg,orbital-technosphere-observer-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,orbital-technosphere-observer-myriahedral-44-24.75.svg) \
+	$(call generated_svg,orbital-technosphere-observer-star-x-34-44.svg) \
+	$(call generated_svg,orbital-technosphere-observer-voronoi-44-22.916667.svg)
 ORBITING_SVGS := $(ORBITING_GLOBAL_SVGS) $(ORBITING_OBSERVER_SVGS)
-ORBITING_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PDF_DIR)/%.pdf,$(ORBITING_SVGS))
-ORBITING_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PNG_DIR)/%.png,$(ORBITING_SVGS))
+ORBITING_PDFS := $(call svg_to_pdf,$(ORBITING_SVGS))
+ORBITING_PNGS := $(call svg_to_png,$(ORBITING_SVGS))
 
 NETWORK_SWARM_SVGS := \
-	$(GENERATED_SVG_DIR)/network-swarm-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/network-swarm-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/network-swarm-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/network-swarm-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/network-swarm-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/network-swarm-voronoi-44-22.916667.svg
-NETWORK_SWARM_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PDF_DIR)/%.pdf,$(NETWORK_SWARM_SVGS))
-NETWORK_SWARM_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PNG_DIR)/%.png,$(NETWORK_SWARM_SVGS))
+	$(call generated_svg,network-swarm-ck-44-22.svg) \
+	$(call generated_svg,network-swarm-authagraph-44-19.052559.svg) \
+	$(call generated_svg,network-swarm-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,network-swarm-myriahedral-44-24.75.svg) \
+	$(call generated_svg,network-swarm-star-x-34-44.svg) \
+	$(call generated_svg,network-swarm-voronoi-44-22.916667.svg)
+NETWORK_SWARM_PDFS := $(call svg_to_pdf,$(NETWORK_SWARM_SVGS))
+NETWORK_SWARM_PNGS := $(call svg_to_png,$(NETWORK_SWARM_SVGS))
 
 NETWORK_INFRASTRUCTURE_SITES_SVGS := \
-	$(GENERATED_SVG_DIR)/network-infrastructure-sites-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/network-infrastructure-sites-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/network-infrastructure-sites-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/network-infrastructure-sites-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/network-infrastructure-sites-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/network-infrastructure-sites-voronoi-44-22.916667.svg
+	$(call generated_svg,network-infrastructure-sites-ck-44-22.svg) \
+	$(call generated_svg,network-infrastructure-sites-authagraph-44-19.052559.svg) \
+	$(call generated_svg,network-infrastructure-sites-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,network-infrastructure-sites-myriahedral-44-24.75.svg) \
+	$(call generated_svg,network-infrastructure-sites-star-x-34-44.svg) \
+	$(call generated_svg,network-infrastructure-sites-voronoi-44-22.916667.svg)
 NETWORK_INFRASTRUCTURE_SITES_PDFS := \
-	$(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PDF_DIR)/%.pdf,$(NETWORK_INFRASTRUCTURE_SITES_SVGS))
+	$(call svg_to_pdf,$(NETWORK_INFRASTRUCTURE_SITES_SVGS))
 NETWORK_INFRASTRUCTURE_SITES_PNGS := \
-	$(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PNG_DIR)/%.png,$(NETWORK_INFRASTRUCTURE_SITES_SVGS))
+	$(call svg_to_png,$(NETWORK_INFRASTRUCTURE_SITES_SVGS))
 NETWORK_INFRASTRUCTURE_TOPOLOGY_SVGS := \
-	$(GENERATED_SVG_DIR)/network-infrastructure-topology-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/network-infrastructure-topology-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/network-infrastructure-topology-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/network-infrastructure-topology-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/network-infrastructure-topology-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/network-infrastructure-topology-voronoi-44-22.916667.svg
+	$(call generated_svg,network-infrastructure-topology-ck-44-22.svg) \
+	$(call generated_svg,network-infrastructure-topology-authagraph-44-19.052559.svg) \
+	$(call generated_svg,network-infrastructure-topology-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,network-infrastructure-topology-myriahedral-44-24.75.svg) \
+	$(call generated_svg,network-infrastructure-topology-star-x-34-44.svg) \
+	$(call generated_svg,network-infrastructure-topology-voronoi-44-22.916667.svg)
 NETWORK_INFRASTRUCTURE_TOPOLOGY_PDFS := \
-	$(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PDF_DIR)/%.pdf,$(NETWORK_INFRASTRUCTURE_TOPOLOGY_SVGS))
+	$(call svg_to_pdf,$(NETWORK_INFRASTRUCTURE_TOPOLOGY_SVGS))
 NETWORK_INFRASTRUCTURE_TOPOLOGY_PNGS := \
-	$(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PNG_DIR)/%.png,$(NETWORK_INFRASTRUCTURE_TOPOLOGY_SVGS))
+	$(call svg_to_png,$(NETWORK_INFRASTRUCTURE_TOPOLOGY_SVGS))
 NETWORK_INFRASTRUCTURE_TOPOLOGY_LANDSCAPE_PNGS := \
-	$(filter-out $(GENERATED_PNG_DIR)/network-infrastructure-topology-star-x-34-44.png,\
+	$(filter-out $(call generated_png,network-infrastructure-topology-star-x-34-44.png),\
 	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_PNGS))
 
+FIBER_SYNTHESIZED_SVGS := \
+	$(call generated_svg,fiber-synthesized-ck-44-22.svg) \
+	$(call generated_svg,fiber-synthesized-authagraph-44-19.052559.svg) \
+	$(call generated_svg,fiber-synthesized-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,fiber-synthesized-myriahedral-44-24.75.svg) \
+	$(call generated_svg,fiber-synthesized-star-x-34-44.svg) \
+	$(call generated_svg,fiber-synthesized-voronoi-44-22.916667.svg)
+FIBER_SYNTHESIZED_PDFS := $(call svg_to_pdf,$(FIBER_SYNTHESIZED_SVGS))
+FIBER_SYNTHESIZED_PNGS := $(call svg_to_png,$(FIBER_SYNTHESIZED_SVGS))
+
 ANTHROPOCENE_SVGS := \
-	$(GENERATED_SVG_DIR)/anthropocene-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/anthropocene-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/anthropocene-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/anthropocene-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/anthropocene-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/anthropocene-voronoi-44-22.916667.svg
-ANTHROPOCENE_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PDF_DIR)/%.pdf,$(ANTHROPOCENE_SVGS))
-ANTHROPOCENE_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PNG_DIR)/%.png,$(ANTHROPOCENE_SVGS))
+	$(call generated_svg,anthropocene-ck-44-22.svg) \
+	$(call generated_svg,anthropocene-authagraph-44-19.052559.svg) \
+	$(call generated_svg,anthropocene-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,anthropocene-myriahedral-44-24.75.svg) \
+	$(call generated_svg,anthropocene-star-x-34-44.svg) \
+	$(call generated_svg,anthropocene-voronoi-44-22.916667.svg)
+ANTHROPOCENE_PDFS := $(call svg_to_pdf,$(ANTHROPOCENE_SVGS))
+ANTHROPOCENE_PNGS := $(call svg_to_png,$(ANTHROPOCENE_SVGS))
 ANTHROPOCENE_TEMPERATURE_2025_SVGS := \
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-voronoi-44-22.916667.svg
+	$(call generated_svg,anthropocene-temperature-2025-ck-44-22.svg) \
+	$(call generated_svg,anthropocene-temperature-2025-authagraph-44-19.052559.svg) \
+	$(call generated_svg,anthropocene-temperature-2025-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,anthropocene-temperature-2025-myriahedral-44-24.75.svg) \
+	$(call generated_svg,anthropocene-temperature-2025-star-x-34-44.svg) \
+	$(call generated_svg,anthropocene-temperature-2025-voronoi-44-22.916667.svg)
 ANTHROPOCENE_TEMPERATURE_2026_SVGS := \
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-voronoi-44-22.916667.svg
+	$(call generated_svg,anthropocene-temperature-2026-ck-44-22.svg) \
+	$(call generated_svg,anthropocene-temperature-2026-authagraph-44-19.052559.svg) \
+	$(call generated_svg,anthropocene-temperature-2026-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,anthropocene-temperature-2026-myriahedral-44-24.75.svg) \
+	$(call generated_svg,anthropocene-temperature-2026-star-x-34-44.svg) \
+	$(call generated_svg,anthropocene-temperature-2026-voronoi-44-22.916667.svg)
 ANTHROPOCENE_TEMPERATURE_SVGS := \
 	$(ANTHROPOCENE_TEMPERATURE_2025_SVGS) \
 	$(ANTHROPOCENE_TEMPERATURE_2026_SVGS)
 ANTHROPOCENE_TEMPERATURE_PDFS := \
-	$(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PDF_DIR)/%.pdf,$(ANTHROPOCENE_TEMPERATURE_SVGS))
+	$(call svg_to_pdf,$(ANTHROPOCENE_TEMPERATURE_SVGS))
 ANTHROPOCENE_TEMPERATURE_PNGS := \
-	$(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PNG_DIR)/%.png,$(ANTHROPOCENE_TEMPERATURE_SVGS))
+	$(call svg_to_png,$(ANTHROPOCENE_TEMPERATURE_SVGS))
 
 RESOURCE_OUTPUT_SUFFIXES := ck-44-22 authagraph-44-19.052559 \
 	dymaxion-44-20.78461 myriahedral-44-24.75 star-x-34-44 \
 	voronoi-44-22.916667
-resource_metric_svgs = $(addprefix $(GENERATED_SVG_DIR)/$(1)-$(2)-,\
-	$(addsuffix .svg,$(RESOURCE_OUTPUT_SUFFIXES)))
+resource_metric_svgs = $(foreach suffix,$(RESOURCE_OUTPUT_SUFFIXES),\
+	$(call generated_svg,$(1)-$(2)-$(suffix).svg))
 
 RESOURCES_ENERGY_SOLAR_SVGS := $(call resource_metric_svgs,resources-energy,solar-capacity-2025)
 RESOURCES_ENERGY_WIND_SVGS := $(call resource_metric_svgs,resources-energy,wind-capacity-2025)
@@ -416,23 +473,29 @@ RESOURCES_HUMAN_SVGS := $(RESOURCES_HUMAN_UNDER_30_SVGS) \
 RESOURCES_SVGS := $(RESOURCES_ENERGY_SVGS) $(RESOURCES_FOOD_SVGS) \
 	$(RESOURCES_FAUNA_SVGS) $(RESOURCES_FLORA_SVGS) \
 	$(RESOURCES_MINERAL_SVGS) $(RESOURCES_HUMAN_SVGS)
-RESOURCES_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PDF_DIR)/%.pdf,$(RESOURCES_SVGS))
-RESOURCES_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PNG_DIR)/%.png,$(RESOURCES_SVGS))
+RESOURCES_PDFS := $(call svg_to_pdf,$(RESOURCES_SVGS))
+RESOURCES_PNGS := $(call svg_to_png,$(RESOURCES_SVGS))
 RESOURCES_SVG_ARCHIVES := $(addsuffix .gz,$(RESOURCES_SVGS))
 
 BATHYMETRY_ROULETTE_SVGS := \
-	$(GENERATED_SVG_DIR)/bathymetry-roulette-ck-44-22.svg \
-	$(GENERATED_SVG_DIR)/bathymetry-roulette-authagraph-44-19.052559.svg \
-	$(GENERATED_SVG_DIR)/bathymetry-roulette-dymaxion-44-20.78461.svg \
-	$(GENERATED_SVG_DIR)/bathymetry-roulette-myriahedral-44-24.75.svg \
-	$(GENERATED_SVG_DIR)/bathymetry-roulette-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/bathymetry-roulette-voronoi-44-22.916667.svg
-BATHYMETRY_ROULETTE_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PDF_DIR)/%.pdf,$(BATHYMETRY_ROULETTE_SVGS))
-BATHYMETRY_ROULETTE_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PNG_DIR)/%.png,$(BATHYMETRY_ROULETTE_SVGS))
+	$(call generated_svg,bathymetry-roulette-ck-44-22.svg) \
+	$(call generated_svg,bathymetry-roulette-authagraph-44-19.052559.svg) \
+	$(call generated_svg,bathymetry-roulette-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,bathymetry-roulette-myriahedral-44-24.75.svg) \
+	$(call generated_svg,bathymetry-roulette-star-x-34-44.svg) \
+	$(call generated_svg,bathymetry-roulette-voronoi-44-22.916667.svg)
+BATHYMETRY_ROULETTE_PDFS := $(call svg_to_pdf,$(BATHYMETRY_ROULETTE_SVGS))
+BATHYMETRY_ROULETTE_PNGS := $(call svg_to_png,$(BATHYMETRY_ROULETTE_SVGS))
+
+BATHYMETRY_HAMONSHU_SVGS := \
+	$(call generated_svg,bathymetry-hamonshu-ck-44-22.svg) \
+	$(call generated_svg,bathymetry-hamonshu-authagraph-44-19.052559.svg) \
+	$(call generated_svg,bathymetry-hamonshu-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,bathymetry-hamonshu-myriahedral-44-24.75.svg) \
+	$(call generated_svg,bathymetry-hamonshu-star-x-34-44.svg) \
+	$(call generated_svg,bathymetry-hamonshu-voronoi-44-22.916667.svg)
+BATHYMETRY_HAMONSHU_PDFS := $(call svg_to_pdf,$(BATHYMETRY_HAMONSHU_SVGS))
+BATHYMETRY_HAMONSHU_PNGS := $(call svg_to_png,$(BATHYMETRY_HAMONSHU_SVGS))
 
 REQUESTED_GEOMETRY_SVGS := \
 	$(AUTHAGRAPH_GEOMETRY_SVG) \
@@ -469,73 +532,100 @@ GENERATED_SVGS := \
 	$(REQUESTED_PROJECTION_SVGS) \
 	$(MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS) $(MYRIAHEDRAL_SLICE_SVGS) \
 	$(ASTRO_SVGS) $(ORBITING_SVGS) $(NETWORK_SWARM_SVGS) \
-	$(NETWORK_INFRASTRUCTURE_SITES_SVGS) \
+	$(NETWORK_INFRASTRUCTURE_SITES_SVGS) $(FIBER_SYNTHESIZED_SVGS) \
 	$(ANTHROPOCENE_SVGS) $(ANTHROPOCENE_TEMPERATURE_SVGS) \
 	$(RESOURCES_SVGS) \
-	$(BATHYMETRY_ROULETTE_SVGS)
-GENERATED_PDFS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PDF_DIR)/%.pdf,$(GENERATED_SVGS))
-GENERATED_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PNG_DIR)/%.png,$(GENERATED_SVGS))
-CK_SNAPSHOT_SVGS := \
+	$(BATHYMETRY_ROULETTE_SVGS) $(BATHYMETRY_HAMONSHU_SVGS)
+GENERATED_PDFS := $(call svg_to_pdf,$(GENERATED_SVGS))
+GENERATED_PNGS := $(call svg_to_png,$(GENERATED_SVGS))
+SNAPSHOT_SVGS := \
 	$(CK_GEOMETRY_SVG) $(CK_GRATICULE_SVG) $(CK_EARTH_SVG) $(CK_WATER_SVG) \
-	$(filter %-ck-44-22.svg,$(ASTRO_SVGS) $(ORBITING_SVGS) \
-		$(NETWORK_SWARM_SVGS) $(NETWORK_INFRASTRUCTURE_SITES_SVGS) \
-		$(ANTHROPOCENE_SVGS) $(ANTHROPOCENE_TEMPERATURE_SVGS) \
-		$(RESOURCES_SVGS) $(BATHYMETRY_ROULETTE_SVGS))
-CK_SNAPSHOT_THUMBNAIL_DIR := \
-	$(GENERATED_DIR)/thumbnail/cahill-keyes
-CK_SNAPSHOT_WIDTH ?= 480
-CK_SNAPSHOT_THUMBNAILS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(CK_SNAPSHOT_THUMBNAIL_DIR)/%.png,$(CK_SNAPSHOT_SVGS))
+	$(REQUESTED_PROJECTION_SVGS) \
+	$(ASTRO_SVGS) $(ORBITING_SVGS) $(NETWORK_SWARM_SVGS) \
+	$(NETWORK_INFRASTRUCTURE_SITES_SVGS) $(FIBER_SYNTHESIZED_SVGS) \
+	$(ANTHROPOCENE_SVGS) $(ANTHROPOCENE_TEMPERATURE_SVGS) \
+	$(RESOURCES_SVGS) $(BATHYMETRY_ROULETTE_SVGS) \
+	$(BATHYMETRY_HAMONSHU_SVGS)
+SNAPSHOT_WIDTH ?= 480
+CK_SNAPSHOT_WIDTH ?= $(SNAPSHOT_WIDTH)
+SNAPSHOT_THUMBNAILS := $(call svg_to_thumbnail,$(SNAPSHOT_SVGS))
+CK_SNAPSHOT_SVGS := $(filter $(GENERATED_DIR)/cahill-keyes/svg/%,\
+	$(SNAPSHOT_SVGS))
+CK_SNAPSHOT_THUMBNAILS := \
+	$(filter $(GENERATED_DIR)/cahill-keyes/thumbnail/%,\
+		$(SNAPSHOT_THUMBNAILS))
 STAR_X_SVGS := $(STAR_X_GEOMETRY_SVG) $(STAR_X_GRATICULE_SVG) \
 	$(STAR_X_EARTH_SVG) $(STAR_X_WATER_SVG)
-STAR_X_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PNG_DIR)/%.png,$(STAR_X_SVGS))
-CK_SLICE_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PNG_DIR)/%.png,$(CK_SLICE_SVGS))
+STAR_X_PNGS := $(call svg_to_png,$(STAR_X_SVGS))
+CK_SLICE_PNGS := $(call svg_to_png,$(CK_SLICE_SVGS))
 ASTRO_STAR_X_SVGS := \
-	$(GENERATED_SVG_DIR)/astro-all-sky-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/astro-observer-star-x-34-44.svg
-ASTRO_STAR_X_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PNG_DIR)/%.png,$(ASTRO_STAR_X_SVGS))
+	$(call generated_svg,astro-all-sky-star-x-34-44.svg) \
+	$(call generated_svg,astro-observer-ground-multiband-star-x-34-44.svg) \
+	$(call generated_svg,astro-observer-hubble-star-x-34-44.svg)
+ASTRO_STAR_X_PNGS := $(call svg_to_png,$(ASTRO_STAR_X_SVGS))
 ORBITING_STAR_X_SVGS := \
-	$(GENERATED_SVG_DIR)/orbital-technosphere-global-star-x-34-44.svg \
-	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-star-x-34-44.svg
-ORBITING_STAR_X_PNGS := $(patsubst $(GENERATED_SVG_DIR)/%.svg,\
-	$(GENERATED_PNG_DIR)/%.png,$(ORBITING_STAR_X_SVGS))
-NETWORK_SWARM_STAR_X_PNG := $(GENERATED_PNG_DIR)/network-swarm-star-x-34-44.png
+	$(call generated_svg,orbital-technosphere-global-star-x-34-44.svg) \
+	$(call generated_svg,orbital-technosphere-observer-star-x-34-44.svg)
+ORBITING_STAR_X_PNGS := $(call svg_to_png,$(ORBITING_STAR_X_SVGS))
+NETWORK_SWARM_STAR_X_PNG := $(call generated_png,network-swarm-star-x-34-44.png)
 NETWORK_INFRASTRUCTURE_SITES_STAR_X_PNG := \
-	$(GENERATED_PNG_DIR)/network-infrastructure-sites-star-x-34-44.png
+	$(call generated_png,network-infrastructure-sites-star-x-34-44.png)
 NETWORK_INFRASTRUCTURE_TOPOLOGY_STAR_X_PNG := \
-	$(GENERATED_PNG_DIR)/network-infrastructure-topology-star-x-34-44.png
+	$(call generated_png,network-infrastructure-topology-star-x-34-44.png)
+FIBER_SYNTHESIZED_STAR_X_PNG := \
+	$(call generated_png,fiber-synthesized-star-x-34-44.png)
 ANTHROPOCENE_STAR_X_PNG := \
-	$(GENERATED_PNG_DIR)/anthropocene-star-x-34-44.png
+	$(call generated_png,anthropocene-star-x-34-44.png)
 ANTHROPOCENE_TEMPERATURE_STAR_X_PNGS := \
-	$(GENERATED_PNG_DIR)/anthropocene-temperature-2025-star-x-34-44.png \
-	$(GENERATED_PNG_DIR)/anthropocene-temperature-2026-star-x-34-44.png
+	$(call generated_png,anthropocene-temperature-2025-star-x-34-44.png) \
+	$(call generated_png,anthropocene-temperature-2026-star-x-34-44.png)
 RESOURCES_STAR_X_PNGS := $(filter %-star-x-34-44.png,$(RESOURCES_PNGS))
 BATHYMETRY_ROULETTE_STAR_X_PNG := \
-	$(GENERATED_PNG_DIR)/bathymetry-roulette-star-x-34-44.png
+	$(call generated_png,bathymetry-roulette-star-x-34-44.png)
+BATHYMETRY_HAMONSHU_STAR_X_PNG := \
+	$(call generated_png,bathymetry-hamonshu-star-x-34-44.png)
 CLOUD_ATMOSPHERE_STAR_X_PNG := \
-	$(GENERATED_PNG_DIR)/cloud-atmosphere-star-x-34-44.png
+	$(call generated_png,cloud-atmosphere-star-x-34-44.png)
 MYRIAHEDRAL_PORTRAIT_SLICE_PNG := \
-	$(GENERATED_PNG_DIR)/water-myriahedral-adhoc-slice-1.png
+	$(call generated_png,water-myriahedral-adhoc-slice-1.png)
 PORTRAIT_PNGS := $(STAR_X_PNGS) $(ASTRO_STAR_X_PNGS) \
 	$(ORBITING_STAR_X_PNGS) $(NETWORK_SWARM_STAR_X_PNG) \
 	$(NETWORK_INFRASTRUCTURE_SITES_STAR_X_PNG) \
 	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_STAR_X_PNG) \
+	$(FIBER_SYNTHESIZED_STAR_X_PNG) \
 	$(ANTHROPOCENE_STAR_X_PNG) $(ANTHROPOCENE_TEMPERATURE_STAR_X_PNGS) \
 	$(RESOURCES_STAR_X_PNGS) $(CK_SLICE_PNGS) \
 	$(BATHYMETRY_ROULETTE_STAR_X_PNG) \
+	$(BATHYMETRY_HAMONSHU_STAR_X_PNG) \
 	$(CLOUD_ATMOSPHERE_STAR_X_PNG) \
 	$(MYRIAHEDRAL_PORTRAIT_SLICE_PNG)
 LANDSCAPE_PNGS := $(filter-out $(PORTRAIT_PNGS),\
 	$(GENERATED_PNGS) $(CLOUD_ATMOSPHERE_PNGS))
+# A successful generate-authorized-external run records canonical pass names
+# in a local, ignored state file.  Re-read only known names; arbitrary state
+# file contents can never become Make syntax or targets.  JAXA and licensed
+# topology have reproducible artifact graphs. NASA FIRMS remains a candidate
+# refresh workflow until a reviewed snapshot is promoted.
+AUTHORIZED_EXTERNAL_PASSES := $(filter \
+	jaxa-ptree nasa-firms network-topology,\
+	$(strip $(shell if test -r "$(EXTERNAL_AUTHORIZATION_STATE)"; then \
+		sed -n '/^jaxa-ptree$$/p;/^nasa-firms$$/p;/^network-topology$$/p' \
+		"$(EXTERNAL_AUTHORIZATION_STATE)"; fi)))
+AUTHORIZED_EXTERNAL_ARTIFACTS :=
+ifneq (,$(filter jaxa-ptree,$(AUTHORIZED_EXTERNAL_PASSES)))
+AUTHORIZED_EXTERNAL_ARTIFACTS += $(CLOUD_ATMOSPHERE_SVGS) \
+	$(CLOUD_ATMOSPHERE_PDFS) $(CLOUD_ATMOSPHERE_PNGS)
+endif
+ifneq (,$(filter network-topology,$(AUTHORIZED_EXTERNAL_PASSES)))
+AUTHORIZED_EXTERNAL_ARTIFACTS += $(NETWORK_INFRASTRUCTURE_TOPOLOGY_SVGS) \
+	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_PDFS) \
+	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_PNGS)
+endif
+
 GENERATED_ARTIFACTS := \
 	$(filter-out $(RESOURCES_SVGS),$(GENERATED_SVGS)) \
 	$(RESOURCES_SVG_ARCHIVES) $(GENERATED_PDFS) $(GENERATED_PNGS) \
-	$(CK_SNAPSHOT_THUMBNAILS)
+	$(SNAPSHOT_THUMBNAILS) $(AUTHORIZED_EXTERNAL_ARTIFACTS)
 
 GENERATOR_BINARIES := \
 	$(ANTHROPOCENE_GENERATOR) \
@@ -547,8 +637,10 @@ GENERATOR_BINARIES := \
 	$(CLOUD_ATMOSPHERE_GENERATOR) \
 	$(CLOUD_ATMOSPHERE_PREPARER) \
 	$(BATHYMETRY_ROULETTE_GENERATOR) \
+	$(BATHYMETRY_HAMONSHU_GENERATOR) \
 	$(GENERATION_PROFILE_RESOLVER) \
 	$(NETWORK_INFRASTRUCTURE_GENERATOR) \
+	$(FIBER_SYNTHESIZED_GENERATOR) \
 	$(NETWORK_SWARM_GENERATOR) \
 	$(ORBITING_GENERATOR) \
 	$(EIGHT_SLICE_GENERATOR) \
@@ -565,9 +657,11 @@ TEST_BINARIES := \
 	$(TEST_DIR)/test-astro-generation \
 	$(TEST_DIR)/test-cloud-atmosphere-generation \
 	$(TEST_DIR)/test-bathymetry-roulette-style \
+	$(TEST_DIR)/test-bathymetry-hamonshu-style \
 	$(TEST_DIR)/test-generation-profile \
 	$(TEST_DIR)/test-generation-typography \
 	$(TEST_DIR)/test-network-infrastructure-generation \
+	$(TEST_DIR)/test-fiber-synthesized-generation \
 	$(TEST_DIR)/test-network-swarm-generation \
 	$(TEST_DIR)/test-orbiting-generation \
 	$(TEST_DIR)/test-cahill-keyes-projection \
@@ -607,10 +701,17 @@ NATURAL_EARTH_GENERATOR_HEADER := \
 	$(GENERATOR_SRC_DIR)/natural-earth-generation.h
 BATHYMETRY_ROULETTE_STYLE_HEADER := \
 	$(GENERATOR_SRC_DIR)/bathymetry-roulette-style.h
+BATHYMETRY_HAMONSHU_STYLE_HEADER := \
+	$(GENERATOR_SRC_DIR)/bathymetry-hamonshu-style.h
+HAMONSHU_IZZI_HEADERS := \
+	$(IZZI_SRC)/a60-svg-curves-hamonshu.h \
+	$(IZZI_SRC)/a60-svg-curves-hamonshu-v2.inc
 ASTRO_GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/astro-data.h \
+	$(GENERATOR_SRC_DIR)/astro-observer.h \
 	$(GENERATOR_SRC_DIR)/astro-generation.h \
-	$(GENERATOR_HEADERS)
+	$(GENERATOR_SRC_DIR)/orbiting-data.h \
+	$(GENERATOR_HEADERS) $(SGP4_HEADER)
 CLOUD_ATMOSPHERE_GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/cloud-atmosphere-data.h \
 	$(GENERATOR_SRC_DIR)/cloud-atmosphere-generation.h \
@@ -633,6 +734,10 @@ NETWORK_INFRASTRUCTURE_GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/network-infrastructure-generation.h \
 	$(NATURAL_EARTH_GENERATOR_HEADER) \
 	$(GENERATOR_HEADERS)
+FIBER_SYNTHESIZED_GENERATOR_HEADERS := \
+	$(GENERATOR_SRC_DIR)/fiber-synthesized-data.h \
+	$(GENERATOR_SRC_DIR)/fiber-synthesized-generation.h \
+	$(NETWORK_INFRASTRUCTURE_GENERATOR_HEADERS)
 ANTHROPOCENE_GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/anthropocene-data.h \
 	$(GENERATOR_SRC_DIR)/anthropocene-generation.h \
@@ -666,16 +771,18 @@ RESOURCE_METRIC_PUBLIC_TARGETS := \
 			generate-$(stem)-$(projection)))
 
 PUBLIC_TARGETS := all assets-single assets-resilient check check-prerequisite \
-	check-resources-svg-archives clean clean-failed-generated configured doxygen \
+	check-resources-svg-archives check-fiber-synthesized \
+	clean clean-failed-generated configured doxygen \
 	generation-plan list-targets authorize-external \
-	generate-authorized-external generate-snapshot-ck \
+	generate-authorized-external generate-snapshots generate-snapshot-all \
+	generate-snapshot-ck \
 	install-jaxa-certificate \
 	fetch-natural-earth-10m fetch-astro-data fetch-orbiting-data \
 	fetch-cloud-atmosphere-data prepare-cloud-atmosphere-data \
 	verify-cloud-atmosphere-data \
 	fetch-anthropocene-data prepare-anthropocene-data \
 	fetch-anthropocene-cpc-data prepare-anthropocene-temperature-data \
-	refresh-resources-data \
+	refresh-resources-data refresh-fiber-synthesized \
 	prepare-network-swarm-data make-generated \
 	check-network-infrastructure-sources \
 	check-network-infrastructure-topology-sources \
@@ -689,7 +796,9 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-prerequisite \
 	generate-geometry-projections generate-graticules-projections \
 	generate-earth-projections generate-water-projections \
 	generate-astro generate-astro-projections generate-astro-all-sky \
-	generate-astro-observer generate-astro-cahill-keyes \
+	generate-astro-artifacts \
+	generate-astro-observer generate-astro-observer-ground \
+	generate-astro-observer-hubble generate-astro-cahill-keyes \
 	generate-astro-authagraph generate-astro-dymaxion \
 	generate-astro-myriahedral generate-astro-star-x \
 	generate-astro-voronoi \
@@ -782,6 +891,14 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-prerequisite \
 	generate-network-infrastructure-topology-myriahedral \
 	generate-network-infrastructure-topology-star-x \
 	generate-network-infrastructure-topology-voronoi \
+	generate-fiber-synthesized generate-fiber-synthesized-projections \
+	generate-fiber-synthesized-artifacts \
+	generate-fiber-synthesized-cahill-keyes \
+	generate-fiber-synthesized-authagraph \
+	generate-fiber-synthesized-dymaxion \
+	generate-fiber-synthesized-myriahedral \
+	generate-fiber-synthesized-star-x \
+	generate-fiber-synthesized-voronoi \
 	generate-bathymetry-roulette generate-bathymetry-roulette-projections \
 	generate-bathymetry-roulette-artifacts \
 	generate-bathymetry-roulette-cahill-keyes \
@@ -790,6 +907,14 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-prerequisite \
 	generate-bathymetry-roulette-myriahedral \
 	generate-bathymetry-roulette-star-x \
 	generate-bathymetry-roulette-voronoi \
+	generate-bathymetry-hamonshu generate-bathymetry-hamonshu-projections \
+	generate-bathymetry-hamonshu-artifacts \
+	generate-bathymetry-hamonshu-cahill-keyes \
+	generate-bathymetry-hamonshu-authagraph \
+	generate-bathymetry-hamonshu-dymaxion \
+	generate-bathymetry-hamonshu-myriahedral \
+	generate-bathymetry-hamonshu-star-x \
+	generate-bathymetry-hamonshu-voronoi \
 	generate-water-myriahedral-perspectives generate-myriahedral-slices \
 	generate-authagraph generate-dymaxion generate-myriahedral generate-star-x \
 	generate-voronoi generate-voroni \
@@ -833,17 +958,23 @@ check-prerequisite: $(PREREQUISITE_CHECKER)
 		LABEL_FONT="$(LABEL_FONT)" \
 		"$(PREREQUISITE_CHECKER)"
 
-check-resources-svg-archives:
+check-resources-svg-archives: $(RESOURCES_SVG_ARCHIVES)
 	"$(GZIP)" -t $(RESOURCES_SVG_ARCHIVES)
+
+check-fiber-synthesized: $(FIBER_SYNTHESIZED_CHECKSUMS)
+	cd "$(FIBER_SYNTHESIZED_DATA_DIR)" && sha256sum -c SHA256SUMS
 
 check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
 		$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2025) \
 		$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2026) \
 		$(CLOUD_ATMOSPHERE_PROFILE) $(CLOUD_ATMOSPHERE_FIXTURE) \
+		$(ASTRO_PROFILE) $(ASTRO_HUBBLE_PROFILE) $(ASTRO_HUBBLE_OMM) \
 		$(RESOURCES_PROFILE) $(RESOURCES_VALUES) $(RESOURCES_COUNTRIES) \
 		$(RESOURCES_REEFS) \
 		$(RESOURCES_CHECKSUMS) \
-		check-resources-svg-archives
+		$(FIBER_SYNTHESIZED_MANIFEST) $(FIBER_SYNTHESIZED_ROUTES) \
+		$(FIBER_SYNTHESIZED_LANDINGS) $(FIBER_SYNTHESIZED_CHECKSUMS) \
+		check-fiber-synthesized
 	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_PROFILE)" \
 		"$(ANTHROPOCENE_GEOJSON)"
 	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_TEMPERATURE_PROFILE_2025)" \
@@ -871,7 +1002,7 @@ check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
 	cd "$(RESOURCES_DATA_DIR)" && sha256sum -c SHA256SUMS
 	cd "$(ANTHROPOCENE_DATA_DIR)" && sha256sum -c SHA256SUMS
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
-		$(TEST_DIR)/test-astro-generation.cc \
+		$(TEST_DIR)/test-astro-generation.cc $(SGP4_OBJECT) \
 		-o $(TEST_DIR)/test-astro-generation
 	$(TEST_DIR)/test-astro-generation
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
@@ -887,6 +1018,10 @@ check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
 		$(TEST_DIR)/test-bathymetry-roulette-style.cc \
 		-o $(TEST_DIR)/test-bathymetry-roulette-style
 	$(TEST_DIR)/test-bathymetry-roulette-style
+	$(CXX) $(CPPFLAGS) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$(TEST_DIR)/test-bathymetry-hamonshu-style.cc \
+		-o $(TEST_DIR)/test-bathymetry-hamonshu-style
+	$(TEST_DIR)/test-bathymetry-hamonshu-style
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-generation-profile.cc \
 		-o $(TEST_DIR)/test-generation-profile
@@ -901,6 +1036,12 @@ check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
 		$(shell $(GDAL_CONFIG) --libs) \
 		-o $(TEST_DIR)/test-network-infrastructure-generation
 	$(TEST_DIR)/test-network-infrastructure-generation
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$(TEST_DIR)/test-fiber-synthesized-generation.cc \
+		$(shell $(GDAL_CONFIG) --libs) \
+		-o $(TEST_DIR)/test-fiber-synthesized-generation
+	$(TEST_DIR)/test-fiber-synthesized-generation
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$(TEST_DIR)/test-network-swarm-generation.cc \
 		-lh3 \
@@ -1075,6 +1216,15 @@ $(BATHYMETRY_ROULETTE_GENERATOR): \
 		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$< $(shell $(GDAL_CONFIG) --libs) -o $@
 
+$(BATHYMETRY_HAMONSHU_GENERATOR): \
+		$(GENERATOR_SRC_DIR)/generate-bathymetry-hamonshu.cc \
+		$(BATHYMETRY_HAMONSHU_STYLE_HEADER) $(HAMONSHU_IZZI_HEADERS) \
+		$(NATURAL_EARTH_GENERATOR_HEADER) $(GENERATOR_HEADERS) \
+		$(AREA_GENERATOR_HEADER)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -o $@
+
 $(FOUR_SLICE_GENERATOR): $(GENERATOR_SRC_DIR)/generate-4-slice.cc \
 		$(PROJECTION_SRC_DIR)/cart0freak0-cahill-keyes-slicing.h \
 		$(PROJECTION_SRC_DIR)/cart0freak0-cahill-keyes.h \
@@ -1102,9 +1252,9 @@ $(MYRIAHEDRAL_SLICE_GENERATOR): \
 		$< -o $@
 
 $(ASTRO_GENERATOR): $(GENERATOR_SRC_DIR)/generate-astro.cc \
-		$(ASTRO_GENERATOR_HEADERS)
+		$(ASTRO_GENERATOR_HEADERS) $(SGP4_OBJECT)
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
-		$< -o $@
+		$< $(SGP4_OBJECT) -o $@
 
 $(CLOUD_ATMOSPHERE_GENERATOR): \
 		$(GENERATOR_SRC_DIR)/generate-cloud-atmosphere.cc \
@@ -1178,6 +1328,20 @@ $(NETWORK_INFRASTRUCTURE_GENERATOR): \
 		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$< $(shell $(GDAL_CONFIG) --libs) -o $@
 
+$(FIBER_SYNTHESIZED_GENERATOR): \
+		$(GENERATOR_SRC_DIR)/generate-fiber-synthesized.cc \
+		$(FIBER_SYNTHESIZED_GENERATOR_HEADERS)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -o $@
+
+refresh-fiber-synthesized: $(FIBER_SYNTHESIZER)
+	python3 "$(FIBER_SYNTHESIZER)" \
+		--old "$(abspath $(FIBER_SYNTHESIZED_OLD_SOURCE))" \
+		--new "$(abspath $(FIBER_SYNTHESIZED_NEW_SOURCE))" \
+		--output "$(abspath $(FIBER_SYNTHESIZED_DATA_DIR))" \
+		--repository-commit "$(FIBER_SYNTHESIZED_SOURCE_COMMIT)"
+
 check-network-infrastructure-sources: \
 		$(NETWORK_INFRASTRUCTURE_SOURCE_CHECKER)
 	"$(NETWORK_INFRASTRUCTURE_SOURCE_CHECKER)" sites \
@@ -1226,6 +1390,7 @@ generate-authorized-external: $(EXTERNAL_GENERATOR) $(EXTERNAL_AUTHORIZER) \
 	NETWORK_INFRASTRUCTURE_SOURCE_CHECKER="$(abspath $(NETWORK_INFRASTRUCTURE_SOURCE_CHECKER))" \
 	EXTERNAL_AUTHORIZER="$(abspath $(EXTERNAL_AUTHORIZER))" \
 	JAXA_CERTIFICATE_INSTALLER="$(abspath $(JAXA_CERTIFICATE_INSTALLER))" \
+	EXTERNAL_AUTHORIZATION_STATE="$(abspath $(EXTERNAL_AUTHORIZATION_STATE))" \
 	EXTERNAL_SELECTION_MODE="$(if $(filter file,$(origin EXTERNAL_PASSES)),auto,strict)" \
 	MAKE_COMMAND="$(EXTERNAL_MAKE_COMMAND)" \
 		"$(EXTERNAL_GENERATOR)" $(EXTERNAL_PASSES)
@@ -1308,44 +1473,50 @@ $(NETWORK_INFRASTRUCTURE_CLOUD_MANIFEST):
 $(NATURAL_EARTH_STAMP): $(NATURAL_EARTH_FETCHER)
 	$(NATURAL_EARTH_FETCHER) "$(NATURAL_EARTH_DIR)"
 
-$(GENERATED_DIR) $(GENERATED_SVG_DIR) $(GENERATED_PNG_DIR) \
-		$(GENERATED_PDF_DIR) $(CK_SNAPSHOT_THUMBNAIL_DIR):
+$(GENERATED_DIR) $(GENERATED_PROJECTION_DIRS) $(GENERATED_SVG_DIRS) \
+		$(GENERATED_PNG_DIRS) $(GENERATED_PDF_DIRS) \
+		$(GENERATED_THUMBNAIL_DIRS):
 	mkdir -p "$@"
 
 # Preserve the original Cahill-Keyes workflow and output names.
 generate-geometry: $(CK_GEOMETRY_SVG)
 generate-geometry-cahill-keyes: $(CK_GEOMETRY_SVG)
 
-$(CK_GEOMETRY_SVG): $(GEOMETRY_GENERATOR) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+$(CK_GEOMETRY_SVG): $(GEOMETRY_GENERATOR) \
+		| $(GENERATED_DIR)/cahill-keyes/svg
+	cd "$(@D)" && \
 		"$(abspath $(GEOMETRY_GENERATOR))" cahill-keyes
 
 generate-graticules-ck: $(CK_GRATICULE_SVG)
 generate-graticules-cahill-keyes: $(CK_GRATICULE_SVG)
 
-$(CK_GRATICULE_SVG): $(GRATICULE_GENERATOR) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+$(CK_GRATICULE_SVG): $(GRATICULE_GENERATOR) \
+		| $(GENERATED_DIR)/cahill-keyes/svg
+	cd "$(@D)" && \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(GRATICULE_GENERATOR))" cahill-keyes
 
 generate-earth-ck: $(CK_EARTH_SVG) $(CK_SLICE_SVGS)
 generate-earth-cahill-keyes: $(CK_EARTH_SVG)
 
-$(CK_EARTH_SVG): $(EARTH_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+$(CK_EARTH_SVG): $(EARTH_GENERATOR) $(NATURAL_EARTH_STAMP) \
+		| $(GENERATED_DIR)/cahill-keyes/svg
+	cd "$(@D)" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		"$(abspath $(EARTH_GENERATOR))" cahill-keyes
 
 generate-4-slice: $(CK_FOUR_SLICE_SVGS)
 
-$(CK_FOUR_SLICE_SVGS) &: $(FOUR_SLICE_GENERATOR) $(CK_EARTH_SVG) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+$(CK_FOUR_SLICE_SVGS) &: $(FOUR_SLICE_GENERATOR) $(CK_EARTH_SVG) \
+		| $(GENERATED_DIR)/cahill-keyes/svg
+	cd "$(dir $(word 1,$(CK_FOUR_SLICE_SVGS)))" && \
 		"$(abspath $(FOUR_SLICE_GENERATOR))"
 
 generate-8-slice: $(CK_EIGHT_SLICE_SVGS)
 
-$(CK_EIGHT_SLICE_SVGS) &: $(EIGHT_SLICE_GENERATOR) $(CK_EARTH_SVG) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+$(CK_EIGHT_SLICE_SVGS) &: $(EIGHT_SLICE_GENERATOR) $(CK_EARTH_SVG) \
+		| $(GENERATED_DIR)/cahill-keyes/svg
+	cd "$(dir $(word 1,$(CK_EIGHT_SLICE_SVGS)))" && \
 		"$(abspath $(EIGHT_SLICE_GENERATOR))"
 
 generate-ck-slices: generate-4-slice generate-8-slice
@@ -1353,8 +1524,9 @@ generate-ck-slices: generate-4-slice generate-8-slice
 generate-water-ck: $(CK_WATER_SVG)
 generate-water-cahill-keyes: $(CK_WATER_SVG)
 
-$(CK_WATER_SVG): $(WATER_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+$(CK_WATER_SVG): $(WATER_GENERATOR) $(NATURAL_EARTH_STAMP) \
+		| $(GENERATED_DIR)/cahill-keyes/svg
+	cd "$(@D)" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		"$(abspath $(WATER_GENERATOR))" cahill-keyes
 
@@ -1362,42 +1534,45 @@ generate-water-myriahedral-perspectives: \
 	$(MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS)
 
 $(MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS): \
-		$(GENERATED_SVG_DIR)/water-myriahedral-%-44-24.75.svg: \
-		$(WATER_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+		$(GENERATED_DIR)/myriahedral/svg/water-myriahedral-%-44-24.75.svg: \
+		$(WATER_GENERATOR) $(NATURAL_EARTH_STAMP) \
+		| $(GENERATED_DIR)/myriahedral/svg
+	cd "$(@D)" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		"$(abspath $(WATER_GENERATOR))" myriahedral-$*
 
 generate-myriahedral-slices: $(MYRIAHEDRAL_SLICE_SVGS)
 
 $(MYRIAHEDRAL_SLICE_SVGS) &: $(MYRIAHEDRAL_SLICE_GENERATOR) \
-		$(MYRIAHEDRAL_WATER_SVG) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+		$(MYRIAHEDRAL_WATER_SVG) | $(GENERATED_DIR)/myriahedral/svg
+	cd "$(dir $(word 1,$(MYRIAHEDRAL_SLICE_SVGS)))" && \
 		"$(abspath $(MYRIAHEDRAL_SLICE_GENERATOR))"
 
 # $(1): command-line projection name; $(2)-$(5): generated artifacts.
 define PROJECTION_RULES
 generate-geometry-$(1): $(2)
-$(2): $(GEOMETRY_GENERATOR) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+$(2): $(GEOMETRY_GENERATOR) | $(call artifact_directory,$(2))
+	cd "$(call artifact_directory,$(2))" && \
 		"$(abspath $(GEOMETRY_GENERATOR))" $(1)
 
 generate-graticules-$(1): $(3)
-$(3): $(GRATICULE_GENERATOR) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+$(3): $(GRATICULE_GENERATOR) | $(call artifact_directory,$(3))
+	cd "$(call artifact_directory,$(3))" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(GRATICULE_GENERATOR))" $(1)
 
 generate-earth-$(1): $(4)
-$(4): $(EARTH_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+$(4): $(EARTH_GENERATOR) $(NATURAL_EARTH_STAMP) \
+		| $(call artifact_directory,$(4))
+	cd "$(call artifact_directory,$(4))" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		"$(abspath $(EARTH_GENERATOR))" $(1)
 
 generate-water-$(1): $(5)
-$(5): $(WATER_GENERATOR) $(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+$(5): $(WATER_GENERATOR) $(NATURAL_EARTH_STAMP) \
+		| $(call artifact_directory,$(5))
+	cd "$(call artifact_directory,$(5))" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		"$(abspath $(WATER_GENERATOR))" $(1)
 
@@ -1421,54 +1596,72 @@ $(eval $(call PROJECTION_RULES,voronoi,\
 	$(VORONOI_GEOMETRY_SVG),$(VORONOI_GRATICULE_SVG),\
 	$(VORONOI_EARTH_SVG),$(VORONOI_WATER_SVG)))
 
-# $(1): command-line projection name; $(2)-$(3): astronomy products.
+# $(1): projection; $(2): all-sky; $(3): ground observer; $(4): Hubble.
 define ASTRO_PROJECTION_RULES
-generate-astro-$(1): $(2) $(3)
-$(2): $(ASTRO_GENERATOR) $(ASTRO_PROFILE) $(ASTRO_CATALOGS) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+generate-astro-$(1): $(2) $(3) $(4)
+$(2): $(ASTRO_GENERATOR) $(ASTRO_PROFILE) $(ASTRO_CATALOGS) \
+		| $(call artifact_directory,$(2))
+	cd "$(call artifact_directory,$(2))" && \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(ASTRO_GENERATOR))" $(1) all-sky \
 		"$(abspath $(ASTRO_PROFILE))"
 
-$(3): $(ASTRO_GENERATOR) $(ASTRO_PROFILE) $(ASTRO_CATALOGS) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+$(3): $(ASTRO_GENERATOR) $(ASTRO_PROFILE) $(ASTRO_CATALOGS) \
+		| $(call artifact_directory,$(3))
+	cd "$(call artifact_directory,$(3))" && \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(ASTRO_GENERATOR))" $(1) observer \
 		"$(abspath $(ASTRO_PROFILE))"
+
+$(4): $(ASTRO_GENERATOR) $(ASTRO_HUBBLE_PROFILE) $(ASTRO_CATALOGS) \
+		$(ASTRO_HUBBLE_OMM) | $(call artifact_directory,$(4))
+	cd "$(call artifact_directory,$(4))" && \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
+		"$(abspath $(ASTRO_GENERATOR))" $(1) observer \
+		"$(abspath $(ASTRO_HUBBLE_PROFILE))"
 endef
 
 $(eval $(call ASTRO_PROJECTION_RULES,cahill-keyes,\
-	$(GENERATED_SVG_DIR)/astro-all-sky-ck-44-22.svg,\
-	$(GENERATED_SVG_DIR)/astro-observer-ck-44-22.svg))
+	$(call generated_svg,astro-all-sky-ck-44-22.svg),\
+	$(call generated_svg,astro-observer-ground-multiband-ck-44-22.svg),\
+	$(call generated_svg,astro-observer-hubble-ck-44-22.svg)))
 $(eval $(call ASTRO_PROJECTION_RULES,authagraph,\
-	$(GENERATED_SVG_DIR)/astro-all-sky-authagraph-44-19.052559.svg,\
-	$(GENERATED_SVG_DIR)/astro-observer-authagraph-44-19.052559.svg))
+	$(call generated_svg,astro-all-sky-authagraph-44-19.052559.svg),\
+	$(call generated_svg,astro-observer-ground-multiband-authagraph-44-19.052559.svg),\
+	$(call generated_svg,astro-observer-hubble-authagraph-44-19.052559.svg)))
 $(eval $(call ASTRO_PROJECTION_RULES,dymaxion,\
-	$(GENERATED_SVG_DIR)/astro-all-sky-dymaxion-44-20.78461.svg,\
-	$(GENERATED_SVG_DIR)/astro-observer-dymaxion-44-20.78461.svg))
+	$(call generated_svg,astro-all-sky-dymaxion-44-20.78461.svg),\
+	$(call generated_svg,astro-observer-ground-multiband-dymaxion-44-20.78461.svg),\
+	$(call generated_svg,astro-observer-hubble-dymaxion-44-20.78461.svg)))
 $(eval $(call ASTRO_PROJECTION_RULES,myriahedral,\
-	$(GENERATED_SVG_DIR)/astro-all-sky-myriahedral-44-24.75.svg,\
-	$(GENERATED_SVG_DIR)/astro-observer-myriahedral-44-24.75.svg))
+	$(call generated_svg,astro-all-sky-myriahedral-44-24.75.svg),\
+	$(call generated_svg,astro-observer-ground-multiband-myriahedral-44-24.75.svg),\
+	$(call generated_svg,astro-observer-hubble-myriahedral-44-24.75.svg)))
 $(eval $(call ASTRO_PROJECTION_RULES,star-x,\
-	$(GENERATED_SVG_DIR)/astro-all-sky-star-x-34-44.svg,\
-	$(GENERATED_SVG_DIR)/astro-observer-star-x-34-44.svg))
+	$(call generated_svg,astro-all-sky-star-x-34-44.svg),\
+	$(call generated_svg,astro-observer-ground-multiband-star-x-34-44.svg),\
+	$(call generated_svg,astro-observer-hubble-star-x-34-44.svg)))
 $(eval $(call ASTRO_PROJECTION_RULES,voronoi,\
-	$(GENERATED_SVG_DIR)/astro-all-sky-voronoi-44-22.916667.svg,\
-	$(GENERATED_SVG_DIR)/astro-observer-voronoi-44-22.916667.svg))
+	$(call generated_svg,astro-all-sky-voronoi-44-22.916667.svg),\
+	$(call generated_svg,astro-observer-ground-multiband-voronoi-44-22.916667.svg),\
+	$(call generated_svg,astro-observer-hubble-voronoi-44-22.916667.svg)))
 
 generate-astro-all-sky: $(ASTRO_ALL_SKY_SVGS)
+generate-astro-observer-ground: $(ASTRO_GROUND_OBSERVER_SVGS)
+generate-astro-observer-hubble: $(ASTRO_HUBBLE_OBSERVER_SVGS)
 generate-astro-observer: $(ASTRO_OBSERVER_SVGS)
 generate-astro: $(ASTRO_SVGS)
 generate-astro-projections: $(ASTRO_SVGS)
+generate-astro-artifacts: $(ASTRO_SVGS) $(ASTRO_PDFS) $(ASTRO_PNGS)
 
 # $(1): command-line projection name; $(2): cloud-atmosphere product.
 define CLOUD_ATMOSPHERE_PROJECTION_RULES
 generate-cloud-atmosphere-$(1): $(2)
 $(2): $(CLOUD_ATMOSPHERE_GENERATOR) $(CLOUD_ATMOSPHERE_PROFILE) \
 		$(CLOUD_ATMOSPHERE_GEOJSON) $(CLOUD_ATMOSPHERE_VERIFIER) \
-		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+		$(NATURAL_EARTH_STAMP) | $(call artifact_directory,$(2))
 	$(CLOUD_ATMOSPHERE_VERIFIER) "$(CLOUD_ATMOSPHERE_DATA_DIR)"
-	cd "$(GENERATED_SVG_DIR)" && \
+	cd "$(call artifact_directory,$(2))" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(CLOUD_ATMOSPHERE_GENERATOR))" $(1) \
@@ -1477,17 +1670,17 @@ $(2): $(CLOUD_ATMOSPHERE_GENERATOR) $(CLOUD_ATMOSPHERE_PROFILE) \
 endef
 
 $(eval $(call CLOUD_ATMOSPHERE_PROJECTION_RULES,cahill-keyes,\
-	$(GENERATED_SVG_DIR)/cloud-atmosphere-ck-44-22.svg))
+	$(call generated_svg,cloud-atmosphere-ck-44-22.svg)))
 $(eval $(call CLOUD_ATMOSPHERE_PROJECTION_RULES,authagraph,\
-	$(GENERATED_SVG_DIR)/cloud-atmosphere-authagraph-44-19.052559.svg))
+	$(call generated_svg,cloud-atmosphere-authagraph-44-19.052559.svg)))
 $(eval $(call CLOUD_ATMOSPHERE_PROJECTION_RULES,dymaxion,\
-	$(GENERATED_SVG_DIR)/cloud-atmosphere-dymaxion-44-20.78461.svg))
+	$(call generated_svg,cloud-atmosphere-dymaxion-44-20.78461.svg)))
 $(eval $(call CLOUD_ATMOSPHERE_PROJECTION_RULES,myriahedral,\
-	$(GENERATED_SVG_DIR)/cloud-atmosphere-myriahedral-44-24.75.svg))
+	$(call generated_svg,cloud-atmosphere-myriahedral-44-24.75.svg)))
 $(eval $(call CLOUD_ATMOSPHERE_PROJECTION_RULES,star-x,\
-	$(GENERATED_SVG_DIR)/cloud-atmosphere-star-x-34-44.svg))
+	$(call generated_svg,cloud-atmosphere-star-x-34-44.svg)))
 $(eval $(call CLOUD_ATMOSPHERE_PROJECTION_RULES,voronoi,\
-	$(GENERATED_SVG_DIR)/cloud-atmosphere-voronoi-44-22.916667.svg))
+	$(call generated_svg,cloud-atmosphere-voronoi-44-22.916667.svg)))
 
 generate-cloud-atmosphere: $(CLOUD_ATMOSPHERE_SVGS)
 generate-cloud-atmosphere-projections: $(CLOUD_ATMOSPHERE_SVGS)
@@ -1498,39 +1691,39 @@ generate-cloud-atmosphere-artifacts: $(CLOUD_ATMOSPHERE_SVGS) \
 define ORBITING_PROJECTION_RULES
 generate-orbiting-$(1): $(2) $(3)
 $(2): $(ORBITING_GENERATOR) $(ORBITING_PROFILE) $(ORBITING_CATALOGS) \
-		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+		$(NATURAL_EARTH_STAMP) | $(call artifact_directory,$(2))
+	cd "$(call artifact_directory,$(2))" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(ORBITING_GENERATOR))" $(1) global \
 		"$(abspath $(ORBITING_PROFILE))"
 
 $(3): $(ORBITING_GENERATOR) $(ORBITING_PROFILE) $(ORBITING_CATALOGS) \
-		| $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+		| $(call artifact_directory,$(3))
+	cd "$(call artifact_directory,$(3))" && \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(ORBITING_GENERATOR))" $(1) observer \
 		"$(abspath $(ORBITING_PROFILE))"
 endef
 
 $(eval $(call ORBITING_PROJECTION_RULES,cahill-keyes,\
-	$(GENERATED_SVG_DIR)/orbital-technosphere-global-ck-44-22.svg,\
-	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-ck-44-22.svg))
+	$(call generated_svg,orbital-technosphere-global-ck-44-22.svg),\
+	$(call generated_svg,orbital-technosphere-observer-ck-44-22.svg)))
 $(eval $(call ORBITING_PROJECTION_RULES,authagraph,\
-	$(GENERATED_SVG_DIR)/orbital-technosphere-global-authagraph-44-19.052559.svg,\
-	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-authagraph-44-19.052559.svg))
+	$(call generated_svg,orbital-technosphere-global-authagraph-44-19.052559.svg),\
+	$(call generated_svg,orbital-technosphere-observer-authagraph-44-19.052559.svg)))
 $(eval $(call ORBITING_PROJECTION_RULES,dymaxion,\
-	$(GENERATED_SVG_DIR)/orbital-technosphere-global-dymaxion-44-20.78461.svg,\
-	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-dymaxion-44-20.78461.svg))
+	$(call generated_svg,orbital-technosphere-global-dymaxion-44-20.78461.svg),\
+	$(call generated_svg,orbital-technosphere-observer-dymaxion-44-20.78461.svg)))
 $(eval $(call ORBITING_PROJECTION_RULES,myriahedral,\
-	$(GENERATED_SVG_DIR)/orbital-technosphere-global-myriahedral-44-24.75.svg,\
-	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-myriahedral-44-24.75.svg))
+	$(call generated_svg,orbital-technosphere-global-myriahedral-44-24.75.svg),\
+	$(call generated_svg,orbital-technosphere-observer-myriahedral-44-24.75.svg)))
 $(eval $(call ORBITING_PROJECTION_RULES,star-x,\
-	$(GENERATED_SVG_DIR)/orbital-technosphere-global-star-x-34-44.svg,\
-	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-star-x-34-44.svg))
+	$(call generated_svg,orbital-technosphere-global-star-x-34-44.svg),\
+	$(call generated_svg,orbital-technosphere-observer-star-x-34-44.svg)))
 $(eval $(call ORBITING_PROJECTION_RULES,voronoi,\
-	$(GENERATED_SVG_DIR)/orbital-technosphere-global-voronoi-44-22.916667.svg,\
-	$(GENERATED_SVG_DIR)/orbital-technosphere-observer-voronoi-44-22.916667.svg))
+	$(call generated_svg,orbital-technosphere-global-voronoi-44-22.916667.svg),\
+	$(call generated_svg,orbital-technosphere-observer-voronoi-44-22.916667.svg)))
 
 generate-orbiting-global: $(ORBITING_GLOBAL_SVGS)
 generate-orbiting-observer: $(ORBITING_OBSERVER_SVGS)
@@ -1544,10 +1737,10 @@ define ANTHROPOCENE_PROJECTION_RULES
 generate-anthropocene-atlas-$(1): $(2)
 $(2): $(ANTHROPOCENE_GENERATOR) $(ANTHROPOCENE_PROFILE) \
 		$(ANTHROPOCENE_GEOJSON) $(ANTHROPOCENE_VERIFIER) \
-		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
+		$(NATURAL_EARTH_STAMP) | $(call artifact_directory,$(2))
 	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_PROFILE)" \
 		"$(ANTHROPOCENE_GEOJSON)"
-	cd "$(GENERATED_SVG_DIR)" && \
+	cd "$(call artifact_directory,$(2))" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(ANTHROPOCENE_GENERATOR))" $(1) \
@@ -1556,17 +1749,17 @@ $(2): $(ANTHROPOCENE_GENERATOR) $(ANTHROPOCENE_PROFILE) \
 endef
 
 $(eval $(call ANTHROPOCENE_PROJECTION_RULES,cahill-keyes,\
-	$(GENERATED_SVG_DIR)/anthropocene-ck-44-22.svg))
+	$(call generated_svg,anthropocene-ck-44-22.svg)))
 $(eval $(call ANTHROPOCENE_PROJECTION_RULES,authagraph,\
-	$(GENERATED_SVG_DIR)/anthropocene-authagraph-44-19.052559.svg))
+	$(call generated_svg,anthropocene-authagraph-44-19.052559.svg)))
 $(eval $(call ANTHROPOCENE_PROJECTION_RULES,dymaxion,\
-	$(GENERATED_SVG_DIR)/anthropocene-dymaxion-44-20.78461.svg))
+	$(call generated_svg,anthropocene-dymaxion-44-20.78461.svg)))
 $(eval $(call ANTHROPOCENE_PROJECTION_RULES,myriahedral,\
-	$(GENERATED_SVG_DIR)/anthropocene-myriahedral-44-24.75.svg))
+	$(call generated_svg,anthropocene-myriahedral-44-24.75.svg)))
 $(eval $(call ANTHROPOCENE_PROJECTION_RULES,star-x,\
-	$(GENERATED_SVG_DIR)/anthropocene-star-x-34-44.svg))
+	$(call generated_svg,anthropocene-star-x-34-44.svg)))
 $(eval $(call ANTHROPOCENE_PROJECTION_RULES,voronoi,\
-	$(GENERATED_SVG_DIR)/anthropocene-voronoi-44-22.916667.svg))
+	$(call generated_svg,anthropocene-voronoi-44-22.916667.svg)))
 
 generate-anthropocene-atlas: $(ANTHROPOCENE_SVGS)
 generate-anthropocene-atlas-projections: $(ANTHROPOCENE_SVGS)
@@ -1579,10 +1772,10 @@ $(2): $(ANTHROPOCENE_TEMPERATURE_GENERATOR) \
 		$(ANTHROPOCENE_TEMPERATURE_PROFILE_2025) \
 		$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2025) \
 		$(ANTHROPOCENE_VERIFIER) $(NATURAL_EARTH_STAMP) \
-		| $(GENERATED_SVG_DIR)
+		| $(call artifact_directory,$(2))
 	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_TEMPERATURE_PROFILE_2025)" \
 		"$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2025)"
-	cd "$(GENERATED_SVG_DIR)" && \
+	cd "$(call artifact_directory,$(2))" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(ANTHROPOCENE_TEMPERATURE_GENERATOR))" $(1) \
@@ -1592,10 +1785,10 @@ $(3): $(ANTHROPOCENE_TEMPERATURE_GENERATOR) \
 		$(ANTHROPOCENE_TEMPERATURE_PROFILE_2026) \
 		$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2026) \
 		$(ANTHROPOCENE_VERIFIER) $(NATURAL_EARTH_STAMP) \
-		| $(GENERATED_SVG_DIR)
+		| $(call artifact_directory,$(3))
 	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_TEMPERATURE_PROFILE_2026)" \
 		"$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2026)"
-	cd "$(GENERATED_SVG_DIR)" && \
+	cd "$(call artifact_directory,$(3))" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(ANTHROPOCENE_TEMPERATURE_GENERATOR))" $(1) \
@@ -1604,23 +1797,23 @@ $(3): $(ANTHROPOCENE_TEMPERATURE_GENERATOR) \
 endef
 
 $(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,cahill-keyes,\
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-ck-44-22.svg,\
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-ck-44-22.svg))
+	$(call generated_svg,anthropocene-temperature-2025-ck-44-22.svg),\
+	$(call generated_svg,anthropocene-temperature-2026-ck-44-22.svg)))
 $(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,authagraph,\
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-authagraph-44-19.052559.svg,\
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-authagraph-44-19.052559.svg))
+	$(call generated_svg,anthropocene-temperature-2025-authagraph-44-19.052559.svg),\
+	$(call generated_svg,anthropocene-temperature-2026-authagraph-44-19.052559.svg)))
 $(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,dymaxion,\
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-dymaxion-44-20.78461.svg,\
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-dymaxion-44-20.78461.svg))
+	$(call generated_svg,anthropocene-temperature-2025-dymaxion-44-20.78461.svg),\
+	$(call generated_svg,anthropocene-temperature-2026-dymaxion-44-20.78461.svg)))
 $(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,myriahedral,\
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-myriahedral-44-24.75.svg,\
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-myriahedral-44-24.75.svg))
+	$(call generated_svg,anthropocene-temperature-2025-myriahedral-44-24.75.svg),\
+	$(call generated_svg,anthropocene-temperature-2026-myriahedral-44-24.75.svg)))
 $(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,star-x,\
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-star-x-34-44.svg,\
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-star-x-34-44.svg))
+	$(call generated_svg,anthropocene-temperature-2025-star-x-34-44.svg),\
+	$(call generated_svg,anthropocene-temperature-2026-star-x-34-44.svg)))
 $(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,voronoi,\
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2025-voronoi-44-22.916667.svg,\
-	$(GENERATED_SVG_DIR)/anthropocene-temperature-2026-voronoi-44-22.916667.svg))
+	$(call generated_svg,anthropocene-temperature-2025-voronoi-44-22.916667.svg),\
+	$(call generated_svg,anthropocene-temperature-2026-voronoi-44-22.916667.svg)))
 
 # Stage 12 defaults generate the paired 2025 and 2026 Anthropocene passes.
 generate-anthropocene-cahill-keyes: $(word 1,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) $(word 1,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
@@ -1662,28 +1855,28 @@ generate-$(1)-$(3)-star-x: $(word 5,$(4)).gz
 generate-$(1)-$(3)-voronoi: $(word 6,$(4)).gz
 $(word 1,$(4)): $(RESOURCES_GENERATOR) $(RESOURCES_PROFILE) \
 		$(RESOURCES_VALUES) $(RESOURCES_COUNTRIES) $(RESOURCES_REEFS) \
-		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" cahill-keyes "$(abspath $(RESOURCES_PROFILE))" "$(2)"
+		$(NATURAL_EARTH_STAMP) | $(call artifact_directory,$(word 1,$(4)))
+	cd "$(call artifact_directory,$(word 1,$(4)))" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" cahill-keyes "$(abspath $(RESOURCES_PROFILE))" "$(2)"
 $(word 2,$(4)): $(RESOURCES_GENERATOR) $(RESOURCES_PROFILE) \
 		$(RESOURCES_VALUES) $(RESOURCES_COUNTRIES) $(RESOURCES_REEFS) \
-		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" authagraph "$(abspath $(RESOURCES_PROFILE))" "$(2)"
+		$(NATURAL_EARTH_STAMP) | $(call artifact_directory,$(word 2,$(4)))
+	cd "$(call artifact_directory,$(word 2,$(4)))" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" authagraph "$(abspath $(RESOURCES_PROFILE))" "$(2)"
 $(word 3,$(4)): $(RESOURCES_GENERATOR) $(RESOURCES_PROFILE) \
 		$(RESOURCES_VALUES) $(RESOURCES_COUNTRIES) $(RESOURCES_REEFS) \
-		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" dymaxion "$(abspath $(RESOURCES_PROFILE))" "$(2)"
+		$(NATURAL_EARTH_STAMP) | $(call artifact_directory,$(word 3,$(4)))
+	cd "$(call artifact_directory,$(word 3,$(4)))" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" dymaxion "$(abspath $(RESOURCES_PROFILE))" "$(2)"
 $(word 4,$(4)): $(RESOURCES_GENERATOR) $(RESOURCES_PROFILE) \
 		$(RESOURCES_VALUES) $(RESOURCES_COUNTRIES) $(RESOURCES_REEFS) \
-		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" myriahedral "$(abspath $(RESOURCES_PROFILE))" "$(2)"
+		$(NATURAL_EARTH_STAMP) | $(call artifact_directory,$(word 4,$(4)))
+	cd "$(call artifact_directory,$(word 4,$(4)))" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" myriahedral "$(abspath $(RESOURCES_PROFILE))" "$(2)"
 $(word 5,$(4)): $(RESOURCES_GENERATOR) $(RESOURCES_PROFILE) \
 		$(RESOURCES_VALUES) $(RESOURCES_COUNTRIES) $(RESOURCES_REEFS) \
-		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" star-x "$(abspath $(RESOURCES_PROFILE))" "$(2)"
+		$(NATURAL_EARTH_STAMP) | $(call artifact_directory,$(word 5,$(4)))
+	cd "$(call artifact_directory,$(word 5,$(4)))" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" star-x "$(abspath $(RESOURCES_PROFILE))" "$(2)"
 $(word 6,$(4)): $(RESOURCES_GENERATOR) $(RESOURCES_PROFILE) \
 		$(RESOURCES_VALUES) $(RESOURCES_COUNTRIES) $(RESOURCES_REEFS) \
-		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" voronoi "$(abspath $(RESOURCES_PROFILE))" "$(2)"
+		$(NATURAL_EARTH_STAMP) | $(call artifact_directory,$(word 6,$(4)))
+	cd "$(call artifact_directory,$(word 6,$(4)))" && NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(RESOURCES_GENERATOR))" "$(1)" voronoi "$(abspath $(RESOURCES_PROFILE))" "$(2)"
 endef
 
 $(eval $(call RESOURCES_METRIC_RULES,resources-energy,solar-capacity,solar,$(RESOURCES_ENERGY_SOLAR_SVGS)))
@@ -1725,9 +1918,15 @@ generate-resources-myriahedral: $(addsuffix .gz,$(filter %-myriahedral-44-24.75.
 generate-resources-star-x: $(addsuffix .gz,$(filter %-star-x-34-44.svg,$(RESOURCES_SVGS)))
 generate-resources-voronoi: $(addsuffix .gz,$(filter %-voronoi-44-22.916667.svg,$(RESOURCES_SVGS)))
 
-$(RESOURCES_SVG_ARCHIVES): $(GENERATED_SVG_DIR)/%.svg.gz: \
-		$(GENERATED_SVG_DIR)/%.svg
-	"$(GZIP)" -n -9 -c "$<" > "$@"
+define RESOURCE_ARCHIVE_RULES
+$(filter $(GENERATED_DIR)/$(1)/svg/%.svg.gz,$(RESOURCES_SVG_ARCHIVES)): \
+		$(GENERATED_DIR)/$(1)/svg/%.svg.gz: \
+		$(GENERATED_DIR)/$(1)/svg/%.svg
+	"$(GZIP)" -n -9 -c "$$<" > "$$@"
+endef
+
+$(foreach projection,$(PROJECTION_NAMES),\
+	$(eval $(call RESOURCE_ARCHIVE_RULES,$(projection))))
 
 generate-resources-energy: $(addsuffix .gz,$(RESOURCES_ENERGY_SVGS))
 generate-resources-food: $(addsuffix .gz,$(RESOURCES_FOOD_SVGS))
@@ -1747,8 +1946,8 @@ define NETWORK_SWARM_PROJECTION_RULES
 generate-network-swarm-$(1): $(2)
 $(2): $(NETWORK_SWARM_GENERATOR) $(NETWORK_SWARM_PROFILE) \
 		$(NETWORK_SWARM_GEOJSON) \
-		$(NATURAL_EARTH_STAMP) | $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+		$(NATURAL_EARTH_STAMP) | $(call artifact_directory,$(2))
+	cd "$(call artifact_directory,$(2))" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(NETWORK_SWARM_GENERATOR))" $(1) \
@@ -1756,17 +1955,17 @@ $(2): $(NETWORK_SWARM_GENERATOR) $(NETWORK_SWARM_PROFILE) \
 endef
 
 $(eval $(call NETWORK_SWARM_PROJECTION_RULES,cahill-keyes,\
-	$(GENERATED_SVG_DIR)/network-swarm-ck-44-22.svg))
+	$(call generated_svg,network-swarm-ck-44-22.svg)))
 $(eval $(call NETWORK_SWARM_PROJECTION_RULES,authagraph,\
-	$(GENERATED_SVG_DIR)/network-swarm-authagraph-44-19.052559.svg))
+	$(call generated_svg,network-swarm-authagraph-44-19.052559.svg)))
 $(eval $(call NETWORK_SWARM_PROJECTION_RULES,dymaxion,\
-	$(GENERATED_SVG_DIR)/network-swarm-dymaxion-44-20.78461.svg))
+	$(call generated_svg,network-swarm-dymaxion-44-20.78461.svg)))
 $(eval $(call NETWORK_SWARM_PROJECTION_RULES,myriahedral,\
-	$(GENERATED_SVG_DIR)/network-swarm-myriahedral-44-24.75.svg))
+	$(call generated_svg,network-swarm-myriahedral-44-24.75.svg)))
 $(eval $(call NETWORK_SWARM_PROJECTION_RULES,star-x,\
-	$(GENERATED_SVG_DIR)/network-swarm-star-x-34-44.svg))
+	$(call generated_svg,network-swarm-star-x-34-44.svg)))
 $(eval $(call NETWORK_SWARM_PROJECTION_RULES,voronoi,\
-	$(GENERATED_SVG_DIR)/network-swarm-voronoi-44-22.916667.svg))
+	$(call generated_svg,network-swarm-voronoi-44-22.916667.svg)))
 
 generate-network-swarm: $(NETWORK_SWARM_SVGS)
 generate-network-swarm-projections: $(NETWORK_SWARM_SVGS)
@@ -1780,8 +1979,9 @@ $(2): $(NETWORK_INFRASTRUCTURE_GENERATOR) \
 		$(NETWORK_INFRASTRUCTURE_SITES_PROFILE) \
 		$(NETWORK_INFRASTRUCTURE_CLOUD_MANIFEST) \
 		$(NATURAL_EARTH_STAMP) \
-		| check-network-infrastructure-sources $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+		| check-network-infrastructure-sources \
+		$(call artifact_directory,$(2))
+	cd "$(call artifact_directory,$(2))" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(NETWORK_INFRASTRUCTURE_GENERATOR))" $(1) \
@@ -1790,17 +1990,17 @@ $(2): $(NETWORK_INFRASTRUCTURE_GENERATOR) \
 endef
 
 $(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,cahill-keyes,\
-	$(GENERATED_SVG_DIR)/network-infrastructure-sites-ck-44-22.svg))
+	$(call generated_svg,network-infrastructure-sites-ck-44-22.svg)))
 $(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,authagraph,\
-	$(GENERATED_SVG_DIR)/network-infrastructure-sites-authagraph-44-19.052559.svg))
+	$(call generated_svg,network-infrastructure-sites-authagraph-44-19.052559.svg)))
 $(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,dymaxion,\
-	$(GENERATED_SVG_DIR)/network-infrastructure-sites-dymaxion-44-20.78461.svg))
+	$(call generated_svg,network-infrastructure-sites-dymaxion-44-20.78461.svg)))
 $(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,myriahedral,\
-	$(GENERATED_SVG_DIR)/network-infrastructure-sites-myriahedral-44-24.75.svg))
+	$(call generated_svg,network-infrastructure-sites-myriahedral-44-24.75.svg)))
 $(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,star-x,\
-	$(GENERATED_SVG_DIR)/network-infrastructure-sites-star-x-34-44.svg))
+	$(call generated_svg,network-infrastructure-sites-star-x-34-44.svg)))
 $(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,voronoi,\
-	$(GENERATED_SVG_DIR)/network-infrastructure-sites-voronoi-44-22.916667.svg))
+	$(call generated_svg,network-infrastructure-sites-voronoi-44-22.916667.svg)))
 
 generate-network-infrastructure: $(NETWORK_INFRASTRUCTURE_SITES_SVGS)
 generate-network-infrastructure-sites: $(NETWORK_INFRASTRUCTURE_SITES_SVGS)
@@ -1819,8 +2019,9 @@ $(2): $(NETWORK_INFRASTRUCTURE_GENERATOR) \
 		$(NETWORK_INFRASTRUCTURE_CLOUD_MANIFEST) \
 		$(SUBMARINE_CABLE_ROUTES) $(SUBMARINE_CABLE_LANDINGS) \
 		$(INTERNET_EXCHANGE_BUILDINGS) $(NATURAL_EARTH_STAMP) \
-		| check-network-infrastructure-topology-sources $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+		| check-network-infrastructure-topology-sources \
+		$(call artifact_directory,$(2))
+	cd "$(call artifact_directory,$(2))" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(NETWORK_INFRASTRUCTURE_GENERATOR))" $(1) \
@@ -1831,17 +2032,17 @@ $(2): $(NETWORK_INFRASTRUCTURE_GENERATOR) \
 endef
 
 $(eval $(call NETWORK_INFRASTRUCTURE_TOPOLOGY_PROJECTION_RULES,cahill-keyes,\
-	$(GENERATED_SVG_DIR)/network-infrastructure-topology-ck-44-22.svg))
+	$(call generated_svg,network-infrastructure-topology-ck-44-22.svg)))
 $(eval $(call NETWORK_INFRASTRUCTURE_TOPOLOGY_PROJECTION_RULES,authagraph,\
-	$(GENERATED_SVG_DIR)/network-infrastructure-topology-authagraph-44-19.052559.svg))
+	$(call generated_svg,network-infrastructure-topology-authagraph-44-19.052559.svg)))
 $(eval $(call NETWORK_INFRASTRUCTURE_TOPOLOGY_PROJECTION_RULES,dymaxion,\
-	$(GENERATED_SVG_DIR)/network-infrastructure-topology-dymaxion-44-20.78461.svg))
+	$(call generated_svg,network-infrastructure-topology-dymaxion-44-20.78461.svg)))
 $(eval $(call NETWORK_INFRASTRUCTURE_TOPOLOGY_PROJECTION_RULES,myriahedral,\
-	$(GENERATED_SVG_DIR)/network-infrastructure-topology-myriahedral-44-24.75.svg))
+	$(call generated_svg,network-infrastructure-topology-myriahedral-44-24.75.svg)))
 $(eval $(call NETWORK_INFRASTRUCTURE_TOPOLOGY_PROJECTION_RULES,star-x,\
-	$(GENERATED_SVG_DIR)/network-infrastructure-topology-star-x-34-44.svg))
+	$(call generated_svg,network-infrastructure-topology-star-x-34-44.svg)))
 $(eval $(call NETWORK_INFRASTRUCTURE_TOPOLOGY_PROJECTION_RULES,voronoi,\
-	$(GENERATED_SVG_DIR)/network-infrastructure-topology-voronoi-44-22.916667.svg))
+	$(call generated_svg,network-infrastructure-topology-voronoi-44-22.916667.svg)))
 
 generate-network-infrastructure-topology: \
 	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_SVGS)
@@ -1852,34 +2053,98 @@ generate-network-infrastructure-topology-artifacts: \
 	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_PDFS) \
 	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_PNGS)
 
+# Checked-in, standard cleaned union of the 2022 and 20260805 cable snapshots.
+# The complete later snapshot is the default layer; only unmatched older
+# observations are added as subdued historical context.
+define FIBER_SYNTHESIZED_PROJECTION_RULES
+generate-fiber-synthesized-$(1): $(2)
+$(2): $(FIBER_SYNTHESIZED_GENERATOR) \
+		$(FIBER_SYNTHESIZED_MANIFEST) $(FIBER_SYNTHESIZED_ROUTES) \
+		$(FIBER_SYNTHESIZED_LANDINGS) $(FIBER_SYNTHESIZED_CHECKSUMS) \
+		$(NATURAL_EARTH_STAMP) \
+		| check-fiber-synthesized $(call artifact_directory,$(2))
+	cd "$(call artifact_directory,$(2))" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
+		"$(abspath $(FIBER_SYNTHESIZED_GENERATOR))" $(1) \
+		"$(abspath $(FIBER_SYNTHESIZED_DATA_DIR))"
+endef
+
+$(eval $(call FIBER_SYNTHESIZED_PROJECTION_RULES,cahill-keyes,\
+	$(call generated_svg,fiber-synthesized-ck-44-22.svg)))
+$(eval $(call FIBER_SYNTHESIZED_PROJECTION_RULES,authagraph,\
+	$(call generated_svg,fiber-synthesized-authagraph-44-19.052559.svg)))
+$(eval $(call FIBER_SYNTHESIZED_PROJECTION_RULES,dymaxion,\
+	$(call generated_svg,fiber-synthesized-dymaxion-44-20.78461.svg)))
+$(eval $(call FIBER_SYNTHESIZED_PROJECTION_RULES,myriahedral,\
+	$(call generated_svg,fiber-synthesized-myriahedral-44-24.75.svg)))
+$(eval $(call FIBER_SYNTHESIZED_PROJECTION_RULES,star-x,\
+	$(call generated_svg,fiber-synthesized-star-x-34-44.svg)))
+$(eval $(call FIBER_SYNTHESIZED_PROJECTION_RULES,voronoi,\
+	$(call generated_svg,fiber-synthesized-voronoi-44-22.916667.svg)))
+
+generate-fiber-synthesized: $(FIBER_SYNTHESIZED_SVGS)
+generate-fiber-synthesized-projections: $(FIBER_SYNTHESIZED_SVGS)
+generate-fiber-synthesized-artifacts: $(FIBER_SYNTHESIZED_SVGS) \
+	$(FIBER_SYNTHESIZED_PDFS) $(FIBER_SYNTHESIZED_PNGS)
+
 # $(1): command-line projection name; $(2): Bathymetry Roulette product.
 define BATHYMETRY_ROULETTE_PROJECTION_RULES
 generate-bathymetry-roulette-$(1): $(2)
 $(2): $(BATHYMETRY_ROULETTE_GENERATOR) $(NATURAL_EARTH_STAMP) \
-		| $(GENERATED_SVG_DIR)
-	cd "$(GENERATED_SVG_DIR)" && \
+		| $(call artifact_directory,$(2))
+	cd "$(call artifact_directory,$(2))" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(BATHYMETRY_ROULETTE_GENERATOR))" $(1)
 endef
 
 $(eval $(call BATHYMETRY_ROULETTE_PROJECTION_RULES,cahill-keyes,\
-	$(GENERATED_SVG_DIR)/bathymetry-roulette-ck-44-22.svg))
+	$(call generated_svg,bathymetry-roulette-ck-44-22.svg)))
 $(eval $(call BATHYMETRY_ROULETTE_PROJECTION_RULES,authagraph,\
-	$(GENERATED_SVG_DIR)/bathymetry-roulette-authagraph-44-19.052559.svg))
+	$(call generated_svg,bathymetry-roulette-authagraph-44-19.052559.svg)))
 $(eval $(call BATHYMETRY_ROULETTE_PROJECTION_RULES,dymaxion,\
-	$(GENERATED_SVG_DIR)/bathymetry-roulette-dymaxion-44-20.78461.svg))
+	$(call generated_svg,bathymetry-roulette-dymaxion-44-20.78461.svg)))
 $(eval $(call BATHYMETRY_ROULETTE_PROJECTION_RULES,myriahedral,\
-	$(GENERATED_SVG_DIR)/bathymetry-roulette-myriahedral-44-24.75.svg))
+	$(call generated_svg,bathymetry-roulette-myriahedral-44-24.75.svg)))
 $(eval $(call BATHYMETRY_ROULETTE_PROJECTION_RULES,star-x,\
-	$(GENERATED_SVG_DIR)/bathymetry-roulette-star-x-34-44.svg))
+	$(call generated_svg,bathymetry-roulette-star-x-34-44.svg)))
 $(eval $(call BATHYMETRY_ROULETTE_PROJECTION_RULES,voronoi,\
-	$(GENERATED_SVG_DIR)/bathymetry-roulette-voronoi-44-22.916667.svg))
+	$(call generated_svg,bathymetry-roulette-voronoi-44-22.916667.svg)))
 
 generate-bathymetry-roulette: $(BATHYMETRY_ROULETTE_SVGS)
 generate-bathymetry-roulette-projections: $(BATHYMETRY_ROULETTE_SVGS)
 generate-bathymetry-roulette-artifacts: $(BATHYMETRY_ROULETTE_SVGS) \
 	$(BATHYMETRY_ROULETTE_PDFS) $(BATHYMETRY_ROULETTE_PNGS)
+
+# $(1): command-line projection name; $(2): Bathymetry Hamonshu product.
+define BATHYMETRY_HAMONSHU_PROJECTION_RULES
+generate-bathymetry-hamonshu-$(1): $(2)
+$(2): $(BATHYMETRY_HAMONSHU_GENERATOR) $(NATURAL_EARTH_STAMP) \
+		| $(call artifact_directory,$(2))
+	cd "$(call artifact_directory,$(2))" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
+		"$(abspath $(BATHYMETRY_HAMONSHU_GENERATOR))" $(1)
+endef
+
+$(eval $(call BATHYMETRY_HAMONSHU_PROJECTION_RULES,cahill-keyes,\
+	$(call generated_svg,bathymetry-hamonshu-ck-44-22.svg)))
+$(eval $(call BATHYMETRY_HAMONSHU_PROJECTION_RULES,authagraph,\
+	$(call generated_svg,bathymetry-hamonshu-authagraph-44-19.052559.svg)))
+$(eval $(call BATHYMETRY_HAMONSHU_PROJECTION_RULES,dymaxion,\
+	$(call generated_svg,bathymetry-hamonshu-dymaxion-44-20.78461.svg)))
+$(eval $(call BATHYMETRY_HAMONSHU_PROJECTION_RULES,myriahedral,\
+	$(call generated_svg,bathymetry-hamonshu-myriahedral-44-24.75.svg)))
+$(eval $(call BATHYMETRY_HAMONSHU_PROJECTION_RULES,star-x,\
+	$(call generated_svg,bathymetry-hamonshu-star-x-34-44.svg)))
+$(eval $(call BATHYMETRY_HAMONSHU_PROJECTION_RULES,voronoi,\
+	$(call generated_svg,bathymetry-hamonshu-voronoi-44-22.916667.svg)))
+
+generate-bathymetry-hamonshu: $(BATHYMETRY_HAMONSHU_SVGS)
+generate-bathymetry-hamonshu-projections: $(BATHYMETRY_HAMONSHU_SVGS)
+generate-bathymetry-hamonshu-artifacts: $(BATHYMETRY_HAMONSHU_SVGS) \
+	$(BATHYMETRY_HAMONSHU_PDFS) $(BATHYMETRY_HAMONSHU_PNGS)
 
 generate-water-myriahedral: generate-water-myriahedral-perspectives \
 	generate-myriahedral-slices
@@ -1917,30 +2182,47 @@ define EXPORT_PNG
 	fi
 endef
 
-$(GENERATED_PDFS) $(NETWORK_INFRASTRUCTURE_TOPOLOGY_PDFS) \
-		$(CLOUD_ATMOSPHERE_PDFS): \
-		$(GENERATED_PDF_DIR)/%.pdf: \
-		$(GENERATED_SVG_DIR)/%.svg | $(GENERATED_PDF_DIR)
-	$(EXPORT_PDF)
+ALL_EXPORT_PDFS := $(sort $(GENERATED_PDFS) \
+	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_PDFS) $(CLOUD_ATMOSPHERE_PDFS))
+ALL_LANDSCAPE_PNGS := $(sort $(LANDSCAPE_PNGS) \
+	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_LANDSCAPE_PNGS))
 
-$(LANDSCAPE_PNGS) $(NETWORK_INFRASTRUCTURE_TOPOLOGY_LANDSCAPE_PNGS): \
-		$(GENERATED_PNG_DIR)/%.png: \
-		$(GENERATED_SVG_DIR)/%.svg Makefile | $(GENERATED_PNG_DIR)
-	$(call EXPORT_PNG,--export-width)
+define PROJECTION_EXPORT_RULES
+$(filter $(GENERATED_DIR)/$(1)/pdf/%,$(ALL_EXPORT_PDFS)): \
+		$(GENERATED_DIR)/$(1)/pdf/%.pdf: \
+		$(GENERATED_DIR)/$(1)/svg/%.svg | $(GENERATED_DIR)/$(1)/pdf
+	$$(EXPORT_PDF)
 
-$(PORTRAIT_PNGS): $(GENERATED_PNG_DIR)/%.png: \
-		$(GENERATED_SVG_DIR)/%.svg Makefile | $(GENERATED_PNG_DIR)
-	$(call EXPORT_PNG,--export-height)
+$(filter $(GENERATED_DIR)/$(1)/png/%,$(ALL_LANDSCAPE_PNGS)): \
+		$(GENERATED_DIR)/$(1)/png/%.png: \
+		$(GENERATED_DIR)/$(1)/svg/%.svg Makefile \
+		| $(GENERATED_DIR)/$(1)/png
+	$$(call EXPORT_PNG,--export-width)
+
+$(filter $(GENERATED_DIR)/$(1)/png/%,$(PORTRAIT_PNGS)): \
+		$(GENERATED_DIR)/$(1)/png/%.png: \
+		$(GENERATED_DIR)/$(1)/svg/%.svg Makefile \
+		| $(GENERATED_DIR)/$(1)/png
+	$$(call EXPORT_PNG,--export-height)
+
+$(filter $(GENERATED_DIR)/$(1)/thumbnail/%,$(SNAPSHOT_THUMBNAILS)): \
+		$(GENERATED_DIR)/$(1)/thumbnail/%.png: \
+		$(GENERATED_DIR)/$(1)/svg/%.svg Makefile \
+		| $(GENERATED_DIR)/$(1)/thumbnail
+	$$(call EXPORT_PNG,--export-width)
+endef
+
+$(foreach projection,$(PROJECTION_NAMES),\
+	$(eval $(call PROJECTION_EXPORT_RULES,$(projection))))
 
 # Recursive release targets pass PNG_LONG_SIDE on the command line. Keep the
 # snapshot contract at 480 pixels even when the full-size export setting is
 # inherited by assets-single or assets-resilient.
-$(CK_SNAPSHOT_THUMBNAILS): override PNG_LONG_SIDE=$(CK_SNAPSHOT_WIDTH)
-$(CK_SNAPSHOT_THUMBNAILS): $(CK_SNAPSHOT_THUMBNAIL_DIR)/%.png: \
-		$(GENERATED_SVG_DIR)/%.svg Makefile | $(CK_SNAPSHOT_THUMBNAIL_DIR)
-	$(call EXPORT_PNG,--export-width)
+$(SNAPSHOT_THUMBNAILS): override PNG_LONG_SIDE=$(SNAPSHOT_WIDTH)
 
 generate-snapshot-ck: $(CK_SNAPSHOT_THUMBNAILS)
+generate-snapshot-all: $(SNAPSHOT_THUMBNAILS)
+generate-snapshots: $(SNAPSHOT_THUMBNAILS)
 
 generate-voroni: generate-voronoi
 
@@ -2000,6 +2282,5 @@ clean:
 		$(CK_WEB_MODULE) $(CK_WEB_WASM) \
 		$(MYRIA_WEB_MODULE) $(MYRIA_WEB_WASM) \
 		$(PROJECTIONS_WEB_MODULE) $(PROJECTIONS_WEB_WASM)
-	$(RM) -r "$(GENERATED_DIR)/svg" "$(GENERATED_DIR)/png" \
-		"$(GENERATED_DIR)/pdf" "$(CK_SNAPSHOT_THUMBNAIL_DIR)"
+	$(RM) -r $(GENERATED_PROJECTION_DIRS)
 	$(RM) -r "$(DOXYGEN_OUTPUT_DIR)"

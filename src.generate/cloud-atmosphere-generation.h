@@ -203,8 +203,6 @@ inline void
 add_background(generation::projection_document& document,
                const generation::projection_context& context)
 {
-  svg::group_element layer;
-  layer.start_element("cloud-atmosphere-background");
   svg::rect_element rectangle;
   rectangle.start_element();
   rectangle.add_data({0, 0, context.map_frame.width(),
@@ -212,9 +210,15 @@ add_background(generation::projection_document& document,
   rectangle.add_style({{17, 26, 38}, 1, svg::color::none, 0, 0});
   rectangle.add_raw("id=\"cloud-atmosphere-ground\"");
   rectangle.finish_element();
-  layer.add_element(rectangle);
-  layer.finish_element();
-  document.add_element(layer);
+
+  // Retain the former dark ground as an inspectable SVG layer without
+  // allowing it to obscure the projection carrier by default.  An editor or
+  // downstream viewer can reveal the group by removing display:none.
+  document.add_raw(
+    "<g id=\"cloud-atmosphere-background\" style=\"display:none\" "
+    "data-default-visible=\"false\">\n");
+  document.add_element(rectangle);
+  document.add_raw("</g>\n");
 }
 
 inline svg::style
@@ -444,8 +448,7 @@ add_coastline(generation::projection_document& document,
   if (context.spec.kind == generation::projection_kind::star_x)
     {
       const natural_earth::antarctic_cap cap
-        = natural_earth::make_antarctic_cap(
-          context, natural_earth::land_spec);
+        = natural_earth::make_antarctic_cap(context);
       static_cast<void>(natural_earth::render_star_x_source(
         layer, coastline, context, cap));
     }
@@ -659,10 +662,15 @@ verify(const std::string& generated,
     std::string_view {"coverage-note"},
   };
   for (const std::string_view layer : required_layers)
-    atmosphere_require(generated.find("<g id=\"" + std::string(layer) + "\">")
+    atmosphere_require(generated.find("<g id=\"" + std::string(layer))
                          != std::string::npos,
                        "generated cloud-atmosphere SVG is missing layer "
                          + std::string(layer));
+  atmosphere_require(
+    generated.find(
+      "<g id=\"cloud-atmosphere-background\" style=\"display:none\" "
+      "data-default-visible=\"false\">") != std::string::npos,
+    "generated cloud-atmosphere background must be hidden by default");
   constexpr std::array required_solar_contours {
     std::string_view {"solar-altitude-60-segment-"},
     std::string_view {"solar-altitude-30-segment-"},

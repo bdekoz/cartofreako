@@ -34,10 +34,11 @@ inline constexpr std::array<std::string_view, 6> resource_passes {
   "resources-mineral", "resources-human",
 };
 
-inline constexpr std::array<std::string_view, 17> supported_passes {
+inline constexpr std::array<std::string_view, 19> supported_passes {
   "geometry", "graticules", "earth", "water", "astronomy",
   "orbital-technosphere", "network-swarm", "bathymetry-roulette",
-  "network-infrastructure", "resources-energy", "resources-food",
+  "bathymetry-hamonshu", "network-infrastructure", "fiber-synthesized",
+  "resources-energy", "resources-food",
   "resources-fauna", "resources-flora", "resources-mineral",
   "resources-human", "anthropocene",
   "cloud-atmosphere",
@@ -114,9 +115,15 @@ canonical_pass(const std::string_view input)
     return "network-swarm";
   if (value == "network-infrastructure" || value == "infrastructure")
     return "network-infrastructure";
+  if (value == "fiber" || value == "fiber-map"
+      || value == "fiber-synthesized")
+    return "fiber-synthesized";
   if (value == "bathymetry-roulette" || value == "bathymetry-rolette"
       || value == "art-agua-roulette")
     return "bathymetry-roulette";
+  if (value == "bathymetry-hamonshu" || value == "hamonshu"
+      || value == "art-agua-hamonshu")
+    return "bathymetry-hamonshu";
   if (value == "anthropocene")
     return "anthropocene";
   if (value == "resources" || value == "resource" || value == "resouces")

@@ -145,9 +145,10 @@ a separate global grid and checks every item 18 location.
 20. **Natural Earth.** “1:10m Physical Vectors.”
     [Dataset page](https://www.naturalearthdata.com/downloads/10m-physical-vectors/).
 
-    The mainland land geometry determines the Stage 7 `ant_r`. GDAL uses the
-    resulting four source-circle boundaries to split every physical layer;
-    the same radius and transform also drive the Star-X graticule cap.
+    GDAL uses the fixed `60°S` boundary to split every physical layer. Natural
+    Earth mainland geometry supplies the uncut lower-quadrant baseline used
+    to place the unified continent; the same cut and transform drive the
+    Star-X graticule cap.
 
 ## Source-to-implementation map
 
@@ -157,7 +158,7 @@ a separate global grid and checks every item 18 location.
 | Left/right split, 180-degree rotation, `4 3 / 1 2` ordering | 2022 Star-X project description and plate diagram |
 | 17:22 variable carrier ratio | Historical 34-by-44 four-panel composition |
 | Gap closure and 120-percent page scale | Requested Stage 4/5 geometry and repository concept drawing |
-| North-pole star and unified Antarctica | Repository concept drawing for intent; analytic star plus Natural Earth-derived Stage 7 cap for final geometry |
+| North-pole star and unified Antarctica | Repository concept drawing for intent; analytic star, fixed `60°S` cut, and Natural Earth-derived vertical alignment for final geometry |
 | Official octant numbering | Keyes's eight-octant and polar-assembly page |
 | Longitude registration | Visionscarto asset family and shared C++ helper |
 | Numeric compatibility | Perl-derived CK anchors and Star-X API test |

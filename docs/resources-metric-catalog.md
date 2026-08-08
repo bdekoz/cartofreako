@@ -21,7 +21,7 @@ separate from whether an upstream source happens to require credentials.
 | Pass class | Definition | Build and release behavior | Current examples |
 | --- | --- | --- | --- |
 | **Standard pass** | Implemented, source-pinned, coverage-checked, and released | Included in the offline `make all` graph and generated for all six projections; appears in the public snapshot catalog | All 14 resource products listed below |
-| **Optional pass** | Implemented, but deliberately excluded from the standard graph because it requires credentials, license acceptance, or an explicit operator decision | Authorized with `make authorize-external` and run through a bounded opt-in target; absence never breaks `make all` | P-Tree Cloud-atmosphere and licensed network topology; no resource metric currently has this class |
+| **Optional pass** | Implemented, but initially excluded from the standard graph because it requires credentials, license acceptance, or an explicit operator decision | Run through `generate-authorized-external`; a fully successful run persists only the pass name and enables its prepared artifact graph in later `make all` runs for that checkout. Absence never breaks a clean checkout | P-Tree Cloud-atmosphere and licensed network topology; no resource metric currently has this class |
 | **Exploration only** | Cataloged, researched, or source-tested, but not released | Has no production output tag or complete artifact rule and is absent from `make all`, release manifests, and public preview sheets | Every resource metric marked `planned`, `supplemental`, or `research-gap` below |
 
 Authorization and pass maturity are independent. NASA FIRMS, for example,

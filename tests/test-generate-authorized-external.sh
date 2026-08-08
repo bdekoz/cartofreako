@@ -32,6 +32,7 @@ EXTERNAL_AUTHORIZER="$fake_authorizer" \
 JAXA_CERTIFICATE_INSTALLER="$fake_installer" \
 EXTERNAL_SELECTION_MODE=strict \
 PTREE_CACERT="$temporary_dir/strict/certificate.pem" \
+EXTERNAL_AUTHORIZATION_STATE="$temporary_dir/strict/enabled" \
 MAKE_COMMAND="$fake_make" \
   "$driver" ptree jaxa-ptree firms nasa-firms topology network-topology \
   > "$temporary_dir/output"
@@ -48,6 +49,14 @@ authorize jaxa-ptree nasa-firms network-topology
 --no-print-directory generate-network-infrastructure-topology-artifacts
 EXPECTED
 diff -u "$temporary_dir/expected" "$apply_log"
+cat > "$temporary_dir/strict-expected-enabled" <<'EXPECTED_ENABLED'
+jaxa-ptree
+nasa-firms
+network-topology
+EXPECTED_ENABLED
+diff -u "$temporary_dir/strict-expected-enabled" \
+  "$temporary_dir/strict/enabled"
+test "$(stat -Lc '%a' "$temporary_dir/strict/enabled")" = 600
 
 grep -Fq \
   'no Anthropocene release artifact was rendered from the unpromoted candidate' \
@@ -66,6 +75,7 @@ JAXA_CERTIFICATE_INSTALLER="$fake_installer" \
 EXTERNAL_SELECTION_MODE=auto \
 PTREE_NETRC="$temporary_dir/netrc" \
 PTREE_CACERT="$temporary_dir/auto/certificate.pem" \
+EXTERNAL_AUTHORIZATION_STATE="$temporary_dir/auto/enabled" \
 FIRMS_MAP_KEY='' \
 NETWORK_TOPOLOGY_LICENSE_ACCEPTED='' \
 MAKE_COMMAND="$fake_make" \
@@ -80,6 +90,7 @@ authorize jaxa-ptree
 --no-print-directory generate-cloud-atmosphere-artifacts
 AUTO_EXPECTED
 diff -u "$temporary_dir/auto-expected" "$auto_log"
+test "$(cat "$temporary_dir/auto/enabled")" = jaxa-ptree
 grep -Fq 'skipping nasa-firms (FIRMS_MAP_KEY is unset)' \
   "$temporary_dir/auto-output"
 grep -Fq 'skipping network-topology (license acknowledgement is unset)' \
@@ -87,11 +98,13 @@ grep -Fq 'skipping network-topology (license acknowledgement is unset)' \
 
 if EXTERNAL_GENERATION_TEST_LOG="$temporary_dir/invalid.log" \
      EXTERNAL_AUTHORIZER="$fake_authorizer" \
+     EXTERNAL_AUTHORIZATION_STATE="$temporary_dir/invalid-enabled" \
      MAKE_COMMAND="$fake_make" "$driver" unknown \
      > "$temporary_dir/invalid-output" 2>&1; then
   echo 'unknown external pass unexpectedly succeeded' >&2
   exit 1
 fi
 test ! -e "$temporary_dir/invalid.log"
+test ! -e "$temporary_dir/invalid-enabled"
 
 printf '%s\n' 'authorized external generation driver tests passed'

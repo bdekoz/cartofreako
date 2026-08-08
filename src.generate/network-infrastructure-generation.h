@@ -128,12 +128,12 @@ add_line(svg::group_element& layer, const svg::point_2t start,
 
 inline svg::typography
 infrastructure_typography(const double size = 0.13,
-                          const svg::color_qi color = {226, 232, 229})
+                          const svg::color_qi color = {37, 48, 51})
 {
   svg::typography result = generation::with_configured_label_font(
     svg::k::hyperl_typo);
   result._M_size = size;
-  result._M_style = {color, 0.96, {8, 13, 17}, 0.92, 0.01};
+  result._M_style = {color, 1, {250, 251, 250}, 0.94, 0.012};
   result._M_anchor = svg::typography::anchor::start;
   result._M_align = svg::typography::align::left;
   result._M_baseline = svg::typography::baseline::central;
@@ -150,7 +150,7 @@ add_background(generation::projection_document& document,
   rectangle.start_element();
   rectangle.add_data({0, 0, context.map_frame.width(),
                       context.map_frame.height()});
-  rectangle.add_style({{8, 13, 17}, 1, svg::color::none, 0, 0});
+  rectangle.add_style({{242, 244, 243}, 1, svg::color::none, 0, 0});
   rectangle.add_raw("id=\"network-infrastructure-ocean\"");
   rectangle.finish_element();
   layer.add_element(rectangle);
@@ -165,7 +165,7 @@ add_subdued_land(generation::projection_document& document,
   const natural_earth::layer_spec land {
     "terrestrial-land", "Subdued Natural Earth 1:10m land",
     "ne_10m_land.shp", natural_earth::geometry_role::area,
-    natural_earth::area_style({34, 44, 46}), 0.05, 0.82,
+    natural_earth::area_style({216, 221, 219}), 0.05, 0.82,
   };
   svg::group_element layer;
   layer.start_element(std::string(land.id));
@@ -173,7 +173,7 @@ add_subdued_land(generation::projection_document& document,
   if (context.spec.kind == generation::projection_kind::star_x)
     {
       const natural_earth::antarctic_cap cap
-        = natural_earth::make_antarctic_cap(context, land);
+        = natural_earth::make_antarctic_cap(context);
       static_cast<void>(natural_earth::render_star_x_source(
         layer, land, context, cap));
     }
@@ -276,8 +276,8 @@ add_submarine_cables(generation::projection_document& document,
           "submarine cable route produced no projected path: "
             + route.feature_id);
         const svg::style style = route.planned
-          ? svg::style {svg::color::none, 0, {236, 174, 86}, 0.64, 0.016}
-          : svg::style {svg::color::none, 0, {62, 173, 199}, 0.52, 0.020};
+          ? svg::style {svg::color::none, 0, {137, 76, 0}, 0.86, 0.020}
+          : svg::style {svg::color::none, 0, {0, 96, 120}, 0.82, 0.024};
         std::string attributes
           = "data-submarine-cable-route=\"true\" data-cable-id=\""
           + xml_escape(route.cable_id) + "\" data-cable-name=\""
@@ -402,7 +402,7 @@ add_exchange_membership(generation::projection_document& document,
                 + exchange.slug);
             membership.add_element(svg::make_path(
               path_data,
-              {svg::color::none, 0, {217, 105, 183}, 0.30, 0.009}, "", true,
+              {svg::color::none, 0, {139, 28, 99}, 0.58, 0.012}, "", true,
               "data-internet-exchange-membership=\"true\" data-exchange=\""
                 + xml_escape(exchange.slug) + "\" data-building-count=\""
                 + std::to_string(exchange.building_indices.size())
@@ -414,7 +414,8 @@ add_exchange_membership(generation::projection_document& document,
           : " data-internet-exchange-membership=\"true\""
             " data-topology-semantics=\"co-located-logical-membership\"";
         add_circle(hubs, generation::project_point(context, hub),
-          {svg::color::none, 0, {232, 138, 207}, 0.68, 0.010}, 0.022,
+          {svg::color::none, 0, {139, 28, 99}, 0.86, 0.013},
+          profile.marker_radius * 0.8,
           "data-internet-exchange-logical-hub=\"true\" data-exchange=\""
             + xml_escape(exchange.slug) + "\" data-building-count=\""
             + std::to_string(exchange.building_indices.size())
@@ -482,7 +483,7 @@ add_cluster_tethers(generation::projection_document& document,
       if (generation::point_distance(point.geographic_point, point.display_point)
           >= profile.minimum_tether)
         add_line(layer, point.geographic_point, point.display_point,
-                 {{82, 102, 105}, 0, {82, 102, 105}, 0.34, 0.005},
+                 {{70, 83, 85}, 0, {70, 83, 85}, 0.48, 0.007},
                  "data-source-id=\"" + xml_escape(point.source.id)
                    + "\" data-semantics=\"display-displacement\"");
   layer.finish_element();
@@ -505,22 +506,22 @@ add_cloud_marker(svg::group_element& layer,
     + xml_escape(site.location_precision) + "\"";
   if (site.entity_type == "edge_pop")
     add_polygon(layer, point.display_point,
-      {{232, 161, 72}, 0.82, {250, 204, 124}, 0.92, 0.006},
+      {{137, 76, 0}, 0.90, {82, 51, 5}, 0.98, 0.008},
       profile.marker_radius, 6, attributes);
   else if (site.entity_type == "data_center")
     add_polygon(layer, point.display_point,
-      {{79, 195, 205}, 0.86, {178, 242, 242}, 0.94, 0.007},
+      {{0, 96, 120}, 0.88, {0, 62, 79}, 0.98, 0.009},
       profile.marker_radius * 1.05, 4, attributes, 45);
   else if (site.entity_type == "cloud_region"
            || site.entity_type == "availability_zone"
            || site.entity_type == "local_zone")
     add_polygon(layer, point.display_point,
-      {{123, 126, 230}, 0.82, {203, 199, 255}, 0.94, 0.006},
+      {{77, 58, 166}, 0.88, {48, 35, 116}, 0.98, 0.008},
       profile.marker_radius, site.entity_type == "local_zone" ? 3U : 4U,
       attributes);
   else
     add_circle(layer, point.display_point,
-      {{128, 153, 176}, 0.76, {207, 221, 231}, 0.9, 0.006},
+      {{55, 67, 72}, 0.82, {37, 48, 51}, 0.96, 0.008},
       profile.marker_radius * 0.9, attributes);
 }
 
@@ -549,7 +550,7 @@ add_infrastructure_points(generation::projection_document& document,
         {
           const landing_point& landing = landing_source(point, dataset);
           add_circle(landings, point.display_point,
-            {{50, 184, 213}, 0.92, {203, 247, 255}, 0.96, 0.007},
+            {{0, 96, 120}, 0.90, {0, 62, 79}, 0.98, 0.009},
             profile.marker_radius * 0.78,
             common_point_attributes(point)
               + " data-infrastructure-landing-point=\"true\" data-name=\""
@@ -562,7 +563,7 @@ add_infrastructure_points(generation::projection_document& document,
         {
           const exchange_building& building = building_source(point, dataset);
           add_polygon(buildings, point.display_point,
-            {{212, 92, 173}, 0.88, {255, 198, 234}, 0.98, 0.007},
+            {{139, 28, 99}, 0.88, {91, 17, 64}, 0.98, 0.009},
             profile.marker_radius * 0.92, 4,
             common_point_attributes(point)
               + " data-infrastructure-exchange-building=\"true\" data-name=\""
@@ -633,7 +634,7 @@ add_point_labels(generation::projection_document& document,
         break;
       const double x = std::get<0>(point->display_point);
       const double y = std::get<1>(point->display_point);
-      if (y < 0.88 || y > context.map_frame.height() - 0.2)
+      if (y < 1.05 || y > context.map_frame.height() - 0.2)
         continue;
       const std::pair grid {
         static_cast<int>(std::floor(x / 1.0)),
@@ -695,15 +696,15 @@ add_cable_labels(generation::projection_document& document,
             context, source[source.size() / 2]);
           const double x = std::get<0>(point);
           const double y = std::get<1>(point);
-          if (y < 0.9 || y > context.map_frame.height() - 0.2)
+          if (y < 1.05 || y > context.map_frame.height() - 0.2)
             continue;
           const std::pair grid {static_cast<int>(std::floor(x / 1.5)),
                                 static_cast<int>(std::floor(y / 0.45))};
           if (!occupied.insert(grid).second)
             continue;
           svg::typography typography = infrastructure_typography(
-            0.105, system->planned ? svg::color_qi {238, 186, 105}
-                                  : svg::color_qi {128, 205, 218});
+            0.105, system->planned ? svg::color_qi {137, 76, 0}
+                                  : svg::color_qi {0, 96, 120});
           typography._M_anchor = svg::typography::anchor::middle;
           typography._M_align = svg::typography::align::center;
           svg::styled_text(layer, xml_escape(system->name), point, typography);
@@ -724,19 +725,19 @@ add_legend(generation::projection_document& document,
   layer.start_element("network-infrastructure-legend-and-provenance");
   svg::rect_element band;
   band.start_element();
-  band.add_data({0, 0, context.map_frame.width(), 0.82});
-  band.add_style({{5, 9, 12}, 0.91, svg::color::none, 0, 0});
+  band.add_data({0, 0, context.map_frame.width(), 0.96});
+  band.add_style({{226, 230, 228}, 0.96, svg::color::none, 0, 0});
   band.finish_element();
   layer.add_element(band);
   const bool topology = profile.product == infrastructure_product::topology;
   svg::typography title = infrastructure_typography(
-    0.22, topology ? svg::color_qi {238, 180, 85}
-                  : svg::color_qi {232, 161, 72});
+    0.44, topology ? svg::color_qi {116, 87, 0}
+                  : svg::color_qi {137, 76, 0});
   title._M_w = svg::typography::weight::bold;
   svg::styled_text(layer,
     topology ? "NETWORK INFRASTRUCTURE / TOPOLOGY"
              : "NETWORK INFRASTRUCTURE / SITES",
-    {0.32, 0.23}, title);
+    {0.32, 0.27}, title);
   std::string counts = std::to_string(dataset.cloud.sites.size())
     + " located cloud/CDN records";
   if (topology)
@@ -744,16 +745,16 @@ add_legend(generation::projection_document& document,
       + " cable systems  |  " + std::to_string(dataset.cables.landings.size())
       + " landings  |  " + std::to_string(dataset.exchanges.buildings.size())
       + " IX facilities";
-  svg::styled_text(layer, counts, {0.32, 0.48},
-                   infrastructure_typography(0.112, {187, 201, 199}));
+  svg::styled_text(layer, counts, {0.32, 0.61},
+                   infrastructure_typography(0.112, {55, 67, 72}));
   const std::string semantics = topology
     ? "solid cable = physical route  ·  dashed magenta = logical IX membership, not fiber"
     : "provider/source records = sites only  ·  no links inferred";
-  svg::styled_text(layer, semantics, {0.32, 0.69},
-                   infrastructure_typography(0.103, {150, 180, 182}));
+  svg::styled_text(layer, semantics, {0.32, 0.81},
+                   infrastructure_typography(0.103, {70, 83, 85}));
   svg::typography attribution = infrastructure_typography(
-    0.095, topology ? svg::color_qi {232, 190, 127}
-                   : svg::color_qi {158, 178, 176});
+    0.095, topology ? svg::color_qi {116, 87, 0}
+                   : svg::color_qi {70, 83, 85});
   attribution._M_anchor = svg::typography::anchor::end;
   attribution._M_align = svg::typography::align::right;
   const std::string notice = topology
@@ -762,7 +763,7 @@ add_legend(generation::projection_document& document,
     : "cloud_cdn_cache: ODC-By 1.0; source-specific terms retained · "
       + profile.cloud.snapshot + " snapshot";
   svg::styled_text(layer, notice,
-    {context.map_frame.width() - 0.32, 0.69}, attribution);
+    {context.map_frame.width() - 0.32, 0.81}, attribution);
   layer.finish_element();
   document.add_element(layer);
 }
@@ -777,6 +778,8 @@ metadata_element(const generation::projection_spec& spec,
   std::string result = "<metadata id=\"network-infrastructure-metadata\""
     " data-product=\"" + std::string(topology ? "topology" : "sites") + "\""
     " data-profile=\"" + xml_escape(profile.path.filename().string()) + "\""
+    " data-marker-radius-inches=\"" + format_number(profile.marker_radius, 3)
+      + "\" data-background-color=\"#f2f4f3\" data-title-scale=\"2\""
     " data-projection=\"" + std::string(spec.argument) + "\""
     " data-generated-artifact-license=\""
       + xml_escape(profile.generated_artifact_license) + "\""
@@ -933,6 +936,9 @@ verify(const std::string& generated,
       "generated infrastructure SVG is missing layer " + std::string(layer));
   infrastructure_require(generated.find(
     "id=\"network-infrastructure-metadata\"") != std::string::npos
+    && generated.find("data-background-color=\"#f2f4f3\"")
+         != std::string::npos
+    && generated.find("data-title-scale=\"2\"") != std::string::npos
     && generated.find("data-cloud-manifest-sha256=\""
       + profile.cloud.manifest_sha256 + "\"") != std::string::npos,
     "generated infrastructure SVG is missing cloud provenance");

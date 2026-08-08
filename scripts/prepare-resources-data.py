@@ -940,6 +940,7 @@ def build_profile(
         "description": "Six independent resource families with fourteen released country or spatial products, explicit units, observation periods, and non-sparse coverage gates.",
         "snapshot_as_of": SNAPSHOT_DATE,
         "missing_semantics": "Missing is unknown and is never rendered as observed zero.",
+        "display": {"data_graphic_opacity": 0.30},
         "country_geometry": {
             "path": "countries-110m.geojson", "sha256": geometry_sha,
             "source_id": "natural-earth-admin0",

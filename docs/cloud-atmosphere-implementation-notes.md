@@ -35,7 +35,7 @@ map domains:
 | Visibility | Observer horizon and instrument/darkness filters | Day, civil, nautical, astronomical twilight, and night zones |
 | Observations | Stars, Solar System bodies, and transient catalogs | Cloud properties, aerosol optical depth, precipitation, and surface shortwave radiation |
 | Timestamp | Astronomy profile timestamp | Generator process-start instant |
-| Output contract | `astro-all-sky-*` and `astro-observer-*` | `cloud-atmosphere-*` |
+| Output contract | `astro-all-sky-*`, `astro-observer-ground-multiband-*`, and `astro-observer-hubble-*` | `cloud-atmosphere-*` |
 
 [`generation-instant.h`](../src.generate/generation-instant.h) supplies strict
 UTC parsing, Julian dates, `SOURCE_DATE_EPOCH`, and process clocks.
@@ -199,7 +199,9 @@ warp is reused across projections.
 
 Each SVG contains these ordered groups:
 
-1. `cloud-atmosphere-background`
+1. `cloud-atmosphere-background`, retained for inspection but emitted with
+   `display:none` and `data-default-visible="false"`; removing `display:none`
+   restores the former dark ground
 2. `solar-illumination`, including 60°/30° daylight, horizon, civil,
    nautical, and astronomical solar-altitude contours plus `subsolar-point`
 3. the seven profile layer IDs, when enabled
@@ -238,11 +240,13 @@ per-user certificate when missing, validates P-Tree access, then fetches,
 prepares, verifies, and exports all six SVG/PDF/PNG sets. The narrower targets
 remain useful for working from an already prepared snapshot.
 
-The family is deliberately absent from `make all`: a standard offline build
-cannot assume a P-Tree account or a current local observation snapshot. It is
-still available through explicit targets and through a configured profile
-that selects the pass. A missing prepared snapshot reports the exact fetch
-and prepare commands instead of silently falling back to fixture data.
+The family is deliberately absent from a clean checkout's `make all`: a
+standard offline build cannot assume a P-Tree account or a current local
+observation snapshot. After the end-to-end wrapper succeeds, it records
+`jaxa-ptree` in the local ignored authorization-state file, and later
+`make all` runs include the already prepared cloud artifacts. A missing
+prepared snapshot reports the exact fetch and prepare commands instead of
+silently falling back to fixture data.
 
 ## Validation and fixture
 

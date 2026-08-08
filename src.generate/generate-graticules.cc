@@ -225,8 +225,8 @@ add_antarctic_cap_boundaries(
   svg::group_element layer;
   layer.start_element("antarctic-cap-boundaries");
   layer.add_title(
-    "Stage 7 Antarctic source cuts and unified cap boundary; ant_r="
-    + std::to_string(cap.radius));
+    "Stage 7 fixed 60-degree-South source cuts and unified cap boundary; "
+    "maximum projected radius=" + std::to_string(cap.radius));
 
   svg::vrange unified;
   for (double longitude = -180; longitude < 180; longitude += 0.25)
@@ -383,8 +383,7 @@ generate_graticules(const projection_spec& spec)
   if (spec.kind == projection_kind::star_x)
     {
       natural_earth::initialize_gdal();
-      polar_cap.emplace(natural_earth::make_antarctic_cap(
-        context, natural_earth::land_spec));
+      polar_cap.emplace(natural_earth::make_antarctic_cap(context));
     }
   const natural_earth::antarctic_cap* cap
     = polar_cap.has_value() ? &*polar_cap : nullptr;

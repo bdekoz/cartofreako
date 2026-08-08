@@ -52,6 +52,7 @@ struct temperature_profile
   std::uint64_t high_scale_days = 8;
   std::uint64_t low_scale_days = 8;
   double minimum_nonzero_opacity = 0.34;
+  double data_graphic_opacity = 0.30;
   bool show_legend = true;
   std::string geojson;
   std::string geojson_sha256;
@@ -326,6 +327,8 @@ load_temperature_profile(const fs::path& path)
     display, "low_scale_days", "display");
   result.minimum_nonzero_opacity = temperature_number(
     display, "minimum_nonzero_opacity", "display");
+  result.data_graphic_opacity = temperature_number(
+    display, "data_graphic_opacity", "display");
   result.show_legend = temperature_bool(display, "show_legend", "display");
 
   const rj::Value& source = temperature_member(
@@ -352,7 +355,9 @@ load_temperature_profile(const fs::path& path)
                       "minimum_history_years must be positive");
   temperature_require(result.high_scale_days > 1 && result.low_scale_days > 1
                         && result.minimum_nonzero_opacity >= 0
-                        && result.minimum_nonzero_opacity <= 1,
+                        && result.minimum_nonzero_opacity <= 1
+                        && result.data_graphic_opacity > 0
+                        && result.data_graphic_opacity <= 1,
                       "temperature display scaling is invalid");
   temperature_require(temperature_sha256(result.source_manifest_sha256)
                         && temperature_sha256(result.geojson_sha256),

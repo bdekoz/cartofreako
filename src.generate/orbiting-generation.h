@@ -178,7 +178,7 @@ add_subdued_land(generation::projection_document& document,
   if (context.spec.kind == generation::projection_kind::star_x)
     {
       const natural_earth::antarctic_cap cap
-        = natural_earth::make_antarctic_cap(context, land);
+        = natural_earth::make_antarctic_cap(context);
       static_cast<void>(natural_earth::render_star_x_source(
         layer, land, context, cap));
     }

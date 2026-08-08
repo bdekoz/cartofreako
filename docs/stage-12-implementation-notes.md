@@ -207,6 +207,16 @@ existing data-review gate. Explicitly requested but unavailable passes fail,
 configured passes that fail live authorization fail, and a later failure does
 not undo earlier completed downloads or artifacts.
 
+Stage 13 adds persistence after that transaction. Only after all selected
+workflows finish does the driver atomically merge canonical pass names into
+the ignored `.cartofreako/authorized-external-passes` file with mode `0600`.
+It stores no credentials. Future `make all` graphs include Cloud-atmosphere
+when `jaxa-ptree` is recorded and licensed topology when
+`network-topology` is recorded. FIRMS remains a recorded acquisition/review
+authorization without a promoted render graph. A failure writes no new state;
+`EXTERNAL_AUTHORIZATION_STATE` can select another file, and
+`AUTHORIZED_EXTERNAL_PASSES=` temporarily suppresses all persisted additions.
+
 ## Hardware requirements
 
 The release-qualified reference machine remains the Framework Desktop used

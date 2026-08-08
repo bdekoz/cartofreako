@@ -26,6 +26,7 @@ main()
       "assets.static/network-infrastructure/"
       "network-infrastructure-topology-profile.json");
   assert(sites.product == infrastructure::infrastructure_product::sites);
+  assert(sites.marker_radius == 0.052);
   assert(!sites.topology_opt_in);
   assert(sites.include_cloud_sites && !sites.include_submarine_cables);
   assert(sites.cloud.expected_layers == 28);
@@ -33,6 +34,7 @@ main()
   assert(sites.cloud.expected_located == 1003);
   assert(topology.product
          == infrastructure::infrastructure_product::topology);
+  assert(topology.marker_radius == 0.046);
   assert(topology.topology_opt_in);
   assert(topology.generated_artifact_license.find("CC BY-NC-SA 3.0")
          != std::string::npos);

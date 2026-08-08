@@ -141,7 +141,9 @@ That wrapper runs the fetch, preparation, verification, and full SVG/PDF/PNG
 artifact target. If the per-user certificate is missing, the wrapper installs
 and fingerprint-verifies it before authorization. It is intentionally separate
 from `authorize-external`, which remains read-only and therefore expects the
-certificate to have been installed already.
+certificate to have been installed already. Only after the complete workflow
+succeeds does it record `jaxa-ptree` in the local ignored state file, enabling
+the prepared cloud artifact graph in later `make all` runs.
 
 ## 6. Confirm the result
 
@@ -170,7 +172,7 @@ assets.static/cloud-atmosphere/.prepared/cloud-atmosphere-latest.manifest.json
 
 The explicit verify command must finish with `Verified cloud-atmosphere
 snapshot`. Successful generation then writes six `cloud-atmosphere-*.svg`
-files under `assets.generated/svg/`. Missing cells in those maps mean
+files under each `assets.generated/PROJECTION/svg/` directory. Missing cells in those maps mean
 unobserved, not clear sky and not zero.
 
 Raw rasters and prepared snapshots are intentionally ignored by Git. They can

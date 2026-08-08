@@ -18,9 +18,11 @@ with two products:
 
 Both products use the six production projections, Natural Earth land context,
 Atkinson Hyperlegible labels, deterministic Izzi radial-hexagon detiling, SVG
-provenance, and SVG/PDF/PNG artifact targets. The topology product is not a
-dependency of `make all` and cannot be selected accidentally through profile
-`"all"`.
+provenance, and SVG/PDF/PNG artifact targets. The topology product begins as
+an optional pass. After a successful `generate-authorized-external` topology
+run, its pass name is recorded locally and subsequent `make all` invocations
+include its artifacts. A clean checkout remains credential- and
+license-neutral.
 
 ## Feasibility and audited source snapshots
 
@@ -175,8 +177,10 @@ Consequently:
   opt-in flag, and the CC license;
 - every topology image visibly attributes TeleGeography and states the
   noncommercial/share-alike boundary; and
-- topology products are excluded from `make all` and generation-profile
-  `"all"`.
+- topology products are excluded from a clean checkout's `make all` and
+  generation-profile `"all"`; a successful authorized topology generation
+  persists the local opt-in and adds them to later `make all` runs in that
+  checkout.
 
 The profiles and documentation preserve the cloud source's separate terms as
 well. This implementation record describes the distribution boundary; it is
@@ -243,6 +247,15 @@ coordinates and are never clustered.
 
 ## SVG layer and mark contract
 
+Stage 13 uses an opaque WCAG-oriented `#f2f4f3` background and subdued
+light-gray Natural Earth land. The accessible dark accent palette replaces
+the former low-contrast marks on a near-black ground. Sites use a `0.052`-inch
+base marker radius (formerly `0.032`); topology uses `0.046` inch (formerly
+`0.028`). Cables, exchange membership, cluster marks, and internal glyphs were
+also enlarged. The main plate title is twice its previous size (`0.44` rather
+than `0.22` page units). Root metadata records background color, marker radius,
+and `data-title-scale="2"` for regression checks.
+
 Every product contains the same discoverable group vocabulary, with disabled
 topology groups empty in the sites product:
 
@@ -275,12 +288,12 @@ Normal site-atlas previews:
 
 | Projection | PNG |
 | --- | --- |
-| Cahill-Keyes | [`network-infrastructure-sites-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-infrastructure-sites-ck-44-22.png) |
-| AuthaGraph | [`network-infrastructure-sites-authagraph-44-19.052559.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-infrastructure-sites-authagraph-44-19.052559.png) |
-| Dymaxion | [`network-infrastructure-sites-dymaxion-44-20.78461.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-infrastructure-sites-dymaxion-44-20.78461.png) |
-| Myriahedral | [`network-infrastructure-sites-myriahedral-44-24.75.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-infrastructure-sites-myriahedral-44-24.75.png) |
-| Star-X | [`network-infrastructure-sites-star-x-34-44.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-infrastructure-sites-star-x-34-44.png) |
-| Voronoi | [`network-infrastructure-sites-voronoi-44-22.916667.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-infrastructure-sites-voronoi-44-22.916667.png) |
+| Cahill-Keyes | [`network-infrastructure-sites-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/png/network-infrastructure-sites-ck-44-22.png) |
+| AuthaGraph | [`network-infrastructure-sites-authagraph-44-19.052559.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/authagraph/png/network-infrastructure-sites-authagraph-44-19.052559.png) |
+| Dymaxion | [`network-infrastructure-sites-dymaxion-44-20.78461.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/network-infrastructure-sites-dymaxion-44-20.78461.png) |
+| Myriahedral | [`network-infrastructure-sites-myriahedral-44-24.75.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/network-infrastructure-sites-myriahedral-44-24.75.png) |
+| Star-X | [`network-infrastructure-sites-star-x-34-44.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/star-x/png/network-infrastructure-sites-star-x-34-44.png) |
+| Voronoi | [`network-infrastructure-sites-voronoi-44-22.916667.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/voronoi/png/network-infrastructure-sites-voronoi-44-22.916667.png) |
 
 Opt-in topology PNGs are local authorized-generation products. They were not
 included in the credential-free v12 S3 object release, so the GitHub Pages

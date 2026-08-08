@@ -71,7 +71,7 @@ main()
   const std::vector<std::string> all_targets = generation::targets(everything);
   assert(everything.all_projections);
   assert(everything.all_passes);
-  assert(all_targets.size() == 102);
+  assert(all_targets.size() == 114);
   assert(all_targets.front() == "generate-geometry-cahill-keyes");
   assert(all_targets.back() == "generate-cloud-atmosphere-voronoi");
   std::vector<std::string> unique_targets = all_targets;
@@ -85,7 +85,8 @@ main()
       "description": "Alias coverage",
       "projections": ["STAR_X", "voroni", "ck"],
       "passes": ["graticule", "astro", "orbiting", "swarm",
-                 "bathymetry_rolette", "infrastructure", "anthropocene",
+                 "bathymetry_rolette", "hamonshu", "infrastructure",
+                 "fiber-map", "anthropocene",
                  "resources", "solar/cloud/atmosphere"]
     }
   )json");
@@ -94,8 +95,9 @@ main()
   assert((aliases.passes == std::vector<std::string> {
                               "graticules", "astronomy",
                               "orbital-technosphere", "network-swarm",
-                              "bathymetry-roulette",
-                              "network-infrastructure", "anthropocene",
+                              "bathymetry-roulette", "bathymetry-hamonshu",
+                              "network-infrastructure", "fiber-synthesized",
+                              "anthropocene",
                               "resources-energy", "resources-food",
                               "resources-fauna", "resources-flora", "resources-mineral",
                               "resources-human", "cloud-atmosphere"}));
@@ -106,6 +108,12 @@ main()
          != alias_targets.end());
   assert(std::find(alias_targets.begin(), alias_targets.end(),
                    "generate-network-infrastructure-star-x")
+         != alias_targets.end());
+  assert(std::find(alias_targets.begin(), alias_targets.end(),
+                   "generate-fiber-synthesized-star-x")
+         != alias_targets.end());
+  assert(std::find(alias_targets.begin(), alias_targets.end(),
+                   "generate-bathymetry-hamonshu-star-x")
          != alias_targets.end());
   assert(std::find(alias_targets.begin(), alias_targets.end(),
                    "generate-anthropocene-star-x")
@@ -198,6 +206,18 @@ main()
                                   "bathymetry-roulette"}));
   assert((generation::targets(historical) == std::vector<std::string> {
             "generate-bathymetry-roulette-cahill-keyes"}));
+
+  const generation::profile hamonshu_art = generation::parse_json(R"json(
+    {
+      "schema_version": 1,
+      "projections": ["ck"],
+      "passes": ["art-agua-hamonshu"]
+    }
+  )json");
+  assert((hamonshu_art.passes == std::vector<std::string> {
+                                    "bathymetry-hamonshu"}));
+  assert((generation::targets(hamonshu_art) == std::vector<std::string> {
+            "generate-bathymetry-hamonshu-cahill-keyes"}));
 
   expect_invalid(R"json({
     "schema_version": 1,

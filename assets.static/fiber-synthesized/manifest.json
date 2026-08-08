@@ -1,0 +1,134 @@
+{
+  "caveats": [
+    "Snapshot-only means identifier observation in only one source snapshot; it does not prove physical construction or decommission.",
+    "Unique normalized-name pairing is exact but remains an identity assertion limited to this comparison dataset.",
+    "Unique exact landing-set pairing also requires a shared normalized name token; it is strong topology evidence, not proof that a cable was merely renamed.",
+    "Internet-exchange membership is outside this cable-only synthesis."
+  ],
+  "default_snapshot": "v3.20260805",
+  "kind": "cleaned-union-with-source-separated-observations",
+  "known_source_quirks": [
+    {
+      "disposition": "benign: the aggregate landing FeatureCollection and all cable-to-landing references validate; the renderer does not consume standalone landing detail files",
+      "missing_standalone_landing_details": [
+        "sapporo-japan"
+      ],
+      "snapshot": "v3.2022"
+    },
+    {
+      "disposition": "benign: the aggregate landing FeatureCollection and all cable-to-landing references validate; the renderer does not consume standalone landing detail files",
+      "missing_standalone_landing_details": [
+        "cape-town-south-africa"
+      ],
+      "snapshot": "v3.20260805"
+    }
+  ],
+  "license": "CC BY-NC-SA 3.0 Unported",
+  "matching_policy": {
+    "authoritative_pairs": [
+      "identical safe cable id",
+      "unique exact normalized cable name",
+      "unique exact nonempty landing-id set across both complete snapshots plus a shared normalized name token (strong topology evidence)"
+    ],
+    "cleaned_union_policy": "select every v3.20260805 observation and add only unmatched v3.2022-only observations; retain matched older observations in audit files without rendering them twice",
+    "geometry_policy": "preserve each source geometry as a separate feature; never interpolate or average coordinates",
+    "unmatched_policy": "retain as snapshot-only; do not infer construction, decommission, or identity"
+  },
+  "outputs": {
+    "README.md": {
+      "bytes": 1346,
+      "sha256": "0d04b846feec74690131700460662e80a7051fffea666cc09f0e74c56a937927"
+    },
+    "landing-observations.geojson": {
+      "bytes": 1858344,
+      "sha256": "c2ef29aac5f91bb02199462cee110eee6d7ea61daba536a2ba2f47ae38bafa21"
+    },
+    "landings.geojson": {
+      "bytes": 1133015,
+      "features": 2037,
+      "sha256": "c8b445e6d5760a22131f2ff927997b39166ab9571d27ad5bf40fbe6ddfe03ae0"
+    },
+    "route-observations.geojson": {
+      "bytes": 3523956,
+      "sha256": "b7cb1a5bd90848841ba9f5a9b0303f2544479daa90e7a0a7caa3b93adbfaca3d"
+    },
+    "routes.geojson": {
+      "bytes": 2119747,
+      "features": 767,
+      "sha256": "1a414af0bf940edd8b48e56af9a36b8b108a168806a45c8046de1c5015e20c46"
+    },
+    "systems.json": {
+      "bytes": 1159220,
+      "sha256": "e34000631da58d1295173a4f4e88576e77c00ff451de06de1498e6a25b15c1f9",
+      "systems": 746
+    }
+  },
+  "schema": "cartofreako-fiber-synthesized-v1",
+  "snapshot_paths_tracked_by_checkout_head": false,
+  "source_checkout_head": "4d98b5472152a7c2272c49d8d0125b1ae0419984",
+  "source_repository": "https://github.com/telegeography/www.submarinecablemap.com",
+  "sources": [
+    {
+      "aggregate_landings_without_cable_reference": [],
+      "details_sha256": "2b07e884aadcd58586b942db18e3845b965b3d73609386bfe3d300c983e352fa",
+      "extra_standalone_landing_details": [],
+      "json_file_count": 2205,
+      "landings": 1436,
+      "landings_sha256": "2a350a8be354886949d1a146de6d973d8aa433e085c245b867c130bd0398c69e",
+      "missing_standalone_landing_details": [
+        "sapporo-japan"
+      ],
+      "planned_systems": 65,
+      "route_features": 532,
+      "route_parts": 1458,
+      "route_vertices": 11590,
+      "routes_sha256": "63134a87d7482cb51b5f22d586384e88fbd9ec4315dba9c6899a5e1ff76637f5",
+      "snapshot": "v3.2022",
+      "source_subdirectory": "v3.2022",
+      "systems": 526
+    },
+    {
+      "aggregate_landings_without_cable_reference": [],
+      "details_sha256": "bd97f641df1a6d62b1f901090751bc626834833056c0e1679f98bc4b3542f757",
+      "extra_standalone_landing_details": [],
+      "json_file_count": 2885,
+      "landings": 1922,
+      "landings_sha256": "d4f3ecac61f34bbc7910c04f74917ac3fae0fb7b40d09e7cc12711c98c7307a0",
+      "missing_standalone_landing_details": [
+        "cape-town-south-africa"
+      ],
+      "planned_systems": 91,
+      "route_features": 718,
+      "route_parts": 1930,
+      "route_vertices": 14075,
+      "routes_sha256": "d41a3dfb3e4107740a895a7f178dfee43c874f432c59120679e0dad94803f874",
+      "snapshot": "v3.20260805",
+      "source_subdirectory": "v3.20260805",
+      "systems": 697
+    }
+  ],
+  "summary": {
+    "cleaned_union_landing_features": 2037,
+    "cleaned_union_route_features": 767,
+    "comparison_systems": 746,
+    "match_classes": {
+      "stable-id": 456,
+      "unique-exact-landing-set": 18,
+      "unique-normalized-name": 3,
+      "unmatched": 269
+    },
+    "snapshot_memberships": {
+      "both": 477,
+      "v3.2022-only": 49,
+      "v3.20260805-only": 220
+    },
+    "source_observation_landing_features": 3358,
+    "source_observation_route_features": 1250,
+    "temporal_classes": {
+      "not-comparable": 269,
+      "planned-to-active": 34,
+      "retained-active": 435,
+      "retained-planned": 8
+    }
+  }
+}

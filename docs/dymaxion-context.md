@@ -62,8 +62,8 @@ obligatory top or any one meridian as an obligatory center.
 ## The unfolded net
 
 <p align="center">
-  <a href="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/geometry-dymaxion-44-20.78461.png">
-    <img src="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/geometry-dymaxion-44-20.78461.png"
+  <a href="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/geometry-dymaxion-44-20.78461.png">
+    <img src="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/geometry-dymaxion-44-20.78461.png"
          width="1000"
          alt="Generated horizontal Dymaxion net showing 23 triangular faces and four screen quadrants">
   </a>
@@ -151,8 +151,8 @@ formula.
 ## Reading the Earth result
 
 <p align="center">
-  <a href="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/earth-dymaxion-44-20.78461.png">
-    <img src="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/earth-dymaxion-44-20.78461.png"
+  <a href="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/earth-dymaxion-44-20.78461.png">
+    <img src="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/earth-dymaxion-44-20.78461.png"
          width="1000"
          alt="Generated Natural Earth ocean and land in the Dymaxion projection">
   </a>
@@ -177,8 +177,8 @@ different aspect of the same icosahedral projection.
 ## Graticules, poles, and facet edges
 
 <p align="center">
-  <a href="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/graticules-dymaxion-44-20.78461.png">
-    <img src="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/graticules-dymaxion-44-20.78461.png"
+  <a href="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/graticules-dymaxion-44-20.78461.png">
+    <img src="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/graticules-dymaxion-44-20.78461.png"
          width="1000"
          alt="Generated ten-degree Dymaxion graticules split at native facet cuts">
   </a>

@@ -310,7 +310,7 @@ add_temperature_land(generation::projection_document& document,
   if (context.spec.kind == generation::projection_kind::star_x)
     {
       const natural_earth::antarctic_cap cap
-        = natural_earth::make_antarctic_cap(context, land);
+        = natural_earth::make_antarctic_cap(context);
       static_cast<void>(natural_earth::render_star_x_source(
         layer, land, context, cap));
     }
@@ -405,11 +405,15 @@ add_temperature_records(generation::projection_document& document,
         const double fraction = (bin + 1.0) / bin_count;
         const double opacity = profile.minimum_nonzero_opacity
           + (1 - profile.minimum_nonzero_opacity) * fraction;
+        const double field_opacity = profile.data_graphic_opacity;
         const svg::style style = maximum
-          ? svg::style {color, 0.24 + 0.62 * opacity,
-                        color, std::min(1.0, opacity + 0.08), 0.002}
+          ? svg::style {color, field_opacity * (0.24 + 0.62 * opacity),
+                        color,
+                        field_opacity * std::min(1.0, opacity + 0.08),
+                        0.002}
           : svg::style {svg::color::none, 0, color,
-                        0.42 + 0.58 * opacity, 0.006 + 0.012 * fraction};
+                        field_opacity * (0.42 + 0.58 * opacity),
+                        0.006 + 0.012 * fraction};
         layer.add_element(svg::make_path(
           paths[bin], style, layer_id + "-bin-" + std::to_string(bin + 1),
           true,
@@ -437,52 +441,52 @@ add_temperature_legend(generation::projection_document& document,
     return;
   svg::group_element layer;
   layer.start_element("legend-and-provenance");
-  svg::typography title = temperature_typography(0.17, {44, 42, 38});
+  svg::typography title = temperature_typography(0.34, {44, 42, 38});
   title._M_w = svg::typography::weight::bold;
   svg::styled_text(layer,
     "ANTHROPOCENE TEMPERATURE / " + std::to_string(profile.calendar_year)
       + (profile.partial_year ? " PARTIAL YEAR" : " COMPLETE YEAR"),
-    {0.30, 0.20}, title);
+    {0.30, 0.21}, title);
   svg::styled_text(layer,
     temperature_xml_escape(
       "NOAA CPC 0.5 degree analysis through " + profile.data_through
         + "  |  H3 r" + std::to_string(profile.h3_resolution)
         + "  |  strict records vs " + std::to_string(profile.baseline_start)
         + "-" + std::to_string(profile.baseline_end)),
-    {0.30, 0.41}, temperature_typography(0.105, {83, 79, 72}));
+    {0.30, 0.45}, temperature_typography(0.105, {83, 79, 72}));
 
   svg::rect_element high;
   high.start_element();
-  high.add_data({0.34, 0.58, 0.08, 0.08});
+  high.add_data({0.34, 0.61, 0.08, 0.08});
   high.add_style({{215, 62, 48}, 0.82, {215, 62, 48}, 1, 0.004});
   high.finish_element();
   layer.add_element(high);
   svg::styled_text(layer, "record-high days (filled; log-scaled)",
-                   {0.47, 0.62}, temperature_typography(0.101));
+                   {0.47, 0.65}, temperature_typography(0.101));
 
   svg::rect_element low;
   low.start_element();
-  low.add_data({3.37, 0.58, 0.08, 0.08});
+  low.add_data({3.37, 0.61, 0.08, 0.08});
   low.add_style({svg::color::none, 0, {48, 105, 190}, 1, 0.014});
   low.finish_element();
   layer.add_element(low);
   svg::styled_text(layer, "record-low days (outline; log-scaled)",
-                   {3.50, 0.62}, temperature_typography(0.101));
+                   {3.50, 0.65}, temperature_typography(0.101));
 
   svg::rect_element zero;
   zero.start_element();
-  zero.add_data({6.53, 0.58, 0.08, 0.08});
+  zero.add_data({6.53, 0.61, 0.08, 0.08});
   zero.add_style({{205, 199, 184}, 0.34, {191, 184, 169}, 0.32, 0.004});
   zero.finish_element();
   layer.add_element(zero);
   svg::styled_text(layer, "covered zero / field domain",
-                   {6.66, 0.62}, temperature_typography(0.101));
+                   {6.66, 0.65}, temperature_typography(0.101));
 
   svg::styled_text(layer,
     std::to_string(dataset.covered_cell_count) + " covered of "
       + std::to_string(dataset.cells.size())
       + " global H3 cells; valid-day denominators are embedded",
-    {9.20, 0.62}, temperature_typography(0.101, {83, 79, 72}));
+    {9.20, 0.65}, temperature_typography(0.101, {83, 79, 72}));
   layer.finish_element();
   document.add_element(layer);
 }
@@ -510,6 +514,7 @@ temperature_metadata(const generation::projection_spec& spec,
 {
   return "<metadata id=\"anthropocene-temperature-metadata\""
     " data-workflow=\"Anthropocene NOAA CPC non-sparse temperature field\""
+    " data-title-scale=\"2\""
     " data-profile=\"" + temperature_xml_escape(
       profile.path.filename().string()) + "\""
     " data-projection=\"" + std::string(spec.argument) + "\""
@@ -517,6 +522,8 @@ temperature_metadata(const generation::projection_spec& spec,
     " data-partial-year=\"" + (profile.partial_year ? "true" : "false") + "\""
     " data-data-through=\"" + profile.data_through + "\""
     " data-h3-resolution=\"" + std::to_string(profile.h3_resolution) + "\""
+    " data-graphic-opacity=\""
+      + temperature_format(profile.data_graphic_opacity, 2) + "\""
     " data-feature-count=\"" + std::to_string(dataset.cells.size()) + "\""
     " data-covered-cell-count=\"" + std::to_string(
       dataset.covered_cell_count) + "\""
@@ -609,6 +616,15 @@ verify_temperature(const std::string& generated,
                           "data-zero-semantics=\"valid-days-positive-is-analyzed-zero\"")
                              != std::string::npos,
                       "temperature SVG lacks field provenance");
+  temperature_require(generated.find("data-title-scale=\"2\"")
+                         != std::string::npos,
+                      "temperature SVG lacks title-scale metadata");
+  temperature_require(generated.find(
+                        "data-graphic-opacity=\""
+                          + temperature_format(
+                              profile.data_graphic_opacity, 2) + "\"")
+                         != std::string::npos,
+                      "temperature SVG lacks data-graphic opacity metadata");
   temperature_require(generated.find(" nan") == std::string::npos
                         && generated.find(" -nan") == std::string::npos
                         && generated.find(" inf") == std::string::npos

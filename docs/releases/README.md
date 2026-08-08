@@ -3,6 +3,8 @@
 [Documentation index](../../index.md) ·
 [Generation pipeline](../generation.md) ·
 [Prerequisites and hardware](../prerequisites.md) ·
+[`v20260808` release notes](v20260808.md) ·
+[`v13` S3 publication](s3-v13.md) ·
 [`v20260807` release notes](v20260807.md) ·
 [`v12` S3 publication](s3-v12.md) ·
 [`v20260806` release notes](v20260806.md)
@@ -17,15 +19,97 @@ Treat release assets as immutable snapshots. Never replace an uploaded file
 with different bytes under the same tag and filename. Publish a new tag and
 asset name when either the source or generated payload changes.
 
-The browser-facing mirror of generated assets v12 is separately published at
-the immutable Berkeley S3 prefix `cartofreako/v12/`. It exposes the extracted
+The current browser-facing mirror is generated assets v13 at the immutable
+Berkeley S3 prefix `cartofreako/v13/`. It exposes the projection-organized
 tree for GitHub Pages while retaining the XZ recovery package, manifest, and a
-last-written completion marker. Follow the [S3 v12 publication and
-implementation notes](s3-v12.md); the GitHub source tag remains unchanged.
+last-written completion marker. Follow the [S3 v13 publication and
+implementation notes](s3-v13.md); the GitHub source tag remains unchanged.
 Successful applied uploads now finish by generating the Devastation Pacific
 Active Archive HTML/PDF report and rendered QA pages. Reports are local delivery
 artifacts outside the immutable prefix and Git; their verification and delivery
 record belongs in the versioned publication notes.
+
+## `v20260808` release procedure
+
+Stage 13 uses source tag `v20260808`, static asset
+`assets.generated.v13.tar.xz`, and the projection-first 885-file artifact
+tree. Before packaging, run the native, browser/WebAssembly, and exact artifact
+checks recorded in the [release notes](v20260808.md). The release render must
+contain 205 SVGs, 84 adjacent resource SVG gzip companions, 205 PDFs, 205
+full-size PNGs, and 186 thumbnails.
+
+Create the reproducible archive only after the source commit is final. The
+archive timestamp is the tagged commit time; ownership and modes are
+normalized, and every member remains under `assets.generated/`:
+
+```sh
+release_tag=v20260808
+release_commit=$(git rev-parse "$release_tag^{commit}")
+source_date_epoch=$(git show -s --format=%ct "$release_commit")
+tar --sort=name \
+  --mtime="@$source_date_epoch" \
+  --owner=0 --group=0 --numeric-owner \
+  --mode='u+rwX,go+rX,go-w' \
+  --format=posix \
+  --pax-option=delete=atime,delete=ctime \
+  --create --file=- assets.generated | \
+  xz --threads=0 -9e > assets.generated.v13.tar.xz
+```
+
+Preflight the sealed package and record its digest and byte counts in
+`v20260808.md`:
+
+```sh
+xz --test assets.generated.v13.tar.xz
+test "$(tar --list --file=assets.generated.v13.tar.xz | sed -n '1p')" = \
+  'assets.generated/'
+test "$(tar --list --file=assets.generated.v13.tar.xz | \
+  sed -n '/\/$/!p' | wc -l)" -eq 885
+sha256sum assets.generated.v13.tar.xz
+```
+
+Push the already-created source tag explicitly. The release notes intentionally
+begin with body text; GitHub supplies the one and only announcement title:
+
+```sh
+git push origin main
+git push origin refs/tags/v20260808
+gh release create v20260808 \
+  --repo bdekoz/cartofreako \
+  --verify-tag \
+  --title 'v20260808 — generated assets v13 and Stage 13' \
+  --notes-file docs/releases/v20260808.md \
+  'assets.generated.v13.tar.xz#Projection-organized SVG, PDF, PNG, and thumbnail bundle (XZ)'
+```
+
+Download the GitHub object into a fresh directory and compare it to the local
+package before constructing the S3 release:
+
+```sh
+release_verify_dir=$(mktemp -d /tmp/cartofreako-v20260808.XXXXXX)
+gh release download v20260808 \
+  --repo bdekoz/cartofreako \
+  --pattern 'assets.generated.v13.tar.xz' \
+  --dir "$release_verify_dir"
+test "$(sha256sum assets.generated.v13.tar.xz | awk '{print $1}')" = \
+  "$(sha256sum "$release_verify_dir/assets.generated.v13.tar.xz" | awk '{print $1}')"
+xz --test "$release_verify_dir/assets.generated.v13.tar.xz"
+```
+
+Finally build and publish the immutable S3 prefix. The applied uploader writes
+`release.json` last, optionally reads every object back, builds only the
+canonical Active Archive check-in report, and performs the report-notification
+handoff:
+
+```sh
+scripts/build-generated-assets-s3-release.sh
+scripts/upload-generated-assets-s3-release.sh --validate-only
+scripts/upload-generated-assets-s3-release.sh --apply --verify-download
+```
+
+Do not move `v20260808` or replace either public artifact after publication.
+A correction requires a new source tag, generated-assets version, and S3
+prefix.
 
 ## `v20260807` release procedure
 

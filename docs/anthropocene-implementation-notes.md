@@ -5,6 +5,7 @@
 [Generate-pass decisions](generation-methods.md) ·
 [Stage 12 implementation](stage-12-implementation-notes.md) ·
 [Stage 8b enrichment plan](anthropocene-enrichment-plan.md) ·
+[Stage 13 source expansion review](anthropocene-source-expansion-stage-13.md) ·
 [Snapshot assets](../assets.static/anthropocene/README.md)
 
 ## Outcome and claim boundary
@@ -232,6 +233,10 @@ air-quality exposure, and climate records render above them. Counts affect
 opacity logarithmically up to each profile `scale_days` value. This is a
 visibility scale, not a scientific transformation.
 
+Stage 13 doubles the observation-atlas plate heading from `0.21` to `0.42`
+page units. Its existing per-count marker opacity remains source-specific;
+this compatibility atlas is not silently restyled as the non-sparse field.
+
 The layer hierarchy is:
 
 ```text
@@ -351,6 +356,14 @@ Cahill-Keyes render, 21 of 11,945 covered cells would otherwise close across
 an outer topology cut; those cells use a small centered hexagon and the SVG
 records the fallback count on each affected path. The other five projections
 need no fallback cells.
+
+All data-bearing high and low field paths are multiplied by the profile's
+`display.data_graphic_opacity = 0.30`; covered-zero context and legend
+swatches retain their own opaque reference styling. The plate heading is
+twice its prior size (`0.34` rather than `0.17` page units). Root metadata
+records `data-graphic-opacity="0.3"` and `data-title-scale="2"`, and the
+generator self-check requires both.
+
 Generate both years by default, or either explicit year, across all six
 projections with:
 
@@ -364,5 +377,9 @@ make generate-anthropocene-years
 The global FIRMS gate is also implemented, but the original checked v1
 snapshot is not retroactively relabelled: it still has zero FIRMS rows. A new
 global fire snapshot cannot be promoted until credentialed raw acquisition
-passes its audits. Broader GHCNd, CAMS PM2.5/smoke context, permission-gated
-PurpleAir, and OISST/Coral Reef Watch ocean themes remain planned.
+passes its audits. The
+[Stage 13 source review](anthropocene-source-expansion-stage-13.md)
+prioritizes full GHCN-Daily and OpenAQ, keeps CAMS/MAIAC in separately labeled
+modeled or satellite-aerosol products, and retains PurpleAir as an optional
+supplemental source requiring a bounded scope or provider-arranged bulk
+extract. OISST/Coral Reef Watch ocean themes remain planned.

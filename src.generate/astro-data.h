@@ -143,10 +143,34 @@ required_strings(const rj::Value& object, const char* name,
 
 struct reference_point
 {
-  std::string name;
   double latitude_deg;
   double longitude_deg_east;
   double elevation_m;
+};
+
+enum class observer_kind
+{
+  terrestrial,
+  orbiting,
+};
+
+struct orbiting_observer
+{
+  std::string norad_id;
+  fs::path omm_catalog;
+  std::string source_url;
+  double maximum_element_age_days;
+  double earth_limb_avoidance_deg;
+  double sun_avoidance_deg;
+};
+
+struct observer_configuration
+{
+  std::string id;
+  std::string name;
+  observer_kind kind;
+  std::optional<reference_point> terrestrial;
+  std::optional<orbiting_observer> orbiting;
 };
 
 struct orientation
@@ -157,12 +181,14 @@ struct orientation
 
 struct instrumentation
 {
+  std::string id;
+  std::string name;
   std::string mode;
   std::vector<std::string> bands;
   std::vector<std::string> night_required_bands;
-  double optical_limiting_magnitude;
-  double minimum_altitude_deg;
-  double twilight_sun_altitude_deg;
+  std::optional<double> optical_limiting_magnitude;
+  std::optional<double> minimum_altitude_deg;
+  std::optional<double> twilight_sun_altitude_deg;
 };
 
 struct display_configuration
@@ -179,7 +205,9 @@ struct profile
   fs::path path;
   std::string name;
   instant calculation_time;
-  reference_point observer;
+  bool all_sky_enabled;
+  bool observer_enabled;
+  observer_configuration observer;
   orientation sky_orientation;
   instrumentation instrument;
   double event_lookback_days;
@@ -194,7 +222,7 @@ inline profile
 load_profile(const fs::path& path)
 {
   const rj::Document document = read_json(path);
-  astro_require(required_size(document, "schema_version", "profile") == 1,
+  astro_require(required_size(document, "schema_version", "profile") == 2,
                 "unsupported astronomy profile schema");
   const rj::Value& products = *required_member(document, "products", "profile");
   astro_require(products.IsArray(), "profile.products must be an array");
@@ -207,23 +235,64 @@ load_profile(const fs::path& path)
       all_sky = all_sky || std::string_view(value.GetString()) == "all-sky";
       observer = observer || std::string_view(value.GetString()) == "observer";
     }
-  astro_require(all_sky && observer,
-                "profile.products must enable all-sky and observer");
+  astro_require(all_sky || observer,
+                "profile.products must enable all-sky or observer");
 
-  const rj::Value& point = *required_member(
-    document, "reference_point", "profile");
-  reference_point reference {
-    required_string(point, "name", "profile.reference_point"),
-    required_number(point, "latitude_deg", "profile.reference_point"),
-    required_number(point, "longitude_deg_east", "profile.reference_point"),
-    required_number(point, "elevation_m", "profile.reference_point"),
+  const fs::path base = path.parent_path();
+  const rj::Value& observer_value = *required_member(
+    document, "observer", "profile");
+  const std::string observer_type = required_string(
+    observer_value, "kind", "profile.observer");
+  observer_configuration observer_config {
+    required_string(observer_value, "id", "profile.observer"),
+    required_string(observer_value, "name", "profile.observer"),
+    observer_type == "terrestrial" ? observer_kind::terrestrial
+                                    : observer_kind::orbiting,
+    std::nullopt,
+    std::nullopt,
   };
-  astro_require(reference.latitude_deg >= -90
-                  && reference.latitude_deg <= 90,
-                "reference latitude must be in [-90, 90]");
-  astro_require(reference.longitude_deg_east >= -180
-                  && reference.longitude_deg_east <= 180,
-                "reference longitude must be in [-180, 180]");
+  astro_require(!observer_config.id.empty() && !observer_config.name.empty(),
+                "profile.observer id and name must be nonempty");
+  astro_require(observer_type == "terrestrial" || observer_type == "orbiting",
+                "profile.observer.kind must be terrestrial or orbiting");
+  if (observer_config.kind == observer_kind::terrestrial)
+    {
+      observer_config.terrestrial = reference_point {
+        required_number(observer_value, "latitude_deg", "profile.observer"),
+        required_number(observer_value, "longitude_deg_east",
+                        "profile.observer"),
+        required_number(observer_value, "elevation_m", "profile.observer"),
+      };
+      astro_require(observer_config.terrestrial->latitude_deg >= -90
+                      && observer_config.terrestrial->latitude_deg <= 90,
+                    "observer latitude must be in [-90, 90]");
+      astro_require(observer_config.terrestrial->longitude_deg_east >= -180
+                      && observer_config.terrestrial->longitude_deg_east <= 180,
+                    "observer longitude must be in [-180, 180]");
+    }
+  else
+    {
+      observer_config.orbiting = orbiting_observer {
+        required_string(observer_value, "norad_id", "profile.observer"),
+        base / required_string(observer_value, "omm_catalog",
+                               "profile.observer"),
+        required_string(observer_value, "source_url", "profile.observer"),
+        required_number(observer_value, "maximum_element_age_days",
+                        "profile.observer"),
+        required_number(observer_value, "earth_limb_avoidance_deg",
+                        "profile.observer"),
+        required_number(observer_value, "sun_avoidance_deg",
+                        "profile.observer"),
+      };
+      astro_require(observer_config.orbiting->maximum_element_age_days > 0,
+                    "orbiting observer element age must be positive");
+      astro_require(observer_config.orbiting->earth_limb_avoidance_deg >= 0
+                      && observer_config.orbiting->earth_limb_avoidance_deg < 90,
+                    "orbiting observer Earth-limb avoidance is invalid");
+      astro_require(observer_config.orbiting->sun_avoidance_deg >= 0
+                      && observer_config.orbiting->sun_avoidance_deg < 180,
+                    "orbiting observer Sun avoidance is invalid");
+    }
 
   const rj::Value& orientation_value = *required_member(
     document, "orientation", "profile");
@@ -239,26 +308,52 @@ load_profile(const fs::path& path)
 
   const rj::Value& instrument_value = *required_member(
     document, "instrumentation", "profile");
+  const auto optional_instrument_number = [&](const char* name) {
+    if (!instrument_value.HasMember(name))
+      return std::optional<double> {};
+    return std::optional<double> {required_number(
+      instrument_value, name, "profile.instrumentation")};
+  };
   instrumentation instrument {
+    required_string(instrument_value, "id", "profile.instrumentation"),
+    required_string(instrument_value, "name", "profile.instrumentation"),
     required_string(instrument_value, "mode", "profile.instrumentation"),
     required_strings(instrument_value, "bands", "profile.instrumentation"),
     required_strings(instrument_value, "night_required_bands",
                      "profile.instrumentation"),
-    required_number(instrument_value, "optical_limiting_magnitude",
-                    "profile.instrumentation"),
-    required_number(instrument_value, "minimum_altitude_deg",
-                    "profile.instrumentation"),
-    required_number(instrument_value,
-                    "astronomical_twilight_sun_altitude_deg",
-                    "profile.instrumentation"),
+    optional_instrument_number("optical_limiting_magnitude"),
+    optional_instrument_number("minimum_altitude_deg"),
+    optional_instrument_number("astronomical_twilight_sun_altitude_deg"),
   };
-  astro_require(instrument.mode == "multi-band",
-                "the astronomy MVP requires multi-band instrumentation");
+  astro_require(!instrument.id.empty() && !instrument.name.empty(),
+                "instrumentation id and name must be nonempty");
+  astro_require(instrument.mode == "ground-multi-band"
+                  || instrument.mode == "hst-composite",
+                "unsupported astronomy instrumentation mode");
   astro_require(!instrument.bands.empty(),
                 "instrumentation must enable at least one band");
-  astro_require(instrument.minimum_altitude_deg >= -90
-                  && instrument.minimum_altitude_deg <= 90,
-                "minimum altitude must be in [-90, 90]");
+  if (observer_config.kind == observer_kind::terrestrial)
+    {
+      astro_require(instrument.mode == "ground-multi-band",
+                    "terrestrial observers require ground-multi-band mode");
+      astro_require(instrument.optical_limiting_magnitude.has_value()
+                      && instrument.minimum_altitude_deg.has_value()
+                      && instrument.twilight_sun_altitude_deg.has_value(),
+                    "ground instrumentation requires magnitude, altitude, "
+                    "and twilight limits");
+      astro_require(*instrument.minimum_altitude_deg >= -90
+                      && *instrument.minimum_altitude_deg <= 90,
+                    "minimum altitude must be in [-90, 90]");
+    }
+  else
+    {
+      astro_require(instrument.mode == "hst-composite",
+                    "orbiting observer requires hst-composite mode");
+      astro_require(instrument.night_required_bands.empty(),
+                    "HST composite must not use terrestrial night gating");
+      astro_require(!instrument.optical_limiting_magnitude.has_value(),
+                    "HST composite is catalog-limited, not magnitude-limited");
+    }
 
   const rj::Value& dynamic = *required_member(
     document, "dynamic_events", "profile");
@@ -277,7 +372,6 @@ load_profile(const fs::path& path)
   };
 
   const rj::Value& catalogs = *required_member(document, "catalogs", "profile");
-  const fs::path base = path.parent_path();
   std::vector<fs::path> small_body_paths;
   for (const std::string& filename : required_strings(
          catalogs, "small_bodies", "profile.catalogs"))
@@ -287,7 +381,9 @@ load_profile(const fs::path& path)
     path,
     required_string(document, "name", "profile"),
     parse_timestamp(required_string(document, "timestamp", "profile")),
-    std::move(reference),
+    all_sky,
+    observer,
+    std::move(observer_config),
     {handedness == "celestial", central_ra_hours * degrees_per_hour},
     std::move(instrument),
     lookback_days,
@@ -314,7 +410,9 @@ struct sky_object
   std::optional<instant> observed_at;
   std::string source_url;
   std::string detail;
-  double altitude_deg = std::numeric_limits<double>::quiet_NaN();
+  double observer_angle_deg = std::numeric_limits<double>::quiet_NaN();
+  double sun_separation_deg = std::numeric_limits<double>::quiet_NaN();
+  std::optional<double> apparent_angular_radius_deg = std::nullopt;
 };
 
 inline std::vector<std::string>
@@ -613,6 +711,7 @@ struct planet_model
   std::array<double, 6> base;
   std::array<double, 6> rate;
   double nominal_magnitude;
+  double equatorial_radius_km;
 };
 
 inline constexpr planet_model earth_model {
@@ -622,6 +721,7 @@ inline constexpr planet_model earth_model {
   {0.00000562, -0.00004392, -0.01294668, 35999.37244981,
    0.32327364, 0.0},
   -3.99,
+  6378.1366,
 };
 
 inline constexpr std::array planet_models {
@@ -632,6 +732,7 @@ inline constexpr std::array planet_models {
     {0.00000037, 0.00001906, -0.00594749, 149472.67411175,
      0.16047689, -0.12534081},
     -0.4,
+    2440.53,
   },
   planet_model {
     "venus", "Venus",
@@ -640,6 +741,7 @@ inline constexpr std::array planet_models {
     {0.00000390, -0.00004107, -0.00078890, 58517.81538729,
      0.00268329, -0.27769418},
     -4.1,
+    6051.8,
   },
   planet_model {
     "mars", "Mars",
@@ -648,6 +750,7 @@ inline constexpr std::array planet_models {
     {0.00001847, 0.00007882, -0.00813131, 19140.30268499,
      0.44441088, -0.29257343},
     -1.5,
+    3396.19,
   },
   planet_model {
     "jupiter", "Jupiter",
@@ -656,6 +759,7 @@ inline constexpr std::array planet_models {
     {-0.00011607, -0.00013253, -0.00183714, 3034.74612775,
      0.21252668, 0.20469106},
     -2.2,
+    71492.0,
   },
   planet_model {
     "saturn", "Saturn",
@@ -664,6 +768,7 @@ inline constexpr std::array planet_models {
     {-0.00125060, -0.00050991, 0.00193609, 1222.49362201,
      -0.41897216, -0.28867794},
     0.5,
+    60268.0,
   },
   planet_model {
     "uranus", "Uranus",
@@ -672,6 +777,7 @@ inline constexpr std::array planet_models {
     {-0.00196176, -0.00004397, -0.00242939, 428.48202785,
      0.40805281, 0.04240589},
     5.7,
+    25559.0,
   },
   planet_model {
     "neptune", "Neptune",
@@ -680,8 +786,25 @@ inline constexpr std::array planet_models {
     {0.00026291, 0.00005105, 0.00035372, 218.45945325,
      -0.32241464, -0.00508664},
     7.8,
+    24764.0,
   },
 };
+
+inline double
+planet_apparent_angular_radius_deg(const planet_model& model,
+                                   const vector_3d geocentric)
+{
+  // The approximate JPL elements above are expressed in astronomical units;
+  // radii are JPL equatorial radii in kilometres. This is a geocentric
+  // visualization-grade apparent radius, consistent with the atlas position
+  // model. HST/ground parallax and oblateness are intentionally not implied.
+  constexpr double astronomical_unit_km = 149597870.7;
+  const double distance_km = length(geocentric) * astronomical_unit_km;
+  astro_require(distance_km > model.equatorial_radius_km,
+                "planet distance must exceed its equatorial radius");
+  return radians_to_degrees(std::asin(
+    model.equatorial_radius_km / distance_km));
+}
 
 inline double
 solve_eccentric_anomaly(const double mean_anomaly, const double eccentricity)
@@ -893,12 +1016,16 @@ make_solar_system(const profile& config)
     {
       const vector_3d geocentric = planet_heliocentric_vector(
         model, julian_date) - earth;
-      result.push_back(object_from_vector(
+      sky_object planet = object_from_vector(
         std::string(model.id), std::string(model.name), "planet",
         {"infrared", "optical", "radio"}, geocentric,
         model.nominal_magnitude,
         "https://ssd.jpl.nasa.gov/planets/approx_pos.html",
-        "JPL approximate Keplerian planet position; nominal display magnitude"));
+        "JPL approximate Keplerian planet position and geocentric angular "
+        "radius from JPL equatorial physical radius; nominal display magnitude");
+      planet.apparent_angular_radius_deg
+        = planet_apparent_angular_radius_deg(model, geocentric);
+      result.push_back(std::move(planet));
     }
   for (const fs::path& path : config.small_body_catalogs)
     result.push_back(load_small_body(path, julian_date, earth));
@@ -930,9 +1057,11 @@ load_catalogs(const profile& config)
 inline double
 local_sidereal_time(const profile& config)
 {
+  astro_require(config.observer.terrestrial.has_value(),
+                "local sidereal time requires a terrestrial observer");
   return normalize_degrees(greenwich_mean_sidereal_time(
     config.calculation_time.julian_date)
-    + config.observer.longitude_deg_east);
+    + config.observer.terrestrial->longitude_deg_east);
 }
 
 inline double
@@ -975,13 +1104,16 @@ horizontal_to_equatorial(const double azimuth_deg, const double altitude_deg,
 }
 
 inline void
-calculate_altitudes(catalogs& data, const profile& config)
+calculate_ground_altitudes(catalogs& data, const profile& config)
 {
+  astro_require(config.observer.terrestrial.has_value(),
+                "ground altitude calculation requires a terrestrial observer");
   const double sidereal = local_sidereal_time(config);
   auto calculate = [&](std::vector<sky_object>& objects) {
     for (sky_object& object : objects)
-      object.altitude_deg = altitude_degrees(
-        object.ra_deg, object.dec_deg, config.observer.latitude_deg,
+      object.observer_angle_deg = altitude_degrees(
+        object.ra_deg, object.dec_deg,
+        config.observer.terrestrial->latitude_deg,
         sidereal);
   };
   calculate(data.stars);
@@ -1004,12 +1136,14 @@ object_matches_instrument(const sky_object& object,
     if (contains(config.instrument.bands, band))
       {
         if (band == "optical" && object.magnitude.has_value()
+            && config.instrument.optical_limiting_magnitude.has_value()
             && *object.magnitude
-                 > config.instrument.optical_limiting_magnitude)
+                 > *config.instrument.optical_limiting_magnitude)
           continue;
         if (!contains(config.instrument.night_required_bands, band)
-            || sun_altitude_deg
-                 <= config.instrument.twilight_sun_altitude_deg)
+            || (config.instrument.twilight_sun_altitude_deg.has_value()
+                && sun_altitude_deg
+                     <= *config.instrument.twilight_sun_altitude_deg))
           return true;
       }
   return false;
@@ -1020,7 +1154,9 @@ object_visible_to_observer(const sky_object& object,
                            const profile& config,
                            const double sun_altitude_deg)
 {
-  return object.altitude_deg >= config.instrument.minimum_altitude_deg
+  astro_require(config.instrument.minimum_altitude_deg.has_value(),
+                "ground visibility requires a minimum altitude");
+  return object.observer_angle_deg >= *config.instrument.minimum_altitude_deg
     && object_matches_instrument(object, config, sun_altitude_deg);
 }
 

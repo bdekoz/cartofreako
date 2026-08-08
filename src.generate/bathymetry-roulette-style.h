@@ -32,89 +32,91 @@ struct depth_style
   std::size_t rolling_radius;
   double point_distance_ratio;
   curve_paint paint;
+  svg::color_qi color;
 };
 
 // The historical ocean pass did not present one canonical motif on a regular
 // symbol grid.  It assigned related motif variations to a projected mosaic.
 // Bathymetry Roulette follows that model with deterministic page-space cells:
-// every cell varies the base depth curve's diameter, tracing-point distance,
-// phase, and origin while preserving its radius family and closure period.
+// every cell varies the base depth curve's diameter, phase, and origin while
+// preserving the depth's exact d/r, radius family, and closure period. Nearby
+// cells choose their variation through a shared projected-page Voronoi site.
 struct field_variation
 {
   double diameter_factor;
-  double point_distance_factor;
   double phase_turns;
   double offset_x_cells;
   double offset_y_cells;
 };
 
+// Every depth is a filled roulette at or beyond the cycloid boundary d/r=1.
 // Point distance grows monotonically with depth. Integer radius ratios keep
 // every centered roulette exactly closed; the 5:2 and 11:7 ratios also grow
 // the closure period from one orbit to two and then seven.
-inline constexpr std::array depth_styles {
+inline const std::array depth_styles {
   depth_style {
     "bathymetry-0m", 0, svg::roulette_kind::epitrochoid,
-    1, 1, 0.25, curve_paint::outline,
+    1, 1, 1.00, curve_paint::filled, {190, 219, 235},
   },
   depth_style {
     "bathymetry-200m", -200, svg::roulette_kind::epitrochoid,
-    1, 1, 0.35, curve_paint::outline,
+    1, 1, 1.12, curve_paint::filled, {169, 207, 229},
   },
   depth_style {
     "bathymetry-1000m", -1000, svg::roulette_kind::epitrochoid,
-    1, 1, 0.50, curve_paint::outline,
+    1, 1, 1.25, curve_paint::filled, {146, 194, 221},
   },
   depth_style {
     "bathymetry-2000m", -2000, svg::roulette_kind::epitrochoid,
-    2, 1, 0.65, curve_paint::outline,
+    2, 1, 1.40, curve_paint::filled, {122, 178, 211},
   },
   depth_style {
     "bathymetry-3000m", -3000, svg::roulette_kind::epitrochoid,
-    2, 1, 0.75, curve_paint::outline,
+    2, 1, 1.60, curve_paint::filled, {99, 161, 201},
   },
   depth_style {
     "bathymetry-4000m", -4000, svg::roulette_kind::epitrochoid,
-    3, 1, 0.90, curve_paint::outline,
+    3, 1, 1.85, curve_paint::filled, {76, 142, 190},
   },
   depth_style {
     "bathymetry-5000m", -5000, svg::roulette_kind::epitrochoid,
-    3, 1, 1.00, curve_paint::outline,
+    3, 1, 2.15, curve_paint::filled, {58, 124, 176},
   },
   depth_style {
     "bathymetry-6000m", -6000, svg::roulette_kind::hypotrochoid,
-    4, 1, 1.10, curve_paint::outline,
+    4, 1, 2.50, curve_paint::filled, {45, 107, 160},
   },
   depth_style {
     "bathymetry-7000m", -7000, svg::roulette_kind::epitrochoid,
-    5, 2, 1.25, curve_paint::filled,
+    5, 2, 2.90, curve_paint::filled, {35, 91, 143},
   },
   depth_style {
     "bathymetry-8000m", -8000, svg::roulette_kind::hypotrochoid,
-    5, 2, 1.50, curve_paint::filled,
+    5, 2, 3.40, curve_paint::filled, {27, 76, 125},
   },
   depth_style {
     "bathymetry-9000m", -9000, svg::roulette_kind::hypotrochoid,
-    11, 7, 2.00, curve_paint::filled,
+    11, 7, 4.10, curve_paint::filled, {20, 62, 107},
   },
   depth_style {
     "bathymetry-10000m", -10000, svg::roulette_kind::epitrochoid,
-    11, 7, 3.00, curve_paint::filled,
+    11, 7, 5.00, curve_paint::filled, {15, 49, 88},
   },
 };
 
 inline constexpr std::array field_variations {
-  field_variation {0.74, 0.960, 0.0 / 12, -0.18, -0.11},
-  field_variation {0.86, 0.968, 1.0 / 12,  0.09, -0.21},
-  field_variation {1.02, 0.976, 2.0 / 12,  0.20,  0.04},
-  field_variation {1.18, 0.984, 3.0 / 12, -0.06,  0.19},
-  field_variation {1.30, 0.992, 4.0 / 12, -0.22,  0.08},
-  field_variation {0.92, 1.000, 5.0 / 12,  0.14,  0.17},
-  field_variation {1.24, 1.008, 6.0 / 12,  0.03, -0.16},
-  field_variation {0.80, 1.016, 7.0 / 12, -0.12,  0.22},
-  field_variation {1.10, 1.024, 8.0 / 12,  0.22, -0.07},
-  field_variation {1.36, 1.032, 9.0 / 12, -0.19, -0.20},
-  field_variation {0.98, 1.036, 10.0 / 12, 0.08,  0.10},
-  field_variation {1.16, 1.040, 11.0 / 12, -0.02, -0.02},
+  field_variation {0.74, 0.0 / 12, -0.18, -0.11},
+  field_variation {0.86, 1.0 / 12,  0.09, -0.21},
+  field_variation {1.02, 2.0 / 12,  0.20,  0.04},
+  field_variation {1.18, 3.0 / 12, -0.06,  0.19},
+  field_variation {1.30, 4.0 / 12, -0.22,  0.08},
+  field_variation {0.92, 5.0 / 12,  0.14,  0.17},
+  field_variation {1.24, 6.0 / 12,  0.03, -0.16},
+  field_variation {0.80, 7.0 / 12, -0.12,  0.22},
+  field_variation {1.10, 8.0 / 12,  0.22, -0.07},
+  field_variation {1.36, 9.0 / 12, -0.19, -0.20},
+  field_variation {0.98, 10.0 / 12, 0.08,  0.10},
+  field_variation {1.16, 11.0 / 12, -0.02, -0.02},
 };
 
 inline constexpr std::size_t samples_per_turn = 128;
@@ -122,8 +124,11 @@ inline constexpr double field_cell_size = 1.10;
 inline constexpr double field_base_diameter = 2.15;
 inline constexpr double field_margin = field_base_diameter * 0.75;
 inline constexpr double field_stroke_width = 0.014;
-inline constexpr double field_stroke_opacity = 0.90;
-inline constexpr double field_fill_opacity = 0.060;
+inline constexpr double field_graphic_opacity = 0.30;
+inline constexpr std::size_t field_voronoi_columns = 6;
+inline constexpr std::size_t field_voronoi_rows = 4;
+inline constexpr std::size_t field_voronoi_site_count
+  = field_voronoi_columns * field_voronoi_rows;
 inline constexpr double pi = 3.141592653589793238462643383279502884;
 inline const svg::color_qi ground_color {239, 245, 243};
 inline const svg::color_qi ink_color {23, 63, 72};
@@ -213,7 +218,14 @@ make_field_curve_path(const depth_style& style,
 {
   return make_curve_path(
     style, origin, field_base_diameter * variation.diameter_factor,
-    variation.point_distance_factor, variation.phase_turns);
+    1, variation.phase_turns);
+}
+
+inline constexpr std::size_t
+field_voronoi_variation_index(const std::size_t depth_index,
+                              const std::size_t site_index)
+{
+  return (site_index * 5 + depth_index * 7) % field_variations.size();
 }
 
 inline std::string
@@ -269,8 +281,7 @@ field_variation_title(const depth_style& style, const std::size_t index)
   return curve_title(style) + "; field variation "
     + std::to_string(index + 1) + "/"
     + std::to_string(field_variations.size()) + ", diameter factor="
-    + ratio_text(variation.diameter_factor) + ", point-distance factor="
-    + ratio_text(variation.point_distance_factor) + ", phase="
+    + ratio_text(variation.diameter_factor) + ", phase="
     + ratio_text(variation.phase_turns) + " turn";
 }
 
@@ -279,7 +290,6 @@ validate_catalogue()
 {
   style_require(depth_styles.size() == 12,
                 "bathymetry roulette catalogue must contain twelve depths");
-  bool filled_seen = false;
   std::size_t previous_turns = 0;
   for (std::size_t index = 0; index != depth_styles.size(); ++index)
     {
@@ -289,8 +299,9 @@ validate_catalogue()
       style_require(style.fixed_radius != 0 && style.rolling_radius != 0,
                     "bathymetry roulette radii must be positive");
       style_require(std::isfinite(style.point_distance_ratio)
-                      && style.point_distance_ratio >= 0,
-                    "bathymetry roulette d/r must be finite and nonnegative");
+                      && style.point_distance_ratio >= 1,
+                    "bathymetry roulette d/r must be finite and at least "
+                    "the cycloid boundary 1");
       if (style.kind == svg::roulette_kind::hypotrochoid)
         style_require(style.fixed_radius > style.rolling_radius,
                       "hypotrochoid fixed radius must exceed rolling radius");
@@ -307,11 +318,8 @@ validate_catalogue()
         style_require(style.layer_id != depth_styles[prior].layer_id,
                       "bathymetry roulette layer ids must be unique");
 
-      if (style.paint == curve_paint::filled)
-        filled_seen = true;
-      else
-        style_require(!filled_seen,
-                      "outline roulette cannot follow a filled depth");
+      style_require(style.paint == curve_paint::filled,
+                    "every bathymetry roulette depth must use even-odd fill");
 
       const std::size_t turns = completion_turns(style);
       style_require(turns >= previous_turns,
@@ -337,14 +345,6 @@ validate_catalogue()
                     "roulette field diameter factor must be positive");
       smallest_diameter_factor = std::min(
         smallest_diameter_factor, variation.diameter_factor);
-      style_require(std::isfinite(variation.point_distance_factor)
-                      && variation.point_distance_factor > 0,
-                    "roulette field point-distance factor must be positive");
-      if (index != 0)
-        style_require(
-          variation.point_distance_factor
-            > field_variations[index - 1].point_distance_factor,
-          "roulette field point-distance factors must increase");
       style_require(std::isfinite(variation.phase_turns)
                       && variation.phase_turns >= 0
                       && variation.phase_turns < 1,
@@ -365,13 +365,23 @@ validate_catalogue()
                   > field_cell_size,
                 "roulette field curves must overlap adjacent cells");
 
-  for (std::size_t index = 1; index != depth_styles.size(); ++index)
-    style_require(
-      depth_styles[index - 1].point_distance_ratio
-          * field_variations.back().point_distance_factor
-        < depth_styles[index].point_distance_ratio
-            * field_variations.front().point_distance_factor,
-      "roulette field variation families must remain ordered by depth");
+  style_require(field_voronoi_site_count >= field_variations.size()
+                  && field_voronoi_site_count % field_variations.size() == 0,
+                "roulette Voronoi sites must distribute variations evenly");
+  for (std::size_t depth_index = 0;
+       depth_index != depth_styles.size(); ++depth_index)
+    {
+      std::array<std::size_t, field_variations.size()> site_counts {};
+      for (std::size_t site_index = 0;
+           site_index != field_voronoi_site_count; ++site_index)
+        ++site_counts[field_voronoi_variation_index(
+          depth_index, site_index)];
+      for (const std::size_t count : site_counts)
+        style_require(count == field_voronoi_site_count
+                                 / field_variations.size(),
+                      "roulette Voronoi sites must cover every variation "
+                      "equally at each depth");
+    }
 }
 
 } // namespace cart0freak0::bathymetry_roulette_style

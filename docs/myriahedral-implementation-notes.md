@@ -193,11 +193,11 @@ The generated full-resolution ocean artifacts are:
 
 | Perspective | Ocean artifacts |
 | --- | --- |
-| Americas | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/water-myriahedral-americas-44-24.75.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/viewer.html?asset=water-myriahedral-americas-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/pdf/water-myriahedral-americas-44-24.75.pdf) |
-| Atlantic | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/water-myriahedral-atlantic-44-24.75.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/viewer.html?asset=water-myriahedral-atlantic-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/pdf/water-myriahedral-atlantic-44-24.75.pdf) |
-| Afro Eur Asia | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/water-myriahedral-afro-eur-asia-44-24.75.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/viewer.html?asset=water-myriahedral-afro-eur-asia-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/pdf/water-myriahedral-afro-eur-asia-44-24.75.pdf) |
-| Pacific | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/water-myriahedral-pacific-44-24.75.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/viewer.html?asset=water-myriahedral-pacific-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/pdf/water-myriahedral-pacific-44-24.75.pdf) |
-| Antarctic | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/water-myriahedral-antarctic-44-24.75.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/viewer.html?asset=water-myriahedral-antarctic-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/pdf/water-myriahedral-antarctic-44-24.75.pdf) |
+| Americas | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/water-myriahedral-americas-44-24.75.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=myriahedral/svg/water-myriahedral-americas-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/pdf/water-myriahedral-americas-44-24.75.pdf) |
+| Atlantic | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/water-myriahedral-atlantic-44-24.75.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=myriahedral/svg/water-myriahedral-atlantic-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/pdf/water-myriahedral-atlantic-44-24.75.pdf) |
+| Afro Eur Asia | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/water-myriahedral-afro-eur-asia-44-24.75.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=myriahedral/svg/water-myriahedral-afro-eur-asia-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/pdf/water-myriahedral-afro-eur-asia-44-24.75.pdf) |
+| Pacific | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/water-myriahedral-pacific-44-24.75.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=myriahedral/svg/water-myriahedral-pacific-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/pdf/water-myriahedral-pacific-44-24.75.pdf) |
+| Antarctic | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/water-myriahedral-antarctic-44-24.75.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=myriahedral/svg/water-myriahedral-antarctic-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/pdf/water-myriahedral-antarctic-44-24.75.pdf) |
 
 Generate the five layered SVGs with:
 
@@ -773,7 +773,7 @@ once, with no overlap and no omitted carrier face:
 ### Carrier-preserving output
 
 Both slices reuse
-[`water-myriahedral-44-24.75.svg`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/viewer.html?asset=water-myriahedral-44-24.75.svg.gz)
+[`water-myriahedral-44-24.75.svg`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=myriahedral/svg/water-myriahedral-44-24.75.svg.gz)
 on its canonical `44 × 24.75` carrier. Each terminal face is normalized once
 with the reference layout, and its three exact planar vertices become one SVG
 clip-path subpath. The wrapper takes the tight rectangular bounds of that face
@@ -788,8 +788,8 @@ exports are self-contained.
 
 | Group | Carrier `viewBox` | Raster size | Ocean artifacts |
 | --- | --- | ---: | --- |
-| 1 | `4.62928339131 0 22.5313244683 24.75` | `3496 × 3840` | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/water-myriahedral-adhoc-slice-1.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/viewer.html?asset=water-myriahedral-adhoc-slice-1.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/pdf/water-myriahedral-adhoc-slice-1.pdf) |
-| 2 | `8.17447516329 4.93044675801 31.1962414454 16.1085708814` | `3840 × 1983` | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/water-myriahedral-adhoc-slice-2.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/viewer.html?asset=water-myriahedral-adhoc-slice-2.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/pdf/water-myriahedral-adhoc-slice-2.pdf) |
+| 1 | `4.62928339131 0 22.5313244683 24.75` | `3496 × 3840` | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/water-myriahedral-adhoc-slice-1.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=myriahedral/svg/water-myriahedral-adhoc-slice-1.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/pdf/water-myriahedral-adhoc-slice-1.pdf) |
+| 2 | `8.17447516329 4.93044675801 31.1962414454 16.1085708814` | `3840 × 1983` | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/water-myriahedral-adhoc-slice-2.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=myriahedral/svg/water-myriahedral-adhoc-slice-2.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/pdf/water-myriahedral-adhoc-slice-2.pdf) |
 
 Generate both slice SVGs with:
 

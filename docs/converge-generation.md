@@ -232,7 +232,7 @@ Evaluate and suggest methods to improve coverage in the anthropocene pass.
 
 Given the generated output
 
-assets.generated/png/anthropocene-ck-44-22.png
+assets.generated/cahill-keyes/png/anthropocene-ck-44-22.png
 
 Coverage is great for North America and weak everywhere else.
 

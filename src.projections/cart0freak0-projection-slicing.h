@@ -30,6 +30,7 @@ enum class slice_kind
   planar_tile,
 };
 
+/// Axis-aligned viewport measured in the full projected carrier coordinates.
 struct projected_view
 {
   double x;
@@ -38,6 +39,7 @@ struct projected_view
   double height;
 };
 
+/// Ordered WGS 84 longitude/latitude bounds used for source preclipping.
 struct geographic_bounds
 {
   double west;
@@ -218,6 +220,8 @@ append_sampled_edge(projected_path& result,
     }
 }
 
+/// Longitude interval and north/south face identifiers for one Cahill-Keyes
+/// source sector used while constructing runtime slice outlines.
 struct ck_sector
 {
   double west;
@@ -302,6 +306,7 @@ make_cahill_keyes_slices(const projection_context& context)
   return result;
 }
 
+/// Vertex pair whose shared hinge separates the two Myriahedral face groups.
 struct myria_hinge_cut
 {
   std::uint16_t first;

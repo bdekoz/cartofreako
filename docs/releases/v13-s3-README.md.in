@@ -1,0 +1,49 @@
+# Cartofreako generated assets v13
+
+This immutable object release mirrors the projection-organized generated-asset
+bundle published with source release `@@SOURCE_TAG@@`. The source tag resolves
+to commit `@@SOURCE_COMMIT@@`.
+
+The release root is `cartofreako/v13/` in the Berkeley S3-compatible bucket
+`adekosnik-bucket01`:
+
+```text
+cartofreako/v13/
+├── tree/
+│   ├── cahill-keyes/{svg,pdf,png,thumbnail}/
+│   ├── authagraph/{svg,pdf,png,thumbnail}/
+│   ├── dymaxion/{svg,pdf,png,thumbnail}/
+│   ├── myriahedral/{svg,pdf,png,thumbnail}/
+│   ├── star-x/{svg,pdf,png,thumbnail}/
+│   └── voronoi/{svg,pdf,png,thumbnail}/
+├── package/assets.generated.v13.tar.xz
+├── README.md
+├── viewer.html
+├── SHA256SUMS
+└── release.json
+```
+
+The recovery package contains @@SOURCE_TREE_FILES@@ files: 205 layered SVGs,
+84 adjacent deterministic resource `.svg.gz` archives, 205 PDFs, 205
+full-resolution PNGs, and 186 480-pixel-wide thumbnails—31 for each of the six
+projections. The browser tree stores every SVG only as an explicit `.svg.gz`
+object, served as `application/gzip` without `Content-Encoding`.
+
+Selecting a thumbnail opens `viewer.html`, which fetches the same-origin
+projection-specific `.svg.gz` object and streams it through
+`DecompressionStream("gzip")`. The viewer also exposes compressed and
+decompressed downloads. No uncompressed SVG is published in the browser tree.
+
+All @@RELEASE_OBJECTS@@ objects are public-read and carry an immutable one-year
+cache policy. `release.json` is the completion marker and is uploaded only
+after every other object passes checksum verification. `SHA256SUMS` covers all
+@@PAYLOAD_FILES@@ payload objects; it excludes itself and `release.json`.
+
+The recovery package is byte-for-byte identical to the GitHub release asset:
+
+```text
+@@ARCHIVE_SHA256@@  assets.generated.v13.tar.xz
+```
+
+Project documentation and release notes are available at
+<https://github.com/bdekoz/cartofreako/releases/tag/@@SOURCE_TAG@@>.

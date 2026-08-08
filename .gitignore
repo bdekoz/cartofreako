@@ -16,7 +16,9 @@
 /tests/test-generation-typography
 /tests/test-orbiting-generation
 /tests/test-network-swarm-generation
+/tests/test-fiber-synthesized-generation
 /tests/test-bathymetry-roulette-style
+/tests/test-bathymetry-hamonshu-style
 /tests/test-anthropocene-generation
 /tests/test-anthropocene-temperature-generation
 /tests/test-cloud-atmosphere-generation
@@ -36,7 +38,10 @@
 /src.generate/generate-astro
 /src.generate/generate-orbiting
 /src.generate/generate-network-swarm
+/src.generate/generate-network-infrastructure
+/src.generate/generate-fiber-synthesized
 /src.generate/generate-bathymetry-roulette
+/src.generate/generate-bathymetry-hamonshu
 /src.generate/generate-anthropocene
 /src.generate/prepare-anthropocene
 /src.generate/generate-anthropocene-temperature
@@ -49,6 +54,7 @@
 
 # Optional local generation preference (the default profile is checked in).
 /generation-profile.local.json
+/.cartofreako/
 
 # Downloaded inputs and local build products.
 /assets.static/natural-earth/10m-physical-vectors/
@@ -72,6 +78,8 @@ __pycache__/
 # Generated render trees and bundles are static release assets, not Git
 # content. Extracting a published bundle should leave the source tree clean.
 /assets.generated/
+/assets.generated.v*/
+/assets.generated.pre-*/
 /assets.generated.v*.tar.xz
 
 # Generated release reports and visual-QA renders are delivery artifacts.

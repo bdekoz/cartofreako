@@ -1,5 +1,5 @@
-{% assign release_base = "https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12" %}
-{% assign viewer_base = release_base | append: "/viewer.html?asset=" %}
+{% assign release_base = "https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13" %}
+{% assign viewer_base = release_base | append: "/viewer.html?asset=" | append: page.projection_key | append: "/svg/" %}
 {% assign preview_base = release_base | append: "/" | append: page.preview_path %}
 
 # {{ page.projection_name }} generated snapshot
@@ -13,17 +13,17 @@
 [Voronoi](generated-snapshot-voronoi.html)
 
 [Generation guide](generation.html) ·
-[Stage 12 implementation notes](stage-12-implementation-notes.html) ·
-[S3 v12 publication](releases/s3-v12.html)
+[Stage 13 convergence notes](converge-generation-13.html) ·
+[S3 v13 publication](releases/s3-v13.html)
 
 This contact sheet covers every credential-free {{ page.projection_name }}
-whole-map pass in the Stage 12 release graph, plus the explicitly retained
+whole-map pass in the Stage 13 release graph, plus the explicitly retained
 legacy Anthropocene atlas. Each preview is an immutable public PNG rendered at
 contact-sheet width; offscreen previews are loaded only as they approach the
 viewport. Select an image to open the S3-hosted viewer, which streams the
 matching `.svg.gz` object through the browser's `DecompressionStream` API and
 displays the full-resolution SVG. The previews, viewer, and compressed SVGs
-are served from the same immutable public S3 release at `cartofreako/v12/`,
+are served from the same immutable public S3 release at `cartofreako/v13/`,
 whose [completion marker]({{ release_base }}/release.json) records its source
 commit, inventory, manifest, and HTTP delivery contract.
 
@@ -41,7 +41,8 @@ commit, inventory, manifest, and HTTP delivery contract.
 | Pass | Preview |
 | --- | --- |
 | Astronomy — all sky | <a href="{{ viewer_base }}astro-all-sky-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/astro-all-sky-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} all-sky astronomy"></a> |
-| Astronomy — observer | <a href="{{ viewer_base }}astro-observer-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/astro-observer-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} observer astronomy"></a> |
+| Astronomy — ground multiband observer | <a href="{{ viewer_base }}astro-observer-ground-multiband-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/astro-observer-ground-multiband-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} ground multiband observer astronomy"></a> |
+| Astronomy — Hubble observer | <a href="{{ viewer_base }}astro-observer-hubble-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/astro-observer-hubble-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} Hubble observer astronomy"></a> |
 | Orbital Technosphere — global | <a href="{{ viewer_base }}orbital-technosphere-global-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/orbital-technosphere-global-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} global orbital technosphere"></a> |
 | Orbital Technosphere — observer | <a href="{{ viewer_base }}orbital-technosphere-observer-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/orbital-technosphere-observer-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} observer orbital technosphere"></a> |
 
@@ -51,6 +52,7 @@ commit, inventory, manifest, and HTTP delivery contract.
 | --- | --- |
 | Network swarm | <a href="{{ viewer_base }}network-swarm-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/network-swarm-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} network swarm"></a> |
 | Network infrastructure sites | <a href="{{ viewer_base }}network-infrastructure-sites-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/network-infrastructure-sites-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} network infrastructure sites"></a> |
+| Fiber Synthesized | <a href="{{ viewer_base }}fiber-synthesized-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/fiber-synthesized-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} Fiber Synthesized cleaned union"></a> |
 | Anthropocene — 2025 default | <a href="{{ viewer_base }}anthropocene-temperature-2025-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/anthropocene-temperature-2025-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} Anthropocene 2025"></a> |
 | Anthropocene — 2026 default | <a href="{{ viewer_base }}anthropocene-temperature-2026-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/anthropocene-temperature-2026-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} Anthropocene 2026"></a> |
 | Anthropocene — legacy observation atlas | <a href="{{ viewer_base }}anthropocene-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/anthropocene-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} legacy Anthropocene observation atlas"></a> |
@@ -79,6 +81,7 @@ commit, inventory, manifest, and HTTP delivery contract.
 | Pass | Preview |
 | --- | --- |
 | Bathymetry Roulette | <a href="{{ viewer_base }}bathymetry-roulette-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/bathymetry-roulette-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} Bathymetry Roulette"></a> |
+| Bathymetry Hamonshū | <a href="{{ viewer_base }}bathymetry-hamonshu-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/bathymetry-hamonshu-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} Bathymetry Hamonshū"></a> |
 
 Credentialed P-Tree cloud-atmosphere and licensed network-topology products
 are intentionally excluded from these default sheets. After the operator has

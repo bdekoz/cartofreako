@@ -3,7 +3,7 @@
   "name": "Cloud and CDN infrastructure sites",
   "product": "sites",
   "display": {
-    "marker_radius_inches": 0.032,
+    "marker_radius_inches": 0.052,
     "collision_cell_inches": 0.18,
     "minimum_tether_inches": 0.045,
     "maximum_labels": 55,

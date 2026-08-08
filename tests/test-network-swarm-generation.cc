@@ -21,6 +21,7 @@ main()
       "assets.static/network-swarm/network-swarm-profile.json");
   assert(profile.source_h3_resolution == 5);
   assert(profile.parent_h3_resolution == 3);
+  assert(profile.marker_radius == 0.042);
   assert(profile.maximum_labels == 40);
   assert(profile.show_tethers);
   assert(profile.archive_sha256

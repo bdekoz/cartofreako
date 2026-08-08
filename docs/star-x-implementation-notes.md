@@ -21,10 +21,11 @@ The implementation deliberately separates three transformation stages:
    right four slots by 180 degrees, place them above, apply the configured
    symmetric inter-group spacing, and uniformly enlarge the assembled X
    about the page center. The default enlargement is 120 percent.
-3. SVG composition helpers add the North-pole star and apply the Stage 7
-   Antarctic cap. The cap radius is measured from Natural Earth land in the
-   ordinary Star-X projection; every physical layer and the graticule use the
-   same cut and reassembly at the bottom of the page.
+3. SVG composition helpers add the North-pole star and apply the Stage 13
+   Antarctic cap. Every source geometry at or south of the fixed `60°S`
+   parallel is reassembled at the bottom of the page. The transform preserves
+   each point's ordinary Star-X distance from its source South-Pole tip, and
+   the unified mainland is vertically aligned from the uncut lower quadrant.
 
 This makes Star-X a real point projection while keeping its local geometry
 numerically identical to the tested Cahill-Keyes implementation.
@@ -41,8 +42,8 @@ numerically identical to the tested Cahill-Keyes implementation.
 | [`a60-carto.h`](../src.projections/a60-carto.h) | Umbrella include and `starxwestate` whole-earth state |
 | [`test-star-x-projection-api.cc`](../tests/test-star-x-projection-api.cc) | Reference anchors, assembly identity, global domain, scaling, validation, and API tests |
 | [`generate-geometry.cc`](../src.generate/generate-geometry.cc) | Layered Star-X face geometry and the central North-pole star |
-| [`natural-earth-generation.h`](../src.generate/natural-earth-generation.h) | Natural Earth `ant_r` measurement, cap clipping, all-layer reassembly, and placement |
-| [`generate-graticules.cc`](../src.generate/generate-graticules.cc) | Cap-aware latitude/longitude splitting and visible Stage 7 source/destination boundaries |
+| [`natural-earth-generation.h`](../src.generate/natural-earth-generation.h) | Fixed-`60°S` clipping, radius-preserving all-layer reassembly, uncut-mainland vertical alignment, and topmost Antarctic paint order |
+| [`generate-graticules.cc`](../src.generate/generate-graticules.cc) | Cap-aware latitude/longitude splitting and visible Stage 13 source/destination boundaries |
 
 The repository renamed projection-specific headers from the former
 `a60-carto-projection-*` prefix to `cart0freak0-*`. The implementation is
@@ -262,7 +263,7 @@ the page center. Scaling the two groups independently would also scale their
 gap around two different centers and would not reproduce the reference
 geometry.
 
-### Stages 6 and 7: polar composition
+### Stages 6 and 13: polar composition
 
 Stage 6 adds two presentation elements after the point transform.
 
@@ -271,28 +272,29 @@ It alternates an outer radius of `(1.25/44)H` with an inner radius equal to
 `0.4` of the outer radius. `make_north_pole_star()` returns its sixteen
 vertices, beginning at the upper tip, so Izzi can emit a native SVG path.
 
-Stage 7 replaces Stage 6's fixed `60 degrees S` polar inset with a cap derived
-from the actual projected mainland. Let `Q(lambda)` select the practical
-Star-X quadrant using the registered cuts at `-111`, `-21`, `69`, and `159`
-degrees. Let `S_q` be that quadrant's South-Pole tip—the projected point in
-the quadrant farthest from page center—and let `P(phi,lambda)` be the ordinary
-Stage 5 Star-X point. The source radius is:
+Stage 13 simplifies Stage 7's data-derived boundary to a fixed geographic
+cut. A point belongs to the cap exactly when:
+
+```text
+phi <= -60 degrees
+```
+
+The decision no longer depends on maximum land distance, a varying boundary
+latitude, or a bisection. Let `Q(lambda)` select the practical Star-X quadrant
+using the registered cuts at `-111`, `-21`, `69`, and `159` degrees. Let
+`S_q` be that quadrant's South-Pole tip and let `P(phi,lambda)` be the ordinary
+Stage 5 Star-X point. The transform still preserves the source radius:
 
 ```text
 rho(phi,lambda) = length(P(phi,lambda) - S_Q(lambda))
 ```
 
-The generator opens `ne_10m_land.shp`, identifies the mainland polygon whose
-envelope reaches the South Pole, and evaluates `rho` at every exterior-ring
-vertex. The maximum is `ant_r`; no fixed latitude or independently chosen
-inset scale remains. For the Natural Earth 5.1.1 data and the standard
-34-by-44 frame, `ant_r` is approximately `3.623650` frame units.
-
-Each practical quadrant is intersected with the circle centered at `S_q` and
-radius `ant_r`. The geographic latitude of that circular boundary varies with
-longitude and is found by bisection of `rho(phi,lambda) = ant_r`. GDAL uses
-the sampled boundary as a polygon: geometry outside it stays in the ordinary
-X, and geometry inside it is moved to the unified cap.
+GDAL intersects each practical source quadrant with the constant-latitude
+polygon from the South Pole through `60°S`. Geometry north of that line stays
+in the ordinary X; geometry on or south of it moves to the unified cap. The
+diagnostic `radius` is only the maximum projected source radius sampled along
+the `60°S` boundary. It validates frame fit and labels the graticule guide; it
+does not decide cap membership or rescale geometry.
 
 A single rigid rotation per quadrant is insufficient. Cahill-Keyes boundary
 meridians bend below its small near-pole construction zone, so a rotation
@@ -300,8 +302,7 @@ that joins one latitude opens a gap at another. The compositor instead keeps
 each point's exact source radius and normalizes only its geographic bearing:
 
 ```text
-delta = 180 degrees - longitude of the farthest mainland point
-theta = (lambda + delta) pi / 180
+theta = lambda pi / 180
 xcap = Cx + rho sin(theta)
 ycap = Cy - rho cos(theta)
 ```
@@ -309,24 +310,23 @@ ycap = Cy - rho cos(theta)
 This is a pointwise rotation around the quadrant tip, not a rescaled polar
 substitute. Adjacent cut meridians coincide at every latitude, the four land
 pieces form one mass, and every radius remains exactly the ordinary Star-X
-radius. `delta` turns the farthest mainland point downward so the visible
-continent reaches the common lower alignment.
+radius. Zero bearing offset gives the reassembled continent a stable
+geographic orientation.
 
-The unified South Pole `C` is placed by:
+The unified South Pole has `Cx = W/2`. Its vertical coordinate is derived
+from the original, uncut lower Star-X quadrant rather than from geometry that
+has already had the `60°S` region removed. The generator scans the Natural
+Earth Antarctic mainland and records both its lowest ordinary lower-quadrant
+Y coordinate and its lowest reassembled local Y coordinate. Their difference
+sets `Cy`, so the reassembled mainland reaches the same lower-page baseline
+as the original continent and cannot be pulled upward by the cut itself.
 
-```text
-Cx = W/2
-Cy = Ybottom - ant_r
-```
-
-`Ybottom` is the lowest point of the enlarged Star-X octant geometry,
-sampled over the integer-degree globe. The destination circle is therefore
-centered on the page axis and tangent to the lowest octant extent. The same
-cap operation applies to ocean, land, all twelve bathymetry levels, minor
+The same cap operation applies to ocean, land, all twelve bathymetry levels, minor
 islands, ice, lakes, playas, rivers, reefs, and coastline, so neither source
 geometry nor a polar ocean is duplicated. The graticule generator applies
 the identical membership test and mapping; its `antarctic-cap-boundaries`
-layer draws the four source cut arcs and the unified destination circle. The
+layer draws the four projected `60°S` source segments and the unified
+destination boundary. The
 Natural Earth compositor queues ordinary quadrant paths separately from cap
 paths and serializes every transformed Antarctic fragment last within its
 thematic layer. Because SVG uses document paint order, this makes the unified
@@ -350,9 +350,9 @@ Star-X compositions place an eight-point star over that locus.
 
 The four southern polar copies remain at the outer tips in the ordinary point
 transform. This is a consequence of rotating an entire four-face group, not
-a special latitude case. Stage 7 leaves those public point coordinates
-unchanged; cap-aware generators explicitly cut the four source circles and
-route their contents to the shared South Pole.
+a special latitude case. Stage 13 leaves those public point coordinates
+unchanged; cap-aware generators explicitly cut the four source quadrants at
+`60°S` and route their southern contents to the shared South Pole.
 
 ## Public C++ API
 
@@ -440,8 +440,8 @@ northern and southern rings are closed separately before projection. This
 matters at the cyclic `159 degrees E / 201 degrees W` octant, where one ring
 spanning both hemispheres otherwise bridges the lower-left exterior notch
 when SVG applies its fill rule. Stable `-north` and `-south` path-ID suffixes
-make the split testable. In Stage 7, each longitude band is split against its
-data-derived source circle before the inside portion receives the continuous
+make the split testable. In Stage 13, each longitude band is split at the
+fixed `60°S` parallel before the southern portion receives the continuous
 radius-preserving cap transform. The cap projection is a separate continuous
 mapping and is not passed through ordinary Star-X edge routing.
 
@@ -454,9 +454,10 @@ Validation occurs before the native call, so invalid layout and geographic
 values receive public Star-X diagnostics. The optional Antarctic compositor
 uses one ordinary Star-X projection, distance, sine, and cosine per densified
 source point. Its radius is measured from the selected source tip and becomes
-exactly zero at the South Pole. Fifty-six bisection iterations locate each
-sampled source-circle boundary; all computed cap polygons must pass GEOS
-validity checks and fit inside the output frame.
+exactly zero at the South Pole. Cap membership is one latitude comparison;
+the former 56-iteration boundary bisection is gone. The constant-latitude cap
+polygons must pass GEOS validity checks, and the reassembled boundary and
+mainland alignment must fit inside the output frame.
 The native projector remains immutable after its one-time function-local
 static initialization and is safe for concurrent read-only calls.
 
@@ -499,11 +500,13 @@ Cahill-Keyes fixture. This gives the test a numeric oracle without making a
 historical raster the implementation.
 
 The geometry generator additionally asserts one `north-pole-star` path. The
-graticule generator requires its Stage 7 source and unified cap guides. The
-Natural Earth generators assert the unified land, ice-shelf, and coastline
-fragments, require every ordinary quadrant path to precede the first
-Antarctic fragment in each applicable layer, and retain exactly two Earth
-layer groups and 22 water-overlay groups.
+graticule and Natural Earth generators assert that the cap contains `60°S`,
+excludes a point just north of it, and reports `-60` at every sampled
+longitude. The placement check reconstructs the uncut lower-quadrant
+mainland baseline. Natural Earth output requires every ordinary quadrant path
+to precede the first Antarctic fragment in each applicable layer. Earth keeps
+two top-level groups; water adds a final `polar-mark` group so its black
+North-pole star paints above all physical overlay groups.
 
 ## Provenance and limitations
 
@@ -518,9 +521,11 @@ ellipsoidal correction, or raster reconstruction. The point API does not
 automatically replace Antarctic points with the composed cap: callers that
 render geographic layers must opt into the supplied layer-aware helpers, as
 the Natural Earth and graticule generators do. The cap preserves distance
-from the South Pole, but its bearing normalization is deliberately not a
-global rigid transform; that correction is what joins the bent Cahill-Keyes
-quadrant edges without changing `ant_r`. The 17:22 frame preserves the
+from the South Pole, but its longitude-derived bearing normalization is
+deliberately not a global rigid transform; that correction joins the bent
+Cahill-Keyes quadrant edges without changing radial scale. The fixed `60°S`
+cut is an authored presentation boundary, not a projection discontinuity or
+a claim that Antarctica ends at that latitude. The 17:22 frame preserves the
 historical carrier; the default centered enlargement reduces its former
 margins while remaining inside the 34-by-44 page for the tested Star-X
 geometry.

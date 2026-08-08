@@ -33,7 +33,8 @@ decision after the fact.
 | 4.1a | `generate-cloud-atmosphere` | **Implemented** | Confirmed P-Tree physical-cloud contract, regional/daytime coverage, process-start solar calculation, source-timed JAXA atmosphere layers, H3 preparation, products, and limits are detailed in the [Cloud-atmosphere implementation notes](cloud-atmosphere-implementation-notes.md) |
 | 4.2 | `generate-orbiting` / Orbital Technosphere | **Implemented** | Naming, NASA/CelesTrak feasibility, OMM/SGP4, profile authority, products, and limits are summarized below and detailed in the [Orbital Technosphere implementation notes](orbital-technosphere-implementation-notes.md) |
 | 4.4 | `generate-network-swarm` | **Implemented** | Confirmed variable-input contract, fixed cumulative snapshot, H3/Izzi clustering, projection-safe components, independent downloader layers, products, and limits are detailed in the [network-swarm implementation notes](network-swarm-implementation-notes.md) |
-| 4.5 | `generate-bathymetry-roulette` | **Implemented** | Confirmed depth-to-curve catalogue, explicit varied page-space line fields, Natural Earth clipping, accepted moiré, products, and limits are detailed in the [Bathymetry Roulette implementation notes](bathymetry-roulette-implementation-notes.md) |
+| 4.5 | `generate-bathymetry-roulette` | **Implemented; Stage 13 revised** | Cycloid-minimum filled forms, depth-only `d/r`, 24-region Voronoi grouping, 30% opacity, restored blue ramp, clipping, accepted moiré, products, and limits are detailed in the [Bathymetry Roulette implementation notes](bathymetry-roulette-implementation-notes.md) |
+| 4.6 | `generate-bathymetry-hamonshu` | **Implemented** | Separate source-indexed Izzi Hamonshū wave-field experiment using the same depth/Voronoi/opacity/blue architecture is detailed in the [Bathymetry Hamonshū implementation notes](bathymetry-hamonshu-implementation-notes.md) |
 | 6a | `generate-resources` / World Game | **Historical method only; implementation retired** | A bounded 1960 production-leader transcription was feasible, but it was not a current resources atlas; its data, renderer, targets, and generated products were removed at the Stage 6b cutover |
 | 6b | `resources-energy`, `resources-food`, `resources-flora`, `resources-mineral`, `resources-human` | **Implemented historical first increment; superseded by Stage 12** | The five-family v2 baseline established metric separation, non-sparse coverage gates, deterministic archives, source refresh, and six-projection rules |
 | 7 | Configurable `generate-*` selection | **Implemented infrastructure** | JSON profile, validation, safe target expansion, default Make behavior, alternatives, and scope boundaries are recorded in this document |
@@ -58,17 +59,19 @@ navigation-grade ephemerides. The implemented choices were:
 - use the same six spherical projection implementations as terrestrial maps,
   with declination mapped to latitude and profile-oriented right ascension
   mapped to synthetic longitude;
-- produce complementary `all-sky` and observer-filtered products rather than
-  one ambiguous view;
-- make a JSON profile the sole authority for calculation timestamp, observer
-  position, orientation, instrument bands, transient window, source paths,
-  and display budgets;
+- produce complementary `all-sky`, explicitly named ground-observer, and
+  Hubble-observer products rather than one ambiguous view;
+- make ground and Hubble JSON profiles the sole authorities for calculation
+  timestamp, platform, orientation, instrument bands, transient window,
+  source paths, and display budgets;
 - keep normal generation offline through bounded, checked-in snapshots;
 - use NASA Planetary Data for discovery/provenance, not as a universal sky
   catalog; use Gaia for stars, the NASA Exoplanet Archive for confirmed host
   systems, JPL elements and SBDB for Solar System bodies, and curated
-  GCN/NSSDC/HEASARC context for persistent and transient high-energy sources;
-  and
+  GCN/NSSDC/HEASARC context for persistent and transient high-energy sources,
+  plus a checked CelesTrak OMM and SGP4 for Hubble;
+- give each major planet a dotted true-apparent-angular-size outline while
+  doubling the separate fixed legibility glyph; and
 - state the approximation boundary: linear Gaia proper motion, approximate
   major-planet and lunar elements, two-body small-body propagation, simplified
   sidereal/visibility calculations, and no atmospheric or terrain model.
@@ -161,21 +164,24 @@ edge-data work are recorded in
 
 ### Stage 4.5: Bathymetry Roulette
 
-The evaluation concluded that a monochrome roulette bathymetry pass is
+The evaluation concluded that a roulette bathymetry pass is
 feasible by reusing the twelve nested Natural Earth depth polygons as
 projection-safe SVG clips and Izzi's closed roulette paths as explicit
-page-space line fields. The confirmed and implemented choices were:
+page-space form fields. Stage 13 revised the confirmed choices to:
 
 - use the canonical name `bathymetry-roulette`, while accepting the requested
   `bathymetry-rolette` spelling and historical `art-agua-roulette` name as
   generation-profile aliases;
-- keep one pale ground and one dark ink for every depth so curve structure,
-  rather than a changing color ramp, carries the encoding;
-- increase point-distance ratio strictly with depth, progress from simple
-  1:1 curves through 5:2 and 11:7 curves, and use outline motifs through
-  -6,000 m followed by even-odd filled motifs;
+- start at the cycloid boundary `d/r = 1`, prohibit lower values, and increase
+  the exact point-distance ratio strictly with depth to 5.00;
+- use even-odd-filled forms at every depth with fill and stroke fixed at 30%
+  opacity;
+- restore the original twelve-step Natural Earth blue ramp as a redundant
+  depth cue;
 - expand each representative depth curve into twelve deterministic diameter,
-  point-distance, phase, and center-offset variations;
+  phase, and center-offset variations without spatially perturbing `d/r`;
+- assign nearby field cells through 24 jittered projected-page Voronoi sites,
+  with two regions per variation and no hard curve clip at region boundaries;
 - place those curves on staggered 1.10-unit projected-page cells with
   overlapping diameters, producing a continuous field rather than an icon
   grid;
@@ -191,6 +197,22 @@ page-space line fields. The confirmed and implemented choices were:
 The exact twelve-row catalogue, SVG layer contract, products, verification,
 and interpretation boundary are recorded in
 [`bathymetry-roulette-implementation-notes.md`](bathymetry-roulette-implementation-notes.md).
+
+### Stage 4.6: Bathymetry Hamonshū
+
+The second art pass retains the revised depth clips, blue ramp, 30% opacity,
+field spacing, Voronoi grouping, shallow-to-deep replacement, explicit path
+serialization, and accepted-moiré policy. It replaces the roulette engine with
+twelve source-indexed wave motifs from Izzi's procedural interpretation of
+Mori Yūzan's 1903 *Hamonshū*, volume 2. Depth increases Izzi's native density
+and curvature parameters instead of inventing a `d/r` analogue; motifs remain
+stroke linework because many source forms are open polylines. The canonical
+standard-pass name is `bathymetry-hamonshu`, with `hamonshu` and
+`art-agua-hamonshu` profile aliases.
+
+The source selection, exact depth table, field/layer contract, provenance,
+commands, verification, and interpretation limits are in the
+[Bathymetry Hamonshū implementation notes](bathymetry-hamonshu-implementation-notes.md).
 
 ### Stage 6a: World Game resources (historical method record)
 
@@ -428,6 +450,7 @@ Normalization is limited and deterministic:
 - `orbiting` becomes `orbital-technosphere`;
 - the former `network` name and short `swarm` name become `network-swarm`;
 - `infrastructure` becomes `network-infrastructure`;
+- `fiber` and `fiber-map` become `fiber-synthesized`;
 - `resource` and the historical request typo `resouces` expand to the six
   `resources-*` family passes;
 - `energy`, `food`, `fauna`, `flora`, `mineral`/`minerals`, and `human`, plus the
@@ -437,6 +460,8 @@ Normalization is limited and deterministic:
   `ressources-flora` spelling becomes `resources-flora`;
 - `bathymetry-rolette` and `art-agua-roulette` become
   `bathymetry-roulette`; and
+- `hamonshu` and `art-agua-hamonshu` become
+  `bathymetry-hamonshu`; and
 - `ocean` becomes `water`, the current name of the complementary Natural
   Earth physical-feature generation pass.
 
@@ -446,24 +471,25 @@ twice.
 
 The supported cross-product is:
 
-| Projection selector | Geometry | Graticules | Earth | Water | Astronomy | Orbital Technosphere | Network-swarm | Stage 12 resources aggregate | Bathymetry Roulette | Anthropocene defaults | Network infrastructure |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `cahill-keyes` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 2 SVGs | 1 SVG |
-| `authagraph` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 2 SVGs | 1 SVG |
-| `dymaxion` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 2 SVGs | 1 SVG |
-| `myriahedral` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 2 SVGs | 1 SVG |
-| `star-x` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 2 SVGs | 1 SVG |
-| `voronoi` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 2 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 2 SVGs | 1 SVG |
+| Projection selector | Geometry | Graticules | Earth | Water | Astronomy | Orbital Technosphere | Network-swarm | Stage 12 resources aggregate | Bathymetry Roulette | Bathymetry Hamonshū | Anthropocene defaults | Network infrastructure | Fiber Synthesized |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `cahill-keyes` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 3 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 1 SVG | 2 SVGs | 1 SVG | 1 SVG |
+| `authagraph` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 3 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 1 SVG | 2 SVGs | 1 SVG | 1 SVG |
+| `dymaxion` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 3 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 1 SVG | 2 SVGs | 1 SVG | 1 SVG |
+| `myriahedral` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 3 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 1 SVG | 2 SVGs | 1 SVG | 1 SVG |
+| `star-x` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 3 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 1 SVG | 2 SVGs | 1 SVG | 1 SVG |
+| `voronoi` | 1 SVG | 1 SVG | 1 SVG | 1 SVG | 3 SVGs | 2 SVGs | 1 SVG | 14 SVG.gz | 1 SVG | 1 SVG | 2 SVGs | 1 SVG | 1 SVG |
 
 Astronomy resolves to `generate-astro-PROJECTION`, which intentionally makes
-both all-sky and observer products. Orbital Technosphere resolves to
+all-sky, ground-observer, and Hubble-observer products. Orbital Technosphere resolves to
 `generate-orbiting-PROJECTION`, which makes both global and observer
 products. The four terrestrial passes resolve to uniform
 `generate-PASS-PROJECTION` targets.
 
 Network-swarm resolves to `generate-network-swarm-PROJECTION` and makes the
-one cumulative swarm product. Bathymetry Roulette similarly resolves to
-`generate-bathymetry-roulette-PROJECTION` and makes one monochrome depth map.
+one cumulative swarm product. The two bathymetry art selectors resolve to
+`generate-bathymetry-roulette-PROJECTION` and
+`generate-bathymetry-hamonshu-PROJECTION`, each making one blue depth map.
 Each canonical resource-family selector resolves to
 `generate-resources-FAMILY-PROJECTION` and makes every released metric in
 that family as a deterministic `.svg.gz` archive. The aggregate `resources`
@@ -474,6 +500,10 @@ fields; the source-separated observation atlas remains under explicit
 `generate-anthropocene-atlas-PROJECTION` targets. Network infrastructure resolves to
 `generate-network-infrastructure-PROJECTION` and makes only the cloud/CDN site
 atlas; licensed topology is intentionally not a profile-selectable product.
+Fiber Synthesized resolves to `generate-fiber-synthesized-PROJECTION` and
+makes the standard cleaned union whose complete 20260805 snapshot is the
+default visible layer. See the
+[implementation notes](fiber-synthesized-implementation-notes.md).
 
 Stage 7 adds uniform Cahill-Keyes aliases for the terrestrial rule. In
 particular,
@@ -512,7 +542,7 @@ make all
 This remains the release/review build. It creates the complete layered SVG,
 PDF, and opaque-PNG suite, including all 84 Stage 12 resource maps plus slice
 and perspective families outside the configurable matrix. It also makes the
-28 lower-resolution Cahill-Keyes thumbnails linked from the
+31 lower-resolution Cahill-Keyes thumbnails linked from the
 [generated snapshot](generated-snapshot-ck.md). The aliases
 `generate-projections`, `generated-projections`, and `make-generated` retain
 the same full-suite behavior. Use `make assets-resilient` for the bounded
@@ -533,7 +563,9 @@ make generate-anthropocene
 make generate-resources
 make generate-network-swarm
 make generate-network-infrastructure
+make generate-fiber-synthesized
 make generate-bathymetry-roulette
+make generate-bathymetry-hamonshu
 make generate-water-myriahedral-perspectives
 make generate-ck-slices
 ```
@@ -547,8 +579,13 @@ products.
 `generate-network-infrastructure-artifacts` does the same for the six
 cloud/CDN site products. The separate
 `generate-network-infrastructure-topology` and
-`generate-network-infrastructure-topology-artifacts` targets are explicit
-CC BY-NC-SA 3.0 opt-ins and never dependencies of the normal family.
+`generate-network-infrastructure-topology-artifacts` targets begin as explicit
+CC BY-NC-SA 3.0 opt-ins. After a fully successful authorized generation, the
+local persisted pass state makes topology a dependency of that checkout's
+`make all` graph.
+`generate-fiber-synthesized-artifacts` exports the six standard checked-union
+submarine-fiber products in all three formats; it is neither credential-gated
+nor optional.
 `generate-anthropocene-artifacts` does the same for all twelve default 2025
 and 2026 Anthropocene products; `generate-anthropocene-atlas-artifacts`
 exports the six legacy observation-atlas products.
@@ -556,8 +593,10 @@ exports the six legacy observation-atlas products.
 Stage 12 SVG products.
 `generate-bathymetry-roulette-artifacts` does the same for all six roulette
 bathymetry products.
+`generate-bathymetry-hamonshu-artifacts` does the same for all six Hamonshū
+bathymetry products.
 
-`generate-snapshot-ck` builds only the 28 480-pixel-wide contact-sheet
+`generate-snapshot-ck` builds only the 31 480-pixel-wide contact-sheet
 thumbnails and their Cahill-Keyes SVG prerequisites. `authorize-external`
 performs read-only credential/terms-boundary checks for selected optional
 P-Tree, NASA FIRMS, and network-topology passes; it does not fetch source data
@@ -569,6 +608,10 @@ candidate automatically. Its default pass list is filtered by local netrc,
 map-key, and license-acknowledgement presence with explicit skip notices;
 overriding `EXTERNAL_PASSES` requests strict behavior. A discovered P-Tree
 account gets the pinned per-user trust anchor automatically when missing.
+After every selected workflow succeeds, the driver atomically records only
+canonical pass names in `.cartofreako/authorized-external-passes`. Later
+`make all` runs include recorded JAXA and topology artifact graphs; FIRMS
+remains a review-only acquisition because it has no promoted renderer.
 
 ### Exact targets and artifact paths
 
@@ -583,8 +626,8 @@ Generated PDF and PNG paths are also direct Make targets. Their pattern rules
 first update the corresponding checked SVG and then invoke Inkscape:
 
 ```sh
-make assets.generated/png/earth-ck-44-22.png
-make assets.generated/pdf/astro-observer-star-x-34-44.pdf
+make assets.generated/cahill-keyes/png/earth-ck-44-22.png
+make assets.generated/star-x/pdf/astro-observer-hubble-star-x-34-44.pdf
 ```
 
 ### Input acquisition and verification

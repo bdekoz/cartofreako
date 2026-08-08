@@ -19,7 +19,7 @@ and artifacts:
 | `src.wasm/` | WebAssembly adapters, geographic input, smoke tests, and generated builds |
 | `tests/` | Standalone algorithm and API tests only |
 | `assets.static/` | Historical, reference, and downloaded source assets |
-| `assets.generated/` | Locally generated or release-extracted SVG, PDF, and PNG renderings |
+| `assets.generated/` | Projection-organized SVG, PDF, PNG, and thumbnail renderings |
 
 ## Build and test
 
@@ -76,14 +76,16 @@ See the [web-developer quick start](docs/pages/webassembly-quick-start.md) and
 [`src.wasm` README](src.wasm/README.md) for API, deployment paths, slices,
 compatibility contracts, and build requirements.
 
-Generate 24 production whole-earth maps, 12 timestamped astronomy maps, 12
+Generate 24 production whole-earth maps, 18 timestamped astronomy maps, 12
 timestamped Orbital Technosphere maps, 84 Stage 12 resources maps, six
-cumulative network-swarm maps, six monochrome Bathymetry Roulette maps, 18
-source-separated Anthropocene observation and temperature maps, six cloud/CDN network-infrastructure site maps, five
+cumulative network-swarm maps, six filled blue Bathymetry Roulette maps, six
+blue Hamonshū bathymetry maps, 18
+source-separated Anthropocene observation and temperature maps, six cloud/CDN
+network-infrastructure site maps, six default-rendered Fiber Synthesized maps, five
 exploratory Myriahedral ocean perspectives, 12 Cahill-Keyes enlargement
 slices, and two Myriahedral face-group slices as layered SVG, PDF, and opaque-white,
-3840-pixel-long-side PNG artifacts. The same graph also makes 28
-480-pixel-wide Cahill-Keyes thumbnails with:
+3840-pixel-long-side PNG artifacts. The same graph also makes 31
+480-pixel-wide thumbnails for each of the six projections, 186 total, with:
 
 ```sh
 make all
@@ -104,14 +106,13 @@ started with `-j`:
 make assets-single
 ```
 
-Outputs are organized under `assets.generated/svg/`, `assets.generated/pdf/`, and
-`assets.generated/png/`; the release's dedicated contact-sheet thumbnails are
-under `assets.generated/thumbnail/cahill-keyes/`. Review all 28 public passes
-for each of the six projections in the
+Outputs are organized projection-first as
+`assets.generated/PROJECTION/{svg,pdf,png,thumbnail}/`. Review all 31 standard
+passes for each of the six projections in the
 [generated snapshot catalog](index.md#generated-artifact-previews). The
-[`v20260807` generated-assets release notes](docs/releases/v20260807.md)
+[`v20260808` generated-assets release notes](docs/releases/v20260808.md)
 record the static-bundle manifest, render host, hardware sizing, verification,
-and source commit. The [S3 v12 publication notes](docs/releases/s3-v12.md)
+and source commit. The [S3 v13 publication notes](docs/releases/s3-v13.md)
 document the public extracted tree used by that snapshot. Maintainers publish
 source tags and large generated bundles with the
 [release runbook](docs/releases/README.md).
@@ -124,10 +125,12 @@ For normal generation, run only:
 make generate-astro
 ```
 
-That target reads the checked-in profile and bounded catalogs, produces both
-all-sky and observer-filtered SVGs for all six projections, and performs no
-network access. It does not call `fetch-astro-data`; `make all` includes the
-same offline generation automatically.
+That target reads the checked-in ground and Hubble profiles plus bounded
+catalogs, producing all-sky, `ground-multiband` observer, and `hubble`
+observer SVGs for all six projections without network access. Stable observer
+and instrument IDs appear in both filenames and SVG metadata. It does not call
+`fetch-astro-data`; `make all` includes the same offline generation
+automatically.
 
 `fetch-astro-data` is a separate, optional maintainer operation. Run it only
 when deliberately replacing the checked-in Gaia, NASA Exoplanet Archive, and
@@ -145,8 +148,9 @@ no maps, while generation consumes the snapshots but never refreshes them.
 
 See the
 [`astronomy implementation notes`](docs/astro-implementation-notes.md) for the
-San Francisco profile, data sources, formulas, instrumentation model, and
-outputs.
+San Francisco/Hubble distinction, SGP4 observer geometry, data sources,
+instrumentation models, and the planet sizing contract: a 2× fixed display
+glyph plus a dotted true-apparent-size outline.
 
 Cloud-atmosphere generation is a source-timed opt-in outside `make all`.
 P-Tree supplies physical Himawari clouds with regional/daytime coverage;
@@ -287,6 +291,14 @@ FIRMS deliberately stops at the ignored Anthropocene review candidate;
 release rendering remains blocked until that candidate is audited and
 promoted with its profile checksum and coverage documentation.
 
+Only a completely successful run updates the local, ignored
+`.cartofreako/authorized-external-passes` file (mode `0600`). It contains
+canonical pass names, never credentials or tokens. Later `make all` runs
+automatically include prepared JAXA Cloud-atmosphere and licensed topology
+artifacts recorded there. FIRMS is remembered as an authorized refresh, but
+still has no default render until a candidate is promoted. A clean checkout
+has no state file and retains the standard credential-free graph.
+
 See [Prerequisites](docs/prerequisites.md#optional-external-authorization) for
 the per-provider variables and selective checks.
 
@@ -333,16 +345,34 @@ See the
 for source pins, checkout overrides, physical-versus-logical edge semantics,
 clustering, licensing, and previews.
 
-Bathymetry Roulette generation is offline from the same pinned Natural Earth
-input as the Earth and water maps. Generate the six projection variants, or
-their complete SVG/PDF/PNG artifact family, with:
+The checked `assets.static/fiber-synthesized` cleanup/union is a separate
+standard pass. It defaults to the complete 20260805 network and adds unmatched
+2022-only routes as subdued historical context:
+
+```sh
+make check-fiber-synthesized
+make generate-fiber-synthesized
+make generate-fiber-synthesized-artifacts
+```
+
+See the [Fiber Synthesized implementation notes](docs/fiber-synthesized-implementation-notes.md)
+for the union-versus-difference decision, exact matching policy, source pins,
+license, rendering semantics, and refresh command.
+
+Both bathymetry art families are offline from the same pinned Natural Earth
+input as the Earth and water maps. Generate either six-projection suite or its
+complete SVG/PDF/PNG artifact family with:
 
 ```sh
 make generate-bathymetry-roulette
 make generate-bathymetry-roulette-artifacts
+make generate-bathymetry-hamonshu
+make generate-bathymetry-hamonshu-artifacts
 ```
 
 See the [Bathymetry Roulette implementation notes](docs/bathymetry-roulette-implementation-notes.md)
-for the confirmed depth-to-curve catalogue, explicit overlapping line-field
-variations, monochrome clipping model, accepted moiré, layer contract, and
-previews.
+for the cycloid-minimum depth catalogue, filled 30% forms, Voronoi grouping,
+restored blue ramp, accepted moiré, and layer contract. The separate
+[Bathymetry Hamonshū notes](docs/bathymetry-hamonshu-implementation-notes.md)
+document its source-indexed Izzi motifs, density/curvature depth mapping,
+shared field architecture, provenance, commands, and verification.

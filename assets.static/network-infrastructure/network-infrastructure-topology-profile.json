@@ -3,7 +3,7 @@
   "name": "Cloud, cable, and Internet-exchange topology",
   "product": "topology",
   "display": {
-    "marker_radius_inches": 0.028,
+    "marker_radius_inches": 0.046,
     "collision_cell_inches": 0.17,
     "minimum_tether_inches": 0.04,
     "maximum_labels": 64,

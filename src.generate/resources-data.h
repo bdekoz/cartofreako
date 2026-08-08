@@ -142,6 +142,7 @@ struct resources_profile
   std::string description;
   std::string snapshot_as_of;
   std::string missing_semantics;
+  double data_graphic_opacity = 0.30;
   fs::path country_geometry_path;
   std::string country_geometry_sha256;
   std::string country_geometry_source_id;
@@ -454,7 +455,8 @@ load_resources_profile(const fs::path& configured_path)
   rj::Document document = read_resources_document(path, 2U * 1024U * 1024U);
   require_members(document,
     {"schema", "name", "description", "snapshot_as_of", "missing_semantics",
-     "country_geometry", "values", "sources", "families"}, {}, path.string());
+     "display", "country_geometry", "values", "sources", "families"}, {},
+    path.string());
   resources_require(required_string(document, "schema", path.string())
                       == "cartofreako-resources-profile-v3",
                     "unsupported resources profile schema");
@@ -465,6 +467,15 @@ load_resources_profile(const fs::path& configured_path)
   result.description = required_string(document, "description", path.string());
   result.snapshot_as_of = required_string(document, "snapshot_as_of", path.string());
   result.missing_semantics = required_string(document, "missing_semantics", path.string());
+
+  const rj::Value& display = document["display"];
+  require_members(display, {"data_graphic_opacity"}, {},
+                  "resources.display");
+  result.data_graphic_opacity = required_number(
+    display, "data_graphic_opacity", "resources.display");
+  resources_require(result.data_graphic_opacity > 0
+                      && result.data_graphic_opacity <= 1,
+                    "resources.display.data_graphic_opacity must be in (0, 1]");
 
   const rj::Value& geometry = document["country_geometry"];
   require_members(geometry, {"path", "sha256", "source_id"}, {},

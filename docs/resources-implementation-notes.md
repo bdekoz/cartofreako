@@ -43,6 +43,9 @@ The checked snapshot releases 14 separate metric products:
 The public term `petrochemical` is only a convenient Make-target alias for the
 precisely labeled refinery-throughput metric. The map is not nameplate
 capacity, extraction, chemical-plant capacity, or all petrochemical output.
+All fourteen products—including fisheries and the spatial reef product—are
+standard, offline passes in `make all`; reef generation is not
+authorization-gated.
 
 ## Data contract and gates
 
@@ -50,7 +53,8 @@ capacity, extraction, chemical-plant capacity, or all petrochemical output.
 uses `cartofreako-resources-profile-v3`. It defines the source register,
 country geometry and values digests, six families, palettes, metrics, one
 default per family, and either a country coverage definition or a spatial
-definition for every released product.
+definition for every released product. Its `display.data_graphic_opacity`
+field is fixed at `0.30` for the Stage 13 render contract.
 
 [`resources-values.json`](../assets.static/resources/resources-values.json)
 uses `cartofreako-resources-values-v3`. Its 1,679 records contain family,
@@ -137,6 +141,13 @@ The reef product replaces the three country sublayers with
 Low/Medium/High/Very High colors and a no-mapped-reef swatch. Both branches
 clip across all projection seams and use native-face area clipping where
 required.
+
+Every observed country fill and every observed reef cell uses its metric hue
+at 30% opacity. Missing-data context stays opaque: transparency cannot make an
+unknown country look like a low observed value. Legends also stay opaque so
+their reference colors remain readable. Main plate headings are twice the
+pre-Stage-13 size (`0.36` rather than `0.18` page units); metadata records
+both `data-graphic-opacity="0.3"` and `data-title-scale="2"`.
 
 Every SVG embeds the complete source and metric catalogues, selected metric,
 units, period, profile/value/geometry digests, gate statistics, Stage 12

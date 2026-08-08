@@ -16,16 +16,18 @@
 [Anthropocene Stage 8b plan](anthropocene-enrichment-plan.md) ·
 [Network-swarm notes](network-swarm-implementation-notes.md) ·
 [Network-infrastructure notes](network-infrastructure-implementation-notes.md) ·
-[Bathymetry Roulette notes](bathymetry-roulette-implementation-notes.md)
+[Fiber Synthesized notes](fiber-synthesized-implementation-notes.md) ·
+[Bathymetry Roulette notes](bathymetry-roulette-implementation-notes.md) ·
+[Bathymetry Hamonshū notes](bathymetry-hamonshu-implementation-notes.md)
 
 ## Purpose
 
-The repository contains sixteen C++20 SVG generation programs under
+The repository contains seventeen C++20 SVG generation programs under
 `src.generate/`.
-Thirteen exercise all six production projections through the real Alpha60 and
+Fourteen exercise all six production projections through the real Alpha60 and
 Izzi APIs. Three derive Cahill-Keyes or Myriahedral slices from an already
-projected whole-earth SVG. They write layered SVGs under
-`assets.generated/svg/`, then reopen those files and verify dimensions, layer
+projected whole-earth SVG. They write layered SVGs under each
+`assets.generated/PROJECTION/svg/` directory, then reopen those files and verify dimensions, layer
 structure, path counts, and numeric sanity. Inkscape subsequently exports each
 validated SVG as PDF and as a 3840-pixel-long-side PNG.
 
@@ -39,8 +41,9 @@ does not duplicate generation logic or filter SVG layers after generation.
 | Graticules | [`src.generate/generate-graticules.cc`](../src.generate/generate-graticules.cc) | Sampled latitude and longitude lines |
 | Earth | [`src.generate/generate-earth.cc`](../src.generate/generate-earth.cc) | Natural Earth 1:10m ocean and land |
 | Water | [`src.generate/generate-water.cc`](../src.generate/generate-water.cc) | Every other Natural Earth 1:10m physical layer |
-| Bathymetry Roulette | [`src.generate/generate-bathymetry-roulette.cc`](../src.generate/generate-bathymetry-roulette.cc) | Twelve Natural Earth depth thresholds clipped over explicit, varied Izzi roulette line fields |
-| Astronomy | [`src.generate/generate-astro.cc`](../src.generate/generate-astro.cc) | Profile timestamp and observer, bounded Gaia/exoplanet/SBDB snapshots, curated multi-band sources and events |
+| Bathymetry Roulette | [`src.generate/generate-bathymetry-roulette.cc`](../src.generate/generate-bathymetry-roulette.cc) | Twelve Natural Earth depth thresholds clipped over explicit, filled Izzi roulette fields |
+| Bathymetry Hamonshū | [`src.generate/generate-bathymetry-hamonshu.cc`](../src.generate/generate-bathymetry-hamonshu.cc) | The same depth field architecture using twelve source-indexed Izzi Hamonshū wave motifs |
+| Astronomy | [`src.generate/generate-astro.cc`](../src.generate/generate-astro.cc) | Dual ground/Hubble observer profiles, SGP4 Hubble state, bounded Gaia/exoplanet/SBDB snapshots, curated sources/events, and physical planet-size cues |
 | Cloud-atmosphere | [`src.generate/generate-cloud-atmosphere.cc`](../src.generate/generate-cloud-atmosphere.cc) | Process-start solar geometry plus prepared, source-timed JAXA P-Tree cloud and JAXA Earth atmosphere observations |
 | Orbital Technosphere | [`src.generate/generate-orbiting.cc`](../src.generate/generate-orbiting.cc) | Profile timestamp and observer, CelesTrak OMM population and memberships, NASA SSCWeb reference positions, and SGP4 |
 | Resources Stage 12 | [`src.generate/generate-resources.cc`](../src.generate/generate-resources.cc) | Pinned current-source country and reef fields for energy, food, fauna, flora, mineral, and human families |
@@ -48,12 +51,13 @@ does not duplicate generation logic or filter SVG layers after generation.
 | Anthropocene temperature | [`src.generate/generate-anthropocene-temperature.cc`](../src.generate/generate-anthropocene-temperature.cc) | Complete-2025 and partial-2026 CPC temperature fields on a global H3 domain |
 | Network swarm | [`src.generate/generate-network-swarm.cc`](../src.generate/generate-network-swarm.cc) | Validated cumulative swarm GeoJSON, H3 parent clustering, fixed display profile, and Izzi radial honeycombs |
 | Network infrastructure | [`src.generate/generate-network-infrastructure.cc`](../src.generate/generate-network-infrastructure.cc) | Manifested cloud/CDN sites plus explicitly opted-in TeleGeography cable and Internet-exchange topology |
+| Fiber Synthesized | [`src.generate/generate-fiber-synthesized.cc`](../src.generate/generate-fiber-synthesized.cc) | Checked cleanup/union of 2022 and 20260805 cable snapshots, with 20260805 as the default layer |
 | Four slices | [`src.generate/generate-4-slice.cc`](../src.generate/generate-4-slice.cc) | Four full-height, quarter-width quadrant-pair enlargements from the Cahill-Keyes Earth SVG |
 | Eight slices | [`src.generate/generate-8-slice.cc`](../src.generate/generate-8-slice.cc) | Eight exact-octant enlargements from the Cahill-Keyes Earth SVG |
 | Myriahedral groups | [`src.generate/generate-myriahedral-slices.cc`](../src.generate/generate-myriahedral-slices.cc) | Two complementary exact-terminal-face masks from the Myriahedral water SVG |
 
 The aggregate target generates all four terrestrial artifact families, the
-monochrome Bathymetry Roulette family, two astronomy and two Orbital
+blue Bathymetry Roulette and Bathymetry Hamonshū art families, astronomy and two Orbital
 Technosphere products, 14 Stage 12 resource products, one
 Anthropocene observation atlas, two year-bearing Anthropocene temperature
 atlases, one cumulative
@@ -139,7 +143,7 @@ The default locations can be overridden:
 | `GENERATION_PROFILE` | `generation-profile.json` | Projection and generation-pass selection used by `make` and `make configured` |
 | `NATURAL_EARTH_DIR` | `assets.static/natural-earth/10m-physical-vectors` | Extracted shapefiles |
 | `ASTRO_DATA_DIR` | `assets.static/astronomy` | Astronomy profile and bounded catalog snapshots |
-| `ASTRO_PROFILE` | `$(ASTRO_DATA_DIR)/astro-profile.json` | Authoritative timestamp, point of reference, orientation, instrumentation, event window, and catalog paths |
+| `ASTRO_PROFILE`, `ASTRO_HUBBLE_PROFILE` | Ground and Hubble JSON files in `$(ASTRO_DATA_DIR)` | Authoritative timestamp, observer/platform, orientation, instrument, event window, and catalog paths |
 | `CLOUD_ATMOSPHERE_DATA_DIR` | `assets.static/cloud-atmosphere` | JAXA source profile plus ignored raw and prepared refresh staging |
 | `CLOUD_ATMOSPHERE_PROFILE` | `$(CLOUD_ATMOSPHERE_DATA_DIR)/cloud-atmosphere-profile.json` | Process-time, latest-not-after, source, freshness, QA, H3 aggregation, and display contract |
 | `CLOUD_ATMOSPHERE_GEOJSON` | `$(CLOUD_ATMOSPHERE_DATA_DIR)/.prepared/cloud-atmosphere-latest.geojson` | Locally prepared, checksum-verified H3 observation snapshot |
@@ -163,10 +167,11 @@ The default locations can be overridden:
 | `INTERNET_EXCHANGE_SOURCE` | `../www.internetexchangemap.com` | External TeleGeography exchange checkout used only by topology opt-in targets |
 | `NETWORK_INFRASTRUCTURE_SITES_PROFILE` | `assets.static/network-infrastructure/network-infrastructure-sites-profile.json` | Normal cloud/CDN site-atlas sources, counts, detiling, labels, and terms |
 | `NETWORK_INFRASTRUCTURE_TOPOLOGY_PROFILE` | `assets.static/network-infrastructure/network-infrastructure-topology-profile.json` | Explicit TeleGeography topology layers, source pins, and CC BY-NC-SA 3.0 opt-in |
+| `FIBER_SYNTHESIZED_DATA_DIR` | `assets.static/fiber-synthesized` | Checked manifest, cleaned union, source-separated audit observations, and hashes |
 | `INKSCAPE` | `inkscape` | Command-line PDF and PNG exporter |
 | `PNG_LONG_SIDE` | `3840` | Pixel count assigned to each PNG's longest side |
 | `ASSET_JOBS` | `2` | Concurrent recipes in the keep-going first phase of `assets-resilient`; its second phase is always serial |
-| `LABEL_FONT` | `atkinson_hyperlegible` | Installed font used for visible labels in graticule, astronomy, Cloud-atmosphere, Orbital Technosphere, resources, Anthropocene, network-swarm, network-infrastructure, and Bathymetry Roulette images |
+| `LABEL_FONT` | `atkinson_hyperlegible` | Installed font used for visible labels in graticule, astronomy, Cloud-atmosphere, Orbital Technosphere, resources, Anthropocene, network-swarm, network-infrastructure, and both bathymetry-art families |
 
 ### Generated label typography
 
@@ -259,14 +264,17 @@ candidates are not accepted as generation-profile passes at all.
 | `resources-mineral` | One rare-earth mine-production country choropleth | Standard |
 | `resources-human` | Five country products: under 30, over 60, two attainment levels, and patents | Standard |
 | `network-swarm` | One cumulative network-swarm SVG | Standard |
-| `bathymetry-roulette` | One monochrome, explicitly varied roulette-line-field depth SVG | Standard |
+| `bathymetry-roulette` | One blue-ramp, filled, Voronoi-grouped roulette depth SVG | Standard |
+| `bathymetry-hamonshu` | One blue-ramp, Voronoi-grouped Hamonshū wave-field depth SVG | Standard |
 | `network-infrastructure` | One cloud/CDN infrastructure-site SVG; never the licensed topology product | Standard; licensed topology is a separate optional pass |
+| `fiber-synthesized` | One cleaned-union submarine-fiber SVG with 20260805 as the default layer | Standard |
 
 Names are case-insensitive, and underscores normalize to hyphens. The
 resolver also accepts `ck`, `starx`, and the established `voroni` spelling as
 projection aliases; `graticule`, `astro`, `orbiting`, and the former `network`
 and short `swarm` names for `network-swarm`, `infrastructure` for
-`network-infrastructure`, `clouds`, `atmosphere`, `solar-atmosphere`, and
+`network-infrastructure`, `fiber`, `fiber-map`, and `fiber-synthesized` for
+`fiber-synthesized`, `clouds`, `atmosphere`, `solar-atmosphere`, and
 `solar/cloud/atmosphere` for `cloud-atmosphere`, plus `energy`, `food`,
 `fauna`, `fisheries`, `reefs`, `flora`, `mineral`, `minerals`, and `human` for their corresponding resource
 families. `resources`, `resource`, and the legacy typo `resouces` expand to all
@@ -275,20 +283,21 @@ See the [resource metric catalog](resources-metric-catalog.md) for the exact
 standard/optional/exploration-only definitions. In particular, catalog status
 `supplemental` is exploration-only and does not authorize a generation target.
 The retired historical selector names are rejected. `bathymetry-rolette` and
-`art-agua-roulette` are aliases for `bathymetry-roulette`.
+`art-agua-roulette` are aliases for `bathymetry-roulette`; `hamonshu` and
+`art-agua-hamonshu` are aliases for `bathymetry-hamonshu`.
 For compatibility with the requested `earth, ocean` vocabulary, `ocean`
 normalizes to the current `water` generation pass. It does not mean the
 `ocean` layer inside the Earth base SVG.
 
-Profile `"all"` means the six projections by 17 selectable passes. It
-produces 168 SVGs because astronomy, Orbital Technosphere, Anthropocene, and
+Profile `"all"` means the six projections by 19 selectable passes. It
+produces 180 SVGs because astronomy, Orbital Technosphere, Anthropocene, and
 several resource families produce multiple products. It deliberately excludes Cahill-Keyes slices, exploratory
 Myriahedral perspectives and slices, and PDF/PNG exports. Those products do
 not form a projection/pass cross-product and remain available through their
 explicit targets. It includes Cloud-atmosphere and therefore requires a
 current locally prepared JAXA snapshot. `make all` retains the credential-free
-187 SVG products (84 stored as deterministic `.svg.gz` archives), 187 PDF,
-187 full-size PNG products, and 28 Cahill–Keyes thumbnails; it excludes
+205 SVG products (84 stored as deterministic `.svg.gz` archives), 205 PDF,
+205 full-size PNG products, and 31 Cahill–Keyes thumbnails; it excludes
 Cloud-atmosphere. The six opt-in topology
 products per format also remain separate.
 
@@ -343,7 +352,9 @@ make prepare-network-swarm-data
 make generate-network-swarm
 make generate-network-infrastructure
 make generate-network-infrastructure-topology
+make generate-fiber-synthesized
 make generate-bathymetry-roulette
+make generate-bathymetry-hamonshu
 make all
 ```
 
@@ -358,16 +369,17 @@ The full generators are not part of `make check`; invoking a `generate-*`
 target both writes its artifact and runs that generator's embedded structural
 checks.
 
-The 187 standard products plus six opt-in topology products can be generated
-in each of `assets.generated/svg/`, `assets.generated/pdf/`, and
-`assets.generated/png/`; the 84 resource products also have deterministic
-`.svg.gz` companions in the SVG directory, and the Cahill–Keyes contact sheet
-adds 28 lower-resolution PNGs. Large standard suites are released
+The 205 standard products plus six initially opt-in topology products can be
+generated beneath their projection's `svg/`, `pdf/`, and `png/` directories;
+the 84 resource products also have deterministic `.svg.gz` companions in the
+SVG directories. Every projection contact sheet receives 31 lower-resolution
+PNGs, 186 total. Large standard suites are released
 as versioned static bundles instead of being stored in Git. Regenerating with
 a different GDAL, GEOS, font, or Inkscape version can still produce ordering,
 coordinate, or rendering differences even though the input snapshots are
-pinned. Cloud-atmosphere artifacts remain local, source-timed opt-in products
-outside the standard suite.
+pinned. Cloud-atmosphere artifacts remain local, source-timed optional
+products outside the standard release count even when persisted into one
+checkout's `make all` graph.
 
 ## PDF and 4K PNG export
 
@@ -396,35 +408,46 @@ the layered SVG originals. For example, a 44-by-22-inch Cahill-Keyes page is
 3168 by 1584 PDF points. The explicit PNG pixel override is independent of
 that physical page size.
 
-Final files are grouped by format rather than mixed at the `assets.generated/` root:
+Final files are grouped by projection first and format second:
 
 ```text
 assets.generated/
-├── svg/
-├── pdf/
-└── png/
+├── cahill-keyes/{svg,pdf,png,thumbnail}/
+├── authagraph/{svg,pdf,png,thumbnail}/
+├── dymaxion/{svg,pdf,png,thumbnail}/
+├── myriahedral/{svg,pdf,png,thumbnail}/
+├── star-x/{svg,pdf,png,thumbnail}/
+└── voronoi/{svg,pdf,png,thumbnail}/
 ```
 
 ## Astronomy generation
 
 The astronomy pass maps declination to geographic latitude and right
 ascension to a configurable synthetic longitude before using the same six
-projection implementations as the terrestrial generators. Its checked-in
-profile contains both the calculation timestamp and the reference point; no
-host clock or location is inferred. The default is a pinned San Francisco
-multi-band profile with celestial handedness, RA 12h at the map center, and a
-seven-day transient lookback.
+projection implementations as the terrestrial generators. Its two checked-in
+profiles contain the calculation timestamp, observer, and instrument; no host
+clock or location is inferred. The ground profile supplies the all-sky and
+`ground-multiband` observer products. The Hubble profile propagates NORAD
+20580 with SGP4 and supplies a distinct `hubble` observer product. Both use
+celestial handedness, RA 12h at map center, and a seven-day transient lookback.
 
-Generate both all-sky and observer-filtered products for all projections with:
+Generate all-sky plus both observer-filtered products for all projections with:
 
 ```sh
 make generate-astro
 ```
 
-The product-family targets are `generate-astro-all-sky` and
-`generate-astro-observer`. Per-projection targets follow the
-`generate-astro-PROJECTION` form. Supply another profile with
-`ASTRO_PROFILE=/absolute/path/profile.json`.
+The product-family targets are `generate-astro-all-sky`,
+`generate-astro-observer-ground`, `generate-astro-observer-hubble`, and the
+two-observer aggregate `generate-astro-observer`. Per-projection targets
+follow the `generate-astro-PROJECTION` form. Supply alternate profiles with
+`ASTRO_PROFILE` and `ASTRO_HUBBLE_PROFILE`.
+
+Planet markers deliberately carry two scales. The dotted outline follows the
+calculated true apparent angular radius from JPL equatorial radius and
+geocentric distance. The solid legibility glyph is a fixed 0.15 inch, twice
+the earlier symbol size. Metadata labels this
+`fixed-glyph-plus-true-angular-outline` contract explicitly.
 
 Catalog acquisition is deliberately separate from rendering. The repository
 contains bounded snapshots for reproducible offline generation; refresh Gaia
@@ -469,8 +492,11 @@ diagnose common failures. Use
 `generate-cloud-atmosphere-PROJECTION` for one SVG,
 `generate-cloud-atmosphere-projections` for all six SVGs, or
 `generate-cloud-atmosphere-artifacts` for SVG/PDF/PNG output. This family is
-excluded from `make all` because an offline build cannot assume credentials
-or a current snapshot. The
+excluded from a clean checkout's `make all` because an offline build cannot
+assume credentials or a current snapshot. A fully successful
+`generate-authorized-external` run records `jaxa-ptree` locally; later
+`make all` runs in that checkout include the prepared artifact graph without
+refetching. The
 [Cloud-atmosphere implementation notes](cloud-atmosphere-implementation-notes.md)
 document the astro boundary, exact sources, time and QA rules, H3
 preparation, source terms, layer contract, and tests.
@@ -613,7 +639,7 @@ Inspect one without changing the checkout:
 
 ```sh
 gzip -cd \
-  assets.generated/svg/resources-fauna-coral-reef-threat-2011-ck-44-22.svg.gz \
+  assets.generated/cahill-keyes/svg/resources-fauna-coral-reef-threat-2011-ck-44-22.svg.gz \
   > /tmp/resources-fauna-reefs.svg
 ```
 
@@ -713,33 +739,72 @@ record the source audit, exact snapshots and counts, license boundary, profile
 schema, seam handling, clustering, layer semantics, previews, verification,
 and known limits.
 
-## Bathymetry Roulette generation
+## Fiber Synthesized generation
+
+Fiber Synthesized is the standard, checked-in submarine-fiber pass. It is a
+cleanup and union—not a `new - old` difference—of the 2022 and 20260805 API
+snapshots. The complete 20260805 network is the default visible layer; only
+unmatched 2022-only routes and landings are added as subdued historical
+context, while source-separated audit files retain both observations.
+
+```sh
+make check-fiber-synthesized
+make generate-fiber-synthesized
+make generate-fiber-synthesized-artifacts
+make generate-fiber-synthesized-star-x
+```
+
+Normal generation is offline from `assets.static/fiber-synthesized` and is
+part of `make all`. `make refresh-fiber-synthesized` is the separate,
+reviewable operation that reads the two dated external snapshot directories
+and rewrites the static union. Snapshot-only classifications never claim
+construction or decommission. See the
+[Fiber Synthesized implementation notes](fiber-synthesized-implementation-notes.md)
+for exact source hashes, counts, matching policy, layer grammar, license, and
+verification.
+
+## Bathymetry art generation
 
 The Bathymetry Roulette pass reuses the twelve nested Natural Earth depth
 polygons as projection-safe clip paths. Each depth paints an opaque pale ground
 and an explicit projected-page mosaic of Izzi epitrochoid or hypotrochoid
-lines. Twelve staggered, overlapping phase/size/point-distance variations per
-depth replace the former grid of one repeated symbol. One dark ink remains
-constant while the base point distance, radius ratio, closure period, and
-finally outline versus low-opacity even-odd fill become more complex with
-depth. Every curve instance is serialized; output size is intentionally not a
-generation constraint.
+forms. All depths use even-odd fill at 30% opacity. The 0 m family starts at the
+cycloid boundary `d/r = 1`; `d/r` increases strictly with depth to 5.00 and
+does not vary spatially. Twenty-four jittered Voronoi regions group the twelve
+phase/size/offset variations. The original Natural Earth blue ramp supplies a
+second depth cue.
+
+Bathymetry Hamonshū is a separate standard art pass over the same Natural
+Earth clips, field spacing, 24-region assignment, 30% opacity, blue ramp, and
+shallow-to-deep replacement model. It substitutes twelve source-indexed Izzi
+Hamonshū wave motifs. Because those motifs are linework, depth increases the
+native density and curvature parameters rather than inventing a `d/r` value.
+Both generators serialize every field instance; output size is intentionally
+not a generation constraint, and overlapping region edges may produce moiré.
 
 ```sh
 make generate-bathymetry-roulette
+make generate-bathymetry-hamonshu
 ```
 
 Use `generate-bathymetry-roulette-PROJECTION` for one SVG,
 `generate-bathymetry-roulette-projections` for the six SVGs, or
 `generate-bathymetry-roulette-artifacts` for all six SVG/PDF/PNG products.
+The Hamonshū family provides the parallel
+`generate-bathymetry-hamonshu-PROJECTION`,
+`generate-bathymetry-hamonshu-projections`, and
+`generate-bathymetry-hamonshu-artifacts` targets.
 The source catalogue is deterministic and needs no profile beyond the common
 Natural Earth input. `bathymetry-roulette`, `bathymetry-rolette`, and
-`art-agua-roulette` select the pass in a generation profile.
+`art-agua-roulette` select the roulette pass; `bathymetry-hamonshu`,
+`hamonshu`, and `art-agua-hamonshu` select the Hamonshū pass.
 
 The [Bathymetry Roulette implementation notes](bathymetry-roulette-implementation-notes.md)
 record the exact twelve curve parameter sets, nested-paint model, visible key,
 SVG contract, verification, previews, accepted moiré, and interpretation
-limits.
+limits. The [Bathymetry Hamonshū notes](bathymetry-hamonshu-implementation-notes.md)
+record source motifs, density/curvature mapping, common field architecture,
+provenance, commands, verification, and limits.
 
 ## Natural Earth acquisition
 
@@ -753,7 +818,7 @@ downloads Natural Earth 5.1.1's complete 1:10m physical-vector archive. It:
 4. extracts only the named physical datasets; and
 5. creates the completion stamp last, so interrupted extraction is retried.
 
-The Earth, water, Star-X graticule, Bathymetry Roulette, Cloud-atmosphere,
+The Earth, water, Star-X graticule, both bathymetry-art families, Cloud-atmosphere,
 resources, and Anthropocene targets depend on that
 stamp and pass
 `NATURAL_EARTH_DIR` to their executables. The archive digest and licensing
@@ -762,7 +827,7 @@ are recorded in the
 
 ## Shared coordinate pipeline
 
-The twelve whole-map generators use
+The fourteen whole-map generators use
 [`projection-generation-common.h`](../src.generate/projection-generation-common.h)
 to select a production projection, construct its exact frame, and call the
 shared public API in `(latitude, longitude)` order. Projected coordinates use
@@ -973,13 +1038,13 @@ distant octants. Splitting a meridian at the equator reflects the fact that
 its northern and southern halves belong to different octahedral faces even
 though they touch geographically.
 
-Star-X adds the Stage 7 Antarctic cap after those ordinary splits. The
-generator computes `ant_r` from Natural Earth mainland land, bisects each
-graticule edge at the four source circles, leaves the outside subpaths on the
-X, and maps the inside subpaths around one bottom-center South Pole without
-changing their source-pole radius. The visible
-`antarctic-cap-boundaries` layer draws the four source cut arcs and the
-unified destination circle, making the operation directly inspectable in
+Star-X adds the Stage 13 Antarctic cap after those ordinary splits. The
+generator cuts each graticule edge at the fixed `60°S` parallel, leaves the
+northern subpaths on the X, and maps the southern subpaths around one
+bottom-center South Pole without changing their source-pole radius. The
+visible `antarctic-cap-boundaries` layer draws the four projected source
+segments and the unified destination boundary, making the operation directly
+inspectable in
 `graticules-star-x-34-44.png`. Consequently the Star-X graticule target, unlike
 the other graticule targets, depends on the prepared Natural Earth dataset.
 
@@ -1019,7 +1084,7 @@ For each shapefile, the program:
 5. intersects the feature with every relevant seam-safe longitude band;
 6. for Star-X, further clips filled areas into northern and southern pieces
    so closing a projected ring cannot bridge an exterior equatorial notch,
-   then splits every physical layer against the data-derived Antarctic cap;
+   then splits every physical layer at the fixed `60°S` Antarctic boundary;
 7. for AuthaGraph, Dymaxion, Myriahedral, and Voronoi, further clips areas to a
    5-degree geographic grid;
 8. densifies each surviving piece with `segmentize()`;
@@ -1082,17 +1147,18 @@ Natural Earth polygon families. Both artifacts use the same projection frame,
 so compositing water over Earth reconstructs the original complete physical
 stack without duplicating a group.
 
-Star-X adds a layer-aware polar composition while preserving those public
-group counts. Its default point transform first closes the central group gap
-and enlarges the complete X 120 percent about the 34-by-44 page center. The
-generator then measures the maximum ordinary projected mainland distance
-from the four South-Pole tips (`ant_r`), intersects each practical quadrant
-with its `ant_r` circle, and moves the four inside fragments around one
+Star-X adds a layer-aware polar composition. Its default point transform
+first closes the central group gap and enlarges the complete X 120 percent
+about the 34-by-44 page center. The generator then cuts each practical
+quadrant at `60°S` and moves the four southern fragments around one
 bottom-center pole. This applies to ocean, land, all bathymetry levels, minor
 islands, ice, lakes, playas, rivers, reefs, and coastline. The source caps are
-removed, so no physical content is duplicated. The Earth `land` group also
-contains the central `north-pole-star` path, so Earth still has exactly two
-top-level groups and water still has 22.
+removed, so no physical content is duplicated. Natural Earth mainland
+geometry aligns the unified continent's lowest Y coordinate with its original
+uncut lower-quadrant position. Every transformed Antarctic path paints after
+the ordinary quadrant paths in its layer. The Earth `land` group contains the
+central `north-pole-star`; water adds a final `polar-mark` group with the same
+black star above its 22 physical groups.
 
 The Antarctic mapping reuses each point's exact distance from its ordinary
 Star-X source tip; it introduces no separate radial scale. Geographic bearing

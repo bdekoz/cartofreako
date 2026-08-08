@@ -65,6 +65,8 @@ main()
   assert(profile_2025.low_scale_days == 16);
   assert(profile_2026.high_scale_days == 32);
   assert(profile_2026.low_scale_days == 16);
+  assert(profile_2025.data_graphic_opacity == 0.30);
+  assert(profile_2026.data_graphic_opacity == 0.30);
   assert(profile_2025.source_manifest_sha256
          == profile_2026.source_manifest_sha256);
 

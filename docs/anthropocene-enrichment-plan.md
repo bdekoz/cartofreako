@@ -42,7 +42,7 @@ source-separated observations.
 The checked
 [`anthropocene-2026.geojson`](../assets.static/anthropocene/anthropocene-2026.geojson)
 and the rendered
-[`anthropocene-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/anthropocene-ck-44-22.png)
+[`anthropocene-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/png/anthropocene-ck-44-22.png)
 are behaving consistently with their inputs. The imbalance is an acquisition
 and evidence-class problem, not a projection or marker-layout bug.
 
@@ -296,8 +296,8 @@ assets.static/anthropocene/anthropocene-temperature-2025-profile.json
 assets.static/anthropocene/anthropocene-temperature-2025.geojson
 assets.static/anthropocene/anthropocene-temperature-2026-profile.json
 assets.static/anthropocene/anthropocene-temperature-2026.geojson
-assets.generated/png/anthropocene-temperature-2025-ck-44-22.png
-assets.generated/png/anthropocene-temperature-2026-ck-44-22.png
+assets.generated/cahill-keyes/png/anthropocene-temperature-2025-ck-44-22.png
+assets.generated/cahill-keyes/png/anthropocene-temperature-2026-ck-44-22.png
 ```
 
 Implemented temperature-field targets are:

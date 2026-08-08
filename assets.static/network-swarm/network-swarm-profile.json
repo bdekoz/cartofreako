@@ -4,7 +4,7 @@
   "clustering": {
     "source_h3_resolution": 5,
     "parent_h3_resolution": 3,
-    "marker_radius_inches": 0.026,
+    "marker_radius_inches": 0.042,
     "minimum_tether_inches": 0.035
   },
   "display": {

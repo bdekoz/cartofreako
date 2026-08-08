@@ -144,7 +144,7 @@ snap at exactly 90 degrees latitude.
 The South Pole does not occupy the center. Group 2 carries its southern
 vertices toward the top edge after rotation, while group 1 carries them
 toward the bottom edge. The map can therefore be turned 180 degrees without
-giving one half a permanent visual “top.” Stages 6 and 7 add a single
+giving one half a permanent visual “top.” Stages 6 and 13 add a single
 South-polar cap at the lower end. It is an explicit layer-aware cut and
 reassembly, not a collapse of the point projection's polar copies.
 
@@ -152,11 +152,11 @@ reassembly, not a collapse of the point projection's polar copies.
 
 The finished presentation uses two different kinds of polar context. The
 North Pole is a symbolic eight-point star over the central locus. Antarctica
-is geographic source geometry. Natural Earth mainland vertices determine
-`ant_r`, the maximum ordinary Star-X distance from the relevant outer
-South-Pole tip. A circle of that radius is cut from each practical quadrant,
-and all content inside those four cuts is reassembled around one South Pole
-at bottom center.
+is geographic source geometry. The final compositor cuts every source at the
+fixed `60°S` parallel and reassembles all content south of it around one South
+Pole at bottom center. Natural Earth mainland geometry is used only to align
+the transformed continent vertically with its lowest point in the original,
+uncut lower quadrant; it no longer chooses the cut radius.
 
 This distinction is perceptual as well as numerical. The star makes the
 rotation center immediately legible without pretending that all cut copies
@@ -166,7 +166,9 @@ among outer faces. Every point keeps its original distance from its quadrant
 tip, so no independent inset scale is introduced. Geographic bearing is
 normalized around the shared pole to join Cahill-Keyes's bent octant edges.
 Ocean, land, bathymetry, ice, linework, and graticules all use the same cap;
-the source circles are removed, so nothing is duplicated.
+the southern source portions are removed, so nothing is duplicated. Within
+each thematic layer, transformed Antarctic paths are serialized after every
+ordinary quadrant path and therefore paint on top.
 
 ## Quadrants in the final carrier
 
@@ -248,7 +250,7 @@ flowchart TD
   GAP["apply symmetric<br/>signed group gap"]
   ENLARGE["uniformly enlarge about<br/>the page center"]
   FRAME["scale into<br/>frame.frame_area"]
-  COMPOSE["SVG composition:<br/>central star + unified ant_r cap"]
+  COMPOSE["SVG composition:<br/>central star + fixed-60°S unified cap"]
 
   LL --> CK --> M --> SIDE
   SIDE -- yes --> LOWER --> GAP

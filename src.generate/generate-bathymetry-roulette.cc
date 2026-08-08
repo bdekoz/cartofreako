@@ -1,4 +1,4 @@
-// Generate monochrome roulette-line-field Natural Earth bathymetry.
+// Generate blue-ramp roulette-field Natural Earth bathymetry.
 // -*- mode: C++ -*-
 
 #include <array>
@@ -9,10 +9,12 @@
 #include <iomanip>
 #include <iostream>
 #include <iterator>
+#include <limits>
 #include <sstream>
 #include <stdexcept>
 #include <string>
 #include <string_view>
+#include <tuple>
 #include <vector>
 
 #include <a60-svg.h>
@@ -125,23 +127,59 @@ make_field_grid(const generation::projection_context& context)
   };
 }
 
-std::size_t
-cell_variation_index(const std::size_t depth_index,
-                     const std::size_t row_index,
-                     const std::size_t column_index)
+double
+field_voronoi_jitter(const std::size_t site_index, const std::size_t salt)
 {
-  // A stable two-dimensional mix prevents visible strips while keeping the
-  // assignment reproducible and evenly spread through the twelve variants.
   const std::size_t mixed
-    = row_index * 17 + column_index * 31 + depth_index * 43
-      + (row_index + 3) * (column_index + 5) * 7;
-  return mixed % catalogue::field_variations.size();
+    = site_index * (37 + salt * 18) + 11 + salt * 29;
+  return (static_cast<double>(mixed % 101) / 100 - 0.5) * 0.46;
+}
+
+svg::point_2t
+field_voronoi_site(const std::size_t site_index,
+                   const generation::projection_context& context)
+{
+  roulette_require(site_index < catalogue::field_voronoi_site_count,
+                   "roulette Voronoi site index is out of range");
+  const std::size_t row = site_index / catalogue::field_voronoi_columns;
+  const std::size_t column = site_index % catalogue::field_voronoi_columns;
+  return {
+    (static_cast<double>(column) + 0.5
+       + field_voronoi_jitter(site_index, 0))
+      * context.map_frame.width() / catalogue::field_voronoi_columns,
+    (static_cast<double>(row) + 0.5
+       + field_voronoi_jitter(site_index, 1))
+      * context.map_frame.height() / catalogue::field_voronoi_rows,
+  };
+}
+
+std::size_t
+nearest_field_voronoi_site(const svg::point_2t point,
+                           const generation::projection_context& context)
+{
+  std::size_t nearest = 0;
+  double nearest_distance = std::numeric_limits<double>::infinity();
+  for (std::size_t site_index = 0;
+       site_index != catalogue::field_voronoi_site_count; ++site_index)
+    {
+      const svg::point_2t site = field_voronoi_site(site_index, context);
+      const double delta_x = std::get<0>(point) - std::get<0>(site);
+      const double delta_y = std::get<1>(point) - std::get<1>(site);
+      const double distance = delta_x * delta_x + delta_y * delta_y;
+      if (distance < nearest_distance)
+        {
+          nearest = site_index;
+          nearest_distance = distance;
+        }
+    }
+  return nearest;
 }
 
 struct roulette_field
 {
   std::array<std::string, catalogue::field_variations.size()> paths;
   std::array<std::size_t, catalogue::field_variations.size()> counts {};
+  std::array<std::size_t, catalogue::field_voronoi_site_count> site_counts {};
   std::size_t total = 0;
 };
 
@@ -158,23 +196,29 @@ make_roulette_field(const depth_style& style,
       {
         const std::size_t row_index
           = static_cast<std::size_t>(row - grid.first_row);
-        const std::size_t column_index
-          = static_cast<std::size_t>(column - grid.first_column);
-        const std::size_t variation_index = cell_variation_index(
-          depth_index, row_index, column_index);
-        const catalogue::field_variation& variation
-          = catalogue::field_variations[variation_index];
         const double stagger
           = row_index % 2 == 0 ? 0 : catalogue::field_cell_size / 2;
+        const svg::point_2t unshifted_origin {
+          column * catalogue::field_cell_size + stagger,
+          row * catalogue::field_cell_size,
+        };
+        const std::size_t site_index
+          = nearest_field_voronoi_site(unshifted_origin, context);
+        const std::size_t variation_index
+          = catalogue::field_voronoi_variation_index(
+              depth_index, site_index);
+        const catalogue::field_variation& variation
+          = catalogue::field_variations[variation_index];
         const svg::point_2t origin {
-          column * catalogue::field_cell_size + stagger
+          std::get<0>(unshifted_origin)
             + variation.offset_x_cells * catalogue::field_cell_size,
-          row * catalogue::field_cell_size
+          std::get<1>(unshifted_origin)
             + variation.offset_y_cells * catalogue::field_cell_size,
         };
         result.paths[variation_index]
           += catalogue::make_field_curve_path(style, origin, variation);
         ++result.counts[variation_index];
+        ++result.site_counts[site_index];
         ++result.total;
       }
   roulette_require(result.total == grid.cell_count(),
@@ -182,6 +226,26 @@ make_roulette_field(const depth_style& style,
   for (const std::size_t count : result.counts)
     roulette_require(count != 0,
                      "roulette field variation received no mosaic cells");
+  for (const std::size_t count : result.site_counts)
+    roulette_require(count != 0,
+                     "roulette field Voronoi site received no mosaic cells");
+  return result;
+}
+
+std::string
+variation_voronoi_sites(const std::size_t depth_index,
+                        const std::size_t variation_index)
+{
+  std::string result;
+  for (std::size_t site_index = 0;
+       site_index != catalogue::field_voronoi_site_count; ++site_index)
+    if (catalogue::field_voronoi_variation_index(depth_index, site_index)
+          == variation_index)
+      {
+        if (!result.empty())
+          result += ',';
+        result += std::to_string(site_index + 1);
+      }
   return result;
 }
 
@@ -195,7 +259,7 @@ metadata_markup(const generation::projection_spec& spec,
          << " data-source=\"Natural Earth 5.1.1 1:10m physical vectors\""
          << " data-projection=\"" << spec.argument << "\""
          << " data-depth-count=\"" << catalogue::depth_styles.size() << "\""
-         << " data-field-mode=\"explicit-overlapping-mosaic\""
+         << " data-field-mode=\"depth-filled-voronoi-groups\""
          << " data-field-space=\"projected-page\""
          << " data-field-variation-count-per-depth=\""
          << catalogue::field_variations.size() << "\""
@@ -204,14 +268,29 @@ metadata_markup(const generation::projection_spec& spec,
          << " data-field-base-diameter=\""
          << format_number(catalogue::field_base_diameter) << "\""
          << " data-field-row-stagger-cells=\"0.5\""
+         << " data-field-voronoi-assignment=\"nearest-jittered-site\""
+         << " data-field-voronoi-site-columns=\""
+         << catalogue::field_voronoi_columns << "\""
+         << " data-field-voronoi-site-rows=\""
+         << catalogue::field_voronoi_rows << "\""
+         << " data-field-voronoi-site-count=\""
+         << catalogue::field_voronoi_site_count << "\""
+         << " data-field-voronoi-curve-clipping=\"none\""
          << " data-field-cell-count-per-depth=\"" << cells << "\""
          << " data-field-curve-instance-count=\""
          << cells * catalogue::depth_styles.size() << "\""
+         << " data-minimum-d-r=\"1\""
+         << " data-depth-controls-d-r=\"true\""
+         << " data-paint=\"even-odd-fill\""
+         << " data-graphic-opacity=\""
+         << format_number(catalogue::field_graphic_opacity) << "\""
+         << " data-moire=\"accepted\""
+         << " data-depth-palette=\"Natural Earth bathymetry blue ramp\""
          << " data-ground=\"" << color_text(catalogue::ground_color) << "\""
-         << " data-ink=\"" << color_text(catalogue::ink_color) << "\""
-         << ">Monochrome depth thresholds use explicit overlapping mosaics "
-            "of progressively more variable and complex Izzi roulette "
-            "curves.</metadata>\n";
+         << " data-label-ink=\"" << color_text(catalogue::ink_color) << "\""
+         << ">Monochrome depth thresholds use explicit overlapping filled "
+            "Izzi roulette forms selected in projected-page Voronoi groups; "
+            "depth alone increases d/r from the cycloid boundary.</metadata>\n";
   return output.str();
 }
 
@@ -220,24 +299,20 @@ curve_style(const depth_style& style, const double stroke_width)
 {
   const bool filled = style.paint == curve_paint::filled;
   return {
-    filled ? catalogue::ink_color : svg::color::none,
-    filled ? 0.52 : 0,
-    catalogue::ink_color, 0.96, stroke_width,
+    filled ? style.color : svg::color::none,
+    filled ? catalogue::field_graphic_opacity : 0,
+    style.color, catalogue::field_graphic_opacity, stroke_width,
   };
 }
 
 svg::style
 field_curve_style(const depth_style& style, const std::size_t index)
 {
-  const bool filled = style.paint == curve_paint::filled;
   const double stroke_width
     = catalogue::field_stroke_width * (0.88 + 0.06 * (index % 4));
-  const double fill_opacity
-    = catalogue::field_fill_opacity * (0.82 + 0.06 * (index % 5));
   return {
-    filled ? catalogue::ink_color : svg::color::none,
-    filled ? fill_opacity : 0,
-    catalogue::ink_color, catalogue::field_stroke_opacity, stroke_width,
+    style.color, catalogue::field_graphic_opacity,
+    style.color, catalogue::field_graphic_opacity, stroke_width,
   };
 }
 
@@ -282,7 +357,7 @@ add_key(generation::projection_document& document,
   background.finish_element();
   key.add_element(background);
   key.add_raw(key_text_markup(
-    left + margin, top + 0.28, "DEPTH / ROULETTE (monochrome)"));
+    left + margin, top + 0.28, "DEPTH / ROULETTE / ORIGINAL BLUE RAMP"));
 
   for (std::size_t index = 0; index != catalogue::depth_styles.size(); ++index)
     {
@@ -327,7 +402,7 @@ generate(const generation::projection_spec& spec)
   const generation::projection_context context(spec, basename);
   generation::projection_document document(
     basename, "Natural Earth 1:10m bathymetry rendered with progressively "
-              "complex monochrome roulette curves in the "
+              "complex blue-hued roulette curves in the "
               + std::string(spec.title) + " projection",
     context.map_frame.frame_area);
   document.add_raw(metadata_markup(spec, context));
@@ -343,6 +418,9 @@ generate(const generation::projection_spec& spec)
         = natural_earth::bathymetry_specs[index];
       roulette_require(style.layer_id == source.id,
                        "roulette catalogue and Natural Earth depths differ");
+      roulette_require(color_text(style.color)
+                         == color_text(source.style._M_fill_color),
+                       "roulette catalogue and Natural Earth blue ramp differ");
       natural_earth::layer_spec clipping_source = source;
       clipping_source.style = natural_earth::area_style(svg::color::black);
       svg::group_element geometry;
@@ -363,7 +441,8 @@ generate(const generation::projection_spec& spec)
   svg::group_element bathymetry;
   bathymetry.start_element("bathymetry-roulette");
   bathymetry.add_title(
-    "Twelve nested Natural Earth depth thresholds with varied roulette fields");
+    "Twelve nested Natural Earth depth thresholds with filled, "
+    "Voronoi-grouped roulette fields");
   for (std::size_t depth_index = 0;
        depth_index != catalogue::depth_styles.size(); ++depth_index)
     {
@@ -406,17 +485,25 @@ generate(const generation::projection_spec& spec)
               + std::to_string(field.counts[variation_index])
               + "\" data-diameter-factor=\""
               + catalogue::ratio_text(variation.diameter_factor)
-              + "\" data-point-distance-factor=\""
-              + catalogue::ratio_text(variation.point_distance_factor)
+              + "\" data-depth-d-r=\""
+              + catalogue::ratio_text(style.point_distance_ratio)
               + "\" data-phase-turns=\""
               + catalogue::ratio_text(variation.phase_turns)
               + "\" data-offset-x-cells=\""
               + catalogue::ratio_text(variation.offset_x_cells)
               + "\" data-offset-y-cells=\""
-              + catalogue::ratio_text(variation.offset_y_cells) + "\"";
+              + catalogue::ratio_text(variation.offset_y_cells)
+              + "\" data-voronoi-sites=\""
+              + variation_voronoi_sites(depth_index, variation_index)
+              + "\" data-voronoi-site-count=\""
+              + std::to_string(catalogue::field_voronoi_site_count
+                               / catalogue::field_variations.size())
+              + "\" data-paint=\"even-odd-fill\""
+                " data-graphic-opacity=\""
+              + format_number(catalogue::field_graphic_opacity) + "\"";
           variation_group.add_element(svg::make_path(
             field.paths[variation_index],
-            field_curve_style(style, variation_index), id + "-lines", true,
+            field_curve_style(style, variation_index), id + "-forms", true,
             attributes));
           variation_group.finish_element();
           layer.add_element(variation_group);
@@ -424,7 +511,9 @@ generate(const generation::projection_spec& spec)
       layer.finish_element();
       bathymetry.add_element(layer);
       std::cout << style.layer_id << ": " << field.total
-                << " explicit field curves across "
+                << " explicit filled field curves across "
+                << catalogue::field_voronoi_site_count
+                << " Voronoi regions and "
                 << catalogue::field_variations.size() << " variations\n";
     }
   bathymetry.finish_element();
@@ -457,7 +546,7 @@ verify(const std::string& generated,
   roulette_require(generated.find("id=\"bathymetry-roulette-metadata\"")
                      != std::string::npos
                      && generated.find(
-                          "data-field-mode=\"explicit-overlapping-mosaic\"")
+                          "data-field-mode=\"depth-filled-voronoi-groups\"")
                           != std::string::npos,
                    "generated bathymetry roulette SVG lacks metadata");
   const std::size_t cells = make_field_grid(context).cell_count();
@@ -467,6 +556,15 @@ verify(const std::string& generated,
         != std::string::npos
       && generated.find("data-field-row-stagger-cells=\"0.5\"")
            != std::string::npos
+      && generated.find("data-field-voronoi-site-count=\""
+                        + std::to_string(
+                          catalogue::field_voronoi_site_count) + "\"")
+           != std::string::npos
+      && generated.find("data-minimum-d-r=\"1\"")
+           != std::string::npos
+      && generated.find("data-graphic-opacity=\""
+                        + format_number(catalogue::field_graphic_opacity)
+                        + "\"") != std::string::npos
       && generated.find("data-field-cell-count-per-depth=\""
                    + std::to_string(cells) + "\"") != std::string::npos
       && generated.find("data-field-curve-instance-count=\""
@@ -489,6 +587,12 @@ verify(const std::string& generated,
       && token_count(generated, "data-instance-count=\"")
            == catalogue::depth_styles.size()
                 * catalogue::field_variations.size()
+      && token_count(generated, "data-voronoi-sites=\"")
+           == catalogue::depth_styles.size()
+                * catalogue::field_variations.size()
+      && token_count(generated, "data-paint=\"even-odd-fill\"")
+           == 1 + catalogue::depth_styles.size()
+                    * catalogue::field_variations.size()
       && generated.find("<pattern") == std::string::npos,
     "generated bathymetry roulette SVG has incomplete definitions");
 
@@ -517,7 +621,7 @@ verify(const std::string& generated,
             = catalogue::field_variation_id(style, variation_index);
           roulette_require(generated.find("<g id=\"" + id + "\">")
                              != std::string::npos
-                             && generated.find("id=\"" + id + "-lines\"")
+                             && generated.find("id=\"" + id + "-forms\"")
                                   != std::string::npos,
                            "bathymetry roulette field variation is missing");
         }
@@ -539,8 +643,8 @@ verify(const std::string& generated,
        : natural_earth::bathymetry_specs)
     roulette_require(
       generated.find(color_text(source.style._M_fill_color))
-        == std::string::npos,
-      "generated bathymetry roulette SVG contains the ordinary depth palette");
+        != std::string::npos,
+      "generated bathymetry roulette SVG omits a Natural Earth depth blue");
 }
 
 int

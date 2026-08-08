@@ -158,4 +158,25 @@ for pass in jaxa-ptree nasa-firms network-topology; do
   esac
 done
 
-printf '%s\n' 'external generation: requested optional workflows completed'
+authorization_state=${EXTERNAL_AUTHORIZATION_STATE:-.cartofreako/authorized-external-passes}
+[[ $authorization_state = /* ]] \
+  || authorization_state=$repository_root/$authorization_state
+state_directory=$(dirname "$authorization_state")
+mkdir -p "$state_directory"
+state_temporary=$(mktemp "$state_directory/.authorized-external-passes.XXXXXX")
+trap 'rm -f -- "$state_temporary"' EXIT
+{
+  if [[ -r $authorization_state ]]; then
+    sed -n \
+      '/^jaxa-ptree$/p;/^nasa-firms$/p;/^network-topology$/p' \
+      "$authorization_state"
+  fi
+  printf '%s\n' "${selected_passes[@]}"
+} | sort -u > "$state_temporary"
+chmod 600 "$state_temporary"
+mv -f "$state_temporary" "$authorization_state"
+trap - EXIT
+
+printf '%s\n' \
+  'external generation: requested optional workflows completed' \
+  "external generation: enabled passes recorded in $authorization_state"

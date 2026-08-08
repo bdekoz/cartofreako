@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Cartofreako">
+  <meta name="description" content="Verified Active Archive check-in report for Cartofreako generated assets v13 in UCB Active Archive Object Storage.">
+  <meta name="devastation-pacific-house-style" content="Summer 2026 v1.1 canonical">
+  <meta name="document-kind" content="active-archive-check-in">
+  <title>cartofreako v13 checked in to UCB Active Archive Object Storage</title>
+  <style>
+    @font-face {
+      font-family: "Atkinson Next";
+      src: url("file:///home/bkoz/.fonts/atkinson_hyperlegible.2026/AtkinsonHyperlegibleNext-Regular.otf") format("opentype");
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Atkinson Next";
+      src: url("file:///home/bkoz/.fonts/atkinson_hyperlegible.2026/AtkinsonHyperlegibleNext-SemiBold.otf") format("opentype");
+      font-weight: 600;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Atkinson Next";
+      src: url("file:///home/bkoz/.fonts/atkinson_hyperlegible.2026/AtkinsonHyperlegibleNext-Bold.otf") format("opentype");
+      font-weight: 700;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Atkinson Mono";
+      src: url("file:///home/bkoz/.fonts/atkinson_hyperlegible.2026/AtkinsonHyperlegibleMono-Regular.otf") format("opentype");
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Atkinson Mono";
+      src: url("file:///home/bkoz/.fonts/atkinson_hyperlegible.2026/AtkinsonHyperlegibleMono-Bold.otf") format("opentype");
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    :root {
+      --paper: #fcfbf7;
+      --ink: #14171a;
+      --accent: #173a55;
+      --muted: #4d565d;
+      --rule: #9da8af;
+      --soft: #eef1f2;
+      --soft-2: #f5f6f4;
+    }
+
+    @page { size: Letter; margin: 0; }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--paper);
+      color: var(--ink);
+    }
+    body {
+      font-family: "Atkinson Next", Arial, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.4;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .page {
+      position: relative;
+      width: 8.5in;
+      height: 11in;
+      overflow: hidden;
+      padding: .58in .64in .55in;
+      background: var(--paper);
+      break-after: page;
+      page-break-after: always;
+    }
+    .page:last-child { break-after: auto; page-break-after: auto; }
+    .top-rule {
+      position: absolute;
+      top: 0;
+      left: .64in;
+      right: .64in;
+      height: .10in;
+      background: var(--accent);
+    }
+    .eyebrow {
+      margin: .10in 0 .18in;
+      color: var(--accent);
+      font-family: "Atkinson Mono", monospace;
+      font-size: 8.2pt;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 6.95in;
+      margin-bottom: .17in;
+      font-size: 28pt;
+      line-height: 1.01;
+      letter-spacing: -.025em;
+      font-weight: 700;
+    }
+    h2 {
+      margin-bottom: .14in;
+      font-size: 20pt;
+      line-height: 1.08;
+      letter-spacing: -.018em;
+    }
+    h3 {
+      margin-bottom: .07in;
+      color: var(--accent);
+      font-family: "Atkinson Mono", monospace;
+      font-size: 8.2pt;
+      line-height: 1.2;
+      letter-spacing: .055em;
+      text-transform: uppercase;
+    }
+    .deck {
+      max-width: 6.4in;
+      margin-bottom: .20in;
+      color: var(--muted);
+      font-size: 11.5pt;
+      line-height: 1.35;
+    }
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: .12in;
+      margin-bottom: .22in;
+    }
+    .status {
+      display: inline-block;
+      padding: .055in .11in .045in;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: var(--paper);
+      font-family: "Atkinson Mono", monospace;
+      font-size: 8.1pt;
+      font-weight: 700;
+      letter-spacing: .06em;
+    }
+    .status-note {
+      color: var(--muted);
+      font-family: "Atkinson Mono", monospace;
+      font-size: 8.4pt;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.28fr 1fr;
+      gap: .16in;
+      margin-bottom: .15in;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: .17in 0 .15in;
+    }
+    .hero-number {
+      font-family: "Atkinson Mono", monospace;
+      font-size: 43pt;
+      font-weight: 700;
+      line-height: .93;
+      letter-spacing: -.045em;
+    }
+    .hero-unit {
+      margin-top: .04in;
+      color: var(--accent);
+      font-size: 13pt;
+      font-weight: 700;
+    }
+    .hero-size {
+      align-self: end;
+      color: var(--muted);
+      text-align: right;
+    }
+    .hero-size strong {
+      display: block;
+      color: var(--ink);
+      font-family: "Atkinson Mono", monospace;
+      font-size: 13.2pt;
+      line-height: 1.15;
+    }
+    .hero-size span {
+      display: block;
+      margin-top: .08in;
+    }
+    .finding {
+      margin: 0 0 .17in;
+      padding: .13in .16in;
+      border-left: .07in solid var(--accent);
+      background: var(--soft);
+      font-size: 10.8pt;
+      line-height: 1.36;
+    }
+    .finding strong { color: var(--accent); }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .12in;
+      margin-bottom: .17in;
+    }
+    .metric {
+      min-height: .76in;
+      padding: .11in .13in;
+      background: var(--soft-2);
+      border-top: 2px solid var(--accent);
+    }
+    .metric strong {
+      display: block;
+      font-family: "Atkinson Mono", monospace;
+      font-size: 19pt;
+      line-height: 1;
+    }
+    .metric span {
+      display: block;
+      margin-top: .05in;
+      color: var(--muted);
+      font-size: 8.7pt;
+    }
+    .destination {
+      padding: .13in .16in;
+      border: 1px solid var(--rule);
+    }
+    .destination-grid {
+      display: grid;
+      grid-template-columns: .85in 1fr;
+      gap: .045in .12in;
+      margin: 0;
+    }
+    .destination-grid dt {
+      color: var(--muted);
+      font-family: "Atkinson Mono", monospace;
+      font-size: 8.2pt;
+      text-transform: uppercase;
+    }
+    .destination-grid dd {
+      margin: 0;
+      font-family: "Atkinson Mono", monospace;
+      font-size: 8.6pt;
+      overflow-wrap: anywhere;
+    }
+    .section-lead {
+      max-width: 6.55in;
+      margin-bottom: .15in;
+      color: var(--muted);
+      font-size: 10.7pt;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 .14in;
+      font-size: 8.5pt;
+      line-height: 1.2;
+    }
+    caption {
+      margin-bottom: .07in;
+      color: var(--muted);
+      text-align: left;
+      font-size: 8.5pt;
+    }
+    thead { display: table-header-group; }
+    thead th {
+      padding: .055in .065in;
+      border-top: 2px solid var(--accent);
+      border-bottom: 1px solid var(--rule);
+      color: var(--accent);
+      font-family: "Atkinson Mono", monospace;
+      font-size: 7.6pt;
+      letter-spacing: .045em;
+      text-align: left;
+      text-transform: uppercase;
+    }
+    tbody th, tbody td {
+      padding: .052in .065in;
+      border-bottom: 1px solid #d7dcde;
+      vertical-align: top;
+      text-align: left;
+    }
+    tbody th { font-weight: 600; }
+    td.count, td.bytes {
+      white-space: nowrap;
+      font-family: "Atkinson Mono", monospace;
+      text-align: right;
+    }
+    tfoot th, tfoot td {
+      padding: .065in;
+      border-top: 2px solid var(--accent);
+      font-weight: 700;
+    }
+    tfoot td {
+      font-family: "Atkinson Mono", monospace;
+      text-align: right;
+    }
+    code, .mono { font-family: "Atkinson Mono", monospace; font-size: .94em; }
+    a { color: var(--accent); text-decoration: underline; }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .15in;
+    }
+    .card {
+      padding: .12in .15in;
+      background: var(--soft-2);
+      border-top: 2px solid var(--accent);
+    }
+    .card p:last-child { margin-bottom: 0; }
+    .card ul { margin: .05in 0 0 .16in; padding: 0; }
+    .card li { margin-bottom: .035in; }
+    .label {
+      display: inline-block;
+      margin-right: .05in;
+      color: var(--accent);
+      font-family: "Atkinson Mono", monospace;
+      font-size: 7.6pt;
+      font-weight: 700;
+      letter-spacing: .045em;
+      text-transform: uppercase;
+    }
+    .steps {
+      margin: .01in 0 .13in;
+      padding: 0;
+      list-style: none;
+      counter-reset: step;
+      font-size: 9.8pt;
+    }
+    .steps li {
+      display: grid;
+      grid-template-columns: .37in 1fr;
+      gap: .10in;
+      padding: .055in 0;
+      border-bottom: 1px solid #d7dcde;
+      counter-increment: step;
+    }
+    .steps li::before {
+      content: "0" counter(step);
+      color: var(--accent);
+      font-family: "Atkinson Mono", monospace;
+      font-size: 9pt;
+      font-weight: 700;
+    }
+    .boundary {
+      margin: .09in 0 .12in;
+      padding: .11in .14in;
+      border: 1px solid var(--accent);
+      background: var(--soft);
+      font-size: 9.4pt;
+    }
+    .boundary p { margin-bottom: .05in; }
+    .boundary p:last-child { margin-bottom: 0; }
+    .evidence {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .075in .16in;
+      margin-top: .05in;
+      font-size: 8.3pt;
+    }
+    .evidence div {
+      padding-top: .055in;
+      border-top: 1px solid var(--rule);
+    }
+    .evidence strong {
+      display: block;
+      color: var(--accent);
+      font-family: "Atkinson Mono", monospace;
+      font-size: 7.5pt;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .digest { overflow-wrap: anywhere; }
+    .footer {
+      position: absolute;
+      left: .64in;
+      right: .64in;
+      bottom: .24in;
+      display: flex;
+      justify-content: space-between;
+      padding-top: .07in;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-family: "Atkinson Mono", monospace;
+      font-size: 7.5pt;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="page" aria-labelledby="report-title">
+      <div class="top-rule" aria-hidden="true"></div>
+      <p class="eyebrow">Cartofreako · active archive check-in · release v13</p>
+      <h1 id="report-title">cartofreako v13 checked in to UCB Active Archive Object Storage</h1>
+      <p class="deck">An evidence-first record of the generated-assets v13 release deposited at its immutable public prefix.</p>
+
+      <div class="status-row">
+        <span class="status">OBSERVED · VERIFIED</span>
+        <span class="status-note">@@VERIFIED_AT@@ · run @@RUN_ID@@</span>
+      </div>
+
+      <div class="hero" aria-label="Final remote inventory, stored size, and extracted package payload">
+        <div>
+          <div class="hero-number">@@RELEASE_OBJECTS@@</div>
+          <div class="hero-unit">objects in the completed release</div>
+        </div>
+        <div class="hero-size">
+          <strong>@@RELEASE_BYTES@@ bytes</strong>
+          @@RELEASE_GIB@@ GiB stored at the verified prefix
+          <span><strong>@@SOURCE_TREE_BYTES@@ bytes</strong>@@SOURCE_TREE_GIB@@ GiB extracted package payload</span>
+        </div>
+      </div>
+
+      <p class="finding"><strong>Observed result.</strong> The local @@RELEASE_OBJECTS@@-object release and remote prefix agreed after <code>release.json</code> was published last. @@DOWNLOAD_SENTENCE@@</p>
+
+      <div class="metrics" aria-label="Release summary metrics">
+        <div class="metric"><strong>@@SVG_COUNT@@</strong><span>explicit SVG-gzip objects</span></div>
+        <div class="metric"><strong>@@PDF_COUNT@@</strong><span>single-page PDF maps</span></div>
+        <div class="metric"><strong>@@ALL_PNG_COUNT@@</strong><span>full and thumbnail PNG files</span></div>
+      </div>
+
+      <section class="destination" aria-labelledby="destination-heading">
+        <h3 id="destination-heading">Archive destination</h3>
+        <dl class="destination-grid">
+          <dt>Endpoint</dt><dd>https://s3-ewh.ist.berkeley.edu</dd>
+          <dt>Region</dt><dd>us-east-1</dd>
+          <dt>Bucket</dt><dd>adekosnik-bucket01</dd>
+          <dt>Prefix</dt><dd>cartofreako/v13/</dd>
+        </dl>
+      </section>
+
+      <div class="footer"><span>Cartofreako / v13 / UCB Active Archive</span><span>1 / 3</span></div>
+    </section>
+
+    <section class="page" aria-labelledby="inventory-title">
+      <div class="top-rule" aria-hidden="true"></div>
+      <p class="eyebrow">Deposit inventory</p>
+      <h2 id="inventory-title">What was uploaded</h2>
+      <p class="section-lead">Counts and stored-byte totals below are exact for the completed prefix. The recovery package remains byte-for-byte identical to the GitHub release asset.</p>
+
+      <table aria-label="Uploaded Cartofreako v13 object families">
+        <caption>Completed object families beneath <code>cartofreako/v13/</code>.</caption>
+        <thead>
+          <tr><th scope="col">Object family</th><th scope="col">Purpose</th><th scope="col">Count</th><th scope="col">Bytes</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row"><code>tree/*/svg/*.svg.gz</code></th><td>Explicit browser-decompressed SVG archives</td><td class="count">@@SVG_COUNT@@</td><td class="bytes">@@SVG_BYTES@@</td></tr>
+          <tr><th scope="row"><code>tree/*/pdf/*.pdf</code></th><td>Single-page print maps</td><td class="count">@@PDF_COUNT@@</td><td class="bytes">@@PDF_BYTES@@</td></tr>
+          <tr><th scope="row"><code>tree/*/png/*.png</code></th><td>Full-size opaque PNG maps</td><td class="count">@@PNG_COUNT@@</td><td class="bytes">@@PNG_BYTES@@</td></tr>
+          <tr><th scope="row"><code>tree/*/thumbnail/*.png</code></th><td>480-pixel projection previews</td><td class="count">@@THUMBNAIL_COUNT@@</td><td class="bytes">@@THUMBNAIL_BYTES@@</td></tr>
+          <tr><th scope="row"><code>package/assets.generated.v13.tar.xz</code></th><td>Byte-identical recovery package</td><td class="count">1</td><td class="bytes">@@PACKAGE_BYTES@@</td></tr>
+          <tr><th scope="row"><code>README.md</code></th><td>Release layout and delivery contract</td><td class="count">1</td><td class="bytes">@@README_BYTES@@</td></tr>
+          <tr><th scope="row"><code>viewer.html</code></th><td>Same-origin streaming SVG viewer</td><td class="count">1</td><td class="bytes">@@VIEWER_BYTES@@</td></tr>
+          <tr><th scope="row"><code>SHA256SUMS</code></th><td>SHA-256 payload manifest</td><td class="count">1</td><td class="bytes">@@MANIFEST_BYTES@@</td></tr>
+          <tr><th scope="row"><code>release.json</code></th><td>Release record and completion marker</td><td class="count">1</td><td class="bytes">@@MARKER_BYTES@@</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><th scope="row" colspan="2">Completed release</th><td>@@RELEASE_OBJECTS@@</td><td>@@RELEASE_BYTES@@</td></tr>
+        </tfoot>
+      </table>
+
+      <div class="two-col">
+        <section class="card" aria-labelledby="browser-use-title">
+          <h3 id="browser-use-title">Browser delivery</h3>
+          <p><span class="label">Observed</span>The six documentation grids embed @@THUMBNAIL_COUNT@@ PNG previews, @@THUMBNAILS_PER_PROJECTION@@ per projection. Each selection opens the same-origin viewer, which streams one <code>.svg.gz</code> response through <code>DecompressionStream("gzip")</code>. SVG gzip responses use <code>application/gzip</code> without <code>Content-Encoding</code>.</p>
+        </section>
+        <section class="card" aria-labelledby="package-title">
+          <h3 id="package-title">Recovery identity</h3>
+          <p><span class="label">Observed</span>The @@PACKAGE_BYTES@@-byte XZ package has SHA-256 <span class="mono digest">@@PACKAGE_SHA256@@</span>.</p>
+        </section>
+      </div>
+
+      <div class="boundary">
+        <p><span class="label">Observed</span>The delivery tree contains no raw SVG, symlink, zero-byte file, or temporary upload artifact. The unchanged recovery package retains its original @@SOURCE_TREE_FILES@@-file projection-organized <code>assets.generated/</code> tree.</p>
+      </div>
+
+      <div class="footer"><span>Cartofreako / deposit inventory</span><span>2 / 3</span></div>
+    </section>
+
+    <section class="page" aria-labelledby="verification-title">
+      <div class="top-rule" aria-hidden="true"></div>
+      <p class="eyebrow">Verification and evidence boundary</p>
+      <h2 id="verification-title">How the check-in was verified</h2>
+      <p class="section-lead">The uploader used an ephemeral rclone configuration, credentials entered on <code>/dev/tty</code>, and exact destination confirmation before changing the new prefix.</p>
+
+      <ol class="steps">
+        <li><span><strong>Local preflight.</strong> Archive identity, the @@PAYLOAD_FILES@@-entry payload manifest, SHA-256 hashes, JSON syntax, gzip integrity, fixed inventories, and release hygiene passed.</span></li>
+        <li><span><strong>Destination gate.</strong> The exact bucket and prefix were readable. The immutable-copy guard rejected any object outside this release inventory.</span></li>
+        <li><span><strong>Projection layout.</strong> Six projection roots each contained SVG, PDF, PNG, and thumbnail directories; every projection supplied @@THUMBNAILS_PER_PROJECTION@@ preview PNGs.</span></li>
+        <li><span><strong>Browser pilots.</strong> Public SVG-gzip and PNG stored bytes and HTTP metadata passed; the same-origin viewer was retrieved and checked before bulk completion.</span></li>
+        <li><span><strong>Immutable copy.</strong> General and SVG-gzip phases used <code>rclone copy --checksum --immutable --check-first</code>. No <code>sync</code> or <code>move</code> operation was used.</span></li>
+        <li><span><strong>Completion ordering.</strong> The @@PAYLOAD_FILES@@ payload objects passed <code>rclone check --one-way</code>; <code>release.json</code> was then uploaded as object @@RELEASE_OBJECTS@@ and the complete release was checked again.</span></li>
+        <li><span><strong>Full read-back.</strong> @@DOWNLOAD_STEP@@ Remote count and bytes matched local state: @@RELEASE_OBJECTS@@ objects and @@RELEASE_BYTES@@ bytes.</span></li>
+      </ol>
+
+      <section class="boundary" aria-labelledby="boundary-title">
+        <h3 id="boundary-title">Evidence boundary</h3>
+        <p><span class="label">Observed</span>After upload, anonymous HTTPS returned the exact local marker and viewer, the representative preview and linked SVG-gzip object responded, pilot bytes and metadata matched, and the same-origin viewer retained its streaming decompressor.</p>
+        <p><span class="label">@@DOWNLOAD_LABEL@@</span>@@DOWNLOAD_BOUNDARY@@</p>
+        <p><span class="label">Unavailable</span>Peak uploader RSS and the network route used by the operator were not independently recorded; neither is inferred from byte totals.</p>
+      </section>
+
+      <div class="two-col">
+        <section class="card" aria-labelledby="source-title">
+          <h3 id="source-title">Source identity</h3>
+          <p>Git tag <code>@@SOURCE_TAG@@</code> resolves to source commit <code>@@SOURCE_COMMIT@@</code>. The source and generated recovery package remain separate release assets.</p>
+        </section>
+        <section class="card" aria-labelledby="marker-title">
+          <h3 id="marker-title">Completion semantics</h3>
+          <p><a href="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/release.json">The public release marker</a> has <code>complete: true</code> and was published last. Post-publication reports remain outside the immutable prefix.</p>
+        </section>
+      </div>
+
+      <h3 style="margin-top:.12in">Evidence register</h3>
+      <div class="evidence">
+        <div><strong>Manifest</strong><span class="mono">SHA256SUMS</span> · @@PAYLOAD_FILES@@ payload entries</div>
+        <div><strong>Manifest SHA-256</strong><span class="mono digest">@@MANIFEST_SHA256@@</span></div>
+        <div><strong>Release marker</strong><span class="mono">release.json</span> · @@RELEASE_OBJECTS@@-object completion record</div>
+        <div><strong>Uploader</strong><span class="mono">upload-generated-assets-s3-release.sh</span> · version 6 · run @@RUN_ID@@</div>
+      </div>
+
+      <div class="footer"><span>Cartofreako / verified archive record / @@VERIFIED_AT@@</span><span>3 / 3</span></div>
+    </section>
+  </main>
+</body>
+</html>

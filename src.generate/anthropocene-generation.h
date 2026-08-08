@@ -184,7 +184,7 @@ add_subdued_land(generation::projection_document& document,
   if (context.spec.kind == generation::projection_kind::star_x)
     {
       const natural_earth::antarctic_cap cap
-        = natural_earth::make_antarctic_cap(context, land);
+        = natural_earth::make_antarctic_cap(context);
       static_cast<void>(natural_earth::render_star_x_source(
         layer, land, context, cap));
     }
@@ -460,22 +460,22 @@ add_legend(generation::projection_document& document,
   layer.start_element("legend-and-provenance");
   svg::rect_element band;
   band.start_element();
-  band.add_data({0, 0, context.map_frame.width(), 1.02});
+  band.add_data({0, 0, context.map_frame.width(), 1.25});
   band.add_style({{249, 247, 240}, 0.94, svg::color::none, 0, 0});
   band.finish_element();
   layer.add_element(band);
 
-  svg::typography title = label_typography(0.21, {42, 40, 36});
+  svg::typography title = label_typography(0.42, {42, 40, 36});
   title._M_w = svg::typography::weight::bold;
   svg::styled_text(layer, "ANTHROPOCENE / "
     + std::to_string(profile.calendar_year)
-    + (profile.partial_year ? " PARTIAL YEAR" : ""), {0.30, 0.20}, title);
+    + (profile.partial_year ? " PARTIAL YEAR" : ""), {0.30, 0.25}, title);
   svg::styled_text(layer,
     xml_escape(profile.snapshot_as_of_utc + "  |  "
       + std::to_string(dataset.features.size()) + " H3 r"
       + std::to_string(profile.h3_resolution)
       + " cells  |  absent is unobserved, not zero"),
-    {0.30, 0.41}, label_typography(0.105, {87, 82, 74}));
+    {0.30, 0.58}, label_typography(0.105, {87, 82, 74}));
 
   std::vector<std::size_t> enabled;
   for (std::size_t index = 0; index < profile.metrics.size(); ++index)
@@ -490,7 +490,7 @@ add_legend(generation::projection_document& document,
       const std::size_t row = position / columns;
       const std::size_t column = position % columns;
       const double x = 0.34 + column * column_width;
-      const double y = 0.64 + row * 0.22;
+      const double y = 0.82 + row * 0.22;
       const metric_definition& metric = profile.metrics[index];
       const svg::point_2t marker_point {x, y};
       add_legend_marker(layer, marker_point, metric);
@@ -528,6 +528,7 @@ metadata_element(const generation::projection_spec& spec,
 {
   std::string result = "<metadata id=\"anthropocene-metadata\""
     " data-workflow=\"Anthropocene source-separated observations\""
+    " data-title-scale=\"2\""
     " data-profile=\"" + xml_escape(profile.path.filename().string()) + "\""
     " data-projection=\"" + std::string(spec.argument) + "\""
     " data-calendar-year=\"" + std::to_string(profile.calendar_year) + "\""
@@ -639,6 +640,9 @@ verify(const std::string& generated,
                          && generated.find("data-pm25-smoke-separation=\"true\"")
                               != std::string::npos,
                        "generated Anthropocene SVG lacks provenance metadata");
+  anthropocene_require(generated.find("data-title-scale=\"2\"")
+                         != std::string::npos,
+                       "generated Anthropocene SVG lacks title-scale metadata");
   anthropocene_require(generated.find("<g id=\"pm25-exceedance-days\">")
                          != std::string::npos
                          && generated.find("<g id=\"observed-smoke-days\">")

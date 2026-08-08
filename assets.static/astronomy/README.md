@@ -1,15 +1,26 @@
 # Astronomy generator data
 
-`astro-profile.json` is the authoritative configuration for the generated
-astronomy products. It stores both the calculation timestamp and the observer
-reference point. `timestamp` accepts an ISO-8601 UTC instant or the literal
-`now`; `now` is sampled exactly once when `generate-astro` starts.
+`astro-profile.json` is the authoritative ground/all-sky configuration, and
+`astro-hubble-profile.json` is the independent Hubble observer configuration.
+Both store the calculation timestamp, stable observer and instrument IDs,
+visibility constraints, and catalog paths. `timestamp` accepts an ISO-8601
+UTC instant or the literal `now`; `now` is sampled exactly once when
+`generate-astro` starts.
 
-The checked-in profile uses the generation-session timestamp
+The checked-in ground profile uses the generation-session timestamp
 `2026-08-05T01:59:44Z` and San Francisco, California, USA
 (`37.7749`, `-122.4194`, 16 m elevation). The orientation defaults to
 conventional celestial handedness with right ascension increasing leftward and
 RA 12h at the projection center. The transient window defaults to seven days.
+Its observer ID is `ground-multiband` and its instrument ID is
+`generic-ground-multiband`.
+
+The Hubble profile uses the same instant but selects NORAD `20580` from the
+checked Orbital Technosphere CelesTrak science OMM catalog. Its observer ID is
+`hubble`; its `hst-composite` instrument enables infrared, optical, and
+ultraviolet sources subject to a 20° Earth-limb clearance and 60.3° Sun
+avoidance. It produces only `astro-observer-hubble-*`; the ground product is
+named `astro-observer-ground-multiband-*` so the platforms cannot be confused.
 
 Run `make fetch-astro-data` to refresh the bounded catalog snapshots:
 
@@ -35,3 +46,9 @@ use the JPL Solar System Dynamics approximate Keplerian elements valid from
 snapshots and a two-body propagation. These results must not be used for
 telescope pointing, navigation, occultation prediction, or other precision
 work; JPL Horizons or SPICE is required for those uses.
+
+Major planets use JPL equatorial radii and calculated geocentric distances to
+draw a dotted outline at true apparent angular size. Their legibility glyph is
+separate, fixed at 0.15 inch—twice the former 0.075-inch symbol. Metadata and
+per-object attributes distinguish the physical outline from this display
+scale.

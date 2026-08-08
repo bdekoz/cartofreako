@@ -103,6 +103,17 @@ interpolate_resource_color(const resource_palette& palette, const double value)
   return resource_color(result);
 }
 
+// Data-bearing country fills and spatial cells share one profile-controlled
+// opacity. Missing-data context and legends remain fully opaque so reduced
+// data density never makes "unknown" look like an observed low value.
+inline svg::style
+resource_data_style(const svg::color_qi color, const double opacity)
+{
+  resources_require(opacity > 0 && opacity <= 1,
+                    "resource data opacity must be in (0, 1]");
+  return {color, opacity, color, opacity, 0.0025};
+}
+
 inline std::pair<double, double>
 resource_value_range(const std::vector<const country_value*>& values)
 {
@@ -209,7 +220,7 @@ add_resource_country_coverage(
         0.25, 0.5,
       };
       const natural_earth::antarctic_cap cap
-        = natural_earth::make_antarctic_cap(context, land);
+        = natural_earth::make_antarctic_cap(context);
       svg::group_element star_x_land;
       star_x_land.start_element("star-x-antarctic-land");
       static_cast<void>(natural_earth::render_star_x_source(
@@ -263,9 +274,12 @@ add_resource_country_coverage(
 
       svg::style style = value == nullptr
         ? natural_earth::area_style(resource_color(family.palette.missing))
-        : natural_earth::area_style(interpolate_resource_color(
-            family.palette,
-            scale_resource_value(value->value, minimum, maximum, metric.scale)));
+        : resource_data_style(
+            interpolate_resource_color(
+              family.palette,
+              scale_resource_value(
+                value->value, minimum, maximum, metric.scale)),
+            profile.data_graphic_opacity);
       for (std::size_t band_index = 0;
            band_index != natural_earth::longitude_bands.size(); ++band_index)
         {
@@ -388,6 +402,7 @@ inline spatial_render_stats
 add_resource_spatial_coverage(
   generation::projection_document& document,
   const generation::projection_context& context,
+  const resources_profile& profile,
   const metric_definition& metric)
 {
   resources_require(metric.spatial.has_value(),
@@ -405,7 +420,7 @@ add_resource_spatial_coverage(
   if (context.spec.kind == generation::projection_kind::star_x)
     {
       const natural_earth::antarctic_cap cap
-        = natural_earth::make_antarctic_cap(context, land);
+        = natural_earth::make_antarctic_cap(context);
       static_cast<void>(natural_earth::render_star_x_source(
         terrestrial, land, context, cap));
     }
@@ -519,7 +534,8 @@ add_resource_spatial_coverage(
                   + "\" data-threat=\"" + resources_xml_escape(threat)
                   + "\"";
               coverage_layer.add_element(svg::make_path(
-                path_data, natural_earth::area_style(reef_threat_color(rank)),
+                path_data, resource_data_style(
+                  reef_threat_color(rank), profile.data_graphic_opacity),
                 id, true, attributes));
               rendered_feature = true;
               ++stats.paths;
@@ -550,6 +566,7 @@ resources_metadata_element(
 {
   std::string result = "<metadata id=\"resources-metadata\""
     " data-workflow=\"Resources Stage 12\" data-schema=\"v3\""
+    " data-title-scale=\"2\""
     " data-profile=\"" + resources_xml_escape(profile.path.filename().string())
     + "\" data-projection=\"" + std::string(spec.argument)
     + "\" data-family=\"" + resources_xml_escape(family.id)
@@ -560,7 +577,8 @@ resources_metadata_element(
     + "\" data-snapshot-as-of=\"" + profile.snapshot_as_of
     + "\" data-country-geometry-sha256=\""
     + profile.country_geometry_sha256 + "\" data-values-sha256=\""
-    + profile.values_sha256 + "\"";
+    + profile.values_sha256 + "\" data-graphic-opacity=\""
+    + format_resource_number(profile.data_graphic_opacity, 2) + "\"";
   if (metric.coverage.has_value())
     {
       const coverage_definition& coverage = *metric.coverage;
@@ -662,7 +680,7 @@ add_resources_legend(generation::projection_document& document,
   panel.finish_element();
   layer.add_element(panel);
 
-  svg::typography heading = resources_typography(0.18, {34, 35, 35});
+  svg::typography heading = resources_typography(0.36, {34, 35, 35});
   heading._M_w = svg::typography::weight::bold;
   svg::styled_text(layer,
     resources_xml_escape(family.title + " / " + metric.title),
@@ -751,7 +769,7 @@ add_resources_spatial_legend(
   panel.finish_element();
   layer.add_element(panel);
 
-  svg::typography heading = resources_typography(0.18, {34, 35, 35});
+  svg::typography heading = resources_typography(0.36, {34, 35, 35});
   heading._M_w = svg::typography::weight::bold;
   svg::styled_text(layer,
     resources_xml_escape(family.title + " / " + metric.title),
@@ -843,7 +861,7 @@ generate_resources(const generation::projection_spec& spec,
   else
     {
       static_cast<void>(add_resource_spatial_coverage(
-        document, context, metric));
+        document, context, profile, metric));
       add_resources_spatial_legend(
         document, context, profile, family, metric);
     }
@@ -951,6 +969,15 @@ verify_generated_resources(
                       && generated.find("data-missing-is-zero=\"false\"")
                            != std::string::npos,
                     "generated resources SVG lacks Stage 12 metadata");
+  resources_require(generated.find("data-title-scale=\"2\"")
+                      != std::string::npos,
+                    "generated resources SVG lacks title-scale metadata");
+  resources_require(generated.find(
+                      "data-graphic-opacity=\""
+                        + format_resource_number(
+                            profile.data_graphic_opacity, 2) + "\"")
+                      != std::string::npos,
+                    "generated resources SVG lacks data-graphic opacity metadata");
   resources_require(generated.find(" nan ") == std::string::npos
                       && generated.find(" -nan ") == std::string::npos
                       && generated.find(" inf ") == std::string::npos

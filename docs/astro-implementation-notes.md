@@ -8,44 +8,78 @@
 ## Scope and products
 
 `src.generate/generate-astro.cc` is a C++20 generation pass for naturally
-occurring objects and events on the celestial sphere. It produces two related
-products through every production cartographic projection:
+occurring objects and events on the celestial sphere. Stage 13 produces three
+explicit products through every production cartographic projection:
 
-- `all-sky` retains every object admitted by the configured catalog budgets;
-- `observer` retains objects above the configured horizon that are observable
-  in at least one enabled band at the profile timestamp.
+- `astro-all-sky-*` retains every object admitted by the ground profile's
+  configured catalog budgets, without an observer-visibility filter;
+- `astro-observer-ground-multiband-*` applies the San Francisco terrestrial
+  horizon, twilight, band, and magnitude rules; and
+- `astro-observer-hubble-*` propagates the Hubble Space Telescope orbit and
+  applies its Earth-limb, Sun-avoidance, and UV/optical/near-IR band rules.
 
-Both products use the same calculation instant, point of reference,
-orientation, instrumentation, event interval, catalog snapshots, map frame,
-and object identifiers. This makes the observer product a reproducible subset
-of the corresponding all-sky atlas rather than an independently sampled map.
+The filenames deliberately include `ground-multiband` or `hubble`; the
+profile also embeds independent observer and instrument IDs. “Observer” is
+therefore no longer ambiguous. All three products use the same pinned
+calculation instant, catalog snapshots, celestial orientation, map frames,
+and object identifiers, while each observer owns its visibility geometry and
+instrument contract.
 
 The pass includes bright stars, confirmed-exoplanet host systems, persistent
 multi-wavelength sources, the Sun, Moon, seven major planets, four asteroids,
 three comets, gamma-ray bursts, magnetar candidates, and X-ray transients. The
 output is an instrument-aware map of source positions, not a simulated
-photograph or a physical spectral-energy rendering.
+photograph, mission pointing product, or physical spectral-energy rendering.
 
 ## Authoritative JSON profile
 
-[`astro-profile.json`](../assets.static/astronomy/astro-profile.json) is the
-sole authority for the timestamp and point of reference. The generator never
-infers either value from the build host. The checked-in profile records:
+[`astro-profile.json`](../assets.static/astronomy/astro-profile.json) and
+[`astro-hubble-profile.json`](../assets.static/astronomy/astro-hubble-profile.json)
+are the sole authorities for timestamp, observer, and instrumentation. The
+generator never infers them from the build host. Both profiles use schema
+version 2 and the same pinned timestamp. Their distinguishing fields are:
 
 ```json
 {
   "timestamp": "2026-08-05T01:59:44Z",
-  "reference_point": {
+  "observer": {
+    "id": "ground-multiband",
     "name": "San Francisco, California, USA",
+    "kind": "terrestrial",
     "latitude_deg": 37.7749,
     "longitude_deg_east": -122.4194,
     "elevation_m": 16.0
+  },
+  "instrumentation": {
+    "id": "generic-ground-multiband",
+    "mode": "ground-multi-band"
   },
   "orientation": {
     "handedness": "celestial",
     "central_right_ascension_hours": 12.0
   },
   "dynamic_events": { "lookback_days": 7.0 }
+}
+```
+
+```json
+{
+  "timestamp": "2026-08-05T01:59:44Z",
+  "products": ["observer"],
+  "observer": {
+    "id": "hubble",
+    "name": "Hubble Space Telescope",
+    "kind": "orbiting",
+    "norad_id": "20580",
+    "maximum_element_age_days": 7.0,
+    "earth_limb_avoidance_deg": 20.0,
+    "sun_avoidance_deg": 60.3
+  },
+  "instrumentation": {
+    "id": "hst-composite",
+    "mode": "hst-composite",
+    "bands": ["infrared", "optical", "ultraviolet"]
+  }
 }
 ```
 
@@ -60,15 +94,15 @@ time:
 
 | Section | Fields and behavior |
 | --- | --- |
-| `products` | Must enable `all-sky` and `observer` for this pass |
-| `reference_point` | Name, geodetic latitude, east-positive longitude, and elevation |
+| `products` | Ground enables `all-sky` and `observer`; Hubble enables only `observer` |
+| `observer` | Stable ID/name and kind; terrestrial geodetic position or orbiting NORAD/OMM, freshness, Earth-limb, and Sun-avoidance fields |
 | `orientation` | Celestial or terrestrial handedness and central right ascension in hours |
-| `instrumentation` | Multi-band selection, bands requiring darkness, optical magnitude limit, minimum altitude, and twilight threshold |
+| `instrumentation` | Stable ID/name/mode and enabled bands; optional ground darkness, magnitude, altitude, and twilight rules |
 | `dynamic_events` | Nonnegative past-looking interval in days |
 | `display` | Upper bounds for stars, exoplanet hosts, and labels, plus reference-line switches |
 | `catalogs` | Paths relative to the profile for Gaia, exoplanets, curated sources, and small bodies |
 
-Elevation is preserved as provenance but is not yet used for topocentric
+Ground elevation is preserved as provenance but is not yet used for topocentric
 parallax, atmospheric refraction, extinction, or a terrain horizon. Those are
 precision extensions, not silently implied by the observer filter.
 
@@ -114,6 +148,7 @@ interchangeable catalogs:
 | [NASA Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/docs/program_interfaces.html) | Confirmed planets and host-system sky positions |
 | [JPL approximate positions](https://ssd.jpl.nasa.gov/planets/approx_pos.html) | Calculation-ready mean orbital elements for the major planets |
 | [JPL Small-Body Database API](https://ssd-api.jpl.nasa.gov/doc/sbdb.html) | Osculating elements and physical parameters for representative asteroids and comets |
+| [CelesTrak science OMM](https://celestrak.org/NORAD/elements/gp.php?GROUP=science&FORMAT=csv) | Checked Hubble orbital elements, propagated with the repository's SGP4 implementation |
 | [NASA GCN](https://gcn.nasa.gov/circulars/) | Timestamped transient positions, bands, and localization uncertainty |
 | [NASA HEASARC](https://heasarc.gsfc.nasa.gov/) | Persistent high-energy and multi-wavelength source context |
 
@@ -122,6 +157,10 @@ interchangeable catalogs:
 snapshots: 500 Gaia DR3 stars brighter than G 5.5, 250 nearby confirmed-planet
 rows, and seven named JPL SBDB records. The script checks row counts and writes
 `SHA256SUMS`. It does not modify the profile or the curated transient file.
+Hubble's checked OMM row comes from
+`assets.static/orbital-technosphere/celestrak-science.csv`, shared with the
+Orbital Technosphere pass and refreshed deliberately by
+`make fetch-orbiting-data`, not by `fetch-astro-data`.
 
 This refresh target is not a prerequisite of `generate-astro` and is never
 called by `generate-astro` or `make all`. Conversely, it does not invoke a
@@ -195,6 +234,30 @@ right ascension and declination.
 The Moon uses a separate low-precision elliptic orbit. It is adequate for
 placement at atlas scale but does not model the lunar perturbation series.
 
+Each major planet also carries the JPL equatorial radius: Mercury
+`2440.53 km`, Venus `6051.8 km`, Mars `3396.19 km`, Jupiter `71492 km`,
+Saturn `60268 km`, Uranus `25559 km`, and Neptune `24764 km`. The geocentric
+vector from the same orbital calculation supplies distance `D`; with the
+astronomical unit fixed at `149597870.7 km`, the true apparent angular radius
+is:
+
+```text
+alpha = asin(equatorial_radius_km / (D_AU × 149597870.7 km)).
+```
+
+These radii follow [JPL Solar System physical parameters](https://ssd.jpl.nasa.gov/planets/phys_par.html),
+and the angular interpretation follows the observer quantities documented by
+the [JPL Horizons manual](https://ssd.jpl.nasa.gov/horizons/manual.html).
+
+True size and legibility are shown simultaneously. Every planet gets a
+projected, dotted white outline at its calculated angular radius. Its colored
+display glyph remains fixed-size because a true planet disk is generally too
+small for this atlas; Stage 13 doubles that glyph from `0.075` to `0.15` page
+inches. Thus the solid disk is explicitly a `2×` display-symbol revision, not
+a claim of common physical scale, while the dotted outline is the true
+geocentric apparent size. SVG attributes preserve equatorial radius, distance,
+angular radius/diameter, display radius, and scale.
+
 ### Asteroids and comets
 
 Every SBDB snapshot supplies an osculating epoch, semi-major axis,
@@ -209,7 +272,7 @@ The same Kepler solver and rotations produce a heliocentric vector, from which
 the calculated Earth vector is subtracted. This ignores perturbations and can
 degrade quickly for close approaches or long intervals from the SBDB epoch.
 
-### Sidereal time, altitude, and horizon
+### Ground sidereal time, altitude, and horizon
 
 For `D = JD - 2451545.0` and `T = D / 36525`, Greenwich mean sidereal time is
 
@@ -245,6 +308,35 @@ The visible-horizon path is generated by converting a complete azimuth sweep
 at the minimum altitude back to equatorial coordinates. Thus its geometry is
 derived from the same timestamp and observer as the object filter.
 
+### Hubble orbit and pointing limits
+
+The Hubble profile selects NORAD `20580` from the checked CelesTrak science
+OMM catalogue. The shared SGP4 implementation propagates that element set to
+the profile timestamp, rejects an epoch in the future or more than seven days
+old, and converts the TEME state to a geodetic subpoint for provenance. The
+Earth-center direction is the negative propagated position vector. At orbital
+distance `d`, the apparent Earth angular radius is:
+
+```text
+earth_radius_angle = asin(6378.137 km / d).
+```
+
+For each celestial object the observer stores two angular quantities:
+
+```text
+earth_limb_clearance = separation(object, Earth center)
+                       - earth_radius_angle
+sun_separation = separation(object, Sun).
+```
+
+The Hubble product keeps an object only when limb clearance is at least
+`20.0°`, Sun separation is at least `60.3°`, and at least one object band is
+in the `hst-composite` infrared/optical/ultraviolet set. It has no terrestrial
+horizon, daylight gate, or atmosphere. Its reference layer instead draws the
+Earth limb, the configured limb-avoidance boundary, and the Sun-avoidance
+boundary. These are reproducible visualization constraints, not a complete
+HST scheduling or safety model.
+
 ### Dynamic events
 
 The configured interval is a lookback window. An event is retained exactly
@@ -266,19 +358,22 @@ Each output carries these named groups:
 | Layer | Contents |
 | --- | --- |
 | `astronomy-background` | Opaque dark celestial canvas |
-| `celestial-reference` | Equator, ecliptic, galactic equator, and observer horizon where applicable |
+| `celestial-reference` | Equator, ecliptic, galactic equator, plus ground horizon or Hubble Earth/Sun avoidance guides where applicable |
 | `stars` | Gaia sources with magnitude-scaled, color-index-informed markers |
 | `exoplanet-hosts` | Deduplicated host-system positions |
 | `deep-sky` | Persistent galaxies, nebulae, remnants, black holes, binaries, and quasars |
-| `solar-system` | Sun, Moon, planets, asteroids, and comets at the profile timestamp |
+| `solar-system` | Sun, Moon, planets, asteroids, and comets; planets include solid display glyphs and dotted true-angular-size outlines |
 | `transients` | Recent events and their localization contours |
 | `labels` | Budgeted labels for selected nonstellar objects |
 
 The root metadata records the profile name, product, resolved timestamp,
-reference coordinates, orientation, enabled bands, transient interval, and
-calculated Sun altitude. Each object marker records its identifier, type,
-bands, RA, declination, observer altitude, provenance URL, and available
-magnitude, event time, age, and uncertainty.
+observer/instrument IDs, orientation, enabled bands, transient interval, and
+the planet sizing contract. Ground metadata adds reference coordinates and
+calculated Sun altitude. Hubble metadata adds NORAD ID, OMM source and epoch,
+element age, propagated subpoint/altitude, Earth angular radius, and avoidance
+angles. Each object marker records its identifier, type, bands, RA,
+declination, observer altitude or Earth-limb clearance, provenance URL, and
+available magnitude, planet-size, event time, age, and uncertainty values.
 
 One legacy Cahill-Keyes numerical hole can reject a sampled point on a large
 transient contour. In that exceptional case only, the contour is rendered as
@@ -309,49 +404,55 @@ The first command changes bounded, reproducibility-sensitive inputs; the later
 commands review their effect, render from them, and run the repository checks.
 
 Select one product or projection with `generate-astro-all-sky`,
-`generate-astro-observer`, `generate-astro-cahill-keyes`,
+`generate-astro-observer-ground`, `generate-astro-observer-hubble`, the
+two-observer aggregate `generate-astro-observer`, `generate-astro-cahill-keyes`,
 `generate-astro-authagraph`, `generate-astro-dymaxion`,
 `generate-astro-myriahedral`, `generate-astro-star-x`, or
-`generate-astro-voronoi`. `generate-astro-projections` is an aggregate alias.
-A different authoritative profile can be supplied without editing the
-Makefile:
+`generate-astro-voronoi`. `generate-astro-projections` is an aggregate alias;
+`generate-astro-artifacts` adds all SVG/PDF/PNG forms. Different authoritative
+profiles can be supplied without editing the Makefile:
 
 ```sh
-make ASTRO_PROFILE=/absolute/path/to/profile.json generate-astro
+make ASTRO_PROFILE=/absolute/path/to/ground-profile.json \
+  ASTRO_HUBBLE_PROFILE=/absolute/path/to/hubble-profile.json generate-astro
 ```
 
 Every SVG is also part of `make all`, so Inkscape emits matching PDF and PNG
-files. Representative checked-in previews are:
+files. The public v13 names make the two observer/instrument combinations
+unambiguous:
 
-| Projection | All sky | San Francisco observer |
-| --- | --- | --- |
-| Cahill-Keyes | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-all-sky-ck-44-22.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-observer-ck-44-22.png) |
-| AuthaGraph | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-all-sky-authagraph-44-19.052559.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-observer-authagraph-44-19.052559.png) |
-| Dymaxion | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-all-sky-dymaxion-44-20.78461.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-observer-dymaxion-44-20.78461.png) |
-| Myriahedral | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-all-sky-myriahedral-44-24.75.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-observer-myriahedral-44-24.75.png) |
-| Star-X | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-all-sky-star-x-34-44.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-observer-star-x-34-44.png) |
-| Voronoi | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-all-sky-voronoi-44-22.916667.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/astro-observer-voronoi-44-22.916667.png) |
+| Projection | All sky | Ground multiband | Hubble |
+| --- | --- | --- | --- |
+| Cahill-Keyes | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/png/astro-all-sky-ck-44-22.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/png/astro-observer-ground-multiband-ck-44-22.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/png/astro-observer-hubble-ck-44-22.png) |
+| AuthaGraph | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/authagraph/png/astro-all-sky-authagraph-44-19.052559.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/authagraph/png/astro-observer-ground-multiband-authagraph-44-19.052559.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/authagraph/png/astro-observer-hubble-authagraph-44-19.052559.png) |
+| Dymaxion | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/astro-all-sky-dymaxion-44-20.78461.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/astro-observer-ground-multiband-dymaxion-44-20.78461.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/astro-observer-hubble-dymaxion-44-20.78461.png) |
+| Myriahedral | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/astro-all-sky-myriahedral-44-24.75.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/astro-observer-ground-multiband-myriahedral-44-24.75.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/astro-observer-hubble-myriahedral-44-24.75.png) |
+| Star-X | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/star-x/png/astro-all-sky-star-x-34-44.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/star-x/png/astro-observer-ground-multiband-star-x-34-44.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/star-x/png/astro-observer-hubble-star-x-34-44.png) |
+| Voronoi | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/voronoi/png/astro-all-sky-voronoi-44-22.916667.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/voronoi/png/astro-observer-ground-multiband-voronoi-44-22.916667.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/voronoi/png/astro-observer-hubble-voronoi-44-22.916667.png) |
 
 The command-line program itself accepts
 `generate-astro PROJECTION PRODUCT PROFILE.json`. Each invocation reopens its
 SVG and verifies the frame, required layers, catalog budgets, object classes,
-horizon contract, timestamp metadata, and finite numeric output.
+ground-horizon or Hubble-avoidance contract, observer/instrument identity,
+planet-size outlines, timestamp metadata, and finite numeric output.
 
 ## Verification and accuracy boundary
 
 [`test-astro-generation.cc`](../tests/test-astro-generation.cc) locks the
-profile values, Julian and sidereal reference, celestial handedness, horizon
-round trip, catalog counts, event window, band/daylight filtering, coordinate
-domains, and object-class coverage. It also compares the approximate Sun and
-Jupiter positions with pinned topocentric JPL Horizons values for San
-Francisco at the profile timestamp. The differences are about `0.002°` and
-`0.019°` in right ascension respectively, comfortably below the test's
-`0.05°` visualization tolerance.
+two profile identities, Julian and sidereal reference, celestial handedness,
+ground-horizon round trip, SGP4 Hubble state, OMM freshness, Earth-limb and
+Sun-avoidance filtering, catalog counts, event window, band/daylight
+filtering, coordinate domains, planet radii/apparent sizes, and object-class
+coverage. It also compares the approximate Sun and Jupiter positions with
+pinned topocentric JPL Horizons values for San Francisco at the profile
+timestamp. The differences remain comfortably below the test's `0.05°`
+visualization tolerance.
 
 This is not an observatory ephemeris. It does not yet use IAU SOFA/ERFA, IERS
 Earth-orientation parameters, JPL DE kernels, SPICE, light-time, aberration,
 precession/nutation, refraction, terrain, extinction, a point-spread function,
-or per-instrument response curves. It must not be used for telescope pointing,
+HST attitude/occultation scheduling, or per-instrument response curves. It
+must not be used for telescope pointing,
 navigation, occultation prediction, spacecraft operations, or safety-critical
 decisions.
 

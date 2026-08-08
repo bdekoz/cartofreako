@@ -506,8 +506,8 @@ struct antarctic_cap
 {
   a60::carto::frame map_frame;
   a60::carto::star_x_layout layout;
+  double cutoff_latitude = -60;
   double radius = 0;
-  double farthest_land_longitude = 0;
   double bearing_offset = 0;
   a60::carto::star_x_detail::point_2d target_pole {0, 0};
 
@@ -522,7 +522,7 @@ struct antarctic_cap
   contains(const geographic_point point) const
   {
     constexpr double tolerance = 1e-10;
-    return source_radius(point) <= radius + tolerance;
+    return point.latitude <= cutoff_latitude + tolerance;
   }
 
   svg::point_2t
@@ -538,19 +538,8 @@ struct antarctic_cap
   double
   boundary_latitude(const double longitude) const
   {
-    double inside = -90;
-    double outside = 0;
-    require(source_radius({outside, longitude}) > radius,
-            "Antarctic cap reaches the equator");
-    for (int iteration = 0; iteration != 56; ++iteration)
-      {
-        const double middle = (inside + outside) / 2;
-        if (source_radius({middle, longitude}) <= radius)
-          inside = middle;
-        else
-          outside = middle;
-      }
-    return (inside + outside) / 2;
+    static_cast<void>(longitude);
+    return cutoff_latitude;
   }
 };
 
@@ -567,37 +556,46 @@ star_x_layout_for(const projection_context& context)
   };
 }
 
-struct antarctic_land_extent
+struct star_x_antarctic_vertical_extent
 {
-  double radius = -std::numeric_limits<double>::infinity();
-  double longitude = 0;
+  double uncut_lower_bottom = -std::numeric_limits<double>::infinity();
+  double reassembled_local_bottom
+    = -std::numeric_limits<double>::infinity();
 };
 
 void
-include_antarctic_land_ring(antarctic_land_extent& extent,
-                            const OGRLineString& ring,
-                            const projection_context& context,
-                            const a60::carto::star_x_layout layout)
+include_star_x_antarctic_vertical_ring(
+  star_x_antarctic_vertical_extent& extent, const OGRLineString& ring,
+  const projection_context& context,
+  const a60::carto::star_x_layout layout, const double cutoff_latitude)
 {
+  using a60::carto::star_x_detail::face_group;
   for (int index = 0; index != ring.getNumPoints(); ++index)
     {
+      const double latitude = ring.getY(index);
       const double longitude = ring.getX(index);
-      const double radius
-        = a60::carto::star_x_detail::antarctic_source_radius(
-            ring.getY(index), longitude, context.map_frame, layout);
-      if (radius > extent.radius)
-        {
-          extent.radius = radius;
-          extent.longitude = longitude;
-        }
+      if (latitude > cutoff_latitude)
+        continue;
+      const auto projected
+        = a60::carto::star_x_detail::project_to_normalized_map(
+            latitude, longitude, layout);
+      if (projected.group == face_group::one)
+        extent.uncut_lower_bottom = std::max(
+          extent.uncut_lower_bottom,
+          projected.point.y * context.map_frame.height());
+      const auto local
+        = a60::carto::star_x_detail::project_antarctic_fragment_local(
+            latitude, longitude, context.map_frame, 0, layout);
+      extent.reassembled_local_bottom = std::max(
+        extent.reassembled_local_bottom, local.y);
     }
 }
 
 void
-include_antarctic_land(antarctic_land_extent& extent,
-                       const OGRGeometry& geometry,
-                       const projection_context& context,
-                       const a60::carto::star_x_layout layout)
+include_star_x_antarctic_vertical_extent(
+  star_x_antarctic_vertical_extent& extent, const OGRGeometry& geometry,
+  const projection_context& context,
+  const a60::carto::star_x_layout layout, const double cutoff_latitude)
 {
   switch (wkbFlatten(geometry.getGeometryType()))
     {
@@ -606,13 +604,13 @@ include_antarctic_land(antarctic_land_extent& extent,
         const OGRPolygon* polygon = geometry.toPolygon();
         OGREnvelope envelope;
         polygon->getEnvelope(&envelope);
-        // The Natural Earth mainland polygon is the polar component. This
-        // excludes sub-Antarctic islands and every non-Antarctic land mass.
+        // Only the polar mainland supplies the vertical alignment.  This
+        // excludes sub-Antarctic islands and all other land masses.
         if (envelope.MinY > -89.999999 || envelope.MaxY > -50)
           return;
         if (const OGRLinearRing* exterior = polygon->getExteriorRing())
-          include_antarctic_land_ring(
-            extent, *exterior, context, layout);
+          include_star_x_antarctic_vertical_ring(
+            extent, *exterior, context, layout, cutoff_latitude);
         return;
       }
 
@@ -622,8 +620,9 @@ include_antarctic_land(antarctic_land_extent& extent,
         const OGRGeometryCollection* collection
           = geometry.toGeometryCollection();
         for (int index = 0; index != collection->getNumGeometries(); ++index)
-          include_antarctic_land(
-            extent, *collection->getGeometryRef(index), context, layout);
+          include_star_x_antarctic_vertical_extent(
+            extent, *collection->getGeometryRef(index), context, layout,
+            cutoff_latitude);
         return;
       }
 
@@ -632,67 +631,85 @@ include_antarctic_land(antarctic_land_extent& extent,
     }
 }
 
-double
-star_x_content_bottom(const projection_context& context)
-{
-  double bottom = -std::numeric_limits<double>::infinity();
-  for (int latitude = -90; latitude <= 90; ++latitude)
-    for (int longitude = -180; longitude <= 180; ++longitude)
-      bottom = std::max(
-        bottom,
-        std::get<1>(generation::project_point(
-          context, {static_cast<double>(latitude),
-                    static_cast<double>(longitude)})));
-  require(std::isfinite(bottom),
-          "Star-X geometry has no finite lower extent");
-  return bottom;
-}
-
-antarctic_cap
-make_antarctic_cap(const projection_context& context,
-                   const layer_spec& reference_spec)
+star_x_antarctic_vertical_extent
+star_x_uncut_antarctic_vertical_extent(
+  const projection_context& context,
+  const a60::carto::star_x_layout layout, const double cutoff_latitude)
 {
   const std::filesystem::path path
-    = natural_earth_directory() / reference_spec.shapefile;
+    = natural_earth_directory() / "ne_10m_land.shp";
   dataset_ptr dataset = open_dataset(path);
   OGRLayer* layer = dataset->GetLayer(0);
   require(layer != nullptr,
           "Natural Earth land shapefile has no vector layer");
-
-  const a60::carto::star_x_layout layout = star_x_layout_for(context);
-  antarctic_land_extent extent;
+  star_x_antarctic_vertical_extent result;
   layer->ResetReading();
   while (feature_ptr feature {layer->GetNextFeature()})
     if (const OGRGeometry* source = feature->GetGeometryRef())
-      include_antarctic_land(extent, *source, context, layout);
-  require(std::isfinite(extent.radius) && extent.radius > 0,
-          "Natural Earth land contains no polar Antarctic mainland");
+      include_star_x_antarctic_vertical_extent(
+        result, *source, context, layout, cutoff_latitude);
+  require(std::isfinite(result.uncut_lower_bottom)
+            && std::isfinite(result.reassembled_local_bottom),
+          "Natural Earth land contains no lower-quadrant Antarctic mainland");
+  return result;
+}
 
-  const double content_bottom = star_x_content_bottom(context);
+antarctic_cap
+make_antarctic_cap(const projection_context& context)
+{
+  const a60::carto::star_x_layout layout = star_x_layout_for(context);
+  constexpr double cutoff_latitude = -60;
+  double radius = 0;
+  constexpr double longitude_step = 0.25;
+  for (double longitude = -180; longitude <= 180;
+       longitude += longitude_step)
+    radius = std::max(
+      radius,
+      a60::carto::star_x_detail::antarctic_source_radius(
+        cutoff_latitude, longitude, context.map_frame, layout));
+  require(std::isfinite(radius) && radius > 0,
+          "Star-X 60-degree-South cap has no finite radius");
+
+  // Align the transformed mainland's lowest point with that same mainland's
+  // lowest point in the uncut lower quadrant.  The fixed 60-degree-South cut
+  // changes which geometry is moved, but cannot pull Antarctica upward.
+  const star_x_antarctic_vertical_extent vertical
+    = star_x_uncut_antarctic_vertical_extent(
+        context, layout, cutoff_latitude);
+  const double target_pole_y
+    = vertical.uncut_lower_bottom - vertical.reassembled_local_bottom;
   const antarctic_cap result {
     .map_frame = context.map_frame,
     .layout = layout,
-    .radius = extent.radius,
-    .farthest_land_longitude = extent.longitude,
-    .bearing_offset = 180 - extent.longitude,
+    .cutoff_latitude = cutoff_latitude,
+    .radius = radius,
+    .bearing_offset = 0,
     .target_pole = {
-      context.map_frame.width() / 2, content_bottom - extent.radius,
+      context.map_frame.width() / 2, target_pole_y,
     },
   };
   constexpr double tolerance = 1e-9;
+  require(result.contains({-60, 0})
+            && !result.contains({-59.999, 0}),
+          "Star-X Antarctic cap must use the fixed 60-degree-South cutoff");
+  require(result.boundary_latitude(-180) == -60
+            && result.boundary_latitude(0) == -60
+            && result.boundary_latitude(180) == -60,
+          "Star-X Antarctic cap boundary is not latitude-invariant");
   require(std::abs(result.target_pole.x
                    - context.map_frame.width() / 2) < tolerance,
           "Antarctic cap is not centered on the Star-X page axis");
-  require(std::abs(result.target_pole.y + result.radius
-                   - content_bottom) < tolerance,
-          "Antarctic cap is not aligned with the lowest Star-X octant");
+  require(std::abs(result.target_pole.y
+                     + vertical.reassembled_local_bottom
+                   - vertical.uncut_lower_bottom) < tolerance,
+          "Antarctic cap does not use the uncut lower-quadrant Y extent");
   require(result.target_pole.x - result.radius >= -tolerance
             && result.target_pole.x + result.radius
                  <= context.map_frame.width() + tolerance
             && result.target_pole.y - result.radius >= -tolerance
-            && result.target_pole.y + result.radius
+            && vertical.uncut_lower_bottom
                  <= context.map_frame.height() + tolerance,
-          "Antarctic cap does not fit the Star-X frame");
+          "Antarctic cap anchor does not fit the Star-X frame");
   return result;
 }
 
@@ -1226,6 +1243,26 @@ add_star_x_land_layer(svg::svg_element& document,
 }
 
 void
+add_star_x_polar_mark(svg::svg_element& document,
+                      const projection_context& context)
+{
+  svg::group_element layer;
+  layer.start_element("polar-mark");
+  layer.add_title("Star-X central North-pole mark");
+  svg::vrange star;
+  for (const auto point
+       : a60::carto::star_x_detail::make_north_pole_star(
+           context.map_frame))
+    star.push_back({point.x, point.y});
+  std::string path = svg::make_path_data_from_points(star);
+  path += "Z";
+  layer.add_element(svg::make_path(
+    path, area_style(svg::color::black), "north-pole-star"));
+  layer.finish_element();
+  document.add_element(layer);
+}
+
+void
 generate_earth(const projection_spec& spec)
 {
   initialize_gdal();
@@ -1239,7 +1276,7 @@ generate_earth(const projection_spec& spec)
   render_stats total;
   if (spec.kind == generation::projection_kind::star_x)
     {
-      const antarctic_cap cap = make_antarctic_cap(context, land_spec);
+      const antarctic_cap cap = make_antarctic_cap(context);
       total += add_ocean_layer(document, context, &cap);
       total += add_star_x_land_layer(document, context, cap);
     }
@@ -1265,7 +1302,7 @@ generate_water(const projection_spec& spec)
   render_stats total;
   std::optional<antarctic_cap> polar_cap;
   if (spec.kind == generation::projection_kind::star_x)
-    polar_cap.emplace(make_antarctic_cap(context, land_spec));
+    polar_cap.emplace(make_antarctic_cap(context));
   const antarctic_cap* cap
     = polar_cap.has_value() ? &*polar_cap : nullptr;
   svg::group_element bathymetry;
@@ -1291,6 +1328,8 @@ generate_water(const projection_spec& spec)
   total += add_layer(document, rivers_spec, context, cap);
   total += add_layer(document, reefs_spec, context, cap);
   total += add_layer(document, coastline_spec, context, cap);
+  if (spec.kind == generation::projection_kind::star_x)
+    add_star_x_polar_mark(document, context);
   print_total(total);
 }
 
@@ -1421,13 +1460,22 @@ verify_water(const std::string& generated,
     require_layer(generated, spec.id);
   reject_layer(generated, "ocean");
   reject_layer(generated, "land");
-  require(token_count(generated, "<g id=") == 22,
-          "generated water SVG must contain exactly the physical overlay "
-          "groups");
+  const std::size_t expected_groups
+    = context.spec.kind == generation::projection_kind::star_x ? 23 : 22;
+  require(token_count(generated, "<g id=") == expected_groups,
+          "generated water SVG has the wrong physical overlay group count");
   require(token_count(generated, "<path ") > 100,
           "generated water SVG contains too few Natural Earth paths");
   if (context.spec.kind == generation::projection_kind::star_x)
     {
+      require_layer(generated, "polar-mark");
+      require(generated.find("id=\"north-pole-star\"")
+                != std::string::npos,
+              "generated Star-X water SVG is missing its central black star");
+      require(generated.rfind("id=\"north-pole-star\"")
+                > generated.rfind("id=\"coastline-"),
+              "generated Star-X water polar mark must paint above the "
+              "physical layers");
       require(generated.find("id=\"coastline-antarctic-fragment-")
                 != std::string::npos,
               "generated Star-X water SVG is missing unified Antarctic "

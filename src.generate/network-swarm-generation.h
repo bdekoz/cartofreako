@@ -144,7 +144,7 @@ add_background(generation::projection_document& document,
   rectangle.start_element();
   rectangle.add_data({0, 0, context.map_frame.width(),
                       context.map_frame.height()});
-  rectangle.add_style({{9, 15, 18}, 1, svg::color::none, 0, 0});
+  rectangle.add_style({{242, 244, 243}, 1, svg::color::none, 0, 0});
   rectangle.add_raw("id=\"network-swarm-ocean\"");
   rectangle.finish_element();
   layer.add_element(rectangle);
@@ -159,7 +159,7 @@ add_subdued_land(generation::projection_document& document,
   const natural_earth::layer_spec land {
     "terrestrial-land", "Subdued Natural Earth 1:10m land",
     "ne_10m_land.shp", natural_earth::geometry_role::area,
-    natural_earth::area_style({39, 48, 48}), 0.05, 0.82,
+    natural_earth::area_style({216, 221, 219}), 0.05, 0.82,
   };
   svg::group_element layer;
   layer.start_element(std::string(land.id));
@@ -167,7 +167,7 @@ add_subdued_land(generation::projection_document& document,
   if (context.spec.kind == generation::projection_kind::star_x)
     {
       const natural_earth::antarctic_cap cap
-        = natural_earth::make_antarctic_cap(context, land);
+        = natural_earth::make_antarctic_cap(context);
       static_cast<void>(natural_earth::render_star_x_source(
         layer, land, context, cap));
     }
@@ -229,7 +229,7 @@ add_tethers(generation::projection_document& document,
                                      feature.display_point)
           >= config.minimum_tether)
         add_line(layer, feature.geographic_point, feature.display_point,
-                 {{76, 94, 96}, 0, {76, 94, 96}, 0.35, 0.006},
+                 {{70, 83, 85}, 0, {70, 83, 85}, 0.48, 0.007},
                  "data-h3=\"" + h3_string(feature.source->h3) + "\"");
   layer.finish_element();
   document.add_element(layer);
@@ -247,10 +247,10 @@ total_layer(const projected_layout& layout, const network_swarm_profile& config)
       const double color_fraction = (opacity - config.minimum_nonzero_opacity)
         / (1 - config.minimum_nonzero_opacity);
       const svg::color_qi fill = interpolate_color(
-        {38, 82, 103}, {247, 188, 62}, color_fraction);
+        {39, 72, 99}, {137, 76, 0}, color_fraction);
       add_polygon(layer, feature.display_point,
-                  {fill, 0.35 + 0.65 * opacity,
-                   {7, 13, 16}, 0.92, 0.006},
+                  {fill, 0.70 + 0.30 * opacity,
+                   {37, 48, 51}, 0.96, 0.008},
                   config.marker_radius * 0.94, 6,
                   feature_attributes(feature));
     }
@@ -269,9 +269,9 @@ mobile_layer(const projected_layout& layout, const network_swarm_profile& config
         const double opacity = metric_opacity(
           feature, config, downloader_metric::mobile);
         add_circle(layer, feature.display_point,
-                   {{121, 216, 117}, 0.18 + 0.62 * opacity,
-                    {181, 238, 153}, opacity, 0.004},
-                   config.marker_radius * (0.15 + 0.18 * opacity),
+                   {{30, 111, 60}, 0.70 + 0.30 * opacity,
+                    {20, 74, 41}, 0.72 + 0.28 * opacity, 0.005},
+                   config.marker_radius * (0.24 + 0.26 * opacity),
                    value_attribute(feature, downloader_metric::mobile));
       }
   layer.finish_element();
@@ -290,9 +290,9 @@ satellite_layer(const projected_layout& layout,
         const double opacity = metric_opacity(
           feature, config, downloader_metric::satellite);
         add_polygon(layer, feature.display_point,
-                    {{230, 63, 85}, 0.14 + 0.5 * opacity,
-                     {255, 126, 130}, opacity, 0.004},
-                    config.marker_radius * (0.3 + 0.24 * opacity), 3,
+                    {{176, 35, 55}, 0.70 + 0.30 * opacity,
+                     {112, 24, 39}, 0.72 + 0.28 * opacity, 0.005},
+                    config.marker_radius * (0.36 + 0.30 * opacity), 3,
                     value_attribute(feature, downloader_metric::satellite));
       }
   layer.finish_element();
@@ -312,8 +312,8 @@ outline_layer(const projected_layout& layout, const network_swarm_profile& confi
       {
         const double opacity = metric_opacity(feature, config, metric);
         add_polygon(layer, feature.display_point,
-                    {svg::color::none, 0, color, opacity,
-                     0.003 + 0.008 * opacity},
+                    {svg::color::none, 0, color, 0.70 + 0.30 * opacity,
+                     0.005 + 0.009 * opacity},
                     config.marker_radius * radius_fraction, sides,
                     value_attribute(feature, metric));
       }
@@ -333,8 +333,8 @@ ring_layer(const projected_layout& layout, const network_swarm_profile& config,
       {
         const double opacity = metric_opacity(feature, config, metric);
         add_circle(layer, feature.display_point,
-                   {svg::color::none, 0, color, opacity,
-                    0.003 + 0.008 * opacity},
+                   {svg::color::none, 0, color, 0.70 + 0.30 * opacity,
+                    0.005 + 0.009 * opacity},
                    config.marker_radius * radius_fraction,
                    value_attribute(feature, metric));
       }
@@ -361,8 +361,9 @@ corner_layer(const projected_layout& layout, const network_swarm_profile& config
             + y_sign * config.marker_radius * 0.34,
         };
         add_polygon(layer, point,
-                    {color, 0.3 + 0.7 * opacity, color, opacity, 0.002},
-                    config.marker_radius * 0.13, sides,
+                    {color, 0.70 + 0.30 * opacity,
+                     color, 0.72 + 0.28 * opacity, 0.003},
+                    config.marker_radius * 0.19, sides,
                     value_attribute(feature, metric));
       }
   layer.finish_element();
@@ -384,7 +385,8 @@ slash_layer(const projected_layout& layout, const network_swarm_profile& config,
         const double x = std::get<0>(feature.display_point);
         const double y = std::get<1>(feature.display_point);
         const svg::style style {
-          svg::color::none, 0, color, opacity, 0.003 + 0.008 * opacity,
+          svg::color::none, 0, color, 0.70 + 0.30 * opacity,
+          0.005 + 0.009 * opacity,
         };
         add_line(layer, {x - delta, y + delta}, {x + delta, y - delta},
                  style, value_attribute(feature, metric));
@@ -414,10 +416,10 @@ add_downloader_layers(generation::projection_document& document,
   infrastructure.start_element("infrastructure");
   infrastructure.add_element(outline_layer(
     layout, config, downloader_metric::hosting, "downloaders-hosting",
-    {167, 105, 211}, 6, 0.86));
+    {77, 58, 166}, 6, 0.86));
   infrastructure.add_element(ring_layer(
     layout, config, downloader_metric::service, "downloaders-service",
-    {239, 101, 190}, 0.66));
+    {139, 28, 99}, 0.66));
   infrastructure.finish_element();
   document.add_element(infrastructure);
 
@@ -425,31 +427,31 @@ add_downloader_layers(generation::projection_document& document,
   privacy.start_element("privacy-routing");
   privacy.add_element(outline_layer(
     layout, config, downloader_metric::vpn, "downloaders-vpn",
-    {62, 202, 218}, 4, 0.5));
+    {0, 96, 120}, 4, 0.5));
   privacy.add_element(corner_layer(
     layout, config, downloader_metric::tor, "downloaders-tor",
-    {247, 150, 70}, -1, -1, 6));
+    {151, 70, 0}, -1, -1, 6));
   privacy.add_element(corner_layer(
     layout, config, downloader_metric::tor_exit_nodes,
-    "downloaders-tor-exit-nodes", {255, 232, 133}, 1, -1, 4));
+    "downloaders-tor-exit-nodes", {116, 87, 0}, 1, -1, 4));
   privacy.add_element(slash_layer(
     layout, config, downloader_metric::relay, "downloaders-relay",
-    {126, 158, 255}, false));
+    {52, 77, 159}, false));
   privacy.add_element(slash_layer(
     layout, config, downloader_metric::proxy, "downloaders-proxy",
-    {211, 218, 223}, true));
+    {55, 67, 72}, true));
   privacy.finish_element();
   document.add_element(privacy);
 }
 
 inline svg::typography
 label_typography(const double size = 0.13,
-                 const svg::color_qi color = {225, 230, 225})
+                 const svg::color_qi color = {37, 48, 51})
 {
   svg::typography result = generation::with_configured_label_font(
     svg::k::hyperl_typo);
   result._M_size = size;
-  result._M_style = {color, 0.94, {9, 15, 18}, 0.9, 0.01};
+  result._M_style = {color, 1, {250, 251, 250}, 0.94, 0.012};
   result._M_anchor = svg::typography::anchor::start;
   result._M_align = svg::typography::align::left;
   result._M_baseline = svg::typography::baseline::central;
@@ -484,7 +486,7 @@ add_labels(generation::projection_document& document,
         break;
       const double x = std::get<0>(feature->display_point);
       const double y = std::get<1>(feature->display_point);
-      if (y < 0.75 || y > context.map_frame.height() - 0.2)
+      if (y < 0.95 || y > context.map_frame.height() - 0.2)
         continue;
       const std::pair grid {
         static_cast<int>(std::floor(x / 0.8)),
@@ -519,27 +521,27 @@ add_legend(generation::projection_document& document,
   layer.start_element("legend-and-provenance");
   svg::rect_element band;
   band.start_element();
-  band.add_data({0, 0, context.map_frame.width(), 0.68});
-  band.add_style({{6, 10, 12}, 0.88, svg::color::none, 0, 0});
+  band.add_data({0, 0, context.map_frame.width(), 0.82});
+  band.add_style({{226, 230, 228}, 0.96, svg::color::none, 0, 0});
   band.finish_element();
   layer.add_element(band);
 
-  svg::typography title = label_typography(0.22, {247, 188, 62});
+  svg::typography title = label_typography(0.44, {137, 76, 0});
   title._M_w = svg::typography::weight::bold;
   svg::styled_text(layer, xml_escape("NETWORK SWARM / " + dataset.id),
-                   {0.32, 0.24}, title);
+                   {0.32, 0.27}, title);
   svg::styled_text(layer,
     xml_escape(dataset.datestamp + "  |  "
       + std::to_string(dataset.features.size()) + " H3 cells  |  parent r"
       + std::to_string(config.parent_h3_resolution) + " honeycomb"),
-    {0.32, 0.48}, label_typography(0.115, {188, 199, 197}));
+    {0.32, 0.62}, label_typography(0.115, {55, 67, 72}));
   const std::string fields
     = "size  mobile  satellite  hosting  service  vpn  tor  tor_exit_nodes  relay  proxy";
-  svg::typography field_typography = label_typography(0.105, {157, 181, 180});
+  svg::typography field_typography = label_typography(0.105, {70, 83, 85});
   field_typography._M_anchor = svg::typography::anchor::end;
   field_typography._M_align = svg::typography::align::right;
   svg::styled_text(layer, fields,
-                   {context.map_frame.width() - 0.32, 0.48},
+                   {context.map_frame.width() - 0.32, 0.62},
                    field_typography);
   layer.finish_element();
   document.add_element(layer);
@@ -568,6 +570,8 @@ metadata_element(const generation::projection_spec& spec,
   return "<metadata id=\"network-swarm-metadata\""
     " data-workflow=\"Network cumulative swarm\""
     " data-profile=\"" + xml_escape(config.path.filename().string()) + "\""
+    " data-marker-radius-inches=\"" + format_number(config.marker_radius, 3)
+      + "\" data-background-color=\"#f2f4f3\" data-title-scale=\"2\""
     " data-projection=\"" + std::string(spec.argument) + "\""
     " data-dataset-id=\"" + xml_escape(dataset.id) + "\""
     " data-datestamp=\"" + xml_escape(dataset.datestamp) + "\""
@@ -673,6 +677,10 @@ verify(const std::string& generated,
                       + std::string(layer));
   network_swarm_require(generated.find("id=\"network-swarm-metadata\"")
                     != std::string::npos
+                    && generated.find("data-background-color=\"#f2f4f3\"")
+                         != std::string::npos
+                    && generated.find("data-title-scale=\"2\"")
+                         != std::string::npos
                     && generated.find("data-source-archive-sha256=\""
                       + config.archive_sha256 + "\"") != std::string::npos,
                   "generated Network-swarm SVG is missing provenance metadata");

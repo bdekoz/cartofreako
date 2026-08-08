@@ -63,6 +63,7 @@ using a60::carto::voronoiproj;
 /// Version of the projection descriptor and flat geometry protocol.
 inline constexpr std::uint32_t abi_version = 1;
 
+/// Stable identifiers for the six supported projection families.
 enum class projection_kind
 {
   cahill_keyes,
@@ -73,6 +74,7 @@ enum class projection_kind
   voronoi,
 };
 
+/// Carrier topology used to choose the runtime seam-splitting policy.
 enum class topology_kind
 {
   folded,
@@ -281,6 +283,7 @@ struct projection_context
   }
 };
 
+/// Geographic latitude/longitude pair in decimal degrees on WGS 84.
 struct geographic_point
 {
   double latitude;
@@ -409,6 +412,7 @@ projection_cell(const projection_context& context,
   throw std::logic_error("unhandled projection kind");
 }
 
+/// Counters describing adaptive sampling and seam decisions for one path.
 struct path_diagnostics
 {
   std::uint32_t input_points = 0;
@@ -419,6 +423,7 @@ struct path_diagnostics
   std::uint32_t fallback_splits = 0;
 };
 
+/// One continuous projected segment associated with a native carrier cell.
 struct projected_path_piece
 {
   projected_path points;
@@ -426,12 +431,14 @@ struct projected_path_piece
   bool closed = false;
 };
 
+/// Seam-safe path pieces together with their construction diagnostics.
 struct projected_path_result
 {
   std::vector<projected_path_piece> pieces;
   path_diagnostics diagnostics;
 };
 
+/// Refined left/right samples bracketing a native-cell transition.
 struct projected_transition
 {
   projected_point left;

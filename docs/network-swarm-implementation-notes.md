@@ -84,7 +84,9 @@ The parser intentionally requires the implemented cumulative swarm contract:
 a `FeatureCollection`, hexagon partition metadata, a uniform valid H3
 resolution, unique H3 cells, Point coordinates in range, and unsigned values
 for all ten downloader fields. Missing, malformed, duplicate, or inconsistent
-data stops generation rather than silently becoming zero.
+data stops generation rather than silently becoming zero. Stage 13 increases
+the marker radius from `0.026` to `0.042` inch; glyph internals and outlines
+were enlarged with it rather than merely increasing collision spacing.
 
 ## Configuration profile
 
@@ -92,7 +94,7 @@ data stops generation rather than silently becoming zero.
 owns the decisions that may reasonably change between captures:
 
 - source and parent H3 resolutions;
-- marker radius and tether threshold in physical inches;
+- marker radius (`0.042` inch) and tether threshold in physical inches;
 - label budget, nonzero opacity floor, and tether visibility;
 - fixed per-field scale references; and
 - archive/member names, both digests, repository commit, and license.
@@ -150,7 +152,9 @@ The visual research suggested a restrained atlas rather than a simulated
 network diagram. Arjen van Susteren's *Metropolitan World Atlas* informed the
 consistent framed comparison and standard mark grammar. Lucille Tenazas's
 [MNL–SF–MINY–SF2–ROME–NY2 work](https://2023.agi-open.com/speakers/lucille-tenazas)
-informed the dark field, limited accent palette, and structured date band.
+informed the limited accent palette and structured date band. Stage 13 moves
+the plate to a WCAG-oriented light field so dense marks retain contrast in
+print and on ordinary displays.
 The concrete downloader glyph vocabulary begins with Alpha60's
 [`augment_swarm_features_geojson`](https://github.com/bdekoz/alpha60/blob/da07af121a20cb9f696b057e1425e82055b92cc3/src/a60-carto-geo.cc)
 prior art and extends it to all current object fields.
@@ -158,15 +162,15 @@ prior art and extends it to all current object fields.
 | Field | Encoding |
 | --- | --- |
 | `size` | Full honeycomb hexagon; log-scaled blue-to-amber intensity |
-| `mobile` | Green center disk |
-| `satellite` | Crimson center triangle |
-| `hosting` | Violet outer hexagon outline |
-| `service` | Pink ring |
-| `vpn` | Cyan diamond outline |
-| `tor` | Orange upper-left mini-hexagon |
-| `tor_exit_nodes` | Pale-yellow upper-right square |
-| `relay` | Periwinkle slash |
-| `proxy` | Pale crossed slashes |
+| `mobile` | Dark green center disk |
+| `satellite` | Dark crimson center triangle |
+| `hosting` | Deep violet outer hexagon outline |
+| `service` | Deep magenta ring |
+| `vpn` | Dark cyan diamond outline |
+| `tor` | Burnt-orange upper-left mini-hexagon |
+| `tor_exit_nodes` | Ochre upper-right square |
+| `relay` | Deep blue slash |
+| `proxy` | Charcoal crossed slashes |
 
 All projections contain the same discoverable layer contract:
 
@@ -191,8 +195,11 @@ labels
 legend-and-provenance
 ```
 
-The dark ocean and subdued Natural Earth land preserve geographic context
-without competing with the marks. Labels are a deterministic, collision-grid
+The opaque `#f2f4f3` ocean and subdued light-gray Natural Earth land preserve
+geographic context without competing with the darker marks. The main title is
+twice its former size (`0.44` rather than `0.22` page units); metadata records
+the background, `0.042`-inch marker radius, and `data-title-scale="2"`.
+Labels are a deterministic, collision-grid
 bounded selection from the largest totals. Every base feature stores its H3
 IDs, parent, projection cell, cluster size, country, city, GeoNames ID, and
 all ten raw downloader counts. Root metadata stores source digests, source
@@ -207,12 +214,12 @@ artifact:
 
 | Projection | Network-swarm preview |
 | --- | --- |
-| Cahill-Keyes | [`network-swarm-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-swarm-ck-44-22.png) |
-| AuthaGraph | [`network-swarm-authagraph-44-19.052559.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-swarm-authagraph-44-19.052559.png) |
-| Dymaxion | [`network-swarm-dymaxion-44-20.78461.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-swarm-dymaxion-44-20.78461.png) |
-| Myriahedral | [`network-swarm-myriahedral-44-24.75.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-swarm-myriahedral-44-24.75.png) |
-| Star-X | [`network-swarm-star-x-34-44.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-swarm-star-x-34-44.png) |
-| Voronoi | [`network-swarm-voronoi-44-22.916667.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/tree/png/network-swarm-voronoi-44-22.916667.png) |
+| Cahill-Keyes | [`network-swarm-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/png/network-swarm-ck-44-22.png) |
+| AuthaGraph | [`network-swarm-authagraph-44-19.052559.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/authagraph/png/network-swarm-authagraph-44-19.052559.png) |
+| Dymaxion | [`network-swarm-dymaxion-44-20.78461.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/network-swarm-dymaxion-44-20.78461.png) |
+| Myriahedral | [`network-swarm-myriahedral-44-24.75.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/network-swarm-myriahedral-44-24.75.png) |
+| Star-X | [`network-swarm-star-x-34-44.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/star-x/png/network-swarm-star-x-34-44.png) |
+| Voronoi | [`network-swarm-voronoi-44-22.916667.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/voronoi/png/network-swarm-voronoi-44-22.916667.png) |
 
 Per-projection targets use `generate-network-swarm-PROJECTION`. The canonical
 project-generation profile name is `network-swarm`; the former `network` name

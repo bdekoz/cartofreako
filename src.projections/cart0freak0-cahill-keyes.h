@@ -792,13 +792,14 @@ struct ckproj : public projection_base, public projection_api
   /// @param other Projection to copy.
   ckproj(const ckproj& other) = default;
 
-  /// Resolve the registered raster against the generated PNG directory.
+  /// Resolve the registered raster against the Cahill-Keyes PNG directory.
   /// @param v Raster mode retained for projection API compatibility.
   /// @return Full path to the generated PNG.
   string
   image_filename([[maybe_unused]] const raster_mode v) const override
   {
-    const string prefix = "/home/bkoz/src/cartofreako/assets.generated/png/";
+    const string prefix
+      = "/home/bkoz/src/cartofreako/assets.generated/cahill-keyes/png/";
     string ret = prefix + name;
     return ret + ".png";
   }
