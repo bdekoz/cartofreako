@@ -110,12 +110,14 @@ Outputs are organized projection-first as
 `assets.generated/PROJECTION/{svg,pdf,png,thumbnail}/`. Review all 31 standard
 passes for each of the six projections in the
 [generated snapshot catalog](index.md#generated-artifact-previews). The
-[`v20260808` generated-assets release notes](docs/releases/v20260808.md)
+complete v13 catalog adds the explicitly authorized Cloud-atmosphere pass as
+the thirty-second image in every projection. The corrected
+[`v20260808.1` generated-assets release notes](docs/releases/v20260808.1.md)
 record the static-bundle manifest, render host, hardware sizing, verification,
-and source commit. The [S3 v13 publication notes](docs/releases/s3-v13.md)
-document the public extracted tree used by that snapshot. Maintainers publish
-source tags and large generated bundles with the
-[release runbook](docs/releases/README.md).
+and source commit; the earlier `v20260808` package is superseded. The
+[S3 v13 publication notes](docs/releases/s3-v13.md) document the public
+Cloudian extracted tree used by every preview. Maintainers publish source tags
+and large generated bundles with the [release runbook](docs/releases/README.md).
 
 Astronomy generation is offline by default and uses a checked-in JSON profile
 as the authority for both the calculation timestamp and point of reference.

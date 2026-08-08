@@ -184,6 +184,15 @@ resources, and both bathymetry art passes. The thirty-second pass is the
 explicitly authorized P-Tree Cloud-atmosphere snapshot. Select any preview to
 open its full-resolution layered SVG in the immutable S3 viewer.
 
+The complete v13 release adds the authorized physical-atmosphere product
+beside the standard cleaned-union fiber product. Both representative previews
+below are served from Cloudian/S3 rather than the untracked local generated
+tree.
+
+| Authorized Cloud-atmosphere | Standard Fiber Synthesized |
+| --- | --- |
+| <a href="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=cahill-keyes/svg/cloud-atmosphere-ck-44-22.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/thumbnail/cloud-atmosphere-ck-44-22.png" width="360" alt="Cahill–Keyes authorized Cloud-atmosphere v13 preview"></a> | <a href="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=cahill-keyes/svg/fiber-synthesized-ck-44-22.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/thumbnail/fiber-synthesized-ck-44-22.png" width="360" alt="Cahill–Keyes Fiber Synthesized v13 preview"></a> |
+
 - [AuthaGraph snapshot](docs/generated-snapshot-authagraph.md) — `44 × 19.052559`
 - [Cahill–Keyes snapshot](docs/generated-snapshot-ck.md) — `44 × 22`
 - [Dymaxion snapshot](docs/generated-snapshot-dymaxion.md) — `44 × 20.78461`

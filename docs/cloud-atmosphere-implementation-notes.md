@@ -5,7 +5,8 @@
 [P-Tree download quick start](ptree-production-download.md) ·
 [Source profile](../assets.static/cloud-atmosphere/README.md) ·
 [Astronomy notes](astro-implementation-notes.md) ·
-[Prerequisites](prerequisites.md)
+[Prerequisites](prerequisites.md) ·
+[S3 v13 publication](releases/s3-v13.md)
 
 ## Stage 4.1a outcome
 
@@ -21,6 +22,16 @@ only. Other observed layers come from the public
 This pass is not a weather forecast, a seamless global cloud composite, or a
 simulated view from space. Every observed value retains its own source
 interval and missing cells mean **unobserved**, never clear sky or zero.
+
+## Published v13 previews
+
+The complete Stage 13 release includes the authorized, source-timed
+Cloud-atmosphere product in all six projections. These 480-pixel previews load
+directly from the immutable Cloudian/S3 v13 tree. Select one to open its
+layered `.svg.gz` in the same-origin streaming viewer; the retained
+`cloud-atmosphere-background` group is hidden by default in every product.
+
+{% include v13-pass-gallery.md stem="cloud-atmosphere" label="Cloud-atmosphere" %}
 
 ## Boundary with astronomy
 

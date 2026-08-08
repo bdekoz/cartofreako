@@ -1,0 +1,65 @@
+{
+  "schema": "aao-upload-profile-v1",
+  "name": "cartofreako-v13",
+  "data_root": "build/s3-release-v13",
+  "log_namespace": "cartofreako-v13",
+  "destination": {
+    "endpoint": "https://s3-ewh.ist.berkeley.edu",
+    "region": "us-east-1",
+    "bucket": "adekosnik-bucket01",
+    "prefix": "cartofreako/v13"
+  },
+  "acl": "public-read",
+  "cache_control": "public,max-age=31536000,immutable",
+  "manifest": "SHA256SUMS",
+  "completion_marker": "release.json",
+  "groups": [
+    {
+      "id": "general",
+      "label": "package, documents, viewer, PDF, and PNG",
+      "includes": [],
+      "excludes": [
+        "/tree/*/svg/**"
+      ],
+      "headers": [],
+      "validate_gzip": false
+    },
+    {
+      "id": "svg-gzip",
+      "label": "explicit SVG gzip",
+      "includes": [
+        "/tree/*/svg/*.svg.gz"
+      ],
+      "excludes": [],
+      "headers": [
+        "Content-Type: application/gzip"
+      ],
+      "validate_gzip": true
+    }
+  ],
+  "pilots": [
+    {
+      "path": "tree/cahill-keyes/svg/geometry-ck-44-22.svg.gz",
+      "content_type": "application/gzip",
+      "content_encoding": null,
+      "public": true
+    },
+    {
+      "path": "tree/cahill-keyes/thumbnail/geometry-ck-44-22.png",
+      "content_type": "image/png",
+      "content_encoding": null,
+      "public": true
+    },
+    {
+      "path": "viewer.html",
+      "content_type": "text/html",
+      "content_encoding": null,
+      "public": true,
+      "contains": "new DecompressionStream(\"gzip\")"
+    }
+  ],
+  "completion": {
+    "content_type": "application/json",
+    "public": true
+  }
+}

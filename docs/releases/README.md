@@ -30,6 +30,17 @@ Active Archive HTML/PDF report and rendered QA pages. Reports are local delivery
 artifacts outside the immutable prefix and Git; their verification and delivery
 record belongs in the versioned publication notes.
 
+Future releases use the declarative
+[`alpha60-clusterops` shared AAO interface](https://github.com/alpha60-devops/alpha60-clusterops/blob/main/docs/storage/shared-aao-upload.md).
+Cartofreako keeps an exact release validator and versioned transport profile;
+the shared engine owns credentials, rclone configuration, prefix inspection,
+pilots, immutable phased copies, marker-last completion, readback, totals, and
+the sanitized receipt. The project adapter never opens a desktop mailer. It
+writes a Gmail outbox request after report generation; after inspecting every
+QA page, the authenticated release orchestrator consumes that request and
+sends the canonical PDF automatically, without a second operator confirmation.
+The orchestrator records actual delivery separately from upload completion.
+
 ## `v20260808.1` corrective release procedure
 
 Stage 13 uses corrective source tag `v20260808.1`, static asset
@@ -110,13 +121,23 @@ xz --test "$release_verify_dir/assets.generated.v13.tar.xz"
 Finally build and publish the immutable S3 prefix. The applied uploader writes
 `release.json` last, optionally reads every object back, builds only the
 canonical Active Archive check-in report, and performs the report-notification
-handoff:
+handoff. `AAO_CLUSTEROPS_ROOT` may select another checkout of the shared
+interface; the default is `/home/bkoz/src/alpha60-clusterops`:
 
 ```sh
 scripts/build-generated-assets-s3-release.sh
 scripts/upload-generated-assets-s3-release.sh --validate-only
 scripts/upload-generated-assets-s3-release.sh --apply --verify-download
 ```
+
+The adapter first runs
+`scripts/validate-generated-assets-s3-release.sh`, then passes
+`docs/releases/v13-aao-upload-profile.json` to
+`alpha60-clusterops/bin/load-s3-aao`. Validation, dry-run, and applied-upload
+receipts have separate filenames, so a later preflight cannot overwrite the
+canonical completion evidence. For v14, copy and deliberately update the
+profile's data root, immutable prefix, and pilot names; never reuse or repair
+`cartofreako/v13/`.
 
 Do not move `v20260808.1` or replace either public artifact after publication.
 A later correction requires a new source tag, generated-assets version, and

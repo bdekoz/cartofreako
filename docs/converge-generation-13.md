@@ -389,7 +389,8 @@ The Stage 13 release follows this completed sequence:
    passes;
 4. inspected all 192 thumbnails, including every changed Star-X family and
    the six authorized Cloud-atmosphere previews;
-5. created a new immutable generated-assets version and `cartofreako/v13/`
-   publication plan without changing `cartofreako/v12/`; and
-6. treats the source tag, static asset, completion marker, canonical Active
-   Archive check-in report, and notification as one evidenced release flow.
+5. published the new immutable generated-assets version and verified
+   `cartofreako/v13/` without changing `cartofreako/v12/`; and
+6. completed the source tag, static asset, last-written completion marker,
+   canonical Active Archive check-in report, full readback, and authenticated
+   Gmail notification as one evidenced release flow.

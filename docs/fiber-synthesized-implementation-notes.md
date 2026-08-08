@@ -1,5 +1,10 @@
 # Fiber Synthesized implementation notes
 
+[Documentation index](../index.md) ·
+[Generation pipeline](generation.md) ·
+[Stage 13 convergence](converge-generation-13.md) ·
+[S3 v13 publication](releases/s3-v13.md)
+
 ## Status and scope
 
 `fiber-synthesized` is a **standard, default-rendered pass**. Its checked-in
@@ -11,6 +16,15 @@ The dataset is a validated cleanup and union of the TeleGeography submarine-
 cable API snapshots `v3.2022` and `v3.20260805`. It is not a strict set
 difference. The unused path `assets.static/fiber-evolution` is reserved for a
 future `new - old` product if one is implemented.
+
+## Published v13 previews
+
+Fiber Synthesized is present in every projection of the immutable Cloudian/S3
+v13 tree. These dedicated 480-pixel thumbnails show the checked cleanup and
+union with `v3.20260805` as the primary visible snapshot. Select one to stream
+the corresponding layered `.svg.gz` through the v13 viewer.
+
+{% include v13-pass-gallery.md stem="fiber-synthesized" label="Fiber Synthesized" %}
 
 ## Source boundary
 
