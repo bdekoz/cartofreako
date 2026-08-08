@@ -11,10 +11,10 @@
 
 Stage 13 begins after the immutable `v20260807` source tag at
 `2bd3d760fef540addfcbb4f8002ef7b283d8000f` and the independently versioned
-`assets.generated.v12.tar.xz` bundle. The last committed development checkpoint
-when this document was written is `ec15022`; the rendering changes described
-below are the next-release working tree. They do not mutate the v12 tag, GitHub
-asset, or Berkeley S3 prefix.
+`assets.generated.v12.tar.xz` bundle. The rendering changes described below
+were frozen at `c7d9c09be630f1ac16d750b7da4e98cb9082d139` and tagged
+`v20260808`. They do not mutate the v12 tag, GitHub asset, or Berkeley S3
+prefix.
 
 The v12 browser tree remains immutable at
 [`cartofreako/v12/`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/).
@@ -24,10 +24,11 @@ and uses `release.json` as its last-written completion marker. See the
 [S3 v12 publication record](releases/s3-v12.md) for its exact digest,
 inventory, viewer, verification, and Active Archive delivery evidence.
 
-Stage 13 is development, not a release declaration. No v13 tag, source
-release, generated-assets archive, S3 prefix, release marker, Active Archive
-report, or completion email exists yet. Full repository checks and a complete
-asset render remain a deliberate operator checkpoint.
+The projection-first `assets.generated.v13.tar.xz` recovery package is sealed:
+885 files, 3,035,210,413 extracted payload bytes, and SHA-256
+`5458e32ecd04e37a38a0691e7e780f03609cebe905e7c5237ab5d8f3071eaafc`.
+GitHub and Berkeley S3 publication evidence belongs to the versioned
+[release record](releases/v20260808.md), not to this implementation ledger.
 
 ## Current outcome
 
@@ -362,18 +363,22 @@ while producing valid nonempty PNGs.
 
 The operator froze the Stage 13 manifest and authorized the full checks,
 complete six-projection render, release packaging, and publication on
-2026-08-07. Their final results belong in the release record rather than being
-predicted here.
+2026-08-07. Native and browser/WebAssembly checks passed. The completed render
+passed exact inventory, XML, gzip round-trip, single-page PDF, PNG color and
+opacity, thumbnail-dimension, and visual contact-sheet checks before the
+recovery package was sealed. Publication results belong in the release record
+rather than being duplicated here.
 
-## Next release checkpoint
+## Release checkpoint
 
-When development is frozen:
+The Stage 13 release follows this completed sequence:
 
-1. restore and verify every documented sibling source prerequisite;
-2. run the full checks only after operator confirmation;
-3. render all standard products, plus only locally authorized optional passes;
-4. inspect all 186 thumbnails, including every changed Star-X family;
-5. create a new immutable generated-assets version and new S3 prefix rather
-   than changing `cartofreako/v12/`; and
-6. publish the source tag, static asset, completion marker, canonical Active
+1. restored and verified every documented sibling source prerequisite;
+2. ran the full checks after operator confirmation;
+3. rendered all standard products, plus only locally authorized optional
+   passes;
+4. inspected all 186 thumbnails, including every changed Star-X family;
+5. created a new immutable generated-assets version and `cartofreako/v13/`
+   publication plan without changing `cartofreako/v12/`; and
+6. treats the source tag, static asset, completion marker, canonical Active
    Archive check-in report, and notification as one evidenced release flow.

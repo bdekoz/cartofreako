@@ -53,8 +53,13 @@ tar --sort=name \
   --format=posix \
   --pax-option=delete=atime,delete=ctime \
   --create --file=- assets.generated | \
-  xz --threads=0 -9e > assets.generated.v13.tar.xz
+  xz --threads=4 -9e > assets.generated.v13.tar.xz
 ```
+
+The Stage 13 package used four XZ worker threads so compression remained
+inside the release environment's 64 GiB execution limit. This affects only
+compression resources; the normalized archive members and reproducibility
+contract are unchanged.
 
 Preflight the sealed package and record its digest and byte counts in
 `v20260808.md`:
