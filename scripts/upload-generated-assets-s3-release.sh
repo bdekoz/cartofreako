@@ -276,9 +276,9 @@ pdf_count=$(find "$data_root/tree" -type f -path '*/pdf/*.pdf' | wc -l)
 png_count=$(find "$data_root/tree" -type f -path '*/png/*.png' | wc -l)
 thumbnail_count=$(find "$data_root/tree" -type f \
   -path '*/thumbnail/*.png' | wc -l)
-if [[ $tree_file_count -ne 801 || $raw_svg_count -ne 0 ||
-      $svg_gzip_count -ne 205 || $pdf_count -ne 205 ||
-      $png_count -ne 205 || $thumbnail_count -ne 186 ]]; then
+if [[ $tree_file_count -ne 825 || $raw_svg_count -ne 0 ||
+      $svg_gzip_count -ne 211 || $pdf_count -ne 211 ||
+      $png_count -ne 211 || $thumbnail_count -ne 192 ]]; then
   printf 'Unexpected release inventory: tree=%s svg=%s svg.gz=%s pdf=%s png=%s thumbnails=%s\n' \
     "$tree_file_count" "$raw_svg_count" "$svg_gzip_count" \
     "$pdf_count" "$png_count" "$thumbnail_count" >&2
@@ -287,11 +287,24 @@ fi
 for projection in "${projections[@]}"; do
   projection_thumbnail_count=$(find "$data_root/tree/$projection/thumbnail" \
     -maxdepth 1 -type f -name '*.png' | wc -l)
-  if [[ $projection_thumbnail_count -ne 31 ]]; then
-    printf 'Unexpected %s thumbnail count: %s; expected 31.\n' \
+  if [[ $projection_thumbnail_count -ne 32 ]]; then
+    printf 'Unexpected %s thumbnail count: %s; expected 32.\n' \
       "$projection" "$projection_thumbnail_count" >&2
     exit 1
   fi
+  for required_stem in cloud-atmosphere fiber-synthesized; do
+    for format in svg pdf png thumbnail; do
+      extension=$format
+      [[ $format == thumbnail ]] && extension=png
+      required_count=$(find "$data_root/tree/$projection/$format" -maxdepth 1 \
+        -type f -name "$required_stem-*.$extension" | wc -l)
+      if [[ $required_count -ne 1 ]]; then
+        printf 'Unexpected %s/%s %s count: %s; expected one.\n' \
+          "$projection" "$format" "$required_stem" "$required_count" >&2
+        exit 1
+      fi
+    done
+  done
 done
 
 payload_count=$(wc -l < "$local_paths")
@@ -308,8 +321,8 @@ general_upload_bytes=$(find "$data_root" -type f \
 svg_gzip_bytes=$(find "$data_root/tree" -type f \
   -path '*/svg/*.svg.gz' -printf '%s\n' | \
   awk '{ total += $1 } END { printf "%.0f", total }')
-if [[ $payload_count -ne 804 || $release_count -ne 806 ||
-      $general_upload_count -ne 600 ]]; then
+if [[ $payload_count -ne 828 || $release_count -ne 830 ||
+      $general_upload_count -ne 618 ]]; then
   printf 'Unexpected publication counts: payload=%s release=%s general=%s\n' \
     "$payload_count" "$release_count" "$general_upload_count" >&2
   exit 1
@@ -319,7 +332,8 @@ package_sha256=$(sha256sum "$data_root/package/assets.generated.v13.tar.xz" | \
   awk '{print $1}')
 source_tag=$(jq -r '.source.tag' "$data_root/release.json")
 source_commit=$(jq -r '.source.commit' "$data_root/release.json")
-if [[ ! $source_tag =~ ^v[0-9]{8}$ || ! $source_commit =~ ^[0-9a-f]{40}$ ||
+if [[ ! $source_tag =~ ^v[0-9]{8}(\.[0-9]+)?$ ||
+      ! $source_commit =~ ^[0-9a-f]{40}$ ||
       $(git -C "$repository_root" rev-parse "$source_tag^{commit}" 2>/dev/null || true) != "$source_commit" ]]; then
   printf 'The staged source tag and commit do not resolve to the same local commit.\n' >&2
   exit 1
@@ -347,12 +361,12 @@ if ! jq -e \
    .delivery.cache_control == "public,max-age=31536000,immutable" and
    .layout.svg_viewer == "viewer.html" and
    .layout.organization == "projection/format/artifact" and
-   .inventory.source_tree_files == 885 and
-   .inventory.published_tree_files == 801 and
-   .inventory.published_svg_gzip_files == 205 and
-   .inventory.pdf_files == 205 and .inventory.png_files == 205 and
-   .inventory.thumbnail_files == 186 and
-   .inventory.thumbnails_per_projection == 31 and
+   .inventory.source_tree_files == 909 and
+   .inventory.published_tree_files == 825 and
+   .inventory.published_svg_gzip_files == 211 and
+   .inventory.pdf_files == 211 and .inventory.png_files == 211 and
+   .inventory.thumbnail_files == 192 and
+   .inventory.thumbnails_per_projection == 32 and
    .delivery.svg_gzip.content_type == "application/gzip" and
    .delivery.svg_gzip.content_encoding == null and
    .delivery.preview_png.content_type == "image/png"' \

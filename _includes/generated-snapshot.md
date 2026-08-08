@@ -16,15 +16,16 @@
 [Stage 13 convergence notes](converge-generation-13.html) ·
 [S3 v13 publication](releases/s3-v13.html)
 
-This contact sheet covers every credential-free {{ page.projection_name }}
-whole-map pass in the Stage 13 release graph, plus the explicitly retained
-legacy Anthropocene atlas. Each preview is an immutable public PNG rendered at
-contact-sheet width; offscreen previews are loaded only as they approach the
-viewport. Select an image to open the S3-hosted viewer, which streams the
-matching `.svg.gz` object through the browser's `DecompressionStream` API and
-displays the full-resolution SVG. The previews, viewer, and compressed SVGs
-are served from the same immutable public S3 release at `cartofreako/v13/`,
-whose [completion marker]({{ release_base }}/release.json) records its source
+This contact sheet covers every {{ page.projection_name }} whole-map pass in
+the complete Stage 13 release graph, including its authorized P-Tree
+Cloud-atmosphere snapshot and the explicitly retained legacy Anthropocene
+atlas. Each preview is an immutable public PNG rendered at contact-sheet
+width; offscreen previews are loaded only as they approach the viewport.
+Select an image to open the S3-hosted viewer, which streams the matching
+`.svg.gz` object through the browser's `DecompressionStream` API and displays
+the full-resolution SVG. The previews, viewer, and compressed SVGs are served
+from the same immutable public S3 release at `cartofreako/v13/`, whose
+[completion marker]({{ release_base }}/release.json) records its source
 commit, inventory, manifest, and HTTP delivery contract.
 
 ## Projection foundations
@@ -53,6 +54,7 @@ commit, inventory, manifest, and HTTP delivery contract.
 | Network swarm | <a href="{{ viewer_base }}network-swarm-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/network-swarm-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} network swarm"></a> |
 | Network infrastructure sites | <a href="{{ viewer_base }}network-infrastructure-sites-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/network-infrastructure-sites-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} network infrastructure sites"></a> |
 | Fiber Synthesized | <a href="{{ viewer_base }}fiber-synthesized-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/fiber-synthesized-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} Fiber Synthesized cleaned union"></a> |
+| Cloud-atmosphere — authorized P-Tree snapshot | <a href="{{ viewer_base }}cloud-atmosphere-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/cloud-atmosphere-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} authorized P-Tree cloud and atmosphere snapshot"></a> |
 | Anthropocene — 2025 default | <a href="{{ viewer_base }}anthropocene-temperature-2025-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/anthropocene-temperature-2025-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} Anthropocene 2025"></a> |
 | Anthropocene — 2026 default | <a href="{{ viewer_base }}anthropocene-temperature-2026-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/anthropocene-temperature-2026-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} Anthropocene 2026"></a> |
 | Anthropocene — legacy observation atlas | <a href="{{ viewer_base }}anthropocene-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/anthropocene-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} legacy Anthropocene observation atlas"></a> |
@@ -83,12 +85,8 @@ commit, inventory, manifest, and HTTP delivery contract.
 | Bathymetry Roulette | <a href="{{ viewer_base }}bathymetry-roulette-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/bathymetry-roulette-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} Bathymetry Roulette"></a> |
 | Bathymetry Hamonshū | <a href="{{ viewer_base }}bathymetry-hamonshu-{{ page.artifact_suffix }}.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/bathymetry-hamonshu-{{ page.artifact_suffix }}.png" width="360" alt="{{ page.projection_name }} Bathymetry Hamonshū"></a> |
 
-Credentialed P-Tree cloud-atmosphere and licensed network-topology products
-are intentionally excluded from these default sheets. After the operator has
-completed the provider-side account or terms step, `make authorize-external`
-verifies the local P-Tree, NASA FIRMS, and topology authorization boundary;
-`make generate-authorized-external` is the separate mutating workflow. P-Tree
-and topology artifacts remain outside these default sheets, while FIRMS data
-remains an unrendered review candidate until deliberate promotion. With no
-explicit pass override, that workflow reports and skips providers that are not
-locally configured.
+The P-Tree account workflow was completed explicitly for this release, so its
+Cloud-atmosphere product is part of the sheet rather than being implied by a
+clean checkout. Licensed network topology remains outside this release sheet.
+NASA FIRMS remains an unrendered review candidate until deliberate promotion;
+it is not a missing map layer.

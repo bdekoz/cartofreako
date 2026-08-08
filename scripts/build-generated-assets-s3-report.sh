@@ -136,7 +136,7 @@ if ! jq -e \
   '.schema_version == 2 and
    .complete == true and
    .release == "v13" and .stage == 13 and
-   (.source.tag | test("^v[0-9]{8}$")) and
+   (.source.tag | test("^v[0-9]{8}([.][0-9]+)?$")) and
    (.source.commit | test("^[0-9a-f]{40}$")) and
    .destination.endpoint == "https://s3-ewh.ist.berkeley.edu" and
    .destination.region == "us-east-1" and
@@ -144,15 +144,15 @@ if ! jq -e \
    .destination.prefix == "cartofreako/v13" and
    .layout.organization == "projection/format/artifact" and
    .package.sha256 == $package_sha256 and
-   .inventory.source_tree_files == 885 and
-   .inventory.manifest_payload_files == 804 and
-   .inventory.release_object_count == 806 and
-   .inventory.published_tree_files == 801 and
-   .inventory.published_svg_gzip_files == 205 and
-   .inventory.pdf_files == 205 and
-   .inventory.png_files == 205 and
-   .inventory.thumbnail_files == 186 and
-   .inventory.thumbnails_per_projection == 31 and
+   .inventory.source_tree_files == 909 and
+   .inventory.manifest_payload_files == 828 and
+   .inventory.release_object_count == 830 and
+   .inventory.published_tree_files == 825 and
+   .inventory.published_svg_gzip_files == 211 and
+   .inventory.pdf_files == 211 and
+   .inventory.png_files == 211 and
+   .inventory.thumbnail_files == 192 and
+   .inventory.thumbnails_per_projection == 32 and
    .integrity.manifest_sha256 == $manifest_sha256' \
   "$data_root/release.json" >/dev/null; then
   printf 'release.json does not match the verified v13 report contract.\n' >&2

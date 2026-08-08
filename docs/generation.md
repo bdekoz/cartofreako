@@ -295,11 +295,14 @@ several resource families produce multiple products. It deliberately excludes Ca
 Myriahedral perspectives and slices, and PDF/PNG exports. Those products do
 not form a projection/pass cross-product and remain available through their
 explicit targets. It includes Cloud-atmosphere and therefore requires a
-current locally prepared JAXA snapshot. `make all` retains the credential-free
-205 SVG products (84 stored as deterministic `.svg.gz` archives), 205 PDF,
-205 full-size PNG products, and 31 Cahill–Keyes thumbnails; it excludes
-Cloud-atmosphere. The six opt-in topology
-products per format also remain separate.
+current locally prepared JAXA snapshot. A clean `make all` retains the
+credential-free 205 SVG products (84 stored as deterministic `.svg.gz`
+archives), 205 PDF, 205 full-size PNG products, and 31 thumbnails per
+projection. A recorded `jaxa-ptree` authorization adds all six
+Cloud-atmosphere SVG/PDF/PNG products and one thumbnail per projection; the
+complete Stage 13 release therefore has 211 products per full-size format and
+32 thumbnails per projection. The six opt-in topology products per format
+remain separate from this release.
 
 The resolver rejects empty selectors, duplicate aliases or JSON members,
 unknown names or members, a mixed `"all"` selector, and unsupported schema
@@ -369,17 +372,17 @@ The full generators are not part of `make check`; invoking a `generate-*`
 target both writes its artifact and runs that generator's embedded structural
 checks.
 
-The 205 standard products plus six initially opt-in topology products can be
+The 205 standard products plus explicitly enabled optional products are
 generated beneath their projection's `svg/`, `pdf/`, and `png/` directories;
 the 84 resource products also have deterministic `.svg.gz` companions in the
-SVG directories. Every projection contact sheet receives 31 lower-resolution
-PNGs, 186 total. Large standard suites are released
-as versioned static bundles instead of being stored in Git. Regenerating with
-a different GDAL, GEOS, font, or Inkscape version can still produce ordering,
-coordinate, or rendering differences even though the input snapshots are
-pinned. Cloud-atmosphere artifacts remain local, source-timed optional
-products outside the standard release count even when persisted into one
-checkout's `make all` graph.
+SVG directories. A clean projection contact sheet has 31 lower-resolution
+PNGs. The complete Stage 13 graph records `jaxa-ptree`, adds one
+Cloud-atmosphere preview to each sheet, and has 32 per projection, 192 total.
+Large suites are released as versioned static bundles instead of being stored
+in Git. Regenerating with a different GDAL, GEOS, font, or Inkscape version
+can still produce ordering, coordinate, or rendering differences even though
+the input snapshots are pinned. Cloud-atmosphere remains a source-timed
+optional pass even though it is explicitly included in this release.
 
 ## PDF and 4K PNG export
 

@@ -8,7 +8,7 @@ readonly default_archive=$repository_root/assets.generated.v13.tar.xz
 readonly default_output=$repository_root/build/s3-release-v13
 readonly readme_template=$repository_root/docs/releases/v13-s3-README.md.in
 readonly viewer_source=$repository_root/docs/releases/v13-s3-viewer.html
-readonly default_source_tag=v20260808
+readonly default_source_tag=v20260808.1
 readonly release_name=v13
 readonly package_name=assets.generated.v13.tar.xz
 readonly endpoint=https://s3-ewh.ist.berkeley.edu
@@ -19,15 +19,15 @@ readonly cache_control='public,max-age=31536000,immutable'
 readonly -a projections=(
   cahill-keyes authagraph dymaxion myriahedral star-x voronoi
 )
-readonly expected_source_tree_files=885
-readonly expected_svg_files=205
+readonly expected_source_tree_files=909
+readonly expected_svg_files=211
 readonly expected_explicit_svg_gzip_files=84
-readonly expected_pdf_files=205
-readonly expected_png_files=205
-readonly expected_thumbnail_files=186
-readonly expected_published_tree_files=801
-readonly expected_payload_files=804
-readonly expected_release_objects=806
+readonly expected_pdf_files=211
+readonly expected_png_files=211
+readonly expected_thumbnail_files=192
+readonly expected_published_tree_files=825
+readonly expected_payload_files=828
+readonly expected_release_objects=830
 
 archive=$default_archive
 output=$default_output
@@ -45,7 +45,7 @@ v13 S3 object tree. The output directory must not already exist.
 Options:
   --archive PATH                Override assets.generated.v13.tar.xz.
   --output PATH                 Override build/s3-release-v13.
-  --source-tag TAG              Override v20260808.
+  --source-tag TAG              Override v20260808.1.
   --source-commit SHA           Override the commit resolved from the tag.
   --source-published-at ISO8601 Record the GitHub release publication time.
   -h, --help                    Show this help.
@@ -99,8 +99,9 @@ for command_name in awk basename cmp cp date diff dirname find git grep gzip \
     exit 1
   fi
 done
-if [[ ! $source_tag =~ ^v[0-9]{8}$ ]]; then
-  printf 'Source tag must use the date form vYYYYMMDD: %s\n' "$source_tag" >&2
+if [[ ! $source_tag =~ ^v[0-9]{8}(\.[0-9]+)?$ ]]; then
+  printf 'Source tag must use vYYYYMMDD or vYYYYMMDD.N: %s\n' \
+    "$source_tag" >&2
   exit 2
 fi
 resolved_commit=$(git -C "$repository_root" rev-parse "$source_tag^{commit}" 2>/dev/null) || {
@@ -211,11 +212,24 @@ for projection in "${projections[@]}"; do
   done
   thumbnail_count=$(find "$source_tree/$projection/thumbnail" -maxdepth 1 \
     -type f -name '*.png' | wc -l)
-  if [[ $thumbnail_count -ne 31 ]]; then
-    printf '%s has %s thumbnails; expected 31.\n' \
+  if [[ $thumbnail_count -ne 32 ]]; then
+    printf '%s has %s thumbnails; expected 32.\n' \
       "$projection" "$thumbnail_count" >&2
     exit 1
   fi
+  for required_stem in cloud-atmosphere fiber-synthesized; do
+    for format in svg pdf png thumbnail; do
+      extension=$format
+      [[ $format == thumbnail ]] && extension=png
+      required_count=$(find "$source_tree/$projection/$format" -maxdepth 1 \
+        -type f -name "$required_stem-*.$extension" | wc -l)
+      if [[ $required_count -ne 1 ]]; then
+        printf '%s/%s has %s %s products; expected exactly one.\n' \
+          "$projection" "$format" "$required_count" "$required_stem" >&2
+        exit 1
+      fi
+    done
+  done
 done
 
 tree_files=$(find "$source_tree" -type f | wc -l)
@@ -386,17 +400,17 @@ jq -n \
     inventory: {
       source_tree_files: $source_tree_files,
       source_tree_bytes: $source_tree_bytes,
-      source_svg_files: 205,
+      source_svg_files: 211,
       source_explicit_svg_gzip_files: 84,
       published_tree_files: $published_tree_files,
       published_tree_bytes: $published_tree_bytes,
-      published_svg_gzip_files: 205,
+      published_svg_gzip_files: 211,
       published_svg_gzip_bytes: $published_svg_gzip_bytes,
-      derived_svg_gzip_files: 121,
-      pdf_files: 205,
-      png_files: 205,
-      thumbnail_files: 186,
-      thumbnails_per_projection: 31,
+      derived_svg_gzip_files: 127,
+      pdf_files: 211,
+      png_files: 211,
+      thumbnail_files: 192,
+      thumbnails_per_projection: 32,
       manifest_payload_files: $payload_file_count,
       manifest_payload_bytes: $payload_byte_count,
       release_object_count: $release_object_count
@@ -440,12 +454,12 @@ if ! jq -e \
    .destination.prefix == "cartofreako/v13" and
    .layout.organization == "projection/format/artifact" and
    .package.sha256 == $archive_sha256 and
-   .inventory.source_tree_files == 885 and
-   .inventory.published_tree_files == 801 and
-   .inventory.thumbnail_files == 186 and
-   .inventory.thumbnails_per_projection == 31 and
-   .inventory.manifest_payload_files == 804 and
-   .inventory.release_object_count == 806 and
+   .inventory.source_tree_files == 909 and
+   .inventory.published_tree_files == 825 and
+   .inventory.thumbnail_files == 192 and
+   .inventory.thumbnails_per_projection == 32 and
+   .inventory.manifest_payload_files == 828 and
+   .inventory.release_object_count == 830 and
    .integrity.manifest_sha256 == $manifest_sha256 and
    .delivery.svg_gzip.content_type == "application/gzip" and
    .delivery.svg_gzip.content_encoding == null and

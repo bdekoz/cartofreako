@@ -40,7 +40,7 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Stage 12 resource, authorization, default-year, snapshot, and Star-X integration | [Stage 12 implementation notes](docs/stage-12-implementation-notes.md) |
 | Stage 13 visual, observer, external-source, and bathymetry development | [Stage 13 convergence notes](docs/converge-generation-13.md) |
 | Visual contact sheets for every projection and released pass | [Generated projection snapshots](#generated-artifact-previews) |
-| Static generated-asset releases, manifests, render hardware, and publishing | [`v20260808` release notes](docs/releases/v20260808.md), [S3 v13 publication](docs/releases/s3-v13.md), and [release runbook](docs/releases/README.md) |
+| Static generated-asset releases, manifests, render hardware, and publishing | [`v20260808.1` corrected release notes](docs/releases/v20260808.1.md), [S3 v13 publication](docs/releases/s3-v13.md), and [release runbook](docs/releases/README.md) |
 | Generate-pass evaluation record plus configured, full-suite, family, and exact workflows | [Generate-pass methods and decision record](docs/generation-methods.md) |
 | Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/astro-implementation-notes.md) |
 | Process-start solar illumination and source-timed JAXA physical atmosphere generation | [Cloud-atmosphere implementation notes](docs/cloud-atmosphere-implementation-notes.md) |
@@ -113,28 +113,33 @@ make all
 ```
 
 The 24 production whole-earth maps, 18 astronomy maps, 12 Orbital
-Technosphere maps, 84 resources maps, 18 Anthropocene maps, six network-swarm maps, six
-network-infrastructure site maps, six Fiber Synthesized maps, six Bathymetry Roulette maps, six Bathymetry
+Technosphere maps, 84 resources maps, 18 Anthropocene maps, six network-swarm
+maps, six network-infrastructure site maps, six Fiber Synthesized maps, six
+authorized Cloud-atmosphere maps, six Bathymetry Roulette maps, six Bathymetry
 Hamonshū maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes enlargement
-slices, and two Myriahedral face-group slices total 205 products. They are
+slices, and two Myriahedral face-group slices total 211 release products. The
+credential-free graph accounts for 205; the explicitly completed P-Tree
+workflow adds the six source-timed atmosphere products. They are
 organized first by projection beneath `assets.generated/`, then into `svg/`,
 `pdf/`, `png/`, and `thumbnail/` directories. The 84 resource SVGs also
-receive deterministic `.svg.gz` release archives. All 205 have an Inkscape
+receive deterministic `.svg.gz` release archives. All 211 have an Inkscape
 PDF and PNG beside their projection peers. PNGs preserve the source aspect ratio and
 have a longest side of 3840 pixels, the horizontal resolution of UHD 4K
 video. Transparent SVG page regions are flattened against an opaque white
-background. The graph also creates 31 480-pixel-wide thumbnails for every
-projection, 186 total.
+background. The complete graph also creates 32 480-pixel-wide thumbnails for
+every projection, 192 total.
 Review the complete all-projection release in the
 [generated snapshot catalog](#generated-artifact-previews). The
 targets `make generated-projections`, `make
 generate-projections`, and `make make-generated` are equivalent aliases.
 
-The credentialed, source-timed Cloud-atmosphere family is deliberately not
-part of `make all`. After a P-Tree/JAXA refresh and local H3 preparation,
-generate it with `make generate-cloud-atmosphere` or export all three formats
-with `make generate-cloud-atmosphere-artifacts`.
+The credentialed, source-timed Cloud-atmosphere family is absent from a clean
+checkout's `make all`. After a successful P-Tree/JAXA refresh and local H3
+preparation, `generate-authorized-external` records `jaxa-ptree`; subsequent
+`make all` runs include its SVG/PDF/PNG and thumbnail products. Direct family
+targets remain available as `make generate-cloud-atmosphere` and
+`make generate-cloud-atmosphere-artifacts`.
 
 Every print frame preserves the projection's required ratio and has a largest
 dimension of exactly 44 inches:
@@ -173,10 +178,11 @@ required layers, path structure, and finite numeric output.
 ### Generated artifact previews
 
 The v13 visual catalog is organized by projection. Each contact sheet presents
-the same 31 credential-free whole-map passes as labeled previews, grouped into
-projection foundations, sky and orbital work, networks and Anthropocene,
-resources, and both bathymetry art passes. Select any preview to open its
-full-resolution layered SVG in the immutable S3 viewer.
+the same 32 complete-release whole-map passes as labeled previews, grouped
+into projection foundations, sky and orbital work, networks and Anthropocene,
+resources, and both bathymetry art passes. The thirty-second pass is the
+explicitly authorized P-Tree Cloud-atmosphere snapshot. Select any preview to
+open its full-resolution layered SVG in the immutable S3 viewer.
 
 - [AuthaGraph snapshot](docs/generated-snapshot-authagraph.md) — `44 × 19.052559`
 - [Cahill–Keyes snapshot](docs/generated-snapshot-ck.md) — `44 × 22`
@@ -187,16 +193,15 @@ full-resolution layered SVG in the immutable S3 viewer.
 
 All preview and viewer links resolve against the completed
 `cartofreako/v13/` public S3 release, so GitHub Pages does not depend on the
-untracked local `assets.generated/` directory. The sealed v13 inventory has a
-dedicated 480-pixel thumbnail for all 31 passes in each projection, 186 total;
+untracked local `assets.generated/` directory. The complete v13 inventory has
+a dedicated 480-pixel thumbnail for all 32 passes in each projection, 192 total;
 the contact sheets never download a full-size PNG merely to draw a preview.
 
 The current Anthropocene defaults are the complete 2025 and partial 2026 CPC
 temperature fields; the legacy observation atlas remains available as an
-explicitly labeled pass. The sheets also distinguish the ordinary cloud/CDN
-site atlas from the licensed topology product. Credentialed P-Tree
-cloud-atmosphere, licensed network topology, and unpromoted FIRMS candidates
-remain outside the default public catalog.
+explicitly labeled pass. The sheets distinguish the ordinary cloud/CDN site
+atlas from the P-Tree Cloud-atmosphere snapshot. Licensed network topology and
+unpromoted FIRMS candidates remain outside the public catalog.
 
 The [SVG generation pipeline](docs/generation.md) explains the generator
 sources and Make targets, Natural Earth acquisition, seam handling, sampling,
@@ -426,7 +431,7 @@ the `voronoi_source` preset are in the
 | [`docs/ptree-production-download.md`](docs/ptree-production-download.md) | Quick-start P-Tree registration, secure credentials, connection test, reproducible production refresh, expected files, and troubleshooting |
 | [`docs/orbital-technosphere-implementation-notes.md`](docs/orbital-technosphere-implementation-notes.md) | Stage 4.2 feasibility, naming, NASA/CelesTrak source roles, OMM/SGP4 formulas, products, verification, and accuracy boundary |
 | [`docs/stage-12-implementation-notes.md`](docs/stage-12-implementation-notes.md) | Stage 12 resource expansion, Anthropocene defaults, external authorization, render hardware, generated snapshots, and Star-X paint-order integration |
-| [Generated projection snapshots](#generated-artifact-previews) | Six projection-specific contact sheets sharing one 31-pass release template |
+| [Generated projection snapshots](#generated-artifact-previews) | Six projection-specific contact sheets sharing one 32-pass complete-release template |
 | `_includes/generated-snapshot.md` | Canonical contact-sheet taxonomy, viewer links, labels, and exclusion policy used by all six snapshot pages |
 | [`docs/resources-enrichment-plan.md`](docs/resources-enrichment-plan.md) | Stage 12 six-family taxonomy, source evaluation, non-sparse options, v3 schema, migration sequence, and release QA |
 | [`src.projections/cart0freak0-star-x.h`](src.projections/cart0freak0-star-x.h) | Star-X group assembly, configurable centered scale, fixed-`60°S` cap geometry, frame validation, public API, and factory |

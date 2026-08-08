@@ -11,10 +11,12 @@
 
 Stage 13 begins after the immutable `v20260807` source tag at
 `2bd3d760fef540addfcbb4f8002ef7b283d8000f` and the independently versioned
-`assets.generated.v12.tar.xz` bundle. The rendering changes described below
-were frozen at `c7d9c09be630f1ac16d750b7da4e98cb9082d139` and tagged
-`v20260808`. They do not mutate the v12 tag, GitHub asset, or Berkeley S3
-prefix.
+`assets.generated.v12.tar.xz` bundle. The credential-free rendering changes
+were first frozen at `c7d9c09be630f1ac16d750b7da4e98cb9082d139` and tagged
+`v20260808`. That standard-only package was superseded without moving its tag;
+the corrected complete graph and authorization-aware thumbnail contract are
+published from `v20260808.1`. Neither attempt mutates the v12 tag, GitHub
+asset, or Berkeley S3 prefix.
 
 The v12 browser tree remains immutable at
 [`cartofreako/v12/`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v12/).
@@ -24,11 +26,13 @@ and uses `release.json` as its last-written completion marker. See the
 [S3 v12 publication record](releases/s3-v12.md) for its exact digest,
 inventory, viewer, verification, and Active Archive delivery evidence.
 
-The projection-first `assets.generated.v13.tar.xz` recovery package is sealed:
-885 files, 3,035,210,413 extracted payload bytes, and SHA-256
-`5458e32ecd04e37a38a0691e7e780f03609cebe905e7c5237ab5d8f3071eaafc`.
-GitHub and Berkeley S3 publication evidence belongs to the versioned
-[release record](releases/v20260808.md), not to this implementation ledger.
+The first projection-first package attempt contained only the 205-product
+credential-free graph. Publication was stopped before S3 because the release
+manifest requires the already authorized Cloud-atmosphere family as well as
+standard Fiber Synthesized. The corrected graph has 211 SVG, PDF, and PNG
+products, 84 resource SVG-gzip companions, and 192 thumbnails. Final package
+identity and publication evidence belong to the versioned release record, not
+to this implementation ledger.
 
 ## Current outcome
 
@@ -57,6 +61,12 @@ from v12's 187 products and 28 Cahill–Keyes-only thumbnails is six Hubble
 observer maps, six Bathymetry Hamonshū maps, and six Fiber Synthesized maps. The
 renamed ground observer maps replace, rather than duplicate, the former
 ambiguous observer names.
+
+The complete release graph records `jaxa-ptree` after an end-to-end successful
+fetch, preparation, verification, and six-projection render. That adds six
+Cloud-atmosphere SVG/PDF/PNG products plus one thumbnail per projection, for
+211 full-size products, 32 thumbnails per projection, and 192 thumbnails
+total. Fiber Synthesized is already part of the 205-product standard count.
 
 The generated tree is projection-first:
 
@@ -377,7 +387,8 @@ The Stage 13 release follows this completed sequence:
 2. ran the full checks after operator confirmation;
 3. rendered all standard products, plus only locally authorized optional
    passes;
-4. inspected all 186 thumbnails, including every changed Star-X family;
+4. inspected all 192 thumbnails, including every changed Star-X family and
+   the six authorized Cloud-atmosphere previews;
 5. created a new immutable generated-assets version and `cartofreako/v13/`
    publication plan without changing `cartofreako/v12/`; and
 6. treats the source tag, static asset, completion marker, canonical Active
