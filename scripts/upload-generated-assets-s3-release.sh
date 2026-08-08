@@ -295,6 +295,7 @@ for projection in "${projections[@]}"; do
   for required_stem in cloud-atmosphere fiber-synthesized; do
     for format in svg pdf png thumbnail; do
       extension=$format
+      [[ $format == svg ]] && extension=svg.gz
       [[ $format == thumbnail ]] && extension=png
       required_count=$(find "$data_root/tree/$projection/$format" -maxdepth 1 \
         -type f -name "$required_stem-*.$extension" | wc -l)
