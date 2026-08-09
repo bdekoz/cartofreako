@@ -47,7 +47,7 @@ Options:
   --apply              Upload after dry runs and exact-prefix confirmation.
   --verify-download    Read every remote object back after normal checks.
   --validate-only      Validate locally without network or credentials.
-  --skip-report-email  Do not create the post-report Gmail send request.
+  --skip-report-email  Do not create the post-report Gmail outbox request.
   --clusterops-root P  Override /home/bkoz/src/alpha60-clusterops.
   --data-root PATH     Override build/s3-release-v13.
   --receipt PATH       Override the mode-specific shared-transport receipt.

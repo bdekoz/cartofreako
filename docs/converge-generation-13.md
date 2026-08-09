@@ -127,7 +127,8 @@ base:
   **cartofreako v13 checked in to UCB Active Archive Object Storage** report,
   validate its document kind, page geometry, fonts, text extraction, and QA
   renders, exclude the unrelated generic deposit-report layout, and hand the
-  exact PDF to the desktop mailer for the two fixed recipients;
+  exact PDF to the authenticated release orchestrator for automatic Gmail
+  delivery to the two fixed recipients, without a desktop composer;
 - projection snapshot pages share navigation and use the immutable S3 PNG and
   viewer URLs instead of assuming `assets.generated/` is checked into Git;
   and

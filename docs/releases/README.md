@@ -30,16 +30,31 @@ Active Archive HTML/PDF report and rendered QA pages. Reports are local delivery
 artifacts outside the immutable prefix and Git; their verification and delivery
 record belongs in the versioned publication notes.
 
+## Shared transport and documentation authority
+
 Future releases use the declarative
-[`alpha60-clusterops` shared AAO interface](https://github.com/alpha60-devops/alpha60-clusterops/blob/main/docs/storage/shared-aao-upload.md).
-Cartofreako keeps an exact release validator and versioned transport profile;
-the shared engine owns credentials, rclone configuration, prefix inspection,
-pilots, immutable phased copies, marker-last completion, readback, totals, and
-the sanitized receipt. The project adapter never opens a desktop mailer. It
-writes a Gmail outbox request after report generation; after inspecting every
-QA page, the authenticated release orchestrator consumes that request and
-sends the canonical PDF automatically, without a second operator confirmation.
-The orchestrator records actual delivery separately from upload completion.
+[`alpha60-clusterops` shared AAO interface](https://github.com/alpha60-devops/alpha60-clusterops/blob/main/docs/storage/shared-aao-upload.md),
+whose [profile](https://github.com/alpha60-devops/alpha60-clusterops/blob/main/storage/schemas/aao-upload-profile-v1.schema.json)
+and [receipt](https://github.com/alpha60-devops/alpha60-clusterops/blob/main/storage/schemas/aao-upload-receipt-v1.schema.json)
+schemas define the cross-project transport contract. Shared implementation
+commit `cebba0d8144f46f75997f568e7f5b3a36e4161ef` is the first version adopted
+by this repository.
+
+| `alpha60-clusterops` is authoritative for | Cartofreako is authoritative for |
+| --- | --- |
+| Credential prompts, empty rclone configuration, exact-prefix inspection, immutable grouped copies, marker-last publication, remote checks, and transport receipts | Source/tag/package identity, exact counts and pass requirements, the tracked release profile and validator, gallery URLs, report design, recipients, and observed v13 evidence |
+| Profile and receipt schemas, baseline report/automatic-delivery policy, and future shared-engine corrections | Versioned S3 prefix, pilot identities declared by the profile, Devastation Pacific report contents, and delivery evidence |
+
+The Cartofreako adapter never opens a desktop mailer. It writes a Gmail outbox
+request after report generation; after inspecting every QA page, the
+authenticated release orchestrator consumes that request and sends the
+canonical PDF automatically, without a second operator confirmation. The
+orchestrator records actual delivery separately from upload completion.
+
+The v13 prefix itself was applied and fully read back by uploader 6 before the
+shared engine existed. Uploader 7 is the validated migration adapter over the
+same sealed 830-object staging tree. Do not republish v13 to exercise it;
+Cartofreako v14 is the first intended applied use of the shared interface.
 
 ## `v20260808.1` corrective release procedure
 
@@ -118,22 +133,32 @@ test "$(sha256sum assets.generated.v13.tar.xz | awk '{print $1}')" = \
 xz --test "$release_verify_dir/assets.generated.v13.tar.xz"
 ```
 
-Finally build and publish the immutable S3 prefix. The applied uploader writes
-`release.json` last, optionally reads every object back, builds only the
-canonical Active Archive check-in report, and performs the report-notification
-handoff. `AAO_CLUSTEROPS_ROOT` may select another checkout of the shared
-interface; the default is `/home/bkoz/src/alpha60-clusterops`:
+Build the immutable S3 staging tree, then run the exact local validation.
+`AAO_CLUSTEROPS_ROOT` may select another checkout of the shared interface; the
+default is `/home/bkoz/src/alpha60-clusterops`:
 
 ```sh
 scripts/build-generated-assets-s3-release.sh
 scripts/upload-generated-assets-s3-release.sh --validate-only
+```
+
+The historical applied v13 run used uploader 6 with
+`--apply --verify-download`; its observed result is in
+[`s3-v13.md`](s3-v13.md). Because `cartofreako/v13/` is complete and
+immutable, do not rerun an applied command against it. After deliberately
+versioning the adapter, profile, validator, package, and destination for v14,
+the equivalent shared-engine closeout is:
+
+```sh
 scripts/upload-generated-assets-s3-release.sh --apply --verify-download
 ```
 
 The adapter first runs
 `scripts/validate-generated-assets-s3-release.sh`, then passes
 `docs/releases/v13-aao-upload-profile.json` to
-`alpha60-clusterops/bin/load-s3-aao`. Validation, dry-run, and applied-upload
+`alpha60-clusterops/bin/load-s3-aao`. The release-local profile declares pilot
+paths and expected metadata; the shared engine performs the pilot upload and
+verification. Validation, dry-run, and applied-upload
 receipts have separate filenames, so a later preflight cannot overwrite the
 canonical completion evidence. For v14, copy and deliberately update the
 profile's data root, immutable prefix, and pilot names; never reuse or repair
