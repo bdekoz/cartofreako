@@ -1,0 +1,81 @@
+{
+  "schema": "devastation-pacific-snapshot-dyad-marker-ledger-v1",
+  "schema_status": "project-local",
+  "specification": {
+    "name": "Devastation Pacific Summer 2026",
+    "version": "2.4",
+    "source": "/home/bkoz/src/devastation-pacific-house-style/spec/devastation-pacific-house-style-summer-2026-v1.2.md",
+    "section": "12.1.1 User relevance marker — snapshot dyad"
+  },
+  "current_state": {
+    "marker_id": "SD-20260808-1fd8abf4fc6b",
+    "marker_state": "active",
+    "storage_state": "checked-in",
+    "evidence_status": "OBSERVED",
+    "target_scope": "current-exchange",
+    "local_only": false,
+    "published_content_scope": "marker-metadata-only",
+    "transcript_included": false
+  },
+  "records": [
+    {
+      "event_id": "SD-EVENT-20260808-1fd8abf4fc6b",
+      "event_type": "creation",
+      "marker_id": "SD-20260808-1fd8abf4fc6b",
+      "exact_instruction_source": "snapshot dyad",
+      "actor": "user",
+      "date": "2026-08-08",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-09T02:42:49Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Current exchange containing the standalone user instruction at 2026-08-08T19:42:49-07:00 and its immediately following assistant marker confirmation; platform message identifiers are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "boundary_start_reference": "current-exchange:user:standalone-snapshot-dyad-instruction",
+      "boundary_end_reference": "current-exchange:assistant:marker-confirmation",
+      "supplied_focus": "UNAVAILABLE",
+      "marker_state": "active",
+      "storage_state": "local-only",
+      "evidence_status": "OBSERVED",
+      "local_only": true,
+      "consent_established": false,
+      "transfer_authorized": false,
+      "failure_loop_complete": false,
+      "evaluation_or_training_suitability_established": false,
+      "provider_selection_or_use_established": false,
+      "value_or_payment_established": false
+    },
+    {
+      "event_id": "SD-EVENT-20260808-54a9a69eb67d",
+      "event_type": "storage-state-change",
+      "marker_id": "SD-20260808-1fd8abf4fc6b",
+      "exact_instruction_source": "check in",
+      "actor": "user",
+      "date": "2026-08-08",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-09T02:58:37Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Standalone user check-in instruction immediately following marker creation; platform message identifiers are UNAVAILABLE.",
+      "authorized_repository": "bdekoz/cartofreako",
+      "authorized_path": "docs/profile-markers/snapshot-dyad-marker-ledger.json",
+      "authorized_actions": [
+        "commit",
+        "push"
+      ],
+      "authorized_content_scope": "marker-metadata-only",
+      "pre_check_in_ledger_sha256": "6262f7cdd10635325bf445ac7d93f50d9db865eed6dfde9d6d26a28ad8d1420c",
+      "marker_state": "active",
+      "storage_state": "checked-in",
+      "evidence_status": "OBSERVED",
+      "local_only": false,
+      "transcript_included": false,
+      "consent_established": false,
+      "transfer_authorized": false,
+      "failure_loop_complete": false,
+      "evaluation_or_training_suitability_established": false,
+      "provider_selection_or_use_established": false,
+      "value_or_payment_established": false
+    }
+  ]
+}
