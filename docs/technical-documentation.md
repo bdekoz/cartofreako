@@ -70,6 +70,7 @@ path structures.
 | --- | --- |
 | Use all six projections in WebAssembly, workers, SVG, Canvas, or D3 | [WebAssembly quick start](pages/webassembly-quick-start.md) and [runtime reference](../src.wasm/README.md) |
 | Use structured forward points and face-qualified reverse candidates | [Forward/reverse projection API](forward-reverse-projection-api.md) |
+| Plan machine-readable agent discovery and 1080p/Three.js derivatives without changing archive/art/print masters | [AI-agent and 1080p gaming improvement plan](ai-agent-and-1080p-gaming-improvement-plan.md) |
 | Understand the Stage 10 browser architecture and checks | [Stage 10 WebAssembly notes](pages/stage-10-webassembly.md) |
 | Follow a raster-backed overlay workflow | [Web workflow](web-workflow.md) and [complete example](web-example.md) |
 | Inspect the immutable generated release without checking it into Git | [Visual gallery](gallery.md), [S3 v13 contract](releases/s3-v13.md), and [release marker](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/release.json) |

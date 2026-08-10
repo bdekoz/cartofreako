@@ -411,6 +411,13 @@ the layered SVG originals. For example, a 44-by-22-inch Cahill-Keyes page is
 3168 by 1584 PDF points. The explicit PNG pixel override is independent of
 that physical page size.
 
+Proposed 1920 × 1080 and GPU-friendly derivatives are documented in the
+[AI-agent and gaming consumer plan](ai-agent-and-1080p-gaming-improvement-plan.md).
+They are additive access/runtime products: layered SVG and physical-size PDF
+remain the authoritative archive/art objects, and the projection-ratio
+44-inch plates, A0 inkjet workflow, and existing 3840-pixel PNG remain
+independent authoritative outputs.
+
 Final files are grouped by projection first and format second:
 
 ```text

@@ -10,7 +10,10 @@ Start with the [visual gallery](docs/gallery.md), where every thumbnail opens
 a released 3840-pixel PNG and every plate has separate layered SVG and print
 PDF actions. The [technical documentation hub](docs/technical-documentation.md)
 is the compact build, projection, pass, browser, and release index. The
-authoritative full project documentation remains [`index.md`](index.md).
+authoritative full project documentation remains [`index.md`](index.md). The
+[AI-agent and 1080p gaming improvement plan](docs/ai-agent-and-1080p-gaming-improvement-plan.md)
+adds screen/runtime derivatives while preserving the SVG/PDF archive and art
+masters plus the existing projection-specific 44-inch and A0 print products.
 
 The top-level directories separate implementation, generation, verification,
 and artifacts:

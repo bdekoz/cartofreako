@@ -2,6 +2,7 @@
 
 [Documentation index](../index.md) ·
 [Forward/reverse projection API](forward-reverse-projection-api.md) ·
+[AI-agent and 1080p gaming follow-on](ai-agent-and-1080p-gaming-improvement-plan.md) ·
 [WebAssembly quick start](pages/webassembly-quick-start.md) ·
 [Stage 13 implementation ledger](converge-generation-13.md) ·
 [Release runbook](releases/README.md)
@@ -248,3 +249,13 @@ UCB AAO deposit is not part of that source release: it requires its own frozen
 generated manifest, reviewed profile, human invocation of
 `make release-ucb-aao-s3`, immutable inventory verification, and canonical
 Active Archive check-in record. `make release-github` cannot reach that target.
+
+## Post-release consumer follow-on
+
+Runtime API 3 completes the reverse-projection foundation identified by the
+special-topics audit. The separate
+[AI-agent and 1080p gaming improvement plan](ai-agent-and-1080p-gaming-improvement-plan.md)
+turns the remaining JavaScript/catalog and gaming recommendations into phased,
+testable work. Its screen derivatives are additive and cannot alter the
+authoritative SVG/PDF archive and art objects, projection-specific 44-inch or
+A0 inkjet workflows, 3840-pixel raster, or print-generation contracts.

@@ -64,6 +64,7 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Stage 12 resource, authorization, default-year, snapshot, and Star-X integration | [Stage 12 implementation notes](docs/stage-12-implementation-notes.md) |
 | Stage 13 visual, observer, external-source, and bathymetry development | [Stage 13 convergence notes](docs/converge-generation-13.md) |
 | Stage 14 projection API, visual hierarchy, verification, and release plan | [Stage 14 convergence ledger](docs/converge-generation-14.md) |
+| AI-agent discovery, 1080p gaming derivatives, and preservation of authoritative archive/art/print products | [AI-agent and 1080p gaming improvement plan](docs/ai-agent-and-1080p-gaming-improvement-plan.md) |
 | Visual contact sheets for every projection and released pass | [Visual gallery](docs/gallery.md) and [generated projection snapshots](#generated-artifact-previews) |
 | Compact index of build, projection, pass, browser, and release documentation | [Technical documentation](docs/technical-documentation.md) |
 | GitHub source releases versus UCB AAO/S3 deposits, static assets, manifests, and render hardware | [`v20260810` Stage 14 source release](docs/releases/v20260810.md), [`v20260808.1` corrected release notes](docs/releases/v20260808.1.md), [S3 v13 publication](docs/releases/s3-v13.md), and [release runbook](docs/releases/README.md) |
