@@ -11,43 +11,133 @@
     <!-- 2. Apply it normally (blocks rendering, which we want for main styles) -->
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
 
-    <!-- Preload the regular weight of Noto Sans -->
-    <link rel="preload" href="../resources/fonts/noto-sans-v42-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
-
-    <!-- Preload the italic weight of Noto Sans -->
-    <link rel="preload" href="../resources/fonts/noto-sans-v42-latin-italic.woff2" as="font" type="font/woff2" crossorigin>
-
-    <!-- Preload the bold weight (only if it's used immediately "above the fold") -->
-    <link rel="preload" href="../resources/fonts/noto-sans-v42-latin-700.woff2" as="font" type="font/woff2" crossorigin>
-
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-
     <style>
-/* noto-sans-regular - latin */
-@font-face {
-  font-display: swap;
-  font-family: 'Noto Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: url('../resources/fonts/noto-sans-v42-latin-regular.woff2') format('woff2');
+body {
+  margin: 0;
 }
 
-/* noto-sans-italic - latin */
-@font-face {
-  font-display: swap;
-  font-family: 'Noto Sans';
-  font-style: italic;
-  font-weight: 400;
-  src: url('../resources/fonts/noto-sans-v42-latin-italic.woff2') format('woff2');
+.site-header,
+main {
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 1180px;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
-/* noto-sans-700 - latin */
-@font-face {
-  font-display: swap;
-  font-family: 'Noto Sans';
-  font-style: normal;
+.site-header {
+  border-bottom: 1px solid #d8dee4;
+  float: none;
+  padding-bottom: 0.8rem;
+  padding-top: 0.8rem;
+  position: static;
+  width: auto;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+}
+
+.site-nav a:first-child {
   font-weight: 700;
-  src: url('../resources/fonts/noto-sans-v42-latin-700.woff2') format('woff2');
+}
+
+main {
+  padding-bottom: 4rem;
+  padding-top: 1.5rem;
+}
+
+.gallery-grid,
+.subject-grid {
+  align-items: start;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  margin: 1.25rem 0 2rem;
+}
+
+.gallery-card {
+  border: 1px solid #d8dee4;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0.8rem;
+}
+
+.gallery-card h3,
+.gallery-card h4 {
+  margin: 0 0 0.7rem;
+}
+
+.gallery-card img,
+.artifact-table img,
+.pass-gallery img {
+  background: #f6f8fa;
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.artifact-table img,
+.pass-gallery img {
+  max-width: 480px;
+}
+
+.gallery-card figcaption {
+  margin-top: 0.7rem;
+}
+
+.artifact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.88rem;
+  gap: 0.25rem 0.8rem;
+  line-height: 1.5;
+  margin: 0.55rem 0 0;
+}
+
+.artifact-actions a:first-child {
+  font-weight: 700;
+}
+
+.artifact-table th:first-child {
+  min-width: 13rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.artifact-table td {
+  vertical-align: top;
+}
+
+.pass-gallery figure {
+  margin: 0;
+}
+
+.pass-gallery th {
+  text-align: left;
+}
+
+.page-deck {
+  font-size: 1.1rem;
+  max-width: 54rem;
+}
+
+@media (max-width: 620px) {
+  .artifact-table,
+  .artifact-table tbody,
+  .artifact-table tr,
+  .artifact-table th,
+  .artifact-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .artifact-table th:first-child {
+    min-width: 0;
+    padding-bottom: 0.35rem;
+  }
 }
 
 /* don't render below the fold: 80% on the images and svgs is rougly 480px*/
@@ -94,6 +184,16 @@ a:focus {
 
 </head>
 <body>
+
+  <header class="site-header">
+    <nav class="site-nav" aria-label="Primary documentation">
+      <a href="{{ '/' | relative_url }}">Cartofreako</a>
+      <a href="{{ '/docs/gallery.html' | relative_url }}">Gallery</a>
+      <a href="{{ '/docs/technical-documentation.html' | relative_url }}">Technical documentation</a>
+      <a href="{{ '/docs/generation.html' | relative_url }}">Generate maps</a>
+      <a href="{{ '/docs/releases/s3-v13.html' | relative_url }}">Release</a>
+    </nav>
+  </header>
 
   <!-- The landmark wraps where the markdown content gets injected -->
   <main>

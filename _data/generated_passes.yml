@@ -1,0 +1,115 @@
+- title: Projection foundations
+  id: projection-foundations
+  passes:
+    - label: Native geometry
+      stem: geometry
+      alt: native geometry
+    - label: Graticules
+      stem: graticules
+      alt: graticules
+    - label: Earth
+      stem: earth
+      alt: Earth
+    - label: Water
+      stem: water
+      alt: water
+
+- title: Sky and orbital passes
+  id: sky-and-orbital-passes
+  passes:
+    - label: Astronomy — all sky
+      stem: astro-all-sky
+      alt: all-sky astronomy
+    - label: Astronomy — ground multiband observer
+      stem: astro-observer-ground-multiband
+      alt: ground multiband observer astronomy
+    - label: Astronomy — Hubble observer
+      stem: astro-observer-hubble
+      alt: Hubble observer astronomy
+    - label: Orbital Technosphere — global
+      stem: orbital-technosphere-global
+      alt: global orbital technosphere
+    - label: Orbital Technosphere — observer
+      stem: orbital-technosphere-observer
+      alt: observer orbital technosphere
+
+- title: Networks and Anthropocene
+  id: networks-and-anthropocene
+  passes:
+    - label: Network swarm
+      stem: network-swarm
+      alt: network swarm
+    - label: Network infrastructure sites
+      stem: network-infrastructure-sites
+      alt: network infrastructure sites
+    - label: Fiber Synthesized
+      stem: fiber-synthesized
+      alt: Fiber Synthesized cleaned union
+    - label: Cloud-atmosphere — authorized P-Tree snapshot
+      stem: cloud-atmosphere
+      alt: authorized P-Tree cloud and atmosphere snapshot
+    - label: Anthropocene — 2025 default
+      stem: anthropocene-temperature-2025
+      alt: Anthropocene 2025
+    - label: Anthropocene — 2026 default
+      stem: anthropocene-temperature-2026
+      alt: Anthropocene 2026
+    - label: Anthropocene — legacy observation atlas
+      stem: anthropocene
+      alt: legacy Anthropocene observation atlas
+
+- title: Stage 12 resources
+  id: stage-12-resources
+  passes:
+    - label: Energy — solar
+      stem: resources-energy-solar-capacity-2025
+      alt: solar capacity
+    - label: Energy — wind
+      stem: resources-energy-wind-capacity-2025
+      alt: wind capacity
+    - label: Energy — nuclear
+      stem: resources-energy-nuclear-operating-capacity-2024
+      alt: nuclear operating capacity
+    - label: Energy — petrochemical refinery throughput
+      stem: resources-energy-petrochemical-refinery-throughput-latest-2024
+      alt: petroleum refinery throughput
+    - label: Food — production index
+      stem: resources-food-food-production-index-2022
+      alt: food production index
+    - label: Fauna — fisheries
+      stem: resources-fauna-fisheries-production-latest-2024
+      alt: fisheries production
+    - label: Fauna — reefs
+      stem: resources-fauna-coral-reef-threat-2011
+      alt: coral reef threat
+    - label: Flora — forest area
+      stem: resources-flora-forest-area-percent-2023
+      alt: forest area
+    - label: Mineral — rare-earth production
+      stem: resources-mineral-rare-earth-mine-production-2025
+      alt: rare-earth production
+    - label: Human — under 30
+      stem: resources-human-population-under-30-2024
+      alt: population under 30
+    - label: Human — over 60
+      stem: resources-human-population-over-60-2024
+      alt: population over 60
+    - label: Human — upper-secondary attainment
+      stem: resources-human-upper-secondary-attainment-latest-2025
+      alt: upper-secondary attainment
+    - label: Human — bachelor’s attainment
+      stem: resources-human-bachelors-attainment-latest-2024
+      alt: bachelor's attainment
+    - label: Human — resident patent applications
+      stem: resources-human-resident-patent-applications-per-million-2019-2021
+      alt: resident patent applications per million
+
+- title: Art passes
+  id: art-passes
+  passes:
+    - label: Bathymetry Roulette
+      stem: bathymetry-roulette
+      alt: Bathymetry Roulette
+    - label: Bathymetry Hamonshū
+      stem: bathymetry-hamonshu
+      alt: Bathymetry Hamonshū

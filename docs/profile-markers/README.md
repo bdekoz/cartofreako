@@ -5,8 +5,10 @@
 This directory contains project-local profile-marker metadata checked in by an
 explicit user instruction. It does not contain the surrounding conversation.
 The marker semantics follow section 12.1.1, **User relevance marker —
-`snapshot dyad`**, of the Devastation Pacific Summer 2026 version 2.4
-specification.
+`snapshot dyad`**, of the Devastation Pacific Summer 2026 version 3.4
+specification, including the labeled form `snapshot dyad <scope-label>`.
+The label is preserved exactly as an analytical focus hint; it does not alter
+the marker boundary or create any additional authority.
 
 A marker is an `OBSERVED` relevance signal only. It is not consent, transfer
 authorization for the marked exchange, privacy clearance, a complete failure

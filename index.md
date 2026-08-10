@@ -1,14 +1,37 @@
-# Cartographic projection documentation
+---
+layout: default
+title: Cartofreako
+---
+
+# Cartofreako
+
+<p class="page-deck">Six projection systems, 32 released whole-map passes
+apiece, and one visual catalog for comparing physical, social, environmental,
+network, astronomy, and art layers.</p>
+
+## Start with the maps
+
+The water pass holds the subject constant across all six projections. Select
+a thumbnail for the 3840-pixel PNG; layered SVG and print PDF remain explicit
+secondary actions.
+
+{% include v13-projection-gallery.md %}
+
+[Explore featured subjects and all six projection catalogs](docs/gallery.md).
+
+## Project and build
 
 This repository contains native C++20 forward implementations of the
 AuthaGraph, Cahill-Keyes, Dymaxion, Star-X, Myriahedral, and icosahedral
-Voronoi projections for `a60::carto::projection_api`. All six accept variable-size
+Voronoi projections, plus face-qualified Myriahedral/Voronoi reverse
+candidates through runtime API 2. All six accept variable-size
 `a60::carto::frame` values while enforcing the aspect ratio required by the
 selected geometry or source-canvas registration.
 
 Before building, see [Prerequisites](docs/prerequisites.md) for the compiler,
 GNU Make, Alpha60, Izzi, H3, GDAL/GEOS, Natural Earth, Inkscape, and optional
-WebAssembly requirements.
+WebAssembly requirements, or use the
+[technical documentation hub](docs/technical-documentation.md).
 
 ## Repository layout
 
@@ -19,7 +42,7 @@ WebAssembly requirements.
 | [`src.wasm/`](src.wasm/) | All-projection browser runtime, workers, SVG/Canvas/D3 adapters, compatibility modules, examples, and smoke tests | [WebAssembly quick start](docs/pages/webassembly-quick-start.md) |
 | [`tests/`](tests/) | Standalone algorithm and public-API tests | [`make check`](Makefile) |
 | [`assets.static/`](assets.static/) | Source plates, historical implementations, reference rasters, and downloaded geographic data | [Myriahedral reconstruction assets](assets.static/myriahedral/README.md) |
-| `assets.generated/` | Projection-organized SVG (`.svg.gz` companions for resources), PDF, full PNG, and thumbnail deliverables | [S3 v13 publication](docs/releases/s3-v13.md) and [projection snapshot catalog](#generated-artifact-previews) |
+| `assets.generated/` | Projection-organized SVG (`.svg.gz` release companions), PDF, full PNG, and thumbnail deliverables | [Visual gallery](docs/gallery.md), [S3 v13 publication](docs/releases/s3-v13.md), and [projection snapshot catalog](#generated-artifact-previews) |
 
 This separation keeps reproducible inputs distinct from rendered outputs and
 keeps generation programs out of the test suite.
@@ -39,7 +62,9 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | SVG/PDF/PNG generation, Natural Earth, folding, slicing, and review | [Generation guide](docs/generation.md) |
 | Stage 12 resource, authorization, default-year, snapshot, and Star-X integration | [Stage 12 implementation notes](docs/stage-12-implementation-notes.md) |
 | Stage 13 visual, observer, external-source, and bathymetry development | [Stage 13 convergence notes](docs/converge-generation-13.md) |
-| Visual contact sheets for every projection and released pass | [Generated projection snapshots](#generated-artifact-previews) |
+| Stage 14 projection API, visual hierarchy, verification, and release plan | [Stage 14 convergence ledger](docs/converge-generation-14.md) |
+| Visual contact sheets for every projection and released pass | [Visual gallery](docs/gallery.md) and [generated projection snapshots](#generated-artifact-previews) |
+| Compact index of build, projection, pass, browser, and release documentation | [Technical documentation](docs/technical-documentation.md) |
 | Static generated-asset releases, manifests, render hardware, and publishing | [`v20260808.1` corrected release notes](docs/releases/v20260808.1.md), [S3 v13 publication](docs/releases/s3-v13.md), and [release runbook](docs/releases/README.md) |
 | Generate-pass evaluation record plus configured, full-suite, family, and exact workflows | [Generate-pass methods and decision record](docs/generation-methods.md) |
 | Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/astro-implementation-notes.md) |
@@ -56,6 +81,7 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Source-indexed Hamonshū wave-field bathymetry generation | [Bathymetry Hamonshū implementation notes](docs/bathymetry-hamonshu-implementation-notes.md) |
 | Natural Earth acquisition, digest, and license | [Natural Earth data note](docs/natural-earth-10m-physical-vectors.md) |
 | All-six-projection browser runtime, slices, workers, SVG, Canvas, and D3 | [WebAssembly quick start](docs/pages/webassembly-quick-start.md) and [runtime reference](src.wasm/README.md) |
+| Structured forward results and face-qualified reverse candidates | [Forward/reverse projection API](docs/forward-reverse-projection-api.md) |
 | Stage 10 browser architecture and verification | [Stage 10 implementation notes](docs/pages/stage-10-webassembly.md) |
 | Proposed nested documentation structure | [Stage 11 documentation plan](docs/pages/stage-11-documentation-plan.md) |
 | Illustrative raster-backed Myriahedral overlay | [WebAssembly workflow](docs/web-workflow.md) and [complete example](docs/web-example.md) |
@@ -175,23 +201,20 @@ Star-X, and Voronoi. The fifteen whole-map generators accept a projection name
 on their command line. Every generator reopens its SVG to validate the view box,
 required layers, path structure, and finite numeric output.
 
-### Generated artifact previews
+<a id="generated-artifact-previews"></a>
 
-The v13 visual catalog is organized by projection. Each contact sheet presents
-the same 32 complete-release whole-map passes as labeled previews, grouped
-into projection foundations, sky and orbital work, networks and Anthropocene,
-resources, and both bathymetry art passes. The thirty-second pass is the
-explicitly authorized P-Tree Cloud-atmosphere snapshot. Select any preview to
-open its full-resolution layered SVG in the immutable S3 viewer.
+### Complete released artifact catalog
 
-The complete v13 release adds the authorized physical-atmosphere product
-beside the standard cleaned-union fiber product. Both representative previews
-below are served from Cloudian/S3 rather than the untracked local generated
-tree.
+The [visual gallery](docs/gallery.md) now leads with projection comparisons
+and featured subjects. Each contact sheet below presents the same 32
+complete-release whole-map passes, grouped into projection foundations, sky
+and orbital work, networks and Anthropocene, resources, and both bathymetry
+art passes. The thirty-second pass is the explicitly authorized P-Tree
+Cloud-atmosphere snapshot.
 
-| Authorized Cloud-atmosphere | Standard Fiber Synthesized |
-| --- | --- |
-| <a href="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=cahill-keyes/svg/cloud-atmosphere-ck-44-22.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/thumbnail/cloud-atmosphere-ck-44-22.png" width="360" alt="Cahill–Keyes authorized Cloud-atmosphere v13 preview"></a> | <a href="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=cahill-keyes/svg/fiber-synthesized-ck-44-22.svg.gz"><img class="defer-render" loading="lazy" decoding="async" src="https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/thumbnail/fiber-synthesized-ck-44-22.png" width="360" alt="Cahill–Keyes Fiber Synthesized v13 preview"></a> |
+Thumbnail clicks open the released 3840-pixel PNG. Every entry separately
+offers the compressed layered SVG viewer and the 44-inch print PDF, so a dense
+SVG is never required merely to inspect a larger image.
 
 - [AuthaGraph snapshot](docs/generated-snapshot-authagraph.md) — `44 × 19.052559`
 - [Cahill–Keyes snapshot](docs/generated-snapshot-ck.md) — `44 × 22`
@@ -200,7 +223,7 @@ tree.
 - [Star-X snapshot](docs/generated-snapshot-star-x.md) — `34 × 44`
 - [Voronoi snapshot](docs/generated-snapshot-voronoi.md) — `44 × 22.916667`
 
-All preview and viewer links resolve against the completed
+All preview, PNG, viewer, and PDF links resolve against the completed
 `cartofreako/v13/` public S3 release, so GitHub Pages does not depend on the
 untracked local `assets.generated/` directory. The complete v13 inventory has
 a dedicated 480-pixel thumbnail for all 32 passes in each projection, 192 total;
@@ -440,8 +463,10 @@ the `voronoi_source` preset are in the
 | [`docs/ptree-production-download.md`](docs/ptree-production-download.md) | Quick-start P-Tree registration, secure credentials, connection test, reproducible production refresh, expected files, and troubleshooting |
 | [`docs/orbital-technosphere-implementation-notes.md`](docs/orbital-technosphere-implementation-notes.md) | Stage 4.2 feasibility, naming, NASA/CelesTrak source roles, OMM/SGP4 formulas, products, verification, and accuracy boundary |
 | [`docs/stage-12-implementation-notes.md`](docs/stage-12-implementation-notes.md) | Stage 12 resource expansion, Anthropocene defaults, external authorization, render hardware, generated snapshots, and Star-X paint-order integration |
-| [Generated projection snapshots](#generated-artifact-previews) | Six projection-specific contact sheets sharing one 32-pass complete-release template |
-| `_includes/generated-snapshot.md` | Canonical contact-sheet taxonomy, viewer links, labels, and exclusion policy used by all six snapshot pages |
+| [Visual gallery](docs/gallery.md) | Projection comparison, featured subjects, and entry points to all six 32-pass contact sheets |
+| [Technical documentation](docs/technical-documentation.md) | Compact build, projection, pass-lifecycle, browser, release, and preservation index |
+| `_data/generated_passes.yml` | Canonical 32-pass labels, stems, alternate text, categories, and stable section identifiers |
+| `_includes/generated-snapshot.md` | Shared PNG-first contact sheet with explicit layered SVG and print PDF actions for all six projections |
 | [`docs/resources-enrichment-plan.md`](docs/resources-enrichment-plan.md) | Stage 12 six-family taxonomy, source evaluation, non-sparse options, v3 schema, migration sequence, and release QA |
 | [`src.projections/cart0freak0-star-x.h`](src.projections/cart0freak0-star-x.h) | Star-X group assembly, configurable centered scale, fixed-`60°S` cap geometry, frame validation, public API, and factory |
 | [`tests/test-star-x-projection-api.cc`](tests/test-star-x-projection-api.cc) | Star-X anchors, assembly and scale, global domain, cap invariants, variable-frame, validation, and API tests |

@@ -2,12 +2,14 @@
 
 This repository contains native C++20 forward implementations of the
 AuthaGraph, Cahill-Keyes, Dymaxion, Star-X, Myriahedral, and icosahedral
-Voronoi projections for the shared `a60::carto::projection_api`.
+Voronoi projections, plus face-qualified reverse implementations for every
+Myriahedral layout and Voronoi, through one projection-neutral runtime.
 
-The authoritative project documentation is [`index.md`](index.md). It contains
-the projection comparison, aspect-ratio requirements, public APIs, usage
-entry points, implementation guides, geometric context, bibliographies,
-attribution, and source/test index.
+Start with the [visual gallery](docs/gallery.md), where every thumbnail opens
+a released 3840-pixel PNG and every plate has separate layered SVG and print
+PDF actions. The [technical documentation hub](docs/technical-documentation.md)
+is the compact build, projection, pass, browser, and release index. The
+authoritative full project documentation remains [`index.md`](index.md).
 
 The top-level directories separate implementation, generation, verification,
 and artifacts:
@@ -68,13 +70,16 @@ targets:
 ```sh
 make check-wasm-projections
 make check-wasm-projections-browser
+make check-forward-reverse-projection-api
 make check-wasm-cahill-keyes
 make check-wasm-cahill-myriahedral
 ```
 
 See the [web-developer quick start](docs/pages/webassembly-quick-start.md) and
-[`src.wasm` README](src.wasm/README.md) for API, deployment paths, slices,
-compatibility contracts, and build requirements.
+[`src.wasm` README](src.wasm/README.md) for deployment paths, slices,
+compatibility contracts, and build requirements. The
+[forward/reverse API notes](docs/forward-reverse-projection-api.md) define
+runtime API 2, candidate statuses, batches, TypeScript, and headless behavior.
 
 Generate 24 production whole-earth maps, 18 timestamped astronomy maps, 12
 timestamped Orbital Technosphere maps, 84 Stage 12 resources maps, six
