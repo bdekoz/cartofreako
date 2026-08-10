@@ -16,7 +16,7 @@ synthetic, is identified as a fixture in its metadata, and must not be
 presented as an observation.
 
 For first-time production setup, follow the
-[credentialed P-Tree download quick start](../../docs/ptree-production-download.md).
+[credentialed P-Tree download quick start](../../docs/pages/data/ptree-download.md).
 It covers registration, safe `.netrc` configuration, a read-only login test,
 the complete refresh sequence, expected outputs, and troubleshooting.
 

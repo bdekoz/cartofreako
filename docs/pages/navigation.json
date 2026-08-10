@@ -1,0 +1,23 @@
+{
+  "schema": "cartofreako-documentation-navigation-v1",
+  "updated": "2026-08-10",
+  "landing": "docs/pages/README.md",
+  "sections": [
+    {"id": "gallery", "title": "Visual gallery", "path": "docs/pages/gallery/README.md"},
+    {"id": "getting-started", "title": "Build and generate", "path": "docs/pages/getting-started/README.md"},
+    {"id": "projections", "title": "Projection reference", "path": "docs/pages/projections/README.md"},
+    {"id": "passes", "title": "Generation passes", "path": "docs/pages/passes/README.md"},
+    {"id": "data", "title": "Source data", "path": "docs/pages/data/README.md"},
+    {"id": "runtime", "title": "Runtime and consumers", "path": "docs/pages/runtime/README.md"},
+    {"id": "development", "title": "Development records", "path": "docs/pages/development/README.md"},
+    {"id": "history", "title": "Historical records", "path": "docs/pages/history/README.md"},
+    {"id": "releases", "title": "Releases and preservation", "path": "docs/pages/releases/README.md"}
+  ],
+  "external_authorities": [
+    {
+      "id": "alpha60-clusterops",
+      "title": "Annual campaigns and shared UCB AAO transport",
+      "url": "https://github.com/alpha60-devops/alpha60-clusterops/blob/main/docs/README.md"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 This directory contains the checked, offline inputs for the six resource
 families documented in
-[`docs/resources-implementation-notes.md`](../../docs/resources-implementation-notes.md).
+[resources implementation notes](../../docs/pages/passes/resources/implementation.md).
 
 - `resources-profile.json` is the strict
   `cartofreako-resources-profile-v3` source/metric catalogue and release-gate

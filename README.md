@@ -6,12 +6,12 @@ Voronoi projections, plus candidate-aware reverse implementations for every
 family and checked layout through one projection-neutral runtime. Star-X keeps
 its ordinary carrier and unified Antarctic cap as explicit components.
 
-Start with the [visual gallery](docs/gallery.md), where every thumbnail opens
+Start with the [visual gallery](docs/pages/gallery/README.md), where every thumbnail opens
 a released 3840-pixel PNG and every plate has separate layered SVG and print
-PDF actions. The [technical documentation hub](docs/technical-documentation.md)
+PDF actions. The [technical documentation hub](docs/pages/README.md)
 is the compact build, projection, pass, browser, and release index. The
 authoritative full project documentation remains [`index.md`](index.md). The
-[AI-agent and 1080p gaming improvement plan](docs/ai-agent-and-1080p-gaming-improvement-plan.md)
+[AI Workflows assessment and 1080p gaming improvement plan](docs/pages/runtime/ai-agent-and-1080p-gaming.md)
 adds screen/runtime derivatives while preserving the SVG/PDF archive and art
 masters plus the existing projection-specific 44-inch and A0 print products.
 
@@ -30,7 +30,7 @@ and artifacts:
 ## Build and test
 
 Install the components listed in
-[`docs/prerequisites.md`](docs/prerequisites.md) before building the complete
+the [prerequisites](docs/pages/getting-started/prerequisites.md) before building the complete
 SVG, PDF, and PNG suite. The offline `make check` target needs GNU Make, a
 C++20 compiler, RapidJSON and H3 development files, sibling Alpha60/Izzi
 headers, and the checked-in astronomy, Cloud-atmosphere fixture, Orbital
@@ -53,7 +53,7 @@ make
 
 The checked-in development profile selects Cahill-Keyes plus the Earth and
 water passes (`ocean` is accepted as the legacy alias for `water`). See the
-[generation methods](docs/generation-methods.md) for custom profiles, explicit
+[generation methods](docs/pages/getting-started/generation-methods.md) for custom profiles, explicit
 targets, full-suite generation, the central `generate-*` evaluation ledger,
 and the Stage 7 design choices.
 
@@ -79,10 +79,10 @@ make check-wasm-cahill-keyes
 make check-wasm-cahill-myriahedral
 ```
 
-See the [web-developer quick start](docs/pages/webassembly-quick-start.md) and
+See the [web-developer quick start](docs/pages/runtime/webassembly-quick-start.md) and
 [`src.wasm` README](src.wasm/README.md) for deployment paths, slices,
 compatibility contracts, and build requirements. The
-[forward/reverse API notes](docs/forward-reverse-projection-api.md) define
+[forward/reverse API notes](docs/pages/runtime/projection-api.md) define
 runtime API 3, candidate/component statuses, batches, TypeScript, and headless behavior.
 
 Generate 24 production whole-earth maps, 18 timestamped astronomy maps, 12
@@ -121,12 +121,12 @@ passes for each of the six projections in the
 [generated snapshot catalog](index.md#generated-artifact-previews). The
 complete v13 catalog adds the explicitly authorized Cloud-atmosphere pass as
 the thirty-second image in every projection. The corrected
-[`v20260808.1` generated-assets release notes](docs/releases/v20260808.1.md)
+[`v20260808.1` generated-assets release notes](docs/pages/releases/v20260808.1.md)
 record the static-bundle manifest, render host, hardware sizing, verification,
 and source commit; the earlier `v20260808` package is superseded. The
-[S3 v13 publication notes](docs/releases/s3-v13.md) document the public
+[S3 v13 publication notes](docs/pages/releases/s3-v13.md) document the public
 Cloudian extracted tree used by every preview. The
-[release runbook](docs/releases/README.md) treats a GitHub source release and a
+[release runbook](docs/pages/releases/README.md) treats a GitHub source release and a
 UCB Active Archive Object Storage deposit over S3 as different operations;
 only the latter uses the interactive, human-invoked AAO target.
 
@@ -160,7 +160,7 @@ Neither target calls the other: fetching changes source snapshots but creates
 no maps, while generation consumes the snapshots but never refreshes them.
 
 See the
-[`astronomy implementation notes`](docs/astro-implementation-notes.md) for the
+[`astronomy implementation notes`](docs/pages/passes/astronomy.md) for the
 San Francisco/Hubble distinction, SGP4 observer geometry, data sources,
 instrumentation models, and the planet sizing contract: a 2× fixed display
 glyph plus a dotted true-apparent-size outline.
@@ -181,14 +181,14 @@ make generate-cloud-atmosphere
 ```
 
 See the
-[credentialed P-Tree production-download quick start](docs/ptree-production-download.md)
+[credentialed P-Tree production-download quick start](docs/pages/data/ptree-download.md)
 for account registration, secure `.netrc` setup, a login smoke test,
 reproducible commands, expected files, and troubleshooting.
 
 Solar illumination is calculated once at generator process start. AOD remains
 distinct from smoke and PM2.5, precipitation is not an event count, and
 missing data means unobserved. See the
-[Cloud-atmosphere implementation notes](docs/cloud-atmosphere-implementation-notes.md)
+[Cloud-atmosphere implementation notes](docs/pages/passes/cloud-atmosphere.md)
 for the astronomy boundary, source and QA contracts, terms, layers, and
 limitations.
 
@@ -201,7 +201,7 @@ make generate-orbiting
 make fetch-orbiting-data
 ```
 
-See the [Orbital Technosphere implementation notes](docs/orbital-technosphere-implementation-notes.md)
+See the [Orbital Technosphere implementation notes](docs/pages/passes/orbital-technosphere.md)
 for source feasibility, naming, propagation, detiling layers, and accuracy
 limits.
 
@@ -232,9 +232,9 @@ refresh of the observation atlas requires
 `ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY=1` is an explicit local-pipeline
 override, not a global release path. EPA AirData remains distinct from NOAA HMS
 smoke, and CWFIS remains Canadian QA rather than global fire coverage. See the
-[Anthropocene implementation notes](docs/anthropocene-implementation-notes.md)
+[Anthropocene implementation notes](docs/pages/passes/anthropocene/implementation.md)
 for classifications, formulas, source research, refresh workflow, and limits.
-[Stage 8b enrichment plan](docs/anthropocene-enrichment-plan.md) evaluates the
+[Stage 8b enrichment plan](docs/pages/passes/anthropocene/enrichment-plan.md) evaluates the
 current North American bias, records the implemented CPC/FIRMS-gate increment,
 and specifies the remaining CAMS, permission-gated PurpleAir, and ocean work.
 
@@ -252,13 +252,13 @@ make generate-resources-human
 make generate-resources
 ```
 
-The [resource metric catalog](docs/resources-metric-catalog.md) distinguishes
+The [resource metric catalog](docs/pages/passes/resources/metric-catalog.md) distinguishes
 the 14 standard release passes from optional-pass infrastructure and 45
 exploration-only definitions, including the unreleased LGBTQIA-related and
 drug-policy candidates. The
-[Stage 12 implementation notes](docs/stage-12-implementation-notes.md),
-[resources implementation notes](docs/resources-implementation-notes.md),
-and [enrichment plan](docs/resources-enrichment-plan.md) define source roles,
+[Stage 12 implementation notes](docs/pages/development/stage-12.md),
+[resources implementation notes](docs/pages/passes/resources/implementation.md),
+and [enrichment plan](docs/pages/passes/resources/enrichment-plan.md) define source roles,
 the v3 country/spatial contracts, offline snapshot preparation, reef
 normalization, coverage QA, and candidate promotion rules.
 
@@ -312,7 +312,7 @@ artifacts recorded there. FIRMS is remembered as an authorized refresh, but
 still has no default render until a candidate is promoted. A clean checkout
 has no state file and retains the standard credential-free graph.
 
-See [Prerequisites](docs/prerequisites.md#optional-external-authorization) for
+See [Prerequisites](docs/pages/getting-started/prerequisites.md#optional-external-authorization) for
 the per-provider variables and selective checks.
 
 Network-swarm generation is offline and reproducible from a checked-in
@@ -324,7 +324,7 @@ make prepare-network-swarm-data
 make generate-network-swarm
 ```
 
-See the [network-swarm implementation notes](docs/network-swarm-implementation-notes.md)
+See the [network-swarm implementation notes](docs/pages/passes/network-swarm.md)
 for source validation, independent downloader layers, clustering, projection
 cuts, profile overrides, and output previews.
 
@@ -354,7 +354,7 @@ make generate-network-infrastructure-topology-artifacts
 ```
 
 See the
-[network-infrastructure implementation notes](docs/network-infrastructure-implementation-notes.md)
+[network-infrastructure implementation notes](docs/pages/passes/network-infrastructure.md)
 for source pins, checkout overrides, physical-versus-logical edge semantics,
 clustering, licensing, and previews.
 
@@ -368,7 +368,7 @@ make generate-fiber-synthesized
 make generate-fiber-synthesized-artifacts
 ```
 
-See the [Fiber Synthesized implementation notes](docs/fiber-synthesized-implementation-notes.md)
+See the [Fiber Synthesized implementation notes](docs/pages/passes/fiber-synthesized.md)
 for the union-versus-difference decision, exact matching policy, source pins,
 license, rendering semantics, and refresh command.
 
@@ -383,9 +383,9 @@ make generate-bathymetry-hamonshu
 make generate-bathymetry-hamonshu-artifacts
 ```
 
-See the [Bathymetry Roulette implementation notes](docs/bathymetry-roulette-implementation-notes.md)
+See the [Bathymetry Roulette implementation notes](docs/pages/passes/bathymetry/roulette.md)
 for the cycloid-minimum depth catalogue, filled 30% forms, Voronoi grouping,
 restored blue ramp, accepted moiré, and layer contract. The separate
-[Bathymetry Hamonshū notes](docs/bathymetry-hamonshu-implementation-notes.md)
+[Bathymetry Hamonshū notes](docs/pages/passes/bathymetry/hamonshu.md)
 document its source-indexed Izzi motifs, density/curvature depth mapping,
 shared field architecture, provenance, commands, and verification.

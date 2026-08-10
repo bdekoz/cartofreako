@@ -5,18 +5,18 @@
 
 # {{ page.projection_name }} generated snapshot
 
-[Visual gallery](gallery.html) ·
-[Technical documentation](technical-documentation.html) ·
-[AuthaGraph](generated-snapshot-authagraph.html) ·
-[Cahill–Keyes](generated-snapshot-ck.html) ·
-[Dymaxion](generated-snapshot-dymaxion.html) ·
-[Myriahedral](generated-snapshot-myriahedral.html) ·
-[Star-X](generated-snapshot-star-x.html) ·
-[Voronoi](generated-snapshot-voronoi.html)
+[Visual gallery]({{site.baseurl}}/docs/pages/gallery/) ·
+[Technical documentation]({{site.baseurl}}/docs/pages/) ·
+[AuthaGraph]({{site.baseurl}}/docs/pages/gallery/authagraph.html) ·
+[Cahill–Keyes]({{site.baseurl}}/docs/pages/gallery/cahill-keyes.html) ·
+[Dymaxion]({{site.baseurl}}/docs/pages/gallery/dymaxion.html) ·
+[Myriahedral]({{site.baseurl}}/docs/pages/gallery/myriahedral.html) ·
+[Star-X]({{site.baseurl}}/docs/pages/gallery/star-x.html) ·
+[Voronoi]({{site.baseurl}}/docs/pages/gallery/voronoi.html)
 
-[Generation guide](generation.html) ·
-[Stage 13 convergence notes](converge-generation-13.html) ·
-[S3 v13 publication](releases/s3-v13.html)
+[Generation guide]({{site.baseurl}}/docs/pages/getting-started/generation.html) ·
+[Stage 13 convergence notes]({{site.baseurl}}/docs/pages/development/stage-13.html) ·
+[S3 v13 publication]({{site.baseurl}}/docs/pages/releases/s3-v13.html)
 
 This contact sheet covers every {{ page.projection_name }} whole-map pass in
 the complete Stage 13 release graph, including its authorized P-Tree

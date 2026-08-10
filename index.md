@@ -17,7 +17,7 @@ secondary actions.
 
 {% include v13-projection-gallery.md %}
 
-[Explore featured subjects and all six projection catalogs](docs/gallery.md).
+[Explore featured subjects and all six projection catalogs](docs/pages/gallery/README.md).
 
 ## Project and build
 
@@ -29,21 +29,21 @@ Antarctic cap as separate components. All six accept variable-size
 `a60::carto::frame` values while enforcing the aspect ratio required by the
 selected geometry or source-canvas registration.
 
-Before building, see [Prerequisites](docs/prerequisites.md) for the compiler,
+Before building, see [Prerequisites](docs/pages/getting-started/prerequisites.md) for the compiler,
 GNU Make, Alpha60, Izzi, H3, GDAL/GEOS, Natural Earth, Inkscape, and optional
 WebAssembly requirements, or use the
-[technical documentation hub](docs/technical-documentation.md).
+[technical documentation hub](docs/pages/README.md).
 
 ## Repository layout
 
 | Directory | Responsibility | Start here |
 | --- | --- | --- |
 | [`src.projections/`](src.projections/) | Projection interface, frame abstraction, and native implementations | [`a60-carto-projection.h`](src.projections/a60-carto-projection.h) |
-| [`src.generate/`](src.generate/) | Native SVG generators and their shared generation support | [Generation guide](docs/generation.md) |
-| [`src.wasm/`](src.wasm/) | All-projection browser runtime, workers, SVG/Canvas/D3 adapters, compatibility modules, examples, and smoke tests | [WebAssembly quick start](docs/pages/webassembly-quick-start.md) |
+| [`src.generate/`](src.generate/) | Native SVG generators and their shared generation support | [Generation guide](docs/pages/getting-started/generation.md) |
+| [`src.wasm/`](src.wasm/) | All-projection browser runtime, workers, SVG/Canvas/D3 adapters, compatibility modules, examples, and smoke tests | [WebAssembly quick start](docs/pages/runtime/webassembly-quick-start.md) |
 | [`tests/`](tests/) | Standalone algorithm and public-API tests | [`make check`](Makefile) |
 | [`assets.static/`](assets.static/) | Source plates, historical implementations, reference rasters, and downloaded geographic data | [Myriahedral reconstruction assets](assets.static/myriahedral/README.md) |
-| `assets.generated/` | Projection-organized SVG (`.svg.gz` release companions), PDF, full PNG, and thumbnail deliverables | [Visual gallery](docs/gallery.md), [S3 v13 publication](docs/releases/s3-v13.md), and [projection snapshot catalog](#generated-artifact-previews) |
+| `assets.generated/` | Projection-organized SVG (`.svg.gz` release companions), PDF, full PNG, and thumbnail deliverables | [Visual gallery](docs/pages/gallery/README.md), [S3 v13 publication](docs/pages/releases/s3-v13.md), and [projection snapshot catalog](#generated-artifact-previews) |
 
 This separation keeps reproducible inputs distinct from rendered outputs and
 keeps generation programs out of the test suite.
@@ -59,34 +59,34 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 
 | Topic | Authoritative documentation |
 | --- | --- |
-| Installation and build dependencies | [Prerequisites](docs/prerequisites.md) |
-| SVG/PDF/PNG generation, Natural Earth, folding, slicing, and review | [Generation guide](docs/generation.md) |
-| Stage 12 resource, authorization, default-year, snapshot, and Star-X integration | [Stage 12 implementation notes](docs/stage-12-implementation-notes.md) |
-| Stage 13 visual, observer, external-source, and bathymetry development | [Stage 13 convergence notes](docs/converge-generation-13.md) |
-| Stage 14 projection API, visual hierarchy, verification, and release plan | [Stage 14 convergence ledger](docs/converge-generation-14.md) |
-| AI-agent discovery, 1080p gaming derivatives, and preservation of authoritative archive/art/print products | [AI-agent and 1080p gaming improvement plan](docs/ai-agent-and-1080p-gaming-improvement-plan.md) |
-| Visual contact sheets for every projection and released pass | [Visual gallery](docs/gallery.md) and [generated projection snapshots](#generated-artifact-previews) |
-| Compact index of build, projection, pass, browser, and release documentation | [Technical documentation](docs/technical-documentation.md) |
-| GitHub source releases versus UCB AAO/S3 deposits, static assets, manifests, and render hardware | [`v20260810` Stage 14 source release](docs/releases/v20260810.md), [`v20260808.1` corrected release notes](docs/releases/v20260808.1.md), [S3 v13 publication](docs/releases/s3-v13.md), and [release runbook](docs/releases/README.md) |
-| Generate-pass evaluation record plus configured, full-suite, family, and exact workflows | [Generate-pass methods and decision record](docs/generation-methods.md) |
-| Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/astro-implementation-notes.md) |
-| Process-start solar illumination and source-timed JAXA physical atmosphere generation | [Cloud-atmosphere implementation notes](docs/cloud-atmosphere-implementation-notes.md) |
-| Human-made Earth-orbit population and observer generation | [Orbital Technosphere implementation notes](docs/orbital-technosphere-implementation-notes.md) |
-| Implemented energy, food, fauna, flora, mineral, and human resource families | [Resources Stage 12 implementation notes](docs/resources-implementation-notes.md) and [enrichment plan](docs/resources-enrichment-plan.md) |
-| Standard, optional, and exploration-only resource metrics | [Resources metric catalog](docs/resources-metric-catalog.md) |
-| Source-separated climate, weather, fire, smoke, and air-quality atlas | [Anthropocene implementation notes](docs/anthropocene-implementation-notes.md) |
-| Implemented dual-year CPC field plus planned atmosphere, PurpleAir, and ocean enrichment | [Anthropocene Stage 8b enrichment plan](docs/anthropocene-enrichment-plan.md) |
-| Cumulative H3 network-swarm generation | [Network-swarm generation implementation notes](docs/network-swarm-implementation-notes.md) |
-| Cloud/CDN site atlas and opt-in cable/exchange topology | [Network-infrastructure implementation notes](docs/network-infrastructure-implementation-notes.md) |
-| Checked cleanup/union of 2022 and 20260805 submarine fiber | [Fiber Synthesized implementation notes](docs/fiber-synthesized-implementation-notes.md) |
-| Filled, blue-ramp, Voronoi-grouped roulette bathymetry generation | [Bathymetry Roulette implementation notes](docs/bathymetry-roulette-implementation-notes.md) |
-| Source-indexed Hamonshū wave-field bathymetry generation | [Bathymetry Hamonshū implementation notes](docs/bathymetry-hamonshu-implementation-notes.md) |
-| Natural Earth acquisition, digest, and license | [Natural Earth data note](docs/natural-earth-10m-physical-vectors.md) |
-| All-six-projection browser runtime, slices, workers, SVG, Canvas, and D3 | [WebAssembly quick start](docs/pages/webassembly-quick-start.md) and [runtime reference](src.wasm/README.md) |
-| Structured forward results and face-qualified reverse candidates | [Forward/reverse projection API](docs/forward-reverse-projection-api.md) |
-| Stage 10 browser architecture and verification | [Stage 10 implementation notes](docs/pages/stage-10-webassembly.md) |
-| Proposed nested documentation structure | [Stage 11 documentation plan](docs/pages/stage-11-documentation-plan.md) |
-| Illustrative raster-backed Myriahedral overlay | [WebAssembly workflow](docs/web-workflow.md) and [complete example](docs/web-example.md) |
+| Installation and build dependencies | [Prerequisites](docs/pages/getting-started/prerequisites.md) |
+| SVG/PDF/PNG generation, Natural Earth, folding, slicing, and review | [Generation guide](docs/pages/getting-started/generation.md) |
+| Stage 12 resource, authorization, default-year, snapshot, and Star-X integration | [Stage 12 implementation notes](docs/pages/development/stage-12.md) |
+| Stage 13 visual, observer, external-source, and bathymetry development | [Stage 13 convergence notes](docs/pages/development/stage-13.md) |
+| Stage 14 projection API, visual hierarchy, verification, and release plan | [Stage 14 convergence ledger](docs/pages/development/stage-14.md) |
+| AI-agent discovery, 1080p gaming derivatives, and preservation of authoritative archive/art/print products | [AI Workflows assessment and 1080p gaming improvement plan](docs/pages/runtime/ai-agent-and-1080p-gaming.md) |
+| Visual contact sheets for every projection and released pass | [Visual gallery](docs/pages/gallery/README.md) and [generated projection snapshots](#generated-artifact-previews) |
+| Compact index of build, projection, pass, browser, and release documentation | [Technical documentation](docs/pages/README.md) |
+| GitHub source releases versus UCB AAO/S3 deposits, static assets, manifests, and render hardware | [`v20260810` Stage 14 source release](docs/pages/releases/v20260810.md), [`v20260808.1` corrected release notes](docs/pages/releases/v20260808.1.md), [S3 v13 publication](docs/pages/releases/s3-v13.md), and [release runbook](docs/pages/releases/README.md) |
+| Generate-pass evaluation record plus configured, full-suite, family, and exact workflows | [Generate-pass methods and decision record](docs/pages/getting-started/generation-methods.md) |
+| Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/pages/passes/astronomy.md) |
+| Process-start solar illumination and source-timed JAXA physical atmosphere generation | [Cloud-atmosphere implementation notes](docs/pages/passes/cloud-atmosphere.md) |
+| Human-made Earth-orbit population and observer generation | [Orbital Technosphere implementation notes](docs/pages/passes/orbital-technosphere.md) |
+| Implemented energy, food, fauna, flora, mineral, and human resource families | [Resources Stage 12 implementation notes](docs/pages/passes/resources/implementation.md) and [enrichment plan](docs/pages/passes/resources/enrichment-plan.md) |
+| Standard, optional, and exploration-only resource metrics | [Resources metric catalog](docs/pages/passes/resources/metric-catalog.md) |
+| Source-separated climate, weather, fire, smoke, and air-quality atlas | [Anthropocene implementation notes](docs/pages/passes/anthropocene/implementation.md) |
+| Implemented dual-year CPC field plus planned atmosphere, PurpleAir, and ocean enrichment | [Anthropocene Stage 8b enrichment plan](docs/pages/passes/anthropocene/enrichment-plan.md) |
+| Cumulative H3 network-swarm generation | [Network-swarm generation implementation notes](docs/pages/passes/network-swarm.md) |
+| Cloud/CDN site atlas and opt-in cable/exchange topology | [Network-infrastructure implementation notes](docs/pages/passes/network-infrastructure.md) |
+| Checked cleanup/union of 2022 and 20260805 submarine fiber | [Fiber Synthesized implementation notes](docs/pages/passes/fiber-synthesized.md) |
+| Filled, blue-ramp, Voronoi-grouped roulette bathymetry generation | [Bathymetry Roulette implementation notes](docs/pages/passes/bathymetry/roulette.md) |
+| Source-indexed Hamonshū wave-field bathymetry generation | [Bathymetry Hamonshū implementation notes](docs/pages/passes/bathymetry/hamonshu.md) |
+| Natural Earth acquisition, digest, and license | [Natural Earth data note](docs/pages/data/natural-earth.md) |
+| All-six-projection browser runtime, slices, workers, SVG, Canvas, and D3 | [WebAssembly quick start](docs/pages/runtime/webassembly-quick-start.md) and [runtime reference](src.wasm/README.md) |
+| Structured forward results and face-qualified reverse candidates | [Forward/reverse projection API](docs/pages/runtime/projection-api.md) |
+| Stage 10 browser architecture and verification | [Stage 10 implementation notes](docs/pages/runtime/webassembly-architecture.md) |
+| Implemented topic-oriented Pages structure and repository ownership | [Documentation architecture](docs/pages/development/documentation-layout.md) |
+| Illustrative raster-backed Myriahedral overlay | [WebAssembly workflow](docs/pages/runtime/myriahedral-workflow.md) and [complete example](docs/pages/runtime/myriahedral-example.md) |
 
 Each projection has three complementary documents. Context explains the
 geometry and cuts, implementation notes describe formulas and code, and the
@@ -94,12 +94,12 @@ bibliography records primary sources and attribution.
 
 | Projection | Context | Implementation | Bibliography |
 | --- | --- | --- | --- |
-| AuthaGraph | [Context](docs/authagraph-context.md) | [Notes](docs/authagraph-implementation-notes.md) | [Sources](docs/authagraph-bibliography.md) |
-| Cahill-Keyes | [Context](docs/cahill-keyes-context.md) | [Notes](docs/cahill-keyes-implementation-notes.md) | [Sources](docs/cahill-keyes-bibliography.md) |
-| Dymaxion | [Context](docs/dymaxion-context.md) | [Notes](docs/dymaxion-implementation-notes.md) | [Sources](docs/dymaxion-bibliography.md) |
-| Star-X | [Context](docs/star-x-context.md) | [Notes](docs/star-x-implementation-notes.md) | [Sources](docs/star-x-bibliography.md) |
-| Myriahedral | [Context](docs/myriahedral-context.md) | [Notes](docs/myriahedral-implementation-notes.md) | [Sources](docs/myriahedral-bibliography.md) |
-| Icosahedral Voronoi | [Context](docs/voronoi-context.md) | [Notes](docs/voronoi-implementation-notes.md) | [Sources](docs/voronoi-bibliography.md) |
+| AuthaGraph | [Context](docs/pages/projections/authagraph/context.md) | [Notes](docs/pages/projections/authagraph/implementation.md) | [Sources](docs/pages/projections/authagraph/bibliography.md) |
+| Cahill-Keyes | [Context](docs/pages/projections/cahill-keyes/context.md) | [Notes](docs/pages/projections/cahill-keyes/implementation.md) | [Sources](docs/pages/projections/cahill-keyes/bibliography.md) |
+| Dymaxion | [Context](docs/pages/projections/dymaxion/context.md) | [Notes](docs/pages/projections/dymaxion/implementation.md) | [Sources](docs/pages/projections/dymaxion/bibliography.md) |
+| Star-X | [Context](docs/pages/projections/star-x/context.md) | [Notes](docs/pages/projections/star-x/implementation.md) | [Sources](docs/pages/projections/star-x/bibliography.md) |
+| Myriahedral | [Context](docs/pages/projections/myriahedral/context.md) | [Notes](docs/pages/projections/myriahedral/implementation.md) | [Sources](docs/pages/projections/myriahedral/bibliography.md) |
+| Icosahedral Voronoi | [Context](docs/pages/projections/voronoi/context.md) | [Notes](docs/pages/projections/voronoi/implementation.md) | [Sources](docs/pages/projections/voronoi/bibliography.md) |
 
 ## Choose a projection
 
@@ -117,7 +117,7 @@ bibliography records primary sources and attribution.
 A bare `make` validates [`generation-profile.json`](generation-profile.json)
 and builds only its selected projection/pass SVG matrix. Preview the
 normalized selection and targets with `make generation-plan`; see the
-[generation methods](docs/generation-methods.md) for schema details and the
+[generation methods](docs/pages/getting-started/generation-methods.md) for schema details and the
 generation-pass and Stage 7 decision records. The explicit `make all`
 workflow below remains the complete release/review build.
 
@@ -207,7 +207,7 @@ required layers, path structure, and finite numeric output.
 
 ### Complete released artifact catalog
 
-The [visual gallery](docs/gallery.md) now leads with projection comparisons
+The [visual gallery](docs/pages/gallery/README.md) now leads with projection comparisons
 and featured subjects. Each contact sheet below presents the same 32
 complete-release whole-map passes, grouped into projection foundations, sky
 and orbital work, networks and Anthropocene, resources, and both bathymetry
@@ -218,12 +218,12 @@ Thumbnail clicks open the released 3840-pixel PNG. Every entry separately
 offers the compressed layered SVG viewer and the 44-inch print PDF, so a dense
 SVG is never required merely to inspect a larger image.
 
-- [AuthaGraph snapshot](docs/generated-snapshot-authagraph.md) — `44 × 19.052559`
-- [Cahill–Keyes snapshot](docs/generated-snapshot-ck.md) — `44 × 22`
-- [Dymaxion snapshot](docs/generated-snapshot-dymaxion.md) — `44 × 20.78461`
-- [Myriahedral snapshot](docs/generated-snapshot-myriahedral.md) — `44 × 24.75`
-- [Star-X snapshot](docs/generated-snapshot-star-x.md) — `34 × 44`
-- [Voronoi snapshot](docs/generated-snapshot-voronoi.md) — `44 × 22.916667`
+- [AuthaGraph snapshot](docs/pages/gallery/authagraph.md) — `44 × 19.052559`
+- [Cahill–Keyes snapshot](docs/pages/gallery/cahill-keyes.md) — `44 × 22`
+- [Dymaxion snapshot](docs/pages/gallery/dymaxion.md) — `44 × 20.78461`
+- [Myriahedral snapshot](docs/pages/gallery/myriahedral.md) — `44 × 24.75`
+- [Star-X snapshot](docs/pages/gallery/star-x.md) — `34 × 44`
+- [Voronoi snapshot](docs/pages/gallery/voronoi.md) — `44 × 22.916667`
 
 All preview, PNG, viewer, and PDF links resolve against the completed
 `cartofreako/v13/` public S3 release, so GitHub Pages does not depend on the
@@ -237,34 +237,34 @@ explicitly labeled pass. The sheets distinguish the ordinary cloud/CDN site
 atlas from the P-Tree Cloud-atmosphere snapshot. Licensed network topology and
 unpromoted FIRMS candidates remain outside the public catalog.
 
-The [SVG generation pipeline](docs/generation.md) explains the generator
+The [SVG generation pipeline](docs/pages/getting-started/generation.md) explains the generator
 sources and Make targets, Natural Earth acquisition, seam handling, sampling,
 polygon clipping, projected-path folding, layer construction, self-checks,
 perceptual tradeoffs, and both Cahill-Keyes enlargement styles. It is the
 authoritative reference for individual `generate-*` targets and the
 ocean/land versus physical-feature layer partition. The
-[astronomy notes](docs/astro-implementation-notes.md) cover the profile,
+[astronomy notes](docs/pages/passes/astronomy.md) cover the profile,
 source evaluation, calculations, instrument filter, and accuracy boundary.
-The [Cloud-atmosphere notes](docs/cloud-atmosphere-implementation-notes.md)
+The [Cloud-atmosphere notes](docs/pages/passes/cloud-atmosphere.md)
 record the astro/atmosphere boundary, P-Tree regional/daytime cloud decision,
 JAXA source timing, raster-to-H3 preparation, QA and missing-data rules,
 terms, products, and verification.
-The [Orbital Technosphere notes](docs/orbital-technosphere-implementation-notes.md)
+The [Orbital Technosphere notes](docs/pages/passes/orbital-technosphere.md)
 record its naming decision, NASA/CelesTrak feasibility evaluation, OMM and
 SGP4 pipeline, semantic detiling, and non-operational accuracy boundary.
-The [Anthropocene notes](docs/anthropocene-implementation-notes.md) record the
+The [Anthropocene notes](docs/pages/passes/anthropocene/implementation.md) record the
 feasibility boundary, literal 2026 profile, source classifications, record and
 rainfall formulas, Canada/Russia fire-source evaluation, EPA/smoke separation,
 deferred coral phase, snapshot audit, and interpretation limits.
-The [Stage 8b enrichment plan](docs/anthropocene-enrichment-plan.md) documents
+The [Stage 8b enrichment plan](docs/pages/passes/anthropocene/enrichment-plan.md) documents
 the coverage diagnosis, the implemented complete-2025/partial-2026 CPC field
 and FIRMS release gate, and the remaining CAMS, PurpleAir, and ocean themes.
-The [Resources Stage 12 implementation notes](docs/resources-implementation-notes.md)
-and [enrichment plan](docs/resources-enrichment-plan.md) define the six
+The [Resources Stage 12 implementation notes](docs/pages/passes/resources/implementation.md)
+and [enrichment plan](docs/pages/passes/resources/enrichment-plan.md) define the six
 implemented target families, v3 country/spatial contracts, non-sparse
 coverage gates, actual reef geometry, corrected human-measure semantics,
 refresh workflow, and rejected-candidate audit.
-The [resources metric catalog](docs/resources-metric-catalog.md) makes all 59
+The [resources metric catalog](docs/pages/passes/resources/metric-catalog.md) makes all 59
 catalog entries and their lifecycle visible, including the unreleased
 LGBTQIA-related and drug-policy definitions.
 
@@ -286,25 +286,25 @@ exploration input rather than an optional released pass.
 The 45 exploration-only entries comprise 41 `planned`, three `supplemental`,
 and one `research-gap` metric. `Supplemental` means a possible supporting
 product; it does **not** mean an implemented optional pass. The complete
-[human-readable catalog](docs/resources-metric-catalog.md) maps every metric
+[human-readable catalog](docs/pages/passes/resources/metric-catalog.md) maps every metric
 to its class and promotion boundary, while
 [`resources-profile.json`](assets.static/resources/resources-profile.json)
 remains the machine-readable authority.
-The [network-swarm notes](docs/network-swarm-implementation-notes.md) record the fixed
+The [network-swarm notes](docs/pages/passes/network-swarm.md) record the fixed
 source audit, variable-input contract, H3/Izzi clustering, independent
 downloader encodings, SVG metadata, and interpretation limits.
-The [network-infrastructure notes](docs/network-infrastructure-implementation-notes.md)
+The [network-infrastructure notes](docs/pages/passes/network-infrastructure.md)
 record the audited external pins, normal site atlas, CC BY-NC-SA 3.0 topology
 opt-in, physical-versus-logical edge boundary, seam handling, Izzi collision
 layout, products, and verification.
-The [Fiber Synthesized notes](docs/fiber-synthesized-implementation-notes.md)
+The [Fiber Synthesized notes](docs/pages/passes/fiber-synthesized.md)
 record the cleanup/union decision, checked 2022 and 20260805 snapshots,
 default newer layer, neutral snapshot-only semantics, standard build targets,
 licensing, and verification.
-The [Bathymetry Roulette notes](docs/bathymetry-roulette-implementation-notes.md)
+The [Bathymetry Roulette notes](docs/pages/passes/bathymetry/roulette.md)
 record the confirmed curve catalogue, explicit varied-line-field and clipping
 model, visible key, accepted moiré, products, and verification.
-The [Bathymetry Hamonshū notes](docs/bathymetry-hamonshu-implementation-notes.md)
+The [Bathymetry Hamonshū notes](docs/pages/passes/bathymetry/hamonshu.md)
 record its source-indexed wave catalogue, depth form mapping, shared Voronoi
 field architecture, provenance, commands, products, and verification.
 
@@ -318,7 +318,7 @@ sheet.
 
 Construction examples, screen-coordinate conventions, optional raster naming,
 the exact frame predicate, and the source-plate `ag_a3` preset are in the
-[AuthaGraph public API notes](docs/authagraph-implementation-notes.md#public-api-and-usage).
+[AuthaGraph public API notes](docs/pages/projections/authagraph/implementation.md#public-api-and-usage).
 
 ## Cahill-Keyes
 
@@ -329,9 +329,9 @@ positive 2:1 `a60::carto::frame`.
 
 Construction examples, compatibility presets, screen coordinates, and error
 behavior are in the
-[Cahill-Keyes public API notes](docs/cahill-keyes-implementation-notes.md#public-construction-and-usage).
+[Cahill-Keyes public API notes](docs/pages/projections/cahill-keyes/implementation.md#public-construction-and-usage).
 The same guide distinguishes a valid 2:1 world carrier from arbitrary-ratio
-[enlargement slices](docs/cahill-keyes-implementation-notes.md#carrier-slicing-and-enlargement).
+[enlargement slices](docs/pages/projections/cahill-keyes/implementation.md#carrier-slicing-and-enlargement).
 
 ## Star-X
 
@@ -352,12 +352,12 @@ complete projected boundary independently of any land dataset. Its bottommost
 point retains `0.25/44` of frame height—exactly `0.25` units on a 34-by-44
 plate—so the blue edge remains inside the view box. Every unified Antarctic
 fragment is emitted after the ordinary quadrants and paints above them. The
-[Star-X snapshot](docs/generated-snapshot-star-x.md) shows the released
+[Star-X snapshot](docs/pages/gallery/star-x.md) shows the released
 projection family; the next generated release will carry the corrected lower
 clearance.
 
 Construction examples and `star_x_layout` configuration are in the
-[Star-X public API notes](docs/star-x-implementation-notes.md#public-c-api).
+[Star-X public API notes](docs/pages/projections/star-x/implementation.md#public-c-api).
 The signed gap and page-centered enlargement default to `-9/88` of frame
 height and `1.2`. The central star and unified Antarctica remain layer-aware
 SVG composition helpers, not hidden changes to the point transform; cap
@@ -381,8 +381,8 @@ is intentionally distinct from a radial, gnomonic projection.
 The public frame may have any finite positive size that retains the exact
 `11/(3sqrt(3))` net ratio. Construction examples, formulas, face selection,
 split-face registration, generator behavior, and verification are in the
-[Dymaxion implementation notes](docs/dymaxion-implementation-notes.md). The
-[geometric context](docs/dymaxion-context.md) illustrates the facets, cuts,
+[Dymaxion implementation notes](docs/pages/projections/dymaxion/implementation.md). The
+[geometric context](docs/pages/projections/dymaxion/context.md) illustrates the facets, cuts,
 screen quadrants, graticules, and resulting Earth map.
 
 ## Myriahedral
@@ -402,12 +402,12 @@ Natural Earth.
 Construction examples, the `myriahedral_source` preset, and the distinction
 between this raster-registered 16:9 net and other possible Myriahedral nets
 are in the
-[Myriahedral public API notes](docs/myriahedral-implementation-notes.md#public-api-and-use).
+[Myriahedral public API notes](docs/pages/projections/myriahedral/implementation.md#public-api-and-use).
 The same notes record the
-[perspective configurations](docs/myriahedral-implementation-notes.md#perspective-configuration-metadata)
-and [Myriahedral slicing](docs/myriahedral-implementation-notes.md#myriahedral-slicing).
+[perspective configurations](docs/pages/projections/myriahedral/implementation.md#perspective-configuration-metadata)
+and [Myriahedral slicing](docs/pages/projections/myriahedral/implementation.md#myriahedral-slicing).
 The production
-[WebAssembly base-map option](docs/myriahedral-implementation-notes.md#webassembly-land-and-ocean-option)
+[WebAssembly base-map option](docs/pages/projections/myriahedral/implementation.md#webassembly-land-and-ocean-option)
 emits only the `ocean` and `land` layers.
 
 ## Icosahedral Voronoi
@@ -427,7 +427,7 @@ tree.
 
 Construction examples, source-canvas registration, screen coordinates, and
 the `voronoi_source` preset are in the
-[Voronoi public API notes](docs/voronoi-implementation-notes.md#public-api-and-use).
+[Voronoi public API notes](docs/pages/projections/voronoi/implementation.md#public-api-and-use).
 
 ## Source guide
 
@@ -464,26 +464,26 @@ the `voronoi_source` preset are in the
 | [`src.wasm/cartofreako-cahill-myriahedral.mjs`](src.wasm/cartofreako-cahill-myriahedral.mjs) | Generated ES-module loader for the Myriahedral WebAssembly binary |
 | [`src.wasm/cartofreako-cahill-myriahedral.wasm`](src.wasm/cartofreako-cahill-myriahedral.wasm) | Generated Myriahedral WebAssembly binary |
 | [`src.wasm/README.md`](src.wasm/README.md) | Browser builds, layer choices, output artifacts, runtime clipping, shared Natural Earth input, and provenance |
-| [`docs/web-workflow.md`](docs/web-workflow.md) | Emscripten workflow for an illustrative raster-backed 1920×1080 Myriahedral overlay |
-| [`docs/web-example.md`](docs/web-example.md) | Complete copyable C++, HTML, JavaScript, and build example for that Myriahedral workflow |
-| [`docs/generation.md`](docs/generation.md) | End-to-end SVG generation, seam and folding techniques, data preparation, structural checks, and perceptual considerations |
-| [`docs/generation-methods.md`](docs/generation-methods.md) | Central `generate-*` evaluation ledger, implemented conclusions, configured workflows, JSON schema, and Stage 7 decisions |
-| [`docs/prerequisites.md`](docs/prerequisites.md) | Native build, data acquisition, Inkscape review, and optional WebAssembly prerequisites |
-| [`docs/astro-implementation-notes.md`](docs/astro-implementation-notes.md) | Astronomy profile schema, source evaluation, astrometric formulas, instrumentation filter, output contract, verification, and accuracy boundary |
-| [`docs/cloud-atmosphere-implementation-notes.md`](docs/cloud-atmosphere-implementation-notes.md) | Stage 4.1a feasibility, astronomy boundary, JAXA sources, process time, P-Tree QA, H3 preparation, products, terms, verification, and limits |
-| [`docs/ptree-production-download.md`](docs/ptree-production-download.md) | Quick-start P-Tree registration, secure credentials, connection test, reproducible production refresh, expected files, and troubleshooting |
-| [`docs/orbital-technosphere-implementation-notes.md`](docs/orbital-technosphere-implementation-notes.md) | Stage 4.2 feasibility, naming, NASA/CelesTrak source roles, OMM/SGP4 formulas, products, verification, and accuracy boundary |
-| [`docs/stage-12-implementation-notes.md`](docs/stage-12-implementation-notes.md) | Stage 12 resource expansion, Anthropocene defaults, external authorization, render hardware, generated snapshots, and Star-X paint-order integration |
-| [Visual gallery](docs/gallery.md) | Projection comparison, featured subjects, and entry points to all six 32-pass contact sheets |
-| [Technical documentation](docs/technical-documentation.md) | Compact build, projection, pass-lifecycle, browser, release, and preservation index |
+| [Myriahedral web workflow](docs/pages/runtime/myriahedral-workflow.md) | Emscripten workflow for an illustrative raster-backed 1920×1080 Myriahedral overlay |
+| [Myriahedral web example](docs/pages/runtime/myriahedral-example.md) | Complete copyable C++, HTML, JavaScript, and build example for that Myriahedral workflow |
+| [Generation guide](docs/pages/getting-started/generation.md) | End-to-end SVG generation, seam and folding techniques, data preparation, structural checks, and perceptual considerations |
+| [Generation methods](docs/pages/getting-started/generation-methods.md) | Central `generate-*` evaluation ledger, implemented conclusions, configured workflows, JSON schema, and Stage 7 decisions |
+| [Prerequisites](docs/pages/getting-started/prerequisites.md) | Native build, data acquisition, Inkscape review, and optional WebAssembly prerequisites |
+| [Astronomy implementation](docs/pages/passes/astronomy.md) | Astronomy profile schema, source evaluation, astrometric formulas, instrumentation filter, output contract, verification, and accuracy boundary |
+| [Cloud-atmosphere implementation](docs/pages/passes/cloud-atmosphere.md) | Stage 4.1a feasibility, astronomy boundary, JAXA sources, process time, P-Tree QA, H3 preparation, products, terms, verification, and limits |
+| [P-Tree production download](docs/pages/data/ptree-download.md) | Quick-start P-Tree registration, secure credentials, connection test, reproducible production refresh, expected files, and troubleshooting |
+| [Orbital Technosphere implementation](docs/pages/passes/orbital-technosphere.md) | Stage 4.2 feasibility, naming, NASA/CelesTrak source roles, OMM/SGP4 formulas, products, verification, and accuracy boundary |
+| [Stage 12 implementation](docs/pages/development/stage-12.md) | Stage 12 resource expansion, Anthropocene defaults, external authorization, render hardware, generated snapshots, and Star-X paint-order integration |
+| [Visual gallery](docs/pages/gallery/README.md) | Projection comparison, featured subjects, and entry points to all six 32-pass contact sheets |
+| [Technical documentation](docs/pages/README.md) | Compact build, projection, pass-lifecycle, browser, release, and preservation index |
 | `_data/generated_passes.yml` | Canonical 32-pass labels, stems, alternate text, categories, and stable section identifiers |
 | `_includes/generated-snapshot.md` | Shared PNG-first contact sheet with explicit layered SVG and print PDF actions for all six projections |
-| [`docs/resources-enrichment-plan.md`](docs/resources-enrichment-plan.md) | Stage 12 six-family taxonomy, source evaluation, non-sparse options, v3 schema, migration sequence, and release QA |
+| [Resources enrichment plan](docs/pages/passes/resources/enrichment-plan.md) | Stage 12 six-family taxonomy, source evaluation, non-sparse options, v3 schema, migration sequence, and release QA |
 | [`src.projections/cart0freak0-star-x.h`](src.projections/cart0freak0-star-x.h) | Star-X group assembly, configurable centered scale, fixed-`60°S` cap geometry, frame validation, public API, and factory |
 | [`tests/test-star-x-projection-api.cc`](tests/test-star-x-projection-api.cc) | Star-X anchors, assembly and scale, global domain, cap invariants, variable-frame, validation, and API tests |
-| [`docs/star-x-context.md`](docs/star-x-context.md) | Star-X octahedral context, face-slot mapping, group rotation, page enlargement, polar composition, and cuts |
-| [`docs/star-x-implementation-notes.md`](docs/star-x-implementation-notes.md) | Star-X gap, scale, and polar formulas, API, safeguards, verification, and provenance |
-| [`docs/star-x-bibliography.md`](docs/star-x-bibliography.md) | Star-X arrangement, Cahill-Keyes geometry, historical, asset, and test sources |
+| [Star-X context](docs/pages/projections/star-x/context.md) | Star-X octahedral context, face-slot mapping, group rotation, page enlargement, polar composition, and cuts |
+| [Star-X implementation](docs/pages/projections/star-x/implementation.md) | Star-X gap, scale, and polar formulas, API, safeguards, verification, and provenance |
+| [Star-X sources](docs/pages/projections/star-x/bibliography.md) | Star-X arrangement, Cahill-Keyes geometry, historical, asset, and test sources |
 | [`src.generate/projection-generation-common.h`](src.generate/projection-generation-common.h) | Exact 44-unit frame configurations, projection dispatch, native-cell lookup, cut bisection, and shared seam-safe path projection |
 | [`src.generate/generation-instant.h`](src.generate/generation-instant.h) | Shared strict UTC parsing, Julian dates, process-start sampling, `SOURCE_DATE_EPOCH`, and source-age calculation |
 | [`src.generate/solar-geometry.h`](src.generate/solar-geometry.h) | Shared astronomy/atmosphere Sun ephemeris, sidereal time, subsolar point, solar altitude, and twilight zones |
@@ -505,12 +505,12 @@ the `voronoi_source` preset are in the
 | [`src.generate/generate-bathymetry-roulette.cc`](src.generate/generate-bathymetry-roulette.cc) | Six-projection Natural Earth clip and explicit filled, blue-ramp, Voronoi-grouped roulette-field generator with key and embedded SVG checks |
 | [`tests/test-bathymetry-roulette-style.cc`](tests/test-bathymetry-roulette-style.cc) | Cycloid minimum, depth ordering, equal Voronoi distribution, closure period, curve uniqueness, all-fill, opacity, and identifier tests |
 | [`bathymetry-roulette-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/thumbnail/bathymetry-roulette-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes roulette bathymetry |
-| [`docs/bathymetry-roulette-implementation-notes.md`](docs/bathymetry-roulette-implementation-notes.md) | Stage 4.5 feasibility, confirmed catalogue, clipping and layering model, products, verification, accepted moiré, and limits |
+| [`docs/bathymetry-roulette-implementation-notes.md`](docs/pages/passes/bathymetry/roulette.md) | Stage 4.5 feasibility, confirmed catalogue, clipping and layering model, products, verification, accepted moiré, and limits |
 | [`src.generate/bathymetry-hamonshu-style.h`](src.generate/bathymetry-hamonshu-style.h) | Twelve depth parameter pairs, twelve source-indexed Izzi wave motifs, blue ramp, field geometry, and Voronoi mapping |
 | [`src.generate/generate-bathymetry-hamonshu.cc`](src.generate/generate-bathymetry-hamonshu.cc) | Six-projection Natural Earth clip and explicit 30%-opacity Hamonshū wave-field generator |
 | [`tests/test-bathymetry-hamonshu-style.cc`](tests/test-bathymetry-hamonshu-style.cc) | Source uniqueness, monotonic density/curvature, overlap, opacity, Voronoi balance, and identifier tests |
-| [`docs/bathymetry-hamonshu-implementation-notes.md`](docs/bathymetry-hamonshu-implementation-notes.md) | Stage 4.6 source, form mapping, field/layer contract, commands, verification, and limits |
-| [`docs/anthropocene-source-expansion-stage-13.md`](docs/anthropocene-source-expansion-stage-13.md) | Stage 13 full-GHCN, OpenAQ, CAMS/MAIAC, GFAS, and PurpleAir source evaluation and promotion gates |
+| [`docs/bathymetry-hamonshu-implementation-notes.md`](docs/pages/passes/bathymetry/hamonshu.md) | Stage 4.6 source, form mapping, field/layer contract, commands, verification, and limits |
+| [`docs/anthropocene-source-expansion-stage-13.md`](docs/pages/passes/anthropocene/source-expansion-stage-13.md) | Stage 13 full-GHCN, OpenAQ, CAMS/MAIAC, GFAS, and PurpleAir source evaluation and promotion gates |
 | [`src.generate/astro-data.h`](src.generate/astro-data.h) | Validated dual-observer profiles and catalog ingestion, proper motion, Solar System approximation, physical planet radii/apparent sizes, sidereal time, event window, and band filtering |
 | [`src.generate/astro-observer.h`](src.generate/astro-observer.h) | Terrestrial altitude and orbiting-Hubble SGP4 state, Earth-limb/Sun separation, and platform visibility rules |
 | [`src.generate/astro-generation.h`](src.generate/astro-generation.h) | Projection-aware astronomy layers, distinct ground/Hubble metadata and guides, 2× planet glyphs, dotted true-size outlines, labels, and embedded SVG checks |
@@ -535,7 +535,7 @@ the `voronoi_source` preset are in the
 | [`src.generate/resources-generation.h`](src.generate/resources-generation.h) | Metric-specific country choropleths and spatial reef fields, missing-data layers, catalogue metadata, legends, and embedded SVG checks |
 | [`src.generate/generate-resources.cc`](src.generate/generate-resources.cc) | Six-family, fourteen-metric resource-generator entry point |
 | [`tests/test-resources-generation.cc`](tests/test-resources-generation.cc) | Stage 12 source, coverage, spatial schema, derivation, catalogue, alias, and naming tests |
-| [`docs/resources-metric-catalog.md`](docs/resources-metric-catalog.md) | Human-readable classification of all 59 standard and exploration-only resource metrics, plus the optional-pass boundary |
+| [Resources metric catalog](docs/pages/passes/resources/metric-catalog.md) | Human-readable classification of all 59 standard and exploration-only resource metrics, plus the optional-pass boundary |
 | [`assets.static/resources/resources-profile.json`](assets.static/resources/resources-profile.json) | Checked v3 family/source/metric/coverage/spatial catalogue |
 | [`assets.static/resources/resources-values.json`](assets.static/resources/resources-values.json) | Checked normalized country observations for released/default and available metrics |
 | [`assets.static/resources/countries-110m.geojson`](assets.static/resources/countries-110m.geojson) | Natural Earth Admin-0 country geometry with normalized resource join keys |
@@ -557,7 +557,7 @@ the `voronoi_source` preset are in the
 | [`tests/test-network-swarm-generation.cc`](tests/test-network-swarm-generation.cc) | Snapshot totals, overlap semantics, H3 statistics, honeycomb uniqueness, and six-projection layout tests |
 | [`assets.static/network-swarm/network-swarm-profile.json`](assets.static/network-swarm/network-swarm-profile.json) | H3 resolutions, physical mark dimensions, label/tether settings, fixed p99 scales, hashes, commit, and license |
 | [`scripts/prepare-network-swarm-data.sh`](scripts/prepare-network-swarm-data.sh) | Bounded, safe, atomic staging of local ZIP or plain GeoJSON network-swarm input |
-| [`docs/network-swarm-implementation-notes.md`](docs/network-swarm-implementation-notes.md) | Stage 4.4 feasibility, source audit, clustering, visual encodings, products, verification, and limits |
+| [Network-swarm implementation](docs/pages/passes/network-swarm.md) | Stage 4.4 feasibility, source audit, clustering, visual encodings, products, verification, and limits |
 | [`src.generate/network-infrastructure-data.h`](src.generate/network-infrastructure-data.h) | Strict profile, cloud-manifest, submarine-cable, landing, and Internet-exchange parsing with exact source audits |
 | [`src.generate/network-infrastructure-clustering.h`](src.generate/network-infrastructure-clustering.h) | Shared projection-cell-aware Izzi radial-hexagon collision layout for infrastructure point families |
 | [`src.generate/network-infrastructure-generation.h`](src.generate/network-infrastructure-generation.h) | Dark terrestrial base, seam-safe physical and logical topology, semantic point layers, attribution, and embedded SVG checks |
@@ -565,18 +565,18 @@ the `voronoi_source` preset are in the
 | [`tests/test-network-infrastructure-generation.cc`](tests/test-network-infrastructure-generation.cc) | Profile license gate, seam geometry, honeycomb uniqueness, mixed-model, XML, and six-projection tests |
 | [`assets.static/network-infrastructure/`](assets.static/network-infrastructure/) | Commit/digest/count-pinned sites and topology profiles plus external-source and licensing contract |
 | [`scripts/check-network-infrastructure-sources.sh`](scripts/check-network-infrastructure-sources.sh) | Offline commit, digest, and consumed-path validation for external infrastructure checkouts |
-| [`docs/network-infrastructure-implementation-notes.md`](docs/network-infrastructure-implementation-notes.md) | Stage 9 feasibility, source audit, license boundary, semantics, profiles, rendering, products, verification, and limits |
+| [Network-infrastructure implementation](docs/pages/passes/network-infrastructure.md) | Stage 9 feasibility, source audit, license boundary, semantics, profiles, rendering, products, verification, and limits |
 | [`assets.static/fiber-synthesized/`](assets.static/fiber-synthesized/) | Checked 2022/20260805 cleaned union, source-separated audit observations, manifest, and hashes |
 | [`scripts/synthesize-submarine-cable-snapshots.py`](scripts/synthesize-submarine-cable-snapshots.py) | Deterministic validation, exact matching, source-separated audit, and cleaned-union preparation |
 | [`src.generate/fiber-synthesized-data.h`](src.generate/fiber-synthesized-data.h) | Strict manifest and cleaned-union GeoJSON loader |
 | [`src.generate/fiber-synthesized-generation.h`](src.generate/fiber-synthesized-generation.h) | Six-projection default-union rendering, temporal semantics, provenance, and embedded checks |
 | [`tests/test-fiber-synthesized-generation.cc`](tests/test-fiber-synthesized-generation.cc) | Counts, default snapshot, classification, hashes, and six-projection geometry tests |
-| [`docs/fiber-synthesized-implementation-notes.md`](docs/fiber-synthesized-implementation-notes.md) | Union-versus-difference decision, source validation, algorithm, default layer, licensing, commands, and verification |
+| [Fiber Synthesized implementation](docs/pages/passes/fiber-synthesized.md) | Union-versus-difference decision, source validation, algorithm, default layer, licensing, commands, and verification |
 | [`src.generate/generate-4-slice.cc`](src.generate/generate-4-slice.cc) | Four full-height, quarter-width Cahill-Keyes quadrant-pair enlargements |
 | [`src.generate/generate-8-slice.cc`](src.generate/generate-8-slice.cc) | Eight naturally bounded, face-clipped Cahill-Keyes octant enlargements |
 | [`src.generate/generate-myriahedral-slices.cc`](src.generate/generate-myriahedral-slices.cc) | Two complementary, exact-terminal-face Myriahedral water slices |
 | [`scripts/fetch-natural-earth-10m.sh`](scripts/fetch-natural-earth-10m.sh) | Pinned, checksum-verifying acquisition of the required Natural Earth shapefiles |
-| [`docs/natural-earth-10m-physical-vectors.md`](docs/natural-earth-10m-physical-vectors.md) | Natural Earth source, checksum, extracted-dataset, and licensing note |
+| [Natural Earth source data](docs/pages/data/natural-earth.md) | Natural Earth source, checksum, extracted-dataset, and licensing note |
 | [`src.projections/cart0freak0-myriahedral.h`](src.projections/cart0freak0-myriahedral.h) | Myriahedral mesh, unfolding, forward transform, frame validation, API, and source-raster preset |
 | [`src.projections/cart0freak0-myriahedral-tree.inc`](src.projections/cart0freak0-myriahedral-tree.inc) | Compact fixed parent tree for the 5120-face net |
 | [`src.projections/cart0freak0-myriahedral-perspectives.h`](src.projections/cart0freak0-myriahedral-perspectives.h) | Five exploratory tree configurations, raw bounds, registrations, and lazy layouts shared by native and WASM clients |
@@ -596,40 +596,40 @@ the `voronoi_source` preset are in the
 AuthaGraph was invented and developed by Hajime Narukawa. The implementation
 uses his published 2022 analytic formulation and an official Narukawa Lab
 drawing sheet. See the
-[AuthaGraph implementation provenance](docs/authagraph-implementation-notes.md#provenance)
-and [bibliography](docs/authagraph-bibliography.md).
+[AuthaGraph implementation provenance](docs/pages/projections/authagraph/implementation.md#provenance)
+and [bibliography](docs/pages/projections/authagraph/bibliography.md).
 
 The Cahill-Keyes map design is Gene Keyes's development of B.J.S. Cahill's
 octahedral map. The computational construction ported here was written in Perl
 by Mary Jo Graça. Its source header permits non-commercial use with attribution
 to Graça and Keyes and asks commercial users to contact Gene Keyes. See the
-[Cahill-Keyes provenance and licensing note](docs/cahill-keyes-implementation-notes.md#provenance-and-licensing)
-and [bibliography](docs/cahill-keyes-bibliography.md).
+[Cahill-Keyes provenance and licensing note](docs/pages/projections/cahill-keyes/implementation.md#provenance-and-licensing)
+and [bibliography](docs/pages/projections/cahill-keyes/bibliography.md).
 
 The Dymaxion map is R. Buckminster Fuller's icosahedral world-map design. The
 exact face equations follow Robert W. Gray's published work; the spherical
 subface and horizontal net tables derive from PROJ 9.6.2 under its retained
 MIT-style notice. Gray's separately distributed reference C program is not
 incorporated. See the
-[Dymaxion provenance and licensing note](docs/dymaxion-implementation-notes.md#provenance-and-licensing)
-and [bibliography](docs/dymaxion-bibliography.md).
+[Dymaxion provenance and licensing note](docs/pages/projections/dymaxion/implementation.md#provenance-and-licensing)
+and [bibliography](docs/pages/projections/dymaxion/bibliography.md).
 
 Star-X retains that Cahill-Keyes construction and its terms, then applies
 Benjamin De Kosnik's two-group arrangement. See the
-[Star-X implementation provenance](docs/star-x-implementation-notes.md#provenance-and-limitations)
-and [bibliography](docs/star-x-bibliography.md).
+[Star-X implementation provenance](docs/pages/projections/star-x/implementation.md#provenance-and-limitations)
+and [bibliography](docs/pages/projections/star-x/bibliography.md).
 
 The Myriahedral method was published by Jarke J. van Wijk. The fixed mesh,
 tree-building method, source command, and raster derive from Hannes Schulz's
 `temporaer/myriaworld` implementation; historical land geometry came from
 Natural Earth. See the
-[Myriahedral implementation provenance](docs/myriahedral-implementation-notes.md#provenance)
-and [bibliography](docs/myriahedral-bibliography.md).
+[Myriahedral implementation provenance](docs/pages/projections/myriahedral/implementation.md#provenance)
+and [bibliography](docs/pages/projections/myriahedral/bibliography.md).
 
 The icosahedral Voronoi geometry, parent tree, and registration derive from
 the ISC-licensed [`d3-geo-polygon`](https://github.com/d3/d3-geo-polygon)
 implementation by Mike Bostock, with the Icosahedral map implemented by Jason
 Davies, Enrico Spinielli, and Philippe Rivière. The required ISC notice is
 retained in `src.projections/cart0freak0-voronoi.h`. See the
-[Voronoi implementation provenance](docs/voronoi-implementation-notes.md#provenance-and-licensing)
-and [bibliography](docs/voronoi-bibliography.md).
+[Voronoi implementation provenance](docs/pages/projections/voronoi/implementation.md#provenance-and-licensing)
+and [bibliography](docs/pages/projections/voronoi/bibliography.md).

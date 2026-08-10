@@ -62,7 +62,7 @@
       const svgName = compressedName.slice(0, -3);
       title.textContent = svgName;
       document.title = `${svgName} — Cartofreako`;
-      gridLink.href = `https://bdekoz.github.io/cartofreako/docs/generated-snapshot-${gridNames[projection] || projection}.html`;
+      gridLink.href = `https://bdekoz.github.io/cartofreako/docs/pages/gallery/${gridNames[projection] || projection}.html`;
       gzipLink.href = compressedUrl;
       gzipLink.download = compressedName;
       gzipLink.hidden = false;

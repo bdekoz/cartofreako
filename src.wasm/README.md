@@ -1,9 +1,9 @@
 # WebAssembly projection runtime
 
 [Documentation index](../index.md) ·
-[Web-developer quick start](../docs/pages/webassembly-quick-start.md) ·
-[Forward/reverse API](../docs/forward-reverse-projection-api.md) ·
-[Stage 10 implementation notes](../docs/pages/stage-10-webassembly.md) ·
+[Web-developer quick start](../docs/pages/runtime/webassembly-quick-start.md) ·
+[Forward/reverse API](../docs/pages/runtime/projection-api.md) ·
+[Stage 10 implementation notes](../docs/pages/runtime/webassembly-architecture.md) ·
 [Slice examples](examples/README.md)
 
 The production browser runtime exposes all six Cartofreako projection models
@@ -137,7 +137,7 @@ advertises `inverseMode: "candidates"`: carrier component `0` owns latitudes
 north of `60°S`, and unified-cap component `1` owns the cutoff and everything
 south. `inverse` accepts both `nativeCell` and `component` qualifiers.
 
-See the [forward/reverse implementation notes](../docs/forward-reverse-projection-api.md)
+See the [forward/reverse implementation notes](../docs/pages/runtime/projection-api.md)
 for status semantics, batch fields, native C++ types, algorithms, and
 verification.
 
@@ -199,7 +199,7 @@ const tile = projection.projectGeometry(geojson, {
 ```
 
 See the [runnable slice examples](examples/README.md) and the
-[quick start](../docs/pages/webassembly-quick-start.md#use-a-slice) for exact
+[quick start](../docs/pages/runtime/webassembly-quick-start.md#use-a-slice) for exact
 carrier/ocean plus feature usage.
 
 ## Compatibility modules
@@ -242,7 +242,7 @@ asset is deployed.
 ---
 
 [Documentation index](../index.md) ·
-[Web-developer quick start](../docs/pages/webassembly-quick-start.md) ·
-[Forward/reverse API](../docs/forward-reverse-projection-api.md) ·
-[Stage 10 implementation notes](../docs/pages/stage-10-webassembly.md) ·
+[Web-developer quick start](../docs/pages/runtime/webassembly-quick-start.md) ·
+[Forward/reverse API](../docs/pages/runtime/projection-api.md) ·
+[Stage 10 implementation notes](../docs/pages/runtime/webassembly-architecture.md) ·
 [Slice examples](examples/README.md)

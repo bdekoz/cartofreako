@@ -25,6 +25,7 @@ AAO_CLUSTEROPS_ROOT ?= /home/bkoz/src/alpha60-clusterops
 UCB_AAO_RELEASE_PROFILE ?=
 UCB_AAO_RELEASE_DATA_ROOT ?=
 UCB_AAO_RELEASE_RECEIPT ?=
+DOC_LINK_CHECKER := scripts/check-doc-links.py
 PNG_EXPORT_BACKGROUND := --export-background=white \
 	--export-background-opacity=255 \
 	--export-png-color-mode=RGB_8
@@ -797,11 +798,13 @@ RESOURCE_METRIC_PUBLIC_TARGETS := \
 		$(foreach projection,$(RESOURCE_PROJECTION_NAMES),\
 			generate-$(stem)-$(projection)))
 
-PUBLIC_TARGETS := all assets-single assets-resilient check check-prerequisite \
+PUBLIC_TARGETS := all assets-single assets-resilient check check-docs \
+	check-prerequisite \
 	check-resources-svg-archives check-fiber-synthesized \
 	check-forward-reverse-projection-api \
 	clean clean-failed-generated configured doxygen \
-	generation-plan list-targets release-github release-ucb-aao-s3 \
+	generation-plan list-targets render-marshall-islands-speculations-v01 \
+	release-github release-ucb-aao-s3 \
 	authorize-external \
 	generate-authorized-external generate-snapshots generate-snapshot-all \
 	generate-snapshot-ck \
@@ -965,6 +968,14 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-prerequisite \
 
 list-targets:
 	@printf '%s\n' $(sort $(PUBLIC_TARGETS))
+
+check-docs: $(DOC_LINK_CHECKER)
+	"$(DOC_LINK_CHECKER)"
+
+render-marshall-islands-speculations-v01: \
+		scripts/render-marshall-islands-speculations-v01.sh \
+		scripts/render-marshall-islands-speculations-v01.mjs
+	"scripts/render-marshall-islands-speculations-v01.sh"
 
 # GitHub publication and a UCB Active Archive Object Storage deposit are
 # intentionally separate operations. There is no umbrella `release` target,

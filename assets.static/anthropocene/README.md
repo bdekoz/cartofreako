@@ -21,7 +21,7 @@ property means unavailable or unobserved and must not be interpreted as zero.
 The profile's literal `duration.year` is the sole year authority; the generator
 does not read the host clock.
 
-The [Stage 8b enrichment plan](../../docs/anthropocene-enrichment-plan.md)
+The [Stage 8b enrichment plan](../../docs/pages/passes/anthropocene/enrichment-plan.md)
 records the CPC temperature/FIRMS-gate increment implemented here and the
 remaining CAMS, PurpleAir, and ocean work.
 
@@ -119,8 +119,8 @@ America, Europe, Africa, northern Asia, East Asia, and Oceania. The original
 checked Stage 8 snapshot still has no FIRMS rows and therefore makes no global
 fire claim; CWFIS is regional QA/fallback only.
 
-See the [Anthropocene implementation notes](../../docs/anthropocene-implementation-notes.md)
+See the [Anthropocene implementation notes](../../docs/pages/passes/anthropocene/implementation.md)
 for current source roles, formulas, coverage boundaries, refresh commands, and
 interpretation limits, and the
-[Stage 8b enrichment plan](../../docs/anthropocene-enrichment-plan.md) for the
+[Stage 8b enrichment plan](../../docs/pages/passes/anthropocene/enrichment-plan.md) for the
 full global-coverage design and its remaining phases.

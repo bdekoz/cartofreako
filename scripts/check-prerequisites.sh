@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Check the installed tools and headers documented in docs/prerequisites.md.
+# Check the tools and headers documented in docs/pages/getting-started/prerequisites.md.
 # Required native dependencies make this script fail; optional WebAssembly
 # dependencies are reported without changing the exit status.
 
@@ -424,7 +424,7 @@ fi
 
 printf '\n'
 if [ "$required_failures" -ne 0 ]; then
-  printf '%s required prerequisite check(s) failed. See docs/prerequisites.md.\n' \
+  printf '%s required prerequisite check(s) failed. See docs/pages/getting-started/prerequisites.md.\n' \
     "$required_failures"
   if [ "$optional_missing" -ne 0 ]; then
     printf '%s optional WebAssembly prerequisite(s) were also not found.\n' \
