@@ -127,8 +127,8 @@ const oneFace = projection.inverse([forward.x, forward.y], {
 });
 ```
 
-All Myriahedral layouts and Voronoi currently advertise
-`inverseMode: "face-qualified"`. The other four families return
+All Myriahedral layouts, Cahill–Keyes, and Voronoi currently advertise
+`inverseMode: "face-qualified"`. The other three families return
 `{status: "unsupported", candidates: []}`. Preserve every candidate when the
 status is `ambiguous`, or pass a known `nativeCell`; never silently select the
 first result.
@@ -327,7 +327,7 @@ does not invalidate them.
 | Lines jump across the page | Do not project raw vertices yourself; pass complete lines/rings to `projectGeometry()` |
 | A slice is distorted | Keep the full carrier; use `{slice: ...}` rather than constructing a projection from slice dimensions |
 | Main thread stalls on a large file | Use `CartofreakoWorkerClient` |
-| Reverse returns `unsupported` | Choose a Myriahedral layout or Voronoi, or retain planar feature picking until that family implements reverse support |
+| Reverse returns `unsupported` | Choose Cahill–Keyes, a Myriahedral layout, or Voronoi, or retain planar feature picking until that family implements reverse support |
 | Reverse returns several candidates | Preserve all candidates or repeat with the intended `nativeCell`; do not choose index zero implicitly |
 
 Inspect `runtime.manifest` and `runtime.licenses` before publishing. The

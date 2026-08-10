@@ -2,8 +2,9 @@
 
 This repository contains native C++20 forward implementations of the
 AuthaGraph, Cahill-Keyes, Dymaxion, Star-X, Myriahedral, and icosahedral
-Voronoi projections, plus face-qualified reverse implementations for every
-Myriahedral layout and Voronoi, through one projection-neutral runtime.
+Voronoi projections, plus face-qualified reverse implementations for
+Cahill–Keyes, every Myriahedral layout, and Voronoi, through one
+projection-neutral runtime.
 
 Start with the [visual gallery](docs/gallery.md), where every thumbnail opens
 a released 3840-pixel PNG and every plate has separate layered SVG and print

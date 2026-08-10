@@ -11,8 +11,9 @@ through one ES-module API. It transforms points, lines, polygon rings,
 multi-geometries, finite carrier faces, and slices into a shared typed-array
 command buffer. The same buffer feeds the supplied SVG, Canvas, and D3 stream
 adapters, either on the main thread or in a Web Worker. Runtime API 2 also
-provides structured forward results and face-qualified Myriahedral/Voronoi
-reverse candidates without changing geometry command-buffer ABI 1.
+provides structured forward results and face-qualified Cahill–Keyes,
+Myriahedral, and Voronoi reverse candidates without changing geometry
+command-buffer ABI 1.
 
 The older Cahill-Keyes and land/ocean-only Myriahedral modules remain available
 as compatibility builds. New applications should start with
@@ -129,10 +130,10 @@ The checked alternate layouts are `myriahedral-americas`,
 
 The point API and geometry protocol are versioned separately. Runtime API 2
 adds `forward`, `forwardMany`, `inverse`, and `inverseMany`; geometry buffers
-remain ABI 1. Myriahedral (all six layouts) and Voronoi advertise
-`inverseMode: "face-qualified"`. Cahill–Keyes, AuthaGraph, Dymaxion, and
-Star-X currently advertise `inverseMode: "none"` and return the structured
-status `unsupported`.
+remain ABI 1. Cahill–Keyes, Myriahedral (all six layouts), and Voronoi
+advertise `inverseMode: "face-qualified"`. AuthaGraph, Dymaxion, and Star-X
+currently advertise `inverseMode: "none"` and return the structured status
+`unsupported`.
 
 See the [forward/reverse implementation notes](../docs/forward-reverse-projection-api.md)
 for status semantics, batch fields, native C++ types, algorithms, and

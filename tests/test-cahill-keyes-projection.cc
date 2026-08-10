@@ -92,6 +92,23 @@ near(const double actual, const double expected, const double tolerance = 1e-9)
   return std::abs(actual - expected) <= tolerance;
 }
 
+double
+longitude_distance(const double left, const double right)
+{ return std::abs(std::remainder(left - right, 360.0)); }
+
+int
+assembly_octant(const double registered_longitude, const double latitude)
+{
+  int northern
+    = static_cast<int>((registered_longitude + 200) / 90) + 1;
+  if (northern == 5)
+    northern = 1;
+  if (latitude >= 0)
+    return northern;
+  constexpr std::array south {0, 6, 7, 8, 5};
+  return south.at(northern);
+}
+
 void
 assert_scale_invariant(const double longitude, const double latitude)
 {
@@ -214,6 +231,13 @@ main()
       const auto [x, y] = ck(point.longitude, point.latitude);
       assert(near(x, point.x));
       assert(near(y, point.y));
+      const auto reversed = ck.inverse(
+        x, y, assembly_octant(point.longitude, point.latitude), 1e-7);
+      assert(reversed);
+      assert(std::abs(reversed->latitude - point.latitude) < 2e-8);
+      assert(longitude_distance(
+               reversed->registered_longitude, point.longitude) < 2e-8);
+      assert(reversed->forward_residual <= 1e-7);
     }
 
   // Every construction length must scale with the selected raster. This is
@@ -346,6 +370,25 @@ main()
         assert(x >= -1056 && x <= 1056);
         assert(y >= -528 && y <= 528);
       }
+
+  assert(!ck.inverse(10000, 10000, 1, 1e-7));
+  const auto rejects_inverse = [&ck](const double x, const double y,
+                                     const int octant,
+                                     const double tolerance)
+  {
+    bool rejected_inverse = false;
+    try
+      {
+        static_cast<void>(ck.inverse(x, y, octant, tolerance));
+      }
+    catch (const std::invalid_argument&)
+      { rejected_inverse = true; }
+    assert(rejected_inverse);
+  };
+  rejects_inverse(0, 0, 0, 1e-7);
+  rejects_inverse(0, 0, 9, 1e-7);
+  rejects_inverse(0, 0, 1, 0);
+  rejects_inverse(std::numeric_limits<double>::quiet_NaN(), 0, 1, 1e-7);
 
   const auto rejects_scaffold = [](const double scaffold)
   {

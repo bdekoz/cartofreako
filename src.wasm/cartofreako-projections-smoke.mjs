@@ -142,7 +142,7 @@ requireCondition(documentedReverse.candidates.length === 1, 'documented API reve
 documentedApi.dispose();
 
 const summaries = [];
-const reversible = new Set(['myriahedral', 'voronoi']);
+const reversible = new Set(['cahill-keyes', 'myriahedral', 'voronoi']);
 for (const id of [
     'cahill-keyes', 'authagraph', 'dymaxion', 'myriahedral', 'star-x', 'voronoi'
 ]) {
@@ -270,6 +270,24 @@ requireCondition(strip.clip === undefined, 'viewport slice unexpectedly has clip
 const octant = ck.slice('ck-octant-7');
 requireCondition(octant.selectedCells.length === 1, 'octant slice does not select one cell');
 requireCondition(octant.clip.partOffsets.length === 2, 'octant slice has no exact clip path');
+
+const ckD3Adapter = cartofreakoD3Projection(ck);
+const ckD3Forward = ck.forward([171.2, 7.1]);
+const ckD3Reverse = ckD3Adapter.invert([ckD3Forward.x, ckD3Forward.y]);
+requireCondition(
+    ckD3Reverse && Math.abs(ckD3Reverse[0] - 171.2) < 2e-8
+        && Math.abs(ckD3Reverse[1] - 7.1) < 2e-8,
+    'D3 Cahill-Keyes inverse adapter failed'
+);
+const ckD3Candidates = ckD3Adapter.invertCandidates(
+    [ckD3Forward.x, ckD3Forward.y],
+    {nativeCell: ckD3Forward.nativeCell}
+);
+requireCondition(
+    ckD3Candidates.status === 'unique'
+        && ckD3Candidates.candidates.length === 1,
+    'D3 Cahill-Keyes candidate adapter failed'
+);
 
 const geographic = ck.projectGeometry(fixture, {
     slice: {kind: 'geographic-preclip', bounds: [-20, -20, 20, 20]}

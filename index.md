@@ -23,8 +23,8 @@ secondary actions.
 
 This repository contains native C++20 forward implementations of the
 AuthaGraph, Cahill-Keyes, Dymaxion, Star-X, Myriahedral, and icosahedral
-Voronoi projections, plus face-qualified Myriahedral/Voronoi reverse
-candidates through runtime API 2. All six accept variable-size
+Voronoi projections, plus face-qualified Cahill–Keyes, Myriahedral, and
+Voronoi reverse candidates through runtime API 2. All six accept variable-size
 `a60::carto::frame` values while enforcing the aspect ratio required by the
 selected geometry or source-canvas registration.
 

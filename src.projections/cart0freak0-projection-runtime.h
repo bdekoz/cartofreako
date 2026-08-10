@@ -493,10 +493,10 @@ inverse_mode_for(const projection_spec& spec)
 {
   switch (spec.kind)
     {
+    case projection_kind::cahill_keyes:
     case projection_kind::myriahedral:
     case projection_kind::voronoi:
       return inverse_mode::face_qualified;
-    case projection_kind::cahill_keyes:
     case projection_kind::authagraph:
     case projection_kind::dymaxion:
     case projection_kind::star_x:
@@ -649,6 +649,47 @@ append_candidate(inverse_result& result,
     result.candidates.push_back(std::move(candidate));
   else
     result.truncated = true;
+}
+
+inline void
+inverse_cahill_keyes(const projection_handle& projection,
+                     const projected_coordinate point,
+                     const inverse_options& options,
+                     inverse_result& result)
+{
+  const ckproj& implementation = std::get<ckproj>(projection.projection);
+  const double native_x = point.x - implementation.longitude_zero_x;
+  const double native_y = implementation.latitude_zero_y - point.y;
+  const double acceptance = std::max(
+    options.tolerance_pixels, residual_floor(projection));
+  constexpr std::array<int, 8> assembly_octants {
+    1, 2, 3, 4, 6, 7, 8, 5,
+  };
+  const std::size_t begin = options.native_cell
+                              ? *options.native_cell : 0;
+  const std::size_t end = options.native_cell
+                            ? begin + 1 : assembly_octants.size();
+  for (std::size_t cell = begin; cell < end; ++cell)
+    {
+      const auto solution = implementation.forward.inverse(
+        native_x, native_y, assembly_octants[cell], acceptance);
+      if (!solution)
+        continue;
+      const geographic_coordinate geographic {
+        canonical_longitude(solution->registered_longitude - 1),
+        solution->latitude,
+      };
+      if (!solution->boundary
+          && cahill_keyes_cell(
+               {geographic.latitude_degrees,
+                geographic.longitude_degrees}) != cell)
+        continue;
+      append_candidate(
+        result,
+        {geographic, static_cast<std::uint32_t>(cell), 0,
+         solution->forward_residual, solution->boundary},
+        options);
+    }
 }
 
 inline void
@@ -846,6 +887,10 @@ inverse(const projection_handle& projection,
     }
   switch (projection.spec.kind)
     {
+    case projection_kind::cahill_keyes:
+      inverse_detail::inverse_cahill_keyes(
+        projection, point, options, result);
+      break;
     case projection_kind::myriahedral:
       inverse_detail::inverse_myriahedral(
         projection, point, options, result);
@@ -854,7 +899,6 @@ inverse(const projection_handle& projection,
       inverse_detail::inverse_voronoi(
         projection, point, options, result);
       break;
-    case projection_kind::cahill_keyes:
     case projection_kind::authagraph:
     case projection_kind::dymaxion:
     case projection_kind::star_x:

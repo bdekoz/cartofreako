@@ -23,7 +23,7 @@
 
 /**
  * @file cart0freak0-cahill-keyes.h
- * @brief Native scalable Cahill-Keyes forward projection and raster presets.
+ * @brief Native scalable Cahill-Keyes forward/reverse projection and presets.
  */
 
 #ifndef cart0freak0_CK_H
@@ -34,15 +34,28 @@
 #include <cmath>
 #include <limits>
 #include <numbers>
+#include <optional>
 #include <stdexcept>
 #include <utility>
 
 /// Native scalable implementation of the Cahill-Keyes construction.
 namespace a60::carto::ck_native {
 
-/// Native forward Cahill-Keyes projection in scalable Megamap units.
+/// Native Cahill-Keyes forward and octant-qualified reverse projection in
+/// scalable Megamap units.
 class forward_projection
 {
+public:
+  /// One octant-qualified solution returned by the native reverse solver.
+  struct inverse_solution
+  {
+    double registered_longitude; ///< Longitude before the public -1° undo.
+    double latitude; ///< Geographic latitude in degrees.
+    double forward_residual; ///< Native output-space residual.
+    bool boundary; ///< True on an equator, outer meridian, or pole.
+  };
+
+private:
   /// Widest standard floating-point scalar used by the construction.
   using scalar = long double;
 
@@ -586,6 +599,88 @@ class forward_projection
     return result;
   }
 
+  /// Undo one supported octant rotation.
+  /// @param point Rotated point.
+  /// @param angle Magnitude of the original negative rotation.
+  /// @return Point before the rotation.
+  xy
+  undo_rotation(const xy point, const int angle) const
+  {
+    if (angle == 60)
+      return {point.x * cos_60 - point.y * sin_60,
+              point.x * sin_60 + point.y * cos_60};
+    if (angle == 120)
+      return {-point.x * cos_60 - point.y * sin_60,
+              point.x * sin_60 - point.y * cos_60};
+    throw std::invalid_argument(
+      "unsupported Cahill-Keyes inverse octant rotation");
+  }
+
+  /// Undo the complete M-layout transform for a caller-selected octant.
+  /// @param point Centered canonical M-layout point.
+  /// @param octant One-based assembly octant in `[1, 8]`.
+  /// @return Signed canonical half-octant point.
+  xy
+  megamap_to_half_octant(xy point, const int octant) const
+  {
+    point.y -= y_translate;
+    xy result;
+    switch (octant)
+      {
+      case 1:
+        point.x += length_mg;
+        result = undo_rotation(point, 120);
+        break;
+      case 2:
+        point.x += length_mg;
+        result = undo_rotation(point, 60);
+        break;
+      case 3:
+        point.x -= length_mg;
+        result = undo_rotation(point, 120);
+        break;
+      case 4:
+        point.x -= length_mg;
+        result = undo_rotation(point, 60);
+        break;
+      case 5:
+        point.x -= length_mg;
+        result = undo_rotation(point, 60);
+        result.x = 2 * length_mg - result.x;
+        break;
+      case 6:
+        point.x += length_mg;
+        result = undo_rotation(point, 120);
+        result.x = 2 * length_mg - result.x;
+        break;
+      case 7:
+        point.x += length_mg;
+        result = undo_rotation(point, 60);
+        result.x = 2 * length_mg - result.x;
+        break;
+      case 8:
+        point.x -= length_mg;
+        result = undo_rotation(point, 120);
+        result.x = 2 * length_mg - result.x;
+        break;
+      default:
+        throw std::invalid_argument(
+          "Cahill-Keyes inverse octant must be within [1, 8]");
+      }
+    return result;
+  }
+
+  /// Canonicalize a longitude to the native forward domain.
+  static scalar
+  canonical_longitude(scalar value)
+  {
+    while (value > 180)
+      value -= 360;
+    while (value <= -180)
+      value += 360;
+    return value;
+  }
+
   /// Derive all canonical control points and segment lengths.
   void
   calculate_preliminaries()
@@ -640,6 +735,152 @@ public:
       throw std::invalid_argument(
 	"Cahill-Keyes scaffold altitude is too large");
     calculate_preliminaries();
+  }
+
+  /// Reverse a centered Megamap point within one selected assembly octant.
+  ///
+  /// The Cahill-Keyes construction is piecewise across the 15°, 73°, and 75°
+  /// parallels and the 29°/30° meridian transition. The solver therefore
+  /// searches the canonical half-octant directly instead of differentiating
+  /// across those joints. A coarse zone-aware lattice selects the basin, then
+  /// a bounded pattern search reduces the forward residual. The caller must
+  /// enumerate octants when global cut ambiguity matters.
+  ///
+  /// @param x Centered native M-layout x coordinate in output units.
+  /// @param y Centered native M-layout y coordinate in output units.
+  /// @param octant One-based assembly octant in `[1, 8]`.
+  /// @param tolerance Maximum accepted forward residual in output units.
+  /// @return Registered longitude/latitude candidate, or no candidate when
+  /// the point is outside the selected octant.
+  /// @throws std::invalid_argument for invalid inputs or octant.
+  std::optional<inverse_solution>
+  inverse(const double x, const double y, const int octant,
+          const double tolerance) const
+  {
+    if (!std::isfinite(x) || !std::isfinite(y))
+      throw std::invalid_argument(
+        "Cahill-Keyes inverse point must be finite");
+    if (!std::isfinite(tolerance) || tolerance <= 0)
+      throw std::invalid_argument(
+        "Cahill-Keyes inverse tolerance must be finite and positive");
+
+    xy target = megamap_to_half_octant(
+      {static_cast<scalar>(x) / output_scale,
+       static_cast<scalar>(y) / output_scale}, octant);
+    const scalar canonical_tolerance
+      = static_cast<scalar>(tolerance) / output_scale;
+    const scalar meridian_sign = target.y < 0 ? -1.0L : 1.0L;
+    target.y = std::abs(target.y);
+
+    // Every meridian converges at the pole. Use the octant center as a stable
+    // representative longitude and mark the solution as a shared boundary.
+    if (distance(target, point_a) <= canonical_tolerance)
+      {
+        constexpr std::array<int, 9> geographic_octants {
+          0, 1, 2, 3, 4, 4, 1, 2, 3,
+        };
+        const int geographic_octant = geographic_octants.at(octant);
+        const scalar center = -155 + 90 * (geographic_octant - 1);
+        return inverse_solution {
+          static_cast<double>(canonical_longitude(center)),
+          octant <= 4 ? 90.0 : -90.0,
+          static_cast<double>(distance(target, point_a) * output_scale),
+          true,
+        };
+      }
+
+    struct search_point
+    {
+      scalar meridian = 0;
+      scalar parallel = 0;
+      scalar residual_squared = std::numeric_limits<scalar>::infinity();
+    };
+    const auto evaluate = [this, target](const scalar meridian,
+                                         const scalar parallel)
+    {
+      const xy projected = meridian_parallel_to_xy(meridian, parallel);
+      const scalar dx = projected.x - target.x;
+      const scalar dy = projected.y - target.y;
+      return search_point {meridian, parallel,
+                           std::fma(dx, dx, dy * dy)};
+    };
+
+    search_point best;
+    const auto consider = [&best, &evaluate](const scalar meridian,
+                                             const scalar parallel)
+    {
+      const search_point candidate = evaluate(meridian, parallel);
+      if (candidate.residual_squared < best.residual_squared)
+        best = candidate;
+    };
+
+    // Five-degree coverage is supplemented by every piecewise construction
+    // joint that does not already fall on that lattice.
+    for (int meridian = 0; meridian <= 45; meridian += 5)
+      for (int parallel = 0; parallel <= 90; parallel += 5)
+        consider(meridian, parallel);
+    for (int parallel = 0; parallel <= 90; parallel += 5)
+      consider(29, parallel);
+    for (int meridian = 0; meridian <= 45; meridian += 5)
+      consider(meridian, 73);
+    consider(29, 73);
+
+    scalar meridian_step = 2.5L;
+    scalar parallel_step = 2.5L;
+    constexpr scalar final_step = 2.5e-10L;
+    for (int iteration = 0;
+         iteration != 256
+           && (meridian_step > final_step || parallel_step > final_step);
+         ++iteration)
+      {
+        const search_point before = best;
+        for (const int meridian_direction : {-1, 0, 1})
+          for (const int parallel_direction : {-1, 0, 1})
+            {
+              if (meridian_direction == 0 && parallel_direction == 0)
+                continue;
+              const scalar meridian = std::clamp(
+                before.meridian + meridian_direction * meridian_step,
+                0.0L, 45.0L);
+              const scalar parallel = std::clamp(
+                before.parallel + parallel_direction * parallel_step,
+                0.0L, 90.0L);
+              consider(meridian, parallel);
+            }
+        if (best.residual_squared >= before.residual_squared)
+          {
+            meridian_step /= 2;
+            parallel_step /= 2;
+          }
+      }
+
+    const scalar canonical_residual = std::sqrt(best.residual_squared);
+    const scalar numerical_floor
+      = 512 * std::numeric_limits<scalar>::epsilon();
+    if (!std::isfinite(canonical_residual)
+        || canonical_residual > canonical_tolerance + numerical_floor)
+      return std::nullopt;
+
+    constexpr std::array<int, 9> geographic_octants {
+      0, 1, 2, 3, 4, 4, 1, 2, 3,
+    };
+    const int geographic_octant = geographic_octants.at(octant);
+    const scalar center = -155 + 90 * (geographic_octant - 1);
+    const scalar registered_longitude = canonical_longitude(
+      center + meridian_sign * best.meridian);
+    const scalar latitude = octant <= 4
+                              ? best.parallel : -best.parallel;
+    constexpr scalar boundary_epsilon = 2e-7L;
+    const bool boundary
+      = best.parallel <= boundary_epsilon
+        || 90 - best.parallel <= boundary_epsilon
+        || 45 - best.meridian <= boundary_epsilon;
+    return inverse_solution {
+      static_cast<double>(registered_longitude),
+      static_cast<double>(latitude),
+      static_cast<double>(canonical_residual * output_scale),
+      boundary,
+    };
   }
 
   /// Convert `(longitude, latitude)` in degrees to centered Megamap `(x, y)`.

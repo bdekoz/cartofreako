@@ -2,7 +2,8 @@
 
 **Implementation date:** 2026-08-06  
 **Status:** geometry ABI 1 complete; runtime API 2 face-qualified reverse
-extension implemented 2026-08-09; measured WebGL/LOD remains optional
+extension implemented 2026-08-09 and extended to Cahill–Keyes 2026-08-10;
+measured WebGL/LOD remains optional
 
 [Documentation index](../../index.md) ·
 [Web-developer quick start](webassembly-quick-start.md) ·
@@ -37,8 +38,9 @@ The implementation provides:
 - SVG, Canvas/OffscreenCanvas, and D3-stream consumers;
 - an ordinary ES-module Web Worker and main-thread client;
 - runtime projection/capability/license manifests;
-- runtime API 2 structured forward results plus analytic face-qualified
-  reverse candidates for every Myriahedral layout and Voronoi;
+- runtime API 2 structured forward results plus octant-qualified numerical
+  Cahill–Keyes and analytic face-qualified Myriahedral/Voronoi reverse
+  candidates;
 - Node and real-Chrome integration tests; and
 - interactive and command-line slice examples.
 
@@ -204,8 +206,8 @@ interrupted cuts and face IDs.
 
 Leaflet and OpenLayers can host the finite output as a non-wrapping planar
 carrier. They should not assume a globally unique inverse: API 2 exposes
-face-qualified Myriahedral/Voronoi candidates while the other families remain
-explicitly unsupported. MapLibre integration remains a custom WebGL
+face-qualified Cahill–Keyes, Myriahedral, and Voronoi candidates while the
+other families remain explicitly unsupported. MapLibre integration remains a custom WebGL
 consumer of the command buffer, not a projection mode in its Mercator tile
 pipeline. The detailed comparison is retained in the
 [originating evaluation](converge-generation.status-20260806.md#context-existing-browser-cartography).
@@ -222,7 +224,7 @@ pipeline. The detailed comparison is retained in the
 | Existing CK/Myria slices | Native counts, Node catalogs, runnable examples |
 | SVG and Canvas share geometry | Both adapters consume ABI 1 in Node; Canvas also runs in Chrome |
 | Worker path | Real Chrome instantiates a second WASM runtime, projects a sliced path, and transfers its buffers |
-| Native forward/reverse contract | `tests/test-forward-reverse-projection-api.cc` checks all 5,120 faces in all six Myriahedral layouts, all Voronoi faces, batches, boundaries, outside points, and unsupported families |
+| Native forward/reverse contract | `tests/test-forward-reverse-projection-api.cc` checks 1,560 Cahill–Keyes zone samples plus seams/poles, all 5,120 faces in all six Myriahedral layouts, all Voronoi faces, batches, boundaries, outside points, and unsupported families |
 | Browser forward/reverse contract | Node checks typed-array batches and D3 behavior; real Chrome checks main-thread and worker reverse calls |
 | Visible license metadata | `runtime.manifest` and `runtime.licenses` assertions |
 | Node and real browser | `make check-wasm-projections`; `make check-wasm-projections-browser` |
@@ -235,8 +237,8 @@ streaming.
 
 ## Deliberate API 2 / ABI 1 boundaries
 
-- No false global inverse. Myriahedral and Voronoi return face-qualified
-  candidates; Cahill–Keyes, AuthaGraph, Dymaxion, and Star-X return
+- No false global inverse. Cahill–Keyes, Myriahedral, and Voronoi return
+  face-qualified candidates; AuthaGraph, Dymaxion, and Star-X return
   `unsupported`. Use feature IDs plus a planar index for feature picking.
 - No built-in polygon triangulation or WebGL renderer. The command buffer is
   the stable input for one after profiling establishes the need.
@@ -261,8 +263,8 @@ streaming.
    and license manifest.
 5. Evaluate TopoJSON/shared-arc input for stable feature IDs and smaller base
    map transfers.
-6. Extend the checked reverse contract in order: Dymaxion, Cahill–Keyes,
-   AuthaGraph, then Star-X and its separate unified-Antarctic semantics.
+6. Extend the checked reverse contract in order: Dymaxion, AuthaGraph, then
+   Star-X and its separate unified-Antarctic semantics.
 
 These are enhancements, not hidden prerequisites for the documented ABI 1
 workflow.

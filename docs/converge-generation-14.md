@@ -28,6 +28,8 @@ been built or published.
   and component identity.
 - [x] Implement analytic, face-qualified reverse projection for all six
   Myriahedral layouts and Voronoi.
+- [x] Implement octant-qualified Cahill–Keyes reverse projection across every
+  piecewise construction zone, seam, hemisphere, and pole convention.
 - [x] Return explicit reverse outcomes rather than guessing across cuts:
   `unique`, `ambiguous`, `outside`, `cut`, and `unsupported`.
 - [x] Expose the same contract through WebAssembly, the JavaScript wrapper,
@@ -38,8 +40,8 @@ been built or published.
   while retaining the established 2× primary-title scale.
 - [x] Finish focused native and WebAssembly verification for the implemented
   API 2 capability set after the final numerical review.
-- [ ] Review the four remaining reverse families in this order: Dymaxion,
-  Cahill–Keyes, AuthaGraph, then Star-X. Until implemented, each must continue
+- [ ] Review the three remaining reverse families in this order: Dymaxion,
+  AuthaGraph, then Star-X. Until implemented, each must continue
   to advertise `inverseMode: "none"` and return `unsupported`.
 - [ ] Run the repository-wide full check only at the established release gate.
 - [ ] Freeze final source identity, generated manifest, checksums, publication
@@ -97,6 +99,32 @@ Build compatibility changes:
 - retained Izzi as an explicit build dependency without introducing a local
   compatibility copy.
 
+### 2026-08-10 — Cahill–Keyes reverse support
+
+Status: **implemented; focused verification passing**.
+
+- added an octant-qualified native inverse to the authoritative scalable
+  Cahill–Keyes construction;
+- exactly undid the M-layout translation, rotation, and southern reflection
+  before solving within one canonical half-octant;
+- used a zone-aware bounded numerical search across the 29°/30° meridian and
+  15°/73°/75° parallel transitions, followed by forced-octant forward-residual
+  acceptance;
+- reversed the one-degree raster registration and retained explicit
+  equator/outer-meridian/pole boundary semantics;
+- promoted Cahill–Keyes metadata from `inverseMode: "none"` to
+  `inverseMode: "face-qualified"` without changing runtime API 2 or geometry
+  ABI 1;
+- extended native coverage to 1,560 interior zone samples, 16 registered seam
+  probes, all eight qualified pole copies, batches, outside points, and direct
+  native compatibility anchors; and
+- extended Node, D3, main-thread browser, and module-worker coverage through
+  the existing projection-neutral surface.
+
+The polar longitude returned for a qualified cell is deliberately the center
+of that octant. Latitude and residual remain authoritative at the pole;
+longitude is a stable representative because every meridian converges there.
+
 ### Headless execution and consent
 
 The Stage 14 API and its checks are designed to run without a display,
@@ -123,12 +151,14 @@ different visual system. Immutable v12 and v13 assets are not rewritten; the
 
 | Check | Scope | Current result |
 | --- | --- | --- |
-| `make check-forward-reverse-projection-api` | Native API, all 30,720 Myriahedral face centers, all 20 Voronoi face centers, batches, boundary status, unsupported paths, and invalid input | Passed 2026-08-09 after the final inverse-coordinate residual correction |
-| Native projection-runtime regression | Geometry ABI 1 and runtime API 2 coexistence | Passed 2026-08-09 |
-| `make wasm-projections` | Rebuild bindings and browser distribution | Passed 2026-08-09 with Emscripten warnings treated as errors |
-| `make check-wasm-projections` | Node API, immutable metadata, worker, D3, single and batch reverse | Passed 2026-08-09 |
-| `make check-wasm-projections-browser` | Headless Chrome API 2 and worker integration | Passed 2026-08-09; its temporary server was restricted to loopback |
-| Static syntax and `git diff --check` | Module syntax and patch hygiene | Passed 2026-08-09 |
+| `make check-forward-reverse-projection-api` | Native API, 1,560 Cahill–Keyes zone samples plus seams/poles, all 30,720 Myriahedral face centers, all 20 Voronoi face centers, batches, boundary status, unsupported paths, and invalid input | Passed 2026-08-10 with Cahill–Keyes enabled |
+| Native projection-runtime regression | Geometry ABI 1 and runtime API 2 coexistence | Passed 2026-08-10 |
+| `make wasm-projections` | Rebuild bindings and browser distribution | Passed 2026-08-10 with Emscripten warnings treated as errors |
+| `make check-wasm-projections` | Node API, immutable metadata, typed-array batches, Cahill–Keyes/Myriahedral D3, and single/batch reverse | Passed 2026-08-10 |
+| `make check-wasm-projections-browser` | Headless Chrome API 2 plus main-thread and worker Cahill–Keyes reverse | Passed 2026-08-10; its temporary server was restricted to loopback |
+| `make check-wasm-cahill-keyes check-wasm-cahill-myriahedral` | Legacy compatibility modules after canonical Izzi include migration | Passed 2026-08-10 |
+| Focused UBSan builds | Native Cahill–Keyes anchors and complete projection-neutral reverse campaign at `-O2` | Passed 2026-08-10 |
+| Static syntax and `git diff --check` | Module syntax and patch hygiene | Passed 2026-08-10 |
 | Resource and temperature generator tests | 60% observed fields, 2× titles, metadata, and profile validation | Passed 2026-08-09 |
 | Resource checksum manifest | Source-profile digest after the 60% change and all pinned resource payloads | Passed 2026-08-09 |
 | Repository-wide `make check` | Full project release gate | Deliberately not run yet |
@@ -151,10 +181,10 @@ Stage 14 is ready to freeze only when:
 
 ## Deferred decisions
 
-Reverse support for Dymaxion, Cahill–Keyes, AuthaGraph, and Star-X is not
+Reverse support for Dymaxion, AuthaGraph, and Star-X is not
 simulated by numerical guessing. Each needs a family-specific inverse,
 candidate enumeration at seams, forward-residual validation, exhaustive
 boundary fixtures, and an explicit capability upgrade. Star-X additionally
 needs component-aware treatment of its four-way composition and unified
-Antarctic cap; it should be attempted only after the underlying
-Cahill–Keyes reverse is stable.
+Antarctic cap; its carrier stage can now build on the checked Cahill–Keyes
+reverse, but the compositor still needs separate semantics.

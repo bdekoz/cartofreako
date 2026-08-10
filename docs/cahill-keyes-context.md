@@ -232,9 +232,14 @@ do not identify a supported opposite-frame-edge transition. See the
 [implementation notes](cahill-keyes-implementation-notes.md#projected-path-seam-handling)
 for the API contract, thresholds, formulas, and example.
 
-The native class is a **forward** projection only. It converts geographic
-coordinates to map coordinates; it does not solve the inverse map-to-globe
-problem.
+The native class provides the authoritative forward construction and an
+**octant-qualified reverse**. The reverse first undoes a selected M-layout
+octant and then solves the bounded piecewise half-octant by forward residual.
+It does not pretend the interrupted carrier has one globally unique inverse:
+the runtime returns explicit candidates and `unique`, `ambiguous`, `cut`, or
+`outside` status. See the
+[forward/reverse API](forward-reverse-projection-api.md) and the
+[implementation plan and issues](cahill-keyes-implementation-notes.md#reverse-implementation-plan-and-completion-record).
 
 [Documentation index](../index.md) ·
 [Implementation notes](cahill-keyes-implementation-notes.md) ·

@@ -54,6 +54,21 @@
       drawCommandBuffer(document.querySelector('#map').getContext('2d'), geometry);
       projection.dispose();
 
+      const ckProjection = runtime.createProjection({id: 'cahill-keyes', width: 440});
+      const ckForward = ckProjection.forward([171.2, 7.1]);
+      const ckInverse = ckProjection.inverse([ckForward.x, ckForward.y], {
+        nativeCell: ckForward.nativeCell
+      });
+      requireCondition(ckProjection.descriptor.inverseMode === 'face-qualified',
+        'Cahill-Keyes reverse capability is missing');
+      requireCondition(ckInverse.status === 'unique'
+        && ckInverse.candidates.length === 1,
+        'main-thread Cahill-Keyes inverse failed');
+      requireCondition(Math.abs(ckInverse.candidates[0].longitude - 171.2) < 2e-8
+        && Math.abs(ckInverse.candidates[0].latitude - 7.1) < 2e-8,
+        'main-thread Cahill-Keyes inverse is inaccurate');
+      ckProjection.dispose();
+
       const worker = new CartofreakoWorkerClient();
       const workerManifest = await worker.manifest();
       requireCondition(workerManifest.abiVersion === 1, 'worker ABI is wrong');
@@ -69,6 +84,18 @@
       );
       requireCondition(workerInverse.candidates.length === 1,
         'worker face-qualified inverse failed');
+      const workerCkForward = await worker.forward(
+        {id: 'cahill-keyes', width: 440},
+        [171.2, 7.1]
+      );
+      const workerCkInverse = await worker.inverse(
+        {id: 'cahill-keyes', width: 440},
+        [workerCkForward.x, workerCkForward.y],
+        {nativeCell: workerCkForward.nativeCell}
+      );
+      requireCondition(workerCkInverse.status === 'unique'
+        && workerCkInverse.candidates.length === 1,
+        'worker Cahill-Keyes inverse failed');
       const land = await fetch('./cartofreako-cahill-keyes-land-110m.geojson')
         .then(response => response.json());
       const workerGeometry = await worker.projectGeometry(

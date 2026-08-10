@@ -492,9 +492,13 @@ metadata on hover/click. That is the lower-risk first milestone.
 face-qualified contract analytically for all six Myriahedral layouts and for
 Voronoi, including structured ambiguity/cut/outside/unsupported states,
 native-cell qualification, batch typed arrays, workers, and conservative D3
-integration. Geometry command buffers remain ABI 1. Cahill–Keyes, AuthaGraph,
-Dymaxion, and Star-X continue to advertise `unsupported` rather than a false
-global inverse. See the
+integration. Geometry command buffers remain ABI 1.
+
+**Cahill–Keyes extension, 2026-08-10:** the same API now implements an
+octant-qualified Cahill–Keyes reverse by undoing the M-layout assembly and
+running a bounded, zone-aware solve against the authoritative piecewise
+forward construction. AuthaGraph, Dymaxion, and Star-X continue to advertise
+`unsupported` rather than a false global inverse. See the
 [forward/reverse projection API](../forward-reverse-projection-api.md).
 
 ## Promising leads worth exploring

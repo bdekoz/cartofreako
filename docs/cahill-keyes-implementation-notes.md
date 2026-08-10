@@ -2,13 +2,15 @@
 
 [Documentation index](../index.md) ·
 [Geometric context](cahill-keyes-context.md) ·
+[Forward/reverse API](forward-reverse-projection-api.md) ·
 [Bibliography](cahill-keyes-bibliography.md)
 
 ## Scope and result
 
 The implementation replaces the former per-point Node.js subprocess, shared
 temporary file, and fixed-height caches with an in-process C++20 forward
-projection. Its geometric construction is derived from the
+projection and an octant-qualified reverse solver. Its geometric construction
+is derived from the
 coordinate-conversion core of Mary Jo Graça and Gene Keyes's
 `MegamapMaker-prep9.pl`, including:
 
@@ -31,7 +33,7 @@ The public class remains `a60::carto::ckproj` and continues to implement
 named presets remain available. New code can construct it directly from an
 `a60::carto::frame`.
 
-The work was delivered in four stages:
+The work was delivered in five stages:
 
 1. **Native projection:** translate the forward construction to C++20 and
    verify it against the Perl results and `augment_carto_geo_specific` anchors.
@@ -44,24 +46,29 @@ The work was delivered in four stages:
 4. **Documentation:** record the geometry, formulas, implementation choices,
    usage, verification method, provenance, and bibliography in this
    documentation set.
+5. **Reverse projection:** undo the selected M-layout octant, solve the
+   canonical piecewise construction with a bounded forward-residual search,
+   and expose candidates through runtime API 2.
 
 ## Code organization
 
 | Component | Responsibility |
 | --- | --- |
-| [`cart0freak0-cahill-keyes.h`](../src.projections/cart0freak0-cahill-keyes.h) | Numeric forward projection, frame validation, `projection_api` adapter, screen-coordinate conversion, raster naming, and compatibility presets |
+| [`cart0freak0-cahill-keyes.h`](../src.projections/cart0freak0-cahill-keyes.h) | Numeric forward projection, octant-qualified reverse solver, frame validation, `projection_api` adapter, screen-coordinate conversion, raster naming, and compatibility presets |
 | [`cart0freak0-cahill-keyes-functions.h`](../src.projections/cart0freak0-cahill-keyes-functions.h) | Scale- and offset-aware splitting of projected paths at wrapped frame edges |
 | [`cart0freak0-cahill-keyes-slicing.h`](../src.projections/cart0freak0-cahill-keyes-slicing.h) | Carrier-frame viewport descriptors, exact-octant clipping, SVG slice wrappers, and verification |
 | [`test-cahill-keyes-projection.cc`](../tests/test-cahill-keyes-projection.cc) | Compatibility points, representable boundary neighborhoods, scale invariance, continuity, domain sweep, and invalid input |
 | [`test-cahill-keyes-projection-api.cc`](../tests/test-cahill-keyes-projection-api.cc) | Public API anchors, variable frames, invalid frames, raster paths, and compatibility construction |
 | [`test-cahill-keyes-path-functions.cc`](../tests/test-cahill-keyes-path-functions.cc) | Horizontal, vertical, corner, two-edge, variable-frame, stateful, and invalid path cases |
 | [`test-cahill-keyes-slicing.cc`](../tests/test-cahill-keyes-slicing.cc) | Four-strip and exact-octant geometry, metadata, source references, physical units, and invalid carriers |
+| [`test-forward-reverse-projection-api.cc`](../tests/test-forward-reverse-projection-api.cc) | Runtime round trips, 1,560 zone samples, registered seams, qualified poles, batches, outside points, and capability status |
 
 `ck_native::forward_projection` builds a dimensionless, `long double`
 scaffold with `MG = 1` and stores the requested output altitude separately.
 Calls to `operator()` are stateless: they evaluate the canonical construction,
-assemble the octant, and apply the output scale only once at the end. No cache
-or external process is required.
+assemble the octant, and apply the output scale only once at the end. Reverse
+calls are also stateless and evaluate the same forward construction during
+their residual search. No cache or external process is required.
 
 ## Coordinate conventions
 
@@ -402,6 +409,135 @@ North octants use those rotations directly. South octants first reflect
 
 Finally, every octant is translated vertically by `MG sin60°`.
 
+## Octant-qualified reverse
+
+The reverse contract is deliberately not a single unqualified
+`(x,y) -> (longitude,latitude)` function. The interrupted M-layout can place a
+boundary on more than one planar copy, so the native method accepts one
+official assembly octant and the projection-neutral runtime either honors a
+caller's `nativeCell` or enumerates all eight cells.
+
+For a selected octant, `inverse()` divides out `MGout`, removes the common
+vertical translation, reverses the octant's `-60°` or `-120°` rotation, and
+undoes the southern `x = 2MG - x` reflection when present. The result is a
+signed canonical half-octant coordinate. Its y sign chooses the west/east
+half; the remaining magnitude must be explained by one pair:
+
+```text
+0 <= m <= 45
+0 <= p <= 90
+```
+
+The forward is continuous but piecewise at the A–L zone boundaries. Rather
+than differentiate across those joints, the reverse evaluates a five-degree
+`m,p` lattice augmented by `m=29` and `p=73`, chooses the smallest-residual
+basin, and applies a bounded two-dimensional pattern search. A result is
+accepted only when the selected octant's authoritative forward transform
+returns to the requested point within `tolerance_pixels`. This makes the
+forward residual, rather than a copied external inverse, the numerical oracle.
+
+The geographic sector is reconstructed from the assembly-octant table, and
+the public runtime subtracts the one-degree raster registration before
+returning longitude. Runtime cells `0..3` represent the four northern sectors;
+cells `4..7` are their southern counterparts. Equator points, outer
+45° meridians, and poles carry `boundary=true`. Every meridian converges at a
+pole, so a cell-qualified polar result uses that octant's center longitude as
+a stable representative; only its latitude and residual are geographically
+meaningful there.
+
+This capability remains runtime API 2 and advertises
+`inverseMode: "face-qualified"`; geometry command buffers remain ABI 1. See
+the [projection-neutral forward/reverse contract](forward-reverse-projection-api.md)
+for statuses, batches, WebAssembly, workers, D3, and TypeScript behavior.
+
+### Reverse implementation plan and completion record
+
+The Stage 14 implementation followed this bounded plan:
+
+1. **Preserve the public contract.** Keep runtime API 2 and geometry ABI 1,
+   add no sentinel coordinates, and promote capability metadata only after a
+   checked candidate path exists. **Complete.**
+2. **Invert assembly before geography.** Convert screen coordinates to the
+   centered scaffold and exactly reverse the selected octant's translation,
+   rotation, and southern reflection. **Complete.**
+3. **Solve the authoritative construction.** Reuse
+   `meridian_parallel_to_xy()` as the oracle over bounded `(m,p)` rather than
+   maintaining a second set of inverse A–L formulas. **Complete.**
+4. **Restore registration and topology.** Reconstruct the registered sector
+   longitude, undo the public one-degree offset, retain runtime-cell identity,
+   and explicitly classify cuts and poles. **Complete.**
+5. **Verify native numerics.** Cover compatibility anchors, every assembly
+   octant, both half-octants and hemispheres, all piecewise transitions,
+   unqualified enumeration, exact public seams, poles, batches, invalid input,
+   and forward residuals. **Complete.**
+6. **Verify consumer parity.** Rebuild the all-projection and compatibility
+   WebAssembly modules, then exercise Node, typed arrays, D3, main-thread
+   browser calls, and module-worker calls. **Complete.**
+7. **Defer composition semantics.** Use this checked solver as the future
+   carrier inverse for Star-X, but do not claim Star-X support until its four
+   transformed components and unified Antarctic cap have an explicit result
+   model. **Open Stage 14 follow-on.**
+
+### Issues found during implementation
+
+- **Runtime cells are not official assembly-octant numbers.** Runtime cells
+  are northern `0..3` followed by southern `4..7`; the forward assembly order
+  is `1,2,3,4,6,7,8,5`. Treating `cell + 1` as the octant put every southern
+  candidate into the wrong transform. The reverse now uses the explicit table
+  `{1,2,3,4,6,7,8,5}`.
+- **The public longitude sectors include a wrapped first sector.** The visible
+  sector is `159°..249°`, while native registered longitude is canonicalized
+  around the antimeridian. Reversing with four ordinary closed `[-180,180]`
+  intervals misclassified this sector. Reconstruction now happens around the
+  registered sector center and canonicalizes only after subtracting the
+  one-degree raster offset.
+- **The construction is continuous but not globally differentiable.** A
+  single Newton solve can cross the 29°/30° or 15°/73°/75° ownership branches,
+  use the wrong local derivative, and converge to a residual minimum outside
+  the selected octant. The adopted lattice includes the non-five-degree
+  joints and the refinement is bounded, derivative-free, and checked through
+  the forward transform.
+- **Screen and native axes differ.** Runtime points are top-left, y-down frame
+  coordinates; the native scaffold is centered and y-up. Attempting assembly
+  inversion before removing the projection origin and y reflection produces
+  plausible-looking but geographically wrong solutions. The runtime performs
+  that conversion explicitly before calling the native reverse.
+- **Half-octant sign degenerates on the center line and at poles.** Away from
+  those loci, the unassembled y sign identifies the side of the octant. At
+  `m=0` both sides are the same meridian, and at `p=90` every meridian is the
+  same geographic point. The center line therefore has one natural result;
+  the pole uses a documented per-octant representative longitude and is always
+  marked as a boundary.
+- **A cut cannot be made globally unique by numerical precision.** Equator
+  and outer-meridian points can legitimately validate in more than one native
+  cell or have only one separated planar copy. Candidate enumeration preserves
+  `ambiguous` versus `cut`; `nativeCell` is the only supported way to demand a
+  particular copy.
+- **Unqualified reverse is intentionally more expensive.** It tests all eight
+  octants; a known `nativeCell` tests one. Agentic, editing, and game workflows
+  should retain the cell returned by `forward()` and pass it back whenever
+  their interaction already identifies the projected component.
+- **An inline seed cache was not safe in the closed WebAssembly variant.** An
+  attempted 220-point lattice member passed native tests but reproducibly made
+  the rebuilt all-projection WASM module trap with an out-of-bounds access on
+  an unrelated Myriahedral forward call. Removing the member restored the
+  module. The evidence points to the enlarged `std::variant`/WASM stack
+  footprint, although the exact Emscripten failure mechanism was not proven.
+  The released solver therefore remains stateless; any future cache must be
+  out-of-line or shared and must pass the real browser/worker checks before it
+  is retained.
+- **The compatibility WebAssembly rebuild exposed stale Izzi includes.** The
+  old compatibility sources and two embedded-code documentation examples
+  still included the removed `a60-svg.h` shim. They now use canonical
+  `izzi-svg.h`; both compatibility WebAssembly smoke tests pass again.
+- **The focused runtime target did not track projection headers transitively.**
+  `PROJECTION_RUNTIME_HEADERS` named the runtime shell but omitted the
+  Cahill–Keyes and other concrete projection headers it includes. A solver-only
+  header edit could therefore leave a stale native test or all-projection WASM
+  binary. The Makefile dependency set now names every concrete runtime
+  projection header, so these focused targets rebuild when their mathematics
+  changes.
+
 ## Public construction and usage
 
 The preferred factory takes the `frame` that owns the requested
@@ -658,6 +794,14 @@ Run all standalone tests under strict C++20 warnings:
 make check
 ```
 
+During Stage 14 development, the reverse-specific unattended checks are:
+
+```sh
+make check-forward-reverse-projection-api
+make check-wasm-projections
+make check-wasm-projections-browser
+```
+
 The checks cover:
 
 - Perl-derived compatibility coordinates at a 528-unit scaffold, including
@@ -676,6 +820,14 @@ The checks cover:
 - finite, in-frame output for all 27 locations used by
   `augment_carto_geo_specific`;
 - expected `projection_api` coordinates for those 27 integration anchors;
+- direct reverse recovery for the native compatibility anchors;
+- 1,560 qualified reverse samples across all eight runtime cells, both
+  half-octants, both hemispheres, and every 15°/29°/30°/73°/75° zone branch;
+- qualified and unqualified reverse at 44-, 440-, 3,840-, and 13,200-pixel
+  carrier widths;
+- all four public registered seams at four latitudes, all eight qualified
+  polar copies, equator ambiguity, unqualified candidate enumeration, and
+  forced-forward residual acceptance;
 - 320×160, 44×22, 4224×2112, 13200×6600, and 1234.5×617.25 frames;
 - rejection of 16:9, approximate 2:1, portrait, zero, negative, and infinite
   frames, plus invalid or overflow-prone direct scaffold altitudes;
@@ -708,9 +860,10 @@ can be built without the rest of the application dependency graph.
 
 ## Invariants and limitations
 
-- Only the standard M-layout forward transform is implemented. The alternative
+- Only the standard M-layout forward/reverse transform is implemented. The alternative
   Butterfly and arbitrary Perl area-code arrangements are outside this class.
-- There is no inverse `(x,y)` to `(latitude,longitude)` solver.
+- Reverse results are octant-qualified candidates, not a false globally unique
+  coordinate. Polar longitude is a documented per-octant representative.
 - Equality branches at 0°, 15°, 29°, 30°, 45°, 73°, and 75° define ownership
   of exact geometric boundaries. Adjacent representable values are tested for
   totality and the appropriate one- or two-sided continuity; matching the
@@ -742,4 +895,5 @@ history.
 
 [Documentation index](../index.md) ·
 [Geometric context](cahill-keyes-context.md) ·
+[Forward/reverse API](forward-reverse-projection-api.md) ·
 [Bibliography](cahill-keyes-bibliography.md)

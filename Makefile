@@ -202,10 +202,21 @@ PROJECTIONS_WEB_JS := \
 	$(WEB_DIR)/cartofreako-projections-worker.mjs \
 	$(WEB_DIR)/cartofreako-worker-client.mjs
 PROJECTION_RUNTIME_HEADERS := \
+	$(PROJECTION_SRC_DIR)/a60-carto.h \
+	$(PROJECTION_SRC_DIR)/a60-carto-frame.h \
+	$(PROJECTION_SRC_DIR)/a60-carto-projection.h \
+	$(PROJECTION_SRC_DIR)/a60-carto-projection-dymaxion.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-authagraph.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-cahill-keyes-functions.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-cahill-keyes.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-myriahedral.h \
 	$(PROJECTION_SRC_DIR)/cart0freak0-projection-runtime.h \
 	$(PROJECTION_SRC_DIR)/cart0freak0-projection-slicing.h \
 	$(PROJECTION_SRC_DIR)/cart0freak0-projection-geometry.h \
 	$(PROJECTION_SRC_DIR)/cart0freak0-myriahedral-perspectives.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-star-x-functions.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-star-x.h \
+	$(PROJECTION_SRC_DIR)/cart0freak0-voronoi.h \
 	$(wildcard $(PROJECTION_SRC_DIR)/cart0freak0-myriahedral-perspective-*-tree.inc)
 
 GEOMETRY_GENERATOR := $(GENERATOR_SRC_DIR)/generate-geometry

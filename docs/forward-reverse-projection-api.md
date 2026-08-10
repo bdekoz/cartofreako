@@ -1,6 +1,6 @@
 # Forward and reverse projection API
 
-**Implementation date:** 2026-08-09
+**Implementation dates:** 2026-08-09; Cahill–Keyes reverse 2026-08-10
 **Status:** runtime API 2 implemented; geometry command-buffer ABI 1 retained
 
 [Documentation index](../index.md) ·
@@ -22,7 +22,7 @@ their buffers merely to detect reverse support.
 
 | Projection family | Forward | Reverse mode | Current boundary |
 | --- | --- | --- | --- |
-| Cahill–Keyes | Implemented | `none` | Zone-qualified numerical/analytic inverse remains future work. |
+| Cahill–Keyes | Implemented | `face-qualified` | Octant-qualified bounded numerical inverse over the authoritative piecewise forward construction. |
 | AuthaGraph | Implemented | `none` | Periodic sector inverse and singular-vertex policy remain future work. |
 | Dymaxion | Implemented | `none` | Gray-formula face inverse remains future work. |
 | Myriahedral, all six layouts | Implemented | `face-qualified` | Analytic inverse over the complete 5,120-face mesh. |
@@ -154,6 +154,32 @@ defeats the purpose of a face-qualified inverse.
 
 ## Implemented inverse mathematics
 
+### Cahill–Keyes
+
+The reverse first converts screen coordinates back to the centered native
+Megamap scaffold. For each requested or enumerated native cell it maps the
+runtime cell to the official Cahill–Keyes assembly octant, then exactly undoes
+that octant's translation, `-60°` or `-120°` rotation, and southern reflection.
+The sign of the recovered half-octant y coordinate selects the corresponding
+side of the octant meridian.
+
+The remaining canonical solve is bounded to meridian magnitude `[0°, 45°]`
+and absolute parallel `[0°, 90°]`. The Cahill–Keyes forward construction is
+piecewise at the 29°/30° meridian transition and the 15°, 73°, and 75°
+parallels, so the reverse does not assume one differentiable formula. It
+selects a basin from a five-degree lattice augmented with the 29° and 73°
+joints, then runs a bounded two-dimensional pattern search against the native
+forward transform. Only candidates whose forced-octant forward residual fits
+the caller's pixel tolerance are retained.
+
+The solver then reconstructs the registered sector longitude, reverses the
+project's one-degree raster registration, and marks the Equator, outer
+octant meridians, and poles as boundaries. All meridians converge at a pole;
+there the API returns the selected octant's center longitude as a stable
+representative, marks it as a boundary, and makes no claim that polar
+longitude is unique. This implementation derives from Cartofreako's checked
+native forward construction; it does not copy D3's inverse.
+
 ### Myriahedral
 
 The inverse undoes the registered 16:9 canvas normalization, enumerates every
@@ -195,20 +221,24 @@ make check-wasm-projections-browser
 ```
 
 The native check covers forward/reverse round trips, unsupported/outside/error
-states, batch structure, all 5,120 face centers in each of the six Myriahedral
-layouts, every Voronoi face center, and a Myriahedral boundary probe. Node
-checks typed arrays and D3 behavior. The Chrome check exercises main-thread and
-worker reverse calls through the real Emscripten module.
+states, batch structure, 1,560 Cahill–Keyes interior samples spanning every
+octant and piecewise zone, 16 registered outer-meridian probes, eight qualified
+pole probes, qualified and unqualified solves at 44-, 440-, 3,840-, and
+13,200-pixel carrier widths, all 5,120 face centers in each of the six
+Myriahedral layouts, every Voronoi face center, and carrier-boundary behavior.
+Node checks typed
+arrays plus Cahill–Keyes and Myriahedral D3 inversion. The Chrome check
+exercises Cahill–Keyes on both the main thread and module worker through the
+real Emscripten module, while retaining Myriahedral and Voronoi coverage.
 
 ## Next reverse implementations
 
 1. Dymaxion: invert each registered Gray face/subface and retain every seam
    candidate.
-2. Cahill–Keyes: undo octant assembly, enumerate zones, solve branches with a
-   safeguarded method, and compare—not copy—D3's inverse as an external oracle.
-3. AuthaGraph: invert the published sector algebra with explicit periodic and
+2. AuthaGraph: invert the published sector algebra with explicit periodic and
    singular-vertex behavior.
-4. Star-X: reverse the carrier transforms into CK candidates, then specify a
+3. Star-X: reverse the carrier transforms into checked Cahill–Keyes candidates,
+   then specify a
    separate result for the unified Antarctic cap whose compositor supersedes
    four ordinary source copies.
 

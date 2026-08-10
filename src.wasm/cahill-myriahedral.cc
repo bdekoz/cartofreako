@@ -14,7 +14,7 @@
 #include <emscripten/val.h>
 
 #include <a60-io.h>
-#include <a60-svg.h>
+#include <izzi-svg.h>
 
 #include "a60-carto-frame.h"
 #include "a60-carto-projection.h"
