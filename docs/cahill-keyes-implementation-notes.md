@@ -48,7 +48,8 @@ The work was delivered in five stages:
    documentation set.
 5. **Reverse projection:** undo the selected M-layout octant, solve the
    canonical piecewise construction with a bounded forward-residual search,
-   and expose candidates through runtime API 2.
+   and expose candidates through the projection-neutral runtime (API 3 now;
+   originally delivered in API 2).
 
 ## Code organization
 
@@ -445,7 +446,7 @@ pole, so a cell-qualified polar result uses that octant's center longitude as
 a stable representative; only its latitude and residual are geographically
 meaningful there.
 
-This capability remains runtime API 2 and advertises
+This capability is retained unchanged in runtime API 3 and advertises
 `inverseMode: "face-qualified"`; geometry command buffers remain ABI 1. See
 the [projection-neutral forward/reverse contract](forward-reverse-projection-api.md)
 for statuses, batches, WebAssembly, workers, D3, and TypeScript behavior.
@@ -454,7 +455,8 @@ for statuses, batches, WebAssembly, workers, D3, and TypeScript behavior.
 
 The Stage 14 implementation followed this bounded plan:
 
-1. **Preserve the public contract.** Keep runtime API 2 and geometry ABI 1,
+1. **Preserve the public contract.** Keep the point API independently
+   versioned from geometry ABI 1,
    add no sentinel coordinates, and promote capability metadata only after a
    checked candidate path exists. **Complete.**
 2. **Invert assembly before geography.** Convert screen coordinates to the

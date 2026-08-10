@@ -23,8 +23,9 @@ secondary actions.
 
 This repository contains native C++20 forward implementations of the
 AuthaGraph, Cahill-Keyes, Dymaxion, Star-X, Myriahedral, and icosahedral
-Voronoi projections, plus face-qualified Cahill–Keyes, Myriahedral, and
-Voronoi reverse candidates through runtime API 2. All six accept variable-size
+Voronoi projections, plus candidate-aware reverse projection for all six
+families through runtime API 3. Star-X exposes its ordinary carrier and unified
+Antarctic cap as separate components. All six accept variable-size
 `a60::carto::frame` values while enforcing the aspect ratio required by the
 selected geometry or source-canvas registration.
 
@@ -65,7 +66,7 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Stage 14 projection API, visual hierarchy, verification, and release plan | [Stage 14 convergence ledger](docs/converge-generation-14.md) |
 | Visual contact sheets for every projection and released pass | [Visual gallery](docs/gallery.md) and [generated projection snapshots](#generated-artifact-previews) |
 | Compact index of build, projection, pass, browser, and release documentation | [Technical documentation](docs/technical-documentation.md) |
-| Static generated-asset releases, manifests, render hardware, and publishing | [`v20260808.1` corrected release notes](docs/releases/v20260808.1.md), [S3 v13 publication](docs/releases/s3-v13.md), and [release runbook](docs/releases/README.md) |
+| GitHub source releases versus UCB AAO/S3 deposits, static assets, manifests, and render hardware | [`v20260810` Stage 14 source release](docs/releases/v20260810.md), [`v20260808.1` corrected release notes](docs/releases/v20260808.1.md), [S3 v13 publication](docs/releases/s3-v13.md), and [release runbook](docs/releases/README.md) |
 | Generate-pass evaluation record plus configured, full-suite, family, and exact workflows | [Generate-pass methods and decision record](docs/generation-methods.md) |
 | Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/astro-implementation-notes.md) |
 | Process-start solar illumination and source-timed JAXA physical atmosphere generation | [Cloud-atmosphere implementation notes](docs/cloud-atmosphere-implementation-notes.md) |
@@ -339,16 +340,20 @@ group by 180 degrees, and stacks it above the left group. This produces the
 portrait X arrangement around the northern polar locus without raster tiles
 or temporary maps. Its default layout closes the former central gap, enlarges
 the complete X 120 percent about the page center, adds a central North-pole
-star, and composes Natural Earth Antarctica once at the lower end at the
-projection's geographic scale.
+star, and composes Antarctic source geometry once at the lower end at the
+projection's geographic scale. Natural Earth provides the standard physical
+content but does not control the cap geometry.
 
-The Stage 13 compositor cuts every source at the fixed `60°S` parallel and
+The current compositor cuts every source at the fixed `60°S` parallel and
 reunites the four southern physical and graticule fragments around one
-bottom-center pole. It preserves ordinary source-tip radius, aligns the
-mainland's bottom from the original uncut lower quadrant, and emits every
-unified Antarctic fragment after the ordinary quadrants so it paints above
-them. The source cuts and unified boundary are visible
-in [`graticules-star-x-34-44.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/star-x/png/graticules-star-x-34-44.png).
+bottom-center pole. It preserves ordinary source-tip radius and registers the
+complete projected boundary independently of any land dataset. Its bottommost
+point retains `0.25/44` of frame height—exactly `0.25` units on a 34-by-44
+plate—so the blue edge remains inside the view box. Every unified Antarctic
+fragment is emitted after the ordinary quadrants and paints above them. The
+[Star-X snapshot](docs/generated-snapshot-star-x.md) shows the released
+projection family; the next generated release will carry the corrected lower
+clearance.
 
 Construction examples and `star_x_layout` configuration are in the
 [Star-X public API notes](docs/star-x-implementation-notes.md#public-c-api).
@@ -356,7 +361,12 @@ The signed gap and page-centered enlargement default to `-9/88` of frame
 height and `1.2`. The central star and unified Antarctica remain layer-aware
 SVG composition helpers, not hidden changes to the point transform; cap
 points preserve their ordinary source-tip radius while normalizing bearing so
-all four bent Cahill-Keyes edges meet.
+all four bent Cahill-Keyes edges meet. This fixed, data-independent cap makes
+a checked reverse practical: undo the carrier into Cahill–Keyes candidates,
+or recover cap bearing and solve latitude on `[-90°,-60°]`, while retaining
+component identity for overlaps and cuts. The runtime still advertises Star-X
+reverse as unsupported until that focused implementation and verification are
+complete.
 
 ## Dymaxion
 

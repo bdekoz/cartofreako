@@ -497,8 +497,9 @@ integration. Geometry command buffers remain ABI 1.
 **Cahill–Keyes extension, 2026-08-10:** the same API now implements an
 octant-qualified Cahill–Keyes reverse by undoing the M-layout assembly and
 running a bounded, zone-aware solve against the authoritative piecewise
-forward construction. AuthaGraph, Dymaxion, and Star-X continue to advertise
-`unsupported` rather than a false global inverse. See the
+forward construction. At that checkpoint AuthaGraph, Dymaxion, and Star-X
+still advertised `unsupported` rather than a false global inverse. Runtime API
+3 completed their family-specific reverses on 2026-08-10. See the
 [forward/reverse projection API](../forward-reverse-projection-api.md).
 
 ## Promising leads worth exploring

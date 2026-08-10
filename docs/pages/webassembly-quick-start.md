@@ -107,7 +107,7 @@ cahill-keyes  authagraph  dymaxion  myriahedral  star-x  voronoi
 
 ## Forward and reverse points
 
-Runtime API 2 returns topology with every forward point and never assumes that
+Runtime API 3 returns topology with every forward point and never assumes that
 an interrupted reverse is globally unique:
 
 ```js
@@ -123,22 +123,38 @@ const reverse = projection.inverse([forward.x, forward.y]);
 // {status, candidates, tolerancePx, truncated}
 
 const oneFace = projection.inverse([forward.x, forward.y], {
-  nativeCell: forward.nativeCell
+  nativeCell: forward.nativeCell,
+  component: forward.component
 });
 ```
 
-All Myriahedral layouts, Cahill–Keyes, and Voronoi currently advertise
-`inverseMode: "face-qualified"`. The other three families return
-`{status: "unsupported", candidates: []}`. Preserve every candidate when the
-status is `ambiguous`, or pass a known `nativeCell`; never silently select the
-first result.
+All Myriahedral layouts, Cahill–Keyes, AuthaGraph, Dymaxion, and Voronoi
+advertise `inverseMode: "face-qualified"`. Star-X advertises `"candidates"`
+because its ordinary carrier and unified Antarctic cap can overlap. Preserve
+every candidate when the status is `ambiguous`, or pass known `nativeCell` and
+`component` values; never silently select the first result.
+
+Star-X structured points select the current visible composition automatically:
+
+```js
+const star = runtime.createProjection({id: 'star-x', width: 1080});
+const cap = star.forward([171.2, -75]);
+// cap.component === 1
+const geographic = star.inverse([cap.x, cap.y], {
+  nativeCell: cap.nativeCell,
+  component: cap.component
+});
+```
+
+At the South Pole, omit `nativeCell` to receive the four southern quadrant
+representatives, or supply it to retain one known source cell.
 
 Use `forwardMany()` and `inverseMany()` with packed `Float64Array` pairs for
-agent, game, or data-tool batches. The point API is version 2 while geometry
+agent, game, or data-tool batches. The point API is version 3 while geometry
 buffers remain ABI 1:
 
 ```js
-console.log(runtime.apiVersion); // 2
+console.log(runtime.apiVersion); // 3
 console.log(runtime.abiVersion); // 1
 console.log(projection.metadata().inverseMode);
 ```
@@ -295,7 +311,7 @@ Treat the result as a finite planar carrier:
   vector or raster layers.
 
 Do not register the forward transform as if it had one continuous global
-inverse. Runtime API 2 exposes face-qualified candidates, but interrupted cuts
+inverse. Runtime API 3 exposes face/component-qualified candidates, but interrupted cuts
 can still map one planar boundary to several geographic results. For feature
 clicks and hover, retain `featureIds` and index the projected parts in planar
 space; use reverse candidates for coordinate readout and editing only after
@@ -327,8 +343,8 @@ does not invalidate them.
 | Lines jump across the page | Do not project raw vertices yourself; pass complete lines/rings to `projectGeometry()` |
 | A slice is distorted | Keep the full carrier; use `{slice: ...}` rather than constructing a projection from slice dimensions |
 | Main thread stalls on a large file | Use `CartofreakoWorkerClient` |
-| Reverse returns `unsupported` | Choose Cahill–Keyes, a Myriahedral layout, or Voronoi, or retain planar feature picking until that family implements reverse support |
-| Reverse returns several candidates | Preserve all candidates or repeat with the intended `nativeCell`; do not choose index zero implicitly |
+| Reverse returns `unsupported` | The current six-family registry should not; verify that the caller and WASM binary both use runtime API 3 |
+| Reverse returns several candidates | Preserve all candidates or repeat with the intended `nativeCell` and `component`; do not choose index zero implicitly |
 
 Inspect `runtime.manifest` and `runtime.licenses` before publishing. The
 Cahill-Keyes and Star-X implementations carry an additional attribution and

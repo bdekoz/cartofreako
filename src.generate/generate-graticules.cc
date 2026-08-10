@@ -225,11 +225,15 @@ add_antarctic_cap_boundaries(
   svg::group_element layer;
   layer.start_element("antarctic-cap-boundaries");
   layer.add_title(
-    "Stage 7 fixed 60-degree-South source cuts and unified cap boundary; "
-    "maximum projected radius=" + std::to_string(cap.radius));
+    "Fixed 60-degree-South source cuts and data-independent unified cap "
+    "boundary; maximum projected radius=" + std::to_string(cap.radius)
+    + "; bottom clearance=" + std::to_string(cap.bottom_clearance));
 
   svg::vrange unified;
-  for (double longitude = -180; longitude < 180; longitude += 0.25)
+  constexpr double longitude_step
+    = 360.0 / a60::carto::star_x_antarctic_boundary_sample_count;
+  for (double longitude = -180; longitude < 180;
+       longitude += longitude_step)
     unified.push_back(cap.project(
       {cap.boundary_latitude(longitude), longitude}));
   unified.push_back(unified.front());
@@ -244,7 +248,7 @@ add_antarctic_cap_boundaries(
         = natural_earth::longitude_bands[index];
       svg::vrange source;
       for (double longitude = band.west; longitude < band.east;
-           longitude += 0.25)
+           longitude += longitude_step)
         source.push_back(generation::project_point(
           context, {cap.boundary_latitude(longitude), longitude}));
       source.push_back(generation::project_point(

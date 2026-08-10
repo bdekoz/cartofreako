@@ -65,7 +65,7 @@ using a60::carto::voronoiproj;
 inline constexpr std::uint32_t abi_version = 1;
 
 /// Version of the headless forward/reverse runtime API.
-inline constexpr std::uint32_t api_version = 2;
+inline constexpr std::uint32_t api_version = 3;
 
 /// Stable identifiers for the six supported projection families.
 enum class projection_kind
@@ -346,6 +346,7 @@ struct inverse_options
 {
   double tolerance_pixels = 1e-7;
   std::optional<std::uint32_t> native_cell;
+  std::optional<std::uint32_t> component;
   std::size_t maximum_candidates = 32;
 };
 
@@ -494,15 +495,43 @@ inverse_mode_for(const projection_spec& spec)
   switch (spec.kind)
     {
     case projection_kind::cahill_keyes:
+    case projection_kind::authagraph:
+    case projection_kind::dymaxion:
     case projection_kind::myriahedral:
     case projection_kind::voronoi:
       return inverse_mode::face_qualified;
-    case projection_kind::authagraph:
-    case projection_kind::dymaxion:
     case projection_kind::star_x:
-      return inverse_mode::none;
+      return inverse_mode::candidates;
     }
   return inverse_mode::none;
+}
+
+inline a60::carto::star_x_layout
+runtime_star_x_layout(const projection_handle& projection)
+{
+  const starxproj& implementation
+    = std::get<starxproj>(projection.projection);
+  return {implementation.group_gap_ratio(),
+          implementation.enlargement_factor()};
+}
+
+inline a60::carto::star_x_detail::antarctic_cap_registration
+star_x_cap_registration(const projection_handle& projection)
+{
+  using namespace a60::carto;
+  using namespace a60::carto::star_x_detail;
+  static const frame unit_frame {star_x_width_to_height_ratio, 1};
+  static const antarctic_cap_registration unit
+    = make_antarctic_cap_registration(unit_frame);
+  const double scale = projection.map_frame.height();
+  return {
+    unit.cutoff_latitude,
+    unit.bearing_offset,
+    unit.maximum_boundary_radius * scale,
+    unit.boundary_local_bottom * scale,
+    unit.bottom_clearance * scale,
+    {unit.target_pole.x * scale, unit.target_pole.y * scale},
+  };
 }
 
 /// Project one explicit longitude/latitude coordinate.
@@ -513,6 +542,19 @@ forward(const projection_handle& projection,
   const geographic_point internal {
     point.latitude_degrees, point.longitude_degrees,
   };
+  if (projection.spec.kind == projection_kind::star_x
+      && point.latitude_degrees
+           <= a60::carto::star_x_antarctic_cutoff_latitude_degrees)
+    {
+      validate_geographic_point(internal);
+      const auto registration = star_x_cap_registration(projection);
+      const auto cap = a60::carto::star_x_detail::project_antarctic_fragment(
+        point.latitude_degrees, point.longitude_degrees,
+        projection.map_frame, registration.target_pole,
+        registration.bearing_offset, runtime_star_x_layout(projection));
+      return {{cap.x, cap.y}, static_cast<std::uint32_t>(
+                projection_cell(projection, internal)), 1};
+    }
   const auto [x, y] = project_point(projection, internal);
   return {{x, y}, static_cast<std::uint32_t>(
                     projection_cell(projection, internal)), 0};
@@ -645,6 +687,24 @@ append_candidate(inverse_result& result,
                  inverse_candidate candidate,
                  const inverse_options& options)
 {
+  constexpr double geographic_tolerance = 1e-10;
+  for (inverse_candidate& existing : result.candidates)
+    if (existing.native_cell == candidate.native_cell
+        && existing.component == candidate.component
+        && std::abs(existing.point.latitude_degrees
+                    - candidate.point.latitude_degrees)
+             <= geographic_tolerance
+        && std::abs(std::remainder(
+             existing.point.longitude_degrees
+               - candidate.point.longitude_degrees, 360.0))
+             <= geographic_tolerance)
+      {
+        const bool boundary = existing.boundary || candidate.boundary;
+        if (candidate.forward_residual < existing.forward_residual)
+          existing = std::move(candidate);
+        existing.boundary = boundary;
+        return;
+      }
   if (result.candidates.size() < options.maximum_candidates)
     result.candidates.push_back(std::move(candidate));
   else
@@ -688,6 +748,538 @@ inverse_cahill_keyes(const projection_handle& projection,
         result,
         {geographic, static_cast<std::uint32_t>(cell), 0,
          solution->forward_residual, solution->boundary},
+        options);
+    }
+}
+
+inline void
+inverse_star_x_carrier(const projection_handle& projection,
+                       const projected_coordinate point,
+                       const inverse_options& options,
+                       inverse_result& result)
+{
+  using namespace a60::carto;
+  using namespace a60::carto::star_x_detail;
+  const starxproj& implementation
+    = std::get<starxproj>(projection.projection);
+  const star_x_layout layout = runtime_star_x_layout(projection);
+  const double normalized_x = point.x / projection.map_frame.width();
+  const double normalized_y = point.y / projection.map_frame.height();
+  const point_2d assembled {
+    0.5 + (normalized_x - 0.5) / layout.enlargement_factor,
+    0.5 + (normalized_y - 0.5) / layout.enlargement_factor,
+  };
+  const double x_in_height_units
+    = assembled.x * star_x_width_to_height_ratio;
+  constexpr double group_side = 0.5;
+  constexpr double side_margin = 3.0 / 22.0;
+  const double half_gap = layout.group_gap_ratio / 2;
+  static const ck_native::forward_projection source(0.25);
+  constexpr std::array<int, 8> assembly_octants {
+    1, 2, 3, 4, 6, 7, 8, 5,
+  };
+  const double acceptance = std::max(
+    options.tolerance_pixels, residual_floor(projection));
+  const double native_acceptance = acceptance
+    / (layout.enlargement_factor * projection.map_frame.height());
+  const std::size_t begin = options.native_cell
+                              ? *options.native_cell : 0;
+  const std::size_t end = options.native_cell
+                            ? begin + 1 : assembly_octants.size();
+  for (std::size_t cell = begin; cell < end; ++cell)
+    {
+      const bool second_group = cell % 4 >= 2;
+      const double native_x = second_group
+        ? side_margin + group_side - x_in_height_units
+        : x_in_height_units - side_margin - group_side;
+      const double native_y = second_group
+        ? assembled.y - group_side / 2 + half_gap
+        : 3 * group_side / 2 + half_gap - assembled.y;
+      const auto solution = source.inverse(
+        native_x, native_y, assembly_octants[cell], native_acceptance);
+      if (!solution)
+        continue;
+      const geographic_coordinate geographic {
+        canonical_longitude(solution->registered_longitude - 1),
+        solution->latitude,
+      };
+      if (geographic.latitude_degrees
+          <= star_x_antarctic_cutoff_latitude_degrees)
+        continue;
+      const geographic_point internal {
+        geographic.latitude_degrees, geographic.longitude_degrees,
+      };
+      if (!solution->boundary
+          && a60::carto::star_x_path_detail::path_cell(
+               {internal.latitude, internal.longitude}) != cell)
+        continue;
+      const auto [forced_x, forced_y] = implementation.meridians_to_point_2d(
+        geographic.latitude_degrees, geographic.longitude_degrees);
+      const double residual = std::hypot(
+        forced_x - point.x, forced_y - point.y);
+      if (!std::isfinite(residual) || residual > acceptance)
+        continue;
+      append_candidate(
+        result,
+        {geographic, static_cast<std::uint32_t>(cell), 0,
+         residual, solution->boundary},
+        options);
+    }
+}
+
+inline bool
+star_x_cap_longitude_boundary(const double longitude,
+                              const double tolerance_degrees)
+{
+  constexpr std::array seams {-111.0, -21.0, 69.0, 159.0};
+  for (const double seam : seams)
+    if (std::abs(std::remainder(longitude - seam, 360.0))
+        <= tolerance_degrees)
+      return true;
+  return false;
+}
+
+inline double
+snap_star_x_cap_longitude(const double longitude,
+                          const double tolerance_degrees)
+{
+  constexpr std::array seams {-111.0, -21.0, 69.0, 159.0};
+  for (const double seam : seams)
+    if (std::abs(std::remainder(longitude - seam, 360.0))
+        <= tolerance_degrees)
+      return seam;
+  return longitude;
+}
+
+inline void
+inverse_star_x_cap(const projection_handle& projection,
+                   const projected_coordinate point,
+                   const inverse_options& options,
+                   inverse_result& result)
+{
+  using namespace a60::carto;
+  using namespace a60::carto::star_x_detail;
+  const star_x_layout layout = runtime_star_x_layout(projection);
+  const antarctic_cap_registration registration
+    = star_x_cap_registration(projection);
+  const double delta_x = point.x - registration.target_pole.x;
+  const double delta_y = point.y - registration.target_pole.y;
+  const double requested_radius = std::hypot(delta_x, delta_y);
+  const double acceptance = std::max(
+    options.tolerance_pixels, residual_floor(projection));
+  const double angular_tolerance = std::max(
+    1e-10, acceptance / projection.map_frame.height() * 180);
+
+  if (requested_radius <= acceptance)
+    {
+      constexpr std::array<double, 4> representative_longitudes {
+        -156, -66, 24, 114,
+      };
+      const std::size_t begin = options.native_cell
+                                  ? *options.native_cell : 4;
+      const std::size_t end = options.native_cell
+                                ? begin + 1 : 8;
+      for (std::size_t cell = begin; cell < end; ++cell)
+        {
+          if (cell < 4)
+            continue;
+          const geographic_coordinate geographic {
+            representative_longitudes[cell - 4], -90,
+          };
+          const point_2d forced = project_antarctic_fragment(
+            geographic.latitude_degrees, geographic.longitude_degrees,
+            projection.map_frame, registration.target_pole,
+            registration.bearing_offset, layout);
+          const double residual = std::hypot(
+            forced.x - point.x, forced.y - point.y);
+          if (residual <= acceptance)
+            append_candidate(
+              result,
+              {geographic, static_cast<std::uint32_t>(cell), 1,
+               residual, true},
+              options);
+        }
+      return;
+    }
+
+  const double longitude = snap_star_x_cap_longitude(
+    canonical_longitude(
+      std::atan2(delta_x, -delta_y) * 180 / pi
+        - registration.bearing_offset),
+    angular_tolerance);
+  const double boundary_radius = antarctic_source_radius(
+    registration.cutoff_latitude, longitude,
+    projection.map_frame, layout);
+  if (!std::isfinite(boundary_radius)
+      || requested_radius > boundary_radius + acceptance)
+    return;
+
+  double lower = -90;
+  double upper = registration.cutoff_latitude;
+  for (std::size_t iteration = 0; iteration != 80; ++iteration)
+    {
+      const double middle = (lower + upper) / 2;
+      const double radius = antarctic_source_radius(
+        middle, longitude, projection.map_frame, layout);
+      if (radius < requested_radius)
+        lower = middle;
+      else
+        upper = middle;
+    }
+  const double latitude = (lower + upper) / 2;
+  const std::uint32_t cell
+    = a60::carto::star_x_path_detail::path_cell({latitude, longitude});
+  if (options.native_cell && *options.native_cell != cell)
+    return;
+  const point_2d forced = project_antarctic_fragment(
+    latitude, longitude, projection.map_frame,
+    registration.target_pole, registration.bearing_offset, layout);
+  const double residual = std::hypot(
+    forced.x - point.x, forced.y - point.y);
+  if (!std::isfinite(residual) || residual > acceptance)
+    return;
+  const bool boundary
+    = std::abs(requested_radius - boundary_radius) <= acceptance
+      || star_x_cap_longitude_boundary(longitude, angular_tolerance);
+  append_candidate(
+    result,
+    {{longitude, latitude}, cell, 1, residual, boundary}, options);
+}
+
+inline void
+inverse_star_x(const projection_handle& projection,
+               const projected_coordinate point,
+               const inverse_options& options,
+               inverse_result& result)
+{
+  if (!options.component || *options.component == 0)
+    inverse_star_x_carrier(projection, point, options, result);
+  if (!options.component || *options.component == 1)
+    inverse_star_x_cap(projection, point, options, result);
+}
+
+inline void
+inverse_authagraph(const projection_handle& projection,
+                   const projected_coordinate point,
+                   const inverse_options& options,
+                   inverse_result& result)
+{
+  using namespace a60::carto::authagraph_detail;
+  const double normalized_x = point.x / projection.map_frame.width();
+  const double unfolded_y
+    = (1 - point.y / projection.map_frame.height()) * unfolded_height;
+  const double acceptance = std::max(
+    options.tolerance_pixels, residual_floor(projection));
+  const double native_tolerance = acceptance
+    / std::min(projection.map_frame.width(), projection.map_frame.height())
+    * std::max(unfolded_width, unfolded_height);
+  const double angular_tolerance = std::max(
+    4096 * std::numeric_limits<double>::epsilon(),
+    native_tolerance * 8);
+  const double singular_tolerance = std::max(
+    native_tolerance,
+    64 * std::sqrt(std::numeric_limits<double>::epsilon()));
+  const auto& vertices = tetrahedron_vertices();
+  const std::size_t begin = options.native_cell
+                              ? *options.native_cell : 0;
+  const std::size_t end = options.native_cell
+                            ? begin + 1 : cell_origins.size();
+
+  for (std::size_t cell = begin; cell < end; ++cell)
+    for (int periodic_copy = -2; periodic_copy <= 2; ++periodic_copy)
+      {
+        const double unfolded_x
+          = (normalized_x - horizontal_shift + periodic_copy)
+            * unfolded_width;
+        const double origin_x = tetrahedron_scale
+          * (cell_origins[cell][0] + cell_origins[cell][1] / 2.0);
+        const double origin_y = tetrahedron_scale * cell_origins[cell][1]
+          * sqrt_three / 2;
+        const double angle = cell_rotation_sixths[cell] * pi / 6;
+        const double cosine = std::cos(angle);
+        const double sine = std::sin(angle);
+        const double delta_x = unfolded_x - origin_x;
+        const double delta_y = unfolded_y - origin_y;
+        const point_2d canonical {
+          cosine * delta_x + sine * delta_y,
+          -sine * delta_x + cosine * delta_y,
+        };
+
+        double c = sqrt_two - sqrt_three * canonical.y;
+        if (!std::isfinite(c) || c < -native_tolerance)
+          continue;
+        if (c < 0)
+          c = 0;
+
+        const std::size_t vertex_index = cell / 6;
+        const int sector = static_cast<int>(cell % 6);
+        double reduced_longitude = 0;
+        const bool singular = c <= native_tolerance;
+        bool boundary = c <= singular_tolerance;
+        if (!singular)
+          {
+            const double equal_area_angle
+              = canonical.x * pi / (2 * c);
+            const double maximum_angle = pi / 6;
+            if (!std::isfinite(equal_area_angle)
+                || equal_area_angle < -maximum_angle - angular_tolerance
+                || equal_area_angle > maximum_angle + angular_tolerance)
+              continue;
+            double lower = -pi / 3;
+            double upper = pi / 3;
+            for (std::size_t iteration = 0; iteration != 80; ++iteration)
+              {
+                const double middle = (lower + upper) / 2;
+                const double value = middle - std::asin(std::clamp(
+                  std::sin(middle) / sqrt_three, -1.0, 1.0));
+                if (value < equal_area_angle)
+                  lower = middle;
+                else
+                  upper = middle;
+              }
+            reduced_longitude = (lower + upper) / 2;
+            const bool even_sector = sector % 2 == 0;
+            const double sector_lower = even_sector ? -pi / 3 : 0;
+            const double sector_upper = even_sector ? 0 : pi / 3;
+            if (reduced_longitude < sector_lower - angular_tolerance
+                || reduced_longitude > sector_upper + angular_tolerance)
+              continue;
+            boundary = boundary
+              || std::abs(reduced_longitude - sector_lower)
+                   <= angular_tolerance
+              || std::abs(reduced_longitude - sector_upper)
+                   <= angular_tolerance;
+          }
+
+        double local_longitude = reduced_longitude
+          + static_cast<double>(sector / 2) * 2 * pi / 3;
+        if (local_longitude > pi)
+          local_longitude -= 2 * pi;
+        const double local_latitude = singular
+          ? pi / 2
+          : std::atan((2 + std::cos(reduced_longitude)) / c - sqrt_two);
+        const vector_3d pole = vertices[vertex_index];
+        const vector_3d tangent = unit_tangent_toward(
+          pole, vertices[(vertex_index + 1) % vertices.size()]);
+        const vector_3d quarter_turn = cross(pole, tangent);
+        const double latitude_cosine = std::cos(local_latitude);
+        const vector_3d vector {
+          latitude_cosine
+              * (std::cos(local_longitude) * tangent.x
+                 + std::sin(local_longitude) * quarter_turn.x)
+            + std::sin(local_latitude) * pole.x,
+          latitude_cosine
+              * (std::cos(local_longitude) * tangent.y
+                 + std::sin(local_longitude) * quarter_turn.y)
+            + std::sin(local_latitude) * pole.y,
+          latitude_cosine
+              * (std::cos(local_longitude) * tangent.z
+                 + std::sin(local_longitude) * quarter_turn.z)
+            + std::sin(local_latitude) * pole.z,
+        };
+
+        double maximum_dot = dot(vector, vertices.front());
+        for (std::size_t index = 1; index < vertices.size(); ++index)
+          maximum_dot = std::max(maximum_dot, dot(vector, vertices[index]));
+        const double expected_dot = dot(vector, pole);
+        const double dot_tolerance = angular_tolerance * 4;
+        if (expected_dot < maximum_dot - dot_tolerance)
+          continue;
+        boundary = boundary
+          || (maximum_dot - expected_dot <= dot_tolerance
+              && [&] {
+               for (std::size_t index = 0; index < vertices.size(); ++index)
+                 if (index != vertex_index
+                     && std::abs(dot(vector, vertices[index]) - expected_dot)
+                          <= dot_tolerance)
+                   return true;
+               return false;
+              }());
+
+        const geographic_coordinate geographic
+          = geographic_from_vector(vector);
+        const double forced_latitude_cosine = std::cos(local_latitude);
+        const double forced_c
+          = (2 + std::cos(reduced_longitude)) * forced_latitude_cosine
+            / (sqrt_two * forced_latitude_cosine
+               + std::sin(local_latitude));
+        const double forced_equal_area_angle
+          = reduced_longitude - std::asin(std::clamp(
+              std::sin(reduced_longitude) / sqrt_three, -1.0, 1.0));
+        const point_2d forced_canonical {
+          2 / pi * forced_c * forced_equal_area_angle,
+          (sqrt_two - forced_c) / sqrt_three,
+        };
+        const point_2d forced_unfolded
+          = assemble_cell(cell, forced_canonical);
+        const double forced_x = positive_modulo(
+          forced_unfolded.x / unfolded_width + horizontal_shift, 1)
+          * projection.map_frame.width();
+        const double forced_y
+          = (1 - forced_unfolded.y / unfolded_height)
+            * projection.map_frame.height();
+        double residual_x = std::fmod(
+          std::abs(forced_x - point.x), projection.map_frame.width());
+        residual_x = std::min(
+          residual_x, projection.map_frame.width() - residual_x);
+        const double residual = std::hypot(
+          residual_x, forced_y - point.y);
+        if (!std::isfinite(residual) || residual > acceptance)
+          continue;
+        append_candidate(
+          result,
+          {geographic, static_cast<std::uint32_t>(cell), 0,
+           residual, boundary},
+          options);
+      }
+}
+
+inline std::optional<a60::carto::dymaxion_detail::vector_3d>
+inverse_fuller_triangle(
+  const a60::carto::dymaxion_detail::point_2d canonical,
+  const a60::carto::dymaxion_detail::face_basis& basis)
+{
+  using namespace a60::carto::dymaxion_detail;
+  const double square_root_three = std::sqrt(3.0);
+  const double square_root_five = std::sqrt(5.0);
+  const double spherical_edge_arc
+    = 2 * std::asin(std::sqrt(5 - square_root_five) / std::sqrt(10.0));
+  const double half_edge_arc = spherical_edge_arc / 2;
+  const double vertex_to_edge
+    = std::sqrt(3 + square_root_five) / std::sqrt(5 + square_root_five);
+  const double chord_edge
+    = std::sqrt(8.0) / std::sqrt(5 + square_root_five);
+  const double gnomonic_scale
+    = std::sqrt(5 + 2 * square_root_five) / std::sqrt(15.0);
+
+  const double vertical = square_root_three * spherical_edge_arc
+                          * canonical.y;
+  const double horizontal = spherical_edge_arc * canonical.x;
+  const std::array offsets {
+    2 * vertical / 3,
+    -vertical / 3 + horizontal,
+    -vertical / 3 - horizontal,
+  };
+  double lower = 0;
+  double upper = spherical_edge_arc;
+  for (const double offset : offsets)
+    {
+      lower = std::max(lower, -offset);
+      upper = std::min(upper, spherical_edge_arc - offset);
+    }
+  constexpr double angle_tolerance
+    = 512 * std::numeric_limits<double>::epsilon();
+  if (lower > upper + angle_tolerance)
+    return std::nullopt;
+  lower = std::clamp(lower, 0.0, spherical_edge_arc);
+  upper = std::clamp(upper, 0.0, spherical_edge_arc);
+
+  const auto distance_sum = [&](const double mean) {
+    double sum = 3 * chord_edge / 2;
+    for (const double offset : offsets)
+      sum += vertex_to_edge
+             * std::tan(mean + offset - half_edge_arc);
+    return sum - chord_edge;
+  };
+  const double lower_value = distance_sum(lower);
+  const double upper_value = distance_sum(upper);
+  const double equation_tolerance
+    = 4096 * std::numeric_limits<double>::epsilon();
+  if (lower_value > equation_tolerance
+      || upper_value < -equation_tolerance)
+    return std::nullopt;
+  for (std::size_t iteration = 0; iteration != 96; ++iteration)
+    {
+      const double middle = (lower + upper) / 2;
+      const double value = distance_sum(middle);
+      if (value > 0)
+        upper = middle;
+      else
+        lower = middle;
+    }
+  const double mean = (lower + upper) / 2;
+  std::array<double, 3> edge_coordinates {};
+  for (std::size_t index = 0; index != edge_coordinates.size(); ++index)
+    edge_coordinates[index]
+      = chord_edge / 2
+        + vertex_to_edge
+            * std::tan(mean + offsets[index] - half_edge_arc);
+  const double projected_x
+    = (edge_coordinates[1] - edge_coordinates[2]) / 2;
+  const double projected_y
+    = (edge_coordinates[0]
+       - (edge_coordinates[1] + edge_coordinates[2]) / 2)
+      / square_root_three;
+  vector_3d local = normalized({
+    projected_x / gnomonic_scale,
+    projected_y / gnomonic_scale,
+    1,
+  });
+  return normalized(
+    basis.x * local.x + basis.y * local.y + basis.z * local.z);
+}
+
+inline void
+inverse_dymaxion(const projection_handle& projection,
+                 const projected_coordinate point,
+                 const inverse_options& options,
+                 inverse_result& result)
+{
+  using namespace a60::carto::dymaxion_detail;
+  const point_2d raw {
+    point.x / projection.map_frame.width()
+      * a60::carto::dymaxion_source_width,
+    (1 - point.y / projection.map_frame.height())
+      * a60::carto::dymaxion_source_height,
+  };
+  const layout_data& data = layout();
+  const long double weight_tolerance
+    = barycentric_tolerance(projection, options);
+  const double acceptance = std::max(
+    options.tolerance_pixels, residual_floor(projection));
+  const std::size_t begin = options.native_cell
+                              ? *options.native_cell : 0;
+  const std::size_t end = options.native_cell
+                            ? begin + 1 : face_count;
+  for (std::size_t face = begin; face < end; ++face)
+    {
+      const face_geometry& geometry = data.faces[face];
+      const auto weights = planar_barycentric(
+        geometry.planar, raw.x, raw.y, weight_tolerance);
+      if (!weights)
+        continue;
+      const point_2d canonical {
+        static_cast<double>(
+          weights->weights[0] * geometry.canonical[0].x
+          + weights->weights[1] * geometry.canonical[1].x
+          + weights->weights[2] * geometry.canonical[2].x),
+        static_cast<double>(
+          weights->weights[0] * geometry.canonical[0].y
+          + weights->weights[1] * geometry.canonical[1].y
+          + weights->weights[2] * geometry.canonical[2].y),
+      };
+      const auto vector = inverse_fuller_triangle(
+        canonical, geometry.basis);
+      if (!vector)
+        continue;
+      if (!weights->boundary && containing_face(*vector) != face)
+        continue;
+      const point_2d forced = project_on_face(face, *vector);
+      const double forced_x
+        = forced.x / a60::carto::dymaxion_source_width
+          * projection.map_frame.width();
+      const double forced_y
+        = (1 - forced.y / a60::carto::dymaxion_source_height)
+          * projection.map_frame.height();
+      const double residual = std::hypot(
+        forced_x - point.x, forced_y - point.y);
+      if (!std::isfinite(residual) || residual > acceptance)
+        continue;
+      append_candidate(
+        result,
+        {geographic_from_vector(*vector),
+         static_cast<std::uint32_t>(face), 0, residual,
+         weights->boundary},
         options);
     }
 }
@@ -868,6 +1460,13 @@ inverse(const projection_handle& projection,
   if (options.native_cell
       && *options.native_cell >= projection.spec.native_cell_count)
     throw std::invalid_argument("inverse native cell is out of range");
+  if (options.component)
+    {
+      const std::uint32_t component_count
+        = projection.spec.kind == projection_kind::star_x ? 2 : 1;
+      if (*options.component >= component_count)
+        throw std::invalid_argument("inverse component is out of range");
+    }
 
   inverse_result result;
   result.tolerance_pixels = options.tolerance_pixels;
@@ -891,6 +1490,14 @@ inverse(const projection_handle& projection,
       inverse_detail::inverse_cahill_keyes(
         projection, point, options, result);
       break;
+    case projection_kind::authagraph:
+      inverse_detail::inverse_authagraph(
+        projection, point, options, result);
+      break;
+    case projection_kind::dymaxion:
+      inverse_detail::inverse_dymaxion(
+        projection, point, options, result);
+      break;
     case projection_kind::myriahedral:
       inverse_detail::inverse_myriahedral(
         projection, point, options, result);
@@ -899,9 +1506,9 @@ inverse(const projection_handle& projection,
       inverse_detail::inverse_voronoi(
         projection, point, options, result);
       break;
-    case projection_kind::authagraph:
-    case projection_kind::dymaxion:
     case projection_kind::star_x:
+      inverse_detail::inverse_star_x(
+        projection, point, options, result);
       break;
     }
   if (result.candidates.empty())

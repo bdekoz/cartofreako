@@ -11,7 +11,7 @@
 Stage 14 begins with the post-v13 projection-runtime work on 2026-08-09. Its
 first development objective is a stable, headless forward/reverse projection
 API for native C++ and JavaScript consumers. Stage 14 does not alter the
-geometry command-buffer protocol: runtime API 2 deliberately retains geometry
+geometry command-buffer protocol: runtime API 3 deliberately retains geometry
 ABI 1 so existing render consumers remain compatible.
 
 This document is the Stage 14 working plan and implementation ledger. It will
@@ -38,11 +38,13 @@ been built or published.
   coverage.
 - [x] Raise dense resource and Anthropocene temperature fields to 60% opacity
   while retaining the established 2× primary-title scale.
-- [x] Finish focused native and WebAssembly verification for the implemented
-  API 2 capability set after the final numerical review.
-- [ ] Review the three remaining reverse families in this order: Dymaxion,
-  AuthaGraph, then Star-X. Until implemented, each must continue
-  to advertise `inverseMode: "none"` and return `unsupported`.
+- [x] Finish focused native and WebAssembly verification for the complete
+  API 3 capability set after the final numerical review.
+- [x] Freeze the current Star-X composition as a projection-only fixed-`60°S`
+  cap, retain visible proportional lower clearance, remove its Natural Earth
+  registration dependency, and document the component-qualified inverse plan.
+- [x] Implement and verify the three remaining reverse families in this order:
+  Dymaxion, AuthaGraph, then component-aware Star-X.
 - [ ] Run the repository-wide full check only at the established release gate.
 - [ ] Freeze final source identity, generated manifest, checksums, publication
   evidence, and Active Archive record for the eventual v14 release.
@@ -125,13 +127,70 @@ The polar longitude returned for a qualified cell is deliberately the center
 of that octant. Latitude and residual remain authoritative at the pole;
 longitude is a stable representative because every meridian converges there.
 
+### 2026-08-10 — current Star-X cap specification
+
+Status: **implemented; focused native and visual verification passing**.
+
+- made `60°S`, zero cap-bearing rotation, quarter-degree boundary sampling,
+  and `0.25/44` lower clearance named projection constants;
+- derived the unified-cap pole from the projected boundary alone, removing the
+  Natural Earth mainland extent scan and the graticule target's Natural Earth
+  prerequisite;
+- registered the bottommost boundary point at `H - H(0.25/44)`, which is
+  `43.75` on the 34-by-44 SVG and keeps its blue edge within the view box;
+- retained the existing radius-preserving geographic-bearing transform and
+  topmost per-layer paint order;
+- regenerated and visually inspected the Star-X graticule and Earth plate,
+  and generated the graticule successfully with a deliberately nonexistent
+  Natural Earth directory; and
+- specified separate carrier and cap reverse paths, both with forward-residual
+  checks and explicit component/cut/pole ambiguity.
+
+Natural Earth remains a source of physical feature geometry for Earth and
+water plates. It no longer chooses any Star-X cutoff or placement parameter.
+
+### 2026-08-10 — complete all-family reverse, runtime API 3
+
+Status: **implemented; native, Node, worker, D3, and browser checks passing**.
+
+- completed the exact Gray-transform reverse for all 23 Dymaxion registered
+  faces/subfaces, including the Australia and Japan split registrations;
+- completed the analytic AuthaGraph inverse across all 24 tetrahedral sectors,
+  enumerating periodic page copies and preserving singular-vertex and sector
+  boundary candidates;
+- implemented the Star-X ordinary-carrier reverse by undoing enlargement,
+  group placement, and the upper-group rotation before invoking the checked
+  Cahill–Keyes inverse;
+- implemented the Star-X unified-cap reverse by recovering geographic bearing
+  and solving latitude in `[-90°,-60°]` against the authoritative source-radius
+  function;
+- made the structured Star-X forward use carrier component `0` north of the
+  cutoff and cap component `1` at or south of it, while retaining the direct
+  `starxproj` ordinary-carrier transform used by composition code;
+- defined deterministic cut behavior at `60°S` and registered quadrant
+  meridians, plus four face-qualified representative longitudes at the
+  otherwise longitude-indeterminate South Pole;
+- added the optional `component` inverse qualifier and `componentCount`
+  metadata, promoting the point contract to runtime API 3 while leaving
+  geometry ABI 1 unchanged;
+- promoted AuthaGraph and Dymaxion to `inverseMode: "face-qualified"` and
+  Star-X to `inverseMode: "candidates"`; every current registered projection
+  layout now advertises reverse support; and
+- propagated API 3 through Embind, the ES-module wrapper, module workers, D3,
+  packed batches, TypeScript declarations, Node checks, and headless Chrome.
+
+The inverse implementation is family-specific rather than one generic
+numerical guess. Every candidate is forced through its selected forward
+transform and rejected when its pixel residual exceeds the caller's tolerance.
+
 ### Headless execution and consent
 
 The Stage 14 API and its checks are designed to run without a display,
 interactive prompts, network access, credentials, publication, or external
-side effects. The operator has authorized headless focused verification. That
-authorization does not publish a release and does not collapse the explicit
-repository-wide full-check gate.
+side effects. The operator authorized this completion run to perform focused,
+sanitizer, browser, and repository-wide local verification without another
+prompt. That authorization does not publish a release, upload assets, or alter
+an external service.
 
 ## Visual hierarchy and opacity
 
@@ -151,40 +210,41 @@ different visual system. Immutable v12 and v13 assets are not rewritten; the
 
 | Check | Scope | Current result |
 | --- | --- | --- |
-| `make check-forward-reverse-projection-api` | Native API, 1,560 Cahill–Keyes zone samples plus seams/poles, all 30,720 Myriahedral face centers, all 20 Voronoi face centers, batches, boundary status, unsupported paths, and invalid input | Passed 2026-08-10 with Cahill–Keyes enabled |
-| Native projection-runtime regression | Geometry ABI 1 and runtime API 2 coexistence | Passed 2026-08-10 |
+| `make check-forward-reverse-projection-api` | Native API, 1,560 Cahill–Keyes zone samples plus seams/poles, all 24 AuthaGraph sectors and four singular vertices plus a global lattice, all 23 Dymaxion faces/subfaces plus a global lattice and edge cut, all 30,720 Myriahedral face centers, all 20 Voronoi face centers, Star-X carrier/cap/cut/overlap/pole behavior, three additional frame scales, batches, outside states, and invalid qualifiers | Passed 2026-08-10 for all six families |
+| Native projection-runtime regression | Geometry ABI 1 and runtime API 3 coexistence | Passed 2026-08-10 |
 | `make wasm-projections` | Rebuild bindings and browser distribution | Passed 2026-08-10 with Emscripten warnings treated as errors |
-| `make check-wasm-projections` | Node API, immutable metadata, typed-array batches, Cahill–Keyes/Myriahedral D3, and single/batch reverse | Passed 2026-08-10 |
-| `make check-wasm-projections-browser` | Headless Chrome API 2 plus main-thread and worker Cahill–Keyes reverse | Passed 2026-08-10; its temporary server was restricted to loopback |
+| `make check-wasm-projections` | Node API 3, immutable component metadata, all-family single/batch reverse, typed arrays, Star-X cap/pole/component behavior, and D3 candidates | Passed 2026-08-10 |
+| `make check-wasm-projections-browser` | Headless Chrome API 3 plus main-thread and module-worker reverse, including the Star-X cap | Passed 2026-08-10; its temporary server was restricted to loopback |
 | `make check-wasm-cahill-keyes check-wasm-cahill-myriahedral` | Legacy compatibility modules after canonical Izzi include migration | Passed 2026-08-10 |
-| Focused UBSan builds | Native Cahill–Keyes anchors and complete projection-neutral reverse campaign at `-O2` | Passed 2026-08-10 |
+| Focused UBSan/ASan builds | Complete all-family projection-neutral reverse campaign; UBSan at `-O2`, ASan at `-O1` | Passed 2026-08-10; leak detection was disabled only because LeakSanitizer cannot run under the executor's ptrace boundary |
 | Static syntax and `git diff --check` | Module syntax and patch hygiene | Passed 2026-08-10 |
 | Resource and temperature generator tests | 60% observed fields, 2× titles, metadata, and profile validation | Passed 2026-08-09 |
 | Resource checksum manifest | Source-profile digest after the 60% change and all pinned resource payloads | Passed 2026-08-09 |
-| Repository-wide `make check` | Full project release gate | Deliberately not run yet |
+| `tests/test-star-x-projection-api` plus regenerated graticule/Earth | Fixed cutoff/bearing, projection-only registration (including a no-Natural-Earth smoke run), proportional lower clearance, complete in-frame boundary, topmost land composition, and visual unclipping | Passed 2026-08-10 |
+| Repository-wide `make check` | Full projection, generator, data-integrity, authorization, resources, atmosphere, astronomy, network, bathymetry, slicing, and runtime gate | Passed 2026-08-10 after replacing two stale pre-Izzi bathymetry curve include names with their canonical Izzi headers |
 
 ## Release completion criteria
 
 Stage 14 is ready to freeze only when:
 
 1. every advertised reverse capability passes native and WebAssembly checks;
-2. unsupported families remain mechanically and visibly unsupported;
+2. every current registered family remains mechanically reversible, with
+   candidate/component ambiguity explicit rather than silently collapsed;
 3. all generated projection/pass manifests agree with the documented standard,
    optional, and exploration-only classifications;
 4. the full repository check passes at the authorized release gate;
-5. the projection-organized archive, S3 browser tree, PNG previews, viewer,
-   completion marker, and download verification agree on one immutable
+5. any independently authorized generated-assets deposit has a
+   projection-organized archive, S3 browser tree, PNG previews, viewer,
+   completion marker, and download verification that agree on one immutable
    inventory; and
-6. the canonical Devastation Pacific Active Archive check-in report records
-   the exact uploaded object identity and is delivered through the shared
-   headless archive workflow.
+6. any such UCB AAO deposit produces the canonical Devastation Pacific Active
+   Archive check-in report through the shared headless archive workflow.
 
-## Deferred decisions
+## Remaining release work
 
-Reverse support for Dymaxion, AuthaGraph, and Star-X is not
-simulated by numerical guessing. Each needs a family-specific inverse,
-candidate enumeration at seams, forward-residual validation, exhaustive
-boundary fixtures, and an explicit capability upgrade. Star-X additionally
-needs component-aware treatment of its four-way composition and unified
-Antarctic cap; its carrier stage can now build on the checked Cahill–Keyes
-reverse, but the compositor still needs separate semantics.
+The all-family reverse implementation is complete. The Stage 14 source is
+released on GitHub independently of generated-asset preservation. A later v14
+UCB AAO deposit is not part of that source release: it requires its own frozen
+generated manifest, reviewed profile, human invocation of
+`make release-ucb-aao-s3`, immutable inventory verification, and canonical
+Active Archive check-in record. `make release-github` cannot reach that target.

@@ -63,8 +63,9 @@ Cahill–Keyes. All return explicit `unique`, `ambiguous`, `outside`, `cut`, or
 `unsupported` states. The JavaScript wrapper, TypeScript declarations, module
 worker, D3
 adapter, native exhaustive-face check, Node smoke test, and headless Chrome
-test share the same contract. AuthaGraph, Dymaxion, and Star-X continue to
-report unsupported reverse capability. See the
+test share the same contract. At this checkpoint AuthaGraph, Dymaxion, and
+Star-X still reported unsupported reverse capability. Runtime API 3 completed
+all three on 2026-08-10; see the
 [forward/reverse projection API](forward-reverse-projection-api.md).
 Ongoing implementation and verification are tracked in the
 [Stage 14 convergence ledger](converge-generation-14.md).
@@ -197,6 +198,11 @@ rules remain hard limits. This also avoids curl error 9 when the guessed
 current directory has not yet been published.
 
 ## Star-X projection composition
+
+> This section records the v13 compositor. Stage 14 supersedes its
+> Natural-Earth-derived vertical anchor with projection-only registration of
+> the complete `60°S` boundary and `0.25/44` lower clearance; see the
+> [current Star-X implementation notes](star-x-implementation-notes.md#stages-6-13-and-14-polar-composition).
 
 The Stage 13 Star-X compositor uses a fixed geographic rule:
 

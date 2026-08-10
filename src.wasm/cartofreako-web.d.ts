@@ -14,7 +14,7 @@ export type InverseStatusName =
 export type InverseMode = 'none' | 'face-qualified' | 'candidates';
 
 export interface ProjectionDescriptor {
-    apiVersion: 2;
+    apiVersion: 3;
     geometryAbiVersion: 1;
     id: string;
     family: string;
@@ -22,6 +22,7 @@ export interface ProjectionDescriptor {
     nativeFrameRatio: number;
     defaultFrame: {width: number; height: number};
     nativeCellCount: number;
+    componentCount: number;
     topology: 'folded' | 'periodic' | 'polyhedral';
     geographicCoordinateOrder: 'longitude-latitude';
     geographicUnits: 'degrees';
@@ -65,6 +66,7 @@ export interface ForwardBatch {
 export interface InverseOptions {
     tolerancePx?: number;
     nativeCell?: number | null;
+    component?: number | null;
     maximumCandidates?: number;
 }
 
@@ -124,7 +126,7 @@ export class CartofreakoProjection {
 
 export class CartofreakoRuntime {
     readonly abiVersion: 1;
-    readonly apiVersion: 2;
+    readonly apiVersion: 3;
     readonly implementationName: string;
     readonly manifest: readonly ProjectionDescriptor[];
     readonly licenses: Readonly<Record<string, string>>;

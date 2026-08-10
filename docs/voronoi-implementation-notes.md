@@ -11,6 +11,7 @@ default `geoIcosahedral()` map from `d3-geo-polygon` 1.12.1. It transforms a
 finite `(latitude, longitude)` pair directly into `(x, y)` in an
 `a60::carto::frame`. It does not start a JavaScript process, call D3 at run
 time, sample a raster, or construct a general-purpose Voronoi diagram.
+The projection-neutral runtime adds an analytic face-qualified reverse.
 
 The name describes how the fixed polyhedral map chooses a face. Twenty
 spherical sites lie at the centers of a regular icosahedron's faces. A point
@@ -19,7 +20,7 @@ largest unit-vector dot product. Each resulting spherical Voronoi cell is one
 icosahedral triangle. The selected cell is projected gnomonically and moved
 into a planar net through a fixed shared-edge tree.
 
-The work has three parts:
+The work has four parts:
 
 1. **Native forward projection:** reproduce D3's twelve vertices, twenty
    faces, face-centroid sites, nearest-site choice, local gnomonic projection,
@@ -30,6 +31,8 @@ The work has three parts:
 3. **Verification and documentation:** preserve D3-derived numeric anchors,
    exercise the full geographic domain, and record formulas, topology,
    boundaries, limitations, provenance, and licensing.
+4. **Reverse projection:** undo the D3 registration and face transform,
+   enumerate cut candidates, and forward-check every result.
 
 This is a fixed compatibility projection, not a configurable wrapper around
 all of `geoPolyhedralVoronoi()`. Changing the sites, face order, parent tree,
@@ -40,6 +43,7 @@ rotation, center, or scale would define a different planar map.
 | Component | Responsibility |
 | --- | --- |
 | [`cart0freak0-voronoi.h`](../src.projections/cart0freak0-voronoi.h) | Icosahedral geometry, face sites, gnomonic formulas, affine unfolding, D3 registration, frame validation, API adapter, and source-canvas preset |
+| [`cart0freak0-projection-runtime.h`](../src.projections/cart0freak0-projection-runtime.h) | API 3 analytic barycentric reverse, face candidates, and residual checks |
 | [`a60-carto-projection.h`](../src.projections/a60-carto-projection.h) | Shared `projection_api`, `projection_base`, and `voronoi` projection mode |
 | [`a60-carto-frame.h`](../src.projections/a60-carto-frame.h) | `frame` and `frame.frame_area` geometry |
 | [`a60-carto.h`](../src.projections/a60-carto.h) | Umbrella include that exports the projection |
@@ -350,6 +354,20 @@ Y = factor Y_source
 The geometry, registered whitespace, and all reference coordinates therefore
 remain proportional at every supported size.
 
+## Analytic face-qualified reverse
+
+Runtime API 3 undoes the `960 x 500` source-canvas center/scale registration
+and tests the transformed planar triangle for each of the 20 faces. Planar
+barycentric weights combine that face's three spherical vertices; normalizing
+the weighted vector recovers the rotated geographic direction. The runtime
+then reverses the fixed 108-degree input rotation and forces the candidate
+through the selected gnomonic face and registered net transform before
+accepting its pixel residual.
+
+Face edges and vertices can have several valid planar/geographic copies in an
+interrupted net, so the result remains candidate-aware. An optional
+`nativeCell` restricts the solve when the caller already knows the face.
+
 ## Variable-size frame contract
 
 A valid Voronoi map frame satisfies:
@@ -470,6 +488,11 @@ verifies:
 - exact `-180°`/`+180°` equivalence at five-degree latitude intervals; and
 - rejection of non-finite or out-of-range latitude and longitude.
 
+`tests/test-forward-reverse-projection-api.cc` additionally checks a qualified
+round trip at every one of the 20 face sites, ordinary points, batches,
+outside/cut states, residuals, and invalid qualifiers. Node, D3, and browser
+tests repeat the advertised reverse through WebAssembly and workers.
+
 Run it with all standalone projection checks:
 
 ```sh
@@ -478,8 +501,8 @@ make check
 
 ## Limits and extension points
 
-- Only the forward point transform is implemented. There is no inverse
-  `(x,y)` to `(latitude,longitude)` operation.
+- Runtime API 3 implements face-qualified reverse; cuts and shared vertices
+  can correctly return more than one candidate.
 - The geographic model is a sphere, not an ellipsoid.
 - Gnomonic projection maps great circles to straight lines within a face, but
   it is not equal-area, conformal, or equidistant. Distortion grows away from
@@ -487,8 +510,8 @@ make check
 - Position is continuous across retained tree hinges, but derivatives need
   not agree across face boundaries. Non-tree edges are intentional map
   discontinuities.
-- The point API does not reproduce D3's streaming polygon clipping, adaptive
-  resampling, or inverse traversal. A renderer must split paths at net cuts
+- The point API does not reproduce D3's streaming polygon clipping or adaptive
+  resampling. A renderer must split paths at net cuts
   rather than drawing a spurious segment across the canvas.
 - The fixed sites, face order, parent tree, rotation, center, scale, and canvas
   define one D3-compatible map. Configurable Voronoi sites or alternate nets

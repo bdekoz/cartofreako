@@ -249,6 +249,15 @@ read_inverse_options(const val& source)
         throw std::invalid_argument("inverse nativeCell is invalid");
       result.native_cell = static_cast<std::uint32_t>(value);
     }
+  if (has(source, "component") && !is_nullish(source["component"]))
+    {
+      const double value = source["component"].as<double>();
+      if (!std::isfinite(value) || value < 0
+          || value > std::numeric_limits<std::uint32_t>::max()
+          || std::floor(value) != value)
+        throw std::invalid_argument("inverse component is invalid");
+      result.component = static_cast<std::uint32_t>(value);
+    }
   if (has(source, "maximumCandidates"))
     {
       const double value = source["maximumCandidates"].as<double>();
@@ -353,6 +362,8 @@ projection_descriptor(const runtime::projection_spec& spec)
   default_frame.set("height", spec.height);
   result.set("defaultFrame", default_frame);
   result.set("nativeCellCount", spec.native_cell_count);
+  result.set("componentCount",
+             spec.kind == runtime::projection_kind::star_x ? 2 : 1);
   result.set("topology", std::string(runtime::topology_kind_name(spec.topology)));
   result.set("geographicCoordinateOrder", "longitude-latitude");
   result.set("geographicUnits", "degrees");
@@ -650,7 +661,7 @@ public:
 std::string
 implementation_name()
 {
-  return "cartofreako C++20 all-projection/WebAssembly runtime API 2, "
+  return "cartofreako C++20 all-projection/WebAssembly runtime API 3, "
          "geometry ABI 1";
 }
 

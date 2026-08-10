@@ -11,6 +11,8 @@ the common `a60::carto::projection_api`. It transforms `(latitude, longitude)`
 directly into `(x, y)` in a map frame. It does not invoke the historical
 `myriaworld` executable, inspect the source raster, or depend at runtime on
 Boost.Graph, GDAL, Natural Earth, or Google's S2 geometry library.
+The projection-neutral runtime adds an analytic face-qualified reverse for the
+reference layout and all five exploratory perspectives.
 
 Myriahedral projection is a method for creating many possible maps, not one
 closed-form map. A fine spherical mesh is given a cut tree, and that tree
@@ -28,7 +30,7 @@ are retained, while the historical chord-plane approximation, malformed seed
 embedding, and truncated base constants are not. The resulting coordinate
 changes are subpixel at depth 5 and restore the intended hinge continuity.
 
-The work has four parts:
+The work has five parts:
 
 1. **Forward projection:** retain the upstream icosahedron face order,
    depth-5 subdivision, fixed land-aware cut tree, and planar unfolding while
@@ -39,12 +41,15 @@ The work has four parts:
    `16:9` carrier, then derive exact, unscaled terminal-face subsets.
 4. **Documentation and tests:** record the geometry, formulas, provenance,
    API contract, limitations, and fixed reference coordinates.
+5. **Reverse projection:** invert canvas registration and face-local affine
+   geometry, enumerate cut candidates, and forward-check every result.
 
 ## Code organization
 
 | Component | Responsibility |
 | --- | --- |
 | [`cart0freak0-myriahedral.h`](../src.projections/cart0freak0-myriahedral.h) | Mesh generation, unfolding, forward transform, frame validation, API adapter, and source-raster preset |
+| [`cart0freak0-projection-runtime.h`](../src.projections/cart0freak0-projection-runtime.h) | API 3 analytic barycentric reverse, face candidates, and residual checks |
 | [`cart0freak0-myriahedral-tree.inc`](../src.projections/cart0freak0-myriahedral-tree.inc) | Compact parent indices for the fixed 5120-face spanning tree |
 | [`cart0freak0-myriahedral-perspectives.h`](../src.projections/cart0freak0-myriahedral-perspectives.h) | Reference and exploratory configuration metadata, immutable cut trees, and lazy layouts shared by generators and browser runtime |
 | [`perspective-configurations.json`](../assets.static/myriahedral/perspective-configurations.json) | Machine-readable preprocessing, registration, digest, and artifact metadata |
@@ -440,6 +445,21 @@ Y = v H
 
 Uniform scaling preserves the net geometry at every supported size.
 
+## Analytic face-qualified reverse
+
+Runtime API 3 undoes the same `16:9` registration and finds every planar mesh
+triangle containing the requested point. Its widened barycentric weights are
+applied to the corresponding three spherical chord-face vertices. Normalizing
+that weighted vector recovers the unique spherical direction within the
+selected face. The candidate is then projected through that face and accepted
+only when its output residual fits the caller's pixel tolerance.
+
+This operation uses the selected immutable layout, so it applies identically
+to the reference, Americas, Atlantic, Afro–Eur–Asia, Pacific, and Antarctic
+perspectives. A cut or shared vertex can produce multiple face-qualified
+candidates; optional `nativeCell` qualification avoids enumerating all 5,120
+faces when topology is already known.
+
 ## Aspect-ratio contract
 
 The checked-in raster is `4480 x 2520`, exactly `16:9`. This implementation
@@ -824,6 +844,12 @@ resolution property, not a claim about exact regional boundaries.
 - rejection of out-of-range or non-finite geographic coordinates;
 - a complete whole-degree latitude/longitude sweep;
 - exact equivalence of longitude `-180` and `+180`.
+
+`tests/test-forward-reverse-projection-api.cc` adds a qualified reverse at the
+center of all 5,120 faces in each of the six layouts (30,720 faces total),
+ordinary forward/reverse points, batch structure, cut behavior, outside
+points, residual checks, and invalid qualifiers. Node and browser tests repeat
+single/batch and D3 inversion through WebAssembly and workers.
 
 The fixed anchors detect unintended coordinate drift. The whole-mesh
 invariants independently exercise the mathematical properties that motivated

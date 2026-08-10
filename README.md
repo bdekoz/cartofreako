@@ -2,9 +2,9 @@
 
 This repository contains native C++20 forward implementations of the
 AuthaGraph, Cahill-Keyes, Dymaxion, Star-X, Myriahedral, and icosahedral
-Voronoi projections, plus face-qualified reverse implementations for
-Cahill–Keyes, every Myriahedral layout, and Voronoi, through one
-projection-neutral runtime.
+Voronoi projections, plus candidate-aware reverse implementations for every
+family and checked layout through one projection-neutral runtime. Star-X keeps
+its ordinary carrier and unified Antarctic cap as explicit components.
 
 Start with the [visual gallery](docs/gallery.md), where every thumbnail opens
 a released 3840-pixel PNG and every plate has separate layered SVG and print
@@ -80,7 +80,7 @@ See the [web-developer quick start](docs/pages/webassembly-quick-start.md) and
 [`src.wasm` README](src.wasm/README.md) for deployment paths, slices,
 compatibility contracts, and build requirements. The
 [forward/reverse API notes](docs/forward-reverse-projection-api.md) define
-runtime API 2, candidate statuses, batches, TypeScript, and headless behavior.
+runtime API 3, candidate/component statuses, batches, TypeScript, and headless behavior.
 
 Generate 24 production whole-earth maps, 18 timestamped astronomy maps, 12
 timestamped Orbital Technosphere maps, 84 Stage 12 resources maps, six
@@ -122,8 +122,10 @@ the thirty-second image in every projection. The corrected
 record the static-bundle manifest, render host, hardware sizing, verification,
 and source commit; the earlier `v20260808` package is superseded. The
 [S3 v13 publication notes](docs/releases/s3-v13.md) document the public
-Cloudian extracted tree used by every preview. Maintainers publish source tags
-and large generated bundles with the [release runbook](docs/releases/README.md).
+Cloudian extracted tree used by every preview. The
+[release runbook](docs/releases/README.md) treats a GitHub source release and a
+UCB Active Archive Object Storage deposit over S3 as different operations;
+only the latter uses the interactive, human-invoked AAO target.
 
 Astronomy generation is offline by default and uses a checked-in JSON profile
 as the authority for both the calculation timestamp and point of reference.

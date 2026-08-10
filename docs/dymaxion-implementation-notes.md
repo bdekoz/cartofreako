@@ -11,6 +11,7 @@ icosahedral Fuller projection commonly called the Dymaxion or Airocean map.
 It accepts `(latitude, longitude)` through the shared
 `a60::carto::projection_api` and returns upper-left-origin coordinates in a
 variable-size `a60::carto::frame`.
+The projection-neutral runtime adds the matching exact face-qualified reverse.
 
 The implementation combines two independently documented parts:
 
@@ -26,7 +27,7 @@ edge-distance equations are the third essential part. “Exact” describes the
 analytic sphere-to-face equations, not a claim that the map is conformal,
 equal-area, or free of distortion.
 
-The work is integrated in three stages:
+The work is integrated in four stages:
 
 1. **Projection:** select an oriented icosahedron face, evaluate Gray's exact
    equations, place the result in Fuller's interrupted net, and expose the
@@ -37,12 +38,15 @@ The work is integrated in three stages:
 3. **Generation and documentation:** add geometry, graticule, Earth, and water
    targets; clip filled data per native face; record formulas, context,
    provenance, tests, and limitations.
+4. **Reverse projection:** invert Gray's canonical edge-distance equations for
+   all registered faces/subfaces and forward-check every candidate.
 
 ## Code and artifact organization
 
 | Component | Responsibility |
 | --- | --- |
 | [`a60-carto-projection-dymaxion.h`](../src.projections/a60-carto-projection-dymaxion.h) | Icosahedron and net tables, exact face transform, frame validation, API adapter, factory, and native-size preset |
+| [`cart0freak0-projection-runtime.h`](../src.projections/cart0freak0-projection-runtime.h) | API 3 exact Gray reverse, face/subface candidates, and residual checks |
 | [`a60-carto-projection.h`](../src.projections/a60-carto-projection.h) | Shared `projection_api`, `projection_base`, and `dymaxion` mode |
 | [`a60-carto-frame.h`](../src.projections/a60-carto-frame.h) | `frame` and its `frame.frame_area` dimensions |
 | [`a60-carto.h`](../src.projections/a60-carto.h) | Umbrella include exporting the Dymaxion header |
@@ -252,6 +256,39 @@ y = ny * frame.height()
 Clamping contains only boundary roundoff. Face selection and transform tests
 ensure ordinary locations already lie in the native bounds.
 
+## Exact face-qualified reverse
+
+Runtime API 3 reverses the same Gray transform rather than approximating it
+with a planar triangle. It first undoes frame normalization and enumerates the
+registered planar triangles containing the point. Planar barycentric weights
+transfer the point through the affine net registration to the cached canonical
+Fuller triangle, including the Australia and Japan subfaces.
+
+The canonical coordinates determine three offsets from the otherwise unknown
+mean of Gray's spherical edge distances:
+
+```text
+vertical   = sqrt(3) E y
+horizontal = E x
+
+offsets = (2 vertical / 3,
+           -vertical / 3 + horizontal,
+           -vertical / 3 - horizontal)
+```
+
+Here `E` is the spherical icosahedron edge arc. For `ai = mean + offset_i`,
+the inverse of Gray's arctangent relation yields the three gnomonic edge
+coordinates. Their required sum is the chord length, giving one monotone
+bounded scalar equation for `mean`. The solved coordinates reconstruct the
+face-local gnomonic direction; normalizing it and applying the stored
+orthonormal basis returns the global unit vector.
+
+The runtime retains the candidate only when the selected face/subface's exact
+forward transform returns to the requested screen coordinate within the pixel
+tolerance. Edges and split boundaries remain multiple/cut candidates, and an
+optional `nativeCell` avoids enumerating faces when the caller already knows
+the topology.
+
 ## Variable-size frame contract
 
 `is_dymaxion_frame()` accepts a frame only when:
@@ -362,6 +399,12 @@ Fuller face transform rather than either projection's face formula.
 - rejection of wrong ratios, zero, negative, NaN, infinity, and overflow;
 - every integer latitude/longitude pair over the complete public domain; and
 - exact equality of the `-180` and `+180` antimeridian forms.
+
+`tests/test-forward-reverse-projection-api.cc` additionally checks an interior
+point in every one of the 23 faces/subfaces, a global coordinate lattice,
+native-cell qualification, batches, boundary status, exact forward residuals,
+and invalid options. Node and browser tests repeat the advertised reverse
+through WebAssembly and workers.
 
 Each generator also reopens its SVG and checks the exact view box, layer and
 face counts, path presence, and absence of non-finite coordinates. The checked

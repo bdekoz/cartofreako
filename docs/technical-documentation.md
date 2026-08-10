@@ -78,7 +78,8 @@ path structures.
 
 | Need | Documentation |
 | --- | --- |
-| Publish a static generated-assets release through the shared AAO interface | [Release runbook](releases/README.md) |
+| Publish a GitHub source release without invoking S3 | [Release runbook](releases/README.md) and [`v20260810`](releases/v20260810.md) |
+| Deposit generated assets in UCB AAO through the separate human-invoked S3 target | [Release runbook](releases/README.md) |
 | Inspect v13 paths, formats, metadata, and verification | [S3 v13 publication](releases/s3-v13.md) |
 | Read the corrected source and generated-assets release notes | [`v20260808.1`](releases/v20260808.1.md) |
 | Review source-data acquisition and attribution | [Natural Earth data note](natural-earth-10m-physical-vectors.md) and the family-specific implementation notes above |

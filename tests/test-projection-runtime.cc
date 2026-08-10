@@ -76,7 +76,7 @@ int
 main()
 {
   static_assert(runtime::abi_version == 1);
-  static_assert(runtime::api_version == 2);
+  static_assert(runtime::api_version == 3);
   assert(runtime::reference_projection_ids.size() == 6);
   std::set<std::string_view> families;
   for (const runtime::projection_spec& spec : runtime::projection_specs)

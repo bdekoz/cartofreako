@@ -80,6 +80,15 @@ inline constexpr double star_x_polar_star_outer_radius_ratio = 1.25 / 44.0;
 /// Inner radius of the North-pole star relative to its outer radius.
 inline constexpr double star_x_polar_star_inner_radius_factor = 0.4;
 
+/// Fixed geographic boundary of the unified Antarctic quadrant cut.
+inline constexpr double star_x_antarctic_cutoff_latitude_degrees = -60;
+/// Geographic-bearing rotation of the unified Antarctic cap.
+inline constexpr double star_x_antarctic_bearing_offset_degrees = 0;
+/// Bottom clearance retained by the cap boundary in every Star-X frame.
+inline constexpr double star_x_antarctic_bottom_clearance_ratio = 0.25 / 44.0;
+/// Quarter-degree samples used to register the rendered cap boundary.
+inline constexpr std::size_t star_x_antarctic_boundary_sample_count = 1440;
+
 /// Configurable placement and final scale of the Star-X arrangement.
 struct star_x_layout
 {
@@ -367,6 +376,78 @@ project_antarctic_fragment(
   const point_2d local = project_antarctic_fragment_local(
     latitude, longitude, map_frame, bearing_offset, layout);
   return {target_pole.x + local.x, target_pole.y + local.y};
+}
+
+/** Pure projection registration for the fixed-60-degree-South cap.
+
+    The cap boundary and placement are derived only from the Star-X frame,
+    layout, and projected geographic boundary. No coastline, land mask, or
+    other thematic dataset participates. The bottommost sampled boundary
+    point is placed one quarter carrier unit above the bottom of the canonical
+    34-by-44 frame (one quarter inch in the generated SVG), with that
+    clearance scaled proportionally for every valid frame.
+*/
+struct antarctic_cap_registration
+{
+  double cutoff_latitude; ///< Fixed geographic cutoff in degrees.
+  double bearing_offset; ///< Geographic-bearing rotation in degrees.
+  double maximum_boundary_radius; ///< Largest source radius at the cutoff.
+  double boundary_local_bottom; ///< Largest local y value on the boundary.
+  double bottom_clearance; ///< Required visible clearance in frame units.
+  point_2d target_pole; ///< Registered common South Pole in frame units.
+};
+
+/// Register the unified Antarctic cap without consulting source data.
+/// @param map_frame Complete ratio-correct Star-X output frame.
+/// @param variable_layout Star-X carrier configuration.
+/// @return Fixed-cut cap registration and its visible bottom clearance.
+inline antarctic_cap_registration
+make_antarctic_cap_registration(
+  const frame& map_frame, const star_x_layout variable_layout = {})
+{
+  if (!is_star_x_frame(map_frame))
+    throw std::invalid_argument(
+      "Star-X Antarctic cap requires a valid 17:22 frame");
+  const star_x_layout layout = validate_star_x_layout(variable_layout);
+  double maximum_radius = 0;
+  double local_bottom = -std::numeric_limits<double>::infinity();
+  for (std::size_t sample = 0;
+       sample <= star_x_antarctic_boundary_sample_count; ++sample)
+    {
+      const double longitude
+        = -180 + 360 * static_cast<double>(sample)
+                   / star_x_antarctic_boundary_sample_count;
+      const point_2d local = project_antarctic_fragment_local(
+        star_x_antarctic_cutoff_latitude_degrees, longitude, map_frame,
+        star_x_antarctic_bearing_offset_degrees, layout);
+      maximum_radius = std::max(
+        maximum_radius, std::hypot(local.x, local.y));
+      local_bottom = std::max(local_bottom, local.y);
+    }
+  if (!std::isfinite(maximum_radius) || maximum_radius <= 0
+      || !std::isfinite(local_bottom))
+    throw std::logic_error(
+      "Star-X 60-degree-South cap has no finite boundary");
+
+  const double clearance
+    = map_frame.height() * star_x_antarctic_bottom_clearance_ratio;
+  const point_2d target {
+    map_frame.width() / 2,
+    map_frame.height() - clearance - local_bottom,
+  };
+  if (target.x - maximum_radius < 0
+      || target.x + maximum_radius > map_frame.width()
+      || target.y - maximum_radius < 0)
+    throw std::logic_error(
+      "Star-X Antarctic cap registration does not fit its frame");
+  return {
+    star_x_antarctic_cutoff_latitude_degrees,
+    star_x_antarctic_bearing_offset_degrees,
+    maximum_radius,
+    local_bottom,
+    clearance,
+    target,
+  };
 }
 
 /**

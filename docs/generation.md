@@ -1041,15 +1041,16 @@ distant octants. Splitting a meridian at the equator reflects the fact that
 its northern and southern halves belong to different octahedral faces even
 though they touch geographically.
 
-Star-X adds the Stage 13 Antarctic cap after those ordinary splits. The
+Star-X adds its current Antarctic cap after those ordinary splits. The
 generator cuts each graticule edge at the fixed `60°S` parallel, leaves the
 northern subpaths on the X, and maps the southern subpaths around one
 bottom-center South Pole without changing their source-pole radius. The
 visible `antarctic-cap-boundaries` layer draws the four projected source
 segments and the unified destination boundary, making the operation directly
-inspectable in
-`graticules-star-x-34-44.png`. Consequently the Star-X graticule target, unlike
-the other graticule targets, depends on the prepared Natural Earth dataset.
+inspectable in `graticules-star-x-34-44.png`. Its registration comes entirely
+from that projected boundary and proportional lower clearance; the Star-X
+graticule target neither depends on nor reads the prepared Natural Earth
+dataset.
 
 Each line is a named SVG subgroup with paths, a title, and one visible degree
 label. Multiples of 30 degrees receive stronger styling. The label is placed
@@ -1156,12 +1157,13 @@ about the 34-by-44 page center. The generator then cuts each practical
 quadrant at `60°S` and moves the four southern fragments around one
 bottom-center pole. This applies to ocean, land, all bathymetry levels, minor
 islands, ice, lakes, playas, rivers, reefs, and coastline. The source caps are
-removed, so no physical content is duplicated. Natural Earth mainland
-geometry aligns the unified continent's lowest Y coordinate with its original
-uncut lower-quadrant position. Every transformed Antarctic path paints after
-the ordinary quadrant paths in its layer. The Earth `land` group contains the
-central `north-pole-star`; water adds a final `polar-mark` group with the same
-black star above its 22 physical groups.
+removed, so no physical content is duplicated. Cap registration is independent
+of Natural Earth: the complete projected `60°S` boundary is sampled every
+`0.25°`, centered on the page axis, and placed so its bottommost point retains
+`H(0.25/44)` clearance (`0.25` units on the 34-by-44 plate). Every transformed
+Antarctic path paints after the ordinary quadrant paths in its layer. The Earth
+`land` group contains the central `north-pole-star`; water adds a final
+`polar-mark` group with the same black star above its 22 physical groups.
 
 The Antarctic mapping reuses each point's exact distance from its ordinary
 Star-X source tip; it introduces no separate radial scale. Geographic bearing

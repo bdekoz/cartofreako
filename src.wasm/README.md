@@ -10,10 +10,10 @@ The production browser runtime exposes all six Cartofreako projection models
 through one ES-module API. It transforms points, lines, polygon rings,
 multi-geometries, finite carrier faces, and slices into a shared typed-array
 command buffer. The same buffer feeds the supplied SVG, Canvas, and D3 stream
-adapters, either on the main thread or in a Web Worker. Runtime API 2 also
-provides structured forward results and face-qualified Cahill–Keyes,
-Myriahedral, and Voronoi reverse candidates without changing geometry
-command-buffer ABI 1.
+adapters, either on the main thread or in a Web Worker. Runtime API 3 also
+provides structured forward results and candidate-aware reverse projection for
+all six families without changing geometry command-buffer ABI 1. Star-X keeps
+its ordinary carrier and unified Antarctic cap as explicit components.
 
 The older Cahill-Keyes and land/ocean-only Myriahedral modules remain available
 as compatibility builds. New applications should start with
@@ -34,7 +34,7 @@ make check-wasm-projections-browser
 layouts, points, lines, holes, multipolygons, carrier geometry, all four slice
 kinds, SVG, Canvas, D3 replay, and the common Cahill-Keyes/Myriahedral Natural
 Earth base maps under Node. It also checks forward/reverse result structure,
-face qualification, batches, unsupported statuses, and conservative D3
+face/component qualification, batches, singular/cut statuses, and conservative D3
 inverse behavior. The browser check serves the files with the proper MIME
 types and runs the module, reverse API, Canvas adapter, slices, and worker in
 headless Chrome/Chromium.
@@ -58,7 +58,7 @@ Deploy these files at the same relative paths, or provide Emscripten's
 | `src.wasm/cartofreako-projections.mjs` | Generated Emscripten ES-module loader |
 | `src.wasm/cartofreako-projections.wasm` | Generated all-projection binary |
 | `src.wasm/cartofreako-web.mjs` | Stable high-level API and GeoJSON flattener |
-| `src.wasm/cartofreako-web.d.ts` | TypeScript declarations for runtime API 2 |
+| `src.wasm/cartofreako-web.d.ts` | TypeScript declarations for runtime API 3 |
 | `src.wasm/cartofreako-svg.mjs` | SVG path/document and base-map renderer |
 | `src.wasm/cartofreako-canvas.mjs` | Canvas and OffscreenCanvas command replay |
 | `src.wasm/cartofreako-d3.mjs` | D3-compatible synchronous stream adapter |
@@ -97,7 +97,8 @@ const tokyo = projection.project(139.6917, 35.6895); // longitude, latitude
 const marshall = projection.forward([171.2, 7.1]);
 const reverse = projection.inverse([marshall.x, marshall.y]);
 const faceQualified = projection.inverse([marshall.x, marshall.y], {
-  nativeCell: marshall.nativeCell
+  nativeCell: marshall.nativeCell,
+  component: marshall.component
 });
 const geometry = projection.projectGeometry(geojson, {
   tolerancePx: 0.35,
@@ -126,14 +127,15 @@ The checked alternate layouts are `myriahedral-americas`,
 `myriahedral-atlantic`, `myriahedral-afro-eur-asia`,
 `myriahedral-pacific`, and `myriahedral-antarctic`.
 
-## Runtime API 2 and command-buffer ABI 1
+## Runtime API 3 and command-buffer ABI 1
 
-The point API and geometry protocol are versioned separately. Runtime API 2
-adds `forward`, `forwardMany`, `inverse`, and `inverseMany`; geometry buffers
-remain ABI 1. Cahill–Keyes, Myriahedral (all six layouts), and Voronoi
-advertise `inverseMode: "face-qualified"`. AuthaGraph, Dymaxion, and Star-X
-currently advertise `inverseMode: "none"` and return the structured status
-`unsupported`.
+The point API and geometry protocol are versioned separately. Runtime API 3
+provides `forward`, `forwardMany`, `inverse`, and `inverseMany`; geometry
+buffers remain ABI 1. Cahill–Keyes, AuthaGraph, Dymaxion, Myriahedral (all six
+layouts), and Voronoi advertise `inverseMode: "face-qualified"`. Star-X
+advertises `inverseMode: "candidates"`: carrier component `0` owns latitudes
+north of `60°S`, and unified-cap component `1` owns the cutoff and everything
+south. `inverse` accepts both `nativeCell` and `component` qualifiers.
 
 See the [forward/reverse implementation notes](../docs/forward-reverse-projection-api.md)
 for status semantics, batch fields, native C++ types, algorithms, and
@@ -222,10 +224,10 @@ runtime ignores that compatibility property.
 
 ## Boundaries and licenses
 
-Runtime API 2 has no globally unique inverse contract: reverse support is
-capability-gated and may return multiple candidates. Use `nativeCell` when a
-known face disambiguates a click; retain feature IDs and a planar index for
-feature picking regardless. There is no built-in WebGL
+Runtime API 3 has no globally unique inverse contract: an interrupted cut,
+periodic seam, singular vertex, or overlapping Star-X component may return
+multiple candidates. Use `nativeCell` and `component` when known; retain
+feature IDs and a planar index for feature picking regardless. There is no built-in WebGL
 triangulator or XYZ geographic tile scheme; finite-carrier planar tiles are
 the supported delivery unit. Input polygon edges should follow RFC 7946's
 antimeridian-cut guidance.

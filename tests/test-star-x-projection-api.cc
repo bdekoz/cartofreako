@@ -577,6 +577,55 @@ main()
       assert(std::abs(std::hypot(local.x, local.y) - radius) < 1e-9);
     }
 
+  // The fixed 60-degree-South cap registration is projection-only. Its
+  // complete boundary retains the proportional equivalent of a visible
+  // quarter-unit bottom clearance on the canonical 34-by-44 frame, without
+  // consulting geographic datasets.
+  const frame canonical_star_x_frame {34, 44};
+  const auto canonical_cap_registration
+    = star_x_detail::make_antarctic_cap_registration(
+        canonical_star_x_frame);
+  assert(std::abs(canonical_cap_registration.bottom_clearance - 0.25)
+         < 1e-12);
+  assert(std::abs(canonical_cap_registration.target_pole.x - 17) < 1e-12);
+  assert(std::abs(canonical_cap_registration.target_pole.y
+                    + canonical_cap_registration.boundary_local_bottom
+                  - 43.75) < 1e-12);
+  const auto cap_registration
+    = star_x_detail::make_antarctic_cap_registration(reference_frame);
+  assert(cap_registration.cutoff_latitude
+         == star_x_antarctic_cutoff_latitude_degrees);
+  assert(cap_registration.bearing_offset
+         == star_x_antarctic_bearing_offset_degrees);
+  assert(std::abs(
+           cap_registration.bottom_clearance
+           - reference_frame.height()
+               * star_x_antarctic_bottom_clearance_ratio) < 1e-12);
+  assert(std::abs(
+           cap_registration.bottom_clearance / reference_frame.height()
+           - 0.25 / 44.0) < 1e-12);
+  assert(std::abs(cap_registration.target_pole.x
+                  - reference_frame.width() / 2) < 1e-12);
+  double cap_boundary_bottom = -std::numeric_limits<double>::infinity();
+  for (std::size_t sample = 0;
+       sample <= star_x_antarctic_boundary_sample_count; ++sample)
+    {
+      const double longitude
+        = -180 + 360 * static_cast<double>(sample)
+                   / star_x_antarctic_boundary_sample_count;
+      const auto point = star_x_detail::project_antarctic_fragment(
+        cap_registration.cutoff_latitude, longitude, reference_frame,
+        cap_registration.target_pole, cap_registration.bearing_offset);
+      assert(point.x >= -1e-9
+             && point.x <= reference_frame.width() + 1e-9);
+      assert(point.y >= -1e-9
+             && point.y <= reference_frame.height() + 1e-9);
+      cap_boundary_bottom = std::max(cap_boundary_bottom, point.y);
+    }
+  assert(std::abs(cap_boundary_bottom
+                  - (reference_frame.height()
+                     - cap_registration.bottom_clearance)) < 1e-9);
+
   struct quadrant_seam
   {
     double longitude;

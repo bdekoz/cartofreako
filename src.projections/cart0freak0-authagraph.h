@@ -235,6 +235,9 @@ local_longitude_latitude(const vector_3d& value,
   const double sine_longitude = dot(pole, perpendicular);
   const double cosine_longitude = dot(tangent, value);
   const double sine_latitude = std::clamp(dot(pole, value), -1.0, 1.0);
+  if (sine_latitude
+      >= 1 - 64 * std::numeric_limits<double>::epsilon())
+    return {0, pi / 2};
   return {std::atan2(sine_longitude, cosine_longitude),
           std::asin(sine_latitude)};
 }
@@ -256,6 +259,41 @@ struct triangle_projection
   point_2d point; ///< Analytic point in the canonical planar triangle.
   int sector; ///< Zero-based 60-degree sector around the selected vertex.
 };
+
+/// Coefficients of v0=(1,0) and v1=(1/2,sqrt(3)/2) for the 24
+/// triangle origins in the rectangular tetrahedron net.
+inline constexpr std::array<std::array<int, 2>, 24> cell_origins {{
+  {{1, 1}}, {{1, 1}}, {{2, 1}}, {{2, 1}}, {{2, 2}}, {{0, 2}},
+  {{0, 0}}, {{2, 0}}, {{1, 1}}, {{1, 1}}, {{0, 1}}, {{0, 1}},
+  {{3, 1}}, {{3, 1}}, {{2, 1}}, {{2, 1}}, {{2, 0}}, {{4, 0}},
+  {{0, 2}}, {{2, 2}}, {{3, 1}}, {{3, 1}}, {{0, 1}}, {{0, 1}},
+}};
+
+/// Rotation angles, in sixths of pi, for the 24 unfolded triangles.
+inline constexpr std::array<int, 24> cell_rotation_sixths {{
+  -1, -1, 1, 1, 3, -3,
+  -3, 3, 5, 5, -5, -5,
+  5, 5, -5, -5, -3, 3,
+  3, -3, -1, -1, 1, 1,
+}};
+
+/// Assemble a canonical triangle point into one registered net cell.
+/// @param number Cell number in `[0, 24)`.
+/// @param point Point in the canonical analytic triangle.
+/// @return Point in the unnormalized cyclic tetrahedral net.
+inline point_2d
+assemble_cell(const std::size_t number, const point_2d point)
+{
+  const double origin_x = tetrahedron_scale
+    * (cell_origins[number][0] + cell_origins[number][1] / 2.0);
+  const double origin_y = tetrahedron_scale * cell_origins[number][1]
+    * sqrt_three / 2;
+  const double angle = cell_rotation_sixths[number] * pi / 6;
+  const double cosine = std::cos(angle);
+  const double sine = std::sin(angle);
+  return {cosine * point.x - sine * point.y + origin_x,
+          sine * point.x + cosine * point.y + origin_y};
+}
 
 /// Project pole-centered spherical coordinates into a canonical triangle.
 /// @param local Local longitude and latitude in radians.
@@ -317,33 +355,7 @@ project_to_unfolded_tetrahedron(const double latitude,
   const std::size_t number = closest * 6
                              + static_cast<std::size_t>(triangle.sector);
 
-  // Coefficients of v0=(1,0) and v1=(1/2,sqrt(3)/2) for the 24 triangle
-  // origins in the rectangular tetrahedron net.
-  static constexpr std::array<std::array<int, 2>, 24> origins {{
-    {{1, 1}}, {{1, 1}}, {{2, 1}}, {{2, 1}}, {{2, 2}}, {{0, 2}},
-    {{0, 0}}, {{2, 0}}, {{1, 1}}, {{1, 1}}, {{0, 1}}, {{0, 1}},
-    {{3, 1}}, {{3, 1}}, {{2, 1}}, {{2, 1}}, {{2, 0}}, {{4, 0}},
-    {{0, 2}}, {{2, 2}}, {{3, 1}}, {{3, 1}}, {{0, 1}}, {{0, 1}},
-  }};
-
-  // Rotation angles in sixths of pi.
-  static constexpr std::array<int, 24> rotation_sixths {{
-    -1, -1, 1, 1, 3, -3,
-    -3, 3, 5, 5, -5, -5,
-    5, 5, -5, -5, -3, 3,
-    3, -3, -1, -1, 1, 1,
-  }};
-
-  const double origin_x = tetrahedron_scale
-                          * (origins[number][0] + origins[number][1] / 2.0);
-  const double origin_y = tetrahedron_scale * origins[number][1]
-                          * sqrt_three / 2;
-  const double angle = rotation_sixths[number] * pi / 6;
-  const double cosine = std::cos(angle);
-  const double sine = std::sin(angle);
-
-  return {cosine * triangle.point.x - sine * triangle.point.y + origin_x,
-          sine * triangle.point.x + cosine * triangle.point.y + origin_y};
+  return assemble_cell(number, triangle.point);
 }
 
 /// Project geographic coordinates into the normalized AuthaGraph rectangle.

@@ -24,7 +24,7 @@
     try {
       const runtime = await createCartofreako();
       requireCondition(runtime.abiVersion === 1, 'wrong ABI');
-      requireCondition(runtime.apiVersion === 2, 'wrong API');
+      requireCondition(runtime.apiVersion === 3, 'wrong API');
       requireCondition(new Set(runtime.manifest.map(({family}) => family)).size === 6,
         'missing projection family');
       for (const id of ['cahill-keyes', 'authagraph', 'dymaxion',
@@ -69,10 +69,26 @@
         'main-thread Cahill-Keyes inverse is inaccurate');
       ckProjection.dispose();
 
+      const starProjection = runtime.createProjection({id: 'star-x', width: 340});
+      const starForward = starProjection.forward([-66, -75]);
+      requireCondition(starForward.component === 1,
+        'main-thread Star-X cap component is missing');
+      const starInverse = starProjection.inverse(
+        [starForward.x, starForward.y],
+        {nativeCell: starForward.nativeCell, component: 1}
+      );
+      requireCondition(starProjection.descriptor.inverseMode === 'candidates'
+        && starInverse.candidates.length === 1,
+        'main-thread Star-X cap inverse failed');
+      requireCondition(Math.abs(starInverse.candidates[0].longitude + 66) < 2e-8
+        && Math.abs(starInverse.candidates[0].latitude + 75) < 2e-8,
+        'main-thread Star-X cap inverse is inaccurate');
+      starProjection.dispose();
+
       const worker = new CartofreakoWorkerClient();
       const workerManifest = await worker.manifest();
       requireCondition(workerManifest.abiVersion === 1, 'worker ABI is wrong');
-      requireCondition(workerManifest.apiVersion === 2, 'worker API is wrong');
+      requireCondition(workerManifest.apiVersion === 3, 'worker API is wrong');
       const workerForward = await worker.forward(
         {id: 'voronoi', width: 440},
         [171.2, 7.1]
@@ -96,6 +112,18 @@
       requireCondition(workerCkInverse.status === 'unique'
         && workerCkInverse.candidates.length === 1,
         'worker Cahill-Keyes inverse failed');
+      const workerStarForward = await worker.forward(
+        {id: 'star-x', width: 340},
+        [-66, -75]
+      );
+      const workerStarInverse = await worker.inverse(
+        {id: 'star-x', width: 340},
+        [workerStarForward.x, workerStarForward.y],
+        {nativeCell: workerStarForward.nativeCell, component: 1}
+      );
+      requireCondition(workerStarForward.component === 1
+        && workerStarInverse.candidates.length === 1,
+        'worker Star-X cap inverse failed');
       const land = await fetch('./cartofreako-cahill-keyes-land-110m.geojson')
         .then(response => response.json());
       const workerGeometry = await worker.projectGeometry(

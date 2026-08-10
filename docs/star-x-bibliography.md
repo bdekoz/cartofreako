@@ -139,16 +139,18 @@ a separate global grid and checks every item 18 location.
 
     This illustrates the requested 120-percent page-centered scale, central
     star, and unified Antarctic presentation. Its Antarctica silhouette is
-    intentionally not a scale reference; the implementation uses Natural
-    Earth geometry and the documented projection-relative scale instead.
+    intentionally not a scale or placement reference; the implementation uses
+    the documented projection-relative radius, fixed `60°S` boundary, and
+    projection-only lower-clearance registration instead.
 
 20. **Natural Earth.** “1:10m Physical Vectors.”
     [Dataset page](https://www.naturalearthdata.com/downloads/10m-physical-vectors/).
 
-    GDAL uses the fixed `60°S` boundary to split every physical layer. Natural
-    Earth mainland geometry supplies the uncut lower-quadrant baseline used
-    to place the unified continent; the same cut and transform drive the
-    Star-X graticule cap.
+    GDAL clips these physical source layers at the projection's fixed `60°S`
+    boundary. Natural Earth supplies geographic content only: it does not
+    select the cutoff, radius, bearing, pole position, or lower clearance. The
+    same cap can therefore be registered and drawn as a graticule without the
+    dataset.
 
 ## Source-to-implementation map
 
@@ -158,7 +160,7 @@ a separate global grid and checks every item 18 location.
 | Left/right split, 180-degree rotation, `4 3 / 1 2` ordering | 2022 Star-X project description and plate diagram |
 | 17:22 variable carrier ratio | Historical 34-by-44 four-panel composition |
 | Gap closure and 120-percent page scale | Requested Stage 4/5 geometry and repository concept drawing |
-| North-pole star and unified Antarctica | Repository concept drawing for intent; analytic star, fixed `60°S` cut, and Natural Earth-derived vertical alignment for final geometry |
+| North-pole star and unified Antarctica | Repository concept drawing for intent; analytic star, fixed `60°S` cut, radius-preserving bearing transform, and projection-only `0.25/44` lower-clearance registration for final geometry |
 | Official octant numbering | Keyes's eight-octant and polar-assembly page |
 | Longitude registration | Visionscarto asset family and shared C++ helper |
 | Numeric compatibility | Perl-derived CK anchors and Star-X API test |

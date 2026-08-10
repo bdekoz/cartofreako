@@ -107,14 +107,15 @@ requireCondition(flat.ringRoles[1] === RingRole.hole, 'hole role missing');
 
 const runtime = await createCartofreako();
 requireCondition(runtime.abiVersion === 1, 'incorrect runtime ABI');
-requireCondition(runtime.apiVersion === 2, 'incorrect runtime API');
+requireCondition(runtime.apiVersion === 3, 'incorrect runtime API');
 requireCondition(Object.isFrozen(runtime.manifest), 'projection manifest is mutable');
 requireCondition(
     runtime.manifest.every((entry) => Object.isFrozen(entry)
         && entry.geographicCoordinateOrder === 'longitude-latitude'
         && entry.projectedUnits === 'pixels'
         && entry.axisOrigin === 'top-left'
-        && entry.framePolicy === 'exact-native-aspect'),
+        && entry.framePolicy === 'exact-native-aspect'
+        && entry.componentCount === (entry.family === 'star-x' ? 2 : 1)),
     'projection metadata omits coordinate or frame policy'
 );
 requireCondition(
@@ -132,7 +133,7 @@ const documentedApi = runtime.projection({
     name: 'myriahedral-pacific',
     frame: [1920, 1080]
 });
-requireCondition(documentedApi.metadata().apiVersion === 2, 'metadata API version is wrong');
+requireCondition(documentedApi.metadata().apiVersion === 3, 'metadata API version is wrong');
 const documentedForward = documentedApi.forward([171.2, 7.1]);
 const documentedReverse = documentedApi.inverse(
     [documentedForward.x, documentedForward.y],
@@ -142,7 +143,6 @@ requireCondition(documentedReverse.candidates.length === 1, 'documented API reve
 documentedApi.dispose();
 
 const summaries = [];
-const reversible = new Set(['cahill-keyes', 'myriahedral', 'voronoi']);
 for (const id of [
     'cahill-keyes', 'authagraph', 'dymaxion', 'myriahedral', 'star-x', 'voronoi'
 ]) {
@@ -162,37 +162,35 @@ for (const id of [
         `${id} forward alias disagrees with project`
     );
     requireCondition(
-        projection.descriptor.inverseMode === (reversible.has(id) ? 'face-qualified' : 'none'),
+        projection.descriptor.inverseMode
+            === (id === 'star-x' ? 'candidates' : 'face-qualified'),
         `${id} inverse capability is wrong`
     );
     const reversed = projection.inverse([point.x, point.y]);
-    if (reversible.has(id)) {
-        requireCondition(
-            ['unique', 'ambiguous', 'cut'].includes(reversed.status),
-            `${id} reverse status is wrong`
-        );
-        const candidate = reversed.candidates.find(
-            ({nativeCell}) => nativeCell === point.nativeCell
-        );
-        requireCondition(candidate, `${id} reverse omitted the forward face`);
-        requireCondition(
-            Math.abs(candidate.latitude - 37.7749) < 2e-8
-                && Math.abs(candidate.longitude - -122.4194) < 2e-8,
-            `${id} reverse coordinate is inaccurate`
-        );
-        const qualified = projection.inverse([point.x, point.y], {
-            nativeCell: point.nativeCell
-        });
-        requireCondition(qualified.candidates.length === 1, `${id} qualified reverse is not unique`);
-        const reverseBatch = projection.inverseMany(new Float64Array([
-            point.x, point.y, forward.x, forward.y
-        ]));
-        requireCondition(reverseBatch.statuses.length === 2, `${id} reverse batch lost inputs`);
-        requireCondition(reverseBatch.candidateOffsets.length === 3, `${id} reverse offsets are wrong`);
-    } else {
-        requireCondition(reversed.status === 'unsupported', `${id} reverse should be unsupported`);
-        requireCondition(reversed.candidates.length === 0, `${id} unsupported reverse returned data`);
-    }
+    requireCondition(
+        ['unique', 'ambiguous', 'cut'].includes(reversed.status),
+        `${id} reverse status is wrong`
+    );
+    const candidate = reversed.candidates.find(
+        ({nativeCell, component}) => nativeCell === point.nativeCell
+            && component === point.component
+    );
+    requireCondition(candidate, `${id} reverse omitted the forward face/component`);
+    requireCondition(
+        Math.abs(candidate.latitude - 37.7749) < 2e-8
+            && Math.abs(candidate.longitude - -122.4194) < 2e-8,
+        `${id} reverse coordinate is inaccurate`
+    );
+    const qualified = projection.inverse([point.x, point.y], {
+        nativeCell: point.nativeCell,
+        component: point.component
+    });
+    requireCondition(qualified.candidates.length === 1, `${id} qualified reverse is not unique`);
+    const reverseBatch = projection.inverseMany(new Float64Array([
+        point.x, point.y, forward.x, forward.y
+    ]));
+    requireCondition(reverseBatch.statuses.length === 2, `${id} reverse batch lost inputs`);
+    requireCondition(reverseBatch.candidateOffsets.length === 3, `${id} reverse offsets are wrong`);
     const batched = projection.projectPoints(new Float64Array([
         -122.4194, 37.7749, 139.6917, 35.6895
     ]));
@@ -260,6 +258,38 @@ for (const id of [
     });
     projection.dispose();
 }
+
+const star = runtime.createProjection({id: 'star-x', width: 340});
+const starCapForward = star.forward([-66, -75]);
+requireCondition(starCapForward.component === 1, 'Star-X cap component is missing');
+const starCapReverse = star.inverse(
+    [starCapForward.x, starCapForward.y],
+    {nativeCell: starCapForward.nativeCell, component: 1}
+);
+requireCondition(starCapReverse.candidates.length === 1,
+    'Star-X component-qualified cap inverse failed');
+requireCondition(Math.abs(starCapReverse.candidates[0].longitude - -66) < 2e-8
+    && Math.abs(starCapReverse.candidates[0].latitude - -75) < 2e-8,
+    'Star-X cap inverse is inaccurate');
+const starPole = star.forward([24, -90]);
+const starPoleReverse = star.inverse([starPole.x, starPole.y], {component: 1});
+requireCondition(starPoleReverse.status === 'ambiguous'
+    && starPoleReverse.candidates.length === 4,
+    'Star-X South-Pole ambiguity policy changed');
+const starD3Candidates = cartofreakoD3Projection(star).invertCandidates(
+    [starCapForward.x, starCapForward.y],
+    {nativeCell: starCapForward.nativeCell, component: 1}
+);
+requireCondition(starD3Candidates.candidates.length === 1,
+    'D3 Star-X component-qualified inverse failed');
+let rejectedComponent = false;
+try {
+    star.inverse([starCapForward.x, starCapForward.y], {component: 2});
+} catch {
+    rejectedComponent = true;
+}
+requireCondition(rejectedComponent, 'Star-X accepted an invalid component');
+star.dispose();
 
 const ck = runtime.createProjection({id: 'cahill-keyes', width: 440});
 const ckSlices = ck.listSlices();

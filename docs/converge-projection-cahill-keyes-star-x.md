@@ -1,3 +1,13 @@
+# Star-X development request ledger
+
+> **Historical record, not the current specification.** The authoritative
+> geometry is documented in [Star-X geometric context](star-x-context.md) and
+> [implementation notes](star-x-implementation-notes.md). In particular, the
+> former maximum-land-distance experiment and Natural Earth vertical baseline
+> below are superseded: the current cap is cut at fixed `60°S`, preserves
+> source-tip radius, uses zero geographic-bearing offset, and derives its
+> `0.25/44` lower clearance entirely from the projected boundary.
+
 Stage 1 development:
 implement a new C++20 projection in the file src.projections/cart0freak0-star-x.h using
 the same carto API as previous.

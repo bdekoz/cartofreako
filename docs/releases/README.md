@@ -1,8 +1,9 @@
-# Publishing releases
+# GitHub releases and UCB AAO deposits
 
 [Documentation index](../../index.md) ·
 [Generation pipeline](../generation.md) ·
 [Prerequisites and hardware](../prerequisites.md) ·
+[`v20260810` Stage 14 source release](v20260810.md) ·
 [`v20260808.1` corrected release notes](v20260808.1.md) ·
 [`v20260808` superseded attempt](v20260808.md) ·
 [`v13` S3 publication](s3-v13.md) ·
@@ -10,13 +11,50 @@
 [`v12` S3 publication](s3-v12.md) ·
 [`v20260806` release notes](v20260806.md)
 
-Cartofreako releases have two deliberately separate parts:
+Cartofreako has two deliberately different release concepts:
 
-1. a date-named Git tag supplies the source tree; and
-2. large generated outputs are uploaded to that GitHub release as static
-   assets rather than committed to Git.
+1. **Releasing on GitHub** publishes a date-named source tag and a GitHub
+   release. A generated XZ bundle may be attached as a static GitHub asset,
+   but it is not required for a source-only release.
+2. **Releasing to UCB Active Archive Object Storage (AAO) via S3** deposits an
+   independently versioned generated-assets tree under an immutable Cloudian
+   prefix. It publishes the completion marker last and produces a transport
+   receipt, verification record, and canonical check-in report.
 
-Treat release assets as immutable snapshots. Never replace an uploaded file
+The first operation never invokes, authorizes, or implies the second. There is
+no umbrella `release` Make target. `release-github` has no S3 dependency, and
+`release-ucb-aao-s3` is deliberately a separate, top-level, interactive-only
+target.
+
+For example, a source-only GitHub release uses:
+
+```sh
+git tag v20260810 HEAD
+make release-github \
+  GITHUB_RELEASE_TAG=v20260810 \
+  GITHUB_RELEASE_TITLE='v20260810 — Stage 14 reverse projections' \
+  GITHUB_RELEASE_NOTES=docs/releases/v20260810.md
+```
+
+An eventual generated-assets deposit is a later, separately authorized human
+operation. Cartofreako supplies its reviewed profile, staged tree, and receipt
+path; the target delegates credentials, immutable grouped transfer,
+marker-last publication, and download verification to the shared
+`alpha60-clusterops/bin/load-s3-aao` implementation:
+
+```sh
+make release-ucb-aao-s3 \
+  UCB_AAO_RELEASE_PROFILE=docs/releases/v14-aao-upload-profile.json \
+  UCB_AAO_RELEASE_DATA_ROOT=build/s3-release-v14 \
+  UCB_AAO_RELEASE_RECEIPT=reports/cartofreako-v14-aao-upload-receipt.json
+```
+
+The AAO target must be the only requested Make goal and must run in an
+interactive terminal. The shared engine still requires the exact destination
+confirmation. Do not call it from CI, another Make target, a GitHub release
+script, or an unattended agent workflow.
+
+Treat GitHub assets and AAO objects as immutable snapshots. Never replace an uploaded file
 with different bytes under the same tag and filename. Publish a new tag and
 asset name when either the source or generated payload changes.
 
@@ -133,9 +171,8 @@ test "$(sha256sum assets.generated.v13.tar.xz | awk '{print $1}')" = \
 xz --test "$release_verify_dir/assets.generated.v13.tar.xz"
 ```
 
-Build the immutable S3 staging tree, then run the exact local validation.
-`AAO_CLUSTEROPS_ROOT` may select another checkout of the shared interface; the
-default is `/home/bkoz/src/alpha60-clusterops`:
+Historically, v13 built the immutable S3 staging tree and ran its exact local
+validation through the release-local adapter:
 
 ```sh
 scripts/build-generated-assets-s3-release.sh
@@ -145,24 +182,32 @@ scripts/upload-generated-assets-s3-release.sh --validate-only
 The historical applied v13 run used uploader 6 with
 `--apply --verify-download`; its observed result is in
 [`s3-v13.md`](s3-v13.md). Because `cartofreako/v13/` is complete and
-immutable, do not rerun an applied command against it. After deliberately
-versioning the adapter, profile, validator, package, and destination for v14,
-the equivalent shared-engine closeout is:
+immutable, do not rerun an applied command against it. The release-local
+uploader 7 remains migration evidence: it validated the Cartofreako product
+and then delegated transport to `alpha60-clusterops/bin/load-s3-aao`.
+
+For v14 and later, keep product validation and post-transfer report generation
+in Cartofreako, but do not maintain another S3 transport implementation here.
+After building the staged tree, running the version-specific Cartofreako
+validator, and reviewing the new profile, the applied transfer is the separate
+human-only Make target:
 
 ```sh
-scripts/upload-generated-assets-s3-release.sh --apply --verify-download
+make release-ucb-aao-s3 \
+  UCB_AAO_RELEASE_PROFILE=docs/releases/v14-aao-upload-profile.json \
+  UCB_AAO_RELEASE_DATA_ROOT=build/s3-release-v14 \
+  UCB_AAO_RELEASE_RECEIPT=reports/cartofreako-v14-aao-upload-receipt.json
 ```
 
-The adapter first runs
-`scripts/validate-generated-assets-s3-release.sh`, then passes
-`docs/releases/v13-aao-upload-profile.json` to
-`alpha60-clusterops/bin/load-s3-aao`. The release-local profile declares pilot
-paths and expected metadata; the shared engine performs the pilot upload and
-verification. Validation, dry-run, and applied-upload
-receipts have separate filenames, so a later preflight cannot overwrite the
-canonical completion evidence. For v14, copy and deliberately update the
-profile's data root, immutable prefix, and pilot names; never reuse or repair
-`cartofreako/v13/`.
+The Make recipe is only a guarded wrapper over
+`alpha60-clusterops/bin/load-s3-aao --apply --verify-download`. The
+release-local profile declares the staged tree, immutable destination, groups,
+pilots, metadata, and completion marker; the shared engine owns credentials,
+dry runs, exact-prefix authorization, upload, and verification. Validation,
+dry-run, and applied-upload receipts need separate filenames so a later
+preflight cannot overwrite the canonical completion evidence. Copy and
+deliberately update the profile's data root, immutable prefix, and pilot names;
+never reuse or repair `cartofreako/v13/`.
 
 Do not move `v20260808.1` or replace either public artifact after publication.
 A later correction requires a new source tag, generated-assets version, and

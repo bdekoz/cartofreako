@@ -305,7 +305,7 @@ export class CartofreakoRuntime {
         if (module.runtimeAbiVersion() !== 1) {
             throw new Error(`Unsupported Cartofreako WASM ABI ${module.runtimeAbiVersion()}`);
         }
-        if (module.runtimeApiVersion() !== 2) {
+        if (module.runtimeApiVersion() !== 3) {
             throw new Error(`Unsupported Cartofreako runtime API ${module.runtimeApiVersion()}`);
         }
     }

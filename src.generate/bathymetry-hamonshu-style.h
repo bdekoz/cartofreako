@@ -13,7 +13,7 @@
 #include <string>
 #include <string_view>
 
-#include <a60-svg-curves-hamonshu.h>
+#include <izzi-svg-curves-hamonshu.h>
 
 namespace cart0freak0::bathymetry_hamonshu_style {
 

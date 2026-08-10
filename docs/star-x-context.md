@@ -12,6 +12,14 @@ triangles, every triangle still uses the Cahill-Keyes A–L construction, and
 the same continental cuts remain available. Star-X changes where two groups
 of those projected faces are placed on the page.
 
+The current specification also defines one composed southern component. The
+ordinary X carrier is cut at the geographic parallel `60°S`; everything at or
+south of that parallel can be reassembled around one bottom-center South Pole.
+That boundary, radial transform, zero-degree bearing, and page registration are
+projection geometry. They do not depend on a coastline, land extent, or
+Natural Earth. Source datasets supply content to clip and draw, not parameters
+for the Star-X transform.
+
 The ordinary Cahill-Keyes M map is horizontal. Star-X reads its four
 north/south face pairs from left to right, keeps the first two pairs in the
 lower half, rotates the last two pairs by 180 degrees, and puts them in the
@@ -144,19 +152,20 @@ snap at exactly 90 degrees latitude.
 The South Pole does not occupy the center. Group 2 carries its southern
 vertices toward the top edge after rotation, while group 1 carries them
 toward the bottom edge. The map can therefore be turned 180 degrees without
-giving one half a permanent visual “top.” Stages 6 and 13 add a single
-South-polar cap at the lower end. It is an explicit layer-aware cut and
-reassembly, not a collapse of the point projection's polar copies.
+giving one half a permanent visual “top.” Stages 6 and 13 introduced a single
+South-polar cap at the lower end; Stage 14 fixed its data-independent page
+registration. It is an explicit layer-aware cut and reassembly, not a collapse
+of the point projection's polar copies.
 
 ## Polar marks and Antarctica
 
 The finished presentation uses two different kinds of polar context. The
 North Pole is a symbolic eight-point star over the central locus. Antarctica
-is geographic source geometry. The final compositor cuts every source at the
-fixed `60°S` parallel and reassembles all content south of it around one South
-Pole at bottom center. Natural Earth mainland geometry is used only to align
-the transformed continent vertically with its lowest point in the original,
-uncut lower quadrant; it no longer chooses the cut radius.
+is a geographic component of the projection. The final compositor cuts every
+source at the fixed `60°S` parallel and reassembles all content at or south of
+it around one South Pole at bottom center. The same result is obtained for the
+same frame and `star_x_layout` even when no physical-feature dataset is
+installed.
 
 This distinction is perceptual as well as numerical. The star makes the
 rotation center immediately legible without pretending that all cut copies
@@ -169,6 +178,23 @@ Ocean, land, bathymetry, ice, linework, and graticules all use the same cap;
 the southern source portions are removed, so nothing is duplicated. Within
 each thematic layer, transformed Antarctic paths are serialized after every
 ordinary quadrant path and therefore paint on top.
+
+The cap registration is fixed by its projected `60°S` boundary. Let
+`L(phi,lambda)` be the radius-preserving cap point relative to the shared pole,
+in the usual page axes where y increases downward. The pole is registered as:
+
+```text
+Cx = W / 2
+clearance = H * (0.25 / 44)
+Cy = H - clearance - max_lambda(Ly(-60°, lambda))
+```
+
+The boundary is sampled at quarter-degree longitude intervals, including both
+antimeridian limits. Therefore its bottommost point is exactly one quarter
+unit above the lower edge of a `34 × 44` carrier, with proportional clearance
+at every other valid 17:22 size. This is why the blue unified-cap edge remains
+visible instead of being clipped by the SVG view box. The placement is a
+carrier invariant, not a measurement of the Antarctic mainland.
 
 ## Quadrants in the final carrier
 
@@ -259,8 +285,17 @@ flowchart TD
   FRAME -. layer-aware generation .-> COMPOSE
 ```
 
-Star-X is forward-only: it maps the globe to the X net. It does not solve the
-inverse problem of selecting a geographic point from a page coordinate.
+The checked runtime currently implements the ordinary Star-X carrier forward
+transform and advertises its reverse mode as unsupported. The fixed cap makes
+a full reverse useful and tractable rather than data-dependent: reverse the
+ordinary carrier by undoing the Star-X group transform before applying the
+checked Cahill–Keyes inverse; reverse the composed cap by recovering bearing
+around its registered pole and solving its bounded source-radius equation on
+`[-90°,-60°]`. A result must retain a component identifier because the ordinary
+carrier and the topmost cap can occupy overlapping page regions. The
+[forward/reverse API](forward-reverse-projection-api.md#next-reverse-implementations)
+records the promotion and verification plan; until that work lands, callers
+must not infer geographic coordinates from a Star-X page point.
 
 ---
 

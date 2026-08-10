@@ -16,6 +16,15 @@ GZIP ?= gzip
 PNG_LONG_SIDE ?= 3840
 ASSET_JOBS ?= 2
 LABEL_FONT ?= atkinson_hyperlegible
+GITHUB_RELEASE_REPOSITORY ?= bdekoz/cartofreako
+GITHUB_RELEASE_TAG ?=
+GITHUB_RELEASE_TITLE ?=
+GITHUB_RELEASE_NOTES ?=
+GITHUB_RELEASE_ASSET ?=
+AAO_CLUSTEROPS_ROOT ?= /home/bkoz/src/alpha60-clusterops
+UCB_AAO_RELEASE_PROFILE ?=
+UCB_AAO_RELEASE_DATA_ROOT ?=
+UCB_AAO_RELEASE_RECEIPT ?=
 PNG_EXPORT_BACKGROUND := --export-background=white \
 	--export-background-opacity=255 \
 	--export-png-color-mode=RGB_8
@@ -792,7 +801,8 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-prerequisite \
 	check-resources-svg-archives check-fiber-synthesized \
 	check-forward-reverse-projection-api \
 	clean clean-failed-generated configured doxygen \
-	generation-plan list-targets authorize-external \
+	generation-plan list-targets release-github release-ucb-aao-s3 \
+	authorize-external \
 	generate-authorized-external generate-snapshots generate-snapshot-all \
 	generate-snapshot-ck \
 	install-jaxa-certificate \
@@ -955,6 +965,78 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-prerequisite \
 
 list-targets:
 	@printf '%s\n' $(sort $(PUBLIC_TARGETS))
+
+# GitHub publication and a UCB Active Archive Object Storage deposit are
+# intentionally separate operations. There is no umbrella `release` target,
+# and neither target depends on the other.
+release-github:
+	@test -n "$(GITHUB_RELEASE_TAG)" || { \
+		printf '%s\n' 'GITHUB_RELEASE_TAG is required.' >&2; exit 2; }
+	@test -n "$(GITHUB_RELEASE_TITLE)" || { \
+		printf '%s\n' 'GITHUB_RELEASE_TITLE is required.' >&2; exit 2; }
+	@test -n "$(GITHUB_RELEASE_NOTES)" || { \
+		printf '%s\n' 'GITHUB_RELEASE_NOTES is required.' >&2; exit 2; }
+	@test -f "$(GITHUB_RELEASE_NOTES)" || { \
+		printf '%s\n' 'GITHUB_RELEASE_NOTES does not name a file.' >&2; exit 2; }
+	@test -z "$$(git status --porcelain)" || { \
+		printf '%s\n' 'The worktree must be clean before a GitHub release.' >&2; \
+		exit 2; }
+	@test "$$(git rev-parse "$(GITHUB_RELEASE_TAG)^{commit}")" = \
+		"$$(git rev-parse HEAD)" || { \
+		printf '%s\n' 'The GitHub release tag must already identify HEAD.' >&2; \
+		exit 2; }
+	@gh auth status --hostname github.com >/dev/null
+	git push origin main
+	git push origin "refs/tags/$(GITHUB_RELEASE_TAG)"
+	@if test -n "$(GITHUB_RELEASE_ASSET)"; then \
+		gh release create "$(GITHUB_RELEASE_TAG)" \
+			--repo "$(GITHUB_RELEASE_REPOSITORY)" --verify-tag \
+			--title "$(GITHUB_RELEASE_TITLE)" \
+			--notes-file "$(GITHUB_RELEASE_NOTES)" \
+			"$(GITHUB_RELEASE_ASSET)"; \
+	else \
+		gh release create "$(GITHUB_RELEASE_TAG)" \
+			--repo "$(GITHUB_RELEASE_REPOSITORY)" --verify-tag \
+			--title "$(GITHUB_RELEASE_TITLE)" \
+			--notes-file "$(GITHUB_RELEASE_NOTES)"; \
+	fi
+
+# This target must be the sole, directly requested top-level goal and must own
+# an interactive terminal. Cartofreako supplies release identity; the shared
+# alpha60-clusterops engine owns credentials, transfer, and verification.
+release-ucb-aao-s3:
+	@test "$(MAKELEVEL)" = 0 || { \
+		printf '%s\n' 'release-ucb-aao-s3 must be invoked by a human at the top level.' >&2; \
+		exit 2; }
+	@test "$(MAKECMDGOALS)" = release-ucb-aao-s3 || { \
+		printf '%s\n' 'release-ucb-aao-s3 must be the only requested Make goal.' >&2; \
+		exit 2; }
+	@test -t 0 && test -t 1 || { \
+		printf '%s\n' 'release-ucb-aao-s3 requires an interactive terminal.' >&2; \
+		exit 2; }
+	@test -x "$(AAO_CLUSTEROPS_ROOT)/bin/load-s3-aao" || { \
+		printf '%s\n' 'alpha60-clusterops/bin/load-s3-aao is unavailable.' >&2; \
+		exit 2; }
+	@test -n "$(UCB_AAO_RELEASE_PROFILE)" || { \
+		printf '%s\n' 'UCB_AAO_RELEASE_PROFILE is required.' >&2; exit 2; }
+	@test -f "$(UCB_AAO_RELEASE_PROFILE)" || { \
+		printf '%s\n' 'UCB_AAO_RELEASE_PROFILE does not name a file.' >&2; \
+		exit 2; }
+	@test -n "$(UCB_AAO_RELEASE_DATA_ROOT)" || { \
+		printf '%s\n' 'UCB_AAO_RELEASE_DATA_ROOT is required.' >&2; exit 2; }
+	@test -d "$(UCB_AAO_RELEASE_DATA_ROOT)" || { \
+		printf '%s\n' 'UCB_AAO_RELEASE_DATA_ROOT does not name a directory.' >&2; \
+		exit 2; }
+	@test -n "$(UCB_AAO_RELEASE_RECEIPT)" || { \
+		printf '%s\n' 'UCB_AAO_RELEASE_RECEIPT is required.' >&2; exit 2; }
+	@printf '%s\n' \
+		'Beginning a separate human-authorized UCB AAO deposit over S3.'
+	"$(AAO_CLUSTEROPS_ROOT)/bin/load-s3-aao" \
+		--release-root "$(CURDIR)" \
+		--profile "$(UCB_AAO_RELEASE_PROFILE)" \
+		--data-root "$(UCB_AAO_RELEASE_DATA_ROOT)" \
+		--receipt "$(UCB_AAO_RELEASE_RECEIPT)" \
+		--apply --verify-download
 
 generation-plan: $(GENERATION_PROFILE_RESOLVER) $(GENERATION_PROFILE)
 	@"$(GENERATION_PROFILE_RESOLVER)" --describe "$(GENERATION_PROFILE)"
@@ -1587,7 +1669,6 @@ $(2): $(GEOMETRY_GENERATOR) | $(call artifact_directory,$(2))
 generate-graticules-$(1): $(3)
 $(3): $(GRATICULE_GENERATOR) | $(call artifact_directory,$(3))
 	cd "$(call artifact_directory,$(3))" && \
-		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(GRATICULE_GENERATOR))" $(1)
 
@@ -1620,7 +1701,6 @@ $(eval $(call PROJECTION_RULES,myriahedral,\
 $(eval $(call PROJECTION_RULES,star-x,\
 	$(STAR_X_GEOMETRY_SVG),$(STAR_X_GRATICULE_SVG),\
 	$(STAR_X_EARTH_SVG),$(STAR_X_WATER_SVG)))
-$(STAR_X_GRATICULE_SVG): $(NATURAL_EARTH_STAMP)
 $(eval $(call PROJECTION_RULES,voronoi,\
 	$(VORONOI_GEOMETRY_SVG),$(VORONOI_GRATICULE_SVG),\
 	$(VORONOI_EARTH_SVG),$(VORONOI_WATER_SVG)))

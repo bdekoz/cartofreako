@@ -13,7 +13,7 @@
 #include <string>
 #include <string_view>
 
-#include <a60-svg-curves-roulette.h>
+#include <izzi-svg-curves-roulette.h>
 
 namespace cart0freak0::bathymetry_roulette_style {
 

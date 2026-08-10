@@ -10,6 +10,7 @@
 common `a60::carto::projection_api`. It transforms `(latitude, longitude)`
 directly into `(x, y)` in a map frame. It does not invoke an external program,
 sample a raster, or use the source PDF as a lookup table.
+The projection-neutral runtime adds the matching face-qualified reverse.
 
 The numeric core follows Hajime Narukawa's 2022 analytic formulation. That
 paper replaces the earlier modeling construction's curved intermediate
@@ -19,7 +20,7 @@ to, the earlier 96-region graphical construction. This distinction matters:
 the implementation is the published analytic formulation, not a reverse
 engineering of every point in the checked-in drawing sheet.
 
-The work was delivered in three stages:
+The work was delivered in four stages:
 
 1. **Forward projection:** implement the spherical-to-planar formulas, orient
    the published tetrahedron on Earth, assemble its 24 symmetric regions, and
@@ -28,12 +29,15 @@ The work was delivered in three stages:
    finite, positive `frame.frame_area` with the required `4:sqrt(3)` ratio.
 3. **Documentation:** record the geometric model, equations, source-plate
    calibration, API, validation, limitations, and bibliography.
+4. **Reverse projection:** invert the analytic sector equations, enumerate
+   periodic copies, preserve singular candidates, and forward-check results.
 
 ## Code organization
 
 | Component | Responsibility |
 | --- | --- |
 | [`cart0freak0-authagraph.h`](../src.projections/cart0freak0-authagraph.h) | Numeric forward transform, net assembly, frame validation, API adapter, and A3 compatibility preset |
+| [`cart0freak0-projection-runtime.h`](../src.projections/cart0freak0-projection-runtime.h) | API 3 periodic sector reverse, cell/component candidates, and residual checks |
 | [`a60-carto-projection.h`](../src.projections/a60-carto-projection.h) | Shared `projection_api`, `projection_base`, and projection mode |
 | [`a60-carto-frame.h`](../src.projections/a60-carto-frame.h) | `frame` and `frame.frame_area` geometry |
 | [`a60-carto.h`](../src.projections/a60-carto.h) | Umbrella include that exports the projection |
@@ -226,6 +230,35 @@ layout within a larger canvas belongs to the surrounding cartography code.
 The A3 compatibility preset is the exception: it keeps the full PDF page as
 `pframe` and its measured map rectangle as `map_frame`.
 
+## Face-qualified reverse transform
+
+Runtime API 3 implements the inverse without replacing the periodic map with
+a different continuous aspect. It converts screen coordinates back to raw
+net y and enumerates the finite periodic x copies for each of the 24 cells.
+For a selected cell, subtract its lattice origin and apply the negative of its
+stored rotation to recover canonical analytic `(x,y)`.
+
+Let `r` be the reduced longitude in one 60-degree sector. The inverse uses:
+
+```text
+c = sqrt(2) - sqrt(3)y
+A = pi x / (2c)
+A = r - asin(sin(r) / sqrt(3))
+tan(local_latitude) = (2 + cos(r)) / c - sqrt(2)
+```
+
+`A(r)` is monotone on the bounded canonical interval, so bisection recovers a
+single `r`. Sector parity restores the complete pole-local longitude. The
+selected tetrahedron vertex, its prime-meridian tangent, and their cross
+product then reconstruct the global unit vector. The runtime verifies the
+nearest-vertex/sector classification and forces the result through the
+complete periodic forward transform before accepting it.
+
+At a tetrahedron vertex `c=0`; local longitude and all six incident sectors
+coincide. The inverse reports boundary candidates rather than fabricating one
+globally unique sector. Callers can pass `nativeCell` when that topology is
+already known.
+
 ## Variable-size frame contract
 
 A valid AuthaGraph map frame must satisfy:
@@ -317,6 +350,9 @@ agreement everywhere on the plate.
 - Geographic inputs and frame dimensions must be finite.
 - Latitude and longitude use closed, explicitly checked degree domains.
 - Dot products passed to `asin` are clamped to `[-1, 1]`.
+- A direction within the roundoff neighborhood of its selected tetrahedron
+  vertex is snapped to exact local `pi/2` latitude, avoiding an unstable
+  `atan2` sector choice at the singularity.
 - The sector operation uses positive modular arithmetic, including at the
   antimeridian.
 - Longitude `-180` and `+180` map to equivalent periodic positions.
@@ -342,6 +378,12 @@ agreement everywhere on the plate.
 - generic map-only placement and A3 embedded-viewport behavior; and
 - runtime resource paths and the public `projection_api` interface.
 
+`tests/test-forward-reverse-projection-api.cc` additionally checks structured
+round trips on a global coordinate lattice, an interior point in every one of
+the 24 sectors, native-cell qualification, periodic candidate enumeration,
+batches, residuals, and invalid options. Node and browser tests repeat the
+same advertised capability through WebAssembly and workers.
+
 Run all standalone projection checks with:
 
 ```sh
@@ -350,8 +392,8 @@ make check
 
 ## Limits and extension points
 
-- Only the forward transform is implemented; there is no `(x, y)` to
-  longitude/latitude inverse.
+- Runtime API 3 implements face-qualified reverse; a periodic seam or singular
+  tetrahedron vertex can correctly return more than one candidate.
 - The geographic model is spherical, not ellipsoidal.
 - The projection has intentional cuts. Lines that cross a periodic seam must
   be split by rendering code rather than connected across the page.
@@ -362,8 +404,6 @@ make check
 - The assembly and horizontal shift encode one useful world-map aspect.
   Alternative periodic aspects can be produced by changing the net cut and
   registration, but doing so should be accompanied by new reference tests.
-- A future inverse should define behavior on duplicated seam coordinates and
-  singular tetrahedron vertices explicitly.
 
 ## Provenance
 
