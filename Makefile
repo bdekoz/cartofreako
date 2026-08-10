@@ -206,6 +206,8 @@ PROJECTIONS_WEB_WASM := $(WEB_BUILD_DIR)/cartofreako-projections.wasm
 PROJECTIONS_WEB_JS := \
 	$(WEB_DIR)/cartofreako-web.mjs \
 	$(WEB_DIR)/cartofreako-web.d.ts \
+	$(WEB_DIR)/cartofreako-screen.mjs \
+	$(WEB_DIR)/cartofreako-screen.d.ts \
 	$(WEB_DIR)/cartofreako-svg.mjs \
 	$(WEB_DIR)/cartofreako-canvas.mjs \
 	$(WEB_DIR)/cartofreako-d3.mjs \
@@ -802,6 +804,8 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-docs \
 	check-prerequisite \
 	check-resources-svg-archives check-fiber-synthesized \
 	check-forward-reverse-projection-api \
+	check-screen-1080p generate-screen-1080p consumer-assets-v1 \
+	audit-projection-round-trips \
 	clean clean-failed-generated configured doxygen \
 	generation-plan list-targets render-marshall-islands-speculations-v01 \
 	release-github release-ucb-aao-s3 \
@@ -1085,6 +1089,25 @@ $(TEST_DIR)/test-forward-reverse-projection-api: \
 check-forward-reverse-projection-api: \
 		$(TEST_DIR)/test-forward-reverse-projection-api
 	$(TEST_DIR)/test-forward-reverse-projection-api
+
+$(TEST_DIR)/audit-projection-round-trips: \
+		$(TEST_DIR)/audit-projection-round-trips.cc \
+		$(PROJECTION_RUNTIME_HEADERS)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$< -o $@
+
+audit-projection-round-trips: $(TEST_DIR)/audit-projection-round-trips
+	mkdir -p reports
+	$(TEST_DIR)/audit-projection-round-trips \
+		reports/cartofreako-audit-outcomes-02-numerics.json
+
+generate-screen-1080p:
+	"$(NODE)" scripts/generate-screen-1080p.mjs
+
+check-screen-1080p: generate-screen-1080p wasm-projections
+	"$(NODE)" tests/test-screen-1080p.mjs
+
+consumer-assets-v1: check-screen-1080p check-wasm-projections-browser
 
 check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
 		$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2025) \

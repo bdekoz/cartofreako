@@ -50,6 +50,8 @@ Add whichever output adapters you use:
 
 ```text
 cartofreako-canvas.mjs
+cartofreako-screen.mjs
+cartofreako-screen.d.ts
 cartofreako-svg.mjs
 cartofreako-d3.mjs
 cartofreako-projections-worker.mjs
@@ -64,7 +66,8 @@ python3 -m http.server 8000
 ```
 
 Then open
-`http://localhost:8000/src.wasm/examples/slices.html`.
+`http://localhost:8000/src.wasm/examples/slices.html` or the exact-1080p
+`http://localhost:8000/src.wasm/examples/screen-1080p.html` canary.
 
 ## 3. Project GeoJSON to Canvas
 
@@ -163,6 +166,38 @@ The runtime is fully headless. It performs no network access, opens no prompt,
 and persists no consent or authorization state. Calling workflows remain
 responsible for recording source licenses, data consent, and publication
 authority. See the [complete API contract](projection-api.md).
+
+## Map projected coordinates into an exact 1080p product
+
+Build the checked four-pass by six-projection derivative set and catalog:
+
+```sh
+make generate-screen-1080p
+make check-screen-1080p
+```
+
+The output uses a 1920 × 1080 contain fit with `#f4f5f5` padding; nothing is
+cropped or stretched. Convert pointer coordinates through the catalog matrix
+before calling the reverse API:
+
+```js
+import {
+  projectedToScreen,
+  screenToGeographic
+} from './cartofreako-screen.mjs';
+
+const forward = projection.forward([171.2, 7.1]);
+const screen = projectedToScreen([forward.x, forward.y], artifact.screen);
+const inverse = screenToGeographic(projection, screen, artifact, {
+  nativeCell: forward.nativeCell,
+  component: forward.component
+});
+```
+
+Padding clicks throw `RangeError`; handle that as “outside map,” not as a
+geographic point. The catalog separately identifies the authoritative SVG,
+print PDF, full PNG, screen PNG, and lossless WebP with hashes and authority
+classes.
 
 ## Return SVG instead
 

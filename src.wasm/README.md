@@ -4,7 +4,7 @@
 [Web-developer quick start](../docs/pages/runtime/webassembly-quick-start.md) ·
 [Forward/reverse API](../docs/pages/runtime/projection-api.md) ·
 [Stage 10 implementation notes](../docs/pages/runtime/webassembly-architecture.md) ·
-[Slice examples](examples/README.md)
+[Slice and 1080p examples](examples/README.md)
 
 The production browser runtime exposes all six Cartofreako projection models
 through one ES-module API. It transforms points, lines, polygon rings,
@@ -28,6 +28,7 @@ make wasm-projections
 make check-forward-reverse-projection-api
 make check-wasm-projections
 make check-wasm-projections-browser
+make consumer-assets-v1
 ```
 
 `check-wasm-projections` exercises all six models, all checked Myriahedral
@@ -59,6 +60,8 @@ Deploy these files at the same relative paths, or provide Emscripten's
 | `src.wasm/cartofreako-projections.wasm` | Generated all-projection binary |
 | `src.wasm/cartofreako-web.mjs` | Stable high-level API and GeoJSON flattener |
 | `src.wasm/cartofreako-web.d.ts` | TypeScript declarations for runtime API 3 |
+| `src.wasm/cartofreako-screen.mjs` | 1080p contain transform, padding-aware screen picks, and flat texture-plane adapter |
+| `src.wasm/cartofreako-screen.d.ts` | TypeScript declarations for the screen contract |
 | `src.wasm/cartofreako-svg.mjs` | SVG path/document and base-map renderer |
 | `src.wasm/cartofreako-canvas.mjs` | Canvas and OffscreenCanvas command replay |
 | `src.wasm/cartofreako-d3.mjs` | D3-compatible synchronous stream adapter |
@@ -75,6 +78,7 @@ Source and verification paths are:
 | `src.projections/cart0freak0-projection-slicing.h` | Generic slice descriptors and built-in catalogs |
 | `tests/test-projection-runtime.cc` | Native all-model geometry and slice checks |
 | `tests/test-forward-reverse-projection-api.cc` | Native exhaustive face-qualified reverse and batch checks |
+| `tests/test-screen-1080p.mjs` | Catalog/file/hash/no-crop/affine-picking checks across 24 derivatives |
 | `src.wasm/cartofreako-projections-smoke.mjs` | Node integration smoke test |
 | `src.wasm/cartofreako-browser-smoke.html` | Real-browser main-thread/worker smoke page |
 | `scripts/run-wasm-browser-smoke.py` | Ephemeral local server and Chrome DevTools runner |
@@ -140,6 +144,39 @@ south. `inverse` accepts both `nativeCell` and `component` qualifiers.
 See the [forward/reverse implementation notes](../docs/pages/runtime/projection-api.md)
 for status semantics, batch fields, native C++ types, algorithms, and
 verification.
+
+## Exact 1080p flat-map products
+
+`make generate-screen-1080p` generates an audit-ready four-pass by
+six-projection set under
+`assets.generated/<projection>/screen-1080p{,-webp}/` plus
+`assets.generated/catalog/artifacts-v1.json`. The layered SVG, physical-size
+PDF, exact-ratio 44-inch-leading-edge/A0 print products, and 3840-pixel PNG are
+parents, never outputs of the screen path.
+
+Use the catalog matrix with the projection created at the record's
+`projection.nativeFrame.width`:
+
+```js
+import {projectedToScreen, screenToGeographic} from './cartofreako-screen.mjs';
+
+const artifact = catalog.artifacts[0];
+const projection = runtime.createProjection({
+  id: artifact.projection.id,
+  width: artifact.projection.nativeFrame.width
+});
+const point = projection.forward([171.2, 7.1]);
+const screen = projectedToScreen([point.x, point.y], artifact.screen);
+const geographic = screenToGeographic(projection, screen, artifact, {
+  nativeCell: point.nativeCell,
+  component: point.component
+});
+```
+
+The transform rejects letterbox/pillarbox padding by default. See the
+[`screen-1080p.html`](examples/screen-1080p.html) Canvas example. Its
+`flatTexturePlane()` output is a dependency-free WebGL/Three.js input record;
+the plate remains a flat interrupted map, never an equirectangular sphere.
 
 ### Command-buffer ABI 1
 

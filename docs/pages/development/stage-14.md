@@ -259,3 +259,44 @@ turns the remaining JavaScript/catalog and gaming recommendations into phased,
 testable work. Its screen derivatives are additive and cannot alter the
 authoritative SVG/PDF archive and art objects, projection-specific 44-inch or
 A0 inkjet workflows, 3840-pixel raster, or print-generation contracts.
+
+### 2026-08-10 — 1080p consumer and agent catalog v1
+
+Status: **implemented as a bounded 24-artifact audit canary; focused checks
+passing**.
+
+- added exact 1920 × 1080 contain-fit PNG and lossless-WebP derivatives for
+  Water, Anthropocene Temperature 2026, Network Infrastructure Sites, and
+  Bathymetry Roulette across all six reference projection families;
+- retained the projection-specific whole-map ratio without crop or stretch,
+  using declared `#f4f5f5` letterbox/pillarbox padding;
+- added the checked `cartofreako-artifacts-v1` schema and generated catalog,
+  with parent SVG/PDF/full-PNG hashes, authority classes, source revision,
+  content rectangles, and both affine matrices;
+- added projection-to-screen, padding-aware screen-to-projection, and
+  candidate-preserving screen-to-geographic APIs plus TypeScript declarations;
+- added a dependency-free flat texture-plane record suitable for Three.js or
+  raw WebGL while explicitly rejecting equirectangular-sphere treatment;
+- added a runnable exact-1080p Canvas example and extended headless Chrome to
+  cover all six families, affine picks, no-crop layout, and the flat plane;
+- verified decoded PNG/WebP pixel equality and re-hashed every authoritative
+  parent after derivative generation; and
+- kept all consumer targets out of `make all`, GitHub release, and UCB AAO/S3
+  publication paths.
+
+`make generate-screen-1080p` produces the bounded set;
+`make check-screen-1080p` validates its files, catalog, transforms, and picks;
+`make consumer-assets-v1` also runs the browser canary. Extending the catalog
+to every standard pass, perspective, and approved slice remains a separate
+promotion gate. KTX2, semantic masks, engine-specific importers, and a
+collaborator clean-room run remain `UNAVAILABLE`.
+
+The systematic round-trip audit adds 46,656 face/component-qualified interior
+samples: 2,592 points × six families × three frame scales. All candidates
+returned and all statuses were unique on the deliberately seam-avoiding grid.
+The maximum spherical error was approximately `1.22e-10°` for the bounded
+numerical Cahill–Keyes solver and its Star-X carrier, and approximately
+`4.20e-13°` or less for the analytic families. These round trips are strong
+implementation consistency evidence, not independent mathematical proof;
+published anchors, exact seams, poles, face centers, and retained-hinge tests
+remain necessary independent/structural evidence.

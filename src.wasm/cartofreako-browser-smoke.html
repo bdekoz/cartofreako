@@ -9,11 +9,19 @@
   <main>
     <h1>Cartofreako browser smoke test</h1>
     <canvas id="map" width="440" height="248"></canvas>
+    <canvas id="screen-map" width="1920" height="1080" hidden></canvas>
     <pre id="result" data-status="running">RUNNING</pre>
   </main>
   <script type="module">
     import createCartofreako from './cartofreako-web.mjs';
     import {drawCommandBuffer} from './cartofreako-canvas.mjs';
+    import {
+      containTransform,
+      flatTexturePlane,
+      projectedToScreen,
+      screenToGeographic,
+      screenToProjected
+    } from './cartofreako-screen.mjs';
     import CartofreakoWorkerClient from './cartofreako-worker-client.mjs';
 
     const result = document.querySelector('#result');
@@ -29,12 +37,44 @@
         'missing projection family');
       for (const id of ['cahill-keyes', 'authagraph', 'dymaxion',
                          'myriahedral', 'star-x', 'voronoi']) {
-        const projection = runtime.createProjection({id, width: 440});
+        const descriptor = runtime.manifest.find((entry) => entry.id === id);
+        const projection = runtime.createProjection({id, width: descriptor.defaultFrame.width});
         const point = projection.project(139.6917, 35.6895);
         requireCondition(Number.isFinite(point.x) && Number.isFinite(point.y),
           `${id} point is not finite`);
+        const transform = containTransform(descriptor.defaultFrame);
+        const screenPoint = projectedToScreen([point.x, point.y], transform);
+        const projected = screenToProjected(screenPoint, transform);
+        requireCondition(Math.hypot(projected[0] - point.x, projected[1] - point.y) < 1e-10,
+          `${id} screen affine round trip failed`);
+        const inverse = screenToGeographic(projection, screenPoint, transform, {
+          nativeCell: point.nativeCell,
+          component: point.component
+        });
+        requireCondition(inverse.candidates.length === 1,
+          `${id} screen inverse pick failed`);
+        requireCondition(flatTexturePlane(transform).textureCoordinates.length === 8,
+          `${id} flat texture plane failed`);
         projection.dispose();
       }
+
+      const screenCanvas = document.querySelector('#screen-map');
+      const screenContext = screenCanvas.getContext('2d');
+      const screenProjection = runtime.createProjection({id: 'myriahedral', width: 44, height: 24.75});
+      const screenTransform = containTransform({width: 44, height: 24.75});
+      screenContext.fillStyle = screenTransform.background;
+      screenContext.fillRect(0, 0, 1920, 1080);
+      screenContext.save();
+      const screenMatrix = screenTransform.projectedToScreen;
+      screenContext.setTransform(
+        screenMatrix[0], screenMatrix[3], screenMatrix[1],
+        screenMatrix[4], screenMatrix[2], screenMatrix[5]
+      );
+      drawCommandBuffer(screenContext, screenProjection.carrierGeometry(), {clear: false});
+      screenContext.restore();
+      requireCondition(screenCanvas.width === 1920 && screenCanvas.height === 1080,
+        'screen Canvas is not exact 1080p');
+      screenProjection.dispose();
 
       const projection = runtime.createProjection({id: 'myriahedral', width: 440});
       const forward = projection.forward([171.2, 7.1]);
@@ -136,7 +176,7 @@
       worker.terminate();
 
       result.dataset.status = 'pass';
-      result.textContent = `PASS API ${runtime.apiVersion}; ABI ${runtime.abiVersion}; forward/reverse; six projections; worker; Canvas; slices`;
+      result.textContent = `PASS API ${runtime.apiVersion}; ABI ${runtime.abiVersion}; forward/reverse; six projections; worker; Canvas 1080p; affine picking; flat texture plane; slices`;
     } catch (error) {
       result.dataset.status = 'fail';
       result.textContent = `FAIL ${error.stack ?? error}`;

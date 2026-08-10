@@ -1,7 +1,8 @@
 # AI Workflows assessment and 1080p gaming consumer improvement plan
 
-**Status:** active post-Stage-14 implementation plan; Marshall Islands
-workflow canary implemented, general consumer asset graph still proposed
+**Status:** Stage 14 consumer v1 implemented for a 24-artifact audit canary;
+full release-matrix catalog, GPU formats, masks, and independent collaborator
+run remain proposed
 
 **Evidence basis:**
 the local delivery report `reports/cartofreako-audit-outcomes-01.md`,
@@ -38,7 +39,7 @@ print target.
 | --- | --- | --- |
 | `RECOMMENDATION-REVERSE` | Complete in runtime API 3 for all six projection families, including face/component candidates and residuals | Add the screen-to-projection affine transform and game picking fixtures; do not redesign the inverse mathematics |
 | `RECOMMENDATION-JS` | Core ESM, TypeScript, immutable capability metadata, typed-array batches, workers, Canvas, SVG, and D3 are implemented | Add artifact discovery, deterministic selection, decision receipts, cancellation for long work, multi-bound Pacific slices, and runnable Three.js/WebGL examples |
-| `RECOMMENDATION-GAMING` | A checked 1920 × 1080 Myriahedral example exists, but the release graph has no general 1080p, WebP, power-of-two, mask, or KTX2 products | Build and validate the derivative graph without changing archive/art masters |
+| `RECOMMENDATION-GAMING` | Six-projection 1920 × 1080 contain-fit PNG/lossless-WebP canary, affine picking, Canvas example, and dependency-free flat texture plane are implemented | Extend the checked subset to the full standard release matrix; benchmark power-of-two/KTX2 and masks separately |
 
 The existing S3 `release.json` proves aggregate release identity and counts,
 but it is not an artifact catalog. It cannot answer a request such as “the
@@ -95,9 +96,14 @@ stretched to fill the screen.
 
 ## Artifact catalog v1
 
-Create `assets.generated/catalog/artifacts-v1.json` plus a checked JSON Schema.
-Each logical plate has one stable record with format variants rather than one
-unrelated record per file. Minimum fields are:
+The v1 canary creates `assets.generated/catalog/artifacts-v1.json` against
+[`contracts/artifacts-v1.schema.json`](../../../contracts/artifacts-v1.schema.json).
+It contains 24 records: Water, Anthropocene Temperature 2026, Network
+Infrastructure Sites, and Bathymetry Roulette across all six reference
+projections. This is intentionally an audit-ready subset, not a false claim
+that every standard, optional, exploration-only, perspective, or slice product
+has already entered the catalog. Each logical plate has one stable record with
+PNG/WebP variants rather than unrelated records per file. Minimum fields are:
 
 - stable artifact ID, title, human-reviewed alt text, subject/pass, lifecycle
   state (`standard`, `optional`, or `exploration-only`), year and source period;
@@ -231,7 +237,7 @@ transparent semantic-layer rasters allow approved layer composition. Every
 mask needs lossless encoding, a value dictionary, a matching transform, and
 licensing approval. Anti-aliased display colors are never decoded as IDs.
 
-## Proposed generated layout and Make surface
+## Implemented v1 layout and Make surface
 
 Keep the existing projection-first tree:
 
@@ -249,21 +255,26 @@ assets.generated/
     └── mask/                # optional topology/feature masks
 ```
 
-Proposed targets remain separate from archive/art/print generation:
+The checked v1 targets remain separate from archive/art/print generation:
 
 ```text
 make generate-screen-1080p
-make generate-game-textures
-make generate-agent-catalog
-make check-print-contract
-make check-consumer-assets
-make consumer-assets
+make check-screen-1080p
+make consumer-assets-v1
 ```
 
-Do not add KTX2, semantic layers, or masks to `make all` until their tools,
-licenses, determinism, and QA are proven. The 1080p PNG/WebP and catalog can be
-promoted after the canary phase. None of these targets may depend on
-`release-ucb-aao-s3`.
+`generate-screen-1080p` uses high-quality Lanczos downsampling from the
+unchanged 3840-pixel parent PNG, exact 1920 × 1080 contain-fit placement,
+WCAG-light-gray `#f4f5f5` padding, and lossless WebP. It verifies pixel
+equivalence between decoded PNG and WebP and re-hashes the SVG, PDF, and full
+PNG parents after every derivative. `check-screen-1080p` validates all 24
+records, files, hashes, frames, matrices, padding rejection, and qualified
+forward/screen/reverse picks. `consumer-assets-v1` adds the headless browser
+Canvas check.
+
+Do not add KTX2, semantic layers, masks, or the full release matrix to
+`make all` until their tools, licenses, determinism, and QA are proven. None of
+these targets depends on `release-ucb-aao-s3`.
 
 ## Implementation sequence
 
@@ -276,19 +287,22 @@ promoted after the canary phase. None of these targets may depend on
 Exit gate: a consumer target cannot change any canonical SVG/PDF frame, print
 target, 3840 PNG rule, or archived-art identity.
 
-### 1. Render a representative 1080p canary
+### 1. Render a representative 1080p canary — implemented
 
-Render water in all six projections, then add dense canaries for Bathymetry
-Roulette, Fiber Synthesized or network infrastructure, Anthropocene
-Temperature, coral reefs, and Star-X's Antarctic component. Compare direct SVG
-rendering with a high-quality 3840-to-1080 downsample.
+The implemented v1 renders Water, Bathymetry Roulette, Network Infrastructure
+Sites, and Anthropocene Temperature 2026 in all six projections. It uses the
+existing reviewed 3840-pixel PNG as the declared parent so the screen product
+cannot silently select a different SVG renderer or font environment. Coral
+reefs, Fiber Synthesized, perspectives, and slices remain later catalog
+coverage.
 
 Exit gate: exact 1920 × 1080 output, no crop, readable title/legend, no severe
 moire aliasing, correct opacity, and recorded transform for every ratio.
 
-### 2. Build catalog and deterministic agent tools
+### 2. Build catalog and deterministic agent tools — schema and transform implemented
 
-- Define and validate catalog/request/decision-receipt schemas.
+- Define and validate catalog/request/decision-receipt schemas. The artifact
+  catalog schema is implemented; request and decision-receipt schemas remain.
 - Populate records from generation profiles and release manifests, not from
   filename guesses alone.
 - Add ESM/TypeScript query functions and a JSON-only headless CLI.
@@ -297,7 +311,7 @@ moire aliasing, correct opacity, and recorded transform for every ratio.
 Exit gate: an offline agent can select and explain one artifact without opening
 an SVG, parsing a filename, or inventing license/source facts.
 
-### 3. Complete 1080p derivatives
+### 3. Complete 1080p derivatives — canary complete, release matrix pending
 
 - Generate exact contain-fit PNG and lossless WebP for every released whole-map
   product and approved slice.
@@ -307,17 +321,21 @@ an SVG, parsing a filename, or inventing license/source facts.
 Exit gate: all variants resolve from the catalog and round-trip to their
 authoritative parent identity and checksum.
 
-### 4. Add interactive game examples
+### 4. Add interactive game examples — Canvas/picking canary complete
 
 - Implement pointer-to-projected conversion and candidate-aware picking.
+  [`cartofreako-screen.mjs`](../../../src.wasm/cartofreako-screen.mjs) now does
+  both and rejects contain-fit padding by default.
 - Add Canvas and Three.js examples covering a unique interior, a cut, an
   overlapping Star-X carrier/cap point, and a South Pole candidate set.
 - Move large batches to the existing worker and add `AbortSignal` cancellation
   around long consumer operations.
 
-Exit gate: headless Chromium screenshots and picking fixtures pass at
-1920 × 1080; no example maps an interrupted plate onto a sphere as if it were
-equirectangular.
+Current gate: the six-family main-thread browser canary, exact 1920 × 1080
+Canvas, affine picks, and flat-plane geometry pass in headless Chromium. A
+package-specific Three.js import, cut/overlap UI, screenshot reference, and
+South-Pole interaction example remain pending. No example maps an interrupted
+plate onto a sphere as if it were equirectangular.
 
 ### 5. Evaluate GPU derivatives
 

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cartofreako 1080p flat-map example</title>
+  <style>
+    :root { font-family: system-ui, sans-serif; color-scheme: light; }
+    body { margin: 2rem; color: #182023; background: #fff; }
+    label { display: grid; gap: .25rem; max-width: 28rem; }
+    canvas { display: block; width: min(100%, 960px); height: auto; margin-top: 1rem; border: 1px solid #a9adae; }
+    pre { max-width: 80rem; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>1920 × 1080 interrupted flat-map canary</h1>
+  <p>The light-gray padding is outside map space. Pointer picks preserve inverse candidates at cuts.</p>
+  <label>Projection
+    <select id="projection">
+      <option value="cahill-keyes">Cahill–Keyes</option>
+      <option value="authagraph">AuthaGraph</option>
+      <option value="dymaxion">Dymaxion</option>
+      <option value="myriahedral">Myriahedral</option>
+      <option value="star-x">Star-X</option>
+      <option value="voronoi">Voronoi</option>
+    </select>
+  </label>
+  <canvas id="map" width="1920" height="1080"></canvas>
+  <pre id="metadata"></pre>
+  <script type="module" src="./screen-1080p-demo.mjs"></script>
+</body>
+</html>

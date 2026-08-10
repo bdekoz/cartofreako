@@ -7,6 +7,14 @@ The interactive example is [`slices.html`](slices.html). It projects the same
 Natural Earth geometry through the complete carrier and then applies a named
 Cahill-Keyes or Myriahedral slice.
 
+[`screen-1080p.html`](screen-1080p.html) is the six-projection consumer
+canary. It draws an interrupted map into an exact 1920 × 1080 contain-fit
+Canvas, treats its light-gray letterbox/pillarbox region as non-map space, and
+passes pointer coordinates through the catalog-compatible affine transform to
+the candidate-aware reverse API. Its dependency-free texture-plane record can
+be copied into Three.js or raw WebGL without pretending the plate is an
+equirectangular globe texture.
+
 The Node example is directly runnable from the repository root:
 
 ```sh

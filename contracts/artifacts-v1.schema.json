@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bdekoz.github.io/cartofreako/contracts/artifacts-v1.schema.json",
+  "title": "Cartofreako artifact catalog v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "catalogVersion",
+    "consumerProfile",
+    "sourceRevision",
+    "artifacts"
+  ],
+  "properties": {
+    "schema": {"const": "cartofreako-artifacts-v1"},
+    "catalogVersion": {"const": 1},
+    "consumerProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "canvas", "fit", "background", "recipeVersion"],
+      "properties": {
+        "id": {"const": "screen-1080p-lossless-v1"},
+        "canvas": {"$ref": "#/$defs/dimensions"},
+        "fit": {"const": "contain"},
+        "background": {"type": "string", "pattern": "^#[0-9a-f]{6}$"},
+        "recipeVersion": {"type": "integer", "minimum": 1}
+      }
+    },
+    "sourceRevision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gitCommit", "workingTree", "runtimeApi", "geometryAbi"],
+      "properties": {
+        "gitCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "workingTree": {"enum": ["clean", "modified"]},
+        "runtimeApi": {"const": 3},
+        "geometryAbi": {"const": 1}
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/artifact"}
+    }
+  },
+  "$defs": {
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height"],
+      "properties": {
+        "width": {"type": "number", "exclusiveMinimum": 0},
+        "height": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "mediaType", "bytes", "sha256", "authorityClass"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "mediaType": {"type": "string", "minLength": 1},
+        "bytes": {"type": "integer", "minimum": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "authorityClass": {
+          "enum": [
+            "archive-art-master",
+            "print-presentation",
+            "full-raster",
+            "access-derivative"
+          ]
+        },
+        "dimensions": {"$ref": "#/$defs/dimensions"},
+        "lossless": {"type": "boolean"}
+      }
+    },
+    "rectangle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y", "width", "height"],
+      "properties": {
+        "x": {"type": "number", "minimum": 0},
+        "y": {"type": "number", "minimum": 0},
+        "width": {"type": "number", "exclusiveMinimum": 0},
+        "height": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "matrix": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": {"type": "number"}
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "altText",
+        "pass",
+        "projection",
+        "parents",
+        "screen",
+        "limitations"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$"},
+        "title": {"type": "string", "minLength": 1},
+        "altText": {"type": "string", "minLength": 1},
+        "pass": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "lifecycle"],
+          "properties": {
+            "id": {"type": "string", "minLength": 1},
+            "lifecycle": {"enum": ["standard", "optional", "exploration-only"]},
+            "year": {"type": "integer", "minimum": 1900, "maximum": 2200}
+          }
+        },
+        "projection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "nativeFrame", "cutTopology", "inverseMode"],
+          "properties": {
+            "id": {"type": "string", "minLength": 1},
+            "nativeFrame": {"$ref": "#/$defs/dimensions"},
+            "cutTopology": {"enum": ["folded", "periodic", "polyhedral"]},
+            "inverseMode": {"enum": ["face-qualified", "candidates"]}
+          }
+        },
+        "parents": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["svg", "pdf", "fullPng"],
+          "properties": {
+            "svg": {"$ref": "#/$defs/file"},
+            "pdf": {"$ref": "#/$defs/file"},
+            "fullPng": {"$ref": "#/$defs/file"}
+          }
+        },
+        "screen": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "authorityClass",
+            "canvas",
+            "fit",
+            "background",
+            "contentRectangle",
+            "projectedToScreen",
+            "screenToProjected",
+            "png",
+            "webp"
+          ],
+          "properties": {
+            "authorityClass": {"const": "access-derivative"},
+            "canvas": {"$ref": "#/$defs/dimensions"},
+            "fit": {"const": "contain"},
+            "background": {"type": "string", "pattern": "^#[0-9a-f]{6}$"},
+            "contentRectangle": {"$ref": "#/$defs/rectangle"},
+            "projectedToScreen": {"$ref": "#/$defs/matrix"},
+            "screenToProjected": {"$ref": "#/$defs/matrix"},
+            "png": {"$ref": "#/$defs/file"},
+            "webp": {"$ref": "#/$defs/file"}
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}
