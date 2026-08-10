@@ -2,6 +2,7 @@
 
 [Documentation index](../../index.md) ·
 [Runtime reference](../../src.wasm/README.md) ·
+[Forward/reverse API](../forward-reverse-projection-api.md) ·
 [Runnable examples](../../src.wasm/examples/README.md) ·
 [Stage 10 notes](stage-10-webassembly.md)
 
@@ -16,6 +17,7 @@ From the repository root:
 
 ```sh
 make wasm-projections
+make check-forward-reverse-projection-api
 make check-wasm-projections
 ```
 
@@ -39,6 +41,7 @@ The smallest normal deployment keeps these three files together:
 
 ```text
 cartofreako-web.mjs
+cartofreako-web.d.ts
 cartofreako-projections.mjs
 cartofreako-projections.wasm
 ```
@@ -101,6 +104,49 @@ Switch projection models by changing `id`:
 ```text
 cahill-keyes  authagraph  dymaxion  myriahedral  star-x  voronoi
 ```
+
+## Forward and reverse points
+
+Runtime API 2 returns topology with every forward point and never assumes that
+an interrupted reverse is globally unique:
+
+```js
+const projection = runtime.projection({
+  name: 'myriahedral-pacific',
+  frame: [1920, 1080]
+});
+
+const forward = projection.forward([171.2, 7.1]);
+// {x, y, nativeCell, component}
+
+const reverse = projection.inverse([forward.x, forward.y]);
+// {status, candidates, tolerancePx, truncated}
+
+const oneFace = projection.inverse([forward.x, forward.y], {
+  nativeCell: forward.nativeCell
+});
+```
+
+All Myriahedral layouts and Voronoi currently advertise
+`inverseMode: "face-qualified"`. The other four families return
+`{status: "unsupported", candidates: []}`. Preserve every candidate when the
+status is `ambiguous`, or pass a known `nativeCell`; never silently select the
+first result.
+
+Use `forwardMany()` and `inverseMany()` with packed `Float64Array` pairs for
+agent, game, or data-tool batches. The point API is version 2 while geometry
+buffers remain ABI 1:
+
+```js
+console.log(runtime.apiVersion); // 2
+console.log(runtime.abiVersion); // 1
+console.log(projection.metadata().inverseMode);
+```
+
+The runtime is fully headless. It performs no network access, opens no prompt,
+and persists no consent or authorization state. Calling workflows remain
+responsible for recording source licenses, data consent, and publication
+authority. See the [complete API contract](../forward-reverse-projection-api.md).
 
 ## Return SVG instead
 
@@ -230,6 +276,9 @@ const adapter = cartofreakoD3Projection(projection, {
 });
 const path = geoPath(adapter);
 svgPath.setAttribute('d', path(geojson));
+
+const candidates = adapter.invertCandidates([x, y]);
+const unique = adapter.invert([x, y]); // [longitude, latitude] or null
 ```
 
 The adapter buffers each source line or polygon, calls WASM in a batch, then
@@ -246,9 +295,11 @@ Treat the result as a finite planar carrier:
   vector or raster layers.
 
 Do not register the forward transform as if it had one continuous global
-inverse. Interrupted cuts can map one planar boundary to multiple geographic
-candidates. For clicks and hover, retain `featureIds` and index the projected
-parts in planar space.
+inverse. Runtime API 2 exposes face-qualified candidates, but interrupted cuts
+can still map one planar boundary to several geographic results. For feature
+clicks and hover, retain `featureIds` and index the projected parts in planar
+space; use reverse candidates for coordinate readout and editing only after
+handling their status.
 
 ## Typed-array input for high-volume data
 
@@ -276,7 +327,8 @@ does not invalidate them.
 | Lines jump across the page | Do not project raw vertices yourself; pass complete lines/rings to `projectGeometry()` |
 | A slice is distorted | Keep the full carrier; use `{slice: ...}` rather than constructing a projection from slice dimensions |
 | Main thread stalls on a large file | Use `CartofreakoWorkerClient` |
-| Click cannot produce longitude/latitude | ABI 1 has no global inverse; use feature IDs and planar hit testing |
+| Reverse returns `unsupported` | Choose a Myriahedral layout or Voronoi, or retain planar feature picking until that family implements reverse support |
+| Reverse returns several candidates | Preserve all candidates or repeat with the intended `nativeCell`; do not choose index zero implicitly |
 
 Inspect `runtime.manifest` and `runtime.licenses` before publishing. The
 Cahill-Keyes and Star-X implementations carry an additional attribution and
@@ -286,5 +338,6 @@ commercial-use notice beyond the repository's GPL license.
 
 [Documentation index](../../index.md) ·
 [Runtime reference](../../src.wasm/README.md) ·
+[Forward/reverse API](../forward-reverse-projection-api.md) ·
 [Runnable examples](../../src.wasm/examples/README.md) ·
 [Stage 10 notes](stage-10-webassembly.md)

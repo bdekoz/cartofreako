@@ -2,6 +2,13 @@ import createWasmModule from './cartofreako-projections.mjs';
 
 export const GeometryPart = Object.freeze({point: 0, line: 1, ring: 2});
 export const RingRole = Object.freeze({none: 0, exterior: 1, hole: 2});
+export const InverseStatus = Object.freeze({
+    unique: 0,
+    ambiguous: 1,
+    outside: 2,
+    cut: 3,
+    unsupported: 4
+});
 
 function requireCondition(condition, message) {
     if (!condition) throw new TypeError(message);
@@ -149,6 +156,30 @@ function descriptorFor(manifest, id) {
     return descriptor;
 }
 
+function coordinatePair(value, label) {
+    requireCondition(
+        Array.isArray(value) || ArrayBuffer.isView(value),
+        `${label} must be a two-coordinate array`
+    );
+    requireCondition(value.length === 2, `${label} must contain exactly two coordinates`);
+    const first = Number(value[0]);
+    const second = Number(value[1]);
+    requireCondition(
+        Number.isFinite(first) && Number.isFinite(second),
+        `${label} coordinates must be finite`
+    );
+    return [first, second];
+}
+
+function immutableManifest(source) {
+    return Object.freeze(source.map((entry) => Object.freeze({
+        ...entry,
+        defaultFrame: Object.freeze({...entry.defaultFrame}),
+        capabilities: Object.freeze({...entry.capabilities}),
+        license: Object.freeze({...entry.license})
+    })));
+}
+
 export class CartofreakoProjection {
     #raw;
     #descriptor;
@@ -164,6 +195,8 @@ export class CartofreakoProjection {
     get width() { this.#assertLive(); return this.#raw.width(); }
     get height() { this.#assertLive(); return this.#raw.height(); }
 
+    metadata() { return this.#descriptor; }
+
     #assertLive() {
         if (this.#disposed) throw new Error('Cartofreako projection has been disposed');
     }
@@ -171,13 +204,46 @@ export class CartofreakoProjection {
     project(longitude, latitude) {
         this.#assertLive();
         const result = this.#raw.project(latitude, longitude);
-        return {x: result.x, y: result.y, nativeCell: result.nativeCell};
+        return {
+            x: result.x,
+            y: result.y,
+            nativeCell: result.nativeCell,
+            component: result.component
+        };
+    }
+
+    forward(longitudeLatitude) {
+        const [longitude, latitude] = coordinatePair(
+            longitudeLatitude, 'forward coordinate'
+        );
+        const result = this.project(longitude, latitude);
+        return {...result, component: result.component ?? 0};
     }
 
     projectPoints(lonLat) {
         this.#assertLive();
         const source = lonLat instanceof Float64Array ? lonLat : new Float64Array(lonLat);
         return this.#raw.projectPoints(source);
+    }
+
+    forwardMany(lonLat) {
+        this.#assertLive();
+        const source = lonLat instanceof Float64Array ? lonLat : new Float64Array(lonLat);
+        requireCondition(source.length % 2 === 0, 'forwardMany expects longitude/latitude pairs');
+        return this.#raw.forwardPoints(source);
+    }
+
+    inverse(xy, options = {}) {
+        this.#assertLive();
+        const [x, y] = coordinatePair(xy, 'inverse coordinate');
+        return this.#raw.inverse(x, y, options);
+    }
+
+    inverseMany(xy, options = {}) {
+        this.#assertLive();
+        const source = xy instanceof Float64Array ? xy : new Float64Array(xy);
+        requireCondition(source.length % 2 === 0, 'inverseMany expects x/y pairs');
+        return this.#raw.inversePoints(source, options);
     }
 
     projectGeometry(input, options = {}) {
@@ -198,6 +264,10 @@ export class CartofreakoProjection {
         );
         result.features = flat.features;
         return result;
+    }
+
+    projectGeoJSON(input, options = {}) {
+        return this.projectGeometry(input, options);
     }
 
     carrierGeometry(options = {}) {
@@ -231,16 +301,30 @@ export class CartofreakoRuntime {
 
     constructor(module) {
         this.#module = module;
-        this.#manifest = Object.freeze(module.projectionManifest());
+        this.#manifest = immutableManifest(module.projectionManifest());
         if (module.runtimeAbiVersion() !== 1) {
             throw new Error(`Unsupported Cartofreako WASM ABI ${module.runtimeAbiVersion()}`);
+        }
+        if (module.runtimeApiVersion() !== 2) {
+            throw new Error(`Unsupported Cartofreako runtime API ${module.runtimeApiVersion()}`);
         }
     }
 
     get abiVersion() { return this.#module.runtimeAbiVersion(); }
+    get apiVersion() { return this.#module.runtimeApiVersion(); }
     get implementationName() { return this.#module.implementationName(); }
     get manifest() { return this.#manifest; }
     get licenses() { return this.#module.licenseManifest(); }
+
+    listProjections() { return this.#manifest; }
+
+    projection({name, frame, ...options} = {}) {
+        if (frame != null) {
+            const [width, height] = coordinatePair(frame, 'projection frame');
+            return this.createProjection({id: name ?? options.id, width, height});
+        }
+        return this.createProjection({...options, id: name ?? options.id});
+    }
 
     createProjection({id = 'cahill-keyes', width = 1200, height} = {}) {
         const descriptor = descriptorFor(this.#manifest, id);

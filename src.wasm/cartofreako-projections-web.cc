@@ -25,6 +25,7 @@ struct browser_projected_point
   double x;
   double y;
   std::uint32_t native_cell;
+  std::uint32_t component;
 };
 
 bool
@@ -202,6 +203,107 @@ diagnostics_value(const runtime::geometry_diagnostics& diagnostics)
 }
 
 val
+inverse_candidate_value(const runtime::inverse_candidate& candidate)
+{
+  val result = val::object();
+  result.set("longitude", candidate.point.longitude_degrees);
+  result.set("latitude", candidate.point.latitude_degrees);
+  result.set("nativeCell", candidate.native_cell);
+  result.set("component", candidate.component);
+  result.set("forwardResidual", candidate.forward_residual);
+  result.set("boundary", candidate.boundary);
+  return result;
+}
+
+val
+inverse_result_value(const runtime::inverse_result& source)
+{
+  val result = val::object();
+  result.set("status", std::string(
+    runtime::inverse_status_name(source.status)));
+  val candidates = val::array();
+  for (std::size_t index = 0; index < source.candidates.size(); ++index)
+    candidates.set(index, inverse_candidate_value(source.candidates[index]));
+  result.set("candidates", candidates);
+  result.set("tolerancePx", source.tolerance_pixels);
+  result.set("truncated", source.truncated);
+  return result;
+}
+
+runtime::inverse_options
+read_inverse_options(const val& source)
+{
+  runtime::inverse_options result;
+  if (is_nullish(source))
+    return result;
+  if (source.typeOf().as<std::string>() != "object")
+    throw std::invalid_argument("inverse options must be an object");
+  if (has(source, "tolerancePx"))
+    result.tolerance_pixels = source["tolerancePx"].as<double>();
+  if (has(source, "nativeCell") && !is_nullish(source["nativeCell"]))
+    {
+      const double value = source["nativeCell"].as<double>();
+      if (!std::isfinite(value) || value < 0
+          || value > std::numeric_limits<std::uint32_t>::max()
+          || std::floor(value) != value)
+        throw std::invalid_argument("inverse nativeCell is invalid");
+      result.native_cell = static_cast<std::uint32_t>(value);
+    }
+  if (has(source, "maximumCandidates"))
+    {
+      const double value = source["maximumCandidates"].as<double>();
+      if (!std::isfinite(value) || value < 1
+          || value > std::numeric_limits<std::uint32_t>::max()
+          || std::floor(value) != value)
+        throw std::invalid_argument("inverse maximumCandidates is invalid");
+      result.maximum_candidates = static_cast<std::size_t>(value);
+    }
+  return result;
+}
+
+val
+inverse_batch_value(const std::vector<runtime::inverse_result>& source)
+{
+  std::vector<std::uint8_t> statuses;
+  std::vector<std::uint8_t> truncated;
+  std::vector<std::uint32_t> offsets {0};
+  std::vector<double> coordinates;
+  std::vector<std::uint32_t> cells;
+  std::vector<std::uint32_t> components;
+  std::vector<double> residuals;
+  std::vector<std::uint8_t> boundaries;
+  statuses.reserve(source.size());
+  truncated.reserve(source.size());
+  offsets.reserve(source.size() + 1);
+  for (const runtime::inverse_result& item : source)
+    {
+      statuses.push_back(static_cast<std::uint8_t>(item.status));
+      truncated.push_back(item.truncated ? 1 : 0);
+      for (const runtime::inverse_candidate& candidate : item.candidates)
+        {
+          coordinates.push_back(candidate.point.longitude_degrees);
+          coordinates.push_back(candidate.point.latitude_degrees);
+          cells.push_back(candidate.native_cell);
+          components.push_back(candidate.component);
+          residuals.push_back(candidate.forward_residual);
+          boundaries.push_back(candidate.boundary ? 1 : 0);
+        }
+      offsets.push_back(static_cast<std::uint32_t>(cells.size()));
+    }
+  val result = val::object();
+  result.set("statuses", typed_array("Uint8Array", statuses));
+  result.set("candidateOffsets", typed_array("Uint32Array", offsets));
+  result.set("coordinates", typed_array("Float64Array", coordinates));
+  result.set("nativeCells", typed_array("Uint32Array", cells));
+  result.set("componentIds", typed_array("Uint32Array", components));
+  result.set("forwardResiduals", typed_array("Float64Array", residuals));
+  result.set("boundaries", typed_array("Uint8Array", boundaries));
+  result.set("truncated", typed_array("Uint8Array", truncated));
+  result.set("tolerancePx", source.empty() ? 0 : source.front().tolerance_pixels);
+  return result;
+}
+
+val
 command_buffer_value(const runtime::geometry_command_buffer& buffer)
 {
   val result = val::object();
@@ -240,6 +342,8 @@ val
 projection_descriptor(const runtime::projection_spec& spec)
 {
   val result = val::object();
+  result.set("apiVersion", runtime::api_version);
+  result.set("geometryAbiVersion", runtime::abi_version);
   result.set("id", std::string(spec.argument));
   result.set("family", std::string(runtime::projection_kind_name(spec.kind)));
   result.set("title", std::string(spec.title));
@@ -250,7 +354,19 @@ projection_descriptor(const runtime::projection_spec& spec)
   result.set("defaultFrame", default_frame);
   result.set("nativeCellCount", spec.native_cell_count);
   result.set("topology", std::string(runtime::topology_kind_name(spec.topology)));
-  result.set("inverseMode", "none");
+  result.set("geographicCoordinateOrder", "longitude-latitude");
+  result.set("geographicUnits", "degrees");
+  result.set("longitudeDomain", "[-180,180]");
+  result.set("latitudeDomain", "[-90,90]");
+  result.set("projectedUnits", "pixels");
+  result.set("axisOrigin", "top-left");
+  result.set("xAxisDirection", "right");
+  result.set("yAxisDirection", "down");
+  result.set("framePolicy", "exact-native-aspect");
+  result.set("cutTopology", std::string(
+    runtime::topology_kind_name(spec.topology)));
+  result.set("inverseMode", std::string(
+    runtime::inverse_mode_name(runtime::inverse_mode_for(spec))));
   val capabilities = val::object();
   capabilities.set("points", true);
   capabilities.set("lines", true);
@@ -258,6 +374,14 @@ projection_descriptor(const runtime::projection_spec& spec)
   capabilities.set("sphere", true);
   capabilities.set("slices", true);
   capabilities.set("planarTiles", true);
+  capabilities.set("forward", true);
+  capabilities.set("inverse",
+                   runtime::inverse_mode_for(spec)
+                     != runtime::inverse_mode::none);
+  capabilities.set("inverseCandidates",
+                   runtime::inverse_mode_for(spec)
+                     != runtime::inverse_mode::none);
+  capabilities.set("headless", true);
   result.set("capabilities", capabilities);
   val license = val::object();
   license.set("spdx", "GPL-3.0-or-later");
@@ -427,10 +551,10 @@ public:
   browser_projected_point
   project(const double latitude, const double longitude) const
   {
-    const runtime::geographic_point geographic {latitude, longitude};
-    const auto [x, y] = runtime::project_point(context, geographic);
-    return {x, y, static_cast<std::uint32_t>(
-                    runtime::projection_cell(context, geographic))};
+    const runtime::forward_result result = runtime::forward(
+      context, {longitude, latitude});
+    return {result.point.x, result.point.y,
+            result.native_cell, result.component};
   }
 
   val
@@ -442,23 +566,46 @@ public:
         "projectPoints expects interleaved longitude/latitude pairs");
     std::vector<double> coordinates;
     std::vector<std::uint32_t> cells;
+    std::vector<std::uint32_t> components;
     coordinates.reserve(source.size());
     cells.reserve(source.size() / 2);
+    components.reserve(source.size() / 2);
     for (std::size_t index = 0; index < source.size(); index += 2)
       {
-        const runtime::geographic_point point {
-          source[index + 1], source[index],
-        };
-        const auto [x, y] = runtime::project_point(context, point);
-        coordinates.push_back(x);
-        coordinates.push_back(y);
-        cells.push_back(static_cast<std::uint32_t>(
-          runtime::projection_cell(context, point)));
+        const runtime::forward_result result = runtime::forward(
+          context, {source[index], source[index + 1]});
+        coordinates.push_back(result.point.x);
+        coordinates.push_back(result.point.y);
+        cells.push_back(result.native_cell);
+        components.push_back(result.component);
       }
     val result = val::object();
     result.set("coordinates", typed_array("Float64Array", coordinates));
     result.set("nativeCells", typed_array("Uint32Array", cells));
+    result.set("componentIds", typed_array("Uint32Array", components));
     return result;
+  }
+
+  val
+  inverse(const double x, const double y, const val& options) const
+  {
+    return inverse_result_value(runtime::inverse(
+      context, {x, y}, read_inverse_options(options)));
+  }
+
+  val
+  inverse_points(const val& xy, const val& options) const
+  {
+    const std::vector<double> source = read_doubles(xy, "inverse points");
+    if (source.size() % 2 != 0)
+      throw std::invalid_argument(
+        "inversePoints expects interleaved x/y pairs");
+    std::vector<runtime::projected_coordinate> points;
+    points.reserve(source.size() / 2);
+    for (std::size_t index = 0; index < source.size(); index += 2)
+      points.push_back({source[index], source[index + 1]});
+    return inverse_batch_value(runtime::inverse_many(
+      context, points, read_inverse_options(options)));
   }
 
   val
@@ -502,11 +649,18 @@ public:
 
 std::string
 implementation_name()
-{ return "cartofreako C++20 all-projection/WebAssembly runtime ABI 1"; }
+{
+  return "cartofreako C++20 all-projection/WebAssembly runtime API 2, "
+         "geometry ABI 1";
+}
 
 std::uint32_t
 runtime_abi_version()
 { return runtime::abi_version; }
+
+std::uint32_t
+runtime_api_version()
+{ return runtime::api_version; }
 
 } // namespace
 
@@ -515,7 +669,8 @@ EMSCRIPTEN_BINDINGS(cartofreako_all_projection_web)
   emscripten::value_object<browser_projected_point>("RuntimeProjectedPoint")
     .field("x", &browser_projected_point::x)
     .field("y", &browser_projected_point::y)
-    .field("nativeCell", &browser_projected_point::native_cell);
+    .field("nativeCell", &browser_projected_point::native_cell)
+    .field("component", &browser_projected_point::component);
 
   emscripten::class_<browser_projection>("Projection")
     .constructor<std::string, double, double>()
@@ -524,7 +679,11 @@ EMSCRIPTEN_BINDINGS(cartofreako_all_projection_web)
     .function("height", &browser_projection::height)
     .function("descriptor", &browser_projection::descriptor)
     .function("project", &browser_projection::project)
+    .function("forward", &browser_projection::project)
     .function("projectPoints", &browser_projection::project_points)
+    .function("forwardPoints", &browser_projection::project_points)
+    .function("inverse", &browser_projection::inverse)
+    .function("inversePoints", &browser_projection::inverse_points)
     .function("projectGeometryFlat", &browser_projection::project_geometry)
     .function("carrierGeometry", &browser_projection::carrier_geometry)
     .function("listSlices", &browser_projection::list_slices)
@@ -532,6 +691,7 @@ EMSCRIPTEN_BINDINGS(cartofreako_all_projection_web)
 
   emscripten::function("implementationName", &implementation_name);
   emscripten::function("runtimeAbiVersion", &runtime_abi_version);
+  emscripten::function("runtimeApiVersion", &runtime_api_version);
   emscripten::function("projectionManifest", &projection_manifest);
   emscripten::function("licenseManifest", &license_manifest);
 }

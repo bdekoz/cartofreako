@@ -52,6 +52,21 @@ to this implementation ledger.
 | Bathymetry Hamonshū | New Izzi wave-field pass using the Roulette depth-field architecture | Standard art pass |
 | Air and smoke research | Full GHCN and OpenAQ prioritized; CAMS, MAIAC, GFAS, and PurpleAir boundaries documented without merging unlike observations | Exploration only |
 
+## Post-v13 projection API development
+
+On 2026-08-09, the shared native/WebAssembly runtime added independently
+versioned API 2 while retaining geometry command-buffer ABI 1. Structured
+forward calls now return native cell and component metadata. Analytic,
+face-qualified reverse calls cover every Myriahedral layout and Voronoi and
+return explicit `unique`, `ambiguous`, `outside`, `cut`, or `unsupported`
+states. The JavaScript wrapper, TypeScript declarations, module worker, D3
+adapter, native exhaustive-face check, Node smoke test, and headless Chrome
+test share the same contract. The remaining four families continue to report
+unsupported reverse capability. See the
+[forward/reverse projection API](forward-reverse-projection-api.md).
+Ongoing implementation and verification are tracked in the
+[Stage 14 convergence ledger](converge-generation-14.md).
+
 ## Build graph and pass classes
 
 A clean checkout has 205 standard layered SVG products, 205 PDFs, 205

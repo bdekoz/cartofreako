@@ -24,7 +24,7 @@
 #include <vector>
 
 #include <a60-io.h>
-#include <a60-svg.h>
+#include <izzi-svg.h>
 
 #include "generation-typography.h"
 #include "natural-earth-generation.h"

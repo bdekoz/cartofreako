@@ -5,7 +5,7 @@
   "snapshot_as_of": "2026-08-06",
   "missing_semantics": "Missing is unknown and is never rendered as observed zero.",
   "display": {
-    "data_graphic_opacity": 0.3
+    "data_graphic_opacity": 0.6
   },
   "country_geometry": {
     "path": "countries-110m.geojson",

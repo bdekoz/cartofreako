@@ -54,7 +54,8 @@ uses `cartofreako-resources-profile-v3`. It defines the source register,
 country geometry and values digests, six families, palettes, metrics, one
 default per family, and either a country coverage definition or a spatial
 definition for every released product. Its `display.data_graphic_opacity`
-field is fixed at `0.30` for the Stage 13 render contract.
+field is fixed at `0.60` for the Stage 14 render contract. Immutable Stage 13
+artifacts retain their original `0.30` value.
 
 [`resources-values.json`](../assets.static/resources/resources-values.json)
 uses `cartofreako-resources-values-v3`. Its 1,679 records contain family,
@@ -143,11 +144,13 @@ clip across all projection seams and use native-face area clipping where
 required.
 
 Every observed country fill and every observed reef cell uses its metric hue
-at 30% opacity. Missing-data context stays opaque: transparency cannot make an
+at 60% opacity. Missing-data context stays opaque: transparency cannot make an
 unknown country look like a low observed value. Legends also stay opaque so
 their reference colors remain readable. Main plate headings are twice the
 pre-Stage-13 size (`0.36` rather than `0.18` page units); metadata records
-both `data-graphic-opacity="0.3"` and `data-title-scale="2"`.
+both `data-graphic-opacity="0.6"` and `data-title-scale="2"`. Stage 14 raises
+the observed field from Stage 13's 30% setting to 60% while retaining the
+same title scale and evidence metadata.
 
 Every SVG embeds the complete source and metric catalogues, selected metric,
 units, period, profile/value/geometry digests, gate statistics, Stage 12

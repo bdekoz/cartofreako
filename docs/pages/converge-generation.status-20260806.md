@@ -488,6 +488,15 @@ Inverse projection is not required for initial feature interaction. A browser
 can build a planar R-tree over projected features and return original feature
 metadata on hover/click. That is the lower-risk first milestone.
 
+**Post-audit implementation, 2026-08-09:** runtime API 2 now implements this
+face-qualified contract analytically for all six Myriahedral layouts and for
+Voronoi, including structured ambiguity/cut/outside/unsupported states,
+native-cell qualification, batch typed arrays, workers, and conservative D3
+integration. Geometry command buffers remain ABI 1. Cahill–Keyes, AuthaGraph,
+Dymaxion, and Star-X continue to advertise `unsupported` rather than a false
+global inverse. See the
+[forward/reverse projection API](../forward-reverse-projection-api.md).
+
 ## Promising leads worth exploring
 
 ### High priority: finish the open data stages

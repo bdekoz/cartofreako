@@ -18,7 +18,7 @@
 #include <vector>
 
 #include <a60-io.h>
-#include <a60-svg.h>
+#include <izzi-svg.h>
 
 #include "astro-observer.h"
 #include "generation-typography.h"

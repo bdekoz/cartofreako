@@ -23,7 +23,7 @@
 #include <vector>
 
 #include <a60-io.h>
-#include <a60-svg.h>
+#include <izzi-svg.h>
 
 #include "anthropocene-data.h"
 #include "generation-typography.h"

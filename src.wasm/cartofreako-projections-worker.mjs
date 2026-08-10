@@ -20,7 +20,8 @@ function transferList(value) {
     const result = [];
     for (const key of [
         'coordinates', 'partOffsets', 'partTypes', 'featureIds',
-        'nativeCells', 'componentIds', 'ringRoles', 'closed'
+        'nativeCells', 'componentIds', 'ringRoles', 'closed', 'statuses',
+        'candidateOffsets', 'forwardResiduals', 'boundaries', 'truncated'
     ]) {
         if (ArrayBuffer.isView(value?.[key])) result.push(value[key].buffer);
     }
@@ -33,6 +34,7 @@ async function dispatch(message) {
         const runtime = await runtimePromise;
         return {
             abiVersion: runtime.abiVersion,
+            apiVersion: runtime.apiVersion,
             implementationName: runtime.implementationName,
             manifest: runtime.manifest,
             licenses: runtime.licenses
@@ -41,6 +43,20 @@ async function dispatch(message) {
     case 'projectGeometry':
         return (await projection(message.projection)).projectGeometry(
             message.geometry,
+            message.options
+        );
+    case 'forward':
+        return (await projection(message.projection)).forward(message.coordinate);
+    case 'forwardMany':
+        return (await projection(message.projection)).forwardMany(message.coordinates);
+    case 'inverse':
+        return (await projection(message.projection)).inverse(
+            message.coordinate,
+            message.options
+        );
+    case 'inverseMany':
+        return (await projection(message.projection)).inverseMany(
+            message.coordinates,
             message.options
         );
     case 'carrierGeometry':

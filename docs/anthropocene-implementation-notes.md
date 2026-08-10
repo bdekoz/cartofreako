@@ -358,10 +358,10 @@ records the fallback count on each affected path. The other five projections
 need no fallback cells.
 
 All data-bearing high and low field paths are multiplied by the profile's
-`display.data_graphic_opacity = 0.30`; covered-zero context and legend
+`display.data_graphic_opacity = 0.60`; covered-zero context and legend
 swatches retain their own opaque reference styling. The plate heading is
 twice its prior size (`0.34` rather than `0.17` page units). Root metadata
-records `data-graphic-opacity="0.3"` and `data-title-scale="2"`, and the
+records `data-graphic-opacity="0.6"` and `data-title-scale="2"`, and the
 generator self-check requires both.
 
 Generate both years by default, or either explicit year, across all six

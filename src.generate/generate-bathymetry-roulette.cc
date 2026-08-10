@@ -17,7 +17,7 @@
 #include <tuple>
 #include <vector>
 
-#include <a60-svg.h>
+#include <izzi-svg.h>
 
 #include "bathymetry-roulette-style.h"
 #include "generation-typography.h"

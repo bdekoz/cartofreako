@@ -20,7 +20,7 @@
 #define a60_CARTOGRAPHY_FRAME_H 1
 
 #include <a60-numeric.h>
-#include <a60-svg.h>
+#include <izzi-svg.h>
 
 namespace a60::carto {
 

@@ -195,6 +195,7 @@ PROJECTIONS_WEB_MODULE := $(WEB_BUILD_DIR)/cartofreako-projections.mjs
 PROJECTIONS_WEB_WASM := $(WEB_BUILD_DIR)/cartofreako-projections.wasm
 PROJECTIONS_WEB_JS := \
 	$(WEB_DIR)/cartofreako-web.mjs \
+	$(WEB_DIR)/cartofreako-web.d.ts \
 	$(WEB_DIR)/cartofreako-svg.mjs \
 	$(WEB_DIR)/cartofreako-canvas.mjs \
 	$(WEB_DIR)/cartofreako-d3.mjs \
@@ -679,6 +680,7 @@ TEST_BINARIES := \
 	$(TEST_DIR)/test-myriahedral-slicing \
 	$(TEST_DIR)/test-projection-generation-common \
 	$(TEST_DIR)/test-projection-runtime \
+	$(TEST_DIR)/test-forward-reverse-projection-api \
 	$(TEST_DIR)/test-star-x-projection-api \
 	$(TEST_DIR)/test-voronoi-projection-api
 
@@ -777,6 +779,7 @@ RESOURCE_METRIC_PUBLIC_TARGETS := \
 
 PUBLIC_TARGETS := all assets-single assets-resilient check check-prerequisite \
 	check-resources-svg-archives check-fiber-synthesized \
+	check-forward-reverse-projection-api \
 	clean clean-failed-generated configured doxygen \
 	generation-plan list-targets authorize-external \
 	generate-authorized-external generate-snapshots generate-snapshot-all \
@@ -969,6 +972,16 @@ check-resources-svg-archives: $(RESOURCES_SVG_ARCHIVES)
 check-fiber-synthesized: $(FIBER_SYNTHESIZED_CHECKSUMS)
 	cd "$(FIBER_SYNTHESIZED_DATA_DIR)" && sha256sum -c SHA256SUMS
 
+$(TEST_DIR)/test-forward-reverse-projection-api: \
+		$(TEST_DIR)/test-forward-reverse-projection-api.cc \
+		$(PROJECTION_RUNTIME_HEADERS)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$< -o $@
+
+check-forward-reverse-projection-api: \
+		$(TEST_DIR)/test-forward-reverse-projection-api
+	$(TEST_DIR)/test-forward-reverse-projection-api
+
 check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
 		$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2025) \
 		$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2026) \
@@ -979,7 +992,7 @@ check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
 		$(RESOURCES_CHECKSUMS) \
 		$(FIBER_SYNTHESIZED_MANIFEST) $(FIBER_SYNTHESIZED_ROUTES) \
 		$(FIBER_SYNTHESIZED_LANDINGS) $(FIBER_SYNTHESIZED_CHECKSUMS) \
-		check-fiber-synthesized
+		check-fiber-synthesized check-forward-reverse-projection-api
 	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_PROFILE)" \
 		"$(ANTHROPOCENE_GEOJSON)"
 	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_TEMPERATURE_PROFILE_2025)" \

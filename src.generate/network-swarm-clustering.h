@@ -15,7 +15,7 @@
 #include <utility>
 #include <vector>
 
-#include <a60-svg.h>
+#include <izzi-svg.h>
 
 #include "network-swarm-data.h"
 #include "projection-generation-common.h"

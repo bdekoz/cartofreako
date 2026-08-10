@@ -10,7 +10,7 @@
 #include <string>
 #include <string_view>
 
-#include <a60-svg.h>
+#include <izzi-svg.h>
 
 namespace cart0freak0::generation {
 

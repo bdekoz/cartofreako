@@ -106,7 +106,7 @@ main()
     = resources::load_resources_profile(profile_path);
   assert(profile.name == "Resources Stage 12 current-source atlas");
   assert(profile.snapshot_as_of == "2026-08-06");
-  assert(profile.data_graphic_opacity == 0.30);
+  assert(profile.data_graphic_opacity == 0.60);
   assert(profile.families.size() == 6);
   assert(profile.values.size() == 1679);
   assert(profile.name.find("1960") == std::string::npos);
@@ -278,7 +278,7 @@ main()
          != std::string::npos);
   assert(metadata.find("data-missing-is-zero=\"false\"")
          != std::string::npos);
-  assert(metadata.find("data-graphic-opacity=\"0.3\"")
+  assert(metadata.find("data-graphic-opacity=\"0.6\"")
          != std::string::npos);
   assert(metadata.find("data-title-scale=\"2\"") != std::string::npos);
   assert(metadata.find("1960") == std::string::npos);

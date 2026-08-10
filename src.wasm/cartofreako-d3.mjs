@@ -29,7 +29,16 @@ function replayPolygon(buffer, sink) {
  * object to `d3.geoPath(adapter)`.
  */
 export function cartofreakoD3Projection(projection, options = {}) {
-    return {
+    const adapter = {
+        invertCandidates(point, inverseOptions = {}) {
+            return projection.inverse(point, inverseOptions);
+        },
+        invert(point) {
+            const result = projection.inverse(point);
+            if (result.status !== 'unique') return null;
+            const candidate = result.candidates[0];
+            return [candidate.longitude, candidate.latitude];
+        },
         stream(sink) {
             let line = null;
             let polygon = null;
@@ -91,6 +100,7 @@ export function cartofreakoD3Projection(projection, options = {}) {
             };
         }
     };
+    return adapter;
 }
 
 export default cartofreakoD3Projection;

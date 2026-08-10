@@ -11,6 +11,7 @@
 #include <cstdint>
 #include <limits>
 #include <optional>
+#include <span>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -26,7 +27,7 @@
 #include <a60-countries.h>
 #endif
 #include <a60-io.h>
-#include <a60-svg.h>
+#include <izzi-svg.h>
 
 #include "a60-carto.h"
 #include "a60-carto-frame.h"
@@ -63,6 +64,9 @@ using a60::carto::voronoiproj;
 /// Version of the projection descriptor and flat geometry protocol.
 inline constexpr std::uint32_t abi_version = 1;
 
+/// Version of the headless forward/reverse runtime API.
+inline constexpr std::uint32_t api_version = 2;
+
 /// Stable identifiers for the six supported projection families.
 enum class projection_kind
 {
@@ -80,6 +84,24 @@ enum class topology_kind
   folded,
   periodic,
   polyhedral,
+};
+
+/// Reverse-projection capability advertised by one projection layout.
+enum class inverse_mode
+{
+  none,
+  face_qualified,
+  candidates,
+};
+
+/// Outcome of one reverse-projection request.
+enum class inverse_status : std::uint8_t
+{
+  unique,
+  ambiguous,
+  outside,
+  cut,
+  unsupported,
 };
 
 /// Registry record for one projection and layout.
@@ -283,6 +305,59 @@ struct projection_context
   }
 };
 
+/// Public immutable runtime handle. The alias keeps the implementation's
+/// established context name available to existing generators.
+using projection_handle = projection_context;
+
+/// Geographic coordinate in explicit GeoJSON order.
+struct geographic_coordinate
+{
+  double longitude_degrees;
+  double latitude_degrees;
+};
+
+/// Projected coordinate in output-frame pixels.
+struct projected_coordinate
+{
+  double x;
+  double y;
+};
+
+/// Structured result of one forward projection.
+struct forward_result
+{
+  projected_coordinate point;
+  std::uint32_t native_cell;
+  std::uint32_t component;
+};
+
+/// One face-qualified geographic solution to a projected coordinate.
+struct inverse_candidate
+{
+  geographic_coordinate point;
+  std::uint32_t native_cell;
+  std::uint32_t component;
+  double forward_residual;
+  bool boundary;
+};
+
+/// Controls candidate enumeration and numerical acceptance.
+struct inverse_options
+{
+  double tolerance_pixels = 1e-7;
+  std::optional<std::uint32_t> native_cell;
+  std::size_t maximum_candidates = 32;
+};
+
+/// Structured result of one reverse projection.
+struct inverse_result
+{
+  inverse_status status = inverse_status::outside;
+  std::vector<inverse_candidate> candidates;
+  double tolerance_pixels = 0;
+  bool truncated = false;
+};
+
 /// Geographic latitude/longitude pair in decimal degrees on WGS 84.
 struct geographic_point
 {
@@ -410,6 +485,403 @@ projection_cell(const projection_context& context,
       }
     }
   throw std::logic_error("unhandled projection kind");
+}
+
+/// Return the reverse capability implemented for one projection layout.
+inline constexpr inverse_mode
+inverse_mode_for(const projection_spec& spec)
+{
+  switch (spec.kind)
+    {
+    case projection_kind::myriahedral:
+    case projection_kind::voronoi:
+      return inverse_mode::face_qualified;
+    case projection_kind::cahill_keyes:
+    case projection_kind::authagraph:
+    case projection_kind::dymaxion:
+    case projection_kind::star_x:
+      return inverse_mode::none;
+    }
+  return inverse_mode::none;
+}
+
+/// Project one explicit longitude/latitude coordinate.
+inline forward_result
+forward(const projection_handle& projection,
+        const geographic_coordinate point)
+{
+  const geographic_point internal {
+    point.latitude_degrees, point.longitude_degrees,
+  };
+  const auto [x, y] = project_point(projection, internal);
+  return {{x, y}, static_cast<std::uint32_t>(
+                    projection_cell(projection, internal)), 0};
+}
+
+/// Project a packed native batch without sentinel coordinates.
+inline std::vector<forward_result>
+forward_many(const projection_handle& projection,
+             const std::span<const geographic_coordinate> points)
+{
+  std::vector<forward_result> result;
+  result.reserve(points.size());
+  for (const geographic_coordinate point : points)
+    result.push_back(forward(projection, point));
+  return result;
+}
+
+namespace inverse_detail {
+
+inline constexpr double pi
+  = 3.141592653589793238462643383279502884;
+
+struct barycentric_result
+{
+  std::array<long double, 3> weights;
+  bool boundary;
+};
+
+template<typename Triangle>
+inline std::optional<barycentric_result>
+planar_barycentric(const Triangle& triangle,
+                   const double x, const double y,
+                   const long double tolerance)
+{
+  const long double ax = triangle[0].x;
+  const long double ay = triangle[0].y;
+  const long double bx = triangle[1].x;
+  const long double by = triangle[1].y;
+  const long double cx = triangle[2].x;
+  const long double cy = triangle[2].y;
+  const long double px = x;
+  const long double py = y;
+  const long double divisor
+    = (bx - ax) * (cy - ay) - (by - ay) * (cx - ax);
+  const long double scale = std::max({
+    std::abs(bx - ax), std::abs(by - ay),
+    std::abs(cx - ax), std::abs(cy - ay), 1.0L,
+  });
+  if (!std::isfinite(divisor)
+      || std::abs(divisor)
+           <= 64 * std::numeric_limits<long double>::epsilon()
+                * scale * scale)
+    throw std::logic_error("inverse candidate has a degenerate planar face");
+
+  const long double second
+    = ((px - ax) * (cy - ay) - (py - ay) * (cx - ax)) / divisor;
+  const long double third
+    = ((bx - ax) * (py - ay) - (by - ay) * (px - ax)) / divisor;
+  const long double first = 1 - second - third;
+  if (!std::isfinite(first) || !std::isfinite(second)
+      || !std::isfinite(third)
+      || first < -tolerance || second < -tolerance
+      || third < -tolerance
+      || first > 1 + tolerance || second > 1 + tolerance
+      || third > 1 + tolerance)
+    return std::nullopt;
+
+  std::array<long double, 3> weights {
+    std::clamp(first, 0.0L, 1.0L),
+    std::clamp(second, 0.0L, 1.0L),
+    std::clamp(third, 0.0L, 1.0L),
+  };
+  const long double sum = weights[0] + weights[1] + weights[2];
+  for (long double& weight : weights)
+    weight /= sum;
+  const bool boundary = weights[0] <= tolerance
+                        || weights[1] <= tolerance
+                        || weights[2] <= tolerance;
+  return barycentric_result {weights, boundary};
+}
+
+inline double
+canonical_longitude(double value)
+{
+  while (value >= 180)
+    value -= 360;
+  while (value < -180)
+    value += 360;
+  return value;
+}
+
+template<typename Vector>
+inline geographic_coordinate
+geographic_from_vector(const Vector& value,
+                       const double input_rotation_degrees = 0)
+{
+  const double horizontal = std::hypot(value.x, value.y);
+  const double latitude = std::asin(
+    std::clamp(value.z, -1.0, 1.0)) * 180 / pi;
+  if (horizontal <= 64 * std::numeric_limits<double>::epsilon())
+    return {0, latitude};
+  const double rotated_longitude = std::atan2(value.y, value.x) * 180 / pi;
+  return {canonical_longitude(
+            rotated_longitude - input_rotation_degrees),
+          latitude};
+}
+
+inline long double
+barycentric_tolerance(const projection_handle& projection,
+                      const inverse_options& options)
+{
+  const double minimum_dimension = std::min(
+    projection.map_frame.width(), projection.map_frame.height());
+  return std::max(
+    512 * std::numeric_limits<long double>::epsilon(),
+    static_cast<long double>(8 * options.tolerance_pixels
+                             / minimum_dimension));
+}
+
+inline double
+residual_floor(const projection_handle& projection)
+{
+  return 256 * std::numeric_limits<double>::epsilon()
+         * std::max(projection.map_frame.width(),
+                    projection.map_frame.height());
+}
+
+inline void
+append_candidate(inverse_result& result,
+                 inverse_candidate candidate,
+                 const inverse_options& options)
+{
+  if (result.candidates.size() < options.maximum_candidates)
+    result.candidates.push_back(std::move(candidate));
+  else
+    result.truncated = true;
+}
+
+inline void
+inverse_myriahedral(const projection_handle& projection,
+                    const projected_coordinate point,
+                    const inverse_options& options,
+                    inverse_result& result)
+{
+  using namespace a60::carto::myriahedral_detail;
+  const myriaproj& implementation
+    = std::get<myriaproj>(projection.projection);
+  const projection_layout& layout = implementation.layout();
+  const long double extent_x
+    = static_cast<long double>(layout.maximum_x) - layout.minimum_x;
+  const long double extent_y
+    = static_cast<long double>(layout.maximum_y) - layout.minimum_y;
+  constexpr long double ratio = 16.0L / 9.0L;
+  const long double scale = std::min(ratio / extent_x, 1.0L / extent_y);
+  const long double left = (ratio - extent_x * scale) / 2;
+  const long double bottom = (1 - extent_y * scale) / 2;
+  const long double normalized_x
+    = point.x / projection.map_frame.width();
+  const long double normalized_y
+    = point.y / projection.map_frame.height();
+  const point_2d raw {
+    static_cast<double>(layout.minimum_x
+      + (normalized_x * ratio - left) / scale),
+    static_cast<double>(layout.minimum_y
+      + ((1 - normalized_y) - bottom) / scale),
+  };
+  const long double weight_tolerance
+    = barycentric_tolerance(projection, options);
+  const double acceptance = std::max(
+    options.tolerance_pixels, residual_floor(projection));
+
+  const std::size_t begin = options.native_cell
+                              ? *options.native_cell : 0;
+  const std::size_t end = options.native_cell
+                            ? begin + 1 : face_count;
+  for (std::size_t face = begin; face < end; ++face)
+    {
+      const auto weights = planar_barycentric(
+        layout.planar[face], raw.x, raw.y, weight_tolerance);
+      if (!weights)
+        continue;
+      const spherical_face& source = layout.spherical[face];
+      vector_3d vector {
+        static_cast<double>(weights->weights[0] * source[0].x
+                            + weights->weights[1] * source[1].x
+                            + weights->weights[2] * source[2].x),
+        static_cast<double>(weights->weights[0] * source[0].y
+                            + weights->weights[1] * source[1].y
+                            + weights->weights[2] * source[2].y),
+        static_cast<double>(weights->weights[0] * source[0].z
+                            + weights->weights[1] * source[1].z
+                            + weights->weights[2] * source[2].z),
+      };
+      vector = normalized(vector);
+      const point_2d forced = normalize_planar_point(
+        layout, project_on_face(layout, face, vector));
+      const double residual = std::hypot(
+        forced.x * projection.map_frame.width() - point.x,
+        forced.y * projection.map_frame.height() - point.y);
+      if (!std::isfinite(residual) || residual > acceptance)
+        continue;
+      append_candidate(
+        result,
+        {geographic_from_vector(vector), static_cast<std::uint32_t>(face),
+         0, residual, weights->boundary},
+        options);
+    }
+}
+
+inline void
+inverse_voronoi(const projection_handle& projection,
+                const projected_coordinate point,
+                const inverse_options& options,
+                inverse_result& result)
+{
+  using namespace a60::carto::voronoi_detail;
+  const double normalized_x = point.x / projection.map_frame.width();
+  const double normalized_y = point.y / projection.map_frame.height();
+  static const point_2d registration = project_to_unfolded_net(
+    0, registration_longitude_degrees);
+  const point_2d raw {
+    registration.x
+      + (normalized_x * a60::carto::voronoi_source_width - source_center_x)
+          / source_scale,
+    registration.y
+      + (source_center_y - normalized_y * a60::carto::voronoi_source_height)
+          / source_scale,
+  };
+  const layout_data& data = layout();
+  const long double weight_tolerance
+    = barycentric_tolerance(projection, options);
+  const double acceptance = std::max(
+    options.tolerance_pixels, residual_floor(projection));
+  const std::size_t begin = options.native_cell
+                              ? *options.native_cell : 0;
+  const std::size_t end = options.native_cell
+                            ? begin + 1 : face_count;
+  for (std::size_t face = begin; face < end; ++face)
+    {
+      const face_geometry& geometry = data.faces[face];
+      std::array<point_2d, 3> planar {};
+      for (std::size_t vertex = 0; vertex < planar.size(); ++vertex)
+        {
+          const point_2d local = project_on_face(
+            geometry, data.vertices[geometry.vertices[vertex]]);
+          const point_2d unfolded = apply(geometry.transform, local);
+          planar[vertex] = {unfolded.x, -unfolded.y};
+        }
+      const auto weights = planar_barycentric(
+        planar, raw.x, raw.y, weight_tolerance);
+      if (!weights)
+        continue;
+      vector_3d vector {
+        static_cast<double>(
+          weights->weights[0] * data.vertices[geometry.vertices[0]].x
+          + weights->weights[1] * data.vertices[geometry.vertices[1]].x
+          + weights->weights[2] * data.vertices[geometry.vertices[2]].x),
+        static_cast<double>(
+          weights->weights[0] * data.vertices[geometry.vertices[0]].y
+          + weights->weights[1] * data.vertices[geometry.vertices[1]].y
+          + weights->weights[2] * data.vertices[geometry.vertices[2]].y),
+        static_cast<double>(
+          weights->weights[0] * data.vertices[geometry.vertices[0]].z
+          + weights->weights[1] * data.vertices[geometry.vertices[1]].z
+          + weights->weights[2] * data.vertices[geometry.vertices[2]].z),
+      };
+      vector = normalized(vector);
+      const point_2d local = project_on_face(geometry, vector);
+      const point_2d unfolded = apply(geometry.transform, local);
+      const point_2d forced_raw {unfolded.x, -unfolded.y};
+      const double forced_x
+        = (source_center_x
+           + source_scale * (forced_raw.x - registration.x))
+          / a60::carto::voronoi_source_width
+          * projection.map_frame.width();
+      const double forced_y
+        = (source_center_y
+           - source_scale * (forced_raw.y - registration.y))
+          / a60::carto::voronoi_source_height
+          * projection.map_frame.height();
+      const double residual = std::hypot(
+        forced_x - point.x, forced_y - point.y);
+      if (!std::isfinite(residual) || residual > acceptance)
+        continue;
+      append_candidate(
+        result,
+        {geographic_from_vector(vector, input_rotation_degrees),
+         static_cast<std::uint32_t>(face), 0, residual,
+         weights->boundary},
+        options);
+    }
+}
+
+} // namespace inverse_detail
+
+/// Reverse one projected coordinate into zero or more face-qualified
+/// geographic candidates. Unsupported projections return a structured status.
+inline inverse_result
+inverse(const projection_handle& projection,
+        const projected_coordinate point,
+        const inverse_options& options = {})
+{
+  if (!std::isfinite(point.x) || !std::isfinite(point.y))
+    throw std::invalid_argument("inverse point must be finite");
+  if (!std::isfinite(options.tolerance_pixels)
+      || options.tolerance_pixels <= 0)
+    throw std::invalid_argument(
+      "inverse tolerance must be finite and positive");
+  if (options.maximum_candidates == 0)
+    throw std::invalid_argument(
+      "inverse maximum candidate count must be positive");
+  if (options.native_cell
+      && *options.native_cell >= projection.spec.native_cell_count)
+    throw std::invalid_argument("inverse native cell is out of range");
+
+  inverse_result result;
+  result.tolerance_pixels = options.tolerance_pixels;
+  if (inverse_mode_for(projection.spec) == inverse_mode::none)
+    {
+      result.status = inverse_status::unsupported;
+      return result;
+    }
+  const double tolerance = options.tolerance_pixels;
+  if (point.x < -tolerance
+      || point.x > projection.map_frame.width() + tolerance
+      || point.y < -tolerance
+      || point.y > projection.map_frame.height() + tolerance)
+    {
+      result.status = inverse_status::outside;
+      return result;
+    }
+  switch (projection.spec.kind)
+    {
+    case projection_kind::myriahedral:
+      inverse_detail::inverse_myriahedral(
+        projection, point, options, result);
+      break;
+    case projection_kind::voronoi:
+      inverse_detail::inverse_voronoi(
+        projection, point, options, result);
+      break;
+    case projection_kind::cahill_keyes:
+    case projection_kind::authagraph:
+    case projection_kind::dymaxion:
+    case projection_kind::star_x:
+      break;
+    }
+  if (result.candidates.empty())
+    result.status = inverse_status::outside;
+  else if (result.candidates.size() > 1 || result.truncated)
+    result.status = inverse_status::ambiguous;
+  else if (result.candidates.front().boundary)
+    result.status = inverse_status::cut;
+  else
+    result.status = inverse_status::unique;
+  return result;
+}
+
+/// Reverse a native batch, preserving one structured result per input point.
+inline std::vector<inverse_result>
+inverse_many(const projection_handle& projection,
+             const std::span<const projected_coordinate> points,
+             const inverse_options& options = {})
+{
+  std::vector<inverse_result> result;
+  result.reserve(points.size());
+  for (const projected_coordinate point : points)
+    result.push_back(inverse(projection, point, options));
+  return result;
 }
 
 /// Counters describing adaptive sampling and seam decisions for one path.
@@ -722,6 +1194,32 @@ topology_kind_name(const topology_kind kind)
     case topology_kind::folded: return "folded";
     case topology_kind::periodic: return "periodic";
     case topology_kind::polyhedral: return "polyhedral";
+    }
+  return "unknown";
+}
+
+inline constexpr std::string_view
+inverse_mode_name(const inverse_mode mode)
+{
+  switch (mode)
+    {
+    case inverse_mode::none: return "none";
+    case inverse_mode::face_qualified: return "face-qualified";
+    case inverse_mode::candidates: return "candidates";
+    }
+  return "unknown";
+}
+
+inline constexpr std::string_view
+inverse_status_name(const inverse_status status)
+{
+  switch (status)
+    {
+    case inverse_status::unique: return "unique";
+    case inverse_status::ambiguous: return "ambiguous";
+    case inverse_status::outside: return "outside";
+    case inverse_status::cut: return "cut";
+    case inverse_status::unsupported: return "unsupported";
     }
   return "unknown";
 }

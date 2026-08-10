@@ -20,7 +20,7 @@
 #include <vector>
 
 #include <a60.h>
-#include <a60-svg.h>
+#include <izzi-svg.h>
 
 #include "a60-carto-frame.h"
 #include "a60-carto-projection.h"

@@ -37,6 +37,22 @@ export class CartofreakoWorkerClient {
 
     manifest() { return this.request('manifest'); }
 
+    forward(projection, coordinate) {
+        return this.request('forward', {projection, coordinate});
+    }
+
+    forwardMany(projection, coordinates) {
+        return this.request('forwardMany', {projection, coordinates});
+    }
+
+    inverse(projection, coordinate, options = {}) {
+        return this.request('inverse', {projection, coordinate, options});
+    }
+
+    inverseMany(projection, coordinates, options = {}) {
+        return this.request('inverseMany', {projection, coordinates, options});
+    }
+
     projectGeometry(projection, geometry, options = {}) {
         return this.request('projectGeometry', {projection, geometry, options});
     }

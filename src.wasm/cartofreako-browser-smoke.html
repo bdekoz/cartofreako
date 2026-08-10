@@ -24,6 +24,7 @@
     try {
       const runtime = await createCartofreako();
       requireCondition(runtime.abiVersion === 1, 'wrong ABI');
+      requireCondition(runtime.apiVersion === 2, 'wrong API');
       requireCondition(new Set(runtime.manifest.map(({family}) => family)).size === 6,
         'missing projection family');
       for (const id of ['cahill-keyes', 'authagraph', 'dymaxion',
@@ -36,6 +37,15 @@
       }
 
       const projection = runtime.createProjection({id: 'myriahedral', width: 440});
+      const forward = projection.forward([171.2, 7.1]);
+      const inverse = projection.inverse([forward.x, forward.y], {
+        nativeCell: forward.nativeCell
+      });
+      requireCondition(inverse.candidates.length === 1,
+        'main-thread face-qualified inverse failed');
+      requireCondition(Math.abs(inverse.candidates[0].longitude - 171.2) < 2e-8
+        && Math.abs(inverse.candidates[0].latitude - 7.1) < 2e-8,
+        'main-thread inverse is inaccurate');
       const geometry = projection.projectGeometry({
         type: 'Polygon',
         coordinates: [[[-10, -10], [10, -10], [10, 10], [-10, 10], [-10, -10]]]
@@ -47,6 +57,18 @@
       const worker = new CartofreakoWorkerClient();
       const workerManifest = await worker.manifest();
       requireCondition(workerManifest.abiVersion === 1, 'worker ABI is wrong');
+      requireCondition(workerManifest.apiVersion === 2, 'worker API is wrong');
+      const workerForward = await worker.forward(
+        {id: 'voronoi', width: 440},
+        [171.2, 7.1]
+      );
+      const workerInverse = await worker.inverse(
+        {id: 'voronoi', width: 440},
+        [workerForward.x, workerForward.y],
+        {nativeCell: workerForward.nativeCell}
+      );
+      requireCondition(workerInverse.candidates.length === 1,
+        'worker face-qualified inverse failed');
       const land = await fetch('./cartofreako-cahill-keyes-land-110m.geojson')
         .then(response => response.json());
       const workerGeometry = await worker.projectGeometry(
@@ -59,7 +81,7 @@
       worker.terminate();
 
       result.dataset.status = 'pass';
-      result.textContent = `PASS ABI ${runtime.abiVersion}; six projections; worker; Canvas; slices`;
+      result.textContent = `PASS API ${runtime.apiVersion}; ABI ${runtime.abiVersion}; forward/reverse; six projections; worker; Canvas; slices`;
     } catch (error) {
       result.dataset.status = 'fail';
       result.textContent = `FAIL ${error.stack ?? error}`;

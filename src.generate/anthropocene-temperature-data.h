@@ -52,7 +52,7 @@ struct temperature_profile
   std::uint64_t high_scale_days = 8;
   std::uint64_t low_scale_days = 8;
   double minimum_nonzero_opacity = 0.34;
-  double data_graphic_opacity = 0.30;
+  double data_graphic_opacity = 0.60;
   bool show_legend = true;
   std::string geojson;
   std::string geojson_sha256;

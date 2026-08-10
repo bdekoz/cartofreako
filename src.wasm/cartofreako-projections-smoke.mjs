@@ -107,6 +107,16 @@ requireCondition(flat.ringRoles[1] === RingRole.hole, 'hole role missing');
 
 const runtime = await createCartofreako();
 requireCondition(runtime.abiVersion === 1, 'incorrect runtime ABI');
+requireCondition(runtime.apiVersion === 2, 'incorrect runtime API');
+requireCondition(Object.isFrozen(runtime.manifest), 'projection manifest is mutable');
+requireCondition(
+    runtime.manifest.every((entry) => Object.isFrozen(entry)
+        && entry.geographicCoordinateOrder === 'longitude-latitude'
+        && entry.projectedUnits === 'pixels'
+        && entry.axisOrigin === 'top-left'
+        && entry.framePolicy === 'exact-native-aspect'),
+    'projection metadata omits coordinate or frame policy'
+);
 requireCondition(
     runtime.implementationName.includes('all-projection/WebAssembly'),
     'incorrect runtime implementation identity'
@@ -118,8 +128,21 @@ requireCondition(
     runtime.licenses.cahillKeyes.includes('Gene Keyes'),
     'runtime omits Cahill-Keyes attribution metadata'
 );
+const documentedApi = runtime.projection({
+    name: 'myriahedral-pacific',
+    frame: [1920, 1080]
+});
+requireCondition(documentedApi.metadata().apiVersion === 2, 'metadata API version is wrong');
+const documentedForward = documentedApi.forward([171.2, 7.1]);
+const documentedReverse = documentedApi.inverse(
+    [documentedForward.x, documentedForward.y],
+    {nativeCell: documentedForward.nativeCell}
+);
+requireCondition(documentedReverse.candidates.length === 1, 'documented API reverse failed');
+documentedApi.dispose();
 
 const summaries = [];
+const reversible = new Set(['myriahedral', 'voronoi']);
 for (const id of [
     'cahill-keyes', 'authagraph', 'dymaxion', 'myriahedral', 'star-x', 'voronoi'
 ]) {
@@ -133,6 +156,43 @@ for (const id of [
         point.nativeCell >= 0 && point.nativeCell < projection.descriptor.nativeCellCount,
         `${id} point has an invalid native cell`
     );
+    const forward = projection.forward([-122.4194, 37.7749]);
+    requireCondition(
+        Math.hypot(forward.x - point.x, forward.y - point.y) < 1e-12,
+        `${id} forward alias disagrees with project`
+    );
+    requireCondition(
+        projection.descriptor.inverseMode === (reversible.has(id) ? 'face-qualified' : 'none'),
+        `${id} inverse capability is wrong`
+    );
+    const reversed = projection.inverse([point.x, point.y]);
+    if (reversible.has(id)) {
+        requireCondition(
+            ['unique', 'ambiguous', 'cut'].includes(reversed.status),
+            `${id} reverse status is wrong`
+        );
+        const candidate = reversed.candidates.find(
+            ({nativeCell}) => nativeCell === point.nativeCell
+        );
+        requireCondition(candidate, `${id} reverse omitted the forward face`);
+        requireCondition(
+            Math.abs(candidate.latitude - 37.7749) < 2e-8
+                && Math.abs(candidate.longitude - -122.4194) < 2e-8,
+            `${id} reverse coordinate is inaccurate`
+        );
+        const qualified = projection.inverse([point.x, point.y], {
+            nativeCell: point.nativeCell
+        });
+        requireCondition(qualified.candidates.length === 1, `${id} qualified reverse is not unique`);
+        const reverseBatch = projection.inverseMany(new Float64Array([
+            point.x, point.y, forward.x, forward.y
+        ]));
+        requireCondition(reverseBatch.statuses.length === 2, `${id} reverse batch lost inputs`);
+        requireCondition(reverseBatch.candidateOffsets.length === 3, `${id} reverse offsets are wrong`);
+    } else {
+        requireCondition(reversed.status === 'unsupported', `${id} reverse should be unsupported`);
+        requireCondition(reversed.candidates.length === 0, `${id} unsupported reverse returned data`);
+    }
     const batched = projection.projectPoints(new Float64Array([
         -122.4194, 37.7749, 139.6917, 35.6895
     ]));
@@ -195,7 +255,8 @@ for (const id of [
         height: projection.height,
         outputParts: geometry.partTypes.length,
         outputVertices: geometry.coordinates.length / 2,
-        cuts: geometry.diagnostics.cuts
+        cuts: geometry.diagnostics.cuts,
+        inverseMode: projection.descriptor.inverseMode
     });
     projection.dispose();
 }
@@ -243,6 +304,17 @@ requireCondition(d3Events[0][0] === 'polygonStart', 'D3 adapter did not replay p
 requireCondition(d3Events.at(-1)[0] === 'polygonEnd', 'D3 adapter did not replay polygon end');
 ck.dispose();
 
+const d3Myria = runtime.createProjection({id: 'myriahedral', width: 440});
+const d3MyriaAdapter = cartofreakoD3Projection(d3Myria);
+const d3Forward = d3Myria.forward([171.2, 7.1]);
+const d3Reverse = d3MyriaAdapter.invert([d3Forward.x, d3Forward.y]);
+requireCondition(
+    d3Reverse && Math.abs(d3Reverse[0] - 171.2) < 2e-8
+        && Math.abs(d3Reverse[1] - 7.1) < 2e-8,
+    'D3 unique inverse adapter failed'
+);
+d3Myria.dispose();
+
 const myria = runtime.createProjection({id: 'myriahedral', width: 440});
 const myriaSlices = myria.listSlices();
 requireCondition(myriaSlices.length === 3, 'Myriahedral common slice catalogue is incomplete');
@@ -284,6 +356,7 @@ requireCondition(rejectedFrame, 'all-projection runtime accepted an invalid fram
 console.log(JSON.stringify({
     implementation: runtime.implementationName,
     abiVersion: runtime.abiVersion,
+    apiVersion: runtime.apiVersion,
     projectionFamilies: [...families],
     manifestEntries: runtime.manifest.length,
     summaries
