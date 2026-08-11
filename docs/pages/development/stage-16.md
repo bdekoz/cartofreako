@@ -43,11 +43,15 @@ reviewed implementation and promotion decision.
 
 ## Stage 16I local outcome
 
-The ignored local review package is rooted at
-`reports/cartofreako-audit-outcomes-03.pdf`, with adjacent Markdown, HTML,
-CSS, metadata, manifest, and plate assets. It uses the canonical Devastation
-Pacific v3.9 `document_type: assess-outcomes`, the `randoma11y-accent` style,
-and the required `coda-share` modifier.
+The reviewed package is rooted at
+`reports/cartofreako-audit-outcomes-03.pdf`. Only that archival PDF boundary
+object, its predecessor feedback, and its planning brief are admitted as
+source-controlled research records under the curated reports policy. Report
+source, HTML, CSS, manifests, metadata, copied plate trees, editor backups,
+and visual-QA intermediates remain ignored. The report uses the canonical
+Devastation Pacific v3.9
+`document_type: assess-outcomes`, the `randoma11y-accent` style, and the
+required `coda-share` modifier.
 
 The completed QA record includes:
 
@@ -65,7 +69,9 @@ The assessment records the Cartofreako × Alpha60 joined workflow as
 `INFERRED`, not implemented; stable AAO inventory and integrity evidence do
 not become measured cache, performance, or power outcomes. Proposed meeting
 participants and contributors remain suggestions, not invitations or
-confirmations. The package is local only and is not a Stage 16 release.
+confirmations. Source-control admission records the reviewed PDF as a boundary
+object; it does not make the package a Stage 16 release or authorize push,
+publication, email, upload, invitation, or external transfer.
 
 ## Preserved benchmark baseline
 

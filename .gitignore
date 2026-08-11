@@ -94,10 +94,14 @@ __pycache__/
 /assets.generated.pre-*/
 /assets.generated.v*.tar.xz
 
-# Generated release reports and visual-QA renders are delivery artifacts.
-# Two Stage 15 research records are checked documentation, not rendered
-# release reports: one implemented exploration canary and one feasibility
-# study.
+# Report outputs remain excluded by default. A reviewed report may become a
+# source-controlled research record only through the explicit allowlist below;
+# admitting its PDF does not admit copied plate trees, browser intermediates,
+# editor backups, QA renders, or unrelated delivery receipts.
 /reports/*
+!/reports/README.md
 !/reports/stage-15-atoll-evidence-canary.md
 !/reports/stage-15-water-debris-feasibility.md
+!/reports/cartofreako-audit-outcomes-02-feedback.md
+!/reports/cartofreako-audit-outcomes-02-next-steps.md
+!/reports/cartofreako-audit-outcomes-03.pdf
