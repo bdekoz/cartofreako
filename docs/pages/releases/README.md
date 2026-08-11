@@ -7,6 +7,7 @@
 [`v20260808.1` corrected release notes](v20260808.1.md) ·
 [`v20260808` superseded attempt](v20260808.md) ·
 [`v13` S3 publication](s3-v13.md) ·
+[v13 to proposed-v14 consumer layout](v13-to-v14-consumer-layout.md) ·
 [`v20260807` release notes](v20260807.md) ·
 [`v12` S3 publication](s3-v12.md) ·
 [`v20260806` release notes](v20260806.md)

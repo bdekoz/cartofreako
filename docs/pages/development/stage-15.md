@@ -7,10 +7,13 @@
 
 ## Status
 
-**Planned.** Stage 15 has no implemented GPU product, benchmark target, or
-promotion decision. This ledger establishes the handoff so Stage 14 can close
-with a stable print, projection, catalog, and 1080p baseline instead of
-changing scope while GPU experiments are in progress.
+**Bounded active scope implemented and locally verified 2026-08-10.** The
+active scope is 15A
+(frozen handoff and benchmark contract), 15B (lossless landscape and portrait
+2K controls), 15I (local consumer-oriented CDN/WASM layout), and two
+exploration-only research prototypes. Stages 15C through 15H are deferred.
+No compressed texture, hardware benchmark, picking mask, Float32 geometry,
+engine adapter, promotion, release, or upload was implemented or implied.
 
 ## Purpose and boundary
 
@@ -28,6 +31,12 @@ promote an experimental format merely by running a benchmark.
 
 All interrupted projections remain flat-map textures. No Stage 15 artifact may
 be described or sampled as an equirectangular globe texture.
+
+The active subset stops before compressed texture experiments or performance
+claims. Stage 15A defines a future result and environment envelope but neither
+installs encoders nor executes GPU timing. Stage 15I builds and checks only a
+local candidate object tree; it has no network, credential, release, or upload
+operation.
 
 ## Stage 14 benchmark handoff
 
@@ -56,17 +65,27 @@ upscaling the 1920 × 1080 derivative. If a Stage 14 parent, transform, or
 catalog record changes, its benchmark case receives a new identity and must be
 rerun.
 
-## Planned products
+Stage 15A begins from a newly regenerated ignored artifact catalog stamped by
+the clean frozen Stage 14 commit `750efb321cc5553c7f0f7aa6d64e47ed9f2e8bef`.
+The previously present catalog identified commit `3a861c7` and a modified
+tree; it was not eligible for the handoff. The checked freeze records the
+clean commit, catalog hash, standard-manifest hash, parent hashes, and existing
+lossless-screen hashes without rewriting any authoritative artifact.
 
-| Candidate | Role | Initial rule |
+## Planned products and current disposition
+
+| Candidate | Role | Disposition |
 | --- | --- | --- |
-| Stage 14 PNG and lossless WebP | Access and transfer baseline | Preserve the exact 1920 × 1080 files and hashes; do not regenerate them inside the benchmark |
-| 2K reference PNG | Lossless power-of-two control | Exact 2048 × 1024 `contain` canvas, declared padding, full projection visible, same parent as Stage 14 |
-| 2K WebP | Transfer/decode comparison | Test lossless first; any lossy profile receives its own ID, settings, hashes, and visual threshold |
-| KTX2/Basis candidates | GPU-upload candidates | Evaluate ETC1S and UASTC profiles, mip levels, supercompression, alpha, orientation, and color-space metadata separately |
-| Topology mask | Qualified-picking aid | Implement before feature masks; encode native cell and component losslessly with a checked value dictionary and matching transform |
-| Feature-ID mask | Visible-feature picking aid | Consider only after the topology-mask contract passes and source licensing permits redistribution |
-| Float32 geometry adapter | Dynamic GPU path | Keep Float64 CPU coordinates authoritative and measure forward, screen, and reverse-selection differences before adoption |
+| Stage 14 PNG and lossless WebP | Access and transfer baseline | **Active 15A input.** Preserve the exact 1920 × 1080 files and hashes; do not regenerate them inside a benchmark |
+| Landscape 2K PNG | Lossless power-of-two control | **Active 15B.** Exact 2048 × 1024 `contain` canvas, declared padding, full projection visible, same 3840-pixel parent as Stage 14 |
+| Portrait 2K PNG | Lossless vertical control | **Active 15B.** Exact 1024 × 2048 `contain` canvas with the same no-crop, parent, color, and transform rules |
+| 2K WebP | Transfer/decode comparison | **Deferred 15C** |
+| KTX2/Basis candidates | GPU-upload candidates | **Deferred 15C** |
+| Hardware timing | Decode, upload, memory, and first-frame evidence | **Deferred 15D** |
+| Topology and feature-ID masks | Qualified-picking aids | **Deferred 15E** |
+| Float32 geometry adapter | Dynamic GPU path | **Deferred 15F**; Float64 remains authoritative |
+| Additional engine adapters | Consumer trials beyond the existing Three.js canary | **Deferred 15G** |
+| Product promotion | Standard or optional lifecycle decision | **Deferred 15H** |
 
 PNG is the visual reference, not necessarily the intended runtime transfer
 format. A single aggregate score must not hide that flat water, translucent
@@ -114,29 +133,32 @@ browser GPU path. Results are reported per machine; they are not merged into a
 claim of universal performance. Software rendering may be retained as a
 correctness fallback but cannot serve as GPU-performance evidence.
 
-## Proposed anthropocene-water-debris-scale evidence tier
+## Research prototype R2 — anthropocene water debris
 
-Investigate water-based debris phenomena like The Great Pacific Garbage Patch, only extend scope to all world locations. Also track river waste and debis.
+The approved prototype is a source-and-contract feasibility study, not a data
+download or generation pass. It must distinguish observed shoreline or
+surface debris, modeled concentration fields, modeled river emissions,
+recorded cleanup operations, and unavailable depth. A two-dimensional patch
+shape must never be presented as an observed three-dimensional debris body.
 
-Sources
-https://theoceancleanup.com
+The source inventory begins with [The Ocean Cleanup](https://theoceancleanup.com/)
+and public NOAA marine-debris records. Before a generator is proposed, the
+prototype records access method, reuse rights, observation/model period,
+spatial and temporal resolution, units, uncertainty, and whether coordinate
+or depth observations are actually available. Unknown depth is
+`UNAVAILABLE`, not zero.
 
-Suggsted generator profile pass changes:
-move 'anthropocene' to 'anthropocene-temperature'
+A future `anthropocene-water-debris` generator and pass may be specified only
+after the feasibility report identifies a redistributable spatial source. It
+is not implemented or promoted in this stage. The existing `anthropocene`
+pass remains the stable legacy multi-source climate, fire, and smoke atlas;
+the dated `anthropocene-temperature-2025` and
+`anthropocene-temperature-2026` pass IDs also remain unchanged.
 
-make this 'antropocene-water-debris'
+The checked outcome is
+[Stage 15 R2 — anthropocene water-debris feasibility](../../../reports/stage-15-water-debris-feasibility.md).
 
-
-Evaluate feasibility and propose a plan for a new generate pass for " anthropocene-water-debris" detailing location, shape, depth
-src.generate/generate-anthropocene-water-debris.cc
-
-
-Research, evaulate, and suggest plan before continuing.
-Then detail plan and way for confirmation before implementing.
-
-After confirmation, assume authorized and proceed and finish work without prompting.
-
-## Proposed atoll-scale evidence tier
+## Research prototype R1 — atoll-scale evidence
 
 Add an atoll-scale evidence tier for place-specific research, beginning with
 the Marshall Islands experiments. Bring in high-resolution topobathymetry,
@@ -158,57 +180,136 @@ visual speculation only. The tier must support forward and reverse projection
 fixtures so a selected pixel, feature, or scenario can be traced back to its
 source coordinate and evidence record.
 
+The Stage 15 prototype is limited to a checked contract, a source/rights
+inventory, one Marshall Islands canary-manifest plan, and explicit
+`UNAVAILABLE` fields. It performs no restricted download, creates no new
+evidentiary render, and makes no promotion decision.
 
-## Optimize layout on S3 for consumers
+The checked outcome is
+[Stage 15 R1 — atoll-scale evidence canary](../../../reports/stage-15-atoll-evidence-canary.md).
 
-Re-examine the layout of the v13 files on the S3 bucket. Given the capabilities added in V14, can this layout be optimized for the new intended consumers? What can be put into the S3 archive to make indexing, searching, or use by ai-agents easier and faster? Think of this like optimizing struct layout in C++ (for a c++ ABI), but in CDN terms.
+## Active 15I — consumer-oriented CDN and WASM layout
 
-- also apply this thinking to any generated WASM binary file: are there any useful optimizations that would be applicable that are not being done currently?
+Stage 15I treats the object tree as a versioned CDN data ABI. It compares the
+immutable v13 publication with a proposed v14 layout that adds machine-readable
+indexes, stable lifecycle partitions, declared media and cache policy, and a
+runtime manifest for browser, game, and AI-agent consumers.
 
-- assume cutover no compatibility needed, all internal documentation pages will be re-indexed, but generate a compatibility doc between v14 and v14 layouts for reference
+Implementation is local only: a checked schema, fixture, builder, checker, and
+v13-to-proposed-v14 compatibility document. The builder may copy local runtime
+files into an ignored staging tree, but it cannot access S3 or invoke release
+transport. Shared AAO publication mechanics remain owned by
+`alpha60-clusterops/bin/load-s3-aao`; Cartofreako supplies manifests and a thin
+release-specific wrapper only.
+
+The review covers immutable or content-addressed runtime identity, correct
+WASM and module MIME types, cache policy, optional precompression, and the
+split between core projection runtime and optional canvas, SVG, D3, Three.js,
+worker, and catalog helpers. A versioned immutable runtime directory is
+preferred where independently hashed Emscripten loader/WASM renames would
+break their default pairing. No v14 archive is rebuilt, released, or uploaded
+by this work. The compatibility reference is v13-to-proposed-v14, not
+v14-to-v14.
+
+The checked compatibility and implementation reference is
+[v13 to proposed-v14 consumer layout](../releases/v13-to-v14-consumer-layout.md).
+
+## Implemented active results
+
+| Work | Local result | Identity or evidence |
+| --- | --- | --- |
+| **15A** | Frozen 205 standard artifacts, 31 pass IDs, 11 layouts, and 14 approved slices from the clean Stage 14 catalog | Commit `750efb321cc5553c7f0f7aa6d64e47ed9f2e8bef`; input-fixture SHA-256 `af793ba88ebaead4aeedfdf179e35a1a786eab5ff7e2cd2f51ca086b4970df8b` |
+| **15B** | Generated and checked 205 landscape 2048 × 1024 PNGs and 205 portrait 1024 × 2048 PNGs | 410 files; 141,014,973 bytes; generated-catalog SHA-256 `901fb44bdc1bd70acd781f66ba0e4b277adfaf0d66ec022becda9b7ec215ccb4` |
+| **15I** | Built a 61-file local candidate with one primary index, 31 pass indexes, 11 projection indexes, and 16 runtime files | 1,291,121 bytes; local `release-layout.json` SHA-256 `763c86011c6c9a8db56f90a9fac1bceb357a0893991c863f68fd5a4b85289e3d`; no `release.json` |
+| **R1** | Validated the Majuro canary contract and source/rights inventory | No download, evidence render, or promotion |
+| **R2** | Validated the water-debris evidence classes and feasibility inventory | No download, generator, pass rename, or promotion |
+
+The 15B generator hashes every authoritative full PNG before and after
+conversion. Both controls use `contain`, Lanczos resampling, the WCAG-light
+gray `#f4f5f5` background, opaque 8-bit sRGB PNG, and no crop. They are built
+directly from the 3840-pixel parent, never from the 1080p derivative. The
+portrait control intentionally has substantial letterboxing for landscape
+layouts; it preserves the entire flat projection instead of zooming or
+cropping.
+
+A representative water-plate contact-sheet review covered all eleven layouts
+in both orientations. All maps were fully contained, the vertical Star-X
+product retained its central black star and Antarctic component, and no
+content edge was clipped. This is control-product QA, not a GPU quality or
+performance claim.
+
+The implementation remains explicit and offline:
+
+```sh
+make freeze-stage-15-inputs
+make check-gpu-controls
+make check-consumer-release-layout
+make check-stage-15-research-prototypes
+make check-stage-15-active
+```
+
+These targets are deliberately absent from `make all`, ordinary `make check`,
+GitHub release, and UCB AAO/S3 release.
 
 
 ## Staging plan
 
-| Stage | Work | Exit gate |
+| Stage | Disposition | Active work or deferral |
 | --- | --- | --- |
-| **15A — benchmark contract** | Freeze the Stage 14 handoff manifest; define result schema, corpus, deterministic derivation recipes, benchmark harness, and lossless reference checks | A rerun identifies every input and environment and cannot mutate a Stage 14 parent |
-| **15B — texture formats** | Produce 2K PNG/WebP controls and pinned KTX2/Basis candidates; measure size, decode, upload, memory, first frame, and visual behavior | Per-pass and per-machine evidence supports retaining or rejecting each profile without one aggregate quality claim |
-| **15C — topology masks** | Define a lossless native-cell/component mask and value dictionary, then test qualified picking across all six families, including Star-X components | Mask and display transforms match exactly; cuts and overlaps retain complete candidate semantics |
-| **15D — dynamic geometry** | Audit Float32 conversion, worker transfer, WebGL/WebGPU upload, cancellation, and representative interactive loads | Positional and candidate-set tolerances are declared and pass while Float64 remains authoritative |
-| **15E — consumer trials** | Extend the checked Stage 14 Three.js flat-plane canary to accepted GPU texture, mask, and Float32 profiles; consider MapLibre, Godot, or Unity adapters only against the same catalog and projection contracts | Each adapter reproduces the same flat-map placement and picking fixtures without inventing projection semantics |
-| **15F — promotion decision** | Compare measured benefit, tooling/license burden, reproducibility, accessibility, fallbacks, and archive separation | Accepted profiles get explicit product IDs and checks; rejected profiles remain documented evidence rather than becoming silent defaults |
-| **15G — atoll-scale evidence** | Define the dated, uncertainty-bearing topobathymetry, inundation, freshwater, infrastructure, shoreline, reef, and ocean-heat contract; build a Marshall Islands canary before any global generalization | Every visible layer and scenario is source-traceable, scale-qualified, reverse-addressable, and reviewed before it can leave exploration-only status |
+| **15A — frozen handoff** | **Approved and active** | Freeze the clean Stage 14 catalog, hashes, deterministic corpus, and future benchmark result/environment envelope |
+| **15B — lossless 2K controls** | **Approved and active** | Produce checked 2048 × 1024 landscape and 1024 × 2048 portrait PNG controls from authoritative full PNG parents |
+| **15C — compressed formats** | **Deferred** | Lossless/lossy WebP and KTX2/Basis profiles, encoder installation, mips, and compression comparisons |
+| **15D — hardware benchmark** | **Deferred** | Decode, GPU upload, memory, first-frame, and repeated machine timing |
+| **15E — topology and feature masks** | **Deferred** | Native-cell/component masks and licensed visible-feature IDs |
+| **15F — Float32 geometry** | **Deferred** | Dynamic geometry conversion and positional/reverse residual audit |
+| **15G — consumer trials** | **Deferred** | Additional browser and game-engine adapters |
+| **15H — promotion** | **Deferred** | Lifecycle, release, fallback, and adoption decision |
+| **15I — CDN/WASM layout** | **Approved and active** | Build and check a local consumer-oriented object-tree fixture; document v13-to-proposed-v14 compatibility |
+| **R1 — atoll evidence** | **Approved prototype only** | Contract, source/rights inventory, and Marshall Islands canary plan; no evidence render |
+| **R2 — water debris** | **Approved prototype only** | Contract and feasibility/source inventory; no generator or pass promotion |
 
-## Proposed repository surface
+## Implemented repository surface
 
-Names remain provisional until implementation:
+The active implementation uses:
 
 ```text
 contracts/gpu-benchmark-v1.schema.json
 fixtures/gpu-benchmark/v1/stage-14-inputs.json
-scripts/generate-gpu-canary.mjs
-scripts/benchmark-gpu-products.mjs
-tests/test-gpu-products.mjs
-reports/stage-15-gpu-benchmark.json
-reports/stage-15-gpu-benchmark.md
+scripts/freeze-stage-15-inputs.mjs
+scripts/generate-gpu-controls.mjs
+assets.generated/<projection>/gpu-control-2k-{landscape,portrait}/*.png
+assets.generated/catalog/gpu-controls-v1.json
+tests/test-gpu-controls.mjs
+tests/validate-stage15-contracts.py
+contracts/consumer-release-layout-v1.schema.json
+fixtures/consumer-release-layout/v1/manifest.json
+scripts/build-consumer-release-layout.mjs
+scripts/check-consumer-release-layout.mjs
+docs/pages/releases/v13-to-v14-consumer-layout.md
 contracts/atoll-evidence-v1.schema.json
 fixtures/atoll-evidence/v1/manifest.json
 reports/stage-15-atoll-evidence-canary.md
+contracts/water-debris-evidence-v1.schema.json
+fixtures/water-debris-evidence/v1/manifest.json
+reports/stage-15-water-debris-feasibility.md
 ```
 
-Candidate Make targets are `generate-gpu-canary`, `check-gpu-products`, and
-`benchmark-gpu-products`. Generation and checking should be deterministic and
-offline once tools are installed. Hardware timing remains an explicitly
-invoked benchmark and must not enter `make all`, ordinary `make check`, GitHub
-release, or UCB AAO/S3 release.
+Active Make targets are `freeze-stage-15-inputs`,
+`generate-gpu-controls`, `check-gpu-controls`,
+`build-consumer-release-layout`, `check-consumer-release-layout`, and explicit
+nonproduction checks for the two research prototypes. The deferred
+`benchmark-gpu-products` target is not added. Nothing in Stage 15 enters
+`make all`, ordinary `make check`, GitHub release, or UCB AAO/S3 release
+without a later promotion decision.
 
 ## Promotion and release rule
 
-GPU products begin as exploration-only development artifacts. A format becomes
-optional only after its toolchain, license, determinism, metadata, visual QA,
-positional tolerance, and fallback behavior pass. Promotion to the standard
-generation graph requires a separate reviewed decision with no change to the
+GPU products begin as exploration-only development artifacts. The approved
+scope creates lossless controls and local layout evidence only; it creates no
+compressed or GPU-promoted product. A future format becomes optional only
+after its toolchain, license, determinism, metadata, visual QA, positional
+tolerance, and fallback behavior pass. Promotion to the standard generation
+graph requires a separate reviewed decision with no change to the
 authoritative archive/art, print, full-raster, or Stage 14 screen products.
 
 GitHub source publication and UCB AAO/S3 preservation remain separate human
