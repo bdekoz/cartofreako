@@ -1,28 +1,35 @@
-# Stage 15 GPU consumer products and benchmark ledger
+# Stage 15 GPU controls, evidence prototypes, and consumer-layout ledger
 
 [Documentation index](../../../index.md) ·
 [Development records](README.md) ·
 [Stage 14 convergence ledger](stage-14.md) ·
+[Stage 16 continuation](stage-16.md) ·
 [AI-agent and 1080p consumer plan](../runtime/ai-agent-and-1080p-gaming.md)
 
 ## Status
 
-**Bounded active scope implemented and locally verified 2026-08-10.** The
-active scope is 15A
-(frozen handoff and benchmark contract), 15B (lossless landscape and portrait
-2K controls), 15I (local consumer-oriented CDN/WASM layout), an implemented
-exploration-only Majuro evidence canary, and one exploration-only feasibility
-prototype. Stages 15C through 15H are deferred.
-No compressed texture, hardware benchmark, picking mask, Float32 geometry,
-engine adapter, promotion, release, or upload was implemented or implied.
+**Closed 2026-08-11 on its approved active scope.** Stage 15 implemented 15A
+(the frozen Stage 14 handoff), 15B (lossless landscape and portrait 2K
+controls), 15I (a local consumer-oriented CDN/WASM layout), the
+six-projection Majuro evidence pass, the accepted standard
+`anthropocene-particulate-2025` and `anthropocene-particulate-2026` pair, and
+bounded exploration-only PurpleAir-interface and water-debris experiments.
+The current standard graph contains 211 products across 32 pass IDs; the
+benchmark fixture deliberately remains the frozen 205-product, 31-pass Stage
+14 corpus.
+
+Compressed formats, hardware timing, picking masks, Float32 geometry,
+additional consumers, promotion decisions, remaining atoll evidence, and the
+approved agentic research-iteration program now live in the
+[Stage 16 ledger](stage-16.md). Moving those explicitly deferred tracks does
+not convert them into Stage 15 failures or imply implementation.
 
 ## Purpose and boundary
 
-Stage 15 measures whether GPU-oriented derivatives materially improve game,
-installation, and interactive-atlas delivery. It owns power-of-two texture
-derivatives, GPU compression experiments, topology and feature masks,
-Float32 positional audits, upload/decode measurements, and later
-engine-specific import examples.
+Stage 15 established the evidence-preserving handoff from archive/art masters
+to power-of-two lossless controls and exercised local consumer packaging and
+bounded research prototypes. It deliberately stopped before performance or
+compressed-format claims.
 
 Stage 15 does not redefine projection mathematics, pass content, source
 authority, archive/art masters, large-format print products, the 3840-pixel
@@ -33,11 +40,10 @@ promote an experimental format merely by running a benchmark.
 All interrupted projections remain flat-map textures. No Stage 15 artifact may
 be described or sampled as an equirectangular globe texture.
 
-The active subset stops before compressed texture experiments or performance
-claims. Stage 15A defines a future result and environment envelope but neither
+Stage 15A defines the frozen input and result/environment envelope but neither
 installs encoders nor executes GPU timing. Stage 15I builds and checks only a
 local candidate object tree; it has no network, credential, release, or upload
-operation.
+operation. Stage 16 owns any continuation.
 
 ## Stage 14 benchmark handoff
 
@@ -73,93 +79,141 @@ tree; it was not eligible for the handoff. The checked freeze records the
 clean commit, catalog hash, standard-manifest hash, parent hashes, and existing
 lossless-screen hashes without rewriting any authoritative artifact.
 
-## Planned products and current disposition
+## Delivered products and continuation boundary
 
 | Candidate | Role | Disposition |
 | --- | --- | --- |
 | Stage 14 PNG and lossless WebP | Access and transfer baseline | **Active 15A input.** Preserve the exact 1920 × 1080 files and hashes; do not regenerate them inside a benchmark |
 | Landscape 2K PNG | Lossless power-of-two control | **Active 15B.** Exact 2048 × 1024 `contain` canvas, declared padding, full projection visible, same 3840-pixel parent as Stage 14 |
 | Portrait 2K PNG | Lossless vertical control | **Active 15B.** Exact 1024 × 2048 `contain` canvas with the same no-crop, parent, color, and transform rules |
-| 2K WebP | Transfer/decode comparison | **Deferred 15C** |
-| KTX2/Basis candidates | GPU-upload candidates | **Deferred 15C** |
-| Hardware timing | Decode, upload, memory, and first-frame evidence | **Deferred 15D** |
-| Topology and feature-ID masks | Qualified-picking aids | **Deferred 15E** |
-| Float32 geometry adapter | Dynamic GPU path | **Deferred 15F**; Float64 remains authoritative |
-| Additional engine adapters | Consumer trials beyond the existing Three.js canary | **Deferred 15G** |
-| Product promotion | Standard or optional lifecycle decision | **Deferred 15H** |
+| Deferred GPU and consumer work | Compression, benchmarks, masks, Float32, additional adapters, and promotion | **Moved to Stage 16A–16F** with the frozen 15A/15B inputs preserved |
 
-PNG is the visual reference, not necessarily the intended runtime transfer
-format. A single aggregate score must not hide that flat water, translucent
-temperature fields, point networks, and moiré-prone bathymetry respond very
-differently to compression.
+PNG is the lossless visual control for the completed Stage 15 work. The
+benchmark contract, hardware matrix, and pass-specific compression cautions
+have moved intact to [Stage 16](stage-16.md).
 
-## Benchmark contract
+## Anthropocene disposition
 
-Every run emits a machine-readable result plus a compact human summary. The
-result records:
+The former unqualified `anthropocene` pass is now the accepted standard
+`anthropocene-particulate` family. It is default-generated as two explicit
+editions across all six projections:
 
-- input/product hashes; encoder, decoder, browser/runtime, driver, operating
-  system, and dependency versions; exact options; color space; alpha mode;
-  mip policy; and determinism status;
-- encoded bytes, compression ratio, encode time, CPU decode time, GPU upload
-  time, time to first usable frame, peak host memory, estimated texture
-  memory, and steady-state sampling behavior;
-- cold and warm observations, a warm-up count, repetition count, median, and
-  tail measurement rather than one favorable timing;
-- pixel and structural error against the lossless reference, transparency and
-  edge behavior, title/legend legibility, thin-line retention, field-opacity
-  preservation, and pass-specific moiré observations;
-- Float64-to-Float32 projected displacement, screen-pixel displacement,
-  reverse residual, status, and complete candidate-set agreement at cuts and
-  overlaps; and
-- unsupported operations, failures, warnings, and human visual-review
-  disposition without silently dropping a product or machine.
+- `anthropocene-particulate-2025` is a complete-calendar-year snapshot;
+- `anthropocene-particulate-2026` is a partial-year snapshot whose profile
+  records the snapshot boundary and source-specific available-through dates;
+  and
+- `anthropocene-temperature-2025` and
+  `anthropocene-temperature-2026` remain the independent accepted standard
+  temperature family.
 
-Visual metrics are supporting evidence, not the sole acceptance rule. The
-review must inspect representative flat fills, translucent fields, fine
-networks, text, boundaries, transparency, and high-frequency curve work at
-native display scale.
+The rename removes the ambiguous unqualified product rather than preserving
+two names for the same plate. The particulate observation field retains its
+source-specific logarithmic marker opacity, a doubled primary title, and
+source period/status in evidence metadata. The 60% field cap applies to the
+temperature and Stage 15 experimental overlays, not retroactively to these
+source-separated glyphs. The two year-qualified particulate passes add six
+products and one pass ID to the current standard graph without altering the
+frozen Stage 14 benchmark fixture.
 
-## Hardware matrix
+Lifecycle boundaries remain explicit:
 
-The first reproducible baseline is the existing Framework Desktop with AMD
-Ryzen AI Max+ 395, integrated Radeon 8060S, 16 physical cores/32 hardware
-threads, and approximately 125 GiB of reported memory. Each run must capture
-the then-current GPU driver, browser/runtime, power profile, display/headless
-mode, and available memory rather than treating the machine name as a complete
-environment record.
+| Family | Lifecycle | Default build | Claim boundary |
+| --- | --- | --- | --- |
+| `anthropocene-particulate-{2025,2026}` | Standard; accepted experimental content | Yes | Checked observations and source receipts only; 2026 is visibly partial |
+| `anthropocene-temperature-{2025,2026}` | Standard; accepted experimental content | Yes | CPC field; 2026 is visibly partial |
+| `anthropocene-particulate-purpleair-{2025,2026}` | Exploration only | Only through `make all-experiments` or its explicit target | Synthetic interface anchors, never sensors or measurements |
+| `anthropocene-water-debris-{2025,2026}` | Exploration only | Only through `make all-experiments` or its explicit target | Five 2018 depth-station observations; edition year is not observation year |
 
-Broad adoption additionally requires at least one discrete-GPU result and one
-browser GPU path. Results are reported per machine; they are not merged into a
-claim of universal performance. Software rendering may be retained as a
-correctness fallback but cannot serve as GPU-performance evidence.
+### PurpleAir interface experiment
 
-## Research prototype R2 — anthropocene water debris
+The PurpleAir prototype is implemented as 12 deterministic SVGs: two atlas
+editions across six projections. Its `purpleair-experiment` layer is visible
+by default at 60% opacity so visual behavior can be reviewed. The checked
+fixture deliberately contains 12 labeled rendering anchors and **no sensor
+IDs, PM2.5 values, measurements, or claim of PurpleAir observations**. It is
+therefore credential-free, reproducible, and unsuitable for evidentiary use.
 
-The approved prototype is a source-and-contract feasibility study, not a data
-download or generation pass. It must distinguish observed shoreline or
-surface debris, modeled concentration fields, modeled river emissions,
-recorded cleanup operations, and unavailable depth. A two-dimensional patch
-shape must never be presented as an observed three-dimensional debris body.
+A future observed-data adapter needs a PurpleAir read key, a reviewed source-
+use and retention decision, sensor and correction metadata, timestamps, and a
+receipt before any downloaded snapshot is retained. Keys are created at
+[PurpleAir Develop](https://develop.purpleair.com/) and belong only in the
+acquisition process environment. They must never enter a fixture, generated
+plate, log, report, Git object, or release package. The current interface
+experiment does not ask for or use that key.
 
-The source inventory begins with [The Ocean Cleanup](https://theoceancleanup.com/)
-and public NOAA marine-debris records. Before a generator is proposed, the
-prototype records access method, reuse rights, observation/model period,
-spatial and temporal resolution, units, uncertainty, and whether coordinate
-or depth observations are actually available. Unknown depth is
-`UNAVAILABLE`, not zero.
+### Research prototype R2 — anthropocene water debris
 
-A future `anthropocene-water-debris` generator and pass may be specified only
-after the feasibility report identifies a redistributable spatial source. It
-is not implemented or promoted in this stage. The existing `anthropocene`
-pass remains the stable legacy multi-source climate, fire, and smoke atlas;
-the dated `anthropocene-temperature-2025` and
-`anthropocene-temperature-2026` pass IDs also remain unchanged.
+The original feasibility gate has been superseded by a bounded first
+experiment, while its evidence classification remains authoritative. The
+experiment distinguishes observed shoreline or surface debris, modeled
+concentration, modeled river emission, cleanup operation, depth profile, and
+unavailable depth. A two-dimensional patch shape is never presented as an
+observed three-dimensional debris body, and unknown depth is `UNAVAILABLE`,
+not zero.
 
-The checked outcome is
-[Stage 15 R2 — anthropocene water-debris feasibility](../../../reports/stage-15-water-debris-feasibility.md).
+Twelve exploration SVGs cover the 2025 complete and 2026 partial atlas
+editions across all six projections. Only five geolocated depth-profile
+stations observed from 2018-11-01 through 2018-12-04 are rendered as
+observations. The NOAA shoreline inventories, candidate survey sites, Ocean
+Cleanup overview, and the 2015–2022 surface-survey family remain visibly
+context-only or unavailable. The edition labels organize the atlas; they do
+not rewrite the observation year. Each rendered station carries a qualified
+forward/reverse projection check, and the observed layer uses 60% opacity and
+the doubled-title rule.
 
-## Research prototype R1 — implemented atoll-scale evidence canary
+The historical source decision and the implemented bounded outcome are
+documented in
+[Stage 15 R2 — anthropocene water-debris feasibility](../../../reports/stage-15-water-debris-feasibility.md)
+and the checked
+[`anthropocene-water-debris` manifest](../../../fixtures/anthropocene-water-debris/v1/manifest.json).
+Neither the experiment nor its contact sheet is a standard artifact, default
+release product, garbage-patch boundary, or global debris census.
+
+<a id="getting-and-using-a-nasa-firms-map_key"></a>
+
+### Getting and using a NASA FIRMS MAP_KEY
+
+NASA FIRMS active-fire acquisition is externally authorized and is never a
+prerequisite for an ordinary local build. To enable it:
+
+1. Request a free key with an email address on the official
+   [NASA FIRMS MAP_KEY page](https://firms.modaps.eosdis.nasa.gov/api/map_key/).
+   FIRMS sends the key to that address. The same page can check its current
+   transaction use; NASA presently documents a limit of 5,000 transactions in
+   each 10-minute interval.
+2. Put the delivered value only in the environment for the acquisition run.
+   Do not add it to Git, `.netrc`, a checked `.env` file, a command argument,
+   or a report:
+
+   ```sh
+   read -rsp 'NASA FIRMS MAP_KEY: ' FIRMS_MAP_KEY
+   printf '\n'
+   export FIRMS_MAP_KEY
+   make authorize-external EXTERNAL_PASSES=nasa-firms
+   make generate-authorized-external EXTERNAL_PASSES=nasa-firms
+   unset FIRMS_MAP_KEY
+   ```
+
+   `authorize-external` checks the key against the FIRMS data-availability
+   endpoint without printing it. `generate-authorized-external` then fetches
+   and prepares review candidates; it does not promote or publish them.
+   The official [FIRMS API tutorial](https://firms.modaps.eosdis.nasa.gov/content/academy/data_api/firms_api_use.html)
+   documents the same MAP_KEY and availability test.
+3. Review the candidate before replacing a checked snapshot. A keyed refresh
+   changes the raw-source receipt, FIRMS row counts, normalized GeoJSON hash,
+   profile data hash, and `SHA256SUMS`. Preserve the observation dates and the
+   FIRMS product identifiers in that receipt. The currently checked
+   particulate snapshots record zero FIRMS rows and therefore must not be
+   described as a global active-fire census until a reviewed keyed refresh is
+   accepted.
+
+The acquisition script spaces FIRMS requests with
+`ANTHROPOCENE_FIRMS_DELAY_SECONDS`; keep the default unless a separately
+documented NASA allowance supports a different rate. A failed authorization
+or exhausted transaction window is a source-acquisition failure, not grounds
+for silently omitting FIRMS while claiming equivalent coverage.
+
+## Research prototype R1 — implemented Majuro evidence pass
 
 Add an atoll-scale evidence tier for place-specific research, beginning with
 the Marshall Islands experiments. Bring in high-resolution topobathymetry,
@@ -181,28 +235,37 @@ visual speculation only. The tier must support forward and reverse projection
 fixtures so a selected pixel, feature, or scenario can be traced back to its
 source coordinate and evidence record.
 
-The implemented canary uses two reviewed public-domain USGS packages: the
+The implemented evidence pass uses two reviewed public-domain USGS packages:
+the
 1944–2016 Majuro 1 m topobathymetric DEM and the 2016-source 30-inch marine
 inundation assessment. Original archives and metadata are retained under the
 explicitly Git-ignored `assets.static/atoll-evidence/.raw/` boundary. Three
 checked approximately 10 m GeoTIFF derivatives preserve the source CRS,
-NoData, data type, and evidence class; they are convenient canary inputs, not
+NoData, data type, and evidence class; they are convenient render inputs, not
 substitutes for the authoritative 1 m sources.
 
-The 2560 × 1440 PNG keeps three claims separate: a planetary Myriahedral
-Pacific locator, an observation-derived topobathymetric panel, and a modeled
-0.762 m-above-MHHW inundation panel. The probability field is color and the
-deterministic extent is an outline, so neither scenario is misrepresented as
-an observed flood. Freshwater, infrastructure, a current independent
-shoreline, reviewed reef geometry, ocean heat, and community/regional review
-remain explicitly unavailable or incomplete.
+The visually approved 2560 × 1440 canary established the composition, after
+which the same evidence contract was implemented for Cahill–Keyes,
+AuthaGraph, Dymaxion, Myriahedral Pacific, Star-X, and Voronoi. The full pass
+contains 24 artifacts: layered SVG, authoritative print PDF, 3840-pixel
+long-side PNG, and 480-pixel thumbnail for each projection. Its checked
+contact sheet is
+[`output/majuro-atoll-evidence-pass-v01/contact-sheet.png`](../../../output/majuro-atoll-evidence-pass-v01/contact-sheet.png).
+
+Every composition keeps three claims separate: a planetary locator, an
+observation-derived topobathymetric panel, and a modeled 0.762 m-above-MHHW
+inundation panel. The probability field is color and the deterministic extent
+is an outline, so neither scenario is misrepresented as an observed flood.
+Freshwater, infrastructure, a current independent shoreline, reviewed reef
+geometry, ocean heat, and community/regional review remain explicitly
+unavailable or incomplete.
 
 Five metadata-envelope anchors and one prepared-pixel anchor carry source
 coordinates, forward pixels, native cells/components, and face-qualified
 reverse candidates. All six live runtime round trips pass within `2e-8`
-degrees. This implements traceability without granting promotion: no atoll
-product enters default generation, ordinary checks, GitHub release, or UCB
-AAO/S3 publication.
+degrees. This implements traceability without granting promotion: visual
+approval authorizes a complete projection family, not standard lifecycle,
+default generation, GitHub release, or UCB AAO/S3 publication.
 
 The checked outcome is
 [Stage 15 R1 — atoll-scale evidence canary](../../../reports/stage-15-atoll-evidence-canary.md).
@@ -240,8 +303,10 @@ The checked compatibility and implementation reference is
 | **15A** | Frozen 205 standard artifacts, 31 pass IDs, 11 layouts, and 14 approved slices from the clean Stage 14 catalog | Commit `750efb321cc5553c7f0f7aa6d64e47ed9f2e8bef`; input-fixture SHA-256 `af793ba88ebaead4aeedfdf179e35a1a786eab5ff7e2cd2f51ca086b4970df8b` |
 | **15B** | Generated and checked 205 landscape 2048 × 1024 PNGs and 205 portrait 1024 × 2048 PNGs | 410 files; 141,014,973 bytes; generated-catalog SHA-256 `901fb44bdc1bd70acd781f66ba0e4b277adfaf0d66ec022becda9b7ec215ccb4` |
 | **15I** | Built a 61-file local candidate with one primary index, 31 pass indexes, 11 projection indexes, and 16 runtime files | 1,291,121 bytes; local `release-layout.json` SHA-256 `763c86011c6c9a8db56f90a9fac1bceb357a0893991c863f68fd5a4b85289e3d`; no `release.json` |
-| **R1** | Prepared three compact Majuro evidence derivatives, five source-envelope plus one pixel forward/reverse trace, and one visually reviewed 2560 × 1440 PNG | Public USGS raw packages remain Git-ignored; output SHA-256 `d132b7fe925fde96acdefce772b93653e30877cb8e52692b04e779bf1925f49e`; no promotion or publication |
-| **R2** | Validated the water-debris evidence classes and feasibility inventory | No download, generator, pass rename, or promotion |
+| **Anthropocene standard** | Replaced the unqualified pass with complete-2025 and partial-2026 particulate editions across six projections | Current standard graph: 211 artifacts and 32 pass IDs; frozen 15A/15B baseline remains 205/31 |
+| **R1** | Extended the approved Majuro canary into six projection compositions and 24 SVG/PDF/full-PNG/thumbnail artifacts | Public USGS raw packages remain Git-ignored; contact-sheet SHA-256 `a211a107838fd51fb7dccf998760fa9ebabd11930df5bdbb11e0f88009848bf6`; no promotion or publication |
+| **R2** | Implemented 12 reversible water-debris exploration plates with five observed 2018 depth stations and four context-only source families | Contact-sheet SHA-256 `3ed9e5c6cb25666c86e37568c34fca0701200f80e940f67be533f462e51d13ef`; no patch polygon, global census, promotion, or publication |
+| **PurpleAir** | Implemented 12 default-visible interface-review overlays using 12 deterministic synthetic anchors | No credential, sensor, measurement, observation claim, promotion, or publication |
 
 The 15B generator hashes every authoritative full PNG before and after
 conversion. Both controls use `contain`, Lanczos resampling, the WCAG-light
@@ -264,6 +329,10 @@ make freeze-stage-15-inputs
 make check-gpu-controls
 make check-consumer-release-layout
 make check-atoll-evidence-canary
+make check-majuro-atoll-evidence
+make check-anthropocene-particulate
+make check-anthropocene-purpleair-experiments
+make check-anthropocene-water-debris-experiments
 make check-stage-15-research-prototypes
 make check-stage-15-active
 ```
@@ -271,22 +340,36 @@ make check-stage-15-active
 These targets are deliberately absent from `make all`, ordinary `make check`,
 GitHub release, and UCB AAO/S3 release.
 
+The local-only build aggregate also includes the Marshall Islands speculative
+render family:
 
-## Staging plan
+```sh
+make list-experiments
+make all-experiments
+make check-all-experiments
+```
 
-| Stage | Disposition | Active work or deferral |
-| --- | --- | --- |
-| **15A — frozen handoff** | **Approved and active** | Freeze the clean Stage 14 catalog, hashes, deterministic corpus, and future benchmark result/environment envelope |
-| **15B — lossless 2K controls** | **Approved and active** | Produce checked 2048 × 1024 landscape and 1024 × 2048 portrait PNG controls from authoritative full PNG parents |
-| **15C — compressed formats** | **Deferred** | Lossless/lossy WebP and KTX2/Basis profiles, encoder installation, mips, and compression comparisons |
-| **15D — hardware benchmark** | **Deferred** | Decode, GPU upload, memory, first-frame, and repeated machine timing |
-| **15E — topology and feature masks** | **Deferred** | Native-cell/component masks and licensed visible-feature IDs |
-| **15F — Float32 geometry** | **Deferred** | Dynamic geometry conversion and positional/reverse residual audit |
-| **15G — consumer trials** | **Deferred** | Additional browser and game-engine adapters |
-| **15H — promotion** | **Deferred** | Lifecycle, release, fallback, and adoption decision |
-| **15I — CDN/WASM layout** | **Approved and active** | Build and check a local consumer-oriented object-tree fixture; document v13-to-proposed-v14 compatibility |
-| **R1 — atoll evidence** | **Implemented exploration canary** | Public USGS acquisition boundary, checked compact derivatives, source coordinates, qualified forward/reverse fixtures, and one reviewed PNG; no promotion or publication |
-| **R2 — water debris** | **Approved prototype only** | Contract and feasibility/source inventory; no generator or pass promotion |
+`all-experiments` invokes seven implemented builders: GPU controls, the local
+consumer-layout prototype, the Majuro canary, the Marshall Islands
+speculations, the full Majuro evidence pass, the synthetic PurpleAir
+interface review, and the bounded water-debris experiment. It does not run
+checks, source acquisition, external authorization, benchmarks, promotion,
+release, or publication. Adding an experiment to this aggregate never changes
+its lifecycle.
+
+
+## Closed staging record
+
+| Work | Closure disposition |
+| --- | --- |
+| **15A — frozen handoff** | Implemented: clean Stage 14 catalog, hashes, deterministic corpus, and benchmark envelope frozen |
+| **15B — lossless 2K controls** | Implemented: checked 2048 × 1024 landscape and 1024 × 2048 portrait PNG controls |
+| **15I — CDN/WASM layout** | Implemented locally: checked consumer object-tree fixture and v13-to-proposed-v14 compatibility; never uploaded |
+| **Anthropocene particulate** | Implemented standard: complete 2025 and partial 2026 editions default-generated; current graph 211/32, frozen input 205/31 |
+| **R1 — atoll evidence** | Implemented exploration pass: six compositions, 24 artifacts, checked contexts, and qualified reverse fixtures |
+| **R2 — water debris** | Implemented bounded experiment: 12 SVGs with five observed depth stations and explicit unavailable/context-only families |
+| **PurpleAir interface** | Implemented synthetic experiment: 12 default-visible overlays with no observations or credential |
+| **Former 15C–15H and incomplete evidence tiers** | Moved, without implementation claims, to [Stage 16](stage-16.md) |
 
 ## Implemented repository surface
 
@@ -310,40 +393,79 @@ contracts/atoll-evidence-v1.schema.json
 contracts/atoll-coordinate-fixtures-v1.schema.json
 fixtures/atoll-evidence/v1/manifest.json
 fixtures/atoll-evidence/v1/coordinates.json
+fixtures/atoll-evidence/v1/pass-manifest.json
 assets.static/atoll-evidence/README.md
 assets.static/atoll-evidence/prepared/*
+assets.static/atoll-evidence/context/*
 scripts/fetch-atoll-evidence-data.sh
 scripts/prepare-atoll-evidence-data.sh
 scripts/build-atoll-evidence-fixtures.mjs
 scripts/render-atoll-evidence-canary-v01.sh
+scripts/prepare-atoll-evidence-contexts.sh
+scripts/generate-majuro-atoll-evidence.mjs
+scripts/export-majuro-atoll-evidence.mjs
 tests/test-atoll-evidence-canary.mjs
+tests/test-majuro-atoll-evidence-pass.mjs
 output/atoll-evidence-canary-v01/majuro-atoll-evidence-canary.png
+output/majuro-atoll-evidence-pass-v01/contact-sheet.png
 reports/stage-15-atoll-evidence-canary.md
 contracts/water-debris-evidence-v1.schema.json
 fixtures/water-debris-evidence/v1/manifest.json
 reports/stage-15-water-debris-feasibility.md
+contracts/anthropocene-water-debris-experiment-v1.schema.json
+fixtures/anthropocene-water-debris/v1/manifest.json
+scripts/generate-anthropocene-water-debris-experiments.mjs
+tests/test-anthropocene-water-debris-experiments.mjs
+output/anthropocene-water-debris-v01/contact-sheet.png
+contracts/anthropocene-purpleair-experiment-v1.schema.json
+fixtures/anthropocene-purpleair/v1/manifest.json
+scripts/generate-anthropocene-purpleair-experiments.mjs
+tests/test-anthropocene-purpleair-experiments.mjs
+assets.static/anthropocene/anthropocene-particulate-{2025,2026}-profile.json
+assets.static/anthropocene/anthropocene-particulate-{2025,2026}.geojson
 ```
 
 Active Make targets are `freeze-stage-15-inputs`,
 `generate-gpu-controls`, `check-gpu-controls`,
 `build-consumer-release-layout`, `check-consumer-release-layout`,
-`generate-atoll-evidence-canary`, `check-atoll-evidence-canary`, and explicit
-nonproduction checks for both research tracks. Raw acquisition and preparation
-are separate `fetch-atoll-evidence-data` and `prepare-atoll-evidence-data`
-maintainer targets; generation never invokes either. The deferred
-`benchmark-gpu-products` target is not added. Nothing in Stage 15 enters
-`make all`, ordinary `make check`, GitHub release, or UCB AAO/S3 release
-without a later promotion decision.
+`generate-atoll-evidence-canary`, `check-atoll-evidence-canary`,
+`generate-majuro-atoll-evidence`, `check-majuro-atoll-evidence`, and the
+explicit PurpleAir and water-debris experiment builders/checkers. Raw
+acquisition and preparation are separate `fetch-atoll-evidence-data` and
+`prepare-atoll-evidence-data` maintainer targets; generation never invokes
+either. No `benchmark-gpu-products` target was added. Only the
+year-qualified particulate family enters `make all` and the standard graph;
+the research products do not enter ordinary `make check`, GitHub release, or
+UCB AAO/S3 release without a later promotion decision.
+
+`all-experiments` is the independent convenience aggregate for the currently
+implemented non-release builders. Adding a later experiment requires updating
+its checked registry; lifecycle or release eligibility never changes merely
+because a builder is added to that aggregate.
+
+## Closure evidence
+
+Stage 15 closes only on checked local evidence. Its release gate covers the
+211-product/32-pass standard manifest, the frozen 205/31 benchmark fixture,
+dual-year particulate family, lossless screen and GPU controls, local consumer
+layout, Majuro products, PurpleAir interface, water-debris experiment,
+experiment registry, pass status, documentation, and repository formatting.
+The final command outcomes and source identity belong in the Stage 15 release
+notes rather than being inferred from this plan.
+
+The checked particulate snapshots contain zero FIRMS rows. A future keyed
+refresh still requires a human-generated key and reviewed candidate. A real
+PurpleAir snapshot still requires source-use, retention, redistribution, and
+credential review. Those facts do not block closure of the implemented,
+explicitly bounded products.
 
 ## Promotion and release rule
 
-GPU products begin as exploration-only development artifacts. The approved
-scope creates lossless controls and local layout evidence only; it creates no
-compressed or GPU-promoted product. A future format becomes optional only
-after its toolchain, license, determinism, metadata, visual QA, positional
-tolerance, and fallback behavior pass. Promotion to the standard generation
-graph requires a separate reviewed decision with no change to the
-authoritative archive/art, print, full-raster, or Stage 14 screen products.
+Stage 15 GPU controls and research products remain exploration-only. The
+closed scope creates lossless controls and local layout/evidence artifacts; it
+creates no compressed or GPU-promoted product. Stage 16 owns any future
+promotion evidence and must not change the authoritative archive/art, print,
+full-raster, or Stage 14 screen contracts.
 
 GitHub source publication and UCB AAO/S3 preservation remain separate human
 decisions. No benchmark target invokes either path.

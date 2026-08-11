@@ -1,27 +1,38 @@
-# Stage 15 R1 — Majuro atoll-scale evidence canary
+# Stage 15 R1 — Majuro atoll-scale evidence canary and full pass
 
-Status: **implemented and checked exploration-only canary; no promotion,
-release, or external publication authorized**
+Status: **implemented and checked exploration-only canary plus six-projection
+full pass; no promotion, release, or external publication authorized**
 
 Checked: 2026-08-10
 
 [Stage 15 ledger](../docs/pages/development/stage-15.md) ·
 [source-data instructions](../assets.static/atoll-evidence/README.md) ·
 [evidence manifest](../fixtures/atoll-evidence/v1/manifest.json) ·
-[coordinate fixture](../fixtures/atoll-evidence/v1/coordinates.json)
+[coordinate fixture](../fixtures/atoll-evidence/v1/coordinates.json) ·
+[full-pass manifest](../fixtures/atoll-evidence/v1/pass-manifest.json)
 
 [![Majuro Stage 15 evidence canary](../output/atoll-evidence-canary-v01/majuro-atoll-evidence-canary.png)](../output/atoll-evidence-canary-v01/majuro-atoll-evidence-canary.png)
 
+[![Majuro six-projection evidence pass](../output/majuro-atoll-evidence-pass-v01/contact-sheet.png)](../output/majuro-atoll-evidence-pass-v01/contact-sheet.png)
+
 ## Outcome
 
-A first atoll-scale evidence tier is technically viable. The canary combines
+A first atoll-scale evidence tier is technically viable. The approved canary combines
 one public USGS observation-derived topobathymetric surface, one separately
 labeled USGS inundation scenario, and a planetary Myriahedral Pacific carrier.
 It preserves source dates, spatial resolution, datum, uncertainty, preparation
 history, and forward/reverse coordinate traceability rather than treating a
-high-resolution raster as self-authenticating evidence.
+high-resolution raster as self-authenticating evidence. Its approved visual
+grammar is now implemented for Cahill–Keyes, AuthaGraph, Dymaxion,
+Myriahedral Pacific, Star-X, and Voronoi.
 
-The result remains exploration-only. It is not a standard or optional pass,
+The full pass contains 24 products: layered SVG, authoritative print PDF,
+3840-pixel-long-side PNG, and 480-pixel thumbnail for each projection. The
+planetary carrier changes with the projection, while the analytical
+topobathymetry and inundation panels retain their source grid and claim
+boundary.
+
+Both results remain exploration-only. They are not a standard or optional pass,
 is absent from default generation and release graphs, and is unsuitable for
 navigation, engineering, present-condition shoreline claims, or unreviewed
 public interpretation. Marshall Islands community and regional review has not
@@ -141,3 +152,9 @@ the ignored/untracked raw-package boundary, evidence statuses, and the six
 live WebAssembly forward/reverse traces. `make check-stage-15-research-prototypes`
 and `make check-stage-15-active` include that isolated check. None is part of
 ordinary `make check` or a release target.
+
+`make check-majuro-atoll-evidence` independently validates the full-pass
+schema and manifest, six context carriers, 24 product paths, layered SVG
+evidence groups, print/full/thumbnail dimensions, hashes, claim boundaries,
+and the same qualified coordinate behavior. It may regenerate only local
+exploration products; it never fetches, promotes, releases, or uploads them.

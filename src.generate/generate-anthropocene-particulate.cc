@@ -1,10 +1,10 @@
-// Anthropocene observation-atlas generator entry point.
+// Anthropocene particulate observation-atlas generator entry point.
 // -*- mode: C++ -*-
 
 #include <exception>
 #include <iostream>
 
-#include "anthropocene-generation.h"
+#include "anthropocene-particulate-generation.h"
 
 int
 main(const int argc, char** argv)
@@ -15,7 +15,7 @@ main(const int argc, char** argv)
     }
   catch (const std::exception& error)
     {
-      std::cerr << "generate-anthropocene: " << error.what() << '\n';
+      std::cerr << "generate-anthropocene-particulate: " << error.what() << '\n';
       return 1;
     }
 }

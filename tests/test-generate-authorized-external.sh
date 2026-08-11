@@ -44,8 +44,8 @@ authorize jaxa-ptree nasa-firms network-topology
 --no-print-directory prepare-cloud-atmosphere-data
 --no-print-directory verify-cloud-atmosphere-data
 --no-print-directory generate-cloud-atmosphere-artifacts
---no-print-directory fetch-anthropocene-data
---no-print-directory prepare-anthropocene-data
+--no-print-directory fetch-anthropocene-particulate-data
+--no-print-directory prepare-anthropocene-particulate-data
 --no-print-directory generate-network-infrastructure-topology-artifacts
 EXPECTED
 diff -u "$temporary_dir/expected" "$apply_log"
@@ -59,7 +59,7 @@ diff -u "$temporary_dir/strict-expected-enabled" \
 test "$(stat -Lc '%a' "$temporary_dir/strict/enabled")" = 600
 
 grep -Fq \
-  'no Anthropocene release artifact was rendered from the unpromoted candidate' \
+  'no particulate release artifact was rendered from an unpromoted candidate' \
   "$temporary_dir/output"
 
 auto_log="$temporary_dir/auto.log"

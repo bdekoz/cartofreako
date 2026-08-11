@@ -11,6 +11,11 @@ title: Projection reference
 Each projection family keeps its mathematical context, implementation
 contract, sources, and visual contact sheet together.
 
+Runtime API 3 implements forward and candidate-aware reverse support for all
+six families. Cuts, duplicated edges, poles, and Star-X carrier/cap overlap
+remain explicit candidates rather than being forced into a false unique
+answer. See the [portable fixtures and independent reverse oracles](../runtime/projection-fixtures.md).
+
 | Projection | Context | Implementation | Sources | Contact sheet |
 | --- | --- | --- | --- | --- |
 | AuthaGraph | [Context](authagraph/context.md) | [Implementation](authagraph/implementation.md) | [Sources](authagraph/bibliography.md) | [Gallery](../gallery/authagraph.md) |

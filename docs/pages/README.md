@@ -9,6 +9,13 @@ Use the [visual gallery](gallery/README.md) to browse the release first. This pa
 the compact route into building, projection mathematics, pass semantics,
 browser integration, verification, and preservation.
 
+The gallery is the sealed v13 S3 publication. Current source development is
+newer: all projection families have forward/reverse runtime support, the live
+catalog contains 211 standard products across 32 pass IDs, Anthropocene is a
+dual-year particulate/temperature family, and Stage 15 adds local research
+products. Those changes are documented here without claiming they have been
+uploaded into the immutable v13 tree.
+
 ## Start, build, and generate
 
 | Need | Documentation |
@@ -18,7 +25,8 @@ browser integration, verification, and preservation.
 | Understand the selected profile, pass evaluation, and exact versus family workflows | [Generation methods and decision record](getting-started/generation-methods.md) |
 | Review the complete Stage 13 development manifest | [Stage 13 convergence notes](development/stage-13.md) |
 | Follow the Stage 14 plan, implementation changes, and verification evidence | [Stage 14 convergence ledger](development/stage-14.md) |
-| Track GPU products and inspect the implemented exploration-only Majuro evidence canary | [Stage 15 development ledger](development/stage-15.md) and [atoll-canary report](../../reports/stage-15-atoll-evidence-canary.md) |
+| Review the closed GPU controls, Majuro full pass, and Anthropocene experiments | [Stage 15 closed ledger](development/stage-15.md), [atoll report](../../reports/stage-15-atoll-evidence-canary.md), and [water-debris report](../../reports/stage-15-water-debris-feasibility.md) |
+| Plan compressed GPU evidence, additional consumers, atoll expansion, and agentic research iteration | [Stage 16 development ledger](development/stage-16.md) |
 | Authorize and generate credentialed external products | [Configured generation](getting-started/generation.md#configured-development-generation), [Cloud-atmosphere generation](getting-started/generation.md#cloud-atmosphere-generation), and [P-Tree production download](data/ptree-download.md) |
 
 ## Pass catalog and lifecycle
@@ -30,7 +38,7 @@ is the machine-readable authority.
 
 | Class | Meaning |
 | --- | --- |
-| **Standard pass** | Released, reproducible without a credential or special acceptance, included in `make all`, and represented in the public contact sheets. |
+| **Standard pass** | Reproducible without a credential or special acceptance, included in `make all`, and eligible for the next generated-assets release. A sealed older gallery may have a different standard composition. |
 | **Optional pass** | Implemented but deliberately gated by credentials, license acceptance, or an operator decision. Authorization makes it eligible for subsequent configured generation. |
 | **Exploration only** | Cataloged, proposed, or source-tested without a released production output. It is not silently generated and is not a missing release artifact. |
 
@@ -38,8 +46,10 @@ The current resource profile has 14 standard passes, no optional resource
 passes, and 45 exploration-only metrics. Project-wide optional products include
 the credentialed P-Tree Cloud-atmosphere pass and licensed network topology;
 NASA FIRMS remains an exploration input rather than a released optional pass.
-Pass maturity is a separate axis: the three current Anthropocene pass IDs are
-standard and default-generated with **accepted-experimental** maturity. See
+Pass maturity is a separate axis: the four current dual-year Anthropocene pass
+IDs are standard and default-generated with **accepted-experimental**
+maturity. The synthetic PurpleAir interface, bounded water-debris, and Majuro
+evidence products remain exploration-only. See
 the [generation-pass overview](passes/README.md) and machine-readable
 [pass-status manifest](../../contracts/pass-status-v1.json).
 
@@ -78,6 +88,7 @@ path structures.
 | Select one standard artifact deterministically and retain a decision receipt | [Artifact catalog and selection](runtime/artifact-selection.md) |
 | Use structured forward points and face-qualified reverse candidates | [Forward/reverse projection API](runtime/projection-api.md) |
 | Plan machine-readable agent discovery and 1080p/Three.js derivatives without changing archive/art/print masters | [AI Workflows assessment and 1080p gaming improvement plan](runtime/ai-agent-and-1080p-gaming.md) |
+| Review the approved Marshall Islands-to-new-experiment agent workflow | [Stage 16 agentic atlas research plan](development/stage-16.md) |
 | Understand the Stage 10 browser architecture and checks | [Stage 10 WebAssembly notes](runtime/webassembly-architecture.md) |
 | Follow a raster-backed overlay workflow | [Web workflow](runtime/myriahedral-workflow.md) and [complete example](runtime/myriahedral-example.md) |
 | Inspect the immutable generated release without checking it into Git | [Visual gallery](gallery/README.md), [S3 v13 contract](releases/s3-v13.md), and [release marker](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/release.json) |
@@ -86,7 +97,7 @@ path structures.
 
 | Need | Documentation |
 | --- | --- |
-| Publish a GitHub source release without invoking S3 | [Release runbook](releases/README.md) and [`v20260810`](releases/v20260810.md) |
+| Publish a GitHub source release without invoking S3 | [Release runbook](releases/README.md) and [`v20260811`](releases/v20260811.md) |
 | Deposit generated assets in UCB AAO through the separate human-invoked S3 target | [Release runbook](releases/README.md) |
 | Inspect v13 paths, formats, metadata, and verification | [S3 v13 publication](releases/s3-v13.md) |
 | Read the corrected source and generated-assets release notes | [`v20260808.1`](releases/v20260808.1.md) |

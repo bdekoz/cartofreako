@@ -1,29 +1,59 @@
 # Anthropocene snapshot assets
 
 This directory contains the authoritative profiles and normalized snapshots
-used by ordinary offline Stage 8 and Stage 8b generation:
+used by ordinary offline Anthropocene generation:
 
-- `anthropocene-profile.json` fixes the calendar year, partial-snapshot date,
-  thresholds, H3 aggregation, source roles, metric styles, and deferred work;
-- `anthropocene-2026.geojson` contains one point at the center of each
-  resolution-4 H3 cell with one or more positive unique-day counts; and
+- `anthropocene-particulate-2025-profile.json` and its GeoJSON define the
+  complete-2025 source-separated observation atlas;
+- `anthropocene-particulate-2026-profile.json` and its GeoJSON define the
+  explicitly partial-2026 observation atlas;
 - `anthropocene-temperature-2025-profile.json` and
-  `anthropocene-temperature-2026-profile.json` independently fix complete-2025
-  and partial-2026 NOAA CPC field contracts;
-- their year-bearing GeoJSON files contain every resolution-3 H3 cell so
-  covered-zero and missing cells remain distinguishable; and
-- `SHA256SUMS` pins all normalized GeoJSON bytes used by `make check`; normal
-  generation also verifies each digest through its selected profile.
+  `anthropocene-temperature-2026-profile.json` independently define the
+  complete-2025 and partial-2026 NOAA CPC temperature fields; and
+- `SHA256SUMS` pins every normalized GeoJSON used by focused checks and normal
+  generation.
 
-The snapshot is partial through source-specific dates recorded in the profile.
-Its 43,895 cells are observations, not complete global coverage. An omitted
-property means unavailable or unobserved and must not be interpreted as zero.
-The profile's literal `duration.year` is the sole year authority; the generator
-does not read the host clock.
+The old unqualified `anthropocene` snapshot is intentionally gone. Both
+accepted standard families now use year-bearing pass IDs and filenames so a
+complete year cannot be confused with a partial snapshot or overwrite it.
+Each profile's literal `duration.year` is the sole year authority; no generator
+reads the host clock.
+
+The particulate snapshots contain one point at the center of each
+resolution-4 H3 cell with one or more positive unique-source-reporting-day
+counts. Complete 2025 contains 49,470 cells; partial 2026 contains 43,895.
+These are observations with uneven source coverage, not complete global
+fields. An omitted property is unavailable or unobserved and never an asserted
+zero. The normalized SHA-256 values are:
+
+| Pass | Status | GeoJSON SHA-256 |
+| --- | --- | --- |
+| `anthropocene-particulate-2025` | Complete through 2025-12-31 | `ecd4b11bab4faa9895522dbfe75436ef66820f53620bf0c5f6fc7404e9f5426b` |
+| `anthropocene-particulate-2026` | Partial; source-specific dates in profile | `a3b2fcb3a809710d278ce88aef52ea938fa67e8b900313cf2e5c2ed9c6ddde42` |
 
 The [Stage 8b enrichment plan](../../docs/pages/passes/anthropocene/enrichment-plan.md)
 records the CPC temperature/FIRMS-gate increment implemented here and the
 remaining CAMS, PurpleAir, and ocean work.
+
+## Particulate observation atlas
+
+The two particulate products retain nine source-separated metrics: temperature
+record highs and lows, precipitation records, heavy precipitation, active-fire
+hotspots, analyst-observed smoke, located flood/heavy-rain events, located
+severe-weather events, and regulatory PM2.5 exceedance days. They compute no
+composite severity or causal-attribution score. Their source-specific marker
+opacity is logarithmic, and the primary title uses the common doubled-title
+rule.
+
+| Year | Temperature high/low | Precipitation record/heavy | Active fire | Smoke | Flood | Severe weather | PM2.5 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 2025 | 4,129 / 714 | 1,757 / 1,491 | 127,392 | 1,794,158 | 7,135 | 21,694 | 1,240 |
+| 2026 partial | 1,567 / 434 | 424 / 426 | 35,940 | 1,088,261 | 1,000 | 4,195 | 129 |
+
+These are H3 cell-day totals, not event, person, area, emission, or damage
+totals. Both checked snapshots record zero NASA FIRMS rows. Their fire layer
+therefore reflects the checked regional CWFIS input and is not a global
+active-fire census.
 
 ## Stage 8b temperature fields
 
@@ -73,8 +103,10 @@ make generate-anthropocene-year-artifacts
 ```
 
 The unqualified targets build both 2025 and 2026. The source-separated
-partial-2026 observation atlas remains available through
-`generate-anthropocene-atlas` and `generate-anthropocene-atlas-artifacts`.
+particulate pair is available explicitly through
+`generate-anthropocene-particulate` and
+`generate-anthropocene-particulate-artifacts`; the former atlas aliases point
+to that same pair and do not recreate an unqualified artifact.
 
 The ignored raw archive is staged and candidates are prepared explicitly:
 
@@ -87,9 +119,9 @@ The raw `.raw/cpc/SHA256SUMS` file is itself pinned by both profiles. Candidate
 preparation verifies every yearly TMAX/TMIN file and never overwrites the
 checked GeoJSON.
 
-## Checked normalization
+## Checked particulate acquisition
 
-The 2026 snapshot was normalized on 2026-08-05 from:
+The partial-2026 snapshot was normalized on 2026-08-05 from:
 
 | Raw input | Captured SHA-256 or set digest |
 | --- | --- |
@@ -102,22 +134,28 @@ The 2026 snapshot was normalized on 2026-08-05 from:
 | 167 CWFIS daily CSVs, filename-sorted SHA-256 manifest | `0d9e1656a3778e5c166db8cf520dfdf50a9445305c6d38d40e67a0770ae1432a` |
 
 The raw archives are intentionally not checked in. They are mutable annual
-feeds and total hundreds of megabytes. `make fetch-anthropocene-data` stages a
-new set under ignored `.raw/YEAR/`; `make prepare-anthropocene-data` produces a
-candidate under ignored `.prepared/` without replacing this checked snapshot.
+feeds and total hundreds of megabytes.
+`make fetch-anthropocene-particulate-YEAR` stages one year under ignored
+`.raw/YEAR/`; `make prepare-anthropocene-particulate-YEAR` produces its
+candidate under ignored `.prepared/` without replacing a checked snapshot.
+The `*-data` aggregate targets run both 2025 and 2026.
 Promotion is deliberately manual because every refresh changes source
 coverage and must update profile dates, statistics, and the normalized digest
 together.
 
-NASA FIRMS requires the free `FIRMS_MAP_KEY`. A new global refresh fails when
-the key or staged FIRMS rows are absent unless the explicit
+NASA FIRMS requires the free `FIRMS_MAP_KEY`. Request it on the official
+[NASA FIRMS key page](https://firms.modaps.eosdis.nasa.gov/api/map_key/) and
+keep it only in the acquisition process environment. A new global refresh
+fails when the key or staged FIRMS rows are absent unless the explicit
 `ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY=1` debugging override is set. The
 fetcher reads FIRMS' advertised date ranges, joins standard S-NPP processing to
 its NRT tail in five-day chunks, and avoids logging the key. Preparation audits
 at least 95% of expected dates and nonzero rows in North America, South
-America, Europe, Africa, northern Asia, East Asia, and Oceania. The original
-checked Stage 8 snapshot still has no FIRMS rows and therefore makes no global
-fire claim; CWFIS is regional QA/fallback only.
+America, Europe, Africa, northern Asia, East Asia, and Oceania. Both checked
+particulate snapshots have no FIRMS rows and therefore make no global fire
+claim; CWFIS is regional QA/fallback only. The complete secure key procedure
+is recorded in the
+[Stage 15 plan](../../docs/pages/development/stage-15.md#getting-and-using-a-nasa-firms-map_key).
 
 See the [Anthropocene implementation notes](../../docs/pages/passes/anthropocene/implementation.md)
 for current source roles, formulas, coverage boundaries, refresh commands, and

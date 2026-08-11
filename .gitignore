@@ -28,6 +28,7 @@
 /tests/test-bathymetry-roulette-style
 /tests/test-bathymetry-hamonshu-style
 /tests/test-anthropocene-generation
+/tests/test-anthropocene-particulate-generation
 /tests/test-anthropocene-temperature-generation
 /tests/test-cloud-atmosphere-generation
 /tests/test-resources-generation
@@ -52,6 +53,8 @@
 /src.generate/generate-bathymetry-hamonshu
 /src.generate/generate-anthropocene
 /src.generate/prepare-anthropocene
+/src.generate/generate-anthropocene-particulate
+/src.generate/prepare-anthropocene-particulate
 /src.generate/generate-anthropocene-temperature
 /src.generate/prepare-anthropocene-temperature
 /src.generate/generate-cloud-atmosphere

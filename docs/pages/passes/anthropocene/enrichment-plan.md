@@ -7,14 +7,14 @@
 
 ## Status and recommendation
 
-Stage 8b is now an **incremental implementation**. The original checked pass
-still produces one partial-2026 observation atlas from the sources and
-filenames described in the
-[Stage 8 implementation notes](implementation.md). The first
-Stage 8b increment additionally implements independently pinned 2025
-complete-year and 2026 partial-year NOAA CPC temperature fields, year-bearing
-targets, explicit global H3 coverage/missing semantics, and a hard global-FIRMS
-release gate. CAMS, PurpleAir, and ocean products below remain planned.
+Stage 8b is now an **incremental implementation** with two accepted standard
+families: complete-2025/partial-2026 particulate observation atlases and
+complete-2025/partial-2026 NOAA CPC temperature fields. All four pass IDs are
+year-bearing and default-generated. The implementation also provides explicit
+global H3 coverage/missing semantics and a hard global-FIRMS refresh gate.
+CAMS and ocean products remain planned. PurpleAir now has a credential-free,
+synthetic interface experiment; a real community-sensor adapter remains
+planned and separately permission-gated.
 
 The completed and planned sequence is:
 
@@ -23,14 +23,15 @@ The completed and planned sequence is:
    prevent promotion without actual global rows. A checked global fire
    snapshot still requires a maintainer-provided free map key.
 2. **Implemented:** add NOAA CPC gridded daily maximum and minimum temperature
-   as the primary non-sparse temperature field while retaining the original
-   observation atlas as a separate product.
+   as the primary non-sparse temperature field while retaining the
+   year-qualified particulate observation atlas as a separate product.
 3. **Planned:** add globally complete CAMS analysis fields for modeled PM2.5 and smoke
    context without relabeling either one as a ground observation;
 4. **Planned:** add NOAA OISST marine-heatwave and Coral Reef Watch reef-heat-stress
    products as a separate ocean theme; and
-5. **Planned:** keep PurpleAir in a separately generated, permission-gated community-sensor
-   product.
+5. **Interface implemented; observed data planned:** keep PurpleAir in a
+   separately generated, permission-gated community-sensor product. The
+   current synthetic overlay tests style and lifecycle only.
 
 The pass should not solve sparse observations by treating missing cells as
 zero or by blending station, model, satellite, and community-sensor values into
@@ -40,9 +41,9 @@ source-separated observations.
 ## Why the current map is North-America-heavy
 
 The checked
-[`anthropocene-2026.geojson`](../../../../assets.static/anthropocene/anthropocene-2026.geojson)
+[`anthropocene-particulate-2026.geojson`](../../../../assets.static/anthropocene/anthropocene-particulate-2026.geojson)
 and the rendered
-[`anthropocene-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/png/anthropocene-ck-44-22.png)
+`anthropocene-particulate-2026` plate
 are behaving consistently with their inputs. The imbalance is an acquisition
 and evidence-class problem, not a projection or marker-layout bug.
 
@@ -74,7 +75,7 @@ legend, and filenames:
 A single overloaded PNG cannot legibly encode several full global fields.
 Treat one year's Anthropocene pass as a bundle of source-separated themes:
 
-- `anthropocene-observations-YEAR-PROJECTION` retains and expands the existing
+- `anthropocene-particulate-YEAR-PROJECTION` retains and expands the existing
   event/station atlas;
 - `anthropocene-temperature-YEAR-PROJECTION` combines the non-sparse
   temperature field with station markers;
@@ -203,13 +204,23 @@ source/evidence class, grid version, temporal convention, and quality flags.
 The existing observation schema can remain v1 while the new field file starts
 at v2.
 
-## Optional PurpleAir pass
+## PurpleAir experiment and optional observed-data pass
 
-Assuming redistribution and display permission are resolved, PurpleAir is
-worth implementing as an **opt-in community-sensor artifact**. It adds useful
-local density in places with participating owners, but it is not globally
-uniform and will not by itself repair Siberian, Chinese, African, or oceanic
-coverage.
+Stage 15 implements a 12-plate, default-visible PurpleAir **interface
+experiment** for two years and six projections. Its 12 geographic anchors are
+synthetic rendering fixtures, not sensors; it contains no PM values,
+measurements, or observation claim. The `purpleair-experiment` layer is capped
+at 60% opacity, remains exploration-only, and is built only by its explicit
+target or `make all-experiments`.
+
+Assuming redistribution and display permission are resolved, a separate
+observed-data pass remains worth implementing as an **opt-in community-sensor
+artifact**. It adds useful local density in places with participating owners,
+but it is not globally uniform and will not by itself repair Siberian,
+Chinese, African, or oceanic coverage. Obtain a read key at
+[PurpleAir Develop](https://develop.purpleair.com/) and keep it only in the
+acquisition environment; the current synthetic experiment neither needs nor
+accepts a key.
 
 Acquisition should use a written bulk-data arrangement or a supplied annual
 snapshot. PurpleAir's own [API guidance](https://community.purpleair.com/t/api-use-guidelines/1589)
@@ -289,9 +300,13 @@ Each year is an independent reproducibility unit:
 | 2026 | `partial_year: true` | End each source before its explicit `available_through` date and the profile snapshot boundary | Title every artifact `2026 PARTIAL YEAR` and expose valid-day denominators |
 
 Use year-bearing profiles and filenames; do not let two runs overwrite the same
-`anthropocene-ck-44-22.*` path:
+unqualified path:
 
 ```text
+assets.static/anthropocene/anthropocene-particulate-2025-profile.json
+assets.static/anthropocene/anthropocene-particulate-2025.geojson
+assets.static/anthropocene/anthropocene-particulate-2026-profile.json
+assets.static/anthropocene/anthropocene-particulate-2026.geojson
 assets.static/anthropocene/anthropocene-temperature-2025-profile.json
 assets.static/anthropocene/anthropocene-temperature-2025.geojson
 assets.static/anthropocene/anthropocene-temperature-2026-profile.json
@@ -309,9 +324,10 @@ make generate-anthropocene-years
 make generate-anthropocene-year-artifacts
 ```
 
-The aliases currently generate the implemented CPC temperature theme across
-all six projections; future fire/air, ocean, and permission-gated PurpleAir
-themes can join the aliases without changing their names. For visual
+The aliases generate both implemented standard themes across all six
+projections. The synthetic PurpleAir and bounded water-debris experiments stay
+outside these aliases. Future fire/air and ocean themes can join only after an
+explicit lifecycle decision. For visual
 year-to-year comparisons, a later product should also support a 2025 window
 truncated to the same month/day as the 2026 snapshot or render rates per 100
 valid days. The canonical 2025 artifact remains complete and the comparison
@@ -319,7 +335,7 @@ window must be labelled separately.
 
 ## Implementation sequence
 
-### 1. Dual-year and schema plumbing — implemented for CPC
+### 1. Dual-year and schema plumbing — implemented for particulate and CPC
 
 - Split the single profile path into explicit 2025 and 2026 profiles.
 - Add year-bearing normalized and generated filenames plus per-year checksum
@@ -328,7 +344,8 @@ window must be labelled separately.
   source.
 - Add evidence class, typed field measures, valid-day denominators, source
   versions, local/UTC reporting-day rules, and partial/complete status.
-- Preserve v1 loading for the checked 2026 artifact during migration.
+- Remove the ambiguous unqualified artifact after both year-bearing
+  particulate snapshots and compatibility Make aliases are checked.
 
 ### 2. Highest-value geographic repairs — CPC implemented; FIRMS gated
 
@@ -359,8 +376,10 @@ window must be labelled separately.
 
 ### 4. Optional community sensors
 
-- Implement the PurpleAir bulk snapshot adapter, QA fixture, correction modes,
-  local-day aggregation, and separate artifacts.
+- **Implemented interface only:** synthetic anchors, six-projection style,
+  default visibility, 60% opacity, claim boundary, and no credential.
+- Implement the real PurpleAir bulk snapshot adapter, observation QA fixture,
+  correction modes, local-day aggregation, and separate artifacts.
 - Require the permission record and raw manifest before the opt-in target can
   run.
 
@@ -411,11 +430,13 @@ should require:
   field-observed bleaching.
 - Do not calculate an Anthropocene severity score from unlike source values.
 
-The first confirmation point is partly complete: two year-bearing,
-source-pinned CPC temperature products now provide broad land coverage, and a
-global observation refresh cannot silently omit FIRMS. Promotion of a new
-global fire snapshot is intentionally still blocked until a maintainer supplies
-`FIRMS_MAP_KEY` and the staged rows pass date and region audits. This increment
-repairs the temperature gap and establishes the field contract needed by CAMS,
-PurpleAir, and ocean products without prematurely committing to their
-calibration choices.
+The first confirmation point is complete: two year-bearing, source-pinned
+particulate products and two year-bearing CPC temperature products are
+standard, while a global observation refresh cannot silently omit FIRMS.
+Promotion of a new global fire snapshot is intentionally still blocked until
+a maintainer supplies `FIRMS_MAP_KEY` and the staged rows pass date and region
+audits. The synthetic PurpleAir interface is implemented without pretending
+that community-sensor observations were acquired. This increment repairs the
+year and temperature ambiguity and establishes the field contract needed by
+CAMS, a future observed PurpleAir adapter, and ocean products without
+prematurely committing to their calibration choices.

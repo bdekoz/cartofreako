@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "cartofreako-anthropocene-water-debris-experiment-v1",
+  "lifecycle": "exploration-only",
+  "checkedOn": "2026-08-10",
+  "passFamily": "anthropocene-water-debris",
+  "years": [
+    {"year": 2025, "editionStatus": "complete", "dataThrough": "2025-12-31"},
+    {"year": 2026, "editionStatus": "partial", "dataThrough": "2026-08-10"}
+  ],
+  "evidenceClasses": [
+    {"id": "observed-shoreline", "renderDisposition": "context-only", "depthRule": "not-applicable"},
+    {"id": "observed-surface-sample", "renderDisposition": "context-only", "depthRule": "observed-only"},
+    {"id": "modeled-concentration", "renderDisposition": "context-only", "depthRule": "UNAVAILABLE-not-zero"},
+    {"id": "modeled-river-emission", "renderDisposition": "UNAVAILABLE", "depthRule": "not-applicable"},
+    {"id": "cleanup-operation", "renderDisposition": "context-only", "depthRule": "UNAVAILABLE-not-zero"},
+    {"id": "depth-profile", "renderDisposition": "rendered-observation", "depthRule": "observed-only"}
+  ],
+  "sources": [
+    {
+      "id": "noaa-mdmap",
+      "authority": "NOAA Marine Debris Program",
+      "title": "Marine Debris Monitoring and Assessment Project",
+      "url": "https://marinedebris.noaa.gov/our-work/monitoring/marine-debris-monitoring-and-assessment-project",
+      "licenseSpdx": "UNAVAILABLE",
+      "sourcePeriod": "ongoing; each exported shoreline survey retains its own date",
+      "renderRole": "context-only",
+      "supportsClasses": ["observed-shoreline"],
+      "limitation": "No reviewed MDMAP observation export is bundled; absence is not zero debris."
+    },
+    {
+      "id": "noaa-mdmap-national-survey-2024",
+      "authority": "NOAA Office of Response and Restoration",
+      "title": "NOAA MDMAP National Survey candidate sampling sites",
+      "url": "https://www.fisheries.noaa.gov/inport/item/73092",
+      "licenseSpdx": "CC0-1.0",
+      "sourcePeriod": "2024 candidate sites; metadata reviewed 2026-08-10",
+      "renderRole": "context-only",
+      "supportsClasses": ["observed-shoreline"],
+      "limitation": "Candidate survey sites are source-coverage context, not debris observations."
+    },
+    {
+      "id": "ocean-cleanup-gpgp-overview",
+      "authority": "The Ocean Cleanup",
+      "title": "The Great Pacific Garbage Patch",
+      "url": "https://theoceancleanup.com/great-pacific-garbage-patch/",
+      "licenseSpdx": "UNAVAILABLE",
+      "sourcePeriod": "multiple expeditions and models; page reviewed 2026-08-10",
+      "renderRole": "context-only",
+      "supportsClasses": ["observed-surface-sample", "modeled-concentration", "cleanup-operation", "depth-profile"],
+      "limitation": "Page illustrations are not traced into geometry and summary values are not treated as a spatial field."
+    },
+    {
+      "id": "ocean-cleanup-gpgp-2015-2022",
+      "authority": "The Ocean Cleanup collaborators",
+      "title": "Seven years into the North Pacific garbage patch supplementary data",
+      "url": "https://figshare.com/s/c19216d64521d44a0e29",
+      "licenseSpdx": "CC-BY-4.0",
+      "sourcePeriod": "2015-2022 surface surveys",
+      "renderRole": "context-only",
+      "supportsClasses": ["observed-surface-sample", "modeled-concentration", "cleanup-operation"],
+      "limitation": "The source is cited and its variables inform the evidence model, but the WAF-blocked file was not silently reconstructed or bundled."
+    },
+    {
+      "id": "ocean-cleanup-depth-2020",
+      "authority": "The Ocean Cleanup collaborators",
+      "title": "First evidence of plastic fallout from the North Pacific Garbage Patch",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7203237/",
+      "licenseSpdx": "CC-BY-4.0",
+      "sourcePeriod": "2018-11-01 through 2018-12-04; published 2020",
+      "renderRole": "observed-geometry",
+      "supportsClasses": ["observed-surface-sample", "depth-profile"],
+      "limitation": "Five eastern North Pacific depth stations do not establish a global depth field or a garbage-patch boundary.",
+      "sourceReceiptSha256": "e0774175c3bd047386805e1d01b5614c5c0d2e54a7eefe86fcd36e7087479797"
+    }
+  ],
+  "depthStations": [
+    {"id": "station-1", "date": "2018-11-01", "longitude": -151.903, "latitude": 25.16, "maximumSampleDepthM": 1462, "sourceId": "ocean-cleanup-depth-2020", "evidenceClass": "depth-profile"},
+    {"id": "station-2", "date": "2018-11-03", "longitude": -147.017, "latitude": 28.716, "maximumSampleDepthM": 1459, "sourceId": "ocean-cleanup-depth-2020", "evidenceClass": "depth-profile"},
+    {"id": "station-3", "date": "2018-11-15", "longitude": -145.09, "latitude": 30.624, "maximumSampleDepthM": 2001, "sourceId": "ocean-cleanup-depth-2020", "evidenceClass": "depth-profile"},
+    {"id": "station-4", "date": "2018-12-01", "longitude": -133.358, "latitude": 30.779, "maximumSampleDepthM": 2002, "sourceId": "ocean-cleanup-depth-2020", "evidenceClass": "depth-profile"},
+    {"id": "station-5", "date": "2018-12-04", "longitude": -123.309, "latitude": 31.516, "maximumSampleDepthM": 1989, "sourceId": "ocean-cleanup-depth-2020", "evidenceClass": "depth-profile"}
+  ],
+  "layouts": [
+    {"id": "cahill-keyes", "projectionDirectory": "cahill-keyes", "runtimeProjection": "cahill-keyes", "frame": [4400, 2200], "sourceBase": "water-ck-44-22", "suffix": "ck-44-22"},
+    {"id": "authagraph", "projectionDirectory": "authagraph", "runtimeProjection": "authagraph", "frame": [4400, 1905.255888325765], "sourceBase": "water-authagraph-44-19.052559", "suffix": "authagraph-44-19.052559"},
+    {"id": "dymaxion", "projectionDirectory": "dymaxion", "runtimeProjection": "dymaxion", "frame": [4400, 2078.460969082653], "sourceBase": "water-dymaxion-44-20.78461", "suffix": "dymaxion-44-20.78461"},
+    {"id": "myriahedral", "projectionDirectory": "myriahedral", "runtimeProjection": "myriahedral-pacific", "frame": [4400, 2475], "sourceBase": "water-myriahedral-44-24.75", "suffix": "myriahedral-44-24.75"},
+    {"id": "star-x", "projectionDirectory": "star-x", "runtimeProjection": "star-x", "frame": [3400, 4400], "sourceBase": "water-star-x-34-44", "suffix": "star-x-34-44"},
+    {"id": "voronoi", "projectionDirectory": "voronoi", "runtimeProjection": "voronoi", "frame": [4400, 2291.666666666667], "sourceBase": "water-voronoi-44-22.916667", "suffix": "voronoi-44-22.916667"}
+  ],
+  "style": {"observedFieldMaximumOpacity": 0.6, "titleScale": 2},
+  "claimBoundary": [
+    "Only the five 2018 depth stations are rendered as observations.",
+    "All shoreline, surface, model, and cleanup sources remain context-only unless a reviewed spatial package is bundled.",
+    "A surface patch is not an observed three-dimensional body; unknown depth is UNAVAILABLE, never zero.",
+    "The 2025 and 2026 labels identify atlas editions, not the observation year of every record.",
+    "The experiment cannot enter standard generation, release, or publication without a separate promotion decision."
+  ],
+  "promotion": {"standardLifecycleAuthorized": false, "defaultGenerationAuthorized": false, "publicReleaseAuthorized": false}
+}

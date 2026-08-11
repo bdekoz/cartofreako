@@ -10,23 +10,34 @@
 
 ## Current pass status
 
-The three implemented Anthropocene pass IDs are current **accepted
-experimental** products. Maturity and lifecycle are separate: each remains a
-**standard**, default-generated, release-eligible pass across all six
-projections.
+The four standard Anthropocene pass IDs are current **accepted experimental**
+products. Maturity and lifecycle are separate: each remains a **standard**,
+default-generated, release-eligible pass across all six projections.
 
 | Pass ID | Current role | Lifecycle | Maturity |
 | --- | --- | --- | --- |
-| `anthropocene` | Source-separated legacy observation atlas | Standard; default-generated | Accepted experimental |
+| `anthropocene-particulate-2025` | Complete-year source-separated observation atlas | Standard; default-generated | Accepted experimental |
+| `anthropocene-particulate-2026` | Explicitly partial-year source-separated observation atlas | Standard; default-generated | Accepted experimental |
 | `anthropocene-temperature-2025` | Complete-year CPC temperature field | Standard; default-generated | Accepted experimental |
 | `anthropocene-temperature-2026` | Explicitly partial-year CPC temperature field | Standard; default-generated | Accepted experimental |
+
+The former unqualified `anthropocene` pass was removed. Compatibility Make
+aliases build the year-bearing particulate pair; they do not recreate an
+ambiguous unqualified artifact.
+
+Two additional families are implemented as **exploration only** and remain
+outside default generation and release: the synthetic, default-visible
+PurpleAir interface review and the bounded water-debris depth-station
+experiment. They are available through their explicit targets and
+`make all-experiments`.
 
 The [pass-status manifest](../../../../contracts/pass-status-v1.json) records
 this classification and its claim boundaries. Acceptance applies to the
 current visual/research implementation, source metadata, title hierarchy, and
 field treatment. It does not turn observations into causal attribution,
-remove the 2026 partial-year qualifier, authorize unreviewed source refreshes,
-or promote Stage 15 atoll and water-debris research products.
+remove either 2026 partial-year qualifier, authorize unreviewed source
+refreshes, or promote Stage 15 atoll, PurpleAir, or water-debris research
+products.
 
 ## Outcome and claim boundary
 
@@ -45,43 +56,43 @@ attribution score. The SVG footer and embedded metadata state that boundary.
 
 The implementation consists of:
 
-- [`generate-anthropocene.cc`](../../../../src.generate/generate-anthropocene.cc), the
-  requested generator entry point;
-- [`anthropocene-data.h`](../../../../src.generate/anthropocene-data.h), strict profile
+- [`generate-anthropocene-particulate.cc`](../../../../src.generate/generate-anthropocene-particulate.cc),
+  the particulate generator entry point;
+- [`anthropocene-particulate-data.h`](../../../../src.generate/anthropocene-particulate-data.h), strict profile
   and normalized GeoJSON validation;
-- [`anthropocene-generation.h`](../../../../src.generate/anthropocene-generation.h),
+- [`anthropocene-particulate-generation.h`](../../../../src.generate/anthropocene-particulate-generation.h),
   projection, semantic SVG layers, legends, metadata, and verification;
-- [`prepare-anthropocene.cc`](../../../../src.generate/prepare-anthropocene.cc), the
+- [`prepare-anthropocene-particulate.cc`](../../../../src.generate/prepare-anthropocene-particulate.cc), the
   deterministic source normalizer;
 - [`prepare-anthropocene-temperature.cc`](../../../../src.generate/prepare-anthropocene-temperature.cc),
   the CPC daily-grid to global-H3 field normalizer;
 - [`generate-anthropocene-temperature.cc`](../../../../src.generate/generate-anthropocene-temperature.cc),
   the complete-2025/partial-2026 Stage 8b field renderer;
-- explicit [fetch](../../../../scripts/fetch-anthropocene-data.sh) and
-  [prepare](../../../../scripts/prepare-anthropocene-data.sh) scripts plus a
-  profile-aware [checksum verifier](../../../../scripts/verify-anthropocene-data.sh);
+- explicit [fetch](../../../../scripts/fetch-anthropocene-particulate-data.sh) and
+  [prepare](../../../../scripts/prepare-anthropocene-particulate-data.sh) scripts plus a
+  profile-aware [checksum verifier](../../../../scripts/verify-anthropocene-particulate-data.sh);
   and
-- a checked [2026 profile](../../../../assets.static/anthropocene/anthropocene-profile.json)
-  and checksum-pinned normalized snapshot.
+- checked [2025](../../../../assets.static/anthropocene/anthropocene-particulate-2025-profile.json)
+  and [2026](../../../../assets.static/anthropocene/anthropocene-particulate-2026-profile.json)
+  profiles with checksum-pinned normalized snapshots.
 
 ## Duration and snapshot authority
 
-The profile contains the literal default year `2026`, matching the calendar
-year when Stage 8 was implemented. Neither generator nor preparer reads the
-host clock:
+The two profiles contain literal years and snapshot boundaries. Neither
+generator nor preparer reads the host clock:
 
 ```json
-"duration": { "type": "calendar-year", "year": 2026 },
-"snapshot": {
-  "as_of_utc": "2026-08-05T00:00:00Z",
-  "partial_year": true
+{
+  "2025": { "data_through": "2025-12-31", "partial_year": false },
+  "2026": { "as_of_utc": "2026-08-05T00:00:00Z", "partial_year": true }
 }
 ```
 
 Changing `duration.year` is an intentional profile edit, not an automatic New
 Year rollover. The normalized GeoJSON must have the same year, snapshot time,
 partial-year flag, and H3 resolution or loading fails. Each source also has an
-`available_through` value because publication latency differs substantially:
+`available_through` value because publication latency differs substantially
+in the partial edition:
 EPA AirData in this capture ends May 31, Storm Events ends April 30, HMS ends
 August 3, and the captured GSN and CWFIS inputs extend through August 4.
 
@@ -123,8 +134,14 @@ PurpleAir is consequently not the default PM2.5 source. Its low-cost sensor
 network can be useful for exploratory local analysis, but PM readings are not
 smoke attribution, API/licensing terms require separate review, and the user
 confirmed [EPA AirData](https://aqs.epa.gov/aqsweb/airdata/download_files.html)
-for the regulatory exposure layer. PurpleAir stays classified as
-`excluded-from-default`, not as observed smoke.
+for the regulatory exposure layer. The Stage 15 PurpleAir interface experiment
+is exploration-only and uses 12 synthetic rendering anchors, no sensor IDs or
+measurements. Its layer is visible by default at 60% opacity so the proposed
+style can be reviewed. A future observed-data adapter needs a read key from
+[PurpleAir Develop](https://develop.purpleair.com/), a reviewed source-use
+receipt, and explicit correction/sensor metadata. The key belongs only in the
+acquisition environment. PurpleAir remains excluded from the standard
+particulate data and is never relabeled as observed smoke.
 
 ## Record and precipitation eligibility
 
@@ -188,33 +205,32 @@ database's full administrative total.
 
 The EPA normalizer reads parameter `88101` daily data, keeps rows with numeric
 AQI greater than the profile's exclusive threshold of 100, deduplicates
-state/county/site/date, then deduplicates again as H3 cell-days. In the checked
-snapshot, 164 monitor site-days become 129 H3 cell-days across 67 cells.
+state/county/site/date, then deduplicates again as H3 cell-days.
 
 ## Snapshot audit
 
-The checked normalized file has SHA-256
+The complete-2025 and partial-2026 normalized files have SHA-256 values
+`ecd4b11bab4faa9895522dbfe75436ef66820f53620bf0c5f6fc7404e9f5426b`
+and
 `a3b2fcb3a809710d278ce88aef52ea938fa67e8b900313cf2e5c2ed9c6ddde42`.
-Its embedded audit values are:
+Their embedded H3 cell-day totals are:
 
-| Metric | H3 cell-days | H3 cells |
+| Metric | 2025 complete | 2026 partial |
 | --- | ---: | ---: |
-| Temperature record highs | 1,567 | 255 |
-| Temperature record lows | 434 | 136 |
-| Precipitation records | 424 | 159 |
-| Heavy precipitation | 426 | 147 |
-| Active fire | 35,940 | 4,937 |
-| Observed smoke | 1,088,261 | 43,690 |
-| Flood/heavy-rain events | 1,000 | 359 |
-| Severe-weather events | 4,195 | 1,813 |
-| EPA PM2.5 exceedance | 129 | 67 |
+| Temperature record highs | 4,129 | 1,567 |
+| Temperature record lows | 714 | 434 |
+| Precipitation records | 1,757 | 424 |
+| Heavy precipitation | 1,491 | 426 |
+| Active fire | 127,392 | 35,940 |
+| Observed smoke | 1,794,158 | 1,088,261 |
+| Flood/heavy-rain events | 7,135 | 1,000 |
+| Severe-weather events | 21,694 | 4,195 |
+| EPA PM2.5 exceedance | 1,240 | 129 |
 
-The source audit records 996 GSN files, 768 temperature-eligible stations,
-652 precipitation-eligible stations, 177,365 EPA rows, 29,813 HMS polygons,
-23,255 Storm Events details, 8,944 located events, 167 CWFIS files, and 755,252
-CWFIS rows. These totals validate the pipeline; they are not normalized by
-population, station density, satellite opportunity, reporting practice, or
-area.
+Both source audits record zero FIRMS rows. These totals validate the bounded
+pipeline; they are not normalized by population, station density, satellite
+opportunity, reporting practice, area, or unequal time coverage. Raw complete
+and partial counts are not a direct year-to-year rate comparison.
 
 ## Additional resource types evaluated
 
@@ -260,7 +276,7 @@ this compatibility atlas is not silently restyled as the non-sparse field.
 The layer hierarchy is:
 
 ```text
-anthropocene-background
+anthropocene-particulate-background
 terrestrial-land
 atmosphere / observed-smoke-days
 fire / active-fire-days
@@ -283,26 +299,28 @@ shape distinction, and absence of a coral group.
 
 ## Acquisition and refresh
 
-The observation-atlas compatibility family is offline and explicit in Stage
-12:
+The particulate observation family is offline and explicit:
 
 ```sh
-make generate-anthropocene-atlas
-make generate-anthropocene-atlas-artifacts
+make generate-anthropocene-particulate
+make generate-anthropocene-particulate-artifacts
 ```
 
 The unqualified `generate-anthropocene` and
-`generate-anthropocene-artifacts` targets now build both year-bearing CPC
-fields described below.
+`generate-anthropocene-artifacts` targets build both year-bearing particulate
+and CPC temperature families. The former `*-atlas` names are compatibility
+aliases for the particulate pair.
 
 A deliberate refresh is two-stage:
 
 ```sh
-make fetch-anthropocene-data
-make prepare-anthropocene-data
+make fetch-anthropocene-particulate-data
+make prepare-anthropocene-particulate-data
 # equivalent authorized wrapper for the complete two-step refresh
-FIRMS_MAP_KEY='…' make EXTERNAL_PASSES=nasa-firms \
-  generate-authorized-external
+read -rsp 'NASA FIRMS MAP_KEY: ' FIRMS_MAP_KEY; printf '\n'
+export FIRMS_MAP_KEY
+make generate-authorized-external EXTERNAL_PASSES=nasa-firms
+unset FIRMS_MAP_KEY
 ```
 
 The fetch target validates TAR/ZIP/GZIP containers, discovers the latest
@@ -315,17 +333,19 @@ only an ignored candidate. It never overwrites checked data. After
 review, update the checked GeoJSON, its `SHA256SUMS`, profile checksum and
 coverage dates, test fixtures, and this audit together.
 
-The wrapper intentionally does not invoke either Anthropocene artifact
-target: `generate-anthropocene-artifacts` is the independent 2025/2026 CPC
-temperature family, and rendering the observation-atlas candidate before
-promotion would bypass its source-coverage review gate.
+The wrapper intentionally does not invoke an Anthropocene artifact target.
+Rendering a prepared candidate before profile/hash/source review would bypass
+its promotion gate. Request the free key from the official
+[NASA FIRMS MAP_KEY page](https://firms.modaps.eosdis.nasa.gov/api/map_key/);
+the complete handling procedure is in the
+[Stage 15 plan](../../development/stage-15.md#getting-and-using-a-nasa-firms-map_key).
 
 Supply another already-normalized, matching dataset with Make variables:
 
 ```sh
-make ANTHROPOCENE_PROFILE=/absolute/path/profile.json \
-     ANTHROPOCENE_GEOJSON=/absolute/path/observations.geojson \
-     generate-anthropocene-atlas-cahill-keyes
+make ANTHROPOCENE_PARTICULATE_PROFILE_2026=/absolute/path/profile.json \
+     ANTHROPOCENE_PARTICULATE_GEOJSON_2026=/absolute/path/observations.geojson \
+     generate-anthropocene-particulate-2026
 ```
 
 The generation rule verifies that the selected profile names the selected
@@ -333,7 +353,7 @@ GeoJSON and that its declared SHA-256 matches before invoking the generator.
 
 ## Tests and limitations
 
-`tests/test-anthropocene-generation.cc` validates profile classifications,
+`tests/test-anthropocene-particulate-generation.cc` validates profile classifications,
 EPA/smoke separation, fire-source roles, coral deferral, exact snapshot audit
 values, H3 centers and resolution, metric sums, and sample projection bounds
 on all six projections. `make check` also verifies the normalized SHA-256.
@@ -360,8 +380,8 @@ United-States-only, and the temperature layer uses the intentionally sparse
 GSN subset. This is a source-coverage limitation rather than a projection
 failure.
 
-The first [Stage 8b enrichment](enrichment-plan.md) increment is
-implemented alongside, rather than blended into, the v1 observation atlas.
+The first [Stage 8b enrichment](enrichment-plan.md) increment is implemented
+alongside, rather than blended into, the year-qualified particulate atlas.
 NOAA CPC daily TMAX/TMIN fields are normalized onto every resolution-3 global
 H3 cell with valid-day denominators and distinct covered-zero/missing
 semantics. The complete-2025 field compares strict daily records with
@@ -394,12 +414,15 @@ make generate-anthropocene-2026
 make generate-anthropocene-years
 ```
 
-The global FIRMS gate is also implemented, but the original checked v1
-snapshot is not retroactively relabelled: it still has zero FIRMS rows. A new
-global fire snapshot cannot be promoted until credentialed raw acquisition
-passes its audits. The
+The global FIRMS gate is also implemented, but neither checked particulate
+snapshot is retroactively relabelled: both have zero FIRMS rows. A new global
+fire snapshot cannot be promoted until credentialed raw acquisition passes its
+audits. The
 [Stage 13 source review](source-expansion-stage-13.md)
 prioritizes full GHCN-Daily and OpenAQ, keeps CAMS/MAIAC in separately labeled
-modeled or satellite-aerosol products, and retains PurpleAir as an optional
-supplemental source requiring a bounded scope or provider-arranged bulk
-extract. OISST/Coral Reef Watch ocean themes remain planned.
+modeled or satellite-aerosol products. Stage 15 now supplies a synthetic,
+default-visible PurpleAir interface experiment without claiming sensor data;
+a real supplemental snapshot still requires a bounded scope or
+provider-arranged bulk extract. Its bounded water-debris experiment likewise
+renders only five reviewed 2018 depth stations and remains exploration-only.
+OISST/Coral Reef Watch ocean themes remain planned.

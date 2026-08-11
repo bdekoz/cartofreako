@@ -1,8 +1,8 @@
-// Strict Anthropocene profile and normalized H3 GeoJSON ingestion.
+// Strict Anthropocene particulate profile and normalized H3 GeoJSON ingestion.
 // -*- mode: C++ -*-
 
-#ifndef CART0FREAK0_ANTHROPOCENE_DATA_H
-#define CART0FREAK0_ANTHROPOCENE_DATA_H 1
+#ifndef CART0FREAK0_ANTHROPOCENE_PARTICULATE_DATA_H
+#define CART0FREAK0_ANTHROPOCENE_PARTICULATE_DATA_H 1
 
 #include <algorithm>
 #include <array>
@@ -718,4 +718,4 @@ metric_index(const anthropocene_profile& profile, const std::string_view id)
 
 } // namespace cart0freak0::anthropocene_generation
 
-#endif // CART0FREAK0_ANTHROPOCENE_DATA_H
+#endif // CART0FREAK0_ANTHROPOCENE_PARTICULATE_DATA_H

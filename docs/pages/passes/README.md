@@ -14,7 +14,7 @@ class, visual policy, verification, and scientific or licensing boundary.
 
 | Lifecycle | Meaning |
 | --- | --- |
-| **Standard** | Reproducible without a credential or special acceptance, part of the default artifact graph, and represented in the public galleries |
+| **Standard** | Reproducible without a credential or special acceptance, part of the default artifact graph, and eligible for the next generated-assets release; sealed older galleries may differ |
 | **Optional** | Implemented but gated by a credential, license acceptance, source availability, or deliberate operator authorization |
 | **Exploration only** | Evaluated or proposed without a released production artifact; absence from a release is intentional |
 
@@ -26,10 +26,13 @@ sources, or interpretation may still be revised. It does not mean
 exploration-only, and it does not broaden an evidence claim.
 
 The machine-readable [current pass-status manifest](../../../contracts/pass-status-v1.json)
-classifies `anthropocene`, `anthropocene-temperature-2025`, and
+classifies `anthropocene-particulate-2025`,
+`anthropocene-particulate-2026`, `anthropocene-temperature-2025`, and
 `anthropocene-temperature-2026` as current, standard, default-generated, and
-accepted-experimental. `make check-pass-status` verifies all 18 projection
-artifacts against the standard manifest.
+accepted-experimental. `make check-pass-status` verifies all 24 projection
+artifacts against the standard manifest. The synthetic PurpleAir interface,
+bounded water-debris, and Majuro evidence families remain exploration-only
+despite having implemented generators.
 
 ## Pass families
 

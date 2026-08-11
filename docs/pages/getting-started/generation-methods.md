@@ -38,7 +38,7 @@ decision after the fact.
 | 6a | `generate-resources` / World Game | **Historical method only; implementation retired** | A bounded 1960 production-leader transcription was feasible, but it was not a current resources atlas; its data, renderer, targets, and generated products were removed at the Stage 6b cutover |
 | 6b | `resources-energy`, `resources-food`, `resources-flora`, `resources-mineral`, `resources-human` | **Implemented historical first increment; superseded by Stage 12** | The five-family v2 baseline established metric separation, non-sparse coverage gates, deterministic archives, source refresh, and six-projection rules |
 | 7 | Configurable `generate-*` selection | **Implemented infrastructure** | JSON profile, validation, safe target expansion, default Make behavior, alternatives, and scope boundaries are recorded in this document |
-| 8 / 8b | `generate-anthropocene`; `generate-anthropocene-{2025,2026}` | **Implemented observation atlas and first Stage 8b field increment** | The checked source-separated partial-2026 atlas remains; complete-2025 and partial-2026 CPC temperature fields plus a required-global-FIRMS refresh gate are implemented, while CAMS, PurpleAir, and ocean themes remain planned in the [Stage 8b enrichment plan](../passes/anthropocene/enrichment-plan.md) |
+| 8 / 8b / 15 | `generate-anthropocene`; `generate-anthropocene-{2025,2026}` | **Implemented dual-year standard family plus bounded experiments** | Complete-2025 and partial-2026 particulate editions replace the unqualified atlas and join the two CPC temperature editions as 24 default-generated, accepted-experimental products. A required-global-FIRMS refresh gate remains; synthetic PurpleAir-interface and five-station water-debris products are exploration-only, while CAMS, observed PurpleAir, and broader ocean enrichment remain planned in the [Stage 8b enrichment plan](../passes/anthropocene/enrichment-plan.md) and [Stage 15 ledger](../development/stage-15.md). |
 | 9 | `generate-network-infrastructure` | **Implemented** | Confirmed external-source contract, normal cloud/CDN site atlas, explicit CC BY-NC-SA 3.0 topology opt-in, physical/logical relation boundary, projection-safe paths, Izzi detiling, products, and limits are detailed in the [network-infrastructure implementation notes](../passes/network-infrastructure.md) |
 | 12 | Expanded resources, dual-year Anthropocene defaults, external authorization, and Cahill-Keyes snapshot | **Implemented** | Six resource families and 14 v3 country/spatial products, five released human products plus two rejected coverage attempts, fisheries plus actual reef geometry, 2025/2026 default fields, `authorize-external`, 28 thumbnails, and Star-X Antarctic paint order are detailed in the [Stage 12 notes](../development/stage-12.md) |
 
@@ -313,15 +313,20 @@ audit, additional resource classifications, fire-source research, SVG layer
 grammar, refresh procedure, products, and interpretation limits are recorded
 in [`anthropocene-implementation-notes.md`](../passes/anthropocene/implementation.md).
 
-The first Stage 8b increment retains that v1 product and adds a separate NOAA
-CPC analysis-field family. Complete-2025 and partial-2026 profiles serialize
-all resolution-3 global H3 cells, retain valid-day denominators, and distinguish
-an analyzed zero-record cell from missing/outside-domain cells. Year aliases
-generate all six projections. Observation refreshes now require credentialed
-NASA FIRMS input and pass reporting-date plus world-region audits; the checked
-v1 snapshot, which has zero FIRMS rows, is not relabelled as global. Remaining
-CAMS atmosphere, PurpleAir, and ocean decisions are tracked in the
-[`Stage 8b enrichment plan`](../passes/anthropocene/enrichment-plan.md).
+The accepted Stage 15 revision replaces the unqualified v1 product with
+complete-2025 and partial-2026 particulate editions and retains the separate
+NOAA CPC analysis-field family for both years. The four pass IDs serialize
+global resolution-3 H3 fields where applicable, retain valid-day denominators,
+and distinguish an analyzed zero-record cell from missing or outside-domain
+cells. Year aliases generate all six projections. Observation refreshes still
+require credentialed NASA FIRMS input and must pass reporting-date plus
+world-region audits; the checked particulate snapshots explicitly contain
+zero FIRMS rows and are not relabelled as global fire coverage. Stage 15 also
+implements a credential-free synthetic PurpleAir-interface review and a
+bounded five-station water-debris experiment, both exploration-only. CAMS,
+observed PurpleAir, and broader ocean decisions remain in the
+[`Stage 8b enrichment plan`](../passes/anthropocene/enrichment-plan.md) and
+[`Stage 15 ledger`](../development/stage-15.md).
 
 ### Stage 9: network infrastructure
 
@@ -542,9 +547,9 @@ make all
 This remains the release/review build. It creates the complete layered SVG,
 PDF, and opaque-PNG suite, including all 84 Stage 12 resource maps plus slice
 and perspective families outside the configurable matrix. A clean checkout
-makes 31 lower-resolution thumbnails per projection. Locally recorded JAXA or
+makes 32 lower-resolution thumbnails per projection. Locally recorded JAXA or
 topology authorization adds the corresponding optional preview; the complete
-Stage 13 JAXA graph makes 32 per projection, including those linked from the
+JAXA-authorized graph makes 33 per projection, including those linked from the
 [generated snapshot](../gallery/cahill-keyes.md). The aliases
 `generate-projections`, `generated-projections`, and `make-generated` retain
 the same full-suite behavior. Use `make assets-resilient` for the bounded
@@ -588,9 +593,10 @@ local persisted pass state makes topology a dependency of that checkout's
 `generate-fiber-synthesized-artifacts` exports the six standard checked-union
 submarine-fiber products in all three formats; it is neither credential-gated
 nor optional.
-`generate-anthropocene-artifacts` does the same for all twelve default 2025
-and 2026 Anthropocene products; `generate-anthropocene-atlas-artifacts`
-exports the six legacy observation-atlas products.
+`generate-anthropocene-artifacts` does the same for all 24 default 2025 and
+2026 particulate and temperature products;
+`generate-anthropocene-atlas-artifacts` is a compatibility alias that exports
+the 12 year-qualified particulate products, not a legacy unqualified artifact.
 `generate-resources-artifacts` adds PDF and PNG exports to all 84 compressed
 Stage 12 SVG products.
 `generate-bathymetry-roulette-artifacts` does the same for all six roulette
@@ -598,10 +604,10 @@ bathymetry products.
 `generate-bathymetry-hamonshu-artifacts` does the same for all six Hamonshū
 bathymetry products.
 
-`generate-snapshot-ck` builds the 31 clean-graph 480-pixel-wide contact-sheet
+`generate-snapshot-ck` builds the 32 clean-graph 480-pixel-wide contact-sheet
 thumbnails and their Cahill-Keyes SVG prerequisites. Recorded JAXA or topology
 authorization extends the sheet with the corresponding optional product; the
-complete Stage 13 JAXA graph therefore has 32. `authorize-external`
+JAXA-authorized graph therefore has 33. `authorize-external`
 performs read-only credential/terms-boundary checks for selected optional
 P-Tree, NASA FIRMS, and network-topology passes; it does not fetch source data
 or accept provider terms. Its explicit mutating companion,

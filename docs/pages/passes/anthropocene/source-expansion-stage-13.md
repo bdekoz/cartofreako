@@ -7,8 +7,8 @@
 
 ## Decision
 
-The legacy observation atlas remains scientifically useful, including its
-large polar smoke geometry, but its uneven source coverage should be improved
+The source-separated particulate observation atlas remains scientifically
+useful, including its large polar smoke geometry, but its uneven source coverage should be improved
 without combining measurements, analyses, forecasts, and attribution into one
 score. Stage 13 re-evaluated five practical source families.
 
@@ -22,9 +22,10 @@ The recommended order is:
 4. use PurpleAir only as a supplemental, explicitly authorized source when a
    bounded sensor set or provider-arranged bulk extract is available.
 
-No Stage 13 source is silently merged into the checked 2026 atlas. Its current
-counts and digest remain reproducible, and each new family must pass a
-source-specific preparation and promotion review first.
+No Stage 13 source is silently merged into either checked particulate atlas.
+The complete-2025 and partial-2026 counts and digests remain reproducible, and
+each new family must pass a source-specific preparation and promotion review
+first.
 
 ## Source findings
 
@@ -65,8 +66,11 @@ with PurpleAir. A production integration therefore needs all of:
 - an independent metric such as `purpleair-pm25-exceedance-days`, never an
   assertion of smoke attribution.
 
-Until those are available, PurpleAir remains exploration-only rather than
-being simulated with partial or rate-limit-hostile acquisition.
+Stage 15 now provides an exploration-only synthetic interface overlay to test
+default visibility, 60% opacity, projection behavior, and claim language. Its
+anchors are explicitly not sensors and contain no PM values. Until the access
+and QA requirements above are available, PurpleAir observations remain absent
+rather than being simulated with partial or rate-limit-hostile acquisition.
 
 ## Promotion gates
 
@@ -101,7 +105,9 @@ being simulated with partial or rate-limit-hostile acquisition.
 
 ## Implementation boundary
 
-This review adds no hidden downloader, credential, or generated metric. The
+This Stage 13 review added no hidden downloader, credential, or generated
+metric. The later synthetic Stage 15 interface experiment also performs no
+acquisition. The
 next bounded implementation should begin with an OpenAQ inventory fixture or
 a full-GHCN development slice, then add a deterministic preparer and coverage
 report before any default artifact is changed. PurpleAir should be implemented

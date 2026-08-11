@@ -19,6 +19,31 @@ secondary actions.
 
 [Explore featured subjects and all six projection catalogs](docs/pages/gallery/README.md).
 
+## Since the v13 generated-assets release
+
+The public gallery above remains the immutable v13 UCB AAO/S3 deposit. Current
+source development adds capabilities without rewriting that release:
+
+- runtime API 3 now provides structured forward and candidate-aware reverse
+  projection for all six families, portable numerical fixtures, independent
+  reverse oracles, typed JavaScript/TypeScript, workers, Canvas/SVG/D3, and an
+  offline Three.js flat-map path;
+- the current standard graph contains 211 products across 32 pass IDs and has
+  exact 1920 × 1080 PNG/lossless-WebP derivatives, affine screen transforms,
+  deterministic artifact requests, and decision receipts;
+- the former unqualified Anthropocene observation atlas is replaced by
+  complete-2025 and partial-2026 `anthropocene-particulate` passes alongside
+  the two accepted temperature passes; and
+- closed Stage 15 implements a six-projection Majuro evidence pass plus bounded
+  PurpleAir-interface and water-debris experiments. These remain local,
+  exploration-only products and are not present in v13; and
+- Stage 16 now holds the deferred GPU evidence, atoll-source expansion, and
+  approved atmosphere-first agentic atlas research plan.
+
+GitHub source publication and human-invoked UCB AAO/S3 preservation remain
+separate operations. No current development or experiment silently updates
+the public v13 object tree.
+
 ## Project and build
 
 This repository contains native C++20 forward implementations of the
@@ -64,19 +89,20 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Stage 12 resource, authorization, default-year, snapshot, and Star-X integration | [Stage 12 implementation notes](docs/pages/development/stage-12.md) |
 | Stage 13 visual, observer, external-source, and bathymetry development | [Stage 13 convergence notes](docs/pages/development/stage-13.md) |
 | Stage 14 projection API, visual hierarchy, verification, and release plan | [Stage 14 convergence ledger](docs/pages/development/stage-14.md) |
-| Stage 15 GPU controls, consumer layout, and exploration-only Majuro atoll evidence | [Stage 15 development ledger](docs/pages/development/stage-15.md) and [atoll-canary report](reports/stage-15-atoll-evidence-canary.md) |
+| Closed Stage 15 GPU controls, consumer layout, Majuro full pass, and Anthropocene experiments | [Stage 15 closed ledger](docs/pages/development/stage-15.md), [atoll report](reports/stage-15-atoll-evidence-canary.md), and [water-debris report](reports/stage-15-water-debris-feasibility.md) |
+| Stage 16 compressed GPU evidence, atoll expansion, and agentic atlas research | [Stage 16 development ledger](docs/pages/development/stage-16.md) |
 | AI-agent discovery, 1080p gaming derivatives, and preservation of authoritative archive/art/print products | [AI Workflows assessment and 1080p gaming improvement plan](docs/pages/runtime/ai-agent-and-1080p-gaming.md) |
 | Visual contact sheets for every projection and released pass | [Visual gallery](docs/pages/gallery/README.md) and [generated projection snapshots](#generated-artifact-previews) |
 | Compact index of build, projection, pass, browser, and release documentation | [Technical documentation](docs/pages/README.md) |
-| GitHub source releases versus UCB AAO/S3 deposits, static assets, manifests, and render hardware | [`v20260810` Stage 14 source release](docs/pages/releases/v20260810.md), [`v20260808.1` corrected release notes](docs/pages/releases/v20260808.1.md), [S3 v13 publication](docs/pages/releases/s3-v13.md), and [release runbook](docs/pages/releases/README.md) |
+| GitHub source releases versus UCB AAO/S3 deposits, static assets, manifests, and render hardware | [`v20260811` Stage 15 source release](docs/pages/releases/v20260811.md), [`v20260810` Stage 14 source release](docs/pages/releases/v20260810.md), [S3 v13 publication](docs/pages/releases/s3-v13.md), and [release runbook](docs/pages/releases/README.md) |
 | Generate-pass evaluation record plus configured, full-suite, family, and exact workflows | [Generate-pass methods and decision record](docs/pages/getting-started/generation-methods.md) |
 | Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/pages/passes/astronomy.md) |
 | Process-start solar illumination and source-timed JAXA physical atmosphere generation | [Cloud-atmosphere implementation notes](docs/pages/passes/cloud-atmosphere.md) |
 | Human-made Earth-orbit population and observer generation | [Orbital Technosphere implementation notes](docs/pages/passes/orbital-technosphere.md) |
 | Implemented energy, food, fauna, flora, mineral, and human resource families | [Resources Stage 12 implementation notes](docs/pages/passes/resources/implementation.md) and [enrichment plan](docs/pages/passes/resources/enrichment-plan.md) |
 | Standard, optional, and exploration-only resource metrics | [Resources metric catalog](docs/pages/passes/resources/metric-catalog.md) |
-| Current accepted-experimental, source-separated climate, weather, fire, smoke, air-quality, and dual-year temperature atlases | [Anthropocene implementation notes](docs/pages/passes/anthropocene/implementation.md) and [pass-status manifest](contracts/pass-status-v1.json) |
-| Implemented dual-year CPC field plus planned atmosphere, PurpleAir, and ocean enrichment | [Anthropocene Stage 8b enrichment plan](docs/pages/passes/anthropocene/enrichment-plan.md) |
+| Current accepted-experimental dual-year particulate and temperature atlases plus exploration boundaries | [Anthropocene implementation notes](docs/pages/passes/anthropocene/implementation.md) and [pass-status manifest](contracts/pass-status-v1.json) |
+| Implemented dual-year particulate/CPC families, synthetic PurpleAir interface, and planned CAMS, observed PurpleAir, and ocean enrichment | [Anthropocene Stage 8b enrichment plan](docs/pages/passes/anthropocene/enrichment-plan.md) |
 | Cumulative H3 network-swarm generation | [Network-swarm generation implementation notes](docs/pages/passes/network-swarm.md) |
 | Cloud/CDN site atlas and opt-in cable/exchange topology | [Network-infrastructure implementation notes](docs/pages/passes/network-infrastructure.md) |
 | Checked cleanup/union of 2022 and 20260805 submarine fiber | [Fiber Synthesized implementation notes](docs/pages/passes/fiber-synthesized.md) |
@@ -131,7 +157,7 @@ make check
 Generate geometry, labeled graticules, both Natural Earth layer families,
 all three timestamped astronomy products, both timestamped Orbital Technosphere
 products, all 14 Stage 12 resource products, the Anthropocene observation and
-dual-year temperature atlases, the cumulative network-swarm,
+temperature atlases for both 2025 and 2026, the cumulative network-swarm,
 the cloud/CDN network-infrastructure site atlas, the default-rendered Fiber
 Synthesized union, Bathymetry Roulette, and
 Bathymetry Hamonshū for
@@ -142,21 +168,20 @@ make all
 ```
 
 The 24 production whole-earth maps, 18 astronomy maps, 12 Orbital
-Technosphere maps, 84 resources maps, 18 Anthropocene maps, six network-swarm
+Technosphere maps, 84 resources maps, 24 Anthropocene maps, six network-swarm
 maps, six network-infrastructure site maps, six Fiber Synthesized maps, six
-authorized Cloud-atmosphere maps, six Bathymetry Roulette maps, six Bathymetry
-Hamonshū maps, five
+Bathymetry Roulette maps, six Bathymetry Hamonshū maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes enlargement
-slices, and two Myriahedral face-group slices total 211 release products. The
-credential-free graph accounts for 205; the explicitly completed P-Tree
-workflow adds the six source-timed atmosphere products. They are
+slices, and two Myriahedral face-group slices total 211 current standard
+products. An explicitly authorized P-Tree workflow can add six source-timed
+Cloud-atmosphere products, producing 217 local products. They are
 organized first by projection beneath `assets.generated/`, then into `svg/`,
 `pdf/`, `png/`, and `thumbnail/` directories. The 84 resource SVGs also
-receive deterministic `.svg.gz` release archives. All 211 have an Inkscape
+receive deterministic `.svg.gz` release archives. All 211 standard products have an Inkscape
 PDF and PNG beside their projection peers. PNGs preserve the source aspect ratio and
 have a longest side of 3840 pixels, the horizontal resolution of UHD 4K
 video. Transparent SVG page regions are flattened against an opaque white
-background. The complete graph also creates 32 480-pixel-wide thumbnails for
+background. The standard graph also creates 32 480-pixel-wide thumbnails for
 every projection, 192 total.
 Review the complete all-projection release in the
 [generated snapshot catalog](#generated-artifact-previews). The
@@ -166,7 +191,7 @@ generate-projections`, and `make make-generated` are equivalent aliases.
 The credentialed, source-timed Cloud-atmosphere family is absent from a clean
 checkout's `make all`. After a successful P-Tree/JAXA refresh and local H3
 preparation, `generate-authorized-external` records `jaxa-ptree`; subsequent
-`make all` runs include its SVG/PDF/PNG and thumbnail products. Direct family
+configured `make all` runs include its SVG/PDF/PNG and thumbnail products. Direct family
 targets remain available as `make generate-cloud-atmosphere` and
 `make generate-cloud-atmosphere-artifacts`.
 
@@ -232,11 +257,13 @@ untracked local `assets.generated/` directory. The complete v13 inventory has
 a dedicated 480-pixel thumbnail for all 32 passes in each projection, 192 total;
 the contact sheets never download a full-size PNG merely to draw a preview.
 
-The current Anthropocene defaults are the complete 2025 and partial 2026 CPC
-temperature fields; the legacy observation atlas remains available as an
-explicitly labeled pass. The sheets distinguish the ordinary cloud/CDN site
-atlas from the P-Tree Cloud-atmosphere snapshot. Licensed network topology and
-unpromoted FIRMS candidates remain outside the public catalog.
+The v13 sheets show the release-era legacy observation atlas, both CPC
+temperature fields, and the authorized P-Tree Cloud-atmosphere snapshot. The
+current source graph instead carries complete-2025 and partial-2026 particulate
+passes plus both CPC temperature fields; those post-v13 particulate products
+are not claimed to exist in the immutable v13 object tree. Licensed network
+topology, Stage 15 experiments, and unpromoted FIRMS candidates remain outside
+the public catalog.
 
 The [SVG generation pipeline](docs/pages/getting-started/generation.md) explains the generator
 sources and Make targets, Natural Earth acquisition, seam handling, sampling,
@@ -254,12 +281,14 @@ The [Orbital Technosphere notes](docs/pages/passes/orbital-technosphere.md)
 record its naming decision, NASA/CelesTrak feasibility evaluation, OMM and
 SGP4 pipeline, semantic detiling, and non-operational accuracy boundary.
 The [Anthropocene notes](docs/pages/passes/anthropocene/implementation.md) record the
-feasibility boundary, literal 2026 profile, source classifications, record and
+dual-year particulate/temperature status, source classifications, record and
 rainfall formulas, Canada/Russia fire-source evaluation, EPA/smoke separation,
-deferred coral phase, snapshot audit, and interpretation limits.
+PurpleAir and water-debris experiment boundaries, snapshot audit, and
+interpretation limits.
 The [Stage 8b enrichment plan](docs/pages/passes/anthropocene/enrichment-plan.md) documents
-the coverage diagnosis, the implemented complete-2025/partial-2026 CPC field
-and FIRMS release gate, and the remaining CAMS, PurpleAir, and ocean themes.
+the coverage diagnosis, implemented complete-2025/partial-2026 particulate and
+CPC families, FIRMS refresh gate, synthetic PurpleAir interface, and remaining
+CAMS, observed PurpleAir, and ocean themes.
 The [Resources Stage 12 implementation notes](docs/pages/passes/resources/implementation.md)
 and [enrichment plan](docs/pages/passes/resources/enrichment-plan.md) define the six
 implemented target families, v3 country/spatial contracts, non-sparse
@@ -275,7 +304,7 @@ The resource catalog distinguishes production behavior from research status:
 
 | Pass class | Meaning | Current resource count |
 | --- | --- | ---: |
-| **Standard pass** | Released, offline, included in `make all`, and present in public previews | 14 |
+| **Standard pass** | Offline, included in `make all`, and eligible for the next generated-assets release | 14 |
 | **Optional pass** | Fully implemented but deliberately opt-in because of credentials, license acceptance, or an operator decision | 0 |
 | **Exploration only** | Cataloged or source-tested, but without a production output tag and released artifact | 45 |
 
@@ -367,8 +396,9 @@ all four bent Cahill-Keyes edges meet. This fixed, data-independent cap makes
 a checked reverse practical: undo the carrier into Cahill–Keyes candidates,
 or recover cap bearing and solve latitude on `[-90°,-60°]`, while retaining
 component identity for overlaps and cuts. The runtime still advertises Star-X
-reverse as unsupported until that focused implementation and verification are
-complete.
+reverse as `candidates`: component `0` owns the ordinary carrier north of
+`60°S`, component `1` owns the cutoff and unified cap, and qualifiers resolve
+otherwise valid overlap candidates without guessing.
 
 ## Dymaxion
 

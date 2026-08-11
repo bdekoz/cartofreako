@@ -288,6 +288,43 @@ def main() -> None:
     assert sha256(output_path) == output["sha256"]
     assert png_dimensions(output_path) == (output["width"], output["height"])
 
+    majuro = validate(
+        "contracts/majuro-atoll-evidence-pass-v1.schema.json",
+        "fixtures/atoll-evidence/v1/pass-manifest.json",
+    )
+    assert majuro["lifecycle"] == "exploration-only"
+    assert majuro["maturity"] == "visual-approved-full-pass-implementation"
+    assert majuro["visualApproval"]["status"] == "approved"
+    assert majuro["promotion"]["fullPassImplementationAuthorized"] is True
+    assert majuro["promotion"]["standardLifecycleAuthorized"] is False
+    assert majuro["promotion"]["defaultGenerationAuthorized"] is False
+    assert majuro["promotion"]["publicReleaseAuthorized"] is False
+    assert majuro["promotion"]["communityRegionalReview"] == "UNAVAILABLE"
+    assert len(majuro["layouts"]) == 6
+    assert len({layout["id"] for layout in majuro["layouts"]}) == 6
+    assert len({layout["projectionDirectory"] for layout in majuro["layouts"]}) == 6
+    assert len({artifact for layout in majuro["layouts"]
+                for artifact in layout["artifacts"].values()}) == 24
+    assert majuro["artifactContract"]["expectedArtifactCount"] == 24
+    for referenced in (
+        majuro["visualApproval"]["artifact"],
+        majuro["sourceManifest"],
+        majuro["coordinateFixture"],
+    ):
+        referenced_path = ROOT / referenced["path"]
+        assert referenced_path.is_file()
+        assert referenced_path.stat().st_size == referenced["bytes"]
+        assert sha256(referenced_path) == referenced["sha256"]
+    for layout in majuro["layouts"]:
+        context_record = layout["context"]
+        context_path = ROOT / context_record["path"]
+        assert context_path.is_file()
+        assert context_path.stat().st_size == context_record["bytes"]
+        assert sha256(context_path) == context_record["sha256"]
+        assert png_dimensions(context_path) == (
+            context_record["width"], context_record["height"]
+        )
+
     debris = validate(
         "contracts/water-debris-evidence-v1.schema.json",
         "fixtures/water-debris-evidence/v1/manifest.json",
@@ -309,6 +346,48 @@ def main() -> None:
     assert debris["generatorImplemented"] is False
     assert debris["promotionAuthorized"] is False
 
+    purpleair = validate(
+        "contracts/anthropocene-purpleair-experiment-v1.schema.json",
+        "fixtures/anthropocene-purpleair/v1/manifest.json",
+    )
+    assert purpleair["lifecycle"] == "exploration-only"
+    assert purpleair["dataBoundary"] == {
+        "kind": "synthetic-interface-fixture",
+        "containsObservations": False,
+        "measurement": "UNAVAILABLE",
+        "source": "https://api.purpleair.com/",
+    }
+    assert purpleair["style"]["defaultVisible"] is True
+    assert purpleair["style"]["maximumOpacity"] == 0.6
+    assert len(purpleair["anchors"]) == 12
+    assert len(purpleair["layouts"]) == 6
+    assert purpleair["promotion"]["standardLifecycleAuthorized"] is False
+    assert purpleair["promotion"]["publicReleaseAuthorized"] is False
+
+    debris_experiment = validate(
+        "contracts/anthropocene-water-debris-experiment-v1.schema.json",
+        "fixtures/anthropocene-water-debris/v1/manifest.json",
+    )
+    assert debris_experiment["lifecycle"] == "exploration-only"
+    assert [value["editionStatus"] for value in debris_experiment["years"]] \
+        == ["complete", "partial"]
+    assert {value["id"] for value in debris_experiment["evidenceClasses"]} \
+        == expected_classes
+    assert len(debris_experiment["sources"]) == 5
+    assert len(debris_experiment["depthStations"]) == 5
+    assert {value["sourceId"] for value in debris_experiment["depthStations"]} \
+        == {"ocean-cleanup-depth-2020"}
+    assert {value["renderRole"] for value in debris_experiment["sources"]} \
+        == {"observed-geometry", "context-only"}
+    assert sum(value["renderRole"] == "observed-geometry"
+               for value in debris_experiment["sources"]) == 1
+    assert debris_experiment["style"]["observedFieldMaximumOpacity"] == 0.6
+    assert debris_experiment["promotion"]["standardLifecycleAuthorized"] is False
+    assert debris_experiment["promotion"]["publicReleaseAuthorized"] is False
+    contact_sheet = ROOT / "output/anthropocene-water-debris-v01/contact-sheet.png"
+    assert contact_sheet.is_file()
+    assert png_dimensions(contact_sheet)[0] >= 1920
+
     if arguments.gpu_controls:
         controls = validate(
             "contracts/gpu-benchmark-v1.schema.json",
@@ -320,7 +399,7 @@ def main() -> None:
         assert sum(len(value["controls"]) for value in controls["artifacts"]) == 410
 
     suffix = ", including generated controls" if arguments.gpu_controls else ""
-    print(f"Stage 15 contracts passed: frozen input, local layout, atoll canary and water-debris prototype{suffix}.")
+    print(f"Stage 15 contracts passed: frozen input, local layout, atoll canary/full pass, PurpleAir interface, and water-debris experiment{suffix}.")
 
 
 if __name__ == "__main__":

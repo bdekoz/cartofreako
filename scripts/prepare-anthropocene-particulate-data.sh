@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-# Prepare a reviewable candidate snapshot without overwriting checked data.
+# Prepare a reviewable particulate candidate without overwriting checked data.
 
 set -euo pipefail
 
 if [[ $# -gt 2 ]]; then
-  echo "usage: $0 [anthropocene-data-directory [profile]]" >&2
+  echo "usage: $0 [anthropocene-data-directory particulate-profile]" >&2
   exit 2
 fi
 
 data_dir=${1:-assets.static/anthropocene}
-profile=${2:-$data_dir/anthropocene-profile.json}
+profile=${2:-$data_dir/anthropocene-particulate-2026-profile.json}
 year=$(sed -n '/"duration"[[:space:]]*:/,/^[[:space:]]*}/ {
   s/^[[:space:]]*"year"[[:space:]]*:[[:space:]]*\([0-9][0-9]*\).*/\1/p
 }' "$profile" | sed -n '1p')
@@ -21,7 +21,7 @@ fi
 
 raw_dir="$data_dir/.raw/$year"
 prepared_dir="$data_dir/.prepared"
-preparer=${ANTHROPOCENE_PREPARER:-src.generate/prepare-anthropocene}
+preparer=${ANTHROPOCENE_PARTICULATE_PREPARER:-src.generate/prepare-anthropocene-particulate}
 for path in \
   "$profile" \
   "$raw_dir/ghcnd_gsn.tar.gz" \
@@ -61,10 +61,23 @@ if [[ -z $epa_csv || -z $hms_shapefile ]]; then
   exit 1
 fi
 
+ghcn_directory="$temporary_dir/ghcn"
+if [[ -z $(find "$ghcn_directory" -maxdepth 1 -type f -name '*.dly' \
+    -print -quit) ]]; then
+  nested_ghcn="$ghcn_directory/ghcnd_gsn"
+  nested_station=$(find "$nested_ghcn" -maxdepth 1 -type f -name '*.dly' \
+    -print -quit 2>/dev/null || true)
+  if [[ ! -d $nested_ghcn || -z $nested_station ]]; then
+    echo "GHCN/GSN archive contained no .dly station files" >&2
+    exit 1
+  fi
+  ghcn_directory=$nested_ghcn
+fi
+
 arguments=(
   "$profile"
-  "$prepared_dir/anthropocene-${year}.geojson"
-  --ghcn-dir "$temporary_dir/ghcn"
+  "$prepared_dir/anthropocene-particulate-${year}.geojson"
+  --ghcn-dir "$ghcn_directory"
   --stations "$raw_dir/ghcnd-stations.txt"
   --epa "$epa_csv"
   --hms "$hms_shapefile"
@@ -91,6 +104,6 @@ else
 fi
 
 "$preparer" "${arguments[@]}"
-sha256sum "$prepared_dir/anthropocene-${year}.geojson"
+sha256sum "$prepared_dir/anthropocene-particulate-${year}.geojson"
 printf '%s\n' \
   'Candidate prepared only. Audit source coverage, metrics, and checksum before replacing the checked GeoJSON/profile digest.'

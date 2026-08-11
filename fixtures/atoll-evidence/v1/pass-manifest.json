@@ -1,0 +1,198 @@
+{
+  "schemaVersion": "cartofreako-majuro-atoll-evidence-pass-v1",
+  "passId": "majuro-atoll-evidence",
+  "checkedOn": "2026-08-10",
+  "lifecycle": "exploration-only",
+  "maturity": "visual-approved-full-pass-implementation",
+  "visualApproval": {
+    "status": "approved",
+    "instruction": "majuro-atoll-evidence-canary.png pass visual, implement full pass",
+    "artifact": {
+      "path": "output/atoll-evidence-canary-v01/majuro-atoll-evidence-canary.png",
+      "sha256": "d132b7fe925fde96acdefce772b93653e30877cb8e52692b04e779bf1925f49e",
+      "bytes": 834767
+    }
+  },
+  "sourceManifest": {
+    "path": "fixtures/atoll-evidence/v1/manifest.json",
+    "sha256": "1c49cad6ec60334d8a6f97535034660be720be7ac2a7ca6565c66244ad1d97e0",
+    "bytes": 14029
+  },
+  "coordinateFixture": {
+    "path": "fixtures/atoll-evidence/v1/coordinates.json",
+    "sha256": "61a4befafd8797805e19a084d56daaacb08071854ec5c1ca27f760d57e3b9e6b",
+    "bytes": 9489
+  },
+  "layers": [
+    {"id": "atoll-evidence-background", "visible": true, "evidenceType": "presentation"},
+    {"id": "planetary-context", "visible": true, "evidenceType": "context"},
+    {"id": "observation-topobathymetry", "visible": true, "evidenceType": "observation"},
+    {"id": "scenario-inundation-probability", "visible": true, "evidenceType": "scenario"},
+    {"id": "scenario-inundation-deterministic", "visible": true, "evidenceType": "scenario"},
+    {"id": "evidence-provenance", "visible": true, "evidenceType": "provenance"},
+    {"id": "unavailable-evidence", "visible": true, "evidenceType": "UNAVAILABLE"}
+  ],
+  "layouts": [
+    {
+      "id": "cahill-keyes",
+      "projectionDirectory": "cahill-keyes",
+      "runtimeProjection": "cahill-keyes",
+      "label": "Cahill–Keyes",
+      "page": {"widthInches": 44, "heightInches": 22, "orientation": "landscape"},
+      "composition": "landscape-three-column",
+      "context": {
+        "path": "assets.static/atoll-evidence/context/water-cahill-keyes-context.png",
+        "sha256": "2c33fb9f25bd3cf5d5e6076cb7e7cd42400eebd3d9352f291677a29fcebbb9f0",
+        "bytes": 607729,
+        "width": 1200,
+        "height": 600,
+        "sourceArtifact": "assets.generated/cahill-keyes/png/water-ck-44-22.png",
+        "sourceSha256": "80f558cce731edfe74dcf41a23c488270c2c319940f8a6e3ae84f88780fcb9b5"
+      },
+      "artifacts": {
+        "svg": "assets.generated/cahill-keyes/svg/majuro-atoll-evidence-ck-44-22.svg",
+        "pdf": "assets.generated/cahill-keyes/pdf/majuro-atoll-evidence-ck-44-22.pdf",
+        "png": "assets.generated/cahill-keyes/png/majuro-atoll-evidence-ck-44-22.png",
+        "thumbnail": "assets.generated/cahill-keyes/thumbnail/majuro-atoll-evidence-ck-44-22.png"
+      }
+    },
+    {
+      "id": "authagraph",
+      "projectionDirectory": "authagraph",
+      "runtimeProjection": "authagraph",
+      "label": "AuthaGraph",
+      "page": {"widthInches": 44, "heightInches": 19.052559, "orientation": "landscape"},
+      "composition": "landscape-three-column",
+      "context": {
+        "path": "assets.static/atoll-evidence/context/water-authagraph-context.png",
+        "sha256": "539050fe444b0c820f0272b3a075ef99b5d91b1805afaa46acd57817100275ee",
+        "bytes": 840715,
+        "width": 1200,
+        "height": 520,
+        "sourceArtifact": "assets.generated/authagraph/png/water-authagraph-44-19.052559.png",
+        "sourceSha256": "8f89f1a28fc85b16d394f3d216c7816d0cb8f34624bf85def887c64096490768"
+      },
+      "artifacts": {
+        "svg": "assets.generated/authagraph/svg/majuro-atoll-evidence-authagraph-44-19.052559.svg",
+        "pdf": "assets.generated/authagraph/pdf/majuro-atoll-evidence-authagraph-44-19.052559.pdf",
+        "png": "assets.generated/authagraph/png/majuro-atoll-evidence-authagraph-44-19.052559.png",
+        "thumbnail": "assets.generated/authagraph/thumbnail/majuro-atoll-evidence-authagraph-44-19.052559.png"
+      }
+    },
+    {
+      "id": "dymaxion",
+      "projectionDirectory": "dymaxion",
+      "runtimeProjection": "dymaxion",
+      "label": "Dymaxion",
+      "page": {"widthInches": 44, "heightInches": 20.78461, "orientation": "landscape"},
+      "composition": "landscape-three-column",
+      "context": {
+        "path": "assets.static/atoll-evidence/context/water-dymaxion-context.png",
+        "sha256": "aad744a6372ce8c618f2a07d2e2b8fdea72a9e2b565b2217075ab6d5bacf4f6b",
+        "bytes": 647337,
+        "width": 1200,
+        "height": 567,
+        "sourceArtifact": "assets.generated/dymaxion/png/water-dymaxion-44-20.78461.png",
+        "sourceSha256": "ccc4bb1b8570a066c71cd6aee8e368023b8e8759a3d62cab95a2cd71b6a96ee8"
+      },
+      "artifacts": {
+        "svg": "assets.generated/dymaxion/svg/majuro-atoll-evidence-dymaxion-44-20.78461.svg",
+        "pdf": "assets.generated/dymaxion/pdf/majuro-atoll-evidence-dymaxion-44-20.78461.pdf",
+        "png": "assets.generated/dymaxion/png/majuro-atoll-evidence-dymaxion-44-20.78461.png",
+        "thumbnail": "assets.generated/dymaxion/thumbnail/majuro-atoll-evidence-dymaxion-44-20.78461.png"
+      }
+    },
+    {
+      "id": "myriahedral-pacific",
+      "projectionDirectory": "myriahedral",
+      "runtimeProjection": "myriahedral-pacific",
+      "label": "Myriahedral Pacific",
+      "page": {"widthInches": 44, "heightInches": 24.75, "orientation": "landscape"},
+      "composition": "landscape-three-column",
+      "context": {
+        "path": "assets.static/atoll-evidence/context/water-myriahedral-pacific-context.png",
+        "sha256": "4569ec7e4cbf0d0fea59e976ebd4d802e9a7efe31e0e3692c4e6bd6296c5af93",
+        "bytes": 539853,
+        "width": 1200,
+        "height": 675,
+        "sourceArtifact": "assets.generated/myriahedral/png/water-myriahedral-pacific-44-24.75.png",
+        "sourceSha256": "c7a5d360aed56c212854cb4132112f83fdebf4fcb691ecd63e00efb27402c81b"
+      },
+      "artifacts": {
+        "svg": "assets.generated/myriahedral/svg/majuro-atoll-evidence-myriahedral-pacific-44-24.75.svg",
+        "pdf": "assets.generated/myriahedral/pdf/majuro-atoll-evidence-myriahedral-pacific-44-24.75.pdf",
+        "png": "assets.generated/myriahedral/png/majuro-atoll-evidence-myriahedral-pacific-44-24.75.png",
+        "thumbnail": "assets.generated/myriahedral/thumbnail/majuro-atoll-evidence-myriahedral-pacific-44-24.75.png"
+      }
+    },
+    {
+      "id": "star-x",
+      "projectionDirectory": "star-x",
+      "runtimeProjection": "star-x",
+      "label": "Star-X",
+      "page": {"widthInches": 34, "heightInches": 44, "orientation": "portrait"},
+      "composition": "portrait-star-x",
+      "context": {
+        "path": "assets.static/atoll-evidence/context/water-star-x-context.png",
+        "sha256": "1b641589c23c2dd386b0df7cd5e31a54b0025c9b0a52920859ea4c1b9b3af047",
+        "bytes": 842350,
+        "width": 927,
+        "height": 1200,
+        "sourceArtifact": "assets.generated/star-x/png/water-star-x-34-44.png",
+        "sourceSha256": "79091bba381fb1faff7bccd0bd692709483648829b45d4b73ba087fdc2c1250b"
+      },
+      "artifacts": {
+        "svg": "assets.generated/star-x/svg/majuro-atoll-evidence-star-x-34-44.svg",
+        "pdf": "assets.generated/star-x/pdf/majuro-atoll-evidence-star-x-34-44.pdf",
+        "png": "assets.generated/star-x/png/majuro-atoll-evidence-star-x-34-44.png",
+        "thumbnail": "assets.generated/star-x/thumbnail/majuro-atoll-evidence-star-x-34-44.png"
+      }
+    },
+    {
+      "id": "voronoi",
+      "projectionDirectory": "voronoi",
+      "runtimeProjection": "voronoi",
+      "label": "Icosahedral Voronoi",
+      "page": {"widthInches": 44, "heightInches": 22.916667, "orientation": "landscape"},
+      "composition": "landscape-three-column",
+      "context": {
+        "path": "assets.static/atoll-evidence/context/water-voronoi-context.png",
+        "sha256": "fb51eaf1f127cb213c89daaffef4d8beaea948d78593276fb937bcf56f6339d2",
+        "bytes": 640060,
+        "width": 1200,
+        "height": 625,
+        "sourceArtifact": "assets.generated/voronoi/png/water-voronoi-44-22.916667.png",
+        "sourceSha256": "4aa4d29790ac8689443217053b26c2523e78575306c2df30552a8edac5a28d4e"
+      },
+      "artifacts": {
+        "svg": "assets.generated/voronoi/svg/majuro-atoll-evidence-voronoi-44-22.916667.svg",
+        "pdf": "assets.generated/voronoi/pdf/majuro-atoll-evidence-voronoi-44-22.916667.pdf",
+        "png": "assets.generated/voronoi/png/majuro-atoll-evidence-voronoi-44-22.916667.png",
+        "thumbnail": "assets.generated/voronoi/thumbnail/majuro-atoll-evidence-voronoi-44-22.916667.png"
+      }
+    }
+  ],
+  "artifactContract": {
+    "layeredSvg": true,
+    "printPdf": true,
+    "fullPng": true,
+    "thumbnail": true,
+    "expectedArtifactCount": 24,
+    "pngLongSidePixels": 3840,
+    "thumbnailWidthPixels": 480
+  },
+  "claimBoundary": [
+    "The planetary carrier locates Majuro but is not the analytical grid.",
+    "The TBDEM panel is a multi-date observation-derived surface, not a current shoreline or single-date survey.",
+    "The 30-inch marine-inundation layers are modeled scenarios, not observed floods or forecasts.",
+    "Freshwater, authoritative infrastructure, current shoreline, reviewed reef geometry, ocean heat, and community/regional review remain unavailable or incomplete.",
+    "Visual approval authorizes full-pass implementation but not standard lifecycle, default generation, public release, or UCB AAO/S3 publication."
+  ],
+  "promotion": {
+    "fullPassImplementationAuthorized": true,
+    "standardLifecycleAuthorized": false,
+    "defaultGenerationAuthorized": false,
+    "publicReleaseAuthorized": false,
+    "communityRegionalReview": "UNAVAILABLE"
+  }
+}

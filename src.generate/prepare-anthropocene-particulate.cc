@@ -376,7 +376,7 @@ parse_arguments(const int argc, char** argv)
 {
   if (argc < 3)
     throw std::invalid_argument(
-      "usage: prepare-anthropocene PROFILE.json OUTPUT.geojson "
+      "usage: prepare-anthropocene-particulate PROFILE.json OUTPUT.geojson "
       "--ghcn-dir DIR --stations FILE --epa FILE --hms FILE "
       "--storm-details FILE --storm-locations FILE --cwfis-dir DIR "
       "[--firms FILE]... [--require-firms]");
@@ -1365,7 +1365,7 @@ main(const int argc, char** argv)
     }
   catch (const std::exception& error)
     {
-      std::cerr << "prepare-anthropocene: " << error.what() << '\n';
+      std::cerr << "prepare-anthropocene-particulate: " << error.what() << '\n';
       return 1;
     }
 }

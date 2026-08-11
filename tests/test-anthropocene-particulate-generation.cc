@@ -9,7 +9,7 @@
 #include <string_view>
 #include <vector>
 
-#include "anthropocene-generation.h"
+#include "anthropocene-particulate-generation.h"
 
 namespace anthropocene = cart0freak0::anthropocene_generation;
 namespace generation = cart0freak0::generation;
@@ -17,9 +17,17 @@ namespace generation = cart0freak0::generation;
 int
 main()
 {
+  const anthropocene::anthropocene_profile profile_2025
+    = anthropocene::load_anthropocene_profile(
+      "assets.static/anthropocene/anthropocene-particulate-2025-profile.json");
   const anthropocene::anthropocene_profile profile
     = anthropocene::load_anthropocene_profile(
-      "assets.static/anthropocene/anthropocene-profile.json");
+      "assets.static/anthropocene/anthropocene-particulate-2026-profile.json");
+  assert(profile_2025.calendar_year == 2025);
+  assert(!profile_2025.partial_year);
+  assert(profile_2025.snapshot_as_of_utc == "2026-08-10T00:00:00Z");
+  assert(profile_2025.geojson_sha256
+         == "ecd4b11bab4faa9895522dbfe75436ef66820f53620bf0c5f6fc7404e9f5426b");
   assert(profile.calendar_year == 2026);
   assert(profile.partial_year);
   assert(profile.snapshot_as_of_utc == "2026-08-05T00:00:00Z");
@@ -62,7 +70,7 @@ main()
   assert(source("nasa-firms").status == "configured-optional");
   assert(source("copernicus-sentinel-3-frp").status == "validation-only");
   assert(source("rosleskhoz-operational-reports").status == "validation-only");
-  assert(source("purpleair").status == "excluded-from-default");
+  assert(source("purpleair").status == "excluded-from-standard");
 
   assert(profile.future_phases.size() == 1);
   assert(profile.future_phases.front().id
@@ -75,7 +83,29 @@ main()
 
   const anthropocene::anthropocene_dataset dataset
     = anthropocene::load_anthropocene_dataset(
-      "assets.static/anthropocene/anthropocene-2026.geojson", profile);
+      "assets.static/anthropocene/anthropocene-particulate-2026.geojson", profile);
+  const anthropocene::anthropocene_dataset dataset_2025
+    = anthropocene::load_anthropocene_dataset(
+      "assets.static/anthropocene/anthropocene-particulate-2025.geojson",
+      profile_2025);
+  assert(dataset_2025.calendar_year == 2025);
+  assert(!dataset_2025.partial_year);
+  assert(dataset_2025.features.size() == 49470);
+  assert(dataset_2025.statistics.ghcn_stations == 996);
+  assert(dataset_2025.statistics.ghcn_eligible_temperature_stations == 760);
+  assert(dataset_2025.statistics.ghcn_eligible_precipitation_stations == 649);
+  assert(dataset_2025.statistics.epa_rows == 758834);
+  assert(dataset_2025.statistics.hms_polygons == 24238);
+  assert(dataset_2025.statistics.storm_events == 72360);
+  assert(dataset_2025.statistics.cwfis_files == 1);
+  assert(dataset_2025.statistics.cwfis_rows == 2616235);
+  assert(dataset_2025.statistics.firms_rows == 0);
+  assert(dataset_2025.reported_metric_totals[anthropocene::metric_index(
+    profile_2025, "climate-records:temperature-record-high-days")] == 4129);
+  assert(dataset_2025.reported_metric_totals[anthropocene::metric_index(
+    profile_2025, "atmosphere:observed-smoke-days")] == 1794158);
+  assert(dataset_2025.reported_metric_totals[anthropocene::metric_index(
+    profile_2025, "fire:active-fire-days")] == 127392);
   assert(dataset.schema == "cartofreako-anthropocene-observations-v1");
   assert(dataset.calendar_year == 2026);
   assert(dataset.partial_year);
@@ -117,7 +147,11 @@ main()
       const generation::projection_spec& spec
         = generation::find_projection_spec(name);
       const generation::projection_context context(
-        spec, "test-anthropocene-" + std::string(name));
+        spec, "test-anthropocene-particulate-" + std::string(name));
+      assert(anthropocene::output_basename(spec, profile_2025).find(
+        "anthropocene-particulate-2025-") == 0);
+      assert(anthropocene::output_basename(spec, profile).find(
+        "anthropocene-particulate-2026-") == 0);
       for (std::size_t index = 0; index < dataset.features.size(); index += 97)
         {
           const anthropocene::anthropocene_feature& feature

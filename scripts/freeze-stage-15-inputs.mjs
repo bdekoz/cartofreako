@@ -50,6 +50,52 @@ async function mapLimit(values, limit, callback) {
 
 requireCondition(['--check', '--refresh'].includes(mode),
     'usage: freeze-stage-15-inputs.mjs [--check|--refresh]');
+if (mode === '--check') {
+    // Stage 15 is a historical freeze of the clean Stage 14 corpus, not a
+    // mirror of the mutable current standard manifest. Validate its retained
+    // records and parents directly so later standard passes do not rewrite or
+    // invalidate the benchmark baseline.
+    const frozen = JSON.parse(await fs.readFile(outputPath));
+    requireCondition(frozen.schemaVersion === 'cartofreako-gpu-benchmark-v1'
+        && frozen.documentType === 'input-freeze'
+        && frozen.lifecycle === 'exploration-only'
+        && frozen.frozenStage14.sourceCommit === frozenCommit
+        && frozen.frozenStage14.workingTree === 'clean'
+        && frozen.frozenStage14.runtimeApi === 3
+        && frozen.frozenStage14.geometryAbi === 1
+        && frozen.frozenStage14.artifactCount === 205
+        && frozen.cases.length === 205,
+    'Stage 15A retained Stage 14 identity changed');
+    requireCondition(new Set(frozen.cases.map(value => value.id)).size === 205,
+        'Stage 15A retained cases are not unique');
+    const retainedFiles = [];
+    for (const value of frozen.cases) {
+        for (const file of [value.parents.svg, value.parents.pdf,
+            value.parents.fullPng, value.screen.png, value.screen.webp]) {
+            retainedFiles.push({id: value.id, value: file});
+        }
+    }
+    requireCondition(retainedFiles.length === 1025,
+        'Stage 15A retained file-record count changed');
+    const retainedPaths = new Set();
+    for (const {id, value} of retainedFiles) {
+        requireCondition(typeof value.path === 'string'
+            && value.path.startsWith('assets.generated/')
+            && Number.isInteger(value.bytes) && value.bytes > 0
+            && /^[0-9a-f]{64}$/.test(value.sha256),
+        `${id} has an invalid retained file record`);
+        requireCondition(!retainedPaths.has(value.path),
+            `${id} repeats retained path ${value.path}`);
+        retainedPaths.add(value.path);
+    }
+    // The fixture is historical evidence. Do not compare its SVG, PDF, or
+    // screen records with a mutable live assets.generated tree: a current
+    // render can legitimately differ, and PDF encoder bytes are not the print
+    // geometry contract. Consumers that actually derive a control validate
+    // the required full-PNG parent hash at use time.
+    console.log(`Stage 15A input freeze passed: 205 retained clean Stage 14 artifact records at ${frozenCommit}; current generated files are independent.`);
+    process.exit(0);
+}
 const [catalogBytes, manifestBytes] = await Promise.all([
     fs.readFile(catalogPath), fs.readFile(manifestPath)
 ]);

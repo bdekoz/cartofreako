@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Verify that an Anthropocene profile names and pins the supplied GeoJSON.
+# Verify that a particulate profile names and pins the supplied GeoJSON.
 
 set -euo pipefail
 
@@ -13,7 +13,7 @@ profile=$1
 geojson=$2
 for path in "$profile" "$geojson"; do
   if [[ ! -f $path ]]; then
-    echo "missing Anthropocene input: $path" >&2
+  echo "missing Anthropocene particulate input: $path" >&2
     exit 1
   fi
 done
@@ -42,10 +42,10 @@ fi
 
 read -r actual_digest _ < <(sha256sum -- "$geojson")
 if [[ $actual_digest != "$declared_digest" ]]; then
-  echo "Anthropocene GeoJSON checksum mismatch: $geojson" >&2
+  echo "Anthropocene particulate GeoJSON checksum mismatch: $geojson" >&2
   echo "expected: $declared_digest" >&2
   echo "actual:   $actual_digest" >&2
   exit 1
 fi
 
-printf 'Anthropocene data checksum verified: %s\n' "$geojson"
+printf 'Anthropocene particulate data checksum verified: %s\n' "$geojson"

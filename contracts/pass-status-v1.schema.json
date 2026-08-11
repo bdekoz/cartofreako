@@ -20,8 +20,8 @@
     },
     "passes": {
       "type": "array",
-      "minItems": 3,
-      "maxItems": 3,
+      "minItems": 4,
+      "maxItems": 4,
       "items": {"$ref": "#/$defs/pass"}
     }
   },
@@ -37,12 +37,13 @@
       "properties": {
         "id": {
           "enum": [
-            "anthropocene",
+            "anthropocene-particulate-2025",
+            "anthropocene-particulate-2026",
             "anthropocene-temperature-2025",
             "anthropocene-temperature-2026"
           ]
         },
-        "family": {"enum": ["observation-atlas", "temperature-field"]},
+        "family": {"enum": ["particulate-observation-atlas", "temperature-field"]},
         "current": {"const": true},
         "lifecycle": {"const": "standard"},
         "maturity": {"const": "accepted-experimental"},

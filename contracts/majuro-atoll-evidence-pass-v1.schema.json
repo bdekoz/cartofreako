@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bdekoz.github.io/cartofreako/contracts/majuro-atoll-evidence-pass-v1.schema.json",
+  "title": "Cartofreako Majuro atoll-evidence full pass v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "passId", "checkedOn", "lifecycle", "maturity",
+    "visualApproval", "sourceManifest", "coordinateFixture", "layers",
+    "layouts", "artifactContract", "claimBoundary", "promotion"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "cartofreako-majuro-atoll-evidence-pass-v1"},
+    "passId": {"const": "majuro-atoll-evidence"},
+    "checkedOn": {"type": "string", "format": "date"},
+    "lifecycle": {"const": "exploration-only"},
+    "maturity": {"const": "visual-approved-full-pass-implementation"},
+    "visualApproval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "instruction", "artifact"],
+      "properties": {
+        "status": {"const": "approved"},
+        "instruction": {"const": "majuro-atoll-evidence-canary.png pass visual, implement full pass"},
+        "artifact": {"$ref": "#/$defs/file"}
+      }
+    },
+    "sourceManifest": {"$ref": "#/$defs/file"},
+    "coordinateFixture": {"$ref": "#/$defs/file"},
+    "layers": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "visible", "evidenceType"],
+        "properties": {
+          "id": {
+            "enum": [
+              "atoll-evidence-background", "planetary-context",
+              "observation-topobathymetry",
+              "scenario-inundation-probability",
+              "scenario-inundation-deterministic",
+              "evidence-provenance", "unavailable-evidence"
+            ]
+          },
+          "visible": {"const": true},
+          "evidenceType": {
+            "enum": ["presentation", "context", "observation", "scenario", "provenance", "UNAVAILABLE"]
+          }
+        }
+      }
+    },
+    "layouts": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {"$ref": "#/$defs/layout"}
+    },
+    "artifactContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "layeredSvg", "printPdf", "fullPng", "thumbnail",
+        "expectedArtifactCount", "pngLongSidePixels", "thumbnailWidthPixels"
+      ],
+      "properties": {
+        "layeredSvg": {"const": true},
+        "printPdf": {"const": true},
+        "fullPng": {"const": true},
+        "thumbnail": {"const": true},
+        "expectedArtifactCount": {"const": 24},
+        "pngLongSidePixels": {"const": 3840},
+        "thumbnailWidthPixels": {"const": 480}
+      }
+    },
+    "claimBoundary": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "promotion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fullPassImplementationAuthorized", "standardLifecycleAuthorized",
+        "defaultGenerationAuthorized", "publicReleaseAuthorized",
+        "communityRegionalReview"
+      ],
+      "properties": {
+        "fullPassImplementationAuthorized": {"const": true},
+        "standardLifecycleAuthorized": {"const": false},
+        "defaultGenerationAuthorized": {"const": false},
+        "publicReleaseAuthorized": {"const": false},
+        "communityRegionalReview": {"const": "UNAVAILABLE"}
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "bytes"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "bytes": {"type": "integer", "minimum": 1}
+      }
+    },
+    "page": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["widthInches", "heightInches", "orientation"],
+      "properties": {
+        "widthInches": {"type": "number", "exclusiveMinimum": 0},
+        "heightInches": {"type": "number", "exclusiveMinimum": 0},
+        "orientation": {"enum": ["landscape", "portrait"]}
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path", "sha256", "bytes", "width", "height",
+        "sourceArtifact", "sourceSha256"
+      ],
+      "properties": {
+        "path": {"type": "string", "pattern": "^assets\\.static/atoll-evidence/context/water-.*-context\\.png$"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "bytes": {"type": "integer", "minimum": 1},
+        "width": {"type": "integer", "minimum": 1},
+        "height": {"type": "integer", "minimum": 1},
+        "sourceArtifact": {"type": "string", "pattern": "^assets\\.generated/.*/png/water-.*\\.png$"},
+        "sourceSha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["svg", "pdf", "png", "thumbnail"],
+      "properties": {
+        "svg": {"type": "string", "pattern": "^assets\\.generated/.*/svg/majuro-atoll-evidence-.*\\.svg$"},
+        "pdf": {"type": "string", "pattern": "^assets\\.generated/.*/pdf/majuro-atoll-evidence-.*\\.pdf$"},
+        "png": {"type": "string", "pattern": "^assets\\.generated/.*/png/majuro-atoll-evidence-.*\\.png$"},
+        "thumbnail": {"type": "string", "pattern": "^assets\\.generated/.*/thumbnail/majuro-atoll-evidence-.*\\.png$"}
+      }
+    },
+    "layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "projectionDirectory", "runtimeProjection", "label", "page",
+        "composition", "context", "artifacts"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "projectionDirectory": {
+          "enum": ["cahill-keyes", "authagraph", "dymaxion", "myriahedral", "star-x", "voronoi"]
+        },
+        "runtimeProjection": {
+          "enum": ["cahill-keyes", "authagraph", "dymaxion", "myriahedral-pacific", "star-x", "voronoi"]
+        },
+        "label": {"type": "string", "minLength": 1},
+        "page": {"$ref": "#/$defs/page"},
+        "composition": {"enum": ["landscape-three-column", "portrait-star-x"]},
+        "context": {"$ref": "#/$defs/context"},
+        "artifacts": {"$ref": "#/$defs/artifacts"}
+      }
+    }
+  }
+}

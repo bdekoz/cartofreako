@@ -19,9 +19,13 @@ or transfer training data.
 `make generate-screen-1080p` builds
 `assets.generated/catalog/artifacts-v1.json` from the checked
 [`standard-artifact-manifest-v1.json`](../../../contracts/standard-artifact-manifest-v1.json).
-That Make-declared manifest contains 205 standard products across 31 pass IDs,
-11 layouts, and 14 approved slices. It excludes authorized optional and
+That Make-declared manifest now contains 211 standard products across 32 pass
+IDs, 11 layouts, and 14 approved slices. It excludes authorized optional and
 exploration-only products.
+
+The Stage 15 benchmark fixture separately freezes the earlier Stage 14
+205-product/31-pass catalog. Updating the live access catalog does not rewrite
+that benchmark identity.
 
 Each catalog record keeps the authoritative SVG or explicit SVG-gzip, print
 PDF, and 3840-pixel PNG distinct from the 1920 × 1080 PNG/lossless-WebP access
@@ -75,7 +79,7 @@ checks catalog-order independence, explicit fallbacks, standard lifecycle
 containment, missing metadata, tampered hashes, `no-match`, and append-only
 overrides.
 
-The screen gate validates all 205 records, 1,025 referenced files, no-crop
+The screen gate validates all 211 records, 1,055 referenced files, no-crop
 contain placement, lossless PNG/WebP identity, carrier-aware reverse picks,
 all approved slices, and all eleven layouts. The independent
 [`read-screen-catalog.py`](../../../tests/read-screen-catalog.py) imports no

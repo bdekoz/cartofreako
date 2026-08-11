@@ -11,6 +11,12 @@ The Stage 13 catalog contains 32 released whole-map passes in each of six
 projections. Start with the images, then follow any projection name to its
 complete contact sheet.
 
+This is a sealed v13 release browser, not a preview of the current working
+tree. Post-v13 reverse APIs, 1080p catalog products, dual-year particulate
+passes, and Stage 15 experiments are documented in the
+[technical index](../README.md) and intentionally do not rewrite these S3
+links.
+
 Every thumbnail opens the released PNG, whose longest side is 3840 pixels.
 The separate **Layered SVG** action opens the compressed vector file in the
 S3 viewer; **Print PDF** opens the 44-inch plate. This makes the PNG the fast,

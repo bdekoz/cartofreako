@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
-# Fetch mutable raw source files for an explicitly dated Anthropocene refresh.
+# Fetch mutable raw source files for an explicitly dated particulate refresh.
 # Normal map generation never calls this script and uses the checked snapshot.
 
 set -euo pipefail
 
 if [[ $# -gt 2 ]]; then
-  echo "usage: $0 [anthropocene-data-directory [profile]]" >&2
+  echo "usage: $0 [anthropocene-data-directory particulate-profile]" >&2
   exit 2
 fi
 
 data_dir=${1:-assets.static/anthropocene}
-profile=${2:-$data_dir/anthropocene-profile.json}
+profile=${2:-$data_dir/anthropocene-particulate-2026-profile.json}
 if [[ ! -f $profile ]]; then
   echo "missing authoritative profile: $profile" >&2
   exit 1
@@ -37,7 +37,7 @@ fi
 raw_dir="$data_dir/.raw/$year"
 temporary_dir=$(mktemp -d)
 trap 'rm -rf "$temporary_dir"' EXIT
-user_agent='cartofreako-anthropocene/1.0 (+https://github.com/bkoz/cartofreako)'
+user_agent='cartofreako-anthropocene-particulate/1.0 (+https://github.com/bkoz/cartofreako)'
 
 fetch() {
   local output=$1
@@ -85,32 +85,63 @@ gzip -t "$temporary_dir/$locations_name"
 
 first_date="${year}-01-01"
 last_date=$(date -u -d "$snapshot_date - 1 day" +%F)
-current_date=$first_date
 cwfis_files=0
-while [[ $current_date < $snapshot_date ]]; do
-  compact_date=${current_date//-/}
-  output="$temporary_dir/cwfis/$compact_date.csv"
-  url="https://cwfis.cfs.nrcan.gc.ca/downloads/hotspots/$compact_date.csv"
-  status=$(curl -sS --remove-on-error -A "$user_agent" \
-    -o "$output" -w '%{http_code}' "$url")
-  case $status in
-    200)
-      if [[ $(sed -n '1p' "$output") != lat,*lon,*rep_date,* ]]; then
-        echo "unexpected CWFIS CSV header: $url" >&2
-        exit 1
-      fi
-      ((cwfis_files += 1))
-      ;;
-    404)
-      rm -f "$output"
-      ;;
-    *)
-      echo "CWFIS returned HTTP $status for $url" >&2
+current_year=$(date -u +%Y)
+if ((year < current_year)); then
+  archive="$temporary_dir/cwfis-${year}-hotspots.zip"
+  archive_url="https://cwfis.cfs.nrcan.gc.ca/downloads/hotspots/archive/${year}_hotspots.zip"
+  if [[ -n ${CWFIS_ARCHIVE_CACHE:-} ]]; then
+    if [[ ! -f $CWFIS_ARCHIVE_CACHE ]]; then
+      echo "CWFIS_ARCHIVE_CACHE does not exist: $CWFIS_ARCHIVE_CACHE" >&2
       exit 1
-      ;;
-  esac
-  current_date=$(date -u -d "$current_date + 1 day" +%F)
-done
+    fi
+    install -m 0644 "$CWFIS_ARCHIVE_CACHE" "$archive"
+  else
+    fetch "$archive" "$archive_url" "CWFIS ${year} annual hotspot archive"
+  fi
+  unzip -tqq "$archive"
+  archive_member=$(unzip -Z1 "$archive" \
+    | sed -n "/^${year}_hotspots\\.csv$/p" | sed -n '1p')
+  if [[ -z $archive_member ]]; then
+    echo "CWFIS archive lacks ${year}_hotspots.csv" >&2
+    exit 1
+  fi
+  unzip -p "$archive" "$archive_member" \
+    > "$temporary_dir/cwfis/${year}_hotspots.csv"
+  archive_header=$(sed -n '1p' "$temporary_dir/cwfis/${year}_hotspots.csv")
+  if [[ $archive_header != *rep_date* \
+        || $archive_header != *lat* || $archive_header != *lon* ]]; then
+    echo "unexpected CWFIS annual CSV header: $archive_url" >&2
+    exit 1
+  fi
+  cwfis_files=1
+else
+  current_date=$first_date
+  while [[ $current_date < $snapshot_date ]]; do
+    compact_date=${current_date//-/}
+    output="$temporary_dir/cwfis/$compact_date.csv"
+    url="https://cwfis.cfs.nrcan.gc.ca/downloads/hotspots/$compact_date.csv"
+    status=$(curl -sS --remove-on-error -A "$user_agent" \
+      -o "$output" -w '%{http_code}' "$url")
+    case $status in
+      200)
+        if [[ $(sed -n '1p' "$output") != lat,*lon,*rep_date,* ]]; then
+          echo "unexpected CWFIS CSV header: $url" >&2
+          exit 1
+        fi
+        ((cwfis_files += 1))
+        ;;
+      404)
+        rm -f "$output"
+        ;;
+      *)
+        echo "CWFIS returned HTTP $status for $url" >&2
+        exit 1
+        ;;
+    esac
+    current_date=$(date -u -d "$current_date + 1 day" +%F)
+  done
+fi
 if ((cwfis_files == 0)); then
   echo "CWFIS supplied no daily hotspot files for $first_date through $last_date" >&2
   exit 1
@@ -234,6 +265,9 @@ install -m 0644 "$temporary_dir/$details_name" \
   "$raw_dir/storm-details-${year}.csv.gz"
 install -m 0644 "$temporary_dir/$locations_name" \
   "$raw_dir/storm-locations-${year}.csv.gz"
+if [[ -f $temporary_dir/cwfis-${year}-hotspots.zip ]]; then
+  install -m 0644 "$temporary_dir/cwfis-${year}-hotspots.zip" "$raw_dir/"
+fi
 find "$temporary_dir/cwfis" -maxdepth 1 -type f -name '*.csv' \
   -exec install -m 0644 -t "$raw_dir/cwfis" {} +
 firms_file=$(find "$temporary_dir/firms" -maxdepth 1 -type f -name '*.csv' \
@@ -246,7 +280,7 @@ fi
 
 find "$raw_dir" -type f ! -name SHA256SUMS -print0 \
   | sort -z | xargs -0 sha256sum > "$raw_dir/SHA256SUMS"
-printf 'Anthropocene raw refresh staged in %s (%s CWFIS files)\n' \
+printf 'Anthropocene particulate raw refresh staged in %s (%s CWFIS files)\n' \
   "$raw_dir" "$cwfis_files"
 printf '%s\n' \
   'Raw feeds are mutable. Review coverage and regenerate the normalized snapshot before changing the checked checksum.'

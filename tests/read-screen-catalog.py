@@ -30,7 +30,7 @@ def main() -> None:
     catalog_path = ROOT / "assets.generated" / "catalog" / "artifacts-v1.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
-    assert manifest["artifactCount"] == 205 == len(catalog["artifacts"])
+    assert manifest["artifactCount"] == 211 == len(catalog["artifacts"])
     assert {value["id"] for value in manifest["artifacts"]} == {
         value["id"] for value in catalog["artifacts"]}
     assert catalog["sourceRevision"]["standardManifestSha256"] == digest(manifest_path)
@@ -60,8 +60,8 @@ def main() -> None:
         for record in (*artifact["parents"].values(), screen["png"], screen["webp"]):
             assert digest(ROOT / record["path"]) == record["sha256"]
             file_count += 1
-    assert file_count == 1025
-    print("clean-room screen catalog passed: 205 artifacts / 1025 files / affine matrices / hashes")
+    assert file_count == 1055
+    print("clean-room screen catalog passed: 211 artifacts / 1055 files / affine matrices / hashes")
 
 
 if __name__ == "__main__":

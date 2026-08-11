@@ -1,8 +1,8 @@
-// Projection-aware, source-separated Anthropocene SVG generation.
+// Projection-aware, source-separated Anthropocene particulate generation.
 // -*- mode: C++ -*-
 
-#ifndef CART0FREAK0_ANTHROPOCENE_GENERATION_H
-#define CART0FREAK0_ANTHROPOCENE_GENERATION_H 1
+#ifndef CART0FREAK0_ANTHROPOCENE_PARTICULATE_GENERATION_H
+#define CART0FREAK0_ANTHROPOCENE_PARTICULATE_GENERATION_H 1
 
 #include <algorithm>
 #include <array>
@@ -25,7 +25,7 @@
 #include <a60-io.h>
 #include <izzi-svg.h>
 
-#include "anthropocene-data.h"
+#include "anthropocene-particulate-data.h"
 #include "generation-typography.h"
 #include "natural-earth-generation.h"
 #include "projection-generation-common.h"
@@ -156,13 +156,13 @@ add_background(generation::projection_document& document,
                const generation::projection_context& context)
 {
   svg::group_element layer;
-  layer.start_element("anthropocene-background");
+  layer.start_element("anthropocene-particulate-background");
   svg::rect_element rectangle;
   rectangle.start_element();
   rectangle.add_data({0, 0, context.map_frame.width(),
                       context.map_frame.height()});
   rectangle.add_style({{246, 242, 232}, 1, svg::color::none, 0, 0});
-  rectangle.add_raw("id=\"anthropocene-ground\"");
+  rectangle.add_raw("id=\"anthropocene-particulate-ground\"");
   rectangle.finish_element();
   layer.add_element(rectangle);
   layer.finish_element();
@@ -229,7 +229,7 @@ marker_attributes(const anthropocene_feature& feature,
                   const metric_definition& metric,
                   const std::uint64_t count)
 {
-  return "data-anthropocene-observation=\"true\" data-h3=\""
+  return "data-anthropocene-particulate-observation=\"true\" data-h3=\""
     + h3_string(feature.h3) + "\" data-metric-id=\""
     + xml_escape(metric.id) + "\" data-property=\""
     + xml_escape(metric.property) + "\" data-family=\""
@@ -467,7 +467,7 @@ add_legend(generation::projection_document& document,
 
   svg::typography title = label_typography(0.42, {42, 40, 36});
   title._M_w = svg::typography::weight::bold;
-  svg::styled_text(layer, "ANTHROPOCENE / "
+  svg::styled_text(layer, "ANTHROPOCENE PARTICULATE / "
     + std::to_string(profile.calendar_year)
     + (profile.partial_year ? " PARTIAL YEAR" : ""), {0.30, 0.25}, title);
   svg::styled_text(layer,
@@ -513,8 +513,8 @@ add_coverage_note(generation::projection_document& document,
   text._M_anchor = svg::typography::anchor::middle;
   text._M_align = svg::typography::align::center;
   svg::styled_text(layer,
-    "Distinct observations, not a climate-attribution score. "
-    "EPA PM2.5 exposure is separate from observed smoke; coral bleaching is deferred.",
+    "Distinct particulate, fire, climate, and weather observations; not an attribution score. "
+    "EPA PM2.5 exposure remains separate from observed smoke.",
     {context.map_frame.width() / 2, y}, text);
   static_cast<void>(profile);
   layer.finish_element();
@@ -526,8 +526,10 @@ metadata_element(const generation::projection_spec& spec,
                  const anthropocene_profile& profile,
                  const anthropocene_dataset& dataset)
 {
-  std::string result = "<metadata id=\"anthropocene-metadata\""
-    " data-workflow=\"Anthropocene source-separated observations\""
+  std::string result = "<metadata id=\"anthropocene-particulate-metadata\""
+    " data-workflow=\"Anthropocene particulate source-separated observations\""
+    " data-product-id=\"anthropocene-particulate-"
+      + std::to_string(profile.calendar_year) + "\""
     " data-title-scale=\"2\""
     " data-profile=\"" + xml_escape(profile.path.filename().string()) + "\""
     " data-projection=\"" + std::string(spec.argument) + "\""
@@ -546,19 +548,22 @@ metadata_element(const generation::projection_spec& spec,
 }
 
 inline std::string
-output_basename(const generation::projection_spec& spec)
-{ return generation::output_basename("anthropocene", spec); }
+output_basename(const generation::projection_spec& spec,
+                const anthropocene_profile& profile)
+{ return generation::output_basename(
+    "anthropocene-particulate-" + std::to_string(profile.calendar_year), spec); }
 
 inline void
 generate(const generation::projection_spec& spec,
          const anthropocene_profile& profile,
          const anthropocene_dataset& dataset)
 {
-  const std::string basename = output_basename(spec);
+  const std::string basename = output_basename(spec, profile);
   const generation::projection_context context(spec, basename);
   const projected_dataset projected = project_dataset(context, dataset);
   generation::projection_document document(
-    basename, std::string(spec.title) + " Anthropocene observation atlas for "
+    basename, std::string(spec.title)
+      + " Anthropocene particulate observation atlas for "
       + std::to_string(profile.calendar_year), context.map_frame.frame_area);
   document.add_raw(metadata_element(spec, profile, dataset));
   add_background(document, context);
@@ -602,7 +607,7 @@ verify(const std::string& generated,
                          != std::string::npos,
                        "generated Anthropocene SVG has the wrong viewBox");
   constexpr std::array required_layers {
-    std::string_view {"anthropocene-background"},
+    std::string_view {"anthropocene-particulate-background"},
     std::string_view {"terrestrial-land"},
     std::string_view {"atmosphere"}, std::string_view {"fire"},
     std::string_view {"hydrology"}, std::string_view {"severe-weather"},
@@ -629,10 +634,11 @@ verify(const std::string& generated,
           dataset.reported_metric_feature_counts[index]);
       }
   anthropocene_require(token_count(
-    generated, "data-anthropocene-observation=\"true\"")
+    generated, "data-anthropocene-particulate-observation=\"true\"")
       == expected_observations,
     "generated Anthropocene SVG has the wrong observation-marker count");
-  anthropocene_require(generated.find("id=\"anthropocene-metadata\"")
+  anthropocene_require(generated.find(
+                         "id=\"anthropocene-particulate-metadata\"")
                          != std::string::npos
                          && generated.find("data-geojson-sha256=\""
                            + profile.geojson_sha256 + "\"")
@@ -668,14 +674,14 @@ run(const int argc, char** argv)
 {
   if (argc != 4)
     throw std::invalid_argument(
-      "usage: generate-anthropocene PROJECTION PROFILE.json INPUT.geojson");
+      "usage: generate-anthropocene-particulate PROJECTION PROFILE.json INPUT.geojson");
   const generation::projection_spec& spec
     = generation::find_projection_spec(argv[1]);
   const anthropocene_profile profile = load_anthropocene_profile(
     std::filesystem::absolute(argv[2]));
   const anthropocene_dataset dataset = load_anthropocene_dataset(
     std::filesystem::absolute(argv[3]), profile);
-  const std::string basename = output_basename(spec);
+  const std::string basename = output_basename(spec, profile);
   const generation::projection_context context(spec, basename);
   generate(spec, profile, dataset);
   verify(read_generated(basename), context, profile, dataset);
@@ -684,4 +690,4 @@ run(const int argc, char** argv)
 
 } // namespace cart0freak0::anthropocene_generation
 
-#endif // CART0FREAK0_ANTHROPOCENE_GENERATION_H
+#endif // CART0FREAK0_ANTHROPOCENE_PARTICULATE_GENERATION_H

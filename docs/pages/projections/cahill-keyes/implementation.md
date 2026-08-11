@@ -475,10 +475,11 @@ The Stage 14 implementation followed this bounded plan:
 6. **Verify consumer parity.** Rebuild the all-projection and compatibility
    WebAssembly modules, then exercise Node, typed arrays, D3, main-thread
    browser calls, and module-worker calls. **Complete.**
-7. **Defer composition semantics.** Use this checked solver as the future
-   carrier inverse for Star-X, but do not claim Star-X support until its four
-   transformed components and unified Antarctic cap have an explicit result
-   model. **Open Stage 14 follow-on.**
+7. **Complete composition semantics.** Reuse this checked solver for Star-X
+   carrier component `0`; give its fixed `60°S` unified Antarctic cap component
+   `1`, explicit candidate/component status, and a separate bounded inverse.
+   **Complete.** See the
+   [Star-X forward/reverse consequence](../star-x/implementation.md#forward-and-reverse-consequence).
 
 ### Issues found during implementation
 

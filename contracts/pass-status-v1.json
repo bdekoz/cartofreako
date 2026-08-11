@@ -8,8 +8,8 @@
   },
   "passes": [
     {
-      "id": "anthropocene",
-      "family": "observation-atlas",
+      "id": "anthropocene-particulate-2025",
+      "family": "particulate-observation-atlas",
       "current": true,
       "lifecycle": "standard",
       "maturity": "accepted-experimental",
@@ -20,11 +20,31 @@
         "path": "contracts/standard-artifact-manifest-v1.json",
         "artifactCount": 6
       },
-      "statusReason": "The source-separated legacy observation atlas is an accepted current visual and research experiment while its sparse, multi-source field remains open to method and source refinement.",
+      "statusReason": "The complete-year 2025 source-separated particulate observation atlas is an accepted current visual and research experiment; it replaces the unqualified legacy artifact with an explicit evidence year.",
       "claimBoundary": [
         "The pass maps dated observations and derived indicators; it does not perform event attribution or compute a composite severity score.",
         "Source coverage, publication latency, and observational opportunity vary by layer and region.",
         "Accepted-experimental status is not approval for navigation, engineering, causal inference, or unreviewed data refreshes."
+      ]
+    },
+    {
+      "id": "anthropocene-particulate-2026",
+      "family": "particulate-observation-atlas",
+      "current": true,
+      "lifecycle": "standard",
+      "maturity": "accepted-experimental",
+      "defaultGenerated": true,
+      "releaseEligible": true,
+      "acceptedOn": "2026-08-10",
+      "artifactManifest": {
+        "path": "contracts/standard-artifact-manifest-v1.json",
+        "artifactCount": 6
+      },
+      "statusReason": "The partial-year 2026 source-separated particulate observation atlas is the accepted current-year companion to the complete 2025 atlas, with its partial-year and incomplete FIRMS coverage retained.",
+      "claimBoundary": [
+        "The pass maps dated observations and derived indicators; it does not perform event attribution or compute a composite severity score.",
+        "The 2026 product is explicitly partial-year and its NASA FIRMS contribution is absent until a keyed, reviewed refresh is promoted.",
+        "Source coverage, publication latency, and observational opportunity vary by layer and region."
       ]
     },
     {

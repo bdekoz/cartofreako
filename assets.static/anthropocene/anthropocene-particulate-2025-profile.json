@@ -1,14 +1,15 @@
 {
   "schema_version": 1,
-  "name": "Anthropocene 2026 partial-year atlas",
-  "description": "Source-separated counts of observed climate and weather indicators; no composite attribution score.",
+  "name": "Anthropocene particulate 2025 complete-year atlas",
+  "description": "Source-separated counts of particulate, fire, smoke, air-quality, climate, hydrology, and weather observations; no composite attribution score.",
   "duration": {
     "type": "calendar-year",
-    "year": 2026
+    "year": 2025
   },
   "snapshot": {
-    "as_of_utc": "2026-08-05T00:00:00Z",
-    "partial_year": true
+    "as_of_utc": "2026-08-10T00:00:00Z",
+    "data_through": "2025-12-31",
+    "partial_year": false
   },
   "aggregation": {
     "spatial_index": "H3",
@@ -30,8 +31,8 @@
     "show_legend": true
   },
   "data": {
-    "geojson": "anthropocene-2026.geojson",
-    "sha256": "a3b2fcb3a809710d278ce88aef52ea938fa67e8b900313cf2e5c2ed9c6ddde42"
+    "geojson": "anthropocene-particulate-2025.geojson",
+    "sha256": "ecd4b11bab4faa9895522dbfe75436ef66820f53620bf0c5f6fc7404e9f5426b"
   },
   "metrics": [
     {
@@ -139,35 +140,35 @@
       "id": "noaa-ghcn-gsn",
       "status": "included",
       "coverage": "global GSN station points",
-      "available_through": "2026-08-04",
+      "available_through": "2025-12-31",
       "url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd_gsn.tar.gz"
     },
     {
       "id": "epa-airdata-pm25",
       "status": "included",
       "coverage": "United States regulatory monitor points",
-      "available_through": "2026-05-31",
-      "url": "https://aqs.epa.gov/aqsweb/airdata/daily_88101_2026.zip"
+      "available_through": "2025-12-31",
+      "url": "https://aqs.epa.gov/aqsweb/airdata/daily_88101_2025.zip"
     },
     {
       "id": "noaa-hms-smoke",
       "status": "included",
       "coverage": "North America analyst-drawn smoke polygons",
-      "available_through": "2026-08-03",
-      "url": "https://satepsanone.nesdis.noaa.gov/pub/FIRE/web/HMS/Smoke_Polygons/Shapefile/Annual_Bundles/hms_smoke2026.zip"
+      "available_through": "2025-12-31",
+      "url": "https://satepsanone.nesdis.noaa.gov/pub/FIRE/web/HMS/Smoke_Polygons/Shapefile/Annual_Bundles/hms_smoke2025.zip"
     },
     {
       "id": "noaa-storm-events",
       "status": "included",
       "coverage": "United States reported event locations",
-      "available_through": "2026-04-30",
+      "available_through": "2025-12-31",
       "url": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/"
     },
     {
       "id": "cwfis-hotspots",
       "status": "included",
-      "coverage": "Canada and North America public daily hotspot files; 167 available reporting days in this snapshot",
-      "available_through": "2026-08-04",
+      "coverage": "Canada and North America public daily hotspot files",
+      "available_through": "2025-12-31",
       "url": "https://cwfis.cfs.nrcan.gc.ca/downloads/hotspots/"
     },
     {
@@ -201,10 +202,10 @@
     },
     {
       "id": "purpleair",
-      "status": "excluded-from-default",
+      "status": "excluded-from-standard",
       "coverage": "low-cost PM sensors; PM observations do not establish smoke attribution",
       "available_through": null,
-      "url": "https://map.purpleair.com/"
+      "url": "https://api.purpleair.com/"
     }
   ],
   "future_phases": [

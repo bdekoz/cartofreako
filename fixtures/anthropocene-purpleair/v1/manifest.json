@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "cartofreako-anthropocene-purpleair-experiment-v1",
+  "lifecycle": "exploration-only",
+  "checkedOn": "2026-08-10",
+  "passFamily": "anthropocene-particulate-purpleair",
+  "dataBoundary": {
+    "kind": "synthetic-interface-fixture",
+    "containsObservations": false,
+    "measurement": "UNAVAILABLE",
+    "source": "https://api.purpleair.com/"
+  },
+  "style": {
+    "layerId": "purpleair-experiment",
+    "defaultVisible": true,
+    "maximumOpacity": 0.6
+  },
+  "anchors": [
+    {"id": "san-francisco", "label": "San Francisco", "longitude": -122.4194, "latitude": 37.7749, "role": "rendering-qa-anchor-not-a-sensor"},
+    {"id": "los-angeles", "label": "Los Angeles", "longitude": -118.2437, "latitude": 34.0522, "role": "rendering-qa-anchor-not-a-sensor"},
+    {"id": "seattle", "label": "Seattle", "longitude": -122.3321, "latitude": 47.6062, "role": "rendering-qa-anchor-not-a-sensor"},
+    {"id": "mexico-city", "label": "Mexico City", "longitude": -99.1332, "latitude": 19.4326, "role": "rendering-qa-anchor-not-a-sensor"},
+    {"id": "new-york", "label": "New York", "longitude": -74.006, "latitude": 40.7128, "role": "rendering-qa-anchor-not-a-sensor"},
+    {"id": "sao-paulo", "label": "São Paulo", "longitude": -46.6333, "latitude": -23.5505, "role": "rendering-qa-anchor-not-a-sensor"},
+    {"id": "london", "label": "London", "longitude": -0.1276, "latitude": 51.5072, "role": "rendering-qa-anchor-not-a-sensor"},
+    {"id": "lagos", "label": "Lagos", "longitude": 3.3792, "latitude": 6.5244, "role": "rendering-qa-anchor-not-a-sensor"},
+    {"id": "delhi", "label": "Delhi", "longitude": 77.1025, "latitude": 28.7041, "role": "rendering-qa-anchor-not-a-sensor"},
+    {"id": "tokyo", "label": "Tokyo", "longitude": 139.6917, "latitude": 35.6895, "role": "rendering-qa-anchor-not-a-sensor"},
+    {"id": "sydney", "label": "Sydney", "longitude": 151.2093, "latitude": -33.8688, "role": "rendering-qa-anchor-not-a-sensor"},
+    {"id": "jakarta", "label": "Jakarta", "longitude": 106.8456, "latitude": -6.2088, "role": "rendering-qa-anchor-not-a-sensor"}
+  ],
+  "layouts": [
+    {"id": "cahill-keyes", "projectionDirectory": "cahill-keyes", "runtimeProjection": "cahill-keyes", "frame": [4400, 2200], "suffix": "ck-44-22"},
+    {"id": "authagraph", "projectionDirectory": "authagraph", "runtimeProjection": "authagraph", "frame": [4400, 1905.255888325765], "suffix": "authagraph-44-19.052559"},
+    {"id": "dymaxion", "projectionDirectory": "dymaxion", "runtimeProjection": "dymaxion", "frame": [4400, 2078.460969082653], "suffix": "dymaxion-44-20.78461"},
+    {"id": "myriahedral", "projectionDirectory": "myriahedral", "runtimeProjection": "myriahedral-pacific", "frame": [4400, 2475], "suffix": "myriahedral-44-24.75"},
+    {"id": "star-x", "projectionDirectory": "star-x", "runtimeProjection": "star-x", "frame": [3400, 4400], "suffix": "star-x-34-44"},
+    {"id": "voronoi", "projectionDirectory": "voronoi", "runtimeProjection": "voronoi", "frame": [4400, 2291.666666666667], "suffix": "voronoi-44-22.916667"}
+  ],
+  "promotion": {
+    "standardLifecycleAuthorized": false,
+    "defaultGenerationAuthorized": false,
+    "publicReleaseAuthorized": false
+  }
+}

@@ -90,13 +90,25 @@ ORBITING_PROFILE ?= \
 	$(ORBITING_DATA_DIR)/orbital-technosphere-profile.json
 ORBITING_FETCHER := scripts/fetch-orbiting-data.sh
 ANTHROPOCENE_DATA_DIR ?= $(STATIC_ASSET_DIR)/anthropocene
-ANTHROPOCENE_PROFILE ?= \
-	$(ANTHROPOCENE_DATA_DIR)/anthropocene-profile.json
-ANTHROPOCENE_GEOJSON ?= \
-	$(ANTHROPOCENE_DATA_DIR)/anthropocene-2026.geojson
-ANTHROPOCENE_FETCHER := scripts/fetch-anthropocene-data.sh
-ANTHROPOCENE_PREPARATION_SCRIPT := scripts/prepare-anthropocene-data.sh
-ANTHROPOCENE_VERIFIER := scripts/verify-anthropocene-data.sh
+ANTHROPOCENE_PARTICULATE_PROFILE_2025 ?= \
+	$(ANTHROPOCENE_DATA_DIR)/anthropocene-particulate-2025-profile.json
+ANTHROPOCENE_PARTICULATE_PROFILE_2026 ?= \
+	$(ANTHROPOCENE_DATA_DIR)/anthropocene-particulate-2026-profile.json
+ANTHROPOCENE_PARTICULATE_GEOJSON_2025 ?= \
+	$(ANTHROPOCENE_DATA_DIR)/anthropocene-particulate-2025.geojson
+ANTHROPOCENE_PARTICULATE_GEOJSON_2026 ?= \
+	$(ANTHROPOCENE_DATA_DIR)/anthropocene-particulate-2026.geojson
+ANTHROPOCENE_PARTICULATE_FETCHER := \
+	scripts/fetch-anthropocene-particulate-data.sh
+ANTHROPOCENE_PARTICULATE_PREPARATION_SCRIPT := \
+	scripts/prepare-anthropocene-particulate-data.sh
+ANTHROPOCENE_PARTICULATE_VERIFIER := \
+	scripts/verify-anthropocene-particulate-data.sh
+# Compatibility variables for external refresh drivers that still select one
+# current-year profile. Standard generation uses both explicit year profiles.
+ANTHROPOCENE_PROFILE ?= $(ANTHROPOCENE_PARTICULATE_PROFILE_2026)
+ANTHROPOCENE_GEOJSON ?= $(ANTHROPOCENE_PARTICULATE_GEOJSON_2026)
+ANTHROPOCENE_VERIFIER := $(ANTHROPOCENE_PARTICULATE_VERIFIER)
 ANTHROPOCENE_TEMPERATURE_PROFILE_2025 ?= \
 	$(ANTHROPOCENE_DATA_DIR)/anthropocene-temperature-2025-profile.json
 ANTHROPOCENE_TEMPERATURE_PROFILE_2026 ?= \
@@ -207,6 +219,16 @@ ATOLL_EVIDENCE_CANARY := \
 ATOLL_EVIDENCE_CONTEXT := \
 	$(ATOLL_EVIDENCE_DIR)/context/water-myriahedral-pacific-700x394.png
 
+# Local exploration products are intentionally registered independently from
+# GENERATED_ARTIFACTS and every publication path.  Add a target here only
+# after it has an implemented, non-release builder; feasibility-only proposals
+# do not belong in this aggregate.
+NON_RELEASE_EXPERIMENT_TARGETS := \
+	generate-gpu-controls \
+	build-consumer-release-layout \
+	generate-atoll-evidence-canary \
+	render-marshall-islands-speculations-v01
+
 # Release artifacts are grouped by projection first.  Keep the projection tag
 # in every basename as a stable, self-describing download name, then derive
 # its owning directory from that tag.
@@ -229,6 +251,36 @@ svg_to_png = $(foreach artifact,$(1),\
 svg_to_thumbnail = $(foreach artifact,$(1),\
 	$(call generated_thumbnail,$(patsubst %.svg,%.png,$(notdir $(artifact)))))
 artifact_directory = $(patsubst %/,%,$(dir $(1)))
+
+MAJURO_ATOLL_EVIDENCE_CONTEXTS := \
+	$(ATOLL_EVIDENCE_DIR)/context/water-cahill-keyes-context.png \
+	$(ATOLL_EVIDENCE_DIR)/context/water-authagraph-context.png \
+	$(ATOLL_EVIDENCE_DIR)/context/water-dymaxion-context.png \
+	$(ATOLL_EVIDENCE_DIR)/context/water-myriahedral-pacific-context.png \
+	$(ATOLL_EVIDENCE_DIR)/context/water-star-x-context.png \
+	$(ATOLL_EVIDENCE_DIR)/context/water-voronoi-context.png
+MAJURO_ATOLL_EVIDENCE_SVGS := \
+	$(call generated_svg,majuro-atoll-evidence-ck-44-22.svg) \
+	$(call generated_svg,majuro-atoll-evidence-authagraph-44-19.052559.svg) \
+	$(call generated_svg,majuro-atoll-evidence-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,majuro-atoll-evidence-myriahedral-pacific-44-24.75.svg) \
+	$(call generated_svg,majuro-atoll-evidence-star-x-34-44.svg) \
+	$(call generated_svg,majuro-atoll-evidence-voronoi-44-22.916667.svg)
+MAJURO_ATOLL_EVIDENCE_PDFS := \
+	$(call svg_to_pdf,$(MAJURO_ATOLL_EVIDENCE_SVGS))
+MAJURO_ATOLL_EVIDENCE_PNGS := \
+	$(call svg_to_png,$(MAJURO_ATOLL_EVIDENCE_SVGS))
+MAJURO_ATOLL_EVIDENCE_THUMBNAILS := \
+	$(call svg_to_thumbnail,$(MAJURO_ATOLL_EVIDENCE_SVGS))
+MAJURO_ATOLL_EVIDENCE_STAR_X_PNG := \
+	$(call generated_png,majuro-atoll-evidence-star-x-34-44.png)
+MAJURO_ATOLL_EVIDENCE_ARTIFACTS := \
+	$(MAJURO_ATOLL_EVIDENCE_SVGS) $(MAJURO_ATOLL_EVIDENCE_PDFS) \
+	$(MAJURO_ATOLL_EVIDENCE_PNGS) $(MAJURO_ATOLL_EVIDENCE_THUMBNAILS)
+NON_RELEASE_EXPERIMENT_TARGETS += generate-majuro-atoll-evidence
+NON_RELEASE_EXPERIMENT_TARGETS += generate-anthropocene-purpleair-experiments
+NON_RELEASE_EXPERIMENT_TARGETS += generate-anthropocene-water-debris-experiments
+
 DOXYGEN_CONFIG := Doxyfile
 DOXYGEN_OUTPUT_DIR := docs/doxygen
 DOXYGEN_HEADERS := $(wildcard $(PROJECTION_SRC_DIR)/cart0freak0*.h) \
@@ -299,8 +351,10 @@ CLOUD_ATMOSPHERE_GENERATOR := \
 CLOUD_ATMOSPHERE_PREPARER := \
 	$(GENERATOR_SRC_DIR)/prepare-cloud-atmosphere
 ORBITING_GENERATOR := $(GENERATOR_SRC_DIR)/generate-orbiting
-ANTHROPOCENE_GENERATOR := $(GENERATOR_SRC_DIR)/generate-anthropocene
-ANTHROPOCENE_PREPARER := $(GENERATOR_SRC_DIR)/prepare-anthropocene
+ANTHROPOCENE_PARTICULATE_GENERATOR := \
+	$(GENERATOR_SRC_DIR)/generate-anthropocene-particulate
+ANTHROPOCENE_PARTICULATE_PREPARER := \
+	$(GENERATOR_SRC_DIR)/prepare-anthropocene-particulate
 ANTHROPOCENE_TEMPERATURE_GENERATOR := \
 	$(GENERATOR_SRC_DIR)/generate-anthropocene-temperature
 ANTHROPOCENE_TEMPERATURE_PREPARER := \
@@ -481,15 +535,27 @@ FIBER_SYNTHESIZED_SVGS := \
 FIBER_SYNTHESIZED_PDFS := $(call svg_to_pdf,$(FIBER_SYNTHESIZED_SVGS))
 FIBER_SYNTHESIZED_PNGS := $(call svg_to_png,$(FIBER_SYNTHESIZED_SVGS))
 
-ANTHROPOCENE_SVGS := \
-	$(call generated_svg,anthropocene-ck-44-22.svg) \
-	$(call generated_svg,anthropocene-authagraph-44-19.052559.svg) \
-	$(call generated_svg,anthropocene-dymaxion-44-20.78461.svg) \
-	$(call generated_svg,anthropocene-myriahedral-44-24.75.svg) \
-	$(call generated_svg,anthropocene-star-x-34-44.svg) \
-	$(call generated_svg,anthropocene-voronoi-44-22.916667.svg)
-ANTHROPOCENE_PDFS := $(call svg_to_pdf,$(ANTHROPOCENE_SVGS))
-ANTHROPOCENE_PNGS := $(call svg_to_png,$(ANTHROPOCENE_SVGS))
+ANTHROPOCENE_PARTICULATE_2025_SVGS := \
+	$(call generated_svg,anthropocene-particulate-2025-ck-44-22.svg) \
+	$(call generated_svg,anthropocene-particulate-2025-authagraph-44-19.052559.svg) \
+	$(call generated_svg,anthropocene-particulate-2025-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,anthropocene-particulate-2025-myriahedral-44-24.75.svg) \
+	$(call generated_svg,anthropocene-particulate-2025-star-x-34-44.svg) \
+	$(call generated_svg,anthropocene-particulate-2025-voronoi-44-22.916667.svg)
+ANTHROPOCENE_PARTICULATE_2026_SVGS := \
+	$(call generated_svg,anthropocene-particulate-2026-ck-44-22.svg) \
+	$(call generated_svg,anthropocene-particulate-2026-authagraph-44-19.052559.svg) \
+	$(call generated_svg,anthropocene-particulate-2026-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,anthropocene-particulate-2026-myriahedral-44-24.75.svg) \
+	$(call generated_svg,anthropocene-particulate-2026-star-x-34-44.svg) \
+	$(call generated_svg,anthropocene-particulate-2026-voronoi-44-22.916667.svg)
+ANTHROPOCENE_PARTICULATE_SVGS := \
+	$(ANTHROPOCENE_PARTICULATE_2025_SVGS) \
+	$(ANTHROPOCENE_PARTICULATE_2026_SVGS)
+ANTHROPOCENE_PARTICULATE_PDFS := \
+	$(call svg_to_pdf,$(ANTHROPOCENE_PARTICULATE_SVGS))
+ANTHROPOCENE_PARTICULATE_PNGS := \
+	$(call svg_to_png,$(ANTHROPOCENE_PARTICULATE_SVGS))
 ANTHROPOCENE_TEMPERATURE_2025_SVGS := \
 	$(call generated_svg,anthropocene-temperature-2025-ck-44-22.svg) \
 	$(call generated_svg,anthropocene-temperature-2025-authagraph-44-19.052559.svg) \
@@ -512,7 +578,7 @@ ANTHROPOCENE_TEMPERATURE_PDFS := \
 ANTHROPOCENE_TEMPERATURE_PNGS := \
 	$(call svg_to_png,$(ANTHROPOCENE_TEMPERATURE_SVGS))
 ACCEPTED_EXPERIMENTAL_SVGS := \
-	$(ANTHROPOCENE_SVGS) $(ANTHROPOCENE_TEMPERATURE_SVGS)
+	$(ANTHROPOCENE_PARTICULATE_SVGS) $(ANTHROPOCENE_TEMPERATURE_SVGS)
 
 RESOURCE_OUTPUT_SUFFIXES := ck-44-22 authagraph-44-19.052559 \
 	dymaxion-44-20.78461 myriahedral-44-24.75 star-x-34-44 \
@@ -660,8 +726,9 @@ NETWORK_INFRASTRUCTURE_TOPOLOGY_STAR_X_PNG := \
 	$(call generated_png,network-infrastructure-topology-star-x-34-44.png)
 FIBER_SYNTHESIZED_STAR_X_PNG := \
 	$(call generated_png,fiber-synthesized-star-x-34-44.png)
-ANTHROPOCENE_STAR_X_PNG := \
-	$(call generated_png,anthropocene-star-x-34-44.png)
+ANTHROPOCENE_PARTICULATE_STAR_X_PNGS := \
+	$(call generated_png,anthropocene-particulate-2025-star-x-34-44.png) \
+	$(call generated_png,anthropocene-particulate-2026-star-x-34-44.png)
 ANTHROPOCENE_TEMPERATURE_STAR_X_PNGS := \
 	$(call generated_png,anthropocene-temperature-2025-star-x-34-44.png) \
 	$(call generated_png,anthropocene-temperature-2026-star-x-34-44.png)
@@ -679,7 +746,8 @@ PORTRAIT_PNGS := $(STAR_X_PNGS) $(ASTRO_STAR_X_PNGS) \
 	$(NETWORK_INFRASTRUCTURE_SITES_STAR_X_PNG) \
 	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_STAR_X_PNG) \
 	$(FIBER_SYNTHESIZED_STAR_X_PNG) \
-	$(ANTHROPOCENE_STAR_X_PNG) $(ANTHROPOCENE_TEMPERATURE_STAR_X_PNGS) \
+	$(ANTHROPOCENE_PARTICULATE_STAR_X_PNGS) \
+	$(ANTHROPOCENE_TEMPERATURE_STAR_X_PNGS) \
 	$(RESOURCES_STAR_X_PNGS) $(CK_SLICE_PNGS) \
 	$(BATHYMETRY_ROULETTE_STAR_X_PNG) \
 	$(BATHYMETRY_HAMONSHU_STAR_X_PNG) \
@@ -720,8 +788,8 @@ GENERATED_ARTIFACTS := \
 	$(AUTHORIZED_EXTERNAL_ARTIFACTS)
 
 GENERATOR_BINARIES := \
-	$(ANTHROPOCENE_GENERATOR) \
-	$(ANTHROPOCENE_PREPARER) \
+	$(ANTHROPOCENE_PARTICULATE_GENERATOR) \
+	$(ANTHROPOCENE_PARTICULATE_PREPARER) \
 	$(ANTHROPOCENE_TEMPERATURE_GENERATOR) \
 	$(ANTHROPOCENE_TEMPERATURE_PREPARER) \
 	$(RESOURCES_GENERATOR) \
@@ -743,7 +811,7 @@ GENERATOR_BINARIES := \
 	$(MYRIAHEDRAL_SLICE_GENERATOR) \
 	$(WATER_GENERATOR)
 TEST_BINARIES := \
-	$(TEST_DIR)/test-anthropocene-generation \
+	$(TEST_DIR)/test-anthropocene-particulate-generation \
 	$(TEST_DIR)/test-anthropocene-temperature-generation \
 	$(TEST_DIR)/test-resources-generation \
 	$(TEST_DIR)/test-astro-generation \
@@ -837,9 +905,9 @@ FIBER_SYNTHESIZED_GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/fiber-synthesized-data.h \
 	$(GENERATOR_SRC_DIR)/fiber-synthesized-generation.h \
 	$(NETWORK_INFRASTRUCTURE_GENERATOR_HEADERS)
-ANTHROPOCENE_GENERATOR_HEADERS := \
-	$(GENERATOR_SRC_DIR)/anthropocene-data.h \
-	$(GENERATOR_SRC_DIR)/anthropocene-generation.h \
+ANTHROPOCENE_PARTICULATE_GENERATOR_HEADERS := \
+	$(GENERATOR_SRC_DIR)/anthropocene-particulate-data.h \
+	$(GENERATOR_SRC_DIR)/anthropocene-particulate-generation.h \
 	$(NATURAL_EARTH_GENERATOR_HEADER) \
 	$(GENERATOR_HEADERS)
 ANTHROPOCENE_TEMPERATURE_GENERATOR_HEADERS := \
@@ -869,7 +937,8 @@ RESOURCE_METRIC_PUBLIC_TARGETS := \
 		$(foreach projection,$(RESOURCE_PROJECTION_NAMES),\
 			generate-$(stem)-$(projection)))
 
-PUBLIC_TARGETS := all assets-single assets-resilient check check-docs \
+PUBLIC_TARGETS := all all-experiments assets-single assets-resilient \
+	check check-docs check-all-experiments \
 	check-print-contract check-pass-status \
 	audit-dymaxion-ulp \
 	check-projection-fixtures check-wasm-projection-fixtures \
@@ -877,6 +946,9 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-docs \
 	check-reverse-oracles refresh-reverse-oracle-fixtures \
 	check-artifact-selection refresh-artifact-selection-fixture \
 	check-standard-artifact-manifest refresh-standard-artifact-manifest \
+	check-anthropocene-particulate \
+	check-anthropocene-purpleair-experiments \
+	check-anthropocene-water-debris-experiments \
 	check-prerequisite \
 	check-resources-svg-archives check-fiber-synthesized \
 	check-forward-reverse-projection-api \
@@ -887,10 +959,15 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-docs \
 	fetch-atoll-evidence-data prepare-atoll-evidence-data \
 	build-atoll-evidence-fixtures generate-atoll-evidence-canary \
 	check-atoll-evidence-canary \
+	prepare-majuro-atoll-evidence-contexts \
+	generate-majuro-atoll-evidence generate-majuro-atoll-evidence-svg \
+	generate-majuro-atoll-evidence-artifacts \
+	check-majuro-atoll-evidence \
 	check-stage-15-research-prototypes check-stage-15-active \
 	audit-projection-round-trips \
 	clean clean-failed-generated configured doxygen \
-	generation-plan list-targets render-marshall-islands-speculations-v01 \
+	generation-plan list-targets list-experiments \
+	render-marshall-islands-speculations-v01 \
 	release-github release-ucb-aao-s3 \
 	authorize-external \
 	generate-authorized-external generate-snapshots generate-snapshot-all \
@@ -900,6 +977,12 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-docs \
 	fetch-cloud-atmosphere-data prepare-cloud-atmosphere-data \
 	verify-cloud-atmosphere-data \
 	fetch-anthropocene-data prepare-anthropocene-data \
+	fetch-anthropocene-particulate-data \
+	fetch-anthropocene-particulate-2025 \
+	fetch-anthropocene-particulate-2026 \
+	prepare-anthropocene-particulate-data \
+	prepare-anthropocene-particulate-2025 \
+	prepare-anthropocene-particulate-2026 \
 	fetch-anthropocene-cpc-data prepare-anthropocene-temperature-data \
 	refresh-resources-data refresh-fiber-synthesized \
 	prepare-network-swarm-data make-generated \
@@ -937,6 +1020,13 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-docs \
 	generate-orbiting-star-x generate-orbiting-voronoi \
 	generate-anthropocene generate-anthropocene-projections \
 	generate-anthropocene-artifacts \
+	generate-anthropocene-particulate \
+	generate-anthropocene-particulate-projections \
+	generate-anthropocene-particulate-artifacts \
+	generate-anthropocene-particulate-2025 \
+	generate-anthropocene-particulate-2026 \
+	generate-anthropocene-purpleair-experiments \
+	generate-anthropocene-water-debris-experiments \
 	generate-anthropocene-atlas generate-anthropocene-atlas-projections \
 	generate-anthropocene-atlas-artifacts \
 	generate-anthropocene-atlas-cahill-keyes \
@@ -1055,6 +1145,16 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-docs \
 
 list-targets:
 	@printf '%s\n' $(sort $(PUBLIC_TARGETS))
+
+list-experiments:
+	@printf '%s\n' $(NON_RELEASE_EXPERIMENT_TARGETS)
+
+all-experiments: $(NON_RELEASE_EXPERIMENT_TARGETS)
+	@printf '%s\n' \
+		'Built every implemented non-release experiment; no publication target was invoked.'
+
+check-all-experiments: tests/check-all-experiments.sh Makefile
+	"tests/check-all-experiments.sh"
 
 check-docs: $(DOC_LINK_CHECKER) check-pass-status
 	"$(DOC_LINK_CHECKER)"
@@ -1404,15 +1504,62 @@ $(ATOLL_EVIDENCE_CANARY): scripts/render-atoll-evidence-canary-v01.sh \
 
 generate-atoll-evidence-canary: $(ATOLL_EVIDENCE_CANARY)
 
+prepare-majuro-atoll-evidence-contexts: \
+		scripts/prepare-atoll-evidence-contexts.sh
+	scripts/prepare-atoll-evidence-contexts.sh
+
+$(MAJURO_ATOLL_EVIDENCE_SVGS) &: \
+		scripts/generate-majuro-atoll-evidence.mjs \
+		contracts/majuro-atoll-evidence-pass-v1.schema.json \
+		fixtures/atoll-evidence/v1/pass-manifest.json \
+		$(ATOLL_EVIDENCE_MANIFEST) $(ATOLL_COORDINATE_FIXTURE) \
+		$(ATOLL_EVIDENCE_CANARY) $(ATOLL_EVIDENCE_PREPARED) \
+		$(ATOLL_EVIDENCE_DIR)/topobathy-colors.txt \
+		$(ATOLL_EVIDENCE_DIR)/inundation-probability-colors.txt \
+		$(ATOLL_EVIDENCE_DIR)/inundation-deterministic-colors.txt \
+		$(ATOLL_EVIDENCE_DIR)/context/FULL_PASS_SHA256SUMS \
+		$(MAJURO_ATOLL_EVIDENCE_CONTEXTS) \
+		$(PROJECTIONS_WEB_MODULE) $(PROJECTIONS_WEB_WASM) \
+		$(WEB_DIR)/cartofreako-web.mjs
+	"$(NODE)" scripts/generate-majuro-atoll-evidence.mjs
+
+generate-majuro-atoll-evidence-svg: $(MAJURO_ATOLL_EVIDENCE_SVGS)
+
+$(MAJURO_ATOLL_EVIDENCE_PDFS) $(MAJURO_ATOLL_EVIDENCE_PNGS) \
+		$(MAJURO_ATOLL_EVIDENCE_THUMBNAILS) &: \
+		$(MAJURO_ATOLL_EVIDENCE_SVGS) \
+		scripts/export-majuro-atoll-evidence.mjs \
+		fixtures/atoll-evidence/v1/pass-manifest.json
+	WEB_BROWSER="$(WEB_BROWSER)" \
+		"$(NODE)" scripts/export-majuro-atoll-evidence.mjs
+
+generate-majuro-atoll-evidence: $(MAJURO_ATOLL_EVIDENCE_ARTIFACTS)
+
+generate-majuro-atoll-evidence-artifacts: \
+	$(MAJURO_ATOLL_EVIDENCE_ARTIFACTS)
+
+check-majuro-atoll-evidence: generate-majuro-atoll-evidence \
+		check-atoll-evidence-canary \
+		contracts/majuro-atoll-evidence-pass-v1.schema.json \
+		fixtures/atoll-evidence/v1/pass-manifest.json \
+		tests/test-majuro-atoll-evidence-pass.mjs
+	"$(NODE)" tests/test-majuro-atoll-evidence-pass.mjs
+
 check-atoll-evidence-canary: generate-atoll-evidence-canary \
 		$(ATOLL_EVIDENCE_SCHEMA) $(ATOLL_COORDINATE_SCHEMA) \
 		tests/test-atoll-evidence-canary.mjs $(STAGE15_CONTRACT_CHECKER)
 	"$(NODE)" tests/test-atoll-evidence-canary.mjs
 	python3 "$(STAGE15_CONTRACT_CHECKER)"
 
-check-stage-15-research-prototypes: check-atoll-evidence-canary \
+check-stage-15-research-prototypes: check-majuro-atoll-evidence \
+		check-anthropocene-purpleair-experiments \
+		check-anthropocene-water-debris-experiments \
 		contracts/water-debris-evidence-v1.schema.json \
 		fixtures/water-debris-evidence/v1/manifest.json \
+		contracts/anthropocene-purpleair-experiment-v1.schema.json \
+		fixtures/anthropocene-purpleair/v1/manifest.json \
+		contracts/anthropocene-water-debris-experiment-v1.schema.json \
+		fixtures/anthropocene-water-debris/v1/manifest.json \
 		reports/stage-15-atoll-evidence-canary.md \
 		reports/stage-15-water-debris-feasibility.md \
 		$(STAGE15_CONTRACT_CHECKER)
@@ -1421,11 +1568,37 @@ check-stage-15-research-prototypes: check-atoll-evidence-canary \
 check-stage-15-active: freeze-stage-15-inputs check-gpu-controls \
 		check-consumer-release-layout check-stage-15-research-prototypes
 
-# Stage 15C through 15H remain intentionally absent: no compression encoder,
-# GPU timing, masks, Float32 geometry, extra engine adapter, promotion, release,
-# or upload target is implied by the active exploration-only checks above.
+# The former Stage 15C through 15H proposals now belong to the Stage 16
+# ledger. No compression encoder, GPU timing, masks, Float32 geometry, extra
+# engine adapter, promotion, release, or upload target is implied by these
+# closed Stage 15 exploration-only checks.
 
-check: check-pass-status $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
+$(TEST_DIR)/test-anthropocene-particulate-generation: \
+		$(TEST_DIR)/test-anthropocene-particulate-generation.cc \
+		$(ANTHROPOCENE_PARTICULATE_GENERATOR_HEADERS)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
+
+check-anthropocene-particulate: \
+		$(TEST_DIR)/test-anthropocene-particulate-generation \
+		$(ANTHROPOCENE_PARTICULATE_PROFILE_2025) \
+		$(ANTHROPOCENE_PARTICULATE_PROFILE_2026) \
+		$(ANTHROPOCENE_PARTICULATE_GEOJSON_2025) \
+		$(ANTHROPOCENE_PARTICULATE_GEOJSON_2026) \
+		$(ANTHROPOCENE_PARTICULATE_VERIFIER)
+	$(ANTHROPOCENE_PARTICULATE_VERIFIER) \
+		"$(ANTHROPOCENE_PARTICULATE_PROFILE_2025)" \
+		"$(ANTHROPOCENE_PARTICULATE_GEOJSON_2025)"
+	$(ANTHROPOCENE_PARTICULATE_VERIFIER) \
+		"$(ANTHROPOCENE_PARTICULATE_PROFILE_2026)" \
+		"$(ANTHROPOCENE_PARTICULATE_GEOJSON_2026)"
+	$(TEST_DIR)/test-anthropocene-particulate-generation
+
+check: check-pass-status check-anthropocene-particulate \
+		$(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) \
+		$(ANTHROPOCENE_PARTICULATE_GEOJSON_2025) \
+		$(ANTHROPOCENE_PARTICULATE_GEOJSON_2026) \
 		$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2025) \
 		$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2026) \
 		$(CLOUD_ATMOSPHERE_PROFILE) $(CLOUD_ATMOSPHERE_FIXTURE) \
@@ -1439,18 +1612,10 @@ check: check-pass-status $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_
 		check-print-contract audit-dymaxion-ulp \
 		check-projection-fixtures check-reverse-oracles \
 		check-artifact-selection check-screen-1080p
-	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_PROFILE)" \
-		"$(ANTHROPOCENE_GEOJSON)"
 	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_TEMPERATURE_PROFILE_2025)" \
 		"$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2025)"
 	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_TEMPERATURE_PROFILE_2026)" \
 		"$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2026)"
-	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
-		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
-		$(TEST_DIR)/test-anthropocene-generation.cc \
-		$(shell $(GDAL_CONFIG) --libs) -lh3 \
-		-o $(TEST_DIR)/test-anthropocene-generation
-	$(TEST_DIR)/test-anthropocene-generation
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
 		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$(TEST_DIR)/test-anthropocene-temperature-generation.cc \
@@ -1749,15 +1914,15 @@ $(ORBITING_GENERATOR): $(GENERATOR_SRC_DIR)/generate-orbiting.cc \
 		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$< $(SGP4_OBJECT) $(shell $(GDAL_CONFIG) --libs) -o $@
 
-$(ANTHROPOCENE_GENERATOR): \
-		$(GENERATOR_SRC_DIR)/generate-anthropocene.cc \
-		$(ANTHROPOCENE_GENERATOR_HEADERS)
+$(ANTHROPOCENE_PARTICULATE_GENERATOR): \
+		$(GENERATOR_SRC_DIR)/generate-anthropocene-particulate.cc \
+		$(ANTHROPOCENE_PARTICULATE_GENERATOR_HEADERS)
 	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
 		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
 
-$(ANTHROPOCENE_PREPARER): \
-		$(GENERATOR_SRC_DIR)/prepare-anthropocene.cc
+$(ANTHROPOCENE_PARTICULATE_PREPARER): \
+		$(GENERATOR_SRC_DIR)/prepare-anthropocene-particulate.cc
 	$(CXX) $(CPPFLAGS) $(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
 
@@ -1889,15 +2054,45 @@ $(CLOUD_ATMOSPHERE_GEOJSON):
 fetch-orbiting-data: $(ORBITING_FETCHER) $(ORBITING_PROFILE)
 	$(ORBITING_FETCHER) "$(ORBITING_DATA_DIR)"
 
-fetch-anthropocene-data: $(ANTHROPOCENE_FETCHER) $(ANTHROPOCENE_PROFILE)
-	$(ANTHROPOCENE_FETCHER) "$(ANTHROPOCENE_DATA_DIR)" \
-		"$(ANTHROPOCENE_PROFILE)"
+fetch-anthropocene-particulate-2025: \
+		$(ANTHROPOCENE_PARTICULATE_FETCHER) \
+		$(ANTHROPOCENE_PARTICULATE_PROFILE_2025)
+	$(ANTHROPOCENE_PARTICULATE_FETCHER) "$(ANTHROPOCENE_DATA_DIR)" \
+		"$(ANTHROPOCENE_PARTICULATE_PROFILE_2025)"
 
-prepare-anthropocene-data: $(ANTHROPOCENE_PREPARER) \
-		$(ANTHROPOCENE_PREPARATION_SCRIPT) $(ANTHROPOCENE_PROFILE)
-	ANTHROPOCENE_PREPARER="$(abspath $(ANTHROPOCENE_PREPARER))" \
-		$(ANTHROPOCENE_PREPARATION_SCRIPT) "$(ANTHROPOCENE_DATA_DIR)" \
-		"$(ANTHROPOCENE_PROFILE)"
+fetch-anthropocene-particulate-2026: \
+		$(ANTHROPOCENE_PARTICULATE_FETCHER) \
+		$(ANTHROPOCENE_PARTICULATE_PROFILE_2026)
+	$(ANTHROPOCENE_PARTICULATE_FETCHER) "$(ANTHROPOCENE_DATA_DIR)" \
+		"$(ANTHROPOCENE_PARTICULATE_PROFILE_2026)"
+
+fetch-anthropocene-particulate-data: \
+		fetch-anthropocene-particulate-2025 \
+		fetch-anthropocene-particulate-2026
+fetch-anthropocene-data: fetch-anthropocene-particulate-data
+
+prepare-anthropocene-particulate-2025: \
+		$(ANTHROPOCENE_PARTICULATE_PREPARER) \
+		$(ANTHROPOCENE_PARTICULATE_PREPARATION_SCRIPT) \
+		$(ANTHROPOCENE_PARTICULATE_PROFILE_2025)
+	ANTHROPOCENE_PARTICULATE_PREPARER="$(abspath $(ANTHROPOCENE_PARTICULATE_PREPARER))" \
+		$(ANTHROPOCENE_PARTICULATE_PREPARATION_SCRIPT) \
+		"$(ANTHROPOCENE_DATA_DIR)" \
+		"$(ANTHROPOCENE_PARTICULATE_PROFILE_2025)"
+
+prepare-anthropocene-particulate-2026: \
+		$(ANTHROPOCENE_PARTICULATE_PREPARER) \
+		$(ANTHROPOCENE_PARTICULATE_PREPARATION_SCRIPT) \
+		$(ANTHROPOCENE_PARTICULATE_PROFILE_2026)
+	ANTHROPOCENE_PARTICULATE_PREPARER="$(abspath $(ANTHROPOCENE_PARTICULATE_PREPARER))" \
+		$(ANTHROPOCENE_PARTICULATE_PREPARATION_SCRIPT) \
+		"$(ANTHROPOCENE_DATA_DIR)" \
+		"$(ANTHROPOCENE_PARTICULATE_PROFILE_2026)"
+
+prepare-anthropocene-particulate-data: \
+		prepare-anthropocene-particulate-2025 \
+		prepare-anthropocene-particulate-2026
+prepare-anthropocene-data: prepare-anthropocene-particulate-data
 
 fetch-anthropocene-cpc-data: $(ANTHROPOCENE_CPC_FETCHER)
 	$(ANTHROPOCENE_CPC_FETCHER) "$(ANTHROPOCENE_DATA_DIR)" 1979 2026
@@ -2196,39 +2391,128 @@ generate-orbiting-projections: $(ORBITING_SVGS)
 generate-orbiting-artifacts: $(ORBITING_SVGS) $(ORBITING_PDFS) \
 	$(ORBITING_PNGS)
 
-# $(1): command-line projection name; $(2): Anthropocene product.
-define ANTHROPOCENE_PROJECTION_RULES
-generate-anthropocene-atlas-$(1): $(2)
-$(2): $(ANTHROPOCENE_GENERATOR) $(ANTHROPOCENE_PROFILE) \
-		$(ANTHROPOCENE_GEOJSON) $(ANTHROPOCENE_VERIFIER) \
-		$(NATURAL_EARTH_STAMP) | $(call artifact_directory,$(2))
-	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_PROFILE)" \
-		"$(ANTHROPOCENE_GEOJSON)"
+# $(1): projection; $(2): 2025 particulate SVG; $(3): 2026 particulate SVG.
+define ANTHROPOCENE_PARTICULATE_PROJECTION_RULES
+generate-anthropocene-atlas-$(1): $(2) $(3)
+$(2): $(ANTHROPOCENE_PARTICULATE_GENERATOR) \
+		$(ANTHROPOCENE_PARTICULATE_PROFILE_2025) \
+		$(ANTHROPOCENE_PARTICULATE_GEOJSON_2025) \
+		$(ANTHROPOCENE_PARTICULATE_VERIFIER) $(NATURAL_EARTH_STAMP) \
+		| $(call artifact_directory,$(2))
+	$(ANTHROPOCENE_PARTICULATE_VERIFIER) \
+		"$(ANTHROPOCENE_PARTICULATE_PROFILE_2025)" \
+		"$(ANTHROPOCENE_PARTICULATE_GEOJSON_2025)"
 	cd "$(call artifact_directory,$(2))" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
-		"$(abspath $(ANTHROPOCENE_GENERATOR))" $(1) \
-		"$(abspath $(ANTHROPOCENE_PROFILE))" \
-		"$(abspath $(ANTHROPOCENE_GEOJSON))"
+		"$(abspath $(ANTHROPOCENE_PARTICULATE_GENERATOR))" $(1) \
+		"$(abspath $(ANTHROPOCENE_PARTICULATE_PROFILE_2025))" \
+		"$(abspath $(ANTHROPOCENE_PARTICULATE_GEOJSON_2025))"
+$(3): $(ANTHROPOCENE_PARTICULATE_GENERATOR) \
+		$(ANTHROPOCENE_PARTICULATE_PROFILE_2026) \
+		$(ANTHROPOCENE_PARTICULATE_GEOJSON_2026) \
+		$(ANTHROPOCENE_PARTICULATE_VERIFIER) $(NATURAL_EARTH_STAMP) \
+		| $(call artifact_directory,$(3))
+	$(ANTHROPOCENE_PARTICULATE_VERIFIER) \
+		"$(ANTHROPOCENE_PARTICULATE_PROFILE_2026)" \
+		"$(ANTHROPOCENE_PARTICULATE_GEOJSON_2026)"
+	cd "$(call artifact_directory,$(3))" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
+		"$(abspath $(ANTHROPOCENE_PARTICULATE_GENERATOR))" $(1) \
+		"$(abspath $(ANTHROPOCENE_PARTICULATE_PROFILE_2026))" \
+		"$(abspath $(ANTHROPOCENE_PARTICULATE_GEOJSON_2026))"
 endef
 
-$(eval $(call ANTHROPOCENE_PROJECTION_RULES,cahill-keyes,\
-	$(call generated_svg,anthropocene-ck-44-22.svg)))
-$(eval $(call ANTHROPOCENE_PROJECTION_RULES,authagraph,\
-	$(call generated_svg,anthropocene-authagraph-44-19.052559.svg)))
-$(eval $(call ANTHROPOCENE_PROJECTION_RULES,dymaxion,\
-	$(call generated_svg,anthropocene-dymaxion-44-20.78461.svg)))
-$(eval $(call ANTHROPOCENE_PROJECTION_RULES,myriahedral,\
-	$(call generated_svg,anthropocene-myriahedral-44-24.75.svg)))
-$(eval $(call ANTHROPOCENE_PROJECTION_RULES,star-x,\
-	$(call generated_svg,anthropocene-star-x-34-44.svg)))
-$(eval $(call ANTHROPOCENE_PROJECTION_RULES,voronoi,\
-	$(call generated_svg,anthropocene-voronoi-44-22.916667.svg)))
+$(eval $(call ANTHROPOCENE_PARTICULATE_PROJECTION_RULES,cahill-keyes,\
+	$(call generated_svg,anthropocene-particulate-2025-ck-44-22.svg),\
+	$(call generated_svg,anthropocene-particulate-2026-ck-44-22.svg)))
+$(eval $(call ANTHROPOCENE_PARTICULATE_PROJECTION_RULES,authagraph,\
+	$(call generated_svg,anthropocene-particulate-2025-authagraph-44-19.052559.svg),\
+	$(call generated_svg,anthropocene-particulate-2026-authagraph-44-19.052559.svg)))
+$(eval $(call ANTHROPOCENE_PARTICULATE_PROJECTION_RULES,dymaxion,\
+	$(call generated_svg,anthropocene-particulate-2025-dymaxion-44-20.78461.svg),\
+	$(call generated_svg,anthropocene-particulate-2026-dymaxion-44-20.78461.svg)))
+$(eval $(call ANTHROPOCENE_PARTICULATE_PROJECTION_RULES,myriahedral,\
+	$(call generated_svg,anthropocene-particulate-2025-myriahedral-44-24.75.svg),\
+	$(call generated_svg,anthropocene-particulate-2026-myriahedral-44-24.75.svg)))
+$(eval $(call ANTHROPOCENE_PARTICULATE_PROJECTION_RULES,star-x,\
+	$(call generated_svg,anthropocene-particulate-2025-star-x-34-44.svg),\
+	$(call generated_svg,anthropocene-particulate-2026-star-x-34-44.svg)))
+$(eval $(call ANTHROPOCENE_PARTICULATE_PROJECTION_RULES,voronoi,\
+	$(call generated_svg,anthropocene-particulate-2025-voronoi-44-22.916667.svg),\
+	$(call generated_svg,anthropocene-particulate-2026-voronoi-44-22.916667.svg)))
 
-generate-anthropocene-atlas: $(ANTHROPOCENE_SVGS)
-generate-anthropocene-atlas-projections: $(ANTHROPOCENE_SVGS)
-generate-anthropocene-atlas-artifacts: $(ANTHROPOCENE_SVGS) \
-	$(ANTHROPOCENE_PDFS) $(ANTHROPOCENE_PNGS)
+generate-anthropocene-particulate-2025: \
+	$(ANTHROPOCENE_PARTICULATE_2025_SVGS)
+generate-anthropocene-particulate-2026: \
+	$(ANTHROPOCENE_PARTICULATE_2026_SVGS)
+generate-anthropocene-particulate: $(ANTHROPOCENE_PARTICULATE_SVGS)
+generate-anthropocene-particulate-projections: \
+	$(ANTHROPOCENE_PARTICULATE_SVGS)
+generate-anthropocene-particulate-artifacts: \
+	$(ANTHROPOCENE_PARTICULATE_SVGS) $(ANTHROPOCENE_PARTICULATE_PDFS) \
+	$(ANTHROPOCENE_PARTICULATE_PNGS)
+
+# PurpleAir remains a default-visible, exploration-only interface experiment.
+# The checked fixture contains rendering anchors, never sensor observations or
+# values, so the builder is reproducible without a credential or network.
+generate-anthropocene-purpleair-experiments: \
+		$(ANTHROPOCENE_PARTICULATE_SVGS) \
+		scripts/generate-anthropocene-purpleair-experiments.mjs \
+		fixtures/anthropocene-purpleair/v1/manifest.json \
+		contracts/anthropocene-purpleair-experiment-v1.schema.json \
+		$(WEB_DIR)/cartofreako-web.mjs
+	"$(NODE)" scripts/generate-anthropocene-purpleair-experiments.mjs
+
+check-anthropocene-purpleair-experiments: \
+		generate-anthropocene-purpleair-experiments \
+		tests/test-anthropocene-purpleair-experiments.mjs
+	"$(NODE)" tests/test-anthropocene-purpleair-experiments.mjs
+
+# The first water-debris edition renders only the five checked 2018 depth
+# stations. Every other reviewed source family remains visibly context-only or
+# unavailable; the builder never fetches, promotes, or publishes data.
+generate-anthropocene-water-debris-experiments: \
+		$(CK_WATER_SVG) $(REQUESTED_WATER_SVGS) \
+		scripts/generate-anthropocene-water-debris-experiments.mjs \
+		scripts/render-anthropocene-water-debris-contact-sheet.sh \
+		fixtures/anthropocene-water-debris/v1/manifest.json \
+		contracts/anthropocene-water-debris-experiment-v1.schema.json \
+		$(WEB_DIR)/cartofreako-web.mjs
+	"$(NODE)" scripts/generate-anthropocene-water-debris-experiments.mjs
+	"scripts/render-anthropocene-water-debris-contact-sheet.sh"
+
+check-anthropocene-water-debris-experiments: \
+		generate-anthropocene-water-debris-experiments \
+		tests/test-anthropocene-water-debris-experiments.mjs
+	"$(NODE)" tests/test-anthropocene-water-debris-experiments.mjs
+
+# Compatibility aliases: the former unqualified atlas is now the paired,
+# year-qualified particulate family. No legacy unqualified artifact is built.
+generate-anthropocene-atlas: generate-anthropocene-particulate
+generate-anthropocene-atlas-projections: \
+	generate-anthropocene-particulate-projections
+generate-anthropocene-atlas-artifacts: \
+	generate-anthropocene-particulate-artifacts
+generate-anthropocene-atlas-cahill-keyes: \
+	$(word 1,$(ANTHROPOCENE_PARTICULATE_2025_SVGS)) \
+	$(word 1,$(ANTHROPOCENE_PARTICULATE_2026_SVGS))
+generate-anthropocene-atlas-authagraph: \
+	$(word 2,$(ANTHROPOCENE_PARTICULATE_2025_SVGS)) \
+	$(word 2,$(ANTHROPOCENE_PARTICULATE_2026_SVGS))
+generate-anthropocene-atlas-dymaxion: \
+	$(word 3,$(ANTHROPOCENE_PARTICULATE_2025_SVGS)) \
+	$(word 3,$(ANTHROPOCENE_PARTICULATE_2026_SVGS))
+generate-anthropocene-atlas-myriahedral: \
+	$(word 4,$(ANTHROPOCENE_PARTICULATE_2025_SVGS)) \
+	$(word 4,$(ANTHROPOCENE_PARTICULATE_2026_SVGS))
+generate-anthropocene-atlas-star-x: \
+	$(word 5,$(ANTHROPOCENE_PARTICULATE_2025_SVGS)) \
+	$(word 5,$(ANTHROPOCENE_PARTICULATE_2026_SVGS))
+generate-anthropocene-atlas-voronoi: \
+	$(word 6,$(ANTHROPOCENE_PARTICULATE_2025_SVGS)) \
+	$(word 6,$(ANTHROPOCENE_PARTICULATE_2026_SVGS))
 
 # $(1): projection; $(2): 2025 SVG; $(3): 2026 SVG.
 define ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES
@@ -2279,16 +2563,45 @@ $(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,voronoi,\
 	$(call generated_svg,anthropocene-temperature-2025-voronoi-44-22.916667.svg),\
 	$(call generated_svg,anthropocene-temperature-2026-voronoi-44-22.916667.svg)))
 
-# Stage 12 defaults generate the paired 2025 and 2026 Anthropocene passes.
-generate-anthropocene-cahill-keyes: $(word 1,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) $(word 1,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
-generate-anthropocene-authagraph: $(word 2,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) $(word 2,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
-generate-anthropocene-dymaxion: $(word 3,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) $(word 3,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
-generate-anthropocene-myriahedral: $(word 4,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) $(word 4,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
-generate-anthropocene-star-x: $(word 5,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) $(word 5,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
-generate-anthropocene-voronoi: $(word 6,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) $(word 6,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
-generate-anthropocene: $(ANTHROPOCENE_TEMPERATURE_SVGS)
-generate-anthropocene-projections: $(ANTHROPOCENE_TEMPERATURE_SVGS)
+# Current defaults generate paired particulate and temperature products for
+# the complete 2025 year and explicitly partial 2026 year.
+generate-anthropocene-cahill-keyes: \
+	$(word 1,$(ANTHROPOCENE_PARTICULATE_2025_SVGS)) \
+	$(word 1,$(ANTHROPOCENE_PARTICULATE_2026_SVGS)) \
+	$(word 1,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) \
+	$(word 1,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
+generate-anthropocene-authagraph: \
+	$(word 2,$(ANTHROPOCENE_PARTICULATE_2025_SVGS)) \
+	$(word 2,$(ANTHROPOCENE_PARTICULATE_2026_SVGS)) \
+	$(word 2,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) \
+	$(word 2,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
+generate-anthropocene-dymaxion: \
+	$(word 3,$(ANTHROPOCENE_PARTICULATE_2025_SVGS)) \
+	$(word 3,$(ANTHROPOCENE_PARTICULATE_2026_SVGS)) \
+	$(word 3,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) \
+	$(word 3,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
+generate-anthropocene-myriahedral: \
+	$(word 4,$(ANTHROPOCENE_PARTICULATE_2025_SVGS)) \
+	$(word 4,$(ANTHROPOCENE_PARTICULATE_2026_SVGS)) \
+	$(word 4,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) \
+	$(word 4,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
+generate-anthropocene-star-x: \
+	$(word 5,$(ANTHROPOCENE_PARTICULATE_2025_SVGS)) \
+	$(word 5,$(ANTHROPOCENE_PARTICULATE_2026_SVGS)) \
+	$(word 5,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) \
+	$(word 5,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
+generate-anthropocene-voronoi: \
+	$(word 6,$(ANTHROPOCENE_PARTICULATE_2025_SVGS)) \
+	$(word 6,$(ANTHROPOCENE_PARTICULATE_2026_SVGS)) \
+	$(word 6,$(ANTHROPOCENE_TEMPERATURE_2025_SVGS)) \
+	$(word 6,$(ANTHROPOCENE_TEMPERATURE_2026_SVGS))
+generate-anthropocene: \
+	$(ANTHROPOCENE_PARTICULATE_SVGS) $(ANTHROPOCENE_TEMPERATURE_SVGS)
+generate-anthropocene-projections: \
+	$(ANTHROPOCENE_PARTICULATE_SVGS) $(ANTHROPOCENE_TEMPERATURE_SVGS)
 generate-anthropocene-artifacts: \
+	$(ANTHROPOCENE_PARTICULATE_SVGS) $(ANTHROPOCENE_PARTICULATE_PDFS) \
+	$(ANTHROPOCENE_PARTICULATE_PNGS) \
 	$(ANTHROPOCENE_TEMPERATURE_SVGS) $(ANTHROPOCENE_TEMPERATURE_PDFS) \
 	$(ANTHROPOCENE_TEMPERATURE_PNGS)
 
@@ -2301,10 +2614,14 @@ generate-anthropocene-temperature-years: $(ANTHROPOCENE_TEMPERATURE_SVGS)
 generate-anthropocene-temperature-artifacts: \
 	$(ANTHROPOCENE_TEMPERATURE_SVGS) $(ANTHROPOCENE_TEMPERATURE_PDFS) \
 	$(ANTHROPOCENE_TEMPERATURE_PNGS)
-generate-anthropocene-2025: generate-anthropocene-temperature-2025
-generate-anthropocene-2026: generate-anthropocene-temperature-2026
-generate-anthropocene-years: generate-anthropocene-temperature-years
+generate-anthropocene-2025: generate-anthropocene-particulate-2025 \
+	generate-anthropocene-temperature-2025
+generate-anthropocene-2026: generate-anthropocene-particulate-2026 \
+	generate-anthropocene-temperature-2026
+generate-anthropocene-years: generate-anthropocene-particulate \
+	generate-anthropocene-temperature-years
 generate-anthropocene-year-artifacts: \
+	generate-anthropocene-particulate-artifacts \
 	generate-anthropocene-temperature-artifacts
 
 # $(1): family; $(2): profile metric id; $(3): public metric alias;
@@ -2650,6 +2967,7 @@ ALL_EXPORT_PDFS := $(sort $(GENERATED_PDFS) \
 	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_PDFS) $(CLOUD_ATMOSPHERE_PDFS))
 ALL_LANDSCAPE_PNGS := $(sort $(LANDSCAPE_PNGS) \
 	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_LANDSCAPE_PNGS))
+ALL_EXPORT_THUMBNAILS := $(sort $(SNAPSHOT_THUMBNAILS))
 
 define PROJECTION_EXPORT_RULES
 $(filter $(GENERATED_DIR)/$(1)/pdf/%,$(ALL_EXPORT_PDFS)): \
@@ -2669,7 +2987,7 @@ $(filter $(GENERATED_DIR)/$(1)/png/%,$(PORTRAIT_PNGS)): \
 		| $(GENERATED_DIR)/$(1)/png
 	$$(call EXPORT_PNG,--export-height)
 
-$(filter $(GENERATED_DIR)/$(1)/thumbnail/%,$(SNAPSHOT_THUMBNAILS)): \
+$(filter $(GENERATED_DIR)/$(1)/thumbnail/%,$(ALL_EXPORT_THUMBNAILS)): \
 		$(GENERATED_DIR)/$(1)/thumbnail/%.png: \
 		$(GENERATED_DIR)/$(1)/svg/%.svg Makefile \
 		| $(GENERATED_DIR)/$(1)/thumbnail

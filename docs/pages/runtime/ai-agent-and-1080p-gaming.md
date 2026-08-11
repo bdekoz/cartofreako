@@ -1,7 +1,8 @@
 # AI Workflows assessment and 1080p gaming consumer improvement plan
 
-**Status:** Stage 14 consumer v1 implemented for the complete checked standard
-matrix: 205 artifacts, 31 pass IDs, 11 layouts, and 14 approved slices.
+**Status:** Consumer v1 is implemented for the current checked standard
+matrix: 211 artifacts, 32 pass IDs, 11 layouts, and 14 approved slices. The
+Stage 15 benchmark fixture preserves the earlier Stage 14 205/31 identity.
 Independent collaborator review remains external evidence; GPU formats, masks,
 and benchmarking are assigned to the
 [Stage 15 ledger](../development/stage-15.md)
@@ -11,7 +12,8 @@ the local delivery report `reports/cartofreako-audit-outcomes-01.md`,
 the [forward/reverse API](projection-api.md), the
 [WebAssembly runtime](../../../src.wasm/README.md), the current
 [generation contract](../getting-started/generation.md), and the
-[Stage 15 GPU benchmark ledger](../development/stage-15.md)
+[Stage 15 closed ledger](../development/stage-15.md) and
+[Stage 16 continuation](../development/stage-16.md)
 
 ## Outcome
 
@@ -42,7 +44,7 @@ target may become an input to an authoritative archive, art, or print target.
 | --- | --- | --- |
 | `RECOMMENDATION-REVERSE` | Complete in runtime API 3 for all six projection families, including face/component candidates and residuals | Screen-to-projection affine transforms and geographic-picking fixtures now cover the standard matrix; independent downstream trials remain useful |
 | `RECOMMENDATION-JS` | Core ESM/TypeScript, artifact discovery and deterministic receipts, typed-array batches, abortable workers, Canvas, SVG, D3, and offline Three.js are implemented | Multi-party clean-room use remains external evidence; GPU and engine-specific adapters belong to Stage 15 |
-| `RECOMMENDATION-GAMING` | The 205-product 1920 × 1080 PNG/lossless-WebP matrix, affine picking, Canvas, raw flat-plane, and Three.js r185 interaction paths are checked | Benchmark GPU products and any MapLibre, Godot, or Unity adapter separately in Stage 15 |
+| `RECOMMENDATION-GAMING` | The 211-product 1920 × 1080 PNG/lossless-WebP matrix, affine picking, Canvas, raw flat-plane, and Three.js r185 interaction paths are checked | Benchmark GPU products and any MapLibre, Godot, or Unity adapter separately in Stage 15 |
 
 The existing S3 `release.json` proves aggregate release identity and counts,
 but it is not an artifact catalog. It cannot answer a request such as “the
@@ -101,9 +103,9 @@ stretched to fill the screen.
 
 The v1 generator creates `assets.generated/catalog/artifacts-v1.json` against
 [`contracts/artifacts-v1.schema.json`](../../../contracts/artifacts-v1.schema.json).
-It contains the 205 products named by the checked
+It contains the 211 products named by the checked
 [`standard-artifact-manifest-v1.json`](../../../contracts/standard-artifact-manifest-v1.json):
-31 standard pass IDs across six projection families, 11 layouts, and 14
+32 standard pass IDs across six projection families, 11 layouts, and 14
 approved slices. Optional and exploration-only passes remain excluded unless a
 later version explicitly opts them in. Each logical plate has one stable record with
 PNG/WebP variants rather than unrelated records per file. Minimum fields are:
@@ -216,6 +218,15 @@ agent-to-agent contract. A later catalog can then discover completed
 experiments alongside released plates without treating speculative outputs as
 archive or art masters.
 
+The approved [Stage 16 agentic atlas research plan](../development/stage-16.md)
+turns that observation into a reviewable two-loop plan: deterministic
+selection of existing plates, followed by separately authorized bounded
+experiments with source inventories, result lineage, visual-review receipts,
+and human-only promotion. It includes a first Marshall Islands projection
+queue, an atmosphere-first generic canary, and a water-debris v02 follow-up;
+it is an approved future-development ledger, not an implemented generic
+orchestrator.
+
 ## Game-facing interface
 
 Stage 14 implements two progressively richer paths:
@@ -264,8 +275,8 @@ make consumer-assets-v1
 unchanged 3840-pixel parent PNG, exact 1920 × 1080 contain-fit placement,
 WCAG-light-gray `#f4f5f5` padding, and lossless WebP. It verifies pixel
 equivalence between decoded PNG and WebP and re-hashes the SVG, PDF, and full
-PNG parents after every derivative. `check-screen-1080p` validates all 205
-records and their 1,025 declared files, hashes, frames, matrices, padding
+PNG parents after every derivative. `check-screen-1080p` validates all 211
+records and their 1,055 declared files, hashes, frames, matrices, padding
 rejection, and qualified forward/screen/reverse picks. It also runs a minimal
 independent Python reader and the offline Three.js browser canary.
 `consumer-assets-v1` adds the broader headless browser consumer checks.
@@ -288,7 +299,7 @@ target, 3840 PNG rule, or archived-art identity.
 
 ### 1. Render the complete standard 1080p matrix — implemented
 
-The implemented v1 renders all 205 products in the checked standard manifest,
+The implemented v1 renders all 211 products in the checked standard manifest,
 including Coral Reefs, Fiber Synthesized, the five Myriahedral perspectives,
 four Cahill–Keyes strips, eight Cahill–Keyes octants, and two Myriahedral face
 groups. It uses the existing reviewed 3840-pixel PNG as the declared parent so
@@ -342,7 +353,7 @@ baseline remain external evidence, not a Stage 14 implementation dependency.
 The 2048 × 1024 texture controls, KTX2/Basis candidates, topology and
 feature-ID masks, Float32 positional audit, hardware matrix, benchmark metrics,
 and adoption gates have moved to the
-[Stage 15 GPU products and benchmark ledger](../development/stage-15.md).
+[Stage 16 GPU evidence and agentic atlas research ledger](../development/stage-16.md).
 Stage 15 derives its controls from the same authoritative 3840-pixel parents
 and compares them against the frozen Stage 14 catalog and 1080p baseline; it
 does not reopen Stage 14 print or projection semantics.
@@ -365,7 +376,9 @@ does not reopen Stage 14 print or projection semantics.
 ## Promotion rule
 
 The 1080p PNG/WebP products and catalog are promoted to the standard generated
-graph after phases 0–4 passed for the checked 205-product standard manifest.
+graph after phases 0–4 passed for the current 211-product standard manifest.
+The Stage 15 performance baseline remains independently frozen at the earlier
+205-product corpus, so live catalog growth does not rewrite benchmark results.
 GPU formats and
 semantic masks remain Stage 15 exploration-only products until its measured
 benefit, tooling, licensing, determinism, and QA gates pass. The authoritative

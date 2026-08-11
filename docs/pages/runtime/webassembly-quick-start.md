@@ -181,7 +181,7 @@ make check-screen-1080p
 ```
 
 The output uses a 1920 × 1080 contain fit with `#f4f5f5` padding; nothing is
-cropped or stretched. The current manifest contains 205 products: 31 standard
+cropped or stretched. The current manifest contains 211 products: 32 standard
 whole-map pass IDs across the applicable projections, five alternate
 Myriahedral layouts, twelve Cahill–Keyes slices, and two Myriahedral slices.
 Convert pointer coordinates through the catalog matrix before calling the

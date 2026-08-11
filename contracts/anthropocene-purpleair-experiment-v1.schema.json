@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bdekoz.github.io/cartofreako/contracts/anthropocene-purpleair-experiment-v1.schema.json",
+  "title": "Cartofreako PurpleAir particulate interface experiment v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "lifecycle", "checkedOn", "passFamily",
+    "dataBoundary", "style", "anchors", "layouts", "promotion"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "cartofreako-anthropocene-purpleair-experiment-v1"},
+    "lifecycle": {"const": "exploration-only"},
+    "checkedOn": {"type": "string", "format": "date"},
+    "passFamily": {"const": "anthropocene-particulate-purpleair"},
+    "dataBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "containsObservations", "measurement", "source"],
+      "properties": {
+        "kind": {"const": "synthetic-interface-fixture"},
+        "containsObservations": {"const": false},
+        "measurement": {"const": "UNAVAILABLE"},
+        "source": {"const": "https://api.purpleair.com/"}
+      }
+    },
+    "style": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["layerId", "defaultVisible", "maximumOpacity"],
+      "properties": {
+        "layerId": {"const": "purpleair-experiment"},
+        "defaultVisible": {"const": true},
+        "maximumOpacity": {"const": 0.6}
+      }
+    },
+    "anchors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "longitude", "latitude", "role"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+          "label": {"type": "string", "minLength": 1},
+          "longitude": {"type": "number", "minimum": -180, "maximum": 180},
+          "latitude": {"type": "number", "minimum": -90, "maximum": 90},
+          "role": {"const": "rendering-qa-anchor-not-a-sensor"}
+        }
+      }
+    },
+    "layouts": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "projectionDirectory", "runtimeProjection", "frame", "suffix"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "projectionDirectory": {"type": "string", "minLength": 1},
+          "runtimeProjection": {"type": "string", "minLength": 1},
+          "frame": {
+            "type": "array", "minItems": 2, "maxItems": 2,
+            "items": {"type": "number", "exclusiveMinimum": 0}
+          },
+          "suffix": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "promotion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["standardLifecycleAuthorized", "defaultGenerationAuthorized", "publicReleaseAuthorized"],
+      "properties": {
+        "standardLifecycleAuthorized": {"const": false},
+        "defaultGenerationAuthorized": {"const": false},
+        "publicReleaseAuthorized": {"const": false}
+      }
+    }
+  }
+}

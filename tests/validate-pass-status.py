@@ -30,7 +30,8 @@ def main() -> None:
         by_pass.setdefault(artifact["passId"], []).append(artifact)
 
     expected = {
-        "anthropocene",
+        "anthropocene-particulate-2025",
+        "anthropocene-particulate-2026",
         "anthropocene-temperature-2025",
         "anthropocene-temperature-2026",
     }
@@ -48,7 +49,7 @@ def main() -> None:
         assert value["defaultGenerated"] is True
         assert value["maturity"] == "accepted-experimental"
 
-    print("Pass status passed: 3 current accepted-experimental Anthropocene passes remain standard across 18 artifacts.")
+    print("Pass status passed: 4 current accepted-experimental Anthropocene passes remain standard across 24 artifacts.")
 
 
 if __name__ == "__main__":

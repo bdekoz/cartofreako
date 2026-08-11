@@ -3,6 +3,7 @@
 [Documentation index](../../../index.md) ·
 [Generation pipeline](../getting-started/generation.md) ·
 [Prerequisites and hardware](../getting-started/prerequisites.md) ·
+[`v20260811` Stage 15 source release](v20260811.md) ·
 [`v20260810` Stage 14 source release](v20260810.md) ·
 [`v20260808.1` corrected release notes](v20260808.1.md) ·
 [`v20260808` superseded attempt](v20260808.md) ·
@@ -27,14 +28,14 @@ no umbrella `release` Make target. `release-github` has no S3 dependency, and
 `release-ucb-aao-s3` is deliberately a separate, top-level, interactive-only
 target.
 
-For example, a source-only GitHub release uses:
+For example, the Stage 15 source-only GitHub release uses:
 
 ```sh
-git tag v20260810 HEAD
+git tag v20260811 HEAD
 make release-github \
-  GITHUB_RELEASE_TAG=v20260810 \
-  GITHUB_RELEASE_TITLE='v20260810 — Stage 14 reverse projections' \
-  GITHUB_RELEASE_NOTES=docs/pages/releases/v20260810.md
+  GITHUB_RELEASE_TAG=v20260811 \
+  GITHUB_RELEASE_TITLE='v20260811 — Stage 15 controls and research prototypes' \
+  GITHUB_RELEASE_NOTES=docs/pages/releases/v20260811.md
 ```
 
 An eventual generated-assets deposit is a later, separately authorized human

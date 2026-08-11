@@ -47,7 +47,7 @@ does not duplicate generation logic or filter SVG layers after generation.
 | Cloud-atmosphere | [`src.generate/generate-cloud-atmosphere.cc`](../../../src.generate/generate-cloud-atmosphere.cc) | Process-start solar geometry plus prepared, source-timed JAXA P-Tree cloud and JAXA Earth atmosphere observations |
 | Orbital Technosphere | [`src.generate/generate-orbiting.cc`](../../../src.generate/generate-orbiting.cc) | Profile timestamp and observer, CelesTrak OMM population and memberships, NASA SSCWeb reference positions, and SGP4 |
 | Resources Stage 12 | [`src.generate/generate-resources.cc`](../../../src.generate/generate-resources.cc) | Pinned current-source country and reef fields for energy, food, fauna, flora, mineral, and human families |
-| Anthropocene | [`src.generate/generate-anthropocene.cc`](../../../src.generate/generate-anthropocene.cc) | Profile-fixed partial year and checksum-pinned H3 cell-day counts from GSN, EPA AirData, HMS, Storm Events, and CWFIS |
+| Anthropocene particulate | [`src.generate/generate-anthropocene-particulate.cc`](../../../src.generate/generate-anthropocene-particulate.cc) | Complete-2025 and partial-2026 checksum-pinned H3 cell-day counts from GSN, EPA AirData, HMS, Storm Events, and CWFIS |
 | Anthropocene temperature | [`src.generate/generate-anthropocene-temperature.cc`](../../../src.generate/generate-anthropocene-temperature.cc) | Complete-2025 and partial-2026 CPC temperature fields on a global H3 domain |
 | Network swarm | [`src.generate/generate-network-swarm.cc`](../../../src.generate/generate-network-swarm.cc) | Validated cumulative swarm GeoJSON, H3 parent clustering, fixed display profile, and Izzi radial honeycombs |
 | Network infrastructure | [`src.generate/generate-network-infrastructure.cc`](../../../src.generate/generate-network-infrastructure.cc) | Manifested cloud/CDN sites plus explicitly opted-in TeleGeography cable and Internet-exchange topology |
@@ -69,6 +69,25 @@ Myriahedral face-group slices:
 ```sh
 make all
 ```
+
+The separate exploration aggregate builds every implemented local
+non-release experiment while leaving the standard artifact graph and both
+publication paths independent:
+
+```sh
+make list-experiments
+make all-experiments
+make check-all-experiments
+```
+
+Its checked seven-builder registry contains the Stage 15 GPU controls,
+proposed consumer object-tree layout, Majuro evidence canary, Marshall Islands
+speculations, full Majuro evidence pass, synthetic PurpleAir interface, and
+bounded water-debris experiment. It deliberately excludes data fetchers, external
+authorization, feasibility-only proposals, hardware benchmarks, GitHub
+release, and UCB AAO/S3 upload. Some experiments require their documented
+frozen or released parent artifacts; the aggregate does not silently replace
+those evidence inputs.
 
 The preferred long-running release workflow bounds its first pass to two
 concurrent recipes by default, keeps independent targets moving after a
@@ -149,9 +168,9 @@ The default locations can be overridden:
 | `CLOUD_ATMOSPHERE_GEOJSON` | `$(CLOUD_ATMOSPHERE_DATA_DIR)/.prepared/cloud-atmosphere-latest.geojson` | Locally prepared, checksum-verified H3 observation snapshot |
 | `ORBITING_DATA_DIR` | `assets.static/orbital-technosphere` | Orbital Technosphere profile, OMM CSV snapshots, NASA reference, and checksums |
 | `ORBITING_PROFILE` | `$(ORBITING_DATA_DIR)/orbital-technosphere-profile.json` | Authoritative propagation instant, make-invocation reference point, catalog roles, freshness rules, visibility rules, and display budgets |
-| `ANTHROPOCENE_DATA_DIR` | `assets.static/anthropocene` | Checked observation and dual-year CPC profiles, normalized H3 GeoJSON files, checksums, and ignored refresh staging |
-| `ANTHROPOCENE_PROFILE` | `$(ANTHROPOCENE_DATA_DIR)/anthropocene-profile.json` | Literal duration year, snapshot date, source coverage, thresholds, metric enablement, scales, and styles |
-| `ANTHROPOCENE_GEOJSON` | `$(ANTHROPOCENE_DATA_DIR)/anthropocene-2026.geojson` | Checksum-pinned, source-separated H3 cell-day snapshot |
+| `ANTHROPOCENE_DATA_DIR` | `assets.static/anthropocene` | Checked dual-year particulate and CPC profiles, normalized H3 GeoJSON files, checksums, and ignored refresh staging |
+| `ANTHROPOCENE_PARTICULATE_PROFILE_2025`, `ANTHROPOCENE_PARTICULATE_PROFILE_2026` | Year-bearing files in `$(ANTHROPOCENE_DATA_DIR)` | Complete-2025 and partial-2026 duration, source coverage, thresholds, metric enablement, scales, and styles |
+| `ANTHROPOCENE_PARTICULATE_GEOJSON_2025`, `ANTHROPOCENE_PARTICULATE_GEOJSON_2026` | Year-bearing files in `$(ANTHROPOCENE_DATA_DIR)` | Checksum-pinned, source-separated H3 cell-day snapshots |
 | `ANTHROPOCENE_TEMPERATURE_PROFILE_2025`, `ANTHROPOCENE_TEMPERATURE_PROFILE_2026` | Year-bearing files in `$(ANTHROPOCENE_DATA_DIR)` | Complete-2025 and partial-2026 CPC field, record-baseline, coverage, and display contracts |
 | `ANTHROPOCENE_TEMPERATURE_GEOJSON_2025`, `ANTHROPOCENE_TEMPERATURE_GEOJSON_2026` | Year-bearing files in `$(ANTHROPOCENE_DATA_DIR)` | Checksum-pinned global-domain resolution-3 H3 temperature fields |
 | `RESOURCES_DATA_DIR` | `assets.static/resources` | Checked Stage 12 profile, values, country/reef geometry, checksums, and source-workflow README |
@@ -256,7 +275,7 @@ candidates are not accepted as generation-profile passes at all.
 | `astronomy` | All-sky and observer SVGs | Standard |
 | `cloud-atmosphere` | One process-start solar and source-timed physical-atmosphere SVG | Optional; P-Tree credentials required for production data |
 | `orbital-technosphere` | Global and observer SVGs | Standard |
-| `anthropocene` | Two temperature-field SVGs, 2025 and 2026 | Standard |
+| `anthropocene` | Four SVGs: particulate and temperature for 2025 and 2026 | Standard |
 | `resources-energy` | Four country products: solar, wind, nuclear, and refinery throughput | Standard |
 | `resources-food` | One food-production-index country choropleth | Standard |
 | `resources-fauna` | Fisheries country choropleth and coral-reef threat field | Standard |
@@ -290,19 +309,19 @@ normalizes to the current `water` generation pass. It does not mean the
 `ocean` layer inside the Earth base SVG.
 
 Profile `"all"` means the six projections by 19 selectable passes. It
-produces 180 SVGs because astronomy, Orbital Technosphere, Anthropocene, and
+produces 186 SVGs because astronomy, Orbital Technosphere, Anthropocene, and
 several resource families produce multiple products. It deliberately excludes Cahill-Keyes slices, exploratory
 Myriahedral perspectives and slices, and PDF/PNG exports. Those products do
 not form a projection/pass cross-product and remain available through their
 explicit targets. It includes Cloud-atmosphere and therefore requires a
 current locally prepared JAXA snapshot. A clean `make all` retains the
-credential-free 205 SVG products (84 stored as deterministic `.svg.gz`
-archives), 205 PDF, 205 full-size PNG products, and 31 thumbnails per
+credential-free 211 SVG products (84 stored as deterministic `.svg.gz`
+archives), 211 PDF, 211 full-size PNG products, and 32 thumbnails per
 projection. A recorded `jaxa-ptree` authorization adds all six
 Cloud-atmosphere SVG/PDF/PNG products and one thumbnail per projection; the
-complete Stage 13 release therefore has 211 products per full-size format and
-32 thumbnails per projection. The six opt-in topology products per format
-remain separate from this release.
+resulting authorized graph has 217 products per full-size format and 33
+thumbnails per projection. The six opt-in topology products per format remain
+separate.
 
 The resolver rejects empty selectors, duplicate aliases or JSON members,
 unknown names or members, a mixed `"all"` selector, and unsupported schema
@@ -372,17 +391,17 @@ The full generators are not part of `make check`; invoking a `generate-*`
 target both writes its artifact and runs that generator's embedded structural
 checks.
 
-The 205 standard products plus explicitly enabled optional products are
+The 211 standard products plus explicitly enabled optional products are
 generated beneath their projection's `svg/`, `pdf/`, and `png/` directories;
 the 84 resource products also have deterministic `.svg.gz` companions in the
-SVG directories. A clean projection contact sheet has 31 lower-resolution
-PNGs. The complete Stage 13 graph records `jaxa-ptree`, adds one
-Cloud-atmosphere preview to each sheet, and has 32 per projection, 192 total.
+SVG directories. A clean projection contact sheet has 32 lower-resolution
+PNGs. Enabling `jaxa-ptree` adds one Cloud-atmosphere preview to each sheet,
+for 33 per projection and 198 total.
 Large suites are released as versioned static bundles instead of being stored
 in Git. Regenerating with a different GDAL, GEOS, font, or Inkscape version
 can still produce ordering, coordinate, or rendering differences even though
 the input snapshots are pinned. Cloud-atmosphere remains a source-timed
-optional pass even though it is explicitly included in this release.
+optional pass.
 
 ## PDF and 4K PNG export
 
@@ -544,22 +563,23 @@ coordinate pipeline, SVG metadata, verification, and operational-use limits.
 
 ## Anthropocene generation
 
-Stage 12 makes the complete-2025 and partial-2026 NOAA CPC temperature fields
-the default Anthropocene pair:
+Default generation produces four accepted-experimental, standard pass IDs:
+complete-2025 and partial-2026 particulate observation atlases plus
+complete-2025 and partial-2026 NOAA CPC temperature fields:
 
 ```sh
 make generate-anthropocene
 make generate-anthropocene-artifacts
 ```
 
-Use `generate-anthropocene-PROJECTION` for both year-bearing SVGs in one
-projection and `generate-anthropocene-projections` for all 12. The loader
-rejects a year, snapshot, H3-resolution, filename, H3-center, or metric-total
-mismatch, and Make verifies each GeoJSON against its profile SHA-256.
+Use `generate-anthropocene-PROJECTION` for all four year-bearing SVGs in one
+projection and `generate-anthropocene-projections` for all 24. The loaders
+reject year, snapshot, H3-resolution, filename, center, coverage, or
+metric-total mismatches, and Make verifies each GeoJSON against its profile
+SHA-256.
 
-The two profiles serialize every resolution-3 global H3
-cell and preserve TMAX/TMIN valid-day denominators, so an analyzed cell with no
-strict record is not confused with missing or ocean-domain data:
+The explicit year aliases build both families for the selected year across all
+six projections:
 
 ```sh
 make generate-anthropocene-2025
@@ -568,18 +588,20 @@ make generate-anthropocene-years
 make generate-anthropocene-year-artifacts
 ```
 
-The explicit year aliases select one member of the default pair across all six
-projections. Stage the ignored NOAA archive and prepare both candidates
-without replacing checked files with:
+The temperature profiles serialize every resolution-3 global H3 cell and
+preserve TMAX/TMIN valid-day denominators, so analyzed zero is not confused
+with missing or ocean-domain data. Stage the ignored NOAA archive and prepare
+both temperature candidates without replacing checked files with:
 
 ```sh
 make fetch-anthropocene-cpc-data
 make prepare-anthropocene-temperature-data
 ```
 
-The earlier source-separated observation atlas maps positive unique-day counts
-from the checked resolution-4 H3 FeatureCollection and remains explicitly
-available:
+The particulate family maps positive unique-source-reporting-day counts from
+checked resolution-4 H3 FeatureCollections. The old unqualified artifact is
+removed; the former atlas aliases now build both year-qualified particulate
+products:
 
 ```sh
 make generate-anthropocene-atlas
@@ -587,35 +609,51 @@ make generate-anthropocene-atlas-cahill-keyes
 make generate-anthropocene-atlas-artifacts
 ```
 
-Its profile fixes the literal 2026 duration year, partial snapshot, per-source
-coverage, thresholds, metric enablement, scales, shapes, and colors. It does
-not read the host clock or calculate a composite climate-attribution score.
+Each profile fixes its literal year, complete/partial status, per-source
+coverage, thresholds, metric enablement, scales, shapes, and colors. No
+generator reads the host clock or calculates a composite climate-attribution
+score. EPA AirData PM2.5 stays separate from NOAA HMS smoke; both checked
+particulate snapshots contain zero FIRMS rows and therefore make no global
+active-fire claim.
 
-EPA AirData PM2.5 exceedance days are enabled by default in the independent
-`air-quality-exposure` group. They use a cross-square and never become NOAA
-HMS `observed-smoke-days`, which use rings in the `atmosphere` group. Coral
-bleaching stress is recorded in the profile and metadata as a separate future
-raster/reef phase and is not rendered in Stage 8.
-
-Ordinary generation is offline. These explicit targets stage a candidate
-refresh without overwriting the checked GeoJSON:
+Ordinary generation is offline. These explicit targets stage both particulate
+candidates without overwriting checked GeoJSON:
 
 ```sh
-make fetch-anthropocene-data
-make prepare-anthropocene-data
+make fetch-anthropocene-particulate-data
+make prepare-anthropocene-particulate-data
 ```
 
-The original checked snapshot retains public CWFIS Canada/North America fire
-coverage and zero FIRMS rows. A new global refresh requires `FIRMS_MAP_KEY`;
-the fetcher joins advertised standard-processing dates to the NRT tail, and
+One year can be selected with the corresponding `*-particulate-2025` or
+`*-particulate-2026` fetch/prepare target. A new global refresh requires a
+free `FIRMS_MAP_KEY`; request it from the official
+[NASA FIRMS key page](https://firms.modaps.eosdis.nasa.gov/api/map_key/), keep
+it only in the process environment, and run:
+
+```sh
+read -rsp 'NASA FIRMS MAP_KEY: ' FIRMS_MAP_KEY; printf '\n'
+export FIRMS_MAP_KEY
+make generate-authorized-external EXTERNAL_PASSES=nasa-firms
+unset FIRMS_MAP_KEY
+```
+
+The fetcher joins advertised standard-processing dates to the NRT tail, and
 the preparer rejects missing dates or absent world regions. Set
 `ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY=1` only to debug the regional pipeline.
 Copernicus Sentinel-3 fire-radiative-power data and Rosleskhoz operational
-reports remain validation sources. The
+reports remain validation sources.
+
+Two separate exploration families are implemented but do not enter the
+standard graph: a synthetic, default-visible PurpleAir interface review and a
+bounded water-debris experiment containing five observed 2018 depth stations.
+Build them explicitly or through `make all-experiments`; neither target fetches
+credentials or promotes a release product. The
 [Anthropocene implementation notes](../passes/anthropocene/implementation.md)
-document the feasibility boundary, classifications, exact formulas, source
-audit, Canada/Russia fire evaluation, candidate resource types, SVG contract,
-refresh workflow, and limits.
+document the status boundary, formulas, source audit, refresh workflow,
+experiments, and limits. The complete FIRMS handling notes and closed-scope
+record are in the [Stage 15 ledger](../development/stage-15.md); future
+observed-data and agentic iteration work is tracked in
+[Stage 16](../development/stage-16.md).
 
 ## Stage 12 resources generation
 

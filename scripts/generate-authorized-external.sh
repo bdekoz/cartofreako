@@ -143,13 +143,13 @@ for pass in jaxa-ptree nasa-firms network-topology; do
         generate-cloud-atmosphere-artifacts
       ;;
     nasa-firms)
-      run_make 'fetching the global Anthropocene refresh with NASA FIRMS' \
-        fetch-anthropocene-data
-      run_make 'preparing the Anthropocene review candidate' \
-        prepare-anthropocene-data
+      run_make 'fetching the 2025/2026 particulate refresh with NASA FIRMS' \
+        fetch-anthropocene-particulate-data
+      run_make 'preparing the 2025/2026 particulate review candidates' \
+        prepare-anthropocene-particulate-data
       printf '%s\n' \
-        'external generation: NASA FIRMS candidate is ready for maintainer review' \
-        'external generation: no Anthropocene release artifact was rendered from the unpromoted candidate'
+        'external generation: NASA FIRMS candidates are ready for maintainer review' \
+        'external generation: no particulate release artifact was rendered from an unpromoted candidate'
       ;;
     network-topology)
       run_make 'rendering licensed network-topology SVG, PDF, and PNG artifacts' \

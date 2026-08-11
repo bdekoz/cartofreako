@@ -57,8 +57,9 @@ Airocean outline while using a different face transform.
 
    Crider derives three alternative exact formulations—spherical linear
    interpolation, geodesic intersection, and spherical triangles—and gives
-   inverse procedures. The current public API implements only the forward
-   Gray equations, but Crider is the appropriate source for a future inverse.
+   inverse procedures. Runtime API 3 now implements a face-qualified inverse
+   over Cartofreako's exact Gray-transform forward registration and uses
+   Crider as the primary inverse-method reference.
 
 ## Gray's primary author notes
 

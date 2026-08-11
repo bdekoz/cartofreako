@@ -14,6 +14,9 @@ authoritative full project documentation remains [`index.md`](index.md). The
 [AI Workflows assessment and 1080p gaming improvement plan](docs/pages/runtime/ai-agent-and-1080p-gaming.md)
 adds screen/runtime derivatives while preserving the SVG/PDF archive and art
 masters plus the existing projection-specific 44-inch and A0 print products.
+The approved [Stage 16 plan](docs/pages/development/stage-16.md) carries the
+deferred GPU evidence and generalizes the Marshall Islands workflow into an
+agentic selection-and-experiment program.
 
 The top-level directories separate implementation, generation, verification,
 and artifacts:
@@ -88,17 +91,33 @@ runtime API 3, candidate/component statuses, batches, TypeScript, and headless b
 Generate 24 production whole-earth maps, 18 timestamped astronomy maps, 12
 timestamped Orbital Technosphere maps, 84 Stage 12 resources maps, six
 cumulative network-swarm maps, six filled blue Bathymetry Roulette maps, six
-blue Hamonshū bathymetry maps, 18
+blue Hamonshū bathymetry maps, 24
 source-separated Anthropocene observation and temperature maps, six cloud/CDN
 network-infrastructure site maps, six default-rendered Fiber Synthesized maps, five
 exploratory Myriahedral ocean perspectives, 12 Cahill-Keyes enlargement
 slices, and two Myriahedral face-group slices as layered SVG, PDF, and opaque-white,
-3840-pixel-long-side PNG artifacts. The same graph also makes 31
-480-pixel-wide thumbnails for each of the six projections, 186 total, with:
+3840-pixel-long-side PNG artifacts. The Anthropocene count comprises complete
+2025 and partial 2026 for both particulate and temperature families. The same
+graph makes 32 480-pixel-wide thumbnails for each of the six projections, 192
+total, with:
 
 ```sh
 make all
 ```
+
+Build every implemented exploration-only product without invoking either
+release path with:
+
+```sh
+make list-experiments
+make all-experiments
+```
+
+The seven-builder aggregate covers the Stage 15 GPU controls, local consumer
+layout prototype, Majuro evidence canary, Marshall Islands speculative renders,
+full six-projection Majuro evidence pass, synthetic PurpleAir interface review,
+and bounded water-debris experiment. It contains no fetch, external
+authorization, benchmark, promotion, GitHub release, or UCB AAO/S3 target.
 
 For a release build, run the same graph with bounded concurrency, keep-going
 failure isolation, and an automatic serial completion pass:
@@ -116,7 +135,7 @@ make assets-single
 ```
 
 Outputs are organized projection-first as
-`assets.generated/PROJECTION/{svg,pdf,png,thumbnail}/`. Review all 31 standard
+`assets.generated/PROJECTION/{svg,pdf,png,thumbnail}/`. Review all 32 standard
 passes for each of the six projections in the
 [generated snapshot catalog](index.md#generated-artifact-previews). The
 complete v13 catalog adds the explicitly authorized Cloud-atmosphere pass as
@@ -205,9 +224,9 @@ See the [Orbital Technosphere implementation notes](docs/pages/passes/orbital-te
 for source feasibility, naming, propagation, detiling layers, and accuracy
 limits.
 
-Anthropocene generation defaults to the separately pinned, broad-coverage
-NOAA CPC temperature fields for the complete 2025 calendar year and partial
-2026 through August 4:
+Anthropocene generation defaults to two separately pinned accepted families
+for complete 2025 and partial 2026: the source-separated particulate
+observation atlas and the broad-coverage NOAA CPC temperature field:
 
 ```sh
 make generate-anthropocene
@@ -215,25 +234,26 @@ make generate-anthropocene-artifacts
 make generate-anthropocene-cahill-keyes
 ```
 
-The observation atlas and both temperature-year pass IDs are current
-**accepted experimental** products. They remain standard, default-generated,
-and release eligible across all six projections; accepted-experimental is a
-maturity classification, not a demotion to exploration-only. The
+All four year-bearing pass IDs are current **accepted experimental** products.
+They remain standard, default-generated, and release eligible across all six
+projections; accepted-experimental is a maturity classification, not a
+demotion to exploration-only. The
 [machine-readable status manifest](contracts/pass-status-v1.json) and
 `make check-pass-status` keep that distinction and each pass's evidence
 boundary explicit.
 
-The original profile-fixed, partial-2026 observation atlas remains available
-as an explicit legacy product. It preserves station temperature records,
-rainfall, fire, smoke, flood, severe weather, and EPA PM2.5 exposure as
-independent layers:
+The old unqualified observation artifact is removed. Its compatibility aliases
+now build the complete-2025 and partial-2026 `anthropocene-particulate` pair,
+which preserves station temperature records, rainfall, fire, smoke, flood,
+severe weather, and EPA PM2.5 exposure as independent layers:
 
 ```sh
 make generate-anthropocene-atlas
 make generate-anthropocene-atlas-artifacts
 ```
 
-The explicit `generate-anthropocene-2025`, `generate-anthropocene-2026`, and
+The explicit `generate-anthropocene-particulate-{2025,2026}`,
+`generate-anthropocene-{2025,2026}`, and
 `generate-anthropocene-year-artifacts` aliases remain available. A release
 refresh of the observation atlas requires
 `FIRMS_MAP_KEY` and audits NASA FIRMS acquisition dates plus world regions;
@@ -243,8 +263,9 @@ smoke, and CWFIS remains Canadian QA rather than global fire coverage. See the
 [Anthropocene implementation notes](docs/pages/passes/anthropocene/implementation.md)
 for classifications, formulas, source research, refresh workflow, and limits.
 [Stage 8b enrichment plan](docs/pages/passes/anthropocene/enrichment-plan.md) evaluates the
-current North American bias, records the implemented CPC/FIRMS-gate increment,
-and specifies the remaining CAMS, permission-gated PurpleAir, and ocean work.
+current North American bias, records the implemented particulate/CPC/FIRMS
+increment, and distinguishes the synthetic PurpleAir interface experiment
+from the remaining permission-gated observed-data, CAMS, and ocean work.
 
 Resources Stage 12 implements six current-source families: energy, food,
 fauna, flora, mineral, and human. Fourteen independently defined products run
