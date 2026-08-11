@@ -487,13 +487,13 @@ the `voronoi_source` preset are in the
 | [`src.wasm/cartofreako-projections-worker.mjs`](src.wasm/cartofreako-projections-worker.mjs) | Module-worker WASM host and transferable buffer protocol |
 | [`tests/test-projection-runtime.cc`](tests/test-projection-runtime.cc) | Native all-model buffers, holes, multipolygons, carriers, and slices |
 | [`src.wasm/cahill-keyes-web.cc`](src.wasm/cahill-keyes-web.cc) | Emscripten/Embind adapter that projects points and generates the browser SVG with the native C++20 Cahill-Keyes implementation |
-| [`src.wasm/cartofreako-cahill-keyes.mjs`](src.wasm/cartofreako-cahill-keyes.mjs) | Generated ES-module loader for the Cahill-Keyes WebAssembly binary |
-| [`src.wasm/cartofreako-cahill-keyes.wasm`](src.wasm/cartofreako-cahill-keyes.wasm) | Generated Cahill-Keyes WebAssembly binary |
+| `src.wasm/cartofreako-cahill-keyes.mjs` | Generated ES-module loader for the Cahill-Keyes WebAssembly binary; produced locally by `make wasm-cahill-keyes` and not checked in |
+| `src.wasm/cartofreako-cahill-keyes.wasm` | Generated Cahill-Keyes WebAssembly binary; produced locally by `make wasm-cahill-keyes` and not checked in |
 | [`src.wasm/cahill-keyes-smoke.mjs`](src.wasm/cahill-keyes-smoke.mjs) | Node smoke test for projection identity, reference coordinates, variable frames, validation, land input, and generated SVG structure |
 | [`src.wasm/cahill-myriahedral.cc`](src.wasm/cahill-myriahedral.cc) | Emscripten/Embind Myriahedral adapter with exact terminal-face clipping and an ocean/land-only SVG contract |
 | [`src.wasm/cahill-myriahedral-smoke.mjs`](src.wasm/cahill-myriahedral-smoke.mjs) | Node smoke test for the Myriahedral API, 16:9 frames, all 5,120 ocean faces, exact two-layer output, and seam-safe land |
-| [`src.wasm/cartofreako-cahill-myriahedral.mjs`](src.wasm/cartofreako-cahill-myriahedral.mjs) | Generated ES-module loader for the Myriahedral WebAssembly binary |
-| [`src.wasm/cartofreako-cahill-myriahedral.wasm`](src.wasm/cartofreako-cahill-myriahedral.wasm) | Generated Myriahedral WebAssembly binary |
+| `src.wasm/cartofreako-cahill-myriahedral.mjs` | Generated ES-module loader for the Myriahedral WebAssembly binary; produced locally by `make wasm-cahill-myriahedral` and not checked in |
+| `src.wasm/cartofreako-cahill-myriahedral.wasm` | Generated Myriahedral WebAssembly binary; produced locally by `make wasm-cahill-myriahedral` and not checked in |
 | [`src.wasm/README.md`](src.wasm/README.md) | Browser builds, layer choices, output artifacts, runtime clipping, shared Natural Earth input, and provenance |
 | [Myriahedral web workflow](docs/pages/runtime/myriahedral-workflow.md) | Emscripten workflow for an illustrative raster-backed 1920×1080 Myriahedral overlay |
 | [Myriahedral web example](docs/pages/runtime/myriahedral-example.md) | Complete copyable C++, HTML, JavaScript, and build example for that Myriahedral workflow |
