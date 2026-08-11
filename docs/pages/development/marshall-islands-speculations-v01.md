@@ -95,12 +95,12 @@ outputs:
     projection: cahill-keyes
     slice: ck-octant-1
     dimensions: 2560x1440
-    sha256: 9cb9faecccc13244af916e840c995c1f76d9a2a6097049904c7719f9a217bb35
+    sha256: 8139ed1cf6d9cd3a12f5d688f0a991cfb0298d985c8c4a8f4dfc0ca0c0e65d1b
   - path: output/marshall-islands-speculations-v01/03-star-x-vertical-now-four-contexts.png
     projection: star-x
     slice: full
     dimensions: 1440x2560
-    sha256: 70ed782e36e64b998ccdc0a7f9869af5debe58d713ab841187fd969aa0c98907
+    sha256: d3008e393e9dd618009fc9276bf80e27b5546cd573f038840a0ba9d2ff93e663
   - path: output/marshall-islands-speculations-v01/04-rmi-regional-ck-dymaxion-preclip.png
     projection: cahill-keyes+dymaxion
     slice: geographic-preclip:160,4,176,15

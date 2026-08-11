@@ -5,9 +5,10 @@ title: Stage 16 GPU evidence and agentic atlas research
 
 # Stage 16 GPU evidence and agentic atlas research
 
-**Status:** approved future-development ledger, opened 2026-08-11. No Stage
-16 implementation, benchmark, promotion, release product, or publication is
-claimed by this plan.
+**Status:** active development ledger, opened 2026-08-11. Stage 16I is
+complete as a validated local assessment draft; human review remains pending.
+No GPU benchmark, promotion, release product, publication, email, push,
+upload, or external transfer is claimed by this ledger.
 
 [Development records](README.md) ·
 [Stage 15 closed ledger](stage-15.md) ·
@@ -33,11 +34,38 @@ moves here as separately activatable Stage 16 work.
 | **16F — GPU product decision** | 15H | Compare evidence and accept or reject each candidate while retaining lossless fallbacks | Separate lifecycle receipt; no implicit publication |
 | **16G — agentic atlas research** | Approved follow-on proposal | Generalize artifact recommendations and bounded experiment iteration for Marshall Islands, reef, atmosphere, and water-debris research | Atmosphere comparison first; water-debris v02 second |
 | **16H — atoll evidence expansion** | Stage 15 R1 evidence gaps | Freshwater, infrastructure, independent current shoreline, reviewed reef, ocean heat, and uncertainty/date metadata | Source selection plus local/regional or community review where applicable |
+| **16I — integrated outcomes assessment** | Audit Outcomes 02 feedback and approved next-steps brief | Reconcile projection numerics, Stage 15 products, integrated practice, decolonial Anthropocene framing, Marshall Islands and reef fit, human-first AI workflow, and a bounded Cartofreako × Alpha60 research proposition | **COMPLETE LOCAL DRAFT**; canonical v3.9 source/PDF checks and every-page visual QA pass; human review and any sharing remain separate |
 
 The tracks are independent. A hardware schedule must not block agent-contract
 work, and an evidence-source gap must not be disguised as a GPU benchmark
 failure. None enters `make all`, GitHub release, or UCB AAO/S3 without a later
 reviewed implementation and promotion decision.
+
+## Stage 16I local outcome
+
+The ignored local review package is rooted at
+`reports/cartofreako-audit-outcomes-03.pdf`, with adjacent Markdown, HTML,
+CSS, metadata, manifest, and plate assets. It uses the canonical Devastation
+Pacific v3.9 `document_type: assess-outcomes`, the `randoma11y-accent` style,
+and the required `coda-share` modifier.
+
+The completed QA record includes:
+
+- canonical `assess-outcomes` and `coda-share` source and PDF checks;
+- metadata-schema, JSON, and local-link validation covering 34 local files
+  and 79 internal anchors;
+- synchronized installable house-style content and 132 passing house-style
+  tests;
+- a tagged, 45-page PDF with selectable text, embedded Atkinson typography,
+  and the intended portrait/landscape page geometry; and
+- visual inspection of all 45 rendered pages, including twenty uncropped
+  one-primary-plate-per-page appendix images.
+
+The assessment records the Cartofreako × Alpha60 joined workflow as
+`INFERRED`, not implemented; stable AAO inventory and integrity evidence do
+not become measured cache, performance, or power outcomes. Proposed meeting
+participants and contributors remain suggestions, not invitations or
+confirmations. The package is local only and is not a Stage 16 release.
 
 ## Preserved benchmark baseline
 
