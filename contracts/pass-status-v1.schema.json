@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bdekoz.github.io/cartofreako/contracts/pass-status-v1.schema.json",
+  "title": "Cartofreako current pass status manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "checkedOn", "axes", "passes"],
+  "properties": {
+    "schemaVersion": {"const": "cartofreako-pass-status-v1"},
+    "checkedOn": {"type": "string", "format": "date"},
+    "axes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["independent", "lifecycle", "maturity"],
+      "properties": {
+        "independent": {"const": true},
+        "lifecycle": {"type": "string", "minLength": 1},
+        "maturity": {"type": "string", "minLength": 1}
+      }
+    },
+    "passes": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/pass"}
+    }
+  },
+  "$defs": {
+    "pass": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "family", "current", "lifecycle", "maturity",
+        "defaultGenerated", "releaseEligible", "acceptedOn",
+        "artifactManifest", "statusReason", "claimBoundary"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "anthropocene",
+            "anthropocene-temperature-2025",
+            "anthropocene-temperature-2026"
+          ]
+        },
+        "family": {"enum": ["observation-atlas", "temperature-field"]},
+        "current": {"const": true},
+        "lifecycle": {"const": "standard"},
+        "maturity": {"const": "accepted-experimental"},
+        "defaultGenerated": {"const": true},
+        "releaseEligible": {"const": true},
+        "acceptedOn": {"type": "string", "format": "date"},
+        "artifactManifest": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "artifactCount"],
+          "properties": {
+            "path": {"const": "contracts/standard-artifact-manifest-v1.json"},
+            "artifactCount": {"const": 6}
+          }
+        },
+        "statusReason": {"type": "string", "minLength": 1},
+        "claimBoundary": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

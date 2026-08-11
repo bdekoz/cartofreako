@@ -64,6 +64,7 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Stage 12 resource, authorization, default-year, snapshot, and Star-X integration | [Stage 12 implementation notes](docs/pages/development/stage-12.md) |
 | Stage 13 visual, observer, external-source, and bathymetry development | [Stage 13 convergence notes](docs/pages/development/stage-13.md) |
 | Stage 14 projection API, visual hierarchy, verification, and release plan | [Stage 14 convergence ledger](docs/pages/development/stage-14.md) |
+| Stage 15 GPU controls, consumer layout, and exploration-only Majuro atoll evidence | [Stage 15 development ledger](docs/pages/development/stage-15.md) and [atoll-canary report](reports/stage-15-atoll-evidence-canary.md) |
 | AI-agent discovery, 1080p gaming derivatives, and preservation of authoritative archive/art/print products | [AI Workflows assessment and 1080p gaming improvement plan](docs/pages/runtime/ai-agent-and-1080p-gaming.md) |
 | Visual contact sheets for every projection and released pass | [Visual gallery](docs/pages/gallery/README.md) and [generated projection snapshots](#generated-artifact-previews) |
 | Compact index of build, projection, pass, browser, and release documentation | [Technical documentation](docs/pages/README.md) |
@@ -74,7 +75,7 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Human-made Earth-orbit population and observer generation | [Orbital Technosphere implementation notes](docs/pages/passes/orbital-technosphere.md) |
 | Implemented energy, food, fauna, flora, mineral, and human resource families | [Resources Stage 12 implementation notes](docs/pages/passes/resources/implementation.md) and [enrichment plan](docs/pages/passes/resources/enrichment-plan.md) |
 | Standard, optional, and exploration-only resource metrics | [Resources metric catalog](docs/pages/passes/resources/metric-catalog.md) |
-| Source-separated climate, weather, fire, smoke, and air-quality atlas | [Anthropocene implementation notes](docs/pages/passes/anthropocene/implementation.md) |
+| Current accepted-experimental, source-separated climate, weather, fire, smoke, air-quality, and dual-year temperature atlases | [Anthropocene implementation notes](docs/pages/passes/anthropocene/implementation.md) and [pass-status manifest](contracts/pass-status-v1.json) |
 | Implemented dual-year CPC field plus planned atmosphere, PurpleAir, and ocean enrichment | [Anthropocene Stage 8b enrichment plan](docs/pages/passes/anthropocene/enrichment-plan.md) |
 | Cumulative H3 network-swarm generation | [Network-swarm generation implementation notes](docs/pages/passes/network-swarm.md) |
 | Cloud/CDN site atlas and opt-in cable/exchange topology | [Network-infrastructure implementation notes](docs/pages/passes/network-infrastructure.md) |

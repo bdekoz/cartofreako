@@ -1,0 +1,360 @@
+{
+  "schemaVersion": "cartofreako-atoll-coordinate-fixtures-v1",
+  "lifecycle": "exploration-only",
+  "studyAreaId": "majuro-atoll-canary",
+  "sourceManifest": {
+    "path": "fixtures/atoll-evidence/v1/manifest.json",
+    "sha256": "1c49cad6ec60334d8a6f97535034660be720be7ac2a7ca6565c66244ad1d97e0",
+    "bytes": 14029
+  },
+  "prepared": [
+    {
+      "id": "majuro-tbdem-observation-10m",
+      "file": {
+        "path": "assets.static/atoll-evidence/prepared/majuro-tbdem-observation-10m.tif",
+        "sha256": "301231b09fb7c44be367cdc639502c8e0aeaddfb2f07efccedc304b4a66adab5",
+        "bytes": 14504642
+      },
+      "evidenceType": "observation",
+      "sourceId": "usgs-majuro-tbdem-1944-2016",
+      "raster": {
+        "width": 4623,
+        "height": 2381,
+        "bandType": "Float32",
+        "noDataValue": -3.402823e+38,
+        "geoTransform": [
+          502323,
+          9.99935107073329,
+          0,
+          799213,
+          0,
+          -10.001259974800504
+        ],
+        "crsName": "ITRF2008 / UTM zone 59N",
+        "crsWktSha256": "df625bc1c19208c4357fb0bb71be57ef180e0dc74a0b9de8627b9e234f525287",
+        "effectiveCellMeters": [
+          9.99935107073329,
+          10.001259974800504
+        ],
+        "wgs84Footprint": [
+          [
+            171.0210424,
+            7.230346
+          ],
+          [
+            171.0210326,
+            7.0149356
+          ],
+          [
+            171.4395709,
+            7.0147304
+          ],
+          [
+            171.4397761,
+            7.2301344
+          ],
+          [
+            171.0210424,
+            7.230346
+          ]
+        ]
+      }
+    },
+    {
+      "id": "majuro-marine-inundation-30in-deterministic-10m",
+      "file": {
+        "path": "assets.static/atoll-evidence/prepared/majuro-marine-inundation-30in-deterministic-10m.tif",
+        "sha256": "f6e500af106f7e81fe2d5de361fe3f3469902ee25cb9c64cea421b0e47eb87d9",
+        "bytes": 17402
+      },
+      "evidenceType": "scenario",
+      "sourceId": "usgs-majuro-inundation-2016",
+      "raster": {
+        "width": 3973,
+        "height": 1272,
+        "bandType": "Byte",
+        "noDataValue": 0,
+        "geoTransform": [
+          502850,
+          10,
+          0,
+          792110,
+          0,
+          -9.996069182389936
+        ],
+        "crsName": "ITRF2008 / UTM zone 59N",
+        "crsWktSha256": "a1a8c83ee864d70b0c794890c0f3cb18074e755cba86b9370a7e0e89066df084",
+        "effectiveCellMeters": [
+          10,
+          9.996069182389936
+        ],
+        "wgs84Footprint": [
+          [
+            171.0258125,
+            7.1660929
+          ],
+          [
+            171.0258061,
+            7.051074
+          ],
+          [
+            171.3855493,
+            7.0509156
+          ],
+          [
+            171.3856452,
+            7.1659319
+          ],
+          [
+            171.0258125,
+            7.1660929
+          ]
+        ]
+      }
+    },
+    {
+      "id": "majuro-marine-inundation-30in-probability-10m",
+      "file": {
+        "path": "assets.static/atoll-evidence/prepared/majuro-marine-inundation-30in-probability-10m.tif",
+        "sha256": "c9984608d4c7ba3858b11e2310a0b4ec7691ef747e339639e841b58bd68ffb9d",
+        "bytes": 307800
+      },
+      "evidenceType": "scenario",
+      "sourceId": "usgs-majuro-inundation-2016",
+      "raster": {
+        "width": 3973,
+        "height": 1272,
+        "bandType": "Float32",
+        "noDataValue": -3.402823e+38,
+        "geoTransform": [
+          502850,
+          10,
+          0,
+          792110,
+          0,
+          -9.996069182389936
+        ],
+        "crsName": "ITRF2008 / UTM zone 59N",
+        "crsWktSha256": "a1a8c83ee864d70b0c794890c0f3cb18074e755cba86b9370a7e0e89066df084",
+        "effectiveCellMeters": [
+          10,
+          9.996069182389936
+        ],
+        "wgs84Footprint": [
+          [
+            171.0258125,
+            7.1660929
+          ],
+          [
+            171.0258061,
+            7.051074
+          ],
+          [
+            171.3855493,
+            7.0509156
+          ],
+          [
+            171.3856452,
+            7.1659319
+          ],
+          [
+            171.0258125,
+            7.1660929
+          ]
+        ]
+      }
+    }
+  ],
+  "pixelTrace": {
+    "preparedId": "majuro-tbdem-observation-10m",
+    "pixelCenter": [
+      2311.5,
+      1190.5
+    ],
+    "sourceProjected": {
+      "crs": "ITRF2008 / UTM zone 59N",
+      "eastingMeters": 525436.5,
+      "northingMeters": 787306.5
+    },
+    "geographic": {
+      "longitude": 171.2303555,
+      "latitude": 7.1225366,
+      "datum": "WGS84",
+      "status": "gdal-itrf2008-to-wgs84-approximation"
+    },
+    "evidenceRecord": "usgs-majuro-tbdem-1944-2016",
+    "forward": {
+      "x": 2635.7859277438934,
+      "y": 1016.0772004163615,
+      "nativeCell": 1738,
+      "component": 0
+    },
+    "qualifiedInverse": {
+      "status": "unique",
+      "candidate": {
+        "longitude": 171.23035549999997,
+        "latitude": 7.122536599999996,
+        "nativeCell": 1738,
+        "component": 0,
+        "forwardResidual": 0,
+        "boundary": false
+      },
+      "tolerancePixels": 1e-7,
+      "truncated": false
+    }
+  },
+  "projectionTrace": {
+    "projection": "myriahedral-pacific",
+    "frame": {
+      "width": 3840,
+      "height": 2160
+    },
+    "points": [
+      {
+        "id": "tbdem-center",
+        "geographic": {
+          "longitude": 171.230319,
+          "latitude": 7.1226005,
+          "datum": "WGS84",
+          "status": "source-metadata-envelope"
+        },
+        "evidenceRecord": "usgs-majuro-tbdem-1944-2016",
+        "forward": {
+          "x": 2635.7853826400724,
+          "y": 1016.077252064672,
+          "nativeCell": 1738,
+          "component": 0
+        },
+        "qualifiedInverse": {
+          "status": "unique",
+          "candidate": {
+            "longitude": 171.23031899999998,
+            "latitude": 7.122600500000035,
+            "nativeCell": 1738,
+            "component": 0,
+            "forwardResidual": 0,
+            "boundary": false
+          },
+          "tolerancePixels": 1e-7,
+          "truncated": false
+        }
+      },
+      {
+        "id": "tbdem-northwest-envelope",
+        "geographic": {
+          "longitude": 171.021037,
+          "latitude": 7.230342,
+          "datum": "WGS84",
+          "status": "source-metadata-envelope"
+        },
+        "evidenceRecord": "usgs-majuro-tbdem-1944-2016",
+        "forward": {
+          "x": 2634.1072081453567,
+          "y": 1017.2823302303572,
+          "nativeCell": 1739,
+          "component": 0
+        },
+        "qualifiedInverse": {
+          "status": "unique",
+          "candidate": {
+            "longitude": 171.02103699999998,
+            "latitude": 7.230342000000006,
+            "nativeCell": 1739,
+            "component": 0,
+            "forwardResidual": 0,
+            "boundary": false
+          },
+          "tolerancePixels": 1e-7,
+          "truncated": false
+        }
+      },
+      {
+        "id": "tbdem-northeast-envelope",
+        "geographic": {
+          "longitude": 171.439601,
+          "latitude": 7.230342,
+          "datum": "WGS84",
+          "status": "source-metadata-envelope"
+        },
+        "evidenceRecord": "usgs-majuro-tbdem-1944-2016",
+        "forward": {
+          "x": 2635.6843586580153,
+          "y": 1014.3370728551706,
+          "nativeCell": 1738,
+          "component": 0
+        },
+        "qualifiedInverse": {
+          "status": "unique",
+          "candidate": {
+            "longitude": 171.439601,
+            "latitude": 7.230342000000026,
+            "nativeCell": 1738,
+            "component": 0,
+            "forwardResidual": 0,
+            "boundary": false
+          },
+          "tolerancePixels": 1e-7,
+          "truncated": false
+        }
+      },
+      {
+        "id": "tbdem-southeast-envelope",
+        "geographic": {
+          "longitude": 171.439601,
+          "latitude": 7.014859,
+          "datum": "WGS84",
+          "status": "source-metadata-envelope"
+        },
+        "evidenceRecord": "usgs-majuro-tbdem-1944-2016",
+        "forward": {
+          "x": 2637.1507298877264,
+          "y": 1014.9929162282572,
+          "nativeCell": 1738,
+          "component": 0
+        },
+        "qualifiedInverse": {
+          "status": "unique",
+          "candidate": {
+            "longitude": 171.439601,
+            "latitude": 7.014858999999982,
+            "nativeCell": 1738,
+            "component": 0,
+            "forwardResidual": 0,
+            "boundary": false
+          },
+          "tolerancePixels": 1e-7,
+          "truncated": false
+        }
+      },
+      {
+        "id": "tbdem-southwest-envelope",
+        "geographic": {
+          "longitude": 171.021037,
+          "latitude": 7.014859,
+          "datum": "WGS84",
+          "status": "source-metadata-envelope"
+        },
+        "evidenceRecord": "usgs-majuro-tbdem-1944-2016",
+        "forward": {
+          "x": 2635.8854621403125,
+          "y": 1017.8176827297128,
+          "nativeCell": 1738,
+          "component": 0
+        },
+        "qualifiedInverse": {
+          "status": "unique",
+          "candidate": {
+            "longitude": 171.02103699999998,
+            "latitude": 7.014859000000006,
+            "nativeCell": 1738,
+            "component": 0,
+            "forwardResidual": 0,
+            "boundary": false
+          },
+          "tolerancePixels": 1e-7,
+          "truncated": false
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,261 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bdekoz.github.io/cartofreako/contracts/atoll-evidence-v1.schema.json",
+  "title": "Cartofreako atoll-scale evidence canary v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "lifecycle", "checkedOn", "studyArea", "sources",
+    "sourcePackages", "layers", "preparedEvidence", "coordinateFixture",
+    "canary", "unavailable", "downloadsPerformed", "downloadedSourceIds",
+    "evidenceRenderProduced", "promotionAuthorized"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "cartofreako-atoll-evidence-v1"},
+    "lifecycle": {"const": "exploration-only"},
+    "checkedOn": {"type": "string", "format": "date"},
+    "studyArea": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "country", "bbox", "bboxStatus"],
+      "properties": {
+        "id": {"const": "majuro-atoll-canary"},
+        "name": {"const": "Majuro Atoll"},
+        "country": {"const": "Republic of the Marshall Islands"},
+        "bbox": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {"type": "number"}
+        },
+        "bboxStatus": {"const": "usgs-tbdem-metadata-envelope"}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/source"}
+    },
+    "sourcePackages": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {"$ref": "#/$defs/sourcePackage"}
+    },
+    "layers": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {"$ref": "#/$defs/layer"}
+    },
+    "preparedEvidence": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/prepared"}
+    },
+    "coordinateFixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "schemaVersion"],
+      "properties": {
+        "path": {"const": "fixtures/atoll-evidence/v1/coordinates.json"},
+        "schemaVersion": {"const": "cartofreako-atoll-coordinate-fixtures-v1"}
+      }
+    },
+    "canary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "carrierProjection", "slice", "forwardFixtureRequired",
+        "reverseFixtureRequired", "sourceCoordinateRequired",
+        "scenarioSeparatedFromObservation", "contextInput", "outputStatus",
+        "outputs"
+      ],
+      "properties": {
+        "carrierProjection": {"const": "myriahedral-pacific"},
+        "slice": {"const": "whole-map-with-majuro-focus-window"},
+        "forwardFixtureRequired": {"const": true},
+        "reverseFixtureRequired": {"const": true},
+        "sourceCoordinateRequired": {"const": true},
+        "scenarioSeparatedFromObservation": {"const": true},
+        "contextInput": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path", "sha256", "bytes", "width", "height",
+            "sourceArtifact", "transformation", "analyticalGrid"
+          ],
+          "properties": {
+            "path": {"const": "assets.static/atoll-evidence/context/water-myriahedral-pacific-700x394.png"},
+            "sha256": {"$ref": "#/$defs/sha256"},
+            "bytes": {"type": "integer", "minimum": 1},
+            "width": {"const": 700},
+            "height": {"const": 394},
+            "sourceArtifact": {"const": "assets.generated/myriahedral/png/water-myriahedral-pacific-44-24.75.png"},
+            "transformation": {"type": "string", "minLength": 1},
+            "analyticalGrid": {"const": false}
+          }
+        },
+        "outputStatus": {"const": "implemented-exploration-canary"},
+        "outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/output"}
+        }
+      }
+    },
+    "unavailable": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "downloadsPerformed": {"const": true},
+    "downloadedSourceIds": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {"enum": ["usgs-majuro-tbdem-1944-2016", "usgs-majuro-inundation-2016"]},
+      "uniqueItems": true
+    },
+    "evidenceRenderProduced": {"const": true},
+    "promotionAuthorized": {"const": false}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "authority", "title", "url", "access", "licenseSpdx",
+        "redistribution", "evidenceType", "sourcePeriod",
+        "spatialResolution", "verticalDatum", "uncertainty", "status",
+        "supportsLayers"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "authority": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "url": {"type": "string", "format": "uri"},
+        "access": {"enum": ["public", "metadata-only", "review-required"]},
+        "licenseSpdx": {"type": "string", "minLength": 1},
+        "redistribution": {"enum": ["permitted", "review-required", "UNAVAILABLE"]},
+        "evidenceType": {"enum": ["observation", "scenario", "mixed", "reference"]},
+        "sourcePeriod": {"type": "string", "minLength": 1},
+        "spatialResolution": {"type": "string", "minLength": 1},
+        "verticalDatum": {"type": "string", "minLength": 1},
+        "uncertainty": {"type": "string", "minLength": 1},
+        "status": {"enum": ["canary-source", "candidate", "candidate-incomplete", "reference-only"]},
+        "supportsLayers": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/layerId"},
+          "uniqueItems": true
+        }
+      }
+    },
+    "sourcePackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "sourceId", "catalogItem", "filename", "localPath",
+        "bytes", "sha256", "upstreamDigest", "checkedIn"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "sourceId": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "catalogItem": {"type": "string", "format": "uri"},
+        "filename": {"type": "string", "minLength": 1},
+        "localPath": {"type": "string", "pattern": "^assets\\.static/atoll-evidence/\\.raw/"},
+        "bytes": {"type": "integer", "minimum": 1},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "upstreamDigest": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["algorithm", "value"],
+              "properties": {
+                "algorithm": {"const": "MD5"},
+                "value": {"type": "string", "pattern": "^[0-9a-f]{32}$"}
+              }
+            }
+          ]
+        },
+        "checkedIn": {"const": false}
+      }
+    },
+    "layerId": {
+      "enum": [
+        "topobathymetry", "inundation", "freshwater", "infrastructure",
+        "shoreline", "reef", "ocean-heat"
+      ]
+    },
+    "layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "status", "evidenceType", "sourceIds", "uncertainty",
+        "observationOrScenarioDate", "limitation"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/layerId"},
+        "status": {"enum": ["canary-rendered", "candidate", "incomplete", "UNAVAILABLE"]},
+        "evidenceType": {"enum": ["observation", "scenario", "derived", "UNAVAILABLE"]},
+        "sourceIds": {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+          "uniqueItems": true
+        },
+        "uncertainty": {"type": "string", "minLength": 1},
+        "observationOrScenarioDate": {"type": "string", "minLength": 1},
+        "limitation": {"type": "string", "minLength": 1}
+      }
+    },
+    "prepared": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "path", "sha256", "bytes", "sourcePackageId",
+        "evidenceType", "sourceResolution", "derivativeResolution",
+        "transformation"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "path": {"type": "string", "pattern": "^assets\\.static/atoll-evidence/prepared/"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "bytes": {"type": "integer", "minimum": 1},
+        "sourcePackageId": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "evidenceType": {"enum": ["observation", "scenario"]},
+        "sourceResolution": {"const": "1 meter grid"},
+        "derivativeResolution": {"const": "approximately 10 meter grid"},
+        "transformation": {"type": "string", "minLength": 1}
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path", "mediaType", "width", "height", "sha256",
+        "authorityClass", "evidenceTypes"
+      ],
+      "properties": {
+        "path": {"type": "string", "pattern": "^output/atoll-evidence-canary-v01/.*\\.png$"},
+        "mediaType": {"const": "image/png"},
+        "width": {"const": 2560},
+        "height": {"const": 1440},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "authorityClass": {"const": "exploration-evidence-canary"},
+        "evidenceTypes": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"enum": ["observation", "scenario"]},
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

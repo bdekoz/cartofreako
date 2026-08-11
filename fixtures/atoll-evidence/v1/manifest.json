@@ -1,0 +1,297 @@
+{
+  "schemaVersion": "cartofreako-atoll-evidence-v1",
+  "lifecycle": "exploration-only",
+  "checkedOn": "2026-08-10",
+  "studyArea": {
+    "id": "majuro-atoll-canary",
+    "name": "Majuro Atoll",
+    "country": "Republic of the Marshall Islands",
+    "bbox": [
+      171.021037,
+      7.014859,
+      171.439601,
+      7.230342
+    ],
+    "bboxStatus": "usgs-tbdem-metadata-envelope"
+  },
+  "sources": [
+    {
+      "id": "usgs-majuro-tbdem-1944-2016",
+      "authority": "U.S. Geological Survey",
+      "title": "One Meter Topobathymetric Digital Elevation Model for Majuro Atoll, Republic of the Marshall Islands, 1944 to 2016",
+      "url": "https://doi.org/10.5066/F7416VXX",
+      "access": "public",
+      "licenseSpdx": "US-PD",
+      "redistribution": "permitted",
+      "evidenceType": "mixed",
+      "sourcePeriod": "1944/2016 multi-source inputs",
+      "spatialResolution": "1 meter grid; checked raster is 46,227 by 23,813 cells",
+      "verticalDatum": "Local Mean Sea Level after source-datum adjustment; horizontal CRS ITRF2008 / UTM zone 59N",
+      "uncertainty": "Published validation reports land RMSE 0.197 m, Landsat-8-derived bathymetry RMSE 1.066 m, and WorldView-3-derived bathymetry RMSE 1.112 m; uncertainty varies by source region and is not a per-cell field.",
+      "status": "canary-source",
+      "supportsLayers": [
+        "topobathymetry",
+        "shoreline"
+      ]
+    },
+    {
+      "id": "usgs-majuro-inundation-2016",
+      "authority": "U.S. Geological Survey",
+      "title": "Inundation Exposure Assessment for Majuro Atoll, Republic of the Marshall Islands",
+      "url": "https://doi.org/10.5066/P9K1GD9W",
+      "access": "public",
+      "licenseSpdx": "US-PD",
+      "redistribution": "permitted",
+      "evidenceType": "scenario",
+      "sourcePeriod": "2016 source elevation; analysis completed 2018; published 2019",
+      "spatialResolution": "1 meter scenario grids, 39,730 by 12,715 cells for the selected 30-inch layers",
+      "verticalDatum": "Water level 0.762 m above Mean Higher High Water, derived from the ITRF2008 / UTM zone 59N TBDEM and local vertical transformations",
+      "uncertainty": "Cumulative vertical uncertainty is 0.192 m RMSE. The selected 30-inch increment is supportable at 95% confidence; its probability grid represents 750 Monte Carlo DEM realizations with values from zero through one.",
+      "status": "canary-source",
+      "supportsLayers": [
+        "inundation"
+      ]
+    },
+    {
+      "id": "usgs-laura-freshwater-1987",
+      "authority": "U.S. Geological Survey",
+      "title": "Ground-water resources of the Laura area, Majuro Atoll, Marshall Islands",
+      "url": "https://doi.org/10.3133/wri874047",
+      "access": "metadata-only",
+      "licenseSpdx": "US-PD",
+      "redistribution": "permitted",
+      "evidenceType": "reference",
+      "sourcePeriod": "field observations reported in 1987",
+      "spatialResolution": "Monitoring wells and test holes; machine-readable coordinates UNAVAILABLE",
+      "verticalDatum": "UNAVAILABLE",
+      "uncertainty": "Report-level estimates and observations; machine-readable uncertainty surface UNAVAILABLE",
+      "status": "reference-only",
+      "supportsLayers": [
+        "freshwater"
+      ]
+    },
+    {
+      "id": "noaa-crw-marshall-islands-v3-1",
+      "authority": "NOAA Coral Reef Watch",
+      "title": "Marshall Islands Regional 5 km Bleaching Heat Stress Maps and Gauges, Version 3.1",
+      "url": "https://coralreefwatch.noaa.gov/product/vs/gauges/marshall_islands.php",
+      "access": "public",
+      "licenseSpdx": "UNAVAILABLE",
+      "redistribution": "review-required",
+      "evidenceType": "mixed",
+      "sourcePeriod": "near-real-time observations and weekly outlooks; snapshot date required at acquisition",
+      "spatialResolution": "5 km satellite products; outlook source grid 0.5 degree",
+      "verticalDatum": "not applicable",
+      "uncertainty": "Regional gauges use a 90th-percentile aggregation; pixel-level and forecast uncertainty require product documentation review.",
+      "status": "candidate-incomplete",
+      "supportsLayers": [
+        "reef",
+        "ocean-heat"
+      ]
+    }
+  ],
+  "sourcePackages": [
+    {
+      "id": "usgs-majuro-tbdem-data-zip",
+      "sourceId": "usgs-majuro-tbdem-1944-2016",
+      "catalogItem": "https://www.sciencebase.gov/catalog/item/59557881e4b04e08be532c9a",
+      "filename": "Majuro_TBDEM_Data.zip",
+      "localPath": "assets.static/atoll-evidence/.raw/Majuro_TBDEM_Data.zip",
+      "bytes": 2355022535,
+      "sha256": "15f2e31655e980304f9590730f6a1768ca2dfa76ef3e11097509abd98fbdeb20",
+      "upstreamDigest": {
+        "algorithm": "MD5",
+        "value": "16b35677ba01331845285e178599b4ea"
+      },
+      "checkedIn": false
+    },
+    {
+      "id": "usgs-majuro-inundation-raster-zip",
+      "sourceId": "usgs-majuro-inundation-2016",
+      "catalogItem": "https://www.sciencebase.gov/catalog/item/5ba9511ee4b08583a5ca09fe",
+      "filename": "Inundation_Exposure_Raster_Layers.zip",
+      "localPath": "assets.static/atoll-evidence/.raw/Inundation_Exposure_Raster_Layers.zip",
+      "bytes": 80927783,
+      "sha256": "6aea7d5b545825a83a9ab198af8695eeaf4cad507e69538b8dc684764e9f1818",
+      "upstreamDigest": null,
+      "checkedIn": false
+    },
+    {
+      "id": "usgs-majuro-tbdem-fgdc-metadata",
+      "sourceId": "usgs-majuro-tbdem-1944-2016",
+      "catalogItem": "https://www.sciencebase.gov/catalog/item/59557881e4b04e08be532c9a",
+      "filename": "majuro_tbdem_metadata.xml",
+      "localPath": "assets.static/atoll-evidence/.raw/majuro_tbdem_metadata.xml",
+      "bytes": 56855,
+      "sha256": "a500ca873fd767a707800753e07f9ab609d72ce31830f0ffbbd1bc6111c4d417",
+      "upstreamDigest": {
+        "algorithm": "MD5",
+        "value": "1e42997bdc5665c7d63401b9e17cdd91"
+      },
+      "checkedIn": false
+    },
+    {
+      "id": "usgs-majuro-inundation-fgdc-metadata",
+      "sourceId": "usgs-majuro-inundation-2016",
+      "catalogItem": "https://www.sciencebase.gov/catalog/item/5ba9511ee4b08583a5ca09fe",
+      "filename": "Inundation_Exposure_FGDC_Metadata_Final_Clean.xml",
+      "localPath": "assets.static/atoll-evidence/.raw/Inundation_Exposure_FGDC_Metadata_Final_Clean.xml",
+      "bytes": 26031,
+      "sha256": "20837a9174eb1e4db181840116d355307a0bba6b25945d607395e1584fa550b1",
+      "upstreamDigest": {
+        "algorithm": "MD5",
+        "value": "0ef769b294578b81b469300d30c2b102"
+      },
+      "checkedIn": false
+    }
+  ],
+  "layers": [
+    {
+      "id": "topobathymetry",
+      "status": "canary-rendered",
+      "evidenceType": "observation",
+      "sourceIds": ["usgs-majuro-tbdem-1944-2016"],
+      "uncertainty": "Use source-specific land and bathymetric validation; never apply one RMSE to all cells without metadata support.",
+      "observationOrScenarioDate": "1944/2016 composite",
+      "limitation": "A multi-date composite is not a single-date surface, some northern islands are excluded, and the approximately 10 m canary derivative is not the authoritative 1 m raster."
+    },
+    {
+      "id": "inundation",
+      "status": "canary-rendered",
+      "evidenceType": "scenario",
+      "sourceIds": ["usgs-majuro-inundation-2016"],
+      "uncertainty": "Selected 30-inch marine-inundation scenario uses the published 0.192 m cumulative vertical RMSE and a separate zero-to-one probability surface.",
+      "observationOrScenarioDate": "2016 source surface; 0.762 m scenario above MHHW; analysis 2018; published 2019",
+      "limitation": "This is a static-water scenario with hydrologic connectivity, not an observed flood, forecast, engineering design surface, or present condition."
+    },
+    {
+      "id": "freshwater",
+      "status": "incomplete",
+      "evidenceType": "observation",
+      "sourceIds": ["usgs-laura-freshwater-1987"],
+      "uncertainty": "UNAVAILABLE for a spatial field",
+      "observationOrScenarioDate": "reported 1987",
+      "limitation": "Reference supports context only; a redistributable, dated spatial dataset has not been identified."
+    },
+    {
+      "id": "infrastructure",
+      "status": "UNAVAILABLE",
+      "evidenceType": "UNAVAILABLE",
+      "sourceIds": [],
+      "uncertainty": "UNAVAILABLE",
+      "observationOrScenarioDate": "UNAVAILABLE",
+      "limitation": "No authoritative redistributable atoll-scale infrastructure source was established; local and regional review is required."
+    },
+    {
+      "id": "shoreline",
+      "status": "incomplete",
+      "evidenceType": "derived",
+      "sourceIds": ["usgs-majuro-tbdem-1944-2016"],
+      "uncertainty": "Threshold and source-date sensitivity must be quantified before use.",
+      "observationOrScenarioDate": "1944/2016 composite",
+      "limitation": "A shoreline derived from a composite elevation model is not a current legal or observed shoreline."
+    },
+    {
+      "id": "reef",
+      "status": "incomplete",
+      "evidenceType": "observation",
+      "sourceIds": ["noaa-crw-marshall-islands-v3-1"],
+      "uncertainty": "UNAVAILABLE for reef geometry",
+      "observationOrScenarioDate": "acquisition date required",
+      "limitation": "Heat-stress station regions do not provide an atoll-scale benthic reef polygon, and no NOAA raster was downloaded for this canary."
+    },
+    {
+      "id": "ocean-heat",
+      "status": "candidate",
+      "evidenceType": "observation",
+      "sourceIds": ["noaa-crw-marshall-islands-v3-1"],
+      "uncertainty": "Retain product version, daily source date, aggregation method, and forecast/observation distinction.",
+      "observationOrScenarioDate": "daily snapshot required",
+      "limitation": "Five-kilometer fields cannot support one-meter atoll claims, and no NOAA raster was downloaded or rendered for this canary."
+    }
+  ],
+  "preparedEvidence": [
+    {
+      "id": "majuro-tbdem-observation-10m",
+      "path": "assets.static/atoll-evidence/prepared/majuro-tbdem-observation-10m.tif",
+      "sha256": "301231b09fb7c44be367cdc639502c8e0aeaddfb2f07efccedc304b4a66adab5",
+      "bytes": 14504642,
+      "sourcePackageId": "usgs-majuro-tbdem-data-zip",
+      "evidenceType": "observation",
+      "sourceResolution": "1 meter grid",
+      "derivativeResolution": "approximately 10 meter grid",
+      "transformation": "GDAL 3.11.5 average resampling from the 46,227 by 23,813 Float32 source to 4,623 by 2,381 cells; source ITRF2008 / UTM zone 59N affine grid, LMSL heights, Float32 values, and NoData sentinel retained."
+    },
+    {
+      "id": "majuro-marine-inundation-30in-deterministic-10m",
+      "path": "assets.static/atoll-evidence/prepared/majuro-marine-inundation-30in-deterministic-10m.tif",
+      "sha256": "f6e500af106f7e81fe2d5de361fe3f3469902ee25cb9c64cea421b0e47eb87d9",
+      "bytes": 17402,
+      "sourcePackageId": "usgs-majuro-inundation-raster-zip",
+      "evidenceType": "scenario",
+      "sourceResolution": "1 meter grid",
+      "derivativeResolution": "approximately 10 meter grid",
+      "transformation": "GDAL 3.11.5 nearest-neighbor resampling of the producer-defined zero/one 30-inch marine-inundation grid from 39,730 by 12,715 to 3,973 by 1,272 cells; source CRS and NoData retained."
+    },
+    {
+      "id": "majuro-marine-inundation-30in-probability-10m",
+      "path": "assets.static/atoll-evidence/prepared/majuro-marine-inundation-30in-probability-10m.tif",
+      "sha256": "c9984608d4c7ba3858b11e2310a0b4ec7691ef747e339639e841b58bd68ffb9d",
+      "bytes": 307800,
+      "sourcePackageId": "usgs-majuro-inundation-raster-zip",
+      "evidenceType": "scenario",
+      "sourceResolution": "1 meter grid",
+      "derivativeResolution": "approximately 10 meter grid",
+      "transformation": "GDAL 3.11.5 average resampling of the zero-to-one 30-inch Monte Carlo probability grid from 39,730 by 12,715 Float32 cells to 3,973 by 1,272 cells; source CRS and NoData retained."
+    }
+  ],
+  "coordinateFixture": {
+    "path": "fixtures/atoll-evidence/v1/coordinates.json",
+    "schemaVersion": "cartofreako-atoll-coordinate-fixtures-v1"
+  },
+  "canary": {
+    "carrierProjection": "myriahedral-pacific",
+    "slice": "whole-map-with-majuro-focus-window",
+    "forwardFixtureRequired": true,
+    "reverseFixtureRequired": true,
+    "sourceCoordinateRequired": true,
+    "scenarioSeparatedFromObservation": true,
+    "contextInput": {
+      "path": "assets.static/atoll-evidence/context/water-myriahedral-pacific-700x394.png",
+      "sha256": "d265d6beebe6d893a2bd764b19e728c587e5d10910a898634ba3cc598a740889",
+      "bytes": 219197,
+      "width": 700,
+      "height": 394,
+      "sourceArtifact": "assets.generated/myriahedral/png/water-myriahedral-pacific-44-24.75.png",
+      "transformation": "ImageMagick 7.1.2-27 contain-free exact resize to 700 by 394 pixels, 8-bit sRGB, stripped metadata, and deterministic PNG time/date exclusion from the Stage 14 authoritative full raster.",
+      "analyticalGrid": false
+    },
+    "outputStatus": "implemented-exploration-canary",
+    "outputs": [
+      {
+        "path": "output/atoll-evidence-canary-v01/majuro-atoll-evidence-canary.png",
+        "mediaType": "image/png",
+        "width": 2560,
+        "height": 1440,
+        "sha256": "d132b7fe925fde96acdefce772b93653e30877cb8e52692b04e779bf1925f49e",
+        "authorityClass": "exploration-evidence-canary",
+        "evidenceTypes": ["observation", "scenario"]
+      }
+    ]
+  },
+  "unavailable": [
+    "Authoritative atoll-scale infrastructure geometry and observation date",
+    "Current observed shoreline independent of the multi-date TBDEM",
+    "Redistributable benthic reef geometry with local review",
+    "Machine-readable freshwater-lens field with coordinates and uncertainty",
+    "Marshall Islands community and regional governance review",
+    "Per-layer decision on research comparison, public interpretation, or visual speculation"
+  ],
+  "downloadsPerformed": true,
+  "downloadedSourceIds": [
+    "usgs-majuro-tbdem-1944-2016",
+    "usgs-majuro-inundation-2016"
+  ],
+  "evidenceRenderProduced": true,
+  "promotionAuthorized": false
+}

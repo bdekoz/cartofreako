@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bdekoz.github.io/cartofreako/contracts/water-debris-evidence-v1.schema.json",
+  "title": "Cartofreako anthropocene water-debris feasibility prototype v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "lifecycle", "checkedOn", "proposedPass",
+    "stableExistingPasses", "evidenceClasses", "sources", "renderReadiness",
+    "unavailable", "downloadsPerformed", "generatorImplemented",
+    "promotionAuthorized"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "cartofreako-water-debris-evidence-v1"},
+    "lifecycle": {"const": "exploration-only"},
+    "checkedOn": {"type": "string", "format": "date"},
+    "proposedPass": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "generator", "status"],
+      "properties": {
+        "id": {"const": "anthropocene-water-debris"},
+        "generator": {"const": "src.generate/generate-anthropocene-water-debris.cc"},
+        "status": {"const": "not-implemented"}
+      }
+    },
+    "stableExistingPasses": {
+      "type": "array",
+      "const": [
+        "anthropocene",
+        "anthropocene-temperature-2025",
+        "anthropocene-temperature-2026"
+      ]
+    },
+    "evidenceClasses": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {"$ref": "#/$defs/evidenceClass"}
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/source"}
+    },
+    "renderReadiness": {"const": "not-ready"},
+    "unavailable": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "downloadsPerformed": {"const": false},
+    "generatorImplemented": {"const": false},
+    "promotionAuthorized": {"const": false}
+  },
+  "$defs": {
+    "classId": {
+      "enum": [
+        "observed-shoreline", "observed-surface-sample",
+        "modeled-concentration", "modeled-river-emission",
+        "cleanup-operation", "depth-profile"
+      ]
+    },
+    "evidenceClass": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "geometry", "depthRule", "status"],
+      "properties": {
+        "id": {"$ref": "#/$defs/classId"},
+        "geometry": {"enum": ["point", "line", "polygon", "raster", "profile", "UNAVAILABLE"]},
+        "depthRule": {"enum": ["not-applicable", "observed-only", "UNAVAILABLE-not-zero"]},
+        "status": {"enum": ["candidate", "incomplete", "UNAVAILABLE"]}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "authority", "title", "url", "access", "licenseSpdx",
+        "redistribution", "sourcePeriod", "spatialDataAccess", "uncertainty",
+        "supportsClasses", "limitation"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "authority": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "url": {"type": "string", "format": "uri"},
+        "access": {"enum": ["public", "publication-only", "review-required"]},
+        "licenseSpdx": {"type": "string", "minLength": 1},
+        "redistribution": {"enum": ["permitted", "review-required", "UNAVAILABLE"]},
+        "sourcePeriod": {"type": "string", "minLength": 1},
+        "spatialDataAccess": {"enum": ["download", "interactive-export", "UNAVAILABLE"]},
+        "uncertainty": {"type": "string", "minLength": 1},
+        "supportsClasses": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/classId"},
+          "uniqueItems": true
+        },
+        "limitation": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

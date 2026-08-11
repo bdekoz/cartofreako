@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bdekoz.github.io/cartofreako/contracts/atoll-coordinate-fixtures-v1.schema.json",
+  "title": "Cartofreako atoll evidence coordinate fixtures v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "lifecycle", "studyAreaId", "sourceManifest",
+    "prepared", "pixelTrace", "projectionTrace"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "cartofreako-atoll-coordinate-fixtures-v1"},
+    "lifecycle": {"const": "exploration-only"},
+    "studyAreaId": {"const": "majuro-atoll-canary"},
+    "sourceManifest": {"$ref": "#/$defs/file"},
+    "prepared": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "file", "evidenceType", "sourceId", "raster"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+          "file": {"$ref": "#/$defs/file"},
+          "evidenceType": {"enum": ["observation", "scenario"]},
+          "sourceId": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+          "raster": {"$ref": "#/$defs/raster"}
+        }
+      }
+    },
+    "pixelTrace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "preparedId", "pixelCenter", "sourceProjected", "geographic",
+        "evidenceRecord", "forward", "qualifiedInverse"
+      ],
+      "properties": {
+        "preparedId": {"const": "majuro-tbdem-observation-10m"},
+        "pixelCenter": {"$ref": "#/$defs/pair"},
+        "sourceProjected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["crs", "eastingMeters", "northingMeters"],
+          "properties": {
+            "crs": {"const": "ITRF2008 / UTM zone 59N"},
+            "eastingMeters": {"type": "number"},
+            "northingMeters": {"type": "number"}
+          }
+        },
+        "geographic": {"$ref": "#/$defs/geographic"},
+        "evidenceRecord": {"const": "usgs-majuro-tbdem-1944-2016"},
+        "forward": {"$ref": "#/$defs/forward"},
+        "qualifiedInverse": {"$ref": "#/$defs/inverse"}
+      }
+    },
+    "projectionTrace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["projection", "frame", "points"],
+      "properties": {
+        "projection": {"const": "myriahedral-pacific"},
+        "frame": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["width", "height"],
+          "properties": {
+            "width": {"const": 3840},
+            "height": {"const": 2160}
+          }
+        },
+        "points": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "geographic", "evidenceRecord", "forward", "qualifiedInverse"],
+            "properties": {
+              "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+              "geographic": {"$ref": "#/$defs/geographic"},
+              "evidenceRecord": {"const": "usgs-majuro-tbdem-1944-2016"},
+              "forward": {"$ref": "#/$defs/forward"},
+              "qualifiedInverse": {"$ref": "#/$defs/inverse"}
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "pair": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {"type": "number"}
+    },
+    "file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "bytes"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "bytes": {"type": "integer", "minimum": 1}
+      }
+    },
+    "raster": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "width", "height", "bandType", "noDataValue", "geoTransform",
+        "crsName", "crsWktSha256", "effectiveCellMeters", "wgs84Footprint"
+      ],
+      "properties": {
+        "width": {"type": "integer", "minimum": 1},
+        "height": {"type": "integer", "minimum": 1},
+        "bandType": {"enum": ["Byte", "Float32"]},
+        "noDataValue": {"type": "number"},
+        "geoTransform": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {"type": "number"}
+        },
+        "crsName": {"const": "ITRF2008 / UTM zone 59N"},
+        "crsWktSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "effectiveCellMeters": {"$ref": "#/$defs/pair"},
+        "wgs84Footprint": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {"$ref": "#/$defs/pair"}
+        }
+      }
+    },
+    "geographic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["longitude", "latitude", "datum", "status"],
+      "properties": {
+        "longitude": {"type": "number", "minimum": -180, "maximum": 180},
+        "latitude": {"type": "number", "minimum": -90, "maximum": 90},
+        "datum": {"const": "WGS84"},
+        "status": {"enum": ["source-metadata-envelope", "gdal-itrf2008-to-wgs84-approximation"]}
+      }
+    },
+    "forward": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y", "nativeCell", "component"],
+      "properties": {
+        "x": {"type": "number"},
+        "y": {"type": "number"},
+        "nativeCell": {"type": "integer", "minimum": 0},
+        "component": {"type": "integer", "minimum": 0}
+      }
+    },
+    "inverse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "candidate", "tolerancePixels", "truncated"],
+      "properties": {
+        "status": {"const": "unique"},
+        "candidate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "longitude", "latitude", "nativeCell", "component",
+            "forwardResidual", "boundary"
+          ],
+          "properties": {
+            "longitude": {"type": "number"},
+            "latitude": {"type": "number"},
+            "nativeCell": {"type": "integer", "minimum": 0},
+            "component": {"type": "integer", "minimum": 0},
+            "forwardResidual": {"type": "number", "minimum": 0},
+            "boundary": {"const": false}
+          }
+        },
+        "tolerancePixels": {"type": "number", "exclusiveMinimum": 0},
+        "truncated": {"const": false}
+      }
+    }
+  }
+}

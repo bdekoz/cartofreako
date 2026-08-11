@@ -18,6 +18,19 @@ class, visual policy, verification, and scientific or licensing boundary.
 | **Optional** | Implemented but gated by a credential, license acceptance, source availability, or deliberate operator authorization |
 | **Exploration only** | Evaluated or proposed without a released production artifact; absence from a release is intentional |
 
+Lifecycle and maturity are independent. Lifecycle controls what is generated
+and released; maturity describes the present review disposition of that
+design. **Accepted experimental** means the current visual and research
+implementation is accepted for ongoing standard use while its methods,
+sources, or interpretation may still be revised. It does not mean
+exploration-only, and it does not broaden an evidence claim.
+
+The machine-readable [current pass-status manifest](../../../contracts/pass-status-v1.json)
+classifies `anthropocene`, `anthropocene-temperature-2025`, and
+`anthropocene-temperature-2026` as current, standard, default-generated, and
+accepted-experimental. `make check-pass-status` verifies all 18 projection
+artifacts against the standard manifest.
+
 ## Pass families
 
 - [Astronomy and observer instruments](astronomy.md)

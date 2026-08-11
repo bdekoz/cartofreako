@@ -215,6 +215,14 @@ make generate-anthropocene-artifacts
 make generate-anthropocene-cahill-keyes
 ```
 
+The observation atlas and both temperature-year pass IDs are current
+**accepted experimental** products. They remain standard, default-generated,
+and release eligible across all six projections; accepted-experimental is a
+maturity classification, not a demotion to exploration-only. The
+[machine-readable status manifest](contracts/pass-status-v1.json) and
+`make check-pass-status` keep that distinction and each pass's evidence
+boundary explicit.
+
 The original profile-fixed, partial-2026 observation atlas remains available
 as an explicit legacy product. It preserves station temperature records,
 rainfall, fire, smoke, flood, severe weather, and EPA PM2.5 exposure as

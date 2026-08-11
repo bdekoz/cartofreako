@@ -10,8 +10,9 @@
 **Bounded active scope implemented and locally verified 2026-08-10.** The
 active scope is 15A
 (frozen handoff and benchmark contract), 15B (lossless landscape and portrait
-2K controls), 15I (local consumer-oriented CDN/WASM layout), and two
-exploration-only research prototypes. Stages 15C through 15H are deferred.
+2K controls), 15I (local consumer-oriented CDN/WASM layout), an implemented
+exploration-only Majuro evidence canary, and one exploration-only feasibility
+prototype. Stages 15C through 15H are deferred.
 No compressed texture, hardware benchmark, picking mask, Float32 geometry,
 engine adapter, promotion, release, or upload was implemented or implied.
 
@@ -158,7 +159,7 @@ the dated `anthropocene-temperature-2025` and
 The checked outcome is
 [Stage 15 R2 — anthropocene water-debris feasibility](../../../reports/stage-15-water-debris-feasibility.md).
 
-## Research prototype R1 — atoll-scale evidence
+## Research prototype R1 — implemented atoll-scale evidence canary
 
 Add an atoll-scale evidence tier for place-specific research, beginning with
 the Marshall Islands experiments. Bring in high-resolution topobathymetry,
@@ -180,10 +181,28 @@ visual speculation only. The tier must support forward and reverse projection
 fixtures so a selected pixel, feature, or scenario can be traced back to its
 source coordinate and evidence record.
 
-The Stage 15 prototype is limited to a checked contract, a source/rights
-inventory, one Marshall Islands canary-manifest plan, and explicit
-`UNAVAILABLE` fields. It performs no restricted download, creates no new
-evidentiary render, and makes no promotion decision.
+The implemented canary uses two reviewed public-domain USGS packages: the
+1944–2016 Majuro 1 m topobathymetric DEM and the 2016-source 30-inch marine
+inundation assessment. Original archives and metadata are retained under the
+explicitly Git-ignored `assets.static/atoll-evidence/.raw/` boundary. Three
+checked approximately 10 m GeoTIFF derivatives preserve the source CRS,
+NoData, data type, and evidence class; they are convenient canary inputs, not
+substitutes for the authoritative 1 m sources.
+
+The 2560 × 1440 PNG keeps three claims separate: a planetary Myriahedral
+Pacific locator, an observation-derived topobathymetric panel, and a modeled
+0.762 m-above-MHHW inundation panel. The probability field is color and the
+deterministic extent is an outline, so neither scenario is misrepresented as
+an observed flood. Freshwater, infrastructure, a current independent
+shoreline, reviewed reef geometry, ocean heat, and community/regional review
+remain explicitly unavailable or incomplete.
+
+Five metadata-envelope anchors and one prepared-pixel anchor carry source
+coordinates, forward pixels, native cells/components, and face-qualified
+reverse candidates. All six live runtime round trips pass within `2e-8`
+degrees. This implements traceability without granting promotion: no atoll
+product enters default generation, ordinary checks, GitHub release, or UCB
+AAO/S3 publication.
 
 The checked outcome is
 [Stage 15 R1 — atoll-scale evidence canary](../../../reports/stage-15-atoll-evidence-canary.md).
@@ -221,7 +240,7 @@ The checked compatibility and implementation reference is
 | **15A** | Frozen 205 standard artifacts, 31 pass IDs, 11 layouts, and 14 approved slices from the clean Stage 14 catalog | Commit `750efb321cc5553c7f0f7aa6d64e47ed9f2e8bef`; input-fixture SHA-256 `af793ba88ebaead4aeedfdf179e35a1a786eab5ff7e2cd2f51ca086b4970df8b` |
 | **15B** | Generated and checked 205 landscape 2048 × 1024 PNGs and 205 portrait 1024 × 2048 PNGs | 410 files; 141,014,973 bytes; generated-catalog SHA-256 `901fb44bdc1bd70acd781f66ba0e4b277adfaf0d66ec022becda9b7ec215ccb4` |
 | **15I** | Built a 61-file local candidate with one primary index, 31 pass indexes, 11 projection indexes, and 16 runtime files | 1,291,121 bytes; local `release-layout.json` SHA-256 `763c86011c6c9a8db56f90a9fac1bceb357a0893991c863f68fd5a4b85289e3d`; no `release.json` |
-| **R1** | Validated the Majuro canary contract and source/rights inventory | No download, evidence render, or promotion |
+| **R1** | Prepared three compact Majuro evidence derivatives, five source-envelope plus one pixel forward/reverse trace, and one visually reviewed 2560 × 1440 PNG | Public USGS raw packages remain Git-ignored; output SHA-256 `d132b7fe925fde96acdefce772b93653e30877cb8e52692b04e779bf1925f49e`; no promotion or publication |
 | **R2** | Validated the water-debris evidence classes and feasibility inventory | No download, generator, pass rename, or promotion |
 
 The 15B generator hashes every authoritative full PNG before and after
@@ -244,6 +263,7 @@ The implementation remains explicit and offline:
 make freeze-stage-15-inputs
 make check-gpu-controls
 make check-consumer-release-layout
+make check-atoll-evidence-canary
 make check-stage-15-research-prototypes
 make check-stage-15-active
 ```
@@ -265,7 +285,7 @@ GitHub release, and UCB AAO/S3 release.
 | **15G — consumer trials** | **Deferred** | Additional browser and game-engine adapters |
 | **15H — promotion** | **Deferred** | Lifecycle, release, fallback, and adoption decision |
 | **15I — CDN/WASM layout** | **Approved and active** | Build and check a local consumer-oriented object-tree fixture; document v13-to-proposed-v14 compatibility |
-| **R1 — atoll evidence** | **Approved prototype only** | Contract, source/rights inventory, and Marshall Islands canary plan; no evidence render |
+| **R1 — atoll evidence** | **Implemented exploration canary** | Public USGS acquisition boundary, checked compact derivatives, source coordinates, qualified forward/reverse fixtures, and one reviewed PNG; no promotion or publication |
 | **R2 — water debris** | **Approved prototype only** | Contract and feasibility/source inventory; no generator or pass promotion |
 
 ## Implemented repository surface
@@ -287,7 +307,17 @@ scripts/build-consumer-release-layout.mjs
 scripts/check-consumer-release-layout.mjs
 docs/pages/releases/v13-to-v14-consumer-layout.md
 contracts/atoll-evidence-v1.schema.json
+contracts/atoll-coordinate-fixtures-v1.schema.json
 fixtures/atoll-evidence/v1/manifest.json
+fixtures/atoll-evidence/v1/coordinates.json
+assets.static/atoll-evidence/README.md
+assets.static/atoll-evidence/prepared/*
+scripts/fetch-atoll-evidence-data.sh
+scripts/prepare-atoll-evidence-data.sh
+scripts/build-atoll-evidence-fixtures.mjs
+scripts/render-atoll-evidence-canary-v01.sh
+tests/test-atoll-evidence-canary.mjs
+output/atoll-evidence-canary-v01/majuro-atoll-evidence-canary.png
 reports/stage-15-atoll-evidence-canary.md
 contracts/water-debris-evidence-v1.schema.json
 fixtures/water-debris-evidence/v1/manifest.json
@@ -296,8 +326,11 @@ reports/stage-15-water-debris-feasibility.md
 
 Active Make targets are `freeze-stage-15-inputs`,
 `generate-gpu-controls`, `check-gpu-controls`,
-`build-consumer-release-layout`, `check-consumer-release-layout`, and explicit
-nonproduction checks for the two research prototypes. The deferred
+`build-consumer-release-layout`, `check-consumer-release-layout`,
+`generate-atoll-evidence-canary`, `check-atoll-evidence-canary`, and explicit
+nonproduction checks for both research tracks. Raw acquisition and preparation
+are separate `fetch-atoll-evidence-data` and `prepare-atoll-evidence-data`
+maintainer targets; generation never invokes either. The deferred
 `benchmark-gpu-products` target is not added. Nothing in Stage 15 enters
 `make all`, ordinary `make check`, GitHub release, or UCB AAO/S3 release
 without a later promotion decision.

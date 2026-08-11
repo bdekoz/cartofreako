@@ -183,6 +183,29 @@ GENERATED_SCREEN_PNG_DIRS := \
 GENERATED_SCREEN_WEBP_DIRS := \
 	$(addsuffix /screen-1080p-webp,$(GENERATED_PROJECTION_DIRS))
 GENERATED_CATALOG_DIR := $(GENERATED_DIR)/catalog
+STAGE15_GPU_SCHEMA := contracts/gpu-benchmark-v1.schema.json
+STAGE15_INPUT_FIXTURE := fixtures/gpu-benchmark/v1/stage-14-inputs.json
+STAGE15_LAYOUT_SCHEMA := contracts/consumer-release-layout-v1.schema.json
+STAGE15_LAYOUT_FIXTURE := fixtures/consumer-release-layout/v1/manifest.json
+STAGE15_LAYOUT_OUTPUT := build/consumer-release-layout-v1
+STAGE15_CONTRACT_CHECKER := tests/validate-stage15-contracts.py
+PASS_STATUS_SCHEMA := contracts/pass-status-v1.schema.json
+PASS_STATUS_MANIFEST := contracts/pass-status-v1.json
+PASS_STATUS_CHECKER := tests/validate-pass-status.py
+ATOLL_EVIDENCE_DIR ?= $(STATIC_ASSET_DIR)/atoll-evidence
+ATOLL_EVIDENCE_PREPARED_DIR := $(ATOLL_EVIDENCE_DIR)/prepared
+ATOLL_EVIDENCE_PREPARED := \
+	$(ATOLL_EVIDENCE_PREPARED_DIR)/majuro-tbdem-observation-10m.tif \
+	$(ATOLL_EVIDENCE_PREPARED_DIR)/majuro-marine-inundation-30in-deterministic-10m.tif \
+	$(ATOLL_EVIDENCE_PREPARED_DIR)/majuro-marine-inundation-30in-probability-10m.tif
+ATOLL_EVIDENCE_SCHEMA := contracts/atoll-evidence-v1.schema.json
+ATOLL_COORDINATE_SCHEMA := contracts/atoll-coordinate-fixtures-v1.schema.json
+ATOLL_EVIDENCE_MANIFEST := fixtures/atoll-evidence/v1/manifest.json
+ATOLL_COORDINATE_FIXTURE := fixtures/atoll-evidence/v1/coordinates.json
+ATOLL_EVIDENCE_CANARY := \
+	output/atoll-evidence-canary-v01/majuro-atoll-evidence-canary.png
+ATOLL_EVIDENCE_CONTEXT := \
+	$(ATOLL_EVIDENCE_DIR)/context/water-myriahedral-pacific-700x394.png
 
 # Release artifacts are grouped by projection first.  Keep the projection tag
 # in every basename as a stable, self-describing download name, then derive
@@ -488,6 +511,8 @@ ANTHROPOCENE_TEMPERATURE_PDFS := \
 	$(call svg_to_pdf,$(ANTHROPOCENE_TEMPERATURE_SVGS))
 ANTHROPOCENE_TEMPERATURE_PNGS := \
 	$(call svg_to_png,$(ANTHROPOCENE_TEMPERATURE_SVGS))
+ACCEPTED_EXPERIMENTAL_SVGS := \
+	$(ANTHROPOCENE_SVGS) $(ANTHROPOCENE_TEMPERATURE_SVGS)
 
 RESOURCE_OUTPUT_SUFFIXES := ck-44-22 authagraph-44-19.052559 \
 	dymaxion-44-20.78461 myriahedral-44-24.75 star-x-34-44 \
@@ -584,7 +609,7 @@ GENERATED_SVGS := \
 	$(MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS) $(MYRIAHEDRAL_SLICE_SVGS) \
 	$(ASTRO_SVGS) $(ORBITING_SVGS) $(NETWORK_SWARM_SVGS) \
 	$(NETWORK_INFRASTRUCTURE_SITES_SVGS) $(FIBER_SYNTHESIZED_SVGS) \
-	$(ANTHROPOCENE_SVGS) $(ANTHROPOCENE_TEMPERATURE_SVGS) \
+	$(ACCEPTED_EXPERIMENTAL_SVGS) \
 	$(RESOURCES_SVGS) \
 	$(BATHYMETRY_ROULETTE_SVGS) $(BATHYMETRY_HAMONSHU_SVGS)
 GENERATED_PDFS := $(call svg_to_pdf,$(GENERATED_SVGS))
@@ -604,7 +629,7 @@ SNAPSHOT_SVGS := \
 	$(REQUESTED_PROJECTION_SVGS) \
 	$(ASTRO_SVGS) $(ORBITING_SVGS) $(NETWORK_SWARM_SVGS) \
 	$(NETWORK_INFRASTRUCTURE_SITES_SVGS) $(FIBER_SYNTHESIZED_SVGS) \
-	$(ANTHROPOCENE_SVGS) $(ANTHROPOCENE_TEMPERATURE_SVGS) \
+	$(ACCEPTED_EXPERIMENTAL_SVGS) \
 	$(RESOURCES_SVGS) $(BATHYMETRY_ROULETTE_SVGS) \
 	$(BATHYMETRY_HAMONSHU_SVGS)
 SNAPSHOT_WIDTH ?= 480
@@ -845,7 +870,7 @@ RESOURCE_METRIC_PUBLIC_TARGETS := \
 			generate-$(stem)-$(projection)))
 
 PUBLIC_TARGETS := all assets-single assets-resilient check check-docs \
-	check-print-contract \
+	check-print-contract check-pass-status \
 	audit-dymaxion-ulp \
 	check-projection-fixtures check-wasm-projection-fixtures \
 	refresh-projection-fixtures \
@@ -856,6 +881,13 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-docs \
 	check-resources-svg-archives check-fiber-synthesized \
 	check-forward-reverse-projection-api \
 	check-screen-1080p check-three-vendor generate-screen-1080p consumer-assets-v1 \
+	freeze-stage-15-inputs refresh-stage-15-inputs \
+	generate-gpu-controls check-gpu-controls \
+	build-consumer-release-layout check-consumer-release-layout \
+	fetch-atoll-evidence-data prepare-atoll-evidence-data \
+	build-atoll-evidence-fixtures generate-atoll-evidence-canary \
+	check-atoll-evidence-canary \
+	check-stage-15-research-prototypes check-stage-15-active \
 	audit-projection-round-trips \
 	clean clean-failed-generated configured doxygen \
 	generation-plan list-targets render-marshall-islands-speculations-v01 \
@@ -1024,8 +1056,12 @@ PUBLIC_TARGETS := all assets-single assets-resilient check check-docs \
 list-targets:
 	@printf '%s\n' $(sort $(PUBLIC_TARGETS))
 
-check-docs: $(DOC_LINK_CHECKER)
+check-docs: $(DOC_LINK_CHECKER) check-pass-status
 	"$(DOC_LINK_CHECKER)"
+
+check-pass-status: $(PASS_STATUS_SCHEMA) $(PASS_STATUS_MANIFEST) \
+		$(PASS_STATUS_CHECKER) $(STANDARD_ARTIFACT_MANIFEST)
+	python3 "$(PASS_STATUS_CHECKER)"
 
 check-print-contract: $(PRINT_CONTRACT) $(PRINT_CONTRACT_CHECKER) \
 		$(PRINT_PDF_CHECKER)
@@ -1315,7 +1351,81 @@ check-three-vendor: scripts/check-three-vendor.mjs \
 
 consumer-assets-v1: check-screen-1080p check-wasm-projections-browser
 
-check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
+refresh-stage-15-inputs: $(STAGE15_GPU_SCHEMA) \
+		scripts/freeze-stage-15-inputs.mjs
+	"$(NODE)" scripts/freeze-stage-15-inputs.mjs --refresh
+
+freeze-stage-15-inputs: $(STAGE15_GPU_SCHEMA) scripts/freeze-stage-15-inputs.mjs \
+		$(STAGE15_INPUT_FIXTURE)
+	"$(NODE)" scripts/freeze-stage-15-inputs.mjs --check
+
+generate-gpu-controls: freeze-stage-15-inputs \
+		scripts/generate-gpu-controls.mjs src.wasm/cartofreako-screen.mjs
+	"$(NODE)" scripts/generate-gpu-controls.mjs
+
+check-gpu-controls: generate-gpu-controls tests/test-gpu-controls.mjs \
+		$(STAGE15_CONTRACT_CHECKER)
+	"$(NODE)" tests/test-gpu-controls.mjs
+	python3 "$(STAGE15_CONTRACT_CHECKER)" --gpu-controls
+
+build-consumer-release-layout: freeze-stage-15-inputs wasm-projections \
+		$(STAGE15_LAYOUT_SCHEMA) $(STAGE15_LAYOUT_FIXTURE) \
+		scripts/build-consumer-release-layout.mjs
+	"$(NODE)" scripts/build-consumer-release-layout.mjs --replace \
+		--output "$(STAGE15_LAYOUT_OUTPUT)"
+
+check-consumer-release-layout: build-consumer-release-layout \
+		scripts/check-consumer-release-layout.mjs $(STAGE15_CONTRACT_CHECKER)
+	"$(NODE)" scripts/check-consumer-release-layout.mjs \
+		--output "$(STAGE15_LAYOUT_OUTPUT)"
+	python3 "$(STAGE15_CONTRACT_CHECKER)"
+
+fetch-atoll-evidence-data: scripts/fetch-atoll-evidence-data.sh
+	scripts/fetch-atoll-evidence-data.sh "$(ATOLL_EVIDENCE_DIR)"
+
+prepare-atoll-evidence-data: scripts/prepare-atoll-evidence-data.sh
+	scripts/prepare-atoll-evidence-data.sh "$(ATOLL_EVIDENCE_DIR)"
+
+$(ATOLL_COORDINATE_FIXTURE): scripts/build-atoll-evidence-fixtures.mjs \
+		$(ATOLL_COORDINATE_SCHEMA) $(ATOLL_EVIDENCE_MANIFEST) \
+		$(ATOLL_EVIDENCE_PREPARED) wasm-projections
+	"$(NODE)" scripts/build-atoll-evidence-fixtures.mjs
+
+build-atoll-evidence-fixtures: $(ATOLL_COORDINATE_FIXTURE)
+
+$(ATOLL_EVIDENCE_CANARY): scripts/render-atoll-evidence-canary-v01.sh \
+		$(ATOLL_EVIDENCE_MANIFEST) $(ATOLL_COORDINATE_FIXTURE) \
+		$(ATOLL_EVIDENCE_PREPARED) \
+		$(ATOLL_EVIDENCE_DIR)/topobathy-colors.txt \
+		$(ATOLL_EVIDENCE_DIR)/inundation-probability-colors.txt \
+		$(ATOLL_EVIDENCE_DIR)/inundation-deterministic-colors.txt \
+		$(ATOLL_EVIDENCE_CONTEXT)
+	scripts/render-atoll-evidence-canary-v01.sh
+
+generate-atoll-evidence-canary: $(ATOLL_EVIDENCE_CANARY)
+
+check-atoll-evidence-canary: generate-atoll-evidence-canary \
+		$(ATOLL_EVIDENCE_SCHEMA) $(ATOLL_COORDINATE_SCHEMA) \
+		tests/test-atoll-evidence-canary.mjs $(STAGE15_CONTRACT_CHECKER)
+	"$(NODE)" tests/test-atoll-evidence-canary.mjs
+	python3 "$(STAGE15_CONTRACT_CHECKER)"
+
+check-stage-15-research-prototypes: check-atoll-evidence-canary \
+		contracts/water-debris-evidence-v1.schema.json \
+		fixtures/water-debris-evidence/v1/manifest.json \
+		reports/stage-15-atoll-evidence-canary.md \
+		reports/stage-15-water-debris-feasibility.md \
+		$(STAGE15_CONTRACT_CHECKER)
+	python3 "$(STAGE15_CONTRACT_CHECKER)"
+
+check-stage-15-active: freeze-stage-15-inputs check-gpu-controls \
+		check-consumer-release-layout check-stage-15-research-prototypes
+
+# Stage 15C through 15H remain intentionally absent: no compression encoder,
+# GPU timing, masks, Float32 geometry, extra engine adapter, promotion, release,
+# or upload target is implied by the active exploration-only checks above.
+
+check: check-pass-status $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
 		$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2025) \
 		$(ANTHROPOCENE_TEMPERATURE_GEOJSON_2026) \
 		$(CLOUD_ATMOSPHERE_PROFILE) $(CLOUD_ATMOSPHERE_FIXTURE) \

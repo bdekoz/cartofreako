@@ -1,0 +1,171 @@
+{
+  "schemaVersion": "cartofreako-consumer-release-layout-v1",
+  "lifecycle": "exploration-only",
+  "referenceRelease": {
+    "id": "v13",
+    "publicBase": "https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/",
+    "immutable": true,
+    "completionMarker": "release.json"
+  },
+  "candidateRelease": {
+    "id": "proposed-v14",
+    "prefix": "cartofreako/v14/",
+    "published": false,
+    "uploadAuthorized": false,
+    "completionMarker": "release.json"
+  },
+  "sourceInput": {
+    "path": "fixtures/gpu-benchmark/v1/stage-14-inputs.json",
+    "sha256": "af793ba88ebaead4aeedfdf179e35a1a786eab5ff7e2cd2f51ca086b4970df8b",
+    "sourceCommit": "750efb321cc5553c7f0f7aa6d64e47ed9f2e8bef",
+    "artifactCount": 205
+  },
+  "partitions": [
+    "standard",
+    "optional",
+    "exploration"
+  ],
+  "indexes": [
+    {
+      "id": "all-artifacts",
+      "path": "indexes/artifacts-v1.json",
+      "key": "artifact-id"
+    },
+    {
+      "id": "by-pass",
+      "path": "indexes/by-pass/{pass-id}.json",
+      "key": "pass-id"
+    },
+    {
+      "id": "by-projection",
+      "path": "indexes/by-projection/{projection-id}.json",
+      "key": "projection-id"
+    }
+  ],
+  "runtime": {
+    "versionDirectory": "runtime/api-3",
+    "identityRule": "versioned-directory-with-sha256-manifest",
+    "core": [
+      {
+        "source": "src.wasm/cartofreako-projections.mjs",
+        "role": "projection-loader",
+        "mediaType": "text/javascript"
+      },
+      {
+        "source": "src.wasm/cartofreako-projections.wasm",
+        "role": "projection-wasm",
+        "mediaType": "application/wasm"
+      },
+      {
+        "source": "src.wasm/cartofreako-web.mjs",
+        "role": "projection-api",
+        "mediaType": "text/javascript"
+      },
+      {
+        "source": "src.wasm/cartofreako-web.d.ts",
+        "role": "typescript-declarations",
+        "mediaType": "text/plain"
+      }
+    ],
+    "optional": [
+      {
+        "source": "src.wasm/cartofreako-screen.mjs",
+        "role": "screen-transform",
+        "mediaType": "text/javascript"
+      },
+      {
+        "source": "src.wasm/cartofreako-screen.d.ts",
+        "role": "typescript-declarations",
+        "mediaType": "text/plain"
+      },
+      {
+        "source": "src.wasm/cartofreako-catalog.mjs",
+        "role": "artifact-catalog",
+        "mediaType": "text/javascript"
+      },
+      {
+        "source": "src.wasm/cartofreako-catalog.d.ts",
+        "role": "typescript-declarations",
+        "mediaType": "text/plain"
+      },
+      {
+        "source": "src.wasm/cartofreako-projections-worker.mjs",
+        "role": "worker",
+        "mediaType": "text/javascript"
+      },
+      {
+        "source": "src.wasm/cartofreako-worker-client.mjs",
+        "role": "worker-client",
+        "mediaType": "text/javascript"
+      },
+      {
+        "source": "src.wasm/cartofreako-worker-client.d.ts",
+        "role": "typescript-declarations",
+        "mediaType": "text/plain"
+      },
+      {
+        "source": "src.wasm/cartofreako-canvas.mjs",
+        "role": "canvas-helper",
+        "mediaType": "text/javascript"
+      },
+      {
+        "source": "src.wasm/cartofreako-svg.mjs",
+        "role": "svg-helper",
+        "mediaType": "text/javascript"
+      },
+      {
+        "source": "src.wasm/cartofreako-d3.mjs",
+        "role": "d3-helper",
+        "mediaType": "text/javascript"
+      },
+      {
+        "source": "src.wasm/cartofreako-three.mjs",
+        "role": "three-helper",
+        "mediaType": "text/javascript"
+      },
+      {
+        "source": "src.wasm/cartofreako-three.d.ts",
+        "role": "typescript-declarations",
+        "mediaType": "text/plain"
+      }
+    ]
+  },
+  "productPaths": {
+    "masterSvgGzip": "products/{lifecycle}/{projection}/master/{filename}.gz",
+    "printPdf": "products/{lifecycle}/{projection}/print/{filename}",
+    "fullPng": "products/{lifecycle}/{projection}/full/{filename}",
+    "thumbnailPng": "products/{lifecycle}/{projection}/thumbnail/{filename}",
+    "screenPng": "products/{lifecycle}/{projection}/screen-1080p/png/{filename}",
+    "screenWebp": "products/{lifecycle}/{projection}/screen-1080p/webp/{filename}"
+  },
+  "delivery": [
+    {"extension": ".json", "mediaType": "application/json", "contentEncoding": null},
+    {"extension": ".mjs", "mediaType": "text/javascript", "contentEncoding": null},
+    {"extension": ".wasm", "mediaType": "application/wasm", "contentEncoding": null},
+    {"extension": ".png", "mediaType": "image/png", "contentEncoding": null},
+    {"extension": ".webp", "mediaType": "image/webp", "contentEncoding": null},
+    {"extension": ".pdf", "mediaType": "application/pdf", "contentEncoding": null},
+    {"extension": ".svg.gz", "mediaType": "application/gzip", "contentEncoding": null},
+    {"extension": ".d.ts", "mediaType": "text/plain", "contentEncoding": null}
+  ],
+  "cachePolicy": {
+    "immutablePayload": "public,max-age=31536000,immutable",
+    "completionMarker": "no-store"
+  },
+  "precompression": {
+    "status": "deferred",
+    "candidates": [
+      "json-gzip",
+      "mjs-gzip",
+      "wasm-brotli"
+    ],
+    "rule": "Do not publish a precompressed sidecar until the browser loader, HTTP metadata, fallback, and byte-verification contract are checked together."
+  },
+  "releaseBoundary": {
+    "builderNetworkAccess": false,
+    "builderS3Access": false,
+    "completionMarkerBuilt": false,
+    "transportOwner": "https://github.com/alpha60-devops/alpha60-clusterops/blob/main/bin/load-s3-aao",
+    "humanInvocationRequired": true
+  }
+}

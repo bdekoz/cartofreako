@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "cartofreako-pass-status-v1",
+  "checkedOn": "2026-08-10",
+  "axes": {
+    "independent": true,
+    "lifecycle": "Controls generation, artifact selection, gallery, and release behavior: standard, optional, or exploration-only.",
+    "maturity": "Records whether a current design is accepted, accepted-experimental, prototype, or proposed without changing lifecycle by implication."
+  },
+  "passes": [
+    {
+      "id": "anthropocene",
+      "family": "observation-atlas",
+      "current": true,
+      "lifecycle": "standard",
+      "maturity": "accepted-experimental",
+      "defaultGenerated": true,
+      "releaseEligible": true,
+      "acceptedOn": "2026-08-10",
+      "artifactManifest": {
+        "path": "contracts/standard-artifact-manifest-v1.json",
+        "artifactCount": 6
+      },
+      "statusReason": "The source-separated legacy observation atlas is an accepted current visual and research experiment while its sparse, multi-source field remains open to method and source refinement.",
+      "claimBoundary": [
+        "The pass maps dated observations and derived indicators; it does not perform event attribution or compute a composite severity score.",
+        "Source coverage, publication latency, and observational opportunity vary by layer and region.",
+        "Accepted-experimental status is not approval for navigation, engineering, causal inference, or unreviewed data refreshes."
+      ]
+    },
+    {
+      "id": "anthropocene-temperature-2025",
+      "family": "temperature-field",
+      "current": true,
+      "lifecycle": "standard",
+      "maturity": "accepted-experimental",
+      "defaultGenerated": true,
+      "releaseEligible": true,
+      "acceptedOn": "2026-08-10",
+      "artifactManifest": {
+        "path": "contracts/standard-artifact-manifest-v1.json",
+        "artifactCount": 6
+      },
+      "statusReason": "The complete-year 2025 temperature field is accepted as the current experimental field treatment, including its source metadata, scale, title hierarchy, and transparency policy.",
+      "claimBoundary": [
+        "The rendered field is a source-governed annual temperature product, not an event-attribution result.",
+        "Visual acceptance does not erase source uncertainty, grid scale, or temporal aggregation.",
+        "Accepted-experimental status does not promote downstream atoll or water-debris research prototypes."
+      ]
+    },
+    {
+      "id": "anthropocene-temperature-2026",
+      "family": "temperature-field",
+      "current": true,
+      "lifecycle": "standard",
+      "maturity": "accepted-experimental",
+      "defaultGenerated": true,
+      "releaseEligible": true,
+      "acceptedOn": "2026-08-10",
+      "artifactManifest": {
+        "path": "contracts/standard-artifact-manifest-v1.json",
+        "artifactCount": 6
+      },
+      "statusReason": "The partial-year 2026 temperature field is accepted as the current experimental companion to the complete 2025 field, with partial-year status retained in every product.",
+      "claimBoundary": [
+        "The 2026 product is explicitly partial-year and must not be compared as though it were a complete annual field.",
+        "The rendered field is not an event-attribution result and does not imply uniform observational certainty.",
+        "Accepted-experimental status is not permission to relabel, suppress the partial-year qualifier, or bypass source review."
+      ]
+    }
+  ]
+}

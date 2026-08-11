@@ -69,6 +69,7 @@
 /assets.static/network-swarm/.prepared/
 /assets.static/anthropocene/.raw/
 /assets.static/anthropocene/.prepared/
+/assets.static/atoll-evidence/.raw/
 /assets.static/cloud-atmosphere/.raw/
 /assets.static/cloud-atmosphere/.prepared/
 /docs/doxygen/
@@ -91,4 +92,9 @@ __pycache__/
 /assets.generated.v*.tar.xz
 
 # Generated release reports and visual-QA renders are delivery artifacts.
-/reports/
+# Two Stage 15 research records are checked documentation, not rendered
+# release reports: one implemented exploration canary and one feasibility
+# study.
+/reports/*
+!/reports/stage-15-atoll-evidence-canary.md
+!/reports/stage-15-water-debris-feasibility.md

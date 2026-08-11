@@ -8,6 +8,26 @@
 [Stage 13 source expansion review](source-expansion-stage-13.md) ·
 [Snapshot assets](../../../../assets.static/anthropocene/README.md)
 
+## Current pass status
+
+The three implemented Anthropocene pass IDs are current **accepted
+experimental** products. Maturity and lifecycle are separate: each remains a
+**standard**, default-generated, release-eligible pass across all six
+projections.
+
+| Pass ID | Current role | Lifecycle | Maturity |
+| --- | --- | --- | --- |
+| `anthropocene` | Source-separated legacy observation atlas | Standard; default-generated | Accepted experimental |
+| `anthropocene-temperature-2025` | Complete-year CPC temperature field | Standard; default-generated | Accepted experimental |
+| `anthropocene-temperature-2026` | Explicitly partial-year CPC temperature field | Standard; default-generated | Accepted experimental |
+
+The [pass-status manifest](../../../../contracts/pass-status-v1.json) records
+this classification and its claim boundaries. Acceptance applies to the
+current visual/research implementation, source metadata, title hierarchy, and
+field treatment. It does not turn observations into causal attribution,
+remove the 2026 partial-year qualifier, authorize unreviewed source refreshes,
+or promote Stage 15 atoll and water-debris research products.
+
 ## Outcome and claim boundary
 
 Stage 8 is feasible as a source-separated observation atlas. It is not

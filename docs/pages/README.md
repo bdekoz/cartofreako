@@ -18,7 +18,7 @@ browser integration, verification, and preservation.
 | Understand the selected profile, pass evaluation, and exact versus family workflows | [Generation methods and decision record](getting-started/generation-methods.md) |
 | Review the complete Stage 13 development manifest | [Stage 13 convergence notes](development/stage-13.md) |
 | Follow the Stage 14 plan, implementation changes, and verification evidence | [Stage 14 convergence ledger](development/stage-14.md) |
-| Track GPU texture, mask, Float32, and hardware benchmark work after the Stage 14 baseline freezes | [Stage 15 GPU benchmark ledger](development/stage-15.md) |
+| Track GPU products and inspect the implemented exploration-only Majuro evidence canary | [Stage 15 development ledger](development/stage-15.md) and [atoll-canary report](../../reports/stage-15-atoll-evidence-canary.md) |
 | Authorize and generate credentialed external products | [Configured generation](getting-started/generation.md#configured-development-generation), [Cloud-atmosphere generation](getting-started/generation.md#cloud-atmosphere-generation), and [P-Tree production download](data/ptree-download.md) |
 
 ## Pass catalog and lifecycle
@@ -38,13 +38,17 @@ The current resource profile has 14 standard passes, no optional resource
 passes, and 45 exploration-only metrics. Project-wide optional products include
 the credentialed P-Tree Cloud-atmosphere pass and licensed network topology;
 NASA FIRMS remains an exploration input rather than a released optional pass.
+Pass maturity is a separate axis: the three current Anthropocene pass IDs are
+standard and default-generated with **accepted-experimental** maturity. See
+the [generation-pass overview](passes/README.md) and machine-readable
+[pass-status manifest](../../contracts/pass-status-v1.json).
 
 | Family | Documentation |
 | --- | --- |
 | Energy, food, fauna, flora, mineral, and human resources | [Stage 12 resource implementation](passes/resources/implementation.md), [metric catalog](passes/resources/metric-catalog.md), and [enrichment plan](passes/resources/enrichment-plan.md) |
 | Astronomy and observer instruments | [Astronomy implementation](passes/astronomy.md) |
 | Orbital Technosphere | [Orbital Technosphere implementation](passes/orbital-technosphere.md) |
-| Climate, weather, fire, smoke, and air quality | [Anthropocene implementation](passes/anthropocene/implementation.md), [source expansion](passes/anthropocene/source-expansion-stage-13.md), and [enrichment plan](passes/anthropocene/enrichment-plan.md) |
+| Climate, weather, fire, smoke, and air quality | [Anthropocene implementation and accepted-experimental status](passes/anthropocene/implementation.md), [source expansion](passes/anthropocene/source-expansion-stage-13.md), and [enrichment plan](passes/anthropocene/enrichment-plan.md) |
 | JAXA physical atmosphere | [Cloud-atmosphere implementation](passes/cloud-atmosphere.md) |
 | Network swarm and infrastructure | [Network swarm](passes/network-swarm.md) and [network infrastructure](passes/network-infrastructure.md) |
 | Cleaned submarine-fiber union | [Fiber Synthesized implementation](passes/fiber-synthesized.md) |

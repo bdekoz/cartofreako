@@ -1,0 +1,446 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bdekoz.github.io/cartofreako/contracts/gpu-benchmark-v1.schema.json",
+  "title": "Cartofreako Stage 15 GPU benchmark and lossless-control contract v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "documentType", "lifecycle"],
+  "properties": {
+    "schemaVersion": {"const": "cartofreako-gpu-benchmark-v1"},
+    "documentType": {
+      "enum": ["input-freeze", "control-catalog", "run-result"]
+    },
+    "lifecycle": {"const": "exploration-only"},
+    "frozenStage14": {"$ref": "#/$defs/frozenStage14"},
+    "controlRecipes": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {"$ref": "#/$defs/controlRecipe"}
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/inputCase"}
+    },
+    "inputFreeze": {"$ref": "#/$defs/inputIdentity"},
+    "recipes": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {"$ref": "#/$defs/controlRecipe"}
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/controlArtifact"}
+    },
+    "environment": {"$ref": "#/$defs/environment"},
+    "runPolicy": {"$ref": "#/$defs/runPolicy"},
+    "results": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/runCase"}
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"documentType": {"const": "input-freeze"}}},
+      "then": {"required": ["frozenStage14", "controlRecipes", "cases"]}
+    },
+    {
+      "if": {"properties": {"documentType": {"const": "control-catalog"}}},
+      "then": {"required": ["inputFreeze", "recipes", "artifacts"]}
+    },
+    {
+      "if": {"properties": {"documentType": {"const": "run-result"}}},
+      "then": {"required": ["inputFreeze", "environment", "runPolicy", "results"]}
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9._/-]+$"
+    },
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height"],
+      "properties": {
+        "width": {"type": "integer", "minimum": 1},
+        "height": {"type": "integer", "minimum": 1}
+      }
+    },
+    "frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y", "width", "height"],
+      "properties": {
+        "x": {"type": "number"},
+        "y": {"type": "number"},
+        "width": {"type": "number", "exclusiveMinimum": 0},
+        "height": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "matrix3": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": {"type": "number"}
+    },
+    "fileRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "mediaType", "bytes", "sha256", "authorityClass"],
+      "properties": {
+        "path": {"$ref": "#/$defs/path"},
+        "mediaType": {"type": "string", "minLength": 1},
+        "bytes": {"type": "integer", "minimum": 1},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "authorityClass": {"type": "string", "minLength": 1},
+        "dimensions": {"$ref": "#/$defs/dimensions"},
+        "lossless": {"type": "boolean"},
+        "colorSpace": {"type": "string", "minLength": 1},
+        "transparency": {"type": "string", "minLength": 1},
+        "contentMediaType": {"type": "string", "minLength": 1},
+        "contentEncoding": {"type": "string", "minLength": 1}
+      }
+    },
+    "inputIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "sourceCommit", "artifactCount"],
+      "properties": {
+        "path": {"$ref": "#/$defs/path"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "sourceCommit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "artifactCount": {"type": "integer", "minimum": 1}
+      }
+    },
+    "frozenStage14": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceCommit", "workingTree", "runtimeApi", "geometryAbi",
+        "artifactCatalog", "standardManifest", "artifactCount",
+        "passCount", "layoutCount", "sliceCount"
+      ],
+      "properties": {
+        "sourceCommit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "workingTree": {"const": "clean"},
+        "runtimeApi": {"const": 3},
+        "geometryAbi": {"const": 1},
+        "artifactCatalog": {"$ref": "#/$defs/inputIdentity"},
+        "standardManifest": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256"],
+          "properties": {
+            "path": {"$ref": "#/$defs/path"},
+            "sha256": {"$ref": "#/$defs/sha256"}
+          }
+        },
+        "artifactCount": {"const": 205},
+        "passCount": {"const": 31},
+        "layoutCount": {"const": 11},
+        "sliceCount": {"const": 14}
+      }
+    },
+    "controlRecipe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "canvas", "fit", "background", "filter", "sourceRole",
+        "authorityClass", "mediaType", "colorSpace", "alpha", "depth",
+        "lossless"
+      ],
+      "properties": {
+        "id": {
+          "enum": ["gpu-control-2k-landscape-v1", "gpu-control-2k-portrait-v1"]
+        },
+        "canvas": {"$ref": "#/$defs/dimensions"},
+        "fit": {"const": "contain"},
+        "background": {"const": "#f4f5f5"},
+        "filter": {"const": "Lanczos"},
+        "sourceRole": {"const": "full-raster-parent"},
+        "authorityClass": {"const": "exploration-control"},
+        "mediaType": {"const": "image/png"},
+        "colorSpace": {"const": "sRGB"},
+        "alpha": {"const": "opaque"},
+        "depth": {"const": 8},
+        "lossless": {"const": true}
+      }
+    },
+    "inputCase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "passId", "projectionId", "layoutId", "sliceId",
+        "lifecycle", "sourcePeriod", "artifactFrame", "parents", "screen"
+      ],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "passId": {"type": "string", "minLength": 1},
+        "projectionId": {"type": "string", "minLength": 1},
+        "layoutId": {"type": "string", "minLength": 1},
+        "sliceId": {"type": ["string", "null"]},
+        "lifecycle": {"const": "standard"},
+        "sourcePeriod": {"type": "string", "minLength": 1},
+        "artifactFrame": {"$ref": "#/$defs/frame"},
+        "parents": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["svg", "pdf", "fullPng"],
+          "properties": {
+            "svg": {"$ref": "#/$defs/fileRecord"},
+            "pdf": {"$ref": "#/$defs/fileRecord"},
+            "fullPng": {"$ref": "#/$defs/fileRecord"}
+          }
+        },
+        "screen": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "canvas", "fit", "background", "contentRectangle",
+            "projectedToScreen", "screenToProjected", "png", "webp"
+          ],
+          "properties": {
+            "canvas": {"$ref": "#/$defs/dimensions"},
+            "fit": {"const": "contain"},
+            "background": {"type": "string", "minLength": 1},
+            "contentRectangle": {"$ref": "#/$defs/frame"},
+            "projectedToScreen": {"$ref": "#/$defs/matrix3"},
+            "screenToProjected": {"$ref": "#/$defs/matrix3"},
+            "png": {"$ref": "#/$defs/fileRecord"},
+            "webp": {"$ref": "#/$defs/fileRecord"}
+          }
+        }
+      }
+    },
+    "controlOutput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recipeId", "parentFullPngSha256", "canvas", "contentRectangle",
+        "projectedToScreen", "screenToProjected", "png"
+      ],
+      "properties": {
+        "recipeId": {"type": "string", "minLength": 1},
+        "parentFullPngSha256": {"$ref": "#/$defs/sha256"},
+        "canvas": {"$ref": "#/$defs/dimensions"},
+        "contentRectangle": {"$ref": "#/$defs/frame"},
+        "projectedToScreen": {"$ref": "#/$defs/matrix3"},
+        "screenToProjected": {"$ref": "#/$defs/matrix3"},
+        "png": {"$ref": "#/$defs/fileRecord"}
+      }
+    },
+    "controlArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "passId", "projectionId", "layoutId", "sliceId", "controls"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "passId": {"type": "string", "minLength": 1},
+        "projectionId": {"type": "string", "minLength": 1},
+        "layoutId": {"type": "string", "minLength": 1},
+        "sliceId": {"type": ["string", "null"]},
+        "controls": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"$ref": "#/$defs/controlOutput"}
+        }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "machineId", "cpu", "memoryBytes", "gpu", "driver",
+        "operatingSystem", "runtime", "runtimeVersion", "browser",
+        "displayMode", "headless", "powerProfile", "availableMemoryBytes",
+        "softwareRendering", "toolchain"
+      ],
+      "properties": {
+        "machineId": {"type": "string", "minLength": 1},
+        "cpu": {"type": "string", "minLength": 1},
+        "memoryBytes": {"type": "integer", "minimum": 1},
+        "gpu": {"type": "string", "minLength": 1},
+        "driver": {"type": "string", "minLength": 1},
+        "operatingSystem": {"type": "string", "minLength": 1},
+        "runtime": {"type": "string", "minLength": 1},
+        "runtimeVersion": {"type": "string", "minLength": 1},
+        "browser": {"type": "string", "minLength": 1},
+        "displayMode": {"type": "string", "minLength": 1},
+        "headless": {"type": "boolean"},
+        "powerProfile": {"type": "string", "minLength": 1},
+        "availableMemoryBytes": {"type": "integer", "minimum": 0},
+        "softwareRendering": {"type": "boolean"},
+        "toolchain": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "version", "licenseSpdx"],
+            "properties": {
+              "name": {"type": "string", "minLength": 1},
+              "version": {"type": "string", "minLength": 1},
+              "licenseSpdx": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    },
+    "runPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["warmups", "repetitions", "coldAndWarm", "statistics"],
+      "properties": {
+        "warmups": {"type": "integer", "minimum": 0},
+        "repetitions": {"type": "integer", "minimum": 1},
+        "coldAndWarm": {"const": true},
+        "statistics": {
+          "type": "array",
+          "contains": {"const": "median"},
+          "items": {"enum": ["minimum", "median", "p95", "maximum"]},
+          "uniqueItems": true
+        }
+      }
+    },
+    "nullableNonnegative": {
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "timingSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cold", "warmMedian", "warmP95"],
+      "properties": {
+        "cold": {"$ref": "#/$defs/nullableNonnegative"},
+        "warmMedian": {"$ref": "#/$defs/nullableNonnegative"},
+        "warmP95": {"$ref": "#/$defs/nullableNonnegative"}
+      }
+    },
+    "runCase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "caseId", "productId", "status", "encoding", "observations",
+        "quality", "precision", "messages"
+      ],
+      "properties": {
+        "caseId": {"type": "string", "minLength": 1},
+        "productId": {"type": "string", "minLength": 1},
+        "status": {"enum": ["passed", "failed", "unsupported"]},
+        "encoding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "format", "encoder", "encoderVersion", "decoder",
+            "decoderVersion", "options", "colorSpace", "alphaMode",
+            "mipPolicy", "determinism", "encodedSha256"
+          ],
+          "properties": {
+            "format": {"type": "string", "minLength": 1},
+            "encoder": {"type": "string", "minLength": 1},
+            "encoderVersion": {"type": "string", "minLength": 1},
+            "decoder": {"type": "string", "minLength": 1},
+            "decoderVersion": {"type": "string", "minLength": 1},
+            "options": {"type": "array", "items": {"type": "string"}},
+            "colorSpace": {"type": "string", "minLength": 1},
+            "alphaMode": {"type": "string", "minLength": 1},
+            "mipPolicy": {"type": "string", "minLength": 1},
+            "determinism": {"enum": ["deterministic", "variable", "UNAVAILABLE"]},
+            "encodedSha256": {
+              "anyOf": [
+                {"$ref": "#/$defs/sha256"},
+                {"type": "null"}
+              ]
+            }
+          }
+        },
+        "observations": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "encodedBytes", "compressionRatio", "encodeMilliseconds",
+            "cpuDecodeMilliseconds", "gpuUploadMilliseconds",
+            "firstUsableFrameMilliseconds", "peakHostMemoryBytes",
+            "estimatedTextureBytes", "steadyState"
+          ],
+          "properties": {
+            "encodedBytes": {"type": ["integer", "null"], "minimum": 0},
+            "compressionRatio": {"$ref": "#/$defs/nullableNonnegative"},
+            "encodeMilliseconds": {"$ref": "#/$defs/timingSummary"},
+            "cpuDecodeMilliseconds": {"$ref": "#/$defs/timingSummary"},
+            "gpuUploadMilliseconds": {"$ref": "#/$defs/timingSummary"},
+            "firstUsableFrameMilliseconds": {"$ref": "#/$defs/timingSummary"},
+            "peakHostMemoryBytes": {"type": ["integer", "null"], "minimum": 0},
+            "estimatedTextureBytes": {"type": ["integer", "null"], "minimum": 0},
+            "steadyState": {"type": "string", "minLength": 1}
+          }
+        },
+        "quality": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "absoluteErrorPixels", "maximumChannelError", "structuralMetric",
+            "transparency", "edges", "titleAndLegend", "thinLines",
+            "fieldOpacity", "moire", "visualDisposition"
+          ],
+          "properties": {
+            "absoluteErrorPixels": {"type": ["integer", "null"], "minimum": 0},
+            "maximumChannelError": {"$ref": "#/$defs/nullableNonnegative"},
+            "structuralMetric": {"$ref": "#/$defs/nullableNonnegative"},
+            "transparency": {"type": "string", "minLength": 1},
+            "edges": {"type": "string", "minLength": 1},
+            "titleAndLegend": {"type": "string", "minLength": 1},
+            "thinLines": {"type": "string", "minLength": 1},
+            "fieldOpacity": {"type": "string", "minLength": 1},
+            "moire": {"type": "string", "minLength": 1},
+            "visualDisposition": {
+              "enum": ["pending-human-review", "accepted", "rejected", "UNAVAILABLE"]
+            }
+          }
+        },
+        "precision": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "float32ProjectedDisplacement", "screenPixelDisplacement",
+            "reverseResidual", "candidateSetAgreement"
+          ],
+          "properties": {
+            "float32ProjectedDisplacement": {"$ref": "#/$defs/nullableNonnegative"},
+            "screenPixelDisplacement": {"$ref": "#/$defs/nullableNonnegative"},
+            "reverseResidual": {"$ref": "#/$defs/nullableNonnegative"},
+            "candidateSetAgreement": {"enum": ["complete", "different", "UNAVAILABLE"]}
+          }
+        },
+        "messages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["level", "text"],
+            "properties": {
+              "level": {"enum": ["warning", "failure", "unsupported", "note"]},
+              "text": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    }
+  }
+}

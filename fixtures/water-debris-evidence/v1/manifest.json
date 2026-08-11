@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "cartofreako-water-debris-evidence-v1",
+  "lifecycle": "exploration-only",
+  "checkedOn": "2026-08-10",
+  "proposedPass": {
+    "id": "anthropocene-water-debris",
+    "generator": "src.generate/generate-anthropocene-water-debris.cc",
+    "status": "not-implemented"
+  },
+  "stableExistingPasses": [
+    "anthropocene",
+    "anthropocene-temperature-2025",
+    "anthropocene-temperature-2026"
+  ],
+  "evidenceClasses": [
+    {
+      "id": "observed-shoreline",
+      "geometry": "point",
+      "depthRule": "not-applicable",
+      "status": "candidate"
+    },
+    {
+      "id": "observed-surface-sample",
+      "geometry": "point",
+      "depthRule": "observed-only",
+      "status": "incomplete"
+    },
+    {
+      "id": "modeled-concentration",
+      "geometry": "raster",
+      "depthRule": "UNAVAILABLE-not-zero",
+      "status": "incomplete"
+    },
+    {
+      "id": "modeled-river-emission",
+      "geometry": "point",
+      "depthRule": "not-applicable",
+      "status": "UNAVAILABLE"
+    },
+    {
+      "id": "cleanup-operation",
+      "geometry": "UNAVAILABLE",
+      "depthRule": "UNAVAILABLE-not-zero",
+      "status": "UNAVAILABLE"
+    },
+    {
+      "id": "depth-profile",
+      "geometry": "profile",
+      "depthRule": "observed-only",
+      "status": "incomplete"
+    }
+  ],
+  "sources": [
+    {
+      "id": "noaa-mdmap",
+      "authority": "NOAA Marine Debris Program",
+      "title": "Marine Debris Monitoring and Assessment Project",
+      "url": "https://marinedebris.noaa.gov/our-work/monitoring/marine-debris-monitoring-and-assessment-project",
+      "access": "public",
+      "licenseSpdx": "UNAVAILABLE",
+      "redistribution": "review-required",
+      "sourcePeriod": "ongoing shoreline surveys; each record date required",
+      "spatialDataAccess": "interactive-export",
+      "uncertainty": "Protocol and sampling effort must accompany each observation; absence of a survey is not zero debris.",
+      "supportsClasses": [
+        "observed-shoreline"
+      ],
+      "limitation": "Shoreline macro-debris observations do not measure open-ocean concentration, river emissions, cleanup operations, or depth."
+    },
+    {
+      "id": "noaa-mdmap-national-survey-2024",
+      "authority": "NOAA Office of Response and Restoration",
+      "title": "NOAA Marine Debris Monitoring and Assessment Project National Survey",
+      "url": "https://www.fisheries.noaa.gov/inport/item/73092",
+      "access": "public",
+      "licenseSpdx": "CC0-1.0",
+      "redistribution": "permitted",
+      "sourcePeriod": "2024 candidate sampling sites",
+      "spatialDataAccess": "download",
+      "uncertainty": "Candidate-site selection and accessibility metadata are not debris measurements.",
+      "supportsClasses": [
+        "observed-shoreline"
+      ],
+      "limitation": "This is a national survey design/candidate-site layer, not a global debris observation field."
+    },
+    {
+      "id": "ocean-cleanup-gpgp-overview",
+      "authority": "The Ocean Cleanup",
+      "title": "The Great Pacific Garbage Patch",
+      "url": "https://theoceancleanup.com/great-pacific-garbage-patch/",
+      "access": "review-required",
+      "licenseSpdx": "UNAVAILABLE",
+      "redistribution": "review-required",
+      "sourcePeriod": "multiple expeditions and models; page current when checked 2026-08-10",
+      "spatialDataAccess": "UNAVAILABLE",
+      "uncertainty": "The page summarizes modeled concentration and sampled vertical distribution but exposes no checked redistributable spatial package.",
+      "supportsClasses": [
+        "observed-surface-sample",
+        "modeled-concentration",
+        "cleanup-operation",
+        "depth-profile"
+      ],
+      "limitation": "Illustrations and summary values cannot be converted into atlas geometry without data access and reuse review."
+    },
+    {
+      "id": "ocean-cleanup-gpgp-2015-2022",
+      "authority": "The Ocean Cleanup",
+      "title": "Seven years into the North Pacific garbage patch: legacy plastic fragments rising disproportionately faster than larger floating objects",
+      "url": "https://doi.org/10.1088/1748-9326/ad78ed",
+      "access": "publication-only",
+      "licenseSpdx": "UNAVAILABLE",
+      "redistribution": "UNAVAILABLE",
+      "sourcePeriod": "2015/2022 systematic surveys",
+      "spatialDataAccess": "UNAVAILABLE",
+      "uncertainty": "Publication reports trawl and aerial sampling plus a mass-balance model; reusable geospatial observations were not established in this prototype.",
+      "supportsClasses": [
+        "observed-surface-sample",
+        "modeled-concentration"
+      ],
+      "limitation": "A publication DOI is evidence context, not authorization to redistribute its underlying data or graphics."
+    },
+    {
+      "id": "ocean-cleanup-depth-2020",
+      "authority": "The Ocean Cleanup collaborators",
+      "title": "First evidence of plastic fallout from the North Pacific Garbage Patch",
+      "url": "https://doi.org/10.1038/s41598-020-64465-8",
+      "access": "publication-only",
+      "licenseSpdx": "UNAVAILABLE",
+      "redistribution": "UNAVAILABLE",
+      "sourcePeriod": "published 2020; sample dates require article review",
+      "spatialDataAccess": "UNAVAILABLE",
+      "uncertainty": "The publication reports concentration decline with depth; station coordinates, sampling uncertainty, and reusable data package remain unverified.",
+      "supportsClasses": [
+        "depth-profile"
+      ],
+      "limitation": "Depth observations from one North Pacific study cannot be generalized to every debris field."
+    }
+  ],
+  "renderReadiness": "not-ready",
+  "unavailable": [
+    "A redistributable global observed surface-debris coordinate dataset",
+    "A redistributable global modeled concentration raster with units, dates, and uncertainty",
+    "A checked global river-emission spatial source and reuse license",
+    "Dated cleanup-operation geometry and redistribution terms",
+    "Depth observations outside the limited North Pacific publication context",
+    "A governance review for communicating modeled garbage-patch boundaries"
+  ],
+  "downloadsPerformed": false,
+  "generatorImplemented": false,
+  "promotionAuthorized": false
+}

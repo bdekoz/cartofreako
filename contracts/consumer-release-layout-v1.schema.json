@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bdekoz.github.io/cartofreako/contracts/consumer-release-layout-v1.schema.json",
+  "title": "Cartofreako consumer release layout proposal v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "lifecycle", "referenceRelease", "candidateRelease",
+    "sourceInput", "partitions", "indexes", "runtime", "productPaths",
+    "delivery", "cachePolicy", "precompression", "releaseBoundary"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "cartofreako-consumer-release-layout-v1"},
+    "lifecycle": {"const": "exploration-only"},
+    "referenceRelease": {"$ref": "#/$defs/referenceRelease"},
+    "candidateRelease": {"$ref": "#/$defs/candidateRelease"},
+    "sourceInput": {"$ref": "#/$defs/sourceInput"},
+    "partitions": {
+      "type": "array",
+      "const": ["standard", "optional", "exploration"]
+    },
+    "indexes": {
+      "type": "array",
+      "minItems": 3,
+      "items": {"$ref": "#/$defs/index"}
+    },
+    "runtime": {"$ref": "#/$defs/runtime"},
+    "productPaths": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["masterSvgGzip", "printPdf", "fullPng", "thumbnailPng", "screenPng", "screenWebp"],
+      "properties": {
+        "masterSvgGzip": {"type": "string", "minLength": 1},
+        "printPdf": {"type": "string", "minLength": 1},
+        "fullPng": {"type": "string", "minLength": 1},
+        "thumbnailPng": {"type": "string", "minLength": 1},
+        "screenPng": {"type": "string", "minLength": 1},
+        "screenWebp": {"type": "string", "minLength": 1}
+      }
+    },
+    "delivery": {
+      "type": "array",
+      "minItems": 7,
+      "items": {"$ref": "#/$defs/delivery"}
+    },
+    "cachePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["immutablePayload", "completionMarker"],
+      "properties": {
+        "immutablePayload": {"const": "public,max-age=31536000,immutable"},
+        "completionMarker": {"const": "no-store"}
+      }
+    },
+    "precompression": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "candidates", "rule"],
+      "properties": {
+        "status": {"const": "deferred"},
+        "candidates": {
+          "type": "array",
+          "items": {"enum": ["json-gzip", "mjs-gzip", "wasm-brotli"]},
+          "uniqueItems": true
+        },
+        "rule": {"type": "string", "minLength": 1}
+      }
+    },
+    "releaseBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "builderNetworkAccess", "builderS3Access", "completionMarkerBuilt",
+        "transportOwner", "humanInvocationRequired"
+      ],
+      "properties": {
+        "builderNetworkAccess": {"const": false},
+        "builderS3Access": {"const": false},
+        "completionMarkerBuilt": {"const": false},
+        "transportOwner": {"type": "string", "format": "uri"},
+        "humanInvocationRequired": {"const": true}
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "path": {"type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9._/{}/-]+$"},
+    "referenceRelease": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "publicBase", "immutable", "completionMarker"],
+      "properties": {
+        "id": {"const": "v13"},
+        "publicBase": {"type": "string", "format": "uri"},
+        "immutable": {"const": true},
+        "completionMarker": {"const": "release.json"}
+      }
+    },
+    "candidateRelease": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "prefix", "published", "uploadAuthorized", "completionMarker"],
+      "properties": {
+        "id": {"const": "proposed-v14"},
+        "prefix": {"const": "cartofreako/v14/"},
+        "published": {"const": false},
+        "uploadAuthorized": {"const": false},
+        "completionMarker": {"const": "release.json"}
+      }
+    },
+    "sourceInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "sourceCommit", "artifactCount"],
+      "properties": {
+        "path": {"$ref": "#/$defs/path"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "sourceCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "artifactCount": {"const": 205}
+      }
+    },
+    "index": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "path", "key"],
+      "properties": {
+        "id": {"enum": ["all-artifacts", "by-pass", "by-projection"]},
+        "path": {"$ref": "#/$defs/path"},
+        "key": {"enum": ["artifact-id", "pass-id", "projection-id"]}
+      }
+    },
+    "runtimeFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "role", "mediaType"],
+      "properties": {
+        "source": {"$ref": "#/$defs/path"},
+        "role": {
+          "enum": [
+            "projection-loader", "projection-wasm", "projection-api",
+            "typescript-declarations", "screen-transform", "artifact-catalog",
+            "worker", "worker-client", "canvas-helper", "svg-helper",
+            "d3-helper", "three-helper"
+          ]
+        },
+        "mediaType": {"type": "string", "minLength": 1}
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["versionDirectory", "identityRule", "core", "optional"],
+      "properties": {
+        "versionDirectory": {"const": "runtime/api-3"},
+        "identityRule": {"const": "versioned-directory-with-sha256-manifest"},
+        "core": {
+          "type": "array",
+          "minItems": 3,
+          "items": {"$ref": "#/$defs/runtimeFile"}
+        },
+        "optional": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/runtimeFile"}
+        }
+      }
+    },
+    "delivery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["extension", "mediaType", "contentEncoding"],
+      "properties": {
+        "extension": {"type": "string", "pattern": "^\\.[a-z0-9.]+$"},
+        "mediaType": {"type": "string", "minLength": 1},
+        "contentEncoding": {"type": ["string", "null"]}
+      }
+    }
+  }
+}
