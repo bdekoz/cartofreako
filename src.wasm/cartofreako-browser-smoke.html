@@ -126,6 +126,16 @@
       starProjection.dispose();
 
       const worker = new CartofreakoWorkerClient();
+      const cancelledController = new AbortController();
+      cancelledController.abort();
+      let workerAbortObserved = false;
+      try {
+        await worker.forwardMany({id: 'voronoi', width: 440},
+          new Float64Array([171.2, 7.1]), {signal: cancelledController.signal});
+      } catch (error) {
+        workerAbortObserved = error.name === 'AbortError';
+      }
+      requireCondition(workerAbortObserved, 'worker pre-abort was not observed');
       const workerManifest = await worker.manifest();
       requireCondition(workerManifest.abiVersion === 1, 'worker ABI is wrong');
       requireCondition(workerManifest.apiVersion === 3, 'worker API is wrong');
@@ -176,7 +186,7 @@
       worker.terminate();
 
       result.dataset.status = 'pass';
-      result.textContent = `PASS API ${runtime.apiVersion}; ABI ${runtime.abiVersion}; forward/reverse; six projections; worker; Canvas 1080p; affine picking; flat texture plane; slices`;
+      result.textContent = `PASS API ${runtime.apiVersion}; ABI ${runtime.abiVersion}; forward/reverse; six projections; abortable worker; Canvas 1080p; affine picking; flat texture plane; slices`;
     } catch (error) {
       result.dataset.status = 'fail';
       result.textContent = `FAIL ${error.stack ?? error}`;

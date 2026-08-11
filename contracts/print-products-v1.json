@@ -1,0 +1,62 @@
+{
+  "schema": "cartofreako-print-products-v1",
+  "units": "inches",
+  "pageTolerancePoints": 0.02,
+  "svgToleranceInches": 0.000001,
+  "a0": {
+    "widthMillimeters": 841,
+    "heightMillimeters": 1189,
+    "imposition": "contain-centered",
+    "status": "dimension-contract"
+  },
+  "projections": [
+    {
+      "id": "cahill-keyes",
+      "outputTag": "ck-44-22",
+      "width": 44,
+      "height": 22,
+      "leadingEdge": "width",
+      "representativeStem": "water-ck-44-22"
+    },
+    {
+      "id": "authagraph",
+      "outputTag": "authagraph-44-19.052559",
+      "width": 44,
+      "height": 19.052559,
+      "leadingEdge": "width",
+      "representativeStem": "water-authagraph-44-19.052559"
+    },
+    {
+      "id": "dymaxion",
+      "outputTag": "dymaxion-44-20.78461",
+      "width": 44,
+      "height": 20.78461,
+      "leadingEdge": "width",
+      "representativeStem": "water-dymaxion-44-20.78461"
+    },
+    {
+      "id": "myriahedral",
+      "outputTag": "myriahedral-44-24.75",
+      "width": 44,
+      "height": 24.75,
+      "leadingEdge": "width",
+      "representativeStem": "water-myriahedral-44-24.75"
+    },
+    {
+      "id": "star-x",
+      "outputTag": "star-x-34-44",
+      "width": 34,
+      "height": 44,
+      "leadingEdge": "height",
+      "representativeStem": "water-star-x-34-44"
+    },
+    {
+      "id": "voronoi",
+      "outputTag": "voronoi-44-22.916667",
+      "width": 44,
+      "height": 22.916667,
+      "leadingEdge": "width",
+      "representativeStem": "water-voronoi-44-22.916667"
+    }
+  ]
+}

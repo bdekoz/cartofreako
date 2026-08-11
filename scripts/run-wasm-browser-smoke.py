@@ -137,7 +137,12 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("html", type=pathlib.Path)
     parser.add_argument("--browser", default="")
+    parser.add_argument("--serve-root", type=pathlib.Path)
+    parser.add_argument("--timeout", type=float, default=30.0,
+                        help="seconds to wait for the page result (default: 30)")
     args = parser.parse_args()
+    if not 1 <= args.timeout <= 300:
+        raise SystemExit("--timeout must be between 1 and 300 seconds")
 
     html = args.html.resolve()
     if not html.is_file():
@@ -146,14 +151,19 @@ def main() -> int:
     if not browser:
         raise SystemExit("no Chrome/Chromium browser found")
 
-    handler = functools.partial(QuietHandler, directory=str(html.parent))
+    serve_root = args.serve_root.resolve() if args.serve_root else html.parent
+    try:
+        relative_html = html.relative_to(serve_root)
+    except ValueError as error:
+        raise SystemExit(f"HTML is outside --serve-root: {html}") from error
+    handler = functools.partial(QuietHandler, directory=str(serve_root))
     server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), handler)
     server_thread = threading.Thread(target=server.serve_forever, daemon=True)
     server_thread.start()
     chrome: subprocess.Popen[str] | None = None
     devtools: DevToolsSocket | None = None
     try:
-        url = f"http://127.0.0.1:{server.server_port}/{html.name}"
+        url = f"http://127.0.0.1:{server.server_port}/{relative_html.as_posix()}"
         with tempfile.TemporaryDirectory(prefix="cartofreako-chrome-") as profile:
             chrome = subprocess.Popen(
                 [
@@ -187,7 +197,7 @@ def main() -> int:
             devtools = DevToolsSocket(page["webSocketDebuggerUrl"])
             devtools.call("Runtime.enable")
 
-            deadline = time.monotonic() + 30
+            deadline = time.monotonic() + args.timeout
             status = "running"
             while status == "running" and time.monotonic() < deadline:
                 status = page_value(

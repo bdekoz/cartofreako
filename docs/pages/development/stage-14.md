@@ -51,10 +51,12 @@ been built or published.
   baseline.
 - [x] Freeze and publish the core Stage 14 reverse-projection source identity
   independently of generated assets and UCB AAO/S3 preservation.
-- [ ] Complete the post-release numerical-evidence, portable-fixture,
+- [x] Complete the post-release numerical-evidence, portable-fixture,
   deterministic-selection, and standard-consumer promotion stages below.
-- [ ] Stop for explicit operator confirmation before the next repository-wide
+- [x] Receive explicit operator authorization for the next repository-wide
   full check and expanded Stage 14 source-release gate.
+- [x] Pass that repository-wide check, generate the local standard asset tree,
+  complete visual QA, and freeze the expanded Stage 14 evidence record.
 - [ ] If separately authorized, freeze a generated-v14 manifest, checksums,
   publication evidence, and Active Archive record through the human-invoked
   UCB AAO/S3 path.
@@ -230,8 +232,16 @@ different visual system. Immutable v12 and v13 assets are not rewritten; the
 | Static syntax and `git diff --check` | Module syntax and patch hygiene | Passed 2026-08-10 |
 | Resource and temperature generator tests | 60% observed fields, 2× titles, metadata, and profile validation | Passed 2026-08-09 |
 | Resource checksum manifest | Source-profile digest after the 60% change and all pinned resource payloads | Passed 2026-08-09 |
+| `make check-print-contract` | Canonical SVG/PDF geometry, 44-inch-leading-edge print products, A0 placement, and authoritative 3840-pixel parents | Passed 2026-08-10 |
+| `make audit-dymaxion-ulp` | 1,883 edge/vertex/subface/tie/clamp probes and 92 frame-scale boundaries | Passed 2026-08-10 with no unclassified gap and no production tolerance change indicated |
+| `make check-projection-fixtures` | 31,008 implementation-neutral cases consumed by native, WebAssembly, Node, and dependency-free Python readers | Passed 2026-08-10 |
+| `make check-reverse-oracles` | 2,108 independently produced Voronoi, Dymaxion, and Myriahedral cases | Passed 2026-08-10 with four retained, classified upstream Dymaxion registration exclusions |
+| `make check-artifact-selection` | Deterministic request/receipt schemas, fallback boundaries, golden decision, browser, Node, and independent Python agreement | Passed 2026-08-10 |
+| `make check-screen-1080p` | 205 standard PNG/WebP records, 1,025 referenced files, hashes, no-crop transforms, geographic picks, worker cancellation, and offline Three.js r185 | Passed 2026-08-10 |
 | `tests/test-star-x-projection-api` plus regenerated graticule/Earth | Fixed cutoff/bearing, projection-only registration (including a no-Natural-Earth smoke run), proportional lower clearance, complete in-frame boundary, topmost land composition, and visual unclipping | Passed 2026-08-10 |
-| Repository-wide `make check` | Full projection, generator, data-integrity, authorization, resources, atmosphere, astronomy, network, bathymetry, slicing, and runtime gate | Passed 2026-08-10 after replacing two stale pre-Izzi bathymetry curve include names with their canonical Izzi headers |
+| Repository-wide `make check` | Full projection, generator, data-integrity, authorization, resources, atmosphere, astronomy, network, bathymetry, slicing, runtime, print, fixtures, oracle, selection, and screen gate | Passed 2026-08-10 after replacing two stale pre-Izzi bathymetry curve include names with their canonical Izzi headers |
+| `make assets-resilient` | Standard graph plus locally authorized JAXA cloud-atmosphere products | Passed 2026-08-10: 1,320 files, approximately 3.2 GB, no zero-byte files |
+| Projection contact-sheet and focused plate review | Six complete standard-projection grids; Star-X water/Antarctica/graticule; network sites/swarm; temperature/resources; six authorized atmosphere plates | Passed operator-style visual inspection 2026-08-10; independent collaborator review remains `UNAVAILABLE` |
 
 ## Expanded Stage 14 completion criteria
 
@@ -263,26 +273,53 @@ Active Archive check-in record. `make release-github` cannot reach that target.
 
 The numerical-evidence and consumer-contract additions described below are
 later Stage 14 work and are not claims retroactively attached to the
-`v20260810` source release. Focused checks accompany each addition. The next
-repository-wide `make check` remains a distinct release gate and requires
-explicit operator confirmation.
+`v20260810` source release. Focused checks accompany each addition. The
+operator authorized the expanded repository-wide gate on 2026-08-10; its
+result is recorded separately so it cannot be confused with the earlier
+source-release evidence.
 
-## Remaining Stage 14 staging plan
+## Expanded Stage 14 staging results
 
 GPU-specific products and performance measurements are intentionally excluded
 from this plan. Stage 14 will freeze the authoritative inputs and portable
 consumer baseline; [Stage 15](stage-15.md) will benchmark GPU products from
 that baseline.
 
-| Stage | Work | Exit gate |
+| Stage | Result | Exit evidence |
 | --- | --- | --- |
-| **14A — baseline and print contract** | Reconcile release-state wording, inventory exact-ratio 44-inch-leading-edge and A0 workflows, and implement `check-print-contract` | Consumer targets cannot change canonical SVG/PDF geometry, print dimensions, the 3840-pixel parent, or archived-art identity |
-| **14B — numerical closure** | Implement the observation-only Dymaxion ULP classifier/clamp audit; make no behavior change without a reproducible discrepancy and explicit error bound | Every probed edge, vertex, subface, frame, tie, and clamp event is classified in machine-readable evidence |
-| **14C — neutral projection fixtures** | Define stable topology keys and evidence grades, publish the six-family fixture bundle and checksums, and add native, WebAssembly, and minimal independent consumers | Offline `make check-projection-fixtures` passes without generated art, S3, or network access |
-| **14D — cross-implementation oracle** | Audit `d3-geo-polygon` v1.12.1 versus v2.0.1, then add independent Voronoi, Dymaxion, and Myriahedral producers before extending the remaining evidence tiers | At least two direct or clean-room independent families pass, and every disagreement is retained and classified before production code changes |
-| **14E — agent selection protocol** | Add artifact request and decision-receipt schemas, a pure deterministic selector, reason codes, hashes, CLI support, and golden fixtures | Node, browser, and a minimal independent consumer choose the same artifact and decision-core hash from identical bytes |
-| **14F — consumer promotion** | Expand the 24-item 1080p canary to the standard whole-map and approved-slice matrix; add gallery links, Three.js interaction, cancellation, and a clean-room handoff | Print, catalog, screen, interaction, accessibility, and independent-consumer gates pass for every promoted standard product |
-| **14G — release gate** | Run focused checks throughout, request confirmation before repository-wide `make check`, then freeze source identity, manifests, checksums, notes, and publication evidence | The expanded source release is internally consistent; any generated-v14 UCB AAO deposit remains a later, separate human invocation |
+| **14A — baseline and print contract** | **Implemented** | `contracts/print-products-v1.json` plus `make check-print-contract` preserve canonical SVG/PDF geometry, exact-ratio 44-inch-leading-edge products, A0 placement, and authoritative 3840-pixel parents |
+| **14B — numerical closure** | **Implemented; no production tolerance change indicated** | `make audit-dymaxion-ulp` classifies 1,883 boundary probes with no gaps and checks 92 frame-scale boundaries |
+| **14C — neutral projection fixtures** | **Implemented** | `make check-projection-fixtures` verifies 31,008 cases in native C++, WebAssembly, and a dependency-free Python reader |
+| **14D — cross-implementation oracle** | **Implemented for the declared first evidence tier** | `make check-reverse-oracles` verifies 2,108 Voronoi, Dymaxion, and Myriahedral cases while retaining four classified upstream Dymaxion registration exclusions |
+| **14E — agent selection protocol** | **Implemented** | Node, browser, and independent Python consumers agree on the golden artifact and decision-core SHA-256 `9c915fe5fa80dcb4d37c2bfa597277d57753f84d6a33fbe189f65d6b1a82a978` |
+| **14F — consumer promotion** | **Implemented and locally reviewed** | The checked manifest names 205 standard products, 31 pass IDs, 11 layouts, and 14 slices; generation, clean-room catalog checks, cancellation, offline Three.js r185 interaction, and projection contact-sheet review passed |
+| **14G — freeze gate** | **Expanded local evidence frozen** | The repository-wide `make check`, `make assets-resilient`, and operator-style visual QA passed; any generated-v14 UCB AAO deposit remains a later, separate human invocation |
+
+The ignored local QA record is `reports/stage-14-visual-qa.md`, with one
+contact sheet per projection and a separate authorized cloud-atmosphere
+sheet. It records the 1,320-file, approximately 3.2 GB local inventory and the
+manual findings without treating that review as publication authority or an
+independent collaborator disposition.
+
+### Final authorized-atmosphere regeneration
+
+The first final `make assets-resilient` run correctly stopped when the pinned
+GCOM-C AOD observation became 98.6 hours old against a 96-hour hard limit.
+That exposed a mismatch between an authorized, reproducible offline snapshot
+and a moving generation-time expiration. The source profile now applies the
+already established `latest-available` rule to every enabled JAXA layer:
+observations must still end no later than source selection and process start,
+but the configured 6-, 96-, or 336-hour value is a preferred freshness target.
+An older newest observation is retained with exact end UTC, age, policy, and
+target in SVG metadata and a visible `latest available` legend label. Future
+observations remain rejected, and the generic implementation still supports a
+strict `maximum-age` policy for profiles that explicitly request it.
+
+The focused atmosphere contract, the final repository-wide check, and all six
+projection regenerations passed with that policy. Each generated SVG also
+verified that `cloud-atmosphere-background` retains `display:none` and
+`data-default-visible="false"`; the six-PNG atmosphere contact sheet confirms
+that it is visually absent by default.
 
 ## Post-release consumer follow-on
 
@@ -294,14 +331,14 @@ testable work. Its screen derivatives are additive and cannot alter the
 authoritative SVG/PDF archive and art objects, projection-specific 44-inch or
 A0 inkjet workflows, 3840-pixel raster, or print-generation contracts.
 
-### 2026-08-10 — 1080p consumer and agent catalog v1
+### 2026-08-10 — complete 1080p consumer and agent catalog v1
 
-Status: **implemented as a bounded 24-artifact audit canary; focused checks
-passing**.
+Status: **implemented for the checked 205-product standard matrix; focused
+Node, Python, vendor, and browser checks passing**.
 
 - added exact 1920 × 1080 contain-fit PNG and lossless-WebP derivatives for
-  Water, Anthropocene Temperature 2026, Network Infrastructure Sites, and
-  Bathymetry Roulette across all six reference projection families;
+  all standard whole maps, five Myriahedral perspectives, four Cahill–Keyes
+  strips, eight Cahill–Keyes octants, and two Myriahedral face groups;
 - retained the projection-specific whole-map ratio without crop or stretch,
   using declared `#f4f5f5` letterbox/pillarbox padding;
 - added the checked `cartofreako-artifacts-v1` schema and generated catalog,
@@ -309,20 +346,23 @@ passing**.
   content rectangles, and both affine matrices;
 - added projection-to-screen, padding-aware screen-to-projection, and
   candidate-preserving screen-to-geographic APIs plus TypeScript declarations;
-- added a dependency-free flat texture-plane record suitable for Three.js or
-  raw WebGL while explicitly rejecting equirectangular-sphere treatment;
-- added a runnable exact-1080p Canvas example and extended headless Chrome to
-  cover all six families, affine picks, no-crop layout, and the flat plane;
+- added a dependency-free flat texture-plane record and a checked offline
+  Three.js r185 `PlaneGeometry`/raycast/reverse-pick path while explicitly
+  rejecting equirectangular-sphere treatment;
+- added runnable exact-1080p Canvas and Three.js examples and extended
+  headless Chrome to cover affine picks, no-crop layout, and the flat plane;
+- added `AbortSignal` cancellation to the worker client and cancellation
+  suppression in the worker protocol;
 - verified decoded PNG/WebP pixel equality and re-hashed every authoritative
   parent after derivative generation; and
-- kept all consumer targets out of `make all`, GitHub release, and UCB AAO/S3
-  publication paths.
+- promoted the complete standard screen matrix into `make all` while keeping
+  GitHub publication and UCB AAO/S3 preservation separate human actions.
 
-`make generate-screen-1080p` produces the bounded set;
-`make check-screen-1080p` validates its files, catalog, transforms, and picks;
-`make consumer-assets-v1` also runs the browser canary. Extending the catalog
-to every standard pass, perspective, and approved slice remains a separate
-promotion gate. A collaborator clean-room run remains `UNAVAILABLE`. KTX2,
+`make generate-screen-1080p` produces the complete set;
+`make check-screen-1080p` validates 205 catalog records and 1,025 file
+references, transforms, hashes, picks, a dependency-free Python reader, and
+the offline Three.js browser canary. A collaborator clean-room run remains
+`UNAVAILABLE`. KTX2,
 semantic masks, Float32 GPU geometry, and engine-specific GPU-product importers
 are assigned to the [Stage 15 ledger](stage-15.md), not this completion gate.
 
@@ -336,9 +376,23 @@ implementation consistency evidence, not independent mathematical proof;
 published anchors, exact seams, poles, face centers, and retained-hinge tests
 remain necessary independent/structural evidence.
 
-### Planned — Dymaxion ULP-scale classifier and clamp audit
+### Implemented — Dymaxion ULP-scale classifier and clamp audit
 
-Status: **planned; not yet implemented or run**.
+Status: **implemented; focused audit passing without a production numerical
+change**.
+
+`make audit-dymaxion-ulp` executes 1,883 edge, vertex, subface, tie, clamp, and
+one-sided boundary probes. It found 566 candidate-set differences that were
+all contained by the declared tolerance, no unclassified gap, and no ordinary
+interior clamp. The 92 native, 44-inch, 1,920-pixel, and 13,200-pixel frame
+checks found the expected first accepted and rejected representable widths.
+The maximum retained forward residual was approximately
+`1.818989e-12` projected units. The machine-readable local result is
+`reports/dymaxion-ulp-audit.json`; the implementation and stable conclusions
+are recorded in the [Dymaxion notes](../projections/dymaxion/implementation.md).
+
+The following text retains the reviewed design and acceptance rationale used
+for the audit.
 
 The 46,656-sample campaign above deliberately avoids seams. It therefore does
 not establish behavior within a few representable floating-point steps of a
@@ -348,7 +402,7 @@ presumed defective, but the fixed spherical face tolerance, frame classifier,
 inverse bounds, barycentric tolerance, and forward clamps merit a dedicated
 ULP-scale audit before Stage 14 numerical work is considered closed.
 
-The proposed implementation adds `tests/audit-dymaxion-ulp.cc`, a focused
+The implemented audit uses `tests/audit-dymaxion-ulp.cc`, a focused
 `make audit-dymaxion-ulp` target, and an ignored
 `reports/dymaxion-ulp-audit.json` evidence file. It should:
 
@@ -382,10 +436,22 @@ and an explicit floating-point error bound support the replacement. The final
 result belongs in the Dymaxion implementation notes whether it confirms the
 existing constants or produces a corrective patch.
 
-### Planned — true cross-implementation reverse oracle
+### Implemented — true cross-implementation reverse oracle
 
-Status: **planned; no oracle fixtures generated and no production behavior
-changed**.
+Status: **implemented for the declared Voronoi, Dymaxion, and Myriahedral
+evidence tier; focused check passing**.
+
+`make check-reverse-oracles` checks 2,108 independently produced cases. The
+pinned `d3-geo-polygon` v2.0.1 Voronoi route has maximum angular difference
+`5.08038e-13°`; the pinned D3 Airocean/Gray comparison has maximum classified
+difference `0.000165906°` under its declared `0.0003°` rounded-registration
+bound; and the dependency-free Myriahedral route has maximum difference
+`1.32339e-13°`. Four D3 face-19 registration cases remain explicit exclusions,
+not discarded failures or reasons to change production behavior. AuthaGraph,
+Cahill–Keyes, and Star-X retain their narrower evidence labels.
+
+The following text retains the reviewed evidence-boundary and acceptance
+rationale used for the implementation.
 
 The existing round-trip tests use Cartofreako's forward and reverse paths
 together. They are strong consistency evidence, but both directions can share
@@ -463,10 +529,20 @@ true cross-implementation reverse oracle exists. Cahill–Keyes and Star-X keep
 their narrower evidence labels until an actual external implementation is
 available.
 
-### Planned — publish implementation-neutral projection fixtures
+### Implemented — publish implementation-neutral projection fixtures
 
-Status: **planned; schema, public bundle, and independent consumer not yet
-implemented**.
+Status: **implemented; native, WebAssembly, Node, and independent Python
+checks passing**.
+
+The checked v1 bundle contains 31,008 cases: 108 Cahill–Keyes, 28 AuthaGraph,
+73 Dymaxion, 30,720 Myriahedral, 17 Star-X, and 62 Voronoi. Stable topology
+keys, evidence grades, provenance, tolerances, SHA-256 inventory, and a
+Cartofreako numeric-cell crosswalk are published under
+`fixtures/projections/v1/`. See the
+[consumer documentation](../runtime/projection-fixtures.md).
+
+The following text retains the reviewed neutral-contract design and
+acceptance rationale.
 
 Publish a small, versioned projection-mathematics dataset that JavaScript,
 Python, Rust, GIS, D3, Mapshaper, and agent workflows can consume without
@@ -561,9 +637,22 @@ clearance for every value. Establish this neutral contract before implementing
 the cross-implementation producers so every oracle emits one portable evidence
 format.
 
-### Planned — artifact request and decision-receipt schemas
+### Implemented — artifact request and decision-receipt schemas
 
-Status: **planned; schemas, selector, and receipts not yet implemented**.
+Status: **implemented; Node, browser, and independent Python consumers agree**.
+
+The schemas, pure ESM selector, TypeScript declarations, JSON-only CLI,
+append-only override receipts, reason vocabulary, order-independent selection,
+and golden fixtures are checked by `make check-artifact-selection`. Fallbacks
+are opt-in and limited to `projectionIds`, `formats`, `maxBytes`, `viewport`,
+and `authorityClasses`; lifecycle, checksum, evidence, governance,
+interaction, and human-review boundaries cannot be relaxed. The current
+golden decision-core SHA-256 is
+`9c915fe5fa80dcb4d37c2bfa597277d57753f84d6a33fbe189f65d6b1a82a978`.
+See [artifact selection and receipts](../runtime/artifact-selection.md).
+
+The following text retains the reviewed request/receipt design and acceptance
+rationale.
 
 Define a deterministic, inspectable interface between an agent's request and
 the artifact catalog. The selector uses structured constraints and explicit

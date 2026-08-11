@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bdekoz.github.io/cartofreako/contracts/projection-fixtures-v1.schema.json",
+  "title": "Cartofreako implementation-neutral projection fixtures v1",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "family",
+    "coordinateContract",
+    "layouts"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "cartofreako-projection-fixtures-v1" },
+    "family": {
+      "enum": [
+        "cahill-keyes",
+        "authagraph",
+        "dymaxion",
+        "myriahedral",
+        "star-x",
+        "voronoi"
+      ]
+    },
+    "coordinateContract": {
+      "type": "object",
+      "required": ["geographic", "projected", "origin", "xAxis", "yAxis"],
+      "properties": {
+        "geographic": { "const": "[longitude, latitude] degrees" },
+        "projected": { "const": "[u, v] normalized page coordinates" },
+        "origin": { "const": "top-left" },
+        "xAxis": { "const": "right" },
+        "yAxis": { "const": "down" }
+      },
+      "additionalProperties": false
+    },
+    "layouts": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/layout" }
+    }
+  },
+  "$defs": {
+    "pair": {
+      "type": "array",
+      "prefixItems": [{ "type": "number" }, { "type": "number" }],
+      "items": false
+    },
+    "candidate": {
+      "type": "object",
+      "required": [
+        "geographic",
+        "topologyKey",
+        "component",
+        "boundary"
+      ],
+      "properties": {
+        "geographic": { "$ref": "#/$defs/pair" },
+        "topologyKey": { "type": "string", "minLength": 1 },
+        "component": { "type": "integer", "minimum": 0 },
+        "boundary": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "case": {
+      "type": "object",
+      "required": [
+        "caseId",
+        "operation",
+        "input",
+        "expected",
+        "boundaryClass",
+        "tolerances",
+        "evidence"
+      ],
+      "properties": {
+        "caseId": { "type": "string", "minLength": 1 },
+        "operation": { "const": "forward-reverse" },
+        "input": {
+          "type": "object",
+          "required": ["geographic"],
+          "properties": { "geographic": { "$ref": "#/$defs/pair" } },
+          "additionalProperties": false
+        },
+        "expected": {
+          "type": "object",
+          "required": [
+            "projected",
+            "topologyKey",
+            "component",
+            "reverseStatus",
+            "reverseCandidates"
+          ],
+          "properties": {
+            "projected": { "$ref": "#/$defs/pair" },
+            "topologyKey": { "type": "string", "minLength": 1 },
+            "component": { "type": "integer", "minimum": 0 },
+            "reverseStatus": {
+              "enum": ["unique", "ambiguous", "outside", "cut", "unsupported"]
+            },
+            "reverseCandidates": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/candidate" }
+            }
+          },
+          "additionalProperties": false
+        },
+        "boundaryClass": {
+          "enum": ["interior", "edge", "vertex", "cut", "pole", "overlap"]
+        },
+        "tolerances": {
+          "type": "object",
+          "required": ["angularDegrees", "normalizedPlanar"],
+          "properties": {
+            "angularDegrees": { "type": "number", "exclusiveMinimum": 0 },
+            "normalizedPlanar": { "type": "number", "exclusiveMinimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "evidence": {
+          "type": "object",
+          "required": ["grade", "source", "revision"],
+          "properties": {
+            "grade": {
+              "enum": [
+                "published-anchor",
+                "upstream-implementation",
+                "independent-reimplementation",
+                "structural-invariant",
+                "cartofreako-compatibility"
+              ]
+            },
+            "source": { "type": "string", "minLength": 1 },
+            "revision": { "type": "integer", "minimum": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "layout": {
+      "type": "object",
+      "required": [
+        "layoutId",
+        "nativeAspect",
+        "componentModel",
+        "cutTopology",
+        "cases"
+      ],
+      "properties": {
+        "layoutId": { "type": "string", "minLength": 1 },
+        "nativeAspect": { "type": "number", "exclusiveMinimum": 0 },
+        "componentModel": { "type": "string", "minLength": 1 },
+        "cutTopology": { "type": "string", "minLength": 1 },
+        "cases": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/case" }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,14 +1,17 @@
 # AI Workflows assessment and 1080p gaming consumer improvement plan
 
-**Status:** Stage 14 consumer v1 implemented for a 24-artifact audit canary;
-full release-matrix catalog, GPU formats, masks, and independent collaborator
-run remain proposed
+**Status:** Stage 14 consumer v1 implemented for the complete checked standard
+matrix: 205 artifacts, 31 pass IDs, 11 layouts, and 14 approved slices.
+Independent collaborator review remains external evidence; GPU formats, masks,
+and benchmarking are assigned to the
+[Stage 15 ledger](../development/stage-15.md)
 
 **Evidence basis:**
 the local delivery report `reports/cartofreako-audit-outcomes-01.md`,
 the [forward/reverse API](projection-api.md), the
-[WebAssembly runtime](../../../src.wasm/README.md), and the current
-[generation contract](../getting-started/generation.md)
+[WebAssembly runtime](../../../src.wasm/README.md), the current
+[generation contract](../getting-started/generation.md), and the
+[Stage 15 GPU benchmark ledger](../development/stage-15.md)
 
 ## Outcome
 
@@ -28,18 +31,18 @@ objects. The existing 44-inch leading-edge plate family and A0 output are
 authoritative print presentations. The print family does not force every plate
 into a 44 × 30 rectangle: the available leading/long edge targets 44 inches
 and the other edge follows the projection's exact aspect ratio. The
-3840-pixel PNG remains the full raster. New 1080p, WebP, KTX2, and mask files
-are additive access/runtime derivatives with explicit parent IDs. No
-derivative target may become an input to an authoritative archive, art, or
-print target.
+3840-pixel PNG remains the full raster. Stage 14's 1080p PNG/lossless-WebP
+files are additive access/runtime derivatives with explicit parent IDs. Stage
+15 owns any KTX2, GPU texture, Float32, or mask experiment. No derivative
+target may become an input to an authoritative archive, art, or print target.
 
 ## Assessment disposition
 
 | Assessment recommendation | Current repository state | Work left by this plan |
 | --- | --- | --- |
-| `RECOMMENDATION-REVERSE` | Complete in runtime API 3 for all six projection families, including face/component candidates and residuals | Add the screen-to-projection affine transform and game picking fixtures; do not redesign the inverse mathematics |
-| `RECOMMENDATION-JS` | Core ESM, TypeScript, immutable capability metadata, typed-array batches, workers, Canvas, SVG, and D3 are implemented | Add artifact discovery, deterministic selection, decision receipts, cancellation for long work, multi-bound Pacific slices, and runnable Three.js/WebGL examples |
-| `RECOMMENDATION-GAMING` | Six-projection 1920 × 1080 contain-fit PNG/lossless-WebP canary, affine picking, Canvas example, and dependency-free flat texture plane are implemented | Extend the checked subset to the full standard release matrix; benchmark power-of-two/KTX2 and masks separately |
+| `RECOMMENDATION-REVERSE` | Complete in runtime API 3 for all six projection families, including face/component candidates and residuals | Screen-to-projection affine transforms and geographic-picking fixtures now cover the standard matrix; independent downstream trials remain useful |
+| `RECOMMENDATION-JS` | Core ESM/TypeScript, artifact discovery and deterministic receipts, typed-array batches, abortable workers, Canvas, SVG, D3, and offline Three.js are implemented | Multi-party clean-room use remains external evidence; GPU and engine-specific adapters belong to Stage 15 |
+| `RECOMMENDATION-GAMING` | The 205-product 1920 × 1080 PNG/lossless-WebP matrix, affine picking, Canvas, raw flat-plane, and Three.js r185 interaction paths are checked | Benchmark GPU products and any MapLibre, Godot, or Unity adapter separately in Stage 15 |
 
 The existing S3 `release.json` proves aggregate release identity and counts,
 but it is not an artifact catalog. It cannot answer a request such as “the
@@ -66,8 +69,8 @@ vertical leading edge. A0 imposition is not currently named as a Make target,
 so the first implementation task is to locate and document its authoritative
 command rather than silently invent a replacement.
 
-Add a `check-print-contract` gate before generating consumer derivatives. It
-compares physical dimensions and page geometry, not raster file hashes,
+`make check-print-contract` is the gate before generating consumer
+derivatives. It compares physical dimensions and page geometry, not raster file hashes,
 because PDF encoder bytes can vary while the art/print contract remains exact.
 A screen-specific label or line-weight adjustment, if later needed, uses an
 explicitly named screen style and cannot modify the canonical SVG/PDF style.
@@ -81,7 +84,7 @@ explicitly named screen style and cannot modify the canonical SVG/PDF style.
 | Full raster | Existing longest-side 3840 PNG | High-resolution review and derivative comparison; unchanged |
 | Preview | Existing 480-pixel PNG | Contact sheets and rapid browsing; unchanged |
 | Screen | Exact 1920 × 1080 contain-fit PNG and lossless WebP | Game UI, exhibits, presentations, and agent visual selection |
-| GPU | Exact 2048 × 1024 contain-fit PNG; optional KTX2/Basis after benchmarks | Flat planes and GPU upload; never described as a globe texture |
+| GPU | Stage 15 2048 × 1024 controls and optional KTX2/Basis candidates | Flat planes and GPU upload; benchmarked before adoption and never described as a globe texture |
 | Interaction | Projection manifest, affine transform, optional topology/feature masks, runtime API 3 | Picking, tooltips, annotations, and linked views |
 
 The default fit policy is `contain`. No lobe, Antarctic component, title,
@@ -96,13 +99,13 @@ stretched to fill the screen.
 
 ## Artifact catalog v1
 
-The v1 canary creates `assets.generated/catalog/artifacts-v1.json` against
+The v1 generator creates `assets.generated/catalog/artifacts-v1.json` against
 [`contracts/artifacts-v1.schema.json`](../../../contracts/artifacts-v1.schema.json).
-It contains 24 records: Water, Anthropocene Temperature 2026, Network
-Infrastructure Sites, and Bathymetry Roulette across all six reference
-projections. This is intentionally an audit-ready subset, not a false claim
-that every standard, optional, exploration-only, perspective, or slice product
-has already entered the catalog. Each logical plate has one stable record with
+It contains the 205 products named by the checked
+[`standard-artifact-manifest-v1.json`](../../../contracts/standard-artifact-manifest-v1.json):
+31 standard pass IDs across six projection families, 11 layouts, and 14
+approved slices. Optional and exploration-only passes remain excluded unless a
+later version explicitly opts them in. Each logical plate has one stable record with
 PNG/WebP variants rather than unrelated records per file. Minimum fields are:
 
 - stable artifact ID, title, human-reviewed alt text, subject/pass, lifecycle
@@ -215,27 +218,22 @@ archive or art masters.
 
 ## Game-facing interface
 
-Implement three progressively richer paths:
+Stage 14 implements two progressively richer paths:
 
 1. **Static flat map:** load the exact 1920 × 1080 PNG/WebP into a UI panel or
    flat Three.js plane. This path needs no WASM.
 2. **Interactive flat map:** map pointer coordinates through the catalog's
    inverse affine transform, then call runtime API 3 `inverse()`. Preserve all
-   ambiguous candidates; use known native-cell/component masks to qualify a
-   result when available.
-3. **Dynamic geometry:** use the existing command buffer on a worker and add a
-   checked Float32/WebGL adapter. Keep Float64 as the authoritative CPU result
-   and measure conversion error before adopting a GPU path.
+   ambiguous candidates. A future Stage 15 topology mask may supply a
+   native-cell/component qualifier without changing those semantics.
 
-Initial examples cover Canvas 2D and a Three.js plane. A later MapLibre custom
-layer, Unity importer, or Godot importer consumes the same catalog and
-transform contract rather than creating engine-specific projection semantics.
-
-Optional masks are additive. A topology mask encodes native cell/component for
-qualified picks; a feature-ID mask links visible marks to catalog records; and
-transparent semantic-layer rasters allow approved layer composition. Every
-mask needs lossless encoding, a value dictionary, a matching transform, and
-licensing approval. Anti-aliased display colors are never decoded as IDs.
+The examples cover Canvas 2D, a dependency-free flat-plane record, and an
+offline checked Three.js r185 plane/raycast/reverse-pick path. Later
+MapLibre, Unity, or Godot importers, Float32/WebGL adapters, and topology or
+feature-ID masks are Stage 15 candidates. They must consume the same catalog
+and transform contract rather than create engine-specific projection
+semantics. Their product definitions, benchmark, and acceptance rules now live
+in the [Stage 15 ledger](../development/stage-15.md).
 
 ## Implemented v1 layout and Make surface
 
@@ -250,12 +248,11 @@ assets.generated/
     ├── png/                 # unchanged 3840 product
     ├── thumbnail/           # unchanged 480 product
     ├── screen-1080p/        # exact 1920 × 1080 PNG
-    ├── screen-1080p-webp/   # exact lossless WebP
-    ├── texture-2k/          # exact 2048 × 1024 PNG/KTX2
-    └── mask/                # optional topology/feature masks
+    └── screen-1080p-webp/   # exact lossless WebP
 ```
 
-The checked v1 targets remain separate from archive/art/print generation:
+The checked v1 targets remain independently invocable even though the promoted
+screen products are now part of the standard generated graph:
 
 ```text
 make generate-screen-1080p
@@ -267,14 +264,16 @@ make consumer-assets-v1
 unchanged 3840-pixel parent PNG, exact 1920 × 1080 contain-fit placement,
 WCAG-light-gray `#f4f5f5` padding, and lossless WebP. It verifies pixel
 equivalence between decoded PNG and WebP and re-hashes the SVG, PDF, and full
-PNG parents after every derivative. `check-screen-1080p` validates all 24
-records, files, hashes, frames, matrices, padding rejection, and qualified
-forward/screen/reverse picks. `consumer-assets-v1` adds the headless browser
-Canvas check.
+PNG parents after every derivative. `check-screen-1080p` validates all 205
+records and their 1,025 declared files, hashes, frames, matrices, padding
+rejection, and qualified forward/screen/reverse picks. It also runs a minimal
+independent Python reader and the offline Three.js browser canary.
+`consumer-assets-v1` adds the broader headless browser consumer checks.
 
-Do not add KTX2, semantic layers, masks, or the full release matrix to
-`make all` until their tools, licenses, determinism, and QA are proven. None of
-these targets depends on `release-ucb-aao-s3`.
+The complete checked standard matrix is part of `make all`. Stage 15
+separately owns KTX2, semantic layers, masks, and their
+promotion evidence. None of these targets depends on
+`release-ucb-aao-s3`.
 
 ## Implementation sequence
 
@@ -287,22 +286,21 @@ these targets depends on `release-ucb-aao-s3`.
 Exit gate: a consumer target cannot change any canonical SVG/PDF frame, print
 target, 3840 PNG rule, or archived-art identity.
 
-### 1. Render a representative 1080p canary — implemented
+### 1. Render the complete standard 1080p matrix — implemented
 
-The implemented v1 renders Water, Bathymetry Roulette, Network Infrastructure
-Sites, and Anthropocene Temperature 2026 in all six projections. It uses the
-existing reviewed 3840-pixel PNG as the declared parent so the screen product
-cannot silently select a different SVG renderer or font environment. Coral
-reefs, Fiber Synthesized, perspectives, and slices remain later catalog
-coverage.
+The implemented v1 renders all 205 products in the checked standard manifest,
+including Coral Reefs, Fiber Synthesized, the five Myriahedral perspectives,
+four Cahill–Keyes strips, eight Cahill–Keyes octants, and two Myriahedral face
+groups. It uses the existing reviewed 3840-pixel PNG as the declared parent so
+the screen product cannot silently select a different SVG renderer or font
+environment.
 
 Exit gate: exact 1920 × 1080 output, no crop, readable title/legend, no severe
 moire aliasing, correct opacity, and recorded transform for every ratio.
 
-### 2. Build catalog and deterministic agent tools — schema and transform implemented
+### 2. Build catalog and deterministic agent tools — implemented
 
-- Define and validate catalog/request/decision-receipt schemas. The artifact
-  catalog schema is implemented; request and decision-receipt schemas remain.
+- Define and validate catalog, request, and decision-receipt schemas.
 - Populate records from generation profiles and release manifests, not from
   filename guesses alone.
 - Add ESM/TypeScript query functions and a JSON-only headless CLI.
@@ -311,7 +309,7 @@ moire aliasing, correct opacity, and recorded transform for every ratio.
 Exit gate: an offline agent can select and explain one artifact without opening
 an SVG, parsing a filename, or inventing license/source facts.
 
-### 3. Complete 1080p derivatives — canary complete, release matrix pending
+### 3. Complete 1080p derivatives — implemented
 
 - Generate exact contain-fit PNG and lossless WebP for every released whole-map
   product and approved slice.
@@ -321,7 +319,7 @@ an SVG, parsing a filename, or inventing license/source facts.
 Exit gate: all variants resolve from the catalog and round-trip to their
 authoritative parent identity and checksum.
 
-### 4. Add interactive game examples — Canvas/picking canary complete
+### 4. Add interactive game examples — implemented
 
 - Implement pointer-to-projected conversion and candidate-aware picking.
   [`cartofreako-screen.mjs`](../../../src.wasm/cartofreako-screen.mjs) now does
@@ -331,22 +329,23 @@ authoritative parent identity and checksum.
 - Move large batches to the existing worker and add `AbortSignal` cancellation
   around long consumer operations.
 
-Current gate: the six-family main-thread browser canary, exact 1920 × 1080
-Canvas, affine picks, and flat-plane geometry pass in headless Chromium. A
-package-specific Three.js import, cut/overlap UI, screenshot reference, and
-South-Pole interaction example remain pending. No example maps an interrupted
-plate onto a sphere as if it were equirectangular.
+Current evidence: exact 1920 × 1080 Canvas, affine and geographic picks,
+flat-plane geometry, worker cancellation, and an offline vendored Three.js
+r185 plane/raycast/reverse-pick path pass in headless Chromium. The checked
+Star-X fixtures retain carrier/cap component identity, cutoff ambiguity, and
+South-Pole behavior. No example maps an interrupted plate onto a sphere as if
+it were equirectangular. A collaborator-run usability review and screenshot
+baseline remain external evidence, not a Stage 14 implementation dependency.
 
-### 5. Evaluate GPU derivatives
+### Stage 15 handoff — GPU derivatives and benchmark
 
-- Benchmark 2048 × 1024 PNG, WebP, and KTX2/Basis on representative integrated
-  and discrete-GPU systems.
-- Prototype topology masks before feature-ID masks.
-- Set size, decode, upload, and visual-error budgets from measured canaries
-  rather than imposing one arbitrary limit on every art style.
-
-Exit gate: adopt KTX2 or Float32 only when it materially improves the measured
-game path and stays within declared visual and positional tolerances.
+The 2048 × 1024 texture controls, KTX2/Basis candidates, topology and
+feature-ID masks, Float32 positional audit, hardware matrix, benchmark metrics,
+and adoption gates have moved to the
+[Stage 15 GPU products and benchmark ledger](../development/stage-15.md).
+Stage 15 derives its controls from the same authoritative 3840-pixel parents
+and compares them against the frozen Stage 14 catalog and 1080p baseline; it
+does not reopen Stage 14 print or projection semantics.
 
 ## Verification matrix
 
@@ -365,9 +364,10 @@ game path and stays within declared visual and positional tolerances.
 
 ## Promotion rule
 
-Start the catalog and screen derivatives as optional development outputs.
-Promote 1080p PNG/WebP plus the catalog to the standard generated graph only
-after phases 0–4 pass for every standard pass and projection. Keep KTX2 and
-semantic masks optional until phase 5 establishes measured benefit and
-licensing. The authoritative archive/art and print products remain standard
-throughout; their preservation is a prerequisite, not a later cleanup task.
+The 1080p PNG/WebP products and catalog are promoted to the standard generated
+graph after phases 0–4 passed for the checked 205-product standard manifest.
+GPU formats and
+semantic masks remain Stage 15 exploration-only products until its measured
+benefit, tooling, licensing, determinism, and QA gates pass. The authoritative
+archive/art and print products remain standard throughout; their preservation
+is a prerequisite, not a later cleanup task.

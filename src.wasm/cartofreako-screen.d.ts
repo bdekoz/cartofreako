@@ -1,6 +1,7 @@
 import type {CartofreakoProjection, InverseOptions, InverseResult} from './cartofreako-web.mjs';
 
 export interface Dimensions {width: number; height: number}
+export interface ProjectedFrame extends Dimensions {x?: number; y?: number}
 export interface ContentRectangle extends Dimensions {x: number; y: number}
 export type Matrix3 = readonly [
     number, number, number,
@@ -15,10 +16,12 @@ export interface ScreenContract {
     projectedToScreen: Matrix3;
     screenToProjected: Matrix3;
 }
-export interface ContainTransform extends ScreenContract {sourceFrame: Dimensions}
+export interface ContainTransform extends ScreenContract {
+    sourceFrame: Required<ProjectedFrame>
+}
 
 export function containTransform(
-    sourceFrame: Dimensions,
+    sourceFrame: ProjectedFrame,
     canvas?: Dimensions,
     options?: {background?: string; contentSize?: Dimensions | null}
 ): ContainTransform;

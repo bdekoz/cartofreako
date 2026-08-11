@@ -26,6 +26,25 @@ UCB_AAO_RELEASE_PROFILE ?=
 UCB_AAO_RELEASE_DATA_ROOT ?=
 UCB_AAO_RELEASE_RECEIPT ?=
 DOC_LINK_CHECKER := scripts/check-doc-links.py
+PRINT_CONTRACT := contracts/print-products-v1.json
+PRINT_CONTRACT_CHECKER := scripts/check-print-contract.mjs
+PRINT_PDF_CHECKER := scripts/check-print-pdfs.sh
+PROJECTION_FIXTURE_DIR := fixtures/projections/v1
+PROJECTION_FIXTURE_SCHEMA := contracts/projection-fixtures-v1.schema.json
+PROJECTION_FIXTURE_CHECKER := scripts/check-projection-fixtures.mjs
+PROJECTION_FIXTURE_FILES := $(addprefix $(PROJECTION_FIXTURE_DIR)/,\
+	cahill-keyes.json authagraph.json dymaxion.json myriahedral.json \
+	star-x.json voronoi.json manifest.json \
+	topology-crosswalk-cartofreako.json SHA256SUMS)
+REVERSE_ORACLE_DIR := $(PROJECTION_FIXTURE_DIR)/oracles
+REVERSE_ORACLE_CHECKER := scripts/check-reverse-oracles.mjs
+REVERSE_ORACLE_FILES := $(addprefix $(REVERSE_ORACLE_DIR)/,\
+	voronoi-d3-v2.0.1.json dymaxion-d3-gray-v2.0.1.json \
+	myriahedral-clean-room.json myriahedral-declared-topology.json \
+	d3-version-delta-v1.12.1-v2.0.1.json \
+	d3-geo-polygon-v2.0.1-yarn.lock manifest.json SHA256SUMS)
+D3_GEO_POLYGON_V1_ROOT ?= /home/bkoz/src/d3-geo-polygon
+D3_GEO_POLYGON_V2_ROOT ?=
 PNG_EXPORT_BACKGROUND := --export-background=white \
 	--export-background-opacity=255 \
 	--export-png-color-mode=RGB_8
@@ -159,6 +178,11 @@ GENERATED_PNG_DIRS := $(addsuffix /png,$(GENERATED_PROJECTION_DIRS))
 GENERATED_PDF_DIRS := $(addsuffix /pdf,$(GENERATED_PROJECTION_DIRS))
 GENERATED_THUMBNAIL_DIRS := \
 	$(addsuffix /thumbnail,$(GENERATED_PROJECTION_DIRS))
+GENERATED_SCREEN_PNG_DIRS := \
+	$(addsuffix /screen-1080p,$(GENERATED_PROJECTION_DIRS))
+GENERATED_SCREEN_WEBP_DIRS := \
+	$(addsuffix /screen-1080p-webp,$(GENERATED_PROJECTION_DIRS))
+GENERATED_CATALOG_DIR := $(GENERATED_DIR)/catalog
 
 # Release artifacts are grouped by projection first.  Keep the projection tag
 # in every basename as a stable, self-describing download name, then derive
@@ -208,11 +232,14 @@ PROJECTIONS_WEB_JS := \
 	$(WEB_DIR)/cartofreako-web.d.ts \
 	$(WEB_DIR)/cartofreako-screen.mjs \
 	$(WEB_DIR)/cartofreako-screen.d.ts \
+	$(WEB_DIR)/cartofreako-three.mjs \
+	$(WEB_DIR)/cartofreako-three.d.ts \
 	$(WEB_DIR)/cartofreako-svg.mjs \
 	$(WEB_DIR)/cartofreako-canvas.mjs \
 	$(WEB_DIR)/cartofreako-d3.mjs \
 	$(WEB_DIR)/cartofreako-projections-worker.mjs \
-	$(WEB_DIR)/cartofreako-worker-client.mjs
+	$(WEB_DIR)/cartofreako-worker-client.mjs \
+	$(WEB_DIR)/cartofreako-worker-client.d.ts
 PROJECTION_RUNTIME_HEADERS := \
 	$(PROJECTION_SRC_DIR)/a60-carto.h \
 	$(PROJECTION_SRC_DIR)/a60-carto-frame.h \
@@ -562,6 +589,16 @@ GENERATED_SVGS := \
 	$(BATHYMETRY_ROULETTE_SVGS) $(BATHYMETRY_HAMONSHU_SVGS)
 GENERATED_PDFS := $(call svg_to_pdf,$(GENERATED_SVGS))
 GENERATED_PNGS := $(call svg_to_png,$(GENERATED_SVGS))
+STANDARD_ARTIFACT_MANIFEST := contracts/standard-artifact-manifest-v1.json
+standard_svg_to_screen_png = $(foreach artifact,$(1),\
+	$(GENERATED_DIR)/$(call projection_for_artifact,$(artifact))/screen-1080p/$(patsubst %.svg,%.png,$(notdir $(artifact))))
+standard_svg_to_screen_webp = $(foreach artifact,$(1),\
+	$(GENERATED_DIR)/$(call projection_for_artifact,$(artifact))/screen-1080p-webp/$(patsubst %.svg,%.webp,$(notdir $(artifact))))
+SCREEN_1080P_PNGS := $(call standard_svg_to_screen_png,$(GENERATED_SVGS))
+SCREEN_1080P_WEBPS := $(call standard_svg_to_screen_webp,$(GENERATED_SVGS))
+SCREEN_1080P_CATALOG := $(GENERATED_CATALOG_DIR)/artifacts-v1.json
+SCREEN_1080P_ARTIFACTS := $(SCREEN_1080P_PNGS) $(SCREEN_1080P_WEBPS) \
+	$(SCREEN_1080P_CATALOG)
 SNAPSHOT_SVGS := \
 	$(CK_GEOMETRY_SVG) $(CK_GRATICULE_SVG) $(CK_EARTH_SVG) $(CK_WATER_SVG) \
 	$(REQUESTED_PROJECTION_SVGS) \
@@ -654,7 +691,8 @@ endif
 GENERATED_ARTIFACTS := \
 	$(filter-out $(RESOURCES_SVGS),$(GENERATED_SVGS)) \
 	$(RESOURCES_SVG_ARCHIVES) $(GENERATED_PDFS) $(GENERATED_PNGS) \
-	$(SNAPSHOT_THUMBNAILS) $(AUTHORIZED_EXTERNAL_ARTIFACTS)
+	$(SNAPSHOT_THUMBNAILS) $(SCREEN_1080P_ARTIFACTS) \
+	$(AUTHORIZED_EXTERNAL_ARTIFACTS)
 
 GENERATOR_BINARIES := \
 	$(ANTHROPOCENE_GENERATOR) \
@@ -705,7 +743,13 @@ TEST_BINARIES := \
 	$(TEST_DIR)/test-projection-runtime \
 	$(TEST_DIR)/test-forward-reverse-projection-api \
 	$(TEST_DIR)/test-star-x-projection-api \
-	$(TEST_DIR)/test-voronoi-projection-api
+	$(TEST_DIR)/test-voronoi-projection-api \
+	$(TEST_DIR)/audit-projection-round-trips \
+	$(TEST_DIR)/audit-dymaxion-ulp \
+	$(TEST_DIR)/generate-projection-fixtures \
+	$(TEST_DIR)/test-projection-fixtures \
+	$(TEST_DIR)/test-cross-implementation-reverse-oracle \
+	$(TEST_DIR)/oracles/export-myriahedral-topology
 
 GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/generation-instant.h \
@@ -734,8 +778,8 @@ BATHYMETRY_ROULETTE_STYLE_HEADER := \
 BATHYMETRY_HAMONSHU_STYLE_HEADER := \
 	$(GENERATOR_SRC_DIR)/bathymetry-hamonshu-style.h
 HAMONSHU_IZZI_HEADERS := \
-	$(IZZI_SRC)/a60-svg-curves-hamonshu.h \
-	$(IZZI_SRC)/a60-svg-curves-hamonshu-v2.inc
+	$(IZZI_SRC)/izzi-svg-curves-hamonshu.h \
+	$(IZZI_SRC)/izzi-svg-curves-hamonshu-v2.inc
 ASTRO_GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/astro-data.h \
 	$(GENERATOR_SRC_DIR)/astro-observer.h \
@@ -801,10 +845,17 @@ RESOURCE_METRIC_PUBLIC_TARGETS := \
 			generate-$(stem)-$(projection)))
 
 PUBLIC_TARGETS := all assets-single assets-resilient check check-docs \
+	check-print-contract \
+	audit-dymaxion-ulp \
+	check-projection-fixtures check-wasm-projection-fixtures \
+	refresh-projection-fixtures \
+	check-reverse-oracles refresh-reverse-oracle-fixtures \
+	check-artifact-selection refresh-artifact-selection-fixture \
+	check-standard-artifact-manifest refresh-standard-artifact-manifest \
 	check-prerequisite \
 	check-resources-svg-archives check-fiber-synthesized \
 	check-forward-reverse-projection-api \
-	check-screen-1080p generate-screen-1080p consumer-assets-v1 \
+	check-screen-1080p check-three-vendor generate-screen-1080p consumer-assets-v1 \
 	audit-projection-round-trips \
 	clean clean-failed-generated configured doxygen \
 	generation-plan list-targets render-marshall-islands-speculations-v01 \
@@ -976,6 +1027,11 @@ list-targets:
 check-docs: $(DOC_LINK_CHECKER)
 	"$(DOC_LINK_CHECKER)"
 
+check-print-contract: $(PRINT_CONTRACT) $(PRINT_CONTRACT_CHECKER) \
+		$(PRINT_PDF_CHECKER)
+	"$(NODE)" "$(PRINT_CONTRACT_CHECKER)" "$(PRINT_CONTRACT)"
+	"bash" "$(PRINT_PDF_CHECKER)" "$(PRINT_CONTRACT)"
+
 render-marshall-islands-speculations-v01: \
 		scripts/render-marshall-islands-speculations-v01.sh \
 		scripts/render-marshall-islands-speculations-v01.mjs
@@ -1101,11 +1157,161 @@ audit-projection-round-trips: $(TEST_DIR)/audit-projection-round-trips
 	$(TEST_DIR)/audit-projection-round-trips \
 		reports/cartofreako-audit-outcomes-02-numerics.json
 
-generate-screen-1080p:
+$(TEST_DIR)/audit-dymaxion-ulp: $(TEST_DIR)/audit-dymaxion-ulp.cc \
+		$(PROJECTION_RUNTIME_HEADERS)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$< -o $@
+
+audit-dymaxion-ulp: $(TEST_DIR)/audit-dymaxion-ulp
+	mkdir -p reports
+	$(TEST_DIR)/audit-dymaxion-ulp reports/dymaxion-ulp-audit.json
+
+$(TEST_DIR)/generate-projection-fixtures: \
+		$(TEST_DIR)/generate-projection-fixtures.cc \
+		$(PROJECTION_RUNTIME_HEADERS)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$< -o $@
+
+$(TEST_DIR)/test-projection-fixtures: \
+		$(TEST_DIR)/test-projection-fixtures.cc \
+		$(PROJECTION_RUNTIME_HEADERS)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$< -o $@
+
+refresh-projection-fixtures: $(TEST_DIR)/generate-projection-fixtures
+	mkdir -p "$(PROJECTION_FIXTURE_DIR)"
+	$(TEST_DIR)/generate-projection-fixtures "$(PROJECTION_FIXTURE_DIR)"
+	"$(NODE)" "$(PROJECTION_FIXTURE_CHECKER)" --refresh
+
+check-wasm-projection-fixtures: wasm-projections $(PROJECTION_FIXTURE_FILES) \
+		$(WEB_DIR)/test-projection-fixtures.mjs
+	cd "$(WEB_BUILD_DIR)" && "$(NODE)" test-projection-fixtures.mjs \
+		"$(abspath $(PROJECTION_FIXTURE_DIR))"
+
+check-projection-fixtures: $(PROJECTION_FIXTURE_FILES) \
+		$(PROJECTION_FIXTURE_SCHEMA) $(PROJECTION_FIXTURE_CHECKER) \
+		$(TEST_DIR)/test-projection-fixtures \
+		$(TEST_DIR)/read-projection-fixtures.py \
+		check-wasm-projection-fixtures
+	"$(NODE)" "$(PROJECTION_FIXTURE_CHECKER)"
+	$(TEST_DIR)/test-projection-fixtures "$(PROJECTION_FIXTURE_DIR)"
+	python3 $(TEST_DIR)/read-projection-fixtures.py
+
+$(TEST_DIR)/oracles/export-myriahedral-topology: \
+		$(TEST_DIR)/oracles/export-myriahedral-topology.cc \
+		$(PROJECTION_RUNTIME_HEADERS)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$< -o $@
+
+$(TEST_DIR)/test-cross-implementation-reverse-oracle: \
+		$(TEST_DIR)/test-cross-implementation-reverse-oracle.cc \
+		$(PROJECTION_RUNTIME_HEADERS)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(CXXFLAGS) \
+		$< -o $@
+
+refresh-reverse-oracle-fixtures: \
+		$(TEST_DIR)/oracles/export-myriahedral-topology
+	@test -n "$(D3_GEO_POLYGON_V2_ROOT)" || { \
+		echo "D3_GEO_POLYGON_V2_ROOT must name a pinned v2.0.1 checkout" >&2; \
+		exit 2; \
+	}
+	mkdir -p "$(REVERSE_ORACLE_DIR)"
+	cp "$(D3_GEO_POLYGON_V2_ROOT)/yarn.lock" \
+		"$(REVERSE_ORACLE_DIR)/d3-geo-polygon-v2.0.1-yarn.lock"
+	$(TEST_DIR)/oracles/export-myriahedral-topology \
+		"$(REVERSE_ORACLE_DIR)/myriahedral-declared-topology.json"
+	python3 $(TEST_DIR)/oracles/generate-myriahedral-clean-room.py \
+		"$(REVERSE_ORACLE_DIR)/myriahedral-declared-topology.json" \
+		"$(REVERSE_ORACLE_DIR)/myriahedral-clean-room.json"
+	"$(NODE)" $(TEST_DIR)/oracles/generate-d3-reverse-oracles.mjs \
+		--source-root "$(D3_GEO_POLYGON_V2_ROOT)" \
+		--legacy-root "$(D3_GEO_POLYGON_V1_ROOT)" \
+		--output "$(REVERSE_ORACLE_DIR)"
+	"$(NODE)" "$(REVERSE_ORACLE_CHECKER)" --refresh
+
+check-reverse-oracles: $(REVERSE_ORACLE_FILES) \
+		$(REVERSE_ORACLE_CHECKER) \
+		$(TEST_DIR)/test-cross-implementation-reverse-oracle
+	"$(NODE)" "$(REVERSE_ORACLE_CHECKER)"
+	mkdir -p reports
+	$(TEST_DIR)/test-cross-implementation-reverse-oracle \
+		"$(REVERSE_ORACLE_DIR)" \
+		reports/cross-implementation-reverse-oracle.json
+
+refresh-artifact-selection-fixture: \
+		contracts/artifact-request-v1.schema.json \
+		contracts/artifact-decision-receipt-v1.schema.json \
+		src.wasm/cartofreako-catalog.mjs \
+		tests/test-artifact-selection.mjs
+	"$(NODE)" tests/test-artifact-selection.mjs --refresh
+
+check-artifact-selection: contracts/artifact-request-v1.schema.json \
+		contracts/artifact-decision-receipt-v1.schema.json \
+		src.wasm/cartofreako-catalog.mjs \
+		src.wasm/cartofreako-catalog.d.ts \
+		scripts/select-artifact.mjs \
+		tests/fixtures/artifact-selection/catalog.json \
+		tests/fixtures/artifact-selection/request.json \
+		tests/fixtures/artifact-selection/expected-receipt.json \
+		tests/test-artifact-selection.mjs \
+		tests/read-artifact-selection.py \
+		tests/artifact-selection-browser-smoke.html
+	"$(NODE)" --check src.wasm/cartofreako-catalog.mjs
+	"$(NODE)" --check scripts/select-artifact.mjs
+	"$(NODE)" tests/test-artifact-selection.mjs
+	python3 tests/read-artifact-selection.py
+	python3 "$(PROJECTIONS_WEB_BROWSER_RUNNER)" \
+		--browser "$(WEB_BROWSER)" --serve-root . \
+		tests/artifact-selection-browser-smoke.html
+
+refresh-standard-artifact-manifest: \
+		scripts/generate-standard-artifact-manifest.mjs
+	@printf '%s\n' $(GENERATED_SVGS) | \
+		"$(NODE)" scripts/generate-standard-artifact-manifest.mjs \
+		--refresh "$(STANDARD_ARTIFACT_MANIFEST)"
+
+check-standard-artifact-manifest: \
+		contracts/standard-artifact-manifest-v1.schema.json \
+		scripts/generate-standard-artifact-manifest.mjs \
+		$(STANDARD_ARTIFACT_MANIFEST)
+	@printf '%s\n' $(GENERATED_SVGS) | \
+		"$(NODE)" scripts/generate-standard-artifact-manifest.mjs \
+		--check "$(STANDARD_ARTIFACT_MANIFEST)"
+
+SCREEN_1080P_PARENT_SVGS := \
+	$(filter-out $(RESOURCES_SVGS),$(GENERATED_SVGS)) \
+	$(RESOURCES_SVG_ARCHIVES)
+
+$(SCREEN_1080P_ARTIFACTS) &: $(STANDARD_ARTIFACT_MANIFEST) \
+		contracts/artifacts-v1.schema.json \
+		scripts/generate-screen-1080p.mjs \
+		src.wasm/cartofreako-screen.mjs \
+		$(GENERATED_PNGS) $(GENERATED_PDFS) $(SCREEN_1080P_PARENT_SVGS) \
+		| $(GENERATED_SCREEN_PNG_DIRS) $(GENERATED_SCREEN_WEBP_DIRS) \
+		$(GENERATED_CATALOG_DIR)
 	"$(NODE)" scripts/generate-screen-1080p.mjs
 
-check-screen-1080p: generate-screen-1080p wasm-projections
+generate-screen-1080p: check-standard-artifact-manifest \
+		$(SCREEN_1080P_ARTIFACTS)
+
+check-screen-1080p: generate-screen-1080p wasm-projections \
+		tests/test-screen-1080p.mjs tests/read-screen-catalog.py \
+		tests/validate-artifact-contracts.py \
+		tests/three-screen-browser-smoke.html
 	"$(NODE)" tests/test-screen-1080p.mjs
+	python3 tests/read-screen-catalog.py
+	python3 tests/validate-artifact-contracts.py
+	"$(NODE)" scripts/check-three-vendor.mjs
+	python3 "$(PROJECTIONS_WEB_BROWSER_RUNNER)" \
+		--browser "$(WEB_BROWSER)" --serve-root . \
+		tests/three-screen-browser-smoke.html
+
+check-three-vendor: scripts/check-three-vendor.mjs \
+		src.wasm/third_party/three-0.185.1/build/three.module.min.js \
+		src.wasm/third_party/three-0.185.1/build/three.core.min.js \
+		src.wasm/third_party/three-0.185.1/LICENSE \
+		src.wasm/third_party/three-0.185.1/package.json
+	"$(NODE)" scripts/check-three-vendor.mjs
 
 consumer-assets-v1: check-screen-1080p check-wasm-projections-browser
 
@@ -1119,7 +1325,10 @@ check: $(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) $(ANTHROPOCENE_GEOJSON) \
 		$(RESOURCES_CHECKSUMS) \
 		$(FIBER_SYNTHESIZED_MANIFEST) $(FIBER_SYNTHESIZED_ROUTES) \
 		$(FIBER_SYNTHESIZED_LANDINGS) $(FIBER_SYNTHESIZED_CHECKSUMS) \
-		check-fiber-synthesized check-forward-reverse-projection-api
+		check-fiber-synthesized check-forward-reverse-projection-api \
+		check-print-contract audit-dymaxion-ulp \
+		check-projection-fixtures check-reverse-oracles \
+		check-artifact-selection check-screen-1080p
 	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_PROFILE)" \
 		"$(ANTHROPOCENE_GEOJSON)"
 	$(ANTHROPOCENE_VERIFIER) "$(ANTHROPOCENE_TEMPERATURE_PROFILE_2025)" \
@@ -1316,6 +1525,7 @@ $(PROJECTIONS_WEB_MODULE) $(PROJECTIONS_WEB_WASM) &: \
 
 check-wasm-projections: wasm-projections
 	cd "$(WEB_BUILD_DIR)" && "$(NODE)" cartofreako-projections-smoke.mjs
+	"$(NODE)" tests/test-worker-cancellation.mjs
 
 check-wasm-projections-browser: wasm-projections \
 		$(PROJECTIONS_WEB_BROWSER_SMOKE) $(PROJECTIONS_WEB_BROWSER_RUNNER)
@@ -1620,7 +1830,8 @@ $(NATURAL_EARTH_STAMP): $(NATURAL_EARTH_FETCHER)
 
 $(GENERATED_DIR) $(GENERATED_PROJECTION_DIRS) $(GENERATED_SVG_DIRS) \
 		$(GENERATED_PNG_DIRS) $(GENERATED_PDF_DIRS) \
-		$(GENERATED_THUMBNAIL_DIRS):
+		$(GENERATED_THUMBNAIL_DIRS) $(GENERATED_SCREEN_PNG_DIRS) \
+		$(GENERATED_SCREEN_WEBP_DIRS) $(GENERATED_CATALOG_DIR):
 	mkdir -p "$@"
 
 # Preserve the original Cahill-Keyes workflow and output names.
@@ -2426,4 +2637,5 @@ clean:
 		$(MYRIA_WEB_MODULE) $(MYRIA_WEB_WASM) \
 		$(PROJECTIONS_WEB_MODULE) $(PROJECTIONS_WEB_WASM)
 	$(RM) -r $(GENERATED_PROJECTION_DIRS)
+	$(RM) -r "$(GENERATED_CATALOG_DIR)"
 	$(RM) -r "$(DOXYGEN_OUTPUT_DIR)"

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "cartofreako-artifact-request-v1",
+  "requestId": "golden-water-1080p",
+  "purpose": "interactive-flat",
+  "passIds": ["water"],
+  "projectionIds": ["myriahedral", "cahill-keyes"],
+  "formats": ["webp", "png"],
+  "viewport": {"width": 1920, "height": 1080},
+  "losslessRequired": true,
+  "interaction": "geographic-picking",
+  "networkPolicy": "offline",
+  "preferences": [
+    {"field": "projection", "order": ["myriahedral", "cahill-keyes"]},
+    {"field": "format", "order": ["webp", "png"]},
+    {"field": "bytes", "direction": "ascending"}
+  ]
+}

@@ -1,0 +1,348 @@
+{
+  "schemaVersion": "cartofreako-artifact-decision-receipt-v1",
+  "decisionCore": {
+    "requestId": "golden-water-1080p",
+    "requestSha256": "9c88917412a7bad5d6d5fc7309632132fb06b1311c075fbd5d55a527adf614ab",
+    "normalizedRequest": {
+      "schemaVersion": "cartofreako-artifact-request-v1",
+      "requestId": "golden-water-1080p",
+      "purpose": "interactive-flat",
+      "passIds": [
+        "water"
+      ],
+      "allowedLifecycles": [
+        "standard"
+      ],
+      "optionalOptIn": false,
+      "explorationOptIn": false,
+      "years": [],
+      "sourcePeriods": [],
+      "projectionIds": [
+        "myriahedral",
+        "cahill-keyes"
+      ],
+      "sliceIds": [],
+      "formats": [
+        "webp",
+        "png"
+      ],
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "fit": "contain",
+      "transparency": "any",
+      "losslessRequired": true,
+      "maxBytes": null,
+      "interaction": "geographic-picking",
+      "authorityClasses": [],
+      "licenses": [],
+      "governance": [],
+      "requireChecksums": true,
+      "expectedCatalogSha256": null,
+      "networkPolicy": "offline",
+      "preferences": [
+        {
+          "field": "projection",
+          "order": [
+            "myriahedral",
+            "cahill-keyes"
+          ],
+          "direction": "ascending"
+        },
+        {
+          "field": "format",
+          "order": [
+            "webp",
+            "png"
+          ],
+          "direction": "ascending"
+        },
+        {
+          "field": "bytes",
+          "order": [],
+          "direction": "ascending"
+        }
+      ],
+      "fallbackSequence": [],
+      "humanReviewRequired": false
+    },
+    "catalog": {
+      "schema": "cartofreako-artifacts-v1",
+      "catalogVersion": 1,
+      "sourceRevision": {
+        "gitCommit": "0000000000000000000000000000000000000000",
+        "workingTree": "clean",
+        "runtimeApi": 3,
+        "geometryAbi": 1
+      },
+      "sha256": "aea76e8dca8306dd9745246eda494e174042e006b530ef0cc601587cb25de2ec"
+    },
+    "selectionPolicyVersion": 1,
+    "runtimeVersion": "cartofreako-catalog-js-v1",
+    "outcome": "selected",
+    "selection": {
+      "artifactId": "water.myriahedral.whole-map",
+      "variantId": "screen-webp",
+      "file": {
+        "path": "water-myriahedral.webp",
+        "mediaType": "image/webp",
+        "bytes": 450,
+        "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "authorityClass": "access-derivative",
+        "dimensions": {
+          "width": 1920,
+          "height": 1080
+        },
+        "lossless": true
+      },
+      "authorityClass": "access-derivative",
+      "lifecycle": "standard",
+      "projectionId": "myriahedral",
+      "layoutId": "myriahedral",
+      "sliceId": "whole-map",
+      "sourcePeriod": "UNAVAILABLE",
+      "limitations": [
+        "Flat interrupted map; not an equirectangular globe texture."
+      ],
+      "interaction": {
+        "projectedPicking": true,
+        "geographicPicking": true,
+        "projectedToScreen": [
+          40,
+          0,
+          80,
+          0,
+          40,
+          45,
+          0,
+          0,
+          1
+        ],
+        "screenToProjected": [
+          0.025,
+          0,
+          -2,
+          0,
+          0.025,
+          -1.125,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    "evaluatedCandidates": [
+      {
+        "artifactId": "astro-observer-hubble.cahill-keyes.whole-map",
+        "variantId": "parent-full-png",
+        "rankVector": [
+          1,
+          2,
+          700
+        ],
+        "rejectionReasonCodes": [
+          "FORMAT_UNAVAILABLE",
+          "INTERACTION_UNSUPPORTED",
+          "LIFECYCLE_DISALLOWED",
+          "SUBJECT_MISMATCH",
+          "VIEWPORT_INCOMPATIBLE"
+        ]
+      },
+      {
+        "artifactId": "astro-observer-hubble.cahill-keyes.whole-map",
+        "variantId": "parent-pdf",
+        "rankVector": [
+          1,
+          2,
+          800
+        ],
+        "rejectionReasonCodes": [
+          "FORMAT_UNAVAILABLE",
+          "INTERACTION_UNSUPPORTED",
+          "LIFECYCLE_DISALLOWED",
+          "SUBJECT_MISMATCH",
+          "VIEWPORT_INCOMPATIBLE"
+        ]
+      },
+      {
+        "artifactId": "astro-observer-hubble.cahill-keyes.whole-map",
+        "variantId": "parent-svg",
+        "rankVector": [
+          1,
+          2,
+          900
+        ],
+        "rejectionReasonCodes": [
+          "FORMAT_UNAVAILABLE",
+          "INTERACTION_UNSUPPORTED",
+          "LIFECYCLE_DISALLOWED",
+          "SUBJECT_MISMATCH",
+          "VIEWPORT_INCOMPATIBLE"
+        ]
+      },
+      {
+        "artifactId": "astro-observer-hubble.cahill-keyes.whole-map",
+        "variantId": "screen-png",
+        "rankVector": [
+          1,
+          1,
+          500
+        ],
+        "rejectionReasonCodes": [
+          "LIFECYCLE_DISALLOWED",
+          "SUBJECT_MISMATCH"
+        ]
+      },
+      {
+        "artifactId": "astro-observer-hubble.cahill-keyes.whole-map",
+        "variantId": "screen-webp",
+        "rankVector": [
+          1,
+          0,
+          400
+        ],
+        "rejectionReasonCodes": [
+          "LIFECYCLE_DISALLOWED",
+          "SUBJECT_MISMATCH"
+        ]
+      },
+      {
+        "artifactId": "water.cahill-keyes.whole-map",
+        "variantId": "parent-full-png",
+        "rankVector": [
+          1,
+          2,
+          800
+        ],
+        "rejectionReasonCodes": [
+          "FORMAT_UNAVAILABLE",
+          "INTERACTION_UNSUPPORTED",
+          "VIEWPORT_INCOMPATIBLE"
+        ]
+      },
+      {
+        "artifactId": "water.cahill-keyes.whole-map",
+        "variantId": "parent-pdf",
+        "rankVector": [
+          1,
+          2,
+          900
+        ],
+        "rejectionReasonCodes": [
+          "FORMAT_UNAVAILABLE",
+          "INTERACTION_UNSUPPORTED",
+          "VIEWPORT_INCOMPATIBLE"
+        ]
+      },
+      {
+        "artifactId": "water.cahill-keyes.whole-map",
+        "variantId": "parent-svg",
+        "rankVector": [
+          1,
+          2,
+          1000
+        ],
+        "rejectionReasonCodes": [
+          "FORMAT_UNAVAILABLE",
+          "INTERACTION_UNSUPPORTED",
+          "VIEWPORT_INCOMPATIBLE"
+        ]
+      },
+      {
+        "artifactId": "water.cahill-keyes.whole-map",
+        "variantId": "screen-png",
+        "rankVector": [
+          1,
+          1,
+          550
+        ],
+        "rejectionReasonCodes": [
+          "LOWER_PREFERENCE_RANK"
+        ]
+      },
+      {
+        "artifactId": "water.cahill-keyes.whole-map",
+        "variantId": "screen-webp",
+        "rankVector": [
+          1,
+          0,
+          425
+        ],
+        "rejectionReasonCodes": [
+          "LOWER_PREFERENCE_RANK"
+        ]
+      },
+      {
+        "artifactId": "water.myriahedral.whole-map",
+        "variantId": "parent-full-png",
+        "rankVector": [
+          0,
+          2,
+          800
+        ],
+        "rejectionReasonCodes": [
+          "FORMAT_UNAVAILABLE",
+          "INTERACTION_UNSUPPORTED",
+          "VIEWPORT_INCOMPATIBLE"
+        ]
+      },
+      {
+        "artifactId": "water.myriahedral.whole-map",
+        "variantId": "parent-pdf",
+        "rankVector": [
+          0,
+          2,
+          900
+        ],
+        "rejectionReasonCodes": [
+          "FORMAT_UNAVAILABLE",
+          "INTERACTION_UNSUPPORTED",
+          "VIEWPORT_INCOMPATIBLE"
+        ]
+      },
+      {
+        "artifactId": "water.myriahedral.whole-map",
+        "variantId": "parent-svg",
+        "rankVector": [
+          0,
+          2,
+          1000
+        ],
+        "rejectionReasonCodes": [
+          "FORMAT_UNAVAILABLE",
+          "INTERACTION_UNSUPPORTED",
+          "VIEWPORT_INCOMPATIBLE"
+        ]
+      },
+      {
+        "artifactId": "water.myriahedral.whole-map",
+        "variantId": "screen-png",
+        "rankVector": [
+          0,
+          1,
+          600
+        ],
+        "rejectionReasonCodes": [
+          "LOWER_PREFERENCE_RANK"
+        ]
+      },
+      {
+        "artifactId": "water.myriahedral.whole-map",
+        "variantId": "screen-webp",
+        "rankVector": [
+          0,
+          0,
+          450
+        ],
+        "rejectionReasonCodes": []
+      }
+    ],
+    "relaxations": [],
+    "nonAuthorityStatement": "This receipt selects an existing catalog artifact only. It grants no external access, license acceptance, publication, release, research interpretation, archival deposit, or training-data authority."
+  },
+  "decisionCoreSha256": "9c915fe5fa80dcb4d37c2bfa597277d57753f84d6a33fbe189f65d6b1a82a978",
+  "runEnvelope": {
+    "createdAt": "2026-08-10T00:00:00Z"
+  }
+}

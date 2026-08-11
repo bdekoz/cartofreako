@@ -52,10 +52,13 @@ Add whichever output adapters you use:
 cartofreako-canvas.mjs
 cartofreako-screen.mjs
 cartofreako-screen.d.ts
+cartofreako-three.mjs
+cartofreako-three.d.ts
 cartofreako-svg.mjs
 cartofreako-d3.mjs
 cartofreako-projections-worker.mjs
 cartofreako-worker-client.mjs
+cartofreako-worker-client.d.ts
 ```
 
 Serve `.wasm` as `application/wasm` and `.mjs` as JavaScript. Use HTTP(S), not
@@ -65,9 +68,10 @@ Serve `.wasm` as `application/wasm` and `.mjs` as JavaScript. Use HTTP(S), not
 python3 -m http.server 8000
 ```
 
-Then open
-`http://localhost:8000/src.wasm/examples/slices.html` or the exact-1080p
-`http://localhost:8000/src.wasm/examples/screen-1080p.html` canary.
+Then open `http://localhost:8000/src.wasm/examples/slices.html`, the exact-1080p
+Canvas canary at `/src.wasm/examples/screen-1080p.html`, or the checked
+Three.js flat-plane example at
+`/src.wasm/examples/screen-1080p-three.html`.
 
 ## 3. Project GeoJSON to Canvas
 
@@ -169,7 +173,7 @@ authority. See the [complete API contract](projection-api.md).
 
 ## Map projected coordinates into an exact 1080p product
 
-Build the checked four-pass by six-projection derivative set and catalog:
+Build the complete checked standard derivative set and catalog:
 
 ```sh
 make generate-screen-1080p
@@ -177,8 +181,11 @@ make check-screen-1080p
 ```
 
 The output uses a 1920 × 1080 contain fit with `#f4f5f5` padding; nothing is
-cropped or stretched. Convert pointer coordinates through the catalog matrix
-before calling the reverse API:
+cropped or stretched. The current manifest contains 205 products: 31 standard
+whole-map pass IDs across the applicable projections, five alternate
+Myriahedral layouts, twelve Cahill–Keyes slices, and two Myriahedral slices.
+Convert pointer coordinates through the catalog matrix before calling the
+reverse API:
 
 ```js
 import {
@@ -198,6 +205,35 @@ Padding clicks throw `RangeError`; handle that as “outside map,” not as a
 geographic point. The catalog separately identifies the authoritative SVG,
 print PDF, full PNG, screen PNG, and lossless WebP with hashes and authority
 classes.
+
+For a Three.js plane and raycast pick, import `createThreeFlatMap()` and
+`threeIntersectionToGeographic()` from `cartofreako-three.mjs`. The checked
+example uses the exact vendored MIT-licensed `three@0.185.1` browser module.
+The 1920 × 1080 image—including any contain padding—belongs on a flat 16:9
+plane, never an equirectangular sphere.
+
+## Cancel long worker requests
+
+Every worker method accepts a final request-options object with an
+`AbortSignal`. Methods that already have projection options retain those as
+the preceding argument:
+
+```js
+const controller = new AbortController();
+const work = worker.projectGeometry(
+  {id: 'myriahedral-pacific', width: 1920},
+  largeGeoJson,
+  {tolerancePx: 0.25},
+  {signal: controller.signal}
+);
+controller.abort();
+await work; // rejects with AbortError
+```
+
+Cancellation is immediate at the client, suppresses late results, and sends a
+cooperative cancel message before queued work enters WebAssembly. JavaScript
+cannot preempt a synchronous WASM function already executing in one worker;
+terminate that worker when hard preemption is required.
 
 ## Return SVG instead
 

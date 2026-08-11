@@ -86,11 +86,16 @@ main()
          == "CLTYPE");
   assert(profile.layers[aerosol].source_id == "jaxa-gcom-c-aod");
   assert(profile.layers[aerosol].freshness
-         == atmosphere::freshness_policy::maximum_age);
+         == atmosphere::freshness_policy::latest_available);
   assert(profile.layers[precipitation].source_id
          == "jaxa-gsmap-precipitation");
   assert(profile.layers[precipitation].variable_candidates.front()
          == "PRECIP");
+  assert(profile.layers[precipitation].freshness
+         == atmosphere::freshness_policy::latest_available);
+  assert(profile.layers[atmosphere::layer_index(
+           profile, "shortwave_radiation_w_m2")].freshness
+         == atmosphere::freshness_policy::latest_available);
 
   const atmosphere::atmosphere_dataset dataset
     = atmosphere::load_atmosphere_dataset(
@@ -147,15 +152,25 @@ main()
         "source selection occurred after") != std::string_view::npos;
     }
   assert(future_selection_rejected);
-  // P-Tree uses the last published observation even beyond its preferred
-  // six-hour target; the other physical sources retain hard age ceilings.
+  // Every source uses its latest published observation even beyond its
+  // preferred target, preserving an authorized offline snapshot indefinitely.
   atmosphere::validate_observation_times(
     profile, dataset, time_model::parse_timestamp("2026-08-06T04:00:00Z"));
+  const time_model::instant delayed_process_start
+    = time_model::parse_timestamp("2026-08-10T04:00:00Z");
+  atmosphere::validate_observation_times(
+    profile, dataset, delayed_process_start);
+
+  // The parser and validator retain a strict maximum-age policy for profiles
+  // that explicitly request one.
+  atmosphere::atmosphere_profile strict_profile = profile;
+  strict_profile.layers[aerosol].freshness
+    = atmosphere::freshness_policy::maximum_age;
   bool stale_rejected = false;
   try
     {
       atmosphere::validate_observation_times(
-        profile, dataset, time_model::parse_timestamp("2026-08-10T04:00:00Z"));
+        strict_profile, dataset, delayed_process_start);
     }
   catch (const std::runtime_error& error)
     {
@@ -278,7 +293,28 @@ main()
   assert(metadata.find(
            "data-observation-jaxa-ptree-cloud-end=\"2026-08-05T03:50:00Z\"")
          != std::string::npos);
+  assert(metadata.find(
+           "data-freshness-aerosol-optical-depth=\"latest-available\"")
+         != std::string::npos);
+  assert(metadata.find(
+           "data-freshness-target-hours-aerosol-optical-depth=\"96.0\"")
+         != std::string::npos);
   assert(atmosphere::short_observation_time(
            dataset.observations.front().end) == "2026-08-05 03:50Z");
   assert(metadata.find("celestial-reference") == std::string::npos);
+
+  generation::projection_document delayed_legend_document(
+    "test-cloud-atmosphere-delayed-legend", "delayed source legend test",
+    generation::make_frame(ck).frame_area, false);
+  atmosphere::add_legend(delayed_legend_document, background_context, profile,
+                         dataset, delayed_process_start, subsolar);
+  const std::string delayed_legend = delayed_legend_document.str();
+  const std::size_t aod_label = delayed_legend.find("AOD 500 nm (");
+  assert(aod_label != std::string::npos);
+  const std::size_t aod_date = delayed_legend.find(
+    "2026-08-04 00:03Z", aod_label);
+  const std::size_t aod_latest = delayed_legend.find(
+    "latest available", aod_label);
+  assert(aod_date != std::string::npos && aod_date - aod_label < 200);
+  assert(aod_latest != std::string::npos && aod_latest - aod_label < 200);
 }

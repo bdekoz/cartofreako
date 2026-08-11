@@ -1,0 +1,106 @@
+{
+  "schema": "cartofreako-artifacts-v1",
+  "catalogVersion": 1,
+  "consumerProfile": {
+    "id": "screen-1080p-lossless-v1",
+    "canvas": {"width": 1920, "height": 1080},
+    "fit": "contain",
+    "background": "#f4f5f5",
+    "recipeVersion": 1
+  },
+  "sourceRevision": {
+    "gitCommit": "0000000000000000000000000000000000000000",
+    "workingTree": "clean",
+    "runtimeApi": 3,
+    "geometryAbi": 1
+  },
+  "artifacts": [
+    {
+      "id": "astro-observer-hubble.cahill-keyes.whole-map",
+      "title": "Hubble — Cahill-Keyes",
+      "altText": "Optional Hubble observer plate.",
+      "pass": {"id": "astro-observer-hubble", "lifecycle": "optional", "year": 2026},
+      "projection": {
+        "id": "cahill-keyes",
+        "nativeFrame": {"width": 44, "height": 22},
+        "cutTopology": "folded",
+        "inverseMode": "face-qualified"
+      },
+      "parents": {
+        "svg": {"path": "hubble.svg", "mediaType": "image/svg+xml", "bytes": 900, "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "authorityClass": "archive-art-master"},
+        "pdf": {"path": "hubble.pdf", "mediaType": "application/pdf", "bytes": 800, "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "authorityClass": "print-presentation"},
+        "fullPng": {"path": "hubble-full.png", "mediaType": "image/png", "bytes": 700, "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "authorityClass": "full-raster", "dimensions": {"width": 3840, "height": 1920}}
+      },
+      "screen": {
+        "authorityClass": "access-derivative",
+        "canvas": {"width": 1920, "height": 1080},
+        "fit": "contain",
+        "background": "#f4f5f5",
+        "contentRectangle": {"x": 0, "y": 60, "width": 1920, "height": 960},
+        "projectedToScreen": [40, 0, 0, 0, 40, 60, 0, 0, 1],
+        "screenToProjected": [0.025, 0, 0, 0, 0.025, -1.5, 0, 0, 1],
+        "png": {"path": "hubble.png", "mediaType": "image/png", "bytes": 500, "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "authorityClass": "access-derivative", "dimensions": {"width": 1920, "height": 1080}, "lossless": true},
+        "webp": {"path": "hubble.webp", "mediaType": "image/webp", "bytes": 400, "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "authorityClass": "access-derivative", "dimensions": {"width": 1920, "height": 1080}, "lossless": true}
+      },
+      "limitations": ["Optional external-source artifact."]
+    },
+    {
+      "id": "water.myriahedral.whole-map",
+      "title": "Water — Myriahedral",
+      "altText": "Standard Water plate in the Myriahedral projection.",
+      "pass": {"id": "water", "lifecycle": "standard"},
+      "projection": {
+        "id": "myriahedral",
+        "nativeFrame": {"width": 44, "height": 24.75},
+        "cutTopology": "polyhedral",
+        "inverseMode": "face-qualified"
+      },
+      "parents": {
+        "svg": {"path": "water-myriahedral.svg", "mediaType": "image/svg+xml", "bytes": 1000, "sha256": "1111111111111111111111111111111111111111111111111111111111111111", "authorityClass": "archive-art-master"},
+        "pdf": {"path": "water-myriahedral.pdf", "mediaType": "application/pdf", "bytes": 900, "sha256": "2222222222222222222222222222222222222222222222222222222222222222", "authorityClass": "print-presentation"},
+        "fullPng": {"path": "water-myriahedral-full.png", "mediaType": "image/png", "bytes": 800, "sha256": "3333333333333333333333333333333333333333333333333333333333333333", "authorityClass": "full-raster", "dimensions": {"width": 3840, "height": 2160}}
+      },
+      "screen": {
+        "authorityClass": "access-derivative",
+        "canvas": {"width": 1920, "height": 1080},
+        "fit": "contain",
+        "background": "#f4f5f5",
+        "contentRectangle": {"x": 0, "y": 0, "width": 1920, "height": 1080},
+        "projectedToScreen": [40, 0, 80, 0, 40, 45, 0, 0, 1],
+        "screenToProjected": [0.025, 0, -2, 0, 0.025, -1.125, 0, 0, 1],
+        "png": {"path": "water-myriahedral.png", "mediaType": "image/png", "bytes": 600, "sha256": "4444444444444444444444444444444444444444444444444444444444444444", "authorityClass": "access-derivative", "dimensions": {"width": 1920, "height": 1080}, "lossless": true},
+        "webp": {"path": "water-myriahedral.webp", "mediaType": "image/webp", "bytes": 450, "sha256": "5555555555555555555555555555555555555555555555555555555555555555", "authorityClass": "access-derivative", "dimensions": {"width": 1920, "height": 1080}, "lossless": true}
+      },
+      "limitations": ["Flat interrupted map; not an equirectangular globe texture."]
+    },
+    {
+      "id": "water.cahill-keyes.whole-map",
+      "title": "Water — Cahill-Keyes",
+      "altText": "Standard Water plate in the Cahill-Keyes projection.",
+      "pass": {"id": "water", "lifecycle": "standard"},
+      "projection": {
+        "id": "cahill-keyes",
+        "nativeFrame": {"width": 44, "height": 22},
+        "cutTopology": "folded",
+        "inverseMode": "face-qualified"
+      },
+      "parents": {
+        "svg": {"path": "water-ck.svg", "mediaType": "image/svg+xml", "bytes": 1000, "sha256": "6666666666666666666666666666666666666666666666666666666666666666", "authorityClass": "archive-art-master"},
+        "pdf": {"path": "water-ck.pdf", "mediaType": "application/pdf", "bytes": 900, "sha256": "7777777777777777777777777777777777777777777777777777777777777777", "authorityClass": "print-presentation"},
+        "fullPng": {"path": "water-ck-full.png", "mediaType": "image/png", "bytes": 800, "sha256": "8888888888888888888888888888888888888888888888888888888888888888", "authorityClass": "full-raster", "dimensions": {"width": 3840, "height": 1920}}
+      },
+      "screen": {
+        "authorityClass": "access-derivative",
+        "canvas": {"width": 1920, "height": 1080},
+        "fit": "contain",
+        "background": "#f4f5f5",
+        "contentRectangle": {"x": 0, "y": 60, "width": 1920, "height": 960},
+        "projectedToScreen": [40, 0, 0, 0, 40, 60, 0, 0, 1],
+        "screenToProjected": [0.025, 0, 0, 0, 0.025, -1.5, 0, 0, 1],
+        "png": {"path": "water-ck.png", "mediaType": "image/png", "bytes": 550, "sha256": "9999999999999999999999999999999999999999999999999999999999999999", "authorityClass": "access-derivative", "dimensions": {"width": 1920, "height": 1080}, "lossless": true},
+        "webp": {"path": "water-ck.webp", "mediaType": "image/webp", "bytes": 425, "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "authorityClass": "access-derivative", "dimensions": {"width": 1920, "height": 1080}, "lossless": true}
+      },
+      "limitations": ["Flat interrupted map; not an equirectangular globe texture."]
+    }
+  ]
+}

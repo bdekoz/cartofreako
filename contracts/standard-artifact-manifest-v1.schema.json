@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bdekoz.github.io/cartofreako/contracts/standard-artifact-manifest-v1.schema.json",
+  "title": "Cartofreako standard artifact manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "inventorySource", "lifecycle", "artifactCount", "artifacts"],
+  "properties": {
+    "schemaVersion": {"const": "cartofreako-standard-artifact-manifest-v1"},
+    "inventorySource": {"const": "Makefile:GENERATED_SVGS"},
+    "lifecycle": {"const": "standard"},
+    "artifactCount": {"type": "integer", "minimum": 1},
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id", "stem", "sourceSvg", "lifecycle", "passId",
+          "projectionId", "layoutId", "family", "sliceId"
+        ],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$"},
+          "stem": {"type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$"},
+          "sourceSvg": {"type": "string", "pattern": "^assets\\.generated/[a-z-]+/svg/[a-z0-9.-]+\\.svg$"},
+          "lifecycle": {"const": "standard"},
+          "passId": {"type": "string", "minLength": 1},
+          "projectionId": {"type": "string", "minLength": 1},
+          "layoutId": {"type": "string", "minLength": 1},
+          "family": {"enum": ["cahill-keyes", "authagraph", "dymaxion", "myriahedral", "star-x", "voronoi"]},
+          "sliceId": {"type": ["string", "null"]}
+        }
+      }
+    }
+  }
+}

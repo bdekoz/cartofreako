@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cartofreako Three.js 1080p flat-map example</title>
+  <style>
+    :root { font-family: system-ui, sans-serif; color-scheme: light; }
+    body { margin: 2rem; color: #182023; background: #fff; }
+    #viewport { width: min(100%, 960px); aspect-ratio: 16 / 9; border: 1px solid #a9adae; }
+    #viewport canvas { display: block; width: 100%; height: 100%; }
+    pre { max-width: 80rem; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>Three.js interrupted flat-map interaction</h1>
+  <p>This is a flat plane, not an equirectangular globe texture. Pointer picks retain every inverse candidate.</p>
+  <div id="viewport"></div>
+  <pre id="metadata">Loading…</pre>
+  <script type="module" src="./screen-1080p-three-demo.mjs"></script>
+</body>
+</html>

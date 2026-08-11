@@ -29,12 +29,17 @@
     "sourceRevision": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["gitCommit", "workingTree", "runtimeApi", "geometryAbi"],
+      "required": [
+        "gitCommit", "workingTree", "runtimeApi", "geometryAbi",
+        "standardManifest", "standardManifestSha256"
+      ],
       "properties": {
         "gitCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
         "workingTree": {"enum": ["clean", "modified"]},
         "runtimeApi": {"const": 3},
-        "geometryAbi": {"const": 1}
+        "geometryAbi": {"const": 1},
+        "standardManifest": {"const": "contracts/standard-artifact-manifest-v1.json"},
+        "standardManifestSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
       }
     },
     "artifacts": {
@@ -49,6 +54,17 @@
       "additionalProperties": false,
       "required": ["width", "height"],
       "properties": {
+        "width": {"type": "number", "exclusiveMinimum": 0},
+        "height": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y", "width", "height"],
+      "properties": {
+        "x": {"type": "number"},
+        "y": {"type": "number"},
         "width": {"type": "number", "exclusiveMinimum": 0},
         "height": {"type": "number", "exclusiveMinimum": 0}
       }
@@ -71,7 +87,12 @@
           ]
         },
         "dimensions": {"$ref": "#/$defs/dimensions"},
-        "lossless": {"type": "boolean"}
+        "lossless": {"type": "boolean"},
+        "contentMediaType": {"type": "string", "minLength": 1},
+        "contentEncoding": {"enum": ["gzip"]},
+        "colorSpace": {"enum": ["sRGB", "UNAVAILABLE"]},
+        "transparency": {"enum": ["opaque", "alpha", "UNAVAILABLE"]},
+        "role": {"type": "string", "minLength": 1}
       }
     },
     "rectangle": {
@@ -100,6 +121,9 @@
         "altText",
         "pass",
         "projection",
+        "slice",
+        "evidence",
+        "accessibility",
         "parents",
         "screen",
         "limitations"
@@ -111,22 +135,75 @@
         "pass": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["id", "lifecycle"],
+          "required": ["id", "lifecycle", "sourcePeriod"],
           "properties": {
             "id": {"type": "string", "minLength": 1},
             "lifecycle": {"enum": ["standard", "optional", "exploration-only"]},
+            "sourcePeriod": {"type": "string", "minLength": 1},
             "year": {"type": "integer", "minimum": 1900, "maximum": 2200}
           }
         },
         "projection": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["id", "nativeFrame", "cutTopology", "inverseMode"],
+          "required": [
+            "id", "family", "layoutId", "nativeFrame", "artifactFrame",
+            "cutTopology", "inverseMode", "nativeCellCount", "componentCount"
+          ],
           "properties": {
             "id": {"type": "string", "minLength": 1},
-            "nativeFrame": {"$ref": "#/$defs/dimensions"},
+            "family": {"enum": ["cahill-keyes", "authagraph", "dymaxion", "myriahedral", "star-x", "voronoi"]},
+            "layoutId": {"type": "string", "minLength": 1},
+            "nativeFrame": {"$ref": "#/$defs/frame"},
+            "artifactFrame": {"$ref": "#/$defs/frame"},
             "cutTopology": {"enum": ["folded", "periodic", "polyhedral"]},
-            "inverseMode": {"enum": ["face-qualified", "candidates"]}
+            "inverseMode": {"enum": ["face-qualified", "candidates"]},
+            "nativeCellCount": {"type": "integer", "minimum": 1},
+            "componentCount": {"type": "integer", "minimum": 1}
+          }
+        },
+        "slice": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "approval"],
+              "properties": {
+                "id": {"type": "string", "minLength": 1},
+                "approval": {"const": "standard-approved"}
+              }
+            }
+          ]
+        },
+        "evidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "sourcePeriod", "licenseSpdx", "attribution", "graphicOpacity",
+            "missingData", "governance"
+          ],
+          "properties": {
+            "sourcePeriod": {"type": "string", "minLength": 1},
+            "licenseSpdx": {"type": "string", "minLength": 1},
+            "attribution": {"type": "string", "minLength": 1},
+            "graphicOpacity": {
+              "oneOf": [
+                {"type": "number", "minimum": 0, "maximum": 1},
+                {"const": "UNAVAILABLE"}
+              ]
+            },
+            "missingData": {"type": "string", "minLength": 1},
+            "governance": {"type": "string", "minLength": 1}
+          }
+        },
+        "accessibility": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["altTextStatus", "visualReviewStatus"],
+          "properties": {
+            "altTextStatus": {"const": "deterministic-source-metadata"},
+            "visualReviewStatus": {"enum": ["pending-human-review", "human-reviewed"]}
           }
         },
         "parents": {
@@ -144,6 +221,8 @@
           "additionalProperties": false,
           "required": [
             "authorityClass",
+            "recipeVersion",
+            "parentFullPngSha256",
             "canvas",
             "fit",
             "background",
@@ -155,6 +234,8 @@
           ],
           "properties": {
             "authorityClass": {"const": "access-derivative"},
+            "recipeVersion": {"type": "integer", "minimum": 1},
+            "parentFullPngSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
             "canvas": {"$ref": "#/$defs/dimensions"},
             "fit": {"const": "contain"},
             "background": {"type": "string", "pattern": "^#[0-9a-f]{6}$"},

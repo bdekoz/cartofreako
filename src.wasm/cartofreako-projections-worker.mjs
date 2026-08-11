@@ -2,6 +2,7 @@ import createCartofreako from './cartofreako-web.mjs';
 
 const runtimePromise = createCartofreako();
 const projections = new Map();
+const cancelled = new Set();
 
 function projectionKey(config) {
     return `${config.id ?? 'cahill-keyes'}:${config.width ?? 1200}:${config.height ?? 'auto'}`;
@@ -78,10 +79,21 @@ async function dispatch(message) {
 
 self.addEventListener('message', async ({data}) => {
     const {requestId} = data;
+    if (data.type === 'cancel') {
+        cancelled.add(requestId);
+        setTimeout(() => cancelled.delete(requestId), 60000);
+        return;
+    }
     try {
+        // Yield once so an AbortSignal cancellation queued immediately after a
+        // request can be observed before entering a synchronous WASM call.
+        await new Promise(resolve => setTimeout(resolve, 0));
+        if (cancelled.delete(requestId)) return;
         const value = await dispatch(data);
+        if (cancelled.delete(requestId)) return;
         self.postMessage({requestId, ok: true, value}, transferList(value));
     } catch (error) {
+        if (cancelled.delete(requestId)) return;
         self.postMessage({
             requestId,
             ok: false,

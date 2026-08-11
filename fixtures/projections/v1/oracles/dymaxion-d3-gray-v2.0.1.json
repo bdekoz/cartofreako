@@ -1,0 +1,3245 @@
+{
+  "schemaVersion": "cartofreako-reverse-oracle-v1",
+  "family": "dymaxion",
+  "evidenceGrade": "upstream-implementation",
+  "coordinateContract": {
+    "selectedProjected": "barycentric weights in the independently projected Gray/Fuller face",
+    "geographic": "[longitude, latitude] degrees"
+  },
+  "selectionMethod": "four fixed interior projected barycentric coordinates in each of the first 23 upstream Airocean registrations; any non-common topology is retained as a classified registration difference",
+  "provenance": {
+    "implementation": "d3-geo-polygon",
+    "version": "2.0.1",
+    "commit": "45d62833536fde08053a0675a488b937d41cde07",
+    "license": "ISC",
+    "packageSha256": "92f7d48bfa5ec5e6c2301ace81387f2e42a18a192794b92874c564d36989a0c4",
+    "dependencyLock": "d3-geo-polygon-v2.0.1-yarn.lock",
+    "dependencyLockSha256": "15712fb5d9ae5273d6835a3189358d4cf02a689a39205be70c9907b2d890e4be",
+    "producer": "tests/oracles/generate-d3-reverse-oracles.mjs",
+    "upstreamModule": "src/airocean.js and src/grayfuller.js",
+    "refinement": "dependency-free central-difference Newton solve against the pinned upstream Gray forward transform; the upstream approximate inverse is retained per case"
+  },
+  "registrationBound": "3e-4 degrees covers the independently observed rounded D3 rotation versus PROJ/Cartofreako Fuller vertex registration; it is not used by the Voronoi or Myriahedral oracles",
+  "cases": [
+    {
+      "caseId": "fuller-face-00-weights-0",
+      "topologyKey": "fuller-registered-face:00",
+      "upstreamFace": 0,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          58.157755754770875,
+          10.447337129069375
+        ],
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        14.307031490770036,
+        -6.936259005984026
+      ],
+      "upstreamApproximateGeographic": [
+        14.307026432028785,
+        -6.936256699912878
+      ],
+      "upstreamRoundTripResidual": 4.218926154447711e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-00-weights-1",
+      "topologyKey": "fuller-registered-face:00",
+      "upstreamFace": 0,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          58.157755754770875,
+          10.447337129069375
+        ],
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        41.43263236027822,
+        -3.2958864571576694
+      ],
+      "upstreamApproximateGeographic": [
+        41.43263151177799,
+        -3.295882456813929
+      ],
+      "upstreamRoundTripResidual": 9.815275750080386e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-00-weights-2",
+      "topologyKey": "fuller-registered-face:00",
+      "upstreamFace": 0,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          58.157755754770875,
+          10.447337129069375
+        ],
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        31.47578512740605,
+        -28.85414980809885
+      ],
+      "upstreamApproximateGeographic": [
+        31.475781378787854,
+        -28.854152245457612
+      ],
+      "upstreamRoundTripResidual": 1.0132267823322093e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-00-weights-3",
+      "topologyKey": "fuller-registered-face:00",
+      "upstreamFace": 0,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          58.157755754770875,
+          10.447337129069375
+        ],
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        29.020120201165764,
+        -13.233149126223891
+      ],
+      "upstreamApproximateGeographic": [
+        29.020120201165764,
+        -13.233149126223891
+      ],
+      "upstreamRoundTripResidual": 5.273672318743298e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-01-weights-0",
+      "topologyKey": "fuller-registered-face:01",
+      "upstreamFace": 1,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          10.536224278210522,
+          64.69997249930763
+        ],
+        [
+          58.157755754770875,
+          10.447337129069375
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        10.165092508024031,
+        17.708837907291127
+      ],
+      "upstreamApproximateGeographic": [
+        10.165088322367126,
+        17.708834081470737
+      ],
+      "upstreamRoundTripResidual": 4.331585706204311e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-01-weights-1",
+      "topologyKey": "fuller-registered-face:01",
+      "upstreamFace": 1,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          10.536224278210522,
+          64.69997249930763
+        ],
+        [
+          58.157755754770875,
+          10.447337129069375
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        19.744236590673456,
+        43.737598645349856
+      ],
+      "upstreamApproximateGeographic": [
+        19.744231180221533,
+        43.73759984495951
+      ],
+      "upstreamRoundTripResidual": 9.83111734896543e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-01-weights-2",
+      "topologyKey": "fuller-registered-face:01",
+      "upstreamFace": 1,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          10.536224278210522,
+          64.69997249930763
+        ],
+        [
+          58.157755754770875,
+          10.447337129069375
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        38.85451694524873,
+        21.558605776117634
+      ],
+      "upstreamApproximateGeographic": [
+        38.8545169323885,
+        21.55860168708598
+      ],
+      "upstreamRoundTripResidual": 1.0105469280107125e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-01-weights-3",
+      "topologyKey": "fuller-registered-face:01",
+      "upstreamFace": 1,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          10.536224278210522,
+          64.69997249930763
+        ],
+        [
+          58.157755754770875,
+          10.447337129069375
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        23.032272216998592,
+        28.173194877367504
+      ],
+      "upstreamApproximateGeographic": [
+        23.032272216998592,
+        28.173194877367504
+      ],
+      "upstreamRoundTripResidual": 5.744182550523785e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-02-weights-0",
+      "topologyKey": "fuller-registered-face:02",
+      "upstreamFace": 2,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ],
+        [
+          10.536224278210522,
+          64.69997249930763
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        -16.1064438250263,
+        21.121520258591513
+      ],
+      "upstreamApproximateGeographic": [
+        -16.106440794011352,
+        21.121515510803313
+      ],
+      "upstreamRoundTripResidual": 4.333071178949439e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-02-weights-1",
+      "topologyKey": "fuller-registered-face:02",
+      "upstreamFace": 2,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ],
+        [
+          10.536224278210522,
+          64.69997249930763
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        -44.34281822190164,
+        31.508042351669427
+      ],
+      "upstreamApproximateGeographic": [
+        -44.34281924309772,
+        31.5080383563831
+      ],
+      "upstreamRoundTripResidual": 1.037702245591572e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-02-weights-2",
+      "topologyKey": "fuller-registered-face:02",
+      "upstreamFace": 2,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ],
+        [
+          10.536224278210522,
+          64.69997249930763
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        -15.976512636512803,
+        48.37634169742794
+      ],
+      "upstreamApproximateGeographic": [
+        -15.976506491688639,
+        48.37634145083472
+      ],
+      "upstreamRoundTripResidual": 9.747859314957293e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-02-weights-3",
+      "topologyKey": "fuller-registered-face:02",
+      "upstreamFace": 2,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ],
+        [
+          10.536224278210522,
+          64.69997249930763
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        -25.817643462526238,
+        34.388414595307985
+      ],
+      "upstreamApproximateGeographic": [
+        -25.817643462526238,
+        34.388414595307985
+      ],
+      "upstreamRoundTripResidual": 6.473657049138937e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-03-weights-0",
+      "topologyKey": "fuller-registered-face:03",
+      "upstreamFace": 3,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ],
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        -26.464302441390288,
+        -1.7125188334621286
+      ],
+      "upstreamApproximateGeographic": [
+        -26.464297008134828,
+        -1.7125178128229106
+      ],
+      "upstreamRoundTripResidual": 4.330225622130344e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-03-weights-1",
+      "topologyKey": "fuller-registered-face:03",
+      "upstreamFace": 3,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ],
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        -47.73717761759834,
+        -19.300151818837715
+      ],
+      "upstreamApproximateGeographic": [
+        -47.73717478490713,
+        -19.30015491282414
+      ],
+      "upstreamRoundTripResidual": 9.83111734896543e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-03-weights-2",
+      "topologyKey": "fuller-registered-face:03",
+      "upstreamFace": 3,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ],
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        -52.13944099584354,
+        7.607515050250572
+      ],
+      "upstreamApproximateGeographic": [
+        -52.13943943946221,
+        7.6075188371298195
+      ],
+      "upstreamRoundTripResidual": 1.0286202842291619e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-03-weights-3",
+      "topologyKey": "fuller-registered-face:03",
+      "upstreamFace": 3,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ],
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        -42.02236128048971,
+        -4.530183046458964
+      ],
+      "upstreamApproximateGeographic": [
+        -42.02236128048971,
+        -4.530183046458964
+      ],
+      "upstreamRoundTripResidual": 5.661048867003677e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-04-weights-0",
+      "topologyKey": "fuller-registered-face:04",
+      "upstreamFace": 4,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ],
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        -8.145921495953807,
+        -19.100635336024773
+      ],
+      "upstreamApproximateGeographic": [
+        -8.145920692411641,
+        -19.10062986253746
+      ],
+      "upstreamRoundTripResidual": 4.330225622130344e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-04-weights-1",
+      "topologyKey": "fuller-registered-face:04",
+      "upstreamFace": 4,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ],
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        6.187520517454008,
+        -43.554556371065345
+      ],
+      "upstreamApproximateGeographic": [
+        6.187525199951734,
+        -43.55455408972224
+      ],
+      "upstreamRoundTripResidual": 9.80349562435714e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-04-weights-2",
+      "topologyKey": "fuller-registered-face:04",
+      "upstreamFace": 4,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ],
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        -29.810252634705826,
+        -38.892459380294675
+      ],
+      "upstreamApproximateGeographic": [
+        -29.810255810236196,
+        -38.89245612276034
+      ],
+      "upstreamRoundTripResidual": 9.659578352375055e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-04-weights-3",
+      "topologyKey": "fuller-registered-face:04",
+      "upstreamFace": 4,
+      "faceVerticesGeographic": [
+        [
+          -5.245335092004242,
+          2.3008516351127875
+        ],
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ],
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        -10.752602458675057,
+        -34.717223744667436
+      ],
+      "upstreamApproximateGeographic": [
+        -10.752602458675057,
+        -34.717223744667436
+      ],
+      "upstreamRoundTripResidual": 5.661048867003677e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-05-weights-0",
+      "topologyKey": "fuller-registered-face:05",
+      "upstreamFace": 5,
+      "faceVerticesGeographic": [
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ],
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ],
+        [
+          58.157755754770875,
+          10.447337129069375
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        89.16960476064817,
+        -25.56284167087995
+      ],
+      "upstreamApproximateGeographic": [
+        89.16960688475615,
+        -25.56283805860095
+      ],
+      "upstreamRoundTripResidual": 1.6326319374041214e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-05-weights-1",
+      "topologyKey": "fuller-registered-face:05",
+      "upstreamFace": 5,
+      "faceVerticesGeographic": [
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ],
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ],
+        [
+          58.157755754770875,
+          10.447337129069375
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        59.86132886163404,
+        -36.517089574626866
+      ],
+      "upstreamApproximateGeographic": [
+        59.86132396851837,
+        -36.517088454004146
+      ],
+      "upstreamRoundTripResidual": 1.7772239894833365e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-05-weights-2",
+      "topologyKey": "fuller-registered-face:05",
+      "upstreamFace": 5,
+      "faceVerticesGeographic": [
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ],
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ],
+        [
+          58.157755754770875,
+          10.447337129069375
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        65.73113403272919,
+        -9.78626245093569
+      ],
+      "upstreamApproximateGeographic": [
+        65.73113205760009,
+        -9.786257279168321
+      ],
+      "upstreamRoundTripResidual": 5.409555279063075e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-05-weights-3",
+      "topologyKey": "fuller-registered-face:05",
+      "upstreamFace": 5,
+      "faceVerticesGeographic": [
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ],
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ],
+        [
+          58.157755754770875,
+          10.447337129069375
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        71.77543531853084,
+        -24.486527745815934
+      ],
+      "upstreamApproximateGeographic": [
+        71.77543531853084,
+        -24.486527745815934
+      ],
+      "upstreamRoundTripResidual": 1.9229626863835638e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-06-weights-0",
+      "topologyKey": "fuller-registered-face:06",
+      "upstreamFace": 6,
+      "faceVerticesGeographic": [
+        [
+          58.157755754770875,
+          10.447337129069375
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        80.12413412247321,
+        10.687651940661373
+      ],
+      "upstreamApproximateGeographic": [
+        80.12412850071833,
+        10.687652076505126
+      ],
+      "upstreamRoundTripResidual": 4.7742817342310054e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-06-weights-1",
+      "topologyKey": "fuller-registered-face:06",
+      "upstreamFace": 6,
+      "faceVerticesGeographic": [
+        [
+          58.157755754770875,
+          10.447337129069375
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        105.71854243521003,
+        22.757431797435625
+      ],
+      "upstreamApproximateGeographic": [
+        105.71854054533051,
+        22.757435496507316
+      ],
+      "upstreamRoundTripResidual": 2.0206364052201327e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-06-weights-2",
+      "topologyKey": "fuller-registered-face:06",
+      "upstreamFace": 6,
+      "faceVerticesGeographic": [
+        [
+          58.157755754770875,
+          10.447337129069375
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        102.94847105381007,
+        -4.362860526242092
+      ],
+      "upstreamApproximateGeographic": [
+        102.94846859431051,
+        -4.362863798273745
+      ],
+      "upstreamRoundTripResidual": 2.0380985511143445e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-06-weights-3",
+      "topologyKey": "fuller-registered-face:06",
+      "upstreamFace": 6,
+      "faceVerticesGeographic": [
+        [
+          58.157755754770875,
+          10.447337129069375
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        96.15078438792747,
+        9.897590337561157
+      ],
+      "upstreamApproximateGeographic": [
+        96.15078438792747,
+        9.897590337561157
+      ],
+      "upstreamRoundTripResidual": 1.79898763908732e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-07-weights-0",
+      "topologyKey": "fuller-registered-face:07",
+      "upstreamFace": 7,
+      "faceVerticesGeographic": [
+        [
+          122.30003931997365,
+          39.10002355936979
+        ],
+        [
+          58.157755754770875,
+          10.447337129069375
+        ],
+        [
+          10.536224278210522,
+          64.69997249930763
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        94.33452640260174,
+        45.97017329738719
+      ],
+      "upstreamApproximateGeographic": [
+        94.33452988410059,
+        45.970176593613125
+      ],
+      "upstreamRoundTripResidual": 1.6883057536160648e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-07-weights-1",
+      "topologyKey": "fuller-registered-face:07",
+      "upstreamFace": 7,
+      "faceVerticesGeographic": [
+        [
+          122.30003931997365,
+          39.10002355936979
+        ],
+        [
+          58.157755754770875,
+          10.447337129069375
+        ],
+        [
+          10.536224278210522,
+          64.69997249930763
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        64.68712987984976,
+        31.171558807171508
+      ],
+      "upstreamApproximateGeographic": [
+        64.68712517454972,
+        31.171558091623215
+      ],
+      "upstreamRoundTripResidual": 1.738660300550457e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-07-weights-2",
+      "topologyKey": "fuller-registered-face:07",
+      "upstreamFace": 7,
+      "faceVerticesGeographic": [
+        [
+          122.30003931997365,
+          39.10002355936979
+        ],
+        [
+          58.157755754770875,
+          10.447337129069375
+        ],
+        [
+          10.536224278210522,
+          64.69997249930763
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        53.466544298536654,
+        57.29952592348628
+      ],
+      "upstreamApproximateGeographic": [
+        53.466536207506806,
+        57.299529304106706
+      ],
+      "upstreamRoundTripResidual": 5.8064860524866546e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-07-weights-3",
+      "topologyKey": "fuller-registered-face:07",
+      "upstreamFace": 7,
+      "faceVerticesGeographic": [
+        [
+          122.30003931997365,
+          39.10002355936979
+        ],
+        [
+          58.157755754770875,
+          10.447337129069375
+        ],
+        [
+          10.536224278210522,
+          64.69997249930763
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        71.52792650536601,
+        46.04189342725922
+      ],
+      "upstreamApproximateGeographic": [
+        71.52792650536601,
+        46.04189342725922
+      ],
+      "upstreamRoundTripResidual": 2.056970405698747e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-08-weights-0",
+      "topologyKey": "fuller-registered-face:08",
+      "upstreamFace": 8,
+      "faceVerticesGeographic": [
+        [
+          10.536224278210522,
+          64.69997249930763
+        ],
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        64.80711127702695,
+        82.08401397456743
+      ],
+      "upstreamApproximateGeographic": [
+        64.80707344825905,
+        82.08401213243337
+      ],
+      "upstreamRoundTripResidual": 4.551914400963142e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-08-weights-1",
+      "topologyKey": "fuller-registered-face:08",
+      "upstreamFace": 8,
+      "faceVerticesGeographic": [
+        [
+          10.536224278210522,
+          64.69997249930763
+        ],
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        -167.27165895443773,
+        68.29916363349064
+      ],
+      "upstreamApproximateGeographic": [
+        -167.27164837427574,
+        68.29916482328404
+      ],
+      "upstreamRoundTripResidual": 2.245973221198118e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-08-weights-2",
+      "topologyKey": "fuller-registered-face:08",
+      "upstreamFace": 8,
+      "faceVerticesGeographic": [
+        [
+          10.536224278210522,
+          64.69997249930763
+        ],
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        129.43944430575132,
+        60.22045788116081
+      ],
+      "upstreamApproximateGeographic": [
+        129.4394362702137,
+        60.22045699091564
+      ],
+      "upstreamRoundTripResidual": 2.245973221198118e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-08-weights-3",
+      "topologyKey": "fuller-registered-face:08",
+      "upstreamFace": 8,
+      "faceVerticesGeographic": [
+        [
+          10.536224278210522,
+          64.69997249930763
+        ],
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        145.35626203558317,
+        74.92846400783768
+      ],
+      "upstreamApproximateGeographic": [
+        145.35626203558317,
+        74.92846400783768
+      ],
+      "upstreamRoundTripResidual": 5.551115123125783e-17,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-09-weights-0",
+      "topologyKey": "fuller-registered-face:09",
+      "upstreamFace": 9,
+      "faceVerticesGeographic": [
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ],
+        [
+          10.536224278210522,
+          64.69997249930763
+        ],
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        -109.5996318576275,
+        60.58005102911521
+      ],
+      "upstreamApproximateGeographic": [
+        -109.59963388518847,
+        60.58004706321034
+      ],
+      "upstreamRoundTripResidual": 1.6326319374041214e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-09-weights-1",
+      "topologyKey": "fuller-registered-face:09",
+      "upstreamFace": 9,
+      "faceVerticesGeographic": [
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ],
+        [
+          10.536224278210522,
+          64.69997249930763
+        ],
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        -45.23906415692559,
+        68.80997427696752
+      ],
+      "upstreamApproximateGeographic": [
+        -45.23905630237914,
+        68.80997133422947
+      ],
+      "upstreamRoundTripResidual": 2.229448362370068e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-09-weights-2",
+      "topologyKey": "fuller-registered-face:09",
+      "upstreamFace": 9,
+      "faceVerticesGeographic": [
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ],
+        [
+          10.536224278210522,
+          64.69997249930763
+        ],
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        -71.37801246113568,
+        45.03033847273098
+      ],
+      "upstreamApproximateGeographic": [
+        -71.37801102086776,
+        45.0303330413851
+      ],
+      "upstreamRoundTripResidual": 5.542081659749287e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-09-weights-3",
+      "topologyKey": "fuller-registered-face:09",
+      "upstreamFace": 9,
+      "faceVerticesGeographic": [
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ],
+        [
+          10.536224278210522,
+          64.69997249930763
+        ],
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        -77.20695436015491,
+        60.43277988562757
+      ],
+      "upstreamApproximateGeographic": [
+        -77.20695436015491,
+        60.43277988562757
+      ],
+      "upstreamRoundTripResidual": 2.220446049250313e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-10-weights-0",
+      "topologyKey": "fuller-registered-face:10",
+      "upstreamFace": 10,
+      "faceVerticesGeographic": [
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ],
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ],
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        -90.83039523935172,
+        25.56284167087993
+      ],
+      "upstreamApproximateGeographic": [
+        -90.830389113866,
+        25.562841687670335
+      ],
+      "upstreamRoundTripResidual": 4.7742817342310054e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-10-weights-1",
+      "topologyKey": "fuller-registered-face:10",
+      "upstreamFace": 10,
+      "faceVerticesGeographic": [
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ],
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ],
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        -114.26886596727073,
+        9.786262450935663
+      ],
+      "upstreamApproximateGeographic": [
+        -114.26886321203244,
+        9.78625939343583
+      ],
+      "upstreamRoundTripResidual": 1.5700924586837751e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-10-weights-2",
+      "topologyKey": "fuller-registered-face:10",
+      "upstreamFace": 10,
+      "faceVerticesGeographic": [
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ],
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ],
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        -120.13867113836605,
+        36.51708957462688
+      ],
+      "upstreamApproximateGeographic": [
+        -120.13866951941732,
+        36.51709345114857
+      ],
+      "upstreamRoundTripResidual": 2.1355566272775288e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-10-weights-3",
+      "topologyKey": "fuller-registered-face:10",
+      "upstreamFace": 10,
+      "faceVerticesGeographic": [
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ],
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ],
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        -108.22456468146912,
+        24.486527745815938
+      ],
+      "upstreamApproximateGeographic": [
+        -108.22456468146912,
+        24.486527745815938
+      ],
+      "upstreamRoundTripResidual": 2.482534153247273e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-11-weights-0",
+      "topologyKey": "fuller-registered-face:11",
+      "upstreamFace": 11,
+      "faceVerticesGeographic": [
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ],
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ],
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        -99.87586587752665,
+        -10.687651940661352
+      ],
+      "upstreamApproximateGeographic": [
+        -99.87586772525997,
+        -10.68765560448828
+      ],
+      "upstreamRoundTripResidual": 1.6326319374041214e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-11-weights-1",
+      "topologyKey": "fuller-registered-face:11",
+      "upstreamFace": 11,
+      "faceVerticesGeographic": [
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ],
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ],
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        -77.05152894618999,
+        4.362860526242032
+      ],
+      "upstreamApproximateGeographic": [
+        -77.05152484883047,
+        4.3628606968957575
+      ],
+      "upstreamRoundTripResidual": 2.229448362370068e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-11-weights-2",
+      "topologyKey": "fuller-registered-face:11",
+      "upstreamFace": 11,
+      "faceVerticesGeographic": [
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ],
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ],
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        -74.28145756478989,
+        -22.75743179743563
+      ],
+      "upstreamApproximateGeographic": [
+        -74.28145395821142,
+        -22.757436210438943
+      ],
+      "upstreamRoundTripResidual": 5.715999172672373e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-11-weights-3",
+      "topologyKey": "fuller-registered-face:11",
+      "upstreamFace": 11,
+      "faceVerticesGeographic": [
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ],
+        [
+          -67.13226039408853,
+          23.717905400028986
+        ],
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        -83.84921561207253,
+        -9.897590337561173
+      ],
+      "upstreamApproximateGeographic": [
+        -83.84921561207253,
+        -9.897590337561173
+      ],
+      "upstreamRoundTripResidual": 2.220446049250313e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-12-weights-0",
+      "topologyKey": "fuller-registered-face:12",
+      "upstreamFace": 12,
+      "faceVerticesGeographic": [
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ],
+        [
+          -169.4637757217895,
+          -64.69997249930763
+        ],
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        -85.66547359739809,
+        -45.97017329738721
+      ],
+      "upstreamApproximateGeographic": [
+        -85.66546573441144,
+        -45.97017247945284
+      ],
+      "upstreamRoundTripResidual": 4.773963996831344e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-12-weights-1",
+      "topologyKey": "fuller-registered-face:12",
+      "upstreamFace": 12,
+      "faceVerticesGeographic": [
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ],
+        [
+          -169.4637757217895,
+          -64.69997249930763
+        ],
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        -126.53345570146321,
+        -57.29952592348633
+      ],
+      "upstreamApproximateGeographic": [
+        -126.53345439393128,
+        -57.299529951058155
+      ],
+      "upstreamRoundTripResidual": 1.7100678429692722e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-12-weights-2",
+      "topologyKey": "fuller-registered-face:12",
+      "upstreamFace": 12,
+      "faceVerticesGeographic": [
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ],
+        [
+          -169.4637757217895,
+          -64.69997249930763
+        ],
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        -115.31287012015027,
+        -31.17155880717147
+      ],
+      "upstreamApproximateGeographic": [
+        -115.31286676823743,
+        -31.171555892539168
+      ],
+      "upstreamRoundTripResidual": 1.9555373935507587e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-12-weights-3",
+      "topologyKey": "fuller-registered-face:12",
+      "upstreamFace": 12,
+      "faceVerticesGeographic": [
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ],
+        [
+          -169.4637757217895,
+          -64.69997249930763
+        ],
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        -108.47207349463402,
+        -46.04189342725924
+      ],
+      "upstreamApproximateGeographic": [
+        -108.47207349463402,
+        -46.04189342725924
+      ],
+      "upstreamRoundTripResidual": 1.1123670610541793e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-13-weights-0",
+      "topologyKey": "fuller-registered-face:13",
+      "upstreamFace": 13,
+      "faceVerticesGeographic": [
+        [
+          -169.4637757217895,
+          -64.69997249930763
+        ],
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ],
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        -115.19288872297233,
+        -82.08401397456743
+      ],
+      "upstreamApproximateGeographic": [
+        -115.1929105232688,
+        -82.0840167505683
+      ],
+      "upstreamRoundTripResidual": 1.6883057536160648e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-13-weights-1",
+      "topologyKey": "fuller-registered-face:13",
+      "upstreamFace": 13,
+      "faceVerticesGeographic": [
+        [
+          -169.4637757217895,
+          -64.69997249930763
+        ],
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ],
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        -50.56055569424869,
+        -60.220457881160876
+      ],
+      "upstreamApproximateGeographic": [
+        -50.56054966963199,
+        -60.22045509422769
+      ],
+      "upstreamRoundTripResidual": 1.738660300550457e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-13-weights-2",
+      "topologyKey": "fuller-registered-face:13",
+      "upstreamFace": 13,
+      "faceVerticesGeographic": [
+        [
+          -169.4637757217895,
+          -64.69997249930763
+        ],
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ],
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        12.728341045562185,
+        -68.29916363349058
+      ],
+      "upstreamApproximateGeographic": [
+        12.728351554947254,
+        -68.29915970475446
+      ],
+      "upstreamRoundTripResidual": 5.8064860524866546e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-13-weights-3",
+      "topologyKey": "fuller-registered-face:13",
+      "upstreamFace": 13,
+      "faceVerticesGeographic": [
+        [
+          -169.4637757217895,
+          -64.69997249930763
+        ],
+        [
+          -57.69996068002635,
+          -39.1000235593698
+        ],
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        -34.6437379644168,
+        -74.92846400783765
+      ],
+      "upstreamApproximateGeographic": [
+        -34.6437379644168,
+        -74.92846400783765
+      ],
+      "upstreamRoundTripResidual": 2.056970405698747e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-14-weights-0",
+      "topologyKey": "fuller-registered-face:14",
+      "upstreamFace": 14,
+      "faceVerticesGeographic": [
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ],
+        [
+          135.39033863910973,
+          -50.15972929853687
+        ],
+        [
+          -169.4637757217895,
+          -64.69997249930763
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        65.46077499459874,
+        -67.61765178114325
+      ],
+      "upstreamApproximateGeographic": [
+        65.46076997536957,
+        -67.61765298493592
+      ],
+      "upstreamRoundTripResidual": 2.7755575615628914e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-14-weights-1",
+      "topologyKey": "fuller-registered-face:14",
+      "upstreamFace": 14,
+      "faceVerticesGeographic": [
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ],
+        [
+          135.39033863910973,
+          -50.15972929853687
+        ],
+        [
+          -169.4637757217895,
+          -64.69997249930763
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        124.71519563753012,
+        -63.33779757879194
+      ],
+      "upstreamApproximateGeographic": [
+        124.71520169906148,
+        -63.33779828318707
+      ],
+      "upstreamRoundTripResidual": 1.1762602059271538e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-14-weights-2",
+      "topologyKey": "fuller-registered-face:14",
+      "upstreamFace": 14,
+      "faceVerticesGeographic": [
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ],
+        [
+          135.39033863910973,
+          -50.15972929853687
+        ],
+        [
+          -169.4637757217895,
+          -64.69997249930763
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        150.27462258040632,
+        -73.39075023866201
+      ],
+      "upstreamApproximateGeographic": [
+        150.2746343499192,
+        -73.39075449456467
+      ],
+      "upstreamRoundTripResidual": 4.803559250984066e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-14-weights-3",
+      "topologyKey": "fuller-registered-face:14",
+      "upstreamFace": 14,
+      "faceVerticesGeographic": [
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ],
+        [
+          135.39033863910973,
+          -50.15972929853687
+        ],
+        [
+          -169.4637757217895,
+          -64.69997249930763
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        111.47849359494805,
+        -71.68446237358135
+      ],
+      "upstreamApproximateGeographic": [
+        111.47849433952634,
+        -71.68446604587268
+      ],
+      "upstreamRoundTripResidual": 1.5515692996128058e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-15-weights-0",
+      "topologyKey": "fuller-registered-face:15",
+      "upstreamFace": 15,
+      "faceVerticesGeographic": [
+        [
+          137.97763871951028,
+          4.53018304645896
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        129.77301844097636,
+        5.887822787836991
+      ],
+      "upstreamApproximateGeographic": [
+        129.77301395461708,
+        5.88782321094852
+      ],
+      "upstreamRoundTripResidual": 2.0824081883200278e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-15-weights-1",
+      "topologyKey": "fuller-registered-face:15",
+      "upstreamFace": 15,
+      "faceVerticesGeographic": [
+        [
+          137.97763871951028,
+          4.53018304645896
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        119.64959552350331,
+        -5.76625006221262
+      ],
+      "upstreamApproximateGeographic": [
+        119.64959819881332,
+        -5.766255378342369
+      ],
+      "upstreamRoundTripResidual": 2.0002991018000927e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-15-weights-2",
+      "topologyKey": "fuller-registered-face:15",
+      "upstreamFace": 15,
+      "faceVerticesGeographic": [
+        [
+          137.97763871951028,
+          4.53018304645896
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        123.41748677934336,
+        20.023331334347205
+      ],
+      "upstreamApproximateGeographic": [
+        123.41749233959489,
+        20.023334534431594
+      ],
+      "upstreamRoundTripResidual": 2.3257582493385758e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-15-weights-3",
+      "topologyKey": "fuller-registered-face:15",
+      "upstreamFace": 15,
+      "faceVerticesGeographic": [
+        [
+          137.97763871951028,
+          4.53018304645896
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        124.1990905217826,
+        6.740031092828877
+      ],
+      "upstreamApproximateGeographic": [
+        124.19908620201898,
+        6.740031159842117
+      ],
+      "upstreamRoundTripResidual": 2.5894628196555746e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-16-weights-0",
+      "topologyKey": "fuller-registered-face:16",
+      "upstreamFace": 16,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ],
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        171.8540785040459,
+        19.100635336024553
+      ],
+      "upstreamApproximateGeographic": [
+        171.8540825736523,
+        19.100633946050646
+      ],
+      "upstreamRoundTripResidual": 2.1719620227114377e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-16-weights-1",
+      "topologyKey": "fuller-registered-face:16",
+      "upstreamFace": 16,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ],
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        150.1897473652941,
+        38.89245938029475
+      ],
+      "upstreamApproximateGeographic": [
+        150.18974571118505,
+        38.89246326138117
+      ],
+      "upstreamRoundTripResidual": 5.818087718705353e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-16-weights-2",
+      "topologyKey": "fuller-registered-face:16",
+      "upstreamFace": 16,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ],
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        -173.8124794825454,
+        43.55455637106528
+      ],
+      "upstreamApproximateGeographic": [
+        -173.81247277013392,
+        43.554558992358864
+      ],
+      "upstreamRoundTripResidual": 1.720657779929419e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-16-weights-3",
+      "topologyKey": "fuller-registered-face:16",
+      "upstreamFace": 16,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ],
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        169.24739754132494,
+        34.71722374466746
+      ],
+      "upstreamApproximateGeographic": [
+        169.24739754132494,
+        34.71722374466746
+      ],
+      "upstreamRoundTripResidual": 3.9739793886722984e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-17-weights-0",
+      "topologyKey": "fuller-registered-face:17",
+      "upstreamFace": 17,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ],
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        -165.69296850923024,
+        6.936259005984217
+      ],
+      "upstreamApproximateGeographic": [
+        -165.69296873233117,
+        6.936254922936898
+      ],
+      "upstreamRoundTripResidual": 2.14362188198208e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-17-weights-1",
+      "topologyKey": "fuller-registered-face:17",
+      "upstreamFace": 17,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ],
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        -148.52421487259386,
+        28.854149808098953
+      ],
+      "upstreamApproximateGeographic": [
+        -148.5242104570075,
+        28.85415113609495
+      ],
+      "upstreamRoundTripResidual": 5.3751307568950885e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-17-weights-2",
+      "topologyKey": "fuller-registered-face:17",
+      "upstreamFace": 17,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ],
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        -138.56736763972165,
+        3.295886457157298
+      ],
+      "upstreamApproximateGeographic": [
+        -138.56736338267734,
+        3.295882925432621
+      ],
+      "upstreamRoundTripResidual": 1.5347379783944548e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-17-weights-3",
+      "topologyKey": "fuller-registered-face:17",
+      "upstreamFace": 17,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          -143.47840470389676,
+          50.1032200521221
+        ],
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        -150.97987979883422,
+        13.2331491262239
+      ],
+      "upstreamApproximateGeographic": [
+        -150.97987979883422,
+        13.2331491262239
+      ],
+      "upstreamRoundTripResidual": 3.1878438852780207e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-18-weights-0",
+      "topologyKey": "fuller-registered-face:18",
+      "upstreamFace": 18,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ],
+        [
+          -169.4637757217895,
+          -64.69997249930763
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        -169.83490749197586,
+        -17.708837907290775
+      ],
+      "upstreamApproximateGeographic": [
+        -169.83491156464908,
+        -17.708839198935507
+      ],
+      "upstreamRoundTripResidual": 2.21394867728755e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-18-weights-1",
+      "topologyKey": "fuller-registered-face:18",
+      "upstreamFace": 18,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ],
+        [
+          -169.4637757217895,
+          -64.69997249930763
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        -141.14548305475117,
+        -21.55860577611765
+      ],
+      "upstreamApproximateGeographic": [
+        -141.1454794223543,
+        -21.558608079925584
+      ],
+      "upstreamRoundTripResidual": 5.274435786004485e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-18-weights-2",
+      "topologyKey": "fuller-registered-face:18",
+      "upstreamFace": 18,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ],
+        [
+          -169.4637757217895,
+          -64.69997249930763
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        -160.25576340932696,
+        -43.73759864535015
+      ],
+      "upstreamApproximateGeographic": [
+        -160.25576483069372,
+        -43.73760407498767
+      ],
+      "upstreamRoundTripResidual": 1.7216757872599123e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-18-weights-3",
+      "topologyKey": "fuller-registered-face:18",
+      "upstreamFace": 18,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          -121.84224424522908,
+          -10.447337129069385
+        ],
+        [
+          -169.4637757217895,
+          -64.69997249930763
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        -156.9677277830014,
+        -28.173194877367504
+      ],
+      "upstreamApproximateGeographic": [
+        -156.9677277830014,
+        -28.173194877367504
+      ],
+      "upstreamRoundTripResidual": 6.436200939563346e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-19-weights-0",
+      "topologyKey": "fuller-registered-face:19",
+      "upstreamFace": 19,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          135.39033863910973,
+          -50.15972929853687
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        157.36663570114862,
+        -17.109760741122635
+      ],
+      "upstreamApproximateGeographic": [
+        157.36663753521066,
+        -17.10975714965182
+      ],
+      "upstreamRoundTripResidual": 1.45553583555479e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-19-weights-1",
+      "topologyKey": "fuller-registered-face:19",
+      "upstreamFace": 19,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          135.39033863910973,
+          -50.15972929853687
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        141.32067081800554,
+        -36.435604194468105
+      ],
+      "upstreamApproximateGeographic": [
+        141.32066704115223,
+        -36.43560667875246
+      ],
+      "upstreamRoundTripResidual": 1.1050065994108396e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-19-weights-2",
+      "topologyKey": "fuller-registered-face:19",
+      "upstreamFace": 19,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          135.39033863910973,
+          -50.15972929853687
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        130.69147612620216,
+        -26.323932777762078
+      ],
+      "upstreamApproximateGeographic": [
+        130.6914730211407,
+        -26.323938563607662
+      ],
+      "upstreamRoundTripResidual": 2.6866078200248146e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-19-weights-3",
+      "topologyKey": "fuller-registered-face:19",
+      "upstreamFace": 19,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          135.39033863910973,
+          -50.15972929853687
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        143.603168320744,
+        -26.916551970392064
+      ],
+      "upstreamApproximateGeographic": [
+        143.60316667573343,
+        -26.91654717497894
+      ],
+      "upstreamRoundTripResidual": 1.7984927663015578e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-20-weights-0",
+      "topologyKey": "fuller-registered-face:20",
+      "upstreamFace": 20,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          137.97763871951028,
+          4.53018304645896
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        158.78127193746863,
+        8.24014324528697
+      ],
+      "upstreamApproximateGeographic": [
+        158.78127311255793,
+        8.240137414866412
+      ],
+      "upstreamRoundTripResidual": 5.226604091682146e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-20-weights-1",
+      "topologyKey": "fuller-registered-face:20",
+      "upstreamFace": 20,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          137.97763871951028,
+          4.53018304645896
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        143.36427681464988,
+        10.86545928896723
+      ],
+      "upstreamApproximateGeographic": [
+        143.36427999362752,
+        10.865462505773873
+      ],
+      "upstreamRoundTripResidual": 1.6698617938864328e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-20-weights-2",
+      "topologyKey": "fuller-registered-face:20",
+      "upstreamFace": 20,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          137.97763871951028,
+          4.53018304645896
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        138.3008992740815,
+        25.527608544426872
+      ],
+      "upstreamApproximateGeographic": [
+        138.3008926329016,
+        25.527607272412727
+      ],
+      "upstreamRoundTripResidual": 2.678285051817266e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-20-weights-3",
+      "topologyKey": "fuller-registered-face:20",
+      "upstreamFace": 20,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          137.97763871951028,
+          4.53018304645896
+        ],
+        [
+          122.30003931997365,
+          39.10002355936979
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        147.13256993822506,
+        15.101303877317177
+      ],
+      "upstreamApproximateGeographic": [
+        147.1325732868851,
+        15.101306697848392
+      ],
+      "upstreamRoundTripResidual": 1.7005268346066206e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-21-weights-0",
+      "topologyKey": "fuller-registered-face:21",
+      "upstreamFace": 21,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ],
+        [
+          137.97763871951028,
+          4.53018304645896
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        156.01448447952907,
+        -6.272707667283383
+      ],
+      "upstreamApproximateGeographic": [
+        156.0144845140959,
+        -6.272702863563203
+      ],
+      "upstreamRoundTripResidual": 3.274028687606861e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-21-weights-1",
+      "topologyKey": "fuller-registered-face:21",
+      "upstreamFace": 21,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ],
+        [
+          137.97763871951028,
+          4.53018304645896
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        131.1110657747618,
+        -15.337853726086703
+      ],
+      "upstreamApproximateGeographic": [
+        131.11106254311645,
+        -15.337850070397565
+      ],
+      "upstreamRoundTripResidual": 1.7746907235050534e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-21-weights-2",
+      "topologyKey": "fuller-registered-face:21",
+      "upstreamFace": 21,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ],
+        [
+          137.97763871951028,
+          4.53018304645896
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        140.8345955746416,
+        -3.244862367466629
+      ],
+      "upstreamApproximateGeographic": [
+        140.83459706839253,
+        -3.244866425920979
+      ],
+      "upstreamRoundTripResidual": 1.4988226751335683e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-21-weights-3",
+      "topologyKey": "fuller-registered-face:21",
+      "upstreamFace": 21,
+      "faceVerticesGeographic": [
+        [
+          174.7546649079958,
+          -2.3008516351127906
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ],
+        [
+          137.97763871951028,
+          4.53018304645896
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        142.78668229363825,
+        -8.503216664536946
+      ],
+      "upstreamApproximateGeographic": [
+        142.78668366921198,
+        -8.503220327218322
+      ],
+      "upstreamRoundTripResidual": 1.234351136320816e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-22-weights-0",
+      "topologyKey": "fuller-registered-face:22",
+      "upstreamFace": 22,
+      "faceVerticesGeographic": [
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ],
+        [
+          135.39033863910973,
+          -50.15972929853687
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.6,
+        0.2,
+        0.2
+      ],
+      "expectedGeographic": [
+        73.06356003380557,
+        -53.367782795440235
+      ],
+      "upstreamApproximateGeographic": [
+        73.06355824294211,
+        -53.36778080542518
+      ],
+      "upstreamRoundTripResidual": 6.206335383118183e-16,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-22-weights-1",
+      "topologyKey": "fuller-registered-face:22",
+      "upstreamFace": 22,
+      "faceVerticesGeographic": [
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ],
+        [
+          135.39033863910973,
+          -50.15972929853687
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        105.28166982808713,
+        -38.7392027561076
+      ],
+      "upstreamApproximateGeographic": [
+        105.28166561134606,
+        -38.73919844185186
+      ],
+      "upstreamRoundTripResidual": 4.803559250984066e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-22-weights-2",
+      "topologyKey": "fuller-registered-face:22",
+      "upstreamFace": 22,
+      "faceVerticesGeographic": [
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ],
+        [
+          135.39033863910973,
+          -50.15972929853687
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.2,
+        0.2,
+        0.6
+      ],
+      "expectedGeographic": [
+        112.66196684759987,
+        -51.281368598980684
+      ],
+      "upstreamApproximateGeographic": [
+        112.66196827150665,
+        -51.281365934162956
+      ],
+      "upstreamRoundTripResidual": 1.3322676295501878e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    },
+    {
+      "caseId": "fuller-face-22-weights-3",
+      "topologyKey": "fuller-registered-face:22",
+      "upstreamFace": 22,
+      "faceVerticesGeographic": [
+        [
+          36.52159529610324,
+          -50.10322005212209
+        ],
+        [
+          112.86773960591147,
+          -23.717905400028993
+        ],
+        [
+          135.39033863910973,
+          -50.15972929853687
+        ]
+      ],
+      "selectedProjectedBarycentricWeights": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "expectedGeographic": [
+        97.89564809946415,
+        -49.00725265942579
+      ],
+      "upstreamApproximateGeographic": [
+        97.89564531835686,
+        -49.00724946374374
+      ],
+      "upstreamRoundTripResidual": 1.6250646570963807e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 0.0003
+    }
+  ]
+}

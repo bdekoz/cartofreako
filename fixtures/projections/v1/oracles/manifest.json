@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "cartofreako-reverse-oracle-manifest-v1",
+  "bundleVersion": 1,
+  "resultPolicy": "Every disagreement is retained and classified before production changes.",
+  "evidenceClaim": "Two direct-upstream families and one independent mathematical inverse over shared declared topology.",
+  "normalCheckNetworkPolicy": "offline",
+  "refreshTarget": "make refresh-reverse-oracle-fixtures",
+  "records": [
+    {
+      "file": "voronoi-d3-v2.0.1.json",
+      "family": "voronoi",
+      "evidenceGrade": "upstream-implementation",
+      "caseCount": 96,
+      "sha256": "92239c12d028781d2236bfe218aea5d52722a1b0169f48f1190a8bcfb34b84d2"
+    },
+    {
+      "file": "dymaxion-d3-gray-v2.0.1.json",
+      "family": "dymaxion",
+      "evidenceGrade": "upstream-implementation",
+      "caseCount": 92,
+      "sha256": "5fe8c9cdb60f8430f8114c6095ad481977e34509ca28d750b3b160ac0411e32e"
+    },
+    {
+      "file": "myriahedral-clean-room.json",
+      "family": "myriahedral",
+      "evidenceGrade": "independent-reimplementation",
+      "caseCount": 1920,
+      "sha256": "1d869039fb6a4e2507a6ea6305f52e54ff8897b65b3e13b7b5e5ae79a67c7ce2"
+    }
+  ],
+  "support": [
+    {
+      "file": "d3-version-delta-v1.12.1-v2.0.1.json",
+      "sha256": "2a1ad44584a9535a454052706fa947faef540a0ed7c4e7ebaad757692d9f3874"
+    },
+    {
+      "file": "d3-geo-polygon-v2.0.1-yarn.lock",
+      "sha256": "15712fb5d9ae5273d6835a3189358d4cf02a689a39205be70c9907b2d890e4be"
+    },
+    {
+      "file": "myriahedral-declared-topology.json",
+      "sha256": "226cd430b390f0c84f90f97c8e594616f31b8367a32af98a70b0603fe1419fca"
+    }
+  ],
+  "totalCaseCount": 2108
+}

@@ -31,7 +31,10 @@ Refresh workflow:
 5. Run `make generate-cloud-atmosphere`.
 
 The process-start UTC instant controls calculated solar geometry. Each source
-observation retains its own interval. P-Tree uses the latest published
-observation ending no later than process start; its exact end UTC and age are
-shown even when publication exceeds the preferred six-hour target. A missing cell or property means
-unobserved, not clear sky and not zero.
+observation retains its own interval. Every enabled layer uses the latest
+published observation ending no later than process start. Its exact end UTC
+and age are shown, and `latest available` is added when publication exceeds
+the layer's preferred freshness target. This makes a verified, authorized
+offline snapshot reproducible without silently turning its age target into an
+expiration date. A missing cell or property means unobserved, not clear sky
+and not zero.

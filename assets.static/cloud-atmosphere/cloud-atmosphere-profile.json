@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "name": "JAXA solar, cloud, and atmosphere snapshot",
-  "description": "A source-timed physical snapshot. Solar geometry is calculated at process start; observed layers are selected latest-not-after that instant, with P-Tree using and labeling its latest published observation when publication lags.",
+  "description": "A source-timed physical snapshot. Solar geometry is calculated at process start; every observed layer uses and dates the latest published observation ending no later than that instant, while maximum-age values remain preferred freshness targets.",
   "time": {
     "calculation": "process-start",
     "source_selection": "latest-not-after",
@@ -34,6 +34,7 @@
       "scale_min": 0.0,
       "scale_max": 400.0,
       "maximum_age_hours": 336.0,
+      "freshness_policy": "latest-available",
       "opacity": 0.24,
       "color": "#f0bd45"
     },
@@ -49,6 +50,7 @@
       "scale_min": 0.0,
       "scale_max": 1.5,
       "maximum_age_hours": 96.0,
+      "freshness_policy": "latest-available",
       "opacity": 0.58,
       "color": "#b07848"
     },
@@ -64,6 +66,7 @@
       "scale_min": 0.0,
       "scale_max": 20.0,
       "maximum_age_hours": 96.0,
+      "freshness_policy": "latest-available",
       "opacity": 0.70,
       "color": "#297fb8"
     },

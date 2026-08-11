@@ -62,11 +62,16 @@ Deploy these files at the same relative paths, or provide Emscripten's
 | `src.wasm/cartofreako-web.d.ts` | TypeScript declarations for runtime API 3 |
 | `src.wasm/cartofreako-screen.mjs` | 1080p contain transform, padding-aware screen picks, and flat texture-plane adapter |
 | `src.wasm/cartofreako-screen.d.ts` | TypeScript declarations for the screen contract |
+| `src.wasm/cartofreako-catalog.mjs` | Deterministic offline artifact selector and decision-receipt implementation |
+| `src.wasm/cartofreako-catalog.d.ts` | TypeScript declarations for artifact requests and receipts |
+| `src.wasm/cartofreako-three.mjs` | Three.js flat-plane/raycast-to-geographic adapter |
+| `src.wasm/cartofreako-three.d.ts` | TypeScript declarations for the Three.js adapter |
 | `src.wasm/cartofreako-svg.mjs` | SVG path/document and base-map renderer |
 | `src.wasm/cartofreako-canvas.mjs` | Canvas and OffscreenCanvas command replay |
 | `src.wasm/cartofreako-d3.mjs` | D3-compatible synchronous stream adapter |
 | `src.wasm/cartofreako-projections-worker.mjs` | ES-module worker hosting one WASM runtime |
 | `src.wasm/cartofreako-worker-client.mjs` | Promise-based main-thread worker client |
+| `src.wasm/cartofreako-worker-client.d.ts` | TypeScript declarations including `AbortSignal` request options |
 
 Source and verification paths are:
 
@@ -78,7 +83,9 @@ Source and verification paths are:
 | `src.projections/cart0freak0-projection-slicing.h` | Generic slice descriptors and built-in catalogs |
 | `tests/test-projection-runtime.cc` | Native all-model geometry and slice checks |
 | `tests/test-forward-reverse-projection-api.cc` | Native exhaustive face-qualified reverse and batch checks |
-| `tests/test-screen-1080p.mjs` | Catalog/file/hash/no-crop/affine-picking checks across 24 derivatives |
+| `tests/test-screen-1080p.mjs` | Catalog/file/hash/no-crop/affine and geographic-picking checks across 205 standard derivatives |
+| `tests/read-screen-catalog.py` | Dependency-free 205-record/1,025-file clean-room catalog and affine checker |
+| `tests/three-screen-browser-smoke.html` | Offline Three.js r185 flat-plane/raycast/reverse-pick canary |
 | `src.wasm/cartofreako-projections-smoke.mjs` | Node integration smoke test |
 | `src.wasm/cartofreako-browser-smoke.html` | Real-browser main-thread/worker smoke page |
 | `scripts/run-wasm-browser-smoke.py` | Ephemeral local server and Chrome DevTools runner |
@@ -147,8 +154,8 @@ verification.
 
 ## Exact 1080p flat-map products
 
-`make generate-screen-1080p` generates an audit-ready four-pass by
-six-projection set under
+`make generate-screen-1080p` generates the complete 205-product standard
+whole-map and approved-slice set under
 `assets.generated/<projection>/screen-1080p{,-webp}/` plus
 `assets.generated/catalog/artifacts-v1.json`. The layered SVG, physical-size
 PDF, exact-ratio 44-inch-leading-edge/A0 print products, and 3840-pixel PNG are
@@ -173,10 +180,13 @@ const geographic = screenToGeographic(projection, screen, artifact, {
 });
 ```
 
-The transform rejects letterbox/pillarbox padding by default. See the
-[`screen-1080p.html`](examples/screen-1080p.html) Canvas example. Its
-`flatTexturePlane()` output is a dependency-free WebGL/Three.js input record;
-the plate remains a flat interrupted map, never an equirectangular sphere.
+The transform rejects letterbox/pillarbox padding by default. Slice records
+retain the original carrier coordinates and their non-zero SVG view-box
+origin. See the [`screen-1080p.html`](examples/screen-1080p.html) Canvas
+example and the real
+[`screen-1080p-three.html`](examples/screen-1080p-three.html) Three.js r185
+plane/raycast example. `flatTexturePlane()` remains the dependency-free raw
+WebGL input; the plate is never an equirectangular sphere.
 
 ### Command-buffer ABI 1
 

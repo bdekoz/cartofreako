@@ -18,6 +18,7 @@ browser integration, verification, and preservation.
 | Understand the selected profile, pass evaluation, and exact versus family workflows | [Generation methods and decision record](getting-started/generation-methods.md) |
 | Review the complete Stage 13 development manifest | [Stage 13 convergence notes](development/stage-13.md) |
 | Follow the Stage 14 plan, implementation changes, and verification evidence | [Stage 14 convergence ledger](development/stage-14.md) |
+| Track GPU texture, mask, Float32, and hardware benchmark work after the Stage 14 baseline freezes | [Stage 15 GPU benchmark ledger](development/stage-15.md) |
 | Authorize and generate credentialed external products | [Configured generation](getting-started/generation.md#configured-development-generation), [Cloud-atmosphere generation](getting-started/generation.md#cloud-atmosphere-generation), and [P-Tree production download](data/ptree-download.md) |
 
 ## Pass catalog and lifecycle
@@ -69,6 +70,8 @@ path structures.
 | Need | Documentation |
 | --- | --- |
 | Use all six projections in WebAssembly, workers, SVG, Canvas, or D3 | [WebAssembly quick start](runtime/webassembly-quick-start.md) and [runtime reference](../../src.wasm/README.md) |
+| Consume portable numeric cases or compare independent reverse implementations | [Projection fixtures and reverse oracles](runtime/projection-fixtures.md) |
+| Select one standard artifact deterministically and retain a decision receipt | [Artifact catalog and selection](runtime/artifact-selection.md) |
 | Use structured forward points and face-qualified reverse candidates | [Forward/reverse projection API](runtime/projection-api.md) |
 | Plan machine-readable agent discovery and 1080p/Three.js derivatives without changing archive/art/print masters | [AI Workflows assessment and 1080p gaming improvement plan](runtime/ai-agent-and-1080p-gaming.md) |
 | Understand the Stage 10 browser architecture and checks | [Stage 10 WebAssembly notes](runtime/webassembly-architecture.md) |

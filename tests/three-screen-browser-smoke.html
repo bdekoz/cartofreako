@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Cartofreako Three.js flat-map smoke</title>
+</head>
+<body>
+  <pre id="result" data-status="running">RUNNING</pre>
+  <script>
+    addEventListener('error', event => {
+      const result = document.querySelector('#result');
+      result.dataset.status = 'fail';
+      result.textContent = `MODULE ERROR ${event.message} ${event.filename}:${event.lineno}`;
+    });
+    addEventListener('unhandledrejection', event => {
+      const result = document.querySelector('#result');
+      result.dataset.status = 'fail';
+      result.textContent = `UNHANDLED ${event.reason?.stack ?? event.reason}`;
+    });
+  </script>
+  <script type="module">
+    import * as THREE
+      from '/src.wasm/third_party/three-0.185.1/build/three.module.min.js';
+    import createCartofreako from '/src.wasm/cartofreako-web.mjs';
+    import {projectedToScreen} from '/src.wasm/cartofreako-screen.mjs';
+    import {
+      createThreeFlatMap,
+      threeIntersectionToGeographic,
+      threeIntersectionToScreen
+    } from '/src.wasm/cartofreako-three.mjs';
+
+    const result = document.querySelector('#result');
+    const requireCondition = (condition, message) => {
+      if (!condition) throw new Error(message);
+    };
+    try {
+      requireCondition(THREE.REVISION === '185', `unexpected Three.js ${THREE.REVISION}`);
+      const catalog = await fetch('/assets.generated/catalog/artifacts-v1.json')
+        .then(response => response.json());
+      const artifact = catalog.artifacts.find(({id}) => id === 'water.myriahedral.whole-map');
+      requireCondition(artifact, 'Myriahedral water screen artifact is missing');
+      const texture = new THREE.Texture();
+      const mesh = createThreeFlatMap(THREE, texture, artifact);
+      requireCondition(mesh instanceof THREE.Mesh
+          && mesh.geometry instanceof THREE.PlaneGeometry
+          && mesh.geometry.parameters.width === 16
+          && mesh.geometry.parameters.height === 9,
+      'Three.js flat-map mesh has the wrong geometry');
+
+      const runtime = await createCartofreako();
+      const projection = runtime.createProjection({id: artifact.projection.id, width: 44});
+      const geographic = [171.2, 7.1];
+      const forward = projection.forward(geographic);
+      const screen = projectedToScreen([forward.x, forward.y], artifact.screen);
+      const intersection = {uv: new THREE.Vector2(
+        screen[0] / artifact.screen.canvas.width,
+        1 - screen[1] / artifact.screen.canvas.height
+      )};
+      const recoveredScreen = threeIntersectionToScreen(intersection, artifact);
+      requireCondition(Math.hypot(recoveredScreen[0] - screen[0],
+        recoveredScreen[1] - screen[1]) < 1e-10, 'Three.js UV-to-screen mapping changed');
+      const inverse = threeIntersectionToGeographic(projection, intersection, artifact, {
+        nativeCell: forward.nativeCell,
+        component: forward.component
+      });
+      requireCondition(inverse.candidates.length === 1
+          && Math.abs(inverse.candidates[0].longitude - geographic[0]) < 2e-8
+          && Math.abs(inverse.candidates[0].latitude - geographic[1]) < 2e-8,
+      'Three.js hit did not preserve the geographic pick');
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.OrthographicCamera(-8, 8, 4.5, -4.5, 0.1, 20);
+      camera.position.z = 10;
+      scene.add(mesh);
+      scene.updateMatrixWorld(true);
+      camera.updateMatrixWorld(true);
+      const raycaster = new THREE.Raycaster();
+      raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
+      requireCondition(raycaster.intersectObject(mesh).length >= 1,
+        'Three.js raycaster did not hit the flat map');
+      projection.dispose();
+      mesh.geometry.dispose();
+      mesh.material.dispose();
+      texture.dispose();
+      result.dataset.status = 'pass';
+      result.textContent = `Three.js r${THREE.REVISION} flat-map interaction passed`;
+    } catch (error) {
+      result.dataset.status = 'fail';
+      result.textContent = `FAIL ${error.stack ?? error}`;
+    }
+  </script>
+</body>
+</html>

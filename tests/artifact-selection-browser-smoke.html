@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Cartofreako artifact selection browser smoke</title>
+</head>
+<body>
+  <pre id="result" data-status="running">RUNNING</pre>
+  <script type="module">
+    import {canonicalJson, selectArtifact, sha256Hex}
+      from '/src.wasm/cartofreako-catalog.mjs';
+
+    const result = document.querySelector('#result');
+    try {
+      const [requestResponse, catalogResponse] = await Promise.all([
+        fetch('/tests/fixtures/artifact-selection/request.json'),
+        fetch('/tests/fixtures/artifact-selection/catalog.json')
+      ]);
+      const request = await requestResponse.json();
+      const catalogBytes = new Uint8Array(await catalogResponse.arrayBuffer());
+      const catalog = JSON.parse(new TextDecoder().decode(catalogBytes));
+      const receipt = await selectArtifact(request, catalog, {
+        catalogBytes,
+        createdAt: '2026-08-10T00:00:00Z'
+      });
+      if (receipt.decisionCore.selection.artifactId
+          !== 'water.myriahedral.whole-map'
+          || receipt.decisionCore.selection.variantId !== 'screen-webp') {
+        throw new Error('browser selected the wrong artifact');
+      }
+      if (receipt.decisionCoreSha256
+          !== '9c915fe5fa80dcb4d37c2bfa597277d57753f84d6a33fbe189f65d6b1a82a978'
+          || receipt.decisionCoreSha256
+              !== await sha256Hex(canonicalJson(receipt.decisionCore))) {
+        throw new Error('browser decision-core hash differs');
+      }
+      result.dataset.status = 'pass';
+      result.textContent = `artifact selector browser passed: ${receipt.decisionCoreSha256}`;
+    } catch (error) {
+      result.dataset.status = 'fail';
+      result.textContent = `FAIL ${error.stack ?? error}`;
+    }
+  </script>
+</body>
+</html>

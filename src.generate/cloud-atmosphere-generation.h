@@ -597,6 +597,13 @@ metadata_element(const generation::projection_spec& spec,
   for (const observation_metadata& observation : dataset.observations)
     result += " data-observation-" + observation.source_id + "-end=\""
       + observation.end.iso_utc + "\"";
+  for (const layer_definition& layer : profile.layers)
+    if (layer.enabled)
+      result += " data-freshness-" + layer.id + "=\""
+        + (layer.freshness == freshness_policy::latest_available
+             ? "latest-available" : "maximum-age")
+        + "\" data-freshness-target-hours-" + layer.id + "=\""
+        + format_number(layer.maximum_age_hours, 1) + "\"";
   return result + "></metadata>\n";
 }
 

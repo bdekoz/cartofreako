@@ -385,6 +385,36 @@ normalization. This prevents false ocean or land chords between unrelated net
 edges. The method is shared with Myriahedral and Voronoi, but uses the exact
 Fuller face transform rather than either projection's face formula.
 
+## ULP-scale audit and external registration evidence
+
+`make audit-dymaxion-ulp` probes exact and one-sided representable values at
+every registered edge, vertex, Australia/Japan subface, tie, clamp threshold,
+and supported frame scale. The current evidence contains 1,883 boundary
+probes, including 566 candidate-set differences that are all contained by the
+declared classifier tolerance, with zero unclassified gaps. Its 92 frame
+checks cover native, 44-inch, 1,920-pixel, and 13,200-pixel carriers. The
+maximum retained forward residual is approximately `1.818989e-12` projected
+units, and no ordinary interior point requires a boundary clamp. The audit
+therefore supports the existing epsilon classifiers and clamps; it does not
+justify a production tolerance change.
+
+The machine-readable local result is
+`reports/dymaxion-ulp-audit.json`. It records raw determinants, expected and
+observed membership, ties, clamp events, and residuals so a later compiler or
+platform change can be compared without rewriting this conclusion.
+
+The independent reverse tier compares 92 projected points against the pinned
+`d3-geo-polygon` v2.0.1 Airocean/Gray route. The maximum classified angular
+difference is `0.000165906°`, below the declared `0.0003°` bound for rounded
+upstream registration. Four face-19 cases are retained as explicit upstream
+registration exclusions. They are not silently discarded failures and do not
+change Cartofreako's exact forward registration. This comparison strengthens
+cross-implementation evidence but does not make D3 an oracle for every net
+convention or boundary.
+
+The versioned fixture and evidence boundaries are documented in
+[projection fixtures and independent reverse oracles](../../runtime/projection-fixtures.md).
+
 ## Verification
 
 `make check` covers:
@@ -399,6 +429,13 @@ Fuller face transform rather than either projection's face formula.
 - rejection of wrong ratios, zero, negative, NaN, infinity, and overflow;
 - every integer latitude/longitude pair over the complete public domain; and
 - exact equality of the `-180` and `+180` antimeridian forms.
+
+The Stage 14 numerical gates additionally include:
+
+- `make audit-dymaxion-ulp` for classifier, frame, tie, and clamp behavior;
+- `make check-projection-fixtures` for the 73 implementation-neutral Dymaxion
+  cases and their checksums; and
+- `make check-reverse-oracles` for the pinned external registration comparison.
 
 `tests/test-forward-reverse-projection-api.cc` additionally checks an interior
 point in every one of the 23 faces/subfaces, a global coordinate lattice,

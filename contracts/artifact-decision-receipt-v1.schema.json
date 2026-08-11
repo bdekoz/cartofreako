@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bdekoz.github.io/cartofreako/contracts/artifact-decision-receipt-v1.schema.json",
+  "title": "Cartofreako artifact decision receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "decisionCore", "decisionCoreSha256", "runEnvelope"],
+  "properties": {
+    "schemaVersion": { "const": "cartofreako-artifact-decision-receipt-v1" },
+    "decisionCore": {
+      "type": "object",
+      "required": [
+        "requestId", "requestSha256", "normalizedRequest", "catalog",
+        "selectionPolicyVersion", "runtimeVersion", "outcome",
+        "selection", "evaluatedCandidates", "relaxations",
+        "nonAuthorityStatement"
+      ],
+      "properties": {
+        "requestId": { "type": "string" },
+        "requestSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "normalizedRequest": { "type": "object" },
+        "catalog": {
+          "type": "object",
+          "required": ["schema", "catalogVersion", "sourceRevision", "sha256"],
+          "properties": {
+            "schema": { "type": "string" },
+            "catalogVersion": { "type": "integer" },
+            "sourceRevision": { "type": "object" },
+            "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+          },
+          "additionalProperties": false
+        },
+        "selectionPolicyVersion": { "const": 1 },
+        "runtimeVersion": { "const": "cartofreako-catalog-js-v1" },
+        "outcome": { "enum": ["selected", "no-match", "requires-human-review", "error"] },
+        "selection": { "type": ["object", "null"] },
+        "evaluatedCandidates": { "type": "array" },
+        "relaxations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["field", "before", "after", "reason"],
+            "properties": {
+              "field": { "enum": ["projectionIds", "formats", "maxBytes", "viewport", "authorityClasses"] },
+              "before": {},
+              "after": {},
+              "reason": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "priorReceiptSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "override": { "type": "object" },
+        "nonAuthorityStatement": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "decisionCoreSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "runEnvelope": {
+      "type": "object",
+      "required": ["createdAt"],
+      "properties": { "createdAt": { "type": "string", "format": "date-time" } },
+      "additionalProperties": false
+    }
+  }
+}

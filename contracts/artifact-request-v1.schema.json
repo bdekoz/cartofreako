@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bdekoz.github.io/cartofreako/contracts/artifact-request-v1.schema.json",
+  "title": "Cartofreako artifact request v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "requestId", "purpose"],
+  "properties": {
+    "schemaVersion": { "const": "cartofreako-artifact-request-v1" },
+    "requestId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" },
+    "purpose": {
+      "enum": ["preview", "flat-screen", "interactive-flat", "print-review", "archive-reference", "research-comparison"]
+    },
+    "passIds": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "allowedLifecycles": {
+      "type": "array",
+      "items": { "enum": ["standard", "optional", "exploration-only"] },
+      "uniqueItems": true
+    },
+    "optionalOptIn": { "type": "boolean" },
+    "explorationOptIn": { "type": "boolean" },
+    "years": { "type": "array", "items": { "type": "integer", "minimum": 1900, "maximum": 2200 }, "uniqueItems": true },
+    "sourcePeriods": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "projectionIds": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "sliceIds": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "formats": {
+      "type": "array",
+      "items": { "enum": ["png", "webp", "svg", "pdf", "full-png"] },
+      "uniqueItems": true
+    },
+    "viewport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height"],
+      "properties": {
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "fit": { "enum": ["contain"] },
+    "transparency": { "enum": ["any", "required", "opaque"] },
+    "losslessRequired": { "type": "boolean" },
+    "maxBytes": { "type": "integer", "minimum": 1 },
+    "interaction": { "enum": ["none", "projected-picking", "geographic-picking"] },
+    "authorityClasses": {
+      "type": "array",
+      "items": { "enum": ["archive-art-master", "print-presentation", "full-raster", "access-derivative"] },
+      "uniqueItems": true
+    },
+    "licenses": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "governance": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "requireChecksums": { "type": "boolean" },
+    "expectedCatalogSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "networkPolicy": { "enum": ["offline", "catalog-declared-only"] },
+    "preferences": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["field"],
+        "properties": {
+          "field": { "enum": ["projection", "format", "authority-class", "lifecycle", "bytes"] },
+          "order": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+          "direction": { "enum": ["ascending", "descending"] }
+        }
+      }
+    },
+    "fallbackSequence": {
+      "type": "array",
+      "items": { "enum": ["projectionIds", "formats", "maxBytes", "viewport", "authorityClasses"] },
+      "uniqueItems": true
+    },
+    "humanReviewRequired": { "type": "boolean" }
+  }
+}

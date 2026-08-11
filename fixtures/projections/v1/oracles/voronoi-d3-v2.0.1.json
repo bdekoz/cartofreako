@@ -1,0 +1,1366 @@
+{
+  "schemaVersion": "cartofreako-reverse-oracle-v1",
+  "family": "voronoi",
+  "evidenceGrade": "upstream-implementation",
+  "coordinateContract": {
+    "projected": "[u, v] normalized 960x500 top-left page space",
+    "geographic": "[longitude, latitude] degrees"
+  },
+  "selectionMethod": "fixed 24-pixel by 25-pixel page lattice; first 96 interior points with an upstream inverse/forward residual no greater than 2e-7 pixels",
+  "provenance": {
+    "implementation": "d3-geo-polygon",
+    "version": "2.0.1",
+    "commit": "45d62833536fde08053a0675a488b937d41cde07",
+    "license": "ISC",
+    "packageSha256": "92f7d48bfa5ec5e6c2301ace81387f2e42a18a192794b92874c564d36989a0c4",
+    "dependencyLock": "d3-geo-polygon-v2.0.1-yarn.lock",
+    "dependencyLockSha256": "15712fb5d9ae5273d6835a3189358d4cf02a689a39205be70c9907b2d890e4be",
+    "producer": "tests/oracles/generate-d3-reverse-oracles.mjs"
+  },
+  "cases": [
+    {
+      "caseId": "d3-page-000",
+      "selectedProjected": [
+        0.1,
+        0.1
+      ],
+      "expectedGeographic": [
+        -86.4510278426418,
+        81.40047092280629
+      ],
+      "upstreamRoundTripResidualPixels": 3.1776437161565096e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-001",
+      "selectedProjected": [
+        0.275,
+        0.1
+      ],
+      "expectedGeographic": [
+        -30.6994377174195,
+        81.95952714155587
+      ],
+      "upstreamRoundTripResidualPixels": 5.684341886080802e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-002",
+      "selectedProjected": [
+        0.45,
+        0.1
+      ],
+      "expectedGeographic": [
+        24.176225717286943,
+        81.82222462877954
+      ],
+      "upstreamRoundTripResidualPixels": 9.099386826154683e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-003",
+      "selectedProjected": [
+        0.625,
+        0.1
+      ],
+      "expectedGeographic": [
+        80.91184388652862,
+        81.02219967259846
+      ],
+      "upstreamRoundTripResidualPixels": 4.263256414560601e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-004",
+      "selectedProjected": [
+        0.65,
+        0.1
+      ],
+      "expectedGeographic": [
+        140.1301322536632,
+        80.56949015252984
+      ],
+      "upstreamRoundTripResidualPixels": 9.947598300641403e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-005",
+      "selectedProjected": [
+        0.825,
+        0.1
+      ],
+      "expectedGeographic": [
+        -161.9486489803155,
+        81.58476555228873
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-006",
+      "selectedProjected": [
+        0.075,
+        0.15
+      ],
+      "expectedGeographic": [
+        -128.9655685659484,
+        71.9584546747627
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-007",
+      "selectedProjected": [
+        0.1,
+        0.15
+      ],
+      "expectedGeographic": [
+        -96.51295736070963,
+        72.75700484823221
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-008",
+      "selectedProjected": [
+        0.25,
+        0.15
+      ],
+      "expectedGeographic": [
+        -64.30903245069797,
+        70.94123362711275
+      ],
+      "upstreamRoundTripResidualPixels": 3.1776437161565096e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-009",
+      "selectedProjected": [
+        0.275,
+        0.15
+      ],
+      "expectedGeographic": [
+        -33.266568229485124,
+        73.06430803294985
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-010",
+      "selectedProjected": [
+        0.3,
+        0.15
+      ],
+      "expectedGeographic": [
+        -3.6197810753247235,
+        70.19315316376415
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-011",
+      "selectedProjected": [
+        0.425,
+        0.15
+      ],
+      "expectedGeographic": [
+        1.2346699693852197,
+        69.68298685520782
+      ],
+      "upstreamRoundTripResidualPixels": 5.684341886080802e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-012",
+      "selectedProjected": [
+        0.45,
+        0.15
+      ],
+      "expectedGeographic": [
+        29.85126337817226,
+        72.99022585205225
+      ],
+      "upstreamRoundTripResidualPixels": 7.105427357601002e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-013",
+      "selectedProjected": [
+        0.475,
+        0.15
+      ],
+      "expectedGeographic": [
+        61.57866343172472,
+        71.36559818237058
+      ],
+      "upstreamRoundTripResidualPixels": 6.355287432313019e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-014",
+      "selectedProjected": [
+        0.625,
+        0.15
+      ],
+      "expectedGeographic": [
+        93.25403266445153,
+        72.54078848144952
+      ],
+      "upstreamRoundTripResidualPixels": 5.684341886080802e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-015",
+      "selectedProjected": [
+        0.65,
+        0.15
+      ],
+      "expectedGeographic": [
+        125.91024818757641,
+        72.27364273683646
+      ],
+      "upstreamRoundTripResidualPixels": 4.263256414560601e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-016",
+      "selectedProjected": [
+        0.8,
+        0.15
+      ],
+      "expectedGeographic": [
+        157.2821113511723,
+        71.7505797997405
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-017",
+      "selectedProjected": [
+        0.825,
+        0.15
+      ],
+      "expectedGeographic": [
+        -170.47921564633245,
+        72.8599536181376
+      ],
+      "upstreamRoundTripResidualPixels": 8.526512829121202e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-018",
+      "selectedProjected": [
+        0.05,
+        0.2
+      ],
+      "expectedGeographic": [
+        -141.13381750073978,
+        58.69593730302508
+      ],
+      "upstreamRoundTripResidualPixels": 7.105427357601002e-15,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-019",
+      "selectedProjected": [
+        0.075,
+        0.2
+      ],
+      "expectedGeographic": [
+        -122.46476492559486,
+        62.260279831230335
+      ],
+      "upstreamRoundTripResidualPixels": 6.355287432313019e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-020",
+      "selectedProjected": [
+        0.1,
+        0.2
+      ],
+      "expectedGeographic": [
+        -100.20972791810053,
+        62.79820822533271
+      ],
+      "upstreamRoundTripResidualPixels": 3.1776437161565096e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-021",
+      "selectedProjected": [
+        0.125,
+        0.2
+      ],
+      "expectedGeographic": [
+        -80.0057111838142,
+        60.02778711045716
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-022",
+      "selectedProjected": [
+        0.25,
+        0.2
+      ],
+      "expectedGeographic": [
+        -55.93214049790805,
+        61.55674153661268
+      ],
+      "upstreamRoundTripResidualPixels": 2.842170943040401e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-023",
+      "selectedProjected": [
+        0.275,
+        0.2
+      ],
+      "expectedGeographic": [
+        -34.159030381132524,
+        63.00164862786381
+      ],
+      "upstreamRoundTripResidualPixels": 2.842170943040401e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-024",
+      "selectedProjected": [
+        0.3,
+        0.2
+      ],
+      "expectedGeographic": [
+        -12.88170358836635,
+        61.02715567087758
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-025",
+      "selectedProjected": [
+        0.425,
+        0.2
+      ],
+      "expectedGeographic": [
+        10.95343369274615,
+        60.66043487770428
+      ],
+      "upstreamRoundTripResidualPixels": 6.355287432313019e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-026",
+      "selectedProjected": [
+        0.45,
+        0.2
+      ],
+      "expectedGeographic": [
+        31.851834508185597,
+        62.95279141016094
+      ],
+      "upstreamRoundTripResidualPixels": 5.684341886080802e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-027",
+      "selectedProjected": [
+        0.475,
+        0.2
+      ],
+      "expectedGeographic": [
+        53.861311464089034,
+        61.85264284359382
+      ],
+      "upstreamRoundTripResidualPixels": 6.355287432313019e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-028",
+      "selectedProjected": [
+        0.5,
+        0.2
+      ],
+      "expectedGeographic": [
+        71.64117634871509,
+        57.92876397773318
+      ],
+      "upstreamRoundTripResidualPixels": 1.214175959108492e-13,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-029",
+      "selectedProjected": [
+        0.6,
+        0.2
+      ],
+      "expectedGeographic": [
+        78.23193536736497,
+        59.60251291661706
+      ],
+      "upstreamRoundTripResidualPixels": 2.842170943040401e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-030",
+      "selectedProjected": [
+        0.625,
+        0.2
+      ],
+      "expectedGeographic": [
+        97.95183633912524,
+        62.653861508361665
+      ],
+      "upstreamRoundTripResidualPixels": 2.842170943040401e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-031",
+      "selectedProjected": [
+        0.65,
+        0.2
+      ],
+      "expectedGeographic": [
+        120.27497242749567,
+        62.474166008822785
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-032",
+      "selectedProjected": [
+        0.675,
+        0.2
+      ],
+      "expectedGeographic": [
+        139.48119040405047,
+        59.157960763673856
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-033",
+      "selectedProjected": [
+        0.775,
+        0.2
+      ],
+      "expectedGeographic": [
+        145.91640559527804,
+        58.414988954862395
+      ],
+      "upstreamRoundTripResidualPixels": 5.684341886080802e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-034",
+      "selectedProjected": [
+        0.8,
+        0.2
+      ],
+      "expectedGeographic": [
+        164.25888275020523,
+        62.118129264881276
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-035",
+      "selectedProjected": [
+        0.825,
+        0.2
+      ],
+      "expectedGeographic": [
+        -173.55802948430718,
+        62.86658858323676
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-036",
+      "selectedProjected": [
+        0.85,
+        0.2
+      ],
+      "expectedGeographic": [
+        -153.08394421727039,
+        60.26964737570434
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-037",
+      "selectedProjected": [
+        0.05,
+        0.25
+      ],
+      "expectedGeographic": [
+        -134.1957373866033,
+        49.21814063956386
+      ],
+      "upstreamRoundTripResidualPixels": 2.5618982671915017e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-038",
+      "selectedProjected": [
+        0.075,
+        0.25
+      ],
+      "expectedGeographic": [
+        -119.00258185034501,
+        51.74353283125256
+      ],
+      "upstreamRoundTripResidualPixels": 3.1776437161565096e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-039",
+      "selectedProjected": [
+        0.1,
+        0.25
+      ],
+      "expectedGeographic": [
+        -102.1127839364057,
+        52.112464455497786
+      ],
+      "upstreamRoundTripResidualPixels": 5.1237965343830035e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-040",
+      "selectedProjected": [
+        0.125,
+        0.25
+      ],
+      "expectedGeographic": [
+        -86.1661975728209,
+        50.177316465020176
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-041",
+      "selectedProjected": [
+        0.15,
+        0.25
+      ],
+      "expectedGeographic": [
+        -73.07735133068158,
+        46.649464516320045
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-042",
+      "selectedProjected": [
+        0.225,
+        0.25
+      ],
+      "expectedGeographic": [
+        -65.72020544710435,
+        48.29048896477833
+      ],
+      "upstreamRoundTripResidualPixels": 2.842170943040401e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-043",
+      "selectedProjected": [
+        0.25,
+        0.25
+      ],
+      "expectedGeographic": [
+        -51.2865042884873,
+        51.255913221411845
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-044",
+      "selectedProjected": [
+        0.275,
+        0.25
+      ],
+      "expectedGeographic": [
+        -34.61224477776626,
+        52.25108404748253
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-045",
+      "selectedProjected": [
+        0.3,
+        0.25
+      ],
+      "expectedGeographic": [
+        -18.163529880499517,
+        50.88517421959882
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-046",
+      "selectedProjected": [
+        0.325,
+        0.25
+      ],
+      "expectedGeographic": [
+        -4.229707530990808,
+        47.68400301182532
+      ],
+      "upstreamRoundTripResidualPixels": 2.842170943040401e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-047",
+      "selectedProjected": [
+        0.4,
+        0.25
+      ],
+      "expectedGeographic": [
+        2.9863553857336327,
+        47.29106501915878
+      ],
+      "upstreamRoundTripResidualPixels": 2.842170943040401e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-048",
+      "selectedProjected": [
+        0.425,
+        0.25
+      ],
+      "expectedGeographic": [
+        16.597496741378322,
+        50.62665349450746
+      ],
+      "upstreamRoundTripResidualPixels": 5.859285502108464e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-049",
+      "selectedProjected": [
+        0.45,
+        0.25
+      ],
+      "expectedGeographic": [
+        32.87114457082505,
+        52.21783994111477
+      ],
+      "upstreamRoundTripResidualPixels": 5.859285502108464e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-050",
+      "selectedProjected": [
+        0.475,
+        0.25
+      ],
+      "expectedGeographic": [
+        49.65156624673888,
+        51.46169319998497
+      ],
+      "upstreamRoundTripResidualPixels": 4.263256414560601e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-051",
+      "selectedProjected": [
+        0.5,
+        0.25
+      ],
+      "expectedGeographic": [
+        64.38766843964979,
+        48.657928563445324
+      ],
+      "upstreamRoundTripResidualPixels": 5.859285502108464e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-052",
+      "selectedProjected": [
+        0.6,
+        0.25
+      ],
+      "expectedGeographic": [
+        84.67943946237537,
+        49.87294941758251
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-053",
+      "selectedProjected": [
+        0.625,
+        0.25
+      ],
+      "expectedGeographic": [
+        100.39304771075324,
+        52.013805498413596
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-054",
+      "selectedProjected": [
+        0.65,
+        0.25
+      ],
+      "expectedGeographic": [
+        117.31301484373377,
+        51.89063671975918
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-055",
+      "selectedProjected": [
+        0.675,
+        0.25
+      ],
+      "expectedGeographic": [
+        132.7747906779587,
+        49.552853512157235
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-056",
+      "selectedProjected": [
+        0.775,
+        0.25
+      ],
+      "expectedGeographic": [
+        152.9792220972344,
+        49.01361664699061
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-057",
+      "selectedProjected": [
+        0.8,
+        0.25
+      ],
+      "expectedGeographic": [
+        168.00634594475696,
+        51.645469066411465
+      ],
+      "upstreamRoundTripResidualPixels": 2.842170943040401e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-058",
+      "selectedProjected": [
+        0.825,
+        0.25
+      ],
+      "expectedGeographic": [
+        -175.13580773448152,
+        52.159113495766796
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-059",
+      "selectedProjected": [
+        0.85,
+        0.25
+      ],
+      "expectedGeographic": [
+        -159.0610381564919,
+        50.34959057931051
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-060",
+      "selectedProjected": [
+        0.875,
+        0.25
+      ],
+      "expectedGeographic": [
+        -145.77709877019316,
+        46.890124683211994
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-061",
+      "selectedProjected": [
+        0.025,
+        0.3
+      ],
+      "expectedGeographic": [
+        -140.35368649999066,
+        36.80281170681383
+      ],
+      "upstreamRoundTripResidualPixels": 5.859285502108464e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-062",
+      "selectedProjected": [
+        0.05,
+        0.3
+      ],
+      "expectedGeographic": [
+        -129.54138355072624,
+        39.481709987723335
+      ],
+      "upstreamRoundTripResidualPixels": 3.552713678800501e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-063",
+      "selectedProjected": [
+        0.075,
+        0.3
+      ],
+      "expectedGeographic": [
+        -116.86690650645373,
+        41.18842524132566
+      ],
+      "upstreamRoundTripResidualPixels": 3.1776437161565096e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-064",
+      "selectedProjected": [
+        0.1,
+        0.3
+      ],
+      "expectedGeographic": [
+        -103.27030169685455,
+        41.43309423391511
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-065",
+      "selectedProjected": [
+        0.125,
+        0.3
+      ],
+      "expectedGeographic": [
+        -90.17855622629054,
+        40.13634736452192
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-066",
+      "selectedProjected": [
+        0.15,
+        0.3
+      ],
+      "expectedGeographic": [
+        -78.74163478875903,
+        37.69229198488858
+      ],
+      "upstreamRoundTripResidualPixels": 2.842170943040401e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-067",
+      "selectedProjected": [
+        0.2,
+        0.3
+      ],
+      "expectedGeographic": [
+        -70.86819382264918,
+        36.0043357098464
+      ],
+      "upstreamRoundTripResidualPixels": 5.684341886080802e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-068",
+      "selectedProjected": [
+        0.225,
+        0.3
+      ],
+      "expectedGeographic": [
+        -60.60985217961806,
+        38.841435968655254
+      ],
+      "upstreamRoundTripResidualPixels": 4.0194366942304644e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-069",
+      "selectedProjected": [
+        0.25,
+        0.3
+      ],
+      "expectedGeographic": [
+        -48.3693112650716,
+        40.863174679228614
+      ],
+      "upstreamRoundTripResidualPixels": 2.842170943040401e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-070",
+      "selectedProjected": [
+        0.275,
+        0.3
+      ],
+      "expectedGeographic": [
+        -34.88641737079712,
+        41.524705481482144
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-071",
+      "selectedProjected": [
+        0.3,
+        0.3
+      ],
+      "expectedGeographic": [
+        -21.523552110895977,
+        40.61448221985058
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-072",
+      "selectedProjected": [
+        0.325,
+        0.3
+      ],
+      "expectedGeographic": [
+        -9.576298516580126,
+        38.41914682848647
+      ],
+      "upstreamRoundTripResidualPixels": 2.842170943040401e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-073",
+      "selectedProjected": [
+        0.4,
+        0.3
+      ],
+      "expectedGeographic": [
+        8.465056244278278,
+        38.144029110954996
+      ],
+      "upstreamRoundTripResidualPixels": 5.684341886080802e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-074",
+      "selectedProjected": [
+        0.425,
+        0.3
+      ],
+      "expectedGeographic": [
+        20.21962806516793,
+        40.44035846498098
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-075",
+      "selectedProjected": [
+        0.45,
+        0.3
+      ],
+      "expectedGeographic": [
+        33.488584483393296,
+        41.50275100495344
+      ],
+      "upstreamRoundTripResidualPixels": 5.684341886080802e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-076",
+      "selectedProjected": [
+        0.475,
+        0.3
+      ],
+      "expectedGeographic": [
+        47.027606321120075,
+        41.00069097933856
+      ],
+      "upstreamRoundTripResidualPixels": 5.684341886080802e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-077",
+      "selectedProjected": [
+        0.5,
+        0.3
+      ],
+      "expectedGeographic": [
+        59.44258353777562,
+        39.09587171941376
+      ],
+      "upstreamRoundTripResidualPixels": 1.1368683772161603e-13,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-078",
+      "selectedProjected": [
+        0.525,
+        0.3
+      ],
+      "expectedGeographic": [
+        69.91539767510397,
+        36.31503735911252
+      ],
+      "upstreamRoundTripResidualPixels": 2.842170943040401e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-079",
+      "selectedProjected": [
+        0.575,
+        0.3
+      ],
+      "expectedGeographic": [
+        77.68768671099042,
+        37.40081171844249
+      ],
+      "upstreamRoundTripResidualPixels": 2.842170943040401e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-080",
+      "selectedProjected": [
+        0.6,
+        0.3
+      ],
+      "expectedGeographic": [
+        88.91948675472437,
+        39.929447205883534
+      ],
+      "upstreamRoundTripResidualPixels": 2.842170943040401e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-081",
+      "selectedProjected": [
+        0.625,
+        0.3
+      ],
+      "expectedGeographic": [
+        101.88356747993834,
+        41.36778582698071
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-082",
+      "selectedProjected": [
+        0.65,
+        0.3
+      ],
+      "expectedGeographic": [
+        115.49601201680971,
+        41.28612918821876
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-083",
+      "selectedProjected": [
+        0.675,
+        0.3
+      ],
+      "expectedGeographic": [
+        128.3207315965583,
+        39.71101883546835
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-084",
+      "selectedProjected": [
+        0.7,
+        0.3
+      ],
+      "expectedGeographic": [
+        139.34407193804415,
+        37.104122438080665
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-085",
+      "selectedProjected": [
+        0.75,
+        0.3
+      ],
+      "expectedGeographic": [
+        147.05919015310312,
+        36.622543042332744
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-086",
+      "selectedProjected": [
+        0.775,
+        0.3
+      ],
+      "expectedGeographic": [
+        157.74567639284183,
+        39.34114125527015
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-087",
+      "selectedProjected": [
+        0.8,
+        0.3
+      ],
+      "expectedGeographic": [
+        170.326454987537,
+        41.12318507722635
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-088",
+      "selectedProjected": [
+        0.825,
+        0.3
+      ],
+      "expectedGeographic": [
+        -176.09373613889426,
+        41.46394330549316
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-089",
+      "selectedProjected": [
+        0.85,
+        0.3
+      ],
+      "expectedGeographic": [
+        -162.93226029849794,
+        40.25310758226828
+      ],
+      "upstreamRoundTripResidualPixels": 2.842170943040401e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-090",
+      "selectedProjected": [
+        0.875,
+        0.3
+      ],
+      "expectedGeographic": [
+        -151.37583819823428,
+        37.862097960803204
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-091",
+      "selectedProjected": [
+        0.025,
+        0.35
+      ],
+      "expectedGeographic": [
+        -135.9367589555929,
+        28.45591579244031
+      ],
+      "upstreamRoundTripResidualPixels": 2.1316282072803006e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-092",
+      "selectedProjected": [
+        0.05,
+        0.35
+      ],
+      "expectedGeographic": [
+        -126.28578430429415,
+        30.219551438521123
+      ],
+      "upstreamRoundTripResidualPixels": 3.552713678800501e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-093",
+      "selectedProjected": [
+        0.075,
+        0.35
+      ],
+      "expectedGeographic": [
+        -115.440257305149,
+        31.311434358186442
+      ],
+      "upstreamRoundTripResidualPixels": 4.0194366942304644e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-094",
+      "selectedProjected": [
+        0.1,
+        0.35
+      ],
+      "expectedGeographic": [
+        -104.0380539804003,
+        31.465875085860855
+      ],
+      "upstreamRoundTripResidualPixels": 1.4210854715202004e-14,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    },
+    {
+      "caseId": "d3-page-095",
+      "selectedProjected": [
+        0.125,
+        0.35
+      ],
+      "expectedGeographic": [
+        -92.93792549952464,
+        30.641346220512435
+      ],
+      "upstreamRoundTripResidualPixels": 0,
+      "boundaryClass": "interior",
+      "angularToleranceDegrees": 2e-7
+    }
+  ]
+}

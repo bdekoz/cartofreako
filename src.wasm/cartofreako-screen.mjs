@@ -16,6 +16,16 @@ function dimensions(value, label) {
     });
 }
 
+function frame(value, label) {
+    const size = dimensions(value, label);
+    const x = value.x == null ? 0 : Number(value.x);
+    const y = value.y == null ? 0 : Number(value.y);
+    if (!Number.isFinite(x) || !Number.isFinite(y)) {
+        throw new TypeError(`${label}.x and ${label}.y must be finite`);
+    }
+    return Object.freeze({x, y, ...size});
+}
+
 function pair(value, label) {
     if (!(Array.isArray(value) || ArrayBuffer.isView(value)) || value.length !== 2) {
         throw new TypeError(`${label} must be a two-coordinate array`);
@@ -41,7 +51,7 @@ export function containTransform(sourceFrame, canvas = {width: 1920, height: 108
     background = '#f4f5f5',
     contentSize = null
 } = {}) {
-    const source = dimensions(sourceFrame, 'sourceFrame');
+    const source = frame(sourceFrame, 'sourceFrame');
     const target = dimensions(canvas, 'canvas');
     const scale = Math.min(target.width / source.width, target.height / source.height);
     const content = contentSize == null
@@ -55,13 +65,13 @@ export function containTransform(sourceFrame, canvas = {width: 1920, height: 108
     const scaleX = content.width / source.width;
     const scaleY = content.height / source.height;
     const projectedToScreen = Object.freeze([
-        scaleX, 0, x,
-        0, scaleY, y,
+        scaleX, 0, x - source.x * scaleX,
+        0, scaleY, y - source.y * scaleY,
         0, 0, 1
     ]);
     const screenToProjected = Object.freeze([
-        1 / scaleX, 0, -x / scaleX,
-        0, 1 / scaleY, -y / scaleY,
+        1 / scaleX, 0, source.x - x / scaleX,
+        0, 1 / scaleY, source.y - y / scaleY,
         0, 0, 1
     ]);
     return Object.freeze({

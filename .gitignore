@@ -13,10 +13,16 @@
 /tests/audit-projection-round-trips
 /tests/test-star-x-projection-api
 /tests/test-voronoi-projection-api
+/tests/audit-dymaxion-ulp
+/tests/generate-projection-fixtures
+/tests/test-projection-fixtures
+/tests/test-cross-implementation-reverse-oracle
+/tests/oracles/export-myriahedral-topology
 /tests/test-astro-generation
 /tests/test-generation-profile
 /tests/test-generation-typography
 /tests/test-orbiting-generation
+/tests/test-network-infrastructure-generation
 /tests/test-network-swarm-generation
 /tests/test-fiber-synthesized-generation
 /tests/test-bathymetry-roulette-style

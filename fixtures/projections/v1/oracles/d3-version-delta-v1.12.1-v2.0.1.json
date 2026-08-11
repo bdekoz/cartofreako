@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "cartofreako-oracle-version-delta-v1",
+  "package": "d3-geo-polygon",
+  "from": {
+    "version": "1.12.1",
+    "sourceSha256": "167f7839a44724a901d286d11e45a5281057eb5e0da2aa11f70e2c1a3c05c54a",
+    "dependencyLockSha256": "d8b53dada8afb53859c7b7217d3febad401ee2b3fcdea4286b6182359b3f1adb"
+  },
+  "to": {
+    "version": "2.0.1",
+    "commit": "45d62833536fde08053a0675a488b937d41cde07",
+    "sourceSha256": "860f1344d6764f4e795a00bc579bf2721ba5a305924c9c0ad15efb469be031ab",
+    "dependencyLockSha256": "15712fb5d9ae5273d6835a3189358d4cf02a689a39205be70c9907b2d890e4be"
+  },
+  "audit": {
+    "projectionDefiningTokens": [
+      "atan(0.5)",
+      "[0, 90]",
+      "[0, -90]",
+      "[0, 3, 11]",
+      "[1, 10, 2]",
+      "-1, // 0",
+      "13, // 14",
+      ".rotate([108,0])",
+      ".scale(131.777)",
+      ".center([162, 0])"
+    ],
+    "result": "registration-preserving",
+    "observation": "The icosahedron vertices, 20 face triples, parent tree, 108-degree rotation, 131.777 scale, and 162-degree center are retained. The inspected changes modernize JavaScript syntax and GeoJSON Feature declarations.",
+    "scope": "Source-level registration delta; numeric reverse cases are generated only by pinned v2.0.1."
+  }
+}

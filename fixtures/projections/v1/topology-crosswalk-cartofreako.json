@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "cartofreako-projection-topology-crosswalk-v1",
+  "adapter": {
+    "implementation": "Cartofreako",
+    "runtimeApi": 3,
+    "geometryAbi": 1,
+    "normative": false
+  },
+  "families": {
+    "cahill-keyes": {
+      "nativeCellRange": [0, 7],
+      "stableKeyTemplate": "octant:{north|south}:{quarter-turn-index}",
+      "mapping": "cells 0..3 are north octants; 4..7 are south octants"
+    },
+    "authagraph": {
+      "nativeCellRange": [0, 23],
+      "stableKeyTemplate": "tetrahedron-vertex:{nativeCell div 6}/sector:{nativeCell mod 6}"
+    },
+    "dymaxion": {
+      "nativeCellRange": [0, 22],
+      "stableKeyTemplate": "fuller-registered-face:{two-digit nativeCell}",
+      "note": "The registration includes Fuller's Australia and Japan subfaces."
+    },
+    "myriahedral": {
+      "nativeCellRange": [0, 5119],
+      "stableKeyTemplate": "icosahedron-base-face:{two-digit nativeCell div 256}/subdivision:{four base-4 digits}",
+      "note": "The stable key describes spherical topology; each layout supplies a different spanning-tree placement."
+    },
+    "star-x": {
+      "nativeCellRange": [0, 7],
+      "componentRange": [0, 1],
+      "stableKeyTemplate": "{carrier|antarctic-cap}/octant:{north|south}:{quarter-turn-index}",
+      "mapping": "component 0 is the Cahill-Keyes carrier; component 1 is the fixed-60S unified cap"
+    },
+    "voronoi": {
+      "nativeCellRange": [0, 19],
+      "stableKeyTemplate": "icosahedron-face:{three ascending declared vertex indices}",
+      "note": "Face indices are adapter details; the sorted vertex triple is stable topology."
+    }
+  }
+}

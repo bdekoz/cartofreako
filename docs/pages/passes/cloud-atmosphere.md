@@ -68,9 +68,9 @@ The default source split is:
 | Cloud optical thickness | Same P-Tree observation | Latest published; exact end UTC and age shown | Valid retrieved COT only |
 | Cloud-top height | Same P-Tree observation | Latest published; exact end UTC and age shown | Valid retrieved height converted to km when necessary |
 | ISCCP cloud type | Same P-Tree observation | Latest published; exact end UTC and age shown | Modal class among confidently cloudy samples |
-| Aerosol optical depth at 500 nm | GCOM-C/SGLI L3 AROT v3 global daytime daily COGs | 96 h | Column aerosol loading; explicitly not observed smoke and not surface PM2.5 exposure |
-| Gauge-adjusted precipitation rate | GSMaP standard Gauge 00Z–23Z v6 daily COGs, 60°S–60°N | 96 h | Daily precipitation-rate field expressed in mm h⁻¹; explicitly not flood, above-average-rainfall, or extreme-event counts |
-| Surface shortwave radiation | JASMES Aqua/MODIS SWR v811 global daily COGs | 336 h | Latest available daily surface field, whose publication lag is visible in the legend |
+| Aerosol optical depth at 500 nm | GCOM-C/SGLI L3 AROT v3 global daytime daily COGs | Latest published; 96 h preferred target, exact end UTC and age shown | Column aerosol loading; explicitly not observed smoke and not surface PM2.5 exposure |
+| Gauge-adjusted precipitation rate | GSMaP standard Gauge 00Z–23Z v6 daily COGs, 60°S–60°N | Latest published; 96 h preferred target, exact end UTC and age shown | Daily precipitation-rate field expressed in mm h⁻¹; explicitly not flood, above-average-rainfall, or extreme-event counts |
+| Surface shortwave radiation | JASMES Aqua/MODIS SWR v811 global daily COGs | Latest published; 336 h preferred target, exact end UTC and age shown | Latest available daily surface field, whose publication lag is visible in the legend |
 
 The public JAXA catalog exposes overlapping numeric spatial-tile levels. The
 resolver walks the static STAC hierarchy, accepts only observations ending no
@@ -102,16 +102,17 @@ The time contract has four independent rules:
 1. Calculated illumination is valid at process start.
 2. Each source observation has its own start and end.
 3. An observation ending after process start is rejected.
-4. Maximum-age sources reject observations older than their configured
-   freshness ceiling. P-Tree cloud layers instead use the latest published
-   observation and expose its age against the preferred six-hour target.
+4. Every enabled observation layer uses the latest available source ending no
+   later than process start. Its configured maximum age is a preferred
+   freshness target rather than an expiration date; exceeding it is labeled.
 
 This is a latest-not-after source mosaic, not a claim that all instruments
 observed simultaneously. The SVG legend prints each layer's exact source end
 UTC and age, adding `latest available` when P-Tree exceeds its preferred
 target, while root
 metadata records the generation process instant, the fetch-selection process
-instant, source endpoints, subsolar point, selection rule, and fixture status.
+instant, source endpoints, per-layer freshness policy and target, subsolar
+point, selection rule, and fixture status.
 
 ## P-Tree access and terms
 

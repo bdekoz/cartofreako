@@ -31,11 +31,11 @@ be described or sampled as an equirectangular globe texture.
 
 ## Stage 14 benchmark handoff
 
-Stage 15 benchmarks from a frozen Stage 14 input manifest. The first harness
-can use the existing 24-artifact canary—Water, Anthropocene Temperature 2026,
-Network Infrastructure Sites, and Bathymetry Roulette across all six
-projection families. A promotion decision waits for Stage 14 to freeze the
-complete standard whole-map and approved-slice catalog.
+Stage 15 benchmarks from the frozen Stage 14 standard input manifest: 205
+artifacts across 31 pass IDs, 11 layouts, and 14 approved slices. A first
+hardware canary may select a smaller deterministic subset through the Stage 14
+request/decision-receipt interface, but the benchmark must retain the full
+manifest identity and cannot redefine the baseline by filename convention.
 
 The handoff records, without rewriting:
 
@@ -157,6 +157,16 @@ the product is suitable for research comparison, public interpretation, or
 visual speculation only. The tier must support forward and reverse projection
 fixtures so a selected pixel, feature, or scenario can be traced back to its
 source coordinate and evidence record.
+
+
+## Optimize layout on S3 for consumers
+
+Re-examine the layout of the v13 files on the S3 bucket. Given the capabilities added in V14, can this layout be optimized for the new intended consumers? What can be put into the S3 archive to make indexing, searching, or use by ai-agents easier and faster? Think of this like optimizing struct layout in C++ (for a c++ ABI), but in CDN terms.
+
+- also apply this thinking to any generated WASM binary file: are there any useful optimizations that would be applicable that are not being done currently?
+
+- assume cutover no compatibility needed, all internal documentation pages will be re-indexed, but generate a compatibility doc between v14 and v14 layouts for reference
+
 
 ## Staging plan
 
