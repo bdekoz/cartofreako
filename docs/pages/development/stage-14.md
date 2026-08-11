@@ -5,6 +5,7 @@
 [AI-agent and 1080p gaming follow-on](../runtime/ai-agent-and-1080p-gaming.md) ·
 [WebAssembly quick start](../runtime/webassembly-quick-start.md) ·
 [Stage 13 implementation ledger](stage-13.md) ·
+[Stage 15 GPU benchmark ledger](stage-15.md) ·
 [Release runbook](../releases/README.md)
 
 ## Purpose and boundary
@@ -46,9 +47,17 @@ been built or published.
   registration dependency, and document the component-qualified inverse plan.
 - [x] Implement and verify the three remaining reverse families in this order:
   Dymaxion, AuthaGraph, then component-aware Star-X.
-- [ ] Run the repository-wide full check only at the established release gate.
-- [ ] Freeze final source identity, generated manifest, checksums, publication
-  evidence, and Active Archive record for the eventual v14 release.
+- [x] Run the repository-wide full check for the `v20260810` source-release
+  baseline.
+- [x] Freeze and publish the core Stage 14 reverse-projection source identity
+  independently of generated assets and UCB AAO/S3 preservation.
+- [ ] Complete the post-release numerical-evidence, portable-fixture,
+  deterministic-selection, and standard-consumer promotion stages below.
+- [ ] Stop for explicit operator confirmation before the next repository-wide
+  full check and expanded Stage 14 source-release gate.
+- [ ] If separately authorized, freeze a generated-v14 manifest, checksums,
+  publication evidence, and Active Archive record through the human-invoked
+  UCB AAO/S3 path.
 
 ## Change ledger
 
@@ -224,9 +233,11 @@ different visual system. Immutable v12 and v13 assets are not rewritten; the
 | `tests/test-star-x-projection-api` plus regenerated graticule/Earth | Fixed cutoff/bearing, projection-only registration (including a no-Natural-Earth smoke run), proportional lower clearance, complete in-frame boundary, topmost land composition, and visual unclipping | Passed 2026-08-10 |
 | Repository-wide `make check` | Full projection, generator, data-integrity, authorization, resources, atmosphere, astronomy, network, bathymetry, slicing, and runtime gate | Passed 2026-08-10 after replacing two stale pre-Izzi bathymetry curve include names with their canonical Izzi headers |
 
-## Release completion criteria
+## Expanded Stage 14 completion criteria
 
-Stage 14 is ready to freeze only when:
+The original all-family reverse scope passed the full repository gate and was
+published as the source-only `v20260810` release. The expanded post-release
+Stage 14 scope is ready to freeze only when:
 
 1. every advertised reverse capability passes native and WebAssembly checks;
 2. every current registered family remains mechanically reversible, with
@@ -241,7 +252,7 @@ Stage 14 is ready to freeze only when:
 6. any such UCB AAO deposit produces the canonical Devastation Pacific Active
    Archive check-in report through the shared headless archive workflow.
 
-## Remaining release work
+## Current release state and remaining gates
 
 The all-family reverse implementation is complete. The Stage 14 source is
 released on GitHub independently of generated-asset preservation. A later v14
@@ -249,6 +260,29 @@ UCB AAO deposit is not part of that source release: it requires its own frozen
 generated manifest, reviewed profile, human invocation of
 `make release-ucb-aao-s3`, immutable inventory verification, and canonical
 Active Archive check-in record. `make release-github` cannot reach that target.
+
+The numerical-evidence and consumer-contract additions described below are
+later Stage 14 work and are not claims retroactively attached to the
+`v20260810` source release. Focused checks accompany each addition. The next
+repository-wide `make check` remains a distinct release gate and requires
+explicit operator confirmation.
+
+## Remaining Stage 14 staging plan
+
+GPU-specific products and performance measurements are intentionally excluded
+from this plan. Stage 14 will freeze the authoritative inputs and portable
+consumer baseline; [Stage 15](stage-15.md) will benchmark GPU products from
+that baseline.
+
+| Stage | Work | Exit gate |
+| --- | --- | --- |
+| **14A — baseline and print contract** | Reconcile release-state wording, inventory exact-ratio 44-inch-leading-edge and A0 workflows, and implement `check-print-contract` | Consumer targets cannot change canonical SVG/PDF geometry, print dimensions, the 3840-pixel parent, or archived-art identity |
+| **14B — numerical closure** | Implement the observation-only Dymaxion ULP classifier/clamp audit; make no behavior change without a reproducible discrepancy and explicit error bound | Every probed edge, vertex, subface, frame, tie, and clamp event is classified in machine-readable evidence |
+| **14C — neutral projection fixtures** | Define stable topology keys and evidence grades, publish the six-family fixture bundle and checksums, and add native, WebAssembly, and minimal independent consumers | Offline `make check-projection-fixtures` passes without generated art, S3, or network access |
+| **14D — cross-implementation oracle** | Audit `d3-geo-polygon` v1.12.1 versus v2.0.1, then add independent Voronoi, Dymaxion, and Myriahedral producers before extending the remaining evidence tiers | At least two direct or clean-room independent families pass, and every disagreement is retained and classified before production code changes |
+| **14E — agent selection protocol** | Add artifact request and decision-receipt schemas, a pure deterministic selector, reason codes, hashes, CLI support, and golden fixtures | Node, browser, and a minimal independent consumer choose the same artifact and decision-core hash from identical bytes |
+| **14F — consumer promotion** | Expand the 24-item 1080p canary to the standard whole-map and approved-slice matrix; add gallery links, Three.js interaction, cancellation, and a clean-room handoff | Print, catalog, screen, interaction, accessibility, and independent-consumer gates pass for every promoted standard product |
+| **14G — release gate** | Run focused checks throughout, request confirmation before repository-wide `make check`, then freeze source identity, manifests, checksums, notes, and publication evidence | The expanded source release is internally consistent; any generated-v14 UCB AAO deposit remains a later, separate human invocation |
 
 ## Post-release consumer follow-on
 
@@ -288,8 +322,9 @@ passing**.
 `make check-screen-1080p` validates its files, catalog, transforms, and picks;
 `make consumer-assets-v1` also runs the browser canary. Extending the catalog
 to every standard pass, perspective, and approved slice remains a separate
-promotion gate. KTX2, semantic masks, engine-specific importers, and a
-collaborator clean-room run remain `UNAVAILABLE`.
+promotion gate. A collaborator clean-room run remains `UNAVAILABLE`. KTX2,
+semantic masks, Float32 GPU geometry, and engine-specific GPU-product importers
+are assigned to the [Stage 15 ledger](stage-15.md), not this completion gate.
 
 The systematic round-trip audit adds 46,656 face/component-qualified interior
 samples: 2,592 points × six families × three frame scales. All candidates
@@ -300,3 +335,343 @@ numerical Cahill–Keyes solver and its Star-X carrier, and approximately
 implementation consistency evidence, not independent mathematical proof;
 published anchors, exact seams, poles, face centers, and retained-hinge tests
 remain necessary independent/structural evidence.
+
+### Planned — Dymaxion ULP-scale classifier and clamp audit
+
+Status: **planned; not yet implemented or run**.
+
+The 46,656-sample campaign above deliberately avoids seams. It therefore does
+not establish behavior within a few representable floating-point steps of a
+Dymaxion face edge, vertex, Australia/Japan subdivision, pole, antimeridian,
+frame-ratio boundary, or clamp threshold. The current constants are not
+presumed defective, but the fixed spherical face tolerance, frame classifier,
+inverse bounds, barycentric tolerance, and forward clamps merit a dedicated
+ULP-scale audit before Stage 14 numerical work is considered closed.
+
+The proposed implementation adds `tests/audit-dymaxion-ulp.cc`, a focused
+`make audit-dymaxion-ulp` target, and an ignored
+`reports/dymaxion-ulp-audit.json` evidence file. It should:
+
+1. inventory and name the numerical role of the spherical classifier's
+   `8 * epsilon`, the frame-ratio classifier's
+   `16 * epsilon * scale`, the inverse angle/equation bounds, the
+   caller-scaled planar barycentric tolerance, and every forward or inverse
+   clamp;
+2. enumerate every unique spherical edge and vertex, including the five
+   registered Australia/Japan subfaces, and probe exact boundaries plus both
+   sides with boundary-normal and `std::nextafter` displacements from 1 through
+   4096 ULPs;
+3. compare the production `double` classifier and Gray transform with an
+   independent test-only `long double` or multiprecision oracle, recording raw
+   determinants, expected/observed face membership, tie resolution, candidate
+   sets, clamp activation, and forward residual;
+4. audit frame acceptance around the exact Dymaxion ratio at native, 44-inch,
+   1920-pixel, and 13,200-pixel scales, including the first accepted and
+   rejected representable widths on each side;
+5. require valid interior points to avoid clamping, permit boundary clamping
+   only within a derived roundoff bound, and reject larger excursions rather
+   than silently snapping them onto the frame; and
+6. repeat the acceptance campaign in native and WebAssembly builds without
+   changing the authoritative print, SVG, PDF, or 3840-pixel products.
+
+Acceptance requires no unclassified gaps, the documented lowest-face-index
+choice for exact ties, the expected adjacent face or subface on each side of a
+boundary, complete topology-correct reverse candidates, and no non-boundary
+reference regression. A tolerance or clamp changes only when both the oracle
+and an explicit floating-point error bound support the replacement. The final
+result belongs in the Dymaxion implementation notes whether it confirms the
+existing constants or produces a corrective patch.
+
+### Planned — true cross-implementation reverse oracle
+
+Status: **planned; no oracle fixtures generated and no production behavior
+changed**.
+
+The existing round-trip tests use Cartofreako's forward and reverse paths
+together. They are strong consistency evidence, but both directions can share
+one convention or implementation error. This project should compare
+Cartofreako reverse results with geographic answers produced by independent
+programs from independently selected projected coordinates.
+
+For the direct Voronoi oracle, pin the latest upstream release verified on
+2026-08-10:
+[`d3-geo-polygon` v2.0.1](https://github.com/d3/d3-geo-polygon/releases/tag/v2.0.1),
+commit
+[`45d62833536fde08053a0675a488b937d41cde07`](https://github.com/d3/d3-geo-polygon/commit/45d62833536fde08053a0675a488b937d41cde07).
+The tagged
+[`icosahedral.js`](https://github.com/d3/d3-geo-polygon/blob/v2.0.1/src/icosahedral.js)
+constructs the upstream icosahedral projection, and its generic
+[`polyhedral/index.js`](https://github.com/d3/d3-geo-polygon/blob/v2.0.1/src/polyhedral/index.js)
+installs inverse traversal when the face projections expose inverses. Fixture
+generation must also lock and hash the complete npm dependency graph rather
+than accepting the package's semver ranges at refresh time.
+
+The production Voronoi compatibility record remains pinned to v1.12.1 until a
+separate version-delta audit compares v1.12.1 with v2.0.1. Selecting the newer
+oracle must not silently redefine the current forward projection or cause a
+version-registration difference to be reported as a reverse defect.
+
+An oracle qualifies as cross-implementation evidence only when it:
+
+- neither includes nor imports Cartofreako projection or runtime code;
+- derives equations and constants from a pinned primary publication or an
+  independently maintained implementation;
+- begins with independently selected projected coordinates rather than
+  Cartofreako forward output;
+- records source version, command, environment, license, dependency lock, and
+  hashes;
+- emits immutable fixtures that normal offline Cartofreako tests consume; and
+- compares complete candidate sets at cuts instead of selecting one convenient
+  winner.
+
+The proposed oracle routes and their evidence grades are:
+
+| Projection | Independent route | Evidence grade |
+| --- | --- | --- |
+| Voronoi | Pinned `d3-geo-polygon` v2.0.1 inverse runner after the v1.12.1-to-v2.0.1 delta audit | Direct upstream cross-implementation |
+| Dymaxion | Clean-room implementation of Crider's published inverse, checked against Gray's published/reference coordinates | Independent published-mathematics implementation |
+| AuthaGraph | Standalone high-precision inverse/root solver derived from Narukawa 2022, with published numeric and A3 registration anchors kept distinct | Independent algorithmic implementation |
+| Myriahedral | Standalone face-local inverse derived from van Wijk, reading a frozen mesh/layout fixture rather than production headers | Independent inverse mathematics over shared declared topology |
+| Cahill–Keyes | Separately implemented high-precision search against the published forward construction and external reference material | Compatibility evidence until an external inverse exists |
+| Star-X | Independent declarative reversal of its CK carrier and fixed-60°S cap composition | Derived-composition oracle, not an external base projection |
+
+The repository surface should use the implementation-neutral fixture contract
+below rather than define a competing oracle-only coordinate schema:
+
+- `contracts/projection-fixtures-v1.schema.json`;
+- isolated producers and provenance under `tests/oracles/`;
+- checked immutable oracle cases under
+  `fixtures/projections/v1/oracles/`;
+- `tests/test-cross-implementation-reverse-oracle.cc`;
+- offline `make check-reverse-oracles`;
+- separately invoked `make refresh-reverse-oracle-fixtures`; and
+- ignored `reports/cross-implementation-reverse-oracle.json`.
+
+Fixture refresh is an explicit maintenance operation and must not run through
+`make all`, GitHub release, UCB AAO/S3 release, or ordinary offline checks.
+The first milestone covers Voronoi, Dymaxion, and Myriahedral interiors,
+edges, vertices, cuts, one-sided boundary probes, poles, outside points, and
+native/44-inch/1920-pixel/13,200-pixel frames.
+
+Acceptance requires agreement within a declared angular bound, candidate-set
+agreement at cuts after longitude canonicalization, scale-independent
+geographic answers, and retained failing fixtures for every discrepancy. Each
+disagreement must be classified as convention, registration, oracle, or
+production error before production code changes. At least two direct or
+clean-room independent families must pass before documentation claims that a
+true cross-implementation reverse oracle exists. Cahill–Keyes and Star-X keep
+their narrower evidence labels until an actual external implementation is
+available.
+
+### Planned — publish implementation-neutral projection fixtures
+
+Status: **planned; schema, public bundle, and independent consumer not yet
+implemented**.
+
+Publish a small, versioned projection-mathematics dataset that JavaScript,
+Python, Rust, GIS, D3, Mapshaper, and agent workflows can consume without
+compiling or importing Cartofreako. These fixtures are distinct from rendered
+maps, runtime tests, and the isolated programs that produce independent oracle
+evidence.
+
+The neutral contract must:
+
+- declare geographic order as `[longitude, latitude]` in degrees and projected
+  coordinates as normalized top-left page space `u=x/width`, `v=y/height`;
+- declare native aspect, origin, axis directions, longitude and pole
+  conventions, layout, component model, and cut topology;
+- use stable geometric topology keys instead of making Cartofreako's numeric
+  `nativeCell` values normative;
+- treat reverse candidate sets as unordered and preserve every valid
+  face/component result at cuts and overlaps;
+- serialize expected decimal values reproducibly with explicit angular and
+  normalized-planar tolerances;
+- record source, producer, version, hash, license, evidence grade, and revision
+  for every case; and
+- keep runtime API/ABI versions in adapter provenance rather than fixture
+  semantics.
+
+The proposed public source tree is:
+
+```text
+contracts/projection-fixtures-v1.schema.json
+fixtures/projections/v1/
+  manifest.json
+  cahill-keyes.json
+  authagraph.json
+  dymaxion.json
+  myriahedral.json
+  star-x.json
+  voronoi.json
+  topology-crosswalk-cartofreako.json
+  oracles/
+  SHA256SUMS
+docs/pages/runtime/projection-fixtures.md
+tests/test-projection-fixtures.cc
+scripts/check-projection-fixtures.mjs
+```
+
+The numeric Cartofreako cell crosswalk remains separate from stable geometric
+identifiers. Each case records a stable case/projection/layout ID, operation,
+normalized input and expected output, topology keys, expected status and full
+candidate set, boundary class, tolerances, evidence, and revision history.
+
+Evidence grades are deliberately narrow:
+
+| Grade | Meaning |
+| --- | --- |
+| `published-anchor` | Coordinate or invariant supplied by a primary publication |
+| `upstream-implementation` | Produced by a pinned independently maintained implementation |
+| `independent-reimplementation` | Produced by a clean-room implementation of published mathematics |
+| `structural-invariant` | Face center, edge, pole, hinge, scale, or topology fact |
+| `cartofreako-compatibility` | Existing behavior preserved for compatibility; not independent evidence |
+
+Cartofreako round trips must never be silently promoted to an independent
+grade. The initial publication set covers all Cahill–Keyes octants and
+representative A–L zones; all 24 AuthaGraph sectors and singular vertices; all
+23 Dymaxion faces/subfaces; representative Myriahedral cases plus a separate
+5,120-face-center pack for each registered layout; Star-X carrier/cap
+quadrants, cutoff, pole, cut, and overlap; and all 20 Voronoi faces, edges, and
+vertices.
+
+Implementation order is:
+
+1. define stable topology keys, evidence grades, canonical serialization, and
+   the JSON Schema;
+2. extract existing hard-coded published/reference anchors without changing
+   their values or evidence claims;
+3. make native C++ and WebAssembly checks consume the same fixture records;
+4. add independently generated reverse cases through the oracle workflow
+   above;
+5. add a dependency-free Node checker and a minimal non-Cartofreako Python
+   consumer; and
+6. publish versioned raw JSON, checksums, and a downloadable bundle through
+   GitHub Pages and source releases.
+
+Fixture publication does not depend on generated assets, graphics rendering,
+S3, or UCB AAO. Schema/fixture major versions change for semantic changes;
+additions and corrections retain an explicit revision ledger rather than
+silently rewriting evidence.
+
+Acceptance requires offline schema and checksum validation; identical fixture
+use by native and WebAssembly adapters; successful parsing by a non-Cartofreako
+consumer; semantic rather than array-order candidate comparison;
+scale-independent geographic answers; and provenance plus redistribution
+clearance for every value. Establish this neutral contract before implementing
+the cross-implementation producers so every oracle emits one portable evidence
+format.
+
+### Planned — artifact request and decision-receipt schemas
+
+Status: **planned; schemas, selector, and receipts not yet implemented**.
+
+Define a deterministic, inspectable interface between an agent's request and
+the artifact catalog. The selector uses structured constraints and explicit
+preference order rather than hidden model judgment, and emits a receipt even
+when no artifact matches. Neither a request nor a selection receipt authorizes
+external-source access, license acceptance, publication, release, S3 upload,
+research interpretation, or training-data transfer.
+
+The two self-contained JSON Schema Draft 2020-12 contracts are:
+
+```text
+contracts/artifact-request-v1.schema.json
+contracts/artifact-decision-receipt-v1.schema.json
+```
+
+An artifact request records:
+
+- a stable request ID, schema version, and purpose profile: `preview`,
+  `flat-screen`, `interactive-flat`, `print-review`, `archive-reference`, or
+  `research-comparison`;
+- subject/pass IDs, allowed lifecycle states, year or source period, and
+  allowed or preferred projection/layout/slice IDs;
+- viewport, fit, format, transparency, losslessness, byte limit, required
+  interaction capability, and acceptable authority classes;
+- an offline-by-default network policy, checksum/metadata requirements,
+  ordered preference clauses, explicit fallback sequence, and human-review
+  requirement; and
+- no transcript, credential, external authorization, or secret material.
+
+Defaults allow only `standard` passes. Optional passes require explicit opt-in
+and must already be authorized and present. Exploration-only products require
+a separate explicit opt-in and a human-review disposition.
+
+The versioned deterministic selector should:
+
+1. validate and normalize the request;
+2. verify catalog schema and hash;
+3. apply hard constraints;
+4. rank survivors lexicographically using the request's ordered preferences;
+5. break final ties by stable artifact ID and variant ID;
+6. relax only the constraints named in the explicit fallback sequence;
+7. return `no-match` instead of inferring an unstated preference; and
+8. emit the receipt before optional file retrieval.
+
+Missing catalog metadata is `UNAVAILABLE`, never false, zero, unrestricted, or
+acceptable. Phase one supports only fields actually present in
+`artifacts-v1`; source-period, licensing, or governance constraints return
+`METADATA_UNAVAILABLE` until a later catalog revision supplies those fields.
+
+The decision receipt records:
+
+- request ID, canonical request hash, and normalized request;
+- catalog version, source revision, and catalog SHA-256;
+- selection-policy and runtime versions;
+- outcome: `selected`, `no-match`, `requires-human-review`, or `error`;
+- selected artifact/variant IDs, file hash, authority class, lifecycle,
+  projection/layout/slice, source period, limitations, interaction support,
+  and exact screen transform when available;
+- every evaluated candidate with its rank vector and rejection reason codes;
+- every explicit constraint relaxation and each schema, checksum,
+  availability, or retrieval verification state;
+- any human override with prior choice, replacement, reason, and actor label;
+- an explicit non-authority statement; and
+- a canonical decision-core SHA-256.
+
+Timestamp and host information belong in a run envelope outside the
+deterministic decision core. An override or later selection creates a new
+receipt referencing the prior receipt; it never rewrites the original. The
+initial rejection vocabulary is:
+
+```text
+SUBJECT_MISMATCH
+YEAR_MISMATCH
+LIFECYCLE_DISALLOWED
+PROJECTION_DISALLOWED
+SLICE_MISMATCH
+FORMAT_UNAVAILABLE
+VIEWPORT_INCOMPATIBLE
+INTERACTION_UNSUPPORTED
+AUTHORITY_CLASS_DISALLOWED
+MAX_BYTES_EXCEEDED
+CHECKSUM_UNAVAILABLE
+METADATA_UNAVAILABLE
+GOVERNANCE_REVIEW_REQUIRED
+LOWER_PREFERENCE_RANK
+STABLE_TIE_BREAK
+```
+
+The implementation surface should be:
+
+```text
+src.wasm/cartofreako-catalog.mjs
+src.wasm/cartofreako-catalog.d.ts
+scripts/select-artifact.mjs
+tests/fixtures/artifact-selection/
+tests/test-artifact-selection.mjs
+docs/pages/runtime/artifact-selection.md
+```
+
+Add offline `make check-artifact-selection`. The selector is pure and performs
+no network, authorization, generation, release, or upload action.
+
+Acceptance requires identical request/catalog bytes to produce the same
+decision-core hash; catalog order not to affect the decision; standard-only
+defaults never to select optional or exploration-only artifacts; missing
+metadata to yield an explicit rejection or human review; every rejection to
+have a reason code; `no-match` to produce a valid receipt; tampered request,
+catalog, or artifact hashes to fail verification; human overrides to remain
+append-only; and Node, browser, and a minimal independent consumer to agree on
+the selected ID. Selecting an artifact never implies permission to publish or
+authority to interpret its evidence.

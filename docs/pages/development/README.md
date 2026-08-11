@@ -10,6 +10,7 @@ title: Development records
 - [Stage 12 implementation](stage-12.md)
 - [Stage 13 convergence record](stage-13.md)
 - [Stage 14 convergence record](stage-14.md)
+- [Stage 15 GPU products and benchmark ledger](stage-15.md)
 - [Documentation architecture](documentation-layout.md)
 - [Marshall Islands projection and slice speculations v01](marshall-islands-speculations-v01.md)
 
