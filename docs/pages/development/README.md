@@ -14,6 +14,7 @@ title: Development records
 - [Stage 16 GPU evidence, deferred consumer work, atoll expansion, and agentic atlas plan](stage-16.md)
 - [Documentation architecture](documentation-layout.md)
 - [Marshall Islands projection and slice speculations v01](marshall-islands-speculations-v01.md)
+- [Equal Earth positioning and slice speculations v01](equal-earth-positioning-speculations-v01.md)
 
 These records describe accepted and current development work. Raw request
 ledgers and dated snapshots live in `history/` so they are not mistaken for

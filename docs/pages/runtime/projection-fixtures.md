@@ -88,3 +88,33 @@ D3_GEO_POLYGON_V2_ROOT=/path/to/d3-geo-polygon-v2.0.1 \
 
 AuthaGraph, Cahill–Keyes, and Star-X retain narrower structural or derived
 composition evidence until genuinely independent producers exist.
+
+## Standalone Equal Earth comparison bundle
+
+Stage 16J publishes a separate exploration-only bundle under
+[`fixtures/projections/equal-earth-v1/`](../../../fixtures/projections/equal-earth-v1/).
+It remains outside the six-family v1 runtime fixture manifest so a research
+control cannot silently become a released atlas family.
+
+The bundle contains 30 forward/reverse cases across canonical Greenwich and
+an experimental `11.5°E` layout. Each case carries raw unit-sphere and
+normalized top-left page coordinates plus frozen PROJ 9.6.2 and D3 Geo 2.0.1
+observations. Check it offline with:
+
+```sh
+make check-equal-earth-projection
+```
+
+The gate validates the JSON Schema, hashes, C++ and JavaScript agreement,
+page-outside behavior, forward/reverse residuals, Jacobian/Tissot diagnostics,
+and spherical area scale. Fixture refresh is an explicit maintainer action:
+
+```sh
+D3_GEO_ROOT=/path/to/d3-geo-2.0.1 \
+  make refresh-equal-earth-fixtures
+```
+
+PROJ and D3 are cross-implementation observations, not evidence that
+Cartofreako has joined a campaign or corrected human perception. See the
+[implementation notes](../projections/equal-earth/implementation.md) and
+[five comparison plates](../development/equal-earth-positioning-speculations-v01.md).

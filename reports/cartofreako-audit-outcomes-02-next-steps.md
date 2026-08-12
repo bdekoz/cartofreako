@@ -262,7 +262,15 @@ established.
 
 ## Stage 16J — Equal Earth and positioning comparison
 
-After the report, and only after separate approval:
+**Implementation update, 2026-08-11:** separately approved and completed as
+an exploration-only local prototype. It adds standalone C++/JavaScript
+forward and reverse support, a 30-case neutral fixture bundle checked against
+PROJ 9.6.2 and D3 Geo 2.0.1, spherical distortion diagnostics, and five
+matched projection-and-slice PNGs. It does not extend the six-family standard
+runtime, claim campaign compliance, publish, upload, or replace the human
+review proposed below.
+
+The approved implementation scope was:
 
 1. implement Equal Earth forward and reverse support;
 2. cross-check equations and results against PROJ and D3;
@@ -274,9 +282,9 @@ After the report, and only after separate approval:
 6. hold data, dimensions, colors, labels, and extent constant while changing
    one named projection or layout variable at a time.
 
-Estimated engineering effort is **4–7 working days**, followed by human
-cartographic review. A centered variant should not be labeled EPSG:8857 unless
-it exactly implements that registered coordinate operation.
+The completed prototype preserves the estimate's separate human cartographic
+review gate. Its `11.5°E` centered variant is explicitly labeled experimental
+and is not labeled EPSG:8857.
 
 ## Stage 17 candidate — participatory verification
 

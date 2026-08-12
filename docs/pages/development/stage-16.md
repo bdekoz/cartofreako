@@ -6,14 +6,16 @@ title: Stage 16 GPU evidence and agentic atlas research
 # Stage 16 GPU evidence and agentic atlas research
 
 **Status:** active development ledger, opened 2026-08-11. Stage 16I is
-complete as a validated local assessment draft; human review remains pending.
-No GPU benchmark, promotion, release product, publication, email, push,
-upload, or external transfer is claimed by this ledger.
+complete as a validated local assessment draft and Stage 16J is complete as
+an exploration-only Equal Earth comparison prototype; human review remains
+pending. No GPU benchmark, promotion, release product, publication, email,
+push, upload, or external transfer is claimed by this ledger.
 
 [Development records](README.md) ·
 [Stage 15 closed ledger](stage-15.md) ·
 [AI workflows and screen products](../runtime/ai-agent-and-1080p-gaming.md) ·
-[Marshall Islands speculations v01](marshall-islands-speculations-v01.md)
+[Marshall Islands speculations v01](marshall-islands-speculations-v01.md) ·
+[Equal Earth positioning speculations v01](equal-earth-positioning-speculations-v01.md)
 
 ## Scope inherited from Stage 15
 
@@ -35,6 +37,7 @@ moves here as separately activatable Stage 16 work.
 | **16G — agentic atlas research** | Approved follow-on proposal | Generalize artifact recommendations and bounded experiment iteration for Marshall Islands, reef, atmosphere, and water-debris research | Atmosphere comparison first; water-debris v02 second |
 | **16H — atoll evidence expansion** | Stage 15 R1 evidence gaps | Freshwater, infrastructure, independent current shoreline, reviewed reef, ocean heat, and uncertainty/date metadata | Source selection plus local/regional or community review where applicable |
 | **16I — integrated outcomes assessment** | Audit Outcomes 02 feedback and approved next-steps brief | Reconcile projection numerics, Stage 15 products, integrated practice, decolonial Anthropocene framing, Marshall Islands and reef fit, human-first AI workflow, and a bounded Cartofreako × Alpha60 research proposition | **COMPLETE LOCAL DRAFT**; canonical v3.9 source/PDF checks and every-page visual QA pass; human review and any sharing remain separate |
+| **16J — Equal Earth and positioning comparison** | Audit Outcomes 03 and approved Stage 16J brief | Canonical forward/reverse equations, PROJ/D3 oracles, neutral fixtures, distortion diagnostics, matched Mercator/Equal Earth and selected carrier/slice comparisons | **COMPLETE EXPLORATION PROTOTYPE**; 30 checked cases, two layouts, five local 2560 × 1440 PNGs; campaign compliance, promotion, publication, and participatory claims remain separate |
 
 The tracks are independent. A hardware schedule must not block agent-contract
 work, and an evidence-source gap must not be disguised as a GPU benchmark
@@ -72,6 +75,34 @@ participants and contributors remain suggestions, not invitations or
 confirmations. Source-control admission records the reviewed PDF as a boundary
 object; it does not make the package a Stage 16 release or authorize push,
 publication, email, upload, invitation, or external transfer.
+
+## Stage 16J Equal Earth outcome
+
+Stage 16J implements the published spherical Equal Earth forward/reverse
+equations in standalone C++ and dependency-free JavaScript without extending
+the closed six-family release runtime. Its neutral fixture bundle contains 30
+cases across the canonical Greenwich registration and an explicitly
+experimental `11.5°E` Africa-centered variant. Frozen PROJ 9.6.2 and D3 Geo
+2.0.1 observations agree to a maximum raw difference of
+`7.021666937153402e-16`; the finite-difference spherical area audit has a
+maximum error of `1.203175781228083e-9` over 35 samples.
+
+The [one-to-five comparison record](equal-earth-positioning-speculations-v01.md)
+renders:
+
+1. a matched Web Mercator and canonical Equal Earth full-world control;
+2. canonical and Africa-centered Equal Earth with Tissot diagnostics;
+3. one Africa–Europe WGS 84 source-window slice through three registrations;
+4. Equal Earth beside AuthaGraph, Dymaxion, and Myriahedral Afro–Eur–Asia; and
+5. full-carrier, geographic-preclip, registered-perspective, and
+   Cahill–Keyes native-cell slice roles.
+
+The five 2560 × 1440 PNGs are checked local exploration products and are
+registered in `make all-experiments`. Equal Earth is not in `make all`, the
+standard artifact catalog, print generation, GitHub release, or UCB AAO/S3.
+The centered variant is not labeled EPSG:8857. Mathematical implementation
+does not establish `#CorrectTheMap` compliance, corrected perception,
+community authorization, or a decolonial outcome.
 
 ## Preserved benchmark baseline
 
@@ -390,6 +421,7 @@ already been implemented.
 | 16A–16F GPU evidence and decision | 9–15 working days | 2–5 additional calendar days if comparison hardware must be scheduled |
 | 16G generic agentic workflow | 10–16 working days | Collaborator clean-room trial makes 3–5 elapsed weeks plausible |
 | 16H currently named atoll evidence gaps | 5–10 working days after source selection | Scientific, local, regional, and community review remain externally controlled |
+| 16J Equal Earth and positioning prototype | **Implemented** | Human cartographic, campaign, and participatory review remain separate |
 
 These estimates are not additive release gates. Run the tracks independently,
 retain separate receipts, and promote only the evidence that completes its own

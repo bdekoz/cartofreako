@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "cartofreako-equal-earth-fixture-manifest-v1",
+  "bundleVersion": 1,
+  "license": "GPL-3.0-or-later",
+  "lifecycle": "exploration-only",
+  "standardRuntimeFamily": false,
+  "fixture": {
+    "file": "fixtures.json",
+    "sha256": "9587417af030c70619b586136b5d0d7fd2460cf2cedd4c226e182571579e7c32",
+    "caseCount": 30
+  },
+  "schema": {
+    "file": "../../../contracts/equal-earth-projection-fixtures-v1.schema.json",
+    "sha256": "65320dc1a8d86c4302e9a79489973c35fb217810edee931d464ef69d72775385"
+  },
+  "producer": {
+    "file": "../../../scripts/generate-equal-earth-fixtures.mjs",
+    "sha256": "ca0831e0027ad1f442e475d406c2acf09e33a0b115460f4f3fa0aadd540340ab",
+    "refreshTarget": "make refresh-equal-earth-fixtures"
+  },
+  "sourceBoundary": "PROJ and d3-geo are comparison oracles; the published equations remain the method authority."
+}

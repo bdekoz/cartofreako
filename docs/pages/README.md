@@ -27,6 +27,7 @@ uploaded into the immutable v13 tree.
 | Follow the Stage 14 plan, implementation changes, and verification evidence | [Stage 14 convergence ledger](development/stage-14.md) |
 | Review the closed GPU controls, Majuro full pass, and Anthropocene experiments | [Stage 15 closed ledger](development/stage-15.md), [atoll report](../../reports/stage-15-atoll-evidence-canary.md), and [water-debris report](../../reports/stage-15-water-debris-feasibility.md) |
 | Plan compressed GPU evidence, additional consumers, atoll expansion, and agentic research iteration | [Stage 16 development ledger](development/stage-16.md) |
+| Inspect the implemented Equal Earth control, Africa-centered variant, and one-to-five slice queue | [Stage 16J positioning comparisons](development/equal-earth-positioning-speculations-v01.md) |
 | Authorize and generate credentialed external products | [Configured generation](getting-started/generation.md#configured-development-generation), [Cloud-atmosphere generation](getting-started/generation.md#cloud-atmosphere-generation), and [P-Tree production download](data/ptree-download.md) |
 
 ## Pass catalog and lifecycle
@@ -70,6 +71,9 @@ Each projection has context, implementation, and source documents. Its
 32-pass contact sheet provides a visual test across very different data and
 path structures.
 
+Equal Earth is listed separately as a Stage 16J exploration control; it has
+five local comparison plates rather than a standard 32-pass release gallery.
+
 | Projection | Context | Implementation | Sources | Contact sheet |
 | --- | --- | --- | --- | --- |
 | AuthaGraph | [Context](projections/authagraph/context.md) | [Notes](projections/authagraph/implementation.md) | [Bibliography](projections/authagraph/bibliography.md) | [32 passes](gallery/authagraph.md) |
@@ -78,6 +82,7 @@ path structures.
 | Myriahedral | [Context](projections/myriahedral/context.md) | [Notes](projections/myriahedral/implementation.md) | [Bibliography](projections/myriahedral/bibliography.md) | [32 passes](gallery/myriahedral.md) |
 | Star-X | [Context](projections/star-x/context.md) | [Notes](projections/star-x/implementation.md) | [Bibliography](projections/star-x/bibliography.md) | [32 passes](gallery/star-x.md) |
 | Icosahedral Voronoi | [Context](projections/voronoi/context.md) | [Notes](projections/voronoi/implementation.md) | [Bibliography](projections/voronoi/bibliography.md) | [32 passes](gallery/voronoi.md) |
+| Equal Earth *(exploration only)* | [Context](projections/equal-earth/context.md) | [Notes](projections/equal-earth/implementation.md) | [Bibliography](projections/equal-earth/bibliography.md) | [Five comparisons](development/equal-earth-positioning-speculations-v01.md) |
 
 ## Browser and embedding
 
@@ -85,6 +90,7 @@ path structures.
 | --- | --- |
 | Use all six projections in WebAssembly, workers, SVG, Canvas, or D3 | [WebAssembly quick start](runtime/webassembly-quick-start.md) and [runtime reference](../../src.wasm/README.md) |
 | Consume portable numeric cases or compare independent reverse implementations | [Projection fixtures and reverse oracles](runtime/projection-fixtures.md) |
+| Check the standalone Equal Earth forward/reverse control and PROJ/D3 oracle bundle | [Equal Earth implementation](projections/equal-earth/implementation.md) and [Stage 16J comparisons](development/equal-earth-positioning-speculations-v01.md) |
 | Select one standard artifact deterministically and retain a decision receipt | [Artifact catalog and selection](runtime/artifact-selection.md) |
 | Use structured forward points and face-qualified reverse candidates | [Forward/reverse projection API](runtime/projection-api.md) |
 | Plan machine-readable agent discovery and 1080p/Three.js derivatives without changing archive/art/print masters | [AI Workflows assessment and 1080p gaming improvement plan](runtime/ai-agent-and-1080p-gaming.md) |

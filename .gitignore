@@ -10,6 +10,7 @@
 /tests/test-projection-generation-common
 /tests/test-projection-runtime
 /tests/test-forward-reverse-projection-api
+/tests/test-equal-earth-projection
 /tests/audit-projection-round-trips
 /tests/test-star-x-projection-api
 /tests/test-voronoi-projection-api

@@ -38,7 +38,10 @@ source development adds capabilities without rewriting that release:
   PurpleAir-interface and water-debris experiments. These remain local,
   exploration-only products and are not present in v13; and
 - Stage 16 now holds the deferred GPU evidence, atoll-source expansion, and
-  approved atmosphere-first agentic atlas research plan.
+  approved atmosphere-first agentic atlas research plan. Stage 16J also adds
+  standalone Equal Earth forward/reverse equations, neutral PROJ/D3 fixtures,
+  and five local positioning/slice comparisons without changing the six-family
+  release runtime.
 
 GitHub source publication and human-invoked UCB AAO/S3 preservation remain
 separate operations. No current development or experiment silently updates
@@ -91,6 +94,7 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Stage 14 projection API, visual hierarchy, verification, and release plan | [Stage 14 convergence ledger](docs/pages/development/stage-14.md) |
 | Closed Stage 15 GPU controls, consumer layout, Majuro full pass, and Anthropocene experiments | [Stage 15 closed ledger](docs/pages/development/stage-15.md), [atoll report](reports/stage-15-atoll-evidence-canary.md), and [water-debris report](reports/stage-15-water-debris-feasibility.md) |
 | Stage 16 compressed GPU evidence, atoll expansion, and agentic atlas research | [Stage 16 development ledger](docs/pages/development/stage-16.md) |
+| Equal Earth control, Africa-centered variant, and one-to-five projection/slice comparisons | [Stage 16J positioning speculations](docs/pages/development/equal-earth-positioning-speculations-v01.md) |
 | AI-agent discovery, 1080p gaming derivatives, and preservation of authoritative archive/art/print products | [AI Workflows assessment and 1080p gaming improvement plan](docs/pages/runtime/ai-agent-and-1080p-gaming.md) |
 | Visual contact sheets for every projection and released pass | [Visual gallery](docs/pages/gallery/README.md) and [generated projection snapshots](#generated-artifact-previews) |
 | Compact index of build, projection, pass, browser, and release documentation | [Technical documentation](docs/pages/README.md) |
@@ -127,6 +131,7 @@ bibliography records primary sources and attribution.
 | Star-X | [Context](docs/pages/projections/star-x/context.md) | [Notes](docs/pages/projections/star-x/implementation.md) | [Sources](docs/pages/projections/star-x/bibliography.md) |
 | Myriahedral | [Context](docs/pages/projections/myriahedral/context.md) | [Notes](docs/pages/projections/myriahedral/implementation.md) | [Sources](docs/pages/projections/myriahedral/bibliography.md) |
 | Icosahedral Voronoi | [Context](docs/pages/projections/voronoi/context.md) | [Notes](docs/pages/projections/voronoi/implementation.md) | [Sources](docs/pages/projections/voronoi/bibliography.md) |
+| Equal Earth *(exploration only)* | [Context](docs/pages/projections/equal-earth/context.md) | [Notes](docs/pages/projections/equal-earth/implementation.md) | [Sources](docs/pages/projections/equal-earth/bibliography.md) |
 
 ## Choose a projection
 
@@ -138,6 +143,11 @@ bibliography records primary sources and attribution.
 | Star-X | Cahill-Keyes octants, two stacked four-face groups, polar-centered X | `17:22` | `starxproj` | `make_star_x_projection()` |
 | Myriahedral | Depth-5 icosahedral mesh, land-aware spanning-tree net | `16:9` source canvas | `myriaproj` | `make_myriahedral_projection()` |
 | Voronoi | Regular icosahedron, 20 nearest-site gnomonic faces | `48:25` source canvas | `voronoiproj` | `make_voronoi_projection()` |
+
+Equal Earth is not a seventh entry in that release table. Its Stage 16J
+standalone API uses the method's native `2.0545821300028537:1` spherical
+carrier for explicit comparison work; see the
+[implementation boundary](docs/pages/projections/equal-earth/implementation.md).
 
 ## Build and generated artifacts
 
@@ -475,6 +485,9 @@ the `voronoi_source` preset are in the
 | [`tests/test-cahill-keyes-slicing.cc`](tests/test-cahill-keyes-slicing.cc) | Four-strip and exact-octant geometry, metadata, SVG linkage, physical-size, and invalid-carrier tests |
 | [`src.projections/a60-carto-projection-dymaxion.h`](src.projections/a60-carto-projection-dymaxion.h) | Exact Fuller face transform, 23-piece Airocean net, frame validation, public API, factory, and native-size preset |
 | [`tests/test-dymaxion-projection-api.cc`](tests/test-dymaxion-projection-api.cc) | Dymaxion edge scale, Gray reference coordinates, topology, variable-frame, domain, and API tests |
+| [`src.projections/cart0freak0-equal-earth.h`](src.projections/cart0freak0-equal-earth.h) | Stage 16J standalone spherical Equal Earth forward/reverse equations and normalized page wrapper |
+| [`tests/test-equal-earth-projection.cc`](tests/test-equal-earth-projection.cc) | C++ consumption of the neutral canonical and Africa-centered Equal Earth fixtures |
+| [`tests/check-equal-earth-projection.mjs`](tests/check-equal-earth-projection.mjs) | JavaScript oracle, round-trip, area-scale, local-scale, angular-deformation, and Tissot diagnostics |
 | [`src.projections/cart0freak0-projection-runtime.h`](src.projections/cart0freak0-projection-runtime.h) | All-model registry, layouts, frame validation, native-cell classification, and shared seam-safe paths |
 | [`src.projections/cart0freak0-projection-geometry.h`](src.projections/cart0freak0-projection-geometry.h) | Batched flat geometry protocol, adaptive sampling, filled clipping, carrier geometry, and ABI 1 buffers |
 | [`src.projections/cart0freak0-projection-slicing.h`](src.projections/cart0freak0-projection-slicing.h) | Generic viewport, native-cell, geographic, and planar-tile descriptors plus CK/Myria catalogs |

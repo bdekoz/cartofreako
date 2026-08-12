@@ -1,0 +1,1222 @@
+{
+  "schemaVersion": "cartofreako-equal-earth-fixtures-v1",
+  "method": {
+    "name": "Equal Earth",
+    "model": "unit sphere",
+    "coefficients": {
+      "A1": 1.340264,
+      "A2": -0.081106,
+      "A3": 0.000893,
+      "A4": 0.003796,
+      "M": 0.8660254037844386
+    },
+    "reference": "https://doi.org/10.1080/13658816.2018.1504949"
+  },
+  "coordinateContract": {
+    "geographic": "[longitude, latitude] degrees",
+    "raw": "[x, y] on a unit sphere, y up",
+    "normalized": "[u, v] full-carrier page coordinates",
+    "origin": "top-left",
+    "axes": "+u right, +v down"
+  },
+  "implementations": [
+    {
+      "id": "PROJ",
+      "version": "9.6.2",
+      "role": "cross-implementation oracle",
+      "source": "https://proj.org/en/stable/operations/projections/eqearth.html"
+    },
+    {
+      "id": "d3-geo",
+      "version": "2.0.1",
+      "role": "cross-implementation oracle",
+      "source": "https://github.com/d3/d3-geo/blob/v2.0.1/src/projection/equalEarth.js"
+    }
+  ],
+  "layouts": [
+    {
+      "layoutId": "equal-earth/canonical-greenwich",
+      "centralMeridianDegrees": 0,
+      "registration": "EPSG:8857 spherical method comparison",
+      "cases": [
+        {
+          "caseId": "canonical-greenwich-00",
+          "geographic": [
+            0,
+            0
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              0,
+              0
+            ],
+            "normalizedPage": [
+              0.5,
+              0.5
+            ],
+            "inverseGeographic": [
+              0,
+              0
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              0,
+              0
+            ],
+            "d3-geo": [
+              0,
+              0
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "canonical-greenwich-01",
+          "geographic": [
+            12.5,
+            41.9
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              0.16456784853796436,
+              0.8076183205605644
+            ],
+            "normalizedPage": [
+              0.5304008766490564,
+              0.1934715533187237
+            ],
+            "inverseGeographic": [
+              12.5,
+              41.9
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              0.16456784853796436,
+              0.8076183205605644
+            ],
+            "d3-geo": [
+              0.16456784853796436,
+              0.8076183205605644
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "canonical-greenwich-02",
+          "geographic": [
+            -73.9857,
+            40.7484
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              -0.9813688691208633,
+              0.7876836859224698
+            ],
+            "normalizedPage": [
+              0.318710190341433,
+              0.2010376677012362
+            ],
+            "inverseGeographic": [
+              -73.98569999999998,
+              40.74839999999999
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              -0.9813688691208633,
+              0.7876836859224698
+            ],
+            "d3-geo": [
+              -0.9813688691208633,
+              0.7876836859224698
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "canonical-greenwich-03",
+          "geographic": [
+            171.2,
+            7.1
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              2.56487094377873,
+              0.14363990672093657
+            ],
+            "normalizedPage": [
+              0.973812630324193,
+              0.4454820224260746
+            ],
+            "inverseGeographic": [
+              171.20000000000002,
+              7.1
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              2.56487094377873,
+              0.14363990672093657
+            ],
+            "d3-geo": [
+              2.56487094377873,
+              0.14363990672093657
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "canonical-greenwich-04",
+          "geographic": [
+            15,
+            30
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              0.21097513965227208,
+              0.592935119848017
+            ],
+            "normalizedPage": [
+              0.5389737682880783,
+              0.27495374158471775
+            ],
+            "inverseGeographic": [
+              15.000000000000002,
+              29.999999999999996
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              0.21097513965227208,
+              0.592935119848017
+            ],
+            "d3-geo": [
+              0.21097513965227208,
+              0.592935119848017
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "canonical-greenwich-05",
+          "geographic": [
+            -120,
+            -60
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              -1.3593733917143727,
+              -1.0883008355053196
+            ],
+            "normalizedPage": [
+              0.24888082229509959,
+              0.9130604224008116
+            ],
+            "inverseGeographic": [
+              -119.99999999999999,
+              -60.00000000000001
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              -1.3593733917143727,
+              -1.0883008355053196
+            ],
+            "d3-geo": [
+              -1.3593733917143729,
+              -1.0883008355053194
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "canonical-greenwich-06",
+          "geographic": [
+            90,
+            60
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              1.0195300437857795,
+              1.0883008355053196
+            ],
+            "normalizedPage": [
+              0.6883393832786753,
+              0.08693957759918837
+            ],
+            "inverseGeographic": [
+              89.99999999999997,
+              60.00000000000001
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              1.0195300437857795,
+              1.0883008355053196
+            ],
+            "d3-geo": [
+              1.0195300437857797,
+              1.0883008355053194
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "canonical-greenwich-07",
+          "geographic": [
+            -45,
+            80
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              -0.41756929493676204,
+              1.2882111962202532
+            ],
+            "normalizedPage": [
+              0.4228617695340564,
+              0.01106436428937976
+            ],
+            "inverseGeographic": [
+              -45,
+              79.99999999999999
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              -0.41756929493676204,
+              1.2882111962202532
+            ],
+            "d3-geo": [
+              -0.41756929493676204,
+              1.2882111962202532
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "canonical-greenwich-08",
+          "geographic": [
+            30,
+            -80
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              0.2783795299578413,
+              -1.2882111962202532
+            ],
+            "normalizedPage": [
+              0.5514254869772958,
+              0.9889356357106203
+            ],
+            "inverseGeographic": [
+              29.999999999999996,
+              -79.99999999999999
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              0.2783795299578413,
+              -1.2882111962202532
+            ],
+            "d3-geo": [
+              0.2783795299578413,
+              -1.2882111962202532
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "canonical-greenwich-09",
+          "geographic": [
+            180,
+            0
+          ],
+          "boundaryClass": "seam",
+          "expected": {
+            "raw": [
+              2.7066299836960748,
+              0
+            ],
+            "normalizedPage": [
+              1,
+              0.5
+            ],
+            "inverseGeographic": [
+              180,
+              0
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              2.7066299836960748,
+              0
+            ],
+            "d3-geo": [
+              2.7066299836960748,
+              0
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "canonical-greenwich-10",
+          "geographic": [
+            -180,
+            0
+          ],
+          "boundaryClass": "seam",
+          "expected": {
+            "raw": [
+              -2.7066299836960748,
+              0
+            ],
+            "normalizedPage": [
+              0,
+              0.5
+            ],
+            "inverseGeographic": [
+              -180,
+              0
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              -2.7066299836960748,
+              0
+            ],
+            "d3-geo": [
+              -2.7066299836960748,
+              0
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "canonical-greenwich-11",
+          "geographic": [
+            0,
+            90
+          ],
+          "boundaryClass": "pole",
+          "expected": {
+            "raw": [
+              0,
+              1.3173627591574133
+            ],
+            "normalizedPage": [
+              0.5,
+              0
+            ],
+            "inverseGeographic": [
+              0,
+              90
+            ],
+            "sphericalAreaScale": null
+          },
+          "oracles": {
+            "PROJ": [
+              0,
+              1.3173627591574133
+            ],
+            "d3-geo": [
+              0,
+              1.3173627591574133
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "canonical-greenwich-12",
+          "geographic": [
+            0,
+            -90
+          ],
+          "boundaryClass": "pole",
+          "expected": {
+            "raw": [
+              0,
+              -1.3173627591574133
+            ],
+            "normalizedPage": [
+              0.5,
+              1
+            ],
+            "inverseGeographic": [
+              0,
+              -90
+            ],
+            "sphericalAreaScale": null
+          },
+          "oracles": {
+            "PROJ": [
+              0,
+              -1.3173627591574133
+            ],
+            "d3-geo": [
+              0,
+              -1.3173627591574133
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "canonical-greenwich-13",
+          "geographic": [
+            -168.5,
+            0
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              -2.5337064014043813,
+              0
+            ],
+            "normalizedPage": [
+              0.03194444444444441,
+              0.5
+            ],
+            "inverseGeographic": [
+              -168.5,
+              0
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              -2.5337064014043813,
+              0
+            ],
+            "d3-geo": [
+              -2.5337064014043813,
+              0
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "canonical-greenwich-14",
+          "geographic": [
+            60,
+            -30
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              0.8439005586090883,
+              -0.592935119848017
+            ],
+            "normalizedPage": [
+              0.6558950731523133,
+              0.7250462584152823
+            ],
+            "inverseGeographic": [
+              60.00000000000001,
+              -29.999999999999996
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              0.8439005586090883,
+              -0.592935119848017
+            ],
+            "d3-geo": [
+              0.8439005586090883,
+              -0.592935119848017
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        }
+      ]
+    },
+    {
+      "layoutId": "equal-earth/africa-centered-11.5e",
+      "centralMeridianDegrees": 11.5,
+      "registration": "Cartofreako experimental centered variant",
+      "cases": [
+        {
+          "caseId": "africa-centered-11.5e-00",
+          "geographic": [
+            0,
+            0
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              -0.1729235822916937,
+              0
+            ],
+            "normalizedPage": [
+              0.4680555555555556,
+              0.5
+            ],
+            "inverseGeographic": [
+              -1.7763568394002505e-15,
+              0
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              -0.1729235822916937,
+              0
+            ],
+            "d3-geo": [
+              -0.1729235822916937,
+              0
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "africa-centered-11.5e-01",
+          "geographic": [
+            12.5,
+            41.9
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              0.01316542788303715,
+              0.8076183205605644
+            ],
+            "normalizedPage": [
+              0.5024320701319246,
+              0.1934715533187237
+            ],
+            "inverseGeographic": [
+              12.5,
+              41.9
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              0.01316542788303715,
+              0.8076183205605644
+            ],
+            "d3-geo": [
+              0.013165427883037147,
+              0.8076183205605644
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "africa-centered-11.5e-02",
+          "geographic": [
+            -73.9857,
+            40.7484
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              -1.133908373307347,
+              0.7876836859224698
+            ],
+            "normalizedPage": [
+              0.290531328600941,
+              0.2010376677012362
+            ],
+            "inverseGeographic": [
+              -73.98569999999998,
+              40.74839999999999
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              -1.133908373307347,
+              0.7876836859224698
+            ],
+            "d3-geo": [
+              -1.133908373307347,
+              0.7876836859224698
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "africa-centered-11.5e-03",
+          "geographic": [
+            171.2,
+            7.1
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              2.3925811315506023,
+              0.14363990672093657
+            ],
+            "normalizedPage": [
+              0.9419852632171356,
+              0.4454820224260746
+            ],
+            "inverseGeographic": [
+              171.19999999999996,
+              7.1
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              2.3925811315506023,
+              0.14363990672093657
+            ],
+            "d3-geo": [
+              2.3925811315506023,
+              0.14363990672093657
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "africa-centered-11.5e-04",
+          "geographic": [
+            15,
+            30
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              0.04922753258553014,
+              0.592935119848017
+            ],
+            "normalizedPage": [
+              0.5090938792672183,
+              0.27495374158471775
+            ],
+            "inverseGeographic": [
+              15,
+              29.999999999999996
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              0.04922753258553014,
+              0.592935119848017
+            ],
+            "d3-geo": [
+              0.049227532585530163,
+              0.592935119848017
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "africa-centered-11.5e-05",
+          "geographic": [
+            -120,
+            -60
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              -1.4896466750869999,
+              -1.0883008355053196
+            ],
+            "normalizedPage": [
+              0.2248152344317133,
+              0.9130604224008116
+            ],
+            "inverseGeographic": [
+              -119.99999999999997,
+              -60.00000000000001
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              -1.4896466750869999,
+              -1.0883008355053196
+            ],
+            "d3-geo": [
+              -1.4896466750870005,
+              -1.0883008355053194
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "africa-centered-11.5e-06",
+          "geographic": [
+            90,
+            60
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              0.8892567604131522,
+              1.0883008355053196
+            ],
+            "normalizedPage": [
+              0.664273795415289,
+              0.08693957759918837
+            ],
+            "inverseGeographic": [
+              89.99999999999999,
+              60.00000000000001
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              0.8892567604131522,
+              1.0883008355053196
+            ],
+            "d3-geo": [
+              0.8892567604131524,
+              1.0883008355053194
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "africa-centered-11.5e-07",
+          "geographic": [
+            -45,
+            80
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              -0.5242814480872678,
+              1.2882111962202532
+            ],
+            "normalizedPage": [
+              0.4031486661927597,
+              0.01106436428937976
+            ],
+            "inverseGeographic": [
+              -45,
+              79.99999999999999
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              -0.5242814480872678,
+              1.2882111962202532
+            ],
+            "d3-geo": [
+              -0.524281448087268,
+              1.2882111962202532
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "africa-centered-11.5e-08",
+          "geographic": [
+            30,
+            -80
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              0.1716673768073355,
+              -1.2882111962202532
+            ],
+            "normalizedPage": [
+              0.531712383635999,
+              0.9889356357106203
+            ],
+            "inverseGeographic": [
+              29.999999999999996,
+              -79.99999999999999
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              0.1716673768073355,
+              -1.2882111962202532
+            ],
+            "d3-geo": [
+              0.17166737680733551,
+              -1.2882111962202532
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "africa-centered-11.5e-09",
+          "geographic": [
+            180,
+            0
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              2.5337064014043813,
+              0
+            ],
+            "normalizedPage": [
+              0.9680555555555556,
+              0.5
+            ],
+            "inverseGeographic": [
+              180,
+              0
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              2.5337064014043813,
+              0
+            ],
+            "d3-geo": [
+              2.5337064014043813,
+              0
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "africa-centered-11.5e-10",
+          "geographic": [
+            -180,
+            0
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              2.5337064014043813,
+              0
+            ],
+            "normalizedPage": [
+              0.9680555555555556,
+              0.5
+            ],
+            "inverseGeographic": [
+              180,
+              0
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              2.5337064014043813,
+              0
+            ],
+            "d3-geo": [
+              2.5337064014043813,
+              0
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "africa-centered-11.5e-11",
+          "geographic": [
+            0,
+            90
+          ],
+          "boundaryClass": "pole",
+          "expected": {
+            "raw": [
+              -0.1024514969737033,
+              1.3173627591574133
+            ],
+            "normalizedPage": [
+              0.48107397435356136,
+              0
+            ],
+            "inverseGeographic": [
+              0,
+              90
+            ],
+            "sphericalAreaScale": null
+          },
+          "oracles": {
+            "PROJ": [
+              -0.1024514969737033,
+              1.3173627591574133
+            ],
+            "d3-geo": [
+              -0.1024514969737033,
+              1.3173627591574133
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "africa-centered-11.5e-12",
+          "geographic": [
+            0,
+            -90
+          ],
+          "boundaryClass": "pole",
+          "expected": {
+            "raw": [
+              -0.1024514969737033,
+              -1.3173627591574133
+            ],
+            "normalizedPage": [
+              0.48107397435356136,
+              1
+            ],
+            "inverseGeographic": [
+              0,
+              -90
+            ],
+            "sphericalAreaScale": null
+          },
+          "oracles": {
+            "PROJ": [
+              -0.1024514969737033,
+              -1.3173627591574133
+            ],
+            "d3-geo": [
+              -0.1024514969737033,
+              -1.3173627591574133
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "africa-centered-11.5e-13",
+          "geographic": [
+            -168.5,
+            0
+          ],
+          "boundaryClass": "seam",
+          "expected": {
+            "raw": [
+              -2.7066299836960748,
+              0
+            ],
+            "normalizedPage": [
+              0,
+              0.5
+            ],
+            "inverseGeographic": [
+              -168.5,
+              0
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              -2.7066299836960748,
+              0
+            ],
+            "d3-geo": [
+              -2.7066299836960748,
+              0
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        },
+        {
+          "caseId": "africa-centered-11.5e-14",
+          "geographic": [
+            60,
+            -30
+          ],
+          "boundaryClass": "interior",
+          "expected": {
+            "raw": [
+              0.6821529515423465,
+              -0.592935119848017
+            ],
+            "normalizedPage": [
+              0.6260151841314533,
+              0.7250462584152823
+            ],
+            "inverseGeographic": [
+              60.00000000000001,
+              -29.999999999999996
+            ],
+            "sphericalAreaScale": 1
+          },
+          "oracles": {
+            "PROJ": [
+              0.6821529515423465,
+              -0.592935119848017
+            ],
+            "d3-geo": [
+              0.6821529515423465,
+              -0.592935119848017
+            ]
+          },
+          "tolerances": {
+            "raw": 2e-14,
+            "normalized": 5e-15,
+            "angularDegrees": 2e-10,
+            "areaScale": 2e-7
+          }
+        }
+      ]
+    }
+  ]
+}

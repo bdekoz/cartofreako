@@ -36,6 +36,13 @@ remains part of the stable result vocabulary for a future registered layout
 that has forward but not reverse support; it never means “guess with another
 projection.”
 
+Stage 16J also implements Equal Earth forward/reverse equations through a
+[standalone experimental API](../projections/equal-earth/implementation.md).
+Equal Earth is intentionally absent from runtime API 3, the six-family enum,
+the standard artifact catalog, and release generation. Its separate neutral
+fixtures and page wrapper let it serve as a checked comparison method without
+silently changing this API's family registry.
+
 ## Native C++ surface
 
 [`cart0freak0-projection-runtime.h`](../../../src.projections/cart0freak0-projection-runtime.h)

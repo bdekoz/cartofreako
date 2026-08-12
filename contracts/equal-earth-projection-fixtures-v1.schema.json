@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bdekoz.github.io/cartofreako/contracts/equal-earth-projection-fixtures-v1.schema.json",
+  "title": "Cartofreako Stage 16J implementation-neutral Equal Earth fixtures v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "method",
+    "coordinateContract",
+    "implementations",
+    "layouts"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "cartofreako-equal-earth-fixtures-v1" },
+    "method": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "model", "coefficients", "reference"],
+      "properties": {
+        "name": { "const": "Equal Earth" },
+        "model": { "const": "unit sphere" },
+        "coefficients": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["A1", "A2", "A3", "A4", "M"],
+          "properties": {
+            "A1": { "type": "number" },
+            "A2": { "type": "number" },
+            "A3": { "type": "number" },
+            "A4": { "type": "number" },
+            "M": { "type": "number" }
+          }
+        },
+        "reference": { "type": "string", "format": "uri" }
+      }
+    },
+    "coordinateContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["geographic", "raw", "normalized", "origin", "axes"],
+      "properties": {
+        "geographic": { "const": "[longitude, latitude] degrees" },
+        "raw": { "const": "[x, y] on a unit sphere, y up" },
+        "normalized": { "const": "[u, v] full-carrier page coordinates" },
+        "origin": { "const": "top-left" },
+        "axes": { "const": "+u right, +v down" }
+      }
+    },
+    "implementations": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "version", "role", "source"],
+        "properties": {
+          "id": { "enum": ["PROJ", "d3-geo"] },
+          "version": { "type": "string", "minLength": 1 },
+          "role": { "const": "cross-implementation oracle" },
+          "source": { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "layouts": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/layout" }
+    }
+  },
+  "$defs": {
+    "pair": {
+      "type": "array",
+      "prefixItems": [{ "type": "number" }, { "type": "number" }],
+      "items": false
+    },
+    "layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["layoutId", "centralMeridianDegrees", "registration", "cases"],
+      "properties": {
+        "layoutId": { "type": "string", "minLength": 1 },
+        "centralMeridianDegrees": { "type": "number", "minimum": -180, "maximum": 180 },
+        "registration": { "enum": ["EPSG:8857 spherical method comparison", "Cartofreako experimental centered variant"] },
+        "cases": {
+          "type": "array",
+          "minItems": 10,
+          "items": { "$ref": "#/$defs/case" }
+        }
+      }
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["caseId", "geographic", "boundaryClass", "expected", "oracles", "tolerances"],
+      "properties": {
+        "caseId": { "type": "string", "minLength": 1 },
+        "geographic": { "$ref": "#/$defs/pair" },
+        "boundaryClass": { "enum": ["interior", "seam", "pole"] },
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["raw", "normalizedPage", "inverseGeographic", "sphericalAreaScale"],
+          "properties": {
+            "raw": { "$ref": "#/$defs/pair" },
+            "normalizedPage": { "$ref": "#/$defs/pair" },
+            "inverseGeographic": { "$ref": "#/$defs/pair" },
+            "sphericalAreaScale": { "type": ["number", "null"] }
+          }
+        },
+        "oracles": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["PROJ", "d3-geo"],
+          "properties": {
+            "PROJ": { "$ref": "#/$defs/pair" },
+            "d3-geo": { "$ref": "#/$defs/pair" }
+          }
+        },
+        "tolerances": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["raw", "normalized", "angularDegrees", "areaScale"],
+          "properties": {
+            "raw": { "type": "number", "exclusiveMinimum": 0 },
+            "normalized": { "type": "number", "exclusiveMinimum": 0 },
+            "angularDegrees": { "type": "number", "exclusiveMinimum": 0 },
+            "areaScale": { "type": "number", "exclusiveMinimum": 0 }
+          }
+        }
+      }
+    }
+  }
+}

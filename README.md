@@ -16,7 +16,10 @@ adds screen/runtime derivatives while preserving the SVG/PDF archive and art
 masters plus the existing projection-specific 44-inch and A0 print products.
 The approved [Stage 16 plan](docs/pages/development/stage-16.md) carries the
 deferred GPU evidence and generalizes the Marshall Islands workflow into an
-agentic selection-and-experiment program.
+agentic selection-and-experiment program. Its Stage 16J prototype adds
+standalone Equal Earth forward/reverse support, neutral PROJ/D3 comparison
+fixtures, and [five local positioning and slice studies](docs/pages/development/equal-earth-positioning-speculations-v01.md)
+without changing the six-family release runtime.
 
 The top-level directories separate implementation, generation, verification,
 and artifacts:
@@ -78,6 +81,7 @@ targets:
 make check-wasm-projections
 make check-wasm-projections-browser
 make check-forward-reverse-projection-api
+make check-equal-earth-projection
 make check-wasm-cahill-keyes
 make check-wasm-cahill-myriahedral
 ```

@@ -80,10 +80,11 @@ make all-experiments
 make check-all-experiments
 ```
 
-Its checked seven-builder registry contains the Stage 15 GPU controls,
+Its checked eight-builder registry contains the Stage 15 GPU controls,
 proposed consumer object-tree layout, Majuro evidence canary, Marshall Islands
-speculations, full Majuro evidence pass, synthetic PurpleAir interface, and
-bounded water-debris experiment. It deliberately excludes data fetchers, external
+speculations, Stage 16J Equal Earth positioning comparisons, full Majuro
+evidence pass, synthetic PurpleAir interface, and bounded water-debris
+experiment. It deliberately excludes data fetchers, external
 authorization, feasibility-only proposals, hardware benchmarks, GitHub
 release, and UCB AAO/S3 upload. Some experiments require their documented
 frozen or released parent artifacts; the aggregate does not silently replace

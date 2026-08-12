@@ -10,6 +10,7 @@ expected=(
   build-consumer-release-layout
   generate-atoll-evidence-canary
   render-marshall-islands-speculations-v01
+  render-equal-earth-positioning-v01
   generate-majuro-atoll-evidence
   generate-anthropocene-purpleair-experiments
   generate-anthropocene-water-debris-experiments

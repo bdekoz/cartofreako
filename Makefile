@@ -36,6 +36,14 @@ PROJECTION_FIXTURE_FILES := $(addprefix $(PROJECTION_FIXTURE_DIR)/,\
 	cahill-keyes.json authagraph.json dymaxion.json myriahedral.json \
 	star-x.json voronoi.json manifest.json \
 	topology-crosswalk-cartofreako.json SHA256SUMS)
+EQUAL_EARTH_FIXTURE_DIR := fixtures/projections/equal-earth-v1
+EQUAL_EARTH_FIXTURE_SCHEMA := \
+	contracts/equal-earth-projection-fixtures-v1.schema.json
+EQUAL_EARTH_FIXTURE_FILES := $(addprefix $(EQUAL_EARTH_FIXTURE_DIR)/,\
+	fixtures.json manifest.json SHA256SUMS)
+EQUAL_EARTH_FIXTURE_CHECKER := tests/check-equal-earth-projection.mjs
+EQUAL_EARTH_FIXTURE_VALIDATOR := tests/validate-equal-earth-fixtures.py
+EQUAL_EARTH_DIAGNOSTICS := build/stage-16j/equal-earth-diagnostics.json
 REVERSE_ORACLE_DIR := $(PROJECTION_FIXTURE_DIR)/oracles
 REVERSE_ORACLE_CHECKER := scripts/check-reverse-oracles.mjs
 REVERSE_ORACLE_FILES := $(addprefix $(REVERSE_ORACLE_DIR)/,\
@@ -227,7 +235,8 @@ NON_RELEASE_EXPERIMENT_TARGETS := \
 	generate-gpu-controls \
 	build-consumer-release-layout \
 	generate-atoll-evidence-canary \
-	render-marshall-islands-speculations-v01
+	render-marshall-islands-speculations-v01 \
+	render-equal-earth-positioning-v01
 
 # Release artifacts are grouped by projection first.  Keep the projection tag
 # in every basename as a stable, self-describing download name, then derive
@@ -835,6 +844,7 @@ TEST_BINARIES := \
 	$(TEST_DIR)/test-projection-generation-common \
 	$(TEST_DIR)/test-projection-runtime \
 	$(TEST_DIR)/test-forward-reverse-projection-api \
+	$(TEST_DIR)/test-equal-earth-projection \
 	$(TEST_DIR)/test-star-x-projection-api \
 	$(TEST_DIR)/test-voronoi-projection-api \
 	$(TEST_DIR)/audit-projection-round-trips \
@@ -943,6 +953,8 @@ PUBLIC_TARGETS := all all-experiments assets-single assets-resilient \
 	audit-dymaxion-ulp \
 	check-projection-fixtures check-wasm-projection-fixtures \
 	refresh-projection-fixtures \
+	check-equal-earth-projection refresh-equal-earth-fixtures \
+	check-stage-16j \
 	check-reverse-oracles refresh-reverse-oracle-fixtures \
 	check-artifact-selection refresh-artifact-selection-fixture \
 	check-standard-artifact-manifest refresh-standard-artifact-manifest \
@@ -968,6 +980,7 @@ PUBLIC_TARGETS := all all-experiments assets-single assets-resilient \
 	clean clean-failed-generated configured doxygen \
 	generation-plan list-targets list-experiments \
 	render-marshall-islands-speculations-v01 \
+	render-equal-earth-positioning-v01 \
 	release-github release-ucb-aao-s3 \
 	authorize-external \
 	generate-authorized-external generate-snapshots generate-snapshot-all \
@@ -1173,6 +1186,12 @@ render-marshall-islands-speculations-v01: \
 		scripts/render-marshall-islands-speculations-v01.mjs
 	"scripts/render-marshall-islands-speculations-v01.sh"
 
+render-equal-earth-positioning-v01: wasm-projections \
+		check-equal-earth-projection \
+		scripts/render-equal-earth-positioning-v01.sh \
+		scripts/render-equal-earth-positioning-v01.mjs
+	"bash" "scripts/render-equal-earth-positioning-v01.sh"
+
 # GitHub publication and a UCB Active Archive Object Storage deposit are
 # intentionally separate operations. There is no umbrella `release` target,
 # and neither target depends on the other.
@@ -1281,6 +1300,33 @@ $(TEST_DIR)/test-forward-reverse-projection-api: \
 check-forward-reverse-projection-api: \
 		$(TEST_DIR)/test-forward-reverse-projection-api
 	$(TEST_DIR)/test-forward-reverse-projection-api
+
+$(TEST_DIR)/test-equal-earth-projection: \
+		$(TEST_DIR)/test-equal-earth-projection.cc \
+		$(PROJECTION_SRC_DIR)/cart0freak0-equal-earth.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+
+refresh-equal-earth-fixtures: \
+		scripts/refresh-equal-earth-fixtures.sh \
+		scripts/generate-equal-earth-fixtures.mjs \
+		scripts/equal-earth.mjs $(EQUAL_EARTH_FIXTURE_SCHEMA)
+	"bash" "scripts/refresh-equal-earth-fixtures.sh" \
+		"$(EQUAL_EARTH_FIXTURE_DIR)"
+
+check-equal-earth-projection: $(EQUAL_EARTH_FIXTURE_SCHEMA) \
+		$(EQUAL_EARTH_FIXTURE_FILES) $(EQUAL_EARTH_FIXTURE_CHECKER) \
+		$(EQUAL_EARTH_FIXTURE_VALIDATOR) scripts/equal-earth.mjs \
+		$(TEST_DIR)/test-equal-earth-projection
+	python3 "$(EQUAL_EARTH_FIXTURE_VALIDATOR)"
+	"$(NODE)" "$(EQUAL_EARTH_FIXTURE_CHECKER)" \
+		"$(EQUAL_EARTH_DIAGNOSTICS)"
+	$(TEST_DIR)/test-equal-earth-projection \
+		"$(EQUAL_EARTH_FIXTURE_DIR)/fixtures.json"
+
+check-stage-16j: check-equal-earth-projection \
+		render-equal-earth-positioning-v01
+	@printf '%s\n' \
+		'Stage 16J passed: projection fixtures, diagnostics, and five local PNG comparisons.'
 
 $(TEST_DIR)/audit-projection-round-trips: \
 		$(TEST_DIR)/audit-projection-round-trips.cc \
@@ -1609,6 +1655,7 @@ check: check-pass-status check-anthropocene-particulate \
 		$(FIBER_SYNTHESIZED_MANIFEST) $(FIBER_SYNTHESIZED_ROUTES) \
 		$(FIBER_SYNTHESIZED_LANDINGS) $(FIBER_SYNTHESIZED_CHECKSUMS) \
 		check-fiber-synthesized check-forward-reverse-projection-api \
+		check-equal-earth-projection \
 		check-print-contract audit-dymaxion-ulp \
 		check-projection-fixtures check-reverse-oracles \
 		check-artifact-selection check-screen-1080p
