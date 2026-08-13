@@ -57,11 +57,11 @@ requireCondition(catalog.inputFreeze.sha256
 'GPU controls refer to the wrong input freeze');
 requireCondition(catalog.inputFreeze.sourceCommit
     === input.frozenStage14.sourceCommit
-    && catalog.artifacts.length === 205,
+    && catalog.artifacts.length === 211,
 'GPU controls do not preserve the Stage 14 handoff');
 requireCondition(JSON.stringify(catalog.recipes) === JSON.stringify(input.controlRecipes),
     'GPU control recipes changed');
-requireCondition(new Set(catalog.artifacts.map(value => value.id)).size === 205,
+requireCondition(new Set(catalog.artifacts.map(value => value.id)).size === 211,
     'GPU control artifact IDs are not unique');
 requireCondition(new Set(catalog.artifacts.map(value => value.layoutId)).size === 11,
     'GPU controls do not cover all eleven approved layouts');
@@ -123,4 +123,4 @@ await mapLimit(fileChecks, 12, async ({artifact, control}) => {
     `${artifact.id} delivery metadata changed for ${control.recipeId}`);
 });
 
-console.log('Stage 15B controls passed: 410 lossless PNGs, 205 artifacts, 11 layouts, 14 slices, both orientations, no crop, and frozen-parent linkage.');
+console.log('Stage 15B controls passed: 422 lossless PNGs, 211 artifacts, 11 layouts, 14 slices, both orientations, no crop, and frozen-parent linkage.');

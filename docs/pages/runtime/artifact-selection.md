@@ -24,7 +24,7 @@ IDs, 11 layouts, and 14 approved slices. It excludes authorized optional and
 exploration-only products.
 
 The Stage 15 benchmark fixture separately freezes the earlier Stage 14
-205-product/31-pass catalog. Updating the live access catalog does not rewrite
+211-product/32-pass catalog. Updating the live access catalog does not rewrite
 that benchmark identity.
 
 Each catalog record keeps the authoritative SVG or explicit SVG-gzip, print

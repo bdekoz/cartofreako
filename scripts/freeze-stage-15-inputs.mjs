@@ -9,7 +9,7 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const catalogPath = path.join(root, 'assets.generated/catalog/artifacts-v1.json');
 const manifestPath = path.join(root, 'contracts/standard-artifact-manifest-v1.json');
 const outputPath = path.join(root, 'fixtures/gpu-benchmark/v1/stage-14-inputs.json');
-const frozenCommit = '750efb321cc5553c7f0f7aa6d64e47ed9f2e8bef';
+const frozenCommit = '7ba10e6b11475326873b3e206067fecebe7cc1c2';
 const mode = process.argv[2] ?? '--check';
 
 function requireCondition(condition, message) {
@@ -51,10 +51,10 @@ async function mapLimit(values, limit, callback) {
 requireCondition(['--check', '--refresh'].includes(mode),
     'usage: freeze-stage-15-inputs.mjs [--check|--refresh]');
 if (mode === '--check') {
-    // Stage 15 is a historical freeze of the clean Stage 14 corpus, not a
-    // mirror of the mutable current standard manifest. Validate its retained
-    // records and parents directly so later standard passes do not rewrite or
-    // invalidate the benchmark baseline.
+    // Stage 15A is re-frozen from the current clean corpus so every retained
+    // parent remains buildable from the standard graph at the frozen commit.
+    // Validate its retained records and parents directly so later standard
+    // passes do not rewrite or invalidate the benchmark baseline.
     const frozen = JSON.parse(await fs.readFile(outputPath));
     requireCondition(frozen.schemaVersion === 'cartofreako-gpu-benchmark-v1'
         && frozen.documentType === 'input-freeze'
@@ -63,10 +63,10 @@ if (mode === '--check') {
         && frozen.frozenStage14.workingTree === 'clean'
         && frozen.frozenStage14.runtimeApi === 3
         && frozen.frozenStage14.geometryAbi === 1
-        && frozen.frozenStage14.artifactCount === 205
-        && frozen.cases.length === 205,
+        && frozen.frozenStage14.artifactCount === 211
+        && frozen.cases.length === 211,
     'Stage 15A retained Stage 14 identity changed');
-    requireCondition(new Set(frozen.cases.map(value => value.id)).size === 205,
+    requireCondition(new Set(frozen.cases.map(value => value.id)).size === 211,
         'Stage 15A retained cases are not unique');
     const retainedFiles = [];
     for (const value of frozen.cases) {
@@ -75,7 +75,7 @@ if (mode === '--check') {
             retainedFiles.push({id: value.id, value: file});
         }
     }
-    requireCondition(retainedFiles.length === 1025,
+    requireCondition(retainedFiles.length === 1055,
         'Stage 15A retained file-record count changed');
     const retainedPaths = new Set();
     for (const {id, value} of retainedFiles) {
@@ -93,7 +93,7 @@ if (mode === '--check') {
     // render can legitimately differ, and PDF encoder bytes are not the print
     // geometry contract. Consumers that actually derive a control validate
     // the required full-PNG parent hash at use time.
-    console.log(`Stage 15A input freeze passed: 205 retained clean Stage 14 artifact records at ${frozenCommit}; current generated files are independent.`);
+    console.log(`Stage 15A input freeze passed: 211 retained clean Stage 14 artifact records at ${frozenCommit}; current generated files are independent.`);
     process.exit(0);
 }
 const [catalogBytes, manifestBytes] = await Promise.all([
@@ -111,7 +111,7 @@ requireCondition(catalog.sourceRevision.runtimeApi === 3
     && catalog.sourceRevision.geometryAbi === 1,
 'Stage 14 runtime identity changed');
 requireCondition(manifest.schemaVersion === 'cartofreako-standard-artifact-manifest-v1'
-    && manifest.artifactCount === 205 && catalog.artifacts.length === 205,
+    && manifest.artifactCount === 211 && catalog.artifacts.length === 211,
 'Stage 14 corpus is incomplete');
 const manifestHash = createHash('sha256').update(manifestBytes).digest('hex');
 requireCondition(catalog.sourceRevision.standardManifestSha256 === manifestHash,

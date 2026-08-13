@@ -29,5 +29,5 @@ PNG/lossless-WebP pairs across every standard whole map and approved slice, a
 checked catalog/request/receipt contract, all-family affine screen picking, an
 offline Three.js r185 interaction canary, abortable workers, and an independent
 clean-room reader. The Stage 15 benchmark input remains frozen at the earlier
-Stage 14 205-product/31-pass identity. GPU-specific products and their
+Stage 14 211-product/32-pass identity. GPU-specific products and their
 measurements are assigned to Stage 15.

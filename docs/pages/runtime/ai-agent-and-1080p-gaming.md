@@ -2,7 +2,7 @@
 
 **Status:** Consumer v1 is implemented for the current checked standard
 matrix: 211 artifacts, 32 pass IDs, 11 layouts, and 14 approved slices. The
-Stage 15 benchmark fixture preserves the earlier Stage 14 205/31 identity.
+Stage 15 benchmark fixture is re-frozen at the current 211/32 standard corpus.
 Independent collaborator review remains external evidence; GPU formats, masks,
 and benchmarking are assigned to the
 [Stage 15 ledger](../development/stage-15.md)
@@ -378,7 +378,7 @@ does not reopen Stage 14 print or projection semantics.
 The 1080p PNG/WebP products and catalog are promoted to the standard generated
 graph after phases 0–4 passed for the current 211-product standard manifest.
 The Stage 15 performance baseline remains independently frozen at the earlier
-205-product corpus, so live catalog growth does not rewrite benchmark results.
+211-product corpus, so live catalog growth does not rewrite benchmark results.
 GPU formats and
 semantic masks remain Stage 15 exploration-only products until its measured
 benefit, tooling, licensing, determinism, and QA gates pass. The authoritative

@@ -104,13 +104,12 @@ The centered variant is not labeled EPSG:8857. Mathematical implementation
 does not establish `#CorrectTheMap` compliance, corrected perception,
 community authorization, or a decolonial outcome.
 
-## Preserved benchmark baseline
+## Re-frozen benchmark baseline
 
-Stage 16 inherits, without rewriting, the frozen Stage 14 benchmark input:
-205 artifacts across 31 pass IDs, 11 layouts, and 14 approved slices at clean
-commit `750efb321cc5553c7f0f7aa6d64e47ed9f2e8bef`. The current source graph is
-larger at 211 standard products and 32 pass IDs, but changing that live graph
-does not change a historical benchmark identity.
+The Stage 15A benchmark input was re-frozen on 2026-08-13 at the current clean
+corpus: 211 artifacts across 32 pass IDs, 11 layouts, and 14 approved slices
+at clean commit `7ba10e6b11475326873b3e206067fecebe7cc1c2`, so every retained
+parent remains buildable from the standard graph.
 
 The handoff records:
 

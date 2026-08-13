@@ -15,8 +15,8 @@ six-projection Majuro evidence pass, the accepted standard
 `anthropocene-particulate-2025` and `anthropocene-particulate-2026` pair, and
 bounded exploration-only PurpleAir-interface and water-debris experiments.
 The current standard graph contains 211 products across 32 pass IDs; the
-benchmark fixture deliberately remains the frozen 205-product, 31-pass Stage
-14 corpus.
+benchmark fixture was re-frozen on 2026-08-13 at that 211-product, 32-pass
+corpus so every retained parent remains buildable from the standard graph.
 
 Compressed formats, hardware timing, picking masks, Float32 geometry,
 additional consumers, promotion decisions, remaining atoll evidence, and the
@@ -47,8 +47,8 @@ operation. Stage 16 owns any continuation.
 
 ## Stage 14 benchmark handoff
 
-Stage 15 benchmarks from the frozen Stage 14 standard input manifest: 205
-artifacts across 31 pass IDs, 11 layouts, and 14 approved slices. A first
+Stage 15 benchmarks from the frozen Stage 14 standard input manifest: 211
+artifacts across 32 pass IDs, 11 layouts, and 14 approved slices. A first
 hardware canary may select a smaller deterministic subset through the Stage 14
 request/decision-receipt interface, but the benchmark must retain the full
 manifest identity and cannot redefine the baseline by filename convention.
@@ -73,7 +73,7 @@ catalog record changes, its benchmark case receives a new identity and must be
 rerun.
 
 Stage 15A begins from a newly regenerated ignored artifact catalog stamped by
-the clean frozen Stage 14 commit `750efb321cc5553c7f0f7aa6d64e47ed9f2e8bef`.
+the clean frozen Stage 14 commit `7ba10e6b11475326873b3e206067fecebe7cc1c2`.
 The previously present catalog identified commit `3a861c7` and a modified
 tree; it was not eligible for the handoff. The checked freeze records the
 clean commit, catalog hash, standard-manifest hash, parent hashes, and existing
@@ -86,7 +86,7 @@ lossless-screen hashes without rewriting any authoritative artifact.
 | Stage 14 PNG and lossless WebP | Access and transfer baseline | **Active 15A input.** Preserve the exact 1920 × 1080 files and hashes; do not regenerate them inside a benchmark |
 | Landscape 2K PNG | Lossless power-of-two control | **Active 15B.** Exact 2048 × 1024 `contain` canvas, declared padding, full projection visible, same 3840-pixel parent as Stage 14 |
 | Portrait 2K PNG | Lossless vertical control | **Active 15B.** Exact 1024 × 2048 `contain` canvas with the same no-crop, parent, color, and transform rules |
-| Deferred GPU and consumer work | Compression, benchmarks, masks, Float32, additional adapters, and promotion | **Moved to Stage 16A–16F** with the frozen 15A/15B inputs preserved |
+| Deferred GPU and consumer work | Compression, benchmarks, masks, Float32, additional adapters, and promotion | **Moved to Stage 16A–16F** with the 15A/15B inputs re-frozen at the current corpus |
 
 PNG is the lossless visual control for the completed Stage 15 work. The
 benchmark contract, hardware matrix, and pass-specific compression cautions
@@ -112,8 +112,8 @@ source-specific logarithmic marker opacity, a doubled primary title, and
 source period/status in evidence metadata. The 60% field cap applies to the
 temperature and Stage 15 experimental overlays, not retroactively to these
 source-separated glyphs. The two year-qualified particulate passes add six
-products and one pass ID to the current standard graph without altering the
-frozen Stage 14 benchmark fixture.
+products and one pass ID to the current standard graph; the Stage 15A input
+freeze was refreshed to that 211-product/32-pass corpus.
 
 Lifecycle boundaries remain explicit:
 
@@ -300,10 +300,10 @@ The checked compatibility and implementation reference is
 
 | Work | Local result | Identity or evidence |
 | --- | --- | --- |
-| **15A** | Frozen 205 standard artifacts, 31 pass IDs, 11 layouts, and 14 approved slices from the clean Stage 14 catalog | Commit `750efb321cc5553c7f0f7aa6d64e47ed9f2e8bef`; input-fixture SHA-256 `af793ba88ebaead4aeedfdf179e35a1a786eab5ff7e2cd2f51ca086b4970df8b` |
-| **15B** | Generated and checked 205 landscape 2048 × 1024 PNGs and 205 portrait 1024 × 2048 PNGs | 410 files; 141,014,973 bytes; generated-catalog SHA-256 `901fb44bdc1bd70acd781f66ba0e4b277adfaf0d66ec022becda9b7ec215ccb4` |
-| **15I** | Built a 61-file local candidate with one primary index, 31 pass indexes, 11 projection indexes, and 16 runtime files | 1,291,121 bytes; local `release-layout.json` SHA-256 `763c86011c6c9a8db56f90a9fac1bceb357a0893991c863f68fd5a4b85289e3d`; no `release.json` |
-| **Anthropocene standard** | Replaced the unqualified pass with complete-2025 and partial-2026 particulate editions across six projections | Current standard graph: 211 artifacts and 32 pass IDs; frozen 15A/15B baseline remains 205/31 |
+| **15A** | Frozen 211 standard artifacts, 32 pass IDs, 11 layouts, and 14 approved slices from the clean Stage 14 catalog | Commit `7ba10e6b11475326873b3e206067fecebe7cc1c2`; input-fixture SHA-256 `5280a237e763157dac03dd4e43dc16ff97ed37a91757af8ee3540f219ee8805f` |
+| **15B** | Generated and checked 211 landscape 2048 × 1024 PNGs and 211 portrait 1024 × 2048 PNGs | 422 files; 145,877,228 bytes; generated-catalog SHA-256 `8d1168986c708abe22c6098090b56c92f9a78ffad246310aa8e6e2d06c11e7d4` |
+| **15I** | Built a 62-file local candidate with one primary index, 32 pass indexes, 11 projection indexes, and 16 runtime files | 1,304,361 bytes; local `release-layout.json` SHA-256 `0a3296e744f4758bca1e4710c75eb3b8f72019c9935891173dbbb4e0970bf550`; no `release.json` |
+| **Anthropocene standard** | Replaced the unqualified pass with complete-2025 and partial-2026 particulate editions across six projections | Current standard graph: 211 artifacts and 32 pass IDs; Stage 15A input re-frozen at that corpus |
 | **R1** | Extended the approved Majuro canary into six projection compositions and 24 SVG/PDF/full-PNG/thumbnail artifacts | Public USGS raw packages remain Git-ignored; contact-sheet SHA-256 `a211a107838fd51fb7dccf998760fa9ebabd11930df5bdbb11e0f88009848bf6`; no promotion or publication |
 | **R2** | Implemented 12 reversible water-debris exploration plates with five observed 2018 depth stations and four context-only source families | Contact-sheet SHA-256 `3ed9e5c6cb25666c86e37568c34fca0701200f80e940f67be533f462e51d13ef`; no patch polygon, global census, promotion, or publication |
 | **PurpleAir** | Implemented 12 default-visible interface-review overlays using 12 deterministic synthetic anchors | No credential, sensor, measurement, observation claim, promotion, or publication |
@@ -367,7 +367,7 @@ standard generation graph before rendering controls.
 | **15A — frozen handoff** | Implemented: clean Stage 14 catalog, hashes, deterministic corpus, and benchmark envelope frozen |
 | **15B — lossless 2K controls** | Implemented: checked 2048 × 1024 landscape and 1024 × 2048 portrait PNG controls |
 | **15I — CDN/WASM layout** | Implemented locally: checked consumer object-tree fixture and v13-to-proposed-v14 compatibility; never uploaded |
-| **Anthropocene particulate** | Implemented standard: complete 2025 and partial 2026 editions default-generated; current graph 211/32, frozen input 205/31 |
+| **Anthropocene particulate** | Implemented standard: complete 2025 and partial 2026 editions default-generated; current graph 211/32, frozen input re-frozen at 211/32 |
 | **R1 — atoll evidence** | Implemented exploration pass: six compositions, 24 artifacts, checked contexts, and qualified reverse fixtures |
 | **R2 — water debris** | Implemented bounded experiment: 12 SVGs with five observed depth stations and explicit unavailable/context-only families |
 | **PurpleAir interface** | Implemented synthetic experiment: 12 default-visible overlays with no observations or credential |
@@ -448,7 +448,7 @@ because a builder is added to that aggregate.
 ## Closure evidence
 
 Stage 15 closes only on checked local evidence. Its release gate covers the
-211-product/32-pass standard manifest, the frozen 205/31 benchmark fixture,
+211-product/32-pass standard manifest, the frozen 211/32 benchmark fixture,
 dual-year particulate family, lossless screen and GPU controls, local consumer
 layout, Majuro products, PurpleAir interface, water-debris experiment,
 experiment registry, pass status, documentation, and repository formatting.

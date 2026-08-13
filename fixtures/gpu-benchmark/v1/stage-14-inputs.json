@@ -3,22 +3,22 @@
   "documentType": "input-freeze",
   "lifecycle": "exploration-only",
   "frozenStage14": {
-    "sourceCommit": "750efb321cc5553c7f0f7aa6d64e47ed9f2e8bef",
+    "sourceCommit": "7ba10e6b11475326873b3e206067fecebe7cc1c2",
     "workingTree": "clean",
     "runtimeApi": 3,
     "geometryAbi": 1,
     "artifactCatalog": {
       "path": "assets.generated/catalog/artifacts-v1.json",
-      "sha256": "16c23c06a098ea08f8c3e33ddb19cb9120494b8d5c9738d0fabcc27d62b26637",
-      "sourceCommit": "750efb321cc5553c7f0f7aa6d64e47ed9f2e8bef",
-      "artifactCount": 205
+      "sha256": "4ae0e574677685f29ac3093c134b056f83c5dff80569a6fbd354c04526b96a13",
+      "sourceCommit": "7ba10e6b11475326873b3e206067fecebe7cc1c2",
+      "artifactCount": 211
     },
     "standardManifest": {
       "path": "contracts/standard-artifact-manifest-v1.json",
-      "sha256": "bc8773a74f4836eb15545b1d3c88ec1ca06e9f7832a209c0af0ad12d456e8c2e"
+      "sha256": "382fe00328c0a7fedce16dd2e8cd086701d9abf22ec9a9c89aafa61e1d465c85"
     },
-    "artifactCount": 205,
-    "passCount": 31,
+    "artifactCount": 211,
+    "passCount": 32,
     "layoutCount": 11,
     "sliceCount": 14
   },
@@ -60,6 +60,1302 @@
   ],
   "cases": [
     {
+      "id": "anthropocene-particulate-2025.authagraph.whole-map",
+      "passId": "anthropocene-particulate-2025",
+      "projectionId": "authagraph",
+      "layoutId": "authagraph",
+      "sliceId": null,
+      "lifecycle": "standard",
+      "sourcePeriod": "UNAVAILABLE",
+      "artifactFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 44,
+        "height": 19.052559
+      },
+      "parents": {
+        "svg": {
+          "path": "assets.generated/authagraph/svg/anthropocene-particulate-2025-authagraph-44-19.052559.svg",
+          "mediaType": "image/svg+xml",
+          "bytes": 27612431,
+          "sha256": "29eaeadebf4bb01254638ecf1f35b23d1a11a00a87b2d98c05b85e0da8d15390",
+          "authorityClass": "archive-art-master"
+        },
+        "pdf": {
+          "path": "assets.generated/authagraph/pdf/anthropocene-particulate-2025-authagraph-44-19.052559.pdf",
+          "mediaType": "application/pdf",
+          "bytes": 4772357,
+          "sha256": "8e20da0d9241c795461abb857df3dc9221660b511067da2ade10f5959fd4a2d5",
+          "authorityClass": "print-presentation"
+        },
+        "fullPng": {
+          "path": "assets.generated/authagraph/png/anthropocene-particulate-2025-authagraph-44-19.052559.png",
+          "mediaType": "image/png",
+          "bytes": 2633738,
+          "sha256": "262ceb719b8eef2546e9ea7676b44750356a5a56d9a9a1f5a91b00e3a050db13",
+          "authorityClass": "full-raster",
+          "dimensions": {
+            "width": 3840,
+            "height": 1663
+          },
+          "colorSpace": "sRGB",
+          "transparency": "UNAVAILABLE"
+        }
+      },
+      "screen": {
+        "canvas": {
+          "width": 1920,
+          "height": 1080
+        },
+        "fit": "contain",
+        "background": "#f4f5f5",
+        "contentRectangle": {
+          "x": 0,
+          "y": 124,
+          "width": 1920,
+          "height": 832
+        },
+        "projectedToScreen": [
+          43.63636363636363,
+          0,
+          0,
+          0,
+          43.66867463840422,
+          124,
+          0,
+          0,
+          1
+        ],
+        "screenToProjected": [
+          0.02291666666666667,
+          0,
+          0,
+          0,
+          0.02289971033653846,
+          -2.839564081730769,
+          0,
+          0,
+          1
+        ],
+        "png": {
+          "path": "assets.generated/authagraph/screen-1080p/anthropocene-particulate-2025-authagraph-44-19.052559.png",
+          "mediaType": "image/png",
+          "bytes": 719363,
+          "sha256": "c71850f502189bf5446989f7985662f5f260e2cdb70053b5ca488d158fe7c41e",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        },
+        "webp": {
+          "path": "assets.generated/authagraph/screen-1080p-webp/anthropocene-particulate-2025-authagraph-44-19.052559.webp",
+          "mediaType": "image/webp",
+          "bytes": 474726,
+          "sha256": "7cecf9c6774833d1d86585766bd2dc13e0219e1c8b517badbcd4b8334bf31987",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        }
+      }
+    },
+    {
+      "id": "anthropocene-particulate-2025.cahill-keyes.whole-map",
+      "passId": "anthropocene-particulate-2025",
+      "projectionId": "cahill-keyes",
+      "layoutId": "cahill-keyes",
+      "sliceId": null,
+      "lifecycle": "standard",
+      "sourcePeriod": "UNAVAILABLE",
+      "artifactFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 44,
+        "height": 22
+      },
+      "parents": {
+        "svg": {
+          "path": "assets.generated/cahill-keyes/svg/anthropocene-particulate-2025-ck-44-22.svg",
+          "mediaType": "image/svg+xml",
+          "bytes": 27081087,
+          "sha256": "22d25ab04d937f0f72d00132d8d2eb813a4c0cedd94304cc563fd54bbc3c90bb",
+          "authorityClass": "archive-art-master"
+        },
+        "pdf": {
+          "path": "assets.generated/cahill-keyes/pdf/anthropocene-particulate-2025-ck-44-22.pdf",
+          "mediaType": "application/pdf",
+          "bytes": 4618305,
+          "sha256": "1ab48d147ff8a1c16565a065ba30a6757f2928349c694590f2f049d36cf65c4b",
+          "authorityClass": "print-presentation"
+        },
+        "fullPng": {
+          "path": "assets.generated/cahill-keyes/png/anthropocene-particulate-2025-ck-44-22.png",
+          "mediaType": "image/png",
+          "bytes": 2072617,
+          "sha256": "8ae0e067f1c0c7412ac1c0190991dbacad67d232bc58cb8f7b97340bde108964",
+          "authorityClass": "full-raster",
+          "dimensions": {
+            "width": 3840,
+            "height": 1920
+          },
+          "colorSpace": "sRGB",
+          "transparency": "UNAVAILABLE"
+        }
+      },
+      "screen": {
+        "canvas": {
+          "width": 1920,
+          "height": 1080
+        },
+        "fit": "contain",
+        "background": "#f4f5f5",
+        "contentRectangle": {
+          "x": 0,
+          "y": 60,
+          "width": 1920,
+          "height": 960
+        },
+        "projectedToScreen": [
+          43.63636363636363,
+          0,
+          0,
+          0,
+          43.63636363636363,
+          60,
+          0,
+          0,
+          1
+        ],
+        "screenToProjected": [
+          0.02291666666666667,
+          0,
+          0,
+          0,
+          0.02291666666666667,
+          -1.375,
+          0,
+          0,
+          1
+        ],
+        "png": {
+          "path": "assets.generated/cahill-keyes/screen-1080p/anthropocene-particulate-2025-ck-44-22.png",
+          "mediaType": "image/png",
+          "bytes": 564818,
+          "sha256": "dad401982c58139654082091aac598bd63804ce10e9894ca826f424f54fd0991",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        },
+        "webp": {
+          "path": "assets.generated/cahill-keyes/screen-1080p-webp/anthropocene-particulate-2025-ck-44-22.webp",
+          "mediaType": "image/webp",
+          "bytes": 374132,
+          "sha256": "abd8de1128bd1325997a2acb87005e690374346e7bd5608d80564647fd3ce2e0",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        }
+      }
+    },
+    {
+      "id": "anthropocene-particulate-2025.dymaxion.whole-map",
+      "passId": "anthropocene-particulate-2025",
+      "projectionId": "dymaxion",
+      "layoutId": "dymaxion",
+      "sliceId": null,
+      "lifecycle": "standard",
+      "sourcePeriod": "UNAVAILABLE",
+      "artifactFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 44,
+        "height": 20.78461
+      },
+      "parents": {
+        "svg": {
+          "path": "assets.generated/dymaxion/svg/anthropocene-particulate-2025-dymaxion-44-20.78461.svg",
+          "mediaType": "image/svg+xml",
+          "bytes": 27632541,
+          "sha256": "db6719f7840dee740452cb3c2335b457f28794ac342d2ce76286f1b70aba418f",
+          "authorityClass": "archive-art-master"
+        },
+        "pdf": {
+          "path": "assets.generated/dymaxion/pdf/anthropocene-particulate-2025-dymaxion-44-20.78461.pdf",
+          "mediaType": "application/pdf",
+          "bytes": 4728547,
+          "sha256": "e9dcf062bf43bae4a6e45658b5552577c2b64622ead5ea25a2f832c1c56f6bb0",
+          "authorityClass": "print-presentation"
+        },
+        "fullPng": {
+          "path": "assets.generated/dymaxion/png/anthropocene-particulate-2025-dymaxion-44-20.78461.png",
+          "mediaType": "image/png",
+          "bytes": 2211273,
+          "sha256": "3ca45fe7901d79757c25dc5b8ab0950f680564fc68dcaa46d3bdf5ad46c81452",
+          "authorityClass": "full-raster",
+          "dimensions": {
+            "width": 3840,
+            "height": 1814
+          },
+          "colorSpace": "sRGB",
+          "transparency": "UNAVAILABLE"
+        }
+      },
+      "screen": {
+        "canvas": {
+          "width": 1920,
+          "height": 1080
+        },
+        "fit": "contain",
+        "background": "#f4f5f5",
+        "contentRectangle": {
+          "x": 0,
+          "y": 86.5,
+          "width": 1920,
+          "height": 907
+        },
+        "projectedToScreen": [
+          43.63636363636363,
+          0,
+          0,
+          0,
+          43.63805719712806,
+          86.5,
+          0,
+          0,
+          1
+        ],
+        "screenToProjected": [
+          0.02291666666666667,
+          0,
+          0,
+          0,
+          0.022915777287761854,
+          -1.9822147353914004,
+          0,
+          0,
+          1
+        ],
+        "png": {
+          "path": "assets.generated/dymaxion/screen-1080p/anthropocene-particulate-2025-dymaxion-44-20.78461.png",
+          "mediaType": "image/png",
+          "bytes": 599237,
+          "sha256": "0df8f3d23854ed8f9e96e5b173c7d1cf8e9de2254d47a75e0ee381c015b720e1",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        },
+        "webp": {
+          "path": "assets.generated/dymaxion/screen-1080p-webp/anthropocene-particulate-2025-dymaxion-44-20.78461.webp",
+          "mediaType": "image/webp",
+          "bytes": 396388,
+          "sha256": "cfaae4d1af3e9fcb3bf200a168ee6a2a0a5aad8b6c4b7c72c36fe0a1440a6286",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        }
+      }
+    },
+    {
+      "id": "anthropocene-particulate-2025.myriahedral.whole-map",
+      "passId": "anthropocene-particulate-2025",
+      "projectionId": "myriahedral",
+      "layoutId": "myriahedral",
+      "sliceId": null,
+      "lifecycle": "standard",
+      "sourcePeriod": "UNAVAILABLE",
+      "artifactFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 44,
+        "height": 24.75
+      },
+      "parents": {
+        "svg": {
+          "path": "assets.generated/myriahedral/svg/anthropocene-particulate-2025-myriahedral-44-24.75.svg",
+          "mediaType": "image/svg+xml",
+          "bytes": 28030803,
+          "sha256": "4aa85a2f76255eb5608c40f3ef2341e4173891f7eaf2038af4f1bc6e964056a2",
+          "authorityClass": "archive-art-master"
+        },
+        "pdf": {
+          "path": "assets.generated/myriahedral/pdf/anthropocene-particulate-2025-myriahedral-44-24.75.pdf",
+          "mediaType": "application/pdf",
+          "bytes": 4859984,
+          "sha256": "3837ed210d7f9a187f2ac1a8d70483d700f058c95f240128684eb2e8eee1f5ab",
+          "authorityClass": "print-presentation"
+        },
+        "fullPng": {
+          "path": "assets.generated/myriahedral/png/anthropocene-particulate-2025-myriahedral-44-24.75.png",
+          "mediaType": "image/png",
+          "bytes": 1837119,
+          "sha256": "81147579e3c9ad48a5bc49d5293e2d4bbc71dcb99b64f6caad789c4585d87169",
+          "authorityClass": "full-raster",
+          "dimensions": {
+            "width": 3840,
+            "height": 2160
+          },
+          "colorSpace": "sRGB",
+          "transparency": "UNAVAILABLE"
+        }
+      },
+      "screen": {
+        "canvas": {
+          "width": 1920,
+          "height": 1080
+        },
+        "fit": "contain",
+        "background": "#f4f5f5",
+        "contentRectangle": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "projectedToScreen": [
+          43.63636363636363,
+          0,
+          0,
+          0,
+          43.63636363636363,
+          0,
+          0,
+          0,
+          1
+        ],
+        "screenToProjected": [
+          0.02291666666666667,
+          0,
+          0,
+          0,
+          0.02291666666666667,
+          0,
+          0,
+          0,
+          1
+        ],
+        "png": {
+          "path": "assets.generated/myriahedral/screen-1080p/anthropocene-particulate-2025-myriahedral-44-24.75.png",
+          "mediaType": "image/png",
+          "bytes": 527318,
+          "sha256": "4d4124450758e150dc4fe5ab2e20e1c4ccaf39ee8c4772a6db49d84408e75fc5",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        },
+        "webp": {
+          "path": "assets.generated/myriahedral/screen-1080p-webp/anthropocene-particulate-2025-myriahedral-44-24.75.webp",
+          "mediaType": "image/webp",
+          "bytes": 359228,
+          "sha256": "3e069258ebf0b5b1c1e1e126328fb58753362a3b8f595ecc6b9b3eb89d21940b",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        }
+      }
+    },
+    {
+      "id": "anthropocene-particulate-2025.star-x.whole-map",
+      "passId": "anthropocene-particulate-2025",
+      "projectionId": "star-x",
+      "layoutId": "star-x",
+      "sliceId": null,
+      "lifecycle": "standard",
+      "sourcePeriod": "UNAVAILABLE",
+      "artifactFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 34,
+        "height": 44
+      },
+      "parents": {
+        "svg": {
+          "path": "assets.generated/star-x/svg/anthropocene-particulate-2025-star-x-34-44.svg",
+          "mediaType": "image/svg+xml",
+          "bytes": 27158085,
+          "sha256": "ba99848b4717e4f15d420a2ab95520755f0a65b7a76af95dc17fe9274eab7020",
+          "authorityClass": "archive-art-master"
+        },
+        "pdf": {
+          "path": "assets.generated/star-x/pdf/anthropocene-particulate-2025-star-x-34-44.pdf",
+          "mediaType": "application/pdf",
+          "bytes": 4621945,
+          "sha256": "2b8f757bd1e303fd419a306bddcc3c37aef5a1b5009e67d33337ab9432bb6efe",
+          "authorityClass": "print-presentation"
+        },
+        "fullPng": {
+          "path": "assets.generated/star-x/png/anthropocene-particulate-2025-star-x-34-44.png",
+          "mediaType": "image/png",
+          "bytes": 2925850,
+          "sha256": "b2ca5645e35a85eb735d0f6f597e2ab535402cd39cbc06ac333ffa42462b407d",
+          "authorityClass": "full-raster",
+          "dimensions": {
+            "width": 2967,
+            "height": 3840
+          },
+          "colorSpace": "sRGB",
+          "transparency": "UNAVAILABLE"
+        }
+      },
+      "screen": {
+        "canvas": {
+          "width": 1920,
+          "height": 1080
+        },
+        "fit": "contain",
+        "background": "#f4f5f5",
+        "contentRectangle": {
+          "x": 543,
+          "y": 0,
+          "width": 834,
+          "height": 1080
+        },
+        "projectedToScreen": [
+          24.529411764705884,
+          0,
+          543,
+          0,
+          24.545454545454547,
+          0,
+          0,
+          0,
+          1
+        ],
+        "screenToProjected": [
+          0.040767386091127095,
+          0,
+          -22.136690647482013,
+          0,
+          0.04074074074074074,
+          0,
+          0,
+          0,
+          1
+        ],
+        "png": {
+          "path": "assets.generated/star-x/screen-1080p/anthropocene-particulate-2025-star-x-34-44.png",
+          "mediaType": "image/png",
+          "bytes": 251720,
+          "sha256": "be41b83f0f1d3ec33afe422d8047f2eb4313cca11b53a512cff31753ad36e227",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        },
+        "webp": {
+          "path": "assets.generated/star-x/screen-1080p-webp/anthropocene-particulate-2025-star-x-34-44.webp",
+          "mediaType": "image/webp",
+          "bytes": 168000,
+          "sha256": "e7a0679e3ddfe0e20c817ed81225d0ed709e21f359cb7405a37657d603579d93",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        }
+      }
+    },
+    {
+      "id": "anthropocene-particulate-2025.voronoi.whole-map",
+      "passId": "anthropocene-particulate-2025",
+      "projectionId": "voronoi",
+      "layoutId": "voronoi",
+      "sliceId": null,
+      "lifecycle": "standard",
+      "sourcePeriod": "UNAVAILABLE",
+      "artifactFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 44,
+        "height": 22.916667
+      },
+      "parents": {
+        "svg": {
+          "path": "assets.generated/voronoi/svg/anthropocene-particulate-2025-voronoi-44-22.916667.svg",
+          "mediaType": "image/svg+xml",
+          "bytes": 27576051,
+          "sha256": "6a52771faf79eb8a0afdf26534e47117c26eb765e0ebe5678f2bacac5d1ef861",
+          "authorityClass": "archive-art-master"
+        },
+        "pdf": {
+          "path": "assets.generated/voronoi/pdf/anthropocene-particulate-2025-voronoi-44-22.916667.pdf",
+          "mediaType": "application/pdf",
+          "bytes": 4771962,
+          "sha256": "db780e9b852dbc0034e27874d8eca55b18ff47a92d2cbad9f8acdb71f8b96e0b",
+          "authorityClass": "print-presentation"
+        },
+        "fullPng": {
+          "path": "assets.generated/voronoi/png/anthropocene-particulate-2025-voronoi-44-22.916667.png",
+          "mediaType": "image/png",
+          "bytes": 2261723,
+          "sha256": "e703baf3a2022155af7e80229cd437e84a93ce0f1e52a8eba08f19e4c41eb91e",
+          "authorityClass": "full-raster",
+          "dimensions": {
+            "width": 3840,
+            "height": 2000
+          },
+          "colorSpace": "sRGB",
+          "transparency": "UNAVAILABLE"
+        }
+      },
+      "screen": {
+        "canvas": {
+          "width": 1920,
+          "height": 1080
+        },
+        "fit": "contain",
+        "background": "#f4f5f5",
+        "contentRectangle": {
+          "x": 0,
+          "y": 40,
+          "width": 1920,
+          "height": 1000
+        },
+        "projectedToScreen": [
+          43.63636363636363,
+          0,
+          0,
+          0,
+          43.6363630016529,
+          40,
+          0,
+          0,
+          1
+        ],
+        "screenToProjected": [
+          0.02291666666666667,
+          0,
+          0,
+          0,
+          0.022916666999999998,
+          -0.91666668,
+          0,
+          0,
+          1
+        ],
+        "png": {
+          "path": "assets.generated/voronoi/screen-1080p/anthropocene-particulate-2025-voronoi-44-22.916667.png",
+          "mediaType": "image/png",
+          "bytes": 620365,
+          "sha256": "b568a9c8c9413ab749ead2644f1f0c8a4bdced1b4d0824667ee330b60bdc6299",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        },
+        "webp": {
+          "path": "assets.generated/voronoi/screen-1080p-webp/anthropocene-particulate-2025-voronoi-44-22.916667.webp",
+          "mediaType": "image/webp",
+          "bytes": 410334,
+          "sha256": "7664294c984a664e92b24f7d8e78e5e3b021268c69ab30a242edb8fe74b3c3aa",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        }
+      }
+    },
+    {
+      "id": "anthropocene-particulate-2026.authagraph.whole-map",
+      "passId": "anthropocene-particulate-2026",
+      "projectionId": "authagraph",
+      "layoutId": "authagraph",
+      "sliceId": null,
+      "lifecycle": "standard",
+      "sourcePeriod": "UNAVAILABLE",
+      "artifactFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 44,
+        "height": 19.052559
+      },
+      "parents": {
+        "svg": {
+          "path": "assets.generated/authagraph/svg/anthropocene-particulate-2026-authagraph-44-19.052559.svg",
+          "mediaType": "image/svg+xml",
+          "bytes": 22430945,
+          "sha256": "edbfebfceaf73abd9320b77937ad70a67d29f0f13998e631d357dea25ba26437",
+          "authorityClass": "archive-art-master"
+        },
+        "pdf": {
+          "path": "assets.generated/authagraph/pdf/anthropocene-particulate-2026-authagraph-44-19.052559.pdf",
+          "mediaType": "application/pdf",
+          "bytes": 4102600,
+          "sha256": "36696b23c1a336ddd8d4b16307050f053916824b409890fd4c7ac473fea78dd7",
+          "authorityClass": "print-presentation"
+        },
+        "fullPng": {
+          "path": "assets.generated/authagraph/png/anthropocene-particulate-2026-authagraph-44-19.052559.png",
+          "mediaType": "image/png",
+          "bytes": 2450878,
+          "sha256": "2d3fb38db28baee15b4208000cc43414153a958bbc7130d2c378f5382308057d",
+          "authorityClass": "full-raster",
+          "dimensions": {
+            "width": 3840,
+            "height": 1663
+          },
+          "colorSpace": "sRGB",
+          "transparency": "UNAVAILABLE"
+        }
+      },
+      "screen": {
+        "canvas": {
+          "width": 1920,
+          "height": 1080
+        },
+        "fit": "contain",
+        "background": "#f4f5f5",
+        "contentRectangle": {
+          "x": 0,
+          "y": 124,
+          "width": 1920,
+          "height": 832
+        },
+        "projectedToScreen": [
+          43.63636363636363,
+          0,
+          0,
+          0,
+          43.66867463840422,
+          124,
+          0,
+          0,
+          1
+        ],
+        "screenToProjected": [
+          0.02291666666666667,
+          0,
+          0,
+          0,
+          0.02289971033653846,
+          -2.839564081730769,
+          0,
+          0,
+          1
+        ],
+        "png": {
+          "path": "assets.generated/authagraph/screen-1080p/anthropocene-particulate-2026-authagraph-44-19.052559.png",
+          "mediaType": "image/png",
+          "bytes": 656346,
+          "sha256": "3105fd0eb2d9c736a3d0a2ed648db21296703c1f6831d0368aec2450fb06360e",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        },
+        "webp": {
+          "path": "assets.generated/authagraph/screen-1080p-webp/anthropocene-particulate-2026-authagraph-44-19.052559.webp",
+          "mediaType": "image/webp",
+          "bytes": 414386,
+          "sha256": "87274d91e402778fd6188b7b5f0433aa0fc89511c1aa69ae7c164627e6437467",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        }
+      }
+    },
+    {
+      "id": "anthropocene-particulate-2026.cahill-keyes.whole-map",
+      "passId": "anthropocene-particulate-2026",
+      "projectionId": "cahill-keyes",
+      "layoutId": "cahill-keyes",
+      "sliceId": null,
+      "lifecycle": "standard",
+      "sourcePeriod": "UNAVAILABLE",
+      "artifactFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 44,
+        "height": 22
+      },
+      "parents": {
+        "svg": {
+          "path": "assets.generated/cahill-keyes/svg/anthropocene-particulate-2026-ck-44-22.svg",
+          "mediaType": "image/svg+xml",
+          "bytes": 21894179,
+          "sha256": "417ede961724d501b024ece7326a8bb6b5acc9ca1640403b4218d75efd5f89e6",
+          "authorityClass": "archive-art-master"
+        },
+        "pdf": {
+          "path": "assets.generated/cahill-keyes/pdf/anthropocene-particulate-2026-ck-44-22.pdf",
+          "mediaType": "application/pdf",
+          "bytes": 3938969,
+          "sha256": "2d6919290b35601952af04dda528e6fae1bd80cccb519bf09e9b870699664ddd",
+          "authorityClass": "print-presentation"
+        },
+        "fullPng": {
+          "path": "assets.generated/cahill-keyes/png/anthropocene-particulate-2026-ck-44-22.png",
+          "mediaType": "image/png",
+          "bytes": 1890399,
+          "sha256": "05a6aaa9cc8d6b2654a682bdb625e8563783f85ade3f0af5929981e85fae824b",
+          "authorityClass": "full-raster",
+          "dimensions": {
+            "width": 3840,
+            "height": 1920
+          },
+          "colorSpace": "sRGB",
+          "transparency": "UNAVAILABLE"
+        }
+      },
+      "screen": {
+        "canvas": {
+          "width": 1920,
+          "height": 1080
+        },
+        "fit": "contain",
+        "background": "#f4f5f5",
+        "contentRectangle": {
+          "x": 0,
+          "y": 60,
+          "width": 1920,
+          "height": 960
+        },
+        "projectedToScreen": [
+          43.63636363636363,
+          0,
+          0,
+          0,
+          43.63636363636363,
+          60,
+          0,
+          0,
+          1
+        ],
+        "screenToProjected": [
+          0.02291666666666667,
+          0,
+          0,
+          0,
+          0.02291666666666667,
+          -1.375,
+          0,
+          0,
+          1
+        ],
+        "png": {
+          "path": "assets.generated/cahill-keyes/screen-1080p/anthropocene-particulate-2026-ck-44-22.png",
+          "mediaType": "image/png",
+          "bytes": 509128,
+          "sha256": "68c1b2abd4ca9c305dae1687983085be3cae38262ac3294dc2f8bac0babadee4",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        },
+        "webp": {
+          "path": "assets.generated/cahill-keyes/screen-1080p-webp/anthropocene-particulate-2026-ck-44-22.webp",
+          "mediaType": "image/webp",
+          "bytes": 323144,
+          "sha256": "b684ed9c5327c5d95c4c9e4b7df4fcbc65a503f1cc35c61be5e8a7371ec962fa",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        }
+      }
+    },
+    {
+      "id": "anthropocene-particulate-2026.dymaxion.whole-map",
+      "passId": "anthropocene-particulate-2026",
+      "projectionId": "dymaxion",
+      "layoutId": "dymaxion",
+      "sliceId": null,
+      "lifecycle": "standard",
+      "sourcePeriod": "UNAVAILABLE",
+      "artifactFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 44,
+        "height": 20.78461
+      },
+      "parents": {
+        "svg": {
+          "path": "assets.generated/dymaxion/svg/anthropocene-particulate-2026-dymaxion-44-20.78461.svg",
+          "mediaType": "image/svg+xml",
+          "bytes": 22444703,
+          "sha256": "4e700eb414d273a8c0bef63b0d5eb28552ef5dc3702263fb051af4e6886fcd6a",
+          "authorityClass": "archive-art-master"
+        },
+        "pdf": {
+          "path": "assets.generated/dymaxion/pdf/anthropocene-particulate-2026-dymaxion-44-20.78461.pdf",
+          "mediaType": "application/pdf",
+          "bytes": 4057426,
+          "sha256": "cd221fbda640526e0b426c63267862ca0410af8334f6a6161c19bf00e1bef23e",
+          "authorityClass": "print-presentation"
+        },
+        "fullPng": {
+          "path": "assets.generated/dymaxion/png/anthropocene-particulate-2026-dymaxion-44-20.78461.png",
+          "mediaType": "image/png",
+          "bytes": 2024384,
+          "sha256": "4a093a3a2464e17965816cc8b69d609620d4a9274c250612d571b17cd9443bdd",
+          "authorityClass": "full-raster",
+          "dimensions": {
+            "width": 3840,
+            "height": 1814
+          },
+          "colorSpace": "sRGB",
+          "transparency": "UNAVAILABLE"
+        }
+      },
+      "screen": {
+        "canvas": {
+          "width": 1920,
+          "height": 1080
+        },
+        "fit": "contain",
+        "background": "#f4f5f5",
+        "contentRectangle": {
+          "x": 0,
+          "y": 86.5,
+          "width": 1920,
+          "height": 907
+        },
+        "projectedToScreen": [
+          43.63636363636363,
+          0,
+          0,
+          0,
+          43.63805719712806,
+          86.5,
+          0,
+          0,
+          1
+        ],
+        "screenToProjected": [
+          0.02291666666666667,
+          0,
+          0,
+          0,
+          0.022915777287761854,
+          -1.9822147353914004,
+          0,
+          0,
+          1
+        ],
+        "png": {
+          "path": "assets.generated/dymaxion/screen-1080p/anthropocene-particulate-2026-dymaxion-44-20.78461.png",
+          "mediaType": "image/png",
+          "bytes": 539499,
+          "sha256": "6a8db5f355d75ab8dd84ecf476959d47a8ffcd7c61599b8acfd1c8bdc5fb7986",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        },
+        "webp": {
+          "path": "assets.generated/dymaxion/screen-1080p-webp/anthropocene-particulate-2026-dymaxion-44-20.78461.webp",
+          "mediaType": "image/webp",
+          "bytes": 345040,
+          "sha256": "7727e4ee4538db2251e93b9d4ecc89868a4558f1b37907c6e97902f145af7129",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        }
+      }
+    },
+    {
+      "id": "anthropocene-particulate-2026.myriahedral.whole-map",
+      "passId": "anthropocene-particulate-2026",
+      "projectionId": "myriahedral",
+      "layoutId": "myriahedral",
+      "sliceId": null,
+      "lifecycle": "standard",
+      "sourcePeriod": "UNAVAILABLE",
+      "artifactFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 44,
+        "height": 24.75
+      },
+      "parents": {
+        "svg": {
+          "path": "assets.generated/myriahedral/svg/anthropocene-particulate-2026-myriahedral-44-24.75.svg",
+          "mediaType": "image/svg+xml",
+          "bytes": 22841806,
+          "sha256": "36f0a99419445ada7e6ec89a741df08474be752201edb60542ba24f8466a0cae",
+          "authorityClass": "archive-art-master"
+        },
+        "pdf": {
+          "path": "assets.generated/myriahedral/pdf/anthropocene-particulate-2026-myriahedral-44-24.75.pdf",
+          "mediaType": "application/pdf",
+          "bytes": 4188437,
+          "sha256": "896b330ca3b161cd1d18a64f6b8c219a13833c0fce423789f88932d900586d9b",
+          "authorityClass": "print-presentation"
+        },
+        "fullPng": {
+          "path": "assets.generated/myriahedral/png/anthropocene-particulate-2026-myriahedral-44-24.75.png",
+          "mediaType": "image/png",
+          "bytes": 1695960,
+          "sha256": "834bacd95122983b1766b29d462df6f813e1a40f1941e3fc69456d3829abb980",
+          "authorityClass": "full-raster",
+          "dimensions": {
+            "width": 3840,
+            "height": 2160
+          },
+          "colorSpace": "sRGB",
+          "transparency": "UNAVAILABLE"
+        }
+      },
+      "screen": {
+        "canvas": {
+          "width": 1920,
+          "height": 1080
+        },
+        "fit": "contain",
+        "background": "#f4f5f5",
+        "contentRectangle": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "projectedToScreen": [
+          43.63636363636363,
+          0,
+          0,
+          0,
+          43.63636363636363,
+          0,
+          0,
+          0,
+          1
+        ],
+        "screenToProjected": [
+          0.02291666666666667,
+          0,
+          0,
+          0,
+          0.02291666666666667,
+          0,
+          0,
+          0,
+          1
+        ],
+        "png": {
+          "path": "assets.generated/myriahedral/screen-1080p/anthropocene-particulate-2026-myriahedral-44-24.75.png",
+          "mediaType": "image/png",
+          "bytes": 484921,
+          "sha256": "a18cae6d09ffa553eac5cb81c49aa0a9ab63074728298a8c5fbc5292871ee73e",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        },
+        "webp": {
+          "path": "assets.generated/myriahedral/screen-1080p-webp/anthropocene-particulate-2026-myriahedral-44-24.75.webp",
+          "mediaType": "image/webp",
+          "bytes": 314302,
+          "sha256": "e4895c60b7fff4fe4e680f13d97d5ccfbda02f3e081c031b32356724f125ca37",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        }
+      }
+    },
+    {
+      "id": "anthropocene-particulate-2026.star-x.whole-map",
+      "passId": "anthropocene-particulate-2026",
+      "projectionId": "star-x",
+      "layoutId": "star-x",
+      "sliceId": null,
+      "lifecycle": "standard",
+      "sourcePeriod": "UNAVAILABLE",
+      "artifactFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 34,
+        "height": 44
+      },
+      "parents": {
+        "svg": {
+          "path": "assets.generated/star-x/svg/anthropocene-particulate-2026-star-x-34-44.svg",
+          "mediaType": "image/svg+xml",
+          "bytes": 21964037,
+          "sha256": "6c4478ef2d951da154700097ac04c1df856c4f985640e0724ca088644ef0751e",
+          "authorityClass": "archive-art-master"
+        },
+        "pdf": {
+          "path": "assets.generated/star-x/pdf/anthropocene-particulate-2026-star-x-34-44.pdf",
+          "mediaType": "application/pdf",
+          "bytes": 3946180,
+          "sha256": "042ac4ad1b4ffb22885af2f94798c70c71aedafe665f2794acbaa64d7780e366",
+          "authorityClass": "print-presentation"
+        },
+        "fullPng": {
+          "path": "assets.generated/star-x/png/anthropocene-particulate-2026-star-x-34-44.png",
+          "mediaType": "image/png",
+          "bytes": 2626593,
+          "sha256": "a13dc83cd4eedd043eba2d79b7156cc6303b6c763b9adfa5b427005885d156e4",
+          "authorityClass": "full-raster",
+          "dimensions": {
+            "width": 2967,
+            "height": 3840
+          },
+          "colorSpace": "sRGB",
+          "transparency": "UNAVAILABLE"
+        }
+      },
+      "screen": {
+        "canvas": {
+          "width": 1920,
+          "height": 1080
+        },
+        "fit": "contain",
+        "background": "#f4f5f5",
+        "contentRectangle": {
+          "x": 543,
+          "y": 0,
+          "width": 834,
+          "height": 1080
+        },
+        "projectedToScreen": [
+          24.529411764705884,
+          0,
+          543,
+          0,
+          24.545454545454547,
+          0,
+          0,
+          0,
+          1
+        ],
+        "screenToProjected": [
+          0.040767386091127095,
+          0,
+          -22.136690647482013,
+          0,
+          0.04074074074074074,
+          0,
+          0,
+          0,
+          1
+        ],
+        "png": {
+          "path": "assets.generated/star-x/screen-1080p/anthropocene-particulate-2026-star-x-34-44.png",
+          "mediaType": "image/png",
+          "bytes": 223209,
+          "sha256": "588061dee2bf1fee16eb081cf7cde58b489bbaf929e1e329ee47f52b542d835c",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        },
+        "webp": {
+          "path": "assets.generated/star-x/screen-1080p-webp/anthropocene-particulate-2026-star-x-34-44.webp",
+          "mediaType": "image/webp",
+          "bytes": 139164,
+          "sha256": "75fdd41810cab7cc1ce72d3c0f5e9a1ceeb4665b2241c4c85d40b5281ebe824a",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        }
+      }
+    },
+    {
+      "id": "anthropocene-particulate-2026.voronoi.whole-map",
+      "passId": "anthropocene-particulate-2026",
+      "projectionId": "voronoi",
+      "layoutId": "voronoi",
+      "sliceId": null,
+      "lifecycle": "standard",
+      "sourcePeriod": "UNAVAILABLE",
+      "artifactFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 44,
+        "height": 22.916667
+      },
+      "parents": {
+        "svg": {
+          "path": "assets.generated/voronoi/svg/anthropocene-particulate-2026-voronoi-44-22.916667.svg",
+          "mediaType": "image/svg+xml",
+          "bytes": 22388475,
+          "sha256": "60962dc46bd798c8d00fa34b6eda6187d7c4c8cbbf66a009e2f9d940f9a92075",
+          "authorityClass": "archive-art-master"
+        },
+        "pdf": {
+          "path": "assets.generated/voronoi/pdf/anthropocene-particulate-2026-voronoi-44-22.916667.pdf",
+          "mediaType": "application/pdf",
+          "bytes": 4092491,
+          "sha256": "e448ee6b36ed8499f11d676c83472505a83bef0ef5f650b66105abb0ad38426b",
+          "authorityClass": "print-presentation"
+        },
+        "fullPng": {
+          "path": "assets.generated/voronoi/png/anthropocene-particulate-2026-voronoi-44-22.916667.png",
+          "mediaType": "image/png",
+          "bytes": 2072015,
+          "sha256": "2295ec17a83ca903b21b6efa6aa1c63528e94eb56db292d055f728cf8f791377",
+          "authorityClass": "full-raster",
+          "dimensions": {
+            "width": 3840,
+            "height": 2000
+          },
+          "colorSpace": "sRGB",
+          "transparency": "UNAVAILABLE"
+        }
+      },
+      "screen": {
+        "canvas": {
+          "width": 1920,
+          "height": 1080
+        },
+        "fit": "contain",
+        "background": "#f4f5f5",
+        "contentRectangle": {
+          "x": 0,
+          "y": 40,
+          "width": 1920,
+          "height": 1000
+        },
+        "projectedToScreen": [
+          43.63636363636363,
+          0,
+          0,
+          0,
+          43.6363630016529,
+          40,
+          0,
+          0,
+          1
+        ],
+        "screenToProjected": [
+          0.02291666666666667,
+          0,
+          0,
+          0,
+          0.022916666999999998,
+          -0.91666668,
+          0,
+          0,
+          1
+        ],
+        "png": {
+          "path": "assets.generated/voronoi/screen-1080p/anthropocene-particulate-2026-voronoi-44-22.916667.png",
+          "mediaType": "image/png",
+          "bytes": 562182,
+          "sha256": "079b08ecd2e8d52492c429368e43e318475011882a5762df6f98f8e797fae728",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        },
+        "webp": {
+          "path": "assets.generated/voronoi/screen-1080p-webp/anthropocene-particulate-2026-voronoi-44-22.916667.webp",
+          "mediaType": "image/webp",
+          "bytes": 357732,
+          "sha256": "c6f163662e380b50fd93de7e76588dc49228a02e76f2c3d23eaa674758b406a0",
+          "authorityClass": "access-derivative",
+          "dimensions": {
+            "width": 1920,
+            "height": 1080
+          },
+          "lossless": true,
+          "colorSpace": "sRGB",
+          "transparency": "opaque"
+        }
+      }
+    },
+    {
       "id": "anthropocene-temperature-2025.authagraph.whole-map",
       "passId": "anthropocene-temperature-2025",
       "projectionId": "authagraph",
@@ -85,7 +1381,7 @@
           "path": "assets.generated/authagraph/pdf/anthropocene-temperature-2025-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 2623480,
-          "sha256": "4a483fd7cc564948d74d6af76e50b49ca385c9d833e1fdfd656b67f66062dbef",
+          "sha256": "bae204bbd8c3809992947af748ac91cb7a1a934f9282fbd9ee841cff82928dd4",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -192,8 +1488,8 @@
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/anthropocene-temperature-2025-ck-44-22.pdf",
           "mediaType": "application/pdf",
-          "bytes": 2427683,
-          "sha256": "e3a97fe7f7dbb75603bd869baffca70b6272af3bac2a7d6bd1bebab6007e367d",
+          "bytes": 2427684,
+          "sha256": "2a4b6f63e15ef14e5628779e5f932a44af4f580f8801ab5beb2b0aaf05cfcb68",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -300,8 +1596,8 @@
         "pdf": {
           "path": "assets.generated/dymaxion/pdf/anthropocene-temperature-2025-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
-          "bytes": 2587118,
-          "sha256": "412e27887fd36c7e6ec2a8bf85f409d1104c137ef706297391fcd072f349b534",
+          "bytes": 2587119,
+          "sha256": "70b77d586271e0e88a3bd89bf53b1133f6621c305d3b9de59fdf4f426e8aaf9a",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -409,7 +1705,7 @@
           "path": "assets.generated/myriahedral/pdf/anthropocene-temperature-2025-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 3523958,
-          "sha256": "07a980db5fc93aaa274fd5784fc239b558725ef1ab98c93daea2ac328cd2d1d0",
+          "sha256": "92bafb962fe3741ee3af62b695cd0225b117c9e6af61a1c6beeb657cfea558f1",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -516,8 +1812,8 @@
         "pdf": {
           "path": "assets.generated/star-x/pdf/anthropocene-temperature-2025-star-x-34-44.pdf",
           "mediaType": "application/pdf",
-          "bytes": 2477579,
-          "sha256": "f0ccf7c738721ae57c515bdf583325a5d746c1680d35c402cc32218bd4d566a8",
+          "bytes": 2477578,
+          "sha256": "39e16875a0934ef4a6f4a81a8db1d89e673ac2a5fb17224068ea2e1f0cfab1fa",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -625,7 +1921,7 @@
           "path": "assets.generated/voronoi/pdf/anthropocene-temperature-2025-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 2608860,
-          "sha256": "2936ba93bdfb02d016a8193ccbb16d90d0981a666245b766a5364d0526072edb",
+          "sha256": "497778db75acf163176e8e943c740e00f57305f9fa48e1a35f6789637ad45760",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -733,7 +2029,7 @@
           "path": "assets.generated/authagraph/pdf/anthropocene-temperature-2026-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 2528843,
-          "sha256": "628be2473657e8ed7f492c4641620156a416b6cc06d982902a00c3c77630a898",
+          "sha256": "1626b05b2d1a8c815d2be636e4c488a878cb2f4e05e0c780a7658f0fc3e5d785",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -840,8 +2136,8 @@
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/anthropocene-temperature-2026-ck-44-22.pdf",
           "mediaType": "application/pdf",
-          "bytes": 2333990,
-          "sha256": "5d21d03add8dc42e21fa9d71038b7f691456140de190b022f648698fa39f6f59",
+          "bytes": 2333989,
+          "sha256": "74e40de301aed621e7d9993d19340ce1340207d13c2a82e75048492d658aebb4",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -949,7 +2245,7 @@
           "path": "assets.generated/dymaxion/pdf/anthropocene-temperature-2026-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 2492080,
-          "sha256": "2de91d4f651bc1d1ebf38910dcb67d9156a279b1678d07622c13d2130fbd61cb",
+          "sha256": "753fa87a7b89e1feee00a34e06ee36090f4eee3f1a2f5696bab4faf5c4d6839f",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -1056,8 +2352,8 @@
         "pdf": {
           "path": "assets.generated/myriahedral/pdf/anthropocene-temperature-2026-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
-          "bytes": 3408056,
-          "sha256": "3094721a120b695a34814420bc5409a6ba12e885b308ae97a51e303605054492",
+          "bytes": 3408055,
+          "sha256": "0fe98d2f324ca31dc8ef8819ce429f05aa22df169efd3c6bee3703b17e4c31f3",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -1164,8 +2460,8 @@
         "pdf": {
           "path": "assets.generated/star-x/pdf/anthropocene-temperature-2026-star-x-34-44.pdf",
           "mediaType": "application/pdf",
-          "bytes": 2390654,
-          "sha256": "eafdfdbf5becaf3db3fe7358316c4ede2e104d7263ff69f2679e1e39dd4548bf",
+          "bytes": 2390653,
+          "sha256": "ccc7c93281ec4d7bdc3ed56316b00b5064650f39b73bc35167b6f3a6c6e6301c",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -1273,7 +2569,7 @@
           "path": "assets.generated/voronoi/pdf/anthropocene-temperature-2026-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 2515355,
-          "sha256": "6895d4e504cce2e8f6883ded1668d75706e624a962e2e3605cc03fa9c181c7a0",
+          "sha256": "e2713ba447fe1b104241dba3a42fafbc00b70f13b5197beaa5672a35bca7ccdb",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -1344,654 +2640,6 @@
           "mediaType": "image/webp",
           "bytes": 582608,
           "sha256": "98436093d291891772c2e286d5d7aa295b124bca290923d87d66c0e556e8b5de",
-          "authorityClass": "access-derivative",
-          "dimensions": {
-            "width": 1920,
-            "height": 1080
-          },
-          "lossless": true,
-          "colorSpace": "sRGB",
-          "transparency": "opaque"
-        }
-      }
-    },
-    {
-      "id": "anthropocene.authagraph.whole-map",
-      "passId": "anthropocene",
-      "projectionId": "authagraph",
-      "layoutId": "authagraph",
-      "sliceId": null,
-      "lifecycle": "standard",
-      "sourcePeriod": "UNAVAILABLE",
-      "artifactFrame": {
-        "x": 0,
-        "y": 0,
-        "width": 44,
-        "height": 19.052559
-      },
-      "parents": {
-        "svg": {
-          "path": "assets.generated/authagraph/svg/anthropocene-authagraph-44-19.052559.svg",
-          "mediaType": "image/svg+xml",
-          "bytes": 21812009,
-          "sha256": "0b33b1f47884efc3769a684442734f187bce4df1496b9dc74686d1517c7aa496",
-          "authorityClass": "archive-art-master"
-        },
-        "pdf": {
-          "path": "assets.generated/authagraph/pdf/anthropocene-authagraph-44-19.052559.pdf",
-          "mediaType": "application/pdf",
-          "bytes": 4100561,
-          "sha256": "dbe74f049e72a5fb9e5cbeb07a579408032459c61282607fdd94392ed6f6df32",
-          "authorityClass": "print-presentation"
-        },
-        "fullPng": {
-          "path": "assets.generated/authagraph/png/anthropocene-authagraph-44-19.052559.png",
-          "mediaType": "image/png",
-          "bytes": 2444636,
-          "sha256": "4eb53c18df90076236e1cee419b57fa02bc0d2df000fff69065efec2387a2874",
-          "authorityClass": "full-raster",
-          "dimensions": {
-            "width": 3840,
-            "height": 1663
-          },
-          "colorSpace": "sRGB",
-          "transparency": "UNAVAILABLE"
-        }
-      },
-      "screen": {
-        "canvas": {
-          "width": 1920,
-          "height": 1080
-        },
-        "fit": "contain",
-        "background": "#f4f5f5",
-        "contentRectangle": {
-          "x": 0,
-          "y": 124,
-          "width": 1920,
-          "height": 832
-        },
-        "projectedToScreen": [
-          43.63636363636363,
-          0,
-          0,
-          0,
-          43.66867463840422,
-          124,
-          0,
-          0,
-          1
-        ],
-        "screenToProjected": [
-          0.02291666666666667,
-          0,
-          0,
-          0,
-          0.02289971033653846,
-          -2.839564081730769,
-          0,
-          0,
-          1
-        ],
-        "png": {
-          "path": "assets.generated/authagraph/screen-1080p/anthropocene-authagraph-44-19.052559.png",
-          "mediaType": "image/png",
-          "bytes": 651322,
-          "sha256": "35fc377e6bc8a235e1947c47e6c8357bc256282d7c7d323983dae281bea732e5",
-          "authorityClass": "access-derivative",
-          "dimensions": {
-            "width": 1920,
-            "height": 1080
-          },
-          "lossless": true,
-          "colorSpace": "sRGB",
-          "transparency": "opaque"
-        },
-        "webp": {
-          "path": "assets.generated/authagraph/screen-1080p-webp/anthropocene-authagraph-44-19.052559.webp",
-          "mediaType": "image/webp",
-          "bytes": 410890,
-          "sha256": "fa7656d1098f3a935f7e29519733a07d67dc81dc9188674970583762b8f3a5d5",
-          "authorityClass": "access-derivative",
-          "dimensions": {
-            "width": 1920,
-            "height": 1080
-          },
-          "lossless": true,
-          "colorSpace": "sRGB",
-          "transparency": "opaque"
-        }
-      }
-    },
-    {
-      "id": "anthropocene.cahill-keyes.whole-map",
-      "passId": "anthropocene",
-      "projectionId": "cahill-keyes",
-      "layoutId": "cahill-keyes",
-      "sliceId": null,
-      "lifecycle": "standard",
-      "sourcePeriod": "UNAVAILABLE",
-      "artifactFrame": {
-        "x": 0,
-        "y": 0,
-        "width": 44,
-        "height": 22
-      },
-      "parents": {
-        "svg": {
-          "path": "assets.generated/cahill-keyes/svg/anthropocene-ck-44-22.svg",
-          "mediaType": "image/svg+xml",
-          "bytes": 21275243,
-          "sha256": "81a439efce83b8652d51bd0f03af69102b61ea635a1c8263ac202cc3aff8b374",
-          "authorityClass": "archive-art-master"
-        },
-        "pdf": {
-          "path": "assets.generated/cahill-keyes/pdf/anthropocene-ck-44-22.pdf",
-          "mediaType": "application/pdf",
-          "bytes": 3936916,
-          "sha256": "56bac25aeda90e272dae2a513e4d32fa0fc9f3df15045bad0029731efc1ea64b",
-          "authorityClass": "print-presentation"
-        },
-        "fullPng": {
-          "path": "assets.generated/cahill-keyes/png/anthropocene-ck-44-22.png",
-          "mediaType": "image/png",
-          "bytes": 1884335,
-          "sha256": "bc50523804177f37140fcb0565442039033b8fa67e8deb052331d39eaec70e84",
-          "authorityClass": "full-raster",
-          "dimensions": {
-            "width": 3840,
-            "height": 1920
-          },
-          "colorSpace": "sRGB",
-          "transparency": "UNAVAILABLE"
-        }
-      },
-      "screen": {
-        "canvas": {
-          "width": 1920,
-          "height": 1080
-        },
-        "fit": "contain",
-        "background": "#f4f5f5",
-        "contentRectangle": {
-          "x": 0,
-          "y": 60,
-          "width": 1920,
-          "height": 960
-        },
-        "projectedToScreen": [
-          43.63636363636363,
-          0,
-          0,
-          0,
-          43.63636363636363,
-          60,
-          0,
-          0,
-          1
-        ],
-        "screenToProjected": [
-          0.02291666666666667,
-          0,
-          0,
-          0,
-          0.02291666666666667,
-          -1.375,
-          0,
-          0,
-          1
-        ],
-        "png": {
-          "path": "assets.generated/cahill-keyes/screen-1080p/anthropocene-ck-44-22.png",
-          "mediaType": "image/png",
-          "bytes": 504183,
-          "sha256": "fa2dd9215c9d2c1b2575b3b5e46b6956209005f9bd9fbc04abf0ea6b850caca6",
-          "authorityClass": "access-derivative",
-          "dimensions": {
-            "width": 1920,
-            "height": 1080
-          },
-          "lossless": true,
-          "colorSpace": "sRGB",
-          "transparency": "opaque"
-        },
-        "webp": {
-          "path": "assets.generated/cahill-keyes/screen-1080p-webp/anthropocene-ck-44-22.webp",
-          "mediaType": "image/webp",
-          "bytes": 320086,
-          "sha256": "ff07d226b3c7afcb1d50bc0e85bf175441626d20df7e9c35a4b6b039e4d1881d",
-          "authorityClass": "access-derivative",
-          "dimensions": {
-            "width": 1920,
-            "height": 1080
-          },
-          "lossless": true,
-          "colorSpace": "sRGB",
-          "transparency": "opaque"
-        }
-      }
-    },
-    {
-      "id": "anthropocene.dymaxion.whole-map",
-      "passId": "anthropocene",
-      "projectionId": "dymaxion",
-      "layoutId": "dymaxion",
-      "sliceId": null,
-      "lifecycle": "standard",
-      "sourcePeriod": "UNAVAILABLE",
-      "artifactFrame": {
-        "x": 0,
-        "y": 0,
-        "width": 44,
-        "height": 20.78461
-      },
-      "parents": {
-        "svg": {
-          "path": "assets.generated/dymaxion/svg/anthropocene-dymaxion-44-20.78461.svg",
-          "mediaType": "image/svg+xml",
-          "bytes": 21825767,
-          "sha256": "1ae859d10bc5b579456d43146d18a372eee4aa595ee04b699bcd55a5cef8551f",
-          "authorityClass": "archive-art-master"
-        },
-        "pdf": {
-          "path": "assets.generated/dymaxion/pdf/anthropocene-dymaxion-44-20.78461.pdf",
-          "mediaType": "application/pdf",
-          "bytes": 4055400,
-          "sha256": "22a01385cbfb8f239220368c75174f7a344e0319a8963c6fdc2de4424bbd31a0",
-          "authorityClass": "print-presentation"
-        },
-        "fullPng": {
-          "path": "assets.generated/dymaxion/png/anthropocene-dymaxion-44-20.78461.png",
-          "mediaType": "image/png",
-          "bytes": 2018511,
-          "sha256": "491b1fcb3f1ca46dd2ca6abf144702bbbc51c03a5c404862e5fee94eb5d49a43",
-          "authorityClass": "full-raster",
-          "dimensions": {
-            "width": 3840,
-            "height": 1814
-          },
-          "colorSpace": "sRGB",
-          "transparency": "UNAVAILABLE"
-        }
-      },
-      "screen": {
-        "canvas": {
-          "width": 1920,
-          "height": 1080
-        },
-        "fit": "contain",
-        "background": "#f4f5f5",
-        "contentRectangle": {
-          "x": 0,
-          "y": 86.5,
-          "width": 1920,
-          "height": 907
-        },
-        "projectedToScreen": [
-          43.63636363636363,
-          0,
-          0,
-          0,
-          43.63805719712806,
-          86.5,
-          0,
-          0,
-          1
-        ],
-        "screenToProjected": [
-          0.02291666666666667,
-          0,
-          0,
-          0,
-          0.022915777287761854,
-          -1.9822147353914004,
-          0,
-          0,
-          1
-        ],
-        "png": {
-          "path": "assets.generated/dymaxion/screen-1080p/anthropocene-dymaxion-44-20.78461.png",
-          "mediaType": "image/png",
-          "bytes": 534597,
-          "sha256": "c59dd17082d32d37d739701be148753bafc615eb54545c1c90602866dec461e6",
-          "authorityClass": "access-derivative",
-          "dimensions": {
-            "width": 1920,
-            "height": 1080
-          },
-          "lossless": true,
-          "colorSpace": "sRGB",
-          "transparency": "opaque"
-        },
-        "webp": {
-          "path": "assets.generated/dymaxion/screen-1080p-webp/anthropocene-dymaxion-44-20.78461.webp",
-          "mediaType": "image/webp",
-          "bytes": 342014,
-          "sha256": "009d15c2379e057ac6bce4feb945a5f25d74ca72f0de0569a5fa390ea00da9a5",
-          "authorityClass": "access-derivative",
-          "dimensions": {
-            "width": 1920,
-            "height": 1080
-          },
-          "lossless": true,
-          "colorSpace": "sRGB",
-          "transparency": "opaque"
-        }
-      }
-    },
-    {
-      "id": "anthropocene.myriahedral.whole-map",
-      "passId": "anthropocene",
-      "projectionId": "myriahedral",
-      "layoutId": "myriahedral",
-      "sliceId": null,
-      "lifecycle": "standard",
-      "sourcePeriod": "UNAVAILABLE",
-      "artifactFrame": {
-        "x": 0,
-        "y": 0,
-        "width": 44,
-        "height": 24.75
-      },
-      "parents": {
-        "svg": {
-          "path": "assets.generated/myriahedral/svg/anthropocene-myriahedral-44-24.75.svg",
-          "mediaType": "image/svg+xml",
-          "bytes": 22222870,
-          "sha256": "9416e236b9f5dc25e6bf2f978fc8989cab4ebceb0af82b6823211172b063da16",
-          "authorityClass": "archive-art-master"
-        },
-        "pdf": {
-          "path": "assets.generated/myriahedral/pdf/anthropocene-myriahedral-44-24.75.pdf",
-          "mediaType": "application/pdf",
-          "bytes": 4186395,
-          "sha256": "0df840f3ba77cab01c40d013fd9ced4ccb00f724f31a9558bf7f41c27bbda847",
-          "authorityClass": "print-presentation"
-        },
-        "fullPng": {
-          "path": "assets.generated/myriahedral/png/anthropocene-myriahedral-44-24.75.png",
-          "mediaType": "image/png",
-          "bytes": 1689701,
-          "sha256": "44c2fa7874a4112689b42cde55cce237cfb56aaa7e62a9ffb905a58b35503cea",
-          "authorityClass": "full-raster",
-          "dimensions": {
-            "width": 3840,
-            "height": 2160
-          },
-          "colorSpace": "sRGB",
-          "transparency": "UNAVAILABLE"
-        }
-      },
-      "screen": {
-        "canvas": {
-          "width": 1920,
-          "height": 1080
-        },
-        "fit": "contain",
-        "background": "#f4f5f5",
-        "contentRectangle": {
-          "x": 0,
-          "y": 0,
-          "width": 1920,
-          "height": 1080
-        },
-        "projectedToScreen": [
-          43.63636363636363,
-          0,
-          0,
-          0,
-          43.63636363636363,
-          0,
-          0,
-          0,
-          1
-        ],
-        "screenToProjected": [
-          0.02291666666666667,
-          0,
-          0,
-          0,
-          0.02291666666666667,
-          0,
-          0,
-          0,
-          1
-        ],
-        "png": {
-          "path": "assets.generated/myriahedral/screen-1080p/anthropocene-myriahedral-44-24.75.png",
-          "mediaType": "image/png",
-          "bytes": 480394,
-          "sha256": "00f85141fb4d6efb74f630a37705042ba7bae5ade4a5c61cd118b7b73d57a52e",
-          "authorityClass": "access-derivative",
-          "dimensions": {
-            "width": 1920,
-            "height": 1080
-          },
-          "lossless": true,
-          "colorSpace": "sRGB",
-          "transparency": "opaque"
-        },
-        "webp": {
-          "path": "assets.generated/myriahedral/screen-1080p-webp/anthropocene-myriahedral-44-24.75.webp",
-          "mediaType": "image/webp",
-          "bytes": 310814,
-          "sha256": "6e73d242960f562d6587f33946b621e9b10fc1435b72212946179ea40b066624",
-          "authorityClass": "access-derivative",
-          "dimensions": {
-            "width": 1920,
-            "height": 1080
-          },
-          "lossless": true,
-          "colorSpace": "sRGB",
-          "transparency": "opaque"
-        }
-      }
-    },
-    {
-      "id": "anthropocene.star-x.whole-map",
-      "passId": "anthropocene",
-      "projectionId": "star-x",
-      "layoutId": "star-x",
-      "sliceId": null,
-      "lifecycle": "standard",
-      "sourcePeriod": "UNAVAILABLE",
-      "artifactFrame": {
-        "x": 0,
-        "y": 0,
-        "width": 34,
-        "height": 44
-      },
-      "parents": {
-        "svg": {
-          "path": "assets.generated/star-x/svg/anthropocene-star-x-34-44.svg",
-          "mediaType": "image/svg+xml",
-          "bytes": 21345101,
-          "sha256": "78d56b123cc3f477b3f7bec9388464998b56394bfd7fb3b6a6bfb40647a8fb26",
-          "authorityClass": "archive-art-master"
-        },
-        "pdf": {
-          "path": "assets.generated/star-x/pdf/anthropocene-star-x-34-44.pdf",
-          "mediaType": "application/pdf",
-          "bytes": 3944109,
-          "sha256": "be1c399e7c5e89ac1bec66312c096206448ebc3f0e623cb4e032821ac4366d43",
-          "authorityClass": "print-presentation"
-        },
-        "fullPng": {
-          "path": "assets.generated/star-x/png/anthropocene-star-x-34-44.png",
-          "mediaType": "image/png",
-          "bytes": 2620573,
-          "sha256": "d087be5df86b041674e5c7eb4b4e93fdac1584354b9c4ac64a8f2f2fead6b83e",
-          "authorityClass": "full-raster",
-          "dimensions": {
-            "width": 2967,
-            "height": 3840
-          },
-          "colorSpace": "sRGB",
-          "transparency": "UNAVAILABLE"
-        }
-      },
-      "screen": {
-        "canvas": {
-          "width": 1920,
-          "height": 1080
-        },
-        "fit": "contain",
-        "background": "#f4f5f5",
-        "contentRectangle": {
-          "x": 543,
-          "y": 0,
-          "width": 834,
-          "height": 1080
-        },
-        "projectedToScreen": [
-          24.529411764705884,
-          0,
-          543,
-          0,
-          24.545454545454547,
-          0,
-          0,
-          0,
-          1
-        ],
-        "screenToProjected": [
-          0.040767386091127095,
-          0,
-          -22.136690647482013,
-          0,
-          0.04074074074074074,
-          0,
-          0,
-          0,
-          1
-        ],
-        "png": {
-          "path": "assets.generated/star-x/screen-1080p/anthropocene-star-x-34-44.png",
-          "mediaType": "image/png",
-          "bytes": 220624,
-          "sha256": "3498493f0f0b6ce7b2788437496c286c8651a8735b2e7b65b2169c76da13d733",
-          "authorityClass": "access-derivative",
-          "dimensions": {
-            "width": 1920,
-            "height": 1080
-          },
-          "lossless": true,
-          "colorSpace": "sRGB",
-          "transparency": "opaque"
-        },
-        "webp": {
-          "path": "assets.generated/star-x/screen-1080p-webp/anthropocene-star-x-34-44.webp",
-          "mediaType": "image/webp",
-          "bytes": 137430,
-          "sha256": "9f79e958cda7c6c3d6d524c7e35e5afe8b520850e50b4e61258cb069b19445b9",
-          "authorityClass": "access-derivative",
-          "dimensions": {
-            "width": 1920,
-            "height": 1080
-          },
-          "lossless": true,
-          "colorSpace": "sRGB",
-          "transparency": "opaque"
-        }
-      }
-    },
-    {
-      "id": "anthropocene.voronoi.whole-map",
-      "passId": "anthropocene",
-      "projectionId": "voronoi",
-      "layoutId": "voronoi",
-      "sliceId": null,
-      "lifecycle": "standard",
-      "sourcePeriod": "UNAVAILABLE",
-      "artifactFrame": {
-        "x": 0,
-        "y": 0,
-        "width": 44,
-        "height": 22.916667
-      },
-      "parents": {
-        "svg": {
-          "path": "assets.generated/voronoi/svg/anthropocene-voronoi-44-22.916667.svg",
-          "mediaType": "image/svg+xml",
-          "bytes": 21769539,
-          "sha256": "b1b1d134ce3e5e9369fd62eeba6b42e33e133c3a1e6a247f6918941068d376c0",
-          "authorityClass": "archive-art-master"
-        },
-        "pdf": {
-          "path": "assets.generated/voronoi/pdf/anthropocene-voronoi-44-22.916667.pdf",
-          "mediaType": "application/pdf",
-          "bytes": 4090455,
-          "sha256": "2de415f02481ad3bf5d9abaaead0f90c9e081adf90691eebd5576ebe625a5eec",
-          "authorityClass": "print-presentation"
-        },
-        "fullPng": {
-          "path": "assets.generated/voronoi/png/anthropocene-voronoi-44-22.916667.png",
-          "mediaType": "image/png",
-          "bytes": 2066783,
-          "sha256": "d32489858eca7ce812e056f15096f20def5721765964a8e96c28ecc12ae3ea1c",
-          "authorityClass": "full-raster",
-          "dimensions": {
-            "width": 3840,
-            "height": 2000
-          },
-          "colorSpace": "sRGB",
-          "transparency": "UNAVAILABLE"
-        }
-      },
-      "screen": {
-        "canvas": {
-          "width": 1920,
-          "height": 1080
-        },
-        "fit": "contain",
-        "background": "#f4f5f5",
-        "contentRectangle": {
-          "x": 0,
-          "y": 40,
-          "width": 1920,
-          "height": 1000
-        },
-        "projectedToScreen": [
-          43.63636363636363,
-          0,
-          0,
-          0,
-          43.6363630016529,
-          40,
-          0,
-          0,
-          1
-        ],
-        "screenToProjected": [
-          0.02291666666666667,
-          0,
-          0,
-          0,
-          0.022916666999999998,
-          -0.91666668,
-          0,
-          0,
-          1
-        ],
-        "png": {
-          "path": "assets.generated/voronoi/screen-1080p/anthropocene-voronoi-44-22.916667.png",
-          "mediaType": "image/png",
-          "bytes": 557402,
-          "sha256": "51be0487f8bc53d5aa684495574fe442d59111831d31a267c4f544076dd6c30c",
-          "authorityClass": "access-derivative",
-          "dimensions": {
-            "width": 1920,
-            "height": 1080
-          },
-          "lossless": true,
-          "colorSpace": "sRGB",
-          "transparency": "opaque"
-        },
-        "webp": {
-          "path": "assets.generated/voronoi/screen-1080p-webp/anthropocene-voronoi-44-22.916667.webp",
-          "mediaType": "image/webp",
-          "bytes": 354312,
-          "sha256": "d8154415ff1e24a160ac37686a12348f0f4fbd9baf1cfef454936445273f6688",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
