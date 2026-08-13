@@ -155,6 +155,21 @@ requireCondition(input.schemaVersion === 'cartofreako-gpu-benchmark-v1'
     && input.frozenStage14.workingTree === 'clean'
     && input.cases.length === input.frozenStage14.artifactCount,
 'invalid Stage 15A input freeze');
+const missingParents = [];
+for (const value of input.cases) {
+    const file = path.join(root, value.parents.fullPng.path);
+    let present = false;
+    try {
+        present = (await fs.stat(file)).isFile();
+    } catch (error) {
+        if (error.code !== 'ENOENT') throw error;
+    }
+    if (!present) missingParents.push(value.parents.fullPng.path);
+}
+requireCondition(missingParents.length === 0,
+    `${missingParents.length} frozen Stage 14 full-PNG parent(s) are missing`
+    + ` (first: ${missingParents[0]}); run make generate-projections or`
+    + ' make all to build the standard artifact graph first');
 for (const directory of new Set(input.cases.flatMap(value =>
     input.controlRecipes.map(recipe => path.join(generated,
         value.parents.fullPng.path.split('/')[1], outputDirectory(recipe)))))) {

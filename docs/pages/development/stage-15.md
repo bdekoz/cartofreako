@@ -355,7 +355,9 @@ speculations, the full Majuro evidence pass, the synthetic PurpleAir
 interface review, and the bounded water-debris experiment. It does not run
 checks, source acquisition, external authorization, benchmarks, promotion,
 release, or publication. Adding an experiment to this aggregate never changes
-its lifecycle.
+its lifecycle. The GPU-control builder consumes the frozen Stage 14
+full-PNG parents, so `all-experiments` builds any missing parents from the
+standard generation graph before rendering controls.
 
 
 ## Closed staging record

@@ -205,6 +205,8 @@ GENERATED_SCREEN_WEBP_DIRS := \
 GENERATED_CATALOG_DIR := $(GENERATED_DIR)/catalog
 STAGE15_GPU_SCHEMA := contracts/gpu-benchmark-v1.schema.json
 STAGE15_INPUT_FIXTURE := fixtures/gpu-benchmark/v1/stage-14-inputs.json
+STAGE15_FULL_PNGS := $(if $(wildcard $(STAGE15_INPUT_FIXTURE)),\
+	$(shell "$(NODE)" scripts/list-stage-15-parents.mjs))
 STAGE15_LAYOUT_SCHEMA := contracts/consumer-release-layout-v1.schema.json
 STAGE15_LAYOUT_FIXTURE := fixtures/consumer-release-layout/v1/manifest.json
 STAGE15_LAYOUT_OUTPUT := build/consumer-release-layout-v1
@@ -1506,7 +1508,8 @@ freeze-stage-15-inputs: $(STAGE15_GPU_SCHEMA) scripts/freeze-stage-15-inputs.mjs
 	"$(NODE)" scripts/freeze-stage-15-inputs.mjs --check
 
 generate-gpu-controls: freeze-stage-15-inputs \
-		scripts/generate-gpu-controls.mjs src.wasm/cartofreako-screen.mjs
+		scripts/generate-gpu-controls.mjs src.wasm/cartofreako-screen.mjs \
+		$(STAGE15_FULL_PNGS)
 	"$(NODE)" scripts/generate-gpu-controls.mjs
 
 check-gpu-controls: generate-gpu-controls tests/test-gpu-controls.mjs \

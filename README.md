@@ -122,6 +122,8 @@ layout prototype, Majuro evidence canary, Marshall Islands speculative renders,
 full six-projection Majuro evidence pass, synthetic PurpleAir interface review,
 and bounded water-debris experiment. It contains no fetch, external
 authorization, benchmark, promotion, GitHub release, or UCB AAO/S3 target.
+The GPU controls consume the frozen Stage 14 full-PNG corpus, so the aggregate
+builds any missing parents from the standard generation graph first.
 
 For a release build, run the same graph with bounded concurrency, keep-going
 failure isolation, and an automatic serial completion pass:
