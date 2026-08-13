@@ -8,7 +8,7 @@
     "section": "12.1.1 User relevance marker — snapshot dyad"
   },
   "current_state": {
-    "marker_id": "SD-20260813-6c5a6cfb",
+    "marker_id": "SD-20260813-f1956853",
     "marker_state": "active",
     "storage_state": "checked-in",
     "evidence_status": "OBSERVED",
@@ -1781,8 +1781,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260812-356097b5",
       "event_type": "creation",
@@ -1811,8 +1810,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260812-c8babdd6",
       "event_type": "creation",
@@ -1843,8 +1841,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-bd3aeda6",
       "event_type": "creation",
@@ -1873,8 +1870,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-14d2d33d",
       "event_type": "creation",
@@ -1903,8 +1899,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-b8fc45ab",
       "event_type": "creation",
@@ -1933,8 +1928,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-d1d9d5e4",
       "event_type": "creation",
@@ -1963,8 +1957,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-2f45a8f3",
       "event_type": "creation",
@@ -1993,8 +1986,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-79cd0154",
       "event_type": "creation",
@@ -2023,8 +2015,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-8c1952d6",
       "event_type": "storage-state-change",
@@ -2056,8 +2047,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-6e99d868",
       "event_type": "creation",
@@ -2086,8 +2076,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-b339b948",
       "event_type": "creation",
@@ -2116,8 +2105,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-c7b1bf19",
       "event_type": "creation",
@@ -2146,8 +2134,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-7eab8e8d",
       "event_type": "creation",
@@ -2176,8 +2163,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-233eb4b0",
       "event_type": "storage-state-change",
@@ -2209,8 +2195,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-1246dca7",
       "event_type": "creation",
@@ -2239,8 +2224,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-35984ca5",
       "event_type": "storage-state-change",
@@ -2272,8 +2256,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-6c5a6cfb",
       "event_type": "creation",
@@ -2302,8 +2285,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-4569f633",
       "event_type": "storage-state-change",
@@ -2324,6 +2306,157 @@
       ],
       "authorized_content_scope": "marker-metadata-only",
       "pre_check_in_ledger_sha256": "77eefb56ab292e54987c9e3305365cc447c846d8f0045a3f901739d873205bb6",
+      "marker_state": "active",
+      "storage_state": "checked-in",
+      "evidence_status": "OBSERVED",
+      "local_only": false,
+      "transcript_included": false,
+      "consent_established": false,
+      "transfer_authorized": false,
+      "failure_loop_complete": false,
+      "evaluation_or_training_suitability_established": false,
+      "provider_selection_or_use_established": false,
+      "value_or_payment_established": false
+    },
+    {
+      "event_id": "SD-EVENT-20260813-f7c58e36",
+      "event_type": "creation",
+      "marker_id": "SD-20260813-f7c58e36",
+      "exact_instruction_source": "snapshot dyad",
+      "actor": "user",
+      "date": "2026-08-13",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-13T16:12:01Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Current exchange containing the standalone user instruction `snapshot dyad` after the daily snapshot cron was re-enabled and verified on rizal: the in-sandbox crontab PAM denial was traced to the sandbox setuid/NoNewPrivs confinement rather than SELinux (enforcing, targeted, no AVC denials); the installed crontab line was malformed with TZ fused onto the schedule line, so cronie treated it as an environment assignment and the 05:30 job never ran; the crontab was rewritten with TZ on its own line, a one-minute probe job confirmed cron executes user jobs under the current policy, dp-daily-snapshot.sh was patched so future enable runs emit the corrected format, and run-now collected 2026-08-13 snapshots for all seven repositories. Platform message identifiers and the exact user-message timestamp are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "boundary_start_reference": "current-exchange:user:standalone-snapshot-dyad-instruction:SD-20260813-f7c58e36",
+      "boundary_end_reference": "current-exchange:assistant:marker-confirmation:SD-20260813-f7c58e36",
+      "supplied_focus": "UNAVAILABLE",
+      "scope_label_or_unavailable": "UNAVAILABLE — no label was supplied.",
+      "marker_state": "active",
+      "storage_state": "local-only",
+      "evidence_status": "OBSERVED",
+      "local_only": true,
+      "transcript_included": false,
+      "consent_established": false,
+      "transfer_authorized": false,
+      "failure_loop_complete": false,
+      "evaluation_or_training_suitability_established": false,
+      "provider_selection_or_use_established": false,
+      "value_or_payment_established": false
+    },
+    {
+      "event_id": "SD-EVENT-20260813-ccb87acc",
+      "event_type": "creation",
+      "marker_id": "SD-20260813-ccb87acc",
+      "exact_instruction_source": "snapshot dyad",
+      "actor": "user",
+      "date": "2026-08-13",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-13T16:27:27Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Current exchange containing the standalone user instruction `snapshot dyad` after the twice-daily cron retry change: following the TZ-line cron fix commit (293d486) and push to the devastation-pacific-house-style repo, the user requested two runs per day as a safety net in case the first fails; the script CRON_TIME was changed to `30 5,17 * * *` and the installed crontab was updated to the same schedule (05:30 and 17:30 America/Los_Angeles) and verified; the script change remains uncommitted pending review while the installed crontab already carries the identical schedule. Platform message identifiers and the exact user-message timestamp are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "boundary_start_reference": "current-exchange:user:standalone-snapshot-dyad-instruction:SD-20260813-ccb87acc",
+      "boundary_end_reference": "current-exchange:assistant:marker-confirmation:SD-20260813-ccb87acc",
+      "supplied_focus": "UNAVAILABLE",
+      "scope_label_or_unavailable": "UNAVAILABLE — no label was supplied.",
+      "marker_state": "active",
+      "storage_state": "local-only",
+      "evidence_status": "OBSERVED",
+      "local_only": true,
+      "transcript_included": false,
+      "consent_established": false,
+      "transfer_authorized": false,
+      "failure_loop_complete": false,
+      "evaluation_or_training_suitability_established": false,
+      "provider_selection_or_use_established": false,
+      "value_or_payment_established": false
+    },
+    {
+      "event_id": "SD-EVENT-20260813-f1956853",
+      "event_type": "creation",
+      "marker_id": "SD-20260813-f1956853",
+      "exact_instruction_source": "snapshot dyad",
+      "actor": "user",
+      "date": "2026-08-13",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-13T16:28:25Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Current exchange containing the standalone user instruction `snapshot dyad` after the twice-daily cron change was committed and pushed: the CRON_TIME change to `30 5,17 * * *` was committed as a3fa6b9 and pushed to the devastation-pacific-house-style main branch, so the installed crontab and the script now both run dp-daily-snapshot at 05:30 and 17:30 America/Los_Angeles as a retry safety net; the first automatic run is scheduled for the next 05:30 PT. Platform message identifiers and the exact user-message timestamp are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "boundary_start_reference": "current-exchange:user:standalone-snapshot-dyad-instruction:SD-20260813-f1956853",
+      "boundary_end_reference": "current-exchange:assistant:marker-confirmation:SD-20260813-f1956853",
+      "supplied_focus": "UNAVAILABLE",
+      "scope_label_or_unavailable": "UNAVAILABLE — no label was supplied.",
+      "marker_state": "active",
+      "storage_state": "local-only",
+      "evidence_status": "OBSERVED",
+      "local_only": true,
+      "transcript_included": false,
+      "consent_established": false,
+      "transfer_authorized": false,
+      "failure_loop_complete": false,
+      "evaluation_or_training_suitability_established": false,
+      "provider_selection_or_use_established": false,
+      "value_or_payment_established": false
+    },
+    {
+      "event_id": "SD-EVENT-20260813-67e57794",
+      "event_type": "storage-state-change",
+      "marker_id": "SD-20260813-ccb87acc",
+      "exact_instruction_source": "check in",
+      "actor": "user",
+      "date": "2026-08-13",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-13T16:29:25Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Standalone user check-in instruction covering both pending snapshot dyad markers; platform message identifiers are UNAVAILABLE.",
+      "authorized_repository": "bdekoz/cartofreako",
+      "authorized_path": "docs/profile-markers/snapshot-dyad-marker-ledger.json",
+      "authorized_actions": [
+        "commit",
+        "push"
+      ],
+      "authorized_content_scope": "marker-metadata-only",
+      "pre_check_in_ledger_sha256": "212396f3b922d69fe9d52bd0511253ea28944ff26ee52a8677848a92083f10fa",
+      "marker_state": "active",
+      "storage_state": "checked-in",
+      "evidence_status": "OBSERVED",
+      "local_only": false,
+      "transcript_included": false,
+      "consent_established": false,
+      "transfer_authorized": false,
+      "failure_loop_complete": false,
+      "evaluation_or_training_suitability_established": false,
+      "provider_selection_or_use_established": false,
+      "value_or_payment_established": false
+    },
+    {
+      "event_id": "SD-EVENT-20260813-16be6093",
+      "event_type": "storage-state-change",
+      "marker_id": "SD-20260813-f1956853",
+      "exact_instruction_source": "check in",
+      "actor": "user",
+      "date": "2026-08-13",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-13T16:29:25Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Standalone user check-in instruction immediately following marker creation; platform message identifiers are UNAVAILABLE.",
+      "authorized_repository": "bdekoz/cartofreako",
+      "authorized_path": "docs/profile-markers/snapshot-dyad-marker-ledger.json",
+      "authorized_actions": [
+        "commit",
+        "push"
+      ],
+      "authorized_content_scope": "marker-metadata-only",
+      "pre_check_in_ledger_sha256": "212396f3b922d69fe9d52bd0511253ea28944ff26ee52a8677848a92083f10fa",
       "marker_state": "active",
       "storage_state": "checked-in",
       "evidence_status": "OBSERVED",
