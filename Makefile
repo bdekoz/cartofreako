@@ -3140,3 +3140,10 @@ clean:
 	$(RM) -r $(GENERATED_PROJECTION_DIRS)
 	$(RM) -r "$(GENERATED_CATALOG_DIR)"
 	$(RM) -r "$(DOXYGEN_OUTPUT_DIR)"
+	@# Review evidence under output/ is tracked; restore any file a failed or
+	@# interrupted render may have removed so a clean tree stays clean.
+	@if command -v git >/dev/null 2>&1 && \
+			git rev-parse --is-inside-work-tree >/dev/null 2>&1; then \
+		git ls-files -z -- 'output/*' | \
+			git checkout-index --force --stdin -z || true; \
+	fi
