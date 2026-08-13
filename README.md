@@ -115,6 +115,11 @@ release path with:
 ```sh
 make list-experiments
 make all-experiments
+
+On a fresh host, run `make all-experiments-fetch` first. It fetches and
+updates every external experimental source — Natural Earth, astro, orbiting,
+atoll evidence, and the JAXA P-Tree trust anchor and data — before the
+aggregate runs.
 ```
 
 The seven-builder aggregate covers the Stage 15 GPU controls, local consumer

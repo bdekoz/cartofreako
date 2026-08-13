@@ -12,6 +12,7 @@ IZZI_SRC ?= ../izzi/src
 GDAL_CONFIG ?= gdal-config
 DOXYGEN ?= doxygen
 INKSCAPE ?= inkscape
+INKSCAPE_RUNNER := scripts/run-inkscape.sh
 GZIP ?= gzip
 PNG_LONG_SIDE ?= 3840
 ASSET_JOBS ?= 2
@@ -949,7 +950,8 @@ RESOURCE_METRIC_PUBLIC_TARGETS := \
 		$(foreach projection,$(RESOURCE_PROJECTION_NAMES),\
 			generate-$(stem)-$(projection)))
 
-PUBLIC_TARGETS := all all-experiments assets-single assets-resilient \
+PUBLIC_TARGETS := all all-experiments all-experiments-fetch \
+	assets-single assets-resilient \
 	check check-docs check-all-experiments \
 	check-print-contract check-pass-status \
 	audit-dymaxion-ulp \
@@ -1168,6 +1170,14 @@ list-experiments:
 all-experiments: $(NON_RELEASE_EXPERIMENT_TARGETS)
 	@printf '%s\n' \
 		'Built every implemented non-release experiment; no publication target was invoked.'
+
+all-experiments-fetch: fetch-natural-earth-10m \
+		install-jaxa-certificate \
+		fetch-astro-data fetch-orbiting-data \
+		fetch-atoll-evidence-data prepare-atoll-evidence-data \
+		fetch-cloud-atmosphere-data prepare-cloud-atmosphere-data
+	@printf '%s\n' \
+		'Fetched and updated every external experimental source; run make all-experiments next.'
 
 check-all-experiments: tests/check-all-experiments.sh Makefile
 	"tests/check-all-experiments.sh"
@@ -2998,7 +3008,7 @@ generate-myriahedral: generate-water-myriahedral-perspectives \
 define EXPORT_PDF
 	@tmp="$@.tmp.$$$$.pdf"; \
 	rm -f "$$tmp"; \
-	if "$(INKSCAPE)" $(INKSCAPE_INSTANCE_ARGS) \
+	if "$(INKSCAPE_RUNNER)" "$(INKSCAPE)" $(INKSCAPE_INSTANCE_ARGS) \
 		--export-area-page \
 		--export-filename="$$tmp" "$<" && \
 		test -s "$$tmp"; then \
@@ -3013,7 +3023,7 @@ endef
 define EXPORT_PNG
 	@tmp="$@.tmp.$$$$.png"; \
 	rm -f "$$tmp"; \
-	if "$(INKSCAPE)" $(INKSCAPE_INSTANCE_ARGS) \
+	if "$(INKSCAPE_RUNNER)" "$(INKSCAPE)" $(INKSCAPE_INSTANCE_ARGS) \
 		--export-area-page $(PNG_EXPORT_BACKGROUND) \
 		$(1)=$(PNG_LONG_SIDE) \
 		--export-filename="$$tmp" "$<" && \

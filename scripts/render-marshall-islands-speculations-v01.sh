@@ -3,6 +3,7 @@ set -euo pipefail
 
 script_directory=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 repository_root=$(CDPATH= cd -- "$script_directory/.." && pwd)
+inkscape_runner=$script_directory/run-inkscape.sh
 output_directory=${1:-$repository_root/output/marshall-islands-speculations-v01}
 natural_earth_directory=$repository_root/assets.static/natural-earth/10m-physical-vectors
 font_regular=Atkinson-Hyperlegible-Next-Regular
@@ -197,7 +198,7 @@ for index in "${!theme_keys[@]}"; do
   mkdir -p -- "$theme_directory"
   "$repository_root/src.generate/generate-8-slice" \
     "$source_svg" "$theme_directory" >/dev/null
-  inkscape --export-type=png --export-width=900 \
+  "$inkscape_runner" inkscape --export-type=png --export-width=900 \
     --export-background=white --export-background-opacity=255 \
     --export-filename="$theme_directory/raw.png" \
     "$theme_directory/earth-ck-8-slice-1.svg" >/dev/null
@@ -259,7 +260,7 @@ publish_png "$work_directory/iteration-03.png" "${expected_outputs[2]}" \
 
 regional_panels=()
 for projection in cahill-keyes dymaxion; do
-  inkscape --export-type=png --export-width=1500 \
+  "$inkscape_runner" inkscape --export-type=png --export-width=1500 \
     --export-background=white --export-background-opacity=255 \
     --export-filename="$work_directory/regional-$projection.png" \
     "$work_directory/regional-$projection.svg" >/dev/null
@@ -284,7 +285,7 @@ add_landscape_header \
 publish_png "$work_directory/iteration-04.png" "${expected_outputs[3]}" \
   'Iteration 4: one WGS 84 geographic source preclip projected through Cahill-Keyes and Dymaxion; Natural Earth context only.'
 
-inkscape --export-type=png --export-width=2100 \
+"$inkscape_runner" inkscape --export-type=png --export-width=2100 \
   --export-background=white --export-background-opacity=255 \
   --export-filename="$work_directory/local-majuro-aeqd.png" \
   "$work_directory/local-majuro-aeqd.svg" >/dev/null

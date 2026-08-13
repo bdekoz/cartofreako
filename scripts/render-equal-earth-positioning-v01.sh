@@ -3,6 +3,7 @@ set -euo pipefail
 
 script_directory=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 repository_root=$(CDPATH= cd -- "$script_directory/.." && pwd)
+inkscape_runner=$script_directory/run-inkscape.sh
 output_directory=${1:-$repository_root/output/equal-earth-positioning-speculations-v01}
 source_countries=$repository_root/assets.static/resources/countries-110m.geojson
 
@@ -70,7 +71,7 @@ for expected in "${expected_outputs[@]}"; do
     printf 'renderer omitted expected SVG: %s\n' "$source_svg" >&2
     exit 2
   }
-  inkscape --export-type=png --export-width=2560 --export-height=1440 \
+  "$inkscape_runner" inkscape --export-type=png --export-width=2560 --export-height=1440 \
     --export-background='#f2f2ee' --export-background-opacity=255 \
     --export-filename="$raw_png" "$source_svg" >/dev/null
   magick "$raw_png" \
