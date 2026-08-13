@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "name": "San Francisco Orbital Technosphere",
-  "timestamp": "2026-08-05T04:03:56Z",
+  "timestamp": "2026-08-13T15:36:00Z",
   "products": ["global", "observer"],
   "reference_point": {
     "name": "San Francisco, California, USA",
@@ -136,13 +136,13 @@
     ],
     "nasa_ssc_reference": {
       "file": "nasa-ssc-reference.json",
-      "query_url": "https://sscweb.gsfc.nasa.gov/WS/sscr/2/locations/iss,aqua,landsat9,goes19/20260805T040000Z,20260805T041000Z/geo,geij2000/",
+      "query_url": "https://sscweb.gsfc.nasa.gov/WS/sscr/2/locations/iss,aqua,landsat9,goes19/20260813T153000Z,20260813T154000Z/geo,geij2000/",
       "source_url": "https://sscweb.gsfc.nasa.gov/WebServices/REST/"
     }
   },
   "snapshot": {
-    "collection_started_at": "2026-08-05T03:47:00Z",
-    "collection_completed_at": "2026-08-05T04:32:10Z",
+    "collection_started_at": "2026-08-13T15:35:35Z",
+    "collection_completed_at": "2026-08-13T15:36:31Z",
     "checksum_file": "SHA256SUMS"
   }
 }

@@ -278,9 +278,9 @@ main()
   astro::observer_state hubble_state = astro::make_observer_state(hubble);
   assert(hubble_state.orbiting.has_value());
   assert(hubble_state.orbiting->element_epoch_utc
-         == "2026-08-03T01:49:54.868800Z");
-  assert(hubble_state.orbiting->element_age_days > 2.0
-         && hubble_state.orbiting->element_age_days < 2.1);
+         == "2026-08-12T22:01:03.125856Z");
+  assert(hubble_state.orbiting->element_age_days > 0.7
+         && hubble_state.orbiting->element_age_days < 0.8);
   assert(hubble_state.orbiting->subpoint.altitude_km > 450
          && hubble_state.orbiting->subpoint.altitude_km < 650);
   assert(hubble_state.orbiting->earth_angular_radius_deg > 65
@@ -327,7 +327,7 @@ main()
   assert(hubble_metadata.find("data-instrument-id=\"hst-composite\"")
          != std::string::npos);
   assert(hubble_metadata.find(
-           "data-orbit-element-epoch=\"2026-08-03T01:49:54.868800Z\"")
+           "data-orbit-element-epoch=\"2026-08-12T22:01:03.125856Z\"")
          != std::string::npos);
   assert(astro::output_basename(
            astro::product_kind::observer,

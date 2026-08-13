@@ -55,7 +55,7 @@ stores catalog IDs as strings and initializes SGP4 directly from OMM fields.
 [`orbital-technosphere-profile.json`](../../../assets.static/orbital-technosphere/orbital-technosphere-profile.json)
 is authoritative. It records:
 
-- calculation time `2026-08-05T04:03:56Z`;
+- calculation time `2026-08-13T15:36:00Z`;
 - the make-invocation reference point, San Francisco at `37.7749° N`,
   `122.4194° W`, elevation 16 m, as an explicit profile value;
 - SGP4, WGS-72, and AFSPC compatibility mode;
@@ -158,7 +158,7 @@ checks profile authority, fractional timestamps, six-digit catalog IDs,
 catalog membership and budgets, WGS-84 round trips, finite propagated states,
 and solar geometry. Its first propagation reproduces the published Vanguard
 1 SGP4 TEME reference vector. ISS and GOES 19 are also compared with the
-checked-in NASA SSCWeb GEO response at 04:04 UTC with deliberately
+checked-in NASA SSCWeb GEO response at 15:36 UTC with deliberately
 visualization-scale tolerances.
 
 Each generator reopens its SVG and checks the projection viewBox, semantic

@@ -63,7 +63,7 @@ main()
     = "assets.static/orbital-technosphere/orbital-technosphere-profile.json";
   const orbital::profile config = orbital::load_profile(profile_path);
   assert(config.name == "San Francisco Orbital Technosphere");
-  assert(config.calculation_time.iso_utc == "2026-08-05T04:03:56Z");
+  assert(config.calculation_time.iso_utc == "2026-08-13T15:36:00Z");
   assert(config.observer.name == "San Francisco, California, USA");
   assert(near(config.observer.latitude_deg, 37.7749, 1e-12));
   assert(config.groups.size() == 15);
@@ -104,22 +104,22 @@ main()
     });
   assert(!starlink.norad_id.empty());
 
-  // NASA SSCWeb GEO positions at 2026-08-05T04:04:00Z. Public OMM/SGP4
+  // NASA SSCWeb GEO positions at 2026-08-13T15:36:00Z. Public OMM/SGP4
   // states are expected to agree at visualization scale, not operational
   // orbit-determination precision.
   const double nasa_time = orbital::parse_timestamp(
-    "2026-08-05T04:04:00Z").julian_date;
+    "2026-08-13T15:36:00Z").julian_date;
   const orbital::vector_3d iss_ecef = orbital::teme_to_ecef(
     orbital::propagate_teme(iss, nasa_time).position_km, nasa_time);
   assert(distance(iss_ecef,
-                  {-3966.536598947783, 1904.7420679300772,
-                   5171.139240264893}) < 100);
+                  {-888.7007162486722, 4192.760987163541,
+                   -5284.562706947327}) < 100);
   const orbital::orbital_object& goes19 = find_norad(catalogs, "60133");
   const orbital::vector_3d goes19_ecef = orbital::teme_to_ecef(
     orbital::propagate_teme(goes19, nasa_time).position_km, nasa_time);
   assert(distance(goes19_ecef,
-                  {10780.775237498834, -40762.048713034965,
-                   -12.71348912268877}) < 150);
+                  {10778.09601978017, -40764.78455148575,
+                   17.692609690129757}) < 150);
 
   const rapidjson::Document nasa = orbital::read_json(config.nasa_reference);
   assert(nasa.IsArray() && nasa.Size() == 2);

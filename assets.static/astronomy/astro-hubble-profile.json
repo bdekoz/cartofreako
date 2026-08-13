@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "Hubble Space Telescope observer sky",
-  "timestamp": "2026-08-05T01:59:44Z",
+  "timestamp": "2026-08-13T15:36:00Z",
   "products": ["observer"],
   "observer": {
     "id": "hubble",
