@@ -106,3 +106,8 @@ __pycache__/
 !/reports/cartofreako-audit-outcomes-02-feedback.md
 !/reports/cartofreako-audit-outcomes-02-next-steps.md
 !/reports/cartofreako-audit-outcomes-03.pdf
+
+# dp-daily-snapshot: private local objects (generated, never tracked)
+/examples.*/
+!/examples.data/
+!/examples.data/**
