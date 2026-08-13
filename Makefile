@@ -1183,7 +1183,8 @@ check-print-contract: $(PRINT_CONTRACT) $(PRINT_CONTRACT_CHECKER) \
 	"$(NODE)" "$(PRINT_CONTRACT_CHECKER)" "$(PRINT_CONTRACT)"
 	"bash" "$(PRINT_PDF_CHECKER)" "$(PRINT_CONTRACT)"
 
-render-marshall-islands-speculations-v01: \
+render-marshall-islands-speculations-v01: wasm-projections \
+		$(NATURAL_EARTH_STAMP) \
 		scripts/render-marshall-islands-speculations-v01.sh \
 		scripts/render-marshall-islands-speculations-v01.mjs
 	"scripts/render-marshall-islands-speculations-v01.sh"
