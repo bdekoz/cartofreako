@@ -76,6 +76,7 @@ publication paths independent:
 
 ```sh
 make list-experiments
+make all-experiments-fetch
 make all-experiments
 make check-all-experiments
 ```
@@ -88,6 +89,11 @@ experiment. It deliberately excludes data fetchers, external
 authorization, feasibility-only proposals, hardware benchmarks, GitHub
 release, and UCB AAO/S3 upload. Some experiments require their documented
 frozen or released parent artifacts; the aggregate does not silently replace
+them with unrelated data. On a fresh host, run `make all-experiments-fetch`
+before the aggregate to fetch and update every external experimental source —
+Natural Earth, astro, orbiting, atoll evidence, and the JAXA P-Tree trust
+anchor and data. The fetch target is separate: the aggregate registry itself
+still contains no fetch, external authorization, or publication target.
 those evidence inputs.
 
 The preferred long-running release workflow bounds its first pass to two

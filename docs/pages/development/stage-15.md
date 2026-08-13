@@ -345,6 +345,7 @@ render family:
 
 ```sh
 make list-experiments
+make all-experiments-fetch
 make all-experiments
 make check-all-experiments
 ```
@@ -357,7 +358,11 @@ checks, source acquisition, external authorization, benchmarks, promotion,
 release, or publication. Adding an experiment to this aggregate never changes
 its lifecycle. The GPU-control builder consumes the frozen Stage 14
 full-PNG parents, so `all-experiments` builds any missing parents from the
-standard generation graph before rendering controls.
+standard generation graph before rendering controls. Run
+`make all-experiments-fetch` first on a fresh host; that separate target
+fetches and updates the external experimental sources — Natural Earth, astro,
+orbiting, atoll evidence, and the JAXA P-Tree trust anchor and data — without
+adding a fetch target to the aggregate registry itself.
 
 
 ## Closed staging record

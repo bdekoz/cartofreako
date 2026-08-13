@@ -18,6 +18,9 @@ sources first, then use the configured external-generation entry point
 documented in the generation guide.
 
 Local-only research builders are separately enumerated by
-`make list-experiments` and `make all-experiments`. That aggregate never
-fetches data, authorizes a provider, benchmarks hardware, promotes a pass,
-publishes GitHub, or uploads UCB AAO/S3 assets.
+`make list-experiments` and `make all-experiments`. Run
+`make all-experiments-fetch` first on hosts that need the external vendor
+sources (Natural Earth, astro, orbiting, atoll evidence, and the JAXA P-Tree
+trust anchor and data); the aggregate itself still never fetches data,
+authorizes a provider, benchmarks hardware, promotes a pass, publishes
+GitHub, or uploads UCB AAO/S3 assets.
