@@ -137,6 +137,11 @@ failure isolation, and an automatic serial completion pass:
 make assets-resilient
 ```
 
+`assets-resilient` runs the deterministic three-rule chain first — `make
+clean`, then `make all-experiments-fetch`, then `make all-experiments` — so
+release builds regenerate from a clean tree with every external experimental
+source fetched and updated before generation starts.
+
 On a memory-constrained machine, run the same complete artifact graph with
 only one recipe at a time. This remains serial even when an outer Make was
 started with `-j`:

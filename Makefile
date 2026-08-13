@@ -1167,17 +1167,18 @@ list-targets:
 list-experiments:
 	@printf '%s\n' $(NON_RELEASE_EXPERIMENT_TARGETS)
 
-all-experiments: $(NON_RELEASE_EXPERIMENT_TARGETS)
+all-experiments: all-experiments-fetch
+	+$(MAKE) --no-print-directory $(NON_RELEASE_EXPERIMENT_TARGETS)
 	@printf '%s\n' \
 		'Built every implemented non-release experiment; no publication target was invoked.'
 
-all-experiments-fetch: fetch-natural-earth-10m \
+all-experiments-fetch: clean fetch-natural-earth-10m \
 		install-jaxa-certificate \
 		fetch-astro-data fetch-orbiting-data \
 		fetch-atoll-evidence-data prepare-atoll-evidence-data \
 		fetch-cloud-atmosphere-data prepare-cloud-atmosphere-data
 	@printf '%s\n' \
-		'Fetched and updated every external experimental source; run make all-experiments next.'
+		'Cleaned, then fetched and updated every external experimental source.'
 
 check-all-experiments: tests/check-all-experiments.sh Makefile
 	"tests/check-all-experiments.sh"
@@ -3100,9 +3101,11 @@ all: $(GENERATED_ARTIFACTS)
 assets-single:
 	+$(MAKE) --no-print-directory --jobs=1 all
 
-# Finish as much of the graph as possible with moderate parallelism, then
-# retry only missing or failed outputs with a single active job.
-assets-resilient:
+# Release builds run the deterministic three-rule chain first: make clean,
+# then all-experiments-fetch (Natural Earth, astro, orbiting, atoll evidence,
+# and the JAXA P-Tree trust anchor and data), then all-experiments. Generation
+# therefore never starts with stale, partial, or missing vendor data.
+assets-resilient: all-experiments
 	+status=0; \
 	$(MAKE) --no-print-directory \
 		--keep-going \

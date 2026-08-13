@@ -359,10 +359,11 @@ release, or publication. Adding an experiment to this aggregate never changes
 its lifecycle. The GPU-control builder consumes the frozen Stage 14
 full-PNG parents, so `all-experiments` builds any missing parents from the
 standard generation graph before rendering controls. Run
-`make all-experiments-fetch` first on a fresh host; that separate target
-fetches and updates the external experimental sources — Natural Earth, astro,
-orbiting, atoll evidence, and the JAXA P-Tree trust anchor and data — without
-adding a fetch target to the aggregate registry itself.
+`make all-experiments` on a fresh host: it runs the deterministic three-rule
+chain automatically — `make clean`, then `make all-experiments-fetch` (Natural
+Earth, astro, orbiting, atoll evidence, and the JAXA P-Tree trust anchor and
+data), then the eight experiment builders — without adding a fetch target to
+the aggregate registry itself.
 
 
 ## Closed staging record

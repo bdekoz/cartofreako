@@ -105,6 +105,13 @@ make assets-resilient
 make ASSET_JOBS=4 assets-resilient  # only after sizing the host for four jobs
 ```
 
+`assets-resilient` first runs the deterministic three-rule chain: `make
+clean`, then `make all-experiments-fetch` (Natural Earth, astro, orbiting,
+atoll evidence, and the JAXA P-Tree trust anchor and data), then `make
+all-experiments`. Generation therefore always starts from a clean tree with
+every external experimental source fetched and updated, so a release build
+never fails mid-graph for missing vendor data.
+
 `ASSET_JOBS` affects only the keep-going first pass; the completion pass is
 always serial. PDF and PNG exports write a process-specific temporary file,
 require a nonempty result, and atomically rename it over the destination.
