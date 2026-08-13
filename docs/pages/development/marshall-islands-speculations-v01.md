@@ -9,10 +9,12 @@ context:
   source_section: Marshall Islands — one-to-five projection and slice iterations
   evidence_status: OBSERVED_REPORT_CONTEXT_PLUS_INFERRED_RENDER_PLAN
   evidence_boundary: >-
-    Public Cartofreako source, generated assets v13, Natural Earth 1:10m,
-    public Marshall Islands research context named in the report, and the
-    current user-authored workflow direction; no private-project knowledge,
-    community authorization, engineering sufficiency, or patent conclusion.
+    Public Cartofreako source, locally generated assets (cloud-atmosphere
+    plates built from JAXA P-Tree vendor data through the repository
+    fetch/prepare pipeline), Natural Earth 1:10m, public Marshall Islands
+    research context named in the report, and the current user-authored
+    workflow direction; no private-project knowledge, community
+    authorization, engineering sufficiency, or patent conclusion.
   best_existing_planetary_view: Dymaxion full water carrier
   best_existing_focused_slice: Cahill–Keyes ck-octant-1 native-cell mask
   recommended_three_view_set:
@@ -50,8 +52,8 @@ dyad_context_chain:
 public_inputs:
   cartofreako: https://github.com/bdekoz/cartofreako
   izzi: https://github.com/bdekoz/izzi
-  generated_assets_v13: https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/
-  release_marker: https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/release.json
+  cloud_atmosphere_vendor: JAXA P-Tree (assets.static/cloud-atmosphere/cloud-atmosphere-profile.json)
+  local_generated_assets: assets.generated/<projection>/{svg,png}/
   house_style_repository: https://github.com/bdekoz/devastation-pacific-house-style
 product_framing:
   phrase: AI-assisted atlas explorer
@@ -77,14 +79,16 @@ simplified_agent_prompt: >-
   SD-20260810-63556d72aeb8, SD-20260810-078a6ca6f7f3, and
   SD-20260810-5b303583417f. Treat markers as relevance and attribution
   metadata, never as transcript, consent, or legal findings. Verify the five
-  numbered PNGs against their declared source projection, slice kind, hash,
-  and limitation. Reproduce the renderer from public v13 S3 artifacts and
-  Natural Earth, then propose or render one clearly labeled revision for
-  collaborative review. Preserve the authoritative projection-ratio,
-  44-inch-leading-edge and A0 print products; keep all Marshall Islands views
-  speculative until invited local review and source-governed atoll evidence
-  exist. Do not infer a private project, endorsement, patentability, or
-  permission to publish.
+    numbered PNGs against their declared source projection, slice kind, hash,
+    and limitation. Reproduce the renderer from local generated assets and
+    Natural Earth; the cloud-atmosphere plates come from the JAXA P-Tree
+    vendor pipeline (`make fetch-cloud-atmosphere-data
+    prepare-cloud-atmosphere-data`), never from the UCB release base. Then
+    propose or render one clearly labeled revision for collaborative review.
+    Preserve the authoritative projection-ratio, 44-inch-leading-edge and A0
+    print products; keep all Marshall Islands views speculative until invited
+    local review and source-governed atoll evidence exist. Do not infer a
+    private project, endorsement, patentability, or permission to publish.
 outputs:
   - path: output/marshall-islands-speculations-v01/01-dymaxion-full-water-rmi-locator.png
     projection: dymaxion
@@ -117,6 +121,15 @@ outputs:
 
 [Development records](README.md) ·
 [AI-agent and screen-consumer plan](../runtime/ai-agent-and-1080p-gaming.md)
+
+## Local reproduction
+
+`make fetch-marshall-islands-sources` ensures the two cloud-atmosphere theme
+plates exist locally. When the prepared JAXA P-Tree snapshot is missing, the
+repository fetch/prepare targets run automatically from the vendor data
+(`make fetch-cloud-atmosphere-data prepare-cloud-atmosphere-data`), and the
+standard theme plates are built from the ordinary generation graph. The
+renderer itself is strictly local and never contacts the UCB release base.
 
 Audit-outcomes source: local delivery file
 `reports/cartofreako-audit-outcomes-01.pdf`, excluded from Git with other

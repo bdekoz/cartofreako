@@ -4,7 +4,6 @@ set -euo pipefail
 script_directory=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 repository_root=$(CDPATH= cd -- "$script_directory/.." && pwd)
 output_directory=${1:-$repository_root/output/marshall-islands-speculations-v01}
-public_base=${CARTOFREAKO_V13_PUBLIC_BASE:-https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13}
 natural_earth_directory=$repository_root/assets.static/natural-earth/10m-physical-vectors
 font_regular=Atkinson-Hyperlegible-Next-Regular
 font_bold=Atkinson-Hyperlegible-Next-Bold
@@ -20,7 +19,7 @@ expected_outputs=(
   05-majuro-local-azimuthal-equidistant.png
 )
 
-for command_name in curl gzip identify inkscape jq magick montage ogr2ogr; do
+for command_name in identify inkscape jq magick montage node ogr2ogr; do
   command -v "$command_name" >/dev/null 2>&1 || {
     printf 'missing required command: %s\n' "$command_name" >&2
     exit 2
@@ -72,10 +71,9 @@ resolve_png()
     resolved_path=$local_path
     return
   fi
-  resolved_path=$work_directory/sources/$filename
-  curl --silent --show-error --fail --location \
-    "$public_base/tree/$projection/png/$filename" \
-    --output "$resolved_path"
+  printf 'missing local generated PNG: %s\n' "$local_path" >&2
+  printf '%s\n' 'run make render-marshall-islands-speculations-v01; it builds standard sources and fetches the JAXA P-Tree vendor data for the cloud-atmosphere plates first' >&2
+  exit 2
 }
 
 resolve_svg()
@@ -87,12 +85,9 @@ resolve_svg()
     resolved_path=$local_path
     return
   fi
-  local compressed=$work_directory/sources/$filename.gz
-  resolved_path=$work_directory/sources/$filename
-  curl --silent --show-error --fail --location \
-    "$public_base/tree/$projection/svg/$filename.gz" \
-    --output "$compressed"
-  gzip --decompress --keep --force "$compressed"
+  printf 'missing local generated SVG: %s\n' "$local_path" >&2
+  printf '%s\n' 'run make render-marshall-islands-speculations-v01; it builds standard sources and fetches the JAXA P-Tree vendor data for the cloud-atmosphere plates first' >&2
+  exit 2
 }
 
 add_landscape_header()

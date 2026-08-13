@@ -990,6 +990,7 @@ PUBLIC_TARGETS := all all-experiments assets-single assets-resilient \
 	install-jaxa-certificate \
 	fetch-natural-earth-10m fetch-astro-data fetch-orbiting-data \
 	fetch-cloud-atmosphere-data prepare-cloud-atmosphere-data \
+	fetch-marshall-islands-sources \
 	verify-cloud-atmosphere-data \
 	fetch-anthropocene-data prepare-anthropocene-data \
 	fetch-anthropocene-particulate-data \
@@ -1184,10 +1185,23 @@ check-print-contract: $(PRINT_CONTRACT) $(PRINT_CONTRACT_CHECKER) \
 	"bash" "$(PRINT_PDF_CHECKER)" "$(PRINT_CONTRACT)"
 
 render-marshall-islands-speculations-v01: wasm-projections \
-		$(NATURAL_EARTH_STAMP) \
+		$(NATURAL_EARTH_STAMP) fetch-marshall-islands-sources \
+		$(GENERATED_DIR)/dymaxion/png/water-dymaxion-44-20.78461.png \
+		$(GENERATED_DIR)/cahill-keyes/svg/water-ck-44-22.svg \
+		$(GENERATED_DIR)/cahill-keyes/svg/resources-fauna-coral-reef-threat-2011-ck-44-22.svg \
+		$(GENERATED_DIR)/cahill-keyes/svg/fiber-synthesized-ck-44-22.svg \
+		$(GENERATED_DIR)/cahill-keyes/svg/resources-human-population-under-30-2024-ck-44-22.svg \
+		$(GENERATED_DIR)/star-x/png/anthropocene-temperature-2026-star-x-34-44.png \
+		$(GENERATED_DIR)/star-x/png/fiber-synthesized-star-x-34-44.png \
+		$(GENERATED_DIR)/star-x/png/water-star-x-34-44.png \
 		scripts/render-marshall-islands-speculations-v01.sh \
 		scripts/render-marshall-islands-speculations-v01.mjs
 	"scripts/render-marshall-islands-speculations-v01.sh"
+
+MARSHALL_CLOUD_SVG := $(GENERATED_DIR)/cahill-keyes/svg/cloud-atmosphere-ck-44-22.svg
+MARSHALL_CLOUD_PNG := $(GENERATED_DIR)/star-x/png/cloud-atmosphere-star-x-34-44.png
+
+fetch-marshall-islands-sources: $(MARSHALL_CLOUD_SVG) $(MARSHALL_CLOUD_PNG)
 
 render-equal-earth-positioning-v01: wasm-projections \
 		check-equal-earth-projection \
@@ -2097,10 +2111,8 @@ verify-cloud-atmosphere-data: $(CLOUD_ATMOSPHERE_VERIFIER)
 	$(CLOUD_ATMOSPHERE_VERIFIER) "$(CLOUD_ATMOSPHERE_DATA_DIR)"
 
 $(CLOUD_ATMOSPHERE_GEOJSON):
-	@printf '%s\n' \
-		'missing prepared cloud-atmosphere snapshot: $@' \
-		'run make fetch-cloud-atmosphere-data prepare-cloud-atmosphere-data' >&2
-	@exit 1
+	"$(MAKE)" --no-print-directory fetch-cloud-atmosphere-data
+	"$(MAKE)" --no-print-directory prepare-cloud-atmosphere-data
 
 fetch-orbiting-data: $(ORBITING_FETCHER) $(ORBITING_PROFILE)
 	$(ORBITING_FETCHER) "$(ORBITING_DATA_DIR)"
