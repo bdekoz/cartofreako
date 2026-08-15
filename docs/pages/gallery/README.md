@@ -42,6 +42,12 @@ contact sheets retain every pass and the same PNG, SVG, and PDF choices.
     <nav class="artifact-actions" aria-label="Dymaxion water formats"><a href="{{ release_base }}/tree/dymaxion/png/water-dymaxion-44-20.78461.png">Full PNG</a><a href="{{ release_base }}/viewer.html?asset=dymaxion/svg/water-dymaxion-44-20.78461.svg.gz">Layered SVG</a><a href="{{ release_base }}/tree/dymaxion/pdf/water-dymaxion-44-20.78461.pdf">Print PDF</a></nav>
   </figure>
   <figure class="gallery-card">
+    <h3><a href="cahill-keyes.html#projection-foundations">Earth and water</a></h3>
+    <a href="{{ release_base }}/tree/cahill-keyes/png/water-ck-44-22.png"><img loading="lazy" decoding="async" src="{{ release_base }}/tree/cahill-keyes/thumbnail/water-ck-44-22.png" width="480" alt="Cahill–Keyes water v13 preview"></a>
+    <figcaption>Water · Cahill–Keyes</figcaption>
+    <nav class="artifact-actions" aria-label="Cahill–Keyes water formats"><a href="{{ release_base }}/tree/cahill-keyes/png/water-ck-44-22.png">Full PNG</a><a href="{{ release_base }}/viewer.html?asset=cahill-keyes/svg/water-ck-44-22.svg.gz">Layered SVG</a><a href="{{ release_base }}/tree/cahill-keyes/pdf/water-ck-44-22.pdf">Print PDF</a></nav>
+  </figure>
+  <figure class="gallery-card">
     <h3><a href="authagraph.html#sky-and-orbital-passes">Sky and orbit</a></h3>
     <a href="{{ release_base }}/tree/authagraph/png/astro-observer-hubble-authagraph-44-19.052559.png"><img loading="lazy" decoding="async" src="{{ release_base }}/tree/authagraph/thumbnail/astro-observer-hubble-authagraph-44-19.052559.png" width="480" alt="AuthaGraph Hubble observer astronomy v13 preview"></a>
     <figcaption>Hubble observer · AuthaGraph</figcaption>
