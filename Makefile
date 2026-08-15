@@ -951,6 +951,7 @@ RESOURCE_METRIC_PUBLIC_TARGETS := \
 			generate-$(stem)-$(projection)))
 
 PUBLIC_TARGETS := all all-experiments all-experiments-fetch \
+	all-experiments-resilient all-resilient \
 	assets-single assets-resilient \
 	check check-docs check-all-experiments \
 	check-print-contract check-pass-status \
@@ -1180,6 +1181,12 @@ all-experiments-fetch: clean fetch-natural-earth-10m \
 	@printf '%s\n' \
 		'Cleaned, then fetched and updated every external experimental source.'
 
+all-experiments-resilient: all-experiments-fetch
+	+$(MAKE) --no-print-directory all-resilient
+	+$(MAKE) --no-print-directory $(NON_RELEASE_EXPERIMENT_TARGETS)
+	@printf '%s\n' \
+		'all-experiments-resilient gate passed.'
+
 check-all-experiments: tests/check-all-experiments.sh Makefile
 	"tests/check-all-experiments.sh"
 
@@ -1222,8 +1229,10 @@ render-equal-earth-positioning-v01: wasm-projections \
 
 # GitHub publication and a UCB Active Archive Object Storage deposit are
 # intentionally separate operations. There is no umbrella `release` target,
-# and neither target depends on the other.
-release-github:
+# and neither target depends on the other.  Both share the same release gate:
+# all-experiments-resilient must complete clean, fetch, the resilient full
+# asset build, and every experiment before either release target proceeds.
+release-github: all-experiments-resilient
 	@test -n "$(GITHUB_RELEASE_TAG)" || { \
 		printf '%s\n' 'GITHUB_RELEASE_TAG is required.' >&2; exit 2; }
 	@test -n "$(GITHUB_RELEASE_TITLE)" || { \
@@ -1257,8 +1266,9 @@ release-github:
 
 # This target must be the sole, directly requested top-level goal and must own
 # an interactive terminal. Cartofreako supplies release identity; the shared
-# alpha60-clusterops engine owns credentials, transfer, and verification.
-release-ucb-aao-s3:
+# alpha60-clusterops engine owns credentials, transfer, and verification.  The
+# all-experiments-resilient gate runs first, exactly as for release-github.
+release-ucb-aao-s3: all-experiments-resilient
 	@test "$(MAKELEVEL)" = 0 || { \
 		printf '%s\n' 'release-ucb-aao-s3 must be invoked by a human at the top level.' >&2; \
 		exit 2; }
@@ -3101,11 +3111,12 @@ all: $(GENERATED_ARTIFACTS)
 assets-single:
 	+$(MAKE) --no-print-directory --jobs=1 all
 
-# Release builds run the deterministic three-rule chain first: make clean,
-# then all-experiments-fetch (Natural Earth, astro, orbiting, atoll evidence,
-# and the JAXA P-Tree trust anchor and data), then all-experiments. Generation
-# therefore never starts with stale, partial, or missing vendor data.
-assets-resilient: all-experiments
+# all-resilient is the resilient full-asset build: a parallel keep-going pass
+# at ASSET_JOBS (tolerating the documented 0|2 exit statuses), followed by a
+# single-job pass so the final generated graph is complete and deterministic.
+# It is the middle step of the release gate all-experiments-resilient and of
+# the legacy assets-resilient target.
+all-resilient:
 	+status=0; \
 	$(MAKE) --no-print-directory \
 		--keep-going \
@@ -3122,6 +3133,12 @@ assets-resilient: all-experiments
 		--output-sync=target \
 		PNG_LONG_SIDE=$(PNG_LONG_SIDE) \
 		all
+
+# Legacy resilient-assets entry point: experiments first, then the resilient
+# full-asset build.  New release flows should use all-experiments-resilient,
+# which runs clean and fetch, the resilient build, then experiments, and is
+# the shared gate for both release targets.
+assets-resilient: all-experiments all-resilient
 
 clean-failed-generated:
 	@if test -d "$(GENERATED_DIR)"; then \
