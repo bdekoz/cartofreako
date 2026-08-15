@@ -79,7 +79,9 @@ download_file()
   fi
 
   printf 'fetching USGS package %s (%s bytes)\n' "$filename" "$expected_size"
-  curl --silent --show-error --fail --location --continue-at - \
+  # ScienceBase does not support byte ranges, so always fetch fresh into the
+  # .part file (curl truncates any stale partial) and verify before renaming.
+  curl --silent --show-error --fail --location \
     --retry 20 --retry-all-errors --retry-delay 2 \
     --connect-timeout 30 --max-time 0 -A "$user_agent" \
     "$url" --output "$partial"
@@ -106,13 +108,16 @@ fetch_catalog 5ba9511ee4b08583a5ca09fe "$inundation_catalog"
 
 download_file "$tbdem_catalog" Majuro_TBDEM_Data.zip 2355022535 md5 \
   16b35677ba01331845285e178599b4ea
+# ScienceBase's checksum field for this file claims
+# 1e42997bdc5665c7d63401b9e17cdd91, but the bytes it serves hash to the MD5
+# below.  The frozen value matches the served file inspected on 2026-08-14.
+download_file "$tbdem_catalog" majuro_tbdem_metadata.xml 56855 md5 \
+  12d44fdde772138e564f7a13d7915064
 # ScienceBase publishes no checksum for this archive.  The SHA-256 below
 # freezes the public 80,927,783-byte package inspected on 2026-08-10.
 download_file "$inundation_catalog" Inundation_Exposure_Raster_Layers.zip \
   80927783 sha256 \
   6aea7d5b545825a83a9ab198af8695eeaf4cad507e69538b8dc684764e9f1818
-download_file "$tbdem_catalog" majuro_tbdem_metadata.xml 56855 md5 \
-  1e42997bdc5665c7d63401b9e17cdd91
 download_file "$inundation_catalog" \
   Inundation_Exposure_FGDC_Metadata_Final_Clean.xml 26031 md5 \
   0ef769b294578b81b469300d30c2b102
