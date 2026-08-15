@@ -8,12 +8,12 @@
     "section": "12.1.1 User relevance marker — snapshot dyad"
   },
   "current_state": {
-    "marker_id": "SD-20260815-f649a249",
+    "marker_id": "SD-20260815-ef89f14f",
     "marker_state": "active",
-    "storage_state": "checked-in",
+    "storage_state": "local-only",
     "evidence_status": "OBSERVED",
     "target_scope": "current-exchange",
-    "local_only": false,
+    "local_only": true,
     "transcript_included": false
   },
   "records": [
@@ -4870,6 +4870,35 @@
       "target_scope": "current-exchange",
       "marker_state": "active",
       "storage_state": "checked-in"
+    },
+    {
+      "event_id": "SD-EVENT-20260815-ef89f14f",
+      "event_type": "creation",
+      "marker_id": "SD-20260815-ef89f14f",
+      "exact_instruction_source": "snapshot dyad",
+      "actor": "user",
+      "date": "2026-08-15",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-15T18:58:06Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Current exchange containing the human-authored labeled instruction `snapshot dyad` after the 217-artifact gate run: the resilient build completed locally with the renamed Network Fiber/Network CDN passes and the new Network Groundstations pass; the Myriahedral path-densification fix (bd0e6ff), standard-manifest refresh (c45bf69), Stage 15A freeze advance to c45bf69 at 217 artifacts (0f1df46), and stale fiber-basename fixes in the Marshall Islands render wiring (5c019ad) were committed and pushed. The local experiments phase was stopped after repeated portal-timeout stalls and handed off to eureka per the user's contingency; eureka then reported four astronomy static files missing from its working tree, which no commit in main ever deleted (restore via git restore). Platform message identifiers and the exact user-message timestamp are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "boundary_start_reference": "current-exchange:user:standalone-snapshot-dyad-instruction:SD-20260815-ef89f14f",
+      "boundary_end_reference": "current-exchange:assistant:marker-confirmation:SD-20260815-ef89f14f",
+      "supplied_focus": "UNAVAILABLE",
+      "scope_label_or_unavailable": "UNAVAILABLE \u2014 no label was supplied.",
+      "marker_state": "active",
+      "storage_state": "local-only",
+      "evidence_status": "OBSERVED",
+      "local_only": true,
+      "transcript_included": false,
+      "consent_established": false,
+      "transfer_authorized": false,
+      "failure_loop_complete": false,
+      "evaluation_or_training_suitability_established": false,
+      "provider_selection_or_use_established": false,
+      "value_or_payment_established": false
     }
   ]
 }
