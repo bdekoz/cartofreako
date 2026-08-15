@@ -11,7 +11,10 @@ const exec = promisify(execFile);
 const root = path.resolve(new URL('..', import.meta.url).pathname);
 const manifest = JSON.parse(await fs.readFile(path.join(
     root, 'fixtures/atoll-evidence/v1/pass-manifest.json'), 'utf8'));
-const browser = process.env.WEB_BROWSER || 'google-chrome';
+const browserCandidates = [
+    'google-chrome', 'google-chrome-stable', 'chromium',
+    'chromium-browser', 'chrome'
+];
 
 function requireCondition(condition, message) {
     if (!condition) throw new Error(message);
@@ -27,6 +30,56 @@ async function command(program, commandArguments) {
     } catch (error) {
         throw new Error(`${program} failed (${error.code ?? 'unknown'}): ${error.stderr ?? error.message}`);
     }
+}
+
+async function browserAvailable(candidate) {
+    if (!candidate) return false;
+    try {
+        await command(candidate, ['--version']);
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
+
+async function resolveBrowser() {
+    if (process.env.WEB_BROWSER) return process.env.WEB_BROWSER;
+    for (const candidate of browserCandidates) {
+        if (await browserAvailable(candidate)) return candidate;
+    }
+    return null;
+}
+
+const inkScapeRunner = path.join(root, 'scripts/run-inkscape.sh');
+
+async function exportSvg(svg, png, pdf, dimensions) {
+    // Inkscape fallback: deterministic SVG raster and PDF export using the
+    // same isolated-bus runner as the standard projection pipeline.
+    const temporary = path.dirname(png);
+    const pngOutput = path.join(temporary, 'export.png');
+    const pdfOutput = path.join(temporary, 'export.pdf');
+    const args = ['--export-type=png', '--export-area-page',
+        '--export-background=white', '--export-background-opacity=255',
+        '--export-filename=' + pngOutput];
+    if (dimensions.width >= dimensions.height) {
+        args.push('--export-width=' + dimensions.width);
+    } else {
+        args.push('--export-height=' + dimensions.height);
+    }
+    args.push(svg);
+    await command(inkScapeRunner, ['inkscape', ...args]);
+    await command(inkScapeRunner, ['inkscape', '--export-type=pdf',
+        '--export-area-page', '--export-filename=' + pdfOutput, svg]);
+    const [pngBytes, pdfBytes] = await Promise.all([
+        fs.readFile(pngOutput), fs.readFile(pdfOutput)
+    ]);
+    requireCondition(pngBytes.subarray(0, 8).equals(
+        Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])),
+    'Inkscape export did not produce a PNG');
+    requireCondition(pdfBytes.subarray(0, 5).toString() === '%PDF-',
+        'Inkscape export did not produce a PDF');
+    await fs.copyFile(pngOutput, png);
+    await fs.copyFile(pdfOutput, pdf);
 }
 
 function rasterDimensions(page) {
@@ -65,6 +118,10 @@ function pngDimensions(data) {
 const temporary = await fs.mkdtemp(
     path.join(os.tmpdir(), 'cartofreako-majuro-export.'));
 try {
+    const browser = await resolveBrowser();
+    console.log(browser
+        ? `Majuro export browser: ${browser}`
+        : 'Majuro export browser: none; using Inkscape fallback');
     for (const layout of manifest.layouts) {
         const svg = path.join(root, layout.artifacts.svg);
         const png = path.join(root, layout.artifacts.png);
@@ -78,30 +135,36 @@ try {
             `${layout.id}-thumbnail.png`);
         const profile = path.join(temporary, `profile-${layout.id}`);
         await fs.writeFile(page, html(svg, layout.page), 'utf8');
-        await command(browser, [
-            '--headless=new', '--no-sandbox', '--disable-gpu',
-            '--hide-scrollbars', '--allow-file-access-from-files',
-            '--force-device-scale-factor=1',
-            '--run-all-compositor-stages-before-draw',
-            '--virtual-time-budget=2500', `--user-data-dir=${profile}`,
-            `--window-size=${dimensions.width},${dimensions.height}`,
-            `--screenshot=${temporaryPng}`, pathToFileURL(page).href
-        ]);
+        if (browser) {
+            await command(browser, [
+                '--headless=new', '--no-sandbox', '--disable-gpu',
+                '--hide-scrollbars', '--allow-file-access-from-files',
+                '--force-device-scale-factor=1',
+                '--run-all-compositor-stages-before-draw',
+                '--virtual-time-budget=2500', `--user-data-dir=${profile}`,
+                `--window-size=${dimensions.width},${dimensions.height}`,
+                `--screenshot=${temporaryPng}`, pathToFileURL(page).href
+            ]);
+        } else {
+            await exportSvg(svg, temporaryPng, temporaryPdf, dimensions);
+        }
         const actual = pngDimensions(await fs.readFile(temporaryPng));
         requireCondition(actual.width === dimensions.width
             && actual.height === dimensions.height,
         `${layout.id} PNG dimensions are ${actual.width}x${actual.height}`);
         await fs.rm(profile, {recursive: true, force: true});
-        await command(browser, [
-            '--headless=new', '--no-sandbox', '--disable-gpu',
-            '--allow-file-access-from-files', '--no-pdf-header-footer',
-            '--run-all-compositor-stages-before-draw',
-            '--virtual-time-budget=2500', `--user-data-dir=${profile}`,
-            `--print-to-pdf=${temporaryPdf}`, pathToFileURL(page).href
-        ]);
-        const pdfBytes = await fs.readFile(temporaryPdf);
-        requireCondition(pdfBytes.subarray(0, 5).toString() === '%PDF-',
-            `${layout.id} export did not produce a PDF`);
+        if (browser) {
+            await command(browser, [
+                '--headless=new', '--no-sandbox', '--disable-gpu',
+                '--allow-file-access-from-files', '--no-pdf-header-footer',
+                '--run-all-compositor-stages-before-draw',
+                '--virtual-time-budget=2500', `--user-data-dir=${profile}`,
+                `--print-to-pdf=${temporaryPdf}`, pathToFileURL(page).href
+            ]);
+            const pdfBytes = await fs.readFile(temporaryPdf);
+            requireCondition(pdfBytes.subarray(0, 5).toString() === '%PDF-',
+                `${layout.id} export did not produce a PDF`);
+        }
         await command('magick', [temporaryPng, '-filter', 'Lanczos',
             '-resize', '480x', '-strip', '-depth', '8',
             '-define', 'png:compression-level=9',
