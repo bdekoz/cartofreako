@@ -8,12 +8,12 @@
     "section": "12.1.1 User relevance marker — snapshot dyad"
   },
   "current_state": {
-    "marker_id": "SD-20260815-ef89f14f",
+    "marker_id": "SD-20260815-cf419764",
     "marker_state": "active",
-    "storage_state": "local-only",
+    "storage_state": "checked-in",
     "evidence_status": "OBSERVED",
     "target_scope": "current-exchange",
-    "local_only": true,
+    "local_only": false,
     "transcript_included": false
   },
   "records": [
@@ -2468,8 +2468,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-e704528d",
       "event_type": "creation",
@@ -2498,8 +2497,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-8af125fb",
       "event_type": "storage-state-change",
@@ -2531,8 +2529,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-e61f77df",
       "event_type": "creation",
@@ -2561,8 +2558,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-1efb0233",
       "event_type": "creation",
@@ -2591,8 +2587,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-21b59137",
       "event_type": "creation",
@@ -2621,8 +2616,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-d4cd001a",
       "event_type": "creation",
@@ -2650,8 +2644,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-dca122ef",
       "event_type": "storage-state-change",
@@ -2683,8 +2676,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-04737d0b",
       "event_type": "storage-state-change",
@@ -2716,8 +2708,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-b68e2335",
       "event_type": "storage-state-change",
@@ -2749,8 +2740,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-04a177b5",
       "event_type": "creation",
@@ -2779,8 +2769,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-c994d643",
       "event_type": "creation",
@@ -2809,8 +2798,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-35f862ca",
       "event_type": "storage-state-change",
@@ -2842,8 +2830,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-9cc6a126",
       "event_type": "storage-state-change",
@@ -2875,8 +2862,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-ee5e35c7",
       "event_type": "creation",
@@ -2905,8 +2891,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-d04a859c",
       "event_type": "creation",
@@ -2935,8 +2920,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-bee056cb",
       "event_type": "storage-state-change",
@@ -2968,8 +2952,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-5bfb006d",
       "event_type": "storage-state-change",
@@ -3001,8 +2984,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-4d327962",
       "event_type": "creation",
@@ -3031,8 +3013,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-286ca22e",
       "event_type": "creation",
@@ -3061,8 +3042,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-6440a010",
       "event_type": "creation",
@@ -3091,8 +3071,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-72842861",
       "event_type": "storage-state-change",
@@ -3124,8 +3103,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-21fbc71e",
       "event_type": "storage-state-change",
@@ -3157,8 +3135,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-b17406ef",
       "event_type": "storage-state-change",
@@ -3190,8 +3167,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-7d989742",
       "event_type": "creation",
@@ -3220,8 +3196,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-3df62925",
       "event_type": "creation",
@@ -3252,8 +3227,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-c8b1c062",
       "event_type": "storage-state-change",
@@ -3285,8 +3259,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-4852fe39",
       "event_type": "creation",
@@ -3315,8 +3288,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-50ada36a",
       "event_type": "storage-state-change",
@@ -3348,8 +3320,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-243e6d73",
       "event_type": "creation",
@@ -3378,8 +3349,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-b43f59b3",
       "event_type": "creation",
@@ -3408,8 +3378,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-93a465e4",
       "event_type": "storage-state-change",
@@ -3441,8 +3410,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260813-9319f565",
       "event_type": "storage-state-change",
@@ -3474,8 +3442,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-deaffa7b",
       "event_type": "creation",
@@ -3504,8 +3471,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-1b197f39",
       "event_type": "creation",
@@ -3536,8 +3502,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-9ca73dc8",
       "event_type": "storage-state-change",
@@ -3569,8 +3534,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-02201c45",
       "event_type": "storage-state-change",
@@ -3602,8 +3566,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-8a8bd482",
       "event_type": "creation",
@@ -3632,8 +3595,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-736d306c",
       "event_type": "creation",
@@ -3664,8 +3626,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-9615ef77",
       "event_type": "creation",
@@ -3694,8 +3655,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-2b76c3b8",
       "event_type": "creation",
@@ -3726,8 +3686,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-7eac9a7a",
       "event_type": "creation",
@@ -3756,8 +3715,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-235088c5",
       "event_type": "storage-state-change",
@@ -3789,8 +3747,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-6429d945",
       "event_type": "storage-state-change",
@@ -3822,8 +3779,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-07691564",
       "event_type": "storage-state-change",
@@ -3855,8 +3811,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-be5746d5",
       "event_type": "storage-state-change",
@@ -3888,8 +3843,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-950bdbce",
       "event_type": "storage-state-change",
@@ -3921,8 +3875,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-ab22c64f",
       "event_type": "creation",
@@ -3953,8 +3906,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-d09ad266",
       "event_type": "storage-state-change",
@@ -3986,8 +3938,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-d2ce0e09",
       "event_type": "creation",
@@ -4016,8 +3967,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-e1f90a2c",
       "event_type": "storage-state-change",
@@ -4049,8 +3999,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-c10bac7c",
       "event_type": "creation",
@@ -4081,8 +4030,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-aef31c7f",
       "event_type": "storage-state-change",
@@ -4114,8 +4062,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-4c366cf9",
       "event_type": "creation",
@@ -4144,8 +4091,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-9d2151ca",
       "event_type": "creation",
@@ -4176,8 +4122,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-1f4ff35e",
       "event_type": "storage-state-change",
@@ -4209,8 +4154,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-2bdd3fd4",
       "event_type": "creation",
@@ -4239,8 +4183,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-8b32b956",
       "event_type": "creation",
@@ -4271,8 +4214,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-63addfd2",
       "event_type": "storage-state-change",
@@ -4304,8 +4246,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-c9efaaeb",
       "event_type": "creation",
@@ -4334,8 +4275,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-a177baed",
       "event_type": "creation",
@@ -4366,8 +4306,7 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
-    }
-    ,
+    },
     {
       "event_id": "SD-EVENT-20260814-8eeba685",
       "event_type": "storage-state-change",
@@ -4566,7 +4505,7 @@
       "boundary_start_reference": "current-exchange:user:standalone-snapshot-dyad-instruction:SD-20260814-921298ae",
       "boundary_end_reference": "current-exchange:assistant:marker-confirmation:SD-20260814-921298ae",
       "supplied_focus": "UNAVAILABLE",
-      "scope_label_or_unavailable": "UNAVAILABLE \u2014 no label was supplied.",
+      "scope_label_or_unavailable": "UNAVAILABLE — no label was supplied.",
       "marker_state": "active",
       "storage_state": "local-only",
       "evidence_status": "OBSERVED",
@@ -4722,7 +4661,7 @@
       "boundary_start_reference": "current-exchange:user:standalone-snapshot-dyad-instruction:SD-20260814-9d68ddfe",
       "boundary_end_reference": "current-exchange:assistant:marker-confirmation:SD-20260814-9d68ddfe",
       "supplied_focus": "UNAVAILABLE",
-      "scope_label_or_unavailable": "UNAVAILABLE \u2014 no label was supplied.",
+      "scope_label_or_unavailable": "UNAVAILABLE — no label was supplied.",
       "marker_state": "active",
       "storage_state": "local-only",
       "evidence_status": "OBSERVED",
@@ -4767,7 +4706,7 @@
       "boundary_start_reference": "current-exchange:user:standalone-snapshot-dyad-instruction:SD-20260814-08c7815b",
       "boundary_end_reference": "current-exchange:assistant:marker-confirmation:SD-20260814-08c7815b",
       "supplied_focus": "UNAVAILABLE",
-      "scope_label_or_unavailable": "UNAVAILABLE \u2014 no label was supplied.",
+      "scope_label_or_unavailable": "UNAVAILABLE — no label was supplied.",
       "marker_state": "active",
       "storage_state": "local-only",
       "evidence_status": "OBSERVED",
@@ -4887,6 +4826,64 @@
       "boundary_start_reference": "current-exchange:user:standalone-snapshot-dyad-instruction:SD-20260815-ef89f14f",
       "boundary_end_reference": "current-exchange:assistant:marker-confirmation:SD-20260815-ef89f14f",
       "supplied_focus": "UNAVAILABLE",
+      "scope_label_or_unavailable": "UNAVAILABLE — no label was supplied.",
+      "marker_state": "active",
+      "storage_state": "local-only",
+      "evidence_status": "OBSERVED",
+      "local_only": true,
+      "transcript_included": false,
+      "consent_established": false,
+      "transfer_authorized": false,
+      "failure_loop_complete": false,
+      "evaluation_or_training_suitability_established": false,
+      "provider_selection_or_use_established": false,
+      "value_or_payment_established": false
+    },
+    {
+      "event_id": "SD-EVENT-20260815-b2c622d8",
+      "event_type": "creation",
+      "marker_id": "SD-20260815-b2c622d8",
+      "exact_instruction_source": "snapshot dyad begin",
+      "actor": "user",
+      "date": "2026-08-15",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-15T19:23:35Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Current exchange containing the human-authored labeled instruction `snapshot dyad begin` after the user opened this repository-editing exchange in the Devastation Pacific house-style workspace (the first message was a bare `/` with no content). The label is preserved as an analytical focus hint and does not alter the marker boundary or authority. Platform message identifiers and the exact user-message timestamp are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "boundary_start_reference": "current-exchange:user:labeled-snapshot-dyad-instruction:SD-20260815-b2c622d8",
+      "boundary_end_reference": "current-exchange:assistant:marker-confirmation:SD-20260815-b2c622d8",
+      "supplied_focus": "begin",
+      "scope_label_or_unavailable": "begin",
+      "marker_state": "active",
+      "storage_state": "local-only",
+      "evidence_status": "OBSERVED",
+      "local_only": true,
+      "transcript_included": false,
+      "consent_established": false,
+      "transfer_authorized": false,
+      "failure_loop_complete": false,
+      "evaluation_or_training_suitability_established": false,
+      "provider_selection_or_use_established": false,
+      "value_or_payment_established": false
+    },
+    {
+      "event_id": "SD-EVENT-20260815-89e95812",
+      "event_type": "creation",
+      "marker_id": "SD-20260815-89e95812",
+      "exact_instruction_source": "snapshot dyad",
+      "actor": "user",
+      "date": "2026-08-15",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-15T19:29:48Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Current exchange containing the human-authored labeled instruction `snapshot dyad` while the eureka gate run failed at generate-anthropocene-water-debris-experiments with ERR_MODULE_NOT_FOUND for src.wasm/cartofreako-projections.mjs. Diagnosis: a parallel-make prerequisite gap, since the experiment scripts import the wasm projections module but their Make targets do not depend on wasm-projections; the local machine had pre-existing wasm artifacts so the race never surfaced there. The fix (adding wasm-projections prerequisites to the wasm-dependent experiment and consumer targets) is in progress and not yet committed. Platform message identifiers and the exact user-message timestamp are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "boundary_start_reference": "current-exchange:user:standalone-snapshot-dyad-instruction:SD-20260815-89e95812",
+      "boundary_end_reference": "current-exchange:assistant:marker-confirmation:SD-20260815-89e95812",
+      "supplied_focus": "UNAVAILABLE",
       "scope_label_or_unavailable": "UNAVAILABLE \u2014 no label was supplied.",
       "marker_state": "active",
       "storage_state": "local-only",
@@ -4899,6 +4896,220 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
+    },
+    {
+      "event_id": "SD-EVENT-20260815-6bb85ad5",
+      "event_type": "creation",
+      "marker_id": "SD-20260815-6bb85ad5",
+      "exact_instruction_source": "snapshot dyad",
+      "actor": "user",
+      "date": "2026-08-15",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-15T20:02:22Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Current exchange containing the human-authored labeled instruction `snapshot dyad` while investigating an incident on eureka (172.31.200.55): the host did not crash but became unresponsive during the gate's experiment phase, and was restored with `systemctl restart NetworkManager`; the user requested investigation of the dbus/NetworkManager failure. The gate's last logged activity was a pair of Inkscape exports under private dbus sessions. Platform message identifiers and the exact user-message timestamp are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "boundary_start_reference": "current-exchange:user:standalone-snapshot-dyad-instruction:SD-20260815-6bb85ad5",
+      "boundary_end_reference": "current-exchange:assistant:marker-confirmation:SD-20260815-6bb85ad5",
+      "supplied_focus": "UNAVAILABLE",
+      "scope_label_or_unavailable": "UNAVAILABLE \u2014 no label was supplied.",
+      "marker_state": "active",
+      "storage_state": "local-only",
+      "evidence_status": "OBSERVED",
+      "local_only": true,
+      "transcript_included": false,
+      "consent_established": false,
+      "transfer_authorized": false,
+      "failure_loop_complete": false,
+      "evaluation_or_training_suitability_established": false,
+      "provider_selection_or_use_established": false,
+      "value_or_payment_established": false
+    },
+    {
+      "event_id": "SD-EVENT-20260815-20c5bd93",
+      "event_type": "creation",
+      "marker_id": "SD-20260815-20c5bd93",
+      "exact_instruction_source": "snapshot dyad done",
+      "actor": "user",
+      "date": "2026-08-15",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-15T20:26:29Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Current exchange containing the human-authored labeled instruction `snapshot dyad done` after the SSH keepalive work completed on rizal, eureka, and ord: ClientAliveInterval 120 / ClientAliveCountMax 3 drop-ins applied and sshd restarted on all three, client ServerAliveInterval 120 set on eureka and ord (rizal already had it), the malformed scoped sudoers rule was replaced and verified, and the eureka gate experiments resumed under tmux (freeze passed at 217, generate-gpu-controls in progress). Platform message identifiers and the exact user-message timestamp are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "boundary_start_reference": "current-exchange:user:labeled-snapshot-dyad-instruction:SD-20260815-20c5bd93",
+      "boundary_end_reference": "current-exchange:assistant:marker-confirmation:SD-20260815-20c5bd93",
+      "supplied_focus": "done",
+      "scope_label_or_unavailable": "done",
+      "marker_state": "active",
+      "storage_state": "local-only",
+      "evidence_status": "OBSERVED",
+      "local_only": true,
+      "transcript_included": false,
+      "consent_established": false,
+      "transfer_authorized": false,
+      "failure_loop_complete": false,
+      "evaluation_or_training_suitability_established": false,
+      "provider_selection_or_use_established": false,
+      "value_or_payment_established": false
+    },
+    {
+      "event_id": "SD-EVENT-20260815-1ad98300",
+      "event_type": "creation",
+      "marker_id": "SD-20260815-1ad98300",
+      "paired_begin_marker_id": "SD-20260815-6bb85ad5",
+      "exact_instruction_source": "snapshot dyad end",
+      "actor": "user",
+      "date": "2026-08-15",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-15T20:26:40Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Current exchange containing the human-authored labeled instruction `snapshot dyad end` closing the boundary begun by SD-20260815-6bb85ad5, which covered the eureka dbus/NetworkManager incident investigation and the SSH keepalive remediation on rizal, eureka, and ord. The gate experiments resumed on eureka under tmux and are progressing with the Stage 15A freeze passed at 217 artifacts. Platform message identifiers and the exact user-message timestamp are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "boundary_start_reference": "current-exchange:user:labeled-snapshot-dyad-instruction:SD-20260815-6bb85ad5",
+      "boundary_end_reference": "current-exchange:assistant:marker-confirmation:SD-20260815-1ad98300",
+      "supplied_focus": "end",
+      "scope_label_or_unavailable": "end",
+      "marker_state": "active",
+      "storage_state": "local-only",
+      "evidence_status": "OBSERVED",
+      "local_only": true,
+      "transcript_included": false,
+      "consent_established": false,
+      "transfer_authorized": false,
+      "failure_loop_complete": false,
+      "evaluation_or_training_suitability_established": false,
+      "provider_selection_or_use_established": false,
+      "value_or_payment_established": false
+    },
+    {
+      "event_id": "SD-EVENT-20260815-cf419764",
+      "event_type": "creation",
+      "marker_id": "SD-20260815-cf419764",
+      "paired_begin_marker_id": "SD-20260815-1ad98300",
+      "exact_instruction_source": "snapshot dyad end",
+      "actor": "user",
+      "date": "2026-08-15",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-15T20:53:55Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Current exchange containing the human-authored labeled instruction `snapshot dyad end` closing the boundary begun by SD-20260815-1ad98300. The bounded exchange took the all-experiments-resilient gate to green on eureka: the Stage 15A freeze was re-advanced to eureka's corpus at c3263c1 after a cross-machine raster baseline mismatch, the Majuro exporter gained an Inkscape fallback (27daadf) so no browser is required, the wasm-prerequisite ordering fix (af16ccf) removed the clean-checkout experiment race, and all eight experiments plus the 217-artifact build passed. The eureka-built freeze baseline and evidence were published to origin/main (e006b3e). Platform message identifiers and the exact user-message timestamp are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "boundary_start_reference": "current-exchange:user:labeled-snapshot-dyad-instruction:SD-20260815-1ad98300",
+      "boundary_end_reference": "current-exchange:assistant:marker-confirmation:SD-20260815-cf419764",
+      "supplied_focus": "end",
+      "scope_label_or_unavailable": "end",
+      "marker_state": "active",
+      "storage_state": "local-only",
+      "evidence_status": "OBSERVED",
+      "local_only": true,
+      "transcript_included": false,
+      "consent_established": false,
+      "transfer_authorized": false,
+      "failure_loop_complete": false,
+      "evaluation_or_training_suitability_established": false,
+      "provider_selection_or_use_established": false,
+      "value_or_payment_established": false
+    },
+    {
+      "event_id": "SD-EVENT-20260815-10a45396",
+      "event_type": "storage-state-change",
+      "marker_id": "SD-20260815-ef89f14f",
+      "exact_instruction_source": "commit",
+      "actor": "user",
+      "date": "2026-08-15",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-15T20:55:45Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Ledger check-in of the local-only markers covering the gate-to-green work on eureka, per the standalone user commit instruction. Platform message identifiers are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "marker_state": "active",
+      "storage_state": "checked-in"
+    },
+    {
+      "event_id": "SD-EVENT-20260815-83d4ebdd",
+      "event_type": "storage-state-change",
+      "marker_id": "SD-20260815-89e95812",
+      "exact_instruction_source": "commit",
+      "actor": "user",
+      "date": "2026-08-15",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-15T20:55:45Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Ledger check-in of the local-only markers covering the gate-to-green work on eureka, per the standalone user commit instruction. Platform message identifiers are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "marker_state": "active",
+      "storage_state": "checked-in"
+    },
+    {
+      "event_id": "SD-EVENT-20260815-af36df8b",
+      "event_type": "storage-state-change",
+      "marker_id": "SD-20260815-6bb85ad5",
+      "exact_instruction_source": "commit",
+      "actor": "user",
+      "date": "2026-08-15",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-15T20:55:45Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Ledger check-in of the local-only markers covering the gate-to-green work on eureka, per the standalone user commit instruction. Platform message identifiers are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "marker_state": "active",
+      "storage_state": "checked-in"
+    },
+    {
+      "event_id": "SD-EVENT-20260815-0831fc4e",
+      "event_type": "storage-state-change",
+      "marker_id": "SD-20260815-20c5bd93",
+      "exact_instruction_source": "commit",
+      "actor": "user",
+      "date": "2026-08-15",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-15T20:55:45Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Ledger check-in of the local-only markers covering the gate-to-green work on eureka, per the standalone user commit instruction. Platform message identifiers are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "marker_state": "active",
+      "storage_state": "checked-in"
+    },
+    {
+      "event_id": "SD-EVENT-20260815-0b35abad",
+      "event_type": "storage-state-change",
+      "marker_id": "SD-20260815-1ad98300",
+      "exact_instruction_source": "commit",
+      "actor": "user",
+      "date": "2026-08-15",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-15T20:55:45Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Ledger check-in of the local-only markers covering the gate-to-green work on eureka, per the standalone user commit instruction. Platform message identifiers are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "marker_state": "active",
+      "storage_state": "checked-in"
+    },
+    {
+      "event_id": "SD-EVENT-20260815-ca9a5ee8",
+      "event_type": "storage-state-change",
+      "marker_id": "SD-20260815-cf419764",
+      "exact_instruction_source": "commit",
+      "actor": "user",
+      "date": "2026-08-15",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-15T20:55:45Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Ledger check-in of the local-only markers covering the gate-to-green work on eureka, per the standalone user commit instruction. Platform message identifiers are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "marker_state": "active",
+      "storage_state": "checked-in"
     }
   ]
 }
