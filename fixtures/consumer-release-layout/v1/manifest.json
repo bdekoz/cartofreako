@@ -16,8 +16,8 @@
   },
   "sourceInput": {
     "path": "fixtures/gpu-benchmark/v1/stage-14-inputs.json",
-    "sha256": "3686823b64138ba049ed990a83b4a78e38805faf5477bc6e729891a0265ef003",
-    "sourceCommit": "c45bf69877f80bff5149f5256d9d71b794bcd87b",
+    "sha256": "b3e6c23ecdfa20a05829fe3917305e0d094ba4de67537a47b3193975149b2dae",
+    "sourceCommit": "c3263c13a8df53dbe2ec1d89b59b11d67df8ab06",
     "artifactCount": 217
   },
   "partitions": [
@@ -139,14 +139,46 @@
     "screenWebp": "products/{lifecycle}/{projection}/screen-1080p/webp/{filename}"
   },
   "delivery": [
-    {"extension": ".json", "mediaType": "application/json", "contentEncoding": null},
-    {"extension": ".mjs", "mediaType": "text/javascript", "contentEncoding": null},
-    {"extension": ".wasm", "mediaType": "application/wasm", "contentEncoding": null},
-    {"extension": ".png", "mediaType": "image/png", "contentEncoding": null},
-    {"extension": ".webp", "mediaType": "image/webp", "contentEncoding": null},
-    {"extension": ".pdf", "mediaType": "application/pdf", "contentEncoding": null},
-    {"extension": ".svg.gz", "mediaType": "application/gzip", "contentEncoding": null},
-    {"extension": ".d.ts", "mediaType": "text/plain", "contentEncoding": null}
+    {
+      "extension": ".json",
+      "mediaType": "application/json",
+      "contentEncoding": null
+    },
+    {
+      "extension": ".mjs",
+      "mediaType": "text/javascript",
+      "contentEncoding": null
+    },
+    {
+      "extension": ".wasm",
+      "mediaType": "application/wasm",
+      "contentEncoding": null
+    },
+    {
+      "extension": ".png",
+      "mediaType": "image/png",
+      "contentEncoding": null
+    },
+    {
+      "extension": ".webp",
+      "mediaType": "image/webp",
+      "contentEncoding": null
+    },
+    {
+      "extension": ".pdf",
+      "mediaType": "application/pdf",
+      "contentEncoding": null
+    },
+    {
+      "extension": ".svg.gz",
+      "mediaType": "application/gzip",
+      "contentEncoding": null
+    },
+    {
+      "extension": ".d.ts",
+      "mediaType": "text/plain",
+      "contentEncoding": null
+    }
   ],
   "cachePolicy": {
     "immutablePayload": "public,max-age=31536000,immutable",
