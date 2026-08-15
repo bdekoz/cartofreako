@@ -1568,7 +1568,8 @@ check-consumer-release-layout: build-consumer-release-layout \
 fetch-atoll-evidence-data: scripts/fetch-atoll-evidence-data.sh
 	scripts/fetch-atoll-evidence-data.sh "$(ATOLL_EVIDENCE_DIR)"
 
-prepare-atoll-evidence-data: scripts/prepare-atoll-evidence-data.sh
+prepare-atoll-evidence-data: scripts/prepare-atoll-evidence-data.sh \
+		fetch-atoll-evidence-data
 	scripts/prepare-atoll-evidence-data.sh "$(ATOLL_EVIDENCE_DIR)"
 
 $(ATOLL_COORDINATE_FIXTURE): scripts/build-atoll-evidence-fixtures.mjs \
@@ -2123,7 +2124,7 @@ fetch-cloud-atmosphere-data: $(CLOUD_ATMOSPHERE_FETCHER) \
 
 prepare-cloud-atmosphere-data: $(CLOUD_ATMOSPHERE_PREPARER) \
 		$(CLOUD_ATMOSPHERE_PREPARATION_SCRIPT) \
-		$(CLOUD_ATMOSPHERE_PROFILE)
+		$(CLOUD_ATMOSPHERE_PROFILE) fetch-cloud-atmosphere-data
 	CLOUD_ATMOSPHERE_PREPARER="$(abspath $(CLOUD_ATMOSPHERE_PREPARER))" \
 		$(CLOUD_ATMOSPHERE_PREPARATION_SCRIPT) \
 		"$(CLOUD_ATMOSPHERE_DATA_DIR)"
