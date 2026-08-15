@@ -1,4 +1,4 @@
-# Fiber Synthesized implementation notes
+# Network Fiber implementation notes
 
 [Documentation index](../../../index.md) ·
 [Generation pipeline](../getting-started/generation.md) ·
@@ -7,10 +7,10 @@
 
 ## Status and scope
 
-`fiber-synthesized` is a **standard, default-rendered pass**. Its checked-in
-input lives in `assets.static/fiber-synthesized`, so ordinary generation does
-not need network access, an external checkout, credentials, or the optional
-network-topology authorization state.
+`network-fiber` is a **standard, default-rendered pass** (formerly "Fiber
+Synthesized"). Its checked-in input lives in `assets.static/fiber-synthesized`,
+so ordinary generation does not need network access, an external checkout,
+credentials, or the optional network-topology authorization state.
 
 The dataset is a validated cleanup and union of the TeleGeography submarine-
 cable API snapshots `v3.2022` and `v3.20260805`. It is not a strict set
@@ -19,12 +19,13 @@ future `new - old` product if one is implemented.
 
 ## Published v13 previews
 
-Fiber Synthesized is present in every projection of the immutable Cloudian/S3
-v13 tree. These dedicated 480-pixel thumbnails show the checked cleanup and
-union with `v3.20260805` as the primary visible snapshot. Select one to stream
-the corresponding layered `.svg.gz` through the v13 viewer.
+Network Fiber is present in every projection of the immutable Cloudian/S3
+v13 tree (published under the former "Fiber Synthesized" product name). These
+dedicated 480-pixel thumbnails show the checked cleanup and union with
+`v3.20260805` as the primary visible snapshot. Select one to stream the
+corresponding layered `.svg.gz` through the v13 viewer.
 
-{% include v13-pass-gallery.md stem="fiber-synthesized" label="Fiber Synthesized" %}
+{% include v13-pass-gallery.md stem="fiber-synthesized" label="Network Fiber" %}
 
 ## Source boundary
 
@@ -97,8 +98,8 @@ The checked outputs are:
 Regenerate the static snapshot explicitly with:
 
 ```sh
-make refresh-fiber-synthesized
-make check-fiber-synthesized
+make refresh-network-fiber
+make check-network-fiber
 ```
 
 Refresh is intentionally not a dependency of `make all`: a source refresh is
@@ -106,18 +107,20 @@ a reviewable static-data change, while standard rendering remains offline.
 
 ## Default rendering
 
-The SVG group `fiber-synthesized` is the default data layer. It draws all 718
+The SVG group `network-fiber` is the default data layer. It draws all 718
 route features from `v3.20260805` plus 49 unmatched `v3.2022-only` route
 features. The 20260805 snapshot is therefore the primary and complete visible
-network, with older-only context kept faint and dashed.
+network, with older-only context kept faint and dashed. The rendering follows
+the alpha60 fiber style: current and activated routes are green
+(`rgb(18,152,12)`), while planned and 2022-only context routes are black.
 
 | Rendering | Meaning |
 | --- | --- |
-| teal solid | exactly matched, current active route |
-| purple solid | unmatched `v3.20260805-only` active route |
+| green solid | exactly matched, current active route |
+| green solid | unmatched `v3.20260805-only` active route |
 | green solid | current route whose exact system identity changed from planned to active |
-| amber dashed | current planned route |
-| gray dashed | unmatched `v3.2022-only` route; historical snapshot context only |
+| black dashed | current planned route |
+| black dashed | unmatched `v3.2022-only` route; historical snapshot context only |
 
 The plate explicitly states “snapshot-only ≠ construction or decommission.”
 Current landing points are filled; unmatched older landing points are hollow.
@@ -133,12 +136,12 @@ fixed 60°S Antarctic cap and topmost Antarctic paint order.
 Generate the standard family with:
 
 ```sh
-make generate-fiber-synthesized
-make generate-fiber-synthesized-artifacts
-make generate-fiber-synthesized-cahill-keyes
+make generate-network-fiber
+make generate-network-fiber-artifacts
+make generate-network-fiber-cahill-keyes
 ```
 
-`fiber-synthesized`, `fiber`, and `fiber-map` are generation-profile aliases.
+`network-fiber`, `fiber`, and `fiber-map` are generation-profile aliases.
 Because the pass is standard, its six SVG, PDF, PNG, and Cahill–Keyes snapshot
 products are part of the ordinary `make all` graph.
 
@@ -152,5 +155,5 @@ default-layer metadata, source hashes, attribution, caveat, font, and finite
 coordinates.
 
 The focused Cahill–Keyes preview contains exactly 767 route elements and 2,037
-landing elements. `make check-fiber-synthesized` independently verifies every
+landing elements. `make check-network-fiber` independently verifies every
 checked static payload against `SHA256SUMS`.

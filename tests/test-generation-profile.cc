@@ -71,7 +71,7 @@ main()
   const std::vector<std::string> all_targets = generation::targets(everything);
   assert(everything.all_projections);
   assert(everything.all_passes);
-  assert(all_targets.size() == 114);
+  assert(all_targets.size() == 120);
   assert(all_targets.front() == "generate-geometry-cahill-keyes");
   assert(all_targets.back() == "generate-cloud-atmosphere-voronoi");
   std::vector<std::string> unique_targets = all_targets;
@@ -96,7 +96,7 @@ main()
                               "graticules", "astronomy",
                               "orbital-technosphere", "network-swarm",
                               "bathymetry-roulette", "bathymetry-hamonshu",
-                              "network-infrastructure", "fiber-synthesized",
+                              "network-cdn", "network-fiber",
                               "anthropocene",
                               "resources-energy", "resources-food",
                               "resources-fauna", "resources-flora", "resources-mineral",
@@ -107,10 +107,10 @@ main()
                    "generate-network-swarm-star-x")
          != alias_targets.end());
   assert(std::find(alias_targets.begin(), alias_targets.end(),
-                   "generate-network-infrastructure-star-x")
+                   "generate-network-cdn-star-x")
          != alias_targets.end());
   assert(std::find(alias_targets.begin(), alias_targets.end(),
-                   "generate-fiber-synthesized-star-x")
+                   "generate-network-fiber-star-x")
          != alias_targets.end());
   assert(std::find(alias_targets.begin(), alias_targets.end(),
                    "generate-bathymetry-hamonshu-star-x")

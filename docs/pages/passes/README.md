@@ -41,5 +41,5 @@ despite having implemented generators.
 - [Anthropocene](anthropocene/implementation.md), its [source expansion](anthropocene/source-expansion-stage-13.md), and [enrichment plan](anthropocene/enrichment-plan.md)
 - [Cloud-atmosphere](cloud-atmosphere.md)
 - [Resources](resources/implementation.md), [metric catalog](resources/metric-catalog.md), and [enrichment plan](resources/enrichment-plan.md)
-- [Network swarm](network-swarm.md), [network infrastructure](network-infrastructure.md), and [Fiber Synthesized](fiber-synthesized.md)
+- [Network swarm](network-swarm.md), [Network CDN](network-infrastructure.md), [Network Fiber](network-fiber.md), and [Network Groundstations](network-groundstations.md)
 - [Bathymetry Roulette](bathymetry/roulette.md) and [Bathymetry Hamonshū](bathymetry/hamonshu.md)

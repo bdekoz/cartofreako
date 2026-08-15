@@ -496,6 +496,8 @@ add_cloud_marker(svg::group_element& layer,
                  const cloud_site& site,
                  const infrastructure_profile& profile)
 {
+  // alpha60 CDN style: black clustered marks, translucent fill, solid
+  // black stroke, uniform square mark for every provider entity type.
   std::string attributes = common_point_attributes(point)
     + " data-infrastructure-cloud-site=\"true\" data-provider=\""
     + xml_escape(site.provider) + "\" data-service=\""
@@ -506,23 +508,22 @@ add_cloud_marker(svg::group_element& layer,
     + xml_escape(site.location_precision) + "\"";
   if (site.entity_type == "edge_pop")
     add_polygon(layer, point.display_point,
-      {{137, 76, 0}, 0.90, {82, 51, 5}, 0.98, 0.008},
-      profile.marker_radius, 6, attributes);
+      {{0, 0, 0}, 0.30, {0, 0, 0}, 1.0, 0.010},
+      profile.marker_radius, 4, attributes, 45);
   else if (site.entity_type == "data_center")
     add_polygon(layer, point.display_point,
-      {{0, 96, 120}, 0.88, {0, 62, 79}, 0.98, 0.009},
+      {{0, 0, 0}, 0.30, {0, 0, 0}, 1.0, 0.010},
       profile.marker_radius * 1.05, 4, attributes, 45);
   else if (site.entity_type == "cloud_region"
            || site.entity_type == "availability_zone"
            || site.entity_type == "local_zone")
     add_polygon(layer, point.display_point,
-      {{77, 58, 166}, 0.88, {48, 35, 116}, 0.98, 0.008},
-      profile.marker_radius, site.entity_type == "local_zone" ? 3U : 4U,
-      attributes);
+      {{0, 0, 0}, 0.30, {0, 0, 0}, 1.0, 0.010},
+      profile.marker_radius, 4, attributes, 45);
   else
-    add_circle(layer, point.display_point,
-      {{55, 67, 72}, 0.82, {37, 48, 51}, 0.96, 0.008},
-      profile.marker_radius * 0.9, attributes);
+    add_polygon(layer, point.display_point,
+      {{0, 0, 0}, 0.30, {0, 0, 0}, 1.0, 0.010},
+      profile.marker_radius * 0.9, 4, attributes, 45);
 }
 
 inline void
@@ -849,7 +850,7 @@ output_basename(const generation::projection_spec& spec,
   return generation::output_basename(
     product == infrastructure_product::topology
       ? "network-infrastructure-topology"
-      : "network-infrastructure-sites",
+      : "network-cdn",
     spec);
 }
 
@@ -866,7 +867,7 @@ generate(const generation::projection_spec& spec,
     basename, std::string(spec.title)
       + (profile.product == infrastructure_product::topology
            ? " opt-in network infrastructure topology"
-           : " cloud and CDN infrastructure site atlas"),
+           : " network CDN site atlas"),
     context.map_frame.frame_area);
   document.add_raw(metadata_element(spec, profile, dataset, layout));
   add_background(document, context);

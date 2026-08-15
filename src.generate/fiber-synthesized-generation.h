@@ -65,7 +65,7 @@ add_fiber_routes(generation::projection_document& document,
                  const fiber_dataset& dataset)
 {
   svg::group_element layer;
-  layer.start_element("fiber-synthesized");
+  layer.start_element("network-fiber");
   layer.add_title(
     "Cleaned union: 20260805 default network plus unmatched 2022 context");
   svg::group_element historical;
@@ -97,33 +97,33 @@ add_fiber_routes(generation::projection_document& document,
       std::string attributes = route_attributes(route);
       if (is_historical)
         {
-          style = {svg::color::none, 0, {91, 108, 118}, 0.34, 0.020};
+          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.030};
           attributes += " stroke-dasharray=\"0.045 0.050\"";
           historical.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
       else if (route.planned)
         {
-          style = {svg::color::none, 0, {153, 91, 0}, 0.78, 0.030};
+          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.033};
           attributes += " stroke-dasharray=\"0.085 0.055\"";
           planned.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
       else if (is_activated)
         {
-          style = {svg::color::none, 0, {22, 123, 91}, 0.86, 0.034};
+          style = {svg::color::none, 0, {18, 152, 12}, 0.80, 0.033};
           activated.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
       else if (is_current_only)
         {
-          style = {svg::color::none, 0, {103, 68, 151}, 0.68, 0.028};
+          style = {svg::color::none, 0, {18, 152, 12}, 0.80, 0.030};
           current_only.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
       else
         {
-          style = {svg::color::none, 0, {0, 96, 120}, 0.70, 0.026};
+          style = {svg::color::none, 0, {18, 152, 12}, 0.80, 0.028};
           shared.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
@@ -148,7 +148,7 @@ add_fiber_landings(generation::projection_document& document,
                    const fiber_dataset& dataset)
 {
   svg::group_element layer;
-  layer.start_element("fiber-synthesized-landings");
+  layer.start_element("network-fiber-landings");
   layer.add_title("Landing points in the cleaned source union");
   svg::group_element historical;
   historical.start_element("fiber-historical-landings");
@@ -200,7 +200,7 @@ add_fiber_legend(generation::projection_document& document,
                  const fiber_dataset& dataset)
 {
   svg::group_element layer;
-  layer.start_element("fiber-synthesized-legend-and-provenance");
+  layer.start_element("network-fiber-legend-and-provenance");
   svg::rect_element band;
   band.start_element();
   band.add_data({0, 0, context.map_frame.width(), 1.08});
@@ -211,7 +211,7 @@ add_fiber_legend(generation::projection_document& document,
   svg::typography title = infrastructure::infrastructure_typography(
     0.44, {61, 55, 103});
   title._M_w = svg::typography::weight::bold;
-  svg::styled_text(layer, "FIBER SYNTHESIZED / "
+  svg::styled_text(layer, "NETWORK FIBER / "
     + display_snapshot(dataset.profile.default_snapshot) + " DEFAULT",
     {0.32, 0.27}, title);
   svg::styled_text(layer,
@@ -222,7 +222,7 @@ add_fiber_legend(generation::projection_document& document,
     {0.32, 0.61},
     infrastructure::infrastructure_typography(0.112, {55, 67, 72}));
   svg::styled_text(layer,
-    "teal = shared  ·  purple = 20260805-only  ·  green = planned→active  ·  amber dashed = planned  ·  gray dashed = 2022-only",
+    "green = current/activated  ·  black dashed = planned  ·  black dotted = 2022-only",
     {0.32, 0.82},
     infrastructure::infrastructure_typography(0.103, {70, 83, 85}));
   svg::styled_text(layer,
@@ -244,9 +244,9 @@ inline std::string
 fiber_metadata(const generation::projection_spec& spec,
                const fiber_dataset& dataset)
 {
-  return "<metadata id=\"fiber-synthesized-metadata\""
+  return "<metadata id=\"network-fiber-metadata\""
     " data-schema=\"" + std::string(fiber_schema) + "\""
-    " data-kind=\"cleaned-union\" data-default-layer=\"fiber-synthesized\""
+    " data-kind=\"cleaned-union\" data-default-layer=\"network-fiber\""
     " data-default-snapshot=\""
       + infrastructure::xml_escape(dataset.profile.default_snapshot) + "\""
     " data-older-snapshot=\""
@@ -277,7 +277,7 @@ fiber_metadata(const generation::projection_spec& spec,
 inline std::string
 fiber_output_basename(const generation::projection_spec& spec)
 {
-  return generation::output_basename("fiber-synthesized", spec);
+  return generation::output_basename("network-fiber", spec);
 }
 
 inline void
@@ -288,7 +288,7 @@ generate(const generation::projection_spec& spec,
   const generation::projection_context context(spec, basename);
   generation::projection_document document(
     basename, std::string(spec.title)
-      + " cleaned-union submarine-fiber atlas",
+      + " network-fiber cleaned-union atlas",
     context.map_frame.frame_area);
   document.add_raw(fiber_metadata(spec, dataset));
   add_fiber_background(document, context);
@@ -331,11 +331,11 @@ verify(const std::string& generated,
     "generated fiber-synthesized SVG has the wrong viewBox");
   constexpr std::array layers {
     "fiber-synthesized-background", "terrestrial-land",
-    "fiber-synthesized", "fiber-historical-2022-only",
+    "network-fiber", "fiber-historical-2022-only",
     "fiber-current-shared", "fiber-current-20260805-only",
     "fiber-current-planned", "fiber-planned-to-active",
-    "fiber-synthesized-landings", "fiber-historical-landings",
-    "fiber-current-landings", "fiber-synthesized-legend-and-provenance",
+    "network-fiber-landings", "fiber-historical-landings",
+    "fiber-current-landings", "network-fiber-legend-and-provenance",
   };
   for (const std::string_view layer : layers)
     infrastructure::infrastructure_require(
@@ -350,9 +350,9 @@ verify(const std::string& generated,
            == dataset.landings.size(),
     "generated fiber-synthesized SVG has the wrong feature counts");
   infrastructure::infrastructure_require(
-    generated.find("id=\"fiber-synthesized-metadata\"")
+    generated.find("id=\"network-fiber-metadata\"")
       != std::string::npos
-      && generated.find("data-default-layer=\"fiber-synthesized\"")
+      && generated.find("data-default-layer=\"network-fiber\"")
            != std::string::npos
       && generated.find("data-default-snapshot=\""
         + dataset.profile.default_snapshot + "\"") != std::string::npos

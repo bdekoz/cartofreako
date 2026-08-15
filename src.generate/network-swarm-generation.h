@@ -229,7 +229,7 @@ add_tethers(generation::projection_document& document,
                                      feature.display_point)
           >= config.minimum_tether)
         add_line(layer, feature.geographic_point, feature.display_point,
-                 {{70, 83, 85}, 0, {70, 83, 85}, 0.48, 0.007},
+                 {{52, 77, 159}, 0, {52, 77, 159}, 0.42, 0.006},
                  "data-h3=\"" + h3_string(feature.source->h3) + "\"");
   layer.finish_element();
   document.add_element(layer);
@@ -246,11 +246,10 @@ total_layer(const projected_layout& layout, const network_swarm_profile& config)
         feature, config, downloader_metric::size);
       const double color_fraction = (opacity - config.minimum_nonzero_opacity)
         / (1 - config.minimum_nonzero_opacity);
-      const svg::color_qi fill = interpolate_color(
-        {39, 72, 99}, {137, 76, 0}, color_fraction);
+      static_cast<void>(color_fraction);
       add_polygon(layer, feature.display_point,
-                  {fill, 0.70 + 0.30 * opacity,
-                   {37, 48, 51}, 0.96, 0.008},
+                  {svg::color::blue, 0.55 + 0.45 * opacity,
+                   svg::color::blue, 0, 0},
                   config.marker_radius * 0.94, 6,
                   feature_attributes(feature));
     }
@@ -269,8 +268,8 @@ mobile_layer(const projected_layout& layout, const network_swarm_profile& config
         const double opacity = metric_opacity(
           feature, config, downloader_metric::mobile);
         add_circle(layer, feature.display_point,
-                   {{30, 111, 60}, 0.70 + 0.30 * opacity,
-                    {20, 74, 41}, 0.72 + 0.28 * opacity, 0.005},
+                   {svg::color::blue, 0.50 + 0.50 * opacity,
+                    svg::color::blue, 0, 0},
                    config.marker_radius * (0.24 + 0.26 * opacity),
                    value_attribute(feature, downloader_metric::mobile));
       }
@@ -290,8 +289,8 @@ satellite_layer(const projected_layout& layout,
         const double opacity = metric_opacity(
           feature, config, downloader_metric::satellite);
         add_polygon(layer, feature.display_point,
-                    {{176, 35, 55}, 0.70 + 0.30 * opacity,
-                     {112, 24, 39}, 0.72 + 0.28 * opacity, 0.005},
+                    {svg::color::blue, 0.60 + 0.40 * opacity,
+                     svg::color::blue, 0, 0},
                     config.marker_radius * (0.36 + 0.30 * opacity), 3,
                     value_attribute(feature, downloader_metric::satellite));
       }
@@ -416,10 +415,10 @@ add_downloader_layers(generation::projection_document& document,
   infrastructure.start_element("infrastructure");
   infrastructure.add_element(outline_layer(
     layout, config, downloader_metric::hosting, "downloaders-hosting",
-    {77, 58, 166}, 6, 0.86));
+    svg::color::blue, 6, 0.86));
   infrastructure.add_element(ring_layer(
     layout, config, downloader_metric::service, "downloaders-service",
-    {139, 28, 99}, 0.66));
+    svg::color::blue, 0.66));
   infrastructure.finish_element();
   document.add_element(infrastructure);
 
@@ -427,19 +426,19 @@ add_downloader_layers(generation::projection_document& document,
   privacy.start_element("privacy-routing");
   privacy.add_element(outline_layer(
     layout, config, downloader_metric::vpn, "downloaders-vpn",
-    {0, 96, 120}, 4, 0.5));
+    svg::color::blue, 4, 0.5));
   privacy.add_element(corner_layer(
     layout, config, downloader_metric::tor, "downloaders-tor",
-    {151, 70, 0}, -1, -1, 6));
+    svg::color::blue, -1, -1, 6));
   privacy.add_element(corner_layer(
     layout, config, downloader_metric::tor_exit_nodes,
-    "downloaders-tor-exit-nodes", {116, 87, 0}, 1, -1, 4));
+    "downloaders-tor-exit-nodes", svg::color::blue, 1, -1, 4));
   privacy.add_element(slash_layer(
     layout, config, downloader_metric::relay, "downloaders-relay",
-    {52, 77, 159}, false));
+    svg::color::blue, false));
   privacy.add_element(slash_layer(
     layout, config, downloader_metric::proxy, "downloaders-proxy",
-    {55, 67, 72}, true));
+    svg::color::blue, true));
   privacy.finish_element();
   document.add_element(privacy);
 }
@@ -526,7 +525,7 @@ add_legend(generation::projection_document& document,
   band.finish_element();
   layer.add_element(band);
 
-  svg::typography title = label_typography(0.44, {137, 76, 0});
+  svg::typography title = label_typography(0.44, {0, 0, 205});
   title._M_w = svg::typography::weight::bold;
   svg::styled_text(layer, xml_escape("NETWORK SWARM / " + dataset.id),
                    {0.32, 0.27}, title);

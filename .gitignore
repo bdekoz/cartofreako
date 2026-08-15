@@ -50,6 +50,7 @@
 /src.generate/generate-network-swarm
 /src.generate/generate-network-infrastructure
 /src.generate/generate-fiber-synthesized
+/src.generate/generate-network-groundstations
 /src.generate/generate-bathymetry-roulette
 /src.generate/generate-bathymetry-hamonshu
 /src.generate/generate-anthropocene

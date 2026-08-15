@@ -28,7 +28,7 @@ source development adds capabilities without rewriting that release:
   projection for all six families, portable numerical fixtures, independent
   reverse oracles, typed JavaScript/TypeScript, workers, Canvas/SVG/D3, and an
   offline Three.js flat-map path;
-- the current standard graph contains 211 products across 32 pass IDs and has
+- the current standard graph contains 217 products across 33 pass IDs and has
   exact 1920 × 1080 PNG/lossless-WebP derivatives, affine screen transforms,
   deterministic artifact requests, and decision receipts;
 - the former unqualified Anthropocene observation atlas is replaced by
@@ -108,8 +108,9 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | Current accepted-experimental dual-year particulate and temperature atlases plus exploration boundaries | [Anthropocene implementation notes](docs/pages/passes/anthropocene/implementation.md) and [pass-status manifest](contracts/pass-status-v1.json) |
 | Implemented dual-year particulate/CPC families, synthetic PurpleAir interface, and planned CAMS, observed PurpleAir, and ocean enrichment | [Anthropocene Stage 8b enrichment plan](docs/pages/passes/anthropocene/enrichment-plan.md) |
 | Cumulative H3 network-swarm generation | [Network-swarm generation implementation notes](docs/pages/passes/network-swarm.md) |
-| Cloud/CDN site atlas and opt-in cable/exchange topology | [Network-infrastructure implementation notes](docs/pages/passes/network-infrastructure.md) |
-| Checked cleanup/union of 2022 and 20260805 submarine fiber | [Fiber Synthesized implementation notes](docs/pages/passes/fiber-synthesized.md) |
+| Network CDN site atlas and opt-in cable/exchange topology | [Network-infrastructure implementation notes](docs/pages/passes/network-infrastructure.md) |
+| Checked cleanup/union of 2022 and 20260805 submarine fiber | [Network Fiber implementation notes](docs/pages/passes/network-fiber.md) |
+| alpha60 Starlink gateway/POP records | [Network Groundstations implementation notes](docs/pages/passes/network-groundstations.md) |
 | Filled, blue-ramp, Voronoi-grouped roulette bathymetry generation | [Bathymetry Roulette implementation notes](docs/pages/passes/bathymetry/roulette.md) |
 | Source-indexed Hamonshū wave-field bathymetry generation | [Bathymetry Hamonshū implementation notes](docs/pages/passes/bathymetry/hamonshu.md) |
 | Natural Earth acquisition, digest, and license | [Natural Earth data note](docs/pages/data/natural-earth.md) |
@@ -168,8 +169,8 @@ Generate geometry, labeled graticules, both Natural Earth layer families,
 all three timestamped astronomy products, both timestamped Orbital Technosphere
 products, all 14 Stage 12 resource products, the Anthropocene observation and
 temperature atlases for both 2025 and 2026, the cumulative network-swarm,
-the cloud/CDN network-infrastructure site atlas, the default-rendered Fiber
-Synthesized union, Bathymetry Roulette, and
+the network CDN site atlas, the default-rendered Network Fiber
+union, Bathymetry Roulette, and
 Bathymetry Hamonshū for
 all six projections with:
 
@@ -179,15 +180,15 @@ make all
 
 The 24 production whole-earth maps, 18 astronomy maps, 12 Orbital
 Technosphere maps, 84 resources maps, 24 Anthropocene maps, six network-swarm
-maps, six network-infrastructure site maps, six Fiber Synthesized maps, six
+maps, six network CDN site maps, six Network Fiber maps, six
+Network Groundstations maps, six
 Bathymetry Roulette maps, six Bathymetry Hamonshū maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes enlargement
-slices, and two Myriahedral face-group slices total 211 current standard
-products. An explicitly authorized P-Tree workflow can add six source-timed
-Cloud-atmosphere products, producing 217 local products. They are
+slices, and two Myriahedral face-group slices total 217 current standard
+products. They are
 organized first by projection beneath `assets.generated/`, then into `svg/`,
 `pdf/`, `png/`, and `thumbnail/` directories. The 84 resource SVGs also
-receive deterministic `.svg.gz` release archives. All 211 standard products have an Inkscape
+receive deterministic `.svg.gz` release archives. All 217 standard products have an Inkscape
 PDF and PNG beside their projection peers. PNGs preserve the source aspect ratio and
 have a longest side of 3840 pixels, the horizontal resolution of UHD 4K
 video. Transparent SVG page regions are flattened against an opaque white
@@ -230,8 +231,9 @@ Artifact-family targets are also available as
 `generate-resources-projections`,
 `generate-anthropocene-projections`,
 `generate-network-swarm-projections`,
-`generate-network-infrastructure-projections`,
-`generate-fiber-synthesized-projections`,
+`generate-network-cdn-projections`,
+`generate-network-fiber-projections`,
+`generate-network-groundstations-projections`,
 `generate-bathymetry-roulette-projections`, and
 `generate-bathymetry-hamonshu-projections`. Each generic
 family target includes Cahill-Keyes plus AuthaGraph, Dymaxion, Myriahedral,
@@ -334,13 +336,16 @@ The [network-swarm notes](docs/pages/passes/network-swarm.md) record the fixed
 source audit, variable-input contract, H3/Izzi clustering, independent
 downloader encodings, SVG metadata, and interpretation limits.
 The [network-infrastructure notes](docs/pages/passes/network-infrastructure.md)
-record the audited external pins, normal site atlas, CC BY-NC-SA 3.0 topology
+record the audited external pins, Network CDN site atlas, CC BY-NC-SA 3.0 topology
 opt-in, physical-versus-logical edge boundary, seam handling, Izzi collision
 layout, products, and verification.
-The [Fiber Synthesized notes](docs/pages/passes/fiber-synthesized.md)
+The [Network Fiber notes](docs/pages/passes/network-fiber.md)
 record the cleanup/union decision, checked 2022 and 20260805 snapshots,
 default newer layer, neutral snapshot-only semantics, standard build targets,
 licensing, and verification.
+The [Network Groundstations notes](docs/pages/passes/network-groundstations.md)
+record the vendored alpha60 Starlink gateway snapshot, red-triangle gateway
+style, provenance pins, standard build targets, and verification.
 The [Bathymetry Roulette notes](docs/pages/passes/bathymetry/roulette.md)
 record the confirmed curve catalogue, explicit varied-line-field and clipping
 model, visible key, accepted moiré, products, and verification.
@@ -610,12 +615,16 @@ the `voronoi_source` preset are in the
 | [`assets.static/network-infrastructure/`](assets.static/network-infrastructure/) | Commit/digest/count-pinned sites and topology profiles plus external-source and licensing contract |
 | [`scripts/check-network-infrastructure-sources.sh`](scripts/check-network-infrastructure-sources.sh) | Offline commit, digest, and consumed-path validation for external infrastructure checkouts |
 | [Network-infrastructure implementation](docs/pages/passes/network-infrastructure.md) | Stage 9 feasibility, source audit, license boundary, semantics, profiles, rendering, products, verification, and limits |
-| [`assets.static/fiber-synthesized/`](assets.static/fiber-synthesized/) | Checked 2022/20260805 cleaned union, source-separated audit observations, manifest, and hashes |
+| [`assets.static/fiber-synthesized/`](assets.static/fiber-synthesized/) | Checked 2022/20260805 cleaned union (Network Fiber input), source-separated audit observations, manifest, and hashes |
 | [`scripts/synthesize-submarine-cable-snapshots.py`](scripts/synthesize-submarine-cable-snapshots.py) | Deterministic validation, exact matching, source-separated audit, and cleaned-union preparation |
 | [`src.generate/fiber-synthesized-data.h`](src.generate/fiber-synthesized-data.h) | Strict manifest and cleaned-union GeoJSON loader |
-| [`src.generate/fiber-synthesized-generation.h`](src.generate/fiber-synthesized-generation.h) | Six-projection default-union rendering, temporal semantics, provenance, and embedded checks |
+| [`src.generate/fiber-synthesized-generation.h`](src.generate/fiber-synthesized-generation.h) | Network Fiber six-projection alpha60-style rendering, temporal semantics, provenance, and embedded checks |
 | [`tests/test-fiber-synthesized-generation.cc`](tests/test-fiber-synthesized-generation.cc) | Counts, default snapshot, classification, hashes, and six-projection geometry tests |
-| [Fiber Synthesized implementation](docs/pages/passes/fiber-synthesized.md) | Union-versus-difference decision, source validation, algorithm, default layer, licensing, commands, and verification |
+| [Network Fiber implementation](docs/pages/passes/network-fiber.md) | Union-versus-difference decision, source validation, algorithm, default layer, licensing, commands, and verification |
+| [`assets.static/network-groundstations/`](assets.static/network-groundstations/) | Vendored alpha60 Starlink gateway/POP snapshot, profile, and hashes |
+| [`src.generate/network-groundstations-data.h`](src.generate/network-groundstations-data.h) | Strict profile and gateway GeoJSON loader |
+| [`src.generate/network-groundstations-generation.h`](src.generate/network-groundstations-generation.h) | Network Groundstations alpha60 Starlink-style rendering, provenance, and embedded checks |
+| [Network Groundstations implementation](docs/pages/passes/network-groundstations.md) | Vendored source, red-triangle gateway style, provenance pins, build targets, and verification |
 | [`src.generate/generate-4-slice.cc`](src.generate/generate-4-slice.cc) | Four full-height, quarter-width Cahill-Keyes quadrant-pair enlargements |
 | [`src.generate/generate-8-slice.cc`](src.generate/generate-8-slice.cc) | Eight naturally bounded, face-clipped Cahill-Keyes octant enlargements |
 | [`src.generate/generate-myriahedral-slices.cc`](src.generate/generate-myriahedral-slices.cc) | Two complementary, exact-terminal-face Myriahedral water slices |

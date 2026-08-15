@@ -189,6 +189,13 @@ FIBER_SYNTHESIZED_NEW_SOURCE ?= \
 	$(SUBMARINE_CABLE_SOURCE)/web/public/api/v3.20260805
 FIBER_SYNTHESIZED_SOURCE_COMMIT ?= \
 	4d98b5472152a7c2272c49d8d0125b1ae0419984
+NETWORK_GROUNDSTATIONS_DATA_DIR ?= $(STATIC_ASSET_DIR)/network-groundstations
+NETWORK_GROUNDSTATIONS_PROFILE ?= \
+	$(NETWORK_GROUNDSTATIONS_DATA_DIR)/network-groundstations-profile.json
+NETWORK_GROUNDSTATIONS_GATEWAYS := \
+	$(NETWORK_GROUNDSTATIONS_DATA_DIR)/starlink-global-gateways-pops.20250902.json
+NETWORK_GROUNDSTATIONS_CHECKSUMS := \
+	$(NETWORK_GROUNDSTATIONS_DATA_DIR)/SHA256SUMS
 PREREQUISITE_CHECKER := scripts/check-prerequisites.sh
 NATURAL_EARTH_STAMP := \
 	$(NATURAL_EARTH_DIR)/.natural-earth-10m-physical-5.1.1
@@ -377,6 +384,8 @@ NETWORK_INFRASTRUCTURE_GENERATOR := \
 	$(GENERATOR_SRC_DIR)/generate-network-infrastructure
 FIBER_SYNTHESIZED_GENERATOR := \
 	$(GENERATOR_SRC_DIR)/generate-fiber-synthesized
+NETWORK_GROUNDSTATIONS_GENERATOR := \
+	$(GENERATOR_SRC_DIR)/generate-network-groundstations
 GENERATION_PROFILE_RESOLVER := \
 	$(GENERATOR_SRC_DIR)/resolve-generation-profile
 SGP4_SOURCE := $(GENERATOR_SRC_DIR)/third_party/sgp4/SGP4.cpp
@@ -512,12 +521,12 @@ NETWORK_SWARM_PDFS := $(call svg_to_pdf,$(NETWORK_SWARM_SVGS))
 NETWORK_SWARM_PNGS := $(call svg_to_png,$(NETWORK_SWARM_SVGS))
 
 NETWORK_INFRASTRUCTURE_SITES_SVGS := \
-	$(call generated_svg,network-infrastructure-sites-ck-44-22.svg) \
-	$(call generated_svg,network-infrastructure-sites-authagraph-44-19.052559.svg) \
-	$(call generated_svg,network-infrastructure-sites-dymaxion-44-20.78461.svg) \
-	$(call generated_svg,network-infrastructure-sites-myriahedral-44-24.75.svg) \
-	$(call generated_svg,network-infrastructure-sites-star-x-34-44.svg) \
-	$(call generated_svg,network-infrastructure-sites-voronoi-44-22.916667.svg)
+	$(call generated_svg,network-cdn-ck-44-22.svg) \
+	$(call generated_svg,network-cdn-authagraph-44-19.052559.svg) \
+	$(call generated_svg,network-cdn-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,network-cdn-myriahedral-44-24.75.svg) \
+	$(call generated_svg,network-cdn-star-x-34-44.svg) \
+	$(call generated_svg,network-cdn-voronoi-44-22.916667.svg)
 NETWORK_INFRASTRUCTURE_SITES_PDFS := \
 	$(call svg_to_pdf,$(NETWORK_INFRASTRUCTURE_SITES_SVGS))
 NETWORK_INFRASTRUCTURE_SITES_PNGS := \
@@ -538,14 +547,25 @@ NETWORK_INFRASTRUCTURE_TOPOLOGY_LANDSCAPE_PNGS := \
 	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_PNGS))
 
 FIBER_SYNTHESIZED_SVGS := \
-	$(call generated_svg,fiber-synthesized-ck-44-22.svg) \
-	$(call generated_svg,fiber-synthesized-authagraph-44-19.052559.svg) \
-	$(call generated_svg,fiber-synthesized-dymaxion-44-20.78461.svg) \
-	$(call generated_svg,fiber-synthesized-myriahedral-44-24.75.svg) \
-	$(call generated_svg,fiber-synthesized-star-x-34-44.svg) \
-	$(call generated_svg,fiber-synthesized-voronoi-44-22.916667.svg)
+	$(call generated_svg,network-fiber-ck-44-22.svg) \
+	$(call generated_svg,network-fiber-authagraph-44-19.052559.svg) \
+	$(call generated_svg,network-fiber-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,network-fiber-myriahedral-44-24.75.svg) \
+	$(call generated_svg,network-fiber-star-x-34-44.svg) \
+	$(call generated_svg,network-fiber-voronoi-44-22.916667.svg)
 FIBER_SYNTHESIZED_PDFS := $(call svg_to_pdf,$(FIBER_SYNTHESIZED_SVGS))
 FIBER_SYNTHESIZED_PNGS := $(call svg_to_png,$(FIBER_SYNTHESIZED_SVGS))
+NETWORK_GROUNDSTATIONS_SVGS := \
+	$(call generated_svg,network-groundstations-ck-44-22.svg) \
+	$(call generated_svg,network-groundstations-authagraph-44-19.052559.svg) \
+	$(call generated_svg,network-groundstations-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,network-groundstations-myriahedral-44-24.75.svg) \
+	$(call generated_svg,network-groundstations-star-x-34-44.svg) \
+	$(call generated_svg,network-groundstations-voronoi-44-22.916667.svg)
+NETWORK_GROUNDSTATIONS_PDFS := \
+	$(call svg_to_pdf,$(NETWORK_GROUNDSTATIONS_SVGS))
+NETWORK_GROUNDSTATIONS_PNGS := \
+	$(call svg_to_png,$(NETWORK_GROUNDSTATIONS_SVGS))
 
 ANTHROPOCENE_PARTICULATE_2025_SVGS := \
 	$(call generated_svg,anthropocene-particulate-2025-ck-44-22.svg) \
@@ -687,6 +707,7 @@ GENERATED_SVGS := \
 	$(MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS) $(MYRIAHEDRAL_SLICE_SVGS) \
 	$(ASTRO_SVGS) $(ORBITING_SVGS) $(NETWORK_SWARM_SVGS) \
 	$(NETWORK_INFRASTRUCTURE_SITES_SVGS) $(FIBER_SYNTHESIZED_SVGS) \
+	$(NETWORK_GROUNDSTATIONS_SVGS) \
 	$(ACCEPTED_EXPERIMENTAL_SVGS) \
 	$(RESOURCES_SVGS) \
 	$(BATHYMETRY_ROULETTE_SVGS) $(BATHYMETRY_HAMONSHU_SVGS)
@@ -707,6 +728,7 @@ SNAPSHOT_SVGS := \
 	$(REQUESTED_PROJECTION_SVGS) \
 	$(ASTRO_SVGS) $(ORBITING_SVGS) $(NETWORK_SWARM_SVGS) \
 	$(NETWORK_INFRASTRUCTURE_SITES_SVGS) $(FIBER_SYNTHESIZED_SVGS) \
+	$(NETWORK_GROUNDSTATIONS_SVGS) \
 	$(ACCEPTED_EXPERIMENTAL_SVGS) \
 	$(RESOURCES_SVGS) $(BATHYMETRY_ROULETTE_SVGS) \
 	$(BATHYMETRY_HAMONSHU_SVGS)
@@ -733,11 +755,13 @@ ORBITING_STAR_X_SVGS := \
 ORBITING_STAR_X_PNGS := $(call svg_to_png,$(ORBITING_STAR_X_SVGS))
 NETWORK_SWARM_STAR_X_PNG := $(call generated_png,network-swarm-star-x-34-44.png)
 NETWORK_INFRASTRUCTURE_SITES_STAR_X_PNG := \
-	$(call generated_png,network-infrastructure-sites-star-x-34-44.png)
+	$(call generated_png,network-cdn-star-x-34-44.png)
 NETWORK_INFRASTRUCTURE_TOPOLOGY_STAR_X_PNG := \
 	$(call generated_png,network-infrastructure-topology-star-x-34-44.png)
 FIBER_SYNTHESIZED_STAR_X_PNG := \
-	$(call generated_png,fiber-synthesized-star-x-34-44.png)
+	$(call generated_png,network-fiber-star-x-34-44.png)
+NETWORK_GROUNDSTATIONS_STAR_X_PNG := \
+	$(call generated_png,network-groundstations-star-x-34-44.png)
 ANTHROPOCENE_PARTICULATE_STAR_X_PNGS := \
 	$(call generated_png,anthropocene-particulate-2025-star-x-34-44.png) \
 	$(call generated_png,anthropocene-particulate-2026-star-x-34-44.png)
@@ -758,6 +782,7 @@ PORTRAIT_PNGS := $(STAR_X_PNGS) $(ASTRO_STAR_X_PNGS) \
 	$(NETWORK_INFRASTRUCTURE_SITES_STAR_X_PNG) \
 	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_STAR_X_PNG) \
 	$(FIBER_SYNTHESIZED_STAR_X_PNG) \
+	$(NETWORK_GROUNDSTATIONS_STAR_X_PNG) \
 	$(ANTHROPOCENE_PARTICULATE_STAR_X_PNGS) \
 	$(ANTHROPOCENE_TEMPERATURE_STAR_X_PNGS) \
 	$(RESOURCES_STAR_X_PNGS) $(CK_SLICE_PNGS) \
@@ -918,6 +943,11 @@ FIBER_SYNTHESIZED_GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/fiber-synthesized-data.h \
 	$(GENERATOR_SRC_DIR)/fiber-synthesized-generation.h \
 	$(NETWORK_INFRASTRUCTURE_GENERATOR_HEADERS)
+NETWORK_GROUNDSTATIONS_GENERATOR_HEADERS := \
+	$(GENERATOR_SRC_DIR)/network-groundstations-data.h \
+	$(GENERATOR_SRC_DIR)/network-groundstations-generation.h \
+	$(NATURAL_EARTH_GENERATOR_HEADER) \
+	$(GENERATOR_HEADERS)
 ANTHROPOCENE_PARTICULATE_GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/anthropocene-particulate-data.h \
 	$(GENERATOR_SRC_DIR)/anthropocene-particulate-generation.h \
@@ -967,7 +997,8 @@ PUBLIC_TARGETS := all all-experiments all-experiments-fetch \
 	check-anthropocene-purpleair-experiments \
 	check-anthropocene-water-debris-experiments \
 	check-prerequisite \
-	check-resources-svg-archives check-fiber-synthesized \
+	check-resources-svg-archives check-network-fiber \
+	check-network-groundstations \
 	check-forward-reverse-projection-api \
 	check-screen-1080p check-three-vendor generate-screen-1080p consumer-assets-v1 \
 	freeze-stage-15-inputs refresh-stage-15-inputs \
@@ -1003,7 +1034,7 @@ PUBLIC_TARGETS := all all-experiments all-experiments-fetch \
 	prepare-anthropocene-particulate-2025 \
 	prepare-anthropocene-particulate-2026 \
 	fetch-anthropocene-cpc-data prepare-anthropocene-temperature-data \
-	refresh-resources-data refresh-fiber-synthesized \
+	refresh-resources-data refresh-network-fiber \
 	prepare-network-swarm-data make-generated \
 	check-network-infrastructure-sources \
 	check-network-infrastructure-topology-sources \
@@ -1101,15 +1132,15 @@ PUBLIC_TARGETS := all all-experiments all-experiments-fetch \
 	generate-network-swarm-cahill-keyes generate-network-swarm-authagraph \
 	generate-network-swarm-dymaxion generate-network-swarm-myriahedral \
 	generate-network-swarm-star-x generate-network-swarm-voronoi \
-	generate-network-infrastructure generate-network-infrastructure-sites \
-	generate-network-infrastructure-projections \
-	generate-network-infrastructure-artifacts \
-	generate-network-infrastructure-cahill-keyes \
-	generate-network-infrastructure-authagraph \
-	generate-network-infrastructure-dymaxion \
-	generate-network-infrastructure-myriahedral \
-	generate-network-infrastructure-star-x \
-	generate-network-infrastructure-voronoi \
+	generate-network-infrastructure generate-network-cdn \
+	generate-network-cdn-projections \
+	generate-network-cdn-artifacts \
+	generate-network-cdn-cahill-keyes \
+	generate-network-cdn-authagraph \
+	generate-network-cdn-dymaxion \
+	generate-network-cdn-myriahedral \
+	generate-network-cdn-star-x \
+	generate-network-cdn-voronoi \
 	generate-network-infrastructure-topology \
 	generate-network-infrastructure-topology-projections \
 	generate-network-infrastructure-topology-artifacts \
@@ -1119,14 +1150,23 @@ PUBLIC_TARGETS := all all-experiments all-experiments-fetch \
 	generate-network-infrastructure-topology-myriahedral \
 	generate-network-infrastructure-topology-star-x \
 	generate-network-infrastructure-topology-voronoi \
-	generate-fiber-synthesized generate-fiber-synthesized-projections \
-	generate-fiber-synthesized-artifacts \
-	generate-fiber-synthesized-cahill-keyes \
-	generate-fiber-synthesized-authagraph \
-	generate-fiber-synthesized-dymaxion \
-	generate-fiber-synthesized-myriahedral \
-	generate-fiber-synthesized-star-x \
-	generate-fiber-synthesized-voronoi \
+	generate-network-fiber generate-network-fiber-projections \
+	generate-network-fiber-artifacts \
+	generate-network-fiber-cahill-keyes \
+	generate-network-fiber-authagraph \
+	generate-network-fiber-dymaxion \
+	generate-network-fiber-myriahedral \
+	generate-network-fiber-star-x \
+	generate-network-fiber-voronoi \
+	generate-network-groundstations \
+	generate-network-groundstations-projections \
+	generate-network-groundstations-artifacts \
+	generate-network-groundstations-cahill-keyes \
+	generate-network-groundstations-authagraph \
+	generate-network-groundstations-dymaxion \
+	generate-network-groundstations-myriahedral \
+	generate-network-groundstations-star-x \
+	generate-network-groundstations-voronoi \
 	generate-bathymetry-roulette generate-bathymetry-roulette-projections \
 	generate-bathymetry-roulette-artifacts \
 	generate-bathymetry-roulette-cahill-keyes \
@@ -1326,8 +1366,11 @@ check-prerequisite: $(PREREQUISITE_CHECKER)
 check-resources-svg-archives: $(RESOURCES_SVG_ARCHIVES)
 	"$(GZIP)" -t $(RESOURCES_SVG_ARCHIVES)
 
-check-fiber-synthesized: $(FIBER_SYNTHESIZED_CHECKSUMS)
+check-network-fiber: $(FIBER_SYNTHESIZED_CHECKSUMS)
 	cd "$(FIBER_SYNTHESIZED_DATA_DIR)" && sha256sum -c SHA256SUMS
+
+check-network-groundstations: $(NETWORK_GROUNDSTATIONS_CHECKSUMS)
+	cd "$(NETWORK_GROUNDSTATIONS_DATA_DIR)" && sha256sum -c SHA256SUMS
 
 $(TEST_DIR)/test-forward-reverse-projection-api: \
 		$(TEST_DIR)/test-forward-reverse-projection-api.cc \
@@ -1694,7 +1737,8 @@ check: check-pass-status check-anthropocene-particulate \
 		$(RESOURCES_CHECKSUMS) \
 		$(FIBER_SYNTHESIZED_MANIFEST) $(FIBER_SYNTHESIZED_ROUTES) \
 		$(FIBER_SYNTHESIZED_LANDINGS) $(FIBER_SYNTHESIZED_CHECKSUMS) \
-		check-fiber-synthesized check-forward-reverse-projection-api \
+		check-network-fiber check-network-groundstations \
+		check-forward-reverse-projection-api \
 		check-equal-earth-projection \
 		check-print-contract audit-dymaxion-ulp \
 		check-projection-fixtures check-reverse-oracles \
@@ -2052,7 +2096,14 @@ $(FIBER_SYNTHESIZED_GENERATOR): \
 		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$< $(shell $(GDAL_CONFIG) --libs) -o $@
 
-refresh-fiber-synthesized: $(FIBER_SYNTHESIZER)
+$(NETWORK_GROUNDSTATIONS_GENERATOR): \
+		$(GENERATOR_SRC_DIR)/generate-network-groundstations.cc \
+		$(NETWORK_GROUNDSTATIONS_GENERATOR_HEADERS)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -o $@
+
+refresh-network-fiber: $(FIBER_SYNTHESIZER)
 	python3 "$(FIBER_SYNTHESIZER)" \
 		--old "$(abspath $(FIBER_SYNTHESIZED_OLD_SOURCE))" \
 		--new "$(abspath $(FIBER_SYNTHESIZED_NEW_SOURCE))" \
@@ -2838,9 +2889,9 @@ generate-network-swarm-projections: $(NETWORK_SWARM_SVGS)
 generate-network-swarm-artifacts: $(NETWORK_SWARM_SVGS) \
 	$(NETWORK_SWARM_PDFS) $(NETWORK_SWARM_PNGS)
 
-# $(1): projection; $(2): ordinary cloud/CDN site atlas product.
-define NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES
-generate-network-infrastructure-$(1): $(2)
+# $(1): projection; $(2): Network CDN site atlas product.
+define NETWORK_CDN_PROJECTION_RULES
+generate-network-cdn-$(1): $(2)
 $(2): $(NETWORK_INFRASTRUCTURE_GENERATOR) \
 		$(NETWORK_INFRASTRUCTURE_SITES_PROFILE) \
 		$(NETWORK_INFRASTRUCTURE_CLOUD_MANIFEST) \
@@ -2855,24 +2906,24 @@ $(2): $(NETWORK_INFRASTRUCTURE_GENERATOR) \
 		"$(abspath $(NETWORK_INFRASTRUCTURE_CLOUD_SOURCE))"
 endef
 
-$(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,cahill-keyes,\
-	$(call generated_svg,network-infrastructure-sites-ck-44-22.svg)))
-$(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,authagraph,\
-	$(call generated_svg,network-infrastructure-sites-authagraph-44-19.052559.svg)))
-$(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,dymaxion,\
-	$(call generated_svg,network-infrastructure-sites-dymaxion-44-20.78461.svg)))
-$(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,myriahedral,\
-	$(call generated_svg,network-infrastructure-sites-myriahedral-44-24.75.svg)))
-$(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,star-x,\
-	$(call generated_svg,network-infrastructure-sites-star-x-34-44.svg)))
-$(eval $(call NETWORK_INFRASTRUCTURE_SITE_PROJECTION_RULES,voronoi,\
-	$(call generated_svg,network-infrastructure-sites-voronoi-44-22.916667.svg)))
+$(eval $(call NETWORK_CDN_PROJECTION_RULES,cahill-keyes,\
+	$(call generated_svg,network-cdn-ck-44-22.svg)))
+$(eval $(call NETWORK_CDN_PROJECTION_RULES,authagraph,\
+	$(call generated_svg,network-cdn-authagraph-44-19.052559.svg)))
+$(eval $(call NETWORK_CDN_PROJECTION_RULES,dymaxion,\
+	$(call generated_svg,network-cdn-dymaxion-44-20.78461.svg)))
+$(eval $(call NETWORK_CDN_PROJECTION_RULES,myriahedral,\
+	$(call generated_svg,network-cdn-myriahedral-44-24.75.svg)))
+$(eval $(call NETWORK_CDN_PROJECTION_RULES,star-x,\
+	$(call generated_svg,network-cdn-star-x-34-44.svg)))
+$(eval $(call NETWORK_CDN_PROJECTION_RULES,voronoi,\
+	$(call generated_svg,network-cdn-voronoi-44-22.916667.svg)))
 
-generate-network-infrastructure: $(NETWORK_INFRASTRUCTURE_SITES_SVGS)
-generate-network-infrastructure-sites: $(NETWORK_INFRASTRUCTURE_SITES_SVGS)
-generate-network-infrastructure-projections: \
+generate-network-infrastructure: generate-network-cdn
+generate-network-cdn: $(NETWORK_INFRASTRUCTURE_SITES_SVGS)
+generate-network-cdn-projections: \
 	$(NETWORK_INFRASTRUCTURE_SITES_SVGS)
-generate-network-infrastructure-artifacts: \
+generate-network-cdn-artifacts: \
 	$(NETWORK_INFRASTRUCTURE_SITES_SVGS) \
 	$(NETWORK_INFRASTRUCTURE_SITES_PDFS) \
 	$(NETWORK_INFRASTRUCTURE_SITES_PNGS)
@@ -2922,13 +2973,13 @@ generate-network-infrastructure-topology-artifacts: \
 # Checked-in, standard cleaned union of the 2022 and 20260805 cable snapshots.
 # The complete later snapshot is the default layer; only unmatched older
 # observations are added as subdued historical context.
-define FIBER_SYNTHESIZED_PROJECTION_RULES
-generate-fiber-synthesized-$(1): $(2)
+define NETWORK_FIBER_PROJECTION_RULES
+generate-network-fiber-$(1): $(2)
 $(2): $(FIBER_SYNTHESIZED_GENERATOR) \
 		$(FIBER_SYNTHESIZED_MANIFEST) $(FIBER_SYNTHESIZED_ROUTES) \
 		$(FIBER_SYNTHESIZED_LANDINGS) $(FIBER_SYNTHESIZED_CHECKSUMS) \
 		$(NATURAL_EARTH_STAMP) \
-		| check-fiber-synthesized $(call artifact_directory,$(2))
+		| check-network-fiber $(call artifact_directory,$(2))
 	cd "$(call artifact_directory,$(2))" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
@@ -2936,23 +2987,60 @@ $(2): $(FIBER_SYNTHESIZED_GENERATOR) \
 		"$(abspath $(FIBER_SYNTHESIZED_DATA_DIR))"
 endef
 
-$(eval $(call FIBER_SYNTHESIZED_PROJECTION_RULES,cahill-keyes,\
-	$(call generated_svg,fiber-synthesized-ck-44-22.svg)))
-$(eval $(call FIBER_SYNTHESIZED_PROJECTION_RULES,authagraph,\
-	$(call generated_svg,fiber-synthesized-authagraph-44-19.052559.svg)))
-$(eval $(call FIBER_SYNTHESIZED_PROJECTION_RULES,dymaxion,\
-	$(call generated_svg,fiber-synthesized-dymaxion-44-20.78461.svg)))
-$(eval $(call FIBER_SYNTHESIZED_PROJECTION_RULES,myriahedral,\
-	$(call generated_svg,fiber-synthesized-myriahedral-44-24.75.svg)))
-$(eval $(call FIBER_SYNTHESIZED_PROJECTION_RULES,star-x,\
-	$(call generated_svg,fiber-synthesized-star-x-34-44.svg)))
-$(eval $(call FIBER_SYNTHESIZED_PROJECTION_RULES,voronoi,\
-	$(call generated_svg,fiber-synthesized-voronoi-44-22.916667.svg)))
+$(eval $(call NETWORK_FIBER_PROJECTION_RULES,cahill-keyes,\
+	$(call generated_svg,network-fiber-ck-44-22.svg)))
+$(eval $(call NETWORK_FIBER_PROJECTION_RULES,authagraph,\
+	$(call generated_svg,network-fiber-authagraph-44-19.052559.svg)))
+$(eval $(call NETWORK_FIBER_PROJECTION_RULES,dymaxion,\
+	$(call generated_svg,network-fiber-dymaxion-44-20.78461.svg)))
+$(eval $(call NETWORK_FIBER_PROJECTION_RULES,myriahedral,\
+	$(call generated_svg,network-fiber-myriahedral-44-24.75.svg)))
+$(eval $(call NETWORK_FIBER_PROJECTION_RULES,star-x,\
+	$(call generated_svg,network-fiber-star-x-34-44.svg)))
+$(eval $(call NETWORK_FIBER_PROJECTION_RULES,voronoi,\
+	$(call generated_svg,network-fiber-voronoi-44-22.916667.svg)))
 
-generate-fiber-synthesized: $(FIBER_SYNTHESIZED_SVGS)
-generate-fiber-synthesized-projections: $(FIBER_SYNTHESIZED_SVGS)
-generate-fiber-synthesized-artifacts: $(FIBER_SYNTHESIZED_SVGS) \
+generate-network-fiber: $(FIBER_SYNTHESIZED_SVGS)
+generate-network-fiber-projections: $(FIBER_SYNTHESIZED_SVGS)
+generate-network-fiber-artifacts: $(FIBER_SYNTHESIZED_SVGS) \
 	$(FIBER_SYNTHESIZED_PDFS) $(FIBER_SYNTHESIZED_PNGS)
+
+# $(1): projection; $(2): Network Groundstations product.
+define NETWORK_GROUNDSTATIONS_PROJECTION_RULES
+generate-network-groundstations-$(1): $(2)
+$(2): $(NETWORK_GROUNDSTATIONS_GENERATOR) \
+		$(NETWORK_GROUNDSTATIONS_PROFILE) \
+		$(NETWORK_GROUNDSTATIONS_GATEWAYS) \
+		$(NETWORK_GROUNDSTATIONS_CHECKSUMS) \
+		$(NATURAL_EARTH_STAMP) \
+		| check-network-groundstations $(call artifact_directory,$(2))
+	cd "$(call artifact_directory,$(2))" && \
+		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
+		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
+		"$(abspath $(NETWORK_GROUNDSTATIONS_GENERATOR))" $(1) \
+		"$(abspath $(NETWORK_GROUNDSTATIONS_DATA_DIR))"
+endef
+
+$(eval $(call NETWORK_GROUNDSTATIONS_PROJECTION_RULES,cahill-keyes,\
+	$(call generated_svg,network-groundstations-ck-44-22.svg)))
+$(eval $(call NETWORK_GROUNDSTATIONS_PROJECTION_RULES,authagraph,\
+	$(call generated_svg,network-groundstations-authagraph-44-19.052559.svg)))
+$(eval $(call NETWORK_GROUNDSTATIONS_PROJECTION_RULES,dymaxion,\
+	$(call generated_svg,network-groundstations-dymaxion-44-20.78461.svg)))
+$(eval $(call NETWORK_GROUNDSTATIONS_PROJECTION_RULES,myriahedral,\
+	$(call generated_svg,network-groundstations-myriahedral-44-24.75.svg)))
+$(eval $(call NETWORK_GROUNDSTATIONS_PROJECTION_RULES,star-x,\
+	$(call generated_svg,network-groundstations-star-x-34-44.svg)))
+$(eval $(call NETWORK_GROUNDSTATIONS_PROJECTION_RULES,voronoi,\
+	$(call generated_svg,network-groundstations-voronoi-44-22.916667.svg)))
+
+generate-network-groundstations: $(NETWORK_GROUNDSTATIONS_SVGS)
+generate-network-groundstations-projections: \
+	$(NETWORK_GROUNDSTATIONS_SVGS)
+generate-network-groundstations-artifacts: \
+	$(NETWORK_GROUNDSTATIONS_SVGS) \
+	$(NETWORK_GROUNDSTATIONS_PDFS) \
+	$(NETWORK_GROUNDSTATIONS_PNGS)
 
 # $(1): command-line projection name; $(2): Bathymetry Roulette product.
 define BATHYMETRY_ROULETTE_PROJECTION_RULES

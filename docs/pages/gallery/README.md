@@ -55,9 +55,9 @@ contact sheets retain every pass and the same PNG, SVG, and PDF choices.
   </figure>
   <figure class="gallery-card">
     <h3><a href="star-x.html#networks-and-anthropocene">Networks</a></h3>
-    <a href="{{ release_base }}/tree/star-x/png/fiber-synthesized-star-x-34-44.png"><img loading="lazy" decoding="async" src="{{ release_base }}/tree/star-x/thumbnail/fiber-synthesized-star-x-34-44.png" width="480" alt="Star-X Fiber Synthesized v13 preview"></a>
-    <figcaption>Fiber Synthesized · Star-X</figcaption>
-    <nav class="artifact-actions" aria-label="Star-X Fiber Synthesized formats"><a href="{{ release_base }}/tree/star-x/png/fiber-synthesized-star-x-34-44.png">Full PNG</a><a href="{{ release_base }}/viewer.html?asset=star-x/svg/fiber-synthesized-star-x-34-44.svg.gz">Layered SVG</a><a href="{{ release_base }}/tree/star-x/pdf/fiber-synthesized-star-x-34-44.pdf">Print PDF</a></nav>
+    <a href="{{ release_base }}/tree/star-x/png/fiber-synthesized-star-x-34-44.png"><img loading="lazy" decoding="async" src="{{ release_base }}/tree/star-x/thumbnail/fiber-synthesized-star-x-34-44.png" width="480" alt="Star-X Network Fiber v13 preview"></a>
+    <figcaption>Network Fiber · Star-X</figcaption>
+    <nav class="artifact-actions" aria-label="Star-X Network Fiber formats"><a href="{{ release_base }}/tree/star-x/png/fiber-synthesized-star-x-34-44.png">Full PNG</a><a href="{{ release_base }}/viewer.html?asset=star-x/svg/fiber-synthesized-star-x-34-44.svg.gz">Layered SVG</a><a href="{{ release_base }}/tree/star-x/pdf/fiber-synthesized-star-x-34-44.pdf">Print PDF</a></nav>
   </figure>
   <figure class="gallery-card">
     <h3><a href="myriahedral.html#networks-and-anthropocene">Anthropocene</a></h3>
