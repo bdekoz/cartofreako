@@ -18,3 +18,15 @@ creation record.
 
 - [`snapshot-dyad-marker-ledger.json`](snapshot-dyad-marker-ledger.json) —
   marker creation and explicitly authorized repository check-in events.
+
+## SUPERSEDED — frozen 2026-08-15
+
+This ledger is frozen and no longer receives new records. Its canonical
+continuation is the project-keyed `cartofreako` ledger in the
+Devastation Pacific house-style repository:
+
+`devastation-pacific-house-style/assets.rizal.bkoz/per-project/cartofreako/ledger.json`
+
+See [`FREEZE-SUPERSEDED.md`](FREEZE-SUPERSEDED.md) for the freeze SHA-256.
+The historical file remains here only as immutable source evidence; it must
+not be treated as the live cross-project marker index.
