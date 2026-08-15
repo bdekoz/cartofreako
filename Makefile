@@ -1247,10 +1247,10 @@ render-marshall-islands-speculations-v01: wasm-projections \
 		$(GENERATED_DIR)/dymaxion/png/water-dymaxion-44-20.78461.png \
 		$(GENERATED_DIR)/cahill-keyes/svg/water-ck-44-22.svg \
 		$(GENERATED_DIR)/cahill-keyes/svg/resources-fauna-coral-reef-threat-2011-ck-44-22.svg \
-		$(GENERATED_DIR)/cahill-keyes/svg/fiber-synthesized-ck-44-22.svg \
+		$(GENERATED_DIR)/cahill-keyes/svg/network-fiber-ck-44-22.svg \
 		$(GENERATED_DIR)/cahill-keyes/svg/resources-human-population-under-30-2024-ck-44-22.svg \
 		$(GENERATED_DIR)/star-x/png/anthropocene-temperature-2026-star-x-34-44.png \
-		$(GENERATED_DIR)/star-x/png/fiber-synthesized-star-x-34-44.png \
+		$(GENERATED_DIR)/star-x/png/network-fiber-star-x-34-44.png \
 		$(GENERATED_DIR)/star-x/png/water-star-x-34-44.png \
 		scripts/render-marshall-islands-speculations-v01.sh \
 		scripts/render-marshall-islands-speculations-v01.mjs

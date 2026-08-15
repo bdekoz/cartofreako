@@ -185,7 +185,7 @@ theme_files=(
   water-ck-44-22.svg
   resources-fauna-coral-reef-threat-2011-ck-44-22.svg
   cloud-atmosphere-ck-44-22.svg
-  fiber-synthesized-ck-44-22.svg
+  network-fiber-ck-44-22.svg
   resources-human-population-under-30-2024-ck-44-22.svg
 )
 theme_labels=('Water' 'Reef threat · 2011' 'P-Tree atmosphere' 'Fiber union' 'Population under 30 · 2024')
@@ -229,7 +229,7 @@ star_keys=(atmosphere temperature fiber water)
 star_files=(
   cloud-atmosphere-star-x-34-44.png
   anthropocene-temperature-2026-star-x-34-44.png
-  fiber-synthesized-star-x-34-44.png
+  network-fiber-star-x-34-44.png
   water-star-x-34-44.png
 )
 star_labels=('P-Tree atmosphere' 'Temperature · 2026 partial year' 'Fiber union' 'Water')
