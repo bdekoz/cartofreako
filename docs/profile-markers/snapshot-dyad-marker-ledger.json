@@ -4809,6 +4809,22 @@
       "evaluation_or_training_suitability_established": false,
       "provider_selection_or_use_established": false,
       "value_or_payment_established": false
+    },
+    {
+      "event_id": "SD-EVENT-20260815-374ac306",
+      "event_type": "storage-state-change",
+      "marker_id": "SD-20260815-62e54532",
+      "exact_instruction_source": "push",
+      "actor": "user",
+      "date": "2026-08-15",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-15T07:49:49Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Standalone user push instruction publishing commit cee1343, which carries the marker record for SD-20260815-62e54532 and its ledger check-in. Platform message identifiers are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "marker_state": "active",
+      "storage_state": "checked-in"
     }
   ]
 }
