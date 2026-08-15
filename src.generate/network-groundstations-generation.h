@@ -23,12 +23,15 @@
 #include "generation-typography.h"
 #include "natural-earth-generation.h"
 #include "network-groundstations-data.h"
+#include "network-infrastructure-generation.h"
 #include "projection-generation-common.h"
 
 namespace cart0freak0::network_groundstations_generation {
 
 namespace generation = cart0freak0::generation;
 namespace natural_earth = cart0freak0::natural_earth_generation;
+namespace infrastructure
+  = cart0freak0::network_infrastructure_generation;
 
 inline std::string
 xml_escape(std::string value)
@@ -169,14 +172,13 @@ add_gateway_links(generation::projection_document& document,
       geographic.reserve(station.path.size());
       for (const auto& [longitude, latitude] : station.path)
         geographic.push_back({latitude, longitude});
-      const auto pieces
-        = generation::project_path(context, std::move(geographic), false);
-      for (const auto& piece : pieces)
-        if (piece.size() > 1)
-          layer.add_element(svg::make_path(
-            svg::make_path_data_from_points(piece), link_style, "", true,
-            "data-gateway-link=\"true\" data-name=\""
-              + xml_escape(station.name) + "\""));
+      const std::string path_data
+        = infrastructure::project_open_path(context, geographic);
+      if (!path_data.empty())
+        layer.add_element(svg::make_path(
+          path_data, link_style, "", true,
+          "data-gateway-link=\"true\" data-name=\""
+            + xml_escape(station.name) + "\""));
     }
   layer.finish_element();
   document.add_element(layer);
