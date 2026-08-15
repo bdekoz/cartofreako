@@ -44,11 +44,11 @@ requireCondition(release.releaseBoundary.builderNetworkAccess === false
     && release.releaseBoundary.completionMarkerBuilt === false
     && release.releaseBoundary.humanInvocationRequired === true,
 'local builder acquired release authority');
-requireCondition(release.artifactCount === 211 && release.passCount === 32
+requireCondition(release.artifactCount === 217 && release.passCount === 33
     && release.layoutCount === 11 && release.sliceCount === 14,
 'consumer layout corpus counts changed');
-requireCondition(release.indexes.length === 44,
-    'consumer layout must have one primary, 32 pass, and 11 layout indexes');
+requireCondition(release.indexes.length === 45,
+    'consumer layout must have one primary, 33 pass, and 11 layout indexes');
 requireCondition(release.excludedExperiments.includes('gpu-control-2k-landscape-v1')
     && release.excludedExperiments.includes('gpu-control-2k-portrait-v1'),
 'unpromoted 2K controls entered the candidate release');
@@ -67,9 +67,9 @@ for (const record of [...release.indexes, release.runtimeManifest]) {
     `layout hash mismatch: ${record.path}`);
 }
 const artifactIndex = await readJson(path.join(output, 'indexes/artifacts-v1.json'));
-requireCondition(artifactIndex.artifactCount === 211
-    && artifactIndex.artifacts.length === 211
-    && new Set(artifactIndex.artifacts.map(value => value.id)).size === 211,
+requireCondition(artifactIndex.artifactCount === 217
+    && artifactIndex.artifacts.length === 217
+    && new Set(artifactIndex.artifacts.map(value => value.id)).size === 217,
 'primary artifact index is incomplete');
 const productPaths = [];
 for (const artifact of artifactIndex.artifacts) {
@@ -122,4 +122,4 @@ requireCondition(release.precompression.status === 'deferred'
     && release.cachePolicy.completionMarker === 'no-store',
 'precompression or marker caching was silently promoted');
 
-console.log('Stage 15I consumer layout passed: local-only candidate, 211 artifacts, 44 indexes, versioned WASM pair, no completion marker, no promoted 2K controls.');
+console.log('Stage 15I consumer layout passed: local-only candidate, 217 artifacts, 45 indexes, versioned WASM pair, no completion marker, no promoted 2K controls.');

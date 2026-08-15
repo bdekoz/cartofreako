@@ -63,10 +63,10 @@ if (mode === '--check') {
         && frozen.frozenStage14.workingTree === 'clean'
         && frozen.frozenStage14.runtimeApi === 3
         && frozen.frozenStage14.geometryAbi === 1
-        && frozen.frozenStage14.artifactCount === 211
-        && frozen.cases.length === 211,
+        && frozen.frozenStage14.artifactCount === 217
+        && frozen.cases.length === 217,
     'Stage 15A retained Stage 14 identity changed');
-    requireCondition(new Set(frozen.cases.map(value => value.id)).size === 211,
+    requireCondition(new Set(frozen.cases.map(value => value.id)).size === 217,
         'Stage 15A retained cases are not unique');
     const retainedFiles = [];
     for (const value of frozen.cases) {
@@ -75,7 +75,7 @@ if (mode === '--check') {
             retainedFiles.push({id: value.id, value: file});
         }
     }
-    requireCondition(retainedFiles.length === 1055,
+    requireCondition(retainedFiles.length === 1085,
         'Stage 15A retained file-record count changed');
     const retainedPaths = new Set();
     for (const {id, value} of retainedFiles) {
@@ -93,7 +93,7 @@ if (mode === '--check') {
     // render can legitimately differ, and PDF encoder bytes are not the print
     // geometry contract. Consumers that actually derive a control validate
     // the required full-PNG parent hash at use time.
-    console.log(`Stage 15A input freeze passed: 211 retained clean Stage 14 artifact records at ${frozenCommit}; current generated files are independent.`);
+    console.log(`Stage 15A input freeze passed: 217 retained clean Stage 14 artifact records at ${frozenCommit}; current generated files are independent.`);
     process.exit(0);
 }
 const [catalogBytes, manifestBytes] = await Promise.all([
@@ -111,7 +111,7 @@ requireCondition(catalog.sourceRevision.runtimeApi === 3
     && catalog.sourceRevision.geometryAbi === 1,
 'Stage 14 runtime identity changed');
 requireCondition(manifest.schemaVersion === 'cartofreako-standard-artifact-manifest-v1'
-    && manifest.artifactCount === 211 && catalog.artifacts.length === 211,
+    && manifest.artifactCount === 217 && catalog.artifacts.length === 217,
 'Stage 14 corpus is incomplete');
 const manifestHash = createHash('sha256').update(manifestBytes).digest('hex');
 requireCondition(catalog.sourceRevision.standardManifestSha256 === manifestHash,

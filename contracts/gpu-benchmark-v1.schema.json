@@ -151,8 +151,8 @@
             "sha256": {"$ref": "#/$defs/sha256"}
           }
         },
-        "artifactCount": {"const": 211},
-        "passCount": {"const": 32},
+        "artifactCount": {"const": 217},
+        "passCount": {"const": 33},
         "layoutCount": {"const": 11},
         "sliceCount": {"const": 14}
       }

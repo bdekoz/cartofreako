@@ -63,8 +63,8 @@ def main() -> None:
     assert gpu["documentType"] == "input-freeze"
     assert gpu["lifecycle"] == "exploration-only"
     assert gpu["frozenStage14"]["workingTree"] == "clean"
-    assert gpu["frozenStage14"]["artifactCount"] == len(gpu["cases"]) == 211
-    assert len({case["passId"] for case in gpu["cases"]}) == 32
+    assert gpu["frozenStage14"]["artifactCount"] == len(gpu["cases"]) == 217
+    assert len({case["passId"] for case in gpu["cases"]}) == 33
     assert len({case["layoutId"] for case in gpu["cases"]}) == 11
     assert sum(case["sliceId"] is not None for case in gpu["cases"]) == 14
 
@@ -79,7 +79,7 @@ def main() -> None:
             "path": "fixtures/gpu-benchmark/v1/stage-14-inputs.json",
             "sha256": sha256(ROOT / "fixtures/gpu-benchmark/v1/stage-14-inputs.json"),
             "sourceCommit": gpu["frozenStage14"]["sourceCommit"],
-            "artifactCount": 211,
+            "artifactCount": 217,
         },
         "environment": {
             "machineId": "SCHEMA-SENTINEL-NOT-A-MEASUREMENT",
@@ -395,8 +395,8 @@ def main() -> None:
         )
         assert controls["documentType"] == "control-catalog"
         assert controls["lifecycle"] == "exploration-only"
-        assert len(controls["artifacts"]) == 211
-        assert sum(len(value["controls"]) for value in controls["artifacts"]) == 422
+        assert len(controls["artifacts"]) == 217
+        assert sum(len(value["controls"]) for value in controls["artifacts"]) == 434
 
     suffix = ", including generated controls" if arguments.gpu_controls else ""
     print(f"Stage 15 contracts passed: frozen input, local layout, atoll canary/full pass, PurpleAir interface, and water-debris experiment{suffix}.")

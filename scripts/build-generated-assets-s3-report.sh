@@ -144,15 +144,15 @@ if ! jq -e \
    .destination.prefix == "cartofreako/v13" and
    .layout.organization == "projection/format/artifact" and
    .package.sha256 == $package_sha256 and
-   .inventory.source_tree_files == 909 and
-   .inventory.manifest_payload_files == 828 and
-   .inventory.release_object_count == 830 and
-   .inventory.published_tree_files == 825 and
-   .inventory.published_svg_gzip_files == 211 and
-   .inventory.pdf_files == 211 and
-   .inventory.png_files == 211 and
-   .inventory.thumbnail_files == 192 and
-   .inventory.thumbnails_per_projection == 32 and
+   .inventory.source_tree_files == 933 and
+   .inventory.manifest_payload_files == 852 and
+   .inventory.release_object_count == 854 and
+   .inventory.published_tree_files == 849 and
+   .inventory.published_svg_gzip_files == 217 and
+   .inventory.pdf_files == 217 and
+   .inventory.png_files == 217 and
+   .inventory.thumbnail_files == 198 and
+   .inventory.thumbnails_per_projection == 33 and
    .integrity.manifest_sha256 == $manifest_sha256' \
   "$data_root/release.json" >/dev/null; then
   printf 'release.json does not match the verified v13 report contract.\n' >&2

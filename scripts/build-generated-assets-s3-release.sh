@@ -19,15 +19,15 @@ readonly cache_control='public,max-age=31536000,immutable'
 readonly -a projections=(
   cahill-keyes authagraph dymaxion myriahedral star-x voronoi
 )
-readonly expected_source_tree_files=909
-readonly expected_svg_files=211
+readonly expected_source_tree_files=933
+readonly expected_svg_files=217
 readonly expected_explicit_svg_gzip_files=84
-readonly expected_pdf_files=211
-readonly expected_png_files=211
-readonly expected_thumbnail_files=192
-readonly expected_published_tree_files=825
-readonly expected_payload_files=828
-readonly expected_release_objects=830
+readonly expected_pdf_files=217
+readonly expected_png_files=217
+readonly expected_thumbnail_files=198
+readonly expected_published_tree_files=849
+readonly expected_payload_files=852
+readonly expected_release_objects=854
 
 archive=$default_archive
 output=$default_output
@@ -400,17 +400,17 @@ jq -n \
     inventory: {
       source_tree_files: $source_tree_files,
       source_tree_bytes: $source_tree_bytes,
-      source_svg_files: 211,
+      source_svg_files: 217,
       source_explicit_svg_gzip_files: 84,
       published_tree_files: $published_tree_files,
       published_tree_bytes: $published_tree_bytes,
-      published_svg_gzip_files: 211,
+      published_svg_gzip_files: 217,
       published_svg_gzip_bytes: $published_svg_gzip_bytes,
-      derived_svg_gzip_files: 127,
-      pdf_files: 211,
-      png_files: 211,
-      thumbnail_files: 192,
-      thumbnails_per_projection: 32,
+      derived_svg_gzip_files: 133,
+      pdf_files: 217,
+      png_files: 217,
+      thumbnail_files: 198,
+      thumbnails_per_projection: 33,
       manifest_payload_files: $payload_file_count,
       manifest_payload_bytes: $payload_byte_count,
       release_object_count: $release_object_count
@@ -454,12 +454,12 @@ if ! jq -e \
    .destination.prefix == "cartofreako/v13" and
    .layout.organization == "projection/format/artifact" and
    .package.sha256 == $archive_sha256 and
-   .inventory.source_tree_files == 909 and
-   .inventory.published_tree_files == 825 and
-   .inventory.thumbnail_files == 192 and
-   .inventory.thumbnails_per_projection == 32 and
-   .inventory.manifest_payload_files == 828 and
-   .inventory.release_object_count == 830 and
+   .inventory.source_tree_files == 933 and
+   .inventory.published_tree_files == 849 and
+   .inventory.thumbnail_files == 198 and
+   .inventory.thumbnails_per_projection == 33 and
+   .inventory.manifest_payload_files == 852 and
+   .inventory.release_object_count == 854 and
    .integrity.manifest_sha256 == $manifest_sha256 and
    .delivery.svg_gzip.content_type == "application/gzip" and
    .delivery.svg_gzip.content_encoding == null and

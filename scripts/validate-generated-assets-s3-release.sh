@@ -154,15 +154,15 @@ svg_gzip_count=$(find "$data_root/tree" -type f -path '*/svg/*.svg.gz' | wc -l)
 pdf_count=$(find "$data_root/tree" -type f -path '*/pdf/*.pdf' | wc -l)
 png_count=$(find "$data_root/tree" -type f -path '*/png/*.png' | wc -l)
 thumbnail_count=$(find "$data_root/tree" -type f -path '*/thumbnail/*.png' | wc -l)
-if [[ $tree_file_count -ne 825 || $raw_svg_count -ne 0 ||
-      $svg_gzip_count -ne 211 || $pdf_count -ne 211 ||
-      $png_count -ne 211 || $thumbnail_count -ne 192 ]]; then
+if [[ $tree_file_count -ne 849 || $raw_svg_count -ne 0 ||
+      $svg_gzip_count -ne 217 || $pdf_count -ne 217 ||
+      $png_count -ne 217 || $thumbnail_count -ne 198 ]]; then
   die "unexpected release inventory: tree=$tree_file_count svg=$raw_svg_count svg.gz=$svg_gzip_count pdf=$pdf_count png=$png_count thumbnails=$thumbnail_count"
 fi
 for projection in "${projections[@]}"; do
   projection_thumbnail_count=$(find "$data_root/tree/$projection/thumbnail" \
     -maxdepth 1 -type f -name '*.png' | wc -l)
-  [[ $projection_thumbnail_count -eq 32 ]] || \
+  [[ $projection_thumbnail_count -eq 33 ]] || \
     die "$projection has $projection_thumbnail_count thumbnails; expected 32"
   for required_stem in cloud-atmosphere fiber-synthesized; do
     for format in svg pdf png thumbnail; do
@@ -181,7 +181,7 @@ payload_count=$(wc -l < "$local_paths")
 release_count=$(find "$data_root" -type f | wc -l)
 general_upload_count=$(find "$data_root" -type f \
   ! -path "$data_root/tree/*/svg/*" ! -name release.json | wc -l)
-if [[ $payload_count -ne 828 || $release_count -ne 830 ||
+if [[ $payload_count -ne 852 || $release_count -ne 854 ||
       $general_upload_count -ne 618 ]]; then
   die "unexpected publication counts: payload=$payload_count release=$release_count general=$general_upload_count"
 fi
@@ -214,12 +214,12 @@ if ! jq -e \
     .delivery.cache_control == "public,max-age=31536000,immutable" and
     .layout.svg_viewer == "viewer.html" and
     .layout.organization == "projection/format/artifact" and
-    .inventory.source_tree_files == 909 and
-    .inventory.published_tree_files == 825 and
-    .inventory.published_svg_gzip_files == 211 and
-    .inventory.pdf_files == 211 and .inventory.png_files == 211 and
-    .inventory.thumbnail_files == 192 and
-    .inventory.thumbnails_per_projection == 32 and
+    .inventory.source_tree_files == 933 and
+    .inventory.published_tree_files == 849 and
+    .inventory.published_svg_gzip_files == 217 and
+    .inventory.pdf_files == 217 and .inventory.png_files == 217 and
+    .inventory.thumbnail_files == 198 and
+    .inventory.thumbnails_per_projection == 33 and
     .delivery.svg_gzip.content_type == "application/gzip" and
     .delivery.svg_gzip.content_encoding == null and
     .delivery.preview_png.content_type == "image/png"' \

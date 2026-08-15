@@ -116,7 +116,7 @@
         "path": {"$ref": "#/$defs/path"},
         "sha256": {"$ref": "#/$defs/sha256"},
         "sourceCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
-        "artifactCount": {"const": 211}
+        "artifactCount": {"const": 217}
       }
     },
     "index": {
