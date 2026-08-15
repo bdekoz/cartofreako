@@ -16,8 +16,8 @@
   },
   "sourceInput": {
     "path": "fixtures/gpu-benchmark/v1/stage-14-inputs.json",
-    "sha256": "5280a237e763157dac03dd4e43dc16ff97ed37a91757af8ee3540f219ee8805f",
-    "sourceCommit": "7ba10e6b11475326873b3e206067fecebe7cc1c2",
+    "sha256": "20201c9b31bc1fbd09789d874c0b67566509d6cf9aa777e6aeb237f162279c90",
+    "sourceCommit": "737ea6f7698dce810c3334dee713a497d7e389aa",
     "artifactCount": 211
   },
   "partitions": [

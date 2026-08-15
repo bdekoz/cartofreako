@@ -3,14 +3,14 @@
   "documentType": "input-freeze",
   "lifecycle": "exploration-only",
   "frozenStage14": {
-    "sourceCommit": "7ba10e6b11475326873b3e206067fecebe7cc1c2",
+    "sourceCommit": "737ea6f7698dce810c3334dee713a497d7e389aa",
     "workingTree": "clean",
     "runtimeApi": 3,
     "geometryAbi": 1,
     "artifactCatalog": {
       "path": "assets.generated/catalog/artifacts-v1.json",
-      "sha256": "4ae0e574677685f29ac3093c134b056f83c5dff80569a6fbd354c04526b96a13",
-      "sourceCommit": "7ba10e6b11475326873b3e206067fecebe7cc1c2",
+      "sha256": "5e9b7abc999f8f632a84eeba5d1ff037c45f070a4674990742fa27398a49190b",
+      "sourceCommit": "737ea6f7698dce810c3334dee713a497d7e389aa",
       "artifactCount": 211
     },
     "standardManifest": {
@@ -85,7 +85,7 @@
           "path": "assets.generated/authagraph/pdf/anthropocene-particulate-2025-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 4772357,
-          "sha256": "8e20da0d9241c795461abb857df3dc9221660b511067da2ade10f5959fd4a2d5",
+          "sha256": "1b1406f2e1c8ab7e39c779a2c9fc94045722f898b456cf0c20af0164c5956511",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -193,7 +193,7 @@
           "path": "assets.generated/cahill-keyes/pdf/anthropocene-particulate-2025-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 4618305,
-          "sha256": "1ab48d147ff8a1c16565a065ba30a6757f2928349c694590f2f049d36cf65c4b",
+          "sha256": "94d70ea247f4a2923441bcaf700ca1fc22d46d6ab1de993bbfbfb6474fffb3bb",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -301,7 +301,7 @@
           "path": "assets.generated/dymaxion/pdf/anthropocene-particulate-2025-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 4728547,
-          "sha256": "e9dcf062bf43bae4a6e45658b5552577c2b64622ead5ea25a2f832c1c56f6bb0",
+          "sha256": "d0904235054fd01b2030ac32b9c3f1e2b1be7ada88ccc45c348936a27f6c1ba4",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -409,7 +409,7 @@
           "path": "assets.generated/myriahedral/pdf/anthropocene-particulate-2025-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 4859984,
-          "sha256": "3837ed210d7f9a187f2ac1a8d70483d700f058c95f240128684eb2e8eee1f5ab",
+          "sha256": "ce3757b210a214fe1cf5dc70c7c29c7e2833544a2c0f6c60b46fbf87bae47d96",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -517,7 +517,7 @@
           "path": "assets.generated/star-x/pdf/anthropocene-particulate-2025-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 4621945,
-          "sha256": "2b8f757bd1e303fd419a306bddcc3c37aef5a1b5009e67d33337ab9432bb6efe",
+          "sha256": "452e7df9f2d74678d3458131fbe7d9d4d1e72282f3f4a135a5cfbaffcafbf679",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -624,8 +624,8 @@
         "pdf": {
           "path": "assets.generated/voronoi/pdf/anthropocene-particulate-2025-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
-          "bytes": 4771962,
-          "sha256": "db780e9b852dbc0034e27874d8eca55b18ff47a92d2cbad9f8acdb71f8b96e0b",
+          "bytes": 4771963,
+          "sha256": "1739e175cdca033785d2e06fb9a4fd1b70a77a41a9c4c3fcdaa31e8455d62ec0",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -733,7 +733,7 @@
           "path": "assets.generated/authagraph/pdf/anthropocene-particulate-2026-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 4102600,
-          "sha256": "36696b23c1a336ddd8d4b16307050f053916824b409890fd4c7ac473fea78dd7",
+          "sha256": "0668de18c93fccc0477a6026b46756432522b5bdbfb635b3e541e75febb2825b",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -841,7 +841,7 @@
           "path": "assets.generated/cahill-keyes/pdf/anthropocene-particulate-2026-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 3938969,
-          "sha256": "2d6919290b35601952af04dda528e6fae1bd80cccb519bf09e9b870699664ddd",
+          "sha256": "a45815c2c64d47f93a7299b345ef5a69f84b502e61d2fa43881facff1b0a496f",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -948,8 +948,8 @@
         "pdf": {
           "path": "assets.generated/dymaxion/pdf/anthropocene-particulate-2026-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
-          "bytes": 4057426,
-          "sha256": "cd221fbda640526e0b426c63267862ca0410af8334f6a6161c19bf00e1bef23e",
+          "bytes": 4057424,
+          "sha256": "ed81b9d4f2b4913d85b7f6d461222776e1f4b1d5d1a438726796635c211ed6b9",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -1057,7 +1057,7 @@
           "path": "assets.generated/myriahedral/pdf/anthropocene-particulate-2026-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 4188437,
-          "sha256": "896b330ca3b161cd1d18a64f6b8c219a13833c0fce423789f88932d900586d9b",
+          "sha256": "9873b9869ec1715a6ed914d68ab1eca932af2ff48adacac85f37fa9a33c1b2ec",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -1165,7 +1165,7 @@
           "path": "assets.generated/star-x/pdf/anthropocene-particulate-2026-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 3946180,
-          "sha256": "042ac4ad1b4ffb22885af2f94798c70c71aedafe665f2794acbaa64d7780e366",
+          "sha256": "23c214353e9b5dcfd8ced523866730723ca3ad8b5f20e10ea8f1f553d5df3b25",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -1273,7 +1273,7 @@
           "path": "assets.generated/voronoi/pdf/anthropocene-particulate-2026-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 4092491,
-          "sha256": "e448ee6b36ed8499f11d676c83472505a83bef0ef5f650b66105abb0ad38426b",
+          "sha256": "e9708859f365fd4b7609a462e90761cbd31eeb2171f9509d8451d3f647f04c4c",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -1381,7 +1381,7 @@
           "path": "assets.generated/authagraph/pdf/anthropocene-temperature-2025-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 2623480,
-          "sha256": "bae204bbd8c3809992947af748ac91cb7a1a934f9282fbd9ee841cff82928dd4",
+          "sha256": "08bbf27c68c07432a015312ca29fb31f2c23ae8f9bb245e667ac167e693945a7",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -1489,7 +1489,7 @@
           "path": "assets.generated/cahill-keyes/pdf/anthropocene-temperature-2025-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 2427684,
-          "sha256": "2a4b6f63e15ef14e5628779e5f932a44af4f580f8801ab5beb2b0aaf05cfcb68",
+          "sha256": "3715e8e86b3b2ec07d2c33b39134d796cc83df567755284d1838bd27c15b9924",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -1597,7 +1597,7 @@
           "path": "assets.generated/dymaxion/pdf/anthropocene-temperature-2025-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 2587119,
-          "sha256": "70b77d586271e0e88a3bd89bf53b1133f6621c305d3b9de59fdf4f426e8aaf9a",
+          "sha256": "03bba8a90c5b3ccd90b4b76a7f9d41fa8db28dedaa931987938a46cf6d5f097b",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -1705,7 +1705,7 @@
           "path": "assets.generated/myriahedral/pdf/anthropocene-temperature-2025-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 3523958,
-          "sha256": "92bafb962fe3741ee3af62b695cd0225b117c9e6af61a1c6beeb657cfea558f1",
+          "sha256": "25239cddd062d6ce71228bba9ae6a1fe1655bb616583fd74d5cccd2f4e512451",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -1812,8 +1812,8 @@
         "pdf": {
           "path": "assets.generated/star-x/pdf/anthropocene-temperature-2025-star-x-34-44.pdf",
           "mediaType": "application/pdf",
-          "bytes": 2477578,
-          "sha256": "39e16875a0934ef4a6f4a81a8db1d89e673ac2a5fb17224068ea2e1f0cfab1fa",
+          "bytes": 2477579,
+          "sha256": "16b7be5ee207a35f12362b8cdc462e9dc9c36dce87bccf60c9994eb403845221",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -1921,7 +1921,7 @@
           "path": "assets.generated/voronoi/pdf/anthropocene-temperature-2025-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 2608860,
-          "sha256": "497778db75acf163176e8e943c740e00f57305f9fa48e1a35f6789637ad45760",
+          "sha256": "55fd2f5645188b23934af7945626b48b426ddc26c3189c1e87a441ac4858b6d2",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -2029,7 +2029,7 @@
           "path": "assets.generated/authagraph/pdf/anthropocene-temperature-2026-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 2528843,
-          "sha256": "1626b05b2d1a8c815d2be636e4c488a878cb2f4e05e0c780a7658f0fc3e5d785",
+          "sha256": "b50d1c75aa2736dfe8bff005613bbd5c5e88e87710d765a4b057b6820890546c",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -2136,8 +2136,8 @@
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/anthropocene-temperature-2026-ck-44-22.pdf",
           "mediaType": "application/pdf",
-          "bytes": 2333989,
-          "sha256": "74e40de301aed621e7d9993d19340ce1340207d13c2a82e75048492d658aebb4",
+          "bytes": 2333990,
+          "sha256": "50de2ef321ca1676771aa635ada92e8474ff99552f1599174a9eb517754060f1",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -2244,8 +2244,8 @@
         "pdf": {
           "path": "assets.generated/dymaxion/pdf/anthropocene-temperature-2026-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
-          "bytes": 2492080,
-          "sha256": "753fa87a7b89e1feee00a34e06ee36090f4eee3f1a2f5696bab4faf5c4d6839f",
+          "bytes": 2492081,
+          "sha256": "ba701d98e5430866da453bb3eaf238218fb7ec35776ca1506170e29d364aa7b7",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -2352,8 +2352,8 @@
         "pdf": {
           "path": "assets.generated/myriahedral/pdf/anthropocene-temperature-2026-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
-          "bytes": 3408055,
-          "sha256": "0fe98d2f324ca31dc8ef8819ce429f05aa22df169efd3c6bee3703b17e4c31f3",
+          "bytes": 3408056,
+          "sha256": "5f37ccf71e1ab77020335d2f2cd3b72931eac45ecc5dc5989cd4f9b0e03f7890",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -2460,8 +2460,8 @@
         "pdf": {
           "path": "assets.generated/star-x/pdf/anthropocene-temperature-2026-star-x-34-44.pdf",
           "mediaType": "application/pdf",
-          "bytes": 2390653,
-          "sha256": "ccc7c93281ec4d7bdc3ed56316b00b5064650f39b73bc35167b6f3a6c6e6301c",
+          "bytes": 2390654,
+          "sha256": "a673d13d464b792137c4e7a06d575f4fde72742bb4cc8a9d77c518eb2ad1753a",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -2569,7 +2569,7 @@
           "path": "assets.generated/voronoi/pdf/anthropocene-temperature-2026-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 2515355,
-          "sha256": "e2713ba447fe1b104241dba3a42fafbc00b70f13b5197beaa5672a35bca7ccdb",
+          "sha256": "ce4908ebc2cfcc9aca980f3deada2a6bf4ead53fc8211cf853278f6c8fbf55c4",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -2670,21 +2670,21 @@
           "path": "assets.generated/authagraph/svg/astro-all-sky-authagraph-44-19.052559.svg",
           "mediaType": "image/svg+xml",
           "bytes": 480511,
-          "sha256": "7536e09b8988551bc5970a0e0c6c37a88a59bf9af7d621697a9b448c4f89d1fc",
+          "sha256": "8c47e7f9622ce33eb6370737a6eb88f2a6d292c1c2066dbc3ded1d4f47274829",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/authagraph/pdf/astro-all-sky-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
-          "bytes": 154154,
-          "sha256": "e26b3fcd91e8e01151547ac1e24c97088cfd71102ca193da85ef5a3ab0aa8473",
+          "bytes": 154180,
+          "sha256": "2153134e0ae3cd25488b1adf8278d8c913c52c90892d99bd97c78357bd09be66",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/authagraph/png/astro-all-sky-authagraph-44-19.052559.png",
           "mediaType": "image/png",
-          "bytes": 488974,
-          "sha256": "f002849b0520e0b80a36abec4a72a466581d57b76f0cf56257265eb2e45590c3",
+          "bytes": 489153,
+          "sha256": "0bc676f4121649375178c90bd2343d774319d41f88ff2595538600c6749e8510",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -2732,8 +2732,8 @@
         "png": {
           "path": "assets.generated/authagraph/screen-1080p/astro-all-sky-authagraph-44-19.052559.png",
           "mediaType": "image/png",
-          "bytes": 280627,
-          "sha256": "8bcfb9c00c538943963b23c3cc17b46e7a2249cb4fd1c180635a48425949dd39",
+          "bytes": 280639,
+          "sha256": "7034c8b8693101d8c7ba36058d925e20e22ddff718c0488b5758cd180fb6b34d",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -2746,8 +2746,8 @@
         "webp": {
           "path": "assets.generated/authagraph/screen-1080p-webp/astro-all-sky-authagraph-44-19.052559.webp",
           "mediaType": "image/webp",
-          "bytes": 152238,
-          "sha256": "f82db8291d9a5d272463af9765e117f78e10aad4be80ae319f25e6f7758bf04d",
+          "bytes": 152596,
+          "sha256": "5cd91a892629e1fef1dc1e2aa80a4d32ac69a07bf08c0ce8e60817474db0c433",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -2778,21 +2778,21 @@
           "path": "assets.generated/cahill-keyes/svg/astro-all-sky-ck-44-22.svg",
           "mediaType": "image/svg+xml",
           "bytes": 480858,
-          "sha256": "af605dae1eabb9e522fc70bfa6a1f854be8008ec12a6ea57323a3fb74bbe85ae",
+          "sha256": "ebdcf6f843349d58d911ee03331ffcd2086884493cf6c12f7c723fa61a3404f6",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/astro-all-sky-ck-44-22.pdf",
           "mediaType": "application/pdf",
-          "bytes": 154270,
-          "sha256": "ff3f1506d6261530bc3dbe682ba15594f46e36019fd0bc4b839822372f2f61d5",
+          "bytes": 154271,
+          "sha256": "3cccb23636e40af6365ff8b81b9f11ec144ec709381fe87246eb36dbe9bca04c",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/cahill-keyes/png/astro-all-sky-ck-44-22.png",
           "mediaType": "image/png",
-          "bytes": 437437,
-          "sha256": "18f7dd5e0ad4b338c2b93bb5d2073873090438c055ec48c2aafdbaca44457358",
+          "bytes": 437475,
+          "sha256": "23bd56d83c0e856cfca5cf750b67d28fe9ae047ec3ebb53052aa26d685738bfc",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -2840,8 +2840,8 @@
         "png": {
           "path": "assets.generated/cahill-keyes/screen-1080p/astro-all-sky-ck-44-22.png",
           "mediaType": "image/png",
-          "bytes": 255117,
-          "sha256": "ec3fb691a7027fbf24533f113fbf7a430f6be4b41da7c0e426fcfadfda209841",
+          "bytes": 255111,
+          "sha256": "55cf7a4031e6ce3ca4ed422cbf28971cc4944b981dd97f6942f33b3aa9247cae",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -2854,8 +2854,8 @@
         "webp": {
           "path": "assets.generated/cahill-keyes/screen-1080p-webp/astro-all-sky-ck-44-22.webp",
           "mediaType": "image/webp",
-          "bytes": 143274,
-          "sha256": "f338b5f8541540ed845a4f0c9229cc91b10fa0676b7fb17ed27e12be3263dd61",
+          "bytes": 142520,
+          "sha256": "537b0aba79baf95f93098886cdaf21bbe61988c29e310e209e157d89df588b06",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -2886,21 +2886,21 @@
           "path": "assets.generated/dymaxion/svg/astro-all-sky-dymaxion-44-20.78461.svg",
           "mediaType": "image/svg+xml",
           "bytes": 481465,
-          "sha256": "23549723a63852d00b8f8c4cc4b2e772be722b40ae89d69d54fbceb48cbf84f0",
+          "sha256": "31704611b7a54062dbad280f0bf42e9f92135e821a9c9b217f4ca0ac374bb3d6",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/dymaxion/pdf/astro-all-sky-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
-          "bytes": 154372,
-          "sha256": "d329c023afa2f903487a9bf67735c4c46b77f0c2472f482b2c9f8576942f5ebd",
+          "bytes": 154377,
+          "sha256": "0e5f46d1529ff88babb10155e08c0ae0cb2968008717228c1cca02fd0b6ec947",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/dymaxion/png/astro-all-sky-dymaxion-44-20.78461.png",
           "mediaType": "image/png",
-          "bytes": 442954,
-          "sha256": "470b487cd09ca3ee8e1fc3ab3a008fb4dd1dcb6495e4f97a2a3ff730ef1f0783",
+          "bytes": 442978,
+          "sha256": "c64a2a31525843e4811f5722bd3ac3f8ba2503cb88359ee2554042a192bd9ca7",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -2948,8 +2948,8 @@
         "png": {
           "path": "assets.generated/dymaxion/screen-1080p/astro-all-sky-dymaxion-44-20.78461.png",
           "mediaType": "image/png",
-          "bytes": 261116,
-          "sha256": "cf8f7b64c5cf8d9d8734ab754829f5691b0093ff5f4ef2bca85e614a6154158a",
+          "bytes": 261192,
+          "sha256": "3d1f6b2a7add19fe314de6483ccd6aa1cc4d7cd31e88f7ddabd12ae56f5c2fc3",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -2962,8 +2962,8 @@
         "webp": {
           "path": "assets.generated/dymaxion/screen-1080p-webp/astro-all-sky-dymaxion-44-20.78461.webp",
           "mediaType": "image/webp",
-          "bytes": 141410,
-          "sha256": "550cc7e71b6aa9baf0d1bf14360e778ef085164c9f261566e87955642d2cc842",
+          "bytes": 141546,
+          "sha256": "694e4f6c206ad149ab9801be880e8e4cf69c97738ff88abd33ab16da47041f90",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -2994,21 +2994,21 @@
           "path": "assets.generated/myriahedral/svg/astro-all-sky-myriahedral-44-24.75.svg",
           "mediaType": "image/svg+xml",
           "bytes": 525774,
-          "sha256": "cdd5b5c0caf067a2e6ac8841fd61b9b43e95f89b6c92f4c6ed8bca1f2a97f19f",
+          "sha256": "0a776d19948b8fb44e570ba249c581fc0f21c26d337552f2fcddb196ac5e9ef6",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/myriahedral/pdf/astro-all-sky-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
-          "bytes": 161450,
-          "sha256": "8139302a46038675377319b20a093c46c17f9ac45bbe5f3400a08b23788c519e",
+          "bytes": 161495,
+          "sha256": "ee8a568026f52c3efe9e74aaee2296c7783d3227369f9895ed2a12ad2e835813",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/myriahedral/png/astro-all-sky-myriahedral-44-24.75.png",
           "mediaType": "image/png",
-          "bytes": 414919,
-          "sha256": "ded3d918a86c9f0ac9cd2bade5b414d584cdd4bac42d28cc6f8f6879dd1736ef",
+          "bytes": 414871,
+          "sha256": "ca7608d8f9486fe17b4a8f05dc7848a9f66988bfe5faeb85be114d2d114310b0",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -3056,8 +3056,8 @@
         "png": {
           "path": "assets.generated/myriahedral/screen-1080p/astro-all-sky-myriahedral-44-24.75.png",
           "mediaType": "image/png",
-          "bytes": 242038,
-          "sha256": "60ba2732dd27a3a3a973fb1ea6cb6644b05e8f0f3c263cf2e29f40b8bc405fee",
+          "bytes": 242089,
+          "sha256": "498fb93ab0cd560fb5626408c968fad0ca4333ebfe143a31dec41d534c2add7a",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -3070,8 +3070,8 @@
         "webp": {
           "path": "assets.generated/myriahedral/screen-1080p-webp/astro-all-sky-myriahedral-44-24.75.webp",
           "mediaType": "image/webp",
-          "bytes": 135892,
-          "sha256": "46dcfff80a1a3fb2650cf05fd7fa8b6608f44a9232fe007748cc841d0209c0f8",
+          "bytes": 135576,
+          "sha256": "b49dc5a99ee7ee83f0c24b2af51794ab991ea51b4fc782c69520511604b251bc",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -3102,21 +3102,21 @@
           "path": "assets.generated/star-x/svg/astro-all-sky-star-x-34-44.svg",
           "mediaType": "image/svg+xml",
           "bytes": 481255,
-          "sha256": "ff93cc37b0cec845f10466afbddc18c09b32bb346374111aaecdab717703372b",
+          "sha256": "a287a1b274ed8b3050b6375fbf35988e75846f089d124dbeba1622bde96475f5",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/star-x/pdf/astro-all-sky-star-x-34-44.pdf",
           "mediaType": "application/pdf",
-          "bytes": 156038,
-          "sha256": "ec64e813c4a995e4f70e06481911e007ff518403165566272c9545e29032e68e",
+          "bytes": 156057,
+          "sha256": "07c25ade62b16052a9290ae9192442c71744e41dfb85c4189c470923b8878029",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/star-x/png/astro-all-sky-star-x-34-44.png",
           "mediaType": "image/png",
-          "bytes": 505016,
-          "sha256": "9a05f5b297616336bad2e6825780f1dd3b73873e7fb43d57adb4b13837d8f24f",
+          "bytes": 505062,
+          "sha256": "3d2c656bf0309cef73a896894d11d4503c8749418b2526497747496868ba2a17",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 2967,
@@ -3165,7 +3165,7 @@
           "path": "assets.generated/star-x/screen-1080p/astro-all-sky-star-x-34-44.png",
           "mediaType": "image/png",
           "bytes": 151349,
-          "sha256": "733298fe8a1075c7ab258f0eef5b8a2ba35528401c5eb873cbe0f2232da3f9b9",
+          "sha256": "e598fdfccc08026f59097fdc322558f20152d33066a4042e790824d42c312c68",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -3178,8 +3178,8 @@
         "webp": {
           "path": "assets.generated/star-x/screen-1080p-webp/astro-all-sky-star-x-34-44.webp",
           "mediaType": "image/webp",
-          "bytes": 78030,
-          "sha256": "d5c0db46d16cd6eb9af09f88514ee3206f327ffd98918fb57660f3328b4135b5",
+          "bytes": 77772,
+          "sha256": "66740d866d92d5d9339d0c9555962d038d89b28cb1bf7a6edc884b2306ff53a5",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -3210,21 +3210,21 @@
           "path": "assets.generated/voronoi/svg/astro-all-sky-voronoi-44-22.916667.svg",
           "mediaType": "image/svg+xml",
           "bytes": 480240,
-          "sha256": "bf79538d2ca475cf7c3af8142c2fdd0bc5d92c4baf3f6c4a35a7c0793f7fe02b",
+          "sha256": "2c538e160a0c2d76c71c9ba98db7d383b367268db5299f312748c66ad5d9b68d",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/voronoi/pdf/astro-all-sky-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
-          "bytes": 153207,
-          "sha256": "f46fe1f20816dc52e905ecfe0f247dced31efd36eef4bdaaf85a0bc2640809ef",
+          "bytes": 153220,
+          "sha256": "e303bb7ed2b6e5f98b1b80edae3cc881dc6d0555a04378ba5edb98cf083604ec",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/voronoi/png/astro-all-sky-voronoi-44-22.916667.png",
           "mediaType": "image/png",
-          "bytes": 413123,
-          "sha256": "f1d640e7abb8735a96f28407ba91256a91b2608521b61d5ba8466f07a1d6e2e9",
+          "bytes": 413076,
+          "sha256": "1fa8fdb6f2306b8748aeba04a6db96d1416cf6720c4dc29c51b954f140dfdc7e",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -3272,8 +3272,8 @@
         "png": {
           "path": "assets.generated/voronoi/screen-1080p/astro-all-sky-voronoi-44-22.916667.png",
           "mediaType": "image/png",
-          "bytes": 241688,
-          "sha256": "c197bcfbaeec43a44602cc1a4571655232b018f4b39c9e9e165a7492a52b35f1",
+          "bytes": 241648,
+          "sha256": "fb3fc2155cdd73b8b761557f0304d405bbcae1c643607d97860f4945c949d0f7",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -3286,8 +3286,8 @@
         "webp": {
           "path": "assets.generated/voronoi/screen-1080p-webp/astro-all-sky-voronoi-44-22.916667.webp",
           "mediaType": "image/webp",
-          "bytes": 131120,
-          "sha256": "c898862c7c976f6735618f11a16e1875c80a22a641913a99ea0e4f424d331406",
+          "bytes": 130806,
+          "sha256": "4bf56c6b25570ce8269db798924537c22594e5dc58f20591776a27e0d90582a7",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -3325,7 +3325,7 @@
           "path": "assets.generated/authagraph/pdf/astro-observer-ground-multiband-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 52035,
-          "sha256": "1759d074706a4cc0f3e691e19f2e2609bdfd13b7e0362fc74cfa6eb143db9d50",
+          "sha256": "434dbb741d36f2c83e9cf88e3a7aacb69c49bd87599ff0dd6e231bfb7ce79ebf",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -3432,8 +3432,8 @@
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/astro-observer-ground-multiband-ck-44-22.pdf",
           "mediaType": "application/pdf",
-          "bytes": 50900,
-          "sha256": "07abd58b5671d92cca2bf951c9fb519ae552c9a290c9ffcb052697a0812aea40",
+          "bytes": 50899,
+          "sha256": "79ae99c074b0aa9f5df7bb74ecf3434f3ceafe97f11ec519f32947393b64d1ce",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -3541,7 +3541,7 @@
           "path": "assets.generated/dymaxion/pdf/astro-observer-ground-multiband-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 51974,
-          "sha256": "6aa14ad33666421fdc5ca8879cdec01dec098b866ed5d589f706ba7c8089d75d",
+          "sha256": "aaad7e0de33bf33150afe4fffe68ef932eb3917becf7e7b3511a182551879925",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -3648,8 +3648,8 @@
         "pdf": {
           "path": "assets.generated/myriahedral/pdf/astro-observer-ground-multiband-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
-          "bytes": 58508,
-          "sha256": "02b9f59eff8b249b6a2fb981a6398671da442c1bf715daea303e82d741f9f40a",
+          "bytes": 58506,
+          "sha256": "96f335e96b45aa08d76425e19766d19833d1349fcecccf88abbc654bc482ceee",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -3757,7 +3757,7 @@
           "path": "assets.generated/star-x/pdf/astro-observer-ground-multiband-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 51589,
-          "sha256": "2b66a766ae84d6a5b543c34a7f3cdf0ee4dc102cd93375980261b7d10c583764",
+          "sha256": "fc5bf3abfbcaa6399fb121ea40f2fb6fb178cc21c97a0c1f6d58144587e0ddb7",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -3865,7 +3865,7 @@
           "path": "assets.generated/voronoi/pdf/astro-observer-ground-multiband-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 49138,
-          "sha256": "ac53f6d545f8e0024965544504753e5e2ef2f39513dc7ee5bb4b605cd477b9f4",
+          "sha256": "b961ca35650e881dca840bd1418020e4ce774c31054fb209f113a2a5dd429408",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -3954,7 +3954,7 @@
       "layoutId": "authagraph",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T01:59:44Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -3965,22 +3965,22 @@
         "svg": {
           "path": "assets.generated/authagraph/svg/astro-observer-hubble-authagraph-44-19.052559.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 210126,
-          "sha256": "152899b598e6c1222959d99707081562f428ba92659344665d1f1ca205c512ba",
+          "bytes": 138895,
+          "sha256": "cb4a55ebc908be05226ebf0d62bf342c53b27b745d0df7072b9a9b70f9282e2b",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/authagraph/pdf/astro-observer-hubble-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
-          "bytes": 77022,
-          "sha256": "91ad2f2baeafd23ef9af3c30adf79b6903163b12d2876b12a288ae8754c6c997",
+          "bytes": 59206,
+          "sha256": "3bc46974a7a0b5d47ed68efef1a8a8894709a44bcf99271fb8ae3abd957ab967",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/authagraph/png/astro-observer-hubble-authagraph-44-19.052559.png",
           "mediaType": "image/png",
-          "bytes": 453016,
-          "sha256": "21902f31952c584ff2ef2f1a3d934ff756d187afa42cdb0298c97911e09858c4",
+          "bytes": 415955,
+          "sha256": "6a0acd9768105ff6eda93b5f746ff8a5afda6b7085b8b51230a41183e6738b91",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -4028,8 +4028,8 @@
         "png": {
           "path": "assets.generated/authagraph/screen-1080p/astro-observer-hubble-authagraph-44-19.052559.png",
           "mediaType": "image/png",
-          "bytes": 263136,
-          "sha256": "d5843db38475da6e42d30a128f6392be905e78213afd6bf88022870fa32627c4",
+          "bytes": 234475,
+          "sha256": "130bab752320107eddcc44690da8f5dda89862682137a5aca38c4560bb9e5429",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -4042,8 +4042,8 @@
         "webp": {
           "path": "assets.generated/authagraph/screen-1080p-webp/astro-observer-hubble-authagraph-44-19.052559.webp",
           "mediaType": "image/webp",
-          "bytes": 137846,
-          "sha256": "a341e8b90cab74e8a4e8186fc382ee9de79753674823026904cc72074a8a1585",
+          "bytes": 119732,
+          "sha256": "9890bdbc35873c1cb5e765b22aeda7cd345181e7cb9038d90f125cd140768ae5",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -4062,7 +4062,7 @@
       "layoutId": "cahill-keyes",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T01:59:44Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -4073,22 +4073,22 @@
         "svg": {
           "path": "assets.generated/cahill-keyes/svg/astro-observer-hubble-ck-44-22.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 209311,
-          "sha256": "984f724679b1fd372036bf530130b1304c956e94bceaebc6e3326240f9fefd1a",
+          "bytes": 138990,
+          "sha256": "eae8fb2b8980e6d25e656f27e35bd83f0819a086eb904c25bef05b54fc00b74b",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/astro-observer-hubble-ck-44-22.pdf",
           "mediaType": "application/pdf",
-          "bytes": 77005,
-          "sha256": "fb345f87dc9f64097ed96dfb2da3e98f062786983b6eba3a246badf5a5864ca0",
+          "bytes": 58157,
+          "sha256": "57417ede8c3937d13e10b1c33addbf98fdcb0fa0812302a1e262d2f02cfa3837",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/cahill-keyes/png/astro-observer-hubble-ck-44-22.png",
           "mediaType": "image/png",
-          "bytes": 378376,
-          "sha256": "78b3aceabfa6516ec412f22be7bd8ad28556b95e0b5254ab5ed60e52faf83014",
+          "bytes": 355374,
+          "sha256": "7b10a635d36d84e78f64b90041be700e2d5e4a4ae79cd8b6c5c0e408cf9b671b",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -4136,8 +4136,8 @@
         "png": {
           "path": "assets.generated/cahill-keyes/screen-1080p/astro-observer-hubble-ck-44-22.png",
           "mediaType": "image/png",
-          "bytes": 227639,
-          "sha256": "036c6da0160e5ed9f6103ff75853a3d79f26ee2d3827f0bb673c0a90da575698",
+          "bytes": 200440,
+          "sha256": "0ba7a3173381e3e00c0520dacbad70f90a9d70e20f573c7410536c0e3fcd361a",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -4150,8 +4150,8 @@
         "webp": {
           "path": "assets.generated/cahill-keyes/screen-1080p-webp/astro-observer-hubble-ck-44-22.webp",
           "mediaType": "image/webp",
-          "bytes": 125648,
-          "sha256": "29b274110256c1cb6d93cf4c5d0adfb1250961b0abe79a9b16b87999eed1bf25",
+          "bytes": 105058,
+          "sha256": "7264eb1f731cdd61d6a6b311f98c204070ccab7d95a18f6b5755d32beab50887",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -4170,7 +4170,7 @@
       "layoutId": "dymaxion",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T01:59:44Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -4181,22 +4181,22 @@
         "svg": {
           "path": "assets.generated/dymaxion/svg/astro-observer-hubble-dymaxion-44-20.78461.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 211071,
-          "sha256": "69265086758f774e4a19f681a9d7e17ca9c13a1c907f755081b294ae452a9fcd",
+          "bytes": 141160,
+          "sha256": "a5e932bbe5890e462e420c72619a91f7e222048dcf48b18fd1d63e74d5116d41",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/dymaxion/pdf/astro-observer-hubble-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
-          "bytes": 77093,
-          "sha256": "89b17377a33fc64b405deacab8eb634d782b3e85a02cc37318866e73b3aa5ea6",
+          "bytes": 59069,
+          "sha256": "bd17ca7cf4e02ba52110d8d9bda37e0055acc023a17f8ea9fef026c473d0d3c9",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/dymaxion/png/astro-observer-hubble-dymaxion-44-20.78461.png",
           "mediaType": "image/png",
-          "bytes": 401875,
-          "sha256": "9fdccfcb403fff977352b6cba03688741d08e85dc48d77f3dcad2c70e3f2ce20",
+          "bytes": 367333,
+          "sha256": "346fd6446be9e795a087661174e4c7001aba18a708185fdada0524d7fa78e88e",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -4244,8 +4244,8 @@
         "png": {
           "path": "assets.generated/dymaxion/screen-1080p/astro-observer-hubble-dymaxion-44-20.78461.png",
           "mediaType": "image/png",
-          "bytes": 233881,
-          "sha256": "da36e2b0ee998a6dbc8e6a97d8d1f1e1005b8b5e137140bbf7ae7e93d9b7d39e",
+          "bytes": 208597,
+          "sha256": "c078468bc42f9572002b234b2a1901d89d3b905625844c8d7b6c382ba04fc7df",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -4258,8 +4258,8 @@
         "webp": {
           "path": "assets.generated/dymaxion/screen-1080p-webp/astro-observer-hubble-dymaxion-44-20.78461.webp",
           "mediaType": "image/webp",
-          "bytes": 119528,
-          "sha256": "84d3dcc241ba1fcf4240a9dee363b30ef1ed98373acba6c569a9ac0d0f9c28e5",
+          "bytes": 105358,
+          "sha256": "011df4c82cdad41a7cc59ad6729c0c85b2ae99c4173a6a95bea4daf90c49773c",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -4278,7 +4278,7 @@
       "layoutId": "myriahedral",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T01:59:44Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -4289,22 +4289,22 @@
         "svg": {
           "path": "assets.generated/myriahedral/svg/astro-observer-hubble-myriahedral-44-24.75.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 286307,
-          "sha256": "3f1fc525a87d744215998fad6782fba9f58d3ae36fd356f9c8d538d9a9a74737",
+          "bytes": 216405,
+          "sha256": "d9de916bc02b51618e3ca9f031f7fea1841f708a9c81e5552cd0cc8daf161ad9",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/myriahedral/pdf/astro-observer-hubble-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
-          "bytes": 88597,
-          "sha256": "d4e36f968ab2cfcfe197324b344c91210788eb5d13a87989cc8c07ede4c1ad34",
+          "bytes": 69184,
+          "sha256": "b153cf639dfaf033bff1a94ba3effe8dda7566a8c44c0c2f4bb4410c3c20f583",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/myriahedral/png/astro-observer-hubble-myriahedral-44-24.75.png",
           "mediaType": "image/png",
-          "bytes": 359360,
-          "sha256": "ca3588685e779ca3c8320a073cdb3afd2b1488b0fc651c086bb8f1a0e23b6b6c",
+          "bytes": 316986,
+          "sha256": "9702d327fc5b9806fd273a6cf89e958373d67dcbdea2d161978b446243fed7c9",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -4352,8 +4352,8 @@
         "png": {
           "path": "assets.generated/myriahedral/screen-1080p/astro-observer-hubble-myriahedral-44-24.75.png",
           "mediaType": "image/png",
-          "bytes": 210027,
-          "sha256": "d7b2c7eaf397374f3903bb779969bdeaf665fee36fed015e65d6b0d6ccd4dd32",
+          "bytes": 183112,
+          "sha256": "f2e1b16804ff52c12242b46bf079f0916d9b7795ce8960251c71ea4ebf4493d7",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -4366,8 +4366,8 @@
         "webp": {
           "path": "assets.generated/myriahedral/screen-1080p-webp/astro-observer-hubble-myriahedral-44-24.75.webp",
           "mediaType": "image/webp",
-          "bytes": 113758,
-          "sha256": "364c6c837fc1f32a8a67a1659d963de2c8e3a9bb992c654b48705f4e00342443",
+          "bytes": 96456,
+          "sha256": "1486df53bb0ff34bee167ce47c6af01de9d327402a5c80ae2697951bcd17e596",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -4386,7 +4386,7 @@
       "layoutId": "star-x",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T01:59:44Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -4397,22 +4397,22 @@
         "svg": {
           "path": "assets.generated/star-x/svg/astro-observer-hubble-star-x-34-44.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 209795,
-          "sha256": "6e80f96731423fb9da446b5e445e5eea830b3c45114d32c41a5f44e2521ba63a",
+          "bytes": 139323,
+          "sha256": "0464e477cc7d50972b187daf64e084d0ba83891d4f549df0e4346a3465f967dd",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/star-x/pdf/astro-observer-hubble-star-x-34-44.pdf",
           "mediaType": "application/pdf",
-          "bytes": 78467,
-          "sha256": "eeb41d225f60084e2f1167e1147939ab2f5cc16b10289cc8fd1da757fcc8d44d",
+          "bytes": 58685,
+          "sha256": "372220e4fc92486842d4a15d892e6da40c88756051f48ae84a84479a374d3c55",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/star-x/png/astro-observer-hubble-star-x-34-44.png",
           "mediaType": "image/png",
-          "bytes": 456266,
-          "sha256": "8d6243382a454171a2297e60e03079e8af0367cda5acfa1a92f97368921c28ec",
+          "bytes": 423361,
+          "sha256": "a2c0709d12ff83d85bb81271ff4e6ada02eff7e6a3817660476712534f95b326",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 2967,
@@ -4460,8 +4460,8 @@
         "png": {
           "path": "assets.generated/star-x/screen-1080p/astro-observer-hubble-star-x-34-44.png",
           "mediaType": "image/png",
-          "bytes": 139620,
-          "sha256": "2d786e4747ae4a241f800cb1a18ea9fbf756f43c186ba9e833f79f1a854af632",
+          "bytes": 125140,
+          "sha256": "f206dea879f58eb59dfb9fa089295c9b8593b5458b7e8e59973fc69677614667",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -4474,8 +4474,8 @@
         "webp": {
           "path": "assets.generated/star-x/screen-1080p-webp/astro-observer-hubble-star-x-34-44.webp",
           "mediaType": "image/webp",
-          "bytes": 69122,
-          "sha256": "afed25081637f176ed96fa5fcac495bc50bd8714c8604bc916247b7862e66ad9",
+          "bytes": 59572,
+          "sha256": "8f149126272b24a6724cca6f00f11f72e4449b88d7b57b0ab6174e15609fc1f6",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -4494,7 +4494,7 @@
       "layoutId": "voronoi",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T01:59:44Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -4505,22 +4505,22 @@
         "svg": {
           "path": "assets.generated/voronoi/svg/astro-observer-hubble-voronoi-44-22.916667.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 210312,
-          "sha256": "b4c7d24541e8f4342c207655b4e302cc6b0abdea71a45f4f7325595b47621347",
+          "bytes": 139340,
+          "sha256": "f58515dfd1df105113a2e9c6862611ddc0c122c54c77006d93dab43065f6f1f8",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/voronoi/pdf/astro-observer-hubble-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
-          "bytes": 76326,
-          "sha256": "fa3b216d1c179379879fb082ff295a637a39e4a7f769b5aa4a2c9cbdab2b5699",
+          "bytes": 56384,
+          "sha256": "5d970a612d7638ab593d6551657b231a801a7bc4faaf128188a7366dc21054ee",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/voronoi/png/astro-observer-hubble-voronoi-44-22.916667.png",
           "mediaType": "image/png",
-          "bytes": 373967,
-          "sha256": "7fba0dc093595c87d7ad7957ecb25ea9b684ec1890f46abb2e1d34774349fbba",
+          "bytes": 335780,
+          "sha256": "1d570fd0e0ba10759267ba348212b43aca32d540e5f73a105c3cd107befa1cc5",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -4568,8 +4568,8 @@
         "png": {
           "path": "assets.generated/voronoi/screen-1080p/astro-observer-hubble-voronoi-44-22.916667.png",
           "mediaType": "image/png",
-          "bytes": 216227,
-          "sha256": "ab18854dc4453efd3db84e616bf27e518fdaf74e7b9762f235e3ac4a58c2e5a1",
+          "bytes": 191100,
+          "sha256": "19d596f73eaa557e2d9b250f4c586e32b91f22e64f30f289748e847fb315243b",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -4582,8 +4582,8 @@
         "webp": {
           "path": "assets.generated/voronoi/screen-1080p-webp/astro-observer-hubble-voronoi-44-22.916667.webp",
           "mediaType": "image/webp",
-          "bytes": 109922,
-          "sha256": "27f7babdaa5cc0cbbf82db37d408047eab999ad3e7748f8937e82bae7c76f4ef",
+          "bytes": 92676,
+          "sha256": "903e348b78c48a7309f16527f695f156dfd85ba4ad9b2fad027d0bce1a38fcb3",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -4621,7 +4621,7 @@
           "path": "assets.generated/authagraph/pdf/bathymetry-hamonshu-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 21857231,
-          "sha256": "57faf34616a38fa7ce26e2c072b8a0aea6a854d2bfc1fa7746dad7af873ce346",
+          "sha256": "614695e99733c6f28faeb7fc6de2b21a5fbceded25f6db330e9e4b7dc08d8c26",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -4729,7 +4729,7 @@
           "path": "assets.generated/cahill-keyes/pdf/bathymetry-hamonshu-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 21218705,
-          "sha256": "56d0770d71278b5a3e5efeb86d966cf65e41271b959a3cc07ada95366524ea56",
+          "sha256": "8bac0b1366e81d846a40ed30cff21303a02c8d452674f93fb7bbbb65c2d5154a",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -4837,7 +4837,7 @@
           "path": "assets.generated/dymaxion/pdf/bathymetry-hamonshu-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 22484310,
-          "sha256": "4b38b9c8e3256e63238553328856092ead96a486ac6a1dfa4b03c6890d79042d",
+          "sha256": "49c6748b87d5e1efb11a4be5c11a9b78bffa9fa6c4b98f0eca81241310fe0d7b",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -4944,8 +4944,8 @@
         "pdf": {
           "path": "assets.generated/myriahedral/pdf/bathymetry-hamonshu-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
-          "bytes": 26368988,
-          "sha256": "0e1b8431efd6d42ee33fc76f40eab82af0d6bf4cd59dd81e378c10f2045d855d",
+          "bytes": 26368987,
+          "sha256": "7a4089b89e164c6c482c36c0b629a6ff40f25cf2c1b381cb9252190e81acc142",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -5053,7 +5053,7 @@
           "path": "assets.generated/star-x/pdf/bathymetry-hamonshu-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 28454588,
-          "sha256": "1b356b647133e07467f962b8a31f1df451073283db7adf8bfb8c8506ad1f5a92",
+          "sha256": "bf9b36d064bf367c2fed39283982d529469e4044e2d103b60b5ff61ebda46044",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -5161,7 +5161,7 @@
           "path": "assets.generated/voronoi/pdf/bathymetry-hamonshu-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 23700707,
-          "sha256": "2b4483947371070c5509e9a251a255dc25d1bff8eb509b0e6d313a14f70649b8",
+          "sha256": "282f802e5463b9daa33e91a4cfe815ed8a5f771c8a6993f49b1c6a91e1e5ddf2",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -5268,8 +5268,8 @@
         "pdf": {
           "path": "assets.generated/authagraph/pdf/bathymetry-roulette-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
-          "bytes": 51428173,
-          "sha256": "95ab13d07e2be8b06e394517f8065479250b38217831083a309927ff2ecc38e5",
+          "bytes": 51428174,
+          "sha256": "2ebf8e82bfa77e6b104f9b2385fe33776b537cc31595494846aec588b91e41f3",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -5376,8 +5376,8 @@
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/bathymetry-roulette-ck-44-22.pdf",
           "mediaType": "application/pdf",
-          "bytes": 53161133,
-          "sha256": "89df7abc3a9e2ce9a28011a27e6605f067655fc7057f1bde05543ee75bec1207",
+          "bytes": 53161130,
+          "sha256": "609a137d97a4851438094340f2ef4a78443fdbd1670975ec8d525ab3336e85ab",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -5485,7 +5485,7 @@
           "path": "assets.generated/dymaxion/pdf/bathymetry-roulette-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 53196761,
-          "sha256": "d784d833ac8060b155520650e8cbcb3a3b239cce064753091002ad8723ebef4c",
+          "sha256": "2815b8e1ded7d6796d3a06e10157df9a688bf5d9046de5fc7e0b68b5c7a7f0f2",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -5592,8 +5592,8 @@
         "pdf": {
           "path": "assets.generated/myriahedral/pdf/bathymetry-roulette-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
-          "bytes": 61951356,
-          "sha256": "33073aa65afbc2a5ce3832736d2eae406cfcc135de79a47a5d45a5cd871f6ddc",
+          "bytes": 61951359,
+          "sha256": "8402a5d975f3a55419cae3b83cabdddbd3fdade5a4084a3bf817701bc7ca89c1",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -5701,7 +5701,7 @@
           "path": "assets.generated/star-x/pdf/bathymetry-roulette-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 73773424,
-          "sha256": "28851769e750daacfda642456a205d80a32de612be2e165b5fdd6644ce1f4f66",
+          "sha256": "cf784819f1c8051fca97a70ef6001f0201d6dd8aec7b1bcbe99e9ccd486069d1",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -5809,7 +5809,7 @@
           "path": "assets.generated/voronoi/pdf/bathymetry-roulette-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 56860667,
-          "sha256": "160a542beb95eec923fa8ae4563725aa62f7654b32bc819b6126e6a452a68cf7",
+          "sha256": "0e63252034ea42c8a1bd5e2c275fcd9a1d1d7bd5c625cd323896ee43e2512a69",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -5916,8 +5916,8 @@
         "pdf": {
           "path": "assets.generated/authagraph/pdf/earth-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
-          "bytes": 1623021,
-          "sha256": "cd415b411c33d68fef2a01a6c2b78b0d3e8eb056929e459ad06a17ec03d73cce",
+          "bytes": 1623020,
+          "sha256": "08be258c9857149b92120320f67274057f40e119b8f2729b6bc79ddd9f3a75db",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -6025,7 +6025,7 @@
           "path": "assets.generated/cahill-keyes/pdf/earth-ck-8-slice-1.pdf",
           "mediaType": "application/pdf",
           "bytes": 491453,
-          "sha256": "ac7bf771dbf97cbe0fa31c798834258a8d678b672f0637b163bd9ee36afb19b0",
+          "sha256": "a5443af10cb9f0f5f176dfc5e54d4b27c1b3a83e0bafd7dd5b0a676433075d98",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -6132,8 +6132,8 @@
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/earth-ck-8-slice-2.pdf",
           "mediaType": "application/pdf",
-          "bytes": 452657,
-          "sha256": "3c35744bec3e469d845de1b07fe66689375a7a5d4a3a6cb2f4bc87aac1284c39",
+          "bytes": 452658,
+          "sha256": "34a52cdde6b3d34a699a2fb69cdaadfc28bbe19c22a8004622db35e1ccc5ab03",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -6241,7 +6241,7 @@
           "path": "assets.generated/cahill-keyes/pdf/earth-ck-8-slice-3.pdf",
           "mediaType": "application/pdf",
           "bytes": 457195,
-          "sha256": "0890ac7135523976a83f558c953665c134bc456df18ccae0c690472ed5236ead",
+          "sha256": "c004e22d45350cbf64c632b79e3625861e7c2dc7aac67f14b2a8b53c61a635be",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -6348,8 +6348,8 @@
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/earth-ck-8-slice-4.pdf",
           "mediaType": "application/pdf",
-          "bytes": 465375,
-          "sha256": "fef3147de8f1b96755acaa937ef7a13388feee4b29c4ff63ad17669507130bf2",
+          "bytes": 465374,
+          "sha256": "487141020e4e2fbd2b63fec08aa92c25a52d8ddaeec49ba964f4d38c9ac65f23",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -6456,8 +6456,8 @@
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/earth-ck-8-slice-5.pdf",
           "mediaType": "application/pdf",
-          "bytes": 398195,
-          "sha256": "9982cfde327adeadface49c9528183c735dbe6800dbb6bf656abafea6e0541e7",
+          "bytes": 398194,
+          "sha256": "15f11922a769d0ca1ba6cb347e4164391dee338849cf7c4be666f76ef4bab47a",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -6564,8 +6564,8 @@
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/earth-ck-8-slice-6.pdf",
           "mediaType": "application/pdf",
-          "bytes": 177017,
-          "sha256": "e56567e3ece5ce03fbe3352773296ab255cc2faa81e6936f5ea0a758657dc953",
+          "bytes": 177016,
+          "sha256": "d869330137994aff1c2928198414363b1fc8688bb41044d97128ea8a1295d368",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -6673,7 +6673,7 @@
           "path": "assets.generated/cahill-keyes/pdf/earth-ck-8-slice-7.pdf",
           "mediaType": "application/pdf",
           "bytes": 470317,
-          "sha256": "a5f5bbc4e058143a401ffb1a24a2f3e388da296bb8391aa1f12b5161eeb43b27",
+          "sha256": "fd6e9362f809465552fe8312426140079c839d996871ce77d6952bedbc12757e",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -6780,8 +6780,8 @@
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/earth-ck-8-slice-8.pdf",
           "mediaType": "application/pdf",
-          "bytes": 414530,
-          "sha256": "df8bec85a6567060de2866def252feea0dac180e7d2622911d3ec1356d21e714",
+          "bytes": 414529,
+          "sha256": "a53b742b5159dc48671117f7ce9cc3183bbd6481c2b8e97579349d9bba909e07",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -6889,7 +6889,7 @@
           "path": "assets.generated/cahill-keyes/pdf/earth-ck-4-slice-1.pdf",
           "mediaType": "application/pdf",
           "bytes": 493916,
-          "sha256": "e0687122df8862a1033551404e38bcc3fd52dcf99c97cd899b2498b284803224",
+          "sha256": "fd7ae9ff7f1af344d23f44ebbf976454bd1c25972a40946b5b92724851324aef",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -6997,7 +6997,7 @@
           "path": "assets.generated/cahill-keyes/pdf/earth-ck-4-slice-2.pdf",
           "mediaType": "application/pdf",
           "bytes": 570965,
-          "sha256": "0aae139e950e1019f65d7a1f436b02d1448a8c133b5797884c4613e2b752db27",
+          "sha256": "6b2c7b52380df85c490f8e79167d2f97784d343ae52d6368b7eb212956530129",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -7104,8 +7104,8 @@
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/earth-ck-4-slice-3.pdf",
           "mediaType": "application/pdf",
-          "bytes": 620127,
-          "sha256": "1621480bf2c4ff1ce61bff2ca645e0d1b04a03f203e4d17b8da8ad0cbf38aa43",
+          "bytes": 620126,
+          "sha256": "75ea472241d1e1527a1763b039193cd409ccd309cfb0447f8a9ae08140ac7557",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -7212,8 +7212,8 @@
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/earth-ck-4-slice-4.pdf",
           "mediaType": "application/pdf",
-          "bytes": 657074,
-          "sha256": "d122c9de365d2aee01e33254cc8f451d2e2254e4397edfc85a7bd32575273ee7",
+          "bytes": 657073,
+          "sha256": "7b23bcb526f3bbe5f2f5f21112cded0f68cd10006493802425a1edacb03d2863",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -7320,8 +7320,8 @@
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/earth-ck-44-22.pdf",
           "mediaType": "application/pdf",
-          "bytes": 1061031,
-          "sha256": "a40d67fb71de6f86555907fc0b2a61a59de5b757a98d48412de7054ed8d8f5bf",
+          "bytes": 1061030,
+          "sha256": "9ec4465cd35e7f14c49d43768178dfa24845561cfaf7f54c8ccbd481057cebab",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -7429,7 +7429,7 @@
           "path": "assets.generated/dymaxion/pdf/earth-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 1611722,
-          "sha256": "073f8842bdf04664b7d51ee8918002d628a1555eedaac0b1da0729b39bcf76be",
+          "sha256": "145756e5a96ffca4eb84906a22fe4d2678682b200250216db974c64b362df866",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -7537,7 +7537,7 @@
           "path": "assets.generated/myriahedral/pdf/earth-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 1939503,
-          "sha256": "90ffbdbd7aecea78ed6d5e668ebe942ebb7e164f8d2ddc7bac2aadf27fd1c8a6",
+          "sha256": "e3ea0b67417ba208db34fc4dbb578a26c3f59ec3b0579d73df090eeab1b9e2c6",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -7644,8 +7644,8 @@
         "pdf": {
           "path": "assets.generated/star-x/pdf/earth-star-x-34-44.pdf",
           "mediaType": "application/pdf",
-          "bytes": 1140808,
-          "sha256": "e484115f391f31cbb48e66735368d0017791aa3d88a79f38ce6ef7959bd643d1",
+          "bytes": 1140809,
+          "sha256": "bb896820da449d4337b30b805f60a52265868e12701a50a83ffc15ac61b6ce42",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -7753,7 +7753,7 @@
           "path": "assets.generated/voronoi/pdf/earth-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 1587771,
-          "sha256": "3118e559c1e8b3ca39e6cca363cfb6a04c00d3115b18e4dd66b448b68c06f16b",
+          "sha256": "25c050e822c10a02cd9edb574f2d334a1c7755df17a051a422dd1374f81aa6fe",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -7861,7 +7861,7 @@
           "path": "assets.generated/authagraph/pdf/fiber-synthesized-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 927894,
-          "sha256": "14d1ea73f5b6c62b6a568b045f0b730601f0b37677f508c5a6e28355f39cf7bb",
+          "sha256": "57577b0c0ca51dbd26bcbf19d16c215c97706e0ec3f3adca208f9891cf05fc1a",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -7969,7 +7969,7 @@
           "path": "assets.generated/cahill-keyes/pdf/fiber-synthesized-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 771250,
-          "sha256": "5d5d5eae5d46f79aa384700b915ad55a73a948c33c7bd382e62a2ed9ec1ed2a1",
+          "sha256": "5d64821dedd0ee46dd3ff9f02e2ff681d8abdbdf7adf7e0538bd629f44a97cf1",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -8076,8 +8076,8 @@
         "pdf": {
           "path": "assets.generated/dymaxion/pdf/fiber-synthesized-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
-          "bytes": 926062,
-          "sha256": "c6e7a210cafb2544bb3825b6e2afd0b4bf50b565864a11da943ea5a6f3ae302f",
+          "bytes": 926061,
+          "sha256": "357cc93fa2448328d40705fce9a06cf6133f8ad67e10f6fe5d112b42a0519bf5",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -8185,7 +8185,7 @@
           "path": "assets.generated/myriahedral/pdf/fiber-synthesized-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 1124353,
-          "sha256": "69bf8318bed5a86e565d3f41c6bc38c3a95c3098975bdb50dfe7d2244664a12c",
+          "sha256": "b73a8ce1c0f3515a53eaab04462ed4bc8395ca14123fe59e4265a11b7b0fc5c6",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -8293,7 +8293,7 @@
           "path": "assets.generated/star-x/pdf/fiber-synthesized-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 787292,
-          "sha256": "eb6a8a702d1d34fced6c1f27923586d92eea06903a4f08208c7231c5f58ac02f",
+          "sha256": "fbcdffdf566e390bb9dae80ab20c3426042b8b6e9c18e0e8c4727a0c45b4c535",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -8401,7 +8401,7 @@
           "path": "assets.generated/voronoi/pdf/fiber-synthesized-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 920277,
-          "sha256": "3e0e569aca633a0c87cc937ebfabc042fcd33ec1e65f49b255c791b61a482484",
+          "sha256": "a32fe6a2b4845df8ab0459a4484b1906f718b3a6f6c759afc1f95925551f93f9",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -8508,8 +8508,8 @@
         "pdf": {
           "path": "assets.generated/authagraph/pdf/geometry-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
-          "bytes": 1661,
-          "sha256": "1409af247ad7010df10c8efa601ae7d6a0d03cb0fe4e9c5ed33b50c53992e7bc",
+          "bytes": 1660,
+          "sha256": "cddbbe4b74c48c056b2787c79393617608d9a2366aa04dbefbdafe41125e22fc",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -8617,7 +8617,7 @@
           "path": "assets.generated/cahill-keyes/pdf/geometry-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 8531,
-          "sha256": "eddfca81c909f128441b87bc167d957c57620e8defb9f84316600795d62f8106",
+          "sha256": "ce77794c7c1b44140ae5eef11ed6a4d1bbc5da8b1eeedb12ca09baec316125b0",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -8725,7 +8725,7 @@
           "path": "assets.generated/dymaxion/pdf/geometry-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 1617,
-          "sha256": "08671f504a31f80e8f25fbbe8aa8af5761dbfd942cf7963861774a65445413eb",
+          "sha256": "fbb7a54bed5bcb60bd709bddff715dd6e79860627bf6df83a91c7ee76f7b40ec",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -8832,8 +8832,8 @@
         "pdf": {
           "path": "assets.generated/myriahedral/pdf/geometry-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
-          "bytes": 117999,
-          "sha256": "541fb342b85efd386c3d403cf8f1e12f9f35ba2bd829c359aadfe8d37e906128",
+          "bytes": 118001,
+          "sha256": "4798a993d530a812accfef6ad47fe9ab17806f8c1afdc1330e6bd42f3305e571",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -8941,7 +8941,7 @@
           "path": "assets.generated/star-x/pdf/geometry-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 7699,
-          "sha256": "81ef93608ed12cefff7afc6f162485dc95a303dc981a75f8ef23ae51edbfc3ea",
+          "sha256": "2af421c53eab47429e81dc2351942872c5971da63025abdf46a2028dfbc564f9",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -9049,7 +9049,7 @@
           "path": "assets.generated/voronoi/pdf/geometry-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 1652,
-          "sha256": "4c735fb9729ba3f9f1626c032ccd0961df3ae3d047df4f4c8900a431ff709a14",
+          "sha256": "4969850c259b1da5ea0c7c73740cb14b10b6b6e924890c11e38c2a7bb95b45ff",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -9157,7 +9157,7 @@
           "path": "assets.generated/authagraph/pdf/graticules-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 200744,
-          "sha256": "2bea055c632c0b74cddf66b3c227a08e02a386b241d36925a2837e8722781e46",
+          "sha256": "18fe35c02da46c789ef521293fc685d3d6543eaa58818171835794ac993cccfb",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -9265,7 +9265,7 @@
           "path": "assets.generated/cahill-keyes/pdf/graticules-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 175114,
-          "sha256": "2ef78a13f8b97b1fadfc1c6c3224ec6df2c7b1cdf39c43b0efd11354fceeeab2",
+          "sha256": "7ae52c451fc46ae92603fb330fe8b55834d72e7be04ebe4103677cc6f59fa36f",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -9373,7 +9373,7 @@
           "path": "assets.generated/dymaxion/pdf/graticules-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 198767,
-          "sha256": "d1719bdfd822b1507f5558c70c1b28b580538298c08f0f386ff2971a40616130",
+          "sha256": "59f49803196519740d8db1b97a937fd253fbb7536d0aa0811a76645f673c2767",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -9481,7 +9481,7 @@
           "path": "assets.generated/myriahedral/pdf/graticules-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 247178,
-          "sha256": "4654b54bf00acb0484421336c4b76ca34bcc5ed615ad77a1e2b7e94d6fdf0445",
+          "sha256": "bfb0d32b32ba7062143a71bbfa7ba40cc4439abff84c570d9eda5c9860eb69f4",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -9589,7 +9589,7 @@
           "path": "assets.generated/star-x/pdf/graticules-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 201341,
-          "sha256": "619157f1db7bf977ecc618ea0a3968b4e61c30f46f19fd57b60770a941a44abb",
+          "sha256": "b231a250670be28a59844fc9360fa076132dafc9ed62ca2e310a65027b3ff8ca",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -9697,7 +9697,7 @@
           "path": "assets.generated/voronoi/pdf/graticules-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 179329,
-          "sha256": "ec0e0dbe8a125217fe4be0257c8073bf20b013be9566e6e1c6cc8ac8b1a49fa1",
+          "sha256": "484d7bcb44ae010062028edf6cb2c854c84097742acde7cdb9c8528d80070bf3",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -9804,8 +9804,8 @@
         "pdf": {
           "path": "assets.generated/authagraph/pdf/network-infrastructure-sites-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
-          "bytes": 919616,
-          "sha256": "0a2a99031f3b31979b4af611358ecb9a2c794de466718625572fb24041a45193",
+          "bytes": 919617,
+          "sha256": "a2437b287813502127833d1b38ca4ca95e9517523a8a551bf0d16b2c9f455e70",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -9913,7 +9913,7 @@
           "path": "assets.generated/cahill-keyes/pdf/network-infrastructure-sites-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 746720,
-          "sha256": "222073346612ea4f67a14788637482c2ac2bee48f3260508b451e403e80de0f3",
+          "sha256": "da6252f788ed3889610b9ef24dc633d3ea1ce0ee5ebedcb9897291190dcfeba0",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -10021,7 +10021,7 @@
           "path": "assets.generated/dymaxion/pdf/network-infrastructure-sites-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 903719,
-          "sha256": "3e597fb01e1ef4c4f39fdfc56d699be78fedc93d37cc4bc9014e624ef14c8109",
+          "sha256": "59ce58ad28426ca8f52c2d444af399aca506215f37ef3f71640a59d33d301a31",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -10129,7 +10129,7 @@
           "path": "assets.generated/myriahedral/pdf/network-infrastructure-sites-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 1008088,
-          "sha256": "f50c211d43f42a2f0cd3513da1df85cdd9b1e8a301d5fc361c8960eb1432418c",
+          "sha256": "c758929fe2fcf67f123931f469e357f6edcc27330a80eb0ed1d0de453f6fd8d3",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -10237,7 +10237,7 @@
           "path": "assets.generated/star-x/pdf/network-infrastructure-sites-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 767925,
-          "sha256": "51c7acece7d7d5ccd61b7760ad083d333dd1eb7680471db72869b5b5e4980d6f",
+          "sha256": "bb82998ffcce3766df0581db987b01b3486f5d4bfa7f2407bb9d47946b83d848",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -10344,8 +10344,8 @@
         "pdf": {
           "path": "assets.generated/voronoi/pdf/network-infrastructure-sites-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
-          "bytes": 898583,
-          "sha256": "c8852e00fec6d9355365b624c635ecb3ce3e2807871c6e7f78f11c1f62ce6c32",
+          "bytes": 898584,
+          "sha256": "8d5be690d7e6b05003346d5262459170f6ec3fd7f80994ba565de4afe5af9333",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -10453,7 +10453,7 @@
           "path": "assets.generated/authagraph/pdf/network-swarm-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 3419645,
-          "sha256": "f16236c90a69d8d4d217131f7a0f7abdb9fcd87bcb355643d751b7d8bc67508c",
+          "sha256": "80b9a33128874afcd492412f79a38374f4eb34f2e4b6208030aab87d4e82dd53",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -10561,7 +10561,7 @@
           "path": "assets.generated/cahill-keyes/pdf/network-swarm-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 3285539,
-          "sha256": "76947f0cc6ae6c26d34a92129f53ef34082fc9a19f8a48f1e8eed5e53872aa86",
+          "sha256": "8b8291cfb58df56f17be1158d8066ccf291c943656b1fad57cd483e83351076c",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -10669,7 +10669,7 @@
           "path": "assets.generated/dymaxion/pdf/network-swarm-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 3440628,
-          "sha256": "a8cab5fec6baf011b0eee6ddba3f87b3130f88d5875d9d01c5eed73af4013fee",
+          "sha256": "23e9c1cfb97229e272bc2f20b5740c2cb3c25f2d70f3e0705688b6438390f303",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -10776,8 +10776,8 @@
         "pdf": {
           "path": "assets.generated/myriahedral/pdf/network-swarm-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
-          "bytes": 3520031,
-          "sha256": "a50d9628f701f16e73dce27ccfae4b8f67a5ed692aa66684b4cb386a8dae18bf",
+          "bytes": 3520033,
+          "sha256": "dccdb2f2e063bffc1069520d05977aeb5a479321977941d45f283c61b7355550",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -10885,7 +10885,7 @@
           "path": "assets.generated/star-x/pdf/network-swarm-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 3319631,
-          "sha256": "747fea6d21755efca7771be9ff2254861bba0b8bbe61e2a3d4fe0738fe6dd151",
+          "sha256": "5edb8da62aea5fe8b615b128f4e3c24b76bf34cd9011683475f3a32333a9e3e1",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -10992,8 +10992,8 @@
         "pdf": {
           "path": "assets.generated/voronoi/pdf/network-swarm-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
-          "bytes": 3430370,
-          "sha256": "bf2996096fa0174cfb6514649ef68a45f8fa0b756a8d92ad867cc7e732522f38",
+          "bytes": 3430371,
+          "sha256": "778174cde0781f342ed70c598ef44aad6cfbf0195a1724000d3e378cdcd8c0a3",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -11082,7 +11082,7 @@
       "layoutId": "authagraph",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T04:03:56Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -11093,22 +11093,22 @@
         "svg": {
           "path": "assets.generated/authagraph/svg/orbital-technosphere-global-authagraph-44-19.052559.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 15762586,
-          "sha256": "585b2b03bf8b97bdc78b69189115a1ce525a179c7bf1669671fc904d7da4bcff",
+          "bytes": 15804766,
+          "sha256": "f0a7f3b3527793858112f48e802f784d87fa7d847cac65b2d31874354e25e248",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/authagraph/pdf/orbital-technosphere-global-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
-          "bytes": 1861830,
-          "sha256": "e7954b39bd0326c3e3392b681a7cdc4b9980c29b37bc6564f405e33c4cccee66",
+          "bytes": 1854421,
+          "sha256": "d1b23dc60bf0a4fdece0c7af858afdbf742ecd83bfae1ed4feb35b9f08988f99",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/authagraph/png/orbital-technosphere-global-authagraph-44-19.052559.png",
           "mediaType": "image/png",
-          "bytes": 2297260,
-          "sha256": "57c699f04b20acc102b59f5d55137be86eae3679820530c35afea2cb45332dac",
+          "bytes": 2274845,
+          "sha256": "4b056075097f29e18101a2724a7731389f06fd6ec48849b35458d630db5d9728",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -11156,8 +11156,8 @@
         "png": {
           "path": "assets.generated/authagraph/screen-1080p/orbital-technosphere-global-authagraph-44-19.052559.png",
           "mediaType": "image/png",
-          "bytes": 1348197,
-          "sha256": "1b88984d76ba0ea7b219cfe9729bc0998450346f36a47f4255340f894dc570f2",
+          "bytes": 1320005,
+          "sha256": "bf4e4119d9bf7a87d1fe5b7ccb5a1bac3de6d8aa605ed4414348f3d3730480e8",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -11170,8 +11170,8 @@
         "webp": {
           "path": "assets.generated/authagraph/screen-1080p-webp/orbital-technosphere-global-authagraph-44-19.052559.webp",
           "mediaType": "image/webp",
-          "bytes": 805844,
-          "sha256": "10495c22457366c256e53241ff808aad90bf02d0af79c4ef6589bcd675318bdf",
+          "bytes": 785402,
+          "sha256": "9a4a33b88738993684be2fb6643ec75d804465134bf2ffd50784614662be28d6",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -11190,7 +11190,7 @@
       "layoutId": "cahill-keyes",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T04:03:56Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -11201,22 +11201,22 @@
         "svg": {
           "path": "assets.generated/cahill-keyes/svg/orbital-technosphere-global-ck-44-22.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 15227481,
-          "sha256": "fdb6ecf6da1c606ec4a1ff12d44e58868933c00ed40e8a081b8fe3509ca6be37",
+          "bytes": 15268774,
+          "sha256": "0b80302e2a1bf70deb3e9df0167477214ad5fb0afae0e7e46f4c8409a297d0cb",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/orbital-technosphere-global-ck-44-22.pdf",
           "mediaType": "application/pdf",
-          "bytes": 1703826,
-          "sha256": "c6a16fa3d9a6512a51e8d1190f13ae0b6333e3c6414ac11e95ca33379bf87e19",
+          "bytes": 1695263,
+          "sha256": "99c3a0518df92ee80f0f2577722376eba6e1c17065185e2c253773cfe72a2ed0",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/cahill-keyes/png/orbital-technosphere-global-ck-44-22.png",
           "mediaType": "image/png",
-          "bytes": 2032720,
-          "sha256": "3206ac1ded0f23afc5e3ed273a0ba98fcd8c761ce275530cc6f7fd591501a385",
+          "bytes": 1994781,
+          "sha256": "cacd84a65c362892f5cee8aeed5d55e0762faf441c75e283bb01ef75e96fc2a3",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -11264,8 +11264,8 @@
         "png": {
           "path": "assets.generated/cahill-keyes/screen-1080p/orbital-technosphere-global-ck-44-22.png",
           "mediaType": "image/png",
-          "bytes": 1160238,
-          "sha256": "a361ba7a612e15ed6d4c12d9e2424404ea92d48790f6e812767fdd79c9e06e83",
+          "bytes": 1135282,
+          "sha256": "dd4bf5b7d2f9341b1ece5cd7b33ede44738cdbba09c3e123d3042ec9a490800c",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -11278,8 +11278,8 @@
         "webp": {
           "path": "assets.generated/cahill-keyes/screen-1080p-webp/orbital-technosphere-global-ck-44-22.webp",
           "mediaType": "image/webp",
-          "bytes": 717364,
-          "sha256": "b37c21f432b2e2da3e0931178bbcd26f734b5224f92952f53e398921448b46e7",
+          "bytes": 698508,
+          "sha256": "180f64417cac2bb8abaade4b34f28301c4b0720c64ce4219fb0c4de3f70c1e7b",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -11298,7 +11298,7 @@
       "layoutId": "dymaxion",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T04:03:56Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -11309,22 +11309,22 @@
         "svg": {
           "path": "assets.generated/dymaxion/svg/orbital-technosphere-global-dymaxion-44-20.78461.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 15765168,
-          "sha256": "b055ac3b53bf2eebb2b5016570a1a9e7416d3c94b5b034a07e7bfa1ecc0c3518",
+          "bytes": 15805877,
+          "sha256": "66f4de4d61f954358b4a002184968b614682b0e64e33f4caae4e789406a20552",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/dymaxion/pdf/orbital-technosphere-global-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
-          "bytes": 1864038,
-          "sha256": "e7788432d0cd5685da6869cb70d116fafae899fe0e17c7a49caed1d4ecac2438",
+          "bytes": 1854283,
+          "sha256": "4595330db8a27363f3094bc4995ccbc126d38519e08fe558cf2631d153a4c747",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/dymaxion/png/orbital-technosphere-global-dymaxion-44-20.78461.png",
           "mediaType": "image/png",
-          "bytes": 2060100,
-          "sha256": "a712317ee9c586ce3c5f94694c3b4704f47d0b550a8339bdf5030f5a3d9f2caf",
+          "bytes": 2032031,
+          "sha256": "efeabd0846c786881616c9695bf300e0abfdae79764fb4031bb55ffdd2ce1dfa",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -11372,8 +11372,8 @@
         "png": {
           "path": "assets.generated/dymaxion/screen-1080p/orbital-technosphere-global-dymaxion-44-20.78461.png",
           "mediaType": "image/png",
-          "bytes": 1184076,
-          "sha256": "62dc1bdf5458f00067ebf8b2924a786c7b1f6d16ed6f2abe6ec752bbbe76041a",
+          "bytes": 1163138,
+          "sha256": "980042013d2489ff8975e94244ee6c05d0bfde71f14ea8823a7e9e90cf288bc4",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -11386,8 +11386,8 @@
         "webp": {
           "path": "assets.generated/dymaxion/screen-1080p-webp/orbital-technosphere-global-dymaxion-44-20.78461.webp",
           "mediaType": "image/webp",
-          "bytes": 725700,
-          "sha256": "96db818bccde042217181064c09bc57e39f7103d5f5505e927b06e0d91941cd8",
+          "bytes": 708840,
+          "sha256": "c1607e85b572b8ef5a9ba163168e04cbcf974e53742d4b44e1a555e0742186c7",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -11406,7 +11406,7 @@
       "layoutId": "myriahedral",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T04:03:56Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -11417,22 +11417,22 @@
         "svg": {
           "path": "assets.generated/myriahedral/svg/orbital-technosphere-global-myriahedral-44-24.75.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 16485573,
-          "sha256": "1e47bf5548a7f123f1a3b2ded3adf632d6906358b33f34211e43ce28dd262331",
+          "bytes": 16525443,
+          "sha256": "2db5601954c711c81fff57ba8e3c485d4ff97f7d394c0659deab3c047afcc9a0",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/myriahedral/pdf/orbital-technosphere-global-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
-          "bytes": 2007235,
-          "sha256": "e6da3e3d3015a8296f8b35bee866ad50909f7acbff69c29654c29cf1fae10673",
+          "bytes": 1998044,
+          "sha256": "10e5e875890a30f82c7c8c2b97aca5dff721e738d23f5c50bc2b45613056b86b",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/myriahedral/png/orbital-technosphere-global-myriahedral-44-24.75.png",
           "mediaType": "image/png",
-          "bytes": 2054634,
-          "sha256": "7c62dac455215851c0cd7a33c1e871d8d2f5575052c3859d58f715c485c2508b",
+          "bytes": 2016992,
+          "sha256": "219edc4666c6e2e2f226231eb9a44f3a96827e8a098cb393bb18345f541eb762",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -11480,8 +11480,8 @@
         "png": {
           "path": "assets.generated/myriahedral/screen-1080p/orbital-technosphere-global-myriahedral-44-24.75.png",
           "mediaType": "image/png",
-          "bytes": 1103700,
-          "sha256": "567744362f181e2831b3e8297e26831ce166ce9b44f3d695f3d0a0bb761af023",
+          "bytes": 1081758,
+          "sha256": "dfe0384c0e4cda0f6110c908392b726db2f04c3f622f5764e4024bcc35126ec5",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -11494,8 +11494,8 @@
         "webp": {
           "path": "assets.generated/myriahedral/screen-1080p-webp/orbital-technosphere-global-myriahedral-44-24.75.webp",
           "mediaType": "image/webp",
-          "bytes": 705522,
-          "sha256": "a2899bfd7b790b6f04f06d1482cf057b0ae2a62272a90c626d411b56a46460f0",
+          "bytes": 687986,
+          "sha256": "f214e6239b4bdf1242dd4740521b3e594a286f0b0e045be0830f15265d75217b",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -11514,7 +11514,7 @@
       "layoutId": "star-x",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T04:03:56Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -11525,22 +11525,22 @@
         "svg": {
           "path": "assets.generated/star-x/svg/orbital-technosphere-global-star-x-34-44.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 15251294,
-          "sha256": "49c088f54eaac80872893c63dd8eacd8d3decb382c19840bc4c51a2cde83c526",
+          "bytes": 15292449,
+          "sha256": "c28a14b8aeddee23d339ccb00f781b0d5c549428d17a5af8c8f5e9336387eb99",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/star-x/pdf/orbital-technosphere-global-star-x-34-44.pdf",
           "mediaType": "application/pdf",
-          "bytes": 1718443,
-          "sha256": "af01940a2933160daca09adea9c851125be70e8ece6b44fc2c4e89d3990db80f",
+          "bytes": 1707812,
+          "sha256": "a2f9e0be21f54ffdf5641029502e8fd0bf061bdd31c74f3595adf2eb5b5f93a7",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/star-x/png/orbital-technosphere-global-star-x-34-44.png",
           "mediaType": "image/png",
-          "bytes": 2384069,
-          "sha256": "8955f8618c5a91ee8ebd8ee279afa0392f41314b5ae0ea6d2aab284e870c189e",
+          "bytes": 2344535,
+          "sha256": "db0cf4c2b6cbe36538fd485db2952207cb766da3c2fa235ddf6a9366a2855c78",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 2967,
@@ -11588,8 +11588,8 @@
         "png": {
           "path": "assets.generated/star-x/screen-1080p/orbital-technosphere-global-star-x-34-44.png",
           "mediaType": "image/png",
-          "bytes": 678299,
-          "sha256": "a519ca8d94fb62ae7c8816e616470174ed4778238eaad96a193b2c2cd02daa75",
+          "bytes": 667055,
+          "sha256": "48481db0a10fbe712219e6414fecd0a31846807cb5f76d38420384f1ac2e91c0",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -11602,8 +11602,8 @@
         "webp": {
           "path": "assets.generated/star-x/screen-1080p-webp/orbital-technosphere-global-star-x-34-44.webp",
           "mediaType": "image/webp",
-          "bytes": 409120,
-          "sha256": "bf72352c379a4d1a62222e1dedb097c741ca3d8170546415a36dc6fb8e6e997f",
+          "bytes": 398980,
+          "sha256": "9efac38e0fd22a8a2e6f433994c97579978951077d354e12fc24adbc140c4d9a",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -11622,7 +11622,7 @@
       "layoutId": "voronoi",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T04:03:56Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -11633,22 +11633,22 @@
         "svg": {
           "path": "assets.generated/voronoi/svg/orbital-technosphere-global-voronoi-44-22.916667.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 15757842,
-          "sha256": "ed0e64030de6153b2831d133b399b9edea2be27c2d7f363e0d8c2cd8d6ee86fb",
+          "bytes": 15799592,
+          "sha256": "2936afb79ca10cf2e4d48c87fe50f8d5d19d5e2fa37739640626823b1e093640",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/voronoi/pdf/orbital-technosphere-global-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
-          "bytes": 1850866,
-          "sha256": "f0dd498c374eeff422bf6d71dcdae58bf2e745be455c99b56d7a1b705d892008",
+          "bytes": 1842281,
+          "sha256": "17cf8a80b887d6d5d35d3d75d9f25f94c7da0a5409beb8ba311d1b91f72cd2b7",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/voronoi/png/orbital-technosphere-global-voronoi-44-22.916667.png",
           "mediaType": "image/png",
-          "bytes": 2018517,
-          "sha256": "1dacd3327d281daadecb8e79d4131ddf2d854443690067df203ec2d5fd82d71b",
+          "bytes": 1986363,
+          "sha256": "f2901c131e1bc6395e49eaef59ed504ee3c73b04933d351d5d70ff88b4e92a36",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -11696,8 +11696,8 @@
         "png": {
           "path": "assets.generated/voronoi/screen-1080p/orbital-technosphere-global-voronoi-44-22.916667.png",
           "mediaType": "image/png",
-          "bytes": 1175209,
-          "sha256": "0a6f1d108b9470cdbed0da8cc8603f36fe28aa3df6d00453f08a298204181005",
+          "bytes": 1154292,
+          "sha256": "ffa03af773a9b4f6de1030f402054ba6cd42bb83c79395f28b0247dd4663e30a",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -11710,8 +11710,8 @@
         "webp": {
           "path": "assets.generated/voronoi/screen-1080p-webp/orbital-technosphere-global-voronoi-44-22.916667.webp",
           "mediaType": "image/webp",
-          "bytes": 728484,
-          "sha256": "27b932a10f2afc97249b9ed167b74216dd5f9a87e2980fe1ffd0ddb0f41e5b64",
+          "bytes": 709436,
+          "sha256": "c53f77380244ba18d415d07f5c4435cd776563b5a22e2aca48d0e65da94dbec1",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -11730,7 +11730,7 @@
       "layoutId": "authagraph",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T04:03:56Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -11741,22 +11741,22 @@
         "svg": {
           "path": "assets.generated/authagraph/svg/orbital-technosphere-observer-authagraph-44-19.052559.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 906141,
-          "sha256": "f46a7cdfb4d7361969752576caf45930de41b453c869613e7d3bbbe77cd20a91",
+          "bytes": 884613,
+          "sha256": "f570fc72b2eb5400759158e04b2d8ebade82c7d2f8062393e760578695092249",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/authagraph/pdf/orbital-technosphere-observer-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
-          "bytes": 124182,
-          "sha256": "48072319f35c7cef7f1d17c433c05b2a7a5cb2fce530dc9a1bba541a1a2c5aaf",
+          "bytes": 112110,
+          "sha256": "55ee5635365980326b39ceaf884df29459285d6301bd2e7cfd43911e9f6107b9",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/authagraph/png/orbital-technosphere-observer-authagraph-44-19.052559.png",
           "mediaType": "image/png",
-          "bytes": 295001,
-          "sha256": "724506c09a42b718d775fc1d71cb73c81120125ba525d8520eb74d1a05cc58ba",
+          "bytes": 253720,
+          "sha256": "e0e500cf3c23b51f6af3a7f96d98ef31920656b477bfbb12feb5ddc1c3bf7fe7",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -11804,8 +11804,8 @@
         "png": {
           "path": "assets.generated/authagraph/screen-1080p/orbital-technosphere-observer-authagraph-44-19.052559.png",
           "mediaType": "image/png",
-          "bytes": 191600,
-          "sha256": "5962e069d8f1a6c2c7520779e2a146f3bb5d5399c134307b0309c0b934f51a79",
+          "bytes": 163690,
+          "sha256": "e36cca2bf56643394817e18ae4ae012fe5d34eeb0aecbf1ef65e1219c08b4933",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -11818,8 +11818,8 @@
         "webp": {
           "path": "assets.generated/authagraph/screen-1080p-webp/orbital-technosphere-observer-authagraph-44-19.052559.webp",
           "mediaType": "image/webp",
-          "bytes": 106922,
-          "sha256": "357a6798f3fa6eaafb6a1d873dba3626fa5c0f818c491684bf47a7b47608ac4a",
+          "bytes": 88080,
+          "sha256": "eaef55303a55d315cf5ba83be680f1f3bb40de719bdc9e729117e82094d13f32",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -11838,7 +11838,7 @@
       "layoutId": "cahill-keyes",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T04:03:56Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -11849,22 +11849,22 @@
         "svg": {
           "path": "assets.generated/cahill-keyes/svg/orbital-technosphere-observer-ck-44-22.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 905653,
-          "sha256": "f52081d88271d1b870b27588122308c71a147bc0c84b59f0282c8c3f1d299b4d",
+          "bytes": 884274,
+          "sha256": "423edf5f4c3e9287908a2a1682218f29c6eeaed586044b596e91273f40eb70c1",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/orbital-technosphere-observer-ck-44-22.pdf",
           "mediaType": "application/pdf",
-          "bytes": 123416,
-          "sha256": "10b739e75174d9adb553e9810694ad3ac81837ed3825ace7451f31e5d9fdd45f",
+          "bytes": 110944,
+          "sha256": "f616a51e6a8e4ddc413ffc919810a44c8f664bf71b88b44b198e10c2649c2611",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/cahill-keyes/png/orbital-technosphere-observer-ck-44-22.png",
           "mediaType": "image/png",
-          "bytes": 263946,
-          "sha256": "5cecff748441851a360789db07281c93dcbb96e20dd40eaa55a0720da8b513be",
+          "bytes": 222011,
+          "sha256": "be5179d5640f06bb078e182d9070b522c05680fad621de24554b755f14f65fc4",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -11912,8 +11912,8 @@
         "png": {
           "path": "assets.generated/cahill-keyes/screen-1080p/orbital-technosphere-observer-ck-44-22.png",
           "mediaType": "image/png",
-          "bytes": 175072,
-          "sha256": "d232d11b31e7912788d734cd257d837b914860b2652ca6c1a3d3132661bee971",
+          "bytes": 143950,
+          "sha256": "a44c92799c797427dc125faf0977fc787d939be27fdef46182d78ce941de7e1d",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -11926,8 +11926,8 @@
         "webp": {
           "path": "assets.generated/cahill-keyes/screen-1080p-webp/orbital-technosphere-observer-ck-44-22.webp",
           "mediaType": "image/webp",
-          "bytes": 98748,
-          "sha256": "5719108f0fa9340dbfb8d3af345cda2ef9384fca3ac4668cd2f25a22ccedc650",
+          "bytes": 79736,
+          "sha256": "0daf0c828c189b9f63b13f0cd7d7f22415ddeaf045a9f77566091c06edb565ae",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -11946,7 +11946,7 @@
       "layoutId": "dymaxion",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T04:03:56Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -11957,22 +11957,22 @@
         "svg": {
           "path": "assets.generated/dymaxion/svg/orbital-technosphere-observer-dymaxion-44-20.78461.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 906931,
-          "sha256": "ead1015866408e39183d0b7d0c9f9ad77a623b899996b6977708396a2452b225",
+          "bytes": 885287,
+          "sha256": "88d212329dd3d7151cddca06027e3ad73715228b89fd87bf42d164625d026df9",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/dymaxion/pdf/orbital-technosphere-observer-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
-          "bytes": 124334,
-          "sha256": "393c84a1f4eda501cf549e83ed433b5d5a3435003acfad8859deef769b13e22f",
+          "bytes": 112570,
+          "sha256": "fedcc3037be48a20bba174171b8af26e530aa05f9a7cb78638dd1110855f09cb",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/dymaxion/png/orbital-technosphere-observer-dymaxion-44-20.78461.png",
           "mediaType": "image/png",
-          "bytes": 285452,
-          "sha256": "620ecae9953d7ca08f3946a380adb1f918f44e489c20e40f78a7e1c47198acb5",
+          "bytes": 244079,
+          "sha256": "b647f1919d57c2c73bec3054d01a9b34d4159f1bd5b0388a264497d3ba748ac3",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -12020,8 +12020,8 @@
         "png": {
           "path": "assets.generated/dymaxion/screen-1080p/orbital-technosphere-observer-dymaxion-44-20.78461.png",
           "mediaType": "image/png",
-          "bytes": 185233,
-          "sha256": "de68b3f8622bc28193644639f072137c57fd50699b9dfd005dfb0de4f31f93db",
+          "bytes": 153635,
+          "sha256": "45a87d372a8de7ac3a8f550591019a327ad3743f86650a39f0541fd9b84de78c",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -12034,8 +12034,8 @@
         "webp": {
           "path": "assets.generated/dymaxion/screen-1080p-webp/orbital-technosphere-observer-dymaxion-44-20.78461.webp",
           "mediaType": "image/webp",
-          "bytes": 102214,
-          "sha256": "8f073d2d71249d6c8d1a7a811f46df7b132db44f9e7923f8d07b3199535e60e7",
+          "bytes": 83232,
+          "sha256": "6812f1ff8abd132a6e3e62c00cf4d1c418989e3def1956c835c5e444aecb157d",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -12054,7 +12054,7 @@
       "layoutId": "myriahedral",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T04:03:56Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -12065,22 +12065,22 @@
         "svg": {
           "path": "assets.generated/myriahedral/svg/orbital-technosphere-observer-myriahedral-44-24.75.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 925943,
-          "sha256": "bf56fecf019a2bb48ac80e618d512269a6dde78b7a083fa6c61000408af851db",
+          "bytes": 902512,
+          "sha256": "a8217cc682bfd13921719cc486b5bef222e6d05333476f4ea571cd5771bc9e31",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/myriahedral/pdf/orbital-technosphere-observer-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
-          "bytes": 126772,
-          "sha256": "80dd3bb3cfdd7f1dbdf48eb81705a065bb9c78f6fbe2fbc98418b6fb081fc0d7",
+          "bytes": 115203,
+          "sha256": "3fe562e00cbb72f60814d938ce11567c73b9ace97c2c55d475e184c7512913ad",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/myriahedral/png/orbital-technosphere-observer-myriahedral-44-24.75.png",
           "mediaType": "image/png",
-          "bytes": 258272,
-          "sha256": "d1256e3203aa9edcfc47c653667ff2ad04a574cad77707c121bf328e5e02b572",
+          "bytes": 229030,
+          "sha256": "66fcd6039308e2ec28286a135df7dbdc14699a09f6344391848a4ab0916b002f",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -12128,8 +12128,8 @@
         "png": {
           "path": "assets.generated/myriahedral/screen-1080p/orbital-technosphere-observer-myriahedral-44-24.75.png",
           "mediaType": "image/png",
-          "bytes": 166766,
-          "sha256": "50865d781f47ce32364b935a321ed1d63ed5de48a34acbaa7fd2630a8266022a",
+          "bytes": 143837,
+          "sha256": "56adb2ef423d15a5670dc3357579faa98af604ca902fabe1b6aec736ec5b46f1",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -12142,8 +12142,8 @@
         "webp": {
           "path": "assets.generated/myriahedral/screen-1080p-webp/orbital-technosphere-observer-myriahedral-44-24.75.webp",
           "mediaType": "image/webp",
-          "bytes": 96194,
-          "sha256": "827db9be4eb4495eb982daff43c084f493eeeb7286b1abcf7622c37fbc83f4cc",
+          "bytes": 79930,
+          "sha256": "7703796adf13ae05233b3270deeebb7e2e037d850a74c675d03652df4e058509",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -12162,7 +12162,7 @@
       "layoutId": "star-x",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T04:03:56Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -12173,22 +12173,22 @@
         "svg": {
           "path": "assets.generated/star-x/svg/orbital-technosphere-observer-star-x-34-44.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 906734,
-          "sha256": "24f2d1519f3c5d650744625e9c9c814bb255ac6c65ef246883f65745c52827cb",
+          "bytes": 884547,
+          "sha256": "5afb47e7d90faf0de110eb7f5d4cfe701c585e10278e3b10266fb888122e79af",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/star-x/pdf/orbital-technosphere-observer-star-x-34-44.pdf",
           "mediaType": "application/pdf",
-          "bytes": 124047,
-          "sha256": "6c4899ff5166c66ff7bd984d1fae47dabb4069ea53322444fdc7f427f9442034",
+          "bytes": 112105,
+          "sha256": "5b6afc6cbcfc5fdeded750d69fa43b3d8de8f0938b211837581da85fd0be2c1a",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/star-x/png/orbital-technosphere-observer-star-x-34-44.png",
           "mediaType": "image/png",
-          "bytes": 309274,
-          "sha256": "f4cf10ad4c5eac6fc1e3a786b4e3568a74e9d02fbc7f3e1a07bb18d6f3748595",
+          "bytes": 268310,
+          "sha256": "a0d547451d5e4b325dc85482ff9b9d27d998119d0a081977a07ed247edad6bd9",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 2967,
@@ -12236,8 +12236,8 @@
         "png": {
           "path": "assets.generated/star-x/screen-1080p/orbital-technosphere-observer-star-x-34-44.png",
           "mediaType": "image/png",
-          "bytes": 111435,
-          "sha256": "1dc65776f8750797ecff3f33a0c47eee13c72f0853bb39591977c5d1dc8728dd",
+          "bytes": 95643,
+          "sha256": "8c1800f67edf3260c3b70bcd5880732796015962b9fb3302e5232391ca8d531e",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -12250,8 +12250,8 @@
         "webp": {
           "path": "assets.generated/star-x/screen-1080p-webp/orbital-technosphere-observer-star-x-34-44.webp",
           "mediaType": "image/webp",
-          "bytes": 58538,
-          "sha256": "433dd55da44e83b5fe77124bcb7c8a9ca7247b5e0ccfe15a7319132fd869a110",
+          "bytes": 48276,
+          "sha256": "0cb08295d5b97a0466fac36feda545607f57873297e034acaaa137dae57087c2",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -12270,7 +12270,7 @@
       "layoutId": "voronoi",
       "sliceId": null,
       "lifecycle": "standard",
-      "sourcePeriod": "2026-08-05T04:03:56Z",
+      "sourcePeriod": "2026-08-13T15:36:00Z",
       "artifactFrame": {
         "x": 0,
         "y": 0,
@@ -12281,22 +12281,22 @@
         "svg": {
           "path": "assets.generated/voronoi/svg/orbital-technosphere-observer-voronoi-44-22.916667.svg",
           "mediaType": "image/svg+xml",
-          "bytes": 906087,
-          "sha256": "530c1fa7430e06fd693afe8cb5ece97e3b392934f08fe762327160c5d42c0646",
+          "bytes": 884417,
+          "sha256": "a3d09fc2f0d2785e4ce9ffb962e6e85a2cff97d0478af28f72927e25468b71f4",
           "authorityClass": "archive-art-master"
         },
         "pdf": {
           "path": "assets.generated/voronoi/pdf/orbital-technosphere-observer-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
-          "bytes": 120083,
-          "sha256": "fa0f1ad33e236ea442a89f543703731ee437ce1a29464d380648e48613c9d439",
+          "bytes": 109456,
+          "sha256": "f9440cb823b0fe707069bd1c3b3ea1360136549b68cc45319e11e97bf9bfd48d",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
           "path": "assets.generated/voronoi/png/orbital-technosphere-observer-voronoi-44-22.916667.png",
           "mediaType": "image/png",
-          "bytes": 239930,
-          "sha256": "7c89cb220014e8842d50a2214d46203d99b8a4bb7bf4cc9a3b59f44d592b88db",
+          "bytes": 214199,
+          "sha256": "4a0ce7e6b0f323a40392f1654cae5ea2eb5a206d8fd127c80c28603a3a21f72c",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,
@@ -12344,8 +12344,8 @@
         "png": {
           "path": "assets.generated/voronoi/screen-1080p/orbital-technosphere-observer-voronoi-44-22.916667.png",
           "mediaType": "image/png",
-          "bytes": 158705,
-          "sha256": "8cb7693afef1a8814e1e26e040728be156c9c9e7b7899eaa93276715b029bdd8",
+          "bytes": 136414,
+          "sha256": "fe31b1a92929e943b8cdecdb20c7171872b7fb0d60de20b4fb9e548d63f6c540",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -12358,8 +12358,8 @@
         "webp": {
           "path": "assets.generated/voronoi/screen-1080p-webp/orbital-technosphere-observer-voronoi-44-22.916667.webp",
           "mediaType": "image/webp",
-          "bytes": 89078,
-          "sha256": "20b32c755dfcc3364f803d8e806def2e0cacefd7700b8d1dc95956119b01065f",
+          "bytes": 73942,
+          "sha256": "e0140307bef1af492a77ff2f91483affb72b043428e2903af3407db66bf8566b",
           "authorityClass": "access-derivative",
           "dimensions": {
             "width": 1920,
@@ -12399,7 +12399,7 @@
           "path": "assets.generated/authagraph/pdf/resources-energy-nuclear-operating-capacity-2024-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 568309,
-          "sha256": "214a2572b878bd1b71d817f7be23969110f99d56f8e24517dcfe926266baf00c",
+          "sha256": "f96b1295461d098bdb0e6169129b339d62448d3e4dd2aa5939ead5d7312c73f3",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -12509,7 +12509,7 @@
           "path": "assets.generated/cahill-keyes/pdf/resources-energy-nuclear-operating-capacity-2024-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 217453,
-          "sha256": "4fe19387a0290abcfbc514d16d65554c21853e766132bd2ae133c98099473d47",
+          "sha256": "6e31eb81e27cff2446a1ff98c950ae1af6563edbd58e42cc277192c73400a58d",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -12619,7 +12619,7 @@
           "path": "assets.generated/dymaxion/pdf/resources-energy-nuclear-operating-capacity-2024-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 557086,
-          "sha256": "36f74e6cdebe2462f2535172ee2b12b9c858c6a669f30db7b30084889cfa43f9",
+          "sha256": "cb12bddf2de892706dc71c1055d1c27e2d4167864734787797724684618a6254",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -12729,7 +12729,7 @@
           "path": "assets.generated/myriahedral/pdf/resources-energy-nuclear-operating-capacity-2024-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 711991,
-          "sha256": "8293ad1bec092101adb46d9c3ab46991154b8444c9189e0cc4cb901db7b82eec",
+          "sha256": "60db120c9db08dc84d51f098fa55bacad6a1361993861c354f4909a65f17b048",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -12839,7 +12839,7 @@
           "path": "assets.generated/star-x/pdf/resources-energy-nuclear-operating-capacity-2024-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 491560,
-          "sha256": "3342160ae411edb3c5f7341f478fa5209a7e08873e74a70b8aa1c1cd26e707b5",
+          "sha256": "ea61a2672a12e2eff18ec8f1b2804c1253cf0ca4a66fbd64bbc2b9307cf27384",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -12949,7 +12949,7 @@
           "path": "assets.generated/voronoi/pdf/resources-energy-nuclear-operating-capacity-2024-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 546590,
-          "sha256": "01a987704479b92f69c221983514426cfa1a187c6fee4604903d8779fab2c0c1",
+          "sha256": "da6fa052d45c8f5b57576b704982d5da296556d1169f82ffceb2b983eb270ead",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -13059,7 +13059,7 @@
           "path": "assets.generated/authagraph/pdf/resources-energy-petrochemical-refinery-throughput-latest-2024-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 584905,
-          "sha256": "32f2446a17bfcc062f8a190a21d30a0c7d4fa6433a9241c64b550d02fffd81f7",
+          "sha256": "a9f3347b211983440d08548866bf1853929e43eddc3d39648f71d1fc65dafadb",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -13169,7 +13169,7 @@
           "path": "assets.generated/cahill-keyes/pdf/resources-energy-petrochemical-refinery-throughput-latest-2024-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 221395,
-          "sha256": "c7f6ed96b7794ca4a36f7925c9153aff9ea1d72e258a9d05b36dfe4223c1013c",
+          "sha256": "5f31ece7a92431d02e571be1f2a97ab016a3ed71a4629d35c6d1259431849dcd",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -13278,8 +13278,8 @@
         "pdf": {
           "path": "assets.generated/dymaxion/pdf/resources-energy-petrochemical-refinery-throughput-latest-2024-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
-          "bytes": 573151,
-          "sha256": "28a075a36aea35711dded526b1c511b730abc3161f24f6d6a7408fb0d96aba04",
+          "bytes": 573152,
+          "sha256": "4b55bdfe9bc2a6018042f566fd41452dfc0d97d2c99085a5f03dc7d8e91346f8",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -13389,7 +13389,7 @@
           "path": "assets.generated/myriahedral/pdf/resources-energy-petrochemical-refinery-throughput-latest-2024-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 736359,
-          "sha256": "361140ab68e61b5061beb4d87413cea658992e1d306d0feb0df558ca3f8b85e4",
+          "sha256": "77494a5284da394ea7c181cdfc6aa590e685d2045500085d3349fe3096c36cd2",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -13499,7 +13499,7 @@
           "path": "assets.generated/star-x/pdf/resources-energy-petrochemical-refinery-throughput-latest-2024-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 495835,
-          "sha256": "cc2c53adbdce3dedcf8a97d899bd84a81d912dc4a8074c6c93b58c3ae42bdaf6",
+          "sha256": "9f2b57145f9bf9e89b578cd7ebd5d3ca789d2de28f319487fff151f2acc8418d",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -13608,8 +13608,8 @@
         "pdf": {
           "path": "assets.generated/voronoi/pdf/resources-energy-petrochemical-refinery-throughput-latest-2024-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
-          "bytes": 563396,
-          "sha256": "f229d3e744cdd82db0c41bb11d118e9c49d171a3adf9e9381ce4862dc796d89e",
+          "bytes": 563397,
+          "sha256": "46eda007cccf0d41a44d1a57bc17e614bb57739711ca490eecfbe57e0d457aed",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -13719,7 +13719,7 @@
           "path": "assets.generated/authagraph/pdf/resources-energy-solar-capacity-2025-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 596119,
-          "sha256": "48daa26fe94f4aca9feb2ed611f37e0198d1951ca3d5f8acb8fbd4363769c8c6",
+          "sha256": "d8ef805315196c73818dc27414c5bbdf8f55695aa3db5363ada28169cf5c807c",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -13829,7 +13829,7 @@
           "path": "assets.generated/cahill-keyes/pdf/resources-energy-solar-capacity-2025-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 222242,
-          "sha256": "aad674800bec468729b2b6441c6a7d838fa1d4edf7f01351216b112533998b8c",
+          "sha256": "667ddb1103e3cf82f59e752cc573857c53d5a5bb8ad8a6e91d789a9f7a44050d",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -13939,7 +13939,7 @@
           "path": "assets.generated/dymaxion/pdf/resources-energy-solar-capacity-2025-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 584416,
-          "sha256": "8dfe45c0fb0701cdb081735e5a468e7d155544708c22a7622c665e17e68a57bb",
+          "sha256": "ebb1efd56ac801983357101b3bea7f8b51b34c172e3f2751acfbc5b1ee0c5e4d",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -14049,7 +14049,7 @@
           "path": "assets.generated/myriahedral/pdf/resources-energy-solar-capacity-2025-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 750747,
-          "sha256": "2372fb6adb59af0a27f2c02df96c540239857bf520b8a00d9cf8af4bd9f43470",
+          "sha256": "e3a9def6a2b77903a13408ff292658aa4a55cb5a9403fa06078b6273ce8e455d",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -14159,7 +14159,7 @@
           "path": "assets.generated/star-x/pdf/resources-energy-solar-capacity-2025-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 496936,
-          "sha256": "57e83919802af59e689a86c2be649bfe3807c2774b391e509f8ac2ff991c25fa",
+          "sha256": "e57a0382c7c38d6d317beb5d6e5bfe3067c2bfbdf49ada3edb7d9d2e80255d93",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -14269,7 +14269,7 @@
           "path": "assets.generated/voronoi/pdf/resources-energy-solar-capacity-2025-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 574864,
-          "sha256": "c6a1b5e715abdc677be29cccb2e7e291cc9717c08ee16abce43b25cb29b890d2",
+          "sha256": "0cd1041cffb03280c3ab22ee436b6938607dad5c67fb964b9922dbbdfc89fa52",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -14379,7 +14379,7 @@
           "path": "assets.generated/authagraph/pdf/resources-energy-wind-capacity-2025-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 594069,
-          "sha256": "a7001a5265a907fe3cdd844d5c43ba29a0b9223381c7b566d9684161e1e412c9",
+          "sha256": "1ee08c6ad450660c69fd2a2cff21b75139fcf485b0a6a93d948b8efda3272dd5",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -14489,7 +14489,7 @@
           "path": "assets.generated/cahill-keyes/pdf/resources-energy-wind-capacity-2025-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 221356,
-          "sha256": "d18d2db116a8d75b4ef1bc55fc451ba939a35ae3fd9d68276116da449b189abf",
+          "sha256": "3b64b3f7ba859b1b158ad51e6295e26ecd23ef1a3dac2ad00a415da523d154b6",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -14599,7 +14599,7 @@
           "path": "assets.generated/dymaxion/pdf/resources-energy-wind-capacity-2025-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 582784,
-          "sha256": "705b27aebddb6f99bf4901c8d0e33670538e5032f8bbd1e36a9ca09e56857836",
+          "sha256": "e6a6636fb20e6cc38888365294e5c3e1a9c4054793d0fd77b2a5d5262ca4ea2f",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -14709,7 +14709,7 @@
           "path": "assets.generated/myriahedral/pdf/resources-energy-wind-capacity-2025-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 748689,
-          "sha256": "07fbf0640990fa2fd240817b4044bbe0372261841958e8250fc1f5142f21a591",
+          "sha256": "12607329f926901184ce9027987b03def105c774b577e5d5304bcabc99062bb9",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -14819,7 +14819,7 @@
           "path": "assets.generated/star-x/pdf/resources-energy-wind-capacity-2025-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 495997,
-          "sha256": "a6ff656bcfd5ca6a2e81b51540382a570139f1414e80c898458e181f6f6bf8fa",
+          "sha256": "badf96ffcf9984434e52efa8d4cb2e397f0f70ceaddc9af0004b764cd1e0fb87",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -14929,7 +14929,7 @@
           "path": "assets.generated/voronoi/pdf/resources-energy-wind-capacity-2025-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 573070,
-          "sha256": "94d56cfbad2a33e46800aa427ab8b4d270929937846aaa4653b7f4d030228eb2",
+          "sha256": "0e42bb46b17d137e5204645d6ab7cb3bbb8d4a4f0253937e4234d9cbe87e08fb",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -15039,7 +15039,7 @@
           "path": "assets.generated/authagraph/pdf/resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 1034670,
-          "sha256": "de176552be2097e7ab5fe192ef355dbc34be40160a7a04462ea98c7fe04f48de",
+          "sha256": "31604dbdedc9268be8d18546a5aa3c7b5d6a3cdaf031d0708158af93a35ec46e",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -15149,7 +15149,7 @@
           "path": "assets.generated/cahill-keyes/pdf/resources-fauna-coral-reef-threat-2011-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 830782,
-          "sha256": "1f19bdf3bf4d8bc218431aaf34b05760f24882281289cc0d2bc01ebe373c6e1c",
+          "sha256": "acde21a5c4e421d08b5a1f0e1ebd888c413059e3657df22d9fbcb8c7a3bbfd47",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -15258,8 +15258,8 @@
         "pdf": {
           "path": "assets.generated/dymaxion/pdf/resources-fauna-coral-reef-threat-2011-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
-          "bytes": 1029872,
-          "sha256": "847c6c7ab33da4ba11131a47bc63626bcf8b90f580dc6ee17f30968d0f1a04f8",
+          "bytes": 1029871,
+          "sha256": "f5f278c21d99fd8d9881e9725b9f88545829985d8d10ce83e6cc80453f511b30",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -15368,8 +15368,8 @@
         "pdf": {
           "path": "assets.generated/myriahedral/pdf/resources-fauna-coral-reef-threat-2011-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
-          "bytes": 1182755,
-          "sha256": "87cc1fa2ff04c53b13a3ba72ca3b8292dd121f494d5c8a7cc48b47d3a4771144",
+          "bytes": 1182756,
+          "sha256": "369733999fbabbf1467979bea9da12fde7e7223b01c30ce6ecd28177f7a8735c",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -15479,7 +15479,7 @@
           "path": "assets.generated/star-x/pdf/resources-fauna-coral-reef-threat-2011-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 847836,
-          "sha256": "f5f38348a3aca74b0fa991abfba187385b82d970e0d27baf076d8b7aa90c1a5f",
+          "sha256": "0f597ae6c9d2145608ed461ec8f6d2cbb584434f4625791d3078dd23048b6353",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -15589,7 +15589,7 @@
           "path": "assets.generated/voronoi/pdf/resources-fauna-coral-reef-threat-2011-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 999497,
-          "sha256": "524fad2b5c5275260b272666b6ccf8fbdc9ce3b645fb5c151de82cef7b7050b8",
+          "sha256": "9ce14c6b7897c74e48986465e542b36a418ce98b9b6f485be00d52a8a0c7f724",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -15699,7 +15699,7 @@
           "path": "assets.generated/authagraph/pdf/resources-fauna-fisheries-production-latest-2024-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 595914,
-          "sha256": "e868f89a826a96251f328258ccea2e0e800978e03b32c40cc52148e8dc3ee498",
+          "sha256": "c7a5506a63db10ed40f892597b80d1e0ae2246d4969abfbdd69049fde346d88b",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -15809,7 +15809,7 @@
           "path": "assets.generated/cahill-keyes/pdf/resources-fauna-fisheries-production-latest-2024-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 222066,
-          "sha256": "4f04635530bbee45715d6cc72bfd39c533fea04ef939d03eb6760504f1da9bfa",
+          "sha256": "64e8391020a5e1e13feef4b553c885fa4d3cc74a1a2153caaf4828e421ae40e6",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -15919,7 +15919,7 @@
           "path": "assets.generated/dymaxion/pdf/resources-fauna-fisheries-production-latest-2024-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 584203,
-          "sha256": "5d7a4cbeb9c9c679ed490ab51250f8f23e06a0c7adac3fc199e8c9f2bdd7564a",
+          "sha256": "87fe36d2a252be565af6da09d28f96bb446d61fbce97f87829202ad3f7d7fb13",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -16029,7 +16029,7 @@
           "path": "assets.generated/myriahedral/pdf/resources-fauna-fisheries-production-latest-2024-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 750576,
-          "sha256": "ae1fbff28db341de9ec8b13943c9a694f461698baf89e0310172ced36e55bb55",
+          "sha256": "5d052b2b4f5b1071563d2470f5880ef5e1395a335cbb7f199016d6bfd4e43f6a",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -16139,7 +16139,7 @@
           "path": "assets.generated/star-x/pdf/resources-fauna-fisheries-production-latest-2024-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 496747,
-          "sha256": "96275eb8edf9912108ad232a005675c14a7c701f5c0a864a7db0840aea9aa666",
+          "sha256": "86bc32d8649597e55ca245e15bb55376161392075a68121efc903c4a4ceef2de",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -16248,8 +16248,8 @@
         "pdf": {
           "path": "assets.generated/voronoi/pdf/resources-fauna-fisheries-production-latest-2024-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
-          "bytes": 574622,
-          "sha256": "5c5ac58405317f166ad3040ef96a2362e56b69ecdc9f32a603da9c3ab547c6b7",
+          "bytes": 574621,
+          "sha256": "798e788bc4920392ed0fda918aad1c4259fc4784e2acbb42cc9f6588f855b775",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -16359,7 +16359,7 @@
           "path": "assets.generated/authagraph/pdf/resources-flora-forest-area-percent-2023-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 595291,
-          "sha256": "0beaad7c521a76d1a0504c1bb98d8e22022fa9792061f9613838c1f041682319",
+          "sha256": "15c64c42594bda842bbd8db19cc2efe09fb54b0bf2d6345367e5d00e1c5303d9",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -16469,7 +16469,7 @@
           "path": "assets.generated/cahill-keyes/pdf/resources-flora-forest-area-percent-2023-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 221503,
-          "sha256": "e7851ce68cc3aca9665ea749c4d186d191b6f048f1cc2441f7d97453e83a7f54",
+          "sha256": "9a53d46625de41281b0374c0671d9bfc9d8c6f385376a771f5cba37bb1acf525",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -16579,7 +16579,7 @@
           "path": "assets.generated/dymaxion/pdf/resources-flora-forest-area-percent-2023-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 583622,
-          "sha256": "7f1d560478ccd7d91c9712e47c519f26a4a80a1d4134f4c2314fcbae932b7275",
+          "sha256": "7823a8bf7310594c5c10a259cddabc86856c3a53dd0eb267b5d74aa323e681df",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -16689,7 +16689,7 @@
           "path": "assets.generated/myriahedral/pdf/resources-flora-forest-area-percent-2023-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 750004,
-          "sha256": "7d05da7133d84cbe7aea615861b4d09dada1f69d93711809a36ae30057e8dae6",
+          "sha256": "edd39dc4f46284a64d1916effd8191139dbee944b79d9f3255b9e5133466c999",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -16799,7 +16799,7 @@
           "path": "assets.generated/star-x/pdf/resources-flora-forest-area-percent-2023-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 496199,
-          "sha256": "3df2f192d236d7ff06a2d6180978e5d57022789abe9423a7e0bf13ea632a221d",
+          "sha256": "fe7e759bf646812dca5bb7e512f8ac10fa8d6208bd7d87f23e57d17fed14b912",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -16909,7 +16909,7 @@
           "path": "assets.generated/voronoi/pdf/resources-flora-forest-area-percent-2023-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 574025,
-          "sha256": "ffd5630ab49c3cb3f6ffe70461a2cfdfe09ac7d14441eed4a77444618eabbc88",
+          "sha256": "b750c073df6e47ad54b601f4ff29f8140b58360c10c66d0b66b796f1a5279a07",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -17019,7 +17019,7 @@
           "path": "assets.generated/authagraph/pdf/resources-food-food-production-index-2022-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 586048,
-          "sha256": "9debfee1b3db51c15a769d623e83b22f1e002b304123029321a25bac1b077ec7",
+          "sha256": "246168f93c8338107eb8a34f1ee833d76fd7a5629c711fb67dd339e4987079e2",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -17129,7 +17129,7 @@
           "path": "assets.generated/cahill-keyes/pdf/resources-food-food-production-index-2022-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 221795,
-          "sha256": "065953559418ff46b911c0cd8d1839ff853f65f07e4347a29a76c5a8b8cf1f55",
+          "sha256": "7a5dc03bca0f28eba3203b87ba0c3dc8ad844b9546acbee6b6fb655641d236f5",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -17238,8 +17238,8 @@
         "pdf": {
           "path": "assets.generated/dymaxion/pdf/resources-food-food-production-index-2022-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
-          "bytes": 574285,
-          "sha256": "bdb85327a2a14495abdb43131291085117b088a220fc7a3b44d3d0995d3f3177",
+          "bytes": 574284,
+          "sha256": "88849f6bf4b543e98e52c0304a59adae0004d154a292e48d826b27cf006ccf66",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -17349,7 +17349,7 @@
           "path": "assets.generated/myriahedral/pdf/resources-food-food-production-index-2022-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 738161,
-          "sha256": "4af4aa9fc5a741a568f1d8c247ec27adf97a99ac6f654dd24dcbbbfc1931e90a",
+          "sha256": "e205c05b993f2f9a128b34829ca455539ff6c813c932df323294118e7813ac64",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -17459,7 +17459,7 @@
           "path": "assets.generated/star-x/pdf/resources-food-food-production-index-2022-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 496493,
-          "sha256": "a4a7515e7209ffa52336bc2806122a4a5b96a30dbd90dc4181805f707e0f707f",
+          "sha256": "b975d7210d7f8083b8abf6b8b297f1ae4ecbede391c0934380dc8b85d6e8d57b",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -17568,8 +17568,8 @@
         "pdf": {
           "path": "assets.generated/voronoi/pdf/resources-food-food-production-index-2022-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
-          "bytes": 564597,
-          "sha256": "c562ff5fa7ad3fcf6a1c6f8330fb9b75329916d82fb6eba44bd6e456836917ef",
+          "bytes": 564598,
+          "sha256": "c88193a7bed9cf69b0144945308690474fb63f344f04b5c690a8dbb684ce7f9c",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -17679,7 +17679,7 @@
           "path": "assets.generated/authagraph/pdf/resources-human-bachelors-attainment-latest-2024-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 587758,
-          "sha256": "86d5a448edbabf48b5a7e5069b139877165460d7e81afc4c58b9f30e66bb54aa",
+          "sha256": "44202e9c5c8c90645c7abb3fc9ad4855621853116e786416c99f3e27f31a12d0",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -17789,7 +17789,7 @@
           "path": "assets.generated/cahill-keyes/pdf/resources-human-bachelors-attainment-latest-2024-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 223693,
-          "sha256": "9dc12b88b65d541ad1a5131b0c4f535e25fde31742a29761ee91c9cbc9a2d944",
+          "sha256": "ca9d540f86a6a594e9b8c1f3d64716abf5f5d7e64d30ad857e2a6733b8662772",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -17899,7 +17899,7 @@
           "path": "assets.generated/dymaxion/pdf/resources-human-bachelors-attainment-latest-2024-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 576323,
-          "sha256": "c2e2bbaa3c8e9ccb114ba7e3eb4d053b95c5e93cfd656f9d7f798157f3038437",
+          "sha256": "f2144ecdf1854152fc746400067a25ea6b81c7a8be61121fba8164788faf6188",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -18009,7 +18009,7 @@
           "path": "assets.generated/myriahedral/pdf/resources-human-bachelors-attainment-latest-2024-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 739905,
-          "sha256": "db329392821f2989252913504b6bcc76bc98ecb627aad37d20a16a5b05bc4ebf",
+          "sha256": "d0ad318278577051fbb09f9e3915d5df06f1597a8fe9119ed6365874538f13a7",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -18119,7 +18119,7 @@
           "path": "assets.generated/star-x/pdf/resources-human-bachelors-attainment-latest-2024-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 498329,
-          "sha256": "acd88145e0ecb99fe4ed8b3e0a37d1b7bd545c218d3704912f6843ad08344c43",
+          "sha256": "8a2fd681ad5f8bf2d324e80f5c9c6311c966f6df2c750c222c55bf43d5b979d3",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -18229,7 +18229,7 @@
           "path": "assets.generated/voronoi/pdf/resources-human-bachelors-attainment-latest-2024-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 566547,
-          "sha256": "5867f921adf6363f8094e7108e872b329c9e4daac55872fd9944fd29e87763f2",
+          "sha256": "477f7e9ccedcfe8f8e21a7d64921399ae3c65200856f085121dafb8a2a7e5fe7",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -18339,7 +18339,7 @@
           "path": "assets.generated/authagraph/pdf/resources-human-population-over-60-2024-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 596341,
-          "sha256": "5f9d0b6fb4d01c850b87ae1dd5e9cfc2f39ae93ef61c5a55ec0787f241a9aabb",
+          "sha256": "24a174d1ffedded85061a33207d5c3c444301fda6aaffb51bf171409e1d11448",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -18449,7 +18449,7 @@
           "path": "assets.generated/cahill-keyes/pdf/resources-human-population-over-60-2024-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 222524,
-          "sha256": "c56cc14852f1f79389c4f8288f899842f3eba92145cc93dfebc5a8ef3db30499",
+          "sha256": "1de874152c3768d00e65c01af63b5679b9a29bd70bb9c2aa1442d5ea6cb2f27b",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -18558,8 +18558,8 @@
         "pdf": {
           "path": "assets.generated/dymaxion/pdf/resources-human-population-over-60-2024-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
-          "bytes": 584617,
-          "sha256": "30eeb95d7a65a6d7912595e804c1bc68fb70a711fa8cefe8026a22621530a20c",
+          "bytes": 584616,
+          "sha256": "3b7c636948e58128aa0f4cbe85aca52d3fd6c5776de14695c18b1509c428b8e9",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -18668,8 +18668,8 @@
         "pdf": {
           "path": "assets.generated/myriahedral/pdf/resources-human-population-over-60-2024-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
-          "bytes": 750966,
-          "sha256": "45bc84079f2d4e01dd9c843147f692e03a57d8895750c31f2ac2aaa904387521",
+          "bytes": 750967,
+          "sha256": "5d03f56b54a18148c1e7ed7f7499f5de091100b7d27a0c302b0b60840794989e",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -18779,7 +18779,7 @@
           "path": "assets.generated/star-x/pdf/resources-human-population-over-60-2024-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 497188,
-          "sha256": "6a0b73d267c4ee1d80a5e6bf0f2ce0b76396c90bb19288775cae88d13f1d16d9",
+          "sha256": "a31f3f0c2b1ce56e56dd2696c9b2871651c022b4001e5764c757d0df9ccd0c90",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -18888,8 +18888,8 @@
         "pdf": {
           "path": "assets.generated/voronoi/pdf/resources-human-population-over-60-2024-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
-          "bytes": 575039,
-          "sha256": "90e4449642cd544ba196b14bedfc99a29d2bda1d7a6646458ce33b8133bf7d41",
+          "bytes": 575040,
+          "sha256": "1b63d500a2b6c2bca16f0add39cc5236ab3b9f2c34bf0d3fa2a477dc1d9de05f",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -18999,7 +18999,7 @@
           "path": "assets.generated/authagraph/pdf/resources-human-population-under-30-2024-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 596338,
-          "sha256": "f4dd7d3b3f0f274d77e69582ce45a69b02d94aea3a3ef0d8b9a25b0d61759d04",
+          "sha256": "e17eb49bc00502a3305acd1482cf3bf5082ca6614d4711d23dcbcff51636f85a",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -19109,7 +19109,7 @@
           "path": "assets.generated/cahill-keyes/pdf/resources-human-population-under-30-2024-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 222538,
-          "sha256": "04754dd6d753b97955d9bc454ab8ffb04430c73391534803988df55e5171d0fb",
+          "sha256": "cfa3ce8fde442c949628e1914fb88c481ad7749274aaca4c0e967871182d20ba",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -19219,7 +19219,7 @@
           "path": "assets.generated/dymaxion/pdf/resources-human-population-under-30-2024-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 584630,
-          "sha256": "7c6fad803c5e7ac7ddafc147f8c17102998458a85929a176cef4aa2137199939",
+          "sha256": "c8342e1b79d8879a9c31f4d9eb249b312041be7a0fe6ed41a9441138c08c97d3",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -19329,7 +19329,7 @@
           "path": "assets.generated/myriahedral/pdf/resources-human-population-under-30-2024-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 751010,
-          "sha256": "997cbd98d66999d108b669251919f7b151c41c6c1c1e184b85ecbf2c65fb8c45",
+          "sha256": "947ef3d1d1d15a4ba418e51eefecda331dda2f39f36bdcf327cb98b7e19a4949",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -19439,7 +19439,7 @@
           "path": "assets.generated/star-x/pdf/resources-human-population-under-30-2024-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 497239,
-          "sha256": "b97d698d4696f1531b830c79ba7c0b682c376648eb51332f157708e829194464",
+          "sha256": "3f57d7d713388fefdcccc17df728ad4a786cd064af82d027194f4b2e953eba75",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -19549,7 +19549,7 @@
           "path": "assets.generated/voronoi/pdf/resources-human-population-under-30-2024-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 575066,
-          "sha256": "acfcee01db9711ed564e0133b3e78352474cead6dd4946f5cecdde66fe304b27",
+          "sha256": "42bea8d6f780213258e22ee5076d7fc84958f49956cf5ea1d2b4c201bfd89f4c",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -19659,7 +19659,7 @@
           "path": "assets.generated/authagraph/pdf/resources-human-resident-patent-applications-per-million-2019-2021-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 584827,
-          "sha256": "c832a5a63608f862e6a366697b77c6b4cedf58991c937692ac4cb963fbabc475",
+          "sha256": "15a1b467b4365aa5d419178b6eb19a1627e2bf0a23bfa6d25f63c6370e1e0476",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -19769,7 +19769,7 @@
           "path": "assets.generated/cahill-keyes/pdf/resources-human-resident-patent-applications-per-million-2019-2021-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 222037,
-          "sha256": "e12f93b8cc4294d663a73227dbb45fea9acc20b3c284d135ba6bab58f5991f3d",
+          "sha256": "943f31e0772e188bf89ff3d0f85f89eb0d8fcb569e3822cf563c278347e7bb41",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -19879,7 +19879,7 @@
           "path": "assets.generated/dymaxion/pdf/resources-human-resident-patent-applications-per-million-2019-2021-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 572789,
-          "sha256": "2ece9f01112158bc3c5551619c0ced94efb312b1cfcb3557ca3b0e493ef9c9c4",
+          "sha256": "09c92a8507885f030291692dcf968af961e6ee7c6ef109656e0014a51c4d9423",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -19989,7 +19989,7 @@
           "path": "assets.generated/myriahedral/pdf/resources-human-resident-patent-applications-per-million-2019-2021-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 735464,
-          "sha256": "2595547c4683608db3ce28adc648bea810478c6e2d4fa6c793e361ff36081eb8",
+          "sha256": "368ac04eb8ed7d90e5af54f1904c20af74785eb1370fdfade4d3a5e8a1cbff78",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -20099,7 +20099,7 @@
           "path": "assets.generated/star-x/pdf/resources-human-resident-patent-applications-per-million-2019-2021-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 496176,
-          "sha256": "f3e14acf63f3a5ff420c3a3353bb093036f1897b764eeaf15193c61e39e7b308",
+          "sha256": "f6a783d6bb73da874fc06f9c20a994ffd0ae632d464ab6ca65c204c38fc2984c",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -20208,8 +20208,8 @@
         "pdf": {
           "path": "assets.generated/voronoi/pdf/resources-human-resident-patent-applications-per-million-2019-2021-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
-          "bytes": 563184,
-          "sha256": "d4970999feb0bf4cb0332830e155fdfe7ad8666f5f4ae29d0419a84ccba75021",
+          "bytes": 563185,
+          "sha256": "9d067d9d9869057f3d108af5837a685fff71c459582072bc4c619bd3a46f0ba6",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -20319,7 +20319,7 @@
           "path": "assets.generated/authagraph/pdf/resources-human-upper-secondary-attainment-latest-2025-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 587550,
-          "sha256": "8c7e9348f8c22775bd35922ba14db276118acd7f4cb7048b5e847bb48f77a5ce",
+          "sha256": "969a6c7e0d78ec33bd566111e0038b26acb1a6de0ddf0b14de2f60d789285715",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -20429,7 +20429,7 @@
           "path": "assets.generated/cahill-keyes/pdf/resources-human-upper-secondary-attainment-latest-2025-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 223384,
-          "sha256": "cefb36a726e0577e813c3e790dc686124fd657dadedafb808dcf4fec875eeabf",
+          "sha256": "559729a95eb014f44e29865a947ba6ced6917b83fdae1d5796a581fa7983eda9",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -20539,7 +20539,7 @@
           "path": "assets.generated/dymaxion/pdf/resources-human-upper-secondary-attainment-latest-2025-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 576210,
-          "sha256": "ccde71502fc21713f5beb5ed55857871cf705e830006584a6aa2e830733b5cd4",
+          "sha256": "8f658c6843139ceae7cac3b05cf41da1437abc7403bad759e65e4abbe7fa6e87",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -20649,7 +20649,7 @@
           "path": "assets.generated/myriahedral/pdf/resources-human-upper-secondary-attainment-latest-2025-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 739929,
-          "sha256": "632804769dfd233fcd2dd518aca6c9fe476bcbc777d6a96d0e96741a344d30f5",
+          "sha256": "17544b2fab2da6e54f4e711bad454690d7f03f0cab9898d1cd67ce7cacf59217",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -20759,7 +20759,7 @@
           "path": "assets.generated/star-x/pdf/resources-human-upper-secondary-attainment-latest-2025-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 498192,
-          "sha256": "e340bd066d02b1a03cc055b2ca473357b8506ee8fe12bd65193e905e38c1fb43",
+          "sha256": "31ffc94c0fa00a81023bdd5a3ffdaddfb87058dcc07a746a5ed9c3a15286ff2b",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -20869,7 +20869,7 @@
           "path": "assets.generated/voronoi/pdf/resources-human-upper-secondary-attainment-latest-2025-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 566232,
-          "sha256": "61d63a646f64cba2f01e19f9f002edcc9bf8db8e3d9702bb82193986394b15d1",
+          "sha256": "91e553192b7fc8da6a3660e97f8cea787f14a7d4e079afc21f14ba9f3f508a8f",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -20979,7 +20979,7 @@
           "path": "assets.generated/authagraph/pdf/resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
           "bytes": 539062,
-          "sha256": "dd23f829915ce7f314281743fa993061baf3bfb4c6d4ad2fa9e6830d5e968ee2",
+          "sha256": "5294c801939fef98d6c90e0377859e6e55e1c16109519a9c3f251ebb8b348283",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -21089,7 +21089,7 @@
           "path": "assets.generated/cahill-keyes/pdf/resources-mineral-rare-earth-mine-production-2025-ck-44-22.pdf",
           "mediaType": "application/pdf",
           "bytes": 200930,
-          "sha256": "4c51d0bb4826c26f08526e3ec511daeedd4455ebde55dcb7b6d6f7eb50a13ea3",
+          "sha256": "52e2af3b014989bce240b1d179a13d220e9828b9faecf64ea8b1ca36faee08b5",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -21199,7 +21199,7 @@
           "path": "assets.generated/dymaxion/pdf/resources-mineral-rare-earth-mine-production-2025-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 528111,
-          "sha256": "d5165a7f098038f9e26be6fe689579348870d087c5542f5c6e8d37182947f7b1",
+          "sha256": "80a7847d21ff61604f5eb435b305d9b1e3799af24b6085b549ea2a17206b239a",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -21309,7 +21309,7 @@
           "path": "assets.generated/myriahedral/pdf/resources-mineral-rare-earth-mine-production-2025-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 678139,
-          "sha256": "360d0bea216c0055525ca3e7d2c031208bab1f11682291a87ae06dfbd4e43f14",
+          "sha256": "87ca063e8d8684f7743b0449559e7cb6651a28be8839b1029df26e8b025147ad",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -21419,7 +21419,7 @@
           "path": "assets.generated/star-x/pdf/resources-mineral-rare-earth-mine-production-2025-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 473799,
-          "sha256": "cd5b82881690979e7948c0c2f6a1c9243c334aeb283e06f9a548b042c69e5ee9",
+          "sha256": "086ecbe6e1dae5e7b6908aa6f36c0a2a3eda3a30a9d3716ef4afa2b456445d29",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -21529,7 +21529,7 @@
           "path": "assets.generated/voronoi/pdf/resources-mineral-rare-earth-mine-production-2025-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 526535,
-          "sha256": "58a9f8057abb82fcdacdf067b0f00c006b1f8e93cd2f5a3e1c743b27db7281c1",
+          "sha256": "e6600ef19a3e2b716d4f786078695e1b9b5a0345e2f4089abcb011223304dda7",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -21636,8 +21636,8 @@
         "pdf": {
           "path": "assets.generated/authagraph/pdf/water-authagraph-44-19.052559.pdf",
           "mediaType": "application/pdf",
-          "bytes": 7617466,
-          "sha256": "bc29ed5090d06db69cf9a16545811764e13e0a8960ac5e925fb3f6854c6561e8",
+          "bytes": 7617467,
+          "sha256": "56e62a50f20d6e33b88f10f3d550e8ac7ebbd29dd19f029ca0d2e1367884398e",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -21744,8 +21744,8 @@
         "pdf": {
           "path": "assets.generated/cahill-keyes/pdf/water-ck-44-22.pdf",
           "mediaType": "application/pdf",
-          "bytes": 5511311,
-          "sha256": "75136a2d9322ada93b7bd0541079043fee0d24b72d2d02235e1f2a4a00179224",
+          "bytes": 5511312,
+          "sha256": "cf98c4e98a7351050e08b71902887890718bb28de0b056e3a45df5659a16d453",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -21853,7 +21853,7 @@
           "path": "assets.generated/dymaxion/pdf/water-dymaxion-44-20.78461.pdf",
           "mediaType": "application/pdf",
           "bytes": 7574114,
-          "sha256": "defca10158e8d7c3656588100c6e1b411f3fd765bfc422121310bdb995d21772",
+          "sha256": "30fef1bbb7568042a61ba574232efeb07be4711c66e902f3b9bdabd8bb12edde",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -21961,7 +21961,7 @@
           "path": "assets.generated/myriahedral/pdf/water-myriahedral-afro-eur-asia-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 8881174,
-          "sha256": "3db3875845c7dc42f8f2d0e8555a389a3702a77d1892dfcec6fca5d79e243a11",
+          "sha256": "cab4ee3ea98ff2ed7727bf09490435afecb6c15eac98684212f7dec8c97a7655",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -22069,7 +22069,7 @@
           "path": "assets.generated/myriahedral/pdf/water-myriahedral-americas-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 8912451,
-          "sha256": "17253aa765c40dd3e1a0be08a838578e9a2339eaa23106a8038a46c1995d7208",
+          "sha256": "a937034481dd0b6202bf83fb44a2c8d317740192945441f3f64e03a2d2fd0d0a",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -22176,8 +22176,8 @@
         "pdf": {
           "path": "assets.generated/myriahedral/pdf/water-myriahedral-antarctic-44-24.75.pdf",
           "mediaType": "application/pdf",
-          "bytes": 8896601,
-          "sha256": "1e0831db911955575e65815ad898b83a8e27cd283125e9fb576bb60a07963cd0",
+          "bytes": 8896600,
+          "sha256": "b8a55db0efe5286386897ca7492a6fe1fb5b3996b8688ee83c2b04721bd6f702",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -22285,7 +22285,7 @@
           "path": "assets.generated/myriahedral/pdf/water-myriahedral-atlantic-44-24.75.pdf",
           "mediaType": "application/pdf",
           "bytes": 8841795,
-          "sha256": "def29323b659b7ad9aadf9f9eb54c2f0152d676c6d090c99a7fb0fc02e3c33c1",
+          "sha256": "03894028ccb36914df6b776560daee78d43f68a1ae70fdeb1774760d98fcc064",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -22392,8 +22392,8 @@
         "pdf": {
           "path": "assets.generated/myriahedral/pdf/water-myriahedral-pacific-44-24.75.pdf",
           "mediaType": "application/pdf",
-          "bytes": 8910253,
-          "sha256": "40cba6ff643c7c2ef00c7aaa43c5a84ab63d3ab0d337ef5422d0fd42b36f8ae8",
+          "bytes": 8910254,
+          "sha256": "57b0e4c26ea6ccf2ffcbf67ecfe543179cf6fd56db152887c3b0f1282de2e021",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -22501,7 +22501,7 @@
           "path": "assets.generated/myriahedral/pdf/water-myriahedral-adhoc-slice-1.pdf",
           "mediaType": "application/pdf",
           "bytes": 7998676,
-          "sha256": "1a560e9cd3f19c1276d3dae573516fcd70d5a5310136e02e7ac22d8ef0e8b2d4",
+          "sha256": "34e268f41d920bb363e2a296e3f6958c9ff446b7553f15c2c641c38d7d006b95",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -22609,7 +22609,7 @@
           "path": "assets.generated/myriahedral/pdf/water-myriahedral-adhoc-slice-2.pdf",
           "mediaType": "application/pdf",
           "bytes": 8511896,
-          "sha256": "2f5b31cb764f959320a08f1beec46acaa54f0220c27a73da2a5c40a60bfce9aa",
+          "sha256": "c960894f3cb08c391be56519c9e53ac9c86e2d28d6545a1edd2fa56653ccafcd",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -22716,8 +22716,8 @@
         "pdf": {
           "path": "assets.generated/myriahedral/pdf/water-myriahedral-44-24.75.pdf",
           "mediaType": "application/pdf",
-          "bytes": 8927363,
-          "sha256": "422ef29e443d90bffba0c63d50d8e30f92d06735424e4927518e3ed8b566ccc1",
+          "bytes": 8927364,
+          "sha256": "8267663ab90ddec96f0e3cb282aa5adad096710d943124730ec0261a188af8d2",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -22825,7 +22825,7 @@
           "path": "assets.generated/star-x/pdf/water-star-x-34-44.pdf",
           "mediaType": "application/pdf",
           "bytes": 5793189,
-          "sha256": "e2bbc2c14a4ff59f4c236ca3ee677289c175da8316edcb7f962ed07c59ab7a23",
+          "sha256": "2f08e4caba59dab3082affbcb1a4cc163e3dcd918d65b0e4fb9c2826793636a4",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
@@ -22933,7 +22933,7 @@
           "path": "assets.generated/voronoi/pdf/water-voronoi-44-22.916667.pdf",
           "mediaType": "application/pdf",
           "bytes": 7460660,
-          "sha256": "61c2e68f00162772929c7c6b589d9dcaa5bcc4ddeb7397c91f0d462069fa4aee",
+          "sha256": "ff369a5aad30f728f345dcaf85f724fb5d1cc1f192f430e32f93b8faf7e576bf",
           "authorityClass": "print-presentation"
         },
         "fullPng": {
