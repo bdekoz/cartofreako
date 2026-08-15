@@ -23,7 +23,8 @@ fetch() {
   shift
   # CelesTrak's usage policy says to stop and report any HTTP error,
   # especially 403/404, rather than retrying and extending a temporary block.
-  curl -sS --fail -A "$user_agent" "$@" -o "$output"
+  # A failed refresh falls back to the complete checked-in snapshot below.
+  curl -sS --fail -A "$user_agent" "$@" -o "$output" || return 1
 }
 
 groups=(
@@ -72,20 +73,35 @@ if [[ $complete_snapshot == true && ${ORBITING_FORCE_REFRESH:-0} != 1 ]]; then
   fi
 fi
 
+celestrak_failed=false
 for entry in "${groups[@]}"; do
   file_stem=${entry%%|*}
   group=${entry#*|}
   echo "fetching CelesTrak group $group"
-  fetch "$temporary_dir/celestrak-$file_stem.csv" --get \
-    'https://celestrak.org/NORAD/elements/gp.php' \
-    --data-urlencode "GROUP=$group" \
-    --data-urlencode 'FORMAT=csv'
+  if ! fetch "$temporary_dir/celestrak-$file_stem.csv" --get \
+      'https://celestrak.org/NORAD/elements/gp.php' \
+      --data-urlencode "GROUP=$group" \
+      --data-urlencode 'FORMAT=csv'; then
+    echo "CelesTrak fetch failed for group $group" >&2
+    celestrak_failed=true
+    break
+  fi
   header=$(sed -n '1p' "$temporary_dir/celestrak-$file_stem.csv")
   if [[ $header != OBJECT_NAME,OBJECT_ID,EPOCH,* ]]; then
     echo "unexpected CelesTrak OMM header for group $group" >&2
-    exit 1
+    celestrak_failed=true
+    break
   fi
 done
+
+if [[ $celestrak_failed == true ]]; then
+  if [[ $complete_snapshot == true ]]; then
+    echo "CelesTrak refresh failed; reusing the complete checked-in snapshot" >&2
+    exit 0
+  fi
+  echo "no complete checked-in orbital snapshot to fall back to" >&2
+  exit 1
+fi
 
 if [[ $(wc -l < "$temporary_dir/celestrak-active.csv") -lt 10001 ]]; then
   echo "CelesTrak active snapshot is unexpectedly small" >&2
@@ -99,10 +115,14 @@ if [[ -z $nasa_url ]]; then
   exit 1
 fi
 echo "fetching NASA SSCWeb reference"
-fetch "$temporary_dir/nasa-ssc-reference.json" \
-  -H 'Accept: application/json' "$nasa_url"
-if ! rg -q 'SUCCESS' "$temporary_dir/nasa-ssc-reference.json"; then
-  echo "NASA SSCWeb response did not report SUCCESS" >&2
+if ! fetch "$temporary_dir/nasa-ssc-reference.json" \
+    -H 'Accept: application/json' "$nasa_url" \
+    || ! rg -q 'SUCCESS' "$temporary_dir/nasa-ssc-reference.json"; then
+  if [[ -s $output_dir/nasa-ssc-reference.json ]]; then
+    echo "NASA SSCWeb refresh failed; reusing the checked-in reference snapshot" >&2
+    exit 0
+  fi
+  echo "NASA SSCWeb refresh failed and no checked-in reference exists" >&2
   exit 1
 fi
 
