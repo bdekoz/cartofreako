@@ -2,7 +2,7 @@
   "schemaVersion": "cartofreako-standard-artifact-manifest-v1",
   "inventorySource": "Makefile:GENERATED_SVGS",
   "lifecycle": "standard",
-  "artifactCount": 211,
+  "artifactCount": 217,
   "artifacts": [
     {
       "id": "anthropocene-particulate-2025.authagraph.whole-map",
@@ -115,17 +115,6 @@
       "sliceId": null
     },
     {
-      "id": "fiber-synthesized.authagraph.whole-map",
-      "stem": "fiber-synthesized-authagraph-44-19.052559",
-      "sourceSvg": "assets.generated/authagraph/svg/fiber-synthesized-authagraph-44-19.052559.svg",
-      "lifecycle": "standard",
-      "passId": "fiber-synthesized",
-      "projectionId": "authagraph",
-      "layoutId": "authagraph",
-      "family": "authagraph",
-      "sliceId": null
-    },
-    {
       "id": "geometry.authagraph.whole-map",
       "stem": "geometry-authagraph-44-19.052559",
       "sourceSvg": "assets.generated/authagraph/svg/geometry-authagraph-44-19.052559.svg",
@@ -148,11 +137,33 @@
       "sliceId": null
     },
     {
-      "id": "network-infrastructure-sites.authagraph.whole-map",
-      "stem": "network-infrastructure-sites-authagraph-44-19.052559",
-      "sourceSvg": "assets.generated/authagraph/svg/network-infrastructure-sites-authagraph-44-19.052559.svg",
+      "id": "network-cdn.authagraph.whole-map",
+      "stem": "network-cdn-authagraph-44-19.052559",
+      "sourceSvg": "assets.generated/authagraph/svg/network-cdn-authagraph-44-19.052559.svg",
       "lifecycle": "standard",
-      "passId": "network-infrastructure-sites",
+      "passId": "network-cdn",
+      "projectionId": "authagraph",
+      "layoutId": "authagraph",
+      "family": "authagraph",
+      "sliceId": null
+    },
+    {
+      "id": "network-fiber.authagraph.whole-map",
+      "stem": "network-fiber-authagraph-44-19.052559",
+      "sourceSvg": "assets.generated/authagraph/svg/network-fiber-authagraph-44-19.052559.svg",
+      "lifecycle": "standard",
+      "passId": "network-fiber",
+      "projectionId": "authagraph",
+      "layoutId": "authagraph",
+      "family": "authagraph",
+      "sliceId": null
+    },
+    {
+      "id": "network-groundstations.authagraph.whole-map",
+      "stem": "network-groundstations-authagraph-44-19.052559",
+      "sourceSvg": "assets.generated/authagraph/svg/network-groundstations-authagraph-44-19.052559.svg",
+      "lifecycle": "standard",
+      "passId": "network-groundstations",
       "projectionId": "authagraph",
       "layoutId": "authagraph",
       "family": "authagraph",
@@ -599,17 +610,6 @@
       "sliceId": "ck-octant-8"
     },
     {
-      "id": "fiber-synthesized.cahill-keyes.whole-map",
-      "stem": "fiber-synthesized-ck-44-22",
-      "sourceSvg": "assets.generated/cahill-keyes/svg/fiber-synthesized-ck-44-22.svg",
-      "lifecycle": "standard",
-      "passId": "fiber-synthesized",
-      "projectionId": "cahill-keyes",
-      "layoutId": "cahill-keyes",
-      "family": "cahill-keyes",
-      "sliceId": null
-    },
-    {
       "id": "geometry.cahill-keyes.whole-map",
       "stem": "geometry-ck-44-22",
       "sourceSvg": "assets.generated/cahill-keyes/svg/geometry-ck-44-22.svg",
@@ -632,11 +632,33 @@
       "sliceId": null
     },
     {
-      "id": "network-infrastructure-sites.cahill-keyes.whole-map",
-      "stem": "network-infrastructure-sites-ck-44-22",
-      "sourceSvg": "assets.generated/cahill-keyes/svg/network-infrastructure-sites-ck-44-22.svg",
+      "id": "network-cdn.cahill-keyes.whole-map",
+      "stem": "network-cdn-ck-44-22",
+      "sourceSvg": "assets.generated/cahill-keyes/svg/network-cdn-ck-44-22.svg",
       "lifecycle": "standard",
-      "passId": "network-infrastructure-sites",
+      "passId": "network-cdn",
+      "projectionId": "cahill-keyes",
+      "layoutId": "cahill-keyes",
+      "family": "cahill-keyes",
+      "sliceId": null
+    },
+    {
+      "id": "network-fiber.cahill-keyes.whole-map",
+      "stem": "network-fiber-ck-44-22",
+      "sourceSvg": "assets.generated/cahill-keyes/svg/network-fiber-ck-44-22.svg",
+      "lifecycle": "standard",
+      "passId": "network-fiber",
+      "projectionId": "cahill-keyes",
+      "layoutId": "cahill-keyes",
+      "family": "cahill-keyes",
+      "sliceId": null
+    },
+    {
+      "id": "network-groundstations.cahill-keyes.whole-map",
+      "stem": "network-groundstations-ck-44-22",
+      "sourceSvg": "assets.generated/cahill-keyes/svg/network-groundstations-ck-44-22.svg",
+      "lifecycle": "standard",
+      "passId": "network-groundstations",
       "projectionId": "cahill-keyes",
       "layoutId": "cahill-keyes",
       "family": "cahill-keyes",
@@ -951,17 +973,6 @@
       "sliceId": null
     },
     {
-      "id": "fiber-synthesized.dymaxion.whole-map",
-      "stem": "fiber-synthesized-dymaxion-44-20.78461",
-      "sourceSvg": "assets.generated/dymaxion/svg/fiber-synthesized-dymaxion-44-20.78461.svg",
-      "lifecycle": "standard",
-      "passId": "fiber-synthesized",
-      "projectionId": "dymaxion",
-      "layoutId": "dymaxion",
-      "family": "dymaxion",
-      "sliceId": null
-    },
-    {
       "id": "geometry.dymaxion.whole-map",
       "stem": "geometry-dymaxion-44-20.78461",
       "sourceSvg": "assets.generated/dymaxion/svg/geometry-dymaxion-44-20.78461.svg",
@@ -984,11 +995,33 @@
       "sliceId": null
     },
     {
-      "id": "network-infrastructure-sites.dymaxion.whole-map",
-      "stem": "network-infrastructure-sites-dymaxion-44-20.78461",
-      "sourceSvg": "assets.generated/dymaxion/svg/network-infrastructure-sites-dymaxion-44-20.78461.svg",
+      "id": "network-cdn.dymaxion.whole-map",
+      "stem": "network-cdn-dymaxion-44-20.78461",
+      "sourceSvg": "assets.generated/dymaxion/svg/network-cdn-dymaxion-44-20.78461.svg",
       "lifecycle": "standard",
-      "passId": "network-infrastructure-sites",
+      "passId": "network-cdn",
+      "projectionId": "dymaxion",
+      "layoutId": "dymaxion",
+      "family": "dymaxion",
+      "sliceId": null
+    },
+    {
+      "id": "network-fiber.dymaxion.whole-map",
+      "stem": "network-fiber-dymaxion-44-20.78461",
+      "sourceSvg": "assets.generated/dymaxion/svg/network-fiber-dymaxion-44-20.78461.svg",
+      "lifecycle": "standard",
+      "passId": "network-fiber",
+      "projectionId": "dymaxion",
+      "layoutId": "dymaxion",
+      "family": "dymaxion",
+      "sliceId": null
+    },
+    {
+      "id": "network-groundstations.dymaxion.whole-map",
+      "stem": "network-groundstations-dymaxion-44-20.78461",
+      "sourceSvg": "assets.generated/dymaxion/svg/network-groundstations-dymaxion-44-20.78461.svg",
+      "lifecycle": "standard",
+      "passId": "network-groundstations",
       "projectionId": "dymaxion",
       "layoutId": "dymaxion",
       "family": "dymaxion",
@@ -1303,17 +1336,6 @@
       "sliceId": null
     },
     {
-      "id": "fiber-synthesized.myriahedral.whole-map",
-      "stem": "fiber-synthesized-myriahedral-44-24.75",
-      "sourceSvg": "assets.generated/myriahedral/svg/fiber-synthesized-myriahedral-44-24.75.svg",
-      "lifecycle": "standard",
-      "passId": "fiber-synthesized",
-      "projectionId": "myriahedral",
-      "layoutId": "myriahedral",
-      "family": "myriahedral",
-      "sliceId": null
-    },
-    {
       "id": "geometry.myriahedral.whole-map",
       "stem": "geometry-myriahedral-44-24.75",
       "sourceSvg": "assets.generated/myriahedral/svg/geometry-myriahedral-44-24.75.svg",
@@ -1336,11 +1358,33 @@
       "sliceId": null
     },
     {
-      "id": "network-infrastructure-sites.myriahedral.whole-map",
-      "stem": "network-infrastructure-sites-myriahedral-44-24.75",
-      "sourceSvg": "assets.generated/myriahedral/svg/network-infrastructure-sites-myriahedral-44-24.75.svg",
+      "id": "network-cdn.myriahedral.whole-map",
+      "stem": "network-cdn-myriahedral-44-24.75",
+      "sourceSvg": "assets.generated/myriahedral/svg/network-cdn-myriahedral-44-24.75.svg",
       "lifecycle": "standard",
-      "passId": "network-infrastructure-sites",
+      "passId": "network-cdn",
+      "projectionId": "myriahedral",
+      "layoutId": "myriahedral",
+      "family": "myriahedral",
+      "sliceId": null
+    },
+    {
+      "id": "network-fiber.myriahedral.whole-map",
+      "stem": "network-fiber-myriahedral-44-24.75",
+      "sourceSvg": "assets.generated/myriahedral/svg/network-fiber-myriahedral-44-24.75.svg",
+      "lifecycle": "standard",
+      "passId": "network-fiber",
+      "projectionId": "myriahedral",
+      "layoutId": "myriahedral",
+      "family": "myriahedral",
+      "sliceId": null
+    },
+    {
+      "id": "network-groundstations.myriahedral.whole-map",
+      "stem": "network-groundstations-myriahedral-44-24.75",
+      "sourceSvg": "assets.generated/myriahedral/svg/network-groundstations-myriahedral-44-24.75.svg",
+      "lifecycle": "standard",
+      "passId": "network-groundstations",
       "projectionId": "myriahedral",
       "layoutId": "myriahedral",
       "family": "myriahedral",
@@ -1732,17 +1776,6 @@
       "sliceId": null
     },
     {
-      "id": "fiber-synthesized.star-x.whole-map",
-      "stem": "fiber-synthesized-star-x-34-44",
-      "sourceSvg": "assets.generated/star-x/svg/fiber-synthesized-star-x-34-44.svg",
-      "lifecycle": "standard",
-      "passId": "fiber-synthesized",
-      "projectionId": "star-x",
-      "layoutId": "star-x",
-      "family": "star-x",
-      "sliceId": null
-    },
-    {
       "id": "geometry.star-x.whole-map",
       "stem": "geometry-star-x-34-44",
       "sourceSvg": "assets.generated/star-x/svg/geometry-star-x-34-44.svg",
@@ -1765,11 +1798,33 @@
       "sliceId": null
     },
     {
-      "id": "network-infrastructure-sites.star-x.whole-map",
-      "stem": "network-infrastructure-sites-star-x-34-44",
-      "sourceSvg": "assets.generated/star-x/svg/network-infrastructure-sites-star-x-34-44.svg",
+      "id": "network-cdn.star-x.whole-map",
+      "stem": "network-cdn-star-x-34-44",
+      "sourceSvg": "assets.generated/star-x/svg/network-cdn-star-x-34-44.svg",
       "lifecycle": "standard",
-      "passId": "network-infrastructure-sites",
+      "passId": "network-cdn",
+      "projectionId": "star-x",
+      "layoutId": "star-x",
+      "family": "star-x",
+      "sliceId": null
+    },
+    {
+      "id": "network-fiber.star-x.whole-map",
+      "stem": "network-fiber-star-x-34-44",
+      "sourceSvg": "assets.generated/star-x/svg/network-fiber-star-x-34-44.svg",
+      "lifecycle": "standard",
+      "passId": "network-fiber",
+      "projectionId": "star-x",
+      "layoutId": "star-x",
+      "family": "star-x",
+      "sliceId": null
+    },
+    {
+      "id": "network-groundstations.star-x.whole-map",
+      "stem": "network-groundstations-star-x-34-44",
+      "sourceSvg": "assets.generated/star-x/svg/network-groundstations-star-x-34-44.svg",
+      "lifecycle": "standard",
+      "passId": "network-groundstations",
       "projectionId": "star-x",
       "layoutId": "star-x",
       "family": "star-x",
@@ -2084,17 +2139,6 @@
       "sliceId": null
     },
     {
-      "id": "fiber-synthesized.voronoi.whole-map",
-      "stem": "fiber-synthesized-voronoi-44-22.916667",
-      "sourceSvg": "assets.generated/voronoi/svg/fiber-synthesized-voronoi-44-22.916667.svg",
-      "lifecycle": "standard",
-      "passId": "fiber-synthesized",
-      "projectionId": "voronoi",
-      "layoutId": "voronoi",
-      "family": "voronoi",
-      "sliceId": null
-    },
-    {
       "id": "geometry.voronoi.whole-map",
       "stem": "geometry-voronoi-44-22.916667",
       "sourceSvg": "assets.generated/voronoi/svg/geometry-voronoi-44-22.916667.svg",
@@ -2117,11 +2161,33 @@
       "sliceId": null
     },
     {
-      "id": "network-infrastructure-sites.voronoi.whole-map",
-      "stem": "network-infrastructure-sites-voronoi-44-22.916667",
-      "sourceSvg": "assets.generated/voronoi/svg/network-infrastructure-sites-voronoi-44-22.916667.svg",
+      "id": "network-cdn.voronoi.whole-map",
+      "stem": "network-cdn-voronoi-44-22.916667",
+      "sourceSvg": "assets.generated/voronoi/svg/network-cdn-voronoi-44-22.916667.svg",
       "lifecycle": "standard",
-      "passId": "network-infrastructure-sites",
+      "passId": "network-cdn",
+      "projectionId": "voronoi",
+      "layoutId": "voronoi",
+      "family": "voronoi",
+      "sliceId": null
+    },
+    {
+      "id": "network-fiber.voronoi.whole-map",
+      "stem": "network-fiber-voronoi-44-22.916667",
+      "sourceSvg": "assets.generated/voronoi/svg/network-fiber-voronoi-44-22.916667.svg",
+      "lifecycle": "standard",
+      "passId": "network-fiber",
+      "projectionId": "voronoi",
+      "layoutId": "voronoi",
+      "family": "voronoi",
+      "sliceId": null
+    },
+    {
+      "id": "network-groundstations.voronoi.whole-map",
+      "stem": "network-groundstations-voronoi-44-22.916667",
+      "sourceSvg": "assets.generated/voronoi/svg/network-groundstations-voronoi-44-22.916667.svg",
+      "lifecycle": "standard",
+      "passId": "network-groundstations",
       "projectionId": "voronoi",
       "layoutId": "voronoi",
       "family": "voronoi",
