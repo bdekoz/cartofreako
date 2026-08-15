@@ -2598,7 +2598,8 @@ generate-anthropocene-purpleair-experiments: \
 		scripts/generate-anthropocene-purpleair-experiments.mjs \
 		fixtures/anthropocene-purpleair/v1/manifest.json \
 		contracts/anthropocene-purpleair-experiment-v1.schema.json \
-		$(WEB_DIR)/cartofreako-web.mjs
+		$(WEB_DIR)/cartofreako-web.mjs \
+		$(PROJECTIONS_WEB_MODULE) $(PROJECTIONS_WEB_WASM)
 	"$(NODE)" scripts/generate-anthropocene-purpleair-experiments.mjs
 
 check-anthropocene-purpleair-experiments: \
@@ -2615,7 +2616,8 @@ generate-anthropocene-water-debris-experiments: \
 		scripts/render-anthropocene-water-debris-contact-sheet.sh \
 		fixtures/anthropocene-water-debris/v1/manifest.json \
 		contracts/anthropocene-water-debris-experiment-v1.schema.json \
-		$(WEB_DIR)/cartofreako-web.mjs
+		$(WEB_DIR)/cartofreako-web.mjs \
+		$(PROJECTIONS_WEB_MODULE) $(PROJECTIONS_WEB_WASM)
 	"$(NODE)" scripts/generate-anthropocene-water-debris-experiments.mjs
 	"scripts/render-anthropocene-water-debris-contact-sheet.sh"
 
