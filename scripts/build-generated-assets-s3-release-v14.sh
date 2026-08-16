@@ -115,7 +115,7 @@ cleanup()
 trap cleanup EXIT HUP INT TERM
 
 printf 'Building proposed-v14 consumer indexes and runtime...\n'
-"$repository_root"/node "$repository_root/scripts/build-consumer-release-layout.mjs" \
+node "$repository_root/scripts/build-consumer-release-layout.mjs" \
   --replace --output "$work_root/consumer-layout"
 
 printf 'Copying indexes and runtime into the v14 release tree...\n'
