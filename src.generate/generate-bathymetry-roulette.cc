@@ -179,7 +179,6 @@ struct roulette_field
 {
   std::array<std::string, catalogue::field_variations.size()> paths;
   std::array<std::size_t, catalogue::field_variations.size()> counts {};
-  std::array<std::size_t, catalogue::field_voronoi_site_count> site_counts {};
   std::size_t total = 0;
 };
 
@@ -202,11 +201,13 @@ make_roulette_field(const depth_style& style,
           column * catalogue::field_cell_size + stagger,
           row * catalogue::field_cell_size,
         };
-        const std::size_t site_index
-          = nearest_field_voronoi_site(unshifted_origin, context);
-        const std::size_t variation_index
-          = catalogue::field_voronoi_variation_index(
-              depth_index, site_index);
+        const std::size_t column_count = static_cast<std::size_t>(
+          grid.last_column - grid.first_column + 1);
+        const std::size_t cell_index
+          = static_cast<std::size_t>(row - grid.first_row) * column_count
+            + static_cast<std::size_t>(column - grid.first_column);
+        const std::size_t variation_index = (cell_index * 5
+          + depth_index * 7) % catalogue::field_variations.size();
         const catalogue::field_variation& variation
           = catalogue::field_variations[variation_index];
         const svg::point_2t origin {
@@ -218,7 +219,6 @@ make_roulette_field(const depth_style& style,
         result.paths[variation_index]
           += catalogue::make_field_curve_path(style, origin, variation);
         ++result.counts[variation_index];
-        ++result.site_counts[site_index];
         ++result.total;
       }
   roulette_require(result.total == grid.cell_count(),
@@ -226,9 +226,6 @@ make_roulette_field(const depth_style& style,
   for (const std::size_t count : result.counts)
     roulette_require(count != 0,
                      "roulette field variation received no mosaic cells");
-  for (const std::size_t count : result.site_counts)
-    roulette_require(count != 0,
-                     "roulette field Voronoi site received no mosaic cells");
   return result;
 }
 

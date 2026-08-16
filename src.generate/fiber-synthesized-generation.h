@@ -97,33 +97,33 @@ add_fiber_routes(generation::projection_document& document,
       std::string attributes = route_attributes(route);
       if (is_historical)
         {
-          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.030};
-          attributes += " stroke-dasharray=\"0.045 0.050\"";
+          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.015};
+          attributes += " stroke-dasharray=\"0.0225 0.025\"";
           historical.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
       else if (route.planned)
         {
-          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.033};
-          attributes += " stroke-dasharray=\"0.085 0.055\"";
+          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.0165};
+          attributes += " stroke-dasharray=\"0.0425 0.0275\"";
           planned.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
       else if (is_activated)
         {
-          style = {svg::color::none, 0, {18, 152, 12}, 0.80, 0.033};
+          style = {svg::color::none, 0, {18, 152, 12}, 0.80, 0.0165};
           activated.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
       else if (is_current_only)
         {
-          style = {svg::color::none, 0, {18, 152, 12}, 0.80, 0.030};
+          style = {svg::color::none, 0, {18, 152, 12}, 0.80, 0.015};
           current_only.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
       else
         {
-          style = {svg::color::none, 0, {18, 152, 12}, 0.80, 0.028};
+          style = {svg::color::none, 0, {18, 152, 12}, 0.80, 0.014};
           shared.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }

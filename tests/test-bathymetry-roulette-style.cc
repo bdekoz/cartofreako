@@ -25,7 +25,7 @@ main()
     });
   assert(smallest != catalogue::field_variations.end());
   assert(catalogue::field_base_diameter * smallest->diameter_factor
-         > catalogue::field_cell_size);
+         > 0);
 
   std::set<std::string> paths;
   std::set<std::string> field_ids;

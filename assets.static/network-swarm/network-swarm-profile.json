@@ -9,7 +9,7 @@
   },
   "display": {
     "maximum_labels": 40,
-    "minimum_nonzero_opacity": 0.18,
+  "minimum_nonzero_opacity": 0.10,
     "show_tethers": true
   },
   "scale_reference_p99": {

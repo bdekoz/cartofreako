@@ -10,12 +10,14 @@
 #include <cstddef>
 #include <filesystem>
 #include <fstream>
+#include <functional>
 #include <iomanip>
 #include <iterator>
 #include <map>
 #include <numbers>
 #include <optional>
 #include <set>
+#include <span>
 #include <sstream>
 #include <string>
 #include <string_view>
@@ -133,7 +135,7 @@ infrastructure_typography(const double size = 0.13,
   svg::typography result = generation::with_configured_label_font(
     svg::k::hyperl_typo);
   result._M_size = size;
-  result._M_style = {color, 1, {250, 251, 250}, 0.94, 0.012};
+  result._M_style = {color, 1, svg::color::none, 0, 0};
   result._M_anchor = svg::typography::anchor::start;
   result._M_align = svg::typography::align::left;
   result._M_baseline = svg::typography::baseline::central;
@@ -494,6 +496,14 @@ add_cluster_tethers(generation::projection_document& document,
   document.add_element(layer);
 }
 
+inline svg::color_qi
+provider_color(const std::string_view provider)
+{
+  constexpr auto spectrum = svg::spectrum<svg::palette_kind::izzi_hue>();
+  const std::size_t usable = spectrum.size() - 1;
+  return spectrum[std::hash<std::string_view> {}(provider) % usable];
+}
+
 inline void
 add_cloud_marker(svg::group_element& layer,
                  const projected_infrastructure_point& point,
@@ -501,7 +511,7 @@ add_cloud_marker(svg::group_element& layer,
                  const infrastructure_profile& profile)
 {
   // alpha60 CDN style: black clustered marks, translucent fill, solid
-  // black stroke, uniform square mark for every provider entity type.
+  // black stroke, uniform hexagonal mark for every provider entity type.
   std::string attributes = common_point_attributes(point)
     + " data-infrastructure-cloud-site=\"true\" data-provider=\""
     + xml_escape(site.provider) + "\" data-service=\""
@@ -510,24 +520,25 @@ add_cloud_marker(svg::group_element& layer,
     + xml_escape(site.name) + "\" data-source-scope=\""
     + xml_escape(site.source_scope) + "\" data-location-precision=\""
     + xml_escape(site.location_precision) + "\"";
+  const svg::color_qi color = provider_color(site.provider);
   if (site.entity_type == "edge_pop")
     add_polygon(layer, point.display_point,
-      {{0, 0, 0}, 0.30, {0, 0, 0}, 1.0, 0.010},
-      profile.marker_radius, 4, attributes, 45);
+      {color, 0.30, color, 1.0, 0.010},
+      profile.marker_radius, 6, attributes, 0);
   else if (site.entity_type == "data_center")
     add_polygon(layer, point.display_point,
-      {{0, 0, 0}, 0.30, {0, 0, 0}, 1.0, 0.010},
-      profile.marker_radius * 1.05, 4, attributes, 45);
+      {color, 0.30, color, 1.0, 0.010},
+      profile.marker_radius * 1.05, 6, attributes, 0);
   else if (site.entity_type == "cloud_region"
            || site.entity_type == "availability_zone"
            || site.entity_type == "local_zone")
     add_polygon(layer, point.display_point,
-      {{0, 0, 0}, 0.30, {0, 0, 0}, 1.0, 0.010},
-      profile.marker_radius, 4, attributes, 45);
+      {color, 0.30, color, 1.0, 0.010},
+      profile.marker_radius, 6, attributes, 0);
   else
     add_polygon(layer, point.display_point,
-      {{0, 0, 0}, 0.30, {0, 0, 0}, 1.0, 0.010},
-      profile.marker_radius * 0.9, 4, attributes, 45);
+      {color, 0.30, color, 1.0, 0.010},
+      profile.marker_radius * 0.9, 6, attributes, 0);
 }
 
 inline void
@@ -546,45 +557,53 @@ add_infrastructure_points(generation::projection_document& document,
   buildings.start_element("internet-exchange-buildings");
   buildings.add_title("Geolocated Internet-exchange facilities");
   for (const projected_infrastructure_point& point : layout.points)
-    switch (point.source.kind)
-      {
-      case infrastructure_point_kind::cloud_site:
-        add_cloud_marker(cloud, point, cloud_source(point, dataset), profile);
-        break;
-      case infrastructure_point_kind::cable_landing:
+    {
+      if (point.source.kind != infrastructure_point_kind::cloud_site
+          && profile.product == infrastructure_product::sites)
+        continue;
+      switch (point.source.kind)
         {
-          const landing_point& landing = landing_source(point, dataset);
-          add_circle(landings, point.display_point,
-            {{0, 96, 120}, 0.90, {0, 62, 79}, 0.98, 0.009},
-            profile.marker_radius * 0.78,
-            common_point_attributes(point)
-              + " data-infrastructure-landing-point=\"true\" data-name=\""
-              + xml_escape(landing.name) + "\" data-cable-count=\""
-              + std::to_string(landing.cable_count) + "\" data-tbd=\""
-              + (landing.tbd ? "true" : "false") + "\"");
+        case infrastructure_point_kind::cloud_site:
+          add_cloud_marker(cloud, point, cloud_source(point, dataset), profile);
           break;
+        case infrastructure_point_kind::cable_landing:
+          {
+            const landing_point& landing = landing_source(point, dataset);
+            add_circle(landings, point.display_point,
+              {{0, 96, 120}, 0.90, {0, 62, 79}, 0.98, 0.009},
+              profile.marker_radius * 0.78,
+              common_point_attributes(point)
+                + " data-infrastructure-landing-point=\"true\" data-name=\""
+                + xml_escape(landing.name) + "\" data-cable-count=\""
+                + std::to_string(landing.cable_count) + "\" data-tbd=\""
+                + (landing.tbd ? "true" : "false") + "\"");
+            break;
+          }
+        case infrastructure_point_kind::exchange_building:
+          {
+            const exchange_building& building = building_source(point, dataset);
+            add_polygon(buildings, point.display_point,
+              {{139, 28, 99}, 0.88, {91, 17, 64}, 0.98, 0.009},
+              profile.marker_radius * 0.92, 4,
+              common_point_attributes(point)
+                + " data-infrastructure-exchange-building=\"true\" data-name=\""
+                + xml_escape(building.name) + "\" data-country=\""
+                + xml_escape(building.country) + "\" data-metro-area=\""
+                + xml_escape(building.metro_area) + "\" data-exchange-count=\""
+                + std::to_string(building.exchanges.size()) + "\"");
+            break;
+          }
         }
-      case infrastructure_point_kind::exchange_building:
-        {
-          const exchange_building& building = building_source(point, dataset);
-          add_polygon(buildings, point.display_point,
-            {{139, 28, 99}, 0.88, {91, 17, 64}, 0.98, 0.009},
-            profile.marker_radius * 0.92, 4,
-            common_point_attributes(point)
-              + " data-infrastructure-exchange-building=\"true\" data-name=\""
-              + xml_escape(building.name) + "\" data-country=\""
-              + xml_escape(building.country) + "\" data-metro-area=\""
-              + xml_escape(building.metro_area) + "\" data-exchange-count=\""
-              + std::to_string(building.exchanges.size()) + "\"");
-          break;
-        }
-      }
+    }
   cloud.finish_element();
   landings.finish_element();
   buildings.finish_element();
   document.add_element(cloud);
-  document.add_element(landings);
-  document.add_element(buildings);
+  if (profile.product == infrastructure_product::topology)
+    {
+      document.add_element(landings);
+      document.add_element(buildings);
+    }
 }
 
 inline std::string
@@ -877,11 +896,14 @@ generate(const generation::projection_spec& spec,
   add_background(document, context);
   natural_earth::initialize_gdal();
   add_subdued_land(document, context);
-  add_submarine_cables(document, context, dataset, profile);
-  add_exchange_membership(document, context, dataset, profile);
-  add_cluster_tethers(document, layout, profile);
+  if (profile.product == infrastructure_product::topology)
+    {
+      add_submarine_cables(document, context, dataset, profile);
+      add_exchange_membership(document, context, dataset, profile);
+      add_cluster_tethers(document, layout, profile);
+      add_cable_labels(document, context, dataset, profile);
+    }
   add_infrastructure_points(document, layout, dataset, profile);
-  add_cable_labels(document, context, dataset, profile);
   add_point_labels(document, context, layout, dataset, profile);
   add_legend(document, context, dataset, profile);
 }
@@ -926,7 +948,12 @@ verify(const std::string& generated,
   infrastructure_require(generated.find(generation::view_box_fragment(context))
                            != std::string::npos,
                          "generated infrastructure SVG has the wrong viewBox");
-  constexpr std::array layers {
+  constexpr std::array<std::string_view, 5> sites_layers {
+    "network-infrastructure-background", "terrestrial-land",
+    "cloud-cdn-sites", "infrastructure-labels",
+    "network-infrastructure-legend-and-provenance",
+  };
+  constexpr std::array<std::string_view, 14> topology_layers {
     "network-infrastructure-background", "terrestrial-land",
     "submarine-cables", "submarine-cables-not-planned",
     "submarine-cables-planned", "internet-exchange-membership",
@@ -935,6 +962,10 @@ verify(const std::string& generated,
     "submarine-cable-labels", "infrastructure-labels",
     "network-infrastructure-legend-and-provenance",
   };
+  const std::span<const std::string_view> layers
+    = profile.product == infrastructure_product::sites
+      ? std::span<const std::string_view>(sites_layers)
+      : std::span<const std::string_view>(topology_layers);
   for (const std::string_view layer : layers)
     infrastructure_require(generated.find("<g id=\"" + std::string(layer)
                                             + "\">") != std::string::npos,

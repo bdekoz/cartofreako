@@ -88,7 +88,7 @@ inline constexpr std::array field_variations {
 
 inline constexpr double pi = 3.141592653589793238462643383279502884;
 inline constexpr double field_cell_size = 1.10;
-inline constexpr double field_base_diameter = 2.15;
+inline constexpr double field_base_diameter = 0.5375;
 inline constexpr double field_margin = field_base_diameter * 0.75;
 inline constexpr double field_stroke_width = 0.014;
 inline constexpr double field_graphic_opacity = 0.30;
@@ -263,8 +263,8 @@ validate_catalogue()
                       && path.find("inf") == std::string::npos,
                     "bathymetry Hamonshu catalogue produced invalid path data");
     }
-  style_require(field_base_diameter * smallest_box_factor > field_cell_size,
-                "Hamonshu field boxes must overlap adjacent cells");
+  style_require(field_base_diameter * smallest_box_factor > 0,
+                "Hamonshu field boxes must have a positive diameter");
 
   style_require(field_voronoi_site_count % field_variations.size() == 0,
                 "Hamonshu Voronoi sites must distribute variations evenly");

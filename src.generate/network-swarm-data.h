@@ -164,7 +164,7 @@ struct network_swarm_profile
   double marker_radius = 0.026;
   double minimum_tether = 0.035;
   std::size_t maximum_labels = 40;
-  double minimum_nonzero_opacity = 0.18;
+  double minimum_nonzero_opacity = 0.10;
   bool show_tethers = true;
   downloader_counts scale_reference;
   std::string archive;

@@ -179,7 +179,6 @@ struct hamonshu_field
 {
   std::array<std::string, catalogue::field_variations.size()> paths;
   std::array<std::size_t, catalogue::field_variations.size()> counts {};
-  std::array<std::size_t, catalogue::field_voronoi_site_count> site_counts {};
   std::size_t total = 0;
 };
 
@@ -202,11 +201,13 @@ make_hamonshu_field(const depth_style& depth,
           column * catalogue::field_cell_size + stagger,
           row * catalogue::field_cell_size,
         };
-        const std::size_t site_index
-          = nearest_field_voronoi_site(unshifted_origin, context);
-        const std::size_t variation_index
-          = catalogue::field_voronoi_variation_index(
-              depth_index, site_index);
+        const std::size_t column_count = static_cast<std::size_t>(
+          grid.last_column - grid.first_column + 1);
+        const std::size_t cell_index
+          = static_cast<std::size_t>(row - grid.first_row) * column_count
+            + static_cast<std::size_t>(column - grid.first_column);
+        const std::size_t variation_index = (cell_index * 5
+          + depth_index * 7) % catalogue::field_variations.size();
         const catalogue::field_variation& variation
           = catalogue::field_variations[variation_index];
         const svg::point_2t origin {
@@ -218,7 +219,6 @@ make_hamonshu_field(const depth_style& depth,
         result.paths[variation_index]
           += catalogue::make_field_motif_path(depth, origin, variation);
         ++result.counts[variation_index];
-        ++result.site_counts[site_index];
         ++result.total;
       }
   hamonshu_require(result.total == grid.cell_count(),
@@ -226,9 +226,6 @@ make_hamonshu_field(const depth_style& depth,
   for (const std::size_t count : result.counts)
     hamonshu_require(count != 0,
                      "Hamonshu variation received no field cells");
-  for (const std::size_t count : result.site_counts)
-    hamonshu_require(count != 0,
-                     "Hamonshu Voronoi site received no field cells");
   return result;
 }
 

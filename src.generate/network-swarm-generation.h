@@ -242,14 +242,9 @@ total_layer(const projected_layout& layout, const network_swarm_profile& config)
   layer.start_element("downloaders-total");
   for (const projected_feature& feature : layout.features)
     {
-      const double opacity = metric_opacity(
-        feature, config, downloader_metric::size);
-      const double color_fraction = (opacity - config.minimum_nonzero_opacity)
-        / (1 - config.minimum_nonzero_opacity);
-      static_cast<void>(color_fraction);
       add_polygon(layer, feature.display_point,
-                  {svg::color::blue, 0.55 + 0.45 * opacity,
-                   svg::color::blue, 0, 0},
+                  {svg::color::purple, 0.20,
+                   svg::color::none, 0, 0},
                   config.marker_radius * 0.94, 6,
                   feature_attributes(feature));
     }

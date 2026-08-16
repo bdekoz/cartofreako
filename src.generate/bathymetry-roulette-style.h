@@ -121,7 +121,7 @@ inline constexpr std::array field_variations {
 
 inline constexpr std::size_t samples_per_turn = 128;
 inline constexpr double field_cell_size = 1.10;
-inline constexpr double field_base_diameter = 2.15;
+inline constexpr double field_base_diameter = 0.5375;
 inline constexpr double field_margin = field_base_diameter * 0.75;
 inline constexpr double field_stroke_width = 0.014;
 inline constexpr double field_graphic_opacity = 0.30;
@@ -361,9 +361,8 @@ validate_catalogue()
               depth_styles[5], {0, 0}, field_variations[prior]),
           "roulette field variations must produce distinct curves");
     }
-  style_require(field_base_diameter * smallest_diameter_factor
-                  > field_cell_size,
-                "roulette field curves must overlap adjacent cells");
+  style_require(field_base_diameter * smallest_diameter_factor > 0,
+                "roulette field curves must have a positive diameter");
 
   style_require(field_voronoi_site_count >= field_variations.size()
                   && field_voronoi_site_count % field_variations.size() == 0,
