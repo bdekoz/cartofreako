@@ -19,20 +19,17 @@ shell pastes break — prefer one-line commands.
 ## Repository state
 
 - Remote: `git@github.com:bdekoz/cartofreako.git` (branch `main`).
-- `origin/main` is at `4199591` (snapshot-dyad marker check-in); the
-  eureka-built Stage 15A freeze baseline (`e006b3e`) is in history. Local
-  `HEAD` equals `origin/main`.
-- This file (`restart-here.md`) is currently untracked — commit it so the next
-  session can find it.
-- Working tree: two untracked files created by a parallel agent session:
-  `docs/profile-markers/FREEZE-SUPERSEDED.md` and
-  `docs/profile-markers/snapshot-dyad-marker-ledger.sha256`. Do not delete
-  without checking with the user; they belong to the other thread's ledger
-  work. The same session also left an untracked
-  `assets.generated.20280815.tar.xz` at the repo root.
-- The snapshot-dyad ledger is maintained under
-  `docs/profile-markers/snapshot-dyad-marker-ledger.json`; markers are recorded
-  local-only until the user says `commit` / `push`.
+- `origin/main` is at `52b8e82` (development-docs restructure); local `HEAD`
+  equals `origin/main` and the working tree is clean.
+- This file is tracked at `docs/development/explore_20260815_restart.md`.
+- Development records moved from `docs/pages/development/` to
+  `docs/development/`; navigation and repository-local links were updated, and
+  `make check-docs` passed on 129 files / 1304 local links.
+- The project-local snapshot-dyad ledger is frozen at
+  `docs/profile-markers/snapshot-dyad-marker-ledger.json`; its canonical
+  continuation is the ignored house-style asset
+  `devastation-pacific-house-style/assets.rizal.bkoz/per-project/cartofreako/ledger.json`.
+  Markers remain local-only until an explicit ledger check-in instruction.
 
 ## What is done (verified green on eureka)
 
@@ -71,6 +68,10 @@ shell pastes break — prefer one-line commands.
    "eureka cartofreako", with `~/.ssh/config` routing `github.com` through it
    (`IdentitiesOnly yes`). Verified (`Hi bdekoz! ...`); eureka's branch is
    synced with `origin/main` (merge `cb482cb`). No ssh-agent needed.
+9. **Development docs restructured** (`52b8e82`): moved
+   `docs/pages/development/` to `docs/development/`, updated navigation and all
+   repository-local links, rewrote `documentation-layout.md`, and passed the
+   documentation link gate.
 
 ## Open items / decision queue
 
@@ -85,8 +86,8 @@ shell pastes break — prefer one-line commands.
 3. **v20260815 source release** after AAO decision: tag `v20260815`, draft
    `docs/pages/releases/v20260815.md` release notes (user previously declined,
    may revisit), run `make release-github`.
-4. **Docs fixes**: apply once v14 is uploaded (user's motivation for the
-   upload).
+4. **Docs fixes**: the development-docs restructure is complete; remaining
+   release-facing documentation fixes still wait on the v14 upload decision.
 
 ## Resume commands
 
