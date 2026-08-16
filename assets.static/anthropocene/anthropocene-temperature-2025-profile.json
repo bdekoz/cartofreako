@@ -27,7 +27,7 @@
     "high_scale_days": 32,
     "low_scale_days": 16,
     "minimum_nonzero_opacity": 0.34,
-    "data_graphic_opacity": 0.60,
+    "data_graphic_opacity": 0.80,
     "show_legend": true
   },
   "source": {
