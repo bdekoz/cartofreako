@@ -7,7 +7,7 @@ title: v13 to proposed-v14 consumer layout
 
 [Documentation index](../README.md) ·
 [Release and preservation records](README.md) ·
-[Stage 15 ledger](../development/stage-15.md) ·
+[Stage 15 ledger](../../development/stage-15.md) ·
 [v13 publication](s3-v13.md)
 
 This document records the local Stage 15I layout experiment. It does not

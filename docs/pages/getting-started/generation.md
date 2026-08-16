@@ -9,14 +9,14 @@
 [P-Tree download quick start](../data/ptree-download.md) ·
 [Orbital Technosphere notes](../passes/orbital-technosphere.md) ·
 [Resources Stage 12 implementation](../passes/resources/implementation.md) ·
-[Stage 12 overview](../development/stage-12.md) ·
+[Stage 12 overview](../../development/stage-12.md) ·
 [Projection snapshots](../../../index.md#generated-artifact-previews) ·
 [Resources enrichment plan](../passes/resources/enrichment-plan.md) ·
 [Anthropocene notes](../passes/anthropocene/implementation.md) ·
 [Anthropocene Stage 8b plan](../passes/anthropocene/enrichment-plan.md) ·
 [Network-swarm notes](../passes/network-swarm.md) ·
 [Network-infrastructure notes](../passes/network-infrastructure.md) ·
-[Fiber Synthesized notes](../passes/fiber-synthesized.md) ·
+[Fiber Synthesized notes](../passes/network-fiber.md) ·
 [Bathymetry Roulette notes](../passes/bathymetry/roulette.md) ·
 [Bathymetry Hamonshū notes](../passes/bathymetry/hamonshu.md)
 
@@ -665,9 +665,9 @@ credentials or promotes a release product. The
 [Anthropocene implementation notes](../passes/anthropocene/implementation.md)
 document the status boundary, formulas, source audit, refresh workflow,
 experiments, and limits. The complete FIRMS handling notes and closed-scope
-record are in the [Stage 15 ledger](../development/stage-15.md); future
+record are in the [Stage 15 ledger](../../development/stage-15.md); future
 observed-data and agentic iteration work is tracked in
-[Stage 16](../development/stage-16.md).
+[Stage 16](../../development/stage-16.md).
 
 ## Stage 12 resources generation
 
@@ -821,7 +821,7 @@ part of `make all`. `make refresh-fiber-synthesized` is the separate,
 reviewable operation that reads the two dated external snapshot directories
 and rewrites the static union. Snapshot-only classifications never claim
 construction or decommission. See the
-[Fiber Synthesized implementation notes](../passes/fiber-synthesized.md)
+[Fiber Synthesized implementation notes](../passes/network-fiber.md)
 for exact source hashes, counts, matching policy, layer grammar, license, and
 verification.
 

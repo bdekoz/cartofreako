@@ -1,6 +1,6 @@
 # Majuro atoll-evidence canary inputs
 
-[Stage 15 ledger](../../docs/pages/development/stage-15.md) ·
+[Stage 15 ledger](../../docs/development/stage-15.md) ·
 [canary report](../../reports/stage-15-atoll-evidence-canary.md) ·
 [source manifest](../../fixtures/atoll-evidence/v1/manifest.json)
 

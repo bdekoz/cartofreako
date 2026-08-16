@@ -38,9 +38,9 @@ decision after the fact.
 | 6a | `generate-resources` / World Game | **Historical method only; implementation retired** | A bounded 1960 production-leader transcription was feasible, but it was not a current resources atlas; its data, renderer, targets, and generated products were removed at the Stage 6b cutover |
 | 6b | `resources-energy`, `resources-food`, `resources-flora`, `resources-mineral`, `resources-human` | **Implemented historical first increment; superseded by Stage 12** | The five-family v2 baseline established metric separation, non-sparse coverage gates, deterministic archives, source refresh, and six-projection rules |
 | 7 | Configurable `generate-*` selection | **Implemented infrastructure** | JSON profile, validation, safe target expansion, default Make behavior, alternatives, and scope boundaries are recorded in this document |
-| 8 / 8b / 15 | `generate-anthropocene`; `generate-anthropocene-{2025,2026}` | **Implemented dual-year standard family plus bounded experiments** | Complete-2025 and partial-2026 particulate editions replace the unqualified atlas and join the two CPC temperature editions as 24 default-generated, accepted-experimental products. A required-global-FIRMS refresh gate remains; synthetic PurpleAir-interface and five-station water-debris products are exploration-only, while CAMS, observed PurpleAir, and broader ocean enrichment remain planned in the [Stage 8b enrichment plan](../passes/anthropocene/enrichment-plan.md) and [Stage 15 ledger](../development/stage-15.md). |
+| 8 / 8b / 15 | `generate-anthropocene`; `generate-anthropocene-{2025,2026}` | **Implemented dual-year standard family plus bounded experiments** | Complete-2025 and partial-2026 particulate editions replace the unqualified atlas and join the two CPC temperature editions as 24 default-generated, accepted-experimental products. A required-global-FIRMS refresh gate remains; synthetic PurpleAir-interface and five-station water-debris products are exploration-only, while CAMS, observed PurpleAir, and broader ocean enrichment remain planned in the [Stage 8b enrichment plan](../passes/anthropocene/enrichment-plan.md) and [Stage 15 ledger](../../development/stage-15.md). |
 | 9 | `generate-network-infrastructure` | **Implemented** | Confirmed external-source contract, normal cloud/CDN site atlas, explicit CC BY-NC-SA 3.0 topology opt-in, physical/logical relation boundary, projection-safe paths, Izzi detiling, products, and limits are detailed in the [network-infrastructure implementation notes](../passes/network-infrastructure.md) |
-| 12 | Expanded resources, dual-year Anthropocene defaults, external authorization, and Cahill-Keyes snapshot | **Implemented** | Six resource families and 14 v3 country/spatial products, five released human products plus two rejected coverage attempts, fisheries plus actual reef geometry, 2025/2026 default fields, `authorize-external`, 28 thumbnails, and Star-X Antarctic paint order are detailed in the [Stage 12 notes](../development/stage-12.md) |
+| 12 | Expanded resources, dual-year Anthropocene defaults, external authorization, and Cahill-Keyes snapshot | **Implemented** | Six resource families and 14 v3 country/spatial products, five released human products plus two rejected coverage attempts, fisheries plus actual reef geometry, 2025/2026 default fields, `authorize-external`, 28 thumbnails, and Star-X Antarctic paint order are detailed in the [Stage 12 notes](../../development/stage-12.md) |
 
 The unnumbered `solar/high-energy`, `atmosphere/cloud`, and
 `small-body/mission` lines in the raw ledger are taxonomy notes, not extra
@@ -326,7 +326,7 @@ implements a credential-free synthetic PurpleAir-interface review and a
 bounded five-station water-debris experiment, both exploration-only. CAMS,
 observed PurpleAir, and broader ocean decisions remain in the
 [`Stage 8b enrichment plan`](../passes/anthropocene/enrichment-plan.md) and
-[`Stage 15 ledger`](../development/stage-15.md).
+[`Stage 15 ledger`](../../development/stage-15.md).
 
 ### Stage 9: network infrastructure
 
@@ -508,7 +508,7 @@ atlas; licensed topology is intentionally not a profile-selectable product.
 Fiber Synthesized resolves to `generate-fiber-synthesized-PROJECTION` and
 makes the standard cleaned union whose complete 20260805 snapshot is the
 default visible layer. See the
-[implementation notes](../passes/fiber-synthesized.md).
+[implementation notes](../passes/network-fiber.md).
 
 Stage 7 adds uniform Cahill-Keyes aliases for the terrestrial rule. In
 particular,

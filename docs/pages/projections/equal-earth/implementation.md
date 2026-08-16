@@ -7,7 +7,7 @@ title: Equal Earth implementation
 
 [Context](context.md) · [Sources](bibliography.md) ·
 [Portable fixtures](../../runtime/projection-fixtures.md) ·
-[Stage 16J comparisons](../../development/equal-earth-positioning-speculations-v01.md)
+[Stage 16J comparisons](../../../development/equal-earth-positioning-speculations-v01.md)
 
 Stage 16J supplies the spherical Equal Earth forward and reverse equations in
 the standalone C++ header

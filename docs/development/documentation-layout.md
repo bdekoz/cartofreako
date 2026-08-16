@@ -8,17 +8,21 @@ title: Documentation architecture
 **Implemented:** 2026-08-10
 **Status:** current architecture record
 
-[Documentation index](../README.md) ·
+[Documentation index](../pages/README.md) ·
 [Development records](README.md) ·
-[Machine-readable navigation](../navigation.json)
+[Machine-readable navigation](../pages/navigation.json)
 
 ## Outcome
 
-Cartofreako's authored documentation is organized as one topic-oriented tree
-under `docs/pages/`. The migration moved 72 existing Markdown documents,
-created section landing pages, and recalculated repository-relative links from
-their original locations. The user explicitly approved breaking the former
-`docs/*.md` URLs, so the old locations have no compatibility stubs.
+Cartofreako's authored product documentation is organized as one topic-oriented
+tree under `docs/pages/`. Development and stage-ledger records live in
+`docs/development/`. The original migration moved 72 existing Markdown
+documents, created section landing pages, and recalculated repository-relative
+links from their original locations. A 2026-08-15 follow-up split moved
+`docs/pages/development/` to `docs/development/` so development records remain
+first-class but do not sit inside the authored product tree. The user
+explicitly approved breaking the former `docs/*.md` URLs, so the old locations
+have no compatibility stubs.
 
 Markdown remains the source of truth. The same files are readable in a Git
 checkout, on GitHub, and through the repository-root Jekyll build used by
@@ -36,9 +40,14 @@ docs/pages/
   passes/                     generation-pass contracts and metric status
   data/                       acquisition and source-data notes
   runtime/                    forward/reverse and browser-consumer APIs
-  development/                current stage and architecture records
   history/                    dated status and request/projection ledgers
   releases/                   GitHub and UCB AAO product procedures/evidence
+
+docs/development/
+  README.md                    development index and stage-ledger landing page
+  documentation-layout.md     this architecture record
+  stage-*.md                   active and closed stage development ledgers
+  *-speculations-v01.md        local speculative render and slice records
 ```
 
 `docs/profile-markers/` remains separate because it is evidence metadata, not
@@ -56,7 +65,7 @@ documentation lives in `docs/pages/releases/`.
 | Projection reference | `projections/<family>/` | Mathematical context, implementation contract, and sources |
 | Pass reference | `passes/` | Source identity, transformation, lifecycle class, output, and limitations |
 | Runtime integration | `runtime/` | Native/WebAssembly forward and reverse APIs and consumer plans |
-| Current development | `development/` | Implemented architecture and active stage convergence records |
+| Current development | `docs/development/` | Implemented architecture and active stage convergence records |
 | Historical evidence | `history/` | Non-authoritative request ledgers and dated state snapshots |
 | Release/preservation | `releases/` | Product-specific GitHub and UCB AAO procedures and observed evidence |
 
@@ -97,10 +106,12 @@ canonical Pages routes are derived from the Markdown paths; for example:
 /docs/pages/projections/cahill-keyes/implementation.html
 /docs/pages/passes/resources/metric-catalog.html
 /docs/pages/runtime/projection-api.html
+/docs/development/stage-16.html
 ```
 
 The migration intentionally does not preserve paths such as
-`/docs/gallery.html` or `/docs/cahill-keyes-implementation-notes.html`.
+`/docs/gallery.html`, `/docs/cahill-keyes-implementation-notes.html`, or the
+pre-split `/docs/pages/development/stage-16.html`.
 Repository-relative Markdown links remain preferred inside authored pages so
 they work both before and after Jekyll rendering.
 

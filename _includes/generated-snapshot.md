@@ -15,7 +15,7 @@
 [Voronoi]({{site.baseurl}}/docs/pages/gallery/voronoi.html)
 
 [Generation guide]({{site.baseurl}}/docs/pages/getting-started/generation.html) ·
-[Stage 13 convergence notes]({{site.baseurl}}/docs/pages/development/stage-13.html) ·
+[Stage 13 convergence notes]({{site.baseurl}}/docs/development/stage-13.html) ·
 [S3 v13 publication]({{site.baseurl}}/docs/pages/releases/s3-v13.html)
 
 This contact sheet covers every {{ page.projection_name }} whole-map pass in

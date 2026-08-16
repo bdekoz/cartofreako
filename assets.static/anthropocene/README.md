@@ -155,7 +155,7 @@ America, Europe, Africa, northern Asia, East Asia, and Oceania. Both checked
 particulate snapshots have no FIRMS rows and therefore make no global fire
 claim; CWFIS is regional QA/fallback only. The complete secure key procedure
 is recorded in the
-[Stage 15 plan](../../docs/pages/development/stage-15.md#getting-and-using-a-nasa-firms-map_key).
+[Stage 15 plan](../../docs/development/stage-15.md#getting-and-using-a-nasa-firms-map_key).
 
 See the [Anthropocene implementation notes](../../docs/pages/passes/anthropocene/implementation.md)
 for current source roles, formulas, coverage boundaries, refresh commands, and

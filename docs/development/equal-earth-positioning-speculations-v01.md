@@ -37,7 +37,7 @@ outputs:
 # Equal Earth positioning and slice speculations v01
 
 [Development records](README.md) · [Stage 16 ledger](stage-16.md) ·
-[Equal Earth implementation](../projections/equal-earth/implementation.md)
+[Equal Earth implementation](../pages/projections/equal-earth/implementation.md)
 
 These five 2560 × 1440 PNGs implement the Stage 16J one-to-five comparison
 queue. They are local research previews. Equal Earth remains outside the six
@@ -56,28 +56,28 @@ GitHub release, or UCB AAO/S3.
 
 ### 01 · Matched full-world baseline
 
-![Web Mercator and canonical Equal Earth rendered with a shared source, palette, dimensions, and graticule](../../../output/equal-earth-positioning-speculations-v01/01-mercator-equal-earth-full-world.png)
+![Web Mercator and canonical Equal Earth rendered with a shared source, palette, dimensions, and graticule](../../output/equal-earth-positioning-speculations-v01/01-mercator-equal-earth-full-world.png)
 
 ### 02 · Centering and Tissot diagnostics
 
-![Canonical and Africa-centered Equal Earth with matching indicatrices](../../../output/equal-earth-positioning-speculations-v01/02-equal-earth-centering-and-tissot.png)
+![Canonical and Africa-centered Equal Earth with matching indicatrices](../../output/equal-earth-positioning-speculations-v01/02-equal-earth-centering-and-tissot.png)
 
 ### 03 · Africa–Europe source-window slice
 
-![The same Africa-Europe WGS 84 source preclip rendered through three projection registrations](../../../output/equal-earth-positioning-speculations-v01/03-africa-europe-source-window.png)
+![The same Africa-Europe WGS 84 source preclip rendered through three projection registrations](../../output/equal-earth-positioning-speculations-v01/03-africa-europe-source-window.png)
 
 ### 04 · Full-carrier alternatives
 
-![Equal Earth beside AuthaGraph, Dymaxion, and Myriahedral Afro-Eur-Asia](../../../output/equal-earth-positioning-speculations-v01/04-cartofreako-full-carrier-alternatives.png)
+![Equal Earth beside AuthaGraph, Dymaxion, and Myriahedral Afro-Eur-Asia](../../output/equal-earth-positioning-speculations-v01/04-cartofreako-full-carrier-alternatives.png)
 
 ### 05 · Projection and slice strategies
 
-![Full, geographic-preclip, registered-perspective, and native-cell slice roles](../../../output/equal-earth-positioning-speculations-v01/05-projection-and-slice-strategies.png)
+![Full, geographic-preclip, registered-perspective, and native-cell slice roles](../../output/equal-earth-positioning-speculations-v01/05-projection-and-slice-strategies.png)
 
 ## Numerical and evidence controls
 
 The implementation-neutral bundle under
-[`fixtures/projections/equal-earth-v1/`](../../../fixtures/projections/equal-earth-v1/)
+[`fixtures/projections/equal-earth-v1/`](../../fixtures/projections/equal-earth-v1/)
 contains 30 cases across canonical and `11.5°E` layouts. PROJ and D3 are
 recorded as cross-implementation oracles. C++ and JavaScript consume the same
 neutral raw/page contract, and the offline checker adds forward/reverse,

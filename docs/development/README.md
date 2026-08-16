@@ -5,7 +5,7 @@ title: Development records
 
 # Development records
 
-[Documentation index](../README.md) · [Historical records](../history/README.md)
+[Documentation index](../pages/README.md) · [Historical records](../pages/history/README.md)
 
 - [Stage 12 implementation](stage-12.md)
 - [Stage 13 convergence record](stage-13.md)

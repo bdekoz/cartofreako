@@ -3,7 +3,7 @@
 [Documentation index](../../../../index.md) ·
 [Resources implementation](implementation.md) ·
 [Enrichment plan](enrichment-plan.md) ·
-[Stage 12 overview](../../development/stage-12.md) ·
+[Stage 12 overview](../../../development/stage-12.md) ·
 [Generated previews](../../../../index.md#generated-artifact-previews)
 
 This is the human-readable index to the checked

@@ -2,7 +2,7 @@
 
 [Documentation index](../../../index.md) ·
 [Generation pipeline](../getting-started/generation.md) ·
-[Stage 13 convergence](../development/stage-13.md) ·
+[Stage 13 convergence](../../development/stage-13.md) ·
 [S3 v13 publication](../releases/s3-v13.md)
 
 ## Status and scope

@@ -1,11 +1,11 @@
 # Stage 13 generation convergence
 
-[Documentation index](../../../index.md) ·
-[Generation guide](../getting-started/generation.md) ·
-[Generation methods](../getting-started/generation-methods.md) ·
+[Documentation index](../../index.md) ·
+[Generation guide](../pages/getting-started/generation.md) ·
+[Generation methods](../pages/getting-started/generation-methods.md) ·
 [Stage 12 implementation notes](stage-12.md) ·
-[Resource metric catalog](../passes/resources/metric-catalog.md) ·
-[Release runbook](../releases/README.md)
+[Resource metric catalog](../pages/passes/resources/metric-catalog.md) ·
+[Release runbook](../pages/releases/README.md)
 
 ## Scope and release boundary
 
@@ -23,7 +23,7 @@ The v12 browser tree remains immutable at
 It contains 594 objects, preserves the XZ package as the recovery artifact,
 publishes large SVGs only as explicit `.svg.gz` objects, embeds PNG previews,
 and uses `release.json` as its last-written completion marker. See the
-[S3 v12 publication record](../releases/s3-v12.md) for its exact digest,
+[S3 v12 publication record](../pages/releases/s3-v12.md) for its exact digest,
 inventory, viewer, verification, and Active Archive delivery evidence.
 
 The first projection-first package attempt contained only the 205-product
@@ -66,7 +66,7 @@ adapter, native exhaustive-face check, Node smoke test, and headless Chrome
 test share the same contract. At this checkpoint AuthaGraph, Dymaxion, and
 Star-X still reported unsupported reverse capability. Runtime API 3 completed
 all three on 2026-08-10; see the
-[forward/reverse projection API](../runtime/projection-api.md).
+[forward/reverse projection API](../pages/runtime/projection-api.md).
 Ongoing implementation and verification are tracked in the
 [Stage 14 convergence ledger](stage-14.md).
 
@@ -119,7 +119,7 @@ may be recorded locally, but it still ends at a prepared review snapshot and
 adds no rendered artifact until a separate source, metric, coverage, digest,
 test, and documentation review promotes it.
 
-The [resource metric catalog](../passes/resources/metric-catalog.md) is the authoritative
+The [resource metric catalog](../pages/passes/resources/metric-catalog.md) is the authoritative
 human-readable lifecycle index. It makes all 14 standard resource metrics and
 45 exploration-only definitions visible, including the current blockers for
 consensual-same-sex-activity law and drug-possession policy. Neither policy
@@ -153,9 +153,9 @@ base:
 - the resource metric catalog and documentation index expose lifecycle and
   pass-class boundaries directly.
 
-These procedures are documented in [S3 v13 publication](../releases/s3-v13.md),
-the [release runbook](../releases/README.md), and the
-[generated snapshot catalog](../../../index.md#generated-artifact-previews).
+These procedures are documented in [S3 v13 publication](../pages/releases/s3-v13.md),
+the [release runbook](../pages/releases/README.md), and the
+[generated snapshot catalog](../../index.md#generated-artifact-previews).
 
 ## Persistent optional generation
 
@@ -185,8 +185,8 @@ make AUTHORIZED_EXTERNAL_PASSES= all
 
 `EXTERNAL_AUTHORIZATION_STATE` may select a different local state path. The
 certificate installer and P-Tree workflow are documented in
-[Prerequisites](../getting-started/prerequisites.md) and the
-[P-Tree production-download guide](../data/ptree-download.md).
+[Prerequisites](../pages/getting-started/prerequisites.md) and the
+[P-Tree production-download guide](../pages/data/ptree-download.md).
 
 The P-Tree resolver no longer guesses a directory from the current UTC date.
 It walks advertised month/day/hour directories and selects the newest H09
@@ -202,7 +202,7 @@ current directory has not yet been published.
 > This section records the v13 compositor. Stage 14 supersedes its
 > Natural-Earth-derived vertical anchor with projection-only registration of
 > the complete `60°S` boundary and `0.25/44` lower clearance; see the
-> [current Star-X implementation notes](../projections/star-x/implementation.md#stages-6-13-and-14-polar-composition).
+> [current Star-X implementation notes](../pages/projections/star-x/implementation.md#stages-6-13-and-14-polar-composition).
 
 The Stage 13 Star-X compositor uses a fixed geographic rule:
 
@@ -223,8 +223,8 @@ North-pole star. Water appends its black star as a final `polar-mark` group
 after every physical layer, so neither bathymetry nor another quadrant can
 cover it. Embedded generator assertions verify the cap boundary, centering,
 uncut-Y alignment, path order, and final polar mark. See the
-[Star-X implementation notes](../projections/star-x/implementation.md) and
-[context](../projections/star-x/context.md).
+[Star-X implementation notes](../pages/projections/star-x/implementation.md) and
+[context](../pages/projections/star-x/context.md).
 
 ## Astronomy observers and planet scale
 
@@ -246,7 +246,7 @@ their true apparent angular radii. Each planet now has a dotted projected
 outline at that physical apparent scale plus a fixed `0.15 in` display glyph,
 twice the previous `0.075 in` size, so a print viewer can see the object without
 mistaking the enlargement for physical scale. The
-[astronomy implementation notes](../passes/astronomy.md) record the
+[astronomy implementation notes](../pages/passes/astronomy.md) record the
 JPL physical-parameter and Horizons conventions and the exact observer model.
 
 ## Visual hierarchy and opacity
@@ -271,11 +271,11 @@ metadata.
 
 These are display changes, not metric or observation changes. Exact profile
 metadata and implementation constants are recorded in the
-[resources](../passes/resources/implementation.md),
-[Anthropocene](../passes/anthropocene/implementation.md),
-[network-swarm](../passes/network-swarm.md),
-[network-infrastructure](../passes/network-infrastructure.md), and
-[Fiber Synthesized](../passes/fiber-synthesized.md) notes.
+[resources](../pages/passes/resources/implementation.md),
+[Anthropocene](../pages/passes/anthropocene/implementation.md),
+[network-swarm](../pages/passes/network-swarm.md),
+[network-infrastructure](../pages/passes/network-infrastructure.md), and
+[Fiber Synthesized](../pages/passes/network-fiber.md) notes.
 
 ## Fiber Synthesized standard pass
 
@@ -299,7 +299,7 @@ PDFs, PNGs, and Cahill–Keyes thumbnail are in the default `make all` graph;
 `refresh-fiber-synthesized` is a separate reviewable source operation and is
 never an ordinary render dependency. Exact counts, source hashes, licensing,
 layer grammar, commands, and verification are in the
-[Fiber Synthesized implementation notes](../passes/fiber-synthesized.md).
+[Fiber Synthesized implementation notes](../pages/passes/network-fiber.md).
 
 ## Bathymetry art passes
 
@@ -341,8 +341,8 @@ make generate-bathymetry-hamonshu-artifacts
 
 Both families are included in `make all`, resilient/single release builds,
 generation profiles, and Cahill–Keyes thumbnails. See the
-[Roulette](../passes/bathymetry/roulette.md) and
-[Hamonshū](../passes/bathymetry/hamonshu.md) implementation notes
+[Roulette](../pages/passes/bathymetry/roulette.md) and
+[Hamonshū](../pages/passes/bathymetry/hamonshu.md) implementation notes
 for every depth parameter and structural assertion.
 
 ## Anthropocene source expansion boundary
@@ -362,7 +362,7 @@ next candidates:
 None is silently merged into the released atlas. Promotion requires pinned
 bytes, rights, units, time semantics, QA, deduplication, coverage, digest,
 tests, and a new labeled output. The complete findings and gates are in
-[Anthropocene source expansion](../passes/anthropocene/source-expansion-stage-13.md).
+[Anthropocene source expansion](../pages/passes/anthropocene/source-expansion-stage-13.md).
 
 ## Focused verification checkpoint
 

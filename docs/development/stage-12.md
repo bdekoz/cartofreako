@@ -1,11 +1,11 @@
 # Stage 12 development implementation notes
 
-[Documentation index](../../../index.md) ·
-[Generation guide](../getting-started/generation.md) ·
-[Projection snapshots](../../../index.md#generated-artifact-previews) ·
-[Resources details](../passes/resources/implementation.md) ·
-[Resource metric catalog](../passes/resources/metric-catalog.md) ·
-[Prerequisites and hardware](../getting-started/prerequisites.md)
+[Documentation index](../../index.md) ·
+[Generation guide](../pages/getting-started/generation.md) ·
+[Projection snapshots](../../index.md#generated-artifact-previews) ·
+[Resources details](../pages/passes/resources/implementation.md) ·
+[Resource metric catalog](../pages/passes/resources/metric-catalog.md) ·
+[Prerequisites and hardware](../pages/getting-started/prerequisites.md)
 
 ## Release scope
 
@@ -28,7 +28,7 @@ unlike measurements into synthetic scores:
 - `make generate-authorized-external` authorizes every selected workflow
   before running its bounded acquisition and artifact pipeline; and
 - `make generate-snapshot-ck` creates the 28-thumbnail Cahill–Keyes contact
-  sheet documented in [`generated-snapshot-ck.md`](../gallery/cahill-keyes.md);
+  sheet documented in [`generated-snapshot-ck.md`](../pages/gallery/cahill-keyes.md);
 - the thumbnail targets retain their 480-pixel width when invoked through
   `assets-single` or `assets-resilient`, even though those recursive release
   targets forward the 3840-pixel full-size export setting; and

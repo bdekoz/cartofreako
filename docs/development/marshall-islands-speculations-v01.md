@@ -120,7 +120,7 @@ outputs:
 # Marshall Islands projection and slice speculations v01
 
 [Development records](README.md) ·
-[AI-agent and screen-consumer plan](../runtime/ai-agent-and-1080p-gaming.md)
+[AI-agent and screen-consumer plan](../pages/runtime/ai-agent-and-1080p-gaming.md)
 
 ## Local reproduction
 
@@ -152,23 +152,23 @@ yellow point is a regional context locator, not an atoll footprint.
 
 ### 01 · Planetary ocean relation
 
-![Full Dymaxion water carrier with a yellow RMI context locator](../../../output/marshall-islands-speculations-v01/01-dymaxion-full-water-rmi-locator.png)
+![Full Dymaxion water carrier with a yellow RMI context locator](../../output/marshall-islands-speculations-v01/01-dymaxion-full-water-rmi-locator.png)
 
 ### 02 · Focused comparative atlas panel
 
-![Five Cahill–Keyes octant-1 context slices with identical scale and a yellow RMI point](../../../output/marshall-islands-speculations-v01/02-cahill-keyes-octant-1-five-contexts.png)
+![Five Cahill–Keyes octant-1 context slices with identical scale and a yellow RMI point](../../output/marshall-islands-speculations-v01/02-cahill-keyes-octant-1-five-contexts.png)
 
 ### 03 · Vertical “now” comparison
 
-![Four Star-X portrait context plates for atmosphere, temperature, fiber, and water](../../../output/marshall-islands-speculations-v01/03-star-x-vertical-now-four-contexts.png)
+![Four Star-X portrait context plates for atmosphere, temperature, fiber, and water](../../output/marshall-islands-speculations-v01/03-star-x-vertical-now-four-contexts.png)
 
 ### 04 · RMI regional source preclip
 
-![The same RMI regional source window projected through Cahill–Keyes and Dymaxion](../../../output/marshall-islands-speculations-v01/04-rmi-regional-ck-dymaxion-preclip.png)
+![The same RMI regional source window projected through Cahill–Keyes and Dymaxion](../../output/marshall-islands-speculations-v01/04-rmi-regional-ck-dymaxion-preclip.png)
 
 ### 05 · Local analytical-projection hypothesis
 
-![Majuro-centered azimuthal equidistant Natural Earth context with distance rings](../../../output/marshall-islands-speculations-v01/05-majuro-local-azimuthal-equidistant.png)
+![Majuro-centered azimuthal equidistant Natural Earth context with distance rings](../../output/marshall-islands-speculations-v01/05-majuro-local-azimuthal-equidistant.png)
 
 ## Reproduce headlessly
 

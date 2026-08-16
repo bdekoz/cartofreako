@@ -4,7 +4,7 @@
 [Generation methods](../../getting-started/generation-methods.md) ·
 [Generation guide](../../getting-started/generation.md) ·
 [Metric catalog](metric-catalog.md) ·
-[Stage 12 implementation](../../development/stage-12.md)
+[Stage 12 implementation](../../../development/stage-12.md)
 
 ## Status and recommendation
 

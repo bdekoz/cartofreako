@@ -6,7 +6,7 @@ title: Historical records
 # Historical records
 
 [Documentation index](../README.md) ·
-[Current development records](../development/README.md)
+[Current development records](../../development/README.md)
 
 These files preserve dated evidence and request history. They are not current
 build instructions.

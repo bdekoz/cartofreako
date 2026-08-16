@@ -2,8 +2,8 @@
 
 > This is the chronological request ledger, not current implementation
 > documentation. See the
-> [2026-08-06 convergence status](../history/generation-status-20260806.md),
-> [Stage 10 WebAssembly implementation](../runtime/webassembly-architecture.md), and
+> [2026-08-06 convergence status](../pages/history/generation-status-20260806.md),
+> [Stage 10 WebAssembly implementation](../pages/runtime/webassembly-architecture.md), and
 > [Stage 11 documentation proposal](documentation-layout.md).
 
 Stage 4.1 development:

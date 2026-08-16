@@ -13,7 +13,7 @@ push, upload, or external transfer is claimed by this ledger.
 
 [Development records](README.md) ·
 [Stage 15 closed ledger](stage-15.md) ·
-[AI workflows and screen products](../runtime/ai-agent-and-1080p-gaming.md) ·
+[AI workflows and screen products](../pages/runtime/ai-agent-and-1080p-gaming.md) ·
 [Marshall Islands speculations v01](marshall-islands-speculations-v01.md) ·
 [Equal Earth positioning speculations v01](equal-earth-positioning-speculations-v01.md)
 

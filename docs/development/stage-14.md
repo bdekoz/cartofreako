@@ -1,12 +1,12 @@
 # Stage 14 generation convergence
 
-[Documentation index](../../../index.md) ·
-[Forward/reverse projection API](../runtime/projection-api.md) ·
-[AI-agent and 1080p gaming follow-on](../runtime/ai-agent-and-1080p-gaming.md) ·
-[WebAssembly quick start](../runtime/webassembly-quick-start.md) ·
+[Documentation index](../../index.md) ·
+[Forward/reverse projection API](../pages/runtime/projection-api.md) ·
+[AI-agent and 1080p gaming follow-on](../pages/runtime/ai-agent-and-1080p-gaming.md) ·
+[WebAssembly quick start](../pages/runtime/webassembly-quick-start.md) ·
 [Stage 13 implementation ledger](stage-13.md) ·
 [Stage 15 GPU benchmark ledger](stage-15.md) ·
-[Release runbook](../releases/README.md)
+[Release runbook](../pages/releases/README.md)
 
 ## Purpose and boundary
 
@@ -99,9 +99,9 @@ JavaScript-consumer changes:
 
 Documentation changes:
 
-- added the [forward/reverse API specification](../runtime/projection-api.md);
-- updated the [WebAssembly quick start](../runtime/webassembly-quick-start.md),
-  [WebAssembly architecture record](../runtime/webassembly-architecture.md), native and
+- added the [forward/reverse API specification](../pages/runtime/projection-api.md);
+- updated the [WebAssembly quick start](../pages/runtime/webassembly-quick-start.md),
+  [WebAssembly architecture record](../pages/runtime/webassembly-architecture.md), native and
   browser runtime READMEs, the main README, and documentation indexes; and
 - recorded the post-v13 development boundary in the Stage 13 ledger while
   assigning the ongoing work to this Stage 14 ledger.
@@ -325,7 +325,7 @@ that it is visually absent by default.
 
 Runtime API 3 completes the reverse-projection foundation identified by the
 special-topics audit. The separate
-[AI-agent and 1080p gaming improvement plan](../runtime/ai-agent-and-1080p-gaming.md)
+[AI-agent and 1080p gaming improvement plan](../pages/runtime/ai-agent-and-1080p-gaming.md)
 turns the remaining JavaScript/catalog and gaming recommendations into phased,
 testable work. Its screen derivatives are additive and cannot alter the
 authoritative SVG/PDF archive and art objects, projection-specific 44-inch or
@@ -389,7 +389,7 @@ checks found the expected first accepted and rejected representable widths.
 The maximum retained forward residual was approximately
 `1.818989e-12` projected units. The machine-readable local result is
 `reports/dymaxion-ulp-audit.json`; the implementation and stable conclusions
-are recorded in the [Dymaxion notes](../projections/dymaxion/implementation.md).
+are recorded in the [Dymaxion notes](../pages/projections/dymaxion/implementation.md).
 
 The following text retains the reviewed design and acceptance rationale used
 for the audit.
@@ -539,7 +539,7 @@ The checked v1 bundle contains 31,008 cases: 108 Cahill–Keyes, 28 AuthaGraph,
 keys, evidence grades, provenance, tolerances, SHA-256 inventory, and a
 Cartofreako numeric-cell crosswalk are published under
 `fixtures/projections/v1/`. See the
-[consumer documentation](../runtime/projection-fixtures.md).
+[consumer documentation](../pages/runtime/projection-fixtures.md).
 
 The following text retains the reviewed neutral-contract design and
 acceptance rationale.
@@ -649,7 +649,7 @@ and `authorityClasses`; lifecycle, checksum, evidence, governance,
 interaction, and human-review boundaries cannot be relaxed. The current
 golden decision-core SHA-256 is
 `9c915fe5fa80dcb4d37c2bfa597277d57753f84d6a33fbe189f65d6b1a82a978`.
-See [artifact selection and receipts](../runtime/artifact-selection.md).
+See [artifact selection and receipts](../pages/runtime/artifact-selection.md).
 
 The following text retains the reviewed request/receipt design and acceptance
 rationale.

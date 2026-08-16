@@ -9,7 +9,7 @@
     {"id": "passes", "title": "Generation passes", "path": "docs/pages/passes/README.md"},
     {"id": "data", "title": "Source data", "path": "docs/pages/data/README.md"},
     {"id": "runtime", "title": "Runtime and consumers", "path": "docs/pages/runtime/README.md"},
-    {"id": "development", "title": "Development records", "path": "docs/pages/development/README.md"},
+    {"id": "development", "title": "Development records", "path": "docs/development/README.md"},
     {"id": "history", "title": "Historical records", "path": "docs/pages/history/README.md"},
     {"id": "releases", "title": "Releases and preservation", "path": "docs/pages/releases/README.md"}
   ],

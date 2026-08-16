@@ -12,7 +12,7 @@ title: Source data
 - [JAXA P-Tree production download](ptree-download.md) documents certificate,
   credential, last-available snapshot, and Cloud-atmosphere acquisition.
 - [Anthropocene implementation](../passes/anthropocene/implementation.md) and
-  the [Stage 15 FIRMS procedure](../development/stage-15.md#getting-and-using-a-nasa-firms-map_key)
+  the [Stage 15 FIRMS procedure](../../development/stage-15.md#getting-and-using-a-nasa-firms-map_key)
   document year-qualified particulate snapshots and secure NASA FIRMS key use.
 - [`assets.static/atoll-evidence/README.md`](../../../assets.static/atoll-evidence/README.md)
   documents ignored authoritative Majuro source packages, checked derivatives,

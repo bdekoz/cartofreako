@@ -637,5 +637,5 @@ is a viewport, a native-cell mask, a geographic preclip, or a planar delivery
 tile—not a projection with an invalid replacement frame.
 
 The next documentation-level convergence is proposed as
-[`Stage 11`](../development/documentation-layout.md): migrate the flat documentation
+[`Stage 11`](../../development/documentation-layout.md): migrate the flat documentation
 into nested topic pages only after adding link and redirect safety nets.

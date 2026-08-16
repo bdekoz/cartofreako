@@ -5,7 +5,7 @@ full pass; no promotion, release, or external publication authorized**
 
 Checked: 2026-08-10
 
-[Stage 15 ledger](../docs/pages/development/stage-15.md) ·
+[Stage 15 ledger](../docs/development/stage-15.md) ·
 [source-data instructions](../assets.static/atoll-evidence/README.md) ·
 [evidence manifest](../fixtures/atoll-evidence/v1/manifest.json) ·
 [coordinate fixture](../fixtures/atoll-evidence/v1/coordinates.json) ·

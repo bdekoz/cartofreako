@@ -5,15 +5,15 @@ matrix: 211 artifacts, 32 pass IDs, 11 layouts, and 14 approved slices. The
 Stage 15 benchmark fixture is re-frozen at the current 211/32 standard corpus.
 Independent collaborator review remains external evidence; GPU formats, masks,
 and benchmarking are assigned to the
-[Stage 15 ledger](../development/stage-15.md)
+[Stage 15 ledger](../../development/stage-15.md)
 
 **Evidence basis:**
 the local delivery report `reports/cartofreako-audit-outcomes-01.md`,
 the [forward/reverse API](projection-api.md), the
 [WebAssembly runtime](../../../src.wasm/README.md), the current
 [generation contract](../getting-started/generation.md), and the
-[Stage 15 closed ledger](../development/stage-15.md) and
-[Stage 16 continuation](../development/stage-16.md)
+[Stage 15 closed ledger](../../development/stage-15.md) and
+[Stage 16 continuation](../../development/stage-16.md)
 
 ## Outcome
 
@@ -169,7 +169,7 @@ authorization, external-source acceptance, GitHub release, or UCB AAO upload.
 
 ## AI Workflows assessment
 
-The [Marshall Islands projection and slice experiment](../development/marshall-islands-speculations-v01.md)
+The [Marshall Islands projection and slice experiment](../../development/marshall-islands-speculations-v01.md)
 moves one part of this plan from a proposed agent interface to an implemented
 workflow canary. A single headless target turns a bounded research question
 into five checksummed PNG comparisons using public Cartofreako and Izzi code,
@@ -218,7 +218,7 @@ agent-to-agent contract. A later catalog can then discover completed
 experiments alongside released plates without treating speculative outputs as
 archive or art masters.
 
-The approved [Stage 16 agentic atlas research plan](../development/stage-16.md)
+The approved [Stage 16 agentic atlas research plan](../../development/stage-16.md)
 turns that observation into a reviewable two-loop plan: deterministic
 selection of existing plates, followed by separately authorized bounded
 experiments with source inventories, result lineage, visual-review receipts,
@@ -244,7 +244,7 @@ MapLibre, Unity, or Godot importers, Float32/WebGL adapters, and topology or
 feature-ID masks are Stage 15 candidates. They must consume the same catalog
 and transform contract rather than create engine-specific projection
 semantics. Their product definitions, benchmark, and acceptance rules now live
-in the [Stage 15 ledger](../development/stage-15.md).
+in the [Stage 15 ledger](../../development/stage-15.md).
 
 ## Implemented v1 layout and Make surface
 
@@ -353,7 +353,7 @@ baseline remain external evidence, not a Stage 14 implementation dependency.
 The 2048 × 1024 texture controls, KTX2/Basis candidates, topology and
 feature-ID masks, Float32 positional audit, hardware matrix, benchmark metrics,
 and adoption gates have moved to the
-[Stage 16 GPU evidence and agentic atlas research ledger](../development/stage-16.md).
+[Stage 16 GPU evidence and agentic atlas research ledger](../../development/stage-16.md).
 Stage 15 derives its controls from the same authoritative 3840-pixel parents
 and compares them against the frozen Stage 14 catalog and 1080p baseline; it
 does not reopen Stage 14 print or projection semantics.

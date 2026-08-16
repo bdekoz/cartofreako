@@ -1,10 +1,10 @@
 # Stage 15 GPU controls, evidence prototypes, and consumer-layout ledger
 
-[Documentation index](../../../index.md) ·
+[Documentation index](../../index.md) ·
 [Development records](README.md) ·
 [Stage 14 convergence ledger](stage-14.md) ·
 [Stage 16 continuation](stage-16.md) ·
-[AI-agent and 1080p consumer plan](../runtime/ai-agent-and-1080p-gaming.md)
+[AI-agent and 1080p consumer plan](../pages/runtime/ai-agent-and-1080p-gaming.md)
 
 ## Status
 
@@ -163,9 +163,9 @@ the doubled-title rule.
 
 The historical source decision and the implemented bounded outcome are
 documented in
-[Stage 15 R2 — anthropocene water-debris feasibility](../../../reports/stage-15-water-debris-feasibility.md)
+[Stage 15 R2 — anthropocene water-debris feasibility](../../reports/stage-15-water-debris-feasibility.md)
 and the checked
-[`anthropocene-water-debris` manifest](../../../fixtures/anthropocene-water-debris/v1/manifest.json).
+[`anthropocene-water-debris` manifest](../../fixtures/anthropocene-water-debris/v1/manifest.json).
 Neither the experiment nor its contact sheet is a standard artifact, default
 release product, garbage-patch boundary, or global debris census.
 
@@ -250,7 +250,7 @@ AuthaGraph, Dymaxion, Myriahedral Pacific, Star-X, and Voronoi. The full pass
 contains 24 artifacts: layered SVG, authoritative print PDF, 3840-pixel
 long-side PNG, and 480-pixel thumbnail for each projection. Its checked
 contact sheet is
-[`output/majuro-atoll-evidence-pass-v01/contact-sheet.png`](../../../output/majuro-atoll-evidence-pass-v01/contact-sheet.png).
+[`output/majuro-atoll-evidence-pass-v01/contact-sheet.png`](../../output/majuro-atoll-evidence-pass-v01/contact-sheet.png).
 
 Every composition keeps three claims separate: a planetary locator, an
 observation-derived topobathymetric panel, and a modeled 0.762 m-above-MHHW
@@ -268,7 +268,7 @@ approval authorizes a complete projection family, not standard lifecycle,
 default generation, GitHub release, or UCB AAO/S3 publication.
 
 The checked outcome is
-[Stage 15 R1 — atoll-scale evidence canary](../../../reports/stage-15-atoll-evidence-canary.md).
+[Stage 15 R1 — atoll-scale evidence canary](../../reports/stage-15-atoll-evidence-canary.md).
 
 ## Active 15I — consumer-oriented CDN and WASM layout
 
@@ -294,7 +294,7 @@ by this work. The compatibility reference is v13-to-proposed-v14, not
 v14-to-v14.
 
 The checked compatibility and implementation reference is
-[v13 to proposed-v14 consumer layout](../releases/v13-to-v14-consumer-layout.md).
+[v13 to proposed-v14 consumer layout](../pages/releases/v13-to-v14-consumer-layout.md).
 
 ## Implemented active results
 
