@@ -6548,7 +6548,7 @@
       "lifecycle": "standard",
       "sourcePeriod": "UNAVAILABLE",
       "artifactFrame": {
-        "x": 3.36523342526e-9,
+        "x": 3.36523342526e-09,
         "y": 7.82457352814,
         "width": 10.4829999848,
         "height": 11.806235646
@@ -11323,8 +11323,8 @@
         "fullPng": {
           "path": "assets.generated/dymaxion/png/network-swarm-dymaxion-44-20.78461.png",
           "mediaType": "image/png",
-          "bytes": 1219480,
-          "sha256": "bac530fddf7aa03d310b0c143646fe899365e5c8d81406707106bb0105e62e88",
+          "bytes": 1219462,
+          "sha256": "a156b83c72dc8c8f04249b7d53ae64e66445831a498c3adb3de61ab1ad45b1d3",
           "authorityClass": "full-raster",
           "dimensions": {
             "width": 3840,

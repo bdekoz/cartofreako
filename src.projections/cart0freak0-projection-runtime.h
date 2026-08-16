@@ -1676,6 +1676,23 @@ project_path_detailed(const projection_context& context,
       const geographic_point right = source[(index + 1) % source.size()];
       const projected_point projected_left = project_point(context, left);
       const projected_point projected_right = project_point(context, right);
+      const double maximum_dimension = std::max(
+        context.map_frame.width(), context.map_frame.height());
+
+      if (context.spec.topology == topology_kind::periodic
+          && point_distance(projected_left, projected_right)
+               > maximum_dimension / 3)
+        {
+          const projected_transition transition
+            = find_coordinate_wrap(context, left, right);
+          append_unique(current, transition.left);
+          append_piece(result, current, current_cell);
+          append_unique(current, transition.right);
+          ++result.diagnostics.periodic_wraps;
+          current_cell = transition.right_cell;
+          append_unique(current, projected_right);
+          continue;
+        }
 
       if (cahill_keyes_cartography
           && a60::carto::cahill_keyes_path_detail::first_edge_transition(
@@ -1763,8 +1780,6 @@ project_path_detailed(const projection_context& context,
           current_cell = left_cell;
         }
 
-      const double maximum_dimension = std::max(
-        context.map_frame.width(), context.map_frame.height());
       if (!current.empty()
           && point_distance(current.back(), projected_right)
                > maximum_dimension / 3)
@@ -1800,6 +1815,30 @@ project_path_detailed(const projection_context& context,
       result.pieces.front()
         = {std::move(merged), cell, result.pieces.size() == 1};
     }
+
+  if (!closed)
+    {
+      const double maximum_dimension = std::max(
+        context.map_frame.width(), context.map_frame.height());
+      projected_path_result sanitized;
+      sanitized.diagnostics = result.diagnostics;
+      sanitized.pieces.reserve(result.pieces.size() * 2);
+      for (const projected_path_piece& piece : result.pieces)
+        {
+          projected_path current;
+          for (const projected_point point : piece.points)
+            {
+              if (!current.empty()
+                  && point_distance(current.back(), point)
+                       > maximum_dimension / 3)
+                append_piece(sanitized, current, piece.native_cell);
+              append_unique(current, point);
+            }
+          append_piece(sanitized, current, piece.native_cell, false);
+        }
+      result = std::move(sanitized);
+    }
+
   return result;
 }
 

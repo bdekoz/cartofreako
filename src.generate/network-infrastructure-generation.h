@@ -246,10 +246,14 @@ project_open_path(const generation::projection_context& context,
 {
   std::string path_data;
   for (const auto& dateline_part : split_at_dateline(source))
-    for (const svg::vrange& projected : generation::project_path(
-           context, densify_path(dateline_part), false))
-      if (projected.size() >= 2)
-        path_data += svg::make_path_data_from_points(projected);
+    {
+      const generation::projected_path_result detailed
+        = generation::project_path_detailed(
+          context, densify_path(dateline_part), false, true);
+      for (const auto& piece : detailed.pieces)
+        if (piece.points.size() >= 2)
+          path_data += svg::make_path_data_from_points(piece.points);
+    }
   return path_data;
 }
 

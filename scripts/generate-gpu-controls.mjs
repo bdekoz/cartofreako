@@ -52,11 +52,16 @@ async function imageDimensions(file) {
     return {width, height};
 }
 
-async function resizedDimensions(file, canvas) {
-    const {stdout} = await command('magick', [
-        file, '-filter', 'Lanczos', '-resize', `${canvas.width}x${canvas.height}`,
+async function resizedDimensions(file, canvas, rotation = 0) {
+    const args = [file, '-filter', 'Lanczos'];
+    if (Number(rotation) === 90 || Number(rotation) === -90) {
+        args.push('-rotate', String(rotation));
+    }
+    args.push(
+        '-resize', `${canvas.width}x${canvas.height}`,
         '-format', '%w %h', 'info:'
-    ]);
+    );
+    const {stdout} = await command('magick', args);
     const [width, height] = stdout.trim().split(/\s+/).map(Number);
     requireCondition(Number.isInteger(width) && Number.isInteger(height),
         `could not calculate resized dimensions for ${relative(file)}`);
@@ -103,18 +108,25 @@ async function generateControl(input, recipe) {
     const output = path.join(generated, projectionDirectory,
         outputDirectory(recipe), basename);
     const temporary = `${output}.tmp-${process.pid}.png`;
+    const rotation = recipe.id.includes('portrait') ? 90 : 0;
     const [parentHash, contentSize] = await Promise.all([
-        sha256(parent), resizedDimensions(parent, recipe.canvas)
+        sha256(parent), resizedDimensions(parent, recipe.canvas, rotation)
     ]);
     requireCondition(parentHash === input.parents.fullPng.sha256,
         `${input.id} authoritative parent hash changed`);
     const transform = containTransform(input.artifactFrame, recipe.canvas, {
         background: recipe.background,
-        contentSize
+        contentSize,
+        sourceRotation: rotation
     });
-    await command('magick', [
+    const magickArgs = [
         parent,
-        '-filter', recipe.filter,
+        '-filter', recipe.filter
+    ];
+    if (rotation === 90 || rotation === -90) {
+        magickArgs.push('-rotate', String(rotation));
+    }
+    magickArgs.push(
         '-resize', `${contentSize.width}x${contentSize.height}!`,
         '-gravity', 'center',
         '-background', recipe.background,
@@ -126,7 +138,8 @@ async function generateControl(input, recipe) {
         '-define', 'png:compression-level=9',
         '-define', 'png:exclude-chunks=date,time',
         temporary
-    ]);
+    );
+    await command('magick', magickArgs);
     await fs.rename(temporary, output);
     const dimensions = await imageDimensions(output);
     requireCondition(dimensions.width === recipe.canvas.width

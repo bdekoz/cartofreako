@@ -46,38 +46,91 @@ function matrix(value, label) {
     return value;
 }
 
+function multiplyMatrix(left, right) {
+    return [
+        left[0] * right[0] + left[1] * right[3] + left[2] * right[6],
+        left[0] * right[1] + left[1] * right[4] + left[2] * right[7],
+        left[0] * right[2] + left[1] * right[5] + left[2] * right[8],
+        left[3] * right[0] + left[4] * right[3] + left[5] * right[6],
+        left[3] * right[1] + left[4] * right[4] + left[5] * right[7],
+        left[3] * right[2] + left[4] * right[5] + left[5] * right[8],
+        left[6] * right[0] + left[7] * right[3] + left[8] * right[6],
+        left[6] * right[1] + left[7] * right[4] + left[8] * right[7],
+        left[6] * right[2] + left[7] * right[5] + left[8] * right[8]
+    ];
+}
+
+function rotationMatrix(degrees, source) {
+    const rotation = Number(degrees ?? 0);
+    if (rotation === 0) {
+        return [1, 0, 0, 0, 1, 0, 0, 0, 1];
+    }
+    if (rotation === 90) {
+        return [0, -1, source.height + source.y, 1, 0, -source.x, 0, 0, 1];
+    }
+    if (rotation === -90) {
+        return [0, 1, -source.y, -1, 0, source.width + source.x, 0, 0, 1];
+    }
+    throw new TypeError('sourceRotation must be 0, 90, or -90');
+}
+
+function inverseRotationMatrix(degrees, source) {
+    const rotation = Number(degrees ?? 0);
+    if (rotation === 0) {
+        return [1, 0, 0, 0, 1, 0, 0, 0, 1];
+    }
+    if (rotation === 90) {
+        return [0, 1, source.x, -1, 0, source.height + source.y, 0, 0, 1];
+    }
+    if (rotation === -90) {
+        return [0, -1, source.width + source.x, 1, 0, source.y, 0, 0, 1];
+    }
+    throw new TypeError('sourceRotation must be 0, 90, or -90');
+}
+
 /** Create a pixel-snapped contain transform without cropping the source frame. */
 export function containTransform(sourceFrame, canvas = {width: 1920, height: 1080}, {
     background = '#f4f5f5',
-    contentSize = null
+    contentSize = null,
+    sourceRotation = 0
 } = {}) {
     const source = frame(sourceFrame, 'sourceFrame');
     const target = dimensions(canvas, 'canvas');
-    const scale = Math.min(target.width / source.width, target.height / source.height);
+    const rotation = Number(sourceRotation ?? 0);
+    const rotated = rotation === 0
+        ? source
+        : frame({x: 0, y: 0, width: source.height, height: source.width}, 'rotatedSourceFrame');
+    const scale = Math.min(target.width / rotated.width, target.height / rotated.height);
     const content = contentSize == null
-        ? {width: Math.round(source.width * scale), height: Math.round(source.height * scale)}
+        ? {width: Math.round(rotated.width * scale), height: Math.round(rotated.height * scale)}
         : dimensions(contentSize, 'contentSize');
     if (content.width > target.width || content.height > target.height) {
         throw new RangeError('contain content exceeds its canvas');
     }
     const x = (target.width - content.width) / 2;
     const y = (target.height - content.height) / 2;
-    const scaleX = content.width / source.width;
-    const scaleY = content.height / source.height;
-    const projectedToScreen = Object.freeze([
-        scaleX, 0, x - source.x * scaleX,
-        0, scaleY, y - source.y * scaleY,
+    const scaleX = content.width / rotated.width;
+    const scaleY = content.height / rotated.height;
+    const rotatedToScreen = Object.freeze([
+        scaleX, 0, x - rotated.x * scaleX,
+        0, scaleY, y - rotated.y * scaleY,
         0, 0, 1
     ]);
-    const screenToProjected = Object.freeze([
-        1 / scaleX, 0, source.x - x / scaleX,
-        0, 1 / scaleY, source.y - y / scaleY,
+    const screenToRotated = Object.freeze([
+        1 / scaleX, 0, rotated.x - x / scaleX,
+        0, 1 / scaleY, rotated.y - y / scaleY,
         0, 0, 1
     ]);
+    const sourceToRotated = rotationMatrix(rotation, source);
+    const rotatedToSource = inverseRotationMatrix(rotation, source);
+    const projectedToScreen = Object.freeze(multiplyMatrix(rotatedToScreen, sourceToRotated));
+    const screenToProjected = Object.freeze(multiplyMatrix(rotatedToSource, screenToRotated));
     return Object.freeze({
         fit: 'contain',
         background,
         sourceFrame: source,
+        sourceRotation: rotation,
+        rotatedSourceFrame: rotated,
         canvas: target,
         contentRectangle: Object.freeze({x, y, ...content}),
         projectedToScreen,
