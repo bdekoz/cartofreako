@@ -1,0 +1,65 @@
+{
+  "schema": "aao-upload-profile-v1",
+  "name": "cartofreako-v14",
+  "data_root": "build/s3-release-v14",
+  "log_namespace": "cartofreako-v14",
+  "destination": {
+    "endpoint": "https://s3-ewh.ist.berkeley.edu",
+    "region": "us-east-1",
+    "bucket": "adekosnik-bucket01",
+    "prefix": "cartofreako/v14"
+  },
+  "acl": "public-read",
+  "cache_control": "public,max-age=31536000,immutable",
+  "manifest": "SHA256SUMS",
+  "completion_marker": "release.json",
+  "groups": [
+    {
+      "id": "general",
+      "label": "indexes, runtime, package, documents, PDF, PNG, and WebP",
+      "includes": [],
+      "excludes": [
+        "/products/*/*/master/*.svg.gz"
+      ],
+      "headers": [],
+      "validate_gzip": false
+    },
+    {
+      "id": "svg-gzip",
+      "label": "explicit SVG gzip",
+      "includes": [
+        "/products/*/*/master/*.svg.gz"
+      ],
+      "excludes": [],
+      "headers": [
+        "Content-Type: application/gzip"
+      ],
+      "validate_gzip": true
+    }
+  ],
+  "pilots": [
+    {
+      "path": "products/standard/cahill-keyes/master/geometry-ck-44-22.svg.gz",
+      "content_type": "application/gzip",
+      "content_encoding": null,
+      "public": true
+    },
+    {
+      "path": "products/standard/cahill-keyes/thumbnail/geometry-ck-44-22.png",
+      "content_type": "image/png",
+      "content_encoding": null,
+      "public": true
+    },
+    {
+      "path": "viewer.html",
+      "content_type": "text/html",
+      "content_encoding": null,
+      "public": true,
+      "contains": "new DecompressionStream(\"gzip\")"
+    }
+  ],
+  "completion": {
+    "content_type": "application/json",
+    "public": true
+  }
+}
