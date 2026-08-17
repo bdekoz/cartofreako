@@ -5218,6 +5218,38 @@
       "target_scope": "current-exchange",
       "marker_state": "active",
       "storage_state": "checked-in"
+    },
+    {
+      "event_id": "SD-EVENT-20260817-2e329234",
+      "event_type": "storage-state-change",
+      "marker_id": "SD-20260817-a4d5a516",
+      "exact_instruction_source": "push",
+      "actor": "user",
+      "date": "2026-08-17",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-17T15:54:00Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Standalone user push instruction publishing commit dadc1b4, which carries the marker records and ledger check-in for SD-20260817-a4d5a516 and SD-20260815-b2c622d8. Platform message identifiers are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "marker_state": "active",
+      "storage_state": "checked-in"
+    },
+    {
+      "event_id": "SD-EVENT-20260817-d70fa6de",
+      "event_type": "storage-state-change",
+      "marker_id": "SD-20260815-b2c622d8",
+      "exact_instruction_source": "push",
+      "actor": "user",
+      "date": "2026-08-17",
+      "date_status": "OBSERVED",
+      "recorded_at": "2026-08-17T15:54:00Z",
+      "surface": "Codex",
+      "source_id": "codex-conversation-local-current",
+      "source_reference": "Standalone user push instruction publishing commit dadc1b4, which carries the marker records and ledger check-in for SD-20260817-a4d5a516 and SD-20260815-b2c622d8. Platform message identifiers are UNAVAILABLE.",
+      "target_scope": "current-exchange",
+      "marker_state": "active",
+      "storage_state": "checked-in"
     }
   ]
 }
