@@ -22,6 +22,11 @@ creation record.
   pointing at the private canonical ledger records for the
   `SD-EVENT-20260819-begin` / `SD-EVENT-20260819-end` dyad pair, including the
   canonical ledger SHA-256 after the end marker.
+- [`20260819-sd-receipt-2.json`](20260819-sd-receipt-2.json) — a tracked
+  receipt for the second dyad chain of the day
+  (`SD-EVENT-20260819-begin-2` / `SD-EVENT-20260819-end-2` /
+  `SD-EVENT-20260819-end-3`), including the canonical ledger SHA-256 after
+  the final end marker.
 
 ## SUPERSEDED — frozen 2026-08-15
 
