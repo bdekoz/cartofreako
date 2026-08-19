@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cartofreako v14 SVG viewer</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    body { margin: 0; }
+    header { padding: 1rem 1.25rem; border-bottom: 1px solid #8888; }
+    h1 { margin: 0 0 .45rem; font-size: 1.15rem; }
+    p { margin: .35rem 0; }
+    nav { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: .65rem; }
+    main { padding: 1rem; }
+    #status[data-state="error"] { color: #c33; }
+    #map { display: block; width: 100%; min-height: 70vh; border: 0; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="title">Cartofreako v14 SVG viewer</h1>
+    <p id="status">Validating the requested asset…</p>
+    <nav>
+      <a id="gzip-link" hidden>Download compressed SVG</a>
+      <a id="svg-link" hidden>Download decompressed SVG</a>
+      <a id="grid-link" href="https://bdekoz.github.io/cartofreako/docs/pages/gallery/">Return to the visual gallery</a>
+    </nav>
+  </header>
+  <main>
+    <img id="map" alt="" hidden>
+  </main>
+  <script>
+    (() => {
+      "use strict";
+
+      const releaseBase =
+        "https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/";
+      const status = document.querySelector("#status");
+      const title = document.querySelector("#title");
+      const map = document.querySelector("#map");
+      const gzipLink = document.querySelector("#gzip-link");
+      const svgLink = document.querySelector("#svg-link");
+      const gridLink = document.querySelector("#grid-link");
+      const asset = new URLSearchParams(location.search).get("asset") || "";
+      const allowed =
+        /^products\/standard\/(cahill-keyes|authagraph|dymaxion|myriahedral|myriahedral-afro-eur-asia|myriahedral-americas|myriahedral-antarctic|myriahedral-atlantic|myriahedral-pacific|star-x|voronoi)\/master\/[A-Za-z0-9][A-Za-z0-9._-]*\.svg\.gz$/;
+      const gridNames = { "cahill-keyes": "ck" };
+      let objectUrl = "";
+
+      const fail = (message) => {
+        status.textContent = message;
+        status.dataset.state = "error";
+      };
+
+      if (!allowed.test(asset)) {
+        fail("The asset parameter is missing or invalid.");
+        return;
+      }
+
+      const parts = asset.split("/");
+      const projection = parts[2];
+      const objectUrlPublic =
+        releaseBase + parts.map(encodeURIComponent).join("/");
+      const compressedName = parts.at(-1);
+      const svgName = compressedName.slice(0, -3);
+      title.textContent = svgName;
+      document.title = `${svgName} — Cartofreako v14`;
+      gridLink.href =
+        `https://bdekoz.github.io/cartofreako/docs/pages/gallery/${gridNames[projection] || projection}.html`;
+      gzipLink.href = objectUrlPublic;
+      gzipLink.download = compressedName;
+      gzipLink.hidden = false;
+
+      if (!("DecompressionStream" in globalThis)) {
+        fail("This browser does not provide DecompressionStream; use the compressed download instead.");
+        return;
+      }
+
+      status.textContent = "Fetching and decompressing the SVG…";
+      fetch(objectUrlPublic)
+        .then((response) => {
+          if (!response.ok || !response.body) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          return new Response(
+            response.body.pipeThrough(new DecompressionStream("gzip")),
+            { headers: { "Content-Type": "image/svg+xml" } }
+          ).blob();
+        })
+        .then((blob) => {
+          objectUrl = URL.createObjectURL(blob);
+          map.src = objectUrl;
+          map.alt = svgName;
+          map.hidden = false;
+          svgLink.href = objectUrl;
+          svgLink.download = svgName;
+          svgLink.hidden = false;
+          status.textContent =
+            `Decompressed ${blob.size.toLocaleString()} bytes in this browser.`;
+        })
+        .catch((error) => {
+          fail(
+            `Unable to stream this SVG: ${error.message}. ` +
+            "If this viewer is opened from another origin, the Berkeley bucket " +
+            "must send CORS headers; use the compressed download above instead."
+          );
+        });
+
+      addEventListener("pagehide", () => {
+        if (objectUrl) URL.revokeObjectURL(objectUrl);
+      });
+    })();
+  </script>
+</body>
+</html>
