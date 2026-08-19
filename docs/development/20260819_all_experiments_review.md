@@ -108,3 +108,12 @@ stale record, captured before the 2026-08-16 02:16 rewrite. Consequence:
 is red on the current corpus until the Stage 15A freeze is deliberately
 re-advanced on eureka with `make refresh-stage-15-inputs`; that is a separate
 machine-bound decision, not part of the documentation work.
+
+**Re-freeze completed 2026-08-19:** with operator approval, the Stage 15A
+freeze was re-advanced on eureka to `43f3f29` (the clean tree that reproduces
+the published v14 bytes): the catalog was regenerated from a clean tree, the
+`frozenCommit` constant was bumped, `freeze-stage-15-inputs.mjs --refresh`
+rewrote `fixtures/gpu-benchmark/v1/stage-14-inputs.json` with the current
+1,085 validated file records, and `--check` passes. This restores
+`make generate-gpu-controls` and the `all-experiments-resilient` gate to green
+on the current corpus.

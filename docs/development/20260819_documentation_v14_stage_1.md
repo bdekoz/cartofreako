@@ -486,3 +486,35 @@ convention.
 
 Update this status section, and let the user issue the closing
 `snapshot dyad` marker instruction; no end marker is written by the agent.
+
+## 12. Re-assessment and next steps — 2026-08-19
+
+Re-assessed after eureka recovered and the on-host verification ran:
+
+| Phase | State |
+| --- | --- |
+| 0 — eureka recovery | Complete. SSH restored after the operator restart; checkout fast-forwarded. |
+| 1 — Option A review | Complete except the human visual judgment. Evidence prepared (30 images), stale temp file removed, programmatic QA passed, findings recorded. |
+| 2 — screen-catalog verification | Complete. Green on eureka (`217/33` checks passed after the final `1085` count fix, committed in `43f3f29`). |
+| 3 — external v14 URL/CORS check | Blocked. Eureka's Berkeley route/VPN was lost by the restart; the endpoint times out again from every host. |
+| 4 — local final QA | Complete. `make check-docs` and `git diff --check` green. |
+| 5 — check-in gate | Main documentation and test commits are pushed through `43f3f29`. The re-freeze changes are the open commit. |
+| 6 — publish verification | Pending. `main` is pushed; the Pages rebuild and the post-publish link check wait on Phase 3 connectivity. |
+| 7 — next-prefix viewer | Resolved: ship the corrected viewer as `viewer.html` in the next AAO prefix; keep `aao-*` naming. |
+| 8 — close-out | In progress; the end `snapshot dyad` marker remains user-issued. |
+
+Next steps in order:
+
+1. **Stage 15A re-freeze — complete 2026-08-19.** The freeze was re-advanced
+   on eureka to `43f3f29` (clean tree reproducing the published v14 bytes);
+   `stage-14-inputs.json` now carries the current 1,085 validated records,
+   and `--check` passes. `generate-gpu-controls` /
+   `all-experiments-resilient` are green again.
+2. **Operator: reconnect the Berkeley VPN on eureka**, then re-run the 64-URL
+   check and the CORS probe; record both results in `aao-v14.md`.
+3. **Operator: visual review.** Judge the 30-image set
+   (`/tmp/review-20260819/` on eureka); record any defects.
+4. **Verify GitHub Pages** after the rebuild: `aao-v14.md`, the corrected
+   viewer, and sample gallery links.
+5. **Check in the re-freeze commit** (or authorize the agent to do so), and
+   finally issue the closing `snapshot dyad` marker when the boundary is done.
