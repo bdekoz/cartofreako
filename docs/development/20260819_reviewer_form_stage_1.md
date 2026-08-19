@@ -341,17 +341,18 @@ boxes); the Izzi worksheet ≈ 4 pages (27 members).
 Sequence 11.4 is complete:
 
 - Frozen inventories are checked in at
-  `fixtures/audit-generated/cartofreako-v14-expanded.json` (1,283 released +
-  475 speculative items) and
-  `fixtures/audit-generated/izzi-generation-20260818.json` (27 members, no
-  speculative corpus).
+  `fixtures/audit-generated/cartofreako-v14-expanded.json` and
+  `fixtures/audit-generated/izzi-generation-20260818.json`.
 - The type is registered in the house-style repository (DP-0053, spec 3.10,
-  metadata-schema enum, grammar, AGENTS.md, CHANGELOG) and pushed
-  (`a7989fa`, builder fixes `7492435`).
+  metadata-schema enum, grammar, AGENTS.md, CHANGELOG) and pushed.
 - Builder `scripts/build-audit-generated.py`, checker
   `scripts/check-audit-generated-report.py`, section contract, and inventory
   schema are shipped.
-- Four PDFs were generated into `reports/audit-generated/` (private,
-  git-ignored) and all four pass the checker: Cartofreako print (152 pages)
-  and entry (128 pages, fillable), Izzi print and entry (5 pages each).
+- Human review converged on one consolidated printable-and-fillable PDF per
+  worksheet. The Cartofreako worksheet itemizes every PNG in each projection's
+  `assets.generated/<projection>/png/` directory (224 files) plus the 12
+  `output/` speculation PNGs — 236 boxes, 27 pages, fixed three-line
+  title/path header, no GPU/SVG/PDF/WebP/thumbnail items. The Izzi worksheet
+  holds the 27 generation members, 6 pages. Both pass
+  `check-audit-generated-report.py`, and the reviewer marked each pass.
 - Transcription remains the existing situationshipin.space review form.
