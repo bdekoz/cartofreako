@@ -9,7 +9,7 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const catalogPath = path.join(root, 'assets.generated/catalog/artifacts-v1.json');
 const manifestPath = path.join(root, 'contracts/standard-artifact-manifest-v1.json');
 const outputPath = path.join(root, 'fixtures/gpu-benchmark/v1/stage-14-inputs.json');
-const frozenCommit = 'c3263c13a8df53dbe2ec1d89b59b11d67df8ab06';
+const frozenCommit = '43f3f29e6f481560a5634956c200e7a238a81c17';
 const mode = process.argv[2] ?? '--check';
 
 function requireCondition(condition, message) {
