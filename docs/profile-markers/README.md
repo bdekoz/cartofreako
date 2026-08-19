@@ -18,6 +18,10 @@ creation record.
 
 - [`snapshot-dyad-marker-ledger.json`](snapshot-dyad-marker-ledger.json) —
   marker creation and explicitly authorized repository check-in events.
+- [`20260819-sd-receipt.json`](20260819-sd-receipt.json) — a tracked receipt
+  pointing at the private canonical ledger records for the
+  `SD-EVENT-20260819-begin` / `SD-EVENT-20260819-end` dyad pair, including the
+  canonical ledger SHA-256 after the end marker.
 
 ## SUPERSEDED — frozen 2026-08-15
 
