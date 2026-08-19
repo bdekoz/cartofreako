@@ -42,6 +42,24 @@ generation-profile aliases. Because the pass is standard, its six SVG, PDF,
 PNG, and Cahill–Keyes snapshot products are part of the ordinary `make all`
 graph.
 
+## Published v14 previews
+
+Network Groundstations is a new v14 pass and is present in all six
+whole-map projections of the immutable v14 AAO release:
+
+| Projection | Full PNG |
+| --- | --- |
+| Cahill-Keyes | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/cahill-keyes/full/network-groundstations-ck-44-22.png) |
+| AuthaGraph | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/authagraph/full/network-groundstations-authagraph-44-19.052559.png) |
+| Dymaxion | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/dymaxion/full/network-groundstations-dymaxion-44-20.78461.png) |
+| Myriahedral | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/myriahedral/full/network-groundstations-myriahedral-44-24.75.png) |
+| Star-X | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/star-x/full/network-groundstations-star-x-34-44.png) |
+| Voronoi | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/voronoi/full/network-groundstations-voronoi-44-22.916667.png) |
+
+Each product also has a 480-pixel thumbnail, a print PDF, a master
+`.svg.gz`, and 1920 × 1080 PNG/WebP derivatives under the same projection
+directory.
+
 ## Verification
 
 `make check-network-groundstations` verifies every checked static payload

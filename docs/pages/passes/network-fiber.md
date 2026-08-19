@@ -3,7 +3,7 @@
 [Documentation index](../../../index.md) ·
 [Generation pipeline](../getting-started/generation.md) ·
 [Stage 13 convergence](../../development/stage-13.md) ·
-[S3 v13 publication](../releases/s3-v13.md)
+[v13 AAO publication](../releases/aao-v13.md)
 
 ## Status and scope
 
@@ -17,15 +17,15 @@ cable API snapshots `v3.2022` and `v3.20260805`. It is not a strict set
 difference. The unused path `assets.static/fiber-evolution` is reserved for a
 future `new - old` product if one is implemented.
 
-## Published v13 previews
+## Published v14 previews
 
-Network Fiber is present in every projection of the immutable Cloudian/S3
-v13 tree (published under the former "Fiber Synthesized" product name). These
-dedicated 480-pixel thumbnails show the checked cleanup and union with
-`v3.20260805` as the primary visible snapshot. Select one to stream the
-corresponding layered `.svg.gz` through the v13 viewer.
+Network Fiber is present in every projection of the immutable v14 AAO release
+(published under the former "Fiber Synthesized" product name). These dedicated
+480-pixel thumbnails show the checked cleanup and union with `v3.20260805` as
+the primary visible snapshot. Select one to stream the corresponding layered
+`.svg.gz` through the corrected v14 viewer.
 
-{% include v13-pass-gallery.md stem="fiber-synthesized" label="Network Fiber" %}
+{% include v14-pass-gallery.md stem="network-fiber" label="Network Fiber" %}
 
 ## Source boundary
 

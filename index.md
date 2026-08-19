@@ -15,7 +15,7 @@ The water pass holds the subject constant across all six projections. Select
 a thumbnail for the 3840-pixel PNG; layered SVG and print PDF remain explicit
 secondary actions.
 
-{% include v13-projection-gallery.md %}
+{% include v14-projection-gallery.md %}
 
 [Explore featured subjects and all six projection catalogs](docs/pages/gallery/README.md).
 
@@ -71,7 +71,7 @@ WebAssembly requirements, or use the
 | [`src.wasm/`](src.wasm/) | All-projection browser runtime, workers, SVG/Canvas/D3 adapters, compatibility modules, examples, and smoke tests | [WebAssembly quick start](docs/pages/runtime/webassembly-quick-start.md) |
 | [`tests/`](tests/) | Standalone algorithm and public-API tests | [`make check`](Makefile) |
 | [`assets.static/`](assets.static/) | Source plates, historical implementations, reference rasters, and downloaded geographic data | [Myriahedral reconstruction assets](assets.static/myriahedral/README.md) |
-| `assets.generated/` | Projection-organized SVG (`.svg.gz` release companions), PDF, full PNG, and thumbnail deliverables | [Visual gallery](docs/pages/gallery/README.md), [S3 v13 publication](docs/pages/releases/s3-v13.md), and [projection snapshot catalog](#generated-artifact-previews) |
+| `assets.generated/` | Projection-organized SVG (`.svg.gz` release companions), PDF, full PNG, and thumbnail deliverables | [Visual gallery](docs/pages/gallery/README.md), [v14 AAO release record](docs/pages/releases/aao-v14.md), and [projection snapshot catalog](#generated-artifact-previews) |
 
 This separation keeps reproducible inputs distinct from rendered outputs and
 keeps generation programs out of the test suite.
@@ -98,7 +98,7 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | AI-agent discovery, 1080p gaming derivatives, and preservation of authoritative archive/art/print products | [AI Workflows assessment and 1080p gaming improvement plan](docs/pages/runtime/ai-agent-and-1080p-gaming.md) |
 | Visual contact sheets for every projection and released pass | [Visual gallery](docs/pages/gallery/README.md) and [generated projection snapshots](#generated-artifact-previews) |
 | Compact index of build, projection, pass, browser, and release documentation | [Technical documentation](docs/pages/README.md) |
-| GitHub source releases versus UCB AAO/S3 deposits, static assets, manifests, and render hardware | [`v20260811` Stage 15 source release](docs/pages/releases/v20260811.md), [`v20260810` Stage 14 source release](docs/pages/releases/v20260810.md), [S3 v13 publication](docs/pages/releases/s3-v13.md), and [release runbook](docs/pages/releases/README.md) |
+| GitHub source releases versus UCB AAO/S3 deposits, static assets, manifests, and render hardware | [`v20260811` Stage 15 source release](docs/pages/releases/v20260811.md), [`v20260810` Stage 14 source release](docs/pages/releases/v20260810.md), [v14 AAO release record](docs/pages/releases/aao-v14.md), and [release runbook](docs/pages/releases/README.md) |
 | Generate-pass evaluation record plus configured, full-suite, family, and exact workflows | [Generate-pass methods and decision record](docs/pages/getting-started/generation-methods.md) |
 | Timestamped all-sky and observer astronomy generation | [Astronomy implementation notes](docs/pages/passes/astronomy.md) |
 | Process-start solar illumination and source-timed JAXA physical atmosphere generation | [Cloud-atmosphere implementation notes](docs/pages/passes/cloud-atmosphere.md) |
@@ -192,8 +192,8 @@ receive deterministic `.svg.gz` release archives. All 217 standard products have
 PDF and PNG beside their projection peers. PNGs preserve the source aspect ratio and
 have a longest side of 3840 pixels, the horizontal resolution of UHD 4K
 video. Transparent SVG page regions are flattened against an opaque white
-background. The standard graph also creates 32 480-pixel-wide thumbnails for
-every projection, 192 total.
+background. The standard graph also creates 33 480-pixel-wide thumbnails for
+every whole-map projection, 198 total.
 Review the complete all-projection release in the
 [generated snapshot catalog](#generated-artifact-previews). The
 targets `make generated-projections`, `make
@@ -264,18 +264,18 @@ SVG is never required merely to inspect a larger image.
 - [Voronoi snapshot](docs/pages/gallery/voronoi.md) — `44 × 22.916667`
 
 All preview, PNG, viewer, and PDF links resolve against the completed
-`cartofreako/v13/` public S3 release, so GitHub Pages does not depend on the
-untracked local `assets.generated/` directory. The complete v13 inventory has
-a dedicated 480-pixel thumbnail for all 32 passes in each projection, 192 total;
-the contact sheets never download a full-size PNG merely to draw a preview.
+`cartofreako/v14/` AAO release, so GitHub Pages does not depend on the
+untracked local `assets.generated/` directory. The complete v14 inventory has
+a dedicated 480-pixel thumbnail for all 33 passes in each whole-map
+projection, 198 total; the contact sheets never download a full-size PNG
+merely to draw a preview.
 
-The v13 sheets show the release-era legacy observation atlas, both CPC
-temperature fields, and the authorized P-Tree Cloud-atmosphere snapshot. The
-current source graph instead carries complete-2025 and partial-2026 particulate
-passes plus both CPC temperature fields; those post-v13 particulate products
-are not claimed to exist in the immutable v13 object tree. Licensed network
-topology, Stage 15 experiments, and unpromoted FIRMS candidates remain outside
-the public catalog.
+The v14 sheets include the new Network Groundstations pass and both dual-year
+Anthropocene particulate and temperature families. The release-era legacy
+observation atlas and the JAXA P-Tree Cloud-atmosphere snapshot were removed
+from the standard corpus before v14 and remain readable in the immutable v13
+record. Licensed network topology, Stage 15 experiments, and unpromoted FIRMS
+candidates remain outside the public catalog.
 
 The [SVG generation pipeline](docs/pages/getting-started/generation.md) explains the generator
 sources and Make targets, Natural Earth acquisition, seam handling, sampling,
@@ -523,9 +523,9 @@ the `voronoi_source` preset are in the
 | [P-Tree production download](docs/pages/data/ptree-download.md) | Quick-start P-Tree registration, secure credentials, connection test, reproducible production refresh, expected files, and troubleshooting |
 | [Orbital Technosphere implementation](docs/pages/passes/orbital-technosphere.md) | Stage 4.2 feasibility, naming, NASA/CelesTrak source roles, OMM/SGP4 formulas, products, verification, and accuracy boundary |
 | [Stage 12 implementation](docs/development/stage-12.md) | Stage 12 resource expansion, Anthropocene defaults, external authorization, render hardware, generated snapshots, and Star-X paint-order integration |
-| [Visual gallery](docs/pages/gallery/README.md) | Projection comparison, featured subjects, and entry points to all six 32-pass contact sheets |
+| [Visual gallery](docs/pages/gallery/README.md) | Projection comparison, featured subjects, and entry points to all six 33-pass contact sheets |
 | [Technical documentation](docs/pages/README.md) | Compact build, projection, pass-lifecycle, browser, release, and preservation index |
-| `_data/generated_passes.yml` | Canonical 32-pass labels, stems, alternate text, categories, and stable section identifiers |
+| `_data/generated_passes.yml` | Canonical 33-pass labels, stems, alternate text, categories, and stable section identifiers |
 | `_includes/generated-snapshot.md` | Shared PNG-first contact sheet with explicit layered SVG and print PDF actions for all six projections |
 | [Resources enrichment plan](docs/pages/passes/resources/enrichment-plan.md) | Stage 12 six-family taxonomy, source evaluation, non-sparse options, v3 schema, migration sequence, and release QA |
 | [`src.projections/cart0freak0-star-x.h`](src.projections/cart0freak0-star-x.h) | Star-X group assembly, configurable centered scale, fixed-`60°S` cap geometry, frame validation, public API, and factory |
@@ -542,18 +542,18 @@ the `voronoi_source` preset are in the
 | [`tests/test-generation-profile.cc`](tests/test-generation-profile.cc) | Profile defaults, aliases, all-selection expansion, duplicate detection, and invalid-schema tests |
 | [`src.generate/projection-area-generation.h`](src.generate/projection-area-generation.h) | Face-local Dymaxion, Myriahedral, and Voronoi transforms plus exact planar-triangle clipping for filled paths |
 | [`src.generate/generate-geometry.cc`](src.generate/generate-geometry.cc) | Izzi SVG generator and structural test for native AuthaGraph, Cahill-Keyes/Star-X, Dymaxion, Myriahedral, and Voronoi faces plus four map quadrants |
-| [`geometry-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/thumbnail/geometry-ck-44-22.png) | PNG preview of the generated layered Cahill-Keyes face geometry in a 44×22 frame |
+| [`geometry-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/cahill-keyes/thumbnail/geometry-ck-44-22.png) | PNG preview of the generated layered Cahill-Keyes face geometry in a 44×22 frame |
 | [`src.generate/generate-graticules.cc`](src.generate/generate-graticules.cc) | Izzi SVG generator and structural test for grouped, degree-labeled, discontinuity-split 10° latitude and longitude lines |
-| [`graticules-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/thumbnail/graticules-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes graticule with 17 latitudes and 36 longitudes |
+| [`graticules-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/cahill-keyes/thumbnail/graticules-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes graticule with 17 latitudes and 36 longitudes |
 | [`src.generate/natural-earth-generation.h`](src.generate/natural-earth-generation.h) | Shared GDAL/Izzi renderer and structural checks for the complementary Natural Earth base and overlay layer sets |
 | [`src.generate/generate-earth.cc`](src.generate/generate-earth.cc) | Thin generator entry point for the `ocean` and `land` base layers |
-| [`earth-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/thumbnail/earth-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes ocean-and-land base |
+| [`earth-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/cahill-keyes/thumbnail/earth-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes ocean-and-land base |
 | [`src.generate/generate-water.cc`](src.generate/generate-water.cc) | Thin generator entry point for every Natural Earth physical layer except `ocean` and `land` |
-| [`water-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/thumbnail/water-ck-44-22.png) | PNG preview of the complementary 44×22 Cahill-Keyes physical-feature overlay |
+| [`water-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/cahill-keyes/thumbnail/water-ck-44-22.png) | PNG preview of the complementary 44×22 Cahill-Keyes physical-feature overlay |
 | [`src.generate/bathymetry-roulette-style.h`](src.generate/bathymetry-roulette-style.h) | Validated twelve-depth epitrochoid/hypotrochoid catalogue, twelve field variations, curve construction, palette, and mosaic constants |
 | [`src.generate/generate-bathymetry-roulette.cc`](src.generate/generate-bathymetry-roulette.cc) | Six-projection Natural Earth clip and explicit filled, blue-ramp, Voronoi-grouped roulette-field generator with key and embedded SVG checks |
 | [`tests/test-bathymetry-roulette-style.cc`](tests/test-bathymetry-roulette-style.cc) | Cycloid minimum, depth ordering, equal Voronoi distribution, closure period, curve uniqueness, all-fill, opacity, and identifier tests |
-| [`bathymetry-roulette-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/thumbnail/bathymetry-roulette-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes roulette bathymetry |
+| [`bathymetry-roulette-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/cahill-keyes/thumbnail/bathymetry-roulette-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes roulette bathymetry |
 | [`docs/bathymetry-roulette-implementation-notes.md`](docs/pages/passes/bathymetry/roulette.md) | Stage 4.5 feasibility, confirmed catalogue, clipping and layering model, products, verification, accepted moiré, and limits |
 | [`src.generate/bathymetry-hamonshu-style.h`](src.generate/bathymetry-hamonshu-style.h) | Twelve depth parameter pairs, twelve source-indexed Izzi wave motifs, blue ramp, field geometry, and Voronoi mapping |
 | [`src.generate/generate-bathymetry-hamonshu.cc`](src.generate/generate-bathymetry-hamonshu.cc) | Six-projection Natural Earth clip and explicit 30%-opacity Hamonshū wave-field generator |

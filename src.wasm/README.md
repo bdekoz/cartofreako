@@ -83,8 +83,8 @@ Source and verification paths are:
 | `src.projections/cart0freak0-projection-slicing.h` | Generic slice descriptors and built-in catalogs |
 | `tests/test-projection-runtime.cc` | Native all-model geometry and slice checks |
 | `tests/test-forward-reverse-projection-api.cc` | Native exhaustive face-qualified reverse and batch checks |
-| `tests/test-screen-1080p.mjs` | Catalog/file/hash/no-crop/affine and geographic-picking checks across 211 standard derivatives |
-| `tests/read-screen-catalog.py` | Dependency-free 211-record/1,055-file clean-room catalog and affine checker |
+| `tests/test-screen-1080p.mjs` | Catalog/file/hash/no-crop/affine and geographic-picking checks across 217 standard derivatives |
+| `tests/read-screen-catalog.py` | Dependency-free 217-record/1,085-file clean-room catalog and affine checker |
 | `tests/three-screen-browser-smoke.html` | Offline Three.js r185 flat-plane/raycast/reverse-pick canary |
 | `src.wasm/cartofreako-projections-smoke.mjs` | Node integration smoke test |
 | `src.wasm/cartofreako-browser-smoke.html` | Real-browser main-thread/worker smoke page |
@@ -154,7 +154,7 @@ verification.
 
 ## Exact 1080p flat-map products
 
-`make generate-screen-1080p` generates the complete 211-product standard
+`make generate-screen-1080p` generates the complete 217-product standard
 whole-map and approved-slice set under
 `assets.generated/<projection>/screen-1080p{,-webp}/` plus
 `assets.generated/catalog/artifacts-v1.json`. The layered SVG, physical-size

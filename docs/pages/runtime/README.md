@@ -24,10 +24,10 @@ The authoritative art and archive products remain the projection-ratio,
 44-inch-leading-edge and A0 print families. Runtime and 1080p products are
 delivery derivatives, not replacements for those masters.
 
-The v1 consumer catalog now supplies 211 exact 1920 × 1080
+The v1 consumer catalog now supplies 217 exact 1920 × 1080
 PNG/lossless-WebP pairs across every standard whole map and approved slice, a
 checked catalog/request/receipt contract, all-family affine screen picking, an
 offline Three.js r185 interaction canary, abortable workers, and an independent
-clean-room reader. The Stage 15 benchmark input remains frozen at the earlier
-Stage 14 211-product/32-pass identity. GPU-specific products and their
-measurements are assigned to Stage 15.
+clean-room reader. The Stage 15 benchmark input is frozen at the Stage 15A
+217-product/33-pass identity. GPU-specific products and their measurements are
+assigned to Stage 15.

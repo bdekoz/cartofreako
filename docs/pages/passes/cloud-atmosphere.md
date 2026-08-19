@@ -6,7 +6,8 @@
 [Source profile](../../../assets.static/cloud-atmosphere/README.md) ·
 [Astronomy notes](astronomy.md) ·
 [Prerequisites](../getting-started/prerequisites.md) ·
-[S3 v13 publication](../releases/s3-v13.md)
+[v13 AAO publication](../releases/aao-v13.md) ·
+[v14 AAO release record](../releases/aao-v14.md)
 
 ## Stage 4.1a outcome
 
@@ -26,9 +27,12 @@ interval and missing cells mean **unobserved**, never clear sky or zero.
 ## Published v13 previews
 
 The complete Stage 13 release includes the authorized, source-timed
-Cloud-atmosphere product in all six projections. These 480-pixel previews load
-directly from the immutable Cloudian/S3 v13 tree. Select one to open its
-layered `.svg.gz` in the same-origin streaming viewer; the retained
+Cloud-atmosphere product in all six projections, and those objects remain
+readable in the immutable v13 prefix. The pass is **not** part of the v14
+generated-assets corpus: its JAXA P-Tree source moved into the Marshall
+Islands speculation pipeline instead. These 480-pixel previews load directly
+from the immutable v13 tree and are historical release evidence. Select one to
+open its layered `.svg.gz` in the v13 streaming viewer; the retained
 `cloud-atmosphere-background` group is hidden by default in every product.
 
 {% include v13-pass-gallery.md stem="cloud-atmosphere" label="Cloud-atmosphere" %}

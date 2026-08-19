@@ -9,12 +9,12 @@ Use the [visual gallery](gallery/README.md) to browse the release first. This pa
 the compact route into building, projection mathematics, pass semantics,
 browser integration, verification, and preservation.
 
-The gallery is the sealed v13 S3 publication. Current source development is
-newer: all projection families have forward/reverse runtime support, the live
-catalog contains 211 standard products across 32 pass IDs, Anthropocene is a
-dual-year particulate/temperature family, and Stage 15 adds local research
-products. Those changes are documented here without claiming they have been
-uploaded into the immutable v13 tree.
+The gallery is the sealed v14 AAO release: 217 standard products across 33
+pass IDs, including the Network Groundstations pass and the dual-year
+Anthropocene particulate/temperature families. Current source development may
+be newer, and Stage 15/16 research products remain local; those changes are
+documented here without claiming they have been uploaded into the immutable
+v14 prefix.
 
 ## Start, build, and generate
 
@@ -68,20 +68,20 @@ the [generation-pass overview](passes/README.md) and machine-readable
 ## Projection mathematics
 
 Each projection has context, implementation, and source documents. Its
-32-pass contact sheet provides a visual test across very different data and
+33-pass contact sheet provides a visual test across very different data and
 path structures.
 
 Equal Earth is listed separately as a Stage 16J exploration control; it has
-five local comparison plates rather than a standard 32-pass release gallery.
+five local comparison plates rather than a standard 33-pass release gallery.
 
 | Projection | Context | Implementation | Sources | Contact sheet |
 | --- | --- | --- | --- | --- |
-| AuthaGraph | [Context](projections/authagraph/context.md) | [Notes](projections/authagraph/implementation.md) | [Bibliography](projections/authagraph/bibliography.md) | [32 passes](gallery/authagraph.md) |
-| Cahill–Keyes | [Context](projections/cahill-keyes/context.md) | [Notes](projections/cahill-keyes/implementation.md) | [Bibliography](projections/cahill-keyes/bibliography.md) | [32 passes](gallery/cahill-keyes.md) |
-| Dymaxion | [Context](projections/dymaxion/context.md) | [Notes](projections/dymaxion/implementation.md) | [Bibliography](projections/dymaxion/bibliography.md) | [32 passes](gallery/dymaxion.md) |
-| Myriahedral | [Context](projections/myriahedral/context.md) | [Notes](projections/myriahedral/implementation.md) | [Bibliography](projections/myriahedral/bibliography.md) | [32 passes](gallery/myriahedral.md) |
-| Star-X | [Context](projections/star-x/context.md) | [Notes](projections/star-x/implementation.md) | [Bibliography](projections/star-x/bibliography.md) | [32 passes](gallery/star-x.md) |
-| Icosahedral Voronoi | [Context](projections/voronoi/context.md) | [Notes](projections/voronoi/implementation.md) | [Bibliography](projections/voronoi/bibliography.md) | [32 passes](gallery/voronoi.md) |
+| AuthaGraph | [Context](projections/authagraph/context.md) | [Notes](projections/authagraph/implementation.md) | [Bibliography](projections/authagraph/bibliography.md) | [33 passes](gallery/authagraph.md) |
+| Cahill–Keyes | [Context](projections/cahill-keyes/context.md) | [Notes](projections/cahill-keyes/implementation.md) | [Bibliography](projections/cahill-keyes/bibliography.md) | [33 passes](gallery/cahill-keyes.md) |
+| Dymaxion | [Context](projections/dymaxion/context.md) | [Notes](projections/dymaxion/implementation.md) | [Bibliography](projections/dymaxion/bibliography.md) | [33 passes](gallery/dymaxion.md) |
+| Myriahedral | [Context](projections/myriahedral/context.md) | [Notes](projections/myriahedral/implementation.md) | [Bibliography](projections/myriahedral/bibliography.md) | [33 passes](gallery/myriahedral.md) |
+| Star-X | [Context](projections/star-x/context.md) | [Notes](projections/star-x/implementation.md) | [Bibliography](projections/star-x/bibliography.md) | [33 passes](gallery/star-x.md) |
+| Icosahedral Voronoi | [Context](projections/voronoi/context.md) | [Notes](projections/voronoi/implementation.md) | [Bibliography](projections/voronoi/bibliography.md) | [33 passes](gallery/voronoi.md) |
 | Equal Earth *(exploration only)* | [Context](projections/equal-earth/context.md) | [Notes](projections/equal-earth/implementation.md) | [Bibliography](projections/equal-earth/bibliography.md) | [Five comparisons](../development/equal-earth-positioning-speculations-v01.md) |
 
 ## Browser and embedding
@@ -92,12 +92,13 @@ five local comparison plates rather than a standard 32-pass release gallery.
 | Consume portable numeric cases or compare independent reverse implementations | [Projection fixtures and reverse oracles](runtime/projection-fixtures.md) |
 | Check the standalone Equal Earth forward/reverse control and PROJ/D3 oracle bundle | [Equal Earth implementation](projections/equal-earth/implementation.md) and [Stage 16J comparisons](../development/equal-earth-positioning-speculations-v01.md) |
 | Select one standard artifact deterministically and retain a decision receipt | [Artifact catalog and selection](runtime/artifact-selection.md) |
+| Resolve a published artifact ID to a URL, verify a release, or follow the consumer workflows | [v14 consumer release usage](runtime/consumer-release-usage.md) |
 | Use structured forward points and face-qualified reverse candidates | [Forward/reverse projection API](runtime/projection-api.md) |
 | Plan machine-readable agent discovery and 1080p/Three.js derivatives without changing archive/art/print masters | [AI Workflows assessment and 1080p gaming improvement plan](runtime/ai-agent-and-1080p-gaming.md) |
 | Review the approved Marshall Islands-to-new-experiment agent workflow | [Stage 16 agentic atlas research plan](../development/stage-16.md) |
 | Understand the Stage 10 browser architecture and checks | [Stage 10 WebAssembly notes](runtime/webassembly-architecture.md) |
 | Follow a raster-backed overlay workflow | [Web workflow](runtime/myriahedral-workflow.md) and [complete example](runtime/myriahedral-example.md) |
-| Inspect the immutable generated release without checking it into Git | [Visual gallery](gallery/README.md), [S3 v13 contract](releases/s3-v13.md), and [release marker](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/release.json) |
+| Inspect the immutable generated release without checking it into Git | [Visual gallery](gallery/README.md), [v14 AAO release record](releases/aao-v14.md), and [release marker](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/release.json) |
 
 ## Releases and preservation
 
@@ -105,6 +106,7 @@ five local comparison plates rather than a standard 32-pass release gallery.
 | --- | --- |
 | Publish a GitHub source release without invoking S3 | [Release runbook](releases/README.md) and [`v20260811`](releases/v20260811.md) |
 | Deposit generated assets in UCB AAO through the separate human-invoked S3 target | [Release runbook](releases/README.md) |
-| Inspect v13 paths, formats, metadata, and verification | [S3 v13 publication](releases/s3-v13.md) |
+| Inspect v14 paths, formats, metadata, and verification | [v14 AAO release record](releases/aao-v14.md) |
+| Inspect the historical v13 deposit | [v13 AAO publication](releases/aao-v13.md) |
 | Read the corrected source and generated-assets release notes | [`v20260808.1`](releases/v20260808.1.md) |
 | Review source-data acquisition and attribution | [Natural Earth data note](data/natural-earth.md) and the family-specific implementation notes above |

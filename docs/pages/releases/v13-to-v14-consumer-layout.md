@@ -1,19 +1,28 @@
 ---
 layout: default
-title: v13 to proposed-v14 consumer layout
+title: v13 to v14 consumer layout
 ---
 
-# v13 to proposed-v14 consumer layout
+# v13 to v14 consumer layout
 
 [Documentation index](../README.md) ·
 [Release and preservation records](README.md) ·
+[v14 AAO release record](aao-v14.md) ·
 [Stage 15 ledger](../../development/stage-15.md) ·
-[v13 publication](s3-v13.md)
+[v13 publication](aao-v13.md)
 
-This document records the local Stage 15I layout experiment. It does not
-announce v14, authorize an upload, or alter immutable v13 objects. The checked
-candidate tree is built beneath `build/consumer-release-layout-v1/`; it omits
-`release.json` by design.
+> **Superseded as a proposal; kept as the migration reference.** v14 is now
+> the published AAO release. The live description of the applied layout,
+> counts, verification, and known defects is
+> [aao-v14.md](aao-v14.md). This page retains the cutover table below as the
+> v13 → v14 path-mapping evidence.
+
+This document records the Stage 15I layout experiment that became the applied
+v14 AAO release. The original candidate tree is built beneath
+`build/consumer-release-layout-v1/`; the applied release tree adds the
+products, indexes, runtime, manifest, and completion marker beneath the
+immutable `cartofreako/v14/` prefix. This page remains the v13 → v14
+path-mapping reference.
 
 ## Outcome
 
@@ -98,8 +107,8 @@ human-invoked wrapper around
 
 ## Cutover policy
 
-No compatibility alias is required: documentation and consumers may be
-re-indexed for a future v14. The table above remains the migration reference.
-Immutable v13 paths and bytes must not be rewritten; any accepted candidate
-layout begins at a new prefix after a separate review, source release, static
-asset build, and human-invoked AAO deposit.
+No compatibility alias is required: documentation and consumers were
+re-indexed for v14, and the table above remains the migration reference.
+Immutable v13 paths and bytes must not be rewritten; any future layout change
+begins at a new prefix after a separate review, source release, static asset
+build, and human-invoked AAO deposit.

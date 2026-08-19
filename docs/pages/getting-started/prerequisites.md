@@ -77,15 +77,16 @@ Anthropocene particulate maps, 12 Anthropocene temperature maps, six network-swa
 network-infrastructure site maps, six Fiber Synthesized maps, six Bathymetry Roulette maps, six
 Bathymetry Hamonshū maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes slices, and two
-Myriahedral face-group slices, then invokes Inkscape to export all 211 clean
-SVG products as PDFs and 3840-pixel-long-side PNGs and adds 32
+Myriahedral face-group slices, then invokes Inkscape to export all 217 clean
+SVG products as PDFs and 3840-pixel-long-side PNGs and adds 33
 lower-resolution thumbnails per projection. A recorded `jaxa-ptree`
-authorization adds the six Cloud-atmosphere products in all three formats and
-one thumbnail per projection; that authorized local graph therefore contains
-217 full-size products and 198 thumbnails. The immutable v13 S3 release has a
-different 211-product composition: its legacy observation atlas and
-Cloud-atmosphere products predate the current two-year particulate pair. The
-84 resources SVGs are also retained as
+authorization adds the six optional Cloud-atmosphere products in all three
+formats and one thumbnail per projection; that authorized local graph
+therefore contains 223 full-size products and 204 thumbnails. The immutable
+v13 S3 release has a different 211-product composition: its legacy observation
+atlas and Cloud-atmosphere products predate the current two-year particulate
+pair and the Network Groundstations pass. The 84 resources SVGs are also
+retained as
 deterministic `.svg.gz` companions. It needs all native build
 and data-acquisition dependencies through H3 and GEOS, the
 profile-pinned external cloud/CDN checkout, plus Inkscape. The separately
@@ -767,21 +768,21 @@ forcing the complete sub-build to run one recipe at a time, even if the outer
 Make inherited a `-j` setting.
 
 Successful generation places six geometry maps, six graticule maps, six
-Earth maps, eleven water maps (six production plus five exploratory
-Myriahedral perspectives), 18 astronomy maps, 12 Orbital Technosphere maps,
+Earth maps, thirteen water maps (six production, five Myriahedral
+perspectives, and two face-group slices), 18 astronomy maps, 12 Orbital Technosphere maps,
 84 Stage 12 resources maps, 12 default Anthropocene particulate maps, 12
 default Anthropocene temperature maps,
-six network-swarm maps, six network-infrastructure site maps, six Fiber
-Synthesized maps, six Bathymetry
+six network-swarm maps, six network-cdn site maps, six network-fiber maps,
+six network-groundstations maps, six Bathymetry
 Roulette maps, six Bathymetry Hamonshū maps, four quadrant slices, eight
 octant slices, and two Myriahedral face-group
 slices in projection-first `assets.generated/PROJECTION/svg/`, `pdf/`, and
 `png/` directories; resources use `.svg.gz` inside each SVG directory. The
-clean graph writes 32 480-pixel-wide thumbnails per projection under the six
-`thumbnail/` directories, 192 total. A JAXA-authorized graph additionally
-writes all six authorized Cloud-atmosphere full-size products and thumbnails,
-for 217 SVG/PDF/PNG products and 198 thumbnails. Every full-size
-PNG preserves its
+clean graph writes 33 480-pixel-wide thumbnails per projection under the six
+`thumbnail/` directories, 198 total, for 217 standard SVG/PDF/PNG products.
+The credentialed JAXA Cloud-atmosphere products are optional rather than
+standard; they render through the Marshall Islands speculation pipeline and
+are not part of the v14 release sheets. Every full-size PNG preserves its
 source aspect ratio, has a 3840-pixel longest side, and is flattened against
 opaque white.
 

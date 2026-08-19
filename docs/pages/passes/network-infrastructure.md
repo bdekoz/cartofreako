@@ -288,12 +288,12 @@ Normal site-atlas previews:
 
 | Projection | PNG |
 | --- | --- |
-| Cahill-Keyes | [`network-infrastructure-sites-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/png/network-infrastructure-sites-ck-44-22.png) |
-| AuthaGraph | [`network-infrastructure-sites-authagraph-44-19.052559.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/authagraph/png/network-infrastructure-sites-authagraph-44-19.052559.png) |
-| Dymaxion | [`network-infrastructure-sites-dymaxion-44-20.78461.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/network-infrastructure-sites-dymaxion-44-20.78461.png) |
-| Myriahedral | [`network-infrastructure-sites-myriahedral-44-24.75.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/network-infrastructure-sites-myriahedral-44-24.75.png) |
-| Star-X | [`network-infrastructure-sites-star-x-34-44.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/star-x/png/network-infrastructure-sites-star-x-34-44.png) |
-| Voronoi | [`network-infrastructure-sites-voronoi-44-22.916667.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/voronoi/png/network-infrastructure-sites-voronoi-44-22.916667.png) |
+| Cahill-Keyes | [`network-cdn-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/cahill-keyes/full/network-cdn-ck-44-22.png) |
+| AuthaGraph | [`network-cdn-authagraph-44-19.052559.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/authagraph/full/network-cdn-authagraph-44-19.052559.png) |
+| Dymaxion | [`network-cdn-dymaxion-44-20.78461.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/dymaxion/full/network-cdn-dymaxion-44-20.78461.png) |
+| Myriahedral | [`network-cdn-myriahedral-44-24.75.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/myriahedral/full/network-cdn-myriahedral-44-24.75.png) |
+| Star-X | [`network-cdn-star-x-34-44.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/star-x/full/network-cdn-star-x-34-44.png) |
+| Voronoi | [`network-cdn-voronoi-44-22.916667.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/voronoi/full/network-cdn-voronoi-44-22.916667.png) |
 
 Opt-in topology PNGs are local authorized-generation products. They were not
 included in the credential-free v12 S3 object release, so the GitHub Pages

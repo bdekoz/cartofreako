@@ -198,11 +198,11 @@ The generated full-resolution ocean artifacts are:
 
 | Perspective | Ocean artifacts |
 | --- | --- |
-| Americas | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/water-myriahedral-americas-44-24.75.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=myriahedral/svg/water-myriahedral-americas-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/pdf/water-myriahedral-americas-44-24.75.pdf) |
-| Atlantic | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/water-myriahedral-atlantic-44-24.75.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=myriahedral/svg/water-myriahedral-atlantic-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/pdf/water-myriahedral-atlantic-44-24.75.pdf) |
-| Afro Eur Asia | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/water-myriahedral-afro-eur-asia-44-24.75.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=myriahedral/svg/water-myriahedral-afro-eur-asia-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/pdf/water-myriahedral-afro-eur-asia-44-24.75.pdf) |
-| Pacific | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/water-myriahedral-pacific-44-24.75.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=myriahedral/svg/water-myriahedral-pacific-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/pdf/water-myriahedral-pacific-44-24.75.pdf) |
-| Antarctic | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/water-myriahedral-antarctic-44-24.75.png) · [SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=myriahedral/svg/water-myriahedral-antarctic-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/pdf/water-myriahedral-antarctic-44-24.75.pdf) |
+| Americas | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/myriahedral-americas/full/water-myriahedral-americas-44-24.75.png) · [SVG](https://bdekoz.github.io/cartofreako/docs/releases/v14-aao-viewer.html?asset=products/standard/myriahedral-americas/master/water-myriahedral-americas-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/myriahedral-americas/print/water-myriahedral-americas-44-24.75.pdf) |
+| Atlantic | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/myriahedral-atlantic/full/water-myriahedral-atlantic-44-24.75.png) · [SVG](https://bdekoz.github.io/cartofreako/docs/releases/v14-aao-viewer.html?asset=products/standard/myriahedral-atlantic/master/water-myriahedral-atlantic-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/myriahedral-atlantic/print/water-myriahedral-atlantic-44-24.75.pdf) |
+| Afro Eur Asia | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/myriahedral-afro-eur-asia/full/water-myriahedral-afro-eur-asia-44-24.75.png) · [SVG](https://bdekoz.github.io/cartofreako/docs/releases/v14-aao-viewer.html?asset=products/standard/myriahedral-afro-eur-asia/master/water-myriahedral-afro-eur-asia-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/myriahedral-afro-eur-asia/print/water-myriahedral-afro-eur-asia-44-24.75.pdf) |
+| Pacific | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/myriahedral-pacific/full/water-myriahedral-pacific-44-24.75.png) · [SVG](https://bdekoz.github.io/cartofreako/docs/releases/v14-aao-viewer.html?asset=products/standard/myriahedral-pacific/master/water-myriahedral-pacific-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/myriahedral-pacific/print/water-myriahedral-pacific-44-24.75.pdf) |
+| Antarctic | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/myriahedral-antarctic/full/water-myriahedral-antarctic-44-24.75.png) · [SVG](https://bdekoz.github.io/cartofreako/docs/releases/v14-aao-viewer.html?asset=products/standard/myriahedral-antarctic/master/water-myriahedral-antarctic-44-24.75.svg.gz) · [PDF](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/myriahedral-antarctic/print/water-myriahedral-antarctic-44-24.75.pdf) |
 
 Generate the five layered SVGs with:
 
@@ -793,7 +793,7 @@ once, with no overlap and no omitted carrier face:
 ### Carrier-preserving output
 
 Both slices reuse
-[`water-myriahedral-44-24.75.svg`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=myriahedral/svg/water-myriahedral-44-24.75.svg.gz)
+[`water-myriahedral-44-24.75.svg`](https://bdekoz.github.io/cartofreako/docs/releases/v14-aao-viewer.html?asset=products/standard/myriahedral/master/water-myriahedral-44-24.75.svg.gz)
 on its canonical `44 × 24.75` carrier. Each terminal face is normalized once
 with the reference layout, and its three exact planar vertices become one SVG
 clip-path subpath. The wrapper takes the tight rectangular bounds of that face
@@ -804,7 +804,9 @@ This is the direct Myriahedral analogue of the face-clipped Cahill-Keyes
 octants: projection belongs to the complete carrier; slicing belongs to the
 resulting planar geometry. The lightweight SVG wrappers use an external
 `<use>` reference and must remain beside the master SVG. Their PDF and PNG
-exports are self-contained.
+exports are self-contained. These ad-hoc wrappers are v13-era demonstration
+outputs and are not part of the v14 standard corpus; their links below remain
+on the immutable v13 prefix.
 
 | Group | Carrier `viewBox` | Raster size | Ocean artifacts |
 | --- | --- | ---: | --- |

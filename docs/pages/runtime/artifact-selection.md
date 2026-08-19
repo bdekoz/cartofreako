@@ -19,13 +19,13 @@ or transfer training data.
 `make generate-screen-1080p` builds
 `assets.generated/catalog/artifacts-v1.json` from the checked
 [`standard-artifact-manifest-v1.json`](../../../contracts/standard-artifact-manifest-v1.json).
-That Make-declared manifest now contains 211 standard products across 32 pass
+That Make-declared manifest now contains 217 standard products across 33 pass
 IDs, 11 layouts, and 14 approved slices. It excludes authorized optional and
 exploration-only products.
 
-The Stage 15 benchmark fixture separately freezes the earlier Stage 14
-211-product/32-pass catalog. Updating the live access catalog does not rewrite
-that benchmark identity.
+The Stage 15 benchmark fixture separately freezes the Stage 15A
+217-product/33-pass catalog at commit `c3263c1`. Updating the live access
+catalog does not rewrite that benchmark identity.
 
 Each catalog record keeps the authoritative SVG or explicit SVG-gzip, print
 PDF, and 3840-pixel PNG distinct from the 1920 × 1080 PNG/lossless-WebP access

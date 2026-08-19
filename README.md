@@ -151,16 +151,17 @@ make assets-single
 ```
 
 Outputs are organized projection-first as
-`assets.generated/PROJECTION/{svg,pdf,png,thumbnail}/`. Review all 32 standard
+`assets.generated/PROJECTION/{svg,pdf,png,thumbnail}/`. Review all 33 standard
 passes for each of the six projections in the
 [generated snapshot catalog](index.md#generated-artifact-previews). The
-complete v13 catalog adds the explicitly authorized Cloud-atmosphere pass as
-the thirty-second image in every projection. The corrected
+complete v14 catalog adds the Network Groundstations pass and the dual-year
+Anthropocene particulate family, and drops the earlier Cloud-atmosphere pass
+and legacy observation atlas. The corrected
 [`v20260808.1` generated-assets release notes](docs/pages/releases/v20260808.1.md)
 record the static-bundle manifest, render host, hardware sizing, verification,
 and source commit; the earlier `v20260808` package is superseded. The
-[S3 v13 publication notes](docs/pages/releases/s3-v13.md) document the public
-Cloudian extracted tree used by every preview. The
+[v14 AAO release record](docs/pages/releases/aao-v14.md) documents the public
+extracted tree used by every preview. The
 [release runbook](docs/pages/releases/README.md) treats a GitHub source release and a
 UCB Active Archive Object Storage deposit over S3 as different operations;
 only the latter uses the interactive, human-invoked AAO target.

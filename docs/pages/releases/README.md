@@ -8,8 +8,9 @@
 [`v20260810` Stage 14 source release](v20260810.md) ·
 [`v20260808.1` corrected release notes](v20260808.1.md) ·
 [`v20260808` superseded attempt](v20260808.md) ·
-[`v13` S3 publication](s3-v13.md) ·
-[v13 to proposed-v14 consumer layout](v13-to-v14-consumer-layout.md) ·
+[`v14` AAO release record](aao-v14.md) ·
+[`v13` AAO publication](aao-v13.md) ·
+[v13 to v14 consumer layout](v13-to-v14-consumer-layout.md) ·
 [`v20260807` release notes](v20260807.md) ·
 [`v12` S3 publication](s3-v12.md) ·
 [`v20260806` release notes](v20260806.md)
@@ -95,15 +96,16 @@ Treat GitHub assets and AAO objects as immutable snapshots. Never replace an upl
 with different bytes under the same tag and filename. Publish a new tag and
 asset name when either the source or generated payload changes.
 
-The current browser-facing mirror is generated assets v13 at the immutable
-Berkeley S3 prefix `cartofreako/v13/`. It exposes the projection-organized
-tree for GitHub Pages while retaining the XZ recovery package, manifest, and a
-last-written completion marker. Follow the [S3 v13 publication and
-implementation notes](s3-v13.md); the GitHub source tag remains unchanged.
-Successful applied uploads now finish by generating the Devastation Pacific
-Active Archive HTML/PDF report and rendered QA pages. Reports are local delivery
-artifacts outside the immutable prefix and Git; their verification and delivery
-record belongs in the versioned publication notes.
+The current browser-facing mirror is generated assets v14 at the immutable
+Berkeley S3 prefix `cartofreako/v14/`. It exposes the
+lifecycle/projection/format products tree, machine-readable artifact and pass
+indexes, and the versioned runtime for GitHub Pages while retaining the
+manifest and a last-written completion marker. Follow the
+[v14 AAO release record](aao-v14.md); the GitHub source tags remain unchanged.
+Successful applied uploads finish by generating the Devastation Pacific Active
+Archive HTML/PDF report and rendered QA pages. Reports are local delivery
+artifacts outside the immutable prefix and Git; their verification and
+delivery record belongs in the versioned publication notes.
 
 ## Shared transport and documentation authority
 
@@ -129,7 +131,7 @@ orchestrator records actual delivery separately from upload completion.
 The v13 prefix itself was applied and fully read back by uploader 6 before the
 shared engine existed. Uploader 7 is the validated migration adapter over the
 same sealed 830-object staging tree. Do not republish v13 to exercise it;
-Cartofreako v14 is the first intended applied use of the shared interface.
+Cartofreako v14 was the first applied use of the shared interface.
 
 ## `v20260808.1` corrective release procedure
 
@@ -218,7 +220,7 @@ scripts/upload-generated-assets-s3-release.sh --validate-only
 
 The historical applied v13 run used uploader 6 with
 `--apply --verify-download`; its observed result is in
-[`s3-v13.md`](s3-v13.md). Because `cartofreako/v13/` is complete and
+[`aao-v13.md`](aao-v13.md). Because `cartofreako/v13/` is complete and
 immutable, do not rerun an applied command against it. The release-local
 uploader 7 remains migration evidence: it validated the Cartofreako product
 and then delegated transport to `alpha60-clusterops/bin/load-s3-aao`.

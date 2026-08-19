@@ -1,8 +1,8 @@
 # AI Workflows assessment and 1080p gaming consumer improvement plan
 
 **Status:** Consumer v1 is implemented for the current checked standard
-matrix: 211 artifacts, 32 pass IDs, 11 layouts, and 14 approved slices. The
-Stage 15 benchmark fixture is re-frozen at the current 211/32 standard corpus.
+matrix: 217 artifacts, 33 pass IDs, 11 layouts, and 14 approved slices. The
+Stage 15 benchmark fixture is re-frozen at the current 217/33 standard corpus.
 Independent collaborator review remains external evidence; GPU formats, masks,
 and benchmarking are assigned to the
 [Stage 15 ledger](../../development/stage-15.md)
@@ -44,13 +44,15 @@ target may become an input to an authoritative archive, art, or print target.
 | --- | --- | --- |
 | `RECOMMENDATION-REVERSE` | Complete in runtime API 3 for all six projection families, including face/component candidates and residuals | Screen-to-projection affine transforms and geographic-picking fixtures now cover the standard matrix; independent downstream trials remain useful |
 | `RECOMMENDATION-JS` | Core ESM/TypeScript, artifact discovery and deterministic receipts, typed-array batches, abortable workers, Canvas, SVG, D3, and offline Three.js are implemented | Multi-party clean-room use remains external evidence; GPU and engine-specific adapters belong to Stage 15 |
-| `RECOMMENDATION-GAMING` | The 211-product 1920 × 1080 PNG/lossless-WebP matrix, affine picking, Canvas, raw flat-plane, and Three.js r185 interaction paths are checked | Benchmark GPU products and any MapLibre, Godot, or Unity adapter separately in Stage 15 |
+| `RECOMMENDATION-GAMING` | The 217-product 1920 × 1080 PNG/lossless-WebP matrix, affine picking, Canvas, raw flat-plane, and Three.js r185 interaction paths are checked | Benchmark GPU products and any MapLibre, Godot, or Unity adapter separately in Stage 15 |
 
-The existing S3 `release.json` proves aggregate release identity and counts,
-but it is not an artifact catalog. It cannot answer a request such as “the
-2026 temperature pass in a Pacific layout, at 1080p, with reverse picking.”
-The current 480-pixel thumbnails are useful for human contact sheets but too
-small for game UI and detailed agent inspection.
+The published v14 `release.json` proves aggregate release identity and counts,
+and the v14 `indexes/artifacts-v1.json` plus its pass and projection subsets
+now provide the artifact catalog with per-object paths and hashes. A consumer
+can answer “the 2026 temperature pass in a Pacific layout, at 1080p” from the
+indexes, but reverse-picking support still requires the runtime consumer
+contract, not the static index. The 480-pixel thumbnails are useful for human
+contact sheets but too small for game UI and detailed agent inspection.
 
 ## Non-negotiable archive, art, and print contract
 
@@ -173,8 +175,9 @@ The [Marshall Islands projection and slice experiment](../../development/marshal
 moves one part of this plan from a proposed agent interface to an implemented
 workflow canary. A single headless target turns a bounded research question
 into five checksummed PNG comparisons using public Cartofreako and Izzi code,
-immutable v13 S3 inputs, Natural Earth context, explicit projection/slice
-choices, and a portable review prompt. This supports describing Cartofreako as
+local standard sources plus the JAXA P-Tree vendor cloud pipeline, Natural
+Earth context, explicit projection/slice choices, and a portable review
+prompt. This supports describing Cartofreako as
 an **AI-assisted atlas explorer**, with important limits: the implementation
 assists search, comparison, rendering, and handoff; it does not make model
 output authoritative research evidence or supply community consent,
@@ -184,7 +187,7 @@ interpretation, scientific validation, or permission to publish.
 | --- | --- | --- |
 | Context portability | YAML front matter carries the report section, evidence boundary, projection hypotheses, public inputs, output hashes, and relevant snapshot-dyad marker IDs | OBSERVED in the experiment document |
 | Unattended execution | `make render-marshall-islands-speculations-v01` produced five deterministic PNG-only products at declared dimensions | OBSERVED on the development host; independent reproduction remains UNAVAILABLE |
-| Public-input recovery | The renderer can use the public v13 S3 archive when local generated assets are absent and records the exact source boundary | OBSERVED in code and the successful local run; a fresh-host recovery run remains to be witnessed |
+| Public-input recovery | The renderer builds standard sources locally and fetches the JAXA P-Tree vendor cloud data by default, with a local-only option; it records the exact source boundary | OBSERVED in code and the successful local run; a fresh-host recovery run remains to be witnessed |
 | Cross-agent handoff | A compact prompt tells another agent which house-style skill, repositories, evidence subset, checks, and limits to use | IMPLEMENTED contract; successful use by an independent agent or collaborator remains INFERRED |
 | Collaborative revision | The package can be given to an invited reviewer, who can reproduce, challenge, and return one labeled variant without this chat history | INFERRED until a collaborator completes and records that loop |
 | Governance and legal limits | The document separates observed source facts, inferred proposals, local review, publication authority, and the user's patentability hypothesis | OBSERVED safeguards; patentability, inventorship, ownership, prior art, and disclosure effects are NOT EVALUATED |
@@ -275,8 +278,8 @@ make consumer-assets-v1
 unchanged 3840-pixel parent PNG, exact 1920 × 1080 contain-fit placement,
 WCAG-light-gray `#f4f5f5` padding, and lossless WebP. It verifies pixel
 equivalence between decoded PNG and WebP and re-hashes the SVG, PDF, and full
-PNG parents after every derivative. `check-screen-1080p` validates all 211
-records and their 1,055 declared files, hashes, frames, matrices, padding
+PNG parents after every derivative. `check-screen-1080p` validates all 217
+records and their 1,085 declared files, hashes, frames, matrices, padding
 rejection, and qualified forward/screen/reverse picks. It also runs a minimal
 independent Python reader and the offline Three.js browser canary.
 `consumer-assets-v1` adds the broader headless browser consumer checks.
@@ -376,9 +379,10 @@ does not reopen Stage 14 print or projection semantics.
 ## Promotion rule
 
 The 1080p PNG/WebP products and catalog are promoted to the standard generated
-graph after phases 0–4 passed for the current 211-product standard manifest.
-The Stage 15 performance baseline remains independently frozen at the earlier
-211-product corpus, so live catalog growth does not rewrite benchmark results.
+graph after phases 0–4 passed for the current 217-product standard manifest.
+The Stage 15 performance baseline remains independently frozen at the
+Stage 15A 217-product corpus, so live catalog growth does not rewrite
+benchmark results.
 GPU formats and
 semantic masks remain Stage 15 exploration-only products until its measured
 benefit, tooling, licensing, determinism, and QA gates pass. The authoritative

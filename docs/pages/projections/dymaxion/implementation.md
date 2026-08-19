@@ -58,7 +58,7 @@ The production previews are:
 
 | Geometry | Graticules | Earth | Water |
 | --- | --- | --- | --- |
-| [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/geometry-dymaxion-44-20.78461.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/graticules-dymaxion-44-20.78461.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/earth-dymaxion-44-20.78461.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/water-dymaxion-44-20.78461.png) |
+| [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/dymaxion/full/geometry-dymaxion-44-20.78461.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/dymaxion/full/graticules-dymaxion-44-20.78461.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/dymaxion/full/earth-dymaxion-44-20.78461.png) | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/dymaxion/full/water-dymaxion-44-20.78461.png) |
 
 Each also has a layered SVG under `assets.generated/dymaxion/svg/` and a
 print-size PDF under `assets.generated/dymaxion/pdf/` with the same basename.

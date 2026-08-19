@@ -214,12 +214,12 @@ artifact:
 
 | Projection | Network-swarm preview |
 | --- | --- |
-| Cahill-Keyes | [`network-swarm-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/png/network-swarm-ck-44-22.png) |
-| AuthaGraph | [`network-swarm-authagraph-44-19.052559.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/authagraph/png/network-swarm-authagraph-44-19.052559.png) |
-| Dymaxion | [`network-swarm-dymaxion-44-20.78461.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/network-swarm-dymaxion-44-20.78461.png) |
-| Myriahedral | [`network-swarm-myriahedral-44-24.75.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/network-swarm-myriahedral-44-24.75.png) |
-| Star-X | [`network-swarm-star-x-34-44.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/star-x/png/network-swarm-star-x-34-44.png) |
-| Voronoi | [`network-swarm-voronoi-44-22.916667.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/voronoi/png/network-swarm-voronoi-44-22.916667.png) |
+| Cahill-Keyes | [`network-swarm-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/cahill-keyes/full/network-swarm-ck-44-22.png) |
+| AuthaGraph | [`network-swarm-authagraph-44-19.052559.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/authagraph/full/network-swarm-authagraph-44-19.052559.png) |
+| Dymaxion | [`network-swarm-dymaxion-44-20.78461.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/dymaxion/full/network-swarm-dymaxion-44-20.78461.png) |
+| Myriahedral | [`network-swarm-myriahedral-44-24.75.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/myriahedral/full/network-swarm-myriahedral-44-24.75.png) |
+| Star-X | [`network-swarm-star-x-34-44.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/star-x/full/network-swarm-star-x-34-44.png) |
+| Voronoi | [`network-swarm-voronoi-44-22.916667.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/voronoi/full/network-swarm-voronoi-44-22.916667.png) |
 
 Per-projection targets use `generate-network-swarm-PROJECTION`. The canonical
 project-generation profile name is `network-swarm`; the former `network` name

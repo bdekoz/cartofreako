@@ -405,12 +405,12 @@ The full generators are not part of `make check`; invoking a `generate-*`
 target both writes its artifact and runs that generator's embedded structural
 checks.
 
-The 211 standard products plus explicitly enabled optional products are
+The 217 standard products plus explicitly enabled optional products are
 generated beneath their projection's `svg/`, `pdf/`, and `png/` directories;
 the 84 resource products also have deterministic `.svg.gz` companions in the
-SVG directories. A clean projection contact sheet has 32 lower-resolution
-PNGs. Enabling `jaxa-ptree` adds one Cloud-atmosphere preview to each sheet,
-for 33 per projection and 198 total.
+SVG directories. A clean projection contact sheet has 33 lower-resolution
+PNGs, 198 total. Enabling the credentialed `jaxa-ptree` option adds one
+Cloud-atmosphere preview to each sheet, for 34 per projection and 204 total.
 Large suites are released as versioned static bundles instead of being stored
 in Git. Regenerating with a different GDAL, GEOS, font, or Inkscape version
 can still produce ordering, coordinate, or rendering differences even though

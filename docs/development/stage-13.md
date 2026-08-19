@@ -153,7 +153,7 @@ base:
 - the resource metric catalog and documentation index expose lifecycle and
   pass-class boundaries directly.
 
-These procedures are documented in [S3 v13 publication](../pages/releases/s3-v13.md),
+These procedures are documented in [v13 AAO publication](../pages/releases/aao-v13.md),
 the [release runbook](../pages/releases/README.md), and the
 [generated snapshot catalog](../../index.md#generated-artifact-previews).
 

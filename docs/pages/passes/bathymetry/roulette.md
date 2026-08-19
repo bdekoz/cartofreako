@@ -150,20 +150,19 @@ SVG, PDF, and 3840-pixel-long-side PNG with:
 make generate-bathymetry-roulette-artifacts
 ```
 
-The links below are immutable v12 release references and therefore show the
-pre-Stage-13 monochrome algorithm. The next generated-asset release will add
-the blue, filled, Voronoi-grouped implementation documented above; local
-focused review uses
-`assets.generated/cahill-keyes/png/bathymetry-roulette-ck-44-22.png`.
+The links below are immutable v14 release references. They show the blue,
+filled, Voronoi-grouped implementation documented above; the older v12
+references retained the pre-Stage-13 monochrome algorithm. Local focused
+review uses `assets.generated/cahill-keyes/png/bathymetry-roulette-ck-44-22.png`.
 
 | Projection | Preview |
 | --- | --- |
-| Cahill-Keyes | [`bathymetry-roulette-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/cahill-keyes/png/bathymetry-roulette-ck-44-22.png) |
-| AuthaGraph | [`bathymetry-roulette-authagraph-44-19.052559.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/authagraph/png/bathymetry-roulette-authagraph-44-19.052559.png) |
-| Dymaxion | [`bathymetry-roulette-dymaxion-44-20.78461.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/dymaxion/png/bathymetry-roulette-dymaxion-44-20.78461.png) |
-| Myriahedral | [`bathymetry-roulette-myriahedral-44-24.75.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/myriahedral/png/bathymetry-roulette-myriahedral-44-24.75.png) |
-| Star-X | [`bathymetry-roulette-star-x-34-44.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/star-x/png/bathymetry-roulette-star-x-34-44.png) |
-| Voronoi | [`bathymetry-roulette-voronoi-44-22.916667.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/tree/voronoi/png/bathymetry-roulette-voronoi-44-22.916667.png) |
+| Cahill-Keyes | [`bathymetry-roulette-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/cahill-keyes/full/bathymetry-roulette-ck-44-22.png) |
+| AuthaGraph | [`bathymetry-roulette-authagraph-44-19.052559.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/authagraph/full/bathymetry-roulette-authagraph-44-19.052559.png) |
+| Dymaxion | [`bathymetry-roulette-dymaxion-44-20.78461.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/dymaxion/full/bathymetry-roulette-dymaxion-44-20.78461.png) |
+| Myriahedral | [`bathymetry-roulette-myriahedral-44-24.75.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/myriahedral/full/bathymetry-roulette-myriahedral-44-24.75.png) |
+| Star-X | [`bathymetry-roulette-star-x-34-44.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/star-x/full/bathymetry-roulette-star-x-34-44.png) |
+| Voronoi | [`bathymetry-roulette-voronoi-44-22.916667.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/voronoi/full/bathymetry-roulette-voronoi-44-22.916667.png) |
 
 The pass is also selectable through `generation-profile.json` as
 `bathymetry-roulette` or either compatibility alias.

@@ -39,24 +39,27 @@
     - label: Network swarm
       stem: network-swarm
       alt: network swarm
-    - label: Network infrastructure sites
-      stem: network-infrastructure-sites
-      alt: network infrastructure sites
-    - label: Fiber Synthesized
-      stem: fiber-synthesized
-      alt: Fiber Synthesized cleaned union
-    - label: Cloud-atmosphere — authorized P-Tree snapshot
-      stem: cloud-atmosphere
-      alt: authorized P-Tree cloud and atmosphere snapshot
-    - label: Anthropocene — 2025 default
+    - label: Network CDN sites
+      stem: network-cdn
+      alt: network CDN sites
+    - label: Network Fiber
+      stem: network-fiber
+      alt: Network Fiber cleaned union
+    - label: Network Groundstations
+      stem: network-groundstations
+      alt: alpha60 Starlink groundstations
+    - label: Anthropocene — temperature 2025
       stem: anthropocene-temperature-2025
-      alt: Anthropocene 2025
-    - label: Anthropocene — 2026 default
+      alt: Anthropocene temperature 2025
+    - label: Anthropocene — temperature 2026
       stem: anthropocene-temperature-2026
-      alt: Anthropocene 2026
-    - label: Anthropocene — legacy observation atlas
-      stem: anthropocene
-      alt: legacy Anthropocene observation atlas
+      alt: Anthropocene temperature 2026
+    - label: Anthropocene — particulate 2025
+      stem: anthropocene-particulate-2025
+      alt: Anthropocene particulate 2025
+    - label: Anthropocene — particulate 2026
+      stem: anthropocene-particulate-2026
+      alt: Anthropocene particulate 2026
 
 - title: Stage 12 resources
   id: stage-12-resources

@@ -193,10 +193,10 @@ Airocean outline while using a different face transform.
 
 18. **Generated visual references.**
 
-    - [Geometry SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=dymaxion/svg/geometry-dymaxion-44-20.78461.svg.gz)
-    - [Graticules SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=dymaxion/svg/graticules-dymaxion-44-20.78461.svg.gz)
-    - [Earth SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=dymaxion/svg/earth-dymaxion-44-20.78461.svg.gz)
-    - [Water SVG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v13/viewer.html?asset=dymaxion/svg/water-dymaxion-44-20.78461.svg.gz)
+    - [Geometry SVG](https://bdekoz.github.io/cartofreako/docs/releases/v14-aao-viewer.html?asset=products/standard/dymaxion/master/geometry-dymaxion-44-20.78461.svg.gz)
+    - [Graticules SVG](https://bdekoz.github.io/cartofreako/docs/releases/v14-aao-viewer.html?asset=products/standard/dymaxion/master/graticules-dymaxion-44-20.78461.svg.gz)
+    - [Earth SVG](https://bdekoz.github.io/cartofreako/docs/releases/v14-aao-viewer.html?asset=products/standard/dymaxion/master/earth-dymaxion-44-20.78461.svg.gz)
+    - [Water SVG](https://bdekoz.github.io/cartofreako/docs/releases/v14-aao-viewer.html?asset=products/standard/dymaxion/master/water-dymaxion-44-20.78461.svg.gz)
 
     The corresponding PDF and opaque 3840-pixel PNG forms are checked in
     under `assets.generated/dymaxion/pdf/` and

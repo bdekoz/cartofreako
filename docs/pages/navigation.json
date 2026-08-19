@@ -1,6 +1,6 @@
 {
   "schema": "cartofreako-documentation-navigation-v1",
-  "updated": "2026-08-13",
+  "updated": "2026-08-19",
   "landing": "docs/pages/README.md",
   "sections": [
     {"id": "gallery", "title": "Visual gallery", "path": "docs/pages/gallery/README.md"},
