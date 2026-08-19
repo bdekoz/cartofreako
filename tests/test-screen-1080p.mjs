@@ -69,8 +69,8 @@ requireCondition(catalog.schema === 'cartofreako-artifacts-v1', 'wrong catalog s
 requireCondition(catalog.consumerProfile.id === 'screen-1080p-lossless-v1'
     && catalog.consumerProfile.recipeVersion === 2, 'wrong screen profile');
 requireCondition(catalog.artifacts.length === manifest.artifactCount
-    && catalog.artifacts.length === 211, 'standard catalog must contain 211 artifacts');
-requireCondition(new Set(catalog.artifacts.map(({id}) => id)).size === 211,
+    && catalog.artifacts.length === 217, 'standard catalog must contain 217 artifacts');
+requireCondition(new Set(catalog.artifacts.map(({id}) => id)).size === 217,
     'artifact IDs are not unique');
 requireCondition(new Set(catalog.artifacts.map(({projection}) => projection.id)).size === 11,
     'catalog does not cover all eleven approved layouts');
@@ -78,8 +78,8 @@ requireCondition(catalog.artifacts.filter(({slice}) => slice).length === 14,
     'catalog does not cover all fourteen approved slices');
 requireCondition(catalog.artifacts.every(({pass}) => pass.lifecycle === 'standard'),
     'non-standard artifact entered the standard catalog');
-requireCondition(new Set(catalog.artifacts.map(({pass}) => pass.id)).size === 32,
-    'catalog does not cover all thirty-two standard whole-map pass IDs');
+requireCondition(new Set(catalog.artifacts.map(({pass}) => pass.id)).size === 33,
+    'catalog does not cover all thirty-three standard whole-map pass IDs');
 requireCondition(catalog.artifacts.filter(({parents}) =>
     parents.svg.path.endsWith('.svg.gz')).length === 84,
 'catalog does not use explicit gzip masters for all resource plates');
@@ -164,4 +164,4 @@ for (const artifact of catalog.artifacts) {
 }
 for (const projection of projections.values()) projection.dispose();
 
-console.log('screen-1080p: 211 standard artifacts, 11 layouts, 14 slices, lossless files, affine/geographic picking, and no-crop checks passed');
+console.log('screen-1080p: 217 standard artifacts, 11 layouts, 14 slices, lossless files, affine/geographic picking, and no-crop checks passed');
