@@ -1,0 +1,187 @@
+{
+  "schema": "audit-generated-inventory-v1",
+  "worksheet_id": "izzi-generation-20260818",
+  "title": "Izzi Generation 20260818 review",
+  "document_type": "audit-generated",
+  "style": "house-style",
+  "release_identity": {
+    "review_id": "izzi-generation-20260818",
+    "generation_commit": "d16b47f4327fee1371860e0ae885c17c2ed60089",
+    "source_repository": "bdekoz/situationshipin.space",
+    "member_count": 27
+  },
+  "speculative_identity": {
+    "evidence_status": "UNAVAILABLE"
+  },
+  "general_notes": {
+    "lines": 3
+  },
+  "summary_lines": [
+    "Itemized Speculative: UNAVAILABLE \u2014 no speculative corpus is declared for this set."
+  ],
+  "release_items": [
+    {
+      "id": "izzi-generation-20260818/reference-image-danmaku-v1-category-grid",
+      "name": "reference-image-danmaku-v1-category-grid",
+      "family": "danmaku",
+      "path": "/review/reference-image-danmaku-v1-category-grid/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-guilloche-v4-all-grid",
+      "name": "reference-image-guilloche-v4-all-grid",
+      "family": "guilloche",
+      "path": "/review/reference-image-guilloche-v4-all-grid/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-guilloche-v4-combination-grid",
+      "name": "reference-image-guilloche-v4-combination-grid",
+      "family": "guilloche",
+      "path": "/review/reference-image-guilloche-v4-combination-grid/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-guilloche-v4-number-grid",
+      "name": "reference-image-guilloche-v4-number-grid",
+      "family": "guilloche",
+      "path": "/review/reference-image-guilloche-v4-number-grid/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-guilloche-v4-word-grid",
+      "name": "reference-image-guilloche-v4-word-grid",
+      "family": "guilloche",
+      "path": "/review/reference-image-guilloche-v4-word-grid/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-moire-01-linear-close-beat",
+      "name": "reference-image-moire-01-linear-close-beat",
+      "family": "moire",
+      "path": "/review/reference-image-moire-01-linear-close-beat/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-moire-02-linear-cross-current",
+      "name": "reference-image-moire-02-linear-cross-current",
+      "family": "moire",
+      "path": "/review/reference-image-moire-02-linear-cross-current/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-moire-03-eccentric-rings",
+      "name": "reference-image-moire-03-eccentric-rings",
+      "family": "moire",
+      "path": "/review/reference-image-moire-03-eccentric-rings/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-moire-04-elliptic-registration",
+      "name": "reference-image-moire-04-elliptic-registration",
+      "family": "moire",
+      "path": "/review/reference-image-moire-04-elliptic-registration/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-moire-05-radial-parallax",
+      "name": "reference-image-moire-05-radial-parallax",
+      "family": "moire",
+      "path": "/review/reference-image-moire-05-radial-parallax/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-moire-06-orbit-line-collision",
+      "name": "reference-image-moire-06-orbit-line-collision",
+      "family": "moire",
+      "path": "/review/reference-image-moire-06-orbit-line-collision/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-moire-07-sine-curtain",
+      "name": "reference-image-moire-07-sine-curtain",
+      "family": "moire",
+      "path": "/review/reference-image-moire-07-sine-curtain/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-moire-08-destabilized-braid",
+      "name": "reference-image-moire-08-destabilized-braid",
+      "family": "moire",
+      "path": "/review/reference-image-moire-08-destabilized-braid/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-moire-09-glitch-registration",
+      "name": "reference-image-moire-09-glitch-registration",
+      "family": "moire",
+      "path": "/review/reference-image-moire-09-glitch-registration/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-moire-10-wild-collision",
+      "name": "reference-image-moire-10-wild-collision",
+      "family": "moire",
+      "path": "/review/reference-image-moire-10-wild-collision/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-moire-v1-category-grid",
+      "name": "reference-image-moire-v1-category-grid",
+      "family": "moire",
+      "path": "/review/reference-image-moire-v1-category-grid/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-surface-tension-01-paired-drops",
+      "name": "reference-image-surface-tension-01-paired-drops",
+      "family": "surface-tension",
+      "path": "/review/reference-image-surface-tension-01-paired-drops/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-surface-tension-02-triad-membrane",
+      "name": "reference-image-surface-tension-02-triad-membrane",
+      "family": "surface-tension",
+      "path": "/review/reference-image-surface-tension-02-triad-membrane/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-surface-tension-03-vertical-chain",
+      "name": "reference-image-surface-tension-03-vertical-chain",
+      "family": "surface-tension",
+      "path": "/review/reference-image-surface-tension-03-vertical-chain/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-surface-tension-04-boundary-cling",
+      "name": "reference-image-surface-tension-04-boundary-cling",
+      "family": "surface-tension",
+      "path": "/review/reference-image-surface-tension-04-boundary-cling/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-surface-tension-05-orbital-droplets",
+      "name": "reference-image-surface-tension-05-orbital-droplets",
+      "family": "surface-tension",
+      "path": "/review/reference-image-surface-tension-05-orbital-droplets/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-surface-tension-06-anisotropic-petals",
+      "name": "reference-image-surface-tension-06-anisotropic-petals",
+      "family": "surface-tension",
+      "path": "/review/reference-image-surface-tension-06-anisotropic-petals/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-surface-tension-07-cellular-foam",
+      "name": "reference-image-surface-tension-07-cellular-foam",
+      "family": "surface-tension",
+      "path": "/review/reference-image-surface-tension-07-cellular-foam/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-surface-tension-08-destabilized-tide",
+      "name": "reference-image-surface-tension-08-destabilized-tide",
+      "family": "surface-tension",
+      "path": "/review/reference-image-surface-tension-08-destabilized-tide/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-surface-tension-09-glitch-rupture",
+      "name": "reference-image-surface-tension-09-glitch-rupture",
+      "family": "surface-tension",
+      "path": "/review/reference-image-surface-tension-09-glitch-rupture/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-surface-tension-10-wild-surface-storm",
+      "name": "reference-image-surface-tension-10-wild-surface-storm",
+      "family": "surface-tension",
+      "path": "/review/reference-image-surface-tension-10-wild-surface-storm/"
+    },
+    {
+      "id": "izzi-generation-20260818/reference-image-surface-tension-v1-category-grid",
+      "name": "reference-image-surface-tension-v1-category-grid",
+      "family": "surface-tension",
+      "path": "/review/reference-image-surface-tension-v1-category-grid/"
+    }
+  ],
+  "speculative_items": []
+}
