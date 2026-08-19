@@ -370,6 +370,17 @@ ssh eureka "bash -lc 'hostname'"
 If the host itself is healthy and only `sshd` is down, the existing scoped
 sudoers remediation on eureka covers `systemctl restart sshd`.
 
+**Status 2026-08-19:** attempted and still open. Rizal and ord both ping
+eureka, but TCP port 22 times out from both. Eureka's Tailscale address
+(100.68.196.79) is unreachable because `tailscaled` is stopped on rizal and
+starting it requires an interactive sudo password; no recovery key asset was
+found locally. The operator must either start Tailscale on rizal, restart
+`sshd`/the host from eureka's console, or name the recovery key mechanism.
+
+**Update 2026-08-19:** the operator restarted eureka. SSH recovered, and the
+eureka checkout was fast-forwarded to `origin/main` (`5cc2837`) for the
+verification run. Phase 0 is closed.
+
 ### Phase 1 — finish the Option A review on eureka (agent)
 
 - Visually inspect the 13 `output/` PNGs, the 12 PurpleAir SVGs, the Majuro
@@ -384,6 +395,14 @@ rm -- /home/bkoz/src/cartofreako/assets.generated/authagraph/gpu-control-2k-port
 - Append findings to
   `docs/development/20260819_all_experiments_review.md` and close it out.
 
+**Status 2026-08-19:** evidence rendered and copied (30 images), the stale
+temp file was removed, and programmatic QA passed (dimensions, decode, and
+non-blank statistics). The session agent cannot inspect pixels, so the final
+aesthetic judgment remains the operator's visual pass; the prepared set is on
+eureka under `/tmp/review-20260819/` and at the canonical `output/` and
+`assets.generated/` paths. Findings, including a parent-PNG drift against the
+`c3263c1` freeze, are recorded in the review file.
+
 ### Phase 2 — verify the screen-catalog fixes on eureka (agent)
 
 ```sh
@@ -394,6 +413,18 @@ python3 tests/read-screen-catalog.py
 
 Both must pass against the machine-bound 217/33 corpus. If they do not, fix
 only the specific failing evidence and re-run before Phase 5.
+
+**Status 2026-08-19:** in progress. The prior catalog recorded parent hashes
+from before a 2026-08-16 02:16 parent rewrite, so a full
+`make generate-screen-1080p` regeneration is running detached under tmux on
+eureka (`/tmp/screencheck.log`) before the updated tests run.
+
+**Outcome 2026-08-19:** green. The detached run regenerated the screen pairs
+and catalog, then `test-screen-1080p.mjs`, `read-screen-catalog.py` (after one
+missed `1055 → 1085` count fix), and `validate-artifact-contracts.py` all
+passed on eureka. The fresh corpus reproduces the published v14 bytes; the
+`c3263c1` freeze fixture is the stale record, and re-advancing it is a
+separate `make refresh-stage-15-inputs` decision on eureka.
 
 ### Phase 3 — external link and CORS verification (agent, from eureka or VPN)
 
@@ -408,6 +439,11 @@ curl -sSI -H 'Origin: https://bdekoz.github.io' \
 Record the CORS result in `aao-v14.md`: if `Access-Control-Allow-Origin` is
 absent, the viewer's direct-download fallback is the supported Pages path
 until the next prefix ships a same-origin viewer.
+
+**Status 2026-08-19:** blocked. Eureka's Berkeley route was lost by the
+restart: Tailscale is up, but the S3 endpoint now times out from eureka
+(pre-restart it returned HTTP 200). Re-establishing the operator's Berkeley
+VPN on eureka is required before the 64 documented v14 URLs can be re-checked.
 
 ### Phase 4 — local final QA (agent)
 
@@ -438,6 +474,13 @@ retargeted gallery links. Re-run Phase 3 once more post-publish.
 Decide whether the next generated-assets prefix carries the corrected viewer
 as its `viewer.html`. Until then, the Pages-hosted viewer plus direct
 `.svg.gz` downloads remain the documented v14 behavior.
+
+**Resolved 2026-08-19:** yes. The corrected viewer ships as the co-located
+`viewer.html` of the next AAO prefix; the GitHub Pages copy remains only the
+interim path. Going forward, viewer/runtime corrections ride new AAO prefixes
+and sealed prefixes are never repaired. Release-record filenames follow the
+`aao-*` convention (for example `aao-v14.md`) rather than the earlier `s3-*`
+convention.
 
 ### Phase 8 — close-out
 

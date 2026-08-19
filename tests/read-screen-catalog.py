@@ -60,7 +60,7 @@ def main() -> None:
         for record in (*artifact["parents"].values(), screen["png"], screen["webp"]):
             assert digest(ROOT / record["path"]) == record["sha256"]
             file_count += 1
-    assert file_count == 1055
+    assert file_count == 1085
     print("clean-room screen catalog passed: 217 artifacts / 1085 files / affine matrices / hashes")
 
 
