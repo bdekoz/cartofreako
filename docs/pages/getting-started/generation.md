@@ -9,7 +9,7 @@
 [P-Tree download quick start](../data/ptree-download.md) ·
 [Orbital Technosphere notes](../passes/orbital-technosphere.md) ·
 [Resources Stage 12 implementation](../passes/resources/implementation.md) ·
-[Stage 12 overview](../../development/stage-12.md) ·
+[Stage 12 overview](../../development/20260815_stage-12.md) ·
 [Projection snapshots](../../../index.md#generated-artifact-previews) ·
 [Resources enrichment plan](../passes/resources/enrichment-plan.md) ·
 [Anthropocene notes](../passes/anthropocene/implementation.md) ·
@@ -665,9 +665,9 @@ credentials or promotes a release product. The
 [Anthropocene implementation notes](../passes/anthropocene/implementation.md)
 document the status boundary, formulas, source audit, refresh workflow,
 experiments, and limits. The complete FIRMS handling notes and closed-scope
-record are in the [Stage 15 ledger](../../development/stage-15.md); future
+record are in the [Stage 15 ledger](../../development/20260815_stage-15.md); future
 observed-data and agentic iteration work is tracked in
-[Stage 16](../../development/stage-16.md).
+[Stage 16](../../development/20260815_stage-16.md).
 
 ## Stage 12 resources generation
 

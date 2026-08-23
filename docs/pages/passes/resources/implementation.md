@@ -1,7 +1,7 @@
 # Resources Stage 12 implementation notes
 
 [Documentation index](../../../../index.md) ·
-[Stage 12 overview](../../../development/stage-12.md) ·
+[Stage 12 overview](../../../development/20260815_stage-12.md) ·
 [Projection snapshots](../../../../index.md#generated-artifact-previews) ·
 [Generation guide](../../getting-started/generation.md) ·
 [Metric catalog](metric-catalog.md) ·
@@ -86,7 +86,7 @@ gates, missing files, duplicate country keys, and declared/actual count drift.
 
 Exact release counts and percentages live in the profile and are repeated in
 SVG metadata and legends. The Stage 12 summary records the
-[complete table and rejected human candidates](../../../development/stage-12.md#resource-release-definitions).
+[complete table and rejected human candidates](../../../development/20260815_stage-12.md#resource-release-definitions).
 
 ## Human derivations
 

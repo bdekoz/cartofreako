@@ -174,7 +174,7 @@ explicit absolute certificate path. Use
 `EXTERNAL_PASSES='jaxa-ptree nasa-firms'` or another subset when only selected
 optional passes are needed. It does not register an account, accept legal
 terms, fetch production data, or generate artifacts; see
-the [Stage 12 authorization notes](../../development/stage-12.md#optional-external-authorization).
+the [Stage 12 authorization notes](../../development/20260815_stage-12.md#optional-external-authorization).
 
 To authorize and then perform the mutating workflows, use the same pass
 selection or let the target discover locally configured providers:

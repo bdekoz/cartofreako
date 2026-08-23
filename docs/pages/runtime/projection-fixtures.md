@@ -6,7 +6,7 @@ title: Projection fixtures and independent reverse oracles
 # Projection fixtures and independent reverse oracles
 
 [Runtime index](README.md) · [Forward/reverse API](projection-api.md) ·
-[Stage 14 ledger](../../development/stage-14.md) ·
+[Stage 14 ledger](../../development/20260815_stage-14.md) ·
 [Dymaxion implementation](../projections/dymaxion/implementation.md)
 
 Cartofreako publishes a versioned, implementation-neutral projection fixture
@@ -117,4 +117,4 @@ D3_GEO_ROOT=/path/to/d3-geo-2.0.1 \
 PROJ and D3 are cross-implementation observations, not evidence that
 Cartofreako has joined a campaign or corrected human perception. See the
 [implementation notes](../projections/equal-earth/implementation.md) and
-[five comparison plates](../../development/equal-earth-positioning-speculations-v01.md).
+[five comparison plates](../../development/20260815_equal-earth-positioning-speculations-v01.md).

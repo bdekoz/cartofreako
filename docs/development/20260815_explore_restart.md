@@ -21,7 +21,7 @@ shell pastes break — prefer one-line commands.
 - Remote: `git@github.com:bdekoz/cartofreako.git` (branch `main`).
 - `origin/main` is at `52b8e82` (development-docs restructure); local `HEAD`
   equals `origin/main` and the working tree is clean.
-- This file is tracked at `docs/development/explore_20260815_restart.md`.
+- This file is tracked at `docs/development/20260815_explore_restart.md`.
 - Development records moved from `docs/pages/development/` to
   `docs/development/`; navigation and repository-local links were updated, and
   `make check-docs` passed on 129 files / 1304 local links.

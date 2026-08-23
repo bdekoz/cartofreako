@@ -14,9 +14,9 @@ title: Runtime and consumer integration
 - [WebAssembly quick start](webassembly-quick-start.md)
 - [WebAssembly architecture](webassembly-architecture.md)
 - [AI Workflows assessment and 1080p gaming implementation/evolution plan](ai-agent-and-1080p-gaming.md)
-- [Stage 16 GPU evidence and agentic atlas research plan](../../development/stage-16.md)
-- [Stage 16J Equal Earth positioning and slice comparisons](../../development/equal-earth-positioning-speculations-v01.md)
-- [Closed Stage 15 controls and evidence ledger](../../development/stage-15.md)
+- [Stage 16 GPU evidence and agentic atlas research plan](../../development/20260815_stage-16.md)
+- [Stage 16J Equal Earth positioning and slice comparisons](../../development/20260815_equal-earth-positioning-speculations-v01.md)
+- [Closed Stage 15 controls and evidence ledger](../../development/20260815_stage-15.md)
 - [Illustrative Myriahedral workflow](myriahedral-workflow.md) and
   [complete example](myriahedral-example.md)
 

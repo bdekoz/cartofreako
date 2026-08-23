@@ -45,7 +45,7 @@ docs/pages/
 
 docs/development/
   README.md                    development index and stage-ledger landing page
-  documentation-layout.md     this architecture record
+  20260815_documentation-layout.md     this architecture record
   stage-*.md                   active and closed stage development ledgers
   *-speculations-v01.md        local speculative render and slice records
 ```

@@ -7,7 +7,7 @@ title: Equal Earth context
 
 [Projection reference](../README.md) · [Implementation](implementation.md) ·
 [Sources](bibliography.md) ·
-[Stage 16J comparisons](../../../development/equal-earth-positioning-speculations-v01.md)
+[Stage 16J comparisons](../../../development/20260815_equal-earth-positioning-speculations-v01.md)
 
 Equal Earth is an uninterrupted equal-area pseudocylindrical world-map
 projection introduced by Bojan Šavrič, Tom Patterson, and Bernhard Jenny. It

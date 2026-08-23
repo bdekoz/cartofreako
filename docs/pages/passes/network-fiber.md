@@ -2,7 +2,7 @@
 
 [Documentation index](../../../index.md) ·
 [Generation pipeline](../getting-started/generation.md) ·
-[Stage 13 convergence](../../development/stage-13.md) ·
+[Stage 13 convergence](../../development/20260815_stage-13.md) ·
 [v13 AAO publication](../releases/aao-v13.md)
 
 ## Status and scope

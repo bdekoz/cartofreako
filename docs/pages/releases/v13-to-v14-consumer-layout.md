@@ -8,7 +8,7 @@ title: v13 to v14 consumer layout
 [Documentation index](../README.md) ·
 [Release and preservation records](README.md) ·
 [v14 AAO release record](aao-v14.md) ·
-[Stage 15 ledger](../../development/stage-15.md) ·
+[Stage 15 ledger](../../development/20260815_stage-15.md) ·
 [v13 publication](aao-v13.md)
 
 > **Superseded as a proposal; kept as the migration reference.** v14 is now

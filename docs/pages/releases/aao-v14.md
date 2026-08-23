@@ -5,7 +5,7 @@
 [Consumer release usage](../runtime/consumer-release-usage.md) ·
 [v13 AAO publication](aao-v13.md) ·
 [v13 to v14 consumer layout](v13-to-v14-consumer-layout.md) ·
-[Stage 15 ledger](../../development/stage-15.md)
+[Stage 15 ledger](../../development/20260815_stage-15.md)
 
 Generated assets v14 are the current, live browser-facing release. They are
 published separately from any GitHub source release at the immutable Berkeley

@@ -274,4 +274,4 @@ workflow.
 [Web-developer quick start](webassembly-quick-start.md) ·
 [Forward/reverse API](projection-api.md) ·
 [Runtime reference](../../../src.wasm/README.md) ·
-[Stage 11 documentation plan](../../development/documentation-layout.md)
+[Stage 11 documentation plan](../../development/20260815_documentation-layout.md)

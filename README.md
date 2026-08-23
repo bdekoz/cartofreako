@@ -14,11 +14,11 @@ authoritative full project documentation remains [`index.md`](index.md). The
 [AI Workflows assessment and 1080p gaming improvement plan](docs/pages/runtime/ai-agent-and-1080p-gaming.md)
 adds screen/runtime derivatives while preserving the SVG/PDF archive and art
 masters plus the existing projection-specific 44-inch and A0 print products.
-The approved [Stage 16 plan](docs/development/stage-16.md) carries the
+The approved [Stage 16 plan](docs/development/20260815_stage-16.md) carries the
 deferred GPU evidence and generalizes the Marshall Islands workflow into an
 agentic selection-and-experiment program. Its Stage 16J prototype adds
 standalone Equal Earth forward/reverse support, neutral PROJ/D3 comparison
-fixtures, and [five local positioning and slice studies](docs/development/equal-earth-positioning-speculations-v01.md)
+fixtures, and [five local positioning and slice studies](docs/development/20260815_equal-earth-positioning-speculations-v01.md)
 without changing the six-family release runtime.
 
 The top-level directories separate implementation, generation, verification,
@@ -302,7 +302,7 @@ The [resource metric catalog](docs/pages/passes/resources/metric-catalog.md) dis
 the 14 standard release passes from optional-pass infrastructure and 45
 exploration-only definitions, including the unreleased LGBTQIA-related and
 drug-policy candidates. The
-[Stage 12 implementation notes](docs/development/stage-12.md),
+[Stage 12 implementation notes](docs/development/20260815_stage-12.md),
 [resources implementation notes](docs/pages/passes/resources/implementation.md),
 and [enrichment plan](docs/pages/passes/resources/enrichment-plan.md) define source roles,
 the v3 country/spatial contracts, offline snapshot preparation, reef

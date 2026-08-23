@@ -3,7 +3,7 @@
 [Documentation index](../../../../index.md) ·
 [Generation guide](../../getting-started/generation.md) ·
 [Generate-pass decisions](../../getting-started/generation-methods.md) ·
-[Stage 12 implementation](../../../development/stage-12.md) ·
+[Stage 12 implementation](../../../development/20260815_stage-12.md) ·
 [Stage 8b enrichment plan](enrichment-plan.md) ·
 [Stage 13 source expansion review](source-expansion-stage-13.md) ·
 [Snapshot assets](../../../../assets.static/anthropocene/README.md)
@@ -338,7 +338,7 @@ Rendering a prepared candidate before profile/hash/source review would bypass
 its promotion gate. Request the free key from the official
 [NASA FIRMS MAP_KEY page](https://firms.modaps.eosdis.nasa.gov/api/map_key/);
 the complete handling procedure is in the
-[Stage 15 plan](../../../development/stage-15.md#getting-and-using-a-nasa-firms-map_key).
+[Stage 15 plan](../../../development/20260815_stage-15.md#getting-and-using-a-nasa-firms-map_key).
 
 Supply another already-normalized, matching dataset with Make variables:
 

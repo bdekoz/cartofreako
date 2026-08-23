@@ -7,7 +7,7 @@ title: Artifact catalog, selection, and decision receipts
 
 [Runtime index](README.md) ·
 [1080p and AI-agent products](ai-agent-and-1080p-gaming.md) ·
-[Stage 14 ledger](../../development/stage-14.md)
+[Stage 14 ledger](../../development/20260815_stage-14.md)
 
 Stage 14 provides a deterministic, offline bridge from an agent or application
 request to one existing Cartofreako artifact. It does not authorize external

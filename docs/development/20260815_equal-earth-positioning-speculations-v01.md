@@ -36,7 +36,7 @@ outputs:
 
 # Equal Earth positioning and slice speculations v01
 
-[Development records](README.md) · [Stage 16 ledger](stage-16.md) ·
+[Development records](README.md) · [Stage 16 ledger](20260815_stage-16.md) ·
 [Equal Earth implementation](../pages/projections/equal-earth/implementation.md)
 
 These five 2560 × 1440 PNGs implement the Stage 16J one-to-five comparison

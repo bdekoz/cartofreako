@@ -89,12 +89,12 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | --- | --- |
 | Installation and build dependencies | [Prerequisites](docs/pages/getting-started/prerequisites.md) |
 | SVG/PDF/PNG generation, Natural Earth, folding, slicing, and review | [Generation guide](docs/pages/getting-started/generation.md) |
-| Stage 12 resource, authorization, default-year, snapshot, and Star-X integration | [Stage 12 implementation notes](docs/development/stage-12.md) |
-| Stage 13 visual, observer, external-source, and bathymetry development | [Stage 13 convergence notes](docs/development/stage-13.md) |
-| Stage 14 projection API, visual hierarchy, verification, and release plan | [Stage 14 convergence ledger](docs/development/stage-14.md) |
-| Closed Stage 15 GPU controls, consumer layout, Majuro full pass, and Anthropocene experiments | [Stage 15 closed ledger](docs/development/stage-15.md), [atoll report](reports/stage-15-atoll-evidence-canary.md), and [water-debris report](reports/stage-15-water-debris-feasibility.md) |
-| Stage 16 compressed GPU evidence, atoll expansion, and agentic atlas research | [Stage 16 development ledger](docs/development/stage-16.md) |
-| Equal Earth control, Africa-centered variant, and one-to-five projection/slice comparisons | [Stage 16J positioning speculations](docs/development/equal-earth-positioning-speculations-v01.md) |
+| Stage 12 resource, authorization, default-year, snapshot, and Star-X integration | [Stage 12 implementation notes](docs/development/20260815_stage-12.md) |
+| Stage 13 visual, observer, external-source, and bathymetry development | [Stage 13 convergence notes](docs/development/20260815_stage-13.md) |
+| Stage 14 projection API, visual hierarchy, verification, and release plan | [Stage 14 convergence ledger](docs/development/20260815_stage-14.md) |
+| Closed Stage 15 GPU controls, consumer layout, Majuro full pass, and Anthropocene experiments | [Stage 15 closed ledger](docs/development/20260815_stage-15.md), [atoll report](reports/stage-15-atoll-evidence-canary.md), and [water-debris report](reports/stage-15-water-debris-feasibility.md) |
+| Stage 16 compressed GPU evidence, atoll expansion, and agentic atlas research | [Stage 16 development ledger](docs/development/20260815_stage-16.md) |
+| Equal Earth control, Africa-centered variant, and one-to-five projection/slice comparisons | [Stage 16J positioning speculations](docs/development/20260815_equal-earth-positioning-speculations-v01.md) |
 | AI-agent discovery, 1080p gaming derivatives, and preservation of authoritative archive/art/print products | [AI Workflows assessment and 1080p gaming improvement plan](docs/pages/runtime/ai-agent-and-1080p-gaming.md) |
 | Visual contact sheets for every projection and released pass | [Visual gallery](docs/pages/gallery/README.md) and [generated projection snapshots](#generated-artifact-previews) |
 | Compact index of build, projection, pass, browser, and release documentation | [Technical documentation](docs/pages/README.md) |
@@ -117,7 +117,7 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | All-six-projection browser runtime, slices, workers, SVG, Canvas, and D3 | [WebAssembly quick start](docs/pages/runtime/webassembly-quick-start.md) and [runtime reference](src.wasm/README.md) |
 | Structured forward results and face-qualified reverse candidates | [Forward/reverse projection API](docs/pages/runtime/projection-api.md) |
 | Stage 10 browser architecture and verification | [Stage 10 implementation notes](docs/pages/runtime/webassembly-architecture.md) |
-| Implemented topic-oriented Pages structure and repository ownership | [Documentation architecture](docs/development/documentation-layout.md) |
+| Implemented topic-oriented Pages structure and repository ownership | [Documentation architecture](docs/development/20260815_documentation-layout.md) |
 | Illustrative raster-backed Myriahedral overlay | [WebAssembly workflow](docs/pages/runtime/myriahedral-workflow.md) and [complete example](docs/pages/runtime/myriahedral-example.md) |
 
 Each projection has three complementary documents. Context explains the
@@ -522,7 +522,7 @@ the `voronoi_source` preset are in the
 | [Cloud-atmosphere implementation](docs/pages/passes/cloud-atmosphere.md) | Stage 4.1a feasibility, astronomy boundary, JAXA sources, process time, P-Tree QA, H3 preparation, products, terms, verification, and limits |
 | [P-Tree production download](docs/pages/data/ptree-download.md) | Quick-start P-Tree registration, secure credentials, connection test, reproducible production refresh, expected files, and troubleshooting |
 | [Orbital Technosphere implementation](docs/pages/passes/orbital-technosphere.md) | Stage 4.2 feasibility, naming, NASA/CelesTrak source roles, OMM/SGP4 formulas, products, verification, and accuracy boundary |
-| [Stage 12 implementation](docs/development/stage-12.md) | Stage 12 resource expansion, Anthropocene defaults, external authorization, render hardware, generated snapshots, and Star-X paint-order integration |
+| [Stage 12 implementation](docs/development/20260815_stage-12.md) | Stage 12 resource expansion, Anthropocene defaults, external authorization, render hardware, generated snapshots, and Star-X paint-order integration |
 | [Visual gallery](docs/pages/gallery/README.md) | Projection comparison, featured subjects, and entry points to all six 33-pass contact sheets |
 | [Technical documentation](docs/pages/README.md) | Compact build, projection, pass-lifecycle, browser, release, and preservation index |
 | `_data/generated_passes.yml` | Canonical 33-pass labels, stems, alternate text, categories, and stable section identifiers |

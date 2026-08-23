@@ -28,4 +28,4 @@ answer. See the [portable fixtures and independent reverse oracles](../runtime/p
 | Myriahedral | [Context](myriahedral/context.md) | [Implementation](myriahedral/implementation.md) | [Sources](myriahedral/bibliography.md) | [Gallery](../gallery/myriahedral.md) |
 | Star-X | [Context](star-x/context.md) | [Implementation](star-x/implementation.md) | [Sources](star-x/bibliography.md) | [Gallery](../gallery/star-x.md) |
 | Icosahedral Voronoi | [Context](voronoi/context.md) | [Implementation](voronoi/implementation.md) | [Sources](voronoi/bibliography.md) | [Gallery](../gallery/voronoi.md) |
-| Equal Earth *(exploration only)* | [Context](equal-earth/context.md) | [Implementation](equal-earth/implementation.md) | [Sources](equal-earth/bibliography.md) | [Five Stage 16J comparisons](../../development/equal-earth-positioning-speculations-v01.md) |
+| Equal Earth *(exploration only)* | [Context](equal-earth/context.md) | [Implementation](equal-earth/implementation.md) | [Sources](equal-earth/bibliography.md) | [Five Stage 16J comparisons](../../development/20260815_equal-earth-positioning-speculations-v01.md) |
