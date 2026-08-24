@@ -42,18 +42,18 @@ struct field_variation
 // Depth controls form through two Hamonshu-native parameters. Both increase
 // strictly from the 0 m threshold to the deepest Natural Earth polygon.
 inline const std::array depth_styles {
-  depth_style {"bathymetry-0m", 0, 0.55, 0.30, {190, 219, 235}},
-  depth_style {"bathymetry-200m", -200, 0.65, 0.42, {169, 207, 229}},
-  depth_style {"bathymetry-1000m", -1000, 0.75, 0.56, {146, 194, 221}},
-  depth_style {"bathymetry-2000m", -2000, 0.88, 0.72, {122, 178, 211}},
-  depth_style {"bathymetry-3000m", -3000, 1.02, 0.90, {99, 161, 201}},
-  depth_style {"bathymetry-4000m", -4000, 1.18, 1.10, {76, 142, 190}},
-  depth_style {"bathymetry-5000m", -5000, 1.35, 1.35, {58, 124, 176}},
-  depth_style {"bathymetry-6000m", -6000, 1.55, 1.62, {45, 107, 160}},
-  depth_style {"bathymetry-7000m", -7000, 1.78, 1.95, {35, 91, 143}},
-  depth_style {"bathymetry-8000m", -8000, 2.05, 2.30, {27, 76, 125}},
-  depth_style {"bathymetry-9000m", -9000, 2.35, 2.75, {20, 62, 107}},
-  depth_style {"bathymetry-10000m", -10000, 2.70, 3.25, {15, 49, 88}},
+  depth_style {"bathymetry-0m", 0, 0.55, 0.30, {159, 170, 195}},
+  depth_style {"bathymetry-200m", -200, 0.65, 0.42, {140, 150, 185}},
+  depth_style {"bathymetry-1000m", -1000, 0.75, 0.56, {116, 135, 184}},
+  depth_style {"bathymetry-2000m", -2000, 0.88, 0.72, {100, 120, 175}},
+  depth_style {"bathymetry-3000m", -3000, 1.02, 0.90, {84, 104, 169}},
+  depth_style {"bathymetry-4000m", -4000, 1.18, 1.10, {70, 90, 160}},
+  depth_style {"bathymetry-5000m", -5000, 1.35, 1.35, {57, 76, 152}},
+  depth_style {"bathymetry-6000m", -6000, 1.55, 1.62, {40, 55, 136}},
+  depth_style {"bathymetry-7000m", -7000, 1.78, 1.95, {34, 48, 124}},
+  depth_style {"bathymetry-8000m", -8000, 2.05, 2.30, {28, 40, 110}},
+  depth_style {"bathymetry-9000m", -9000, 2.35, 2.75, {22, 32, 96}},
+  depth_style {"bathymetry-10000m", -10000, 2.70, 3.25, {16, 25, 82}},
 };
 
 // Twelve source-indexed wave studies form the spatial vocabulary. The

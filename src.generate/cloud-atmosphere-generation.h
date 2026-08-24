@@ -495,11 +495,15 @@ add_legend(generation::projection_document& document,
 {
   if (!profile.show_legend)
     return;
+  constexpr double panel_width = 24.0;
+  constexpr double panel_height = 1.05;
   svg::group_element layer;
-  layer.start_element("legend-and-provenance");
+  layer.start_element("legend-and-provenance",
+    generation::bottom_right_legend_transform(
+      context, panel_width, panel_height));
   svg::rect_element band;
   band.start_element();
-  band.add_data({0, 0, context.map_frame.width(), 1.05});
+  band.add_data({0, 0, panel_width, panel_height});
   band.add_style({{241, 244, 245}, 0.94, svg::color::none, 0, 0});
   band.finish_element();
   layer.add_element(band);
@@ -516,7 +520,7 @@ add_legend(generation::projection_document& document,
     {0.30, 0.41}, label_typography(0.102, {67, 74, 79}));
 
   const std::size_t columns = 4;
-  const double column_width = (context.map_frame.width() - 0.6) / columns;
+  const double column_width = (panel_width - 0.6) / columns;
   std::size_t position = 0;
   for (const layer_definition& definition : profile.layers)
     if (definition.enabled

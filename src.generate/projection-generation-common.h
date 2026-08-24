@@ -37,6 +37,33 @@ struct projection_document : svg::svg_element
   }
 };
 
+/// Bottom-right legend placement for generated plates. Keeps the compact
+/// panel inside the frame with a fixed margin from the right and bottom
+/// edges so it does not mask cartography (Antarctica overlap is allowed).
+inline svg::point_2t
+bottom_right_legend_origin(const projection_runtime::projection_context& context,
+                           const double panel_width,
+                           const double panel_height)
+{
+  constexpr double margin = 0.30;
+  return {
+    context.map_frame.width() - panel_width - margin,
+    context.map_frame.height() - panel_height - margin,
+  };
+}
+
+/// Transform string that places a legend panel at the bottom-right origin.
+inline std::string
+bottom_right_legend_transform(
+  const projection_runtime::projection_context& context,
+  const double panel_width, const double panel_height)
+{
+  const svg::point_2t origin
+    = bottom_right_legend_origin(context, panel_width, panel_height);
+  return "translate(" + std::to_string(std::get<0>(origin)) + " "
+    + std::to_string(std::get<1>(origin)) + ")";
+}
+
 // The renderer-neutral core is authoritative for projection construction,
 // native-cell classification, and seam routing. These using declarations
 // preserve the established generator API while making native and browser

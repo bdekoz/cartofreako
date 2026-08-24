@@ -229,11 +229,15 @@ add_legend(generation::projection_document& document,
            const groundstations_dataset& dataset,
            const groundstations_profile& profile)
 {
+  constexpr double panel_width = 20.0;
+  constexpr double panel_height = 0.82;
   svg::group_element layer;
-  layer.start_element("network-groundstations-legend-and-provenance");
+  layer.start_element("network-groundstations-legend-and-provenance",
+    generation::bottom_right_legend_transform(
+      context, panel_width, panel_height));
   svg::rect_element band;
   band.start_element();
-  band.add_data({0, 0, context.map_frame.width(), 0.82});
+  band.add_data({0, 0, panel_width, panel_height});
   band.add_style({{226, 230, 228}, 0.96, svg::color::none, 0, 0});
   band.finish_element();
   layer.add_element(band);
@@ -339,7 +343,7 @@ verify(const std::string& generated,
   };
   for (const std::string_view layer : layers)
     network_groundstations_require(
-      generated.find("<g id=\"" + std::string(layer) + "\">")
+      generated.find("<g id=\"" + std::string(layer) + "\"")
         != std::string::npos,
       "generated Network-groundstations SVG is missing layer "
         + std::string(layer));

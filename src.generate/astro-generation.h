@@ -369,7 +369,7 @@ object_style(const sky_object& object)
       || object.kind == "x-ray-transient")
     return {svg::color::none, 0, svg::color::redorange, 1, 0.045};
   if (object.kind == "black-hole")
-    return {svg::color::black, 1, svg::color::magenta, 1, 0.035};
+    return {svg::color::black, 1, svg::color::white, 1, 0.07};
   return {svg::color::mediumpurple, 0.88,
           svg::color::lightcyan, 0.7, 0.012};
 }
@@ -455,10 +455,34 @@ object_attributes(const sky_object& object, const profile& config,
 }
 
 inline void
+make_stationary_rays(svg::group_element& layer, const svg::point_2t origin,
+                     const sky_object& object)
+{
+  // Deterministic ten-ray ornament for fixed catalog points. Equivalent to
+  // Izzi make_line_rays(n=10) but with fixed angles so regenerated plates
+  // remain checksum-stable.
+  constexpr std::size_t nrays = 10;
+  constexpr double tau = 6.2831853071795864769;
+  const double radius = 3.0 * marker_radius(object);
+  const svg::style style {svg::color::none, 0, svg::color::white, 0.6, 0.01};
+  svg::group_element rays;
+  rays.start_element("stationary-rays-" + xml_escape(object.id));
+  for (std::size_t index = 0; index < nrays; ++index)
+    {
+      const double angle = tau * static_cast<double>(index) / nrays;
+      const double end_x = std::get<0>(origin) + radius * std::cos(angle);
+      const double end_y = std::get<1>(origin) + radius * std::sin(angle);
+      rays.add_element(svg::make_line(origin, {end_x, end_y}, style));
+    }
+  rays.finish_element();
+  layer.add_element(rays);
+}
+
+inline void
 add_marker(svg::group_element& layer,
            const generation::projection_context& context,
            const profile& config, const observer_state& state,
-           const sky_object& object)
+           const sky_object& object, const std::string_view layer_name)
 {
   svg::point_2t point;
   try
@@ -471,6 +495,12 @@ add_marker(svg::group_element& layer,
       throw std::runtime_error("failed to project " + object.id + ": "
                                + error.what());
     }
+  // Objects at the projection seam (3C 273 on the AuthaGraph left edge)
+  // must stay fully inside the frame.
+  point = {
+    std::max(std::get<0>(point), marker_radius(object)),
+    std::get<1>(point),
+  };
   svg::circle_element marker;
   marker.start_element();
   marker.add_data({std::get<0>(point), std::get<1>(point),
@@ -487,7 +517,7 @@ add_marker(svg::group_element& layer,
                       && *object.apparent_angular_radius_deg > 0,
                     "planet is missing its apparent angular radius");
       const svg::style true_size_style {
-        svg::color::none, 0, svg::color::white, 0.95, 0.001,
+        svg::color::none, 0, svg::color::white, 1, 0.002,
       };
       const auto segments = project_celestial_path(
         context, config,
@@ -507,6 +537,10 @@ add_marker(svg::group_element& layer,
             + "\" stroke-dasharray=\"0.001 0.001\""
               " stroke-linecap=\"round\""));
     }
+  if (layer_name == "deep-sky" || layer_name == "transients"
+      || (layer_name == "solar-system"
+          && (object.kind == "asteroid" || object.kind == "comet")))
+    make_stationary_rays(layer, point, object);
 }
 
 inline std::vector<right_ascension_declination>
@@ -569,7 +603,7 @@ label_typography()
     svg::k::hyperl_typo);
   result._M_size = 0.17;
   result._M_style = {
-    svg::color::gray05, 0.95, svg::color::midnightblue, 0.75, 0.01,
+    svg::color::gray05, 0.95, svg::color::white, 0.75, 0.05,
   };
   result._M_anchor = svg::typography::anchor::start;
   result._M_align = svg::typography::align::left;
@@ -593,9 +627,11 @@ add_label(svg::group_element& labels,
       throw std::runtime_error("failed to project label " + object.id + ": "
                                + error.what());
     }
+  constexpr double left_inset = 0.15;
   const svg::point_2t label_point {
     std::min(context.map_frame.width() - 0.05,
-             std::get<0>(point) + marker_radius(object) + 0.04),
+             std::max(left_inset,
+                      std::get<0>(point) + marker_radius(object) + 0.04)),
     std::get<1>(point),
   };
   svg::styled_text(labels, xml_escape(object.name), label_point,
@@ -632,7 +668,7 @@ add_object_layer(generation::projection_document& document,
         continue;
       if (layer_name == "transients")
         add_uncertainty(layer, context, config, object);
-      add_marker(layer, context, config, state, object);
+      add_marker(layer, context, config, state, object, layer_name);
       if (label_count < config.display.maximum_labels
           && should_label(object, layer_name, layer_index))
         {
@@ -648,17 +684,21 @@ add_object_layer(generation::projection_document& document,
 
 inline void
 add_background(generation::projection_document& document,
-               const generation::projection_context& context)
+               const generation::projection_context& context,
+               const profile& config, const product_kind product)
 {
+  svg::color_qi background = {0, 1, 108};
+  if (product == product_kind::observer)
+    background = config.observer.kind == observer_kind::terrestrial
+      ? svg::color_qi {0, 1, 139}
+      : svg::color_qi {116, 0, 89};
   svg::group_element layer;
   layer.start_element("astronomy-background");
   svg::rect_element rectangle;
   rectangle.start_element();
   rectangle.add_data({0, 0, context.map_frame.width(),
                       context.map_frame.height()});
-  rectangle.add_style({
-    svg::color::midnightblue, 1, svg::color::none, 0, 0,
-  });
+  rectangle.add_style({background, 1, svg::color::none, 0, 0});
   rectangle.add_raw("id=\"night-sky-background\"");
   rectangle.finish_element();
   layer.add_element(rectangle);
@@ -770,7 +810,7 @@ generate(const generation::projection_spec& spec, const product_kind product,
       + config.instrument.name + " at " + config.calculation_time.iso_utc,
     context.map_frame.frame_area);
   document.add_raw(metadata_element(config, product, state));
-  add_background(document, context);
+  add_background(document, context, config, product);
   add_reference_lines(document, context, config, product, state);
 
   svg::group_element labels;
@@ -830,7 +870,7 @@ verify(const std::string& generated,
     "exoplanet-hosts", "deep-sky", "solar-system", "transients", "labels",
   };
   for (const std::string_view layer : layers)
-    astro_require(generated.find("<g id=\"" + std::string(layer) + "\">")
+    astro_require(generated.find("<g id=\"" + std::string(layer) + "\"")
                     != std::string::npos,
                   "generated astronomy SVG is missing layer "
                     + std::string(layer));

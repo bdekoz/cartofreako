@@ -511,11 +511,15 @@ add_legend(generation::projection_document& document,
            const generation::projection_context& context,
            const swarm_dataset& dataset, const network_swarm_profile& config)
 {
+  constexpr double panel_width = 20.0;
+  constexpr double panel_height = 0.82;
   svg::group_element layer;
-  layer.start_element("legend-and-provenance");
+  layer.start_element("legend-and-provenance",
+    generation::bottom_right_legend_transform(
+      context, panel_width, panel_height));
   svg::rect_element band;
   band.start_element();
-  band.add_data({0, 0, context.map_frame.width(), 0.82});
+  band.add_data({0, 0, panel_width, panel_height});
   band.add_style({{226, 230, 228}, 0.96, svg::color::none, 0, 0});
   band.finish_element();
   layer.add_element(band);
@@ -535,7 +539,7 @@ add_legend(generation::projection_document& document,
   field_typography._M_anchor = svg::typography::anchor::end;
   field_typography._M_align = svg::typography::align::right;
   svg::styled_text(layer, fields,
-                   {context.map_frame.width() - 0.32, 0.62},
+                   {panel_width - 0.32, 0.62},
                    field_typography);
   layer.finish_element();
   document.add_element(layer);
@@ -665,7 +669,7 @@ verify(const std::string& generated,
     "downloaders-proxy", "labels", "legend-and-provenance",
   };
   for (const std::string_view layer : layers)
-    network_swarm_require(generated.find("<g id=\"" + std::string(layer) + "\">")
+    network_swarm_require(generated.find("<g id=\"" + std::string(layer) + "\"")
                       != std::string::npos,
                     "generated Network-swarm SVG is missing layer "
                       + std::string(layer));

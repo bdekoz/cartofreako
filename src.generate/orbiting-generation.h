@@ -150,7 +150,7 @@ add_background(generation::projection_document& document,
   rectangle.add_data({0, 0, context.map_frame.width(),
                       context.map_frame.height()});
   rectangle.add_style({
-    product == product_kind::global ? svg::color_qi {10, 28, 39}
+    product == product_kind::global ? svg::color_qi {242, 244, 243}
                                     : svg::color_qi {5, 12, 31},
     1, svg::color::none, 0, 0,
   });
@@ -170,7 +170,7 @@ add_subdued_land(generation::projection_document& document,
   const natural_earth::layer_spec land {
     "terrestrial-land", "Subdued Natural Earth 1:10m land",
     "ne_10m_land.shp", natural_earth::geometry_role::area,
-    natural_earth::area_style({34, 56, 58}), 0.06, 0.75,
+    natural_earth::area_style({216, 221, 219}), 0.05, 0.82,
   };
   svg::group_element layer;
   layer.start_element(std::string(land.id));
@@ -221,7 +221,11 @@ add_reference_lines(generation::projection_document& document,
   if (config.display.show_reference_lines)
     {
       const svg::style reference_style {
-        svg::color::none, 0, svg::color::gray50, 0.34, 0.014,
+        svg::color::none, 0,
+        product == product_kind::global ? svg::color_qi {75, 75, 75}
+                                        : svg::color::white,
+        product == product_kind::global ? 0.34 : 0.40,
+        product == product_kind::global ? 0.014 : 0.028,
       };
       if (product == product_kind::global)
         {
@@ -293,7 +297,7 @@ marker_style(const propagated_object& object)
     color = svg::color::orange;
   return {color, object.sunlit ? 0.88 : 0.36,
           object.optical_candidate ? svg::color::white : svg::color::none,
-          object.optical_candidate ? 0.9 : 0, 0.009};
+          object.optical_candidate ? 0.9 : 0, 0.018};
 }
 
 inline double
@@ -371,14 +375,14 @@ add_marker(svg::group_element& layer,
 }
 
 inline svg::typography
-label_typography()
+label_typography(const product_kind product)
 {
   svg::typography typography = generation::with_configured_label_font(
     svg::k::hyperl_typo);
   typography._M_size = 0.15;
-  typography._M_style = {
-    svg::color::gray05, 0.92, svg::color::midnightblue, 0.8, 0.01,
-  };
+  typography._M_style = product == product_kind::global
+    ? svg::style {{40, 42, 46}, 0.92, svg::color::none, 0, 0}
+    : svg::style {svg::color::gray05, 0.92, svg::color::white, 0.8, 0.02};
   typography._M_anchor = svg::typography::anchor::start;
   typography._M_align = svg::typography::align::left;
   typography._M_baseline = svg::typography::baseline::central;
@@ -399,7 +403,7 @@ add_label(svg::group_element& labels,
     std::get<1>(point),
   };
   svg::styled_text(labels, xml_escape(object.source.name), label_point,
-                   label_typography());
+                   label_typography(product));
 }
 
 inline bool
@@ -424,7 +428,7 @@ add_tracks(generation::projection_document& document,
     {
       std::unordered_map<std::string, std::size_t> counts;
       const svg::style track_style {
-        svg::color::none, 0, svg::color::gray75, 0.42, 0.012,
+        svg::color::none, 0, svg::color_qi {90, 90, 90}, 0.42, 0.012,
       };
       for (const orbital_object& object : catalogs.objects)
         for (const std::string& group : object.group_ids)
@@ -660,7 +664,7 @@ verify(const std::string& generated,
     "objects-megaconstellation", "objects-human-presence",
   };
   for (const std::string_view layer : object_layers)
-    orbiting_require(generated.find("<g id=\"" + std::string(layer) + "\">")
+    orbiting_require(generated.find("<g id=\"" + std::string(layer) + "\"")
                         != std::string::npos,
                      "generated Orbital Technosphere SVG is missing layer "
                        + std::string(layer));
@@ -668,7 +672,7 @@ verify(const std::string& generated,
     "representative-ground-tracks", "labels", "reference-site",
   };
   for (const std::string_view layer : common_layers)
-    orbiting_require(generated.find("<g id=\"" + std::string(layer) + "\">")
+    orbiting_require(generated.find("<g id=\"" + std::string(layer) + "\"")
                         != std::string::npos,
                      "generated Orbital Technosphere SVG is missing layer "
                        + std::string(layer));

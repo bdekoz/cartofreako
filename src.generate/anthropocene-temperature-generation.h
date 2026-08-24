@@ -439,8 +439,19 @@ add_temperature_legend(generation::projection_document& document,
   static_cast<void>(context);
   if (!profile.show_legend)
     return;
+  constexpr double panel_width = 15.0;
+  constexpr double panel_height = 1.05;
   svg::group_element layer;
-  layer.start_element("legend-and-provenance");
+  layer.start_element("legend-and-provenance",
+    generation::bottom_right_legend_transform(
+      context, panel_width, panel_height));
+  svg::rect_element panel;
+  panel.start_element();
+  panel.add_data({0, 0, panel_width, panel_height});
+  panel.add_style({{250, 249, 244}, 0.93, {62, 61, 57}, 0.62, 0.015});
+  panel.add_raw("id=\"temperature-legend-panel\"");
+  panel.finish_element();
+  layer.add_element(panel);
   svg::typography title = temperature_typography(0.34, {44, 42, 38});
   title._M_w = svg::typography::weight::bold;
   svg::styled_text(layer,
@@ -600,7 +611,7 @@ verify_temperature(const std::string& generated,
   };
   for (const std::string_view layer : layers)
     temperature_require(generated.find("<g id=\"" + std::string(layer)
-                                         + "\">") != std::string::npos,
+                                         + "\"") != std::string::npos,
                         "temperature SVG is missing layer "
                           + std::string(layer));
   temperature_require(generated.find(

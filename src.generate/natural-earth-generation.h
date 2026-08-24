@@ -864,72 +864,72 @@ add_nested_layer(svg::group_element& parent, const layer_spec& spec,
 const std::array bathymetry_specs {
   layer_spec {
     "bathymetry-0m", "Bathymetry 0 m", "ne_10m_bathymetry_L_0.shp",
-    geometry_role::area, area_style({190, 219, 235}), 0.04, 0.5,
+    geometry_role::area, area_style({159, 170, 195}), 0.04, 0.5,
   },
   layer_spec {
     "bathymetry-200m", "Bathymetry -200 m", "ne_10m_bathymetry_K_200.shp",
-    geometry_role::area, area_style({169, 207, 229}), 0.04, 0.5,
+    geometry_role::area, area_style({140, 150, 185}), 0.04, 0.5,
   },
   layer_spec {
     "bathymetry-1000m", "Bathymetry -1,000 m",
     "ne_10m_bathymetry_J_1000.shp", geometry_role::area,
-    area_style({146, 194, 221}), 0.04, 0.5,
+    area_style({116, 135, 184}), 0.04, 0.5,
   },
   layer_spec {
     "bathymetry-2000m", "Bathymetry -2,000 m",
     "ne_10m_bathymetry_I_2000.shp", geometry_role::area,
-    area_style({122, 178, 211}), 0.04, 0.5,
+    area_style({100, 120, 175}), 0.04, 0.5,
   },
   layer_spec {
     "bathymetry-3000m", "Bathymetry -3,000 m",
     "ne_10m_bathymetry_H_3000.shp", geometry_role::area,
-    area_style({99, 161, 201}), 0.04, 0.5,
+    area_style({84, 104, 169}), 0.04, 0.5,
   },
   layer_spec {
     "bathymetry-4000m", "Bathymetry -4,000 m",
     "ne_10m_bathymetry_G_4000.shp", geometry_role::area,
-    area_style({76, 142, 190}), 0.04, 0.5,
+    area_style({70, 90, 160}), 0.04, 0.5,
   },
   layer_spec {
     "bathymetry-5000m", "Bathymetry -5,000 m",
     "ne_10m_bathymetry_F_5000.shp", geometry_role::area,
-    area_style({58, 124, 176}), 0.04, 0.5,
+    area_style({57, 76, 152}), 0.04, 0.5,
   },
   layer_spec {
     "bathymetry-6000m", "Bathymetry -6,000 m",
     "ne_10m_bathymetry_E_6000.shp", geometry_role::area,
-    area_style({45, 107, 160}), 0.04, 0.5,
+    area_style({40, 55, 136}), 0.04, 0.5,
   },
   layer_spec {
     "bathymetry-7000m", "Bathymetry -7,000 m",
     "ne_10m_bathymetry_D_7000.shp", geometry_role::area,
-    area_style({35, 91, 143}), 0.04, 0.5,
+    area_style({34, 48, 124}), 0.04, 0.5,
   },
   layer_spec {
     "bathymetry-8000m", "Bathymetry -8,000 m",
     "ne_10m_bathymetry_C_8000.shp", geometry_role::area,
-    area_style({27, 76, 125}), 0.04, 0.5,
+    area_style({28, 40, 110}), 0.04, 0.5,
   },
   layer_spec {
     "bathymetry-9000m", "Bathymetry -9,000 m",
     "ne_10m_bathymetry_B_9000.shp", geometry_role::area,
-    area_style({20, 62, 107}), 0.04, 0.5,
+    area_style({22, 32, 96}), 0.04, 0.5,
   },
   layer_spec {
     "bathymetry-10000m", "Bathymetry -10,000 m",
     "ne_10m_bathymetry_A_10000.shp", geometry_role::area,
-    area_style({15, 49, 88}), 0.04, 0.5,
+    area_style({16, 25, 82}), 0.04, 0.5,
   },
 };
 
 const layer_spec ocean_spec {
   "ocean", "Ocean", "ne_10m_ocean.shp", geometry_role::area,
-  area_style({209, 228, 239}), 0.04, 0.5,
+  area_style({117, 99, 253}), 0.04, 0.5,
 };
 
 const layer_spec land_spec {
   "land", "Land", "ne_10m_land.shp", geometry_role::area,
-  area_style({221, 215, 190}), 0.03, 0.5,
+  area_style({71, 160, 3}), 0.03, 0.5,
 };
 
 const layer_spec minor_islands_spec {
@@ -1254,7 +1254,7 @@ verify_common(const std::string& generated,
 void
 require_layer(const std::string& generated, const std::string_view layer)
 {
-  require(generated.find("<g id=\"" + std::string(layer) + "\">")
+  require(generated.find("<g id=\"" + std::string(layer) + "\"")
             != std::string::npos,
           "generated SVG is missing layer " + std::string(layer));
 }
@@ -1262,7 +1262,7 @@ require_layer(const std::string& generated, const std::string_view layer)
 void
 reject_layer(const std::string& generated, const std::string_view layer)
 {
-  require(generated.find("<g id=\"" + std::string(layer) + "\">")
+  require(generated.find("<g id=\"" + std::string(layer) + "\"")
             == std::string::npos,
           "generated SVG unexpectedly contains layer " + std::string(layer));
 }

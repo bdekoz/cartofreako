@@ -161,7 +161,7 @@ add_background(generation::projection_document& document,
   rectangle.start_element();
   rectangle.add_data({0, 0, context.map_frame.width(),
                       context.map_frame.height()});
-  rectangle.add_style({{246, 242, 232}, 1, svg::color::none, 0, 0});
+  rectangle.add_style({{252, 248, 245}, 1, svg::color::none, 0, 0});
   rectangle.add_raw("id=\"anthropocene-particulate-ground\"");
   rectangle.finish_element();
   layer.add_element(rectangle);
@@ -456,12 +456,16 @@ add_legend(generation::projection_document& document,
 {
   if (!profile.show_legend)
     return;
+  constexpr double panel_width = 24.0;
+  constexpr double panel_height = 1.25;
   svg::group_element layer;
-  layer.start_element("legend-and-provenance");
+  layer.start_element("legend-and-provenance",
+    generation::bottom_right_legend_transform(
+      context, panel_width, panel_height));
   svg::rect_element band;
   band.start_element();
-  band.add_data({0, 0, context.map_frame.width(), 1.25});
-  band.add_style({{249, 247, 240}, 0.94, svg::color::none, 0, 0});
+  band.add_data({0, 0, panel_width, panel_height});
+  band.add_style({{255, 255, 255}, 0.94, svg::color::none, 0, 0});
   band.finish_element();
   layer.add_element(band);
 
@@ -482,7 +486,7 @@ add_legend(generation::projection_document& document,
     if (profile.metrics[index].enabled)
       enabled.push_back(index);
   const std::size_t columns = 5;
-  const double usable_width = context.map_frame.width() - 0.6;
+  const double usable_width = panel_width - 0.6;
   const double column_width = usable_width / columns;
   for (std::size_t position = 0; position < enabled.size(); ++position)
     {
@@ -617,7 +621,7 @@ verify(const std::string& generated,
     std::string_view {"coverage-note"},
   };
   for (const std::string_view layer : required_layers)
-    anthropocene_require(generated.find("<g id=\"" + std::string(layer) + "\">")
+    anthropocene_require(generated.find("<g id=\"" + std::string(layer) + "\"")
                            != std::string::npos,
                          "generated Anthropocene SVG is missing layer "
                            + std::string(layer));

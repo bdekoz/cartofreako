@@ -199,11 +199,15 @@ add_fiber_legend(generation::projection_document& document,
                  const generation::projection_context& context,
                  const fiber_dataset& dataset)
 {
+  constexpr double panel_width = 22.0;
+  constexpr double panel_height = 1.08;
   svg::group_element layer;
-  layer.start_element("network-fiber-legend-and-provenance");
+  layer.start_element("network-fiber-legend-and-provenance",
+    generation::bottom_right_legend_transform(
+      context, panel_width, panel_height));
   svg::rect_element band;
   band.start_element();
-  band.add_data({0, 0, context.map_frame.width(), 1.08});
+  band.add_data({0, 0, panel_width, panel_height});
   band.add_style({{226, 230, 228}, 0.97, svg::color::none, 0, 0});
   band.finish_element();
   layer.add_element(band);
@@ -235,7 +239,7 @@ add_fiber_legend(generation::projection_document& document,
   attribution._M_align = svg::typography::align::right;
   svg::styled_text(layer,
     "TeleGeography map data · CC BY-NC-SA 3.0",
-    {context.map_frame.width() - 0.32, 1.00}, attribution);
+    {panel_width - 0.32, 1.00}, attribution);
   layer.finish_element();
   document.add_element(layer);
 }
@@ -339,7 +343,7 @@ verify(const std::string& generated,
   };
   for (const std::string_view layer : layers)
     infrastructure::infrastructure_require(
-      generated.find("<g id=\"" + std::string(layer) + "\">")
+      generated.find("<g id=\"" + std::string(layer) + "\"")
         != std::string::npos,
       "generated fiber-synthesized SVG is missing layer "
         + std::string(layer));

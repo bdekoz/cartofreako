@@ -56,51 +56,51 @@ struct field_variation
 inline const std::array depth_styles {
   depth_style {
     "bathymetry-0m", 0, svg::roulette_kind::epitrochoid,
-    1, 1, 1.00, curve_paint::filled, {190, 219, 235},
+    1, 1, 1.00, curve_paint::filled, {159, 170, 195},
   },
   depth_style {
     "bathymetry-200m", -200, svg::roulette_kind::epitrochoid,
-    1, 1, 1.12, curve_paint::filled, {169, 207, 229},
+    1, 1, 1.12, curve_paint::filled, {140, 150, 185},
   },
   depth_style {
     "bathymetry-1000m", -1000, svg::roulette_kind::epitrochoid,
-    1, 1, 1.25, curve_paint::filled, {146, 194, 221},
+    1, 1, 1.25, curve_paint::filled, {116, 135, 184},
   },
   depth_style {
     "bathymetry-2000m", -2000, svg::roulette_kind::epitrochoid,
-    2, 1, 1.40, curve_paint::filled, {122, 178, 211},
+    2, 1, 1.40, curve_paint::filled, {100, 120, 175},
   },
   depth_style {
     "bathymetry-3000m", -3000, svg::roulette_kind::epitrochoid,
-    2, 1, 1.60, curve_paint::filled, {99, 161, 201},
+    2, 1, 1.60, curve_paint::filled, {84, 104, 169},
   },
   depth_style {
     "bathymetry-4000m", -4000, svg::roulette_kind::epitrochoid,
-    3, 1, 1.85, curve_paint::filled, {76, 142, 190},
+    3, 1, 1.85, curve_paint::filled, {70, 90, 160},
   },
   depth_style {
     "bathymetry-5000m", -5000, svg::roulette_kind::epitrochoid,
-    3, 1, 2.15, curve_paint::filled, {58, 124, 176},
+    3, 1, 2.15, curve_paint::filled, {57, 76, 152},
   },
   depth_style {
     "bathymetry-6000m", -6000, svg::roulette_kind::hypotrochoid,
-    4, 1, 2.50, curve_paint::filled, {45, 107, 160},
+    4, 1, 2.50, curve_paint::filled, {40, 55, 136},
   },
   depth_style {
     "bathymetry-7000m", -7000, svg::roulette_kind::epitrochoid,
-    5, 2, 2.90, curve_paint::filled, {35, 91, 143},
+    5, 2, 2.90, curve_paint::filled, {34, 48, 124},
   },
   depth_style {
     "bathymetry-8000m", -8000, svg::roulette_kind::hypotrochoid,
-    5, 2, 3.40, curve_paint::filled, {27, 76, 125},
+    5, 2, 3.40, curve_paint::filled, {28, 40, 110},
   },
   depth_style {
     "bathymetry-9000m", -9000, svg::roulette_kind::hypotrochoid,
-    11, 7, 4.10, curve_paint::filled, {20, 62, 107},
+    11, 7, 4.10, curve_paint::filled, {22, 32, 96},
   },
   depth_style {
     "bathymetry-10000m", -10000, svg::roulette_kind::epitrochoid,
-    11, 7, 5.00, curve_paint::filled, {15, 49, 88},
+    11, 7, 5.00, curve_paint::filled, {16, 25, 82},
   },
 };
 

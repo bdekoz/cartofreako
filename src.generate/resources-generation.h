@@ -163,7 +163,7 @@ add_resources_background(generation::projection_document& document,
   rectangle.start_element();
   rectangle.add_data({0, 0, context.map_frame.width(),
                       context.map_frame.height()});
-  rectangle.add_style({{239, 238, 231}, 1, svg::color::none, 0, 0});
+  rectangle.add_style({{241, 241, 241}, 1, svg::color::none, 0, 0});
   rectangle.add_raw("id=\"resources-ground\"");
   rectangle.finish_element();
   layer.add_element(rectangle);
@@ -667,11 +667,13 @@ add_resources_legend(generation::projection_document& document,
   const auto [minimum, maximum] = resource_value_range(selected_values);
   const coverage_definition& coverage = *metric.coverage;
   svg::group_element layer;
-  layer.start_element("resource-legend");
   const double width = std::min(14.5, context.map_frame.width() - 0.6);
   const double height = 1.38;
   const double left = 0.30;
   const double top = 0.30;
+  layer.start_element("resource-legend", "translate("
+    + std::to_string(context.map_frame.width() - width - 0.60) + " "
+    + std::to_string(context.map_frame.height() - height - 0.60) + ")");
   svg::rect_element panel;
   panel.start_element();
   panel.add_data({left, top, width, height});
@@ -756,11 +758,13 @@ add_resources_spatial_legend(
                     "spatial legend requires spatial metadata");
   const spatial_definition& spatial = *metric.spatial;
   svg::group_element layer;
-  layer.start_element("resource-legend");
   const double width = std::min(14.5, context.map_frame.width() - 0.6);
   const double height = 1.38;
   const double left = 0.30;
   const double top = 0.30;
+  layer.start_element("resource-legend", "translate("
+    + std::to_string(context.map_frame.width() - width - 0.60) + " "
+    + std::to_string(context.map_frame.height() - height - 0.60) + ")");
   svg::rect_element panel;
   panel.start_element();
   panel.add_data({left, top, width, height});
@@ -908,7 +912,7 @@ verify_generated_resources(
     std::string_view {"resource-legend"},
   };
   for (const std::string_view layer : common_layers)
-    resources_require(generated.find("<g id=\"" + std::string(layer) + "\">")
+    resources_require(generated.find("<g id=\"" + std::string(layer) + "\"")
                         != std::string::npos,
                       "generated resources SVG is missing layer "
                         + std::string(layer));
@@ -921,7 +925,7 @@ verify_generated_resources(
       };
       for (const std::string_view layer : country_layers)
         resources_require(
-          generated.find("<g id=\"" + std::string(layer) + "\">")
+          generated.find("<g id=\"" + std::string(layer) + "\"")
             != std::string::npos,
           "generated country resources SVG is missing layer "
             + std::string(layer));

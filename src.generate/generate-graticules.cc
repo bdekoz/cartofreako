@@ -392,16 +392,16 @@ generate_graticules(const projection_spec& spec)
   const natural_earth::antarctic_cap* cap
     = polar_cap.has_value() ? &*polar_cap : nullptr;
   const svg::style latitude_style {
-    svg::color::none, 0, svg::color::steelblue, 0.55, 0.025,
+    svg::color::none, 0, svg::color_qi {189, 199, 246}, 0.55, 0.025,
   };
   const svg::style latitude_major_style {
-    svg::color::none, 0, svg::color::blue, 0.80, 0.045,
+    svg::color::none, 0, svg::color_qi {168, 180, 240}, 0.80, 0.045,
   };
   const svg::style longitude_style {
-    svg::color::none, 0, svg::color::asamaorange, 0.50, 0.025,
+    svg::color::none, 0, svg::color_qi {238, 167, 171}, 0.50, 0.025,
   };
   const svg::style longitude_major_style {
-    svg::color::none, 0, svg::color::red, 0.75, 0.045,
+    svg::color::none, 0, svg::color_qi {224, 130, 138}, 0.75, 0.045,
   };
   const svg::typography latitude_typography
     = make_label_typography(svg::color::blue);

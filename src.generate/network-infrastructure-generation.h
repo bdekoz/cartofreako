@@ -745,11 +745,15 @@ add_legend(generation::projection_document& document,
            const infrastructure_dataset& dataset,
            const infrastructure_profile& profile)
 {
+  constexpr double panel_width = 20.0;
+  constexpr double panel_height = 0.96;
   svg::group_element layer;
-  layer.start_element("network-infrastructure-legend-and-provenance");
+  layer.start_element("network-infrastructure-legend-and-provenance",
+    generation::bottom_right_legend_transform(
+      context, panel_width, panel_height));
   svg::rect_element band;
   band.start_element();
-  band.add_data({0, 0, context.map_frame.width(), 0.96});
+  band.add_data({0, 0, panel_width, panel_height});
   band.add_style({{226, 230, 228}, 0.96, svg::color::none, 0, 0});
   band.finish_element();
   layer.add_element(band);
@@ -787,7 +791,7 @@ add_legend(generation::projection_document& document,
     : "cloud_cdn_cache: ODC-By 1.0; source-specific terms retained · "
       + profile.cloud.snapshot + " snapshot";
   svg::styled_text(layer, notice,
-    {context.map_frame.width() - 0.32, 0.81}, attribution);
+    {panel_width - 0.32, 0.81}, attribution);
   layer.finish_element();
   document.add_element(layer);
 }
@@ -968,7 +972,7 @@ verify(const std::string& generated,
       : std::span<const std::string_view>(topology_layers);
   for (const std::string_view layer : layers)
     infrastructure_require(generated.find("<g id=\"" + std::string(layer)
-                                            + "\">") != std::string::npos,
+                                            + "\"") != std::string::npos,
       "generated infrastructure SVG is missing layer " + std::string(layer));
   infrastructure_require(generated.find(
     "id=\"network-infrastructure-metadata\"") != std::string::npos
