@@ -5,8 +5,8 @@ Status date: 2026-08-23 (America/Los_Angeles).
 This proposes the v15.1 color/style revision for Cartofreako generated
 imagery. It responds to
 [`20260823_map_msp_color_style_edit_v2.md`](20260823_map_msp_color_style_edit_v2.md)
-(the human review of the v15 artifacts). Nothing here is implemented yet: no
-generator, profile, Makefile, or generated artifact has been changed.
+(the human review of the v15 artifacts). Implementation status is recorded
+in section 7.
 
 ## 1. Requirements restated
 
@@ -280,3 +280,52 @@ are regenerated.
 4. Stage 4: astro label/ray fixes (item 4).
 5. Stage 5: full regeneration, gates, compare report, v15.1 archive.
 6. Optional parallel: sol-5.6 pilot against stages 2 and 4 outputs.
+
+## 7. Implementation status — 2026-08-23
+
+Stages 2 through 5 are complete and committed as `c189ab6`
+(pushed to `main`; `c2df594..c189ab6`).
+
+- **Item 1, colors.** Adopted the revised palettes: earth ocean
+  `rgb(117,99,253)` and land `rgb(71,160,3)`; the 12-band bathymetry ramp
+  remapped consistently in the Natural Earth specs, Hamonshu styles, and
+  roulette styles; astro backgrounds set per product (all-sky
+  `rgb(0,1,108)`, ground multiband `rgb(0,1,139)`, Hubble `rgb(116,0,89)`);
+  anthropocene particulate ground `rgb(252,248,245)` with white legend
+  band; resources ground `rgb(241,241,241)`; graticule linework recolored
+  to the revised lavender/salmon family. Shared constants propagate to
+  every projection.
+- **Item 2, legends.** Added
+  `bottom_right_legend_origin`/`bottom_right_legend_transform` to
+  `projection-generation-common.h` and retargeted eight legend sites
+  (particulate, temperature, network swarm/groundstations/infrastructure,
+  fiber, cloud-atmosphere, and both resource legends) to compact
+  bottom-right panels via a real `transform` attribute.
+- **Item 3, orbital background.** Global technosphere ocean changed to
+  `rgb(242,244,243)` with land `rgb(216,221,219)` at 0.05/0.82 to match
+  the network-groundstations plate; orbital labels, reference lines, and
+  tracks are now product-aware for contrast on the light field. Observer
+  night-sky variant stays dark.
+- **Item 4, astro.** Label stroke is white `0.05` across all astro labels;
+  `3C 273` and its marker are clamped inside the frame; the shared planet
+  true-angular-size outline is white `0.002` at full opacity (fixes
+  Mercury, Venus, Jupiter, Uranus); both black-hole rings (Sgr A\*, M87\*)
+  are white `0.07`; and deterministic ten-ray groups were added for all
+  stationary objects (deep-sky, transients, asteroids, and comets — 11
+  objects in the ground-multiband plate). The Hubble addition was folded
+  into the same shared constants.
+- **Item 5, grayscale derivation.** Produced
+  `earth-authagraph-44-19.052559.gray-blue17-green29.webp` with
+  `gray = 0.17*blue + 0.29*green`.
+- **Regeneration and verification.** The full pipeline regenerated all
+  217 screen-1080p PNG/WebP pairs plus the catalog (every projection, since
+  the colors and legends are shared). `make check-docs` passes (141 files,
+  1337 links). AuthaGraph full-map PNGs measure against the revised
+  references at RMSE 0.0225 (earth), 0.0402 (astro ground), 0.0566 (water),
+  0.0739 (graticules), 0.0710 (resources wind), and 0.0734 (particulate
+  2025); the resources/particulate figures include the intentional
+  bottom-right legend relocation, which the reference copies do not have.
+
+Open for the reviewer: the AuthaGraph internal-consistency pass, the RMSE
+eyeball pass on the regenerated plates, v15.1 tarball/manifest archiving,
+and the optional sol-5.6 pilot (not needed for the current result).
