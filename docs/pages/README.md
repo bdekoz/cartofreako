@@ -9,12 +9,14 @@ Use the [visual gallery](gallery/README.md) to browse the release first. This pa
 the compact route into building, projection mathematics, pass semantics,
 browser integration, verification, and preservation.
 
-The gallery is the sealed v14 AAO release: 217 standard products across 33
-pass IDs, including the Network Groundstations pass and the dual-year
-Anthropocene particulate/temperature families. Current source development may
-be newer, and Stage 15/16 research products remain local; those changes are
-documented here without claiming they have been uploaded into the immutable
-v14 prefix.
+The gallery serves the selected image backend: the committed top-of-tree
+snapshot under `assets.tot/` (the live default) or the immutable v14 AAO
+release, both containing 217 standard products across 33 pass IDs, including
+the Network Groundstations pass and the dual-year Anthropocene
+particulate/temperature families. The backend switch is build-time only and
+recorded in `.github/deploy-backend`; Stage 15/16 research products remain
+local and are documented without claiming they have been uploaded into an
+AAO prefix.
 
 ## Start, build, and generate
 

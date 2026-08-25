@@ -3,6 +3,8 @@ layout: default
 title: Cartofreako
 ---
 
+{% include image-backend.md %}
+
 # Cartofreako
 
 <p class="page-deck">Six projection systems, 32 released whole-map passes
@@ -263,11 +265,13 @@ SVG is never required merely to inspect a larger image.
 - [Star-X snapshot](docs/pages/gallery/star-x.md) — `34 × 44`
 - [Voronoi snapshot](docs/pages/gallery/voronoi.md) — `44 × 22.916667`
 
-All preview, PNG, viewer, and PDF links resolve against the completed
-`cartofreako/v14/` AAO release, so GitHub Pages does not depend on the
-untracked local `assets.generated/` directory. The complete v14 inventory has
-a dedicated 480-pixel thumbnail for all 33 passes in each whole-map
-projection, 198 total; the contact sheets never download a full-size PNG
+All preview and full-image links resolve against the selected image backend:
+the committed top-of-tree snapshot under `assets.tot/` (the live default,
+recorded in `.github/deploy-backend`) or the immutable `cartofreako/v14/`
+AAO release when the deployment is switched. GitHub Pages therefore does not
+depend on the untracked local `assets.generated/` directory. The inventory
+has a dedicated 480-pixel thumbnail for all 33 passes in each whole-map
+projection, 198 total; the contact sheets never download a full-size image
 merely to draw a preview.
 
 The v14 sheets include the new Network Groundstations pass and both dual-year
@@ -542,18 +546,18 @@ the `voronoi_source` preset are in the
 | [`tests/test-generation-profile.cc`](tests/test-generation-profile.cc) | Profile defaults, aliases, all-selection expansion, duplicate detection, and invalid-schema tests |
 | [`src.generate/projection-area-generation.h`](src.generate/projection-area-generation.h) | Face-local Dymaxion, Myriahedral, and Voronoi transforms plus exact planar-triangle clipping for filled paths |
 | [`src.generate/generate-geometry.cc`](src.generate/generate-geometry.cc) | Izzi SVG generator and structural test for native AuthaGraph, Cahill-Keyes/Star-X, Dymaxion, Myriahedral, and Voronoi faces plus four map quadrants |
-| [`geometry-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/cahill-keyes/thumbnail/geometry-ck-44-22.png) | PNG preview of the generated layered Cahill-Keyes face geometry in a 44×22 frame |
+| [`geometry-ck-44-22.png`]({{ release_base }}/products/standard/cahill-keyes/thumbnail/geometry-ck-44-22.png) | PNG preview of the generated layered Cahill-Keyes face geometry in a 44×22 frame |
 | [`src.generate/generate-graticules.cc`](src.generate/generate-graticules.cc) | Izzi SVG generator and structural test for grouped, degree-labeled, discontinuity-split 10° latitude and longitude lines |
-| [`graticules-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/cahill-keyes/thumbnail/graticules-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes graticule with 17 latitudes and 36 longitudes |
+| [`graticules-ck-44-22.png`]({{ release_base }}/products/standard/cahill-keyes/thumbnail/graticules-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes graticule with 17 latitudes and 36 longitudes |
 | [`src.generate/natural-earth-generation.h`](src.generate/natural-earth-generation.h) | Shared GDAL/Izzi renderer and structural checks for the complementary Natural Earth base and overlay layer sets |
 | [`src.generate/generate-earth.cc`](src.generate/generate-earth.cc) | Thin generator entry point for the `ocean` and `land` base layers |
-| [`earth-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/cahill-keyes/thumbnail/earth-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes ocean-and-land base |
+| [`earth-ck-44-22.png`]({{ release_base }}/products/standard/cahill-keyes/thumbnail/earth-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes ocean-and-land base |
 | [`src.generate/generate-water.cc`](src.generate/generate-water.cc) | Thin generator entry point for every Natural Earth physical layer except `ocean` and `land` |
-| [`water-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/cahill-keyes/thumbnail/water-ck-44-22.png) | PNG preview of the complementary 44×22 Cahill-Keyes physical-feature overlay |
+| [`water-ck-44-22.png`]({{ release_base }}/products/standard/cahill-keyes/thumbnail/water-ck-44-22.png) | PNG preview of the complementary 44×22 Cahill-Keyes physical-feature overlay |
 | [`src.generate/bathymetry-roulette-style.h`](src.generate/bathymetry-roulette-style.h) | Validated twelve-depth epitrochoid/hypotrochoid catalogue, twelve field variations, curve construction, palette, and mosaic constants |
 | [`src.generate/generate-bathymetry-roulette.cc`](src.generate/generate-bathymetry-roulette.cc) | Six-projection Natural Earth clip and explicit filled, blue-ramp, Voronoi-grouped roulette-field generator with key and embedded SVG checks |
 | [`tests/test-bathymetry-roulette-style.cc`](tests/test-bathymetry-roulette-style.cc) | Cycloid minimum, depth ordering, equal Voronoi distribution, closure period, curve uniqueness, all-fill, opacity, and identifier tests |
-| [`bathymetry-roulette-ck-44-22.png`](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/cahill-keyes/thumbnail/bathymetry-roulette-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes roulette bathymetry |
+| [`bathymetry-roulette-ck-44-22.png`]({{ release_base }}/products/standard/cahill-keyes/thumbnail/bathymetry-roulette-ck-44-22.png) | PNG preview of the generated 44×22 Cahill-Keyes roulette bathymetry |
 | [`docs/bathymetry-roulette-implementation-notes.md`](docs/pages/passes/bathymetry/roulette.md) | Stage 4.5 feasibility, confirmed catalogue, clipping and layering model, products, verification, accepted moiré, and limits |
 | [`src.generate/bathymetry-hamonshu-style.h`](src.generate/bathymetry-hamonshu-style.h) | Twelve depth parameter pairs, twelve source-indexed Izzi wave motifs, blue ramp, field geometry, and Voronoi mapping |
 | [`src.generate/generate-bathymetry-hamonshu.cc`](src.generate/generate-bathymetry-hamonshu.cc) | Six-projection Natural Earth clip and explicit 30%-opacity Hamonshū wave-field generator |

@@ -1,0 +1,4 @@
+# Override used by the Pages workflow when .github/deploy-backend selects the
+# top-of-tree backend, and by local previews:
+# bundle exec jekyll serve --config _config.yml,_config.tot.yml
+image_backend: tot

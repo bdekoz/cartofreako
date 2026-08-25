@@ -1,12 +1,11 @@
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: Deploy Jekyll with GitHub Pages dependencies preinstalled
+# Build and deploy the Jekyll site to GitHub Pages. The image backend is read
+# from .github/deploy-backend (tot or aao) so switching backends is a
+# committed, reviewable file change that persists until the next edit.
+name: Deploy Jekyll site to GitHub Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -16,13 +15,11 @@ permissions:
   id-token: write
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  # Build job
   build:
     runs-on: ubuntu-latest
     steps:
@@ -32,15 +29,38 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Check documentation links
         run: make check-docs
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
+      - name: Read deployment backend
+        id: backend
+        run: |
+          backend=$(tr -d '[:space:]' < .github/deploy-backend)
+          case "$backend" in
+            aao|tot) ;;
+            *) echo "invalid deploy backend: $backend" >&2; exit 1 ;;
+          esac
+          echo "backend=$backend" >> "$GITHUB_OUTPUT"
+      - name: Verify top-of-tree snapshot
+        if: steps.backend.outputs.backend == 'tot'
+        run: make check-tot-snapshot
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          source: ./
-          destination: ./_site
+          ruby-version: '3.3'
+      - name: Install dependencies
+        run: bundle install
+      - name: Build with Jekyll
+        run: |
+          if [ "${{ steps.backend.outputs.backend }}" = "aao" ]; then
+            bundle exec jekyll build --config _config.yml,_config.aao.yml
+          else
+            bundle exec jekyll build
+          fi
+        env:
+          JEKYLL_ENV: production
+      - name: Check rendered site links
+        run: python3 scripts/check-doc-links.py --walk _site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
-  # Deployment job
   deploy:
     environment:
       name: github-pages

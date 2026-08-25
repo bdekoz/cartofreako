@@ -59,6 +59,15 @@ def repository_files(root: Path) -> list[Path]:
     return sorted(files)
 
 
+def rendered_files(root: Path) -> list[Path]:
+    """List rendered HTML/Markdown files under a built site directory."""
+    return sorted(
+        path.relative_to(root)
+        for path in root.rglob("*")
+        if path.is_file() and path.suffix.lower() in {".html", ".md"}
+    )
+
+
 def github_slug(title: str) -> str:
     title = re.sub(r"!?(?:\[([^\]]+)\]\([^)]*\))", r"\1", title)
     title = re.sub(r"<[^>]+>", "", title)
@@ -199,9 +208,15 @@ def rendered_source(target: Path) -> Path | None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
+    parser.add_argument(
+        "--walk",
+        type=Path,
+        help="validate a rendered site directory (for example _site) instead of git-tracked sources",
+    )
     args = parser.parse_args()
-    root = args.root.resolve()
-    files = repository_files(root)
+    walk_mode = args.walk is not None
+    root = args.walk.resolve() if walk_mode else args.root.resolve()
+    files = rendered_files(root) if walk_mode else repository_files(root)
     anchor_cache: dict[Path, set[str]] = {}
     errors: list[str] = []
     checked = 0
@@ -217,7 +232,11 @@ def main() -> int:
             if resolved is None:
                 errors.append(f"{source}:{line}: missing local target: {destination}")
                 continue
-            if fragment and resolved.suffix.lower() in {".md", ".html"}:
+            if (
+                fragment
+                and not walk_mode
+                and resolved.suffix.lower() in {".md", ".html"}
+            ):
                 anchors = anchor_cache.setdefault(resolved, document_anchors(resolved))
                 if fragment not in anchors:
                     errors.append(

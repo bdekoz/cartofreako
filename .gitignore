@@ -116,5 +116,9 @@ __pycache__/
 # Canonical private-assets root (assets.<hostname>.<user>).
 /assets.*/
 
+# Repo-local top-of-tree preview snapshot (tracked; staged by
+# scripts/build-tot-preview.sh).
+!/assets.tot/
+
 # Date-stamped generated archive bundles.
 /assets.generated.*.tar.xz

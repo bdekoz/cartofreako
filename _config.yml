@@ -6,3 +6,23 @@ sass:
 include:
   - _includes
 
+# Image backend selector. The authoritative deployment choice is recorded in
+# .github/deploy-backend and applied by the Pages workflow; this value is the
+# fallback for local builds and the default backend keys below.
+image_backend: tot
+
+image_backend_aao_label: "AAO v14 (immutable)"
+image_backend_aao_base: https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14
+image_backend_aao_viewer: /docs/releases/viewer.html
+image_backend_aao_full_suffix: .png
+image_backend_aao_full_label: "Full PNG"
+image_backend_aao_layered: true
+image_backend_aao_print: true
+
+image_backend_tot_label: "Top of tree (snapshot)"
+image_backend_tot_base: /assets.tot
+image_backend_tot_viewer: /docs/releases/viewer.html
+image_backend_tot_full_suffix: .webp
+image_backend_tot_full_label: "Full WebP"
+image_backend_tot_layered: false
+image_backend_tot_print: false

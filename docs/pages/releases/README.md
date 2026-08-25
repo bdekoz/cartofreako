@@ -96,16 +96,19 @@ Treat GitHub assets and AAO objects as immutable snapshots. Never replace an upl
 with different bytes under the same tag and filename. Publish a new tag and
 asset name when either the source or generated payload changes.
 
-The current browser-facing mirror is generated assets v14 at the immutable
-Berkeley S3 prefix `cartofreako/v14/`. It exposes the
-lifecycle/projection/format products tree, machine-readable artifact and pass
-indexes, and the versioned runtime for GitHub Pages while retaining the
-manifest and a last-written completion marker. Follow the
-[v14 AAO release record](aao-v14.md); the GitHub source tags remain unchanged.
-Successful applied uploads finish by generating the Devastation Pacific Active
-Archive HTML/PDF report and rendered QA pages. Reports are local delivery
-artifacts outside the immutable prefix and Git; their verification and
-delivery record belongs in the versioned publication notes.
+The GitHub Pages gallery is backend-selectable at build time. The live
+default is the committed top-of-tree snapshot under `assets.tot/`
+(`browse` tier: thumbnails, screen-1080p WebP, and full-resolution WebP),
+recorded in `.github/deploy-backend`; switching that file to `aao` makes the
+deployment resolve imagery from the immutable Berkeley S3 prefix
+`cartofreako/v14/`, which exposes the lifecycle/projection/format products
+tree, machine-readable artifact and pass indexes, and the versioned runtime
+while retaining the manifest and a last-written completion marker. Follow the
+[v14 AAO release record](aao-v14.md); the GitHub source tags remain
+unchanged. Successful applied uploads finish by generating the Devastation
+Pacific Active Archive HTML/PDF report and rendered QA pages. Reports are
+local delivery artifacts outside the immutable prefix and Git; their
+verification and delivery record belongs in the versioned publication notes.
 
 ## Shared transport and documentation authority
 

@@ -1017,6 +1017,7 @@ PUBLIC_TARGETS := all all-experiments all-experiments-fetch \
 	generation-plan list-targets list-experiments \
 	render-marshall-islands-speculations-v01 \
 	render-equal-earth-positioning-v01 \
+	build-tot-preview check-tot-snapshot \
 	release-github release-ucb-aao-s3 \
 	authorize-external \
 	generate-authorized-external generate-snapshots generate-snapshot-all \
@@ -1232,6 +1233,22 @@ check-all-experiments: tests/check-all-experiments.sh Makefile
 
 check-docs: $(DOC_LINK_CHECKER) check-pass-status
 	"$(DOC_LINK_CHECKER)"
+
+TOT_PREVIEW_BUILDER := scripts/build-tot-preview.sh
+TOT_PREVIEW_MANIFEST := assets.tot/manifest.json
+
+build-tot-preview: $(TOT_PREVIEW_BUILDER)
+	bash "$(TOT_PREVIEW_BUILDER)" --tier browse
+
+check-tot-snapshot: $(TOT_PREVIEW_MANIFEST)
+	@recorded=$$(jq -r '.sourceRevision.gitCommit' "$(TOT_PREVIEW_MANIFEST)"); \
+	expected=$$(git rev-parse HEAD); \
+	if [ "$$recorded" != "$$expected" ]; then \
+		printf 'tot snapshot is stale: recorded %s, HEAD %s\n' \
+			"$$recorded" "$$expected"; \
+		exit 1; \
+	fi; \
+	printf 'tot snapshot current at %s\n' "$$recorded"
 
 check-pass-status: $(PASS_STATUS_SCHEMA) $(PASS_STATUS_MANIFEST) \
 		$(PASS_STATUS_CHECKER) $(STANDARD_ARTIFACT_MANIFEST)
