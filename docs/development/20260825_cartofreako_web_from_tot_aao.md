@@ -494,10 +494,11 @@ Modified files:
    `jekyll build --config _config.yml,_config.aao.yml`; diff the two
    `_site` trees to confirm only image bases and the marker/narrative text
    differ.
-2. **Offline proof for TOT.** In the TOT build, assert no generated page
-   references `s3-ewh.ist.berkeley.edu` (`rg` over `_site/`), and load the
-   gallery plus one full WebP with headless Chrome
-   (`google-chrome --headless=new`) while network is unavailable.
+2. **Offline proof for TOT.** In the TOT build, assert no gallery or contact
+   sheet references `s3-ewh.ist.berkeley.edu` (`rg` over
+   `_site/docs/pages/gallery/`); release-record pages may still cite the AAO
+   prefix as documentation. Load the gallery plus one full WebP with headless
+   Chrome (`google-chrome --headless=new`) while network is unavailable.
 3. **Rendered link check.** `scripts/check-doc-links.py --walk _site`
    validates every rendered `src`/`href` against files on disk and flags
    missing objects; the workflow runs it after the build. The source-level
