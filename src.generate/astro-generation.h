@@ -241,7 +241,7 @@ add_reference_lines(generation::projection_document& document,
   if (config.display.show_reference_lines)
     {
       const svg::style equator_style {
-        svg::color::none, 0, svg::color::gray50, 0.45, 0.018,
+        svg::color::none, 0, svg::color::white, 0.45, 0.023,
       };
       const svg::style ecliptic_style {
         svg::color::none, 0, svg::color::gold, 0.65, 0.025,
@@ -464,7 +464,7 @@ make_stationary_rays(svg::group_element& layer, const svg::point_2t origin,
   constexpr std::size_t nrays = 10;
   constexpr double tau = 6.2831853071795864769;
   const double radius = 3.0 * marker_radius(object);
-  const svg::style style {svg::color::none, 0, svg::color::white, 0.6, 0.01};
+  const svg::style style {svg::color::none, 0, svg::color::white, 0.6, 0.02};
   svg::group_element rays;
   rays.start_element("stationary-rays-" + xml_escape(object.id));
   for (std::size_t index = 0; index < nrays; ++index)
@@ -603,7 +603,7 @@ label_typography()
     svg::k::hyperl_typo);
   result._M_size = 0.17;
   result._M_style = {
-    svg::color::gray05, 0.95, svg::color::white, 0.75, 0.05,
+    svg::color::gray05, 0.95, svg::color::white, 0.0, 0.05,
   };
   result._M_anchor = svg::typography::anchor::start;
   result._M_align = svg::typography::align::left;

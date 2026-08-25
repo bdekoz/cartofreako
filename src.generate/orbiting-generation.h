@@ -151,7 +151,7 @@ add_background(generation::projection_document& document,
                       context.map_frame.height()});
   rectangle.add_style({
     product == product_kind::global ? svg::color_qi {242, 244, 243}
-                                    : svg::color_qi {5, 12, 31},
+                                    : svg::color::wcag_lgray,
     1, svg::color::none, 0, 0,
   });
   rectangle.add_raw(product == product_kind::global
@@ -223,7 +223,7 @@ add_reference_lines(generation::projection_document& document,
       const svg::style reference_style {
         svg::color::none, 0,
         product == product_kind::global ? svg::color_qi {75, 75, 75}
-                                        : svg::color::white,
+                                        : svg::color_qi {75, 75, 75},
         product == product_kind::global ? 0.34 : 0.40,
         product == product_kind::global ? 0.014 : 0.028,
       };
@@ -282,7 +282,7 @@ marker_style(const propagated_object& object)
 {
   svg::color_qi color = svg::color::gray75;
   if (object.role == "megaconstellation")
-    color = svg::color::cyan;
+    color = svg::color_qi {255, 29, 16};
   else if (object.role == "navigation")
     color = svg::color::gold;
   else if (object.role == "communications")
@@ -296,7 +296,8 @@ marker_style(const propagated_object& object)
   else if (object.role == "debris")
     color = svg::color::orange;
   return {color, object.sunlit ? 0.88 : 0.36,
-          object.optical_candidate ? svg::color::white : svg::color::none,
+          object.optical_candidate ? svg::color_qi {40, 42, 46}
+                                   : svg::color::none,
           object.optical_candidate ? 0.9 : 0, 0.018};
 }
 
@@ -382,7 +383,7 @@ label_typography(const product_kind product)
   typography._M_size = 0.15;
   typography._M_style = product == product_kind::global
     ? svg::style {{40, 42, 46}, 0.92, svg::color::none, 0, 0}
-    : svg::style {svg::color::gray05, 0.92, svg::color::white, 0.8, 0.02};
+    : svg::style {{40, 42, 46}, 0.92, svg::color::none, 0, 0};
   typography._M_anchor = svg::typography::anchor::start;
   typography._M_align = svg::typography::align::left;
   typography._M_baseline = svg::typography::baseline::central;

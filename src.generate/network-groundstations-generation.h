@@ -162,7 +162,7 @@ add_gateway_links(generation::projection_document& document,
   svg::group_element layer;
   layer.start_element("starlink-gateway-links");
   const svg::style link_style {
-    svg::color::none, 0, {255, 29, 16}, 0.45, 0.006,
+    svg::color::none, 0, {255, 29, 16}, 0.45, 0.0115,
   };
   for (const groundstation_link& station : dataset.stations)
     {
@@ -216,7 +216,7 @@ label_typography(const double size = 0.13,
   svg::typography result = generation::with_configured_label_font(
     svg::k::hyperl_typo);
   result._M_size = size;
-  result._M_style = {color, 1, {250, 251, 250}, 0.94, 0.012};
+  result._M_style = {color, 1, {250, 251, 250}, 0.0, 0.012};
   result._M_anchor = svg::typography::anchor::start;
   result._M_align = svg::typography::align::left;
   result._M_baseline = svg::typography::baseline::central;
@@ -229,8 +229,18 @@ add_legend(generation::projection_document& document,
            const groundstations_dataset& dataset,
            const groundstations_profile& profile)
 {
-  constexpr double panel_width = 20.0;
-  constexpr double panel_height = 0.82;
+  const std::string title_text
+    = xml_escape("NETWORK GROUNDSTATIONS / " + dataset.datestamp);
+  const std::string provenance_text = xml_escape(
+    std::to_string(dataset.stations.size())
+      + " Starlink gateway/pop records  |  "
+      + profile.source_repository);
+  constexpr double page_margin = 0.573;
+  const double panel_width = std::clamp(
+    generation::legend_text_width(title_text, 0.42) + 2 * page_margin,
+    5.0,
+    context.map_frame.width() - 0.6);
+  constexpr double panel_height = 1.16;
   svg::group_element layer;
   layer.start_element("network-groundstations-legend-and-provenance",
     generation::bottom_right_legend_transform(
@@ -238,20 +248,21 @@ add_legend(generation::projection_document& document,
   svg::rect_element band;
   band.start_element();
   band.add_data({0, 0, panel_width, panel_height});
-  band.add_style({{226, 230, 228}, 0.96, svg::color::none, 0, 0});
+  band.add_style({{255, 255, 255}, 0.94, svg::color::none, 0, 0});
   band.finish_element();
   layer.add_element(band);
 
-  svg::typography title = label_typography(0.44, {176, 23, 12});
+  svg::typography title = label_typography(0.42, {42, 40, 36});
   title._M_w = svg::typography::weight::bold;
-  svg::styled_text(layer,
-    xml_escape("NETWORK GROUNDSTATIONS / " + dataset.datestamp),
-    {0.32, 0.27}, title);
-  svg::styled_text(layer,
-    xml_escape(std::to_string(dataset.stations.size())
-      + " Starlink gateway/pop records  |  "
-      + profile.source_repository),
-    {0.32, 0.62}, label_typography(0.112, {55, 67, 72}));
+  title._M_anchor = svg::typography::anchor::end;
+  title._M_align = svg::typography::align::right;
+  svg::styled_text(layer, title_text,
+    {panel_width - page_margin, 0.61}, title);
+  svg::typography provenance = label_typography(0.12, {87, 82, 74});
+  provenance._M_anchor = svg::typography::anchor::end;
+  provenance._M_align = svg::typography::align::right;
+  svg::styled_text(layer, provenance_text,
+    {panel_width - page_margin, 1.00}, provenance);
   layer.finish_element();
   document.add_element(layer);
 }

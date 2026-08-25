@@ -97,33 +97,33 @@ add_fiber_routes(generation::projection_document& document,
       std::string attributes = route_attributes(route);
       if (is_historical)
         {
-          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.015};
+          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.0115};
           attributes += " stroke-dasharray=\"0.0225 0.025\"";
           historical.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
       else if (route.planned)
         {
-          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.0165};
+          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.0115};
           attributes += " stroke-dasharray=\"0.0425 0.0275\"";
           planned.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
       else if (is_activated)
         {
-          style = {svg::color::none, 0, {18, 152, 12}, 0.80, 0.0165};
+          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.0115};
           activated.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
       else if (is_current_only)
         {
-          style = {svg::color::none, 0, {18, 152, 12}, 0.80, 0.015};
+          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.0115};
           current_only.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
       else
         {
-          style = {svg::color::none, 0, {18, 152, 12}, 0.80, 0.014};
+          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.0115};
           shared.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
@@ -170,12 +170,12 @@ add_fiber_landings(generation::projection_document& document,
       if (is_current)
         infrastructure::add_circle(current,
           generation::project_point(context, landing.point),
-          {{0, 75, 96}, 0.70, {0, 55, 70}, 0.82, 0.006}, 0.022,
+          {{0, 75, 96}, 0.70, {0, 0, 0}, 0.80, 0.0115}, 0.022,
           attributes);
       else
         infrastructure::add_circle(historical,
           generation::project_point(context, landing.point),
-          {svg::color::none, 0, {91, 108, 118}, 0.42, 0.008}, 0.018,
+          {svg::color::none, 0, {0, 0, 0}, 0.80, 0.0115}, 0.018,
           attributes);
     }
   historical.finish_element();
@@ -199,8 +199,24 @@ add_fiber_legend(generation::projection_document& document,
                  const generation::projection_context& context,
                  const fiber_dataset& dataset)
 {
-  constexpr double panel_width = 22.0;
-  constexpr double panel_height = 1.08;
+  const std::string title_text = "NETWORK FIBER / "
+    + display_snapshot(dataset.profile.default_snapshot) + " DEFAULT";
+  const std::string counts_text
+    = std::to_string(dataset.current_routes) + " current route features  |  "
+      + std::to_string(dataset.historical_routes)
+      + " unmatched 2022-only routes  |  "
+      + std::to_string(dataset.landings.size()) + " cleaned-union landings";
+  const std::string semantics_text
+    = "green = current/activated  ·  black dashed = planned  ·  black dotted = 2022-only";
+  const std::string note_text
+    = "snapshot-only ≠ construction or decommission";
+  const std::string attribution_text = "TeleGeography map data · CC BY-NC-SA 3.0";
+  constexpr double page_margin = 0.573;
+  const double panel_width = std::clamp(
+    generation::legend_text_width(title_text, 0.42) + 2 * page_margin,
+    5.0,
+    context.map_frame.width() - 0.6);
+  constexpr double panel_height = 1.88;
   svg::group_element layer;
   layer.start_element("network-fiber-legend-and-provenance",
     generation::bottom_right_legend_transform(
@@ -208,38 +224,33 @@ add_fiber_legend(generation::projection_document& document,
   svg::rect_element band;
   band.start_element();
   band.add_data({0, 0, panel_width, panel_height});
-  band.add_style({{226, 230, 228}, 0.97, svg::color::none, 0, 0});
+  band.add_style({{255, 255, 255}, 0.94, svg::color::none, 0, 0});
   band.finish_element();
   layer.add_element(band);
 
   svg::typography title = infrastructure::infrastructure_typography(
-    0.44, {61, 55, 103});
+    0.42, {42, 40, 36});
   title._M_w = svg::typography::weight::bold;
-  svg::styled_text(layer, "NETWORK FIBER / "
-    + display_snapshot(dataset.profile.default_snapshot) + " DEFAULT",
-    {0.32, 0.27}, title);
-  svg::styled_text(layer,
-    std::to_string(dataset.current_routes) + " current route features  |  "
-      + std::to_string(dataset.historical_routes)
-      + " unmatched 2022-only routes  |  "
-      + std::to_string(dataset.landings.size()) + " cleaned-union landings",
-    {0.32, 0.61},
-    infrastructure::infrastructure_typography(0.112, {55, 67, 72}));
-  svg::styled_text(layer,
-    "green = current/activated  ·  black dashed = planned  ·  black dotted = 2022-only",
-    {0.32, 0.82},
-    infrastructure::infrastructure_typography(0.103, {70, 83, 85}));
-  svg::styled_text(layer,
-    "snapshot-only ≠ construction or decommission",
-    {0.32, 1.00},
-    infrastructure::infrastructure_typography(0.095, {116, 87, 0}));
+  title._M_anchor = svg::typography::anchor::end;
+  title._M_align = svg::typography::align::right;
+  svg::styled_text(layer, title_text,
+    {panel_width - page_margin, 0.61}, title);
+  svg::typography body
+    = infrastructure::infrastructure_typography(0.12, {87, 82, 74});
+  body._M_anchor = svg::typography::anchor::end;
+  body._M_align = svg::typography::align::right;
+  svg::styled_text(layer, counts_text,
+    {panel_width - page_margin, 1.00}, body);
+  svg::styled_text(layer, semantics_text,
+    {panel_width - page_margin, 1.24}, body);
+  svg::styled_text(layer, note_text,
+    {panel_width - page_margin, 1.48}, body);
   svg::typography attribution = infrastructure::infrastructure_typography(
-    0.095, {116, 87, 0});
+    0.12, {87, 82, 74});
   attribution._M_anchor = svg::typography::anchor::end;
   attribution._M_align = svg::typography::align::right;
-  svg::styled_text(layer,
-    "TeleGeography map data · CC BY-NC-SA 3.0",
-    {panel_width - 0.32, 1.00}, attribution);
+  svg::styled_text(layer, attribution_text,
+    {panel_width - page_margin, 1.72}, attribution);
   layer.finish_element();
   document.add_element(layer);
 }

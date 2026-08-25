@@ -666,65 +666,11 @@ add_resources_legend(generation::projection_document& document,
 {
   const auto [minimum, maximum] = resource_value_range(selected_values);
   const coverage_definition& coverage = *metric.coverage;
-  svg::group_element layer;
-  const double width = std::min(14.5, context.map_frame.width() - 0.6);
-  const double height = 1.38;
-  const double left = 0.30;
-  const double top = 0.30;
-  layer.start_element("resource-legend", "translate("
-    + std::to_string(context.map_frame.width() - width - 0.60) + " "
-    + std::to_string(context.map_frame.height() - height - 0.60) + ")");
-  svg::rect_element panel;
-  panel.start_element();
-  panel.add_data({left, top, width, height});
-  panel.add_style({{250, 249, 244}, 0.93, {62, 61, 57}, 0.62, 0.015});
-  panel.add_raw("id=\"resource-legend-panel\"");
-  panel.finish_element();
-  layer.add_element(panel);
-
-  svg::typography heading = resources_typography(0.36, {34, 35, 35});
-  heading._M_w = svg::typography::weight::bold;
-  svg::styled_text(layer,
-    resources_xml_escape(family.title + " / " + metric.title),
-    {left + 0.22, top + 0.24}, heading);
-  svg::typography detail = resources_typography(0.105, {60, 61, 59});
-  svg::styled_text(layer,
-    resources_xml_escape(metric.unit + " · " + metric.reference_period
-      + " · " + metric.evidence_class),
-    {left + 0.22, top + 0.49}, detail);
-
-  constexpr std::size_t swatch_count = 5;
-  const double swatch_width = 0.62;
-  const double swatch_top = top + 0.69;
-  for (std::size_t index = 0; index != swatch_count; ++index)
-    {
-      const double amount = static_cast<double>(index) / (swatch_count - 1);
-      svg::rect_element swatch;
-      swatch.start_element();
-      swatch.add_data({left + 0.22 + index * swatch_width, swatch_top,
-                       swatch_width, 0.22});
-      swatch.add_style({interpolate_resource_color(family.palette, amount), 1,
-                        svg::color::none, 0, 0});
-      swatch.add_raw("data-resource-legend-swatch=\"true\"");
-      swatch.finish_element();
-      layer.add_element(swatch);
-    }
-  svg::rect_element missing;
-  missing.start_element();
-  missing.add_data({left + 3.62, swatch_top, 0.34, 0.22});
-  missing.add_style({resource_color(family.palette.missing), 1,
-                     {92, 91, 85}, 0.8, 0.008});
-  missing.add_raw("data-resource-legend-missing=\"true\"");
-  missing.finish_element();
-  layer.add_element(missing);
-  svg::typography labels = resources_typography(0.09, {65, 66, 63});
-  svg::styled_text(layer, format_resource_number(minimum),
-                   {left + 0.22, top + 1.03}, labels);
-  svg::styled_text(layer, format_resource_number(maximum),
-                   {left + 2.72, top + 1.03}, labels);
-  svg::styled_text(layer, "missing / unknown",
-                   {left + 4.06, swatch_top + 0.11}, labels);
-
+  const std::string heading_text
+    = resources_xml_escape(family.title + " / " + metric.title);
+  const std::string detail_text = resources_xml_escape(
+    metric.unit + " · " + metric.reference_period
+      + " · " + metric.evidence_class);
   std::string coverage_text = "Coverage: "
     + std::to_string(coverage.covered_countries) + "/"
     + std::to_string(coverage.mapped_countries) + " mapped countries";
@@ -736,13 +682,89 @@ add_resources_legend(generation::projection_document& document,
     coverage_text += " · " + format_resource_number(*coverage.output_percent)
       + "% source world output";
   coverage_text += " · gate passed";
-  svg::styled_text(layer, resources_xml_escape(coverage_text),
-                   {left + 5.70, swatch_top + 0.11}, labels);
-  svg::styled_text(layer,
-    resources_xml_escape("Snapshot " + profile.snapshot_as_of
+  coverage_text = resources_xml_escape(coverage_text);
+  const std::string snapshot_text = resources_xml_escape(
+    "Snapshot " + profile.snapshot_as_of
       + " · missing is not zero · catalogue "
-      + std::to_string(family.metrics.size()) + " metrics"),
-    {left + 5.70, top + 1.03}, labels);
+      + std::to_string(family.metrics.size()) + " metrics");
+  const std::string range_text
+    = format_resource_number(minimum) + " — " + format_resource_number(maximum);
+  constexpr double column_gap = 0.115;
+  constexpr double page_margin = 0.573;
+  constexpr double key_column_width = 5 * 0.36 + 4 * 0.03;
+  const double label_x = page_margin + key_column_width + column_gap;
+  svg::group_element layer;
+  const double width = std::clamp(
+    generation::legend_text_width(heading_text, 0.42) + 2 * page_margin,
+    5.0,
+    context.map_frame.width() - 0.6);
+  const double height = 2.57;
+  const double left = 0.30;
+  const double top = 0.30;
+  layer.start_element("resource-legend", "translate("
+    + std::to_string(context.map_frame.width() - width - 0.573) + " "
+    + std::to_string(context.map_frame.height() - height - 0.573) + ")");
+  svg::rect_element panel;
+  panel.start_element();
+  panel.add_data({left, top + 0.91, width, height - 0.91});
+  panel.add_style({{255, 255, 255}, 0.94, svg::color::none, 0, 0});
+  panel.add_raw("id=\"resource-legend-panel\"");
+  panel.finish_element();
+  layer.add_element(panel);
+
+  svg::typography heading = resources_typography(0.42, {42, 40, 36});
+  heading._M_w = svg::typography::weight::bold;
+  heading._M_anchor = svg::typography::anchor::end;
+  heading._M_align = svg::typography::align::right;
+  svg::styled_text(layer, heading_text,
+    {left + width - page_margin, top + 1.52}, heading);
+  svg::typography detail = resources_typography(0.12, {87, 82, 74});
+  detail._M_anchor = svg::typography::anchor::end;
+  detail._M_align = svg::typography::align::right;
+  svg::styled_text(layer, detail_text,
+    {left + width - page_margin, top + 1.91}, detail);
+  svg::typography other = resources_typography(0.12, {87, 82, 74});
+  other._M_anchor = svg::typography::anchor::end;
+  other._M_align = svg::typography::align::right;
+  svg::styled_text(layer, coverage_text,
+    {left + width - page_margin, top + 2.15}, other);
+  svg::styled_text(layer, snapshot_text,
+    {left + width - page_margin, top + 2.39}, other);
+
+  constexpr std::size_t swatch_count = 5;
+  const double ramp_top = top + 0.36;
+  for (std::size_t index = 0; index != swatch_count; ++index)
+    {
+      const double amount = static_cast<double>(index) / (swatch_count - 1);
+      svg::rect_element swatch;
+      swatch.start_element();
+      swatch.add_data({left + page_margin + index * 0.39, ramp_top - 0.165,
+                       0.36, 0.33});
+      const svg::color_qi ramp_color
+        = interpolate_resource_color(family.palette, amount);
+      const svg::color_qi ramp_outline
+        = ramp_color == svg::color_qi {255, 255, 255}
+          ? svg::color::black : svg::color::none;
+      swatch.add_style({ramp_color, 1, ramp_outline,
+                        ramp_outline == svg::color::none ? 0.0 : 1.0, 0.006});
+      swatch.add_raw("data-resource-legend-swatch=\"true\"");
+      swatch.finish_element();
+      layer.add_element(swatch);
+    }
+  svg::rect_element missing;
+  missing.start_element();
+  missing.add_data({left + page_margin, top + 0.72 - 0.165,
+                    0.48, 0.33});
+  missing.add_style({resource_color(family.palette.missing), 1,
+                     {92, 91, 85}, 0.8, 0.008});
+  missing.add_raw("data-resource-legend-missing=\"true\"");
+  missing.finish_element();
+  layer.add_element(missing);
+  svg::typography labels = resources_typography(0.12, {54, 51, 46});
+  svg::styled_text(layer, range_text,
+                   {left + label_x, ramp_top}, labels);
+  svg::styled_text(layer, "missing / unknown",
+                   {left + label_x, top + 0.72}, labels);
   layer.finish_element();
   document.add_element(layer);
 }
@@ -757,74 +779,96 @@ add_resources_spatial_legend(
   resources_require(metric.spatial.has_value(),
                     "spatial legend requires spatial metadata");
   const spatial_definition& spatial = *metric.spatial;
+  const std::string heading_text
+    = resources_xml_escape(family.title + " / " + metric.title);
+  const std::string detail_text = resources_xml_escape(
+    metric.unit + " · " + metric.reference_period
+      + " · " + metric.evidence_class);
+  const std::string cells_text = resources_xml_escape(
+    std::to_string(spatial.mapped_features) + " mapped 0.25° cells · "
+      + std::to_string(spatial.source_polygons)
+      + " source reef polygons · gate passed");
+  const std::string snapshot_text = resources_xml_escape(
+    "Snapshot " + profile.snapshot_as_of
+      + " · highest local threat retained per cell · missing is not zero");
+  constexpr double column_gap = 0.115;
+  constexpr double page_margin = 0.573;
+  constexpr double key_column_width = 0.48;
+  const double label_x = page_margin + key_column_width + column_gap;
   svg::group_element layer;
-  const double width = std::min(14.5, context.map_frame.width() - 0.6);
-  const double height = 1.38;
+  const double width = std::clamp(
+    generation::legend_text_width(heading_text, 0.42) + 2 * page_margin,
+    5.0,
+    context.map_frame.width() - 0.6);
+  const double height = 3.65;
   const double left = 0.30;
   const double top = 0.30;
   layer.start_element("resource-legend", "translate("
-    + std::to_string(context.map_frame.width() - width - 0.60) + " "
-    + std::to_string(context.map_frame.height() - height - 0.60) + ")");
+    + std::to_string(context.map_frame.width() - width - 0.573) + " "
+    + std::to_string(context.map_frame.height() - height - 0.573) + ")");
   svg::rect_element panel;
   panel.start_element();
-  panel.add_data({left, top, width, height});
-  panel.add_style({{250, 249, 244}, 0.93, {62, 61, 57}, 0.62, 0.015});
+  panel.add_data({left, top + 1.99, width, height - 1.99});
+  panel.add_style({{255, 255, 255}, 0.94, svg::color::none, 0, 0});
   panel.add_raw("id=\"resource-legend-panel\"");
   panel.finish_element();
   layer.add_element(panel);
 
-  svg::typography heading = resources_typography(0.36, {34, 35, 35});
+  svg::typography heading = resources_typography(0.42, {42, 40, 36});
   heading._M_w = svg::typography::weight::bold;
-  svg::styled_text(layer,
-    resources_xml_escape(family.title + " / " + metric.title),
-    {left + 0.22, top + 0.24}, heading);
-  svg::typography detail = resources_typography(0.105, {60, 61, 59});
-  svg::styled_text(layer,
-    resources_xml_escape(metric.unit + " · " + metric.reference_period
-      + " · " + metric.evidence_class),
-    {left + 0.22, top + 0.49}, detail);
+  heading._M_anchor = svg::typography::anchor::end;
+  heading._M_align = svg::typography::align::right;
+  svg::styled_text(layer, heading_text,
+    {left + width - page_margin, top + 2.60}, heading);
+  svg::typography detail = resources_typography(0.12, {87, 82, 74});
+  detail._M_anchor = svg::typography::anchor::end;
+  detail._M_align = svg::typography::align::right;
+  svg::styled_text(layer, detail_text,
+    {left + width - page_margin, top + 2.99}, detail);
+  svg::typography other = resources_typography(0.12, {87, 82, 74});
+  other._M_anchor = svg::typography::anchor::end;
+  other._M_align = svg::typography::align::right;
+  svg::styled_text(layer, cells_text,
+    {left + width - page_margin, top + 3.23}, other);
+  svg::styled_text(layer, snapshot_text,
+    {left + width - page_margin, top + 3.47}, other);
 
   constexpr std::array threat_labels {
     std::string_view {"Low"}, std::string_view {"Medium"},
     std::string_view {"High"}, std::string_view {"Very High"},
   };
-  const double swatch_top = top + 0.69;
-  svg::typography labels = resources_typography(0.09, {65, 66, 63});
+  svg::typography labels = resources_typography(0.12, {54, 51, 46});
   for (std::size_t index = 0; index != threat_labels.size(); ++index)
     {
-      const double x = left + 0.22 + index * 1.18;
+      const double y = top + 0.36 + index * 0.36;
+      const double x = left + page_margin;
       svg::rect_element swatch;
       swatch.start_element();
-      swatch.add_data({x, swatch_top, 0.32, 0.22});
-      swatch.add_style({reef_threat_color(static_cast<int>(index + 1)), 1,
-                        svg::color::none, 0, 0});
+      swatch.add_data({x, y - 0.165, 0.48, 0.33});
+      const svg::color_qi threat_color
+        = reef_threat_color(static_cast<int>(index + 1));
+      const svg::color_qi threat_outline
+        = threat_color == svg::color_qi {255, 255, 255}
+          ? svg::color::black : svg::color::none;
+      swatch.add_style({threat_color, 1, threat_outline,
+                        threat_outline == svg::color::none ? 0.0 : 1.0, 0.006});
       swatch.add_raw("data-resource-legend-swatch=\"true\"");
       swatch.finish_element();
       layer.add_element(swatch);
       svg::styled_text(layer, std::string(threat_labels[index]),
-                       {x + 0.39, swatch_top + 0.11}, labels);
+                       {left + label_x, y}, labels);
     }
   svg::rect_element absent;
   absent.start_element();
-  absent.add_data({left + 5.05, swatch_top, 0.32, 0.22});
+  const double absent_y = top + 0.36 + 4 * 0.36;
+  absent.add_data({left + page_margin, absent_y - 0.165, 0.48, 0.33});
   absent.add_style({resource_color(family.palette.missing), 1,
                     {92, 91, 85}, 0.8, 0.008});
   absent.add_raw("data-resource-legend-missing=\"true\"");
   absent.finish_element();
   layer.add_element(absent);
   svg::styled_text(layer, "no mapped reef",
-                   {left + 5.44, swatch_top + 0.11}, labels);
-
-  svg::styled_text(layer,
-    resources_xml_escape(
-      std::to_string(spatial.mapped_features) + " mapped 0.25° cells · "
-      + std::to_string(spatial.source_polygons)
-      + " source reef polygons · gate passed"),
-    {left + 7.0, swatch_top + 0.11}, labels);
-  svg::styled_text(layer,
-    resources_xml_escape("Snapshot " + profile.snapshot_as_of
-      + " · highest local threat retained per cell · missing is not zero"),
-    {left + 7.0, top + 1.03}, labels);
+                   {left + label_x, absent_y}, labels);
   layer.finish_element();
   document.add_element(layer);
 }

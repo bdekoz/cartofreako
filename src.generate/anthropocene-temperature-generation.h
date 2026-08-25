@@ -72,7 +72,7 @@ temperature_typography(const double size = 0.11,
   svg::typography result = generation::with_configured_label_font(
     svg::k::hyperl_typo);
   result._M_size = size;
-  result._M_style = {color, 0.96, {249, 247, 240}, 0.88, 0.006};
+  result._M_style = {color, 0.96, {249, 247, 240}, 0.0, 0.006};
   result._M_anchor = svg::typography::anchor::start;
   result._M_align = svg::typography::align::left;
   result._M_baseline = svg::typography::baseline::central;
@@ -439,81 +439,100 @@ add_temperature_legend(generation::projection_document& document,
   static_cast<void>(context);
   if (!profile.show_legend)
     return;
-  constexpr double panel_width = 15.0;
-  constexpr double panel_height = 1.05;
+  const std::string title_text = "ANTHROPOCENE TEMPERATURE / "
+    + std::to_string(profile.calendar_year)
+    + (profile.partial_year ? " PARTIAL YEAR" : " COMPLETE YEAR");
+  const std::string note_text
+    = "Analysis field, not station observations or attribution. Neutral means analyzed with zero strict records; blank means missing or outside the CPC land domain.";
+  const std::string provenance_text = temperature_xml_escape(
+    "NOAA CPC 0.5 degree analysis through " + profile.data_through
+      + "  |  H3 r" + std::to_string(profile.h3_resolution)
+      + "  |  strict records vs " + std::to_string(profile.baseline_start)
+      + "-" + std::to_string(profile.baseline_end));
+  const std::string covered_text
+    = std::to_string(dataset.covered_cell_count) + " covered of "
+      + std::to_string(dataset.cells.size())
+      + " global H3 cells; valid-day denominators are embedded";
+  constexpr double key_width = 0.40;
+  constexpr double column_gap = 0.115;
+  constexpr double page_margin = 0.573;
+  const double panel_width = std::clamp(
+    generation::legend_text_width(title_text, 0.42) + 2 * page_margin,
+    5.0,
+    context.map_frame.width() - 0.6);
+  constexpr double table_top = 0.28;
+  constexpr double rect_top = 1.08;
+  constexpr double title_y = 1.69;
+  constexpr double note_y = 2.08;
+  constexpr double provenance_y = 2.32;
+  constexpr double panel_height = 2.50;
   svg::group_element layer;
   layer.start_element("legend-and-provenance",
     generation::bottom_right_legend_transform(
       context, panel_width, panel_height));
   svg::rect_element panel;
   panel.start_element();
-  panel.add_data({0, 0, panel_width, panel_height});
-  panel.add_style({{250, 249, 244}, 0.93, {62, 61, 57}, 0.62, 0.015});
+  panel.add_data({0, rect_top, panel_width, panel_height - rect_top});
+  panel.add_style({{255, 255, 255}, 0.94, svg::color::none, 0, 0});
   panel.add_raw("id=\"temperature-legend-panel\"");
   panel.finish_element();
   layer.add_element(panel);
-  svg::typography title = temperature_typography(0.34, {44, 42, 38});
+  svg::typography title = temperature_typography(0.42, {42, 40, 36});
   title._M_w = svg::typography::weight::bold;
-  svg::styled_text(layer,
-    "ANTHROPOCENE TEMPERATURE / " + std::to_string(profile.calendar_year)
-      + (profile.partial_year ? " PARTIAL YEAR" : " COMPLETE YEAR"),
-    {0.30, 0.21}, title);
-  svg::styled_text(layer,
-    temperature_xml_escape(
-      "NOAA CPC 0.5 degree analysis through " + profile.data_through
-        + "  |  H3 r" + std::to_string(profile.h3_resolution)
-        + "  |  strict records vs " + std::to_string(profile.baseline_start)
-        + "-" + std::to_string(profile.baseline_end)),
-    {0.30, 0.45}, temperature_typography(0.105, {83, 79, 72}));
+  title._M_anchor = svg::typography::anchor::end;
+  title._M_align = svg::typography::align::right;
+  svg::styled_text(layer, title_text,
+    {panel_width - page_margin, title_y}, title);
+  svg::typography note = temperature_typography(0.12, {72, 68, 62});
+  note._M_anchor = svg::typography::anchor::end;
+  note._M_align = svg::typography::align::right;
+  svg::styled_text(layer, note_text, {panel_width - page_margin, note_y}, note);
+  svg::typography provenance = temperature_typography(0.12, {87, 82, 74});
+  provenance._M_anchor = svg::typography::anchor::end;
+  provenance._M_align = svg::typography::align::right;
+  svg::styled_text(layer, provenance_text,
+    {panel_width - page_margin, provenance_y}, provenance);
 
+  constexpr double key_x = page_margin;
   svg::rect_element high;
   high.start_element();
-  high.add_data({0.34, 0.61, 0.08, 0.08});
+  high.add_data({key_x + 0.20 - 0.06, table_top - 0.06, 0.12, 0.12});
   high.add_style({{215, 62, 48}, 0.82, {215, 62, 48}, 1, 0.004});
   high.finish_element();
   layer.add_element(high);
-  svg::styled_text(layer, "record-high days (filled; log-scaled)",
-                   {0.47, 0.65}, temperature_typography(0.101));
+  {
+    svg::typography item = temperature_typography(0.12, {54, 51, 46});
+    svg::styled_text(layer, "record-high days (filled; log-scaled)",
+                     {key_x + key_width + column_gap, table_top}, item);
+  }
 
   svg::rect_element low;
   low.start_element();
-  low.add_data({3.37, 0.61, 0.08, 0.08});
+  low.add_data({key_x + 0.20 - 0.06, table_top + 0.24 - 0.06, 0.12, 0.12});
   low.add_style({svg::color::none, 0, {48, 105, 190}, 1, 0.014});
   low.finish_element();
   layer.add_element(low);
-  svg::styled_text(layer, "record-low days (outline; log-scaled)",
-                   {3.50, 0.65}, temperature_typography(0.101));
+  {
+    svg::typography item = temperature_typography(0.12, {54, 51, 46});
+    svg::styled_text(layer, "record-low days (outline; log-scaled)",
+                     {key_x + key_width + column_gap, table_top + 0.24}, item);
+  }
 
   svg::rect_element zero;
   zero.start_element();
-  zero.add_data({6.53, 0.61, 0.08, 0.08});
+  zero.add_data({key_x + 0.20 - 0.06, table_top + 0.48 - 0.06, 0.12, 0.12});
   zero.add_style({{205, 199, 184}, 0.34, {191, 184, 169}, 0.32, 0.004});
   zero.finish_element();
   layer.add_element(zero);
-  svg::styled_text(layer, "covered zero / field domain",
-                   {6.66, 0.65}, temperature_typography(0.101));
+  {
+    svg::typography item = temperature_typography(0.12, {54, 51, 46});
+    svg::styled_text(layer, "covered zero / field domain",
+                     {key_x + key_width + column_gap, table_top + 0.48}, item);
+  }
 
-  svg::styled_text(layer,
-    std::to_string(dataset.covered_cell_count) + " covered of "
-      + std::to_string(dataset.cells.size())
-      + " global H3 cells; valid-day denominators are embedded",
-    {9.20, 0.65}, temperature_typography(0.101, {83, 79, 72}));
-  layer.finish_element();
-  document.add_element(layer);
-}
-
-inline void
-add_temperature_note(generation::projection_document& document,
-                     const generation::projection_context& context)
-{
-  svg::group_element layer;
-  layer.start_element("coverage-note");
-  svg::typography text = temperature_typography(0.092, {72, 68, 62});
-  text._M_anchor = svg::typography::anchor::middle;
-  text._M_align = svg::typography::align::center;
-  svg::styled_text(layer,
-    "Analysis field, not station observations or attribution. Neutral means analyzed with zero strict records; blank means missing or outside the CPC land domain.",
-    {context.map_frame.width() / 2, context.map_frame.height() - 0.18}, text);
+  svg::typography covered = temperature_typography(0.12, {54, 51, 46});
+  svg::styled_text(layer, covered_text,
+    {key_x + key_width + column_gap, table_top + 0.72}, covered);
   layer.finish_element();
   document.add_element(layer);
 }
@@ -578,7 +597,6 @@ generate_temperature(const generation::projection_spec& spec,
   static_cast<void>(add_temperature_records(
     document, context, profile, dataset, false));
   add_temperature_legend(document, context, profile, dataset);
-  add_temperature_note(document, context);
 }
 
 inline std::string
@@ -607,7 +625,6 @@ verify_temperature(const std::string& generated,
     std::string_view {"cpc-temperature-record-high-days"},
     std::string_view {"cpc-temperature-record-low-days"},
     std::string_view {"legend-and-provenance"},
-    std::string_view {"coverage-note"},
   };
   for (const std::string_view layer : layers)
     temperature_require(generated.find("<g id=\"" + std::string(layer)

@@ -64,6 +64,27 @@ bottom_right_legend_transform(
     + std::to_string(std::get<1>(origin)) + ")";
 }
 
+/// Transform string that horizontally centers a legend panel at the bottom.
+inline std::string
+bottom_center_legend_transform(
+  const projection_runtime::projection_context& context,
+  const double panel_width, const double panel_height)
+{
+  constexpr double margin = 0.30;
+  const double x = (context.map_frame.width() - panel_width) / 2.0;
+  const double y = context.map_frame.height() - panel_height - margin;
+  return "translate(" + std::to_string(x) + " "
+    + std::to_string(y) + ")";
+}
+
+/// Approximate rendered width of a single-line text run in map units,
+/// using a 0.55-em average advance for the configured label font.
+inline double
+legend_text_width(const std::string& text, const double size)
+{
+  return 0.55 * size * static_cast<double>(text.size());
+}
+
 // The renderer-neutral core is authoritative for projection construction,
 // native-cell classification, and seam routing. These using declarations
 // preserve the established generator API while making native and browser

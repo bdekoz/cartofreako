@@ -524,21 +524,21 @@ add_cloud_marker(svg::group_element& layer,
   if (site.entity_type == "edge_pop")
     add_polygon(layer, point.display_point,
       {color, 0.30, color, 1.0, 0.010},
-      profile.marker_radius, 6, attributes, 0);
+      profile.marker_radius * 2.0, 6, attributes, 0);
   else if (site.entity_type == "data_center")
     add_polygon(layer, point.display_point,
       {color, 0.30, color, 1.0, 0.010},
-      profile.marker_radius * 1.05, 6, attributes, 0);
+      profile.marker_radius * 2.1, 6, attributes, 0);
   else if (site.entity_type == "cloud_region"
            || site.entity_type == "availability_zone"
            || site.entity_type == "local_zone")
     add_polygon(layer, point.display_point,
       {color, 0.30, color, 1.0, 0.010},
-      profile.marker_radius, 6, attributes, 0);
+      profile.marker_radius * 2.0, 6, attributes, 0);
   else
     add_polygon(layer, point.display_point,
       {color, 0.30, color, 1.0, 0.010},
-      profile.marker_radius * 0.9, 6, attributes, 0);
+      profile.marker_radius * 1.8, 6, attributes, 0);
 }
 
 inline void
@@ -673,7 +673,7 @@ add_point_labels(generation::projection_document& document,
       typography._M_align = place_left ? svg::typography::align::right
                                        : svg::typography::align::left;
       const double label_x = x + (place_left ? -1 : 1)
-        * (profile.marker_radius + 0.04);
+        * (profile.marker_radius * 2.0 + 0.04);
       svg::styled_text(layer, xml_escape(point_label(*point, dataset)),
                        {label_x, y}, typography);
       ++count;
@@ -745,27 +745,10 @@ add_legend(generation::projection_document& document,
            const infrastructure_dataset& dataset,
            const infrastructure_profile& profile)
 {
-  constexpr double panel_width = 20.0;
-  constexpr double panel_height = 0.96;
-  svg::group_element layer;
-  layer.start_element("network-infrastructure-legend-and-provenance",
-    generation::bottom_right_legend_transform(
-      context, panel_width, panel_height));
-  svg::rect_element band;
-  band.start_element();
-  band.add_data({0, 0, panel_width, panel_height});
-  band.add_style({{226, 230, 228}, 0.96, svg::color::none, 0, 0});
-  band.finish_element();
-  layer.add_element(band);
   const bool topology = profile.product == infrastructure_product::topology;
-  svg::typography title = infrastructure_typography(
-    0.44, topology ? svg::color_qi {116, 87, 0}
-                  : svg::color_qi {137, 76, 0});
-  title._M_w = svg::typography::weight::bold;
-  svg::styled_text(layer,
-    topology ? "NETWORK INFRASTRUCTURE / TOPOLOGY"
-             : "NETWORK INFRASTRUCTURE / SITES",
-    {0.32, 0.27}, title);
+  const std::string title_text = topology
+    ? "NETWORK INFRASTRUCTURE / TOPOLOGY"
+    : "NETWORK INFRASTRUCTURE / SITES";
   std::string counts = std::to_string(dataset.cloud.sites.size())
     + " located cloud/CDN records";
   if (topology)
@@ -773,25 +756,49 @@ add_legend(generation::projection_document& document,
       + " cable systems  |  " + std::to_string(dataset.cables.landings.size())
       + " landings  |  " + std::to_string(dataset.exchanges.buildings.size())
       + " IX facilities";
-  svg::styled_text(layer, counts, {0.32, 0.61},
-                   infrastructure_typography(0.112, {55, 67, 72}));
   const std::string semantics = topology
     ? "solid cable = physical route  ·  dashed magenta = logical IX membership, not fiber"
     : "provider/source records = sites only  ·  no links inferred";
-  svg::styled_text(layer, semantics, {0.32, 0.81},
-                   infrastructure_typography(0.103, {70, 83, 85}));
-  svg::typography attribution = infrastructure_typography(
-    0.095, topology ? svg::color_qi {116, 87, 0}
-                   : svg::color_qi {70, 83, 85});
-  attribution._M_anchor = svg::typography::anchor::end;
-  attribution._M_align = svg::typography::align::right;
   const std::string notice = topology
     ? "TeleGeography map data: CC BY-NC-SA 3.0 · cable "
       + profile.cables.snapshot + " · IX " + profile.exchanges.snapshot
     : "cloud_cdn_cache: ODC-By 1.0; source-specific terms retained · "
       + profile.cloud.snapshot + " snapshot";
+  constexpr double page_margin = 0.573;
+  const double panel_width = std::clamp(
+    generation::legend_text_width(title_text, 0.42) + 2 * page_margin,
+    5.0,
+    context.map_frame.width() - 0.6);
+  constexpr double panel_height = 1.64;
+  svg::group_element layer;
+  layer.start_element("network-infrastructure-legend-and-provenance",
+    generation::bottom_right_legend_transform(
+      context, panel_width, panel_height));
+  svg::rect_element band;
+  band.start_element();
+  band.add_data({0, 0, panel_width, panel_height});
+  band.add_style({{255, 255, 255}, 0.94, svg::color::none, 0, 0});
+  band.finish_element();
+  layer.add_element(band);
+  svg::typography title = infrastructure_typography(
+    0.42, {42, 40, 36});
+  title._M_w = svg::typography::weight::bold;
+  title._M_anchor = svg::typography::anchor::end;
+  title._M_align = svg::typography::align::right;
+  svg::styled_text(layer, title_text,
+    {panel_width - page_margin, 0.61}, title);
+  svg::typography body = infrastructure_typography(0.12, {87, 82, 74});
+  body._M_anchor = svg::typography::anchor::end;
+  body._M_align = svg::typography::align::right;
+  svg::styled_text(layer, counts, {panel_width - page_margin, 1.00}, body);
+  svg::styled_text(layer, semantics,
+    {panel_width - page_margin, 1.24}, body);
+  svg::typography attribution = infrastructure_typography(
+    0.12, {87, 82, 74});
+  attribution._M_anchor = svg::typography::anchor::end;
+  attribution._M_align = svg::typography::align::right;
   svg::styled_text(layer, notice,
-    {panel_width - 0.32, 0.81}, attribution);
+    {panel_width - page_margin, 1.48}, attribution);
   layer.finish_element();
   document.add_element(layer);
 }

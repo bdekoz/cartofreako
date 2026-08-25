@@ -79,7 +79,7 @@ label_typography(const double size, const svg::color_qi color)
   svg::typography result = generation::with_configured_label_font(
     svg::k::hyperl_typo);
   result._M_size = size;
-  result._M_style = {color, 0.94, {241, 244, 245}, 0.88, 0.006};
+  result._M_style = {color, 0.94, {241, 244, 245}, 0.0, 0.006};
   result._M_anchor = svg::typography::anchor::start;
   result._M_align = svg::typography::align::left;
   result._M_baseline = svg::typography::baseline::central;
@@ -410,7 +410,9 @@ add_observation_layer(generation::projection_document& document,
         const double fraction = (bin + 1.0) / bin_count;
         const svg::color_qi color = svg_color(definition.color);
         svg::style style;
-        if (outline_layer(definition.property))
+        if (definition.property == "precipitation_rate_mm_h")
+          style = {color, 0.20, color, 0.20, 0.0025};
+        else if (outline_layer(definition.property))
           style = {svg::color::none, 0, color,
                    std::min(1.0, definition.opacity * (0.35 + 0.65 * fraction)),
                    0.008 + 0.018 * fraction};
@@ -495,80 +497,97 @@ add_legend(generation::projection_document& document,
 {
   if (!profile.show_legend)
     return;
-  constexpr double panel_width = 24.0;
-  constexpr double panel_height = 1.05;
+  const auto item_label = [&](const layer_definition& definition)
+    {
+      const observation_metadata& observation = observation_for(
+        dataset, definition.source_id);
+      const double age = generation_time::age_hours(
+        process_start, observation.end);
+      std::string timing = short_observation_time(observation.end)
+        + " · " + format_number(age, 1) + " h";
+      if (definition.freshness == freshness_policy::latest_available
+          && age > definition.maximum_age_hours)
+        timing += " · latest available";
+      return xml_escape(short_layer_title(definition) + " (" + timing + ")");
+    };
+  std::size_t item_count = 0;
+  for (const layer_definition& definition : profile.layers)
+    if (definition.enabled
+        && (profile.show_cloud_type
+              || definition.property != "cloud_type_isccp"))
+      ++item_count;
+  const std::string title_text = "SOLAR / CLOUD / ATMOSPHERE"
+    + std::string(dataset.fixture ? " — FIXTURE" : "");
+  const std::string note_text
+    = "Data: JAXA/EORC P-Tree, GCOM-C, GSMaP, and JASMES (MODIS source: NASA). P-Tree clouds are regional/daytime; AOD is not smoke or PM2.5.";
+  const std::string provenance_text
+    = xml_escape(process_start.iso_utc + " process start  |  subsolar "
+      + format_number(subsolar.latitude_deg) + "°, "
+      + format_number(subsolar.longitude_deg_east) + "°E  |  missing is unobserved");
+  constexpr double key_width = 0.40;
+  constexpr double column_gap = 0.115;
+  constexpr double page_margin = 0.573;
+  const double panel_width = std::clamp(
+    generation::legend_text_width(title_text, 0.42) + 2 * page_margin,
+    5.0,
+    context.map_frame.width() - 0.6);
+  constexpr double table_top = 0.30;
+  const double row_count = std::max<std::size_t>(1, item_count);
+  const double rect_top = table_top + (row_count - 1) * 0.24 + 0.10;
+  const double title_y = rect_top + 0.61;
+  const double note_y = title_y + 0.39;
+  const double provenance_y = note_y + 0.24;
+  const double panel_height = provenance_y + 0.18;
   svg::group_element layer;
   layer.start_element("legend-and-provenance",
     generation::bottom_right_legend_transform(
       context, panel_width, panel_height));
   svg::rect_element band;
   band.start_element();
-  band.add_data({0, 0, panel_width, panel_height});
-  band.add_style({{241, 244, 245}, 0.94, svg::color::none, 0, 0});
+  band.add_data({0, rect_top, panel_width, panel_height - rect_top});
+  band.add_style({{255, 255, 255}, 0.94, svg::color::none, 0, 0});
   band.finish_element();
   layer.add_element(band);
 
-  svg::typography title = label_typography(0.20, {28, 38, 46});
+  svg::typography title = label_typography(0.42, {42, 40, 36});
   title._M_w = svg::typography::weight::bold;
-  svg::styled_text(layer,
-    "SOLAR / CLOUD / ATMOSPHERE" + std::string(dataset.fixture ? " — FIXTURE" : ""),
-    {0.30, 0.20}, title);
-  svg::styled_text(layer,
-    xml_escape(process_start.iso_utc + " process start  |  subsolar "
-      + format_number(subsolar.latitude_deg) + "°, "
-      + format_number(subsolar.longitude_deg_east) + "°E  |  missing is unobserved"),
-    {0.30, 0.41}, label_typography(0.102, {67, 74, 79}));
+  title._M_anchor = svg::typography::anchor::end;
+  title._M_align = svg::typography::align::right;
+  svg::styled_text(layer, title_text,
+    {panel_width - page_margin, title_y}, title);
+  svg::typography note = label_typography(0.12, {87, 82, 74});
+  note._M_anchor = svg::typography::anchor::end;
+  note._M_align = svg::typography::align::right;
+  svg::styled_text(layer, note_text, {panel_width - page_margin, note_y}, note);
+  svg::typography provenance = label_typography(0.12, {87, 82, 74});
+  provenance._M_anchor = svg::typography::anchor::end;
+  provenance._M_align = svg::typography::align::right;
+  svg::styled_text(layer, provenance_text,
+    {panel_width - page_margin, provenance_y}, provenance);
 
-  const std::size_t columns = 4;
-  const double column_width = (panel_width - 0.6) / columns;
+  constexpr double key_x = page_margin;
   std::size_t position = 0;
   for (const layer_definition& definition : profile.layers)
     if (definition.enabled
         && (profile.show_cloud_type
               || definition.property != "cloud_type_isccp"))
       {
-        const std::size_t row = position / columns;
-        const std::size_t column = position % columns;
-        const double x = 0.32 + column * column_width;
-        const double y = 0.65 + row * 0.20;
+        const double y = table_top + position * 0.24;
         svg::circle_element marker;
         marker.start_element();
-        marker.add_data({x, y, 0.035});
-        marker.add_style({svg_color(definition.color), 0.78,
-                          svg_color(definition.color), 1, 0.006});
+        marker.add_data({key_x + key_width / 2.0, y, 0.075});
+        const svg::color_qi key_color = svg_color(definition.color);
+        const svg::color_qi key_outline
+          = key_color == svg::color_qi {255, 255, 255}
+            ? svg::color::black : key_color;
+        marker.add_style({key_color, 0.78, key_outline, 1, 0.006});
         marker.finish_element();
         layer.add_element(marker);
-        const observation_metadata& observation = observation_for(
-          dataset, definition.source_id);
-        const double age = generation_time::age_hours(
-          process_start, observation.end);
-        std::string timing = short_observation_time(observation.end)
-          + " · " + format_number(age, 1) + " h";
-        if (definition.freshness == freshness_policy::latest_available
-            && age > definition.maximum_age_hours)
-          timing += " · latest available";
-        svg::styled_text(layer,
-          xml_escape(short_layer_title(definition) + " (" + timing + ")"),
-          {x + 0.07, y},
-          label_typography(0.097, {45, 52, 57}));
+        svg::typography item = label_typography(0.12, {54, 51, 46});
+        svg::styled_text(layer, item_label(definition),
+          {key_x + key_width + column_gap, y}, item);
         ++position;
       }
-  layer.finish_element();
-  document.add_element(layer);
-}
-
-inline void
-add_coverage_note(generation::projection_document& document,
-                  const generation::projection_context& context)
-{
-  svg::group_element layer;
-  layer.start_element("coverage-note");
-  svg::typography text = label_typography(0.090, {207, 218, 225});
-  text._M_anchor = svg::typography::anchor::middle;
-  text._M_align = svg::typography::align::center;
-  svg::styled_text(layer,
-    "Data: JAXA/EORC P-Tree, GCOM-C, GSMaP, and JASMES (MODIS source: NASA). P-Tree clouds are regional/daytime; AOD is not smoke or PM2.5.",
-    {context.map_frame.width() / 2, context.map_frame.height() - 0.18}, text);
   layer.finish_element();
   document.add_element(layer);
 }
@@ -642,7 +661,6 @@ generate(const generation::projection_spec& spec,
   natural_earth::initialize_gdal();
   add_coastline(document, context);
   add_legend(document, context, profile, dataset, process_start, subsolar);
-  add_coverage_note(document, context);
 }
 
 inline std::string
@@ -670,7 +688,6 @@ verify(const std::string& generated,
     std::string_view {"solar-illumination"},
     std::string_view {"terrestrial-coastline"},
     std::string_view {"legend-and-provenance"},
-    std::string_view {"coverage-note"},
   };
   for (const std::string_view layer : required_layers)
     atmosphere_require(generated.find("<g id=\"" + std::string(layer))

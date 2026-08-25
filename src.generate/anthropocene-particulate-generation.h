@@ -363,7 +363,7 @@ label_typography(const double size = 0.11,
   svg::typography result = generation::with_configured_label_font(
     svg::k::hyperl_typo);
   result._M_size = size;
-  result._M_style = {color, 0.94, {249, 247, 240}, 0.88, 0.006};
+  result._M_style = {color, 0.94, {249, 247, 240}, 0.0, 0.006};
   result._M_anchor = svg::typography::anchor::start;
   result._M_align = svg::typography::align::left;
   result._M_baseline = svg::typography::baseline::central;
@@ -403,10 +403,12 @@ inline void
 add_legend_marker(svg::group_element& layer, const svg::point_2t point,
                   const metric_definition& metric)
 {
-  constexpr double radius = 0.038;
+  constexpr double radius = 0.057;
   const svg::color_qi color = svg_color(metric.color);
-  const svg::style filled {color, 0.72, color, 1, 0.004};
-  const svg::style outlined {svg::color::none, 0, color, 1, 0.008};
+  const svg::color_qi outline = color == svg::color_qi {255, 255, 255}
+    ? svg::color::black : color;
+  const svg::style filled {color, 0.72, outline, 1, 0.004};
+  const svg::style outlined {svg::color::none, 0, outline, 1, 0.008};
   switch (metric.shape)
     {
     case marker_shape::triangle_up:
@@ -456,71 +458,74 @@ add_legend(generation::projection_document& document,
 {
   if (!profile.show_legend)
     return;
-  constexpr double panel_width = 24.0;
-  constexpr double panel_height = 1.25;
+  std::vector<std::size_t> enabled;
+  for (std::size_t index = 0; index < profile.metrics.size(); ++index)
+    if (profile.metrics[index].enabled)
+      enabled.push_back(index);
+  const std::string title_text = "ANTHROPOCENE PARTICULATE / "
+    + std::to_string(profile.calendar_year)
+    + (profile.partial_year ? " PARTIAL YEAR" : "");
+  const std::string note_text
+    = "Distinct particulate, fire, climate, and weather observations; not an attribution score. "
+      "EPA PM2.5 exposure remains separate from observed smoke.";
+  const std::string provenance_text = xml_escape(
+    profile.snapshot_as_of_utc + "  |  "
+      + std::to_string(dataset.features.size()) + " H3 r"
+      + std::to_string(profile.h3_resolution)
+      + " cells  |  absent is unobserved, not zero");
+  constexpr double key_width = 0.40;
+  constexpr double column_gap = 0.115;
+  constexpr double page_margin = 0.573;
+  const double panel_width = std::clamp(
+    generation::legend_text_width(title_text, 0.42) + 2 * page_margin,
+    5.0,
+    context.map_frame.width() - 0.6);
+  const std::size_t row_count = std::max<std::size_t>(1, enabled.size());
+  constexpr double table_top = 0.28;
+  const double rect_top = table_top + (row_count - 1) * 0.24 + 0.08;
+  const double title_y = rect_top + 0.61;
+  const double note_y = title_y + 0.39;
+  const double provenance_y = note_y + 0.24;
+  const double panel_height = provenance_y + 0.18;
   svg::group_element layer;
   layer.start_element("legend-and-provenance",
     generation::bottom_right_legend_transform(
       context, panel_width, panel_height));
   svg::rect_element band;
   band.start_element();
-  band.add_data({0, 0, panel_width, panel_height});
+  band.add_data({0, rect_top, panel_width, panel_height - rect_top});
   band.add_style({{255, 255, 255}, 0.94, svg::color::none, 0, 0});
   band.finish_element();
   layer.add_element(band);
 
   svg::typography title = label_typography(0.42, {42, 40, 36});
   title._M_w = svg::typography::weight::bold;
-  svg::styled_text(layer, "ANTHROPOCENE PARTICULATE / "
-    + std::to_string(profile.calendar_year)
-    + (profile.partial_year ? " PARTIAL YEAR" : ""), {0.30, 0.25}, title);
-  svg::styled_text(layer,
-    xml_escape(profile.snapshot_as_of_utc + "  |  "
-      + std::to_string(dataset.features.size()) + " H3 r"
-      + std::to_string(profile.h3_resolution)
-      + " cells  |  absent is unobserved, not zero"),
-    {0.30, 0.58}, label_typography(0.105, {87, 82, 74}));
+  title._M_anchor = svg::typography::anchor::end;
+  title._M_align = svg::typography::align::right;
+  svg::styled_text(layer, title_text,
+    {panel_width - page_margin, title_y}, title);
+  svg::typography note = label_typography(0.12, {73, 69, 63});
+  note._M_anchor = svg::typography::anchor::end;
+  note._M_align = svg::typography::align::right;
+  svg::styled_text(layer, note_text, {panel_width - page_margin, note_y}, note);
+  svg::typography provenance = label_typography(0.12, {87, 82, 74});
+  provenance._M_anchor = svg::typography::anchor::end;
+  provenance._M_align = svg::typography::align::right;
+  svg::styled_text(layer, provenance_text,
+    {panel_width - page_margin, provenance_y}, provenance);
 
-  std::vector<std::size_t> enabled;
-  for (std::size_t index = 0; index < profile.metrics.size(); ++index)
-    if (profile.metrics[index].enabled)
-      enabled.push_back(index);
-  const std::size_t columns = 5;
-  const double usable_width = panel_width - 0.6;
-  const double column_width = usable_width / columns;
+  constexpr double key_x = page_margin;
   for (std::size_t position = 0; position < enabled.size(); ++position)
     {
       const std::size_t index = enabled[position];
-      const std::size_t row = position / columns;
-      const std::size_t column = position % columns;
-      const double x = 0.34 + column * column_width;
-      const double y = 0.82 + row * 0.22;
+      const double y = table_top + position * 0.24;
       const metric_definition& metric = profile.metrics[index];
-      const svg::point_2t marker_point {x, y};
+      const svg::point_2t marker_point {key_x + key_width / 2.0, y};
       add_legend_marker(layer, marker_point, metric);
+      svg::typography item = label_typography(0.12, {54, 51, 46});
       svg::styled_text(layer, xml_escape(short_metric_title(metric)),
-                       {x + 0.08, y}, label_typography(0.102, {54, 51, 46}));
+                       {key_x + key_width + column_gap, y}, item);
     }
-  layer.finish_element();
-  document.add_element(layer);
-}
-
-inline void
-add_coverage_note(generation::projection_document& document,
-                  const generation::projection_context& context,
-                  const anthropocene_profile& profile)
-{
-  svg::group_element layer;
-  layer.start_element("coverage-note");
-  const double y = context.map_frame.height() - 0.18;
-  svg::typography text = label_typography(0.095, {73, 69, 63});
-  text._M_anchor = svg::typography::anchor::middle;
-  text._M_align = svg::typography::align::center;
-  svg::styled_text(layer,
-    "Distinct particulate, fire, climate, and weather observations; not an attribution score. "
-    "EPA PM2.5 exposure remains separate from observed smoke.",
-    {context.map_frame.width() / 2, y}, text);
-  static_cast<void>(profile);
   layer.finish_element();
   document.add_element(layer);
 }
@@ -575,7 +580,6 @@ generate(const generation::projection_spec& spec,
   add_subdued_land(document, context);
   add_metric_layers(document, profile, dataset, projected);
   add_legend(document, context, profile, dataset);
-  add_coverage_note(document, context, profile);
 }
 
 inline std::string
@@ -618,7 +622,6 @@ verify(const std::string& generated,
     std::string_view {"air-quality-exposure"},
     std::string_view {"climate-records"},
     std::string_view {"legend-and-provenance"},
-    std::string_view {"coverage-note"},
   };
   for (const std::string_view layer : required_layers)
     anthropocene_require(generated.find("<g id=\"" + std::string(layer) + "\"")
