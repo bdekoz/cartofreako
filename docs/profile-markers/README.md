@@ -27,6 +27,10 @@ creation record.
   (`SD-EVENT-20260819-begin-2` / `SD-EVENT-20260819-end-2` /
   `SD-EVENT-20260819-end-3`), including the canonical ledger SHA-256 after
   the final end marker.
+- [`20260825-sd-receipt.json`](20260825-sd-receipt.json) — a tracked receipt
+  for the `SD-EVENT-20260825-ff6e8f8a` /
+  `SD-EVENT-20260825-495cb184` dyad pair, including the canonical ledger
+  SHA-256 after the end marker.
 
 ## SUPERSEDED — frozen 2026-08-15
 

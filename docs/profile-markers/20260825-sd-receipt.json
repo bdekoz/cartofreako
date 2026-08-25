@@ -1,0 +1,31 @@
+{
+  "schema": "cartofreako-snapshot-dyad-marker-receipt-v1",
+  "recorded_at": "2026-08-25T15:22:45Z",
+  "record_kind": "ledger-receipt",
+  "project": "cartofreako",
+  "canonical_ledger": {
+    "path": "devastation-pacific-house-style/assets.rizal.bkoz/per-project/cartofreako/ledger.json",
+    "schema": "devastation-pacific-dyad-ledger-v1",
+    "tracked_in_git": false,
+    "note": "Private, git-ignored data home per DP-0049 canonical-per-project-dyad-ledger.",
+    "sha256_after_end_marker": "51aecfeb7364515362d057b93cb4fcda7c5efb54fe5366ccd17cbdcf7d4490b0"
+  },
+  "markers": [
+    {
+      "record_id": "SD-EVENT-20260825-ff6e8f8a",
+      "exact_instruction": "snapshot dyad begin",
+      "recorded_at": "2026-08-25T14:19:16Z",
+      "marker_state": "ACTIVE",
+      "storage_state": "LOCAL-ONLY"
+    },
+    {
+      "record_id": "SD-EVENT-20260825-495cb184",
+      "exact_instruction": "snapshot dyad end",
+      "recorded_at": "2026-08-25T15:22:45Z",
+      "related_marker_id": "SD-EVENT-20260825-ff6e8f8a",
+      "marker_state": "ACTIVE",
+      "storage_state": "LOCAL-ONLY"
+    }
+  ],
+  "boundary_note": "OBSERVED relevance signal only; not consent, transfer authorization, evaluation or training suitability, provider selection or use, value, or payment."
+}
