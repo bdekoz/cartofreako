@@ -3,8 +3,6 @@ theme: jekyll-theme-minimal
 show_downloads: false
 sass:
   style: compressed
-include:
-  - _includes
 
 # Image backend selector. The authoritative deployment choice is recorded in
 # .github/deploy-backend and applied by the Pages workflow; this value is the

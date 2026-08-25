@@ -60,11 +60,19 @@ def repository_files(root: Path) -> list[Path]:
 
 
 def rendered_files(root: Path) -> list[Path]:
-    """List rendered HTML/Markdown files under a built site directory."""
+    """List rendered HTML files under a built site directory.
+
+    Static Markdown copies (README.md, front-matter-less development notes)
+    are deliberately excluded: their links are GitHub-view links, not site
+    URLs, and do not have to resolve inside the rendered tree.
+    """
     return sorted(
-        path.relative_to(root)
+        rel
         for path in root.rglob("*")
-        if path.is_file() and path.suffix.lower() in {".html", ".md"}
+        for rel in [path.relative_to(root)]
+        if path.is_file()
+        and path.suffix.lower() == ".html"
+        and not rel.parts[0].startswith("_")
     )
 
 
@@ -133,7 +141,7 @@ def document_anchors(path: Path) -> set[str]:
     return anchors
 
 
-def destination_values(text: str) -> list[tuple[int, str]]:
+def destination_values(text: str, html_only: bool = False) -> list[tuple[int, str]]:
     visible_lines: list[str] = []
     fenced = False
     fence_marker = ""
@@ -151,7 +159,8 @@ def destination_values(text: str) -> list[tuple[int, str]]:
         visible_lines.append(("\n" if line.endswith("\n") else "") if fenced else line)
     text = "".join(visible_lines)
     values: list[tuple[int, str]] = []
-    for pattern in (MARKDOWN_LINK, REFERENCE_LINK, HTML_LINK):
+    patterns = (HTML_LINK,) if html_only else (MARKDOWN_LINK, REFERENCE_LINK, HTML_LINK)
+    for pattern in patterns:
         for match in pattern.finditer(text):
             destination = match.group("destination")
             if destination.startswith("<") and destination.endswith(">"):
@@ -223,7 +232,7 @@ def main() -> int:
 
     for source in files:
         text = (root / source).read_text(encoding="utf-8")
-        for line, destination in destination_values(text):
+        for line, destination in destination_values(text, html_only=walk_mode):
             target, fragment = local_target(root, source, destination)
             if target is None:
                 continue
