@@ -1,3 +1,4 @@
+{% raw %}
 # Cartofreako GitHub Pages dual image backends (AAO + top-of-tree) — stage 1 proposal
 
 Status date: 2026-08-25 (America/Los_Angeles).
@@ -570,3 +571,4 @@ edit plus commit and push, not a dispatch input.
    switch via `.github/deploy-backend`.
 6. Stage 6 — final regression and documentation of the deploy-backend
    procedure in the release runbook.
+{% endraw %}
