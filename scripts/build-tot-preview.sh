@@ -11,6 +11,7 @@ readonly script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)
 readonly repository_root=$(cd -- "$script_dir/.." && pwd -P)
 readonly catalog=$repository_root/assets.generated/catalog/artifacts-v1.json
 readonly default_output=$repository_root/assets.tot
+source "$script_dir/lib-release-products.sh"
 
 tier=browse
 output=$default_output
@@ -99,13 +100,6 @@ fi
 
 [[ -f $catalog ]] || die "missing catalog: $catalog"
 command -v jq >/dev/null || die 'jq is required'
-if command -v magick >/dev/null; then
-  magick_command=$(command -v magick)
-elif command -v convert >/dev/null; then
-  magick_command=$(command -v convert)
-else
-  die 'ImageMagick (magick) is required for the full-resolution WebP family'
-fi
 
 output=${output%/}
 case $output in
@@ -125,113 +119,40 @@ trap cleanup EXIT HUP INT TERM
 
 source_revision=$(jq -c '.sourceRevision' "$catalog")
 
-emit_thumbnail=0
-emit_screen_webp=0
-emit_full_webp=0
-emit_master=0
-emit_print=0
-emit_full_png=0
-emit_screen_png=0
 case $tier in
   preview)
-    emit_thumbnail=1
-    emit_screen_webp=1
+    STAGE_FAMILY_THUMBNAIL=1
+    STAGE_FAMILY_SCREEN_WEBP=1
     ;;
   browse)
-    emit_thumbnail=1
-    emit_screen_webp=1
-    emit_full_webp=1
+    STAGE_FAMILY_THUMBNAIL=1
+    STAGE_FAMILY_SCREEN_WEBP=1
+    STAGE_FAMILY_FULL=webp
     ;;
   full)
-    emit_thumbnail=1
-    emit_screen_webp=1
-    emit_full_webp=1
-    emit_master=1
-    emit_print=1
-    emit_full_png=1
-    emit_screen_png=1
+    STAGE_FAMILY_THUMBNAIL=1
+    STAGE_FAMILY_SCREEN_WEBP=1
+    STAGE_FAMILY_FULL=both
+    STAGE_FAMILY_MASTER=1
+    STAGE_FAMILY_PRINT=1
+    STAGE_FAMILY_SCREEN_PNG=1
     ;;
 esac
 
+STAGE_WEBP_QUALITY=$webp_quality
+STAGE_WEBP_LOSSLESS=$webp_lossless
 webp_worklist=$(mktemp "$work_root/.webp.XXXXXX")
+STAGE_WEBP_WORKLIST=$webp_worklist
 
-while IFS=$'\t' read -r id lifecycle projection svg pdf png screen_png screen_webp; do
-  [[ $id && $lifecycle && $projection && $svg && $pdf && $png &&
-     $screen_png && $screen_webp ]] ||
-    die "malformed catalog case: ${id:-<empty>}"
-  product_root=$release_root/products/$lifecycle/$projection
-  stem=$(basename -- "$png" .png)
-  mkdir -p -- "$product_root/screen-1080p/webp"
-
-  if [[ $emit_thumbnail -eq 1 ]]; then
-    thumbnail=$repository_root/assets.generated/$projection/thumbnail/$stem.png
-    if [[ -f $thumbnail ]]; then
-      mkdir -p -- "$product_root/thumbnail"
-      cp -- "$thumbnail" "$product_root/thumbnail/$stem.png"
-    fi
-  fi
-
-  if [[ $emit_screen_webp -eq 1 ]]; then
-    [[ -f $repository_root/$screen_webp ]] || die "missing screen WebP: $screen_webp"
-    cp -- "$repository_root/$screen_webp" "$product_root/screen-1080p/webp/$stem.webp"
-  fi
-
-  if [[ $emit_full_webp -eq 1 ]]; then
-    [[ -f $repository_root/$png ]] || die "missing full PNG: $png"
-    mkdir -p -- "$product_root/full"
-    printf '%s|%s\n' "$repository_root/$png" "$product_root/full/$stem.webp" \
-      >> "$webp_worklist"
-  fi
-
-  if [[ $emit_full_png -eq 1 ]]; then
-    [[ -f $repository_root/$png ]] || die "missing full PNG: $png"
-    cp -- "$repository_root/$png" "$product_root/full/$stem.png"
-  fi
-
-  if [[ $emit_master -eq 1 ]]; then
-    [[ -f $repository_root/$svg ]] || die "missing master SVG: $svg"
-    mkdir -p -- "$product_root/master"
-    if [[ $svg == *.gz ]]; then
-      cp -- "$repository_root/$svg" "$product_root/master/$stem.svg.gz"
-    else
-      gzip --best --no-name --stdout -- "$repository_root/$svg" \
-        > "$product_root/master/$stem.svg.gz"
-    fi
-  fi
-
-  if [[ $emit_print -eq 1 ]]; then
-    [[ -f $repository_root/$pdf ]] || die "missing print PDF: $pdf"
-    mkdir -p -- "$product_root/print"
-    cp -- "$repository_root/$pdf" "$product_root/print/$stem.pdf"
-  fi
-
-  if [[ $emit_screen_png -eq 1 ]]; then
-    [[ -f $repository_root/$screen_png ]] || die "missing screen PNG: $screen_png"
-    mkdir -p -- "$product_root/screen-1080p/png"
-    cp -- "$repository_root/$screen_png" "$product_root/screen-1080p/png/$stem.png"
-  fi
-done < <(jq -r '
+jq -r '
   .artifacts[]
   | [.id, .pass.lifecycle, .projection.id,
      .parents.svg.path, .parents.pdf.path, .parents.fullPng.path,
      .screen.png.path, .screen.webp.path]
   | @tsv
-' "$catalog")
+' "$catalog" | stage_release_products "$release_root"
 
-if [[ -s $webp_worklist ]]; then
-  export magick_command webp_quality webp_lossless
-  < "$webp_worklist" xargs -P "$jobs" -I '{}' bash -c '
-    set -e
-    line="$1"
-    source=${line%|*}
-    target=${line#*|}
-    if [[ "$webp_lossless" == 1 ]]; then
-      "$magick_command" "$source" -define webp:lossless=true "$target"
-    else
-      "$magick_command" "$source" -define webp:quality="$webp_quality" "$target"
-    fi
-  ' _ '{}'
-fi
+convert_staged_webp_worklist "$webp_worklist" "$jobs"
 
 generated_at=$(date --iso-8601=seconds --utc)
 artifact_count=$(jq '.artifacts | length' "$catalog")

@@ -401,14 +401,20 @@ Decision: refactor the release-tree builder into a shared core rather than
 duplicating it, and consider adopting the AAO product layout as the local
 generation output if that simplifies the pipeline.
 
-- **Shared core now.** The TOT stager (4.3) repeats the v14 builder's
-  family mapping. Extract one shared core consumed by both: it takes a case
-  stream (`id`, `lifecycle`, `projectionId`, master/print/full/screen paths,
-  thumbnail availability) plus tier/family flags and emits the product
-  layout. The v14 builder keeps its frozen-fixture CLI and delegates to the
-  core; its output must stay byte-identical (prove with a rebuild against the
-  frozen Stage-14 fixture) so the v14 release record is untouched. The TOT
-  stager feeds the live catalog to the same core.
+- **Shared core — implemented 2026-08-25.** `scripts/lib-release-products.sh`
+  now owns the family mapping: it takes the 8-column case stream
+  (`id`, `lifecycle`, `projectionId`, master/print/full/screen paths,
+  thumbnail availability) plus family-selection flags and emits the product
+  layout. The v14 builder keeps its frozen-fixture CLI and delegates its
+  product loop to the core with all families enabled and `full` = PNG; the
+  TOT stager selects families per tier and derives full-resolution WebP.
+  Equivalence proof: the pre-refactor inline loop and the new core were run
+  against the same 217 frozen Stage-14 cases; all 1,283 staged files were
+  byte-identical, with the only delta being that the core no longer creates
+  five empty slice `thumbnail/` directories. The frozen consumer-layout step
+  still refuses to run against the post-v15.1 catalog (its input hash is
+  pinned), which is expected behavior for frozen release tooling; the loop
+  equivalence test covers the shared staging path itself.
 - **Local-layout adoption — considered, deferred.** Making the local
   `assets.generated/<projection>/{svg,pdf,png,thumbnail,screen-1080p*}` tree
   adopt `products/<lifecycle>/<projection>/{master,print,full,thumbnail,screen-1080p/*}`
@@ -452,8 +458,8 @@ New files:
 - `_includes/image-backend.md` — backend selector and base derivation
   (implemented).
 - `scripts/build-tot-preview.sh` — catalog-driven TOT staging (implemented).
-- `scripts/lib-release-products.*` — shared release-tree core consumed by
-  both the v14 builder and the TOT stager (D5).
+- `scripts/lib-release-products.sh` — shared release-tree core consumed by
+  both the v14 builder and the TOT stager (D5; implemented).
 - `docs/releases/viewer.html` — backend-aware viewer (implemented).
 - `.github/deploy-backend` — the persisted deployment choice, `tot`
   (implemented).
@@ -479,6 +485,9 @@ Modified files:
 - `.github/workflows/jekyll-gh-pages.yml` — reads `.github/deploy-backend`,
   verifies the TOT snapshot when selected, builds with the matching config,
   checks rendered links, and deploys to Pages (implemented).
+- `scripts/build-generated-assets-s3-release-v14.sh` — delegates its product
+  loop to the shared core; CLI, fixture, indexes/runtime/viewer copy,
+  README, `SHA256SUMS`, and `release.json` are unchanged (D5).
 - `.gitignore` — re-include the tracked snapshot (`!/assets.tot/`) after the
   `/assets.*/` catch-all (implemented).
 - `Makefile` — `build-tot-preview` and `check-tot-snapshot` convenience
@@ -541,9 +550,10 @@ the deployed snapshot.
 D4. Resolved as proposed: one `docs/releases/viewer.html` with Jekyll front
 matter injecting the active backend base.
 
-D5. Resolved: extract the shared release-tree core; adopt the AAO layout
-locally only as a follow-on when a release rewrite forces the Stage-15A
-re-freeze (section 4.7).
+D5. Resolved and implemented: the shared release-tree core exists and both
+builders use it, with byte-identity proven (section 4.7). Adopting the AAO
+layout locally remains a follow-on only when a release rewrite forces the
+Stage-15A re-freeze.
 
 D6. Resolved: AAO default stays `v14` until the v15 AAO deposit's receipt is
 checked in; only then does the registry bump to `v15`.
@@ -567,9 +577,86 @@ edit plus commit and push, not a dispatch input.
    rendered-site `--walk` link mode. Remaining verification: local
    `jekyll serve` preview, offline proof, and viewer click-through in both
    backends.
-5. Stage 5 — extract the shared release-tree core (D5); commit and push this
-   change set; confirm the TOT deployment on Pages and exercise one AAO
-   switch via `.github/deploy-backend`.
+5. Stage 5 — done: the shared release-tree core (D5) is extracted with
+   byte-identity proven; the change set is committed and pushed; the TOT
+   deployment on Pages is confirmed live. Remaining: exercise one AAO switch
+   via `.github/deploy-backend`.
 6. Stage 6 — final regression and documentation of the deploy-backend
    procedure in the release runbook.
+
+## 10. Implementation outcomes — 2026-08-25
+
+### Deployed state
+
+The live GitHub Pages site now serves the top-of-tree backend by default.
+`.github/deploy-backend` records `tot`, the single Pages workflow reads it on
+every push, and the committed `assets.tot/` browse tier (217 full-resolution
+WebP, 217 screen-1080p WebP, 198 thumbnails; 101,811,924 bytes) resolves
+same-origin. Verified live: the site index and gallery return HTTP 200, the
+gallery and contact sheets reference only `/assets.tot/...` imagery (zero
+`s3-ewh` references in `_site/docs/pages/gallery/`), sample full WebPs and the
+snapshot manifest return HTTP 200, and the primary navigation resolves the
+gallery at `README.html`.
+
+### Commit series on `main`
+
+1. `web: add switchable AAO/top-of-tree image backends, TOT live default` —
+   config, includes, viewer, workflow, stager, and the 632-object snapshot.
+2. `docs: check in tracked receipt for the SD-20260825 dyad pair` — the
+   begin/end marker receipt with the canonical ledger SHA-256.
+3. `docs: track v14 upload receipt and archive invoice evidence` — fixed the
+   pre-existing CI link gate (those files were gitignored).
+4. `fix: check TOT snapshot against the generated catalog, not HEAD` — the
+   initial HEAD comparison failed on every later commit.
+5. `ci: pass Pages repo identity and token to the Jekyll build` —
+   `PAGES_REPO_NWO` + tokens for direct builds.
+6. `fix: wrap plan doc Liquid examples in raw and supply Jekyll token`.
+7. `fix: scope rendered link check to HTML and stop rendering _includes` —
+   dropped the stray `include: _includes` and made the walk HTML-only.
+8. `fix: point gallery nav at README.html; scope offline proof`.
+9. This commit — `refactor: shared release-tree core for the v14 builder and
+   TOT stager` (D5).
+
+### Issues found and corrected during deployment
+
+- The two workflow runs preceding this work also failed at `make check-docs`
+  on a clean checkout: a v14 development record links gitignored `reports/`
+  delivery artifacts. Tracking the receipt, invoice PDF, and provenance file
+  restored the gate.
+- Comparing the snapshot to `HEAD` was the wrong staleness invariant; the
+  gate now checks manifest integrity everywhere and compares against the
+  generated catalog on the restage host, with restage-in-same-change-set as
+  the process rule.
+- Direct `bundle exec jekyll build` requires `PAGES_REPO_NWO`,
+  `GITHUB_TOKEN`, and `JEKYLL_GITHUB_TOKEN`.
+- This proposal document's literal Liquid delimiters broke Jekyll parsing;
+  its body is now wrapped in a `raw` block.
+- `include: _includes` rendered include fragments as standalone pages with
+  empty `page.*` context; the line was removed.
+- The rendered-site link check initially tripped on static Markdown copies
+  and those orphan pages; it now scans rendered HTML `href`/`src` only.
+- The primary "Gallery" nav linked a directory with no `index.html`; it now
+  targets `README.html`.
+
+### D5 verification
+
+The shared core (`scripts/lib-release-products.sh`) was proven equivalent by
+running the pre-refactor inline loop and the new core over the same 217
+frozen Stage-14 cases: all 1,283 staged files byte-identical, with the only
+delta being five empty slice `thumbnail/` directories no longer created. The
+refactored TOT stager restaged the browse tier byte-identically to the
+committed snapshot (101,811,924 bytes). Local gates pass: `make check-docs`,
+`make check-tot-snapshot`, and a `--walk` fixture test; the Pages workflow is
+green end to end.
+
+### Remaining follow-ups
+
+- Local `jekyll serve` preview and the headless-Chrome offline proof (Ruby is
+  not installed on rizal).
+- A committed `Gemfile.lock` for a reproducible bundle.
+- One exercised AAO switch: edit `.github/deploy-backend` to `aao`, push,
+  verify, then switch back.
+- The frozen v14 consumer-layout step no longer runs against the current
+  catalog (its input SHA-256 is pinned); rebuilding the v14 tree requires the
+  frozen corpus, as intended for frozen release tooling.
 {% endraw %}

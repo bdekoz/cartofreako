@@ -5,6 +5,7 @@ set -Eeuo pipefail
 script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)
 repository_root=$(cd -- "$script_dir/.." && pwd -P)
 default_output=$repository_root/build/s3-release-v14
+source "$script_dir/lib-release-products.sh"
 output=$default_output
 replace=false
 source_commit=
@@ -124,46 +125,16 @@ cp --archive -- "$work_root/consumer-layout/runtime" "$release_root/"
 cp -- "$viewer_source" "$release_root/viewer.html"
 
 printf 'Copying 217 frozen standard products into proposed-v14 paths...\n'
+STAGE_FAMILY_MASTER=1
+STAGE_FAMILY_PRINT=1
+STAGE_FAMILY_FULL=png
+STAGE_FAMILY_THUMBNAIL=1
+STAGE_FAMILY_SCREEN_PNG=1
+STAGE_FAMILY_SCREEN_WEBP=1
 jq -r '.cases[] | [.id, .lifecycle, .projectionId, .parents.svg.path,
   .parents.pdf.path, .parents.fullPng.path, .screen.png.path,
   .screen.webp.path] | @tsv' "$input_fixture" |
-while IFS=$'\t' read -r id lifecycle projection svg pdf png screen_png screen_webp; do
-  [[ $id && $lifecycle && $projection && $svg && $pdf && $png &&
-     $screen_png && $screen_webp ]] ||
-    die "malformed Stage 14 input case: $id"
-  product_root=$release_root/products/$lifecycle/$projection
-  mkdir -p -- "$product_root/master" "$product_root/print" \
-    "$product_root/full" "$product_root/thumbnail" \
-    "$product_root/screen-1080p/png" "$product_root/screen-1080p/webp"
-
-  source_svg=$repository_root/$svg
-  source_pdf=$repository_root/$pdf
-  source_png=$repository_root/$png
-  source_screen_png=$repository_root/$screen_png
-  source_screen_webp=$repository_root/$screen_webp
-  [[ -f $source_svg ]] || die "missing source SVG: $svg"
-  [[ -f $source_pdf ]] || die "missing source PDF: $pdf"
-  [[ -f $source_png ]] || die "missing source PNG: $png"
-  [[ -f $source_screen_png ]] || die "missing source screen PNG: $screen_png"
-  [[ -f $source_screen_webp ]] || die "missing source screen WebP: $screen_webp"
-
-  stem=$(basename -- "$png" .png)
-  if [[ $source_svg == *.gz ]]; then
-    cp -- "$source_svg" "$product_root/master/$stem.svg.gz"
-  else
-    gzip --best --no-name --stdout -- "$source_svg" \
-      > "$product_root/master/$stem.svg.gz"
-  fi
-  cp -- "$source_pdf" "$product_root/print/$stem.pdf"
-  cp -- "$source_png" "$product_root/full/$stem.png"
-  cp -- "$source_screen_png" "$product_root/screen-1080p/png/$stem.png"
-  cp -- "$source_screen_webp" "$product_root/screen-1080p/webp/$stem.webp"
-
-  thumbnail=$repository_root/assets.generated/$projection/thumbnail/$stem.png
-  if [[ -f $thumbnail ]]; then
-    cp -- "$thumbnail" "$product_root/thumbnail/$stem.png"
-  fi
-done
+stage_release_products "$release_root"
 
 printf 'Writing v14 release README and metadata...\n'
 cat > "$release_root/README.md" <<EOF
