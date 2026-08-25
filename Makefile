@@ -1236,19 +1236,13 @@ check-docs: $(DOC_LINK_CHECKER) check-pass-status
 
 TOT_PREVIEW_BUILDER := scripts/build-tot-preview.sh
 TOT_PREVIEW_MANIFEST := assets.tot/manifest.json
+TOT_PREVIEW_CHECKER := scripts/check-tot-snapshot.py
 
 build-tot-preview: $(TOT_PREVIEW_BUILDER)
 	bash "$(TOT_PREVIEW_BUILDER)" --tier browse
 
-check-tot-snapshot: $(TOT_PREVIEW_MANIFEST)
-	@recorded=$$(jq -r '.sourceRevision.gitCommit' "$(TOT_PREVIEW_MANIFEST)"); \
-	expected=$$(git rev-parse HEAD); \
-	if [ "$$recorded" != "$$expected" ]; then \
-		printf 'tot snapshot is stale: recorded %s, HEAD %s\n' \
-			"$$recorded" "$$expected"; \
-		exit 1; \
-	fi; \
-	printf 'tot snapshot current at %s\n' "$$recorded"
+check-tot-snapshot: $(TOT_PREVIEW_CHECKER) $(TOT_PREVIEW_MANIFEST)
+	python3 "$(TOT_PREVIEW_CHECKER)"
 
 check-pass-status: $(PASS_STATUS_SCHEMA) $(PASS_STATUS_MANIFEST) \
 		$(PASS_STATUS_CHECKER) $(STANDARD_ARTIFACT_MANIFEST)

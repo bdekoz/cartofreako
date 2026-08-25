@@ -381,9 +381,14 @@ runner and the deployer needs no VPN either:
   `github-pages` gem, `ruby/setup-ruby`, `bundle install`, then
   `bundle exec jekyll build`.
 - Staleness: the workflow runs `make check-tot-snapshot` before deploying
-  whenever `.github/deploy-backend` selects `tot`, so a snapshot whose
-  recorded `sourceRevision` is older than `HEAD` cannot be published under
-  the live default.
+  whenever `.github/deploy-backend` selects `tot`. The manifest's
+  `sourceRevision` records the commit that generated the imagery; the check
+  validates manifest integrity everywhere and compares the revision against
+  the live generated catalog on the restage host (the catalog is gitignored,
+  so a clean checkout has no imagery to compare). It deliberately does not
+  compare against `HEAD`, which advances on documentation-only commits too.
+  The restage discipline is therefore a process rule: a commit that changes
+  generated imagery must restage `assets.tot/` in the same change set.
 - Governance: a TOT Pages deployment is a mutable preview publication. It
   never updates the AAO release records and must not be described as an AAO
   deposit. The deployed pages carry `backend_label` ("Top of tree (snapshot)"),
@@ -476,7 +481,9 @@ Modified files:
 - `.gitignore` — re-include the tracked snapshot (`!/assets.tot/`) after the
   `/assets.*/` catch-all (implemented).
 - `Makefile` — `build-tot-preview` and `check-tot-snapshot` convenience
-  targets wrapping the script and the staleness comparison (implemented).
+  targets wrapping the staging script and the manifest check (implemented).
+- `scripts/check-tot-snapshot.py` — manifest-integrity plus snapshot-versus-
+  catalog staleness check (implemented; replaces the former HEAD comparison).
 - `scripts/check-doc-links.py` — rendered-site `--walk` mode for `_site/`
   (implemented; wired into the workflow).
 
@@ -494,11 +501,13 @@ Modified files:
    validates every rendered `src`/`href` against files on disk and flags
    missing objects; the workflow runs it after the build. The source-level
    `make check-docs` must still pass with no network access.
-4. **Staleness gate.** `make check-tot-snapshot` compares
-   `assets.tot/manifest.json` `sourceRevision` to `git rev-parse HEAD` and
-   fails when the snapshot predates the tree; the workflow runs it. It
-   passes against the staged snapshot at `66922af…`. The workflow runs it
-   only when `.github/deploy-backend` selects `tot`.
+4. **Snapshot manifest gate.** `make check-tot-snapshot` validates the
+   manifest schema and `sourceRevision` everywhere, and on a host with the
+   generated catalog it fails when the snapshot predates that catalog. It
+   does not compare against `HEAD` (documentation-only commits advance HEAD
+   without changing imagery). It passes against the staged snapshot at
+   `66922af…`; the workflow runs it only when `.github/deploy-backend`
+   selects `tot`.
 5. **WebP derivative checks.** Every `full/*.webp` must report the same
    dimensions as its `parents.fullPng` and a non-empty size; the manifest
    must record the quality/lossless mode actually used. (Verified on the
