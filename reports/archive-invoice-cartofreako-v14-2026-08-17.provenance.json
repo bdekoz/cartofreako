@@ -1,0 +1,79 @@
+{
+  "schema": "aao-archive-invoice-provenance-v1",
+  "generated_at": "2026-08-17T18:39:25-07:00",
+  "receipt_path": "/home/bkoz/src/cartofreako/reports/cartofreako-v14-aao-upload-receipt.json",
+  "release": "cartofreako-v14",
+  "run_id": "20260816T171544Z-70007",
+  "pdf": {
+    "path": "/home/bkoz/src/cartofreako/reports/archive-invoice-cartofreako-v14-2026-08-17.pdf",
+    "bytes": 97029,
+    "sha256": "cadd49c13bdefdbee28f554fb0842f0b24a1321d41e57c6890ecec7eb8bdfc0e"
+  },
+  "pair": {
+    "dark": "#581c87",
+    "light": "#faf5ff",
+    "source_url": "https://randoma11y.com/%23581c87/%23faf5ff",
+    "retrieved_at": "2026-08-11T04:26:00-07:00",
+    "validator": "WCAG 2.x relative luminance",
+    "endpoint_contrast_ratio": 10.135
+  },
+  "color_validation": [
+    {
+      "foreground": "#14171a",
+      "background": "#fcfbf7",
+      "content_class": "normal-text",
+      "contrast_ratio": 17.376,
+      "use": "body and table text"
+    },
+    {
+      "foreground": "#581c87",
+      "background": "#fcfbf7",
+      "content_class": "normal-text",
+      "contrast_ratio": 10.503,
+      "use": "eyebrows and labels"
+    },
+    {
+      "foreground": "#581c87",
+      "background": "#fcfbf7",
+      "content_class": "essential-graphic",
+      "contrast_ratio": 10.503,
+      "use": "rules and table borders"
+    },
+    {
+      "foreground": "#581c87",
+      "background": "#faf5ff",
+      "content_class": "normal-text",
+      "contrast_ratio": 10.135,
+      "use": "hero numbers and table headers"
+    },
+    {
+      "foreground": "#faf5ff",
+      "background": "#581c87",
+      "content_class": "large-text",
+      "contrast_ratio": 10.135,
+      "use": "hero release panel title"
+    },
+    {
+      "foreground": "#14171a",
+      "background": "#eef1f2",
+      "content_class": "normal-text",
+      "contrast_ratio": 15.849,
+      "use": "box panel text"
+    }
+  ],
+  "qa": {
+    "pages": 3,
+    "fonts_embedded": true,
+    "text_extracted": true,
+    "page_renders": [
+      "/home/bkoz/src/cartofreako/reports/archive-invoice-cartofreako-v14-2026-08-17.qa/page-01.png",
+      "/home/bkoz/src/cartofreako/reports/archive-invoice-cartofreako-v14-2026-08-17.qa/page-02.png",
+      "/home/bkoz/src/cartofreako/reports/archive-invoice-cartofreako-v14-2026-08-17.qa/page-03.png"
+    ],
+    "notes": null
+  },
+  "template": {
+    "path": "/home/bkoz/src/alpha60-clusterops/storage/report-templates/archive-invoice.html.in",
+    "sha256": "7be0e143bc626e419fe7b032bd8853cc3c667f890d8af9873722e1148cabeaa5"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "aao-upload-receipt-v1",
+  "status": "complete",
+  "run_id": "20260816T171544Z-70007",
+  "completed_at": "2026-08-16T17:21:50Z",
+  "profile": {
+    "path": "/home/bkoz/src/cartofreako/docs/releases/v14-aao-upload-profile.json",
+    "sha256": "4b001de0610b403c20d380441091ddaa2e76a7b116f0eeecafd301fff7129b5d"
+  },
+  "release": "cartofreako-v14",
+  "destination": {
+    "endpoint": "https://s3-ewh.ist.berkeley.edu",
+    "region": "us-east-1",
+    "bucket": "adekosnik-bucket01",
+    "prefix": "cartofreako/v14"
+  },
+  "inventory": {
+    "objects": 1349,
+    "stored_bytes": 1618300704
+  },
+  "verification": {
+    "standard": true,
+    "full_download": true
+  },
+  "completion_marker": {
+    "path": "release.json",
+    "public_url": "https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/release.json"
+  },
+  "execution": {
+    "mode": "interactive",
+    "credential_source": "tty",
+    "authorization": null
+  }
+}
