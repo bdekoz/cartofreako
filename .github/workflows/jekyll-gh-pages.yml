@@ -56,6 +56,8 @@ jobs:
           fi
         env:
           JEKYLL_ENV: production
+          PAGES_REPO_NWO: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ github.token }}
       - name: Check rendered site links
         run: python3 scripts/check-doc-links.py --walk _site
       - name: Upload artifact
