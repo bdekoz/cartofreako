@@ -10,7 +10,7 @@
 [Orbital Technosphere notes](../passes/orbital-technosphere.md) ·
 [Resources Stage 12 implementation](../passes/resources/implementation.md) ·
 [Stage 12 overview](../../development/20260815_stage-12.md) ·
-[Projection snapshots](../../../index.md#generated-artifact-previews) ·
+[Projection snapshots](build.md#generated-artifact-previews) ·
 [Resources enrichment plan](../passes/resources/enrichment-plan.md) ·
 [Anthropocene notes](../passes/anthropocene/implementation.md) ·
 [Anthropocene Stage 8b plan](../passes/anthropocene/enrichment-plan.md) ·

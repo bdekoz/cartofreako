@@ -1,0 +1,287 @@
+/* Cartofreako GitHub Pages stylesheet.
+ *
+ * Applies the Devastation Pacific house style over the jekyll-theme-minimal
+ * structural base, using the same token palette and typography as the
+ * devp.ac reference site, then layers the cartofreako gallery components on
+ * top. House rules in effect: no gradients, no shadows, square corners,
+ * underlined links, hard-left alignment, and color never as the sole carrier
+ * of meaning.
+ */
+
+:root {
+  --dp-paper: #fcfbf7;
+  --dp-ink: #14171a;
+  --dp-accent: #173a55;
+  --dp-muted: #4d565d;
+  --dp-rule: #9da8af;
+  --dp-soft: #eef1f2;
+  --dp-soft-2: #f5f6f4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--dp-paper);
+  color: var(--dp-ink);
+}
+
+body {
+  margin: 0;
+  font-family: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible",
+    "Trebuchet MS", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.accent-bar {
+  height: 7px;
+  background: var(--dp-accent);
+}
+
+.site-header,
+main {
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 1180px;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.site-header {
+  border-bottom: 2px solid var(--dp-ink);
+  float: none;
+  padding-bottom: 0.8rem;
+  padding-top: 0.8rem;
+  position: static;
+  width: auto;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  font-weight: 700;
+  gap: 0.35rem 1rem;
+}
+
+.site-nav a:first-child {
+  font-weight: 800;
+}
+
+main {
+  padding-bottom: 4rem;
+  padding-top: 1.5rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--dp-ink);
+}
+
+h1 {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.05;
+  margin: 0 0 12px;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 36px 0 10px;
+}
+
+h3 {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 24px 0 8px;
+}
+
+.page-deck {
+  color: var(--dp-muted);
+  font-size: 1.1rem;
+  max-width: 66ch;
+}
+
+a {
+  color: var(--dp-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+a:hover,
+a:focus {
+  color: #0e2739;
+}
+
+:focus-visible {
+  outline: 3px solid var(--dp-accent);
+  outline-offset: 2px;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 0 0 26px;
+  width: 100%;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--dp-rule);
+  padding: 9px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+thead th {
+  border-bottom: 2px solid var(--dp-ink);
+  border-top: 2px solid var(--dp-ink);
+}
+
+code,
+pre {
+  font-family: "Atkinson Hyperlegible Mono", "Courier New", monospace;
+}
+
+.gallery-grid,
+.subject-grid {
+  align-items: start;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  margin: 1.25rem 0 2rem;
+}
+
+.gallery-card {
+  border: 1px solid var(--dp-rule);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0.8rem;
+}
+
+.gallery-card h3,
+.gallery-card h4 {
+  margin: 0 0 0.7rem;
+}
+
+.gallery-card img,
+.artifact-table img,
+.pass-gallery img {
+  background: var(--dp-soft-2);
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.artifact-table img,
+.pass-gallery img {
+  max-width: 480px;
+}
+
+.gallery-card figcaption {
+  margin-top: 0.7rem;
+}
+
+.artifact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.88rem;
+  gap: 0.25rem 0.8rem;
+  line-height: 1.5;
+  margin: 0.55rem 0 0;
+}
+
+.artifact-actions a:first-child {
+  font-weight: 700;
+}
+
+.artifact-table th:first-child {
+  min-width: 13rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.artifact-table td {
+  vertical-align: top;
+}
+
+.pass-gallery figure {
+  margin: 0;
+}
+
+.pass-gallery th {
+  text-align: left;
+}
+
+/* Don't render below the fold: 80% of the images and SVGs is roughly 480px. */
+.defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: 500px;
+}
+
+/* Disclosure blocks keep square corners and a structural rule. */
+summary {
+  background-color: var(--dp-soft);
+  border: 1px solid var(--dp-rule);
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+summary h3 {
+  display: inline;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+/* Neutralize the Minimal theme's odd nested-list spacing. */
+li * {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+footer.site {
+  border-top: 2px solid var(--dp-ink);
+  color: var(--dp-muted);
+  display: flex;
+  flex-wrap: wrap;
+  font-family: "Atkinson Hyperlegible Mono", "Courier New", monospace;
+  font-size: 13px;
+  gap: 20px;
+  justify-content: space-between;
+  margin: 44px auto 0;
+  max-width: 1180px;
+  padding: 14px 1.25rem 64px;
+}
+
+@media (max-width: 760px) {
+  body {
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 620px) {
+  .artifact-table,
+  .artifact-table tbody,
+  .artifact-table tr,
+  .artifact-table th,
+  .artifact-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .artifact-table th:first-child {
+    min-width: 0;
+    padding-bottom: 0.35rem;
+  }
+}

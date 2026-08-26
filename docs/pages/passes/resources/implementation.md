@@ -2,7 +2,7 @@
 
 [Documentation index](../../../../index.md) ·
 [Stage 12 overview](../../../development/20260815_stage-12.md) ·
-[Projection snapshots](../../../../index.md#generated-artifact-previews) ·
+[Projection snapshots](../../getting-started/build.md#generated-artifact-previews) ·
 [Generation guide](../../getting-started/generation.md) ·
 [Metric catalog](metric-catalog.md) ·
 [Enrichment plan](enrichment-plan.md)

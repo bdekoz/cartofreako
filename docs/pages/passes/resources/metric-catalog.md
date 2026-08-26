@@ -4,7 +4,7 @@
 [Resources implementation](implementation.md) ·
 [Enrichment plan](enrichment-plan.md) ·
 [Stage 12 overview](../../../development/20260815_stage-12.md) ·
-[Generated previews](../../../../index.md#generated-artifact-previews)
+[Generated previews](../../getting-started/build.md#generated-artifact-previews)
 
 This is the human-readable index to the checked
 [`cartofreako-resources-profile-v3`](../../../../assets.static/resources/resources-profile.json)

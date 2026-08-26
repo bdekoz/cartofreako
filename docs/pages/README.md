@@ -23,6 +23,8 @@ AAO prefix.
 | Need | Documentation |
 | --- | --- |
 | Install compilers, libraries, data tools, and optional WebAssembly support | [Prerequisites](getting-started/prerequisites.md) |
+| Read the complete build graph, released artifact catalog, and resource metric classes | [Build and generated artifacts](getting-started/build.md) |
+| Map repository directories and individual source files | [Source layout conventions](getting-started/source_layout_conventions.md) |
 | Generate SVG, PDF, PNG, thumbnails, slices, and projection families | [Generation guide](getting-started/generation.md) |
 | Understand the selected profile, pass evaluation, and exact versus family workflows | [Generation methods and decision record](getting-started/generation-methods.md) |
 | Review the complete Stage 13 development manifest | [Stage 13 convergence notes](../development/20260815_stage-13.md) |
@@ -70,20 +72,22 @@ the [generation-pass overview](passes/README.md) and machine-readable
 ## Projection mathematics
 
 Each projection has context, implementation, and source documents. Its
-33-pass contact sheet provides a visual test across very different data and
-path structures.
+contact sheet provides a visual test across very different data and path
+structures: 32 plates on the top-of-tree snapshot (31 standard passes plus
+the preview-only Cloud-atmosphere snapshot) and 31 standard passes on the
+immutable AAO backend.
 
 Equal Earth is listed separately as a Stage 16J exploration control; it has
-five local comparison plates rather than a standard 33-pass release gallery.
+five local comparison plates rather than a standard release gallery.
 
 | Projection | Context | Implementation | Sources | Contact sheet |
 | --- | --- | --- | --- | --- |
-| AuthaGraph | [Context](projections/authagraph/context.md) | [Notes](projections/authagraph/implementation.md) | [Bibliography](projections/authagraph/bibliography.md) | [33 passes](gallery/authagraph.md) |
-| Cahill–Keyes | [Context](projections/cahill-keyes/context.md) | [Notes](projections/cahill-keyes/implementation.md) | [Bibliography](projections/cahill-keyes/bibliography.md) | [33 passes](gallery/cahill-keyes.md) |
-| Dymaxion | [Context](projections/dymaxion/context.md) | [Notes](projections/dymaxion/implementation.md) | [Bibliography](projections/dymaxion/bibliography.md) | [33 passes](gallery/dymaxion.md) |
-| Myriahedral | [Context](projections/myriahedral/context.md) | [Notes](projections/myriahedral/implementation.md) | [Bibliography](projections/myriahedral/bibliography.md) | [33 passes](gallery/myriahedral.md) |
-| Star-X | [Context](projections/star-x/context.md) | [Notes](projections/star-x/implementation.md) | [Bibliography](projections/star-x/bibliography.md) | [33 passes](gallery/star-x.md) |
-| Icosahedral Voronoi | [Context](projections/voronoi/context.md) | [Notes](projections/voronoi/implementation.md) | [Bibliography](projections/voronoi/bibliography.md) | [33 passes](gallery/voronoi.md) |
+| AuthaGraph | [Context](projections/authagraph/context.md) | [Notes](projections/authagraph/implementation.md) | [Bibliography](projections/authagraph/bibliography.md) | [Contact sheet](gallery/authagraph.md) |
+| Cahill–Keyes | [Context](projections/cahill-keyes/context.md) | [Notes](projections/cahill-keyes/implementation.md) | [Bibliography](projections/cahill-keyes/bibliography.md) | [Contact sheet](gallery/cahill-keyes.md) |
+| Dymaxion | [Context](projections/dymaxion/context.md) | [Notes](projections/dymaxion/implementation.md) | [Bibliography](projections/dymaxion/bibliography.md) | [Contact sheet](gallery/dymaxion.md) |
+| Myriahedral | [Context](projections/myriahedral/context.md) | [Notes](projections/myriahedral/implementation.md) | [Bibliography](projections/myriahedral/bibliography.md) | [Contact sheet](gallery/myriahedral.md) |
+| Star-X | [Context](projections/star-x/context.md) | [Notes](projections/star-x/implementation.md) | [Bibliography](projections/star-x/bibliography.md) | [Contact sheet](gallery/star-x.md) |
+| Icosahedral Voronoi | [Context](projections/voronoi/context.md) | [Notes](projections/voronoi/implementation.md) | [Bibliography](projections/voronoi/bibliography.md) | [Contact sheet](gallery/voronoi.md) |
 | Equal Earth *(exploration only)* | [Context](projections/equal-earth/context.md) | [Notes](projections/equal-earth/implementation.md) | [Bibliography](projections/equal-earth/bibliography.md) | [Five comparisons](../development/20260815_equal-earth-positioning-speculations-v01.md) |
 
 ## Browser and embedding

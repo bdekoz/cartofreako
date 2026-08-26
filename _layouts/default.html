@@ -5,193 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% seo %}
 
-    <!-- 1. Fetch the file as fast as humanly possible -->
+    <!-- Fetch the theme stylesheet as fast as possible, then layer the
+         house-style treatment on top. -->
     <link rel="preload" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}" as="style">
-
-    <!-- 2. Apply it normally (blocks rendering, which we want for main styles) -->
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-
-    <style>
-body {
-  margin: 0;
-}
-
-.site-header,
-main {
-  box-sizing: border-box;
-  margin: 0 auto;
-  max-width: 1180px;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-}
-
-.site-header {
-  border-bottom: 1px solid #d8dee4;
-  float: none;
-  padding-bottom: 0.8rem;
-  padding-top: 0.8rem;
-  position: static;
-  width: auto;
-}
-
-.site-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem 1rem;
-}
-
-.site-nav a:first-child {
-  font-weight: 700;
-}
-
-main {
-  padding-bottom: 4rem;
-  padding-top: 1.5rem;
-}
-
-.gallery-grid,
-.subject-grid {
-  align-items: start;
-  display: grid;
-  gap: 1.25rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  margin: 1.25rem 0 2rem;
-}
-
-.gallery-card {
-  border: 1px solid #d8dee4;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0.8rem;
-}
-
-.gallery-card h3,
-.gallery-card h4 {
-  margin: 0 0 0.7rem;
-}
-
-.gallery-card img,
-.artifact-table img,
-.pass-gallery img {
-  background: #f6f8fa;
-  display: block;
-  height: auto;
-  width: 100%;
-}
-
-.artifact-table img,
-.pass-gallery img {
-  max-width: 480px;
-}
-
-.gallery-card figcaption {
-  margin-top: 0.7rem;
-}
-
-.artifact-actions {
-  display: flex;
-  flex-wrap: wrap;
-  font-size: 0.88rem;
-  gap: 0.25rem 0.8rem;
-  line-height: 1.5;
-  margin: 0.55rem 0 0;
-}
-
-.artifact-actions a:first-child {
-  font-weight: 700;
-}
-
-.artifact-table th:first-child {
-  min-width: 13rem;
-  text-align: left;
-  vertical-align: top;
-}
-
-.artifact-table td {
-  vertical-align: top;
-}
-
-.pass-gallery figure {
-  margin: 0;
-}
-
-.pass-gallery th {
-  text-align: left;
-}
-
-.page-deck {
-  font-size: 1.1rem;
-  max-width: 54rem;
-}
-
-@media (max-width: 620px) {
-  .artifact-table,
-  .artifact-table tbody,
-  .artifact-table tr,
-  .artifact-table th,
-  .artifact-table td {
-    display: block;
-    width: 100%;
-  }
-
-  .artifact-table th:first-child {
-    min-width: 0;
-    padding-bottom: 0.35rem;
-  }
-}
-
-/* don't render below the fold: 80% on the images and svgs is rougly 480px*/
-.defer-render {
-  content-visibility: auto;
-  contain-intrinsic-size: 500px;
-}
-
-/* Style the summary to look like a clickable block */
-summary {
-  cursor: pointer;
-  padding: 0.5rem;
-  background-color: #f8f9fa;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
-}
-
-/* li fix Minimal theme weird nested list spacing */
-      li * {
-    margin-top: 0;
-    margin-bottom: 0;
-      }
-
-/* Ensure the heading sits inline with the native disclosure triangle */
-summary h3 {
-  display: inline;
-  margin: 0;
-  font-size: 1.2rem;
-}
-
-/* link text as WCAG22 compliant and match table style */
-a {
-    color: #0066cc;
-    text-decoration: underline;
-}
-
-
-/* link (optional but good for usability: make it react when hovered) */
-a:hover,
-a:focus {
-    text-decoration: none;
-}
-    </style>
-
+    <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
 </head>
 <body>
+
+  <div class="accent-bar" aria-hidden="true"></div>
 
   <header class="site-header">
     <nav class="site-nav" aria-label="Primary documentation">
       <a href="{{ '/' | relative_url }}">Cartofreako</a>
       <a href="{{ '/docs/pages/gallery/README.html' | relative_url }}">Gallery</a>
       <a href="{{ '/docs/pages/' | relative_url }}">Technical documentation</a>
-      <a href="{{ '/docs/pages/getting-started/generation.html' | relative_url }}">Generate maps</a>
-      <a href="{{ '/docs/pages/releases/aao-v14.html' | relative_url }}">Release</a>
+      <a href="{{ '/docs/pages/getting-started/build.html' | relative_url }}">Build</a>
+      <a href="{{ '/docs/pages/releases/README.html' | relative_url }}">Releases</a>
     </nav>
   </header>
 
@@ -200,11 +30,10 @@ a:focus {
   {{ content }}
   </main>
 
-  <!-- optional floating footer
-  <footer>
-    <p><a href="https://alpha60.co">a60</a></p>
+  <footer class="site">
+    <span>cartofreako / Devastation Pacific house style</span>
+    <span>GitHub Pages · {% if site.image_backend == "tot" %}top of tree{% else %}AAO{% endif %}</span>
   </footer>
-  -->
 
 </body>
 </html>

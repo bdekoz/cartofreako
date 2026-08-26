@@ -9,8 +9,11 @@ title: Cartofreako visual gallery
 # Visual gallery
 
 The selected image backend ({{ backend_label }}) contains 33 standard
-whole-map passes in each of six projections. Start with the images, then
-follow any projection name to its complete contact sheet.
+whole-map passes in each of six projections. The contact sheets present 32
+plates in one canonical order on the top-of-tree snapshot (31 standard passes
+plus the preview-only Cloud-atmosphere snapshot) and 31 standard passes on
+the immutable AAO backend. Start with the images, then follow any projection
+name to its complete contact sheet.
 
 The AAO release records, screen-1080p catalog products, the artifact and pass
 indexes, and the versioned runtime are documented in the
@@ -21,7 +24,7 @@ Every thumbnail opens the {{ full_label }} image, whose longest side is 3840
 pixels.{% if show_layered %} The separate **Layered SVG** action opens the
 compressed vector file in the viewer.{% endif %}{% if show_print %} **Print
 PDF** opens the 44-inch plate.{% endif %} This makes the raster image the
-fast, predictable browsing path even for dense Bathymetry Roulette artwork.
+fast, predictable browsing path even for dense artwork.
 
 ## Compare projections
 
@@ -32,7 +35,7 @@ can be compared directly.
 
 ## Browse by subject
 
-These six plates lead into the major release families. The full projection
+These plates lead into the major release families. The full projection
 contact sheets retain every pass and the same format choices.
 
 <div class="subject-grid">
@@ -55,13 +58,13 @@ contact sheets retain every pass and the same format choices.
     <nav class="artifact-actions" aria-label="AuthaGraph Hubble observer formats"><a href="{{ release_base }}/products/standard/authagraph/full/astro-observer-hubble-authagraph-44-19.052559{{ full_suffix }}">{{ full_label }}</a>{% if show_layered %}<a href="{{ viewer_query }}authagraph/master/astro-observer-hubble-authagraph-44-19.052559.svg.gz">Layered SVG</a>{% endif %}{% if show_print %}<a href="{{ release_base }}/products/standard/authagraph/print/astro-observer-hubble-authagraph-44-19.052559.pdf">Print PDF</a>{% endif %}</nav>
   </figure>
   <figure class="gallery-card">
-    <h3><a href="star-x.html#networks-and-anthropocene">Networks</a></h3>
+    <h3><a href="star-x.html#networks">Networks</a></h3>
     <a href="{{ release_base }}/products/standard/star-x/full/network-fiber-star-x-34-44{{ full_suffix }}"><img loading="lazy" decoding="async" src="{{ release_base }}/products/standard/star-x/thumbnail/network-fiber-star-x-34-44.png" width="480" alt="Star-X Network Fiber preview"></a>
     <figcaption>Network Fiber · Star-X</figcaption>
     <nav class="artifact-actions" aria-label="Star-X Network Fiber formats"><a href="{{ release_base }}/products/standard/star-x/full/network-fiber-star-x-34-44{{ full_suffix }}">{{ full_label }}</a>{% if show_layered %}<a href="{{ viewer_query }}star-x/master/network-fiber-star-x-34-44.svg.gz">Layered SVG</a>{% endif %}{% if show_print %}<a href="{{ release_base }}/products/standard/star-x/print/network-fiber-star-x-34-44.pdf">Print PDF</a>{% endif %}</nav>
   </figure>
   <figure class="gallery-card">
-    <h3><a href="myriahedral.html#networks-and-anthropocene">Anthropocene</a></h3>
+    <h3><a href="myriahedral.html#anthropocene">Anthropocene</a></h3>
     <a href="{{ release_base }}/products/standard/myriahedral/full/anthropocene-particulate-2026-myriahedral-44-24.75{{ full_suffix }}"><img loading="lazy" decoding="async" src="{{ release_base }}/products/standard/myriahedral/thumbnail/anthropocene-particulate-2026-myriahedral-44-24.75.png" width="480" alt="Myriahedral Anthropocene particulate 2026 preview"></a>
     <figcaption>Particulate 2026 · Myriahedral</figcaption>
     <nav class="artifact-actions" aria-label="Myriahedral Anthropocene particulate 2026 formats"><a href="{{ release_base }}/products/standard/myriahedral/full/anthropocene-particulate-2026-myriahedral-44-24.75{{ full_suffix }}">{{ full_label }}</a>{% if show_layered %}<a href="{{ viewer_query }}myriahedral/master/anthropocene-particulate-2026-myriahedral-44-24.75.svg.gz">Layered SVG</a>{% endif %}{% if show_print %}<a href="{{ release_base }}/products/standard/myriahedral/print/anthropocene-particulate-2026-myriahedral-44-24.75.pdf">Print PDF</a>{% endif %}</nav>
@@ -72,22 +75,24 @@ contact sheets retain every pass and the same format choices.
     <figcaption>Coral reef threat · Myriahedral</figcaption>
     <nav class="artifact-actions" aria-label="Myriahedral coral reef threat formats"><a href="{{ release_base }}/products/standard/myriahedral/full/resources-fauna-coral-reef-threat-2011-myriahedral-44-24.75{{ full_suffix }}">{{ full_label }}</a>{% if show_layered %}<a href="{{ viewer_query }}myriahedral/master/resources-fauna-coral-reef-threat-2011-myriahedral-44-24.75.svg.gz">Layered SVG</a>{% endif %}{% if show_print %}<a href="{{ release_base }}/products/standard/myriahedral/print/resources-fauna-coral-reef-threat-2011-myriahedral-44-24.75.pdf">Print PDF</a>{% endif %}</nav>
   </figure>
+  {% if backend_id == "tot" %}
   <figure class="gallery-card">
-    <h3><a href="voronoi.html#art-passes">Art passes</a></h3>
-    <a href="{{ release_base }}/products/standard/voronoi/full/bathymetry-roulette-voronoi-44-22.916667{{ full_suffix }}"><img loading="lazy" decoding="async" src="{{ release_base }}/products/standard/voronoi/thumbnail/bathymetry-roulette-voronoi-44-22.916667.png" width="480" alt="Voronoi Bathymetry Roulette preview"></a>
-    <figcaption>Bathymetry Roulette · Voronoi</figcaption>
-    <nav class="artifact-actions" aria-label="Voronoi Bathymetry Roulette formats"><a href="{{ release_base }}/products/standard/voronoi/full/bathymetry-roulette-voronoi-44-22.916667{{ full_suffix }}">{{ full_label }}</a>{% if show_layered %}<a href="{{ viewer_query }}voronoi/master/bathymetry-roulette-voronoi-44-22.916667.svg.gz">Layered SVG</a>{% endif %}{% if show_print %}<a href="{{ release_base }}/products/standard/voronoi/print/bathymetry-roulette-voronoi-44-22.916667.pdf">Print PDF</a>{% endif %}</nav>
+    <h3><a href="voronoi.html#projection-foundations">Atmosphere</a></h3>
+    <a href="{{ release_base }}/products/standard/voronoi/full/cloud-atmosphere-voronoi-44-22.916667{{ full_suffix }}"><img loading="lazy" decoding="async" src="{{ release_base }}/products/standard/voronoi/thumbnail/cloud-atmosphere-voronoi-44-22.916667.png" width="480" alt="Voronoi Cloud-atmosphere preview"></a>
+    <figcaption>Cloud-atmosphere · Voronoi</figcaption>
+    <nav class="artifact-actions" aria-label="Voronoi Cloud-atmosphere formats"><a href="{{ release_base }}/products/standard/voronoi/full/cloud-atmosphere-voronoi-44-22.916667{{ full_suffix }}">{{ full_label }}</a>{% if show_layered %}<a href="{{ viewer_query }}voronoi/master/cloud-atmosphere-voronoi-44-22.916667.svg.gz">Layered SVG</a>{% endif %}{% if show_print %}<a href="{{ release_base }}/products/standard/voronoi/print/cloud-atmosphere-voronoi-44-22.916667.pdf">Print PDF</a>{% endif %}</nav>
   </figure>
+  {% endif %}
 </div>
 
 ## Complete projection contact sheets
 
-- [AuthaGraph — 33 passes](authagraph.md)
-- [Cahill–Keyes — 33 passes](cahill-keyes.md)
-- [Dymaxion — 33 passes](dymaxion.md)
-- [Myriahedral — 33 passes](myriahedral.md)
-- [Star-X — 33 passes](star-x.md)
-- [Voronoi — 33 passes](voronoi.md)
+- [AuthaGraph — {% if backend_id == "tot" %}32 plates{% else %}31 passes{% endif %}](authagraph.md)
+- [Cahill–Keyes — {% if backend_id == "tot" %}32 plates{% else %}31 passes{% endif %}](cahill-keyes.md)
+- [Dymaxion — {% if backend_id == "tot" %}32 plates{% else %}31 passes{% endif %}](dymaxion.md)
+- [Myriahedral — {% if backend_id == "tot" %}32 plates{% else %}31 passes{% endif %}](myriahedral.md)
+- [Star-X — {% if backend_id == "tot" %}32 plates{% else %}31 passes{% endif %}](star-x.md)
+- [Voronoi — {% if backend_id == "tot" %}32 plates{% else %}31 passes{% endif %}](voronoi.md)
 
 The backend [marker]({{ release_base }}/{{ marker_name }}) is the
 machine-readable authority for the selected inventory. For build

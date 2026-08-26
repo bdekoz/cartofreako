@@ -13,53 +13,61 @@
     - label: Water
       stem: water
       alt: water
+    - label: Atmosphere
+      stem: cloud-atmosphere
+      alt: Cloud-atmosphere snapshot
+      tot_only: true
 
 - title: Sky and orbital passes
   id: sky-and-orbital-passes
   passes:
+    - label: Astronomy — Hubble observer
+      stem: astro-observer-hubble
+      alt: Hubble observer astronomy
     - label: Astronomy — all sky
       stem: astro-all-sky
       alt: all-sky astronomy
     - label: Astronomy — ground multiband observer
       stem: astro-observer-ground-multiband
       alt: ground multiband observer astronomy
-    - label: Astronomy — Hubble observer
-      stem: astro-observer-hubble
-      alt: Hubble observer astronomy
-    - label: Orbital Technosphere — global
-      stem: orbital-technosphere-global
-      alt: global orbital technosphere
     - label: Orbital Technosphere — observer
       stem: orbital-technosphere-observer
       alt: observer orbital technosphere
+    - label: Orbital Technosphere — global
+      stem: orbital-technosphere-global
+      alt: global orbital technosphere
 
-- title: Networks and Anthropocene
-  id: networks-and-anthropocene
+- title: Networks
+  id: networks
   passes:
-    - label: Network swarm
-      stem: network-swarm
-      alt: network swarm
-    - label: Network CDN sites
-      stem: network-cdn
-      alt: network CDN sites
-    - label: Network Fiber
-      stem: network-fiber
-      alt: Network Fiber cleaned union
     - label: Network Groundstations
       stem: network-groundstations
       alt: alpha60 Starlink groundstations
-    - label: Anthropocene — temperature 2025
-      stem: anthropocene-temperature-2025
-      alt: Anthropocene temperature 2025
-    - label: Anthropocene — temperature 2026
-      stem: anthropocene-temperature-2026
-      alt: Anthropocene temperature 2026
+    - label: Network Fiber
+      stem: network-fiber
+      alt: Network Fiber cleaned union
+    - label: Network CDN sites
+      stem: network-cdn
+      alt: network CDN sites
+    - label: Network swarm
+      stem: network-swarm
+      alt: network swarm
+
+- title: Anthropocene
+  id: anthropocene
+  passes:
     - label: Anthropocene — particulate 2025
       stem: anthropocene-particulate-2025
       alt: Anthropocene particulate 2025
     - label: Anthropocene — particulate 2026
       stem: anthropocene-particulate-2026
       alt: Anthropocene particulate 2026
+    - label: Anthropocene — temperature 2025
+      stem: anthropocene-temperature-2025
+      alt: Anthropocene temperature 2025
+    - label: Anthropocene — temperature 2026
+      stem: anthropocene-temperature-2026
+      alt: Anthropocene temperature 2026
 
 - title: Stage 12 resources
   id: stage-12-resources
@@ -106,13 +114,3 @@
     - label: Human — resident patent applications
       stem: resources-human-resident-patent-applications-per-million-2019-2021
       alt: resident patent applications per million
-
-- title: Art passes
-  id: art-passes
-  passes:
-    - label: Bathymetry Roulette
-      stem: bathymetry-roulette
-      alt: Bathymetry Roulette
-    - label: Bathymetry Hamonshū
-      stem: bathymetry-hamonshu
-      alt: Bathymetry Hamonshū

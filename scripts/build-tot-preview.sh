@@ -20,6 +20,20 @@ webp_lossless=0
 allow_oversize=0
 jobs=$(nproc 2>/dev/null || printf '4')
 
+# Preview-only whole-map plates staged beside the standard catalog. These
+# passes exist in assets.generated but are deliberately absent from
+# contracts/standard-artifact-manifest-v1.json (credentialed/optional), so
+# they are staged directly here without changing the standard manifest.
+SUPPLEMENTAL_PASSES=(cloud-atmosphere)
+SUPPLEMENTAL_SUFFIX_MAP=(
+  "authagraph:authagraph-44-19.052559"
+  "cahill-keyes:ck-44-22"
+  "dymaxion:dymaxion-44-20.78461"
+  "myriahedral:myriahedral-44-24.75"
+  "star-x:star-x-34-44"
+  "voronoi:voronoi-44-22.916667"
+)
+
 usage() {
   cat <<'EOF'
 Usage: scripts/build-tot-preview.sh [options]
@@ -152,11 +166,61 @@ jq -r '
   | @tsv
 ' "$catalog" | stage_release_products "$release_root"
 
+stage_supplemental_passes() {
+  local stem entry projection suffix source_png source_thumb source_svg source_pdf product_root
+  for stem in "${SUPPLEMENTAL_PASSES[@]}"; do
+    for entry in "${SUPPLEMENTAL_SUFFIX_MAP[@]}"; do
+      projection=${entry%%:*}
+      suffix=${entry#*:}
+      source_png=$repository_root/assets.generated/$projection/png/$stem-$suffix.png
+      source_thumb=$repository_root/assets.generated/$projection/thumbnail/$stem-$suffix.png
+      [[ -f $source_png ]] || die "missing supplemental PNG: $source_png"
+      [[ -f $source_thumb ]] || die "missing supplemental thumbnail: $source_thumb"
+      product_root=$release_root/products/standard/$projection
+      mkdir -p -- "$product_root/thumbnail"
+      cp -- "$source_thumb" "$product_root/thumbnail/$stem-$suffix.png"
+      if [[ ${STAGE_FAMILY_MASTER:-0} -eq 1 ]]; then
+        source_svg=$repository_root/assets.generated/$projection/svg/$stem-$suffix.svg
+        [[ -f $source_svg ]] || die "missing supplemental SVG: $source_svg"
+        mkdir -p -- "$product_root/master"
+        gzip --best --no-name --stdout -- "$source_svg" \
+          > "$product_root/master/$stem-$suffix.svg.gz"
+      fi
+      if [[ ${STAGE_FAMILY_PRINT:-0} -eq 1 ]]; then
+        source_pdf=$repository_root/assets.generated/$projection/pdf/$stem-$suffix.pdf
+        [[ -f $source_pdf ]] || die "missing supplemental PDF: $source_pdf"
+        mkdir -p -- "$product_root/print"
+        cp -- "$source_pdf" "$product_root/print/$stem-$suffix.pdf"
+      fi
+      case ${STAGE_FAMILY_FULL:-} in
+        webp)
+          mkdir -p -- "$product_root/full"
+          printf '%s|%s\n' "$source_png" "$product_root/full/$stem-$suffix.webp" \
+            >> "$STAGE_WEBP_WORKLIST"
+          ;;
+        both)
+          mkdir -p -- "$product_root/full"
+          cp -- "$source_png" "$product_root/full/$stem-$suffix.png"
+          printf '%s|%s\n' "$source_png" "$product_root/full/$stem-$suffix.webp" \
+            >> "$STAGE_WEBP_WORKLIST"
+          ;;
+        png)
+          mkdir -p -- "$product_root/full"
+          cp -- "$source_png" "$product_root/full/$stem-$suffix.png"
+          ;;
+      esac
+    done
+  done
+}
+stage_supplemental_passes
+
 convert_staged_webp_worklist "$webp_worklist" "$jobs"
 
 generated_at=$(date --iso-8601=seconds --utc)
 artifact_count=$(jq '.artifacts | length' "$catalog")
 projection_count=$(jq '.artifacts | map(.projection.id) | unique | length' "$catalog")
+supplemental_count=$((${#SUPPLEMENTAL_PASSES[@]} * ${#SUPPLEMENTAL_SUFFIX_MAP[@]}))
+supplemental_passes_json=$(printf '%s\n' "${SUPPLEMENTAL_PASSES[@]}" | jq -R . | jq -s .)
 stored_bytes=$(find "$release_root/products" -type f -printf '%s\n' |
   awk '{ total += $1 } END { print total + 0 }')
 
@@ -182,6 +246,8 @@ manifest=$(jq -n \
   --arg generatedAt "$generated_at" \
   --argjson artifactCount "$artifact_count" \
   --argjson projectionCount "$projection_count" \
+  --argjson supplementalCount "$supplemental_count" \
+  --argjson supplementalPasses "$supplemental_passes_json" \
   --argjson families "$families_json" \
   --argjson storedBytes "$stored_bytes" \
   --arg fullWebpMode "$full_webp_mode" \
@@ -194,11 +260,15 @@ manifest=$(jq -n \
      generatedAt: $generatedAt,
      artifactCount: $artifactCount,
      projectionCount: $projectionCount,
+     supplemental: {
+       passes: $supplementalPasses,
+       artifactCount: $supplementalCount
+     },
      families: $families,
      storedBytes: $storedBytes,
      fullWebp: { mode: $fullWebpMode, quality: $fullWebpQuality },
      mutability: "mutable local preview; not an AAO publication"
-   }')
+  }')
 printf '%s\n' "$manifest" > "$release_root/manifest.json"
 
 cat > "$release_root/README.md" <<EOF

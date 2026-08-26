@@ -6,11 +6,14 @@ Voronoi projections, plus candidate-aware reverse implementations for every
 family and checked layout through one projection-neutral runtime. Star-X keeps
 its ordinary carrier and unified Antarctic cap as explicit components.
 
-Start with the [visual gallery](docs/pages/gallery/README.md), where every thumbnail opens
-a released 3840-pixel PNG and every plate has separate layered SVG and print
-PDF actions. The [technical documentation hub](docs/pages/README.md)
-is the compact build, projection, pass, browser, and release index. The
-authoritative full project documentation remains [`index.md`](index.md). The
+Start with the [visual gallery](docs/pages/gallery/README.md), where every
+thumbnail opens a released full-size image. The
+[technical documentation hub](docs/pages/README.md) is the compact build,
+projection, pass, browser, and release index; [`index.md`](index.md) is the
+landing page, with the build catalog in
+[`docs/pages/getting-started/build.md`](docs/pages/getting-started/build.md)
+and repository/source guidance in
+[`docs/pages/getting-started/source_layout_conventions.md`](docs/pages/getting-started/source_layout_conventions.md). The
 [AI Workflows assessment and 1080p gaming improvement plan](docs/pages/runtime/ai-agent-and-1080p-gaming.md)
 adds screen/runtime derivatives while preserving the SVG/PDF archive and art
 masters plus the existing projection-specific 44-inch and A0 print products.
@@ -102,7 +105,7 @@ exploratory Myriahedral ocean perspectives, 12 Cahill-Keyes enlargement
 slices, and two Myriahedral face-group slices as layered SVG, PDF, and opaque-white,
 3840-pixel-long-side PNG artifacts. The Anthropocene count comprises complete
 2025 and partial 2026 for both particulate and temperature families. The same
-graph makes 32 480-pixel-wide thumbnails for each of the six projections, 192
+graph makes 33 480-pixel-wide thumbnails for each of the six projections, 198
 total, with:
 
 ```sh
@@ -153,7 +156,7 @@ make assets-single
 Outputs are organized projection-first as
 `assets.generated/PROJECTION/{svg,pdf,png,thumbnail}/`. Review all 33 standard
 passes for each of the six projections in the
-[generated snapshot catalog](index.md#generated-artifact-previews). The
+[generated snapshot catalog](docs/pages/getting-started/build.md#generated-artifact-previews). The
 complete v14 catalog adds the Network Groundstations pass and the dual-year
 Anthropocene particulate family, and drops the earlier Cloud-atmosphere pass
 and legacy observation atlas. The corrected

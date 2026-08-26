@@ -18,20 +18,20 @@
 [v14 AAO release record]({{site.baseurl}}/docs/pages/releases/aao-v14.html) ·
 [v13 AAO publication]({{site.baseurl}}/docs/pages/releases/aao-v13.html)
 
-This contact sheet covers every {{ page.projection_name }} whole-map pass in
-the selected image backend ({{ backend_label }}): 33 standard passes,
-including the Network Groundstations pass and both dual-year Anthropocene
-particulate and temperature families. The earlier Cloud-atmosphere snapshot
-and the legacy Anthropocene atlas are not part of this corpus. Each thumbnail
-is rendered at contact-sheet width; offscreen previews load only as they
-approach the viewport.
+This contact sheet covers every {{ page.projection_name }} whole-map plate in
+the selected image backend ({{ backend_label }}). The top-of-tree snapshot
+shows 32 plates — 31 standard passes plus the restored preview-only
+Cloud-atmosphere snapshot — while the immutable AAO backend shows the 31
+standard passes. The legacy Anthropocene observation atlas is not part of
+either sheet. Each thumbnail is rendered at contact-sheet width; offscreen
+previews load only as they approach the viewport.
 
 Select a thumbnail or **{{ full_label }}** to open the matching full-size
 image, whose longest side is 3840 pixels.{% if show_layered %} **Layered SVG**
 opens the viewer, which streams the matching `.svg.gz` object through the
 browser's `DecompressionStream` API.{% endif %}{% if show_print %} **Print
 PDF** opens the 44-inch release plate.{% endif %} This keeps slow, complex
-SVGs—especially the roulette passes—out of the ordinary image-browsing path.
+SVGs out of the ordinary image-browsing path.
 All artifacts are served from the selected backend, whose
 [completion marker]({{ release_base }}/{{ marker_name }}) records its source
 revision and inventory.
@@ -48,6 +48,7 @@ revision and inventory.
   </thead>
   <tbody>
   {% for pass in category.passes %}
+    {% if pass.tot_only and backend_id != "tot" %}{% continue %}{% endif %}
     {% assign artifact_name = pass.stem | append: "-" | append: page.artifact_suffix %}
     <tr>
       <th scope="row">{{ pass.label }}</th>
