@@ -10,7 +10,7 @@
     "standardManifest": "contracts/standard-artifact-manifest-v1.json",
     "standardManifestSha256": "1386e935cf0ef9815b930908ab286fede3010280fa1407407a03f866aae77c5c"
   },
-  "generatedAt": "2026-08-26T20:03:25+00:00",
+  "generatedAt": "2026-08-26T22:51:20+00:00",
   "artifactCount": 217,
   "projectionCount": 11,
   "supplemental": {
@@ -24,7 +24,7 @@
     "screen-1080p/webp",
     "full"
   ],
-  "storedBytes": 106426348,
+  "storedBytes": 105371862,
   "fullWebp": {
     "mode": "lossy",
     "quality": 90

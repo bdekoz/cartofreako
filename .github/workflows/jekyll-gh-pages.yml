@@ -52,7 +52,7 @@ jobs:
           if [ "${{ steps.backend.outputs.backend }}" = "aao" ]; then
             bundle exec jekyll build --config _config.yml,_config.aao.yml
           else
-            bundle exec jekyll build
+            bundle exec jekyll build --config _config.yml,_config.tot.yml
           fi
         env:
           JEKYLL_ENV: production
