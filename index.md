@@ -14,8 +14,6 @@ anthropocene, and resource layers.</p>
 
 {% include v14-projection-gallery.md %}
 
-[Explore featured subjects and all six projection catalogs](docs/pages/gallery/README.md).
-
 ## Start here
 
 | Need | Go to |
