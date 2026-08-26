@@ -20,7 +20,7 @@ docs/pages/getting-started/build.md
 "Resource metric catalog and pass classes" sections
 
 
-DY#3 re-order plates in snapshot
+DY#3 re-order and edit plates in snapshot
 
 For all projections, re-order passes in
 
@@ -53,6 +53,12 @@ https://bdekoz.github.io/cartofreako/docs/pages/gallery/authagraph.html
 
 
 remove both "Art passes"
+
+DY#4 website restyle with devastation-pacific-house-style
+
+Use existing devp.ac as an example of how to apply the devastation-pacific-house-style to a website. Do the same, but with cartofreako.
+
+--
 
 
 Implement plan, update and improve documentation and relink, suggest 1-3 improvements and ideas to de-clutter the main cartofreako site.
