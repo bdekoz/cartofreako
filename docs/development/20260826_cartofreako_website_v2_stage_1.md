@@ -16,7 +16,7 @@ six projection contact sheets follow one reviewed plate order, and the whole
 site carries the Devastation Pacific house style the way `devp.ac` does. The
 regenerated site continues to serve the committed top-of-tree (`tot`) image
 snapshot, which is already the recorded live backend in
-[`.github/deploy-backend`](../../.github/deploy-backend).
+`.github/deploy-backend`.
 
 The four work items are:
 
@@ -39,7 +39,7 @@ Evidence gathered while writing this plan:
 | Landing page | [`index.md`](../../index.md), 692 lines, Jekyll `default` layout, opens with `{% include image-backend.md %}` |
 | Section map | `Start with the maps` (14), `Since the v13...` (24), `Project and build` (52), `Repository layout` (67), `Documentation map` (88), `Choose a projection` (139), `Build and generated artifacts` (155), `Complete released artifact catalog` (248), `Resource metric catalog and pass classes` (317), six projection sections (360–481), `Source guide` (482), `Attribution and licensing` (651) |
 | Gallery pages | Six thin front-matter pages under `docs/pages/gallery/`, all including `_includes/generated-snapshot.md` |
-| Plate order authority | [`_data/generated_passes.yml`](../../_data/generated_passes.yml) — categories, ids, labels, stems, alt text; consumed once by `generated-snapshot.md` |
+| Plate order authority | `_data/generated_passes.yml` — categories, ids, labels, stems, alt text; consumed once by `generated-snapshot.md` |
 | Pass count today | 33 in `generated_passes.yml` (4 foundations, 5 sky/orbital, 8 networks+Anthropocene, 14 resources, 2 art) |
 | Image backend | `.github/deploy-backend` = `tot`; `_config.yml` `image_backend: tot`; full images are WebP, layered SVG and print PDF hidden for `tot` |
 | TOT snapshot | `assets.tot/` staged by `scripts/build-tot-preview.sh --tier browse` from `assets.generated/catalog/artifacts-v1.json`; manifest records 217 artifacts |
@@ -115,7 +115,7 @@ needed because the section entry already points at the getting-started README.
 ## 5. DY#3 — one canonical gallery plate order
 
 The requested order, translated onto the current stem names in
-[`_data/generated_passes.yml`](../../_data/generated_passes.yml):
+`_data/generated_passes.yml`:
 
 | Group (new id) | Passes, in order |
 | --- | --- |
@@ -188,7 +188,7 @@ numeric labels, bordered module cards with square corners, and no gradients,
 shadows, or rounded "dashboard" styling.
 
 Cartofreako today uses `jekyll-theme-minimal` plus a large inline `<style>`
-block in [`_layouts/default.html`](../../_layouts/default.html).
+block in `_layouts/default.html`.
 
 Three options:
 
