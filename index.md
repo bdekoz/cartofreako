@@ -11,12 +11,6 @@ title: Cartofreako
 one visual catalog for comparing physical, sky, network, Anthropocene, and
 resource layers.</p>
 
-## Start with the maps
-
-The water pass holds the subject constant across all six projections. Select
-a thumbnail for the full-size image; layered SVG and print PDF remain explicit
-secondary actions on the AAO backend.
-
 {% include v14-projection-gallery.md %}
 
 [Explore featured subjects and all six projection catalogs](docs/pages/gallery/README.md).
