@@ -21,33 +21,6 @@ secondary actions on the AAO backend.
 
 [Explore featured subjects and all six projection catalogs](docs/pages/gallery/README.md).
 
-## Since the v13 generated-assets release
-
-The gallery serves the selected image backend. Current source development
-adds capabilities without rewriting the sealed v13 UCB AAO/S3 deposit. See
-[the release notes](docs/pages/releases/since-v13.md) for the full change
-list.
-
-## Project and build
-
-This repository contains native C++20 forward implementations of the
-AuthaGraph, Cahill-Keyes, Dymaxion, Star-X, Myriahedral, and icosahedral
-Voronoi projections, plus candidate-aware reverse projection for all six
-families through runtime API 3. Star-X exposes its ordinary carrier and unified
-Antarctic cap as separate components. All six accept variable-size
-`a60::carto::frame` values while enforcing the aspect ratio required by the
-selected geometry or source-canvas registration.
-
-Before building, see [Prerequisites](docs/pages/getting-started/prerequisites.md) for the compiler,
-GNU Make, Alpha60, Izzi, H3, GDAL/GEOS, Natural Earth, Inkscape, and optional
-WebAssembly requirements, or use the
-[technical documentation hub](docs/pages/README.md).
-
-The repository is organized as described in the
-[source layout conventions](docs/pages/getting-started/source_layout_conventions.md),
-and the complete build, artifact-catalog, and resource-metric documentation
-is in [Build and generated artifacts](docs/pages/getting-started/build.md).
-
 ## Start here
 
 | Need | Go to |

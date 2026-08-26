@@ -159,6 +159,39 @@ pre {
   margin: 1.25rem 0 2rem;
 }
 
+/* Landing-page "Start with the maps" comparison grid: force every card to
+   the same rectangular box and pin the format action row to the bottom so
+   "Full WebP" lands on one horizontal line across each grid row. */
+.gallery-grid {
+  align-items: stretch;
+}
+
+.gallery-grid .gallery-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.gallery-grid .gallery-card > a {
+  display: block;
+}
+
+.gallery-grid .gallery-card > a img {
+  aspect-ratio: 3 / 2;
+  height: auto;
+  object-fit: contain;
+  width: 100%;
+}
+
+.gallery-grid .gallery-card figcaption {
+  flex: none;
+}
+
+.gallery-grid .gallery-card .artifact-actions {
+  margin-top: auto;
+  padding-top: 0.55rem;
+}
+
 .gallery-card {
   border: 1px solid var(--dp-rule);
   box-sizing: border-box;
@@ -244,20 +277,6 @@ summary h3 {
 li * {
   margin-bottom: 0;
   margin-top: 0;
-}
-
-footer.site {
-  border-top: 2px solid var(--dp-ink);
-  color: var(--dp-muted);
-  display: flex;
-  flex-wrap: wrap;
-  font-family: "Atkinson Hyperlegible Mono", "Courier New", monospace;
-  font-size: 13px;
-  gap: 20px;
-  justify-content: space-between;
-  margin: 44px auto 0;
-  max-width: 1180px;
-  padding: 14px 1.25rem 64px;
 }
 
 @media (max-width: 760px) {

@@ -9,6 +9,31 @@ title: Build and generated artifacts
 [Source layout conventions](source_layout_conventions.md) ·
 [Visual gallery](../gallery/README.md)
 
+## Since the v13 generated-assets release
+
+The gallery serves the selected image backend. Current source development
+adds capabilities without rewriting the sealed v13 UCB AAO/S3 deposit. See
+[the release notes](../releases/since-v13.md) for the full change list.
+
+## Project and build
+
+This repository contains native C++20 forward implementations of the
+AuthaGraph, Cahill-Keyes, Dymaxion, Star-X, Myriahedral, and icosahedral
+Voronoi projections, plus candidate-aware reverse projection for all six
+families through runtime API 3. Star-X exposes its ordinary carrier and unified
+Antarctic cap as separate components. All six accept variable-size
+`a60::carto::frame` values while enforcing the aspect ratio required by the
+selected geometry or source-canvas registration.
+
+Before building, see [Prerequisites](prerequisites.md) for the compiler,
+GNU Make, Alpha60, Izzi, H3, GDAL/GEOS, Natural Earth, Inkscape, and optional
+WebAssembly requirements, or use the
+[technical documentation hub](../README.md).
+
+The repository is organized as described in the
+[source layout conventions](source_layout_conventions.md). The build graph,
+released artifact catalog, and resource metric classes follow below.
+
 ## Build
 
 A bare `make` validates [`generation-profile.json`](../../../generation-profile.json)
