@@ -7,9 +7,10 @@ title: Cartofreako
 
 # Cartofreako
 
-<p class="page-deck">Six projection systems, 32 whole-map plates apiece, and
-one visual catalog for comparing physical, sky, network, Anthropocene, and
-resource layers.</p>
+<p class="page-deck">Cartofreako is an atlas explorer with an optional
+ai-agented exploration workflow. It has six projection systems, 32 whole-map
+plates apiece, and one visual catalog for comparing physical, sky, network,
+anthropocene, and resource layers.</p>
 
 {% include v14-projection-gallery.md %}
 
