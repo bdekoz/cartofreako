@@ -73,7 +73,8 @@ make check
 ```
 
 The checks build in `tests/` with C++20 and strict compiler warnings. See
-[`index.md`](index.md#choose-a-projection) to select and use a projection.
+[`docs/pages/getting-started/build.md`](docs/pages/getting-started/build.md#choose-a-projection)
+to select and use a projection.
 
 The production browser build exposes all six projections, topology-safe
 GeoJSON, slices, workers, and SVG/Canvas/D3 adapters. The original

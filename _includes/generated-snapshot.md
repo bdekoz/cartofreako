@@ -5,8 +5,8 @@
 
 # {{ page.projection_name }} generated snapshot
 
-[Visual gallery]({{site.baseurl}}/docs/pages/gallery/) ·
-[Technical documentation]({{site.baseurl}}/docs/pages/) ·
+[Visual gallery]({{site.baseurl}}/docs/pages/gallery/README.html) ·
+[Technical documentation]({{site.baseurl}}/docs/pages/README.html) ·
 [AuthaGraph]({{site.baseurl}}/docs/pages/gallery/authagraph.html) ·
 [Cahill–Keyes]({{site.baseurl}}/docs/pages/gallery/cahill-keyes.html) ·
 [Dymaxion]({{site.baseurl}}/docs/pages/gallery/dymaxion.html) ·

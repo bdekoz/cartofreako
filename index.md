@@ -22,27 +22,7 @@ anthropocene, and resource layers.</p>
 | --- | --- |
 | Browse the maps | [Visual gallery](docs/pages/gallery/README.md) |
 | Build and generate artifacts | [Build and generated artifacts](docs/pages/getting-started/build.md) |
-| Choose a projection and read its mathematics | [Projection reference](docs/pages/projections/README.md) |
 | Track releases and preservation | [Releases and preservation](docs/pages/releases/README.md) |
-
-## Choose a projection
-
-| Projection | Geometric model | Required map ratio | Public class | Factory |
-| --- | --- | ---: | --- | --- |
-| AuthaGraph | Oblique tetrahedron, 24 symmetric sectors, periodic rectangle | `4:sqrt(3)` | `agproj` | `make_authagraph_projection()` |
-| Cahill-Keyes | Octahedron, 8 octants, M-shaped rectangular layout | `2:1` | `ckproj` | `make_cahill_keyes_projection()` |
-| Dymaxion | Fuller-oriented icosahedron, exact 20-face transform, 23-piece Airocean net | `11/(3sqrt(3))` | `dymaxionproj` | `make_dymaxion_projection()` |
-| Star-X | Cahill-Keyes octants, two stacked four-face groups, polar-centered X | `17:22` | `starxproj` | `make_star_x_projection()` |
-| Myriahedral | Depth-5 icosahedral mesh, land-aware spanning-tree net | `16:9` source canvas | `myriaproj` | `make_myriahedral_projection()` |
-| Voronoi | Regular icosahedron, 20 nearest-site gnomonic faces | `48:25` source canvas | `voronoiproj` | `make_voronoi_projection()` |
-
-Equal Earth is not a seventh entry in that release table. Its Stage 16J
-standalone API uses the method's native `2.0545821300028537:1` spherical
-carrier for explicit comparison work; see the
-[implementation boundary](docs/pages/projections/equal-earth/implementation.md).
-
-The six projection summaries are consolidated in the
-[projection reference](docs/pages/projections/README.md).
 
 ## Attribution and licensing
 
