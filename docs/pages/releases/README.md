@@ -1,3 +1,8 @@
+---
+layout: default
+title: Releases and preservation
+---
+
 # GitHub releases and UCB AAO deposits
 
 [Documentation index](../../../index.md) ·
