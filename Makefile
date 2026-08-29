@@ -404,6 +404,12 @@ ORBITING_CATALOGS := $(filter-out $(ORBITING_PROFILE),\
 CK_GEOMETRY_SVG := $(call generated_svg,geometry-ck-44-22.svg)
 CK_GRATICULE_SVG := $(call generated_svg,graticules-ck-44-22.svg)
 CK_EARTH_SVG := $(call generated_svg,earth-ck-44-22.svg)
+CK_AUDIT_PLATE_BUILDER := scripts/build-media-object-audit-ck-plate.py
+CK_AUDIT_PLATE_CHECKER := scripts/check-media-object-audit-ck-plate.py
+CK_AUDIT_EARTH_SVG := \
+	$(GENERATED_DIR)/cahill-keyes/svg/earth-ck-44-22.gray-water242-landwhite.svg
+CK_AUDIT_EARTH_PNG := \
+	$(GENERATED_DIR)/cahill-keyes/png/earth-ck-44-22.gray-water242-landwhite.png
 CK_WATER_SVG := $(call generated_svg,water-ck-44-22.svg)
 CK_FOUR_SLICE_SVGS := \
 	$(call generated_svg,earth-ck-4-slice-1.svg) \
@@ -821,6 +827,7 @@ endif
 GENERATED_ARTIFACTS := \
 	$(filter-out $(RESOURCES_SVGS),$(GENERATED_SVGS)) \
 	$(RESOURCES_SVG_ARCHIVES) $(GENERATED_PDFS) $(GENERATED_PNGS) \
+	$(CK_AUDIT_EARTH_SVG) $(CK_AUDIT_EARTH_PNG) \
 	$(SNAPSHOT_THUMBNAILS) $(SCREEN_1080P_ARTIFACTS) \
 	$(AUTHORIZED_EXTERNAL_ARTIFACTS)
 
@@ -1044,7 +1051,8 @@ PUBLIC_TARGETS := all all-experiments all-experiments-fetch \
 	wasm-projections check-wasm-projections \
 	check-wasm-projections-browser wasm check-wasm \
 	generate-geometry generate-graticules-ck generate-earth-ck \
-	generate-water-ck generate-4-slice generate-8-slice \
+	generate-water-ck generate-media-object-audit-ck-plate \
+	generate-4-slice generate-8-slice \
 	generate-ck-slices generate-projections generated-projections \
 	generate-geometry-projections generate-graticules-projections \
 	generate-earth-projections generate-water-projections \
@@ -2313,6 +2321,20 @@ $(CK_EARTH_SVG): $(EARTH_GENERATOR) $(NATURAL_EARTH_STAMP) \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		"$(abspath $(EARTH_GENERATOR))" cahill-keyes
 
+generate-media-object-audit-ck-plate: \
+	$(CK_AUDIT_EARTH_SVG) $(CK_AUDIT_EARTH_PNG) \
+	$(CK_AUDIT_PLATE_CHECKER)
+	python3 "$(CK_AUDIT_PLATE_CHECKER)" \
+		--svg "$(CK_AUDIT_EARTH_SVG)" --png "$(CK_AUDIT_EARTH_PNG)"
+
+$(CK_AUDIT_EARTH_SVG): $(CK_EARTH_SVG) $(CK_AUDIT_PLATE_BUILDER) \
+		| $(GENERATED_DIR)/cahill-keyes/svg
+	python3 "$(CK_AUDIT_PLATE_BUILDER)" --source "$<" --output "$@"
+
+$(CK_AUDIT_EARTH_PNG): $(CK_AUDIT_EARTH_SVG) Makefile \
+		| $(GENERATED_DIR)/cahill-keyes/png
+	$(call EXPORT_PNG,--export-width)
+
 generate-4-slice: $(CK_FOUR_SLICE_SVGS)
 
 $(CK_FOUR_SLICE_SVGS) &: $(FOUR_SLICE_GENERATOR) $(CK_EARTH_SVG) \
@@ -3255,6 +3277,7 @@ clean-failed-generated:
 clean:
 	$(RM) $(TEST_BINARIES) $(GENERATOR_BINARIES)
 	$(RM) $(SGP4_OBJECT)
+	$(RM) $(CK_AUDIT_EARTH_SVG) $(CK_AUDIT_EARTH_PNG)
 	$(RM) $(GENERATED_SVGS) $(RESOURCES_SVG_ARCHIVES) \
 		$(CK_WEB_MODULE) $(CK_WEB_WASM) \
 		$(MYRIA_WEB_MODULE) $(MYRIA_WEB_WASM) \
