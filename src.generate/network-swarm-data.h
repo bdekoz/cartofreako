@@ -13,6 +13,7 @@
 #include <fstream>
 #include <iterator>
 #include <limits>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -138,6 +139,7 @@ struct swarm_feature
   double longitude = 0;
   double latitude = 0;
   downloader_counts downloaders;
+  std::optional<downloader_counts> uploaders;
 };
 
 struct swarm_dataset
@@ -147,6 +149,7 @@ struct swarm_dataset
   std::string duration_type;
   std::string data_version;
   std::string partition_by;
+  std::string selection_policy = "downloader-threshold";
   unsigned duration_index = 0;
   unsigned h3_resolution = 0;
   std::uint64_t minimum_size = 0;
@@ -331,6 +334,11 @@ parse_swarm_dataset(const rj::Document& document,
   result.data_version = required_string(document, "data_version", context);
   result.partition_by = required_string(
     document, "swarm_geo_partition_by", context);
+  if (document.HasMember("swarm_selection_policy"))
+    result.selection_policy = required_string(document, "swarm_selection_policy", context);
+  network_swarm_require(result.selection_policy == "downloader-threshold"
+                       || result.selection_policy == "role-union",
+                       "unsupported swarm selection policy");
   result.duration_index = required_uint(document, "duration_index", context);
   result.h3_resolution = required_uint(
     document, "swarm_hexagon_resolution", context);
@@ -395,6 +403,9 @@ parse_swarm_dataset(const rj::Document& document,
         required_member(properties, "downloaders",
                         feature_context + ".properties"),
         feature_context + ".properties.downloaders");
+      if (properties.HasMember("uploaders") && !properties["uploaders"].IsNull())
+        feature.uploaders = parse_counts(properties["uploaders"],
+                                         feature_context + ".properties.uploaders");
 
       network_swarm_require(std::isfinite(feature.longitude)
                         && feature.longitude >= -180
@@ -411,7 +422,9 @@ parse_swarm_dataset(const rj::Document& document,
       network_swarm_require(seen_cells.insert(feature.h3).second,
                       feature_context + " repeats H3 cell "
                         + h3_string(feature.h3));
-      network_swarm_require(feature.downloaders.size >= result.minimum_size,
+      network_swarm_require(feature.downloaders.size >= result.minimum_size
+                        || (result.selection_policy == "role-union" && feature.uploaders
+                            && feature.uploaders->size >= result.minimum_size),
                       feature_context
                         + " has fewer downloaders than swarm_size_min");
       result.features.push_back(std::move(feature));
