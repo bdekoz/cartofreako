@@ -363,7 +363,9 @@ are recorded in
 Stage 7 adds a project-level JSON preference for the common development case:
 select one or more projections, select one or more generation passes, and let
 a bare `make` build only that cross-product. The checked-in default selects
-Cahill-Keyes plus the Earth and complementary physical-feature passes.
+AuthaGraph plus the Earth and complementary physical-feature passes.
+The [default generation styles](generation-styles.md) record the shared
+physical strokes, resource palettes and network renderers.
 
 The implementation keeps the existing Make dependency graph authoritative.
 The profile resolver translates validated names into existing, public Make
@@ -432,8 +434,8 @@ The recursion is a useful boundary rather than a second build system:
 ```json
 {
   "schema_version": 1,
-  "description": "Fast Cahill-Keyes terrestrial development profile",
-  "projections": ["cahill_keyes"],
+  "description": "AuthaGraph terrestrial development with reviewed styles",
+  "projections": ["authagraph"],
   "passes": ["earth", "ocean"]
 }
 ```

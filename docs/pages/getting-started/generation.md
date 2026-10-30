@@ -15,6 +15,7 @@
 [Anthropocene notes](../passes/anthropocene/implementation.md) ·
 [Anthropocene Stage 8b plan](../passes/anthropocene/enrichment-plan.md) ·
 [Network-swarm notes](../passes/network-swarm.md) ·
+[Default generation styles](generation-styles.md) ·
 [Network-infrastructure notes](../passes/network-infrastructure.md) ·
 [Fiber Synthesized notes](../passes/network-fiber.md) ·
 [Bathymetry Roulette notes](../passes/bathymetry/roulette.md) ·
@@ -49,7 +50,7 @@ does not duplicate generation logic or filter SVG layers after generation.
 | Resources Stage 12 | [`src.generate/generate-resources.cc`](../../../src.generate/generate-resources.cc) | Pinned current-source country and reef fields for energy, food, fauna, flora, mineral, and human families |
 | Anthropocene particulate | [`src.generate/generate-anthropocene-particulate.cc`](../../../src.generate/generate-anthropocene-particulate.cc) | Complete-2025 and partial-2026 checksum-pinned H3 cell-day counts from GSN, EPA AirData, HMS, Storm Events, and CWFIS |
 | Anthropocene temperature | [`src.generate/generate-anthropocene-temperature.cc`](../../../src.generate/generate-anthropocene-temperature.cc) | Complete-2025 and partial-2026 CPC temperature fields on a global H3 domain |
-| Network swarm | [`src.generate/generate-network-swarm.cc`](../../../src.generate/generate-network-swarm.cc) | Validated cumulative swarm GeoJSON, H3 parent clustering, fixed display profile, and Izzi radial honeycombs |
+| Network swarm | [`src.generate/generate-native-swarm.cc`](../../../src.generate/generate-native-swarm.cc) | Native Alpha60 cumulative weighted circles; separate 1080p/4K and 720p/SD plates |
 | Network infrastructure | [`src.generate/generate-network-infrastructure.cc`](../../../src.generate/generate-network-infrastructure.cc) | Manifested cloud/CDN sites plus explicitly opted-in TeleGeography cable and Internet-exchange topology |
 | Fiber Synthesized | [`src.generate/generate-fiber-synthesized.cc`](../../../src.generate/generate-fiber-synthesized.cc) | Checked cleanup/union of 2022 and 20260805 cable snapshots, with 20260805 as the default layer |
 | Four slices | [`src.generate/generate-4-slice.cc`](../../../src.generate/generate-4-slice.cc) | Four full-height, quarter-width quadrant-pair enlargements from the Cahill-Keyes Earth SVG |
@@ -192,9 +193,12 @@ The default locations can be overridden:
 | `RESOURCES_VALUES` | `$(RESOURCES_DATA_DIR)/resources-values.json` | Normalized country values for implemented metrics |
 | `RESOURCES_COUNTRIES` | `$(RESOURCES_DATA_DIR)/countries-110m.geojson` | Compact Natural Earth country geometry keyed by `RESOURCE_A3` |
 | `RESOURCES_REEFS` | `$(RESOURCES_DATA_DIR)/coral-reefs-025deg.geojson` | Checked quarter-degree coral-reef presence/threat cells derived from WRI geometry |
-| `NETWORK_SWARM_SOURCE` | `assets.static/network-swarm/house-of-the-dragon-301-cumulative-aggregate.geojson.zip` | Local ZIP or plain GeoJSON source prepared for the network-swarm pass |
-| `NETWORK_SWARM_GEOJSON` | `assets.static/network-swarm/.prepared/house-of-the-dragon-301-cumulative-aggregate.geojson` | Prepared cumulative swarm staging destination |
-| `NETWORK_SWARM_PROFILE` | `assets.static/network-swarm/network-swarm-profile.json` | H3 clustering, physical marker dimensions, labels/tethers, fixed scales, and provenance |
+| `NATIVE_SWARM_CACHE_ARCHIVE` | `../alpha60-samples-cache/dan-da-dan-210.cache/cache.20260304.tar.xz` | Native cumulative cache; `NATIVE_SWARM_CACHE_DIRECTORY` selects an extracted cache instead |
+| `NATIVE_SWARM_GEOLOCATION_DB` | `../geoip-databases/ipinfo/standard_location.mmdb` | Native Alpha60 geolocation database |
+| `CDN_SOURCE_PROFILE` | `config/cdn-sources.json` | Approved `.bkoz` manifest and reference lookup pins |
+| `NETWORK_SWARM_SOURCE` | `assets.static/network-swarm/house-of-the-dragon-301-cumulative-aggregate.geojson.zip` | Legacy aggregate renderer input |
+| `NETWORK_SWARM_GEOJSON` | `assets.static/network-swarm/.prepared/house-of-the-dragon-301-cumulative-aggregate.geojson` | Legacy aggregate staging destination |
+| `NETWORK_SWARM_PROFILE` | `assets.static/network-swarm/network-swarm-profile.json` | Legacy aggregate H3 display profile |
 | `NETWORK_INFRASTRUCTURE_CLOUD_SOURCE` | `../cloud_cdn_cache` | External checkout at the profile-pinned cloud/CDN commit |
 | `SUBMARINE_CABLE_SOURCE` | `../www.submarinecablemap.com` | External TeleGeography cable checkout used only by topology opt-in targets |
 | `INTERNET_EXCHANGE_SOURCE` | `../www.internetexchangemap.com` | External TeleGeography exchange checkout used only by topology opt-in targets |
@@ -240,13 +244,14 @@ documented in the [prerequisites](prerequisites.md#label-font).
 A bare `make` now reads the checked-in
 [`generation-profile.json`](../../../generation-profile.json) and builds only the
 selected projection/pass combinations as layered SVGs. The default profile is
-the fast development case requested for Stage 7:
+the reviewed AuthaGraph development case; visual defaults are recorded in
+[Default generation styles](generation-styles.md):
 
 ```json
 {
   "schema_version": 1,
-  "description": "Fast Cahill-Keyes terrestrial development profile",
-  "projections": ["cahill_keyes"],
+  "description": "AuthaGraph terrestrial development with reviewed styles",
+  "projections": ["authagraph"],
   "passes": ["earth", "ocean"]
 }
 ```
@@ -296,7 +301,7 @@ candidates are not accepted as generation-profile passes at all.
 | `resources-flora` | One forest-area country choropleth | Standard |
 | `resources-mineral` | One rare-earth mine-production country choropleth | Standard |
 | `resources-human` | Five country products: under 30, over 60, two attainment levels, and patents | Standard |
-| `network-swarm` | One cumulative network-swarm SVG | Standard |
+| `network-swarm` | Two native cumulative swarm SVGs, 1080p/4K and 720p/SD | Standard |
 | `bathymetry-roulette` | One blue-ramp, filled, Voronoi-grouped roulette depth SVG | Standard |
 | `bathymetry-hamonshu` | One blue-ramp, Voronoi-grouped Hamonshū wave-field depth SVG | Standard |
 | `network-infrastructure` | One cloud/CDN infrastructure-site SVG; never the licensed topology product | Standard; licensed topology is a separate optional pass |
@@ -384,7 +389,6 @@ make generate-snapshot-ck
 make authorize-external
 make EXTERNAL_PASSES=jaxa-ptree generate-authorized-external
 make generate-resources-mineral-cahill-keyes
-make prepare-network-swarm-data
 make generate-network-swarm
 make generate-network-infrastructure
 make generate-network-infrastructure-topology
@@ -734,48 +738,43 @@ the [enrichment plan](../passes/resources/enrichment-plan.md) records future pro
 
 ## Network-swarm generation
 
-The network-swarm pass reads a strict cumulative swarm FeatureCollection,
-validates all ten `properties.downloaders` values and 64-bit H3 cells, then groups
-resolution-5 features under profile-selected resolution-3 parents. Parent
-groups are split again by the selected projection's native cell before Izzi
-radial honeycomb placement, preventing a cluster from crossing an unfolded
-map seam. Thin optional tethers retain each true projected location.
+The default pass uses native Alpha60 weighted member circles from the local
+Dan Da Dan 210 cumulative cache. It creates separate 1080p/4K and 720p/SD sheets
+at 5% opacity, using the selected Cartofreako projection. AuthaGraph is the
+standalone default. No H3 honeycomb substitution or circle sampling is applied.
 
 ```sh
-make prepare-network-swarm-data
-make generate-network-swarm
+make generate-network-swarm-authagraph
+make generate-network-swarm-artifacts
 ```
 
-Use `generate-network-swarm-PROJECTION` for one SVG or
-`generate-network-swarm-artifacts` for all six SVG/PDF/PNG products. A
-compatible local ZIP or plain GeoJSON is selected with `NETWORK_SWARM_SOURCE`;
-`NETWORK_SWARM_GEOJSON` changes the staging destination. Normal generation is
-offline from the pinned archive.
+`generate-network-swarm-PROJECTION` creates both bands. The unqualified
+`network-swarm` artifact name aliases the 1080p/4K sheet; the lower band uses
+`network-swarm-lt-1080p`. Standard PDF/PNG targets use an ordered-layer exporter
+that preserves every native circle with bounded memory.
 
-The [network-swarm implementation notes](../passes/network-swarm.md)
-document the source audit and digests, schema validation, H3 resolution
-decision, Izzi lattice canonicalization, independent overlapping fields, visual
-grammar, SVG layers, output previews, verification, and interpretation
-boundary.
+See [network-swarm notes](../passes/network-swarm.md) and
+[default generation styles](generation-styles.md) for source overrides,
+prerequisites, provenance, Japan details and export commands. The older
+GeoJSON/H3 renderer is retained as a historical API; its `NETWORK_SWARM_SOURCE`,
+`NETWORK_SWARM_GEOJSON` and `NETWORK_SWARM_PROFILE` variables do not select
+inputs for the default native Make targets.
 
 ## Network-infrastructure generation
 
-The ordinary network-infrastructure product maps the 1,003 located cloud/CDN
-records in an externally checked, commit-pinned manifest. All points enter one
-projection-cell-aware Izzi radial-hexagon collision layout; unlocated source
-records remain represented in provenance totals and are never assigned
-invented coordinates. This non-TeleGeography site atlas is a normal generation
-pass and is included in `make all`:
+Ordinary CDN targets use Alpha60's canonical record loader and the pinned
+`cloud_cdn_cache.bkoz` source profile, with vendor-reel r8 honeycombs and
+separate approximate-reference triangles and locality claims.
 
 ```sh
-make check-network-infrastructure-sources
+make generate-network-cdn-authagraph
 make generate-network-infrastructure
 make generate-network-infrastructure-artifacts
 ```
 
-Set `NETWORK_INFRASTRUCTURE_CLOUD_SOURCE` when the pinned `cloud_cdn_cache`
-checkout is not at its default sibling path. The six SVG-only projection
-targets use `generate-network-infrastructure-PROJECTION`.
+Set `CDN_SOURCE_PROFILE` to a source config with reviewed manifest and lookup
+pins. The default is `config/cdn-sources.json`. The legacy topology API keeps
+its `NETWORK_INFRASTRUCTURE_*` variables and source checks separately.
 
 Submarine cable routes, cable landings, Internet-exchange facilities, and
 logical exchange-to-facility membership are a separate, explicitly opted-in

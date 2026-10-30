@@ -3,18 +3,18 @@
 #define CARTOFREAKO_RESOURCE_COLORS_H
 namespace cart0freak0::resources_generation {
 inline std::array<svg::color_qi, 5> resource_metric_palette(const std::string& id) {
-  if (id == "wind-capacity") return {svg::color::lightcyan, svg::color::cyan, svg::color::crayolacerulean, svg::color::shinbashiiro, svg::color::hanada};
-  if (id == "nuclear-operating-capacity") return {svg::color::lavender, svg::color::mediumpurple, svg::color::slateblue, svg::color::darkslateblue, svg::color::midnightblue};
-  if (id == "petroleum-refinery-throughput") return {svg::color::duboisbrown5, svg::color::duboisbrown4, svg::color::kohakuiro, svg::color::duboisbrown2, svg::color::duboisbrown3};
-  if (id == "food-production-index") return {svg::color::pink, svg::color::hotpink, svg::color::deeppink, svg::color::mediumvioletred, svg::color::peony};
-  if (id == "fisheries-production") return {svg::color::lightblue, svg::color::skyblue, svg::color::deepskyblue, svg::color::dodgerblue, svg::color::navy};
-  if (id == "forest-area-percent") return {svg::color::byakuroku, svg::color::usumoegi, svg::color::moegi, svg::color::midori, svg::color::duboisgreen5};
-  if (id == "rare-earth-mine-production") return {svg::color::plum, svg::color::orchid, svg::color::mediumorchid, svg::color::darkviolet, svg::color::purple};
-  if (id == "population-under-30") return {svg::color::greenyellow, svg::color::chartreuse, svg::color::hiwamoegi, svg::color::rokusho, svg::color::aotakeiro};
-  if (id == "population-over-60") return {svg::color::coral, svg::color::salmon, svg::color::tomato, svg::color::crimson, svg::color::foreigncrimson};
-  if (id == "upper-secondary-attainment") return {svg::color::atmosphericp, svg::color::dustyrose, svg::color::usuiro, svg::color::ayameiro, svg::color::murasaki};
-  if (id == "bachelors-attainment") return {svg::color::navajowhite, svg::color::kanzoiro, svg::color::akebonoiro, svg::color::sohi, svg::color::benikaba};
-  if (id == "resident-patent-applications-per-million") return {svg::color::lightskyblue, svg::color::cornflowerblue, svg::color::royalblue, svg::color::blueprintlight, svg::color::blueprintdark};
+  if (id == "wind-capacity") return generation_style::palette_wind_capacity;
+  if (id == "nuclear-operating-capacity") return generation_style::palette_nuclear_operating_capacity;
+  if (id == "petroleum-refinery-throughput") return generation_style::palette_petroleum_refinery_throughput;
+  if (id == "food-production-index") return generation_style::palette_food_production_index;
+  if (id == "fisheries-production") return generation_style::palette_fisheries_production;
+  if (id == "forest-area-percent") return generation_style::palette_forest_area_percent;
+  if (id == "rare-earth-mine-production") return generation_style::palette_rare_earth_mine_production;
+  if (id == "population-under-30") return generation_style::palette_population_under_30;
+  if (id == "population-over-60") return generation_style::palette_population_over_60;
+  if (id == "upper-secondary-attainment") return generation_style::palette_upper_secondary_attainment;
+  if (id == "bachelors-attainment") return generation_style::palette_bachelors_attainment;
+  if (id == "resident-patent-applications-per-million") return generation_style::palette_resident_patent_applications_per_million;
   throw std::runtime_error("no izzi-hue assignment for resource metric: " + id);
 }
 }

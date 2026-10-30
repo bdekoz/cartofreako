@@ -338,15 +338,11 @@ temperature_bin(const std::uint64_t count, const std::uint64_t scale)
 inline unsigned
 temperature_high_bin(const std::uint64_t count)
 {
-  constexpr std::array<std::uint64_t, 5> upper {5, 10, 20, 40, 80};
+  constexpr auto upper = generation_style::temperature_high_upper_days;
   return std::lower_bound(upper.begin(), upper.end(), count) - upper.begin();
 }
 
-inline constexpr std::array<svg::color_qi, 6> temperature_high_colors {
-  svg::color_qi {255, 240, 188}, svg::color_qi {255, 206, 100},
-  svg::color_qi {244, 163, 64}, svg::color_qi {229, 113, 45},
-  svg::color_qi {196, 71, 36}, svg::color_qi {143, 40, 37},
-};
+inline constexpr auto temperature_high_colors = generation_style::temperature_high_colors;
 
 inline std::size_t
 add_temperature_coverage(generation::projection_document& document,
@@ -464,7 +460,10 @@ add_temperature_legend(generation::projection_document& document,
     + std::to_string(profile.calendar_year)
     + (profile.partial_year ? " THROUGH " + profile.data_through : " COMPLETE YEAR"),
     {0.3, 0.40}, title);
-  constexpr std::array<const char*, 6> labels {"1-5", "6-10", "11-20", "21-40", "41-80", "81+"};
+  std::array<std::string, 6> labels;
+  for (std::size_t i = 0; i < labels.size(); ++i)
+    labels[i] = std::to_string(i == 0 ? 1 : generation_style::temperature_high_upper_days[i-1]+1)
+      + (i == labels.size()-1 ? "+" : "-" + std::to_string(generation_style::temperature_high_upper_days[i]));
   for (std::size_t i = 0; i < labels.size(); ++i)
     {
       svg::rect_element swatch; swatch.start_element();

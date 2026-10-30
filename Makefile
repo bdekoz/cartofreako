@@ -523,6 +523,7 @@ NETWORK_SWARM_SVGS := \
 	$(call generated_svg,network-swarm-myriahedral-44-24.75.svg) \
 	$(call generated_svg,network-swarm-star-x-34-44.svg) \
 	$(call generated_svg,network-swarm-voronoi-44-22.916667.svg)
+NETWORK_SWARM_SVGS += $(subst network-swarm-,network-swarm-lt-1080p-,$(NETWORK_SWARM_SVGS))
 NETWORK_SWARM_PDFS := $(call svg_to_pdf,$(NETWORK_SWARM_SVGS))
 NETWORK_SWARM_PNGS := $(call svg_to_png,$(NETWORK_SWARM_SVGS))
 
@@ -759,7 +760,7 @@ ORBITING_STAR_X_SVGS := \
 	$(call generated_svg,orbital-technosphere-global-star-x-34-44.svg) \
 	$(call generated_svg,orbital-technosphere-observer-star-x-34-44.svg)
 ORBITING_STAR_X_PNGS := $(call svg_to_png,$(ORBITING_STAR_X_SVGS))
-NETWORK_SWARM_STAR_X_PNG := $(call generated_png,network-swarm-star-x-34-44.png)
+NETWORK_SWARM_STAR_X_PNG := $(filter %-star-x-34-44.png,$(NETWORK_SWARM_PNGS))
 NETWORK_INFRASTRUCTURE_SITES_STAR_X_PNG := \
 	$(call generated_png,network-cdn-star-x-34-44.png)
 NETWORK_INFRASTRUCTURE_TOPOLOGY_STAR_X_PNG := \
@@ -891,6 +892,7 @@ TEST_BINARIES := \
 	$(TEST_DIR)/oracles/export-myriahedral-topology
 
 GENERATOR_HEADERS := \
+	$(GENERATOR_SRC_DIR)/generation-style.h \
 	$(GENERATOR_SRC_DIR)/generation-instant.h \
 	$(GENERATOR_SRC_DIR)/solar-geometry.h \
 	$(GENERATOR_SRC_DIR)/generation-typography.h \
@@ -969,6 +971,7 @@ ANTHROPOCENE_TEMPERATURE_GENERATOR_HEADERS := \
 RESOURCES_GENERATOR_HEADERS := \
 	$(GENERATOR_SRC_DIR)/resources-data.h \
 	$(GENERATOR_SRC_DIR)/resources-generation.h $(GENERATOR_SRC_DIR)/resource-colors.h \
+	$(GENERATOR_SRC_DIR)/generation-honeycomb.h \
 	$(NATURAL_EARTH_GENERATOR_HEADER) \
 	$(GENERATOR_HEADERS)
 
@@ -1744,7 +1747,7 @@ check-anthropocene-particulate: \
 		"$(ANTHROPOCENE_PARTICULATE_GEOJSON_2026)"
 	$(TEST_DIR)/test-anthropocene-particulate-generation
 
-check: check-pass-status check-anthropocene-particulate \
+check: check-generation-style check-pass-status check-anthropocene-particulate \
 		$(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) \
 		$(ANTHROPOCENE_PARTICULATE_GEOJSON_2025) \
 		$(ANTHROPOCENE_PARTICULATE_GEOJSON_2026) \
@@ -2894,17 +2897,22 @@ generate-resources-projections: $(RESOURCES_SVG_ARCHIVES)
 generate-resources-artifacts: $(RESOURCES_SVG_ARCHIVES) \
 	$(RESOURCES_PDFS) $(RESOURCES_PNGS)
 
-# $(1): command-line projection name; $(2): Network-swarm product.
+# Native Alpha60 circles are the default; the original identifier aliases 1080p/4K.
+NATIVE_SWARM_CACHE_ARCHIVE ?= $(shell python3 -c 'import json; print(json.load(open("generation-style.json"))["swarm"]["cache_archive"])')
+NATIVE_SWARM_CACHE_DIRECTORY ?=
+NATIVE_SWARM_GEOLOCATION_DB ?= ../geoip-databases/ipinfo/standard_location.mmdb
+
 define NETWORK_SWARM_PROJECTION_RULES
-generate-network-swarm-$(1): $(2)
-$(2): $(NETWORK_SWARM_GENERATOR) $(NETWORK_SWARM_PROFILE) \
-		$(NETWORK_SWARM_GEOJSON) \
-		$(NATURAL_EARTH_STAMP) | $(call artifact_directory,$(2))
-	cd "$(call artifact_directory,$(2))" && \
-		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
-		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
-		"$(abspath $(NETWORK_SWARM_GENERATOR))" $(1) \
-		"$(abspath $(NETWORK_SWARM_PROFILE))" "$(abspath $(NETWORK_SWARM_GEOJSON))"
+generate-network-swarm-$(1): $(2) $(subst network-swarm-,network-swarm-lt-1080p-,$(2))
+$(2) $(subst network-swarm-,network-swarm-lt-1080p-,$(2)) &: build/generate-native-swarm build/generation-context \
+		scripts/generate-native-swarm.py scripts/cartofreako_style.py generation-style.json \
+		$(if $(NATIVE_SWARM_CACHE_DIRECTORY),,$(NATIVE_SWARM_CACHE_ARCHIVE)) \
+		$(if $(NATIVE_SWARM_CACHE_DIRECTORY),$(wildcard $(NATIVE_SWARM_CACHE_DIRECTORY)/*-cumulative-*.json)) \
+		$(NATIVE_SWARM_GEOLOCATION_DB) $(NATURAL_EARTH_STAMP) | $(call artifact_directory,$(2))
+	ALPHA60_ROOT="$(abspath $(ALPHA60_SRC)/..)" NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" python3 scripts/generate-native-swarm.py \
+		--projection $(1) --output-dir "$(abspath $(call artifact_directory,$(2)))" \
+		$(if $(NATIVE_SWARM_CACHE_DIRECTORY),--cache-directory "$(abspath $(NATIVE_SWARM_CACHE_DIRECTORY))",--cache-archive "$(abspath $(NATIVE_SWARM_CACHE_ARCHIVE))") \
+		--geolocation-database "$(abspath $(NATIVE_SWARM_GEOLOCATION_DB))"
 endef
 
 $(eval $(call NETWORK_SWARM_PROJECTION_RULES,cahill-keyes,\
@@ -2925,21 +2933,15 @@ generate-network-swarm-projections: $(NETWORK_SWARM_SVGS)
 generate-network-swarm-artifacts: $(NETWORK_SWARM_SVGS) \
 	$(NETWORK_SWARM_PDFS) $(NETWORK_SWARM_PNGS)
 
-# $(1): projection; $(2): Network CDN site atlas product.
+# The pinned vendor-reel source profile defaults to cloud_cdn_cache.bkoz.
+CDN_SOURCE_PROFILE ?= config/cdn-sources.json
 define NETWORK_CDN_PROJECTION_RULES
 generate-network-cdn-$(1): $(2)
-$(2): $(NETWORK_INFRASTRUCTURE_GENERATOR) \
-		$(NETWORK_INFRASTRUCTURE_SITES_PROFILE) \
-		$(NETWORK_INFRASTRUCTURE_CLOUD_MANIFEST) \
-		$(NATURAL_EARTH_STAMP) \
-		| check-network-infrastructure-sources \
-		$(call artifact_directory,$(2))
-	cd "$(call artifact_directory,$(2))" && \
-		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
-		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
-		"$(abspath $(NETWORK_INFRASTRUCTURE_GENERATOR))" $(1) \
-		"$(abspath $(NETWORK_INFRASTRUCTURE_SITES_PROFILE))" \
-		"$(abspath $(NETWORK_INFRASTRUCTURE_CLOUD_SOURCE))"
+$(2): build/export-cdn-records build/generation-context scripts/generate-cdn-vendor-reel.py \
+		scripts/cartofreako_style.py generation-style.json $(CDN_SOURCE_PROFILE) \
+		$(NATURAL_EARTH_STAMP) | $(call artifact_directory,$(2))
+	NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" python3 scripts/generate-cdn-vendor-reel.py \
+		--projection $(1) --source-profile "$(abspath $(CDN_SOURCE_PROFILE))" --output "$(abspath $(2))"
 endef
 
 $(eval $(call NETWORK_CDN_PROJECTION_RULES,cahill-keyes,\
@@ -3172,6 +3174,9 @@ define EXPORT_PNG
 	fi
 endef
 
+NETWORK_SWARM_THUMBNAILS := $(subst /svg/,/thumbnail/,$(NETWORK_SWARM_SVGS:.svg=.png))
+NATIVE_SWARM_PNG_LONG_SIDE := $(PNG_LONG_SIDE)
+
 ALL_EXPORT_PDFS := $(sort $(GENERATED_PDFS) \
 	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_PDFS) $(CLOUD_ATMOSPHERE_PDFS))
 ALL_LANDSCAPE_PNGS := $(sort $(LANDSCAPE_PNGS) \
@@ -3179,24 +3184,24 @@ ALL_LANDSCAPE_PNGS := $(sort $(LANDSCAPE_PNGS) \
 ALL_EXPORT_THUMBNAILS := $(sort $(SNAPSHOT_THUMBNAILS))
 
 define PROJECTION_EXPORT_RULES
-$(filter $(GENERATED_DIR)/$(1)/pdf/%,$(ALL_EXPORT_PDFS)): \
+$(filter-out $(NETWORK_SWARM_PDFS),$(filter $(GENERATED_DIR)/$(1)/pdf/%,$(ALL_EXPORT_PDFS))): \
 		$(GENERATED_DIR)/$(1)/pdf/%.pdf: \
 		$(GENERATED_DIR)/$(1)/svg/%.svg | $(GENERATED_DIR)/$(1)/pdf
 	$$(EXPORT_PDF)
 
-$(filter $(GENERATED_DIR)/$(1)/png/%,$(ALL_LANDSCAPE_PNGS)): \
+$(filter-out $(NETWORK_SWARM_PNGS),$(filter $(GENERATED_DIR)/$(1)/png/%,$(ALL_LANDSCAPE_PNGS))): \
 		$(GENERATED_DIR)/$(1)/png/%.png: \
 		$(GENERATED_DIR)/$(1)/svg/%.svg Makefile \
 		| $(GENERATED_DIR)/$(1)/png
 	$$(call EXPORT_PNG,--export-width)
 
-$(filter $(GENERATED_DIR)/$(1)/png/%,$(PORTRAIT_PNGS)): \
+$(filter-out $(NETWORK_SWARM_PNGS),$(filter $(GENERATED_DIR)/$(1)/png/%,$(PORTRAIT_PNGS))): \
 		$(GENERATED_DIR)/$(1)/png/%.png: \
 		$(GENERATED_DIR)/$(1)/svg/%.svg Makefile \
 		| $(GENERATED_DIR)/$(1)/png
 	$$(call EXPORT_PNG,--export-height)
 
-$(filter $(GENERATED_DIR)/$(1)/thumbnail/%,$(ALL_EXPORT_THUMBNAILS)): \
+$(filter-out $(NETWORK_SWARM_THUMBNAILS),$(filter $(GENERATED_DIR)/$(1)/thumbnail/%,$(ALL_EXPORT_THUMBNAILS))): \
 		$(GENERATED_DIR)/$(1)/thumbnail/%.png: \
 		$(GENERATED_DIR)/$(1)/svg/%.svg Makefile \
 		| $(GENERATED_DIR)/$(1)/thumbnail
@@ -3293,3 +3298,48 @@ clean:
 		git ls-files -z -- 'output/*' | \
 			git checkout-index --force --stdin -z || true; \
 	fi
+
+# Reviewed styles are source defaults, not an exhibition-output override.
+$(GENERATOR_SRC_DIR)/generation-style.h: generation-style.json scripts/compile-generation-style.py
+	python3 scripts/compile-generation-style.py
+
+.PHONY: check-generation-style
+check-generation-style: $(GENERATOR_SRC_DIR)/generation-style.h build/test-generation-honeycomb
+	python3 scripts/compile-generation-style.py --check
+	python3 tests/test-generation-style.py
+	build/test-generation-honeycomb
+
+build/test-generation-honeycomb: tests/test-generation-honeycomb.cc src.generate/generation-honeycomb.h
+	@mkdir -p build
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+
+build/generation-context: src.generate/generation-context.cc $(GENERATOR_HEADERS) $(NATURAL_EARTH_GENERATOR_HEADER)
+	@mkdir -p build
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) $(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) $< $(shell $(GDAL_CONFIG) --libs) -o $@
+
+build/export-cdn-records: src.generate/export-cdn-records.cc $(ALPHA60_SRC)/a60-cdn-records.h
+	@mkdir -p build
+	$(CXX) -I$(ALPHA60_SRC) -I$(IZZI_SRC) -isystem /usr/include/rapidjson $(CXXFLAGS) $< -lcrypto -o $@
+
+build/generate-native-swarm: src.generate/generate-native-swarm.cc scripts/compile-native-swarm.py $(GENERATOR_HEADERS) $(wildcard $(ALPHA60_SRC)/*.h) $(ALPHA60_SRC)/a60-carto-geo.cc
+	ALPHA60_ROOT="$(abspath $(ALPHA60_SRC)/..)" IZZI_ROOT="$(abspath $(IZZI_SRC)/..)" CXX="$(CXX)" python3 scripts/compile-native-swarm.py
+
+JAPAN_SOURCE ?=
+JAPAN_PROJECTION ?= $(shell python3 -c 'import json; print(json.load(open("generation-style.json"))["default_projection"])')
+JAPAN_OUTPUT ?= $(patsubst %.svg,%-japan.svg,$(JAPAN_SOURCE))
+.PHONY: generate-japan-detail
+generate-japan-detail: build/generation-context scripts/generate-japan-detail.py generation-style.json config/regions/japan-10m.geojson
+	@test -n "$(JAPAN_SOURCE)" || { printf '%s\n' 'Set JAPAN_SOURCE to a geographic world SVG.' >&2; exit 2; }
+	python3 scripts/generate-japan-detail.py "$(JAPAN_SOURCE)" --projection "$(JAPAN_PROJECTION)" --output "$(JAPAN_OUTPUT)"
+
+# Native swarm sheets contain millions of circles; export without DOM-size growth.
+define NATIVE_SWARM_EXPORT_RULES
+$(strip $(call svg_to_pdf,$(1))) $(strip $(call svg_to_png,$(1))) &: $(1) scripts/export-native-swarm.py Makefile \
+        | $(call artifact_directory,$(strip $(call svg_to_pdf,$(1)))) $(call artifact_directory,$(strip $(call svg_to_png,$(1))))
+	python3 scripts/export-native-swarm.py "$(1)" --pdf "$(strip $(call svg_to_pdf,$(1)))" \
+		--png "$(strip $(call svg_to_png,$(1)))" --long-side $(NATIVE_SWARM_PNG_LONG_SIDE)
+$(subst /svg/,/thumbnail/,$(1:.svg=.png)): $(strip $(call svg_to_png,$(1))) \
+        | $(call artifact_directory,$(subst /svg/,/thumbnail/,$(1:.svg=.png)))
+	python3 -c 'from PIL import Image; im=Image.open("$(strip $(call svg_to_png,$(1)))"); im.thumbnail(($(SNAPSHOT_WIDTH), $(SNAPSHOT_WIDTH))); im.save("$(subst /svg/,/thumbnail/,$(1:.svg=.png))")'
+endef
+$(foreach source,$(NETWORK_SWARM_SVGS),$(eval $(call NATIVE_SWARM_EXPORT_RULES,$(source))))

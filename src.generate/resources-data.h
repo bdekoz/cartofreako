@@ -142,7 +142,7 @@ struct resources_profile
   std::string description;
   std::string snapshot_as_of;
   std::string missing_semantics;
-  double data_graphic_opacity = 0.60;
+  double data_graphic_opacity = 1.0;
   fs::path country_geometry_path;
   std::string country_geometry_sha256;
   std::string country_geometry_source_id;

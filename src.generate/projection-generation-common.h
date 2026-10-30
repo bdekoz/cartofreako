@@ -4,6 +4,7 @@
 #ifndef CART0FREAK0_TESTS_PROJECTION_GENERATION_COMMON_H
 #define CART0FREAK0_TESTS_PROJECTION_GENERATION_COMMON_H 1
 
+#include "generation-style.h"
 #include <cstddef>
 #include <cstdio>
 #include <stdexcept>

@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "description": "Fast Cahill-Keyes terrestrial development profile",
+  "description": "AuthaGraph terrestrial development with the reviewed generation-style.json defaults",
   "projections": [
-    "cahill_keyes"
+    "authagraph"
   ],
   "passes": [
     "earth",

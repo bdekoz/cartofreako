@@ -5,7 +5,29 @@
 [Generation methods](../getting-started/generation-methods.md) ·
 [Source profiles](../../../assets.static/network-infrastructure/README.md)
 
-## Outcome
+## Default CDN generation
+
+Ordinary CDN and `generate-network-infrastructure` site targets now use
+Alpha60's canonical record loader and vendor-reel r8 styling. The pinned
+[`config/cdn-sources.json`](../../../config/cdn-sources.json) selects the
+approved `cloud_cdn_cache.bkoz` manifest dated 2026-10-21, plus checked city,
+area and country lookups. `CDN_SOURCE_PROFILE` selects an alternate pinned
+source configuration. The [default styles guide](../getting-started/generation-styles.md)
+records the shared geometry, colors, opacities and regeneration commands.
+
+This snapshot contains 28,243 canonical records: 13,140 with source coordinates,
+1,405 with derived reference positions and 13,698 unplotted. AuthaGraph places
+14,545 located records in 7,318 groups and draws 80 separate locality claims.
+Honeycomb fills are 33% opaque, capped at 320 record cells. Approximate
+references use triangles, and independent locality claims use dashed triangles.
+The groups count source records, not verified unique facilities or traffic.
+
+The remainder of this page documents the retained Stage 9 source/API and the
+optional topology product. Its `NETWORK_INFRASTRUCTURE_*` source variables
+and legacy site-profile counts apply to that API; they do not override the
+current CDN Make targets.
+
+## Stage 9 outcome
 
 Stage 9 is implemented as one C++20 `generate-network-infrastructure` program
 with two products:

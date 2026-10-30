@@ -126,8 +126,9 @@ overlaps retain the highest threat rank. The checked result has 7,215 cells:
 1,493 Low, 1,967 Medium, 1,433 High, and 2,322 Very High.
 
 The reduction is intentionally coarse enough for the six projection products
-and thumbnail review. A filled cell means at least one source reef polygon
-was assigned there; it does not claim full-cell coral area.
+and thumbnail review. A source cell means at least one reef polygon
+was assigned there. The default honeycomb groups those observations in page
+space; its displayed footprints do not claim coral area.
 
 ## Rendering contract
 
@@ -141,25 +142,27 @@ geometry and contain:
 5. `resource-country-values`; and
 6. `resource-legend`.
 
-The reef product replaces the three country sublayers with
-`resource-spatial-coverage` above subdued 1:10m land. It uses categorical
-Low/Medium/High/Very High colors and a no-mapped-reef swatch. Both branches
-clip across all projection seams and use native-face area clipping where
-required.
+The reef product replaces the country sublayers with
+`resource-spatial-coverage` above subdued 1:10m land. Inside it, `reef-groups`
+contains radial honeycombs on a 0.16 in grouping grid. Groups display at most
+61 microhexagons, preserving class proportions and every present threat class.
+Every source cell ID and rank remains in SVG membership metadata even when a
+group is capped. The reviewed AuthaGraph layout has 844 groups containing all
+7,215 source cells.
 
-Every observed country fill and every observed reef cell uses its metric hue
-at 60% opacity. Missing-data context stays opaque: transparency cannot make an
-unknown country look like a low observed value. Legends also stay opaque so
-their reference colors remain readable. Main plate headings are twice the
-pre-Stage-13 size (`0.36` rather than `0.18` page units); metadata records
-both `data-graphic-opacity="0.6"` and `data-title-scale="2"`. Stage 14 raises
-the observed field from Stage 13's 30% setting to 60% while retaining the
-same title scale and evidence metadata.
+Observed country fills and reef symbols use **100% opacity**. Each resource
+metric uses separate named izzi-hue colors from
+[`generation-style.json`](../../../../generation-style.json), with petroleum
+in browns and solar in yellow/orange. Missing data remains neutral and never
+means zero. The solar key uses fixed MW classes, and all visible classes and
+opacity metadata describe the actual styles. See
+[Default generation styles](../../getting-started/generation-styles.md).
 
 Every SVG embeds the complete source and metric catalogues, selected metric,
 units, period, profile/value/geometry digests, gate statistics, Stage 12
 workflow version, and `missing-is-zero=false`. Country paths expose ISO3,
-value, year, and state; reef paths expose threat rank and label. The generator
+value, year, and state; reef groups expose counts and per-cell source IDs and
+threat ranks. The generator
 reopens and checks the viewBox, branch-specific layers, catalogue counts,
 spatial path count, metadata, finite output, and configured label font.
 

@@ -1,0 +1,16 @@
+{
+  "manifest": "../../cloud_cdn_cache.bkoz/data/manifest.20261021.json",
+  "manifest_sha256": "c8537a36bbdbd828948f883269dc4d507df084bed2f804f959c8c0f8f972f4ce",
+  "city_lookup": "../../alpha60/resources/cartography/cdn-vendor-city-reference-points-v3.json",
+  "city_lookup_sha256": "0129395ed3ebbcebe6bc22353b69533a76b33d6bb233e1b2ed6b816d44aa6a5e",
+  "country_registry": "../../alpha60/resources/cartography/cdn-country-registry-v1.json",
+  "country_registry_sha256": "5af4f329d21089e4a997938d7f0f123cf115209a4422e88471d4088531043231",
+  "include_locality_references": true,
+  "geographic_centerpoints": {
+    "enabled": true,
+    "lookup": "../../alpha60/resources/cartography/cdn-area-reference-points-v1.json",
+    "lookup_sha256": "461d29215954e803fb4d63522a60b69787925dce18a84fa992a9bbae735e00cb"
+  },
+  "source_revision": "2234be5c9bce123d26639e79935e54dd8f8785a8",
+  "visual_reference": "Alpha60 cdn-vendor-video-20261023-r8.json"
+}

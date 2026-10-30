@@ -95,7 +95,7 @@ add_fiber_routes(generation::projection_document& document,
              == dataset.profile.default_snapshot + "-only";
       // Map coordinates are inches: half a typographic point is 0.5 / 72.
       const svg::style style
-        = {svg::color::none, 0, {0, 0, 0}, 0.75, 0.5 / 72.0};
+        = {svg::color::none, 0, {0, 0, 0}, generation_style::fiber_opacity, generation_style::fiber_width_pt / 72.0};
       std::string attributes = route_attributes(route);
       if (is_historical)
         {
@@ -235,7 +235,7 @@ add_itu_routes(generation::projection_document& document,
         attrs += kind == "Fibre Under Construction"
           ? " stroke-dasharray=\"0.07 0.025\"" : " stroke-dasharray=\"0.025 0.025\"";
       layer.add_element(svg::make_path(data,
-        {svg::color::none, 0, {76, 187, 23}, 0.75, 0.5 / 72.0},
+        {svg::color::none, 0, generation_style::fiber_terrestrial_colors[0], generation_style::fiber_opacity, generation_style::fiber_width_pt / 72.0},
         "itu-fiber-" + std::to_string(id), true, attrs));
     }
   layer.finish_element();

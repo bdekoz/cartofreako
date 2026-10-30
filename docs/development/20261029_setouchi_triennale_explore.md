@@ -411,3 +411,26 @@ period and the distinction between observations and unique people in the
 exhibition captions. The earlier venue, attribution and production reviews
 remain in force; no additional account or data acquisition is needed for this
 revision.
+
+
+### Generation styles saved as repository defaults — 2026-10-30
+
+The approved physical strokes, resource colors, temperature classes,
+outline-only foreground land, coral honeycombs, CDN vendor reel and separate
+native Alpha60 swarm bands now drive ordinary Cartofreako regeneration.
+[`generation-style.json`](../../generation-style.json) is the shared style
+source; [Default generation styles](../pages/getting-started/generation-styles.md)
+documents the build wiring, source pins, Japan details, exports and checks.
+The development projection is AuthaGraph. Builders no longer depend on this
+edition's output directory.
+
+Fresh normal Make targets reproduced all 844 coral groups and their 7,215
+memberships, 28,243 CDN records and both native swarm circle counts. The Japan
+high-band crop retained 144,555 visible circles. The standard artifact manifest
+includes both resolution bands. The approved delivery and its checksum
+receipts remain frozen; these defaults govern subsequent regenerations.
+
+**Human review and next steps:** no additional review is required to save or
+reuse the defaults. The existing venue, attribution and physical print-proof
+reviews above remain the next production steps. Source refreshes retain their
+own dates and provenance; applying the defaults does not imply new observations.

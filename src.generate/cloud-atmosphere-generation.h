@@ -422,11 +422,7 @@ add_observation_layer(generation::projection_document& document,
           {
             // Use an opaque pink sequence so simultaneous blue/yellow layers
             // cannot turn observed cloud cover into a neutral grey mixture.
-            constexpr std::array<rgb_color, 6> pinks {{
-              {255, 224, 239}, {255, 191, 218}, {255, 145, 194},
-              {250, 100, 165}, {233, 60, 139}, {201, 32, 112},
-            }};
-            color = svg_color(pinks[bin]);
+            color = generation_style::cloud_colors[bin];
             style = {color, definition.opacity, color, definition.opacity, 0.0025};
           }
         else if (definition.property == "precipitation_rate_mm_h")
@@ -465,7 +461,7 @@ add_foreground_land(generation::projection_document& document,
     "ne_10m_land.shp", natural_earth::geometry_role::area,
     // Retain editable land polygons at zero fill opacity. The coastline layer
     // supplies the visible outline without stroking polygon clipping seams.
-    {{250, 248, 244}, 0, {250, 248, 244}, 0, 0}, 0.05, 0.82,
+    {{250, 248, 244}, generation_style::atmosphere_foreground_land_fill_opacity, {250, 248, 244}, 0, 0}, 0.05, 0.82,
   };
   svg::group_element layer;
   layer.start_element(std::string(land.id));
@@ -490,7 +486,7 @@ add_coastline(generation::projection_document& document,
   const natural_earth::layer_spec coastline {
     "terrestrial-coastline", "Natural Earth 1:10m coastline",
     "ne_10m_coastline.shp", natural_earth::geometry_role::line,
-    natural_earth::line_style({70, 76, 80}, 0.5 / 72.0, 0.75), 0.03, 0.82,
+    natural_earth::line_style({70, 76, 80}, generation_style::coastline_atmosphere_width_pt / 72.0, generation_style::coastline_atmosphere_opacity), 0.03, 0.82,
   };
   svg::group_element layer;
   layer.start_element(std::string(coastline.id));

@@ -60,8 +60,10 @@ make generation-plan
 make
 ```
 
-The checked-in development profile selects Cahill-Keyes plus the Earth and
+The checked-in development profile selects AuthaGraph plus the Earth and
 water passes (`ocean` is accepted as the legacy alias for `water`). See the
+[saved generation styles](docs/pages/getting-started/generation-styles.md) for reviewed
+line weights, palettes, honeycombs and native swarm defaults, and the
 [generation methods](docs/pages/getting-started/generation-methods.md) for custom profiles, explicit
 targets, full-suite generation, the central `generate-*` evaluation ledger,
 and the Stage 7 design choices.
@@ -98,7 +100,7 @@ runtime API 3, candidate/component statuses, batches, TypeScript, and headless b
 
 Generate 24 production whole-earth maps, 18 timestamped astronomy maps, 12
 timestamped Orbital Technosphere maps, 84 Stage 12 resources maps, six
-cumulative network-swarm maps, six filled blue Bathymetry Roulette maps, six
+native network-swarm resolution pairs, six filled blue Bathymetry Roulette maps, six
 blue Hamonshū bathymetry maps, 24
 source-separated Anthropocene observation and temperature maps, six cloud/CDN
 network-infrastructure site maps, six default-rendered Fiber Synthesized maps, five
@@ -106,7 +108,7 @@ exploratory Myriahedral ocean perspectives, 12 Cahill-Keyes enlargement
 slices, and two Myriahedral face-group slices as layered SVG, PDF, and opaque-white,
 3840-pixel-long-side PNG artifacts. The Anthropocene count comprises complete
 2025 and partial 2026 for both particulate and temperature families. The same
-graph makes 33 480-pixel-wide thumbnails for each of the six projections, 198
+graph makes 34 480-pixel thumbnails for each of the six projections, 204
 total, with:
 
 ```sh
@@ -365,33 +367,30 @@ has no state file and retains the standard credential-free graph.
 See [Prerequisites](docs/pages/getting-started/prerequisites.md#optional-external-authorization) for
 the per-provider variables and selective checks.
 
-Network-swarm generation is offline and reproducible from a checked-in
-cumulative GeoJSON archive. Prepare the bounded source and generate the six H3/Izzi
-honeycomb maps with:
+Network-swarm generation uses Alpha60's native weighted circles from the local
+Dan Da Dan 210 cache, with separate 1080p/4K and 720p/SD plates:
 
 ```sh
-make prepare-network-swarm-data
+make generate-network-swarm-authagraph
 make generate-network-swarm
 ```
 
-See the [network-swarm implementation notes](docs/pages/passes/network-swarm.md)
-for source validation, independent downloader layers, clustering, projection
-cuts, profile overrides, and output previews.
+See the [network-swarm notes](docs/pages/passes/network-swarm.md) and
+[saved defaults](docs/pages/getting-started/generation-styles.md) for cache and
+library requirements, physical Japan scaling, export and conservation receipts.
 
-Network-infrastructure generation reads a commit- and digest-pinned external
-`cloud_cdn_cache` checkout and produces six projection variants of the located
-site atlas. The default root is `../cloud_cdn_cache`; override
-`NETWORK_INFRASTRUCTURE_CLOUD_SOURCE` when needed:
+Network CDN generation uses the approved `cloud_cdn_cache.bkoz` manifest and
+Alpha60 vendor-reel styling. Source pins and reference lookups live in
+[`config/cdn-sources.json`](config/cdn-sources.json); override `CDN_SOURCE_PROFILE`
+when selecting another snapshot:
 
 ```sh
-make check-network-infrastructure-sources
+make generate-network-cdn-authagraph
 make generate-network-infrastructure
 make generate-network-infrastructure-artifacts
 ```
 
-`make check-prerequisite` verifies that both `../cloud_cdn_cache/` and
-`../www.submarinecablemap.com/` exist before a complete build. The stricter
-source checks above additionally enforce the pinned commits and digests.
+The separate legacy topology source checks retain their original source profile.
 
 TeleGeography submarine cable and Internet-exchange topology is a separate
 CC BY-NC-SA 3.0 opt-in and is never part of `make all` or generation-profile

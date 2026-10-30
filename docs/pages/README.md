@@ -26,6 +26,7 @@ AAO prefix.
 | Read the complete build graph, released artifact catalog, and resource metric classes | [Build and generated artifacts](getting-started/build.md) |
 | Map repository directories and individual source files | [Source layout conventions](getting-started/source_layout_conventions.md) |
 | Generate SVG, PDF, PNG, thumbnails, slices, and projection families | [Generation guide](getting-started/generation.md) |
+| Reuse approved line weights, colors, honeycombs and native swarm rendering | [Default generation styles](getting-started/generation-styles.md) |
 | Understand the selected profile, pass evaluation, and exact versus family workflows | [Generation methods and decision record](getting-started/generation-methods.md) |
 | Review the complete Stage 13 development manifest | [Stage 13 convergence notes](../development/20260815_stage-13.md) |
 | Follow the Stage 14 plan, implementation changes, and verification evidence | [Stage 14 convergence ledger](../development/20260815_stage-14.md) |

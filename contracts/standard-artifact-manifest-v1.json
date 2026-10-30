@@ -2,7 +2,7 @@
   "schemaVersion": "cartofreako-standard-artifact-manifest-v1",
   "inventorySource": "Makefile:GENERATED_SVGS",
   "lifecycle": "standard",
-  "artifactCount": 217,
+  "artifactCount": 223,
   "artifacts": [
     {
       "id": "anthropocene-particulate-2025.authagraph.whole-map",
@@ -175,6 +175,17 @@
       "sourceSvg": "assets.generated/authagraph/svg/network-swarm-authagraph-44-19.052559.svg",
       "lifecycle": "standard",
       "passId": "network-swarm",
+      "projectionId": "authagraph",
+      "layoutId": "authagraph",
+      "family": "authagraph",
+      "sliceId": null
+    },
+    {
+      "id": "network-swarm-lt-1080p.authagraph.whole-map",
+      "stem": "network-swarm-lt-1080p-authagraph-44-19.052559",
+      "sourceSvg": "assets.generated/authagraph/svg/network-swarm-lt-1080p-authagraph-44-19.052559.svg",
+      "lifecycle": "standard",
+      "passId": "network-swarm-lt-1080p",
       "projectionId": "authagraph",
       "layoutId": "authagraph",
       "family": "authagraph",
@@ -676,6 +687,17 @@
       "sliceId": null
     },
     {
+      "id": "network-swarm-lt-1080p.cahill-keyes.whole-map",
+      "stem": "network-swarm-lt-1080p-ck-44-22",
+      "sourceSvg": "assets.generated/cahill-keyes/svg/network-swarm-lt-1080p-ck-44-22.svg",
+      "lifecycle": "standard",
+      "passId": "network-swarm-lt-1080p",
+      "projectionId": "cahill-keyes",
+      "layoutId": "cahill-keyes",
+      "family": "cahill-keyes",
+      "sliceId": null
+    },
+    {
       "id": "orbital-technosphere-global.cahill-keyes.whole-map",
       "stem": "orbital-technosphere-global-ck-44-22",
       "sourceSvg": "assets.generated/cahill-keyes/svg/orbital-technosphere-global-ck-44-22.svg",
@@ -1039,6 +1061,17 @@
       "sliceId": null
     },
     {
+      "id": "network-swarm-lt-1080p.dymaxion.whole-map",
+      "stem": "network-swarm-lt-1080p-dymaxion-44-20.78461",
+      "sourceSvg": "assets.generated/dymaxion/svg/network-swarm-lt-1080p-dymaxion-44-20.78461.svg",
+      "lifecycle": "standard",
+      "passId": "network-swarm-lt-1080p",
+      "projectionId": "dymaxion",
+      "layoutId": "dymaxion",
+      "family": "dymaxion",
+      "sliceId": null
+    },
+    {
       "id": "orbital-technosphere-global.dymaxion.whole-map",
       "stem": "orbital-technosphere-global-dymaxion-44-20.78461",
       "sourceSvg": "assets.generated/dymaxion/svg/orbital-technosphere-global-dymaxion-44-20.78461.svg",
@@ -1385,6 +1418,17 @@
       "sourceSvg": "assets.generated/myriahedral/svg/network-groundstations-myriahedral-44-24.75.svg",
       "lifecycle": "standard",
       "passId": "network-groundstations",
+      "projectionId": "myriahedral",
+      "layoutId": "myriahedral",
+      "family": "myriahedral",
+      "sliceId": null
+    },
+    {
+      "id": "network-swarm-lt-1080p.myriahedral.whole-map",
+      "stem": "network-swarm-lt-1080p-myriahedral-44-24.75",
+      "sourceSvg": "assets.generated/myriahedral/svg/network-swarm-lt-1080p-myriahedral-44-24.75.svg",
+      "lifecycle": "standard",
+      "passId": "network-swarm-lt-1080p",
       "projectionId": "myriahedral",
       "layoutId": "myriahedral",
       "family": "myriahedral",
@@ -1831,6 +1875,17 @@
       "sliceId": null
     },
     {
+      "id": "network-swarm-lt-1080p.star-x.whole-map",
+      "stem": "network-swarm-lt-1080p-star-x-34-44",
+      "sourceSvg": "assets.generated/star-x/svg/network-swarm-lt-1080p-star-x-34-44.svg",
+      "lifecycle": "standard",
+      "passId": "network-swarm-lt-1080p",
+      "projectionId": "star-x",
+      "layoutId": "star-x",
+      "family": "star-x",
+      "sliceId": null
+    },
+    {
       "id": "network-swarm.star-x.whole-map",
       "stem": "network-swarm-star-x-34-44",
       "sourceSvg": "assets.generated/star-x/svg/network-swarm-star-x-34-44.svg",
@@ -2188,6 +2243,17 @@
       "sourceSvg": "assets.generated/voronoi/svg/network-groundstations-voronoi-44-22.916667.svg",
       "lifecycle": "standard",
       "passId": "network-groundstations",
+      "projectionId": "voronoi",
+      "layoutId": "voronoi",
+      "family": "voronoi",
+      "sliceId": null
+    },
+    {
+      "id": "network-swarm-lt-1080p.voronoi.whole-map",
+      "stem": "network-swarm-lt-1080p-voronoi-44-22.916667",
+      "sourceSvg": "assets.generated/voronoi/svg/network-swarm-lt-1080p-voronoi-44-22.916667.svg",
+      "lifecycle": "standard",
+      "passId": "network-swarm-lt-1080p",
       "projectionId": "voronoi",
       "layoutId": "voronoi",
       "family": "voronoi",

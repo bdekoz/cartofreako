@@ -13,6 +13,7 @@
 #include <iomanip>
 #include <iterator>
 #include <limits>
+#include <map>
 #include <numeric>
 #include <optional>
 #include <sstream>
@@ -32,6 +33,7 @@
 #include "resources-data.h"
 
 #include "resource-colors.h"
+#include "generation-honeycomb.h"
 
 namespace cart0freak0::resources_generation {
 
@@ -105,9 +107,7 @@ interpolate_resource_color(const resource_palette& palette, const double value)
   return resource_color(result);
 }
 
-// Data-bearing country fills and spatial cells share one profile-controlled
-// opacity. Missing-data context and legends remain fully opaque so reduced
-// data density never makes "unknown" look like an observed low value.
+// Country fills and spatial cells use the reviewed shared style opacity.
 inline svg::style
 resource_data_style(const svg::color_qi color, const double opacity)
 {
@@ -116,20 +116,18 @@ resource_data_style(const svg::color_qi color, const double opacity)
   return {color, opacity, color, opacity, 0.0025};
 }
 
-inline constexpr std::array<svg::color_qi, 6> solar_capacity_colors {
-  svg::color::hellayellow, svg::color::duboisyellow2, svg::color::gold, svg::color::orange, svg::color::dutchorange, svg::color::darkorange
-};
+inline constexpr auto solar_capacity_colors = generation_style::solar_colors;
 
 inline std::size_t
 solar_capacity_bin(const double megawatts)
 {
-  constexpr std::array<double, 5> bounds {100, 1000, 10000, 50000, 200000};
+  constexpr auto bounds = generation_style::solar_upper_mw;
   return std::upper_bound(bounds.begin(), bounds.end(), megawatts) - bounds.begin();
 }
 
 inline double
-resource_metric_opacity(const resources_profile& profile, const metric_definition& metric)
-{ return metric.id == "solar-capacity" ? 1.0 : profile.data_graphic_opacity; }
+resource_metric_opacity(const resources_profile&, const metric_definition&)
+{ return generation_style::resources_fill_opacity; }
 
 inline std::pair<double, double>
 resource_value_range(const std::vector<const country_value*>& values)
@@ -396,10 +394,10 @@ reef_threat_color(const int rank)
 {
   switch (rank)
     {
-    case 1: return svg::color::seijiiro;
-    case 2: return svg::color::goldenyellow;
-    case 3: return svg::color::asamaorange;
-    case 4: return svg::color::duboisred3;
+    case 1: return generation_style::coral_colors[0];
+    case 2: return generation_style::coral_colors[1];
+    case 3: return generation_style::coral_colors[2];
+    case 4: return generation_style::coral_colors[3];
     default: throw std::runtime_error("unknown coral-reef threat rank");
     }
 }
@@ -419,156 +417,104 @@ add_resource_spatial_coverage(
   const resources_profile& profile,
   const metric_definition& metric)
 {
-  resources_require(metric.spatial.has_value(),
-                    "selected resources metric lacks spatial metadata");
+  resources_require(metric.spatial.has_value(), "selected resource lacks spatial metadata");
   const spatial_definition& spatial = *metric.spatial;
-
   svg::group_element terrestrial;
   terrestrial.start_element("terrestrial-land");
-  terrestrial.add_title("Subdued Natural Earth land and resource coverage");
   const natural_earth::layer_spec land {
     "resource-land", "Subdued terrestrial land", "ne_10m_land.shp",
     natural_earth::geometry_role::area,
-    natural_earth::area_style({218, 216, 204}), 0.05, 0.5,
+    natural_earth::area_style({242, 242, 242}), 0.05, 0.5,
   };
   if (context.spec.kind == generation::projection_kind::star_x)
-    {
-      const natural_earth::antarctic_cap cap
-        = natural_earth::make_antarctic_cap(context);
-      static_cast<void>(natural_earth::render_star_x_source(
-        terrestrial, land, context, cap));
-    }
+    static_cast<void>(natural_earth::render_star_x_source(
+      terrestrial, land, context, natural_earth::make_antarctic_cap(context)));
   else
-    static_cast<void>(natural_earth::render_source(
-      terrestrial, land, context));
+    static_cast<void>(natural_earth::render_source(terrestrial, land, context));
 
-  natural_earth::dataset_ptr dataset
-    = natural_earth::open_dataset(spatial.path);
-  OGRLayer* source_layer = dataset->GetLayer(0);
-  resources_require(source_layer != nullptr,
-                    "resources spatial data has no vector layer");
-  const OGRSpatialReference* spatial_reference = source_layer->GetSpatialRef();
-  resources_require(spatial_reference != nullptr
-                      && spatial_reference->IsGeographic(),
-                    "resources spatial data is not geographic WGS84");
-  const int class_index = source_layer->GetLayerDefn()->GetFieldIndex(
-    spatial.class_property.c_str());
-  resources_require(class_index >= 0,
-                    "resources spatial data omits class property '"
-                      + spatial.class_property + "'");
-
-  svg::group_element coverage_layer;
-  coverage_layer.start_element("resource-spatial-coverage");
-  coverage_layer.add_title(metric.title);
-  const std::string spatial_filename = spatial.path.filename().string();
-  const natural_earth::layer_spec geometry_spec {
-    "resource-spatial-cell", "Resource spatial cell",
-    spatial_filename, natural_earth::geometry_role::area,
-    natural_earth::area_style(reef_threat_color(1)), 0, 0.125,
+  struct group {
+    int q, r;
+    std::array<std::size_t, 4> counts {};
+    std::vector<std::pair<std::string, int>> members;
   };
+  std::vector<group> groups;
+  std::map<std::pair<int, int>, std::size_t> lookup;
+  auto dataset = natural_earth::open_dataset(spatial.path);
+  OGRLayer* layer = dataset->GetLayer(0);
+  resources_require(layer && layer->GetSpatialRef() && layer->GetSpatialRef()->IsGeographic(),
+                    "reef input must contain geographic geometry");
+  const int index = layer->GetLayerDefn()->GetFieldIndex(spatial.class_property.c_str());
+  resources_require(index >= 0, "reef input lacks threat class");
+  constexpr double radius = generation_style::coral_macrohex_radius_in;
   spatial_render_stats stats;
-  source_layer->ResetReading();
-  std::size_t sequential_feature = 0;
-  while (natural_earth::feature_ptr feature {source_layer->GetNextFeature()})
+  layer->ResetReading();
+  while (natural_earth::feature_ptr feature {layer->GetNextFeature()})
     {
-      ++sequential_feature;
       ++stats.source_features;
-      const int rank = feature->GetFieldAsInteger(class_index);
-      resources_require(rank >= 1 && rank <= 4,
-                        "resources spatial data has an invalid threat rank");
-      const char* raw_threat = feature->GetFieldAsString("threat");
-      const std::string threat
-        = raw_threat == nullptr ? "unknown" : raw_threat;
-      const OGRGeometry* source = feature->GetGeometryRef();
-      resources_require(source != nullptr && !source->IsEmpty(),
-                        "resources spatial data contains an empty feature");
-      natural_earth::geometry_ptr prepared
-        = natural_earth::prepare_geometry(*source, geometry_spec);
+      const int rank = feature->GetFieldAsInteger(index);
+      resources_require(rank >= 1 && rank <= 4, "invalid reef threat rank");
+      const auto* geometry = feature->GetGeometryRef();
+      resources_require(geometry && !geometry->IsEmpty(), "empty reef source cell");
       OGREnvelope envelope;
-      prepared->getEnvelope(&envelope);
-      bool rendered_feature = false;
-      for (std::size_t band_index = 0;
-           band_index != natural_earth::longitude_bands.size(); ++band_index)
-        {
-          const natural_earth::longitude_band band
-            = natural_earth::longitude_bands[band_index];
-          const bool split_hemispheres
-            = natural_earth::requires_star_x_hemisphere_clipping(
-                geometry_spec, context);
-          const int latitude_piece_count = split_hemispheres ? 2 : 1;
-          for (int latitude_piece = 0;
-               latitude_piece != latitude_piece_count; ++latitude_piece)
-            {
-              natural_earth::latitude_range latitude;
-              std::string hemisphere_suffix;
-              if (split_hemispheres)
-                {
-                  const bool north = latitude_piece == 1;
-                  latitude.south = north ? 0 : -90;
-                  latitude.north = north
-                    ? 90 : -natural_earth::seam_epsilon;
-                  hemisphere_suffix = north ? "-north" : "-south";
-                }
-              if (!natural_earth::envelope_overlaps(
-                    envelope, band, latitude))
-                continue;
-              std::string path_data;
-              std::size_t point_count = 0;
-              const std::string error_context = spatial.path.string()
-                + " feature " + std::to_string(sequential_feature);
-              if (natural_earth::requires_area_grid(geometry_spec, context))
-                natural_earth::append_gridded_band(
-                  path_data, point_count, *prepared, envelope, band,
-                  geometry_spec, context, error_context);
-              else
-                {
-                  natural_earth::geometry_ptr clip
-                    = natural_earth::make_clip_rectangle(
-                        band.west, latitude.south,
-                        band.east, latitude.north);
-                  natural_earth::geometry_ptr clipped(
-                    prepared->Intersection(clip.get()));
-                  resources_require(clipped != nullptr,
-                                    "GDAL failed to clip " + error_context);
-                  if (clipped->IsEmpty())
-                    continue;
-                  clipped->segmentize(geometry_spec.maximum_segment);
-                  natural_earth::append_geometry(
-                    path_data, point_count, *clipped, context,
-                    natural_earth::geometry_role::area);
-                }
-              if (path_data.empty())
-                continue;
-              const std::string id = "resource-spatial-cell-"
-                + std::to_string(sequential_feature) + "-band-"
-                + std::to_string(band_index + 1) + hemisphere_suffix;
-              const std::string attributes
-                = "fill-rule=\"evenodd\" data-resource-spatial=\"true\""
-                  " data-threat-rank=\"" + std::to_string(rank)
-                  + "\" data-threat=\"" + resources_xml_escape(threat)
-                  + "\"";
-              coverage_layer.add_element(svg::make_path(
-                path_data, resource_data_style(
-                  reef_threat_color(rank), profile.data_graphic_opacity),
-                id, true, attributes));
-              rendered_feature = true;
-              ++stats.paths;
-              stats.points += point_count;
-            }
-        }
-      resources_require(rendered_feature,
-                        "resources spatial feature produced no projected path");
+      geometry->getEnvelope(&envelope);
+      const auto [x, y] = generation::project_point(context,
+        {(envelope.MinY + envelope.MaxY) / 2, (envelope.MinX + envelope.MaxX) / 2});
+      const auto key = generation_honeycomb::cell(x, y, radius);
+      const auto [entry, inserted] = lookup.emplace(key, groups.size());
+      if (inserted) groups.push_back(group {key.first, key.second, {}, {}});
+      auto& item = groups[entry->second];
+      ++item.counts[rank-1];
+      const int id_field = feature->GetFieldIndex("id");
+      const std::string id = id_field >= 0 ? feature->GetFieldAsString(id_field)
+                                          : std::to_string(feature->GetFID());
+      item.members.emplace_back(id, rank);
       ++stats.rendered_features;
     }
   resources_require(stats.source_features == spatial.mapped_features,
-                    "resources spatial feature count drifted");
-  resources_require(stats.rendered_features == stats.source_features
-                      && stats.paths != 0 && stats.points != 0,
-                    "resources spatial layer is incomplete");
-  coverage_layer.finish_element();
-  terrestrial.add_element(coverage_layer);
-  terrestrial.finish_element();
-  document.add_element(terrestrial);
+                    "reef source-cell count drifted");
+  svg::group_element coverage;
+  coverage.start_element("resource-spatial-coverage");
+  coverage.add_title("Radial honeycombs preserve source-cell counts and threat-class composition; display footprints are not reef area");
+  svg::group_element glyphs;
+  glyphs.start_element("reef-groups");
+  for (const auto& item : groups)
+    {
+      const double x = 1.5 * radius * item.q;
+      const double y = std::sqrt(3.0) * radius * (item.r + item.q / 2.0);
+      const auto allocated = generation_honeycomb::allocation(
+        item.counts, generation_style::coral_display_cell_cap);
+      const auto visible = std::accumulate(allocated.begin(), allocated.end(), std::size_t{});
+      const auto positions = generation_honeycomb::offsets(
+        visible, generation_style::coral_microhex_spacing_radius_in);
+      std::string classes;
+      for (auto count : item.counts) classes += (classes.empty() ? "" : ",") + std::to_string(count);
+      glyphs.add_raw("<g data-cell-count=\"" + std::to_string(item.members.size())
+        + "\" data-class-counts=\"" + classes + "\">\n");
+      // Preserve every original cell's membership even when a glyph is capped.
+      for (const auto& [id, rank] : item.members)
+        glyphs.add_raw("<desc data-resource-spatial=\"true\" data-source-cell=\"" + resources_xml_escape(id)
+          + "\" data-threat-rank=\"" + std::to_string(rank) + "\"/>\n");
+      std::size_t n = 0;
+      for (std::size_t rank = 0; rank < 4; ++rank)
+        for (std::size_t c = 0; c < allocated[rank]; ++c)
+          {
+            const auto [dx, dy] = positions[n++];
+            svg::vrange vertices;
+            for (unsigned corner = 0; corner < 7; ++corner)
+              {
+                const double angle = corner * std::acos(-1.0) / 3;
+                vertices.emplace_back(x+dx+generation_style::coral_microhex_radius_in*std::cos(angle),
+                                      y+dy+generation_style::coral_microhex_radius_in*std::sin(angle));
+              }
+            glyphs.add_element(svg::make_path(svg::make_path_data_from_points(vertices),
+              {reef_threat_color(rank+1), resource_metric_opacity(profile, metric), svg::color::white,
+               1, generation_style::coral_microhex_outline_in}, "", true));
+            ++stats.paths; stats.points += 6;
+          }
+      glyphs.add_raw("</g>\n");
+    }
+  glyphs.finish_element(); coverage.add_element(glyphs); coverage.finish_element();
+  terrestrial.add_element(coverage); terrestrial.finish_element(); document.add_element(terrestrial);
   return stats;
 }
 
@@ -692,7 +638,16 @@ add_resources_legend(generation::projection_document& document,
       heading._M_w = svg::typography::weight::bold;
       svg::styled_text(layer, "INSTALLED SOLAR GENERATING CAPACITY / " + metric.reference_period,
         {0.3, 0.40}, heading);
-      constexpr std::array<const char*, 6> labels {"0 to <100", "100 to <1,000", "1,000 to <10,000", "10,000 to <50,000", "50,000 to <200,000", "200,000+"};
+      std::array<std::string, 6> labels;
+      const auto number = [](double value) {
+        std::string text = format_resource_number(value, 0);
+        for (int i = static_cast<int>(text.size()) - 3; i > 0; i -= 3)
+          text.insert(i, ",");
+        return text;
+      };
+      for (std::size_t i = 0; i < labels.size(); ++i)
+        labels[i] = number(i == 0 ? 0 : generation_style::solar_upper_mw[i-1])
+          + (i == labels.size()-1 ? "+" : " to <" + number(generation_style::solar_upper_mw[i]));
       for (std::size_t i = 0; i < labels.size(); ++i)
         {
           svg::rect_element swatch; swatch.start_element();
@@ -765,7 +720,8 @@ add_resources_spatial_legend(
       + " source reef polygons · gate passed");
   const std::string snapshot_text = resources_xml_escape(
     "Snapshot " + profile.snapshot_as_of
-      + " · highest local threat retained per cell · missing is not zero");
+      + " · radial honeycombs, cap " + std::to_string(static_cast<unsigned>(generation_style::coral_display_cell_cap))
+      + "; class mix retained · glyphs are not reef area");
   constexpr double column_gap = 0.115;
   constexpr double page_margin = 0.573;
   constexpr double key_column_width = 0.48;

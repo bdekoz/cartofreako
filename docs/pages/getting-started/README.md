@@ -11,6 +11,8 @@ Start with the [prerequisites](prerequisites.md), then use the
 [build and generated artifacts reference](build.md) for the complete
 artifact graph and released catalog, and the [generation guide](generation.md)
 for the standard or configured artifact workflows. The
+[default generation styles](generation-styles.md) preserve the approved
+world and Japan visual treatments for subsequent regenerations. The
 [generation methods record](generation-methods.md) explains pass selection,
 exact targets, family targets, and the evidence used to decide which products
 belong in a release. Repository directories and individual source files are
