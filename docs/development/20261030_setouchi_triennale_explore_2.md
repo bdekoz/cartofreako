@@ -173,7 +173,9 @@ decision history; the following describes the final files.
 | `index.html` | Searchable review of 38 subjects, paired world/Japan maps and expandable legend/source sheets. |
 | `maps/{world,japan}/{svg,pdf,png,preview}/` | 76 legend-free cartographic/data sheets. |
 | `legends/{world,japan}/{svg,pdf,png,preview}/` | 76 separate legends, each with its data bibliography. Files pair as `network-fiber.svg` and `network-fiber-legend.svg`, for example. |
-| `setouchi-tri-explore-v2.pdf` | 154 pages: cover, plate index, then world map, world legend/sources, Japan map and Japan legend/sources for each subject. No integrated bibliography is appended. |
+| `setouchi-tri-explore-v2-world.pdf` | 79 pages: CARTOFREAKO/date title, World edition notes and index, then 38 world map/legend-bibliography pairs. |
+| `setouchi-tri-explore-v2-japan.pdf` | 79 pages: CARTOFREAKO/date title, Japan edition notes and index, then 38 Japan map/legend-bibliography pairs. |
+| `setouchi-tri-explore-v2.pdf` | Combined 155-page edition with the same title, edition notes and index, then world map, world legend/sources, Japan map and Japan legend/sources for each subject. No integrated bibliography is appended. |
 | `proofs/43p5-antarctica-left/index.html` | Current fiber/groundstation proof, with a four-sheet `setouchi-network-separated-proof.pdf`. |
 | `contact-sheets/` | Eight world/Japan contact sheets and their combined PDF. |
 | `plate-source-bibliography.{json,md,html,pdf}` | Supplementary source audit copies, separate from the aggregate. |
@@ -225,7 +227,7 @@ now contains the approved separate map and legend files as well.
 - The PNG exporters verified white margin bands. All eight contact sheets,
   both shifted network maps and representative dense, celestial and resource
   legends were visually inspected. All 76 bibliography panels fit.
-- The aggregate has 154 pages and the current network proof has four
+- Before the title-page addition below, the aggregate had 154 pages; the current network proof has four
   full-size sheets. Font inspection confirms embedded Atkinson regular,
   bold and italic faces in the representative legend PDF.
 - All **854 local HTML asset/download links** resolve. Desktop (1440 px)
@@ -284,7 +286,7 @@ to the verified 76 maps and 76 separate legend/source sheets. For example:
 
 The Japan filenames use the same pairing with their existing `-japan`
 suffix. The review index links to these standard files and leads with the
-complete 154-page proof. Each map remains immediately followed by its
+then-current 154-page proof. Each map remains immediately followed by its
 legend/bibliography in the PDF.
 
 Combined build inputs and old exports were preserved under
@@ -306,3 +308,36 @@ map/legend pairs in the required PDF order. Desktop and phone browser checks
 passed with the corrected standard filenames, including the network sample.
 The full sheet validator passed all 152 sheets and all 608 standard filename
 bindings, including export checksums and preservation of the map data.
+
+## Title page and separate World/Japan PDFs — 2026-10-30
+
+The human requested an added first page containing only **CARTOFREAKO** and
+the date in the largest fitting type, then requested separate World and
+Japan PDFs. Each new edition opens with the same white 44 × 19.052559-inch
+sheet and two black Atkinson Hyperlegible Bold lines: `CARTOFREAKO` and
+`2026-10-30`. Each line fills the 43.5-inch printable width; the resulting
+font sizes are approximately **429.69 pt** and **563.21 pt**, respectively.
+There is no footer, page number or additional wording on the title sheet.
+
+The World and Japan files each contain **79 pages**: title, edition notes,
+scope-specific index, then 38 cartography/data and legend/data bibliography
+pairs. Their first subject occupies PDF pages 4–5 and the last occupies
+78–79. The combined edition is retained at the existing filename with
+**155 pages**, and its index now starts the first subject at pages 4–7.
+Plate identifiers remain 01–38. All individual cartography and legend
+masters retain their existing content and file bindings.
+
+The review index links directly to both separate PDFs. The generator and
+`make setouchi-st2` save this arrangement for future builds; the title date
+defaults to the current Los Angeles date. Use `SETOUCHI_ST2_DATE=2026-10-30`
+with Make, or `--date 2026-10-30` with
+`scripts/build-setouchi-revision-review.py`, to reproduce this date.
+The revision manifest records the title typography and exact sheet sequence
+for each PDF.
+
+Verification passed for both 79-page editions and the 155-page combined
+file: exact title/date text, printable bounds, scope membership, map/legend
+order and corrected index references. First, temperature and final legend
+pages match the corresponding standalone PDFs. The World and Japan title
+pages render identically, and Atkinson Bold is embedded. All 858 local
+review links resolve. The individual sheet-export manifest is unchanged.

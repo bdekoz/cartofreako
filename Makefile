@@ -3347,6 +3347,7 @@ $(foreach source,$(NETWORK_SWARM_SVGS),$(eval $(call NATIVE_SWARM_EXPORT_RULES,$
 # Setouchi ST2 revises the pinned study inputs without fetching new observations.
 SETOUCHI_ST2_SOURCE ?= output/setouchi-triennale-2028
 SETOUCHI_ST2_OUTPUT ?= output/setouchi-triennale-2028-st2
+SETOUCHI_ST2_DATE ?=
 .PHONY: setouchi-st2
 setouchi-st2: build/generation-context
 	python3 scripts/revise-setouchi-plates.py --delivery "$(SETOUCHI_ST2_SOURCE)" --output "$(SETOUCHI_ST2_OUTPUT)"
@@ -3356,5 +3357,5 @@ setouchi-st2: build/generation-context
 	python3 scripts/export-setouchi-sheets.py --delivery "$(SETOUCHI_ST2_OUTPUT)" --workers "$(ASSET_JOBS)"
 	python3 scripts/publish-setouchi-plate-files.py --delivery "$(SETOUCHI_ST2_OUTPUT)"
 	python3 scripts/study-setouchi-africa-framing.py --delivery "$(SETOUCHI_ST2_SOURCE)" --output "$(SETOUCHI_ST2_OUTPUT)/prototypes/africa-framing" --variants original-100 centered-95 shifted-95 cyclic-95 --render
-	python3 scripts/build-setouchi-revision-review.py --output "$(SETOUCHI_ST2_OUTPUT)"
+	python3 scripts/build-setouchi-revision-review.py --output "$(SETOUCHI_ST2_OUTPUT)" $(if $(strip $(SETOUCHI_ST2_DATE)),--date "$(SETOUCHI_ST2_DATE)")
 	python3 scripts/validate-setouchi-sheets.py --delivery "$(SETOUCHI_ST2_OUTPUT)"

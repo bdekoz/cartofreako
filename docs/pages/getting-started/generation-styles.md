@@ -168,6 +168,11 @@ result. It reuses the recorded observations; it does not fetch new data.
 The saved presentation settings are:
 
 - Separate map and legend/source sheets for all 38 world/Japan pairs.
+- Separate World and Japan PDFs, each with 79 pages. Both start with a
+  44-inch title sheet containing only `CARTOFREAKO` and the date, in bold
+  type independently fitted to the 43.5-inch printable width. The build date
+  defaults to the current date in Los Angeles; set
+  `SETOUCHI_ST2_DATE=2026-10-30` to reproduce this title date.
 - A centered 43.5-inch map image on a 44 × 19.052559-inch sheet. Proportional
   scaling is 98.863636%; physical strokes scale with the artwork, while
   opacity is retained. The original 0.5 pt fiber strokes print at 0.494318 pt.
@@ -180,6 +185,11 @@ The saved presentation settings are:
   white fill, black 0.5 pt outline and 100% opacity. The footer is number only.
 - An aggregate ordered world map, world legend/sources, Japan map, Japan
   legend/sources for each subject. No bibliography is appended at the end.
+
+The separate PDFs are `setouchi-tri-explore-v2-world.pdf` and
+`setouchi-tri-explore-v2-japan.pdf`; the combined 155-page edition remains
+`setouchi-tri-explore-v2.pdf`. Each edition has its own page index following
+the title page and edition notes. Individual sheet numbering stays 01–38.
 
 Full-size masters are under `maps/{world,japan}/` and
 `legends/{world,japan}/`, with `svg`, `pdf`, `png` and `preview` subdirectories.

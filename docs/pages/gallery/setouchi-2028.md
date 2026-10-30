@@ -19,9 +19,12 @@ has a [plate-by-plate source bibliography](setouchi-2028-bibliography.md)
 covering all 38 pairs. The local edition in
 `output/setouchi-triennale-2028-st2/` contains **76 legend-free maps and 76
 separate legend/source sheets**, with each data bibliography on its matching
-legend. Its `index.html` opens the paired review and
-`setouchi-tri-explore-v2.pdf` contains 154 pages: two introductory pages and
-152 full-size sheets. Plate numbers identify subjects 01–38, shared by the
+legend. Its `index.html` opens the paired review. The separate
+`setouchi-tri-explore-v2-world.pdf` and `setouchi-tri-explore-v2-japan.pdf`
+contain **79 pages each**: a large **CARTOFREAKO / 2026-10-30** title page,
+edition notes, a plate index, and 38 cartography/data sheets each followed
+by its legend/data bibliography. The combined
+`setouchi-tri-explore-v2.pdf` has 155 pages. Plate numbers identify subjects 01–38, shared by the
 world and Japan companions; they are independent of PDF page positions.
 The number alone appears in 36 pt bold with white fill and a fully opaque
 black 0.5 pt outline.
