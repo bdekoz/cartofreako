@@ -1,0 +1,80 @@
+{
+  "requested_width_pt": 0.5,
+  "requested_opacity": 0.75,
+  "landing_symbols": {
+    "world": "unchanged",
+    "japan_radius_multiplier": 0.5,
+    "japan_outline_points": 0.5,
+    "count": 2037
+  },
+  "checks": [
+    {
+      "scope": "world",
+      "routes": 767,
+      "svg_scale": 1.0,
+      "effective_width_pt_min": 0.49999967999999995,
+      "effective_width_pt_max": 0.49999967999999995,
+      "opacity": 0.75,
+      "source_svg": "plates/world/svg/network-fiber-authagraph-44-19.052559.svg"
+    },
+    {
+      "scope": "japan",
+      "routes": 767,
+      "svg_scale": 4.42209910488936,
+      "effective_width_pt_min": 0.49999999999970535,
+      "effective_width_pt_max": 0.49999999999970535,
+      "opacity": 0.75,
+      "source_svg": "plates/japan/svg/network-fiber-authagraph-44-19.052559-japan.svg"
+    }
+  ],
+  "exported_pdf_graphics_checks": [
+    {
+      "scope": "world",
+      "stroke_operations_at_opacity_075": 38164,
+      "width_pt_min": 0.5,
+      "width_pt_max": 0.5,
+      "nested_pdf_forms_checked": true
+    },
+    {
+      "scope": "japan",
+      "stroke_operations_at_opacity_075": 934,
+      "width_pt_min": 0.5,
+      "width_pt_max": 0.5,
+      "nested_pdf_forms_checked": true
+    }
+  ],
+  "pdf_graphics": {
+    "world": {
+      "stroke_operations": 38164,
+      "effective_points": [
+        0.5
+      ],
+      "opacity": 0.75
+    },
+    "japan": {
+      "stroke_operations": 934,
+      "effective_points": [
+        0.5
+      ],
+      "opacity": 0.75
+    }
+  },
+  "itu_routes": [
+    {
+      "scope": "world",
+      "itu_features": 37397,
+      "effective_width_pt": 0.5,
+      "opacity": 0.75,
+      "color": "#4CBB17",
+      "svg_sha256": "d9c6d357afc01c5357c218b6f30e4e7c432d24d25e64c936a0ad02e83a5c0df6"
+    },
+    {
+      "scope": "japan",
+      "itu_features": 37397,
+      "effective_width_pt": 0.5,
+      "opacity": 0.75,
+      "color": "#4CBB17",
+      "svg_sha256": "826bdb71248eab5a1800d0adc9e51105f0038ed3df896baa824b969dca220b9d"
+    }
+  ]
+}

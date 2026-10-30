@@ -1,0 +1,1834 @@
+{
+  "palette": "svg::izzi_hue_palette",
+  "palette_source": "/home/bkoz/src/izzi/src/izzi-svg-color-rgb-map.inc",
+  "palette_source_sha256": "61f310d7d420691d8b428f226572cefce8953a5a4bc35e8beac9b5bc751feb16",
+  "opacity": 1,
+  "reuse_policy": "No exact RGB reused between resource metrics. Petroleum comparison plates intentionally share the petroleum family key.",
+  "metrics": {
+    "wind-capacity": [
+      {
+        "name": "lightcyan",
+        "rgb": [
+          224,
+          255,
+          255
+        ],
+        "hex": "#e0ffff"
+      },
+      {
+        "name": "cyan",
+        "rgb": [
+          0,
+          255,
+          255
+        ],
+        "hex": "#00ffff"
+      },
+      {
+        "name": "crayolacerulean",
+        "rgb": [
+          29,
+          172,
+          214
+        ],
+        "hex": "#1dacd6"
+      },
+      {
+        "name": "shinbashiiro",
+        "rgb": [
+          0,
+          108,
+          127
+        ],
+        "hex": "#006c7f"
+      },
+      {
+        "name": "hanada",
+        "rgb": [
+          4,
+          79,
+          103
+        ],
+        "hex": "#044f67"
+      }
+    ],
+    "nuclear-operating-capacity": [
+      {
+        "name": "lavender",
+        "rgb": [
+          230,
+          230,
+          250
+        ],
+        "hex": "#e6e6fa"
+      },
+      {
+        "name": "mediumpurple",
+        "rgb": [
+          147,
+          112,
+          219
+        ],
+        "hex": "#9370db"
+      },
+      {
+        "name": "slateblue",
+        "rgb": [
+          106,
+          90,
+          205
+        ],
+        "hex": "#6a5acd"
+      },
+      {
+        "name": "darkslateblue",
+        "rgb": [
+          72,
+          61,
+          139
+        ],
+        "hex": "#483d8b"
+      },
+      {
+        "name": "midnightblue",
+        "rgb": [
+          25,
+          25,
+          112
+        ],
+        "hex": "#191970"
+      }
+    ],
+    "petroleum-refinery-throughput": [
+      {
+        "name": "duboisbrown5",
+        "rgb": [
+          255,
+          240,
+          200
+        ],
+        "hex": "#fff0c8"
+      },
+      {
+        "name": "duboisbrown4",
+        "rgb": [
+          197,
+          146,
+          37
+        ],
+        "hex": "#c59225"
+      },
+      {
+        "name": "kohakuiro",
+        "rgb": [
+          202,
+          105,
+          36
+        ],
+        "hex": "#ca6924"
+      },
+      {
+        "name": "duboisbrown2",
+        "rgb": [
+          134,
+          90,
+          61
+        ],
+        "hex": "#865a3d"
+      },
+      {
+        "name": "duboisbrown3",
+        "rgb": [
+          81,
+          55,
+          42
+        ],
+        "hex": "#51372a"
+      }
+    ],
+    "food-production-index": [
+      {
+        "name": "pink",
+        "rgb": [
+          255,
+          192,
+          203
+        ],
+        "hex": "#ffc0cb"
+      },
+      {
+        "name": "hotpink",
+        "rgb": [
+          255,
+          105,
+          180
+        ],
+        "hex": "#ff69b4"
+      },
+      {
+        "name": "deeppink",
+        "rgb": [
+          255,
+          20,
+          147
+        ],
+        "hex": "#ff1493"
+      },
+      {
+        "name": "mediumvioletred",
+        "rgb": [
+          199,
+          21,
+          133
+        ],
+        "hex": "#c71585"
+      },
+      {
+        "name": "peony",
+        "rgb": [
+          164,
+          52,
+          93
+        ],
+        "hex": "#a4345d"
+      }
+    ],
+    "fisheries-production": [
+      {
+        "name": "lightblue",
+        "rgb": [
+          173,
+          216,
+          230
+        ],
+        "hex": "#add8e6"
+      },
+      {
+        "name": "skyblue",
+        "rgb": [
+          135,
+          206,
+          235
+        ],
+        "hex": "#87ceeb"
+      },
+      {
+        "name": "deepskyblue",
+        "rgb": [
+          0,
+          191,
+          255
+        ],
+        "hex": "#00bfff"
+      },
+      {
+        "name": "dodgerblue",
+        "rgb": [
+          30,
+          144,
+          255
+        ],
+        "hex": "#1e90ff"
+      },
+      {
+        "name": "navy",
+        "rgb": [
+          0,
+          49,
+          113
+        ],
+        "hex": "#003171"
+      }
+    ],
+    "forest-area-percent": [
+      {
+        "name": "byakuroku",
+        "rgb": [
+          165,
+          186,
+          147
+        ],
+        "hex": "#a5ba93"
+      },
+      {
+        "name": "usumoegi",
+        "rgb": [
+          141,
+          178,
+          85
+        ],
+        "hex": "#8db255"
+      },
+      {
+        "name": "moegi",
+        "rgb": [
+          91,
+          137,
+          48
+        ],
+        "hex": "#5b8930"
+      },
+      {
+        "name": "midori",
+        "rgb": [
+          42,
+          96,
+          59
+        ],
+        "hex": "#2a603b"
+      },
+      {
+        "name": "duboisgreen5",
+        "rgb": [
+          24,
+          57,
+          30
+        ],
+        "hex": "#18391e"
+      }
+    ],
+    "rare-earth-mine-production": [
+      {
+        "name": "plum",
+        "rgb": [
+          221,
+          160,
+          221
+        ],
+        "hex": "#dda0dd"
+      },
+      {
+        "name": "orchid",
+        "rgb": [
+          218,
+          112,
+          214
+        ],
+        "hex": "#da70d6"
+      },
+      {
+        "name": "mediumorchid",
+        "rgb": [
+          186,
+          85,
+          211
+        ],
+        "hex": "#ba55d3"
+      },
+      {
+        "name": "darkviolet",
+        "rgb": [
+          148,
+          0,
+          211
+        ],
+        "hex": "#9400d3"
+      },
+      {
+        "name": "purple",
+        "rgb": [
+          128,
+          0,
+          128
+        ],
+        "hex": "#800080"
+      }
+    ],
+    "population-under-30": [
+      {
+        "name": "greenyellow",
+        "rgb": [
+          173,
+          255,
+          47
+        ],
+        "hex": "#adff2f"
+      },
+      {
+        "name": "chartreuse",
+        "rgb": [
+          127,
+          255,
+          0
+        ],
+        "hex": "#7fff00"
+      },
+      {
+        "name": "hiwamoegi",
+        "rgb": [
+          122,
+          148,
+          46
+        ],
+        "hex": "#7a942e"
+      },
+      {
+        "name": "rokusho",
+        "rgb": [
+          64,
+          122,
+          82
+        ],
+        "hex": "#407a52"
+      },
+      {
+        "name": "aotakeiro",
+        "rgb": [
+          0,
+          100,
+          66
+        ],
+        "hex": "#006442"
+      }
+    ],
+    "population-over-60": [
+      {
+        "name": "coral",
+        "rgb": [
+          255,
+          127,
+          80
+        ],
+        "hex": "#ff7f50"
+      },
+      {
+        "name": "salmon",
+        "rgb": [
+          250,
+          128,
+          114
+        ],
+        "hex": "#fa8072"
+      },
+      {
+        "name": "tomato",
+        "rgb": [
+          255,
+          99,
+          71
+        ],
+        "hex": "#ff6347"
+      },
+      {
+        "name": "crimson",
+        "rgb": [
+          220,
+          20,
+          60
+        ],
+        "hex": "#dc143c"
+      },
+      {
+        "name": "foreigncrimson",
+        "rgb": [
+          201,
+          31,
+          55
+        ],
+        "hex": "#c91f37"
+      }
+    ],
+    "upper-secondary-attainment": [
+      {
+        "name": "atmosphericp",
+        "rgb": [
+          228,
+          210,
+          231
+        ],
+        "hex": "#e4d2e7"
+      },
+      {
+        "name": "dustyrose",
+        "rgb": [
+          191,
+          136,
+          187
+        ],
+        "hex": "#bf88bb"
+      },
+      {
+        "name": "usuiro",
+        "rgb": [
+          168,
+          124,
+          160
+        ],
+        "hex": "#a87ca0"
+      },
+      {
+        "name": "ayameiro",
+        "rgb": [
+          118,
+          53,
+          104
+        ],
+        "hex": "#763568"
+      },
+      {
+        "name": "murasaki",
+        "rgb": [
+          79,
+          40,
+          75
+        ],
+        "hex": "#4f284b"
+      }
+    ],
+    "bachelors-attainment": [
+      {
+        "name": "navajowhite",
+        "rgb": [
+          255,
+          222,
+          173
+        ],
+        "hex": "#ffdead"
+      },
+      {
+        "name": "kanzoiro",
+        "rgb": [
+          255,
+          137,
+          54
+        ],
+        "hex": "#ff8936"
+      },
+      {
+        "name": "akebonoiro",
+        "rgb": [
+          250,
+          123,
+          98
+        ],
+        "hex": "#fa7b62"
+      },
+      {
+        "name": "sohi",
+        "rgb": [
+          227,
+          92,
+          56
+        ],
+        "hex": "#e35c38"
+      },
+      {
+        "name": "benikaba",
+        "rgb": [
+          157,
+          43,
+          34
+        ],
+        "hex": "#9d2b22"
+      }
+    ],
+    "resident-patent-applications-per-million": [
+      {
+        "name": "lightskyblue",
+        "rgb": [
+          173,
+          206,
+          250
+        ],
+        "hex": "#adcefa"
+      },
+      {
+        "name": "cornflowerblue",
+        "rgb": [
+          100,
+          149,
+          237
+        ],
+        "hex": "#6495ed"
+      },
+      {
+        "name": "royalblue",
+        "rgb": [
+          65,
+          105,
+          225
+        ],
+        "hex": "#4169e1"
+      },
+      {
+        "name": "blueprintlight",
+        "rgb": [
+          0,
+          25,
+          166
+        ],
+        "hex": "#0019a6"
+      },
+      {
+        "name": "blueprintdark",
+        "rgb": [
+          0,
+          16,
+          106
+        ],
+        "hex": "#00106a"
+      }
+    ],
+    "solar-capacity": [
+      {
+        "name": "hellayellow",
+        "rgb": [
+          255,
+          255,
+          0
+        ],
+        "hex": "#ffff00"
+      },
+      {
+        "name": "duboisyellow2",
+        "rgb": [
+          255,
+          234,
+          18
+        ],
+        "hex": "#ffea12"
+      },
+      {
+        "name": "gold",
+        "rgb": [
+          255,
+          215,
+          0
+        ],
+        "hex": "#ffd700"
+      },
+      {
+        "name": "orange",
+        "rgb": [
+          255,
+          165,
+          0
+        ],
+        "hex": "#ffa500"
+      },
+      {
+        "name": "dutchorange",
+        "rgb": [
+          250,
+          155,
+          30
+        ],
+        "hex": "#fa9b1e"
+      },
+      {
+        "name": "darkorange",
+        "rgb": [
+          255,
+          140,
+          17
+        ],
+        "hex": "#ff8c11"
+      }
+    ],
+    "coral-reef-threat": [
+      {
+        "name": "seijiiro",
+        "rgb": [
+          129,
+          156,
+          139
+        ],
+        "hex": "#819c8b"
+      },
+      {
+        "name": "goldenyellow",
+        "rgb": [
+          255,
+          164,
+          0
+        ],
+        "hex": "#ffa400"
+      },
+      {
+        "name": "asamaorange",
+        "rgb": [
+          236,
+          75,
+          37
+        ],
+        "hex": "#ec4b25"
+      },
+      {
+        "name": "duboisred3",
+        "rgb": [
+          215,
+          25,
+          50
+        ],
+        "hex": "#d71932"
+      }
+    ]
+  },
+  "classifications": [
+    {
+      "metric": "solar-capacity",
+      "title": "Installed solar generating capacity",
+      "unit": "MW",
+      "scale": "Fixed capacity thresholds, MW",
+      "bins": [
+        {
+          "lower": 0,
+          "upper": 100,
+          "label": "0.00 to <100.00",
+          "count": 51,
+          "color": {
+            "name": "hellayellow",
+            "rgb": [
+              255,
+              255,
+              0
+            ],
+            "hex": "#ffff00"
+          }
+        },
+        {
+          "lower": 100,
+          "upper": 1000,
+          "label": "100.00 to <1,000.00",
+          "count": 50,
+          "color": {
+            "name": "duboisyellow2",
+            "rgb": [
+              255,
+              234,
+              18
+            ],
+            "hex": "#ffea12"
+          }
+        },
+        {
+          "lower": 1000,
+          "upper": 10000,
+          "label": "1,000.00 to <10,000.00",
+          "count": 44,
+          "color": {
+            "name": "gold",
+            "rgb": [
+              255,
+              215,
+              0
+            ],
+            "hex": "#ffd700"
+          }
+        },
+        {
+          "lower": 10000,
+          "upper": 50000,
+          "label": "10,000.00 to <50,000.00",
+          "count": 18,
+          "color": {
+            "name": "orange",
+            "rgb": [
+              255,
+              165,
+              0
+            ],
+            "hex": "#ffa500"
+          }
+        },
+        {
+          "lower": 50000,
+          "upper": 200000,
+          "label": "50,000.00 to <200,000.00",
+          "count": 4,
+          "color": {
+            "name": "dutchorange",
+            "rgb": [
+              250,
+              155,
+              30
+            ],
+            "hex": "#fa9b1e"
+          }
+        },
+        {
+          "lower": 200000,
+          "upper": null,
+          "label": "200,000+",
+          "count": 2,
+          "color": {
+            "name": "darkorange",
+            "rgb": [
+              255,
+              140,
+              17
+            ],
+            "hex": "#ff8c11"
+          }
+        }
+      ],
+      "reported_records": 169
+    },
+    {
+      "metric": "wind-capacity",
+      "title": "Installed wind generating capacity",
+      "unit": "MW",
+      "scale": "Five equal intervals of log(1 + value)",
+      "bins": [
+        {
+          "lower": 0.0,
+          "upper": 13.498432391499495,
+          "label": "0.00 to <13.50",
+          "count": 31,
+          "color": {
+            "name": "lightcyan",
+            "rgb": [
+              224,
+              255,
+              255
+            ],
+            "hex": "#e0ffff"
+          }
+        },
+        {
+          "lower": 13.498432391499495,
+          "upper": 209.20454181088178,
+          "label": "13.50 to <209.20",
+          "count": 26,
+          "color": {
+            "name": "cyan",
+            "rgb": [
+              0,
+              255,
+              255
+            ],
+            "hex": "#00ffff"
+          }
+        },
+        {
+          "lower": 209.20454181088178,
+          "upper": 3046.6363378311967,
+          "label": "209.20 to <3,046.64",
+          "count": 36,
+          "color": {
+            "name": "crayolacerulean",
+            "rgb": [
+              29,
+              172,
+              214
+            ],
+            "hex": "#1dacd6"
+          }
+        },
+        {
+          "lower": 3046.6363378311967,
+          "upper": 44184.94939792274,
+          "label": "3,046.64 to <44,184.95",
+          "count": 27,
+          "color": {
+            "name": "shinbashiiro",
+            "rgb": [
+              0,
+              108,
+              127
+            ],
+            "hex": "#006c7f"
+          }
+        },
+        {
+          "lower": 44184.94939792274,
+          "upper": 640625.9999999998,
+          "label": "44,184.95 to 640,626.00",
+          "count": 4,
+          "color": {
+            "name": "hanada",
+            "rgb": [
+              4,
+              79,
+              103
+            ],
+            "hex": "#044f67"
+          }
+        }
+      ],
+      "reported_records": 124
+    },
+    {
+      "metric": "nuclear-operating-capacity",
+      "title": "Operating nuclear net electrical capacity",
+      "unit": "MW(e)",
+      "scale": "Five equal intervals of log(1 + value)",
+      "bins": [
+        {
+          "lower": 416.0,
+          "upper": 1238.998313149117,
+          "label": "416.00 to <1,239.00",
+          "count": 5,
+          "color": {
+            "name": "lavender",
+            "rgb": [
+              230,
+              230,
+              250
+            ],
+            "hex": "#e6e6fa"
+          }
+        },
+        {
+          "lower": 1238.998313149117,
+          "upper": 3686.2801357617673,
+          "label": "1,239.00 to <3,686.28",
+          "count": 11,
+          "color": {
+            "name": "mediumpurple",
+            "rgb": [
+              147,
+              112,
+              219
+            ],
+            "hex": "#9370db"
+          }
+        },
+        {
+          "lower": 3686.2801357617673,
+          "upper": 10963.559108999603,
+          "label": "3,686.28 to <10,963.56",
+          "count": 8,
+          "color": {
+            "name": "slateblue",
+            "rgb": [
+              106,
+              90,
+              205
+            ],
+            "hex": "#6a5acd"
+          }
+        },
+        {
+          "lower": 10963.559108999603,
+          "upper": 32603.39999900079,
+          "label": "10,963.56 to <32,603.40",
+          "count": 5,
+          "color": {
+            "name": "darkslateblue",
+            "rgb": [
+              72,
+              61,
+              139
+            ],
+            "hex": "#483d8b"
+          }
+        },
+        {
+          "lower": 32603.39999900079,
+          "upper": 96952.00000000003,
+          "label": "32,603.40 to 96,952.00",
+          "count": 3,
+          "color": {
+            "name": "midnightblue",
+            "rgb": [
+              25,
+              25,
+              112
+            ],
+            "hex": "#191970"
+          }
+        }
+      ],
+      "reported_records": 32
+    },
+    {
+      "metric": "petroleum-refinery-throughput",
+      "title": "Petroleum refinery throughput",
+      "unit": "thousand metric tonnes/year",
+      "scale": "Five equal intervals of log(1 + value)",
+      "bins": [
+        {
+          "lower": 2.6000000000000005,
+          "upper": 42.26901420943255,
+          "label": "2.60 to <42.27",
+          "count": 4,
+          "color": {
+            "name": "duboisbrown5",
+            "rgb": [
+              255,
+              240,
+              200
+            ],
+            "hex": "#fff0c8"
+          }
+        },
+        {
+          "lower": 42.26901420943255,
+          "upper": 519.0576640711319,
+          "label": "42.27 to <519.06",
+          "count": 9,
+          "color": {
+            "name": "duboisbrown4",
+            "rgb": [
+              197,
+              146,
+              37
+            ],
+            "hex": "#c59225"
+          }
+        },
+        {
+          "lower": 519.0576640711319,
+          "upper": 6249.661793449461,
+          "label": "519.06 to <6,249.66",
+          "count": 33,
+          "color": {
+            "name": "kohakuiro",
+            "rgb": [
+              202,
+              105,
+              36
+            ],
+            "hex": "#ca6924"
+          }
+        },
+        {
+          "lower": 6249.661793449461,
+          "upper": 75126.77054420063,
+          "label": "6,249.66 to <75,126.77",
+          "count": 45,
+          "color": {
+            "name": "duboisbrown2",
+            "rgb": [
+              134,
+              90,
+              61
+            ],
+            "hex": "#865a3d"
+          }
+        },
+        {
+          "lower": 75126.77054420063,
+          "upper": 902972.4919999996,
+          "label": "75,126.77 to 902,972.49",
+          "count": 10,
+          "color": {
+            "name": "duboisbrown3",
+            "rgb": [
+              81,
+              55,
+              42
+            ],
+            "hex": "#51372a"
+          }
+        }
+      ],
+      "reported_records": 101
+    },
+    {
+      "metric": "food-production-index",
+      "title": "Food production index",
+      "unit": "index, 2014\u20132016=100",
+      "scale": "Five equal intervals of value",
+      "bins": [
+        {
+          "lower": 48.15,
+          "upper": 75.87,
+          "label": "48.15 to <75.87",
+          "count": 2,
+          "color": {
+            "name": "pink",
+            "rgb": [
+              255,
+              192,
+              203
+            ],
+            "hex": "#ffc0cb"
+          }
+        },
+        {
+          "lower": 75.87,
+          "upper": 103.59,
+          "label": "75.87 to <103.59",
+          "count": 58,
+          "color": {
+            "name": "hotpink",
+            "rgb": [
+              255,
+              105,
+              180
+            ],
+            "hex": "#ff69b4"
+          }
+        },
+        {
+          "lower": 103.59,
+          "upper": 131.31,
+          "label": "103.59 to <131.31",
+          "count": 79,
+          "color": {
+            "name": "deeppink",
+            "rgb": [
+              255,
+              20,
+              147
+            ],
+            "hex": "#ff1493"
+          }
+        },
+        {
+          "lower": 131.31,
+          "upper": 159.03,
+          "label": "131.31 to <159.03",
+          "count": 21,
+          "color": {
+            "name": "mediumvioletred",
+            "rgb": [
+              199,
+              21,
+              133
+            ],
+            "hex": "#c71585"
+          }
+        },
+        {
+          "lower": 159.03,
+          "upper": 186.75,
+          "label": "159.03 to 186.75",
+          "count": 8,
+          "color": {
+            "name": "peony",
+            "rgb": [
+              164,
+              52,
+              93
+            ],
+            "hex": "#a4345d"
+          }
+        }
+      ],
+      "reported_records": 168
+    },
+    {
+      "metric": "fisheries-production",
+      "title": "Total fisheries production",
+      "unit": "metric tonnes",
+      "scale": "Five equal intervals of log(1 + value)",
+      "bins": [
+        {
+          "lower": 8.000000000000002,
+          "upper": 227.6295392877097,
+          "label": "8.00 to <227.63",
+          "count": 5,
+          "color": {
+            "name": "lightblue",
+            "rgb": [
+              173,
+              216,
+              230
+            ],
+            "hex": "#add8e6"
+          }
+        },
+        {
+          "lower": 227.6295392877097,
+          "upper": 5806.940692767817,
+          "label": "227.63 to <5,806.94",
+          "count": 17,
+          "color": {
+            "name": "skyblue",
+            "rgb": [
+              135,
+              206,
+              235
+            ],
+            "hex": "#87ceeb"
+          }
+        },
+        {
+          "lower": 5806.940692767817,
+          "upper": 147539.75608864962,
+          "label": "5,806.94 to <147,539.76",
+          "count": 72,
+          "color": {
+            "name": "deepskyblue",
+            "rgb": [
+              0,
+              191,
+              255
+            ],
+            "hex": "#00bfff"
+          }
+        },
+        {
+          "lower": 147539.75608864962,
+          "upper": 3748018.45452315,
+          "label": "147,539.76 to <3,748,018.45",
+          "count": 64,
+          "color": {
+            "name": "dodgerblue",
+            "rgb": [
+              30,
+              144,
+              255
+            ],
+            "hex": "#1e90ff"
+          }
+        },
+        {
+          "lower": 3748018.45452315,
+          "upper": 95211994.68099985,
+          "label": "3,748,018.45 to 95,211,994.68",
+          "count": 11,
+          "color": {
+            "name": "navy",
+            "rgb": [
+              0,
+              49,
+              113
+            ],
+            "hex": "#003171"
+          }
+        }
+      ],
+      "reported_records": 169
+    },
+    {
+      "metric": "coral-reef-threat",
+      "title": "Coral reef integrated local threat",
+      "unit": "four-class spatial field",
+      "scale": "Original four-class historical threat ranks; no interpolation",
+      "bins": [
+        {
+          "label": "Low",
+          "color": {
+            "name": "seijiiro",
+            "rgb": [
+              129,
+              156,
+              139
+            ],
+            "hex": "#819c8b"
+          }
+        },
+        {
+          "label": "Medium",
+          "color": {
+            "name": "goldenyellow",
+            "rgb": [
+              255,
+              164,
+              0
+            ],
+            "hex": "#ffa400"
+          }
+        },
+        {
+          "label": "High",
+          "color": {
+            "name": "asamaorange",
+            "rgb": [
+              236,
+              75,
+              37
+            ],
+            "hex": "#ec4b25"
+          }
+        },
+        {
+          "label": "Very high",
+          "color": {
+            "name": "duboisred3",
+            "rgb": [
+              215,
+              25,
+              50
+            ],
+            "hex": "#d71932"
+          }
+        }
+      ]
+    },
+    {
+      "metric": "forest-area-percent",
+      "title": "Forest area",
+      "unit": "% of land area",
+      "scale": "Five equal intervals of value",
+      "bins": [
+        {
+          "lower": 0.000536,
+          "upper": 18.307909672,
+          "label": "0.00 to <18.31",
+          "count": 58,
+          "color": {
+            "name": "byakuroku",
+            "rgb": [
+              165,
+              186,
+              147
+            ],
+            "hex": "#a5ba93"
+          }
+        },
+        {
+          "lower": 18.307909672,
+          "upper": 36.615283344,
+          "label": "18.31 to <36.62",
+          "count": 42,
+          "color": {
+            "name": "usumoegi",
+            "rgb": [
+              141,
+              178,
+              85
+            ],
+            "hex": "#8db255"
+          }
+        },
+        {
+          "lower": 36.615283344,
+          "upper": 54.922657015999995,
+          "label": "36.62 to <54.92",
+          "count": 36,
+          "color": {
+            "name": "moegi",
+            "rgb": [
+              91,
+              137,
+              48
+            ],
+            "hex": "#5b8930"
+          }
+        },
+        {
+          "lower": 54.922657015999995,
+          "upper": 73.230030688,
+          "label": "54.92 to <73.23",
+          "count": 24,
+          "color": {
+            "name": "midori",
+            "rgb": [
+              42,
+              96,
+              59
+            ],
+            "hex": "#2a603b"
+          }
+        },
+        {
+          "lower": 73.230030688,
+          "upper": 91.53740436,
+          "label": "73.23 to 91.54",
+          "count": 9,
+          "color": {
+            "name": "duboisgreen5",
+            "rgb": [
+              24,
+              57,
+              30
+            ],
+            "hex": "#18391e"
+          }
+        }
+      ],
+      "reported_records": 169
+    },
+    {
+      "metric": "rare-earth-mine-production",
+      "title": "Rare-earth mine production",
+      "unit": "metric tonnes REO equivalent",
+      "scale": "Five equal intervals of log(1 + value)",
+      "bins": [
+        {
+          "lower": 109.99999999999997,
+          "upper": 526.875441372958,
+          "label": "110.00 to <526.88",
+          "count": 2,
+          "color": {
+            "name": "plum",
+            "rgb": [
+              221,
+              160,
+              221
+            ],
+            "hex": "#dda0dd"
+          }
+        },
+        {
+          "lower": 526.875441372958,
+          "upper": 2509.382717159417,
+          "label": "526.88 to <2,509.38",
+          "count": 2,
+          "color": {
+            "name": "orchid",
+            "rgb": [
+              218,
+              112,
+              214
+            ],
+            "hex": "#da70d6"
+          }
+        },
+        {
+          "lower": 2509.382717159417,
+          "upper": 11937.462926446606,
+          "label": "2,509.38 to <11,937.46",
+          "count": 4,
+          "color": {
+            "name": "mediumorchid",
+            "rgb": [
+              186,
+              85,
+              211
+            ],
+            "hex": "#ba55d3"
+          }
+        },
+        {
+          "lower": 11937.462926446606,
+          "upper": 56773.96744696121,
+          "label": "11,937.46 to <56,773.97",
+          "count": 3,
+          "color": {
+            "name": "darkviolet",
+            "rgb": [
+              148,
+              0,
+              211
+            ],
+            "hex": "#9400d3"
+          }
+        },
+        {
+          "lower": 56773.96744696121,
+          "upper": 270000.00000000006,
+          "label": "56,773.97 to 270,000.00",
+          "count": 1,
+          "color": {
+            "name": "purple",
+            "rgb": [
+              128,
+              0,
+              128
+            ],
+            "hex": "#800080"
+          }
+        }
+      ],
+      "reported_records": 12
+    },
+    {
+      "metric": "population-under-30",
+      "title": "Population under age 30",
+      "unit": "% of population",
+      "scale": "Five equal intervals of value",
+      "bins": [
+        {
+          "lower": 25.85901757,
+          "upper": 36.468816996,
+          "label": "25.86 to <36.47",
+          "count": 43,
+          "color": {
+            "name": "greenyellow",
+            "rgb": [
+              173,
+              255,
+              47
+            ],
+            "hex": "#adff2f"
+          }
+        },
+        {
+          "lower": 36.468816996,
+          "upper": 47.078616421999996,
+          "label": "36.47 to <47.08",
+          "count": 30,
+          "color": {
+            "name": "chartreuse",
+            "rgb": [
+              127,
+              255,
+              0
+            ],
+            "hex": "#7fff00"
+          }
+        },
+        {
+          "lower": 47.078616421999996,
+          "upper": 57.68841584799999,
+          "label": "47.08 to <57.69",
+          "count": 39,
+          "color": {
+            "name": "hiwamoegi",
+            "rgb": [
+              122,
+              148,
+              46
+            ],
+            "hex": "#7a942e"
+          }
+        },
+        {
+          "lower": 57.68841584799999,
+          "upper": 68.298215274,
+          "label": "57.69 to <68.30",
+          "count": 30,
+          "color": {
+            "name": "rokusho",
+            "rgb": [
+              64,
+              122,
+              82
+            ],
+            "hex": "#407a52"
+          }
+        },
+        {
+          "lower": 68.298215274,
+          "upper": 78.9080147,
+          "label": "68.30 to 78.91",
+          "count": 27,
+          "color": {
+            "name": "aotakeiro",
+            "rgb": [
+              0,
+              100,
+              66
+            ],
+            "hex": "#006442"
+          }
+        }
+      ],
+      "reported_records": 169
+    },
+    {
+      "metric": "population-over-60",
+      "title": "Population age 60 and older",
+      "unit": "% of population",
+      "scale": "Five equal intervals of value",
+      "bins": [
+        {
+          "lower": 3.34239493,
+          "upper": 9.855955520000002,
+          "label": "3.34 to <9.86",
+          "count": 78,
+          "color": {
+            "name": "coral",
+            "rgb": [
+              255,
+              127,
+              80
+            ],
+            "hex": "#ff7f50"
+          }
+        },
+        {
+          "lower": 9.855955520000002,
+          "upper": 16.369516110000003,
+          "label": "9.86 to <16.37",
+          "count": 29,
+          "color": {
+            "name": "salmon",
+            "rgb": [
+              250,
+              128,
+              114
+            ],
+            "hex": "#fa8072"
+          }
+        },
+        {
+          "lower": 16.369516110000003,
+          "upper": 22.8830767,
+          "label": "16.37 to <22.88",
+          "count": 19,
+          "color": {
+            "name": "tomato",
+            "rgb": [
+              255,
+              99,
+              71
+            ],
+            "hex": "#ff6347"
+          }
+        },
+        {
+          "lower": 22.8830767,
+          "upper": 29.396637290000005,
+          "label": "22.88 to <29.40",
+          "count": 33,
+          "color": {
+            "name": "crimson",
+            "rgb": [
+              220,
+              20,
+              60
+            ],
+            "hex": "#dc143c"
+          }
+        },
+        {
+          "lower": 29.396637290000005,
+          "upper": 35.91019788,
+          "label": "29.40 to 35.91",
+          "count": 10,
+          "color": {
+            "name": "foreigncrimson",
+            "rgb": [
+              201,
+              31,
+              55
+            ],
+            "hex": "#c91f37"
+          }
+        }
+      ],
+      "reported_records": 169
+    },
+    {
+      "metric": "upper-secondary-attainment",
+      "title": "Completed ISCED 3 or higher, age 25+",
+      "unit": "%",
+      "scale": "Five equal intervals of value",
+      "bins": [
+        {
+          "lower": 1.72214997,
+          "upper": 21.054503728,
+          "label": "1.72 to <21.05",
+          "count": 33,
+          "color": {
+            "name": "atmosphericp",
+            "rgb": [
+              228,
+              210,
+              231
+            ],
+            "hex": "#e4d2e7"
+          }
+        },
+        {
+          "lower": 21.054503728,
+          "upper": 40.386857486,
+          "label": "21.05 to <40.39",
+          "count": 27,
+          "color": {
+            "name": "dustyrose",
+            "rgb": [
+              191,
+              136,
+              187
+            ],
+            "hex": "#bf88bb"
+          }
+        },
+        {
+          "lower": 40.386857486,
+          "upper": 59.71921124399999,
+          "label": "40.39 to <59.72",
+          "count": 28,
+          "color": {
+            "name": "usuiro",
+            "rgb": [
+              168,
+              124,
+              160
+            ],
+            "hex": "#a87ca0"
+          }
+        },
+        {
+          "lower": 59.71921124399999,
+          "upper": 79.051565002,
+          "label": "59.72 to <79.05",
+          "count": 25,
+          "color": {
+            "name": "ayameiro",
+            "rgb": [
+              118,
+              53,
+              104
+            ],
+            "hex": "#763568"
+          }
+        },
+        {
+          "lower": 79.051565002,
+          "upper": 98.38391876,
+          "label": "79.05 to 98.38",
+          "count": 37,
+          "color": {
+            "name": "murasaki",
+            "rgb": [
+              79,
+              40,
+              75
+            ],
+            "hex": "#4f284b"
+          }
+        }
+      ],
+      "reported_records": 150
+    },
+    {
+      "metric": "bachelors-attainment",
+      "title": "Completed ISCED 6 or higher, age 25+",
+      "unit": "%",
+      "scale": "Five equal intervals of value",
+      "bins": [
+        {
+          "lower": 0.97130001,
+          "upper": 11.309317688,
+          "label": "0.97 to <11.31",
+          "count": 62,
+          "color": {
+            "name": "navajowhite",
+            "rgb": [
+              255,
+              222,
+              173
+            ],
+            "hex": "#ffdead"
+          }
+        },
+        {
+          "lower": 11.309317688,
+          "upper": 21.647335366,
+          "label": "11.31 to <21.65",
+          "count": 35,
+          "color": {
+            "name": "kanzoiro",
+            "rgb": [
+              255,
+              137,
+              54
+            ],
+            "hex": "#ff8936"
+          }
+        },
+        {
+          "lower": 21.647335366,
+          "upper": 31.985353044,
+          "label": "21.65 to <31.99",
+          "count": 25,
+          "color": {
+            "name": "akebonoiro",
+            "rgb": [
+              250,
+              123,
+              98
+            ],
+            "hex": "#fa7b62"
+          }
+        },
+        {
+          "lower": 31.985353044,
+          "upper": 42.323370722,
+          "label": "31.99 to <42.32",
+          "count": 26,
+          "color": {
+            "name": "sohi",
+            "rgb": [
+              227,
+              92,
+              56
+            ],
+            "hex": "#e35c38"
+          }
+        },
+        {
+          "lower": 42.323370722,
+          "upper": 52.6613884,
+          "label": "42.32 to 52.66",
+          "count": 1,
+          "color": {
+            "name": "benikaba",
+            "rgb": [
+              157,
+              43,
+              34
+            ],
+            "hex": "#9d2b22"
+          }
+        }
+      ],
+      "reported_records": 149
+    },
+    {
+      "metric": "resident-patent-applications-per-million",
+      "title": "Resident patent applications",
+      "unit": "2019\u20132021 applications per million person-years",
+      "scale": "Five equal intervals of log(1 + value)",
+      "bins": [
+        {
+          "lower": 0.30742072,
+          "upper": 5.32546558809227,
+          "label": "0.31 to <5.33",
+          "count": 23,
+          "color": {
+            "name": "lightskyblue",
+            "rgb": [
+              173,
+              206,
+              250
+            ],
+            "hex": "#adcefa"
+          }
+        },
+        {
+          "lower": 5.32546558809227,
+          "upper": 29.603396668013254,
+          "label": "5.33 to <29.60",
+          "count": 32,
+          "color": {
+            "name": "cornflowerblue",
+            "rgb": [
+              100,
+              149,
+              237
+            ],
+            "hex": "#6495ed"
+          }
+        },
+        {
+          "lower": 29.603396668013254,
+          "upper": 147.06307529090972,
+          "label": "29.60 to <147.06",
+          "count": 23,
+          "color": {
+            "name": "royalblue",
+            "rgb": [
+              65,
+              105,
+              225
+            ],
+            "hex": "#4169e1"
+          }
+        },
+        {
+          "lower": 147.06307529090972,
+          "upper": 715.3477473569214,
+          "label": "147.06 to <715.35",
+          "count": 13,
+          "color": {
+            "name": "blueprintlight",
+            "rgb": [
+              0,
+              25,
+              166
+            ],
+            "hex": "#0019a6"
+          }
+        },
+        {
+          "lower": 715.3477473569214,
+          "upper": 3464.780338110002,
+          "label": "715.35 to 3,464.78",
+          "count": 4,
+          "color": {
+            "name": "blueprintdark",
+            "rgb": [
+              0,
+              16,
+              106
+            ],
+            "hex": "#00106a"
+          }
+        }
+      ],
+      "reported_records": 95
+    }
+  ],
+  "palette_definition": "/home/bkoz/src/izzi/src/izzi-svg-color-palettes.inc",
+  "palette_definition_sha256": "d1473030b1ea26a76fee6b7406f00a0f275e9a9522e1823c914455fb6a3ee364"
+}

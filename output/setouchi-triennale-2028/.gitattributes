@@ -1,0 +1,4 @@
+# Preserve exported document bytes and provenance checksums in every checkout.
+*.pdf binary
+*.png binary
+*.csv -text whitespace=cr-at-eol

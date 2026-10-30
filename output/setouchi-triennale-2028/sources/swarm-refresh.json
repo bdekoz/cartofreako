@@ -1,0 +1,76 @@
+{
+  "renderer": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/render-swarm-authagraph",
+  "renderer_sha256": "510e332bf619a3d827470ee635d03e0580391a8827a114e01c99d6f2350b03a0",
+  "native_source": "/home/bkoz/src/alpha60/src/a60-carto-geo.cc",
+  "source_revision": "f5c65176e9326a6685105ae47604874384c27fab",
+  "cache_archive": {
+    "archive": "/home/bkoz/src/alpha60-samples-cache/dan-da-dan-210.cache/cache.20260304.tar.xz",
+    "sha256": "2ec21e71f08a201485ff4644c197e5e2e7eb997ef4c482a6058f1bd9ca3a6d32",
+    "inventory_count": 383,
+    "period": [
+      "2025-09-04",
+      "2026-03-04"
+    ],
+    "note": "Cumulative JSONs extracted; raw participant cache excluded from delivery inventory."
+  },
+  "geolocation_database": {
+    "path": "/home/bkoz/src/geoip-databases/ipinfo/standard_location.mmdb",
+    "sha256": "038a11d61822a80c92ee53f0bce7889a5ebee5bd5379006e847be50e8d939928"
+  },
+  "input_mode": "sample-cache-cumulative",
+  "projection": "AuthaGraph",
+  "layout_frame_inches": [
+    44,
+    19.052559
+  ],
+  "circle_encoding": "Original Alpha60 member colours and native weighted radii, 5% opacity; no rescaling of source counts or sampling.",
+  "japan_layout": "AuthaGraph geographic viewport; physical circle areas match the world scale; neighbouring countries can appear.",
+  "partitions": [
+    {
+      "band": "ge-1080p",
+      "title": "1080p / 4K",
+      "source": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/swarm-runtime/tmp/authagraph/dan-da-dan-210-slice-1080-2160-x-227-torrents-downloader-cumulative-ge-1080p-render-mode-11-11100-earth-authagraph-44-19.052559.svg.svg",
+      "source_sha256": "926b902ee49f06bd76aa8a3e5c44acd9376c16439d3099e1d6479d9a0e12195f",
+      "native_circles": 2804935,
+      "japan_visible_circles": 144555,
+      "projection": "AuthaGraph",
+      "fill_opacity": 0.05,
+      "native_units_per_inch": 96,
+      "japan_geographic_scale": 4.42209910488936,
+      "japan_circle_radius_compensation": 0.22613694905533327,
+      "japan_viewport_world_coordinates": [
+        12.600353120925336,
+        7.14094052077,
+        18.932187694474667,
+        10.532994756599997
+      ],
+      "output_files": {
+        "world": "plates/world/svg/network-swarm-ge-1080p-authagraph-44-19.052559.svg",
+        "japan": "plates/japan/svg/network-swarm-ge-1080p-authagraph-44-19.052559-japan.svg"
+      }
+    },
+    {
+      "band": "lt-1080p",
+      "title": "720p / SD",
+      "source": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/swarm-runtime/tmp/authagraph/dan-da-dan-210-slice-720-sd-x-74-torrents-downloader-cumulative-lt-1080p-render-mode-11-11100-earth-authagraph-44-19.052559.svg.svg",
+      "source_sha256": "52dc7a2410a55d1e6a6fdef51b1b58c53b85442e1997dd4d609b2e00a5492147",
+      "native_circles": 876541,
+      "japan_visible_circles": 44854,
+      "projection": "AuthaGraph",
+      "fill_opacity": 0.05,
+      "native_units_per_inch": 96,
+      "japan_geographic_scale": 4.42209910488936,
+      "japan_circle_radius_compensation": 0.22613694905533327,
+      "japan_viewport_world_coordinates": [
+        12.600353120925336,
+        7.14094052077,
+        18.932187694474667,
+        10.532994756599997
+      ],
+      "output_files": {
+        "world": "plates/world/svg/network-swarm-lt-1080p-authagraph-44-19.052559.svg",
+        "japan": "plates/japan/svg/network-swarm-lt-1080p-authagraph-44-19.052559-japan.svg"
+      }
+    }
+  ]
+}

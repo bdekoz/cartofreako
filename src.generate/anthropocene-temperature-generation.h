@@ -333,6 +333,21 @@ temperature_bin(const std::uint64_t count, const std::uint64_t scale)
                   static_cast<unsigned>(fraction * (bin_count - 1)));
 }
 
+// Shared absolute day counts keep complete and partial years on the same key.
+// The two low-frequency classes are yellow; red is reserved for >40 days.
+inline unsigned
+temperature_high_bin(const std::uint64_t count)
+{
+  constexpr std::array<std::uint64_t, 5> upper {5, 10, 20, 40, 80};
+  return std::lower_bound(upper.begin(), upper.end(), count) - upper.begin();
+}
+
+inline constexpr std::array<svg::color_qi, 6> temperature_high_colors {
+  svg::color_qi {255, 240, 188}, svg::color_qi {255, 206, 100},
+  svg::color_qi {244, 163, 64}, svg::color_qi {229, 113, 45},
+  svg::color_qi {196, 71, 36}, svg::color_qi {143, 40, 37},
+};
+
 inline std::size_t
 add_temperature_coverage(generation::projection_document& document,
                          const generation::projection_context& context,
@@ -389,8 +404,8 @@ add_temperature_records(generation::projection_document& document,
         ? cell.record_high_days : cell.record_low_days;
       if (value == 0)
         continue;
-      const unsigned bin = temperature_bin(
-        value, maximum ? profile.high_scale_days : profile.low_scale_days);
+      const unsigned bin = maximum ? temperature_high_bin(value)
+        : temperature_bin(value, profile.low_scale_days);
       fallback_counts[bin] += append_temperature_polygon(
         paths[bin], context, cell.h3);
       ++counts[bin];
@@ -407,10 +422,8 @@ add_temperature_records(generation::projection_document& document,
           + (1 - profile.minimum_nonzero_opacity) * fraction;
         const double field_opacity = profile.data_graphic_opacity;
         const svg::style style = maximum
-          ? svg::style {color, field_opacity * (0.24 + 0.62 * opacity),
-                        color,
-                        field_opacity * std::min(1.0, opacity + 0.08),
-                        0.002}
+          ? svg::style {temperature_high_colors[bin], field_opacity,
+                        temperature_high_colors[bin], field_opacity, 0.001}
           : svg::style {svg::color::none, 0, color,
                         field_opacity * (0.42 + 0.58 * opacity),
                         0.006 + 0.012 * fraction};
@@ -436,105 +449,40 @@ add_temperature_legend(generation::projection_document& document,
                        const temperature_profile& profile,
                        const temperature_dataset& dataset)
 {
-  static_cast<void>(context);
-  if (!profile.show_legend)
-    return;
-  const std::string title_text = "ANTHROPOCENE TEMPERATURE / "
-    + std::to_string(profile.calendar_year)
-    + (profile.partial_year ? " PARTIAL YEAR" : " COMPLETE YEAR");
-  const std::string note_text
-    = "Analysis field, not station observations or attribution. Neutral means analyzed with zero strict records; blank means missing or outside the CPC land domain.";
-  const std::string provenance_text = temperature_xml_escape(
-    "NOAA CPC 0.5 degree analysis through " + profile.data_through
-      + "  |  H3 r" + std::to_string(profile.h3_resolution)
-      + "  |  strict records vs " + std::to_string(profile.baseline_start)
-      + "-" + std::to_string(profile.baseline_end));
-  const std::string covered_text
-    = std::to_string(dataset.covered_cell_count) + " covered of "
-      + std::to_string(dataset.cells.size())
-      + " global H3 cells; valid-day denominators are embedded";
-  constexpr double key_width = 0.40;
-  constexpr double column_gap = 0.115;
-  constexpr double page_margin = 0.573;
-  const double panel_width = std::clamp(
-    generation::legend_text_width(title_text, 0.42) + 2 * page_margin,
-    5.0,
-    context.map_frame.width() - 0.6);
-  constexpr double table_top = 0.28;
-  constexpr double rect_top = 1.08;
-  constexpr double title_y = 1.69;
-  constexpr double note_y = 2.08;
-  constexpr double provenance_y = 2.32;
-  constexpr double panel_height = 2.50;
+  if (!profile.show_legend) return;
   svg::group_element layer;
   layer.start_element("legend-and-provenance",
-    generation::bottom_right_legend_transform(
-      context, panel_width, panel_height));
+    generation::bottom_right_legend_transform(context, 17.0, 2.70));
   svg::rect_element panel;
-  panel.start_element();
-  panel.add_data({0, rect_top, panel_width, panel_height - rect_top});
-  panel.add_style({{255, 255, 255}, 0.94, svg::color::none, 0, 0});
+  panel.start_element(); panel.add_data({0, 0, 17, 2.70});
+  panel.add_style({{255, 255, 255}, 0.96, svg::color::none, 0, 0});
   panel.add_raw("id=\"temperature-legend-panel\"");
-  panel.finish_element();
-  layer.add_element(panel);
-  svg::typography title = temperature_typography(0.42, {42, 40, 36});
+  panel.finish_element(); layer.add_element(panel);
+  auto title = temperature_typography(0.36, {42, 40, 36});
   title._M_w = svg::typography::weight::bold;
-  title._M_anchor = svg::typography::anchor::end;
-  title._M_align = svg::typography::align::right;
-  svg::styled_text(layer, title_text,
-    {panel_width - page_margin, title_y}, title);
-  svg::typography note = temperature_typography(0.12, {72, 68, 62});
-  note._M_anchor = svg::typography::anchor::end;
-  note._M_align = svg::typography::align::right;
-  svg::styled_text(layer, note_text, {panel_width - page_margin, note_y}, note);
-  svg::typography provenance = temperature_typography(0.12, {87, 82, 74});
-  provenance._M_anchor = svg::typography::anchor::end;
-  provenance._M_align = svg::typography::align::right;
-  svg::styled_text(layer, provenance_text,
-    {panel_width - page_margin, provenance_y}, provenance);
-
-  constexpr double key_x = page_margin;
-  svg::rect_element high;
-  high.start_element();
-  high.add_data({key_x + 0.20 - 0.06, table_top - 0.06, 0.12, 0.12});
-  high.add_style({{215, 62, 48}, 0.82, {215, 62, 48}, 1, 0.004});
-  high.finish_element();
-  layer.add_element(high);
-  {
-    svg::typography item = temperature_typography(0.12, {54, 51, 46});
-    svg::styled_text(layer, "record-high days (filled; log-scaled)",
-                     {key_x + key_width + column_gap, table_top}, item);
-  }
-
-  svg::rect_element low;
-  low.start_element();
-  low.add_data({key_x + 0.20 - 0.06, table_top + 0.24 - 0.06, 0.12, 0.12});
-  low.add_style({svg::color::none, 0, {48, 105, 190}, 1, 0.014});
-  low.finish_element();
-  layer.add_element(low);
-  {
-    svg::typography item = temperature_typography(0.12, {54, 51, 46});
-    svg::styled_text(layer, "record-low days (outline; log-scaled)",
-                     {key_x + key_width + column_gap, table_top + 0.24}, item);
-  }
-
-  svg::rect_element zero;
-  zero.start_element();
-  zero.add_data({key_x + 0.20 - 0.06, table_top + 0.48 - 0.06, 0.12, 0.12});
-  zero.add_style({{205, 199, 184}, 0.34, {191, 184, 169}, 0.32, 0.004});
-  zero.finish_element();
-  layer.add_element(zero);
-  {
-    svg::typography item = temperature_typography(0.12, {54, 51, 46});
-    svg::styled_text(layer, "covered zero / field domain",
-                     {key_x + key_width + column_gap, table_top + 0.48}, item);
-  }
-
-  svg::typography covered = temperature_typography(0.12, {54, 51, 46});
-  svg::styled_text(layer, covered_text,
-    {key_x + key_width + column_gap, table_top + 0.72}, covered);
-  layer.finish_element();
-  document.add_element(layer);
+  svg::styled_text(layer, "NEW DAILY HIGH RECORDS / "
+    + std::to_string(profile.calendar_year)
+    + (profile.partial_year ? " THROUGH " + profile.data_through : " COMPLETE YEAR"),
+    {0.3, 0.40}, title);
+  constexpr std::array<const char*, 6> labels {"1-5", "6-10", "11-20", "21-40", "41-80", "81+"};
+  for (std::size_t i = 0; i < labels.size(); ++i)
+    {
+      svg::rect_element swatch; swatch.start_element();
+      swatch.add_data({0.3 + i * 2.05, 0.76, 0.48, 0.28});
+      swatch.add_style({temperature_high_colors[i], 1, svg::color::none, 0, 0});
+      swatch.finish_element(); layer.add_element(swatch);
+      svg::styled_text(layer, labels[i], {0.9 + i * 2.05, 0.9}, temperature_typography(0.23));
+    }
+  svg::styled_text(layer, "days per H3 cell", {12.75, 0.9}, temperature_typography(0.23));
+  svg::styled_text(layer, "Neutral land: 0 record highs. Blue outlines: record-low days (log scale). Blank: no analysis.",
+    {0.3, 1.36}, temperature_typography(0.20));
+  svg::styled_text(layer, temperature_xml_escape("Strict same-calendar-day records vs "
+    + std::to_string(profile.baseline_start) + "-" + std::to_string(profile.baseline_end)
+    + "; at least 30 years of history. " + std::to_string(dataset.covered_cell_count) + " covered cells."),
+    {0.3, 1.76}, temperature_typography(0.19));
+  svg::styled_text(layer, "NOAA CPC 0.5 degree land analysis; H3 r3. Shared count bins; 2026 is a partial year, not an annual trend.",
+    {0.3, 2.16}, temperature_typography(0.19));
+  layer.finish_element(); document.add_element(layer);
 }
 
 inline std::string

@@ -1,0 +1,18 @@
+{
+  "renderer": "librsvg 2.62.4 / Cairo 1.18.6",
+  "scope": "japan / ge-1080p",
+  "reason": "Bounded-memory export retains every native circle and original paint order",
+  "source": "plates/japan/svg/network-swarm-ge-1080p-authagraph-44-19.052559-japan.svg",
+  "source_sha256": "27b3f3a854a7d65681f3c5529a4488a204a72e8d25e1b94645b48a741b6699fb",
+  "native_circles_retained": 144555,
+  "ordered_layers": 3,
+  "partitioning": "50,000 circles per layer; source paint order, ancestor transforms, clipping and styles retained. No group compositing opacity is permitted across split boundaries.",
+  "vector_pdf": true,
+  "fonts": "embedded by Cairo",
+  "png_pixels": [
+    13200,
+    5716
+  ],
+  "png_dpi": 300,
+  "preview": "downsampled from full-resolution PNG"
+}

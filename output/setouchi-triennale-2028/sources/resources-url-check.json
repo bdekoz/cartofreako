@@ -1,0 +1,38 @@
+[
+  {
+    "name": "natural_earth_url",
+    "url": "https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip",
+    "result": "200 https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip",
+    "stderr": ""
+  },
+  {
+    "name": "irena_url",
+    "url": "https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2026/Mar/IRENA_DAT_RE_capacity_statistics_2026.pdf",
+    "result": "200 https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2026/Mar/IRENA_DAT_RE_capacity_statistics_2026.pdf",
+    "stderr": ""
+  },
+  {
+    "name": "usgs_url",
+    "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026.pdf",
+    "result": "200 https://pubs.usgs.gov/periodicals/mcs2026/mcs2026.pdf",
+    "stderr": ""
+  },
+  {
+    "name": "iaea_url",
+    "url": "https://www-pub.iaea.org/MTCD/publications/PDF/RDS-2-45_web.pdf",
+    "result": "200 https://www-pub.iaea.org/MTCD/publications/PDF/RDS-2-45_web.pdf",
+    "stderr": ""
+  },
+  {
+    "name": "refinery_url",
+    "url": "https://data.un.org/Handlers/DownloadHandler.ashx?DataFilter=cmID%3aGR%3btrID%3a086&DataMartId=EDATA&Format=csv",
+    "result": "404 https://data.un.org/Handlers/DownloadHandler.ashx?DataFilter=cmID%3aGR%3btrID%3a086&DataMartId=EDATA&Format=csv",
+    "stderr": ""
+  },
+  {
+    "name": "reef_url",
+    "url": "https://wriorg.s3.amazonaws.com/s3fs-public/reefs_at_risk_revisited_present.kmz",
+    "result": "200 https://wriorg.s3.amazonaws.com/s3fs-public/reefs_at_risk_revisited_present.kmz",
+    "stderr": ""
+  }
+]

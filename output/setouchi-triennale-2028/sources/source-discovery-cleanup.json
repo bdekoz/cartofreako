@@ -1,0 +1,19 @@
+{
+  "excluded_discovery_javascript": [
+    "fiber/itu-main.js",
+    "particulate/enrichment/openaq-client.js",
+    "particulate/enrichment/soramame-app.js",
+    "particulate/enrichment/openaq-map.js",
+    "particulate/enrichment/openaq-map-render.js",
+    "particulate/enrichment/openaq-clientOnly-Cri8YbAY.js",
+    "particulate/enrichment/openaq-index-C7jywBIp.js",
+    "particulate/enrichment/nies-download.js",
+    "particulate/enrichment/openaq-index-BRq1EV5G.js",
+    "particulate/enrichment/openaq-index-BZ8RPeYj.js",
+    "particulate/enrichment/openaq-map-components.js",
+    "particulate/enrichment/openaq-index-B1R1GfbQ.js",
+    "particulate/enrichment/openaq-lists-DHxFRin3.js",
+    "particulate/enrichment/openaq-_id_-CiKNPPtU.js"
+  ],
+  "reason": "Downloaded front-end bundles were discovery intermediates. Data endpoints, source URLs, raw data and acquisition receipts remain."
+}

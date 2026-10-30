@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "unit": "physical points on full 44-inch sheet",
+  "views": {
+    "world": {
+      "paths": 1500,
+      "effective_points": [
+        0.7500024
+      ],
+      "stroke_opacity": 0.85
+    },
+    "japan": {
+      "paths": 1500,
+      "effective_points": [
+        1.4999999999991158
+      ],
+      "stroke_opacity": 0.85
+    }
+  },
+  "pdf_graphics": {
+    "world": {
+      "stroke_operations": 1500,
+      "effective_points": [
+        0.750002
+      ],
+      "opacity": 0.85
+    },
+    "japan": {
+      "stroke_operations": 97,
+      "effective_points": [
+        1.5
+      ],
+      "opacity": 0.85
+    }
+  }
+}

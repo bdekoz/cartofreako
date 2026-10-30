@@ -1,0 +1,8 @@
+iso3,eia_liquids_2025_mbpd,eia_source_table,opec_numeric_cells,national_rows,note
+RUS,10.53,3b,330,0,"EIA liquids includes NGLs, other liquids and processing gain; not crude-only or throughput"
+BRA,4.65,3b,80,30,"EIA liquids includes NGLs, other liquids and processing gain; not crude-only or throughput"
+CAN,6.26,3b,255,9,"EIA liquids includes NGLs, other liquids and processing gain; not crude-only or throughput"
+VEN,1.01,3c,0,0,"EIA liquids includes NGLs, other liquids and processing gain; not crude-only or throughput"
+MEX,1.87,3b,0,0,"EIA liquids includes NGLs, other liquids and processing gain; not crude-only or throughput"
+USA,23.73,3b,616,3,"EIA liquids includes NGLs, other liquids and processing gain; not crude-only or throughput"
+JPN,,,0,0,no separately listed EIA STEO production value; retain UNSD refinery data

@@ -1,0 +1,1144 @@
+{
+  "status": "passed",
+  "plates": [
+    {
+      "scope": "world",
+      "stem": "anthropocene-particulate-2025-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "anthropocene-particulate-2026-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "anthropocene-temperature-2025-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "anthropocene-temperature-2026-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "astro-all-sky-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "astro-observer-ground-multiband-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "astro-observer-hubble-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "bathymetry-hamonshu-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "bathymetry-roulette-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "earth-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "geometry-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "graticules-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "network-cdn-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "network-fiber-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "network-groundstations-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "orbital-technosphere-global-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "orbital-technosphere-observer-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "petroleum-eia-liquids-2025-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "petroleum-opec-country-coverage-2026-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "petroleum-opec-liquids-projection-2030-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "resources-energy-nuclear-operating-capacity-2024-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "resources-energy-petrochemical-refinery-throughput-latest-2024-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "resources-energy-solar-capacity-2025-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "resources-energy-wind-capacity-2025-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "resources-fauna-fisheries-production-latest-2024-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "resources-flora-forest-area-percent-2024-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "resources-food-food-production-index-latest-2024-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "resources-human-bachelors-attainment-latest-2024-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "resources-human-population-over-60-2024-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "resources-human-population-under-30-2024-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "resources-human-resident-patent-applications-per-million-2019-2021-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "resources-human-upper-secondary-attainment-latest-2025-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "water-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "anthropocene-particulate-2025-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "anthropocene-particulate-2026-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "anthropocene-temperature-2025-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "anthropocene-temperature-2026-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "astro-all-sky-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "astro-observer-ground-multiband-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "astro-observer-hubble-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "bathymetry-hamonshu-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "bathymetry-roulette-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "earth-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "geometry-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "graticules-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "network-cdn-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "network-fiber-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "network-groundstations-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "orbital-technosphere-global-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "orbital-technosphere-observer-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "petroleum-eia-liquids-2025-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "petroleum-opec-country-coverage-2026-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "petroleum-opec-liquids-projection-2030-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "resources-energy-nuclear-operating-capacity-2024-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "resources-energy-petrochemical-refinery-throughput-latest-2024-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "resources-energy-solar-capacity-2025-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "resources-energy-wind-capacity-2025-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "resources-fauna-fisheries-production-latest-2024-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "resources-flora-forest-area-percent-2024-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "resources-food-food-production-index-latest-2024-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "resources-human-bachelors-attainment-latest-2024-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "resources-human-population-over-60-2024-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "resources-human-population-under-30-2024-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "resources-human-resident-patent-applications-per-million-2019-2021-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "resources-human-upper-secondary-attainment-latest-2025-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "water-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "cloud-atmosphere-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "network-swarm-ge-1080p-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "world",
+      "stem": "network-swarm-lt-1080p-authagraph-44-19.052559",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "cloud-atmosphere-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "network-swarm-ge-1080p-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    },
+    {
+      "scope": "japan",
+      "stem": "network-swarm-lt-1080p-authagraph-44-19.052559-japan",
+      "status": "ok",
+      "inches": [
+        44,
+        19.052559
+      ],
+      "pixels": [
+        13200,
+        5716
+      ],
+      "dpi": 300
+    }
+  ],
+  "catalogs": [
+    {
+      "file": "catalogs/E1_shared_sea_atlas.pdf",
+      "pages": 4,
+      "status": "ok"
+    },
+    {
+      "file": "catalogs/E2_the_port_and_the_cloud.pdf",
+      "pages": 4,
+      "status": "ok"
+    },
+    {
+      "file": "catalogs/E3_heat_salt_water.pdf",
+      "pages": 4,
+      "status": "ok"
+    },
+    {
+      "file": "catalogs/I1_the_port_reading_table.pdf",
+      "pages": 4,
+      "status": "ok"
+    },
+    {
+      "file": "catalogs/I2_maps_in_the_winds_shelter.pdf",
+      "pages": 4,
+      "status": "ok"
+    },
+    {
+      "file": "catalogs/I3_the_island_atlas_desk.pdf",
+      "pages": 4,
+      "status": "ok"
+    },
+    {
+      "file": "catalogs/V1_fold_a_world_read_an_island.pdf",
+      "pages": 4,
+      "status": "ok"
+    },
+    {
+      "file": "catalogs/V2_what_does_the_cloud_touch.pdf",
+      "pages": 4,
+      "status": "ok"
+    },
+    {
+      "file": "catalogs/V3_an_island_seen_from_two_scales.pdf",
+      "pages": 4,
+      "status": "ok"
+    }
+  ],
+  "application_pages": 8,
+  "opec_cells_verified": 17920,
+  "petroleum_focus_countries": [
+    "RUS",
+    "BRA",
+    "CAN",
+    "VEN",
+    "MEX",
+    "USA"
+  ],
+  "notes": [
+    "Representative visual review recorded separately; machine checks cover every plate format.",
+    "Data periods and human review gates are in sources/data-quality.md and the development document."
+  ],
+  "japan_water_coastline_revision": {
+    "status": "passed",
+    "coastline_paths": 4157,
+    "effective_points": 1,
+    "svg_pdf_png_dimensions_and_export_freshness": "passed",
+    "other_plate_data": "unchanged"
+  },
+  "pm25_fiber_atmosphere_revision": {
+    "status": "passed",
+    "triplets_checked": 8,
+    "raw_data_checks": "sources/particulate-enrichment-validation.json",
+    "presentation_documents": "Nine four-page catalogs, eight-page application, ten-page contact sheets and eight-page visual annex checked after regeneration"
+  },
+  "incremental_revision": "Rechecked all six changed AuthaGraph swarm / transparent-land atmosphere triplets and refreshed catalogs; unchanged plate and source checks retained."
+}

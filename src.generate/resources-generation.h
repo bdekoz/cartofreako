@@ -31,6 +31,8 @@
 #include "projection-generation-common.h"
 #include "resources-data.h"
 
+#include "resource-colors.h"
+
 namespace cart0freak0::resources_generation {
 
 namespace generation = cart0freak0::generation;
@@ -113,6 +115,21 @@ resource_data_style(const svg::color_qi color, const double opacity)
                     "resource data opacity must be in (0, 1]");
   return {color, opacity, color, opacity, 0.0025};
 }
+
+inline constexpr std::array<svg::color_qi, 6> solar_capacity_colors {
+  svg::color::hellayellow, svg::color::duboisyellow2, svg::color::gold, svg::color::orange, svg::color::dutchorange, svg::color::darkorange
+};
+
+inline std::size_t
+solar_capacity_bin(const double megawatts)
+{
+  constexpr std::array<double, 5> bounds {100, 1000, 10000, 50000, 200000};
+  return std::upper_bound(bounds.begin(), bounds.end(), megawatts) - bounds.begin();
+}
+
+inline double
+resource_metric_opacity(const resources_profile& profile, const metric_definition& metric)
+{ return metric.id == "solar-capacity" ? 1.0 : profile.data_graphic_opacity; }
 
 inline std::pair<double, double>
 resource_value_range(const std::vector<const country_value*>& values)
@@ -275,11 +292,8 @@ add_resource_country_coverage(
       svg::style style = value == nullptr
         ? natural_earth::area_style(resource_color(family.palette.missing))
         : resource_data_style(
-            interpolate_resource_color(
-              family.palette,
-              scale_resource_value(
-                value->value, minimum, maximum, metric.scale)),
-            profile.data_graphic_opacity);
+            metric.id == "solar-capacity" ? solar_capacity_colors[solar_capacity_bin(value->value)] : resource_metric_palette(metric.id)[std::min<std::size_t>(4, static_cast<std::size_t>(5 * scale_resource_value(value->value, minimum, maximum, metric.scale)))],
+            resource_metric_opacity(profile, metric));
       for (std::size_t band_index = 0;
            band_index != natural_earth::longitude_bands.size(); ++band_index)
         {
@@ -382,10 +396,10 @@ reef_threat_color(const int rank)
 {
   switch (rank)
     {
-    case 1: return {62, 160, 151};
-    case 2: return {226, 190, 62};
-    case 3: return {221, 117, 56};
-    case 4: return {164, 48, 63};
+    case 1: return svg::color::seijiiro;
+    case 2: return svg::color::goldenyellow;
+    case 3: return svg::color::asamaorange;
+    case 4: return svg::color::duboisred3;
     default: throw std::runtime_error("unknown coral-reef threat rank");
     }
 }
@@ -578,7 +592,7 @@ resources_metadata_element(
     + "\" data-country-geometry-sha256=\""
     + profile.country_geometry_sha256 + "\" data-values-sha256=\""
     + profile.values_sha256 + "\" data-graphic-opacity=\""
-    + format_resource_number(profile.data_graphic_opacity, 2) + "\"";
+    + format_resource_number(resource_metric_opacity(profile, metric), 2) + "\"";
   if (metric.coverage.has_value())
     {
       const coverage_definition& coverage = *metric.coverage;
@@ -664,109 +678,70 @@ add_resources_legend(generation::projection_document& document,
                      const metric_definition& metric,
                      const std::vector<const country_value*>& selected_values)
 {
-  const auto [minimum, maximum] = resource_value_range(selected_values);
-  const coverage_definition& coverage = *metric.coverage;
-  const std::string heading_text
-    = resources_xml_escape(family.title + " / " + metric.title);
-  const std::string detail_text = resources_xml_escape(
-    metric.unit + " · " + metric.reference_period
-      + " · " + metric.evidence_class);
-  std::string coverage_text = "Coverage: "
-    + std::to_string(coverage.covered_countries) + "/"
-    + std::to_string(coverage.mapped_countries) + " mapped countries";
-  if (coverage.population_percent.has_value())
-    coverage_text += " · "
-      + format_resource_number(*coverage.population_percent)
-      + "% mapped population";
-  if (coverage.output_percent.has_value())
-    coverage_text += " · " + format_resource_number(*coverage.output_percent)
-      + "% source world output";
-  coverage_text += " · gate passed";
-  coverage_text = resources_xml_escape(coverage_text);
-  const std::string snapshot_text = resources_xml_escape(
-    "Snapshot " + profile.snapshot_as_of
-      + " · missing is not zero · catalogue "
-      + std::to_string(family.metrics.size()) + " metrics");
-  const std::string range_text
-    = format_resource_number(minimum) + " — " + format_resource_number(maximum);
-  constexpr double column_gap = 0.115;
-  constexpr double page_margin = 0.573;
-  constexpr double key_column_width = 5 * 0.36 + 4 * 0.03;
-  const double label_x = page_margin + key_column_width + column_gap;
-  svg::group_element layer;
-  const double width = std::clamp(
-    generation::legend_text_width(heading_text, 0.42) + 2 * page_margin,
-    5.0,
-    context.map_frame.width() - 0.6);
-  const double height = 2.57;
-  const double left = 0.30;
-  const double top = 0.30;
-  layer.start_element("resource-legend", "translate("
-    + std::to_string(context.map_frame.width() - width - 0.573) + " "
-    + std::to_string(context.map_frame.height() - height - 0.573) + ")");
-  svg::rect_element panel;
-  panel.start_element();
-  panel.add_data({left, top + 0.91, width, height - 0.91});
-  panel.add_style({{255, 255, 255}, 0.94, svg::color::none, 0, 0});
-  panel.add_raw("id=\"resource-legend-panel\"");
-  panel.finish_element();
-  layer.add_element(panel);
-
-  svg::typography heading = resources_typography(0.42, {42, 40, 36});
-  heading._M_w = svg::typography::weight::bold;
-  heading._M_anchor = svg::typography::anchor::end;
-  heading._M_align = svg::typography::align::right;
-  svg::styled_text(layer, heading_text,
-    {left + width - page_margin, top + 1.52}, heading);
-  svg::typography detail = resources_typography(0.12, {87, 82, 74});
-  detail._M_anchor = svg::typography::anchor::end;
-  detail._M_align = svg::typography::align::right;
-  svg::styled_text(layer, detail_text,
-    {left + width - page_margin, top + 1.91}, detail);
-  svg::typography other = resources_typography(0.12, {87, 82, 74});
-  other._M_anchor = svg::typography::anchor::end;
-  other._M_align = svg::typography::align::right;
-  svg::styled_text(layer, coverage_text,
-    {left + width - page_margin, top + 2.15}, other);
-  svg::styled_text(layer, snapshot_text,
-    {left + width - page_margin, top + 2.39}, other);
-
-  constexpr std::size_t swatch_count = 5;
-  const double ramp_top = top + 0.36;
-  for (std::size_t index = 0; index != swatch_count; ++index)
+  if (metric.id == "solar-capacity")
     {
-      const double amount = static_cast<double>(index) / (swatch_count - 1);
-      svg::rect_element swatch;
-      swatch.start_element();
-      swatch.add_data({left + page_margin + index * 0.39, ramp_top - 0.165,
-                       0.36, 0.33});
-      const svg::color_qi ramp_color
-        = interpolate_resource_color(family.palette, amount);
-      const svg::color_qi ramp_outline
-        = ramp_color == svg::color_qi {255, 255, 255}
-          ? svg::color::black : svg::color::none;
-      swatch.add_style({ramp_color, 1, ramp_outline,
-                        ramp_outline == svg::color::none ? 0.0 : 1.0, 0.006});
-      swatch.add_raw("data-resource-legend-swatch=\"true\"");
-      swatch.finish_element();
-      layer.add_element(swatch);
+      svg::group_element layer;
+      layer.start_element("resource-legend",
+        generation::bottom_right_legend_transform(context, 20.2, 2.6));
+      svg::rect_element panel; panel.start_element();
+      panel.add_data({0, 0, 20.2, 2.6});
+      panel.add_style({{255, 255, 255}, 0.96, svg::color::none, 0, 0});
+      panel.add_raw("id=\"resource-legend-panel\"");
+      panel.finish_element(); layer.add_element(panel);
+      auto heading = resources_typography(0.36, {42, 40, 36});
+      heading._M_w = svg::typography::weight::bold;
+      svg::styled_text(layer, "INSTALLED SOLAR GENERATING CAPACITY / " + metric.reference_period,
+        {0.3, 0.40}, heading);
+      constexpr std::array<const char*, 6> labels {"0 to <100", "100 to <1,000", "1,000 to <10,000", "10,000 to <50,000", "50,000 to <200,000", "200,000+"};
+      for (std::size_t i = 0; i < labels.size(); ++i)
+        {
+          svg::rect_element swatch; swatch.start_element();
+          swatch.add_data({0.3 + i * 3.30, 0.78, 0.48, 0.28});
+          swatch.add_style({solar_capacity_colors[i], 1, svg::color::none, 0, 0});
+          swatch.add_raw("data-resource-legend-swatch=\"true\"");
+          swatch.finish_element(); layer.add_element(swatch);
+          svg::styled_text(layer, labels[i], {0.90 + i * 3.30, 0.92}, resources_typography(0.18, {42, 40, 36}));
+        }
+      svg::styled_text(layer, "MW per country, at year end. 1,000 MW = 1 GW. Solid colours indicate installed capacity; grey = missing.",
+        {0.3, 1.42}, resources_typography(0.22, {42, 40, 36}));
+      svg::styled_text(layer, "IRENA Renewable Capacity Statistics 2026; 169 of 176 mapped countries. Not electricity generation or local irradiance.",
+        {0.3, 1.86}, resources_typography(0.21, {42, 40, 36}));
+      svg::styled_text(layer, "Country totals do not locate solar farms. Future comparisons should add capacity per person, generation and annual additions.",
+        {0.3, 2.25}, resources_typography(0.20, {42, 40, 36}));
+      layer.finish_element(); document.add_element(layer); return;
     }
-  svg::rect_element missing;
-  missing.start_element();
-  missing.add_data({left + page_margin, top + 0.72 - 0.165,
-                    0.48, 0.33});
-  missing.add_style({resource_color(family.palette.missing), 1,
-                     {92, 91, 85}, 0.8, 0.008});
-  missing.add_raw("data-resource-legend-missing=\"true\"");
-  missing.finish_element();
-  layer.add_element(missing);
-  svg::typography labels = resources_typography(0.12, {54, 51, 46});
-  svg::styled_text(layer, range_text,
-                   {left + label_x, ramp_top}, labels);
-  svg::styled_text(layer, "missing / unknown",
-                   {left + label_x, top + 0.72}, labels);
-  layer.finish_element();
-  document.add_element(layer);
+  const auto [minimum, maximum] = resource_value_range(selected_values);
+  const auto palette = resource_metric_palette(metric.id);
+  svg::group_element layer;
+  layer.start_element("resource-legend", generation::bottom_right_legend_transform(context, 23.6, 2.6));
+  svg::rect_element panel; panel.start_element();panel.add_data({0, 0, 23.6, 2.6});
+  panel.add_style({{255, 255, 255}, 0.96, svg::color::none, 0, 0});
+  panel.add_raw("id=\"resource-legend-panel\"");panel.finish_element();layer.add_element(panel);
+  auto title = resources_typography(0.36, {42, 40, 36});title._M_w=svg::typography::weight::bold;
+  svg::styled_text(layer, family.title + " / " + metric.title, {0.3, 0.4}, title);
+  const auto boundary = [&](double fraction) {
+    return metric.scale == metric_scale::log1p
+      ? std::expm1(std::log1p(minimum) + fraction * (std::log1p(maximum)-std::log1p(minimum)))
+      : minimum + fraction * (maximum-minimum);
+  };
+  for (std::size_t i=0; i<5; ++i) {
+    svg::rect_element swatch;swatch.start_element();swatch.add_data({0.3+i*4.6, 0.78, 0.48, 0.28});
+    swatch.add_style({palette[i],1,svg::color::none,0,0});
+    swatch.add_raw("data-resource-legend-swatch=\"true\"");swatch.finish_element();layer.add_element(swatch);
+    const std::string label = format_resource_number(boundary(i/5.0),2)
+      + (i==4 ? " to " : " to <") + format_resource_number(boundary((i+1)/5.0),2);
+    svg::styled_text(layer,label,{0.9+i*4.6,0.92},resources_typography(0.19,{42,40,36}));
+  }
+  svg::styled_text(layer, metric.unit + " / " + metric.reference_period + " / " + metric.evidence_class,
+    {0.3,1.4},resources_typography(0.22,{42,40,36}));
+  const std::string scale_text = metric.scale == metric_scale::log1p ? "Five equal intervals of log(1 + value)." : "Five equal intervals of value.";
+  svg::styled_text(layer, scale_text + " izzi-hue named colours at " + std::to_string(std::lround(resource_metric_opacity(profile, metric)*100)) + "% opacity. Grey: missing, never zero.",
+    {0.3,1.85},resources_typography(0.21,{42,40,36}));
+  svg::styled_text(layer, "Country statistics; " + std::to_string(metric.coverage->covered_countries)
+    + " of " + std::to_string(metric.coverage->mapped_countries)
+    + " mapped countries. Source dates and definitions: see the atlas source notes.",
+    {0.3,2.25},resources_typography(0.18,{42,40,36}));
+  layer.finish_element();document.add_element(layer);
 }
 
 inline void
@@ -1023,7 +998,7 @@ verify_generated_resources(
   resources_require(generated.find(
                       "data-graphic-opacity=\""
                         + format_resource_number(
-                            profile.data_graphic_opacity, 2) + "\"")
+                            resource_metric_opacity(profile, metric), 2) + "\"")
                       != std::string::npos,
                     "generated resources SVG lacks data-graphic opacity metadata");
   resources_require(generated.find(" nan ") == std::string::npos

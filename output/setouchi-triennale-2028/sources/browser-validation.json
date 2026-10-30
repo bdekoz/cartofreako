@@ -1,0 +1,276 @@
+{
+  "browser": "headless Chrome",
+  "status": "passed",
+  "checks": [
+    {
+      "page": "index.html",
+      "name": "local links and images resolve",
+      "count": 326,
+      "passed": true
+    },
+    {
+      "name": "38 plate pairs",
+      "passed": true,
+      "page": "index.html",
+      "viewport": [
+        1440,
+        1100
+      ]
+    },
+    {
+      "name": "swarm search",
+      "passed": true,
+      "page": "index.html",
+      "viewport": [
+        1440,
+        1100
+      ]
+    },
+    {
+      "name": "reset search",
+      "passed": true,
+      "page": "index.html",
+      "viewport": [
+        1440,
+        1100
+      ]
+    },
+    {
+      "name": "no horizontal overflow",
+      "passed": true,
+      "page": "index.html",
+      "viewport": [
+        1440,
+        1100
+      ]
+    },
+    {
+      "name": "38 plate pairs",
+      "passed": true,
+      "page": "index.html",
+      "viewport": [
+        390,
+        900
+      ]
+    },
+    {
+      "name": "swarm search",
+      "passed": true,
+      "page": "index.html",
+      "viewport": [
+        390,
+        900
+      ]
+    },
+    {
+      "name": "reset search",
+      "passed": true,
+      "page": "index.html",
+      "viewport": [
+        390,
+        900
+      ]
+    },
+    {
+      "name": "no horizontal overflow",
+      "passed": true,
+      "page": "index.html",
+      "viewport": [
+        390,
+        900
+      ]
+    },
+    {
+      "page": "prototypes/coral-reef/index.html",
+      "name": "local links and images resolve",
+      "count": 32,
+      "passed": true
+    },
+    {
+      "name": "six comparison views",
+      "passed": true,
+      "page": "prototypes/coral-reef/index.html",
+      "viewport": [
+        1440,
+        1100
+      ]
+    },
+    {
+      "name": "coral japan",
+      "passed": true,
+      "page": "prototypes/coral-reef/index.html",
+      "viewport": [
+        1440,
+        1100
+      ]
+    },
+    {
+      "name": "coral world",
+      "passed": true,
+      "page": "prototypes/coral-reef/index.html",
+      "viewport": [
+        1440,
+        1100
+      ]
+    },
+    {
+      "name": "coral both",
+      "passed": true,
+      "page": "prototypes/coral-reef/index.html",
+      "viewport": [
+        1440,
+        1100
+      ]
+    },
+    {
+      "name": "no horizontal overflow",
+      "passed": true,
+      "page": "prototypes/coral-reef/index.html",
+      "viewport": [
+        1440,
+        1100
+      ]
+    },
+    {
+      "name": "six comparison views",
+      "passed": true,
+      "page": "prototypes/coral-reef/index.html",
+      "viewport": [
+        390,
+        900
+      ]
+    },
+    {
+      "name": "coral japan",
+      "passed": true,
+      "page": "prototypes/coral-reef/index.html",
+      "viewport": [
+        390,
+        900
+      ]
+    },
+    {
+      "name": "coral world",
+      "passed": true,
+      "page": "prototypes/coral-reef/index.html",
+      "viewport": [
+        390,
+        900
+      ]
+    },
+    {
+      "name": "coral both",
+      "passed": true,
+      "page": "prototypes/coral-reef/index.html",
+      "viewport": [
+        390,
+        900
+      ]
+    },
+    {
+      "name": "no horizontal overflow",
+      "passed": true,
+      "page": "prototypes/coral-reef/index.html",
+      "viewport": [
+        390,
+        900
+      ]
+    },
+    {
+      "page": "sources/resource-color-key.html",
+      "name": "local links and images resolve",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "name": "14 resource keys",
+      "passed": true,
+      "page": "sources/resource-color-key.html",
+      "viewport": [
+        1440,
+        1100
+      ]
+    },
+    {
+      "name": "70 distinct displayed colours",
+      "passed": true,
+      "page": "sources/resource-color-key.html",
+      "viewport": [
+        1440,
+        1100
+      ]
+    },
+    {
+      "name": "opaque colour key",
+      "passed": true,
+      "page": "sources/resource-color-key.html",
+      "viewport": [
+        1440,
+        1100
+      ]
+    },
+    {
+      "name": "no horizontal overflow",
+      "passed": true,
+      "page": "sources/resource-color-key.html",
+      "viewport": [
+        1440,
+        1100
+      ]
+    },
+    {
+      "name": "14 resource keys",
+      "passed": true,
+      "page": "sources/resource-color-key.html",
+      "viewport": [
+        390,
+        900
+      ]
+    },
+    {
+      "name": "70 distinct displayed colours",
+      "passed": true,
+      "page": "sources/resource-color-key.html",
+      "viewport": [
+        390,
+        900
+      ]
+    },
+    {
+      "name": "opaque colour key",
+      "passed": true,
+      "page": "sources/resource-color-key.html",
+      "viewport": [
+        390,
+        900
+      ]
+    },
+    {
+      "name": "no horizontal overflow",
+      "passed": true,
+      "page": "sources/resource-color-key.html",
+      "viewport": [
+        390,
+        900
+      ]
+    }
+  ],
+  "earlier_petroleum_checks": [
+    {
+      "name": "all countries",
+      "passed": true
+    },
+    {
+      "name": "Mexico search",
+      "passed": true
+    },
+    {
+      "name": "Russia EIA",
+      "passed": true
+    },
+    {
+      "name": "outlook dataset selectable",
+      "passed": true
+    }
+  ]
+}

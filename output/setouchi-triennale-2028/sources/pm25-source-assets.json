@@ -1,0 +1,62 @@
+[
+  {
+    "path": "assets.static/anthropocene/asia-pm25/cnemc-download-receipts.json",
+    "bytes": 408853,
+    "sha256": "40ebe9138304cd3e723245daa284a0c81f59289a7b64a6382bb8cdb382e0f026"
+  },
+  {
+    "path": "assets.static/anthropocene/asia-pm25/cnemc-quality.json",
+    "bytes": 1233,
+    "sha256": "ed84f0bccd3a46aa12d1dc4e6f672c5b64df1147a53d2ff0a9c5bc179678d623"
+  },
+  {
+    "path": "assets.static/anthropocene/asia-pm25/cnemc-station-days.csv.gz",
+    "bytes": 24044855,
+    "sha256": "252cc3d1bfb64a0daaf5d3e1e36165860b22b1d02007b9bbf15bcb9daab92846"
+  },
+  {
+    "path": "assets.static/anthropocene/asia-pm25/openaq-download-receipts.json",
+    "bytes": 2481328,
+    "sha256": "1fea711619175895243da1bfec6f9f8cf4a8ca1bb639cc47eb9a8db62b78e052"
+  },
+  {
+    "path": "assets.static/anthropocene/asia-pm25/openaq-locations.json",
+    "bytes": 4886,
+    "sha256": "cd374f2f6d01a1652323173fb5130ae62e915a7eb535dade43277cbd7dc77fac"
+  },
+  {
+    "path": "assets.static/anthropocene/asia-pm25/openaq-quality.json",
+    "bytes": 791,
+    "sha256": "957f7a82ac6074f5572d35ad7d420b1b1f49c1b4df64edef7a1e4affb2a24a0c"
+  },
+  {
+    "path": "assets.static/anthropocene/asia-pm25/openaq-station-days.csv.gz",
+    "bytes": 80643,
+    "sha256": "4ff0cd642184f6989fde6cb5285b141cb12ed246ae4c6388d06e4c77610c48ae"
+  },
+  {
+    "path": "assets.static/anthropocene/asia-pm25/soramame-download-receipts.json",
+    "bytes": 132943,
+    "sha256": "33bca2dc7f90964f3d9467145e26377ce25dc4315f3f343d79c9c950c8f72496"
+  },
+  {
+    "path": "assets.static/anthropocene/asia-pm25/soramame-quality.json",
+    "bytes": 1739,
+    "sha256": "c05d72578dc70382933a2820d6bb40694c83f1f52700a642a36fa0c9d594657f"
+  },
+  {
+    "path": "assets.static/anthropocene/asia-pm25/soramame-station-days.csv.gz",
+    "bytes": 2147354,
+    "sha256": "667cc43df9ceb87c6ad3c3cfaab375794764a60a33ceb8e9bd10f9cc84f8b503"
+  },
+  {
+    "path": "assets.static/anthropocene/asia-pm25/stations-cnemc-20220213.csv",
+    "bytes": 95224,
+    "sha256": "d6e52d34ce5231cb60516766d34c5ef0495f48f948dcabca0a31e40a1e9e9533"
+  },
+  {
+    "path": "assets.static/anthropocene/asia-pm25/stations-soramame.csv",
+    "bytes": 173718,
+    "sha256": "0d0efbe2adffde002ee74fadc83cec9daaa7907129bc0fef5fbc6c38b013c8c7"
+  }
+]

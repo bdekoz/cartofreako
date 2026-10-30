@@ -54,8 +54,12 @@ uses `cartofreako-resources-profile-v3`. It defines the source register,
 country geometry and values digests, six families, palettes, metrics, one
 default per family, and either a country coverage definition or a spatial
 definition for every released product. Its `display.data_graphic_opacity`
-field is fixed at `0.60` for the Stage 14 render contract. Immutable Stage 13
-artifacts retain their original `0.30` value.
+field is `1.0` for the 29 October 2026 resource pass. Country metrics use
+distinct named selections from `svg::izzi_hue_palette`, defined in
+`src.generate/resource-colors.h`, with five explicit numeric classes. Solar
+uses six fixed capacity classes and the yellow/orange palette. Petroleum uses
+browns. Missing data retain a separate neutral fill. Historical Stage 13/14
+artifacts retain their original opacity contracts.
 
 [`resources-values.json`](../../../../assets.static/resources/resources-values.json)
 uses `cartofreako-resources-values-v3`. Its 1,679 records contain family,

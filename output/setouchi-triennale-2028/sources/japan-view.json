@@ -1,0 +1,25 @@
+{
+  "country": "JPN",
+  "boundary_source": "Natural Earth Admin 0, 1:10m",
+  "world_viewbox": [
+    13.906484402,
+    7.14094052077,
+    3.7195720114000017,
+    3.3920542358299994
+  ],
+  "setouchi_viewbox": [
+    15.212434033200001,
+    8.684148081130001,
+    0.5368850851999997,
+    0.4251504520400004
+  ],
+  "reference_point": {
+    "lon": 133.99,
+    "lat": 34.45,
+    "meaning": "conceptual Setouchi reference, not a confirmed venue"
+  },
+  "native_reference_point": [
+    15.5326053564,
+    8.88848754506
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "workbooks": 14,
+  "worksheets": 202,
+  "nonempty_cells": 17920,
+  "numeric_country_cells": 3785,
+  "opec_countries_and_territories": 209,
+  "countries_with_indexed_numeric_cells": 17,
+  "eia_records": 1425,
+  "eia_country_count": 36,
+  "national_records": 42,
+  "focus": [
+    {
+      "iso3": "RUS",
+      "eia_liquids_2025_mbpd": 10.53,
+      "eia_source_table": "3b",
+      "opec_numeric_cells": 330,
+      "national_rows": 0,
+      "note": "EIA liquids includes NGLs, other liquids and processing gain; not crude-only or throughput"
+    },
+    {
+      "iso3": "BRA",
+      "eia_liquids_2025_mbpd": 4.65,
+      "eia_source_table": "3b",
+      "opec_numeric_cells": 80,
+      "national_rows": 30,
+      "note": "EIA liquids includes NGLs, other liquids and processing gain; not crude-only or throughput"
+    },
+    {
+      "iso3": "CAN",
+      "eia_liquids_2025_mbpd": 6.26,
+      "eia_source_table": "3b",
+      "opec_numeric_cells": 255,
+      "national_rows": 9,
+      "note": "EIA liquids includes NGLs, other liquids and processing gain; not crude-only or throughput"
+    },
+    {
+      "iso3": "VEN",
+      "eia_liquids_2025_mbpd": 1.01,
+      "eia_source_table": "3c",
+      "opec_numeric_cells": 0,
+      "national_rows": 0,
+      "note": "EIA liquids includes NGLs, other liquids and processing gain; not crude-only or throughput"
+    },
+    {
+      "iso3": "MEX",
+      "eia_liquids_2025_mbpd": 1.87,
+      "eia_source_table": "3b",
+      "opec_numeric_cells": 0,
+      "national_rows": 0,
+      "note": "EIA liquids includes NGLs, other liquids and processing gain; not crude-only or throughput"
+    },
+    {
+      "iso3": "USA",
+      "eia_liquids_2025_mbpd": 23.73,
+      "eia_source_table": "3b",
+      "opec_numeric_cells": 616,
+      "national_rows": 3,
+      "note": "EIA liquids includes NGLs, other liquids and processing gain; not crude-only or throughput"
+    },
+    {
+      "iso3": "JPN",
+      "eia_liquids_2025_mbpd": "",
+      "eia_source_table": "",
+      "opec_numeric_cells": 0,
+      "national_rows": 0,
+      "note": "no separately listed EIA STEO production value; retain UNSD refinery data"
+    }
+  ]
+}

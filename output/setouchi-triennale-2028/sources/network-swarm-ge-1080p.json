@@ -1,0 +1,23 @@
+{
+  "band": "ge-1080p",
+  "title": "1080p / 4K",
+  "source": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/swarm-runtime/tmp/authagraph/dan-da-dan-210-slice-1080-2160-x-227-torrents-downloader-cumulative-ge-1080p-render-mode-11-11100-earth-authagraph-44-19.052559.svg.svg",
+  "source_sha256": "926b902ee49f06bd76aa8a3e5c44acd9376c16439d3099e1d6479d9a0e12195f",
+  "native_circles": 2804935,
+  "japan_visible_circles": 144555,
+  "projection": "AuthaGraph",
+  "fill_opacity": 0.05,
+  "native_units_per_inch": 96,
+  "japan_geographic_scale": 4.42209910488936,
+  "japan_circle_radius_compensation": 0.22613694905533327,
+  "japan_viewport_world_coordinates": [
+    12.600353120925336,
+    7.14094052077,
+    18.932187694474667,
+    10.532994756599997
+  ],
+  "output_files": {
+    "world": "plates/world/svg/network-swarm-ge-1080p-authagraph-44-19.052559.svg",
+    "japan": "plates/japan/svg/network-swarm-ge-1080p-authagraph-44-19.052559-japan.svg"
+  }
+}

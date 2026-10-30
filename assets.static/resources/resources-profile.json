@@ -5,7 +5,7 @@
   "snapshot_as_of": "2026-08-06",
   "missing_semantics": "Missing is unknown and is never rendered as observed zero.",
   "display": {
-    "data_graphic_opacity": 0.6
+    "data_graphic_opacity": 1.0
   },
   "country_geometry": {
     "path": "countries-110m.geojson",
@@ -20,7 +20,7 @@
     {
       "id": "natural-earth-admin0",
       "organization": "Natural Earth",
-      "title": "Admin 0 – Countries, 1:110m",
+      "title": "Admin 0 \u2013 Countries, 1:110m",
       "release": "5.1.1",
       "url": "https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip",
       "retrieved_at": "2026-08-06",
@@ -70,7 +70,7 @@
     {
       "id": "unsd-energy-2025",
       "organization": "United Nations Statistics Division",
-      "title": "Energy Statistics Database — total refinery throughput",
+      "title": "Energy Statistics Database \u2014 total refinery throughput",
       "release": "UNdata update 2025-12-15",
       "url": "https://data.un.org/Handlers/DownloadHandler.ashx?DataFilter=cmID%3aGR%3btrID%3a086&DataMartId=EDATA&Format=csv",
       "retrieved_at": "2026-08-06",
@@ -80,7 +80,7 @@
     {
       "id": "wri-reefs-at-risk-2011",
       "organization": "World Resources Institute",
-      "title": "Reefs at Risk Revisited — present reefs and integrated local threat",
+      "title": "Reefs at Risk Revisited \u2014 present reefs and integrated local threat",
       "release": "2011 global 500 m KML",
       "url": "https://wriorg.s3.amazonaws.com/s3fs-public/reefs_at_risk_revisited_present.kmz",
       "retrieved_at": "2026-08-06",
@@ -262,7 +262,7 @@
           "id": "petroleum-refinery-throughput",
           "title": "Petroleum refinery throughput",
           "unit": "thousand metric tonnes/year",
-          "reference_period": "latest reported from 2018–2024",
+          "reference_period": "latest reported from 2018\u20132024",
           "evidence_class": "reported-statistic",
           "source_ids": [
             "unsd-energy-2025"
@@ -336,7 +336,7 @@
         {
           "id": "food-production-index",
           "title": "Food production index",
-          "unit": "index, 2014–2016=100",
+          "unit": "index, 2014\u20132016=100",
           "reference_period": "2022",
           "evidence_class": "reported-statistic",
           "source_ids": [
@@ -1085,7 +1085,7 @@
             "passes_non_sparse": true
           },
           "spatial": null,
-          "notes": "Derived from age 0–14 and sex-specific five-year age bands using matched population denominators."
+          "notes": "Derived from age 0\u201314 and sex-specific five-year age bands using matched population denominators."
         },
         {
           "id": "population-over-60",
@@ -1108,7 +1108,7 @@
             "passes_non_sparse": true
           },
           "spatial": null,
-          "notes": "Derived from age 60–64 and age 65+ using matched population denominators."
+          "notes": "Derived from age 60\u201364 and age 65+ using matched population denominators."
         },
         {
           "id": "adult-literacy",
@@ -1130,7 +1130,7 @@
           "id": "upper-secondary-attainment",
           "title": "Completed ISCED 3 or higher, age 25+",
           "unit": "%",
-          "reference_period": "latest observation from 2018–2025",
+          "reference_period": "latest observation from 2018\u20132025",
           "evidence_class": "reported-statistic",
           "source_ids": [
             "wdi-2026-07-13"
@@ -1153,7 +1153,7 @@
           "id": "bachelors-attainment",
           "title": "Completed ISCED 6 or higher, age 25+",
           "unit": "%",
-          "reference_period": "latest observation from 2018–2024",
+          "reference_period": "latest observation from 2018\u20132024",
           "evidence_class": "reported-statistic",
           "source_ids": [
             "wdi-2026-07-13"
@@ -1176,7 +1176,7 @@
           "id": "advanced-degree-attainment",
           "title": "Completed ISCED 7 or higher, age 25+",
           "unit": "%",
-          "reference_period": "latest observation from 2018–2024",
+          "reference_period": "latest observation from 2018\u20132024",
           "evidence_class": "reported-statistic",
           "source_ids": [
             "wdi-2026-07-13"
@@ -1191,8 +1191,8 @@
         {
           "id": "resident-patent-applications-per-million",
           "title": "Resident patent applications",
-          "unit": "2019–2021 applications per million person-years",
-          "reference_period": "2019–2021 mean",
+          "unit": "2019\u20132021 applications per million person-years",
+          "reference_period": "2019\u20132021 mean",
           "evidence_class": "derived-statistic",
           "source_ids": [
             "wdi-2026-07-13"

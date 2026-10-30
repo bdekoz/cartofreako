@@ -363,7 +363,9 @@ add_solar_illumination(generation::projection_document& document,
 inline bool
 outline_layer(const std::string_view property)
 {
-  return property == "aerosol_optical_depth_500nm"
+  return property == "shortwave_radiation_w_m2"
+    || property == "aerosol_optical_depth_500nm"
+    || property == "cloud_optical_thickness"
     || property == "cloud_top_height_km"
     || property == "cloud_type_isccp";
 }
@@ -396,6 +398,12 @@ add_observation_layer(generation::projection_document& document,
   for (const atmosphere_cell& cell : dataset.cells)
     if (cell.values[layer_number].has_value())
       {
+        // An observed zero precipitation rate must not paint the whole ocean
+        // blue or muddy the other fields through a constant-opacity wash.
+        if ((definition.property == "precipitation_rate_mm_h"
+             || definition.property == "cloud_fraction")
+            && *cell.values[layer_number] <= 0.0)
+          continue;
         const unsigned bin = value_bin(*cell.values[layer_number], definition);
         for (std::vector<generation::geographic_point>& polygon
              : h3_polygons(cell.h3))
@@ -408,10 +416,23 @@ add_observation_layer(generation::projection_document& document,
     if (!paths[bin].empty())
       {
         const double fraction = (bin + 1.0) / bin_count;
-        const svg::color_qi color = svg_color(definition.color);
+        svg::color_qi color = svg_color(definition.color);
         svg::style style;
-        if (definition.property == "precipitation_rate_mm_h")
-          style = {color, 0.20, color, 0.20, 0.0025};
+        if (definition.property == "cloud_fraction")
+          {
+            // Use an opaque pink sequence so simultaneous blue/yellow layers
+            // cannot turn observed cloud cover into a neutral grey mixture.
+            constexpr std::array<rgb_color, 6> pinks {{
+              {255, 224, 239}, {255, 191, 218}, {255, 145, 194},
+              {250, 100, 165}, {233, 60, 139}, {201, 32, 112},
+            }};
+            color = svg_color(pinks[bin]);
+            style = {color, definition.opacity, color, definition.opacity, 0.0025};
+          }
+        else if (definition.property == "precipitation_rate_mm_h")
+          style = {color, definition.opacity * (0.18 + 0.82 * fraction),
+                   color, definition.opacity * (0.18 + 0.82 * fraction),
+                   0.0025};
         else if (outline_layer(definition.property))
           style = {svg::color::none, 0, color,
                    std::min(1.0, definition.opacity * (0.35 + 0.65 * fraction)),
@@ -436,13 +457,40 @@ add_observation_layer(generation::projection_document& document,
 }
 
 inline void
+add_foreground_land(generation::projection_document& document,
+                    const generation::projection_context& context)
+{
+  const natural_earth::layer_spec land {
+    "terrestrial-land", "Natural Earth land above atmospheric observations",
+    "ne_10m_land.shp", natural_earth::geometry_role::area,
+    // Retain editable land polygons at zero fill opacity. The coastline layer
+    // supplies the visible outline without stroking polygon clipping seams.
+    {{250, 248, 244}, 0, {250, 248, 244}, 0, 0}, 0.05, 0.82,
+  };
+  svg::group_element layer;
+  layer.start_element(std::string(land.id));
+  layer.add_title("Transparent foreground land; coastline supplies the visible outline");
+  if (context.spec.kind == generation::projection_kind::star_x)
+    {
+      const natural_earth::antarctic_cap cap
+        = natural_earth::make_antarctic_cap(context);
+      static_cast<void>(natural_earth::render_star_x_source(
+        layer, land, context, cap));
+    }
+  else
+    static_cast<void>(natural_earth::render_source(layer, land, context));
+  layer.finish_element();
+  document.add_element(layer);
+}
+
+inline void
 add_coastline(generation::projection_document& document,
               const generation::projection_context& context)
 {
   const natural_earth::layer_spec coastline {
     "terrestrial-coastline", "Natural Earth 1:10m coastline",
     "ne_10m_coastline.shp", natural_earth::geometry_role::line,
-    natural_earth::line_style({198, 211, 219}, 0.018, 0.72), 0.03, 0.82,
+    natural_earth::line_style({70, 76, 80}, 0.5 / 72.0, 0.75), 0.03, 0.82,
   };
   svg::group_element layer;
   layer.start_element(std::string(coastline.id));
@@ -519,7 +567,7 @@ add_legend(generation::projection_document& document,
   const std::string title_text = "SOLAR / CLOUD / ATMOSPHERE"
     + std::string(dataset.fixture ? " — FIXTURE" : "");
   const std::string note_text
-    = "Data: JAXA/EORC P-Tree, GCOM-C, GSMaP, and JASMES (MODIS source: NASA). P-Tree clouds are regional/daytime; AOD is not smoke or PM2.5.";
+    = "Data: JAXA/EORC; MODIS: NASA. Land outline only. Clouds: regional/daytime. AOD is not smoke or PM2.5.";
   const std::string provenance_text
     = xml_escape(process_start.iso_utc + " process start  |  subsolar "
       + format_number(subsolar.latitude_deg) + "°, "
@@ -659,6 +707,7 @@ generate(const generation::projection_spec& spec,
       static_cast<void>(add_observation_layer(
         document, context, profile, dataset, index));
   natural_earth::initialize_gdal();
+  add_foreground_land(document, context);
   add_coastline(document, context);
   add_legend(document, context, profile, dataset, process_start, subsolar);
 }

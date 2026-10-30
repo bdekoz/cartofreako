@@ -1,0 +1,194 @@
+[
+  {
+    "stem": "astro-all-sky",
+    "kind": "celestial-context",
+    "file": "plates/japan/svg/astro-all-sky-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "astro-observer-ground-multiband",
+    "kind": "celestial-context",
+    "file": "plates/japan/svg/astro-observer-ground-multiband-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "astro-observer-hubble",
+    "kind": "celestial-context",
+    "file": "plates/japan/svg/astro-observer-hubble-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "orbital-technosphere-observer",
+    "kind": "celestial-context",
+    "file": "plates/japan/svg/orbital-technosphere-observer-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "geometry",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/geometry-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "graticules",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/graticules-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "earth",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/earth-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "bathymetry-roulette",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/bathymetry-roulette-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "bathymetry-hamonshu",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/bathymetry-hamonshu-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "network-groundstations",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/network-groundstations-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "anthropocene-temperature-2025",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/anthropocene-temperature-2025-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "anthropocene-temperature-2026",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/anthropocene-temperature-2026-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "orbital-technosphere-global",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/orbital-technosphere-global-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "resources-energy-solar-capacity-2025",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/resources-energy-solar-capacity-2025-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "petroleum-eia-liquids-2025",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/petroleum-eia-liquids-2025-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "petroleum-opec-liquids-projection-2030",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/petroleum-opec-liquids-projection-2030-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "petroleum-opec-country-coverage-2026",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/petroleum-opec-country-coverage-2026-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "resources-fauna-coral-reef-threat-2011",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "network-cdn",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/network-cdn-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "resources-energy-wind-capacity-2025",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/resources-energy-wind-capacity-2025-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "resources-energy-nuclear-operating-capacity-2024",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/resources-energy-nuclear-operating-capacity-2024-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "resources-energy-petrochemical-refinery-throughput-latest-2024",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/resources-energy-petrochemical-refinery-throughput-latest-2024-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "resources-food-food-production-index-latest-2024",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/resources-food-food-production-index-latest-2024-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "resources-fauna-fisheries-production-latest-2024",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/resources-fauna-fisheries-production-latest-2024-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "resources-flora-forest-area-percent-2024",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/resources-flora-forest-area-percent-2024-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "resources-mineral-rare-earth-mine-production-2025",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "resources-human-population-under-30-2024",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/resources-human-population-under-30-2024-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "resources-human-population-over-60-2024",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/resources-human-population-over-60-2024-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "resources-human-upper-secondary-attainment-latest-2025",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/resources-human-upper-secondary-attainment-latest-2025-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "resources-human-bachelors-attainment-latest-2024",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/resources-human-bachelors-attainment-latest-2024-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "resources-human-resident-patent-applications-per-million-2019-2021",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/resources-human-resident-patent-applications-per-million-2019-2021-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "water",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/water-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "network-fiber",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/network-fiber-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "anthropocene-particulate-2025",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/anthropocene-particulate-2025-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "anthropocene-particulate-2026",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/anthropocene-particulate-2026-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "cloud-atmosphere",
+    "kind": "geographic-enlargement",
+    "file": "plates/japan/svg/cloud-atmosphere-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "network-swarm-ge-1080p",
+    "kind": "authagraph-swarm-detail",
+    "projection": "AuthaGraph",
+    "file": "plates/japan/svg/network-swarm-ge-1080p-authagraph-44-19.052559-japan.svg"
+  },
+  {
+    "stem": "network-swarm-lt-1080p",
+    "kind": "authagraph-swarm-detail",
+    "projection": "AuthaGraph",
+    "file": "plates/japan/svg/network-swarm-lt-1080p-authagraph-44-19.052559-japan.svg"
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "canonical_records": 28243,
+  "source_coordinates": 13140,
+  "derived_references": 1405,
+  "unplotted": 13698,
+  "locality_references": 269,
+  "source_repository": "/home/bkoz/src/cloud_cdn_cache.bkoz",
+  "source_revision": "2234be5c9bce123d26639e79935e54dd8f8785a8",
+  "manifest": "/home/bkoz/src/cloud_cdn_cache.bkoz/data/manifest.20261021.json",
+  "manifest_sha256": "c8537a36bbdbd828948f883269dc4d507df084bed2f804f959c8c0f8f972f4ce",
+  "visual_reference": "/home/bkoz/src/alpha60/config/cartography/cdn-vendor-video-20261023-r8.json",
+  "visual_reference_sha256": "d4458f2d9f8eb4d54b354ab3d22460048496cd533dd2b57f4128ad54466d769e",
+  "groups": 7318,
+  "group_record_total": 14545,
+  "independent_claims": 80,
+  "fill_opacity": 0.33,
+  "hex_radius_inches": 0.0234375,
+  "label_count": 86,
+  "adaptation": "Native AuthaGraph screen cells 0.0625 in; evidence types kept separate. At most five labels per vendor, collision filtered across all vendors. No Star-X crop or vendor video frames."
+}

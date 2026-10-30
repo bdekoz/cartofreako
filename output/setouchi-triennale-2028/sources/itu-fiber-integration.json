@@ -1,0 +1,48 @@
+{
+  "url": "https://bbmaps.itu.int/geoserver/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ITU%3Atrx_public_2&outputFormat=application%2Fjson&srsName=EPSG%3A4326&CQL_FILTER=type_inf+LIKE+%27Fibre%25%27&count=50000&sortBy=id",
+  "retrieved_at_utc": "2026-10-29T22:57:37.755Z",
+  "feature_count": 37397,
+  "status_counts": {
+    "Fibre Operational": 35212,
+    "Fibre Under Construction": 639,
+    "Fibre Planned": 1248,
+    "Fibre Proposed": 298
+  },
+  "sha256": "4f5026ebd6df52280077a01084f3493925a09e305a36d7a7e7632af58d6a9590",
+  "source_page": "https://bbmaps.itu.int/bbmaps/",
+  "scope": "Published anonymous terrestrial fibre routes; microwave and restricted layers excluded",
+  "line_width_pt": 0.5,
+  "opacity": 0.75,
+  "color_name": "Kelly green",
+  "color_hex": "#4CBB17",
+  "checks": [
+    {
+      "scope": "world",
+      "itu_features": 37397,
+      "effective_width_pt": 0.5,
+      "opacity": 0.75,
+      "color": "#4CBB17",
+      "svg_sha256": "d9c6d357afc01c5357c218b6f30e4e7c432d24d25e64c936a0ad02e83a5c0df6"
+    },
+    {
+      "scope": "japan",
+      "itu_features": 37397,
+      "effective_width_pt": 0.5,
+      "opacity": 0.75,
+      "color": "#4CBB17",
+      "svg_sha256": "826bdb71248eab5a1800d0adc9e51105f0038ed3df896baa824b969dca220b9d"
+    }
+  ],
+  "renderer": "Native projected paths; original ocean routes and landing geometry retained",
+  "japan_land_intersections": 202,
+  "assets": [
+    {
+      "path": "assets.static/fiber-synthesized/itu/provenance.json",
+      "sha256": "c38ed17ec081f1ce738a625bb728a5e0a4fc90886a54c953241f312ef448a651"
+    },
+    {
+      "path": "assets.static/fiber-synthesized/itu/terrestrial-fiber.geojson",
+      "sha256": "4f5026ebd6df52280077a01084f3493925a09e305a36d7a7e7632af58d6a9590"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "checked_at": "2026-10-29T18:42:50.114474+00:00",
+  "results": [
+    {
+      "source": "astronomy",
+      "exit_code": 0,
+      "log": "output/setouchi-triennale-2028/logs/refresh-astronomy.log",
+      "result": "astronomy data refreshed in output/setouchi-triennale-2028/sources/data/astronomy\n"
+    },
+    {
+      "source": "orbital-technosphere",
+      "exit_code": 0,
+      "log": "output/setouchi-triennale-2028/logs/refresh-orbital-technosphere.log",
+      "result": "fetching CelesTrak group active\nfetching CelesTrak group starlink\nfetching CelesTrak group oneweb\nfetching CelesTrak group kuiper\nfetching CelesTrak group qianfan\nfetching CelesTrak group hulianwang\nfetching CelesTrak group gnss\nfetching CelesTrak group iridium-NEXT\nfetching CelesTrak group globalstar\nfetching CelesTrak group orbcomm\nfetching CelesTrak group resource\nfetching CelesTrak group science\nfetching CelesTrak group stations\nfetching CelesTrak group fengyun-1c-debris\nfetching CelesTrak group iridium-33-debris\nfetching CelesTrak group cosmos-2251-debris\nfetching NASA SSCWeb reference\ncurl: (28) Failed to connect to sscweb.gsfc.nasa.gov port 443 after 135592 ms: Could not connect to server\nNASA SSCWeb refresh failed; reusing the checked-in reference snapshot\n"
+    },
+    {
+      "source": "resources",
+      "exit_code": 22,
+      "log": "output/setouchi-triennale-2028/logs/refresh-resources.log",
+      "result": "curl: (22) The requested URL returned error: 404\ncurl: (22) The requested URL returned error: 404\ncurl: (22) The requested URL returned error: 404\ncurl: (22) The requested URL returned error: 404\ncurl: (22) The requested URL returned error: 404\n"
+    }
+  ]
+}

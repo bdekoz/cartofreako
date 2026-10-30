@@ -1,0 +1,57 @@
+{
+  "status": "passed",
+  "pdf_rivers": {
+    "world": {
+      "stroke_operations": 1500,
+      "effective_points": [
+        0.750002
+      ],
+      "opacity": 0.85
+    },
+    "japan": {
+      "stroke_operations": 97,
+      "effective_points": [
+        1.5
+      ],
+      "opacity": 0.85
+    }
+  },
+  "pdf_water_coastlines": {
+    "world": {
+      "stroke_operations": 4157,
+      "effective_points": [
+        1.8
+      ],
+      "opacity": 0.9
+    },
+    "japan": {
+      "stroke_operations": 314,
+      "effective_points": [
+        1.0
+      ],
+      "opacity": 0.9
+    }
+  },
+  "pdf_fiber_routes": {
+    "world": {
+      "stroke_operations": 38164,
+      "effective_points": [
+        0.5
+      ],
+      "opacity": 0.75
+    },
+    "japan": {
+      "stroke_operations": 934,
+      "effective_points": [
+        0.5
+      ],
+      "opacity": 0.75
+    }
+  },
+  "temperature_bin_counts_match_sources": true,
+  "distinct_named_resource_colors": 70,
+  "resource_data_fill_opacity": 1,
+  "reef_memberships_conserved": 7215,
+  "cdn_plotted_record_conservation": 14545,
+  "note": "Swarm geometry and opacity are separately audited in swarm-refresh.json; native source counts are retained."
+}

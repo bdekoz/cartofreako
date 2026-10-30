@@ -6,6 +6,7 @@
 [Stage 12 implementation](../../../development/20260815_stage-12.md) ·
 [Stage 8b enrichment plan](enrichment-plan.md) ·
 [Stage 13 source expansion review](source-expansion-stage-13.md) ·
+[Particulate data sources and Asian coverage](../../data/anthropocene-particulate.md) ·
 [Snapshot assets](../../../../assets.static/anthropocene/README.md)
 
 ## Current pass status
@@ -426,3 +427,15 @@ a real supplemental snapshot still requires a bounded scope or
 provider-arranged bulk extract. Its bounded water-debris experiment likewise
 renders only five reviewed 2018 depth stations and remains exploration-only.
 OISST/Coral Reef Watch ocean themes remain planned.
+
+
+### Temperature display revision — 29 October 2026
+
+The current high-record key uses fixed day-count classes: 1–5, 6–10, 11–20,
+21–40, 41–80 and 81+. Yellow low-count classes progress to orange, with red
+reserved for more than 40 strict record days. Both years use the same key;
+2026 is explicitly partial. Neutral covered cells have no record highs; blank
+cells lack analysis. The existing blue record-low outlines retain their log
+scale. Current profiles use full data opacity. Setouchi's separately refreshed
+2026 field runs through 28 October; the repository snapshot remains dated
+4 August. This replaces the earlier log-opacity red high-record encoding.

@@ -1,0 +1,489 @@
+{
+  "file": "setouchi-tri-explore-v1.pdf",
+  "pages": 111,
+  "world_plates": 38,
+  "japan_companions": 38,
+  "catalogs": 9,
+  "vector_maps": true,
+  "scope": "Verified index, all paired plates, nine catalogs, application, contact sheets, petroleum annex, visual revisions and resource colour key, coral prototypes, source notes and human reviews",
+  "sections": [
+    {
+      "title": "E1 / Shared Sea Atlas",
+      "page": 42,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "E2 / The Port and the Cloud",
+      "page": 46,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "E3 / Heat, Salt, Water",
+      "page": 50,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "I1 / The Port Reading Table",
+      "page": 54,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "I2 / Maps in the Wind\u2019s Shelter",
+      "page": 58,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "I3 / The Island Atlas Desk",
+      "page": 62,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "V1 / Fold a World, Read an Island",
+      "page": 66,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "V2 / What Does the Cloud Touch?",
+      "page": 70,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "V3 / An Island Seen from Two Scales",
+      "page": 74,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "Shared Sea Atlas / application draft",
+      "page": 78,
+      "count": 8,
+      "kind": "application"
+    },
+    {
+      "title": "Atlas contact sheets",
+      "page": 86,
+      "count": 10,
+      "kind": "contacts"
+    },
+    {
+      "title": "Petroleum source annex",
+      "page": 96,
+      "count": 4,
+      "kind": "petroleum"
+    },
+    {
+      "title": "Visual revisions, colour key and coral prototypes",
+      "page": 100,
+      "count": 8,
+      "kind": "visual-revisions"
+    },
+    {
+      "title": "Source periods and interpretation",
+      "page": 108,
+      "count": 3,
+      "kind": "notes"
+    },
+    {
+      "title": "Human reviews and next steps",
+      "page": 111,
+      "count": 1,
+      "kind": "reviews"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "docs/development/20261029_setouchi_triennale_explore.md",
+      "sha256": "0593460ec80aea59b932a7c8f099298b3510b0a28872f48bd8f555a2ec35993b"
+    },
+    {
+      "path": "docs/pages/data/anthropocene-particulate.md",
+      "sha256": "f1f0c0ea01fb136fefb4adc3764c228c8c1921347c0d1d49a2f43e0beb648434"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/catalogs/E1_shared_sea_atlas.pdf",
+      "sha256": "0e5d832c1ef818a53a320d4051c7280f927ef7cefb292e74446744966f41ae02"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/catalogs/E2_the_port_and_the_cloud.pdf",
+      "sha256": "a2315d3f95a180b9774fd6f61015e2d16831db62bfe4409b34a2c9c36883c124"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/catalogs/E3_heat_salt_water.pdf",
+      "sha256": "4c17e28e01a8672e6002eb3fe9fed1e19f67c6933c0dd41f229336a58216fe37"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/catalogs/I1_the_port_reading_table.pdf",
+      "sha256": "3bec420a52d1b58c64538b3d1144c6ff5ef0f63bc377e6817d9810e7c8dca675"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/catalogs/I2_maps_in_the_winds_shelter.pdf",
+      "sha256": "5ffd19b1f184225352b38a6cc40f17ba8000d184e1eb0b89d3eda1bc51f3d143"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/catalogs/I3_the_island_atlas_desk.pdf",
+      "sha256": "a96049b6350264a0a13ba77bb4718b02d9308b4d22a0484c35ef6650c487f254"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/catalogs/V1_fold_a_world_read_an_island.pdf",
+      "sha256": "09395cc132e89ae89ca564fb4c2ae299b76eac469202e6182c3c07cdbc696549"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/catalogs/V2_what_does_the_cloud_touch.pdf",
+      "sha256": "acd4df21e4b97d6e9a06f43f3c1c7fe02ba97a8c7e11588898f624e9bbffa6a5"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/catalogs/V3_an_island_seen_from_two_scales.pdf",
+      "sha256": "5b1f1bdbd6089175c33cf19dae74eace64559a529c53197b64fcf68c87c2c047"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/index.html",
+      "sha256": "5d9b817eaebe2549a889ac789110d0108f1fd16c15e6b3a33d1dfdc64c07b228"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/anthropocene-particulate-2025-authagraph-44-19.052559-japan.pdf",
+      "sha256": "d58c05b0aa69ca3225e0ab9cfa3eb525d0a0361cc2f7e48f1571933dee1e20e1"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/anthropocene-particulate-2026-authagraph-44-19.052559-japan.pdf",
+      "sha256": "4b40b0edc0fceac910e01d937dd4fa0a41daddf7ea39c53e0613eb39bf3fcbb8"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/anthropocene-temperature-2025-authagraph-44-19.052559-japan.pdf",
+      "sha256": "83aa936e157d0eef23fa82f999b39d89e4c90631db4d6c718530ac6befa35d02"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/anthropocene-temperature-2026-authagraph-44-19.052559-japan.pdf",
+      "sha256": "d1ff9111909a6770f2c0c39757bebcb67cc1f967f772fcf13263aee49346ceb4"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/astro-all-sky-authagraph-44-19.052559-japan.pdf",
+      "sha256": "e1ad3a1f61cd0df1b888b1eb93a699196ca83f00bae63184f6da8a894559d5db"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/astro-observer-ground-multiband-authagraph-44-19.052559-japan.pdf",
+      "sha256": "8ebc80b5e6e93a989931b28971800c732130a8e739323f02b99a53b0b4fe8231"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/astro-observer-hubble-authagraph-44-19.052559-japan.pdf",
+      "sha256": "3f48257701ba3fe99212145e902dcd21eb41ea716e606200ae74e9b59756f8da"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/bathymetry-hamonshu-authagraph-44-19.052559-japan.pdf",
+      "sha256": "b3cce3ed2915cef13b442c271e55a56d57b573c0696115e3f9a106f698e0971a"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/bathymetry-roulette-authagraph-44-19.052559-japan.pdf",
+      "sha256": "f80d6b01d289563fe07e5badd68bb5aadc7a101ad0d6fa83c7f45ec2c7b000ae"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/cloud-atmosphere-authagraph-44-19.052559-japan.pdf",
+      "sha256": "045219296c5695f64e86e575c6db525e2bfc865ad1089df3efdaa1440432f6fc"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/earth-authagraph-44-19.052559-japan.pdf",
+      "sha256": "31e1c1b5d486265c45f0fead7edf75b3ac2eade82f187fdc6c886edc0a2bdc37"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/geometry-authagraph-44-19.052559-japan.pdf",
+      "sha256": "473983be735e80380d727047f6a576398148102e0dccb4d2c7de1c3d3748777c"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/graticules-authagraph-44-19.052559-japan.pdf",
+      "sha256": "2d82cf35ab23ec78d6057d39941135071dcf6d09fcdbaee710ad4f5a6b11543a"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/network-cdn-authagraph-44-19.052559-japan.pdf",
+      "sha256": "52f7dcbbfe312054ce9f43a14622291743be309556d20dcc7b0492522dcaf58e"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/network-fiber-authagraph-44-19.052559-japan.pdf",
+      "sha256": "52053184c2c4b01b007a2c7c02a034d1c9320bfb7be601d0fe89794d8f9ae71e"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/network-groundstations-authagraph-44-19.052559-japan.pdf",
+      "sha256": "462edb7d630919992196565becfcd43f4f2af0e1f12fc5a67e768d742bc7a4b7"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/network-swarm-ge-1080p-authagraph-44-19.052559-japan.pdf",
+      "sha256": "2c4bf72be8e103c1b23a01d92946a38f8fd6d3715703d7d6b4173f95040bd96f"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/network-swarm-lt-1080p-authagraph-44-19.052559-japan.pdf",
+      "sha256": "855bede49da7f9d120c36fe5da8a4ec14eb57f68e7a1eb9b9f24bfeb7404b66f"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/orbital-technosphere-global-authagraph-44-19.052559-japan.pdf",
+      "sha256": "f57082ac833c1039dffa75fdf0f5c1dd5f1f88ed4e7b6648f92fa56155467eec"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/orbital-technosphere-observer-authagraph-44-19.052559-japan.pdf",
+      "sha256": "c4d363fd868daae1c6a70d979f3f13a0f73b8a13d720dade3f04b0e20e4133a0"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/petroleum-eia-liquids-2025-authagraph-44-19.052559-japan.pdf",
+      "sha256": "af04c06e5c99e975e848cce622f4be75b4fc787db359bcfe2a97c2c5a70a4b8c"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/petroleum-opec-country-coverage-2026-authagraph-44-19.052559-japan.pdf",
+      "sha256": "f540cc949e0b2f99885d5fd68f3137399b8437d20a5c7472056b8d742c2f8fe9"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/petroleum-opec-liquids-projection-2030-authagraph-44-19.052559-japan.pdf",
+      "sha256": "48e4892ff8b52bd44dcfc2621091c93859de13b2d2440f26321fe504e204647c"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/resources-energy-nuclear-operating-capacity-2024-authagraph-44-19.052559-japan.pdf",
+      "sha256": "ffcddfee5b75a57ba47f6388f998d0e4d9311b27fddc73d3297ac4001526770f"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/resources-energy-petrochemical-refinery-throughput-latest-2024-authagraph-44-19.052559-japan.pdf",
+      "sha256": "ddd5e9e20efdcd9dfe1f83514cbc621be892a98b71799ba26959a9c19b34389e"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/resources-energy-solar-capacity-2025-authagraph-44-19.052559-japan.pdf",
+      "sha256": "104db026dc7da6897c2f2e573fae0c5092b666fd631134af72f53b23db7302ff"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/resources-energy-wind-capacity-2025-authagraph-44-19.052559-japan.pdf",
+      "sha256": "b497cb5fb4e595cfa3c09f6034671e735b204d0375ddaacd549d2995a4b00ee6"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559-japan.pdf",
+      "sha256": "20ebd93f9f7cc99f334618e31fd6fdd85a136d53bea22af8b6384caf85905f70"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/resources-fauna-fisheries-production-latest-2024-authagraph-44-19.052559-japan.pdf",
+      "sha256": "42a26b560eaed5a87ce3e6cecd7208c79d38fff8692fb37ccfc52e1340297f90"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/resources-flora-forest-area-percent-2024-authagraph-44-19.052559-japan.pdf",
+      "sha256": "6ced65d603a0fc72cc0bdeaba86f00b1f2b7238c000de53821b0e869291af5f5"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/resources-food-food-production-index-latest-2024-authagraph-44-19.052559-japan.pdf",
+      "sha256": "cc9abbe8e12a4d48b275d7c4e86c82bba47e84778aa3cf45bd2a4aefe1aa5734"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/resources-human-bachelors-attainment-latest-2024-authagraph-44-19.052559-japan.pdf",
+      "sha256": "23ca2bed14583457292c05a83b6f90957354ae82480f0e2970416cdb44ad1fd8"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/resources-human-population-over-60-2024-authagraph-44-19.052559-japan.pdf",
+      "sha256": "9f91bbc6884d47b8c84380f1e439899f4ad2b482a6f02cdb86ca74d265275da0"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/resources-human-population-under-30-2024-authagraph-44-19.052559-japan.pdf",
+      "sha256": "17296f16ccd1901b2808a144998a1120109ac7778225f67513aee22fad1f3fcc"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/resources-human-resident-patent-applications-per-million-2019-2021-authagraph-44-19.052559-japan.pdf",
+      "sha256": "4d517d4c3b411be89ea134c622709f944176dc5e2c52dc4ca7193343633fe2fb"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/resources-human-upper-secondary-attainment-latest-2025-authagraph-44-19.052559-japan.pdf",
+      "sha256": "247145b05b48eb4717726d5cf2b27ca6887b0fbeb82afa03237ff02087563cd9"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559-japan.pdf",
+      "sha256": "ca01ad065a97af9be30ac2e7fcf5121bd95a90a72f2a07cd357aa28ee9dc70e9"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/japan/pdf/water-authagraph-44-19.052559-japan.pdf",
+      "sha256": "3ab6b5ac3893bbddaefa7238eb0c0c56ddc3ce7ccec0036d50c5dfb4305677a8"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/anthropocene-particulate-2025-authagraph-44-19.052559.pdf",
+      "sha256": "3065241d085c2fdfd7bacd60a585286c967897747d8aba5a89c86cea27efacac"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/anthropocene-particulate-2026-authagraph-44-19.052559.pdf",
+      "sha256": "e71bf8d8bae2f867e7263c27ad10915a6a896e697ccad6ee401df4a49dee7857"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/anthropocene-temperature-2025-authagraph-44-19.052559.pdf",
+      "sha256": "b90560ea989e199017188a2458d2925072a07be55343807664ec92ad2c8729eb"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/anthropocene-temperature-2026-authagraph-44-19.052559.pdf",
+      "sha256": "450ab2d51fd88cf30747f7de29f7a8314a868c0970b92126834feb7450794564"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/astro-all-sky-authagraph-44-19.052559.pdf",
+      "sha256": "2b477624e70b10b64e9103af638c3eab213e4941a23d99fe68f44e791992ee86"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/astro-observer-ground-multiband-authagraph-44-19.052559.pdf",
+      "sha256": "2ffa63cf6e6e1e691674866d2b35f56eb085620a673ce5f797e4d6e6c78fb0be"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/astro-observer-hubble-authagraph-44-19.052559.pdf",
+      "sha256": "f20f98781b2db804fae181b90d248c0ac8ca3eb750bfdfe015a97a4a8abbd352"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/bathymetry-hamonshu-authagraph-44-19.052559.pdf",
+      "sha256": "8677586a0a880a990a82ab8e5921f5db6b084f5cce011c43a1a7468904152988"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/bathymetry-roulette-authagraph-44-19.052559.pdf",
+      "sha256": "a53e0d6219566383ca95cc3e026359d5c0f7fabd6d0a5075db6cfe7220054a18"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/cloud-atmosphere-authagraph-44-19.052559.pdf",
+      "sha256": "b48a1bc7c42557ec521ca94bc3b164e9f3c4c7d6303b5626d510d4fef8ac0570"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/earth-authagraph-44-19.052559.pdf",
+      "sha256": "8ffd63dc6e19abf88c9a51bbaff5ac4939696d8e73f653e52bdf7780ad94735c"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/geometry-authagraph-44-19.052559.pdf",
+      "sha256": "2dafc57f7b11b70f24e7830c2cbf9132df87c759aa9d6ea5bd7eb06ed1a44451"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/graticules-authagraph-44-19.052559.pdf",
+      "sha256": "5089639a6130f8178e022943c4500969dd83bda81c08a00e61672ec424f53930"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/network-cdn-authagraph-44-19.052559.pdf",
+      "sha256": "f97062f9cfe9c37f17ef6ab3ef01fb126a27a5ec8f4e60a389d5d26395d0ad3d"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/network-fiber-authagraph-44-19.052559.pdf",
+      "sha256": "41e5d2d9a7d69406436ab66fcffdff3bacf34a1e7930ee6dd1d48ac429b4a4ce"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/network-groundstations-authagraph-44-19.052559.pdf",
+      "sha256": "2600b5bf6ef4f0ddba93adc092ea5e8f47ff808b553f0bff86a9986c80cd343a"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/network-swarm-ge-1080p-authagraph-44-19.052559.pdf",
+      "sha256": "fb68eca64f1d4d1cd7fbdd086dcda09a46e72d1ad9af1dcc3b5c3a777a963138"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/network-swarm-lt-1080p-authagraph-44-19.052559.pdf",
+      "sha256": "b56e270568c32e7789261670c78f213881aad43f57bfbb262316b700db332655"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/orbital-technosphere-global-authagraph-44-19.052559.pdf",
+      "sha256": "6cd3619deb923f3ff3f1038909f2f65973d8a9ebc5cd597f6ebc082ed5d6f9f9"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/orbital-technosphere-observer-authagraph-44-19.052559.pdf",
+      "sha256": "99c27688c44a347c13fd969bb67485564fab62379a677a1c10bb1c501b1ba249"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/petroleum-eia-liquids-2025-authagraph-44-19.052559.pdf",
+      "sha256": "c2744854992cea5f8860b6457d669836d9ff1b81b77c5b855c36e8d4670d67df"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/petroleum-opec-country-coverage-2026-authagraph-44-19.052559.pdf",
+      "sha256": "a2f0260b67420c72748e40f28b63391ae68704fb7d2991ef2c2bf7ff2f54300f"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/petroleum-opec-liquids-projection-2030-authagraph-44-19.052559.pdf",
+      "sha256": "95a8088e55a4a820f468de4b9fcdae5c1af4065da541dcf082b8f7851f762c44"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/resources-energy-nuclear-operating-capacity-2024-authagraph-44-19.052559.pdf",
+      "sha256": "0a25f67454e14afd20eff0fdd55729fc2295870e7d81d5777e3b0e18d23e2896"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/resources-energy-petrochemical-refinery-throughput-latest-2024-authagraph-44-19.052559.pdf",
+      "sha256": "1f80ca2d55934e68f748568e65063e0333f6222ce5a598ddaced10f6089789de"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/resources-energy-solar-capacity-2025-authagraph-44-19.052559.pdf",
+      "sha256": "461099bb2da78a6c619fc81fbd36eb18bc45a5fe695db4c8fe241af5ae1cf45d"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/resources-energy-wind-capacity-2025-authagraph-44-19.052559.pdf",
+      "sha256": "702fb5e1e39e1e3836bba7eec64d9c640559c6a9c70017b62a82852dacc085f8"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559.pdf",
+      "sha256": "6cfb90bcff513b7d3ae33d3240a8c1c1be092d3adc2ba69ad85084e4ae740383"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/resources-fauna-fisheries-production-latest-2024-authagraph-44-19.052559.pdf",
+      "sha256": "5d7569ce741d744a20c8ee4196491e3ed80f5486718218a71c912dc984ae4a45"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/resources-flora-forest-area-percent-2024-authagraph-44-19.052559.pdf",
+      "sha256": "f6e93e869756cba7e680628005afe9774aeb89b074a0b762ed2e07896ef4fd04"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/resources-food-food-production-index-latest-2024-authagraph-44-19.052559.pdf",
+      "sha256": "3417ebcc67538c34878a39d62f48ed2f7dfce75192bd22d2175e062c9c8ea1fe"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/resources-human-bachelors-attainment-latest-2024-authagraph-44-19.052559.pdf",
+      "sha256": "9846c170dfe13dcb3e08783c0f0b4384e3043ae7d2485d4143dfc1369455b76f"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/resources-human-population-over-60-2024-authagraph-44-19.052559.pdf",
+      "sha256": "687ee49abcec20df6d14d6120bde2e6785f53276a3394e3baf02a239e4326132"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/resources-human-population-under-30-2024-authagraph-44-19.052559.pdf",
+      "sha256": "f7ee33a59771a92143c51a6549f19fc0886dc3a371922dd3505b235ba2e5a715"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/resources-human-resident-patent-applications-per-million-2019-2021-authagraph-44-19.052559.pdf",
+      "sha256": "29cd838af0afeb6d546e5837203e1a264991a3069aae8d174750e9e4169e96b1"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/resources-human-upper-secondary-attainment-latest-2025-authagraph-44-19.052559.pdf",
+      "sha256": "bbf991818f61177b6d1d323d44cda9365675e1e4eb54c95e3bd322d237479b6f"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559.pdf",
+      "sha256": "663832e744221d952d4a5773ab56c187693c6d9fd3a88f7629681eebda7cad8e"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/plates/world/pdf/water-authagraph-44-19.052559.pdf",
+      "sha256": "d697bc0ca26b47bb1010a14defb41691b2171796d9f1b7d966d33dfb53500f70"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/proposal/atlas-contact-sheets.pdf",
+      "sha256": "03f5f2f63623be4837fa427a1ed7016b48ab7adce3a666d91cfd1a816af24f4a"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/proposal/options.json",
+      "sha256": "855619bad8cd07dc90350b068874bb84fe2a35626416f442770a604af5e06824"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/proposal/petroleum-source-annex.pdf",
+      "sha256": "20091abcdaae33b07790c4577a5d17d5e21b7a02c810aa3d38dc2a6acdaa12b0"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/proposal/shared-sea-atlas_application-draft.pdf",
+      "sha256": "9b286cfad93ad1fc9261d5a0fdbf5ccd346875a169a80fad7c0233a9d3881470"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/proposal/visual-revisions-and-coral-prototypes.pdf",
+      "sha256": "92ceb7d8289aaa42b658df8c55a85a4a6b8449f55cc12908195e53605ab4ff6b"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/sources/data-quality.md",
+      "sha256": "34c6ca1f937e433e5b9c78a9ad8ade454768377e0d5b5c974975e177ce4d2ed2"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/sources/generation-plan.json",
+      "sha256": "e6bedf7516e97c6aef43f9c4ddf61cfcce64d2f3af6218c5cc3cfa1f925fa2e1"
+    },
+    {
+      "path": "output/setouchi-triennale-2028/sources/japan-companions.json",
+      "sha256": "ce36d177b5325c8d8d50015c715a75c49bb7f7b576b56cd219ecf3c2280fcba7"
+    }
+  ],
+  "sha256": "c1978c545df6676a5983e77d711b29b7614b4a5395201d0f56c586a0d724fb4a",
+  "bytes": 517689304
+}

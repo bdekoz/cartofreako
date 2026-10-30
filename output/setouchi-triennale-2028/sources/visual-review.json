@@ -1,0 +1,104 @@
+{
+  "status": "reviewed representative outputs",
+  "checked": [
+    "World petroleum projection after removing tessellation-edge strokes",
+    "Japan Earth entire boundary and locator",
+    "Japan refinery numeric value and legend",
+    "Japan petroleum missing-value treatment and legend",
+    "Japan Setouchi ground-sky context",
+    "Japan atmosphere dates and legend",
+    "Application opening, budget and source text",
+    "Catalog visitor page and concept layout",
+    "Petroleum source annex national-series table",
+    "Index desktop and phone layout",
+    "Petroleum explorer dataset changes and country search"
+  ],
+  "repairs": [
+    "Explicit clip and native-coordinate transform for Japan viewports",
+    "Fit copied legends using measured SVG bounds",
+    "Preserve metric/year labels after data refresh",
+    "Keep projection and historical petroleum layers separate"
+  ],
+  "limit": "Representative rendered review, not a physical print proof. Every plate format also receives machine dimension and freshness checks.",
+  "refinement_review": {
+    "checked": [
+      "World temperature 2026 classified record-day key",
+      "World solar solid yellow/orange scale and key",
+      "World and Japan CDN honeycombs and separate vendor legends",
+      "World and Japan native Dan Da Dan swarm previews",
+      "Japan fiber thin routes, coastline and smaller landing symbols",
+      "World forest and brown petroleum with named izzi-hue classes",
+      "Coral world/Japan honeycomb, Voronoi and composition-circle prototypes",
+      "Eight-page visual annex: method summary, resource key and honeycomb comparison",
+      "Cairo native global swarm export against the Inkscape preview; complete clouds and label placement",
+      "Final 110-page aggregate: all page layouts inspected in seven contact sheets"
+    ],
+    "repairs": [
+      "Excluded clipped CDN labels and separately typeset Japan vendor key",
+      "Factored native swarm styles with unique panel prefixes",
+      "Corrected escaped less-than signs and shortened overlong resource legend text"
+    ],
+    "limit": "Representative digital review; physical colour/legibility proofs remain human review."
+  },
+  "japan_water_coastline_revision": {
+    "checked": [
+      "Japan Water preview compared with Japan Rare-earth",
+      "Rebuilt aggregate Water pair and Japan contact sheet"
+    ],
+    "result": "All Water coastlines are thin at 1 pt; neighbouring countries and islands included."
+  },
+  "human_feedback": {
+    "daily_high_temperature": "User reports that the new visualization and color balance are much better; retain the current treatment.",
+    "coral_reef": "User approved the current coral reef honeycomb visualization; retain it."
+  },
+  "particulate_fiber_atmosphere_revision": {
+    "checked": [
+      "World 2026 particulate: observed PM2.5 visible in Japan, China and selected Indian cities",
+      "Japan 2026 particulate: coverage rings and threshold symbols, dates and monitor counts",
+      "World and Japan fiber: Kelly green terrestrial routes over the existing ocean network",
+      "World and Japan atmosphere: foreground land, blue precipitation, pink cloud fields and rose aerosol outlines"
+    ],
+    "repairs": [
+      "Excluded Japanese numeric 9999 status codes before hourly completeness and daily means",
+      "Kept sensor measurements separate from government monitors and preserved original metric values",
+      "Removed yellow/blue fill blending by using shortwave outlines"
+    ],
+    "limits": [
+      "Japan 2025 is November\u2013December; Japan 2026 is January\u2013September",
+      "Chinese station coordinates are a 2022 crosswalk; India is a selected urban sample",
+      "Extreme provider-reported concentrations remain flagged for operator review",
+      "Japan daytime cloud retrieval is unavailable in the retained nighttime snapshot"
+    ],
+    "aggregate_review": "Reviewed contact sheets for atlas pages 1\u201316 and appendix/review pages 97\u2013110: captions, paired maps, keys and review text fit their pages."
+  },
+  "authagraph_swarm_transparent_land_revision": {
+    "checked": [
+      "Full-sheet AuthaGraph world 1080p/4K and 720p/SD previews",
+      "Both matching Japan geographic details, clipped viewports and separate legends",
+      "World and Japan atmosphere previews with observations visible across land",
+      "Aggregate pages 10, 14 and 15: transparent-land atmosphere and separate resolution pages",
+      "Current aggregate contact sheets for pages 1\u201316 and 97\u2013111: index, source notes and human reviews fit",
+      "Matched 300 dpi PDF / PNG crop of native 1080p/4K world plate"
+    ],
+    "result": "Separate resolution plates use the atlas projection; native clouds and member colours retained. Atmosphere land fills are transparent and coastline outlines remain above the data.",
+    "machine_evidence": "swarm-authagraph-validation.json compares every native radius/colour/opacity count before and after projection, and checks zero-opacity land.",
+    "limit": "Physical legibility and overprinting proof remains the existing human review step.",
+    "aggregate_pages": 111,
+    "aggregate_bookmarks": 57,
+    "pdf_png_crop_review": {
+      "region_pixels": [
+        4500,
+        2300,
+        1600,
+        1400
+      ],
+      "dpi": 300,
+      "mean_absolute_channel_difference_0_to_255": [
+        5.5359879464,
+        3.9520071429,
+        5.3453522321
+      ],
+      "note": "Poppler PDF and Cairo PNG antialiasing differ; underlying vector encodings and every native circle are conserved."
+    }
+  }
+}

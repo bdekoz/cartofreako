@@ -1,0 +1,21 @@
+{
+  "reference": "Japan / Rare-earth mine production, shared 1 pt Japan outline",
+  "japan_coastline_effective_points": 1,
+  "pdf_graphics": {
+    "world": {
+      "stroke_operations": 4157,
+      "effective_points": [
+        1.8
+      ],
+      "opacity": 0.9
+    },
+    "japan": {
+      "stroke_operations": 314,
+      "effective_points": [
+        1.0
+      ],
+      "opacity": 0.9
+    }
+  },
+  "reason": "Compensate the separate Natural Earth coastline layer for the 4.422099x Japan enlargement."
+}

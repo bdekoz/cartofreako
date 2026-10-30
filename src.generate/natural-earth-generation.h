@@ -961,7 +961,8 @@ const layer_spec playas_spec {
 const layer_spec rivers_spec {
   "rivers", "Rivers and lake centerlines",
   "ne_10m_rivers_lake_centerlines.shp", geometry_role::line,
-  line_style({76, 145, 181}, 0.018, 0.85), 0.01, 0.25,
+  // Native map coordinates are inches; 0.75 points = 0.75 / 72 inches.
+  line_style({76, 145, 181}, 0.75 / 72.0, 0.85), 0.01, 0.25,
 };
 
 const layer_spec reefs_spec {

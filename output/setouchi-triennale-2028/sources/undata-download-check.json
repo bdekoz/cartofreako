@@ -1,0 +1,26 @@
+[
+  {
+    "variant": "literal",
+    "url": "https://data.un.org/Handlers/DownloadHandler.ashx?DataFilter=cmID:GR;trID:086&DataMartId=EDATA&Format=csv",
+    "result": "404 text/html 3769",
+    "stderr": ""
+  },
+  {
+    "variant": "columns",
+    "url": "https://data.un.org/Handlers/DownloadHandler.ashx?DataFilter=cmID:GR;trID:086&DataMartId=EDATA&Format=csv&c=2,5,6,7,8",
+    "result": "404 text/html 3769",
+    "stderr": ""
+  },
+  {
+    "variant": "encoded-upper",
+    "url": "https://data.un.org/Handlers/DownloadHandler.ashx?DataFilter=cmID%3AGR%3BtrID%3A086&DataMartId=EDATA&Format=csv",
+    "result": "404 text/html 3769",
+    "stderr": ""
+  },
+  {
+    "variant": "xml",
+    "url": "https://data.un.org/Handlers/DownloadHandler.ashx?DataFilter=cmID:GR;trID:086&DataMartId=EDATA&Format=xml",
+    "result": "404 text/html 3769",
+    "stderr": ""
+  }
+]

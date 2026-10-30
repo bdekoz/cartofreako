@@ -1,0 +1,455 @@
+{
+  "instant": "2026-10-29T20:00:00Z",
+  "dpi": 300,
+  "world_inches": [
+    44,
+    19.052559
+  ],
+  "plates": [
+    {
+      "stem": "geometry",
+      "title": "Native geometry",
+      "note": "Mathematical projection reference; no observational data.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-geometry",
+        "authagraph"
+      ]
+    },
+    {
+      "stem": "graticules",
+      "title": "Graticules",
+      "note": "Mathematical projection reference; no observational data.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-graticules",
+        "authagraph"
+      ]
+    },
+    {
+      "stem": "earth",
+      "title": "Earth",
+      "note": "Natural Earth physical vectors in the current checkout; bathymetry is generalized, not a navigation chart.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-earth",
+        "authagraph"
+      ]
+    },
+    {
+      "stem": "water",
+      "title": "Water",
+      "note": "Natural Earth physical vectors in the current checkout; bathymetry is generalized, not a navigation chart.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-water",
+        "authagraph"
+      ]
+    },
+    {
+      "stem": "bathymetry-roulette",
+      "title": "Bathymetry Roulette",
+      "note": "Natural Earth physical vectors in the current checkout; bathymetry is generalized, not a navigation chart.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-bathymetry-roulette",
+        "authagraph"
+      ]
+    },
+    {
+      "stem": "bathymetry-hamonshu",
+      "title": "Bathymetry Hamonshu",
+      "note": "Natural Earth physical vectors in the current checkout; bathymetry is generalized, not a navigation chart.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-bathymetry-hamonshu",
+        "authagraph"
+      ]
+    },
+    {
+      "stem": "cloud-atmosphere",
+      "title": "Atmosphere",
+      "note": "JAXA cloud observations through 29 October 2026; precipitation 26 October; aerosols and shortwave 15 October. Pink cloud fields, rose aerosol outlines, blue precipitation/height and gold shortwave outlines. Land outlines sit above the fields with fill opacity 0; observations remain visible over land. The nighttime Japan snapshot has no positive daytime cloud retrievals; missing cloud is not clear sky.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-cloud-atmosphere",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/cloud-atmosphere/cloud-atmosphere-profile.json",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/cloud-atmosphere/.prepared/cloud-atmosphere-latest.geojson"
+      ]
+    },
+    {
+      "stem": "network-cdn",
+      "title": "Network CDN / source records",
+      "note": "cloud_cdn_cache.bkoz, manifest 21 October 2026: 28,243 typed records; 13,140 source coordinates, 1,405 derived references, 13,698 unplotted. Alpha60 r8 vendor colours, 33% honeycombs, reference triangles; counts are not unique active facilities or traffic.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "python3",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_cdn.py"
+      ]
+    },
+    {
+      "stem": "network-fiber",
+      "title": "Network Fiber",
+      "note": "TeleGeography submarine snapshots 2022 / 5 August 2026 plus 37,397 public ITU terrestrial fibre routes retrieved 29 October 2026. Kelly green land routes, black submarine routes: 0.5 pt, 75% opacity. Status retained; schematic locations, not surveyed routes.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-fiber-synthesized",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/assets.static/fiber-synthesized"
+      ]
+    },
+    {
+      "stem": "network-groundstations",
+      "title": "Network Groundstations",
+      "note": "Groundstation snapshot 2025-09-02. A location is not evidence of present operation.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-network-groundstations",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/assets.static/network-groundstations"
+      ]
+    },
+    {
+      "stem": "network-swarm-ge-1080p",
+      "title": "Network swarm / Dan Da Dan / 1080p / 4K",
+      "note": "Dan Da Dan cumulative cache, 4 September 2025\u20134 March 2026. Native Alpha60 weighted circles in AuthaGraph, 5% opacity. 1080p / 4K has a separate world plate and Japan detail. Circle area follows downloader-observation weight, not unique people or traffic volume. Japan uses a geographic viewport, including neighbouring countries.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "python3",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_swarm.py",
+        "--band",
+        "ge-1080p"
+      ]
+    },
+    {
+      "stem": "network-swarm-lt-1080p",
+      "title": "Network swarm / Dan Da Dan / 720p / SD",
+      "note": "Dan Da Dan cumulative cache, 4 September 2025\u20134 March 2026. Native Alpha60 weighted circles in AuthaGraph, 5% opacity. 720p / SD has a separate world plate and Japan detail. Circle area follows downloader-observation weight, not unique people or traffic volume. Japan uses a geographic viewport, including neighbouring countries.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "python3",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_swarm.py",
+        "--band",
+        "lt-1080p"
+      ]
+    },
+    {
+      "stem": "anthropocene-particulate-2025",
+      "title": "Particulate 2025",
+      "note": "2025 available monitored days, not a complete-year comparison. Japan MOE provisional PM2.5: Nov\u2013Dec 2025. China CNEMC via Quotsoft; selected Indian CPCB/AirNow sites and one separate AirGradient sensor. At least 18 valid hours/day; >35 \u00b5g/m\u00b3 counts differ from EPA AQI >100. Source-specific periods and coordinate limits are documented.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-anthropocene-particulate",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/anthropocene/anthropocene-particulate-2025-profile.json",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/anthropocene/anthropocene-particulate-2025.geojson"
+      ]
+    },
+    {
+      "stem": "anthropocene-particulate-2026",
+      "title": "Particulate 2026",
+      "note": "2026 available monitored days, not a complete-year comparison. Japan MOE provisional PM2.5: Jan\u2013Sep 2026. China CNEMC via Quotsoft; selected Indian CPCB/AirNow sites and one separate AirGradient sensor. At least 18 valid hours/day; >35 \u00b5g/m\u00b3 counts differ from EPA AQI >100. Source-specific periods and coordinate limits are documented.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-anthropocene-particulate",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/anthropocene/anthropocene-particulate-2026-profile.json",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/anthropocene/anthropocene-particulate-2026.geojson"
+      ]
+    },
+    {
+      "stem": "anthropocene-temperature-2025",
+      "title": "Temperature 2025",
+      "note": "Local snapshot: {'as_of_utc': '2026-08-06T00:00:00Z', 'data_through': '2025-12-31', 'partial_year': False}. Daily land-temperature record counts on H3 cells; no marine or neighborhood temperature measurement. High-record bins: 1\u20135, 6\u201310, 11\u201320, 21\u201340, 41\u201380 and 81+ days; same count key for both years. 2026 is through 28 October, not a full-year change estimate.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-anthropocene-temperature",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/assets.static/anthropocene/anthropocene-temperature-2025-profile.json",
+        "/home/bkoz/src/cartofreako/assets.static/anthropocene/anthropocene-temperature-2025.geojson"
+      ]
+    },
+    {
+      "stem": "anthropocene-temperature-2026",
+      "title": "Temperature 2026",
+      "note": "Local snapshot: {'as_of_utc': '2026-10-29T19:15:00Z', 'data_through': '2026-10-28', 'partial_year': True}. Daily land-temperature record counts on H3 cells; no marine or neighborhood temperature measurement. High-record bins: 1\u20135, 6\u201310, 11\u201320, 21\u201340, 41\u201380 and 81+ days; same count key for both years. 2026 is through 28 October, not a full-year change estimate.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-anthropocene-temperature",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/anthropocene/anthropocene-temperature-2026-profile.json",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/anthropocene/anthropocene-temperature-2026.geojson"
+      ]
+    },
+    {
+      "stem": "astro-all-sky",
+      "title": "Astronomy: all sky",
+      "note": "Celestial coordinates. Refreshed astronomy catalogs, calculated at 2026-10-29T20:00:00Z. The world ground-observer reference remains San Francisco; the Japan companion uses Setouchi.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-astro",
+        "authagraph",
+        "all-sky",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/astronomy/astro-profile.json"
+      ]
+    },
+    {
+      "stem": "astro-observer-ground-multiband",
+      "title": "Astronomy: ground observer",
+      "note": "Celestial coordinates. Refreshed astronomy catalogs, calculated at 2026-10-29T20:00:00Z. The world ground-observer reference remains San Francisco; the Japan companion uses Setouchi.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-astro",
+        "authagraph",
+        "observer",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/astronomy/astro-profile.json"
+      ]
+    },
+    {
+      "stem": "astro-observer-hubble",
+      "title": "Astronomy: Hubble observer",
+      "note": "Celestial coordinates. Refreshed astronomy catalogs, calculated at 2026-10-29T20:00:00Z. The world ground-observer reference remains San Francisco; the Japan companion uses Setouchi.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-astro",
+        "authagraph",
+        "observer",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/astronomy/astro-hubble-profile.json"
+      ]
+    },
+    {
+      "stem": "orbital-technosphere-global",
+      "title": "Orbital Technosphere: global",
+      "note": "CelesTrak catalogs retrieved 2026-10-29; SGP4 at 2026-10-29T20:00:00Z. Native age/future-epoch filters retained. Observer product uses celestial coordinates.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-orbiting",
+        "authagraph",
+        "global",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/orbital-technosphere/orbital-technosphere-profile.json"
+      ]
+    },
+    {
+      "stem": "orbital-technosphere-observer",
+      "title": "Orbital Technosphere: observer",
+      "note": "CelesTrak catalogs retrieved 2026-10-29; SGP4 at 2026-10-29T20:00:00Z. Native age/future-epoch filters retained. Observer product uses celestial coordinates.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-orbiting",
+        "authagraph",
+        "observer",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/orbital-technosphere/orbital-technosphere-profile.json"
+      ]
+    },
+    {
+      "stem": "resources-energy-solar-capacity-2025",
+      "title": "Installed solar generating capacity",
+      "note": "2025; MW. End-of-year capacity; not generation. Country-level statistics are not Setouchi-specific measurements. Distinct named izzi-hue colours; fully opaque data fills. Grey means missing.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-resources",
+        "resources-energy",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/resources/resources-profile.json",
+        "solar-capacity"
+      ]
+    },
+    {
+      "stem": "resources-energy-wind-capacity-2025",
+      "title": "Installed wind generating capacity",
+      "note": "2025; MW. End-of-year onshore and offshore capacity combined; not generation. Country-level statistics are not Setouchi-specific measurements. Distinct named izzi-hue colours; fully opaque data fills. Grey means missing.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-resources",
+        "resources-energy",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/resources/resources-profile.json",
+        "wind-capacity"
+      ]
+    },
+    {
+      "stem": "resources-energy-nuclear-operating-capacity-2024",
+      "title": "Operating nuclear net electrical capacity",
+      "note": "31 December 2024; MW(e). Operating capacity only; suspended, shutdown, and under-construction reactors are excluded. Country-level statistics are not Setouchi-specific measurements. Distinct named izzi-hue colours; fully opaque data fills. Grey means missing.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-resources",
+        "resources-energy",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/resources/resources-profile.json",
+        "nuclear-operating-capacity"
+      ]
+    },
+    {
+      "stem": "resources-energy-petrochemical-refinery-throughput-latest-2024",
+      "title": "Petroleum refinery throughput",
+      "note": "latest reported from 2018\u20132024; thousand metric tonnes/year. The public petrochemical target selects this comparable refinery-processing measure. It is throughput, not nameplate capacity, extraction, or total petrochemical output; observations before 2018 are excluded. Country-level statistics are not Setouchi-specific measurements. Distinct named izzi-hue colours; fully opaque data fills. Grey means missing.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-resources",
+        "resources-energy",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/resources/resources-profile.json",
+        "petroleum-refinery-throughput"
+      ]
+    },
+    {
+      "stem": "resources-food-food-production-index-latest-2024",
+      "title": "Food production index",
+      "note": "latest observation from 2022\u20132024; index, 2014\u20132016=100. Latest published WDI country observations in the pinned snapshot. Country-level statistics are not Setouchi-specific measurements. Distinct named izzi-hue colours; fully opaque data fills. Grey means missing.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-resources",
+        "resources-food",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/resources/resources-profile.json",
+        "food-production-index"
+      ]
+    },
+    {
+      "stem": "resources-fauna-fisheries-production-latest-2024",
+      "title": "Total fisheries production",
+      "note": "latest accepted through 2024; metric tonnes. FAO-supplied World Development Indicator; capture fisheries and aquaculture are combined in this released total. Country-level statistics are not Setouchi-specific measurements. Distinct named izzi-hue colours; fully opaque data fills. Grey means missing.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-resources",
+        "resources-fauna",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/resources/resources-profile.json",
+        "fisheries-production"
+      ]
+    },
+    {
+      "stem": "resources-fauna-coral-reef-threat-2011",
+      "title": "Coral reef integrated local threat",
+      "note": "WRI Reefs at Risk Revisited 2011. Honeycomb groups retain the four-class mix of 7,215 occupied 0.25 degree source cells; highest threat within each original cell. Glyph areas are not reef extent or present-day condition. Compare bounded Voronoi and composition-circle prototypes.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "python3",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_reef_prototypes.py"
+      ]
+    },
+    {
+      "stem": "resources-flora-forest-area-percent-2024",
+      "title": "Forest area",
+      "note": "latest observation from 2023\u20132024; % of land area. Latest published WDI country observations in the pinned snapshot; not a remotely sensed density field. Country-level statistics are not Setouchi-specific measurements. Distinct named izzi-hue colours; fully opaque data fills. Grey means missing.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-resources",
+        "resources-flora",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/resources/resources-profile.json",
+        "forest-area-percent"
+      ]
+    },
+    {
+      "stem": "resources-mineral-rare-earth-mine-production-2025",
+      "title": "Rare-earth mine production",
+      "note": "2025 estimate; metric tonnes REO equivalent. Mine production; reserves and processing are separate. Country-level statistics are not Setouchi-specific measurements. Distinct named izzi-hue colours; fully opaque data fills. Grey means missing.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-resources",
+        "resources-mineral",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/resources/resources-profile.json",
+        "rare-earth-mine-production"
+      ]
+    },
+    {
+      "stem": "resources-human-population-under-30-2024",
+      "title": "Population under age 30",
+      "note": "2024; % of population. Derived from age 0\u201314 and sex-specific five-year age bands using matched population denominators. Country-level statistics are not Setouchi-specific measurements. Distinct named izzi-hue colours; fully opaque data fills. Grey means missing.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-resources",
+        "resources-human",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/resources/resources-profile.json",
+        "population-under-30"
+      ]
+    },
+    {
+      "stem": "resources-human-population-over-60-2024",
+      "title": "Population age 60 and older",
+      "note": "2024; % of population. Derived from age 60\u201364 and age 65+ using matched population denominators. Country-level statistics are not Setouchi-specific measurements. Distinct named izzi-hue colours; fully opaque data fills. Grey means missing.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-resources",
+        "resources-human",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/resources/resources-profile.json",
+        "population-over-60"
+      ]
+    },
+    {
+      "stem": "resources-human-upper-secondary-attainment-latest-2025",
+      "title": "Completed ISCED 3 or higher, age 25+",
+      "note": "latest observation from 2018\u20132025; %. Educational attainment, not enrollment; every released observation is from 2018 or later. Country-level statistics are not Setouchi-specific measurements. Distinct named izzi-hue colours; fully opaque data fills. Grey means missing.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-resources",
+        "resources-human",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/resources/resources-profile.json",
+        "upper-secondary-attainment"
+      ]
+    },
+    {
+      "stem": "resources-human-bachelors-attainment-latest-2024",
+      "title": "Completed ISCED 6 or higher, age 25+",
+      "note": "latest observation from 2018\u20132024; %. At least bachelor's or equivalent; short-cycle ISCED 5 is excluded and every released observation is from 2018 or later. Country-level statistics are not Setouchi-specific measurements. Distinct named izzi-hue colours; fully opaque data fills. Grey means missing.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-resources",
+        "resources-human",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/resources/resources-profile.json",
+        "bachelors-attainment"
+      ]
+    },
+    {
+      "stem": "resources-human-resident-patent-applications-per-million-2019-2021",
+      "title": "Resident patent applications",
+      "note": "2019\u20132021 mean; 2019\u20132021 applications per million person-years. A matched three-year resident-application rate; applications are not grants, invention quality, or current 2026 activity. Country-level statistics are not Setouchi-specific measurements. Distinct named izzi-hue colours; fully opaque data fills. Grey means missing.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/generate-resources",
+        "resources-human",
+        "authagraph",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/sources/data/resources/resources-profile.json",
+        "resident-patent-applications-per-million"
+      ]
+    },
+    {
+      "stem": "petroleum-eia-liquids-2025",
+      "title": "Petroleum and other liquid fuels / 2025",
+      "note": "EIA Short-Term Energy Outlook, October 2026, tables 3b/3c. Annual historical/estimated production, million barrels/day. Includes crude, condensate, NGLs, other liquids and processing gain. 36 country observations; missing is not zero. Japan has no separate production entry in these tables.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "python3",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_petroleum.py"
+      ]
+    },
+    {
+      "stem": "petroleum-opec-liquids-projection-2030",
+      "title": "OPEC total liquids / 2030 projection",
+      "note": "OPEC World Oil Outlook 2026, tables 4.1 and 8.7 and figures 4.7\u20134.11. Total liquids supply projection for 14 individually reported countries. Other countries remain missing; DoC and regional totals are not allocated. Source components and cell addresses are retained. Japan has no separate total-liquids projection in these series.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "python3",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_petroleum.py"
+      ]
+    },
+    {
+      "stem": "petroleum-opec-country-coverage-2026",
+      "title": "World Oil Outlook / country coverage",
+      "note": "OPEC World Oil Outlook 2026: all 14 supplied workbooks and 202 worksheets retained. Country figures are indexed separately from regional definitions. Grey countries have no separately indexed country figure; no regional totals are allocated to countries. This plate measures source coverage, not oil production.",
+      "destination": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/plates/world/svg",
+      "command": [
+        "python3",
+        "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_petroleum.py"
+      ]
+    }
+  ]
+}

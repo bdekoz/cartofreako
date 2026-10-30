@@ -1,0 +1,210 @@
+iso3,country,in_regional_definitions,numeric_country_cells,worksheets,coverage_note
+AFG,Afghanistan,True,0,,included in regional definitions; no separately indexed country value
+ALB,Albania,True,0,,included in regional definitions; no separately indexed country value
+DZA,Algeria,True,0,,included in regional definitions; no separately indexed country value
+ASM,American Samoa,True,0,,included in regional definitions; no separately indexed country value
+AGO,Angola,True,33,WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.13; WOO 2026_Chapter 8 - Focus on Africa_Tables.xlsx / Table 8.7,country figures retained; inspect metric and period
+AIA,Anguilla,True,0,,included in regional definitions; no separately indexed country value
+ATG,Antigua and Barbuda,True,0,,included in regional definitions; no separately indexed country value
+ARG,Argentina,True,165,WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.10; WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.15; WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.2; WOO 2026_Chapter 4 - Liquids Supply_Tables.xlsx / Table 4.3,country figures retained; inspect metric and period
+ARM,Armenia,True,0,,included in regional definitions; no separately indexed country value
+ABW,Aruba,True,0,,included in regional definitions; no separately indexed country value
+AUS,Australia,True,26,WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.15,country figures retained; inspect metric and period
+AUT,Austria,True,0,,included in regional definitions; no separately indexed country value
+AZE,Azerbaijan,True,0,,included in regional definitions; no separately indexed country value
+BHS,Bahamas,True,0,,included in regional definitions; no separately indexed country value
+BHR,Bahrain,True,0,,included in regional definitions; no separately indexed country value
+BGD,Bangladesh,True,0,,included in regional definitions; no separately indexed country value
+BRB,Barbados,True,0,,included in regional definitions; no separately indexed country value
+BLR,Belarus,True,0,,included in regional definitions; no separately indexed country value
+BEL,Belgium,True,0,,included in regional definitions; no separately indexed country value
+BLZ,Belize,True,0,,included in regional definitions; no separately indexed country value
+BEN,Benin,True,0,,included in regional definitions; no separately indexed country value
+BMU,Bermuda,True,0,,included in regional definitions; no separately indexed country value
+BTN,Bhutan,True,0,,included in regional definitions; no separately indexed country value
+BOL,Bolivia,True,0,,included in regional definitions; no separately indexed country value
+BIH,Bosnia and Herzegovina,True,0,,included in regional definitions; no separately indexed country value
+BWA,Botswana,True,0,,included in regional definitions; no separately indexed country value
+BRA,Brazil,True,80,WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.2; WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.9,country figures retained; inspect metric and period
+VGB,British Virgin Islands,True,0,,included in regional definitions; no separately indexed country value
+BRN,Brunei Darussalam,True,0,,included in regional definitions; no separately indexed country value
+BGR,Bulgaria,True,0,,included in regional definitions; no separately indexed country value
+BFA,Burkina Faso,True,0,,included in regional definitions; no separately indexed country value
+BDI,Burundi,True,0,,included in regional definitions; no separately indexed country value
+KHM,Cambodia,True,0,,included in regional definitions; no separately indexed country value
+CMR,Cameroon,True,0,,included in regional definitions; no separately indexed country value
+CAN,Canada,True,255,WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.15; WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.2; WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.6; WOO 2026_Chapter 4 - Liquids Supply_Tables.xlsx / Table 4.1; WOO 2026_Chapter 4 - Liquids Supply_Tables.xlsx / Table 4.3; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.9; WOO 2026_Chapter 6 - Oil Movements_Figures.xlsx / Figure 6.10; WOO 2026_Chapter 6 - Oil Movements_Figures.xlsx / Figure 6.12,country figures retained; inspect metric and period
+CPV,Cape Verde,True,0,,included in regional definitions; no separately indexed country value
+CYM,Cayman Islands,True,0,,included in regional definitions; no separately indexed country value
+CAF,Central African Republic,True,0,,included in regional definitions; no separately indexed country value
+TCD,Chad,True,33,WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.13; WOO 2026_Chapter 8 - Focus on Africa_Tables.xlsx / Table 8.7,country figures retained; inspect metric and period
+CHL,Chile,True,0,,included in regional definitions; no separately indexed country value
+CHN,China,True,1030,WOO 2026_Chapter 1 - Key Assumptions_Figures.xlsx / Figure 1.1; WOO 2026_Chapter 1 - Key Assumptions_Figures.xlsx / Figure 1.2; WOO 2026_Chapter 1 - Key Assumptions_Figures.xlsx / Figure 1.3; WOO 2026_Chapter 1 - Key Assumptions_Figures.xlsx / Figure 1.4; WOO 2026_Chapter 1 - Key Assumptions_Figures.xlsx / Figure 1.5; WOO 2026_Chapter 1 - Key Assumptions_Figures.xlsx / Figure 1.6; WOO 2026_Chapter 1 - Key Assumptions_Figures.xlsx / Figure 1.7; WOO 2026_Chapter 1 - Key Assumptions_Tables.xlsx / Table 1.1; WOO 2026_Chapter 1 - Key Assumptions_Tables.xlsx / Table 1.2; WOO 2026_Chapter 1 - Key Assumptions_Tables.xlsx / Table 1.3; WOO 2026_Chapter 1 - Key Assumptions_Tables.xlsx / Table 1.4; WOO 2026_Chapter 1 - Key Assumptions_Tables.xlsx / Table 1.5; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.12; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.13; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.14; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.15; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.16; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.17; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.19; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.2; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.22; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.23; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.24; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.3; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.4; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.5; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.8; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.10; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.11; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.12; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.13; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.14; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.15; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.16; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.2; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.5; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.7; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.8; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.9; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.14; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.20; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.22; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.23; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.3; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.7; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.8; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.9; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.1; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.10; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.11; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.12; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.13; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.3; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.4 ; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.5; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.6 ; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.7; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.8; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.9 ; WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.12; WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.3; WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.4; WOO 2026_Chapter 4 - Liquids Supply_Tables.xlsx / Table 4.1; WOO 2026_Chapter 4 - Liquids Supply_Tables.xlsx / Table 4.3; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.11; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.18; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.2; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.22; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.24; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.25; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.26; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.27; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.29; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.3; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.5; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.7; WOO 2026_Chapter 5 - Refining Outlook_Tables.xlsx / Table 5.1; WOO 2026_Chapter 5 - Refining Outlook_Tables.xlsx / Table 5.2; WOO 2026_Chapter 5 - Refining Outlook_Tables.xlsx / Table 5.4; WOO 2026_Chapter 5 - Refining Outlook_Tables.xlsx / Table 5.5; WOO 2026_Chapter 5 - Refining Outlook_Tables.xlsx / Table 5.6; WOO 2026_Chapter 6 - Oil Movements_Figures.xlsx / Figure 6.3,country figures retained; inspect metric and period
+COL,Colombia,True,0,,included in regional definitions; no separately indexed country value
+COM,Comoros,True,0,,included in regional definitions; no separately indexed country value
+COG,Congo,True,0,,included in regional definitions; no separately indexed country value
+COD,Congo (Democratic Republic of the),True,0,,included in regional definitions; no separately indexed country value
+COK,Cook Islands,True,0,,included in regional definitions; no separately indexed country value
+CRI,Costa Rica,True,0,,included in regional definitions; no separately indexed country value
+HRV,Croatia,True,0,,included in regional definitions; no separately indexed country value
+CUB,Cuba,True,0,,included in regional definitions; no separately indexed country value
+CYP,Cyprus,True,0,,included in regional definitions; no separately indexed country value
+CZE,Czechia,True,0,,included in regional definitions; no separately indexed country value
+DNK,Denmark,True,0,,included in regional definitions; no separately indexed country value
+DJI,Djibouti,True,0,,included in regional definitions; no separately indexed country value
+DMA,Dominica,True,0,,included in regional definitions; no separately indexed country value
+DOM,Dominican Republic,True,0,,included in regional definitions; no separately indexed country value
+ECU,Ecuador,True,0,,included in regional definitions; no separately indexed country value
+EGY,Egypt,True,33,WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.13; WOO 2026_Chapter 8 - Focus on Africa_Tables.xlsx / Table 8.7,country figures retained; inspect metric and period
+SLV,El Salvador,True,0,,included in regional definitions; no separately indexed country value
+GNQ,Equatorial Guinea,True,0,,included in regional definitions; no separately indexed country value
+ERI,Eritrea,True,0,,included in regional definitions; no separately indexed country value
+EST,Estonia,True,0,,included in regional definitions; no separately indexed country value
+SWZ,Eswatini,True,0,,included in regional definitions; no separately indexed country value
+ETH,Ethiopia,True,0,,included in regional definitions; no separately indexed country value
+FJI,Fiji,True,0,,included in regional definitions; no separately indexed country value
+FIN,Finland,True,0,,included in regional definitions; no separately indexed country value
+FRA,France,True,0,,included in regional definitions; no separately indexed country value
+GUF,French Guiana,True,0,,included in regional definitions; no separately indexed country value
+PYF,French Polynesia,True,0,,included in regional definitions; no separately indexed country value
+GAB,Gabon,True,0,,included in regional definitions; no separately indexed country value
+GMB,Gambia,True,0,,included in regional definitions; no separately indexed country value
+GEO,Georgia,True,0,,included in regional definitions; no separately indexed country value
+DEU,Germany,True,0,,included in regional definitions; no separately indexed country value
+GHA,Ghana,True,33,WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.13; WOO 2026_Chapter 8 - Focus on Africa_Tables.xlsx / Table 8.7,country figures retained; inspect metric and period
+GIB,Gibraltar,True,0,,included in regional definitions; no separately indexed country value
+GRC,Greece,True,0,,included in regional definitions; no separately indexed country value
+GRD,Grenada,True,0,,included in regional definitions; no separately indexed country value
+GLP,Guadeloupe,True,0,,included in regional definitions; no separately indexed country value
+GTM,Guatemala,True,0,,included in regional definitions; no separately indexed country value
+GIN,Guinea,True,0,,included in regional definitions; no separately indexed country value
+GNB,Guinea-Bissau,True,0,,included in regional definitions; no separately indexed country value
+GUY,Guyana,True,0,,included in regional definitions; no separately indexed country value
+HTI,Haiti,True,0,,included in regional definitions; no separately indexed country value
+HND,Honduras,True,0,,included in regional definitions; no separately indexed country value
+HKG,Hong Kong,True,0,,included in regional definitions; no separately indexed country value
+HUN,Hungary,True,0,,included in regional definitions; no separately indexed country value
+IRN,IR Iran,True,0,,included in regional definitions; no separately indexed country value
+ISL,Iceland,True,0,,included in regional definitions; no separately indexed country value
+IND,India,True,804,WOO 2026_Chapter 1 - Key Assumptions_Figures.xlsx / Figure 1.1; WOO 2026_Chapter 1 - Key Assumptions_Figures.xlsx / Figure 1.2; WOO 2026_Chapter 1 - Key Assumptions_Figures.xlsx / Figure 1.3; WOO 2026_Chapter 1 - Key Assumptions_Figures.xlsx / Figure 1.4; WOO 2026_Chapter 1 - Key Assumptions_Figures.xlsx / Figure 1.5; WOO 2026_Chapter 1 - Key Assumptions_Figures.xlsx / Figure 1.6; WOO 2026_Chapter 1 - Key Assumptions_Figures.xlsx / Figure 1.7; WOO 2026_Chapter 1 - Key Assumptions_Tables.xlsx / Table 1.1; WOO 2026_Chapter 1 - Key Assumptions_Tables.xlsx / Table 1.2; WOO 2026_Chapter 1 - Key Assumptions_Tables.xlsx / Table 1.3; WOO 2026_Chapter 1 - Key Assumptions_Tables.xlsx / Table 1.4; WOO 2026_Chapter 1 - Key Assumptions_Tables.xlsx / Table 1.5; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.12; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.13; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.14; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.15; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.16; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.19; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.2; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.22; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.23; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.24; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.3; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.4; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.5; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.8; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.10; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.11; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.12; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.13; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.14; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.15; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.16; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.2; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.6; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.7; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.8; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.9; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.12; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.13; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.20; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.23; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.3; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.7; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.8; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.9; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.1; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.10; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.11; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.12; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.13; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.3; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.4 ; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.5; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.6 ; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.7; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.8; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.9 ; WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.3; WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.4; WOO 2026_Chapter 4 - Liquids Supply_Tables.xlsx / Table 4.1; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.12; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.18; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.2; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.22; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.24; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.25; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.26; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.27; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.29; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.3; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.5; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.7; WOO 2026_Chapter 5 - Refining Outlook_Tables.xlsx / Table 5.1; WOO 2026_Chapter 5 - Refining Outlook_Tables.xlsx / Table 5.2; WOO 2026_Chapter 5 - Refining Outlook_Tables.xlsx / Table 5.4; WOO 2026_Chapter 5 - Refining Outlook_Tables.xlsx / Table 5.5; WOO 2026_Chapter 5 - Refining Outlook_Tables.xlsx / Table 5.6,country figures retained; inspect metric and period
+IDN,Indonesia,True,0,,included in regional definitions; no separately indexed country value
+IRQ,Iraq,True,0,,included in regional definitions; no separately indexed country value
+IRL,Ireland,True,0,,included in regional definitions; no separately indexed country value
+ITA,Italy,True,0,,included in regional definitions; no separately indexed country value
+CIV,Ivory Coast,True,0,,included in regional definitions; no separately indexed country value
+JAM,Jamaica,True,0,,included in regional definitions; no separately indexed country value
+JPN,Japan,True,0,,included in regional definitions; no separately indexed country value
+JOR,Jordan,True,0,,included in regional definitions; no separately indexed country value
+KAZ,Kazakhstan,True,0,,included in regional definitions; no separately indexed country value
+KEN,Kenya,True,0,,included in regional definitions; no separately indexed country value
+KIR,Kiribati,True,0,,included in regional definitions; no separately indexed country value
+KOR,Korea,True,0,,included in regional definitions; no separately indexed country value
+PRK,Korea (Democratic People’s Republic of),True,0,,included in regional definitions; no separately indexed country value
+KWT,Kuwait,True,0,,included in regional definitions; no separately indexed country value
+KGZ,Kyrgyzstan,True,0,,included in regional definitions; no separately indexed country value
+LAO,Lao People’s Democratic Republic,True,0,,included in regional definitions; no separately indexed country value
+LVA,Latvia,True,0,,included in regional definitions; no separately indexed country value
+LBN,Lebanon,True,0,,included in regional definitions; no separately indexed country value
+LSO,Lesotho,True,0,,included in regional definitions; no separately indexed country value
+LBR,Liberia,True,0,,included in regional definitions; no separately indexed country value
+LBY,Libya,True,0,,included in regional definitions; no separately indexed country value
+LTU,Lithuania,True,0,,included in regional definitions; no separately indexed country value
+LUX,Luxembourg,True,0,,included in regional definitions; no separately indexed country value
+MDG,Madagascar,True,0,,included in regional definitions; no separately indexed country value
+MWI,Malawi,True,0,,included in regional definitions; no separately indexed country value
+MYS,Malaysia,True,0,,included in regional definitions; no separately indexed country value
+MDV,Maldives,True,0,,included in regional definitions; no separately indexed country value
+MLI,Mali,True,0,,included in regional definitions; no separately indexed country value
+MLT,Malta,True,0,,included in regional definitions; no separately indexed country value
+MTQ,Martinique,True,0,,included in regional definitions; no separately indexed country value
+MRT,Mauritania,True,0,,included in regional definitions; no separately indexed country value
+MUS,Mauritius,True,0,,included in regional definitions; no separately indexed country value
+MEX,Mexico,True,0,,included in regional definitions; no separately indexed country value
+FSM,Micronesia (Federated States of),True,0,,included in regional definitions; no separately indexed country value
+MDA,Moldova (Republic of),True,0,,included in regional definitions; no separately indexed country value
+MNG,Mongolia,True,0,,included in regional definitions; no separately indexed country value
+MNE,Montenegro,True,0,,included in regional definitions; no separately indexed country value
+MSR,Montserrat,True,0,,included in regional definitions; no separately indexed country value
+MAR,Morocco,True,0,,included in regional definitions; no separately indexed country value
+MOZ,Mozambique,True,0,,included in regional definitions; no separately indexed country value
+MMR,Myanmar,True,0,,included in regional definitions; no separately indexed country value
+NAM,Namibia,True,0,,included in regional definitions; no separately indexed country value
+NRU,Nauru,True,0,,included in regional definitions; no separately indexed country value
+NPL,Nepal,True,0,,included in regional definitions; no separately indexed country value
+NLD,Netherlands,True,0,,included in regional definitions; no separately indexed country value
+ANT,Netherlands Antilles (historical geography),True,0,,source regional definition retained; no allocation to successor territories
+NCL,New Caledonia,True,0,,included in regional definitions; no separately indexed country value
+NZL,New Zealand,True,0,,included in regional definitions; no separately indexed country value
+NIC,Nicaragua,True,0,,included in regional definitions; no separately indexed country value
+NER,Niger,True,0,,included in regional definitions; no separately indexed country value
+NGA,Nigeria,True,0,,included in regional definitions; no separately indexed country value
+NIU,Niue,True,0,,included in regional definitions; no separately indexed country value
+MKD,North Macedonia,True,0,,included in regional definitions; no separately indexed country value
+NOR,Norway,True,78,WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.15; WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.7,country figures retained; inspect metric and period
+OMN,Oman,True,0,,included in regional definitions; no separately indexed country value
+PAK,Pakistan,True,0,,included in regional definitions; no separately indexed country value
+PAN,Panama,True,0,,included in regional definitions; no separately indexed country value
+PNG,Papua New Guinea,True,0,,included in regional definitions; no separately indexed country value
+PRY,Paraguay,True,0,,included in regional definitions; no separately indexed country value
+PER,Peru,True,0,,included in regional definitions; no separately indexed country value
+PHL,Philippines,True,0,,included in regional definitions; no separately indexed country value
+POL,Poland,True,0,,included in regional definitions; no separately indexed country value
+PRT,Portugal,True,0,,included in regional definitions; no separately indexed country value
+QAT,Qatar,True,106,WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.11; WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.15; WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.2,country figures retained; inspect metric and period
+ROU,Romania,True,0,,included in regional definitions; no separately indexed country value
+RUS,Russian Federation,True,330,WOO 2026_Chapter 1 - Key Assumptions_Figures.xlsx / Figure 1.5; WOO 2026_Chapter 1 - Key Assumptions_Figures.xlsx / Figure 1.6; WOO 2026_Chapter 1 - Key Assumptions_Figures.xlsx / Figure 1.7; WOO 2026_Chapter 1 - Key Assumptions_Tables.xlsx / Table 1.1; WOO 2026_Chapter 1 - Key Assumptions_Tables.xlsx / Table 1.2; WOO 2026_Chapter 1 - Key Assumptions_Tables.xlsx / Table 1.3; WOO 2026_Chapter 1 - Key Assumptions_Tables.xlsx / Table 1.4; WOO 2026_Chapter 1 - Key Assumptions_Tables.xlsx / Table 1.5; WOO 2026_Chapter 2 - Energy Demand_Figures.xlsx / Figure 2.2; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.10; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.11; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.12; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.13; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.14; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.15; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.16; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.2; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.7; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.8; WOO 2026_Chapter 2 - Energy Demand_Tables.xlsx / Table 2.9; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.20; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.3; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.7; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.8; WOO 2026_Chapter 3 - Oil Demand_Figures.xlsx / Figure 3.9; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.1; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.10; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.11; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.12; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.13; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.3; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.4 ; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.5; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.6 ; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.7; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.8; WOO 2026_Chapter 3 - Oil Demand_Tables.xlsx / Table 3.9 ; WOO 2026_Chapter 5 - Refining Outlook_Figures.xlsx / Figure 5.15; WOO 2026_Chapter 6 - Oil Movements_Figures.xlsx / Figure 6.8,country figures retained; inspect metric and period
+RWA,Rwanda,True,0,,included in regional definitions; no separately indexed country value
+REU,Réunion,True,0,,included in regional definitions; no separately indexed country value
+WSM,Samoa,True,0,,included in regional definitions; no separately indexed country value
+SAU,Saudi Arabia,True,0,,included in regional definitions; no separately indexed country value
+SEN,Senegal,True,0,,included in regional definitions; no separately indexed country value
+SRB,Serbia,True,0,,included in regional definitions; no separately indexed country value
+SYC,Seychelles,True,0,,included in regional definitions; no separately indexed country value
+SLE,Sierra Leone,True,0,,included in regional definitions; no separately indexed country value
+SGP,Singapore,True,0,,included in regional definitions; no separately indexed country value
+SVK,Slovakia,True,0,,included in regional definitions; no separately indexed country value
+SVN,Slovenia,True,0,,included in regional definitions; no separately indexed country value
+SLB,Solomon Islands,True,0,,included in regional definitions; no separately indexed country value
+SOM,Somalia,True,0,,included in regional definitions; no separately indexed country value
+ZAF,South Africa,True,33,WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.13; WOO 2026_Chapter 8 - Focus on Africa_Tables.xlsx / Table 8.7,country figures retained; inspect metric and period
+SSD,South Sudan,True,0,,included in regional definitions; no separately indexed country value
+ESP,Spain,True,0,,included in regional definitions; no separately indexed country value
+LKA,Sri Lanka,True,0,,included in regional definitions; no separately indexed country value
+KNA,St. Kitts and Nevis,True,0,,included in regional definitions; no separately indexed country value
+LCA,St. Lucia,True,0,,included in regional definitions; no separately indexed country value
+SPM,St. Pierre et Miquelon,True,0,,included in regional definitions; no separately indexed country value
+VCT,St. Vincent and the Grenadines,True,0,,included in regional definitions; no separately indexed country value
+SDN,Sudan,True,0,,included in regional definitions; no separately indexed country value
+SUR,Suriname,True,0,,included in regional definitions; no separately indexed country value
+SWE,Sweden,True,0,,included in regional definitions; no separately indexed country value
+CHE,Switzerland,True,0,,included in regional definitions; no separately indexed country value
+SYR,Syrian Arab Republic,True,0,,included in regional definitions; no separately indexed country value
+STP,São Tomé and Príncipe,True,0,,included in regional definitions; no separately indexed country value
+TWN,Taiwan,False,0,,named in report; no separately indexed country value
+TJK,Tajikistan,True,0,,included in regional definitions; no separately indexed country value
+TZA,Tanzania,True,0,,included in regional definitions; no separately indexed country value
+THA,Thailand,True,26,WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.15,country figures retained; inspect metric and period
+TLS,Timor-Leste,True,0,,included in regional definitions; no separately indexed country value
+TGO,Togo,True,0,,included in regional definitions; no separately indexed country value
+TON,Tonga,True,0,,included in regional definitions; no separately indexed country value
+TTO,Trinidad and Tobago,True,0,,included in regional definitions; no separately indexed country value
+TUN,Tunisia,True,0,,included in regional definitions; no separately indexed country value
+TKM,Turkmenistan,True,0,,included in regional definitions; no separately indexed country value
+TCA,Turks and Caicos Islands,True,0,,included in regional definitions; no separately indexed country value
+TUV,Tuvalu,True,0,,included in regional definitions; no separately indexed country value
+TUR,Türkiye,True,0,,included in regional definitions; no separately indexed country value
+UGA,Uganda,True,0,,included in regional definitions; no separately indexed country value
+UKR,Ukraine,True,0,,included in regional definitions; no separately indexed country value
+ARE,United Arab Emirates,True,0,,included in regional definitions; no separately indexed country value
+GBR,United Kingdom,True,104,WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.8,country figures retained; inspect metric and period
+USA,United States,True,616,WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.14; WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.15; WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.2; WOO 2026_Chapter 4 - Liquids Supply_Figures.xlsx / Figure 4.5; WOO 2026_Chapter 4 - Liquids Supply_Tables.xlsx / Table 4.1; WOO 2026_Chapter 4 - Liquids Supply_Tables.xlsx / Table 4.3,country figures retained; inspect metric and period
+VIR,United States Virgin Islands,True,0,,included in regional definitions; no separately indexed country value
+URY,Uruguay,True,0,,included in regional definitions; no separately indexed country value
+UZB,Uzbekistan,True,0,,included in regional definitions; no separately indexed country value
+VUT,Vanuatu,True,0,,included in regional definitions; no separately indexed country value
+VEN,Venezuela,True,0,,included in regional definitions; no separately indexed country value
+VNM,Vietnam,True,0,,included in regional definitions; no separately indexed country value
+ESH,Western Sahara,True,0,,included in regional definitions; no separately indexed country value
+YEM,Yemen,True,0,,included in regional definitions; no separately indexed country value
+ZMB,Zambia,True,0,,included in regional definitions; no separately indexed country value
+ZWE,Zimbabwe,True,0,,included in regional definitions; no separately indexed country value

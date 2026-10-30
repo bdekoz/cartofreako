@@ -39,8 +39,8 @@ IRENA_URL = (
 USGS_URL = "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026.pdf"
 IAEA_URL = "https://www-pub.iaea.org/MTCD/publications/PDF/RDS-2-45_web.pdf"
 UNDATA_REFINERY_URL = (
-    "https://data.un.org/Handlers/DownloadHandler.ashx?"
-    "DataFilter=cmID%3aGR%3btrID%3a086&DataMartId=EDATA&Format=csv"
+    "https://data.un.org/WS/rest/data/UNSD,DF_UNDATA_ENERGY,/"
+    "A..GR.086/?startPeriod=2018&format=csv"
 )
 WRI_REEF_URL = (
     "https://wriorg.s3.amazonaws.com/s3fs-public/"
@@ -940,7 +940,7 @@ def build_profile(
         "description": "Six independent resource families with fourteen released country or spatial products, explicit units, observation periods, and non-sparse coverage gates.",
         "snapshot_as_of": SNAPSHOT_DATE,
         "missing_semantics": "Missing is unknown and is never rendered as observed zero.",
-        "display": {"data_graphic_opacity": 0.30},
+        "display": {"data_graphic_opacity": 1.0},
         "country_geometry": {
             "path": "countries-110m.geojson", "sha256": geometry_sha,
             "source_id": "natural-earth-admin0",

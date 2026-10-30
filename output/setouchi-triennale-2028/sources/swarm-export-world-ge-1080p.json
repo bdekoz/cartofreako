@@ -1,0 +1,18 @@
+{
+  "renderer": "librsvg 2.62.4 / Cairo 1.18.6",
+  "scope": "world / ge-1080p",
+  "reason": "Bounded-memory export retains every native circle and original paint order",
+  "source": "plates/world/svg/network-swarm-ge-1080p-authagraph-44-19.052559.svg",
+  "source_sha256": "f6bb70095e0b471b680034b252fdee690a59feac860f6288085343f5fd032b37",
+  "native_circles_retained": 2804935,
+  "ordered_layers": 57,
+  "partitioning": "50,000 circles per layer; source paint order, ancestor transforms, clipping and styles retained. No group compositing opacity is permitted across split boundaries.",
+  "vector_pdf": true,
+  "fonts": "embedded by Cairo",
+  "png_pixels": [
+    13200,
+    5716
+  ],
+  "png_dpi": 300,
+  "preview": "downsampled from full-resolution PNG"
+}

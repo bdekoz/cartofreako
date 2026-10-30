@@ -1,0 +1,74 @@
+{
+  "renderer": "/home/bkoz/src/alpha60/build/cartography/a60-carto-geo",
+  "renderer_sha256": "f4e0a0b3041b4926b6f3d4627d5617640cb820ba5a32ed800a8b4e59df810695",
+  "input_mode": "sample-cache-cumulative",
+  "cache_archive": {
+    "archive": "/home/bkoz/src/alpha60-samples-cache/dan-da-dan-210.cache/cache.20260304.tar.xz",
+    "sha256": "2ec21e71f08a201485ff4644c197e5e2e7eb997ef4c482a6058f1bd9ca3a6d32",
+    "inventory_count": 383,
+    "period": [
+      "2025-09-04",
+      "2026-03-04"
+    ],
+    "note": "Cumulative JSONs extracted; raw participant cache excluded from delivery inventory."
+  },
+  "projection": "Cahill-Keyes",
+  "layout_frame_inches": [
+    44,
+    19.052559
+  ],
+  "circle_encoding": "Alpha60 native per-member colour; radius 2.6 * sqrt(weight); fill opacity 0.05. No geographic rescaling or downsampling.",
+  "optimization": "Repeated inline circle styles are losslessly factored into CSS classes; element order and every geometry value retained. Raster basemap reference replaced with registered native vector geography.",
+  "panels": [
+    {
+      "scope": "world",
+      "source": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/swarm-runtime/tmp/dan-da-dan-210-slice-1080-2160-x-227-torrents-downloader-cumulative-ge-1080p-render-mode-11-11100-earth-ck-44-22.gray-water242-landwhite.svg",
+      "source_sha256": "4f682d468f028dcef83b35cbe78b3c4eaa677ab0640a73bda34ceefe584f72e7",
+      "native_circles": 2804935,
+      "styles": 226,
+      "coastline_paths_at_1pt": 0,
+      "scale_inches_per_native_unit": 0.004995265151515152
+    },
+    {
+      "scope": "world",
+      "source": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/swarm-runtime/tmp/dan-da-dan-210-slice-720-sd-x-74-torrents-downloader-cumulative-lt-1080p-render-mode-11-11100-earth-ck-44-22.gray-water242-landwhite.svg",
+      "source_sha256": "b6816aace0885a48dd4303946ed5caf47260e1b13062fc6f9cf9ee630c3ec672",
+      "native_circles": 876541,
+      "styles": 74,
+      "coastline_paths_at_1pt": 0,
+      "scale_inches_per_native_unit": 0.004995265151515152
+    },
+    {
+      "scope": "japan",
+      "source": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/swarm-runtime/tmp/dan-da-dan-210-data-country-jpn-combined.svg",
+      "source_sha256": "0c0c8702a58a481226eee3c78354cd23436aa95d3cf0b1542109541694d6c2cf",
+      "native_circles": 103183,
+      "styles": 280,
+      "coastline_paths_at_1pt": 3,
+      "scale_inches_per_native_unit": 0.0035511363636363635
+    },
+    {
+      "scope": "japan",
+      "source": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/swarm-runtime/tmp/dan-da-dan-210-data-country-jpn-ge-1080p.svg",
+      "source_sha256": "8b46bec960eb467bdc3188f4a82ffe613f9c7b7869561efa50f252ad45c40cfe",
+      "native_circles": 78288,
+      "styles": 219,
+      "coastline_paths_at_1pt": 3,
+      "scale_inches_per_native_unit": 0.0035511363636363635
+    },
+    {
+      "scope": "japan",
+      "source": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/swarm-runtime/tmp/dan-da-dan-210-data-country-jpn-lt-1080p.svg",
+      "source_sha256": "6005897273424b671fbc28a82b96cb36d537a5a2ceaa92c144c801acfe757a2e",
+      "native_circles": 24895,
+      "styles": 61,
+      "coastline_paths_at_1pt": 3,
+      "scale_inches_per_native_unit": 0.0035511363636363635
+    }
+  ],
+  "source_revision": "f5c65176e9326a6685105ae47604874384c27fab",
+  "geolocation_database": {
+    "path": "/home/bkoz/src/geoip-databases/ipinfo/standard_location.mmdb",
+    "sha256": "038a11d61822a80c92ee53f0bce7889a5ebee5bd5379006e847be50e8d939928"
+  }
+}

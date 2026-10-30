@@ -11,6 +11,9 @@ title: Source data
   checksums, attribution, and the shared geographic base.
 - [JAXA P-Tree production download](ptree-download.md) documents certificate,
   credential, last-available snapshot, and Cloud-atmosphere acquisition.
+- [Anthropocene particulate sources](anthropocene-particulate.md) details the
+  Japan, China and India PM2.5 ingestion, observation periods, quality filters,
+  existing smoke/fire layers, and commercial/community sensor options.
 - [Anthropocene implementation](../passes/anthropocene/implementation.md) and
   the [Stage 15 FIRMS procedure](../../development/20260815_stage-15.md#getting-and-using-a-nasa-firms-map_key)
   document year-qualified particulate snapshots and secure NASA FIRMS key use.

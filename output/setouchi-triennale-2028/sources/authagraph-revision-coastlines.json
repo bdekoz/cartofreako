@@ -1,0 +1,71 @@
+{
+  "status": "passed",
+  "plates": [
+    {
+      "scope": "world",
+      "stem": "cloud-atmosphere",
+      "coastline_paths": 4157,
+      "effective_width_points": [
+        0.4999997
+      ],
+      "opacity": [
+        0.75
+      ]
+    },
+    {
+      "scope": "world",
+      "stem": "network-swarm-ge-1080p",
+      "coastline_paths": 4157,
+      "effective_width_points": [
+        0.5
+      ],
+      "opacity": [
+        0.75
+      ]
+    },
+    {
+      "scope": "world",
+      "stem": "network-swarm-lt-1080p",
+      "coastline_paths": 4157,
+      "effective_width_points": [
+        0.5
+      ],
+      "opacity": [
+        0.75
+      ]
+    },
+    {
+      "scope": "japan",
+      "stem": "cloud-atmosphere",
+      "coastline_paths": 4157,
+      "effective_width_points": [
+        1.0
+      ],
+      "opacity": [
+        0.75
+      ]
+    },
+    {
+      "scope": "japan",
+      "stem": "network-swarm-ge-1080p",
+      "coastline_paths": 4157,
+      "effective_width_points": [
+        1.0
+      ],
+      "opacity": [
+        0.75
+      ]
+    },
+    {
+      "scope": "japan",
+      "stem": "network-swarm-lt-1080p",
+      "coastline_paths": 4157,
+      "effective_width_points": [
+        1.0
+      ],
+      "opacity": [
+        0.75
+      ]
+    }
+  ]
+}

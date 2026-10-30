@@ -1,0 +1,108 @@
+{
+  "status": "passed",
+  "file": "setouchi-tri-explore-v1.pdf",
+  "pages": 111,
+  "bookmarks": 57,
+  "world_plates": 38,
+  "japan_companions": 38,
+  "catalogs": 9,
+  "application_pages": 8,
+  "input_sha256_checks": "passed for every recorded input",
+  "selectable_prose": "present on every page",
+  "map_artwork": "vector plate PDFs retained; native world swarm PDF has zero raster images",
+  "render": "all pages rendered with Poppler; no renderer warnings",
+  "review_images": "/tmp/cartofreako-aggregate-refined-review",
+  "sections": [
+    {
+      "title": "E1 / Shared Sea Atlas",
+      "page": 42,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "E2 / The Port and the Cloud",
+      "page": 46,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "E3 / Heat, Salt, Water",
+      "page": 50,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "I1 / The Port Reading Table",
+      "page": 54,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "I2 / Maps in the Wind\u2019s Shelter",
+      "page": 58,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "I3 / The Island Atlas Desk",
+      "page": 62,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "V1 / Fold a World, Read an Island",
+      "page": 66,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "V2 / What Does the Cloud Touch?",
+      "page": 70,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "V3 / An Island Seen from Two Scales",
+      "page": 74,
+      "count": 4,
+      "kind": "catalog"
+    },
+    {
+      "title": "Shared Sea Atlas / application draft",
+      "page": 78,
+      "count": 8,
+      "kind": "application"
+    },
+    {
+      "title": "Atlas contact sheets",
+      "page": 86,
+      "count": 10,
+      "kind": "contacts"
+    },
+    {
+      "title": "Petroleum source annex",
+      "page": 96,
+      "count": 4,
+      "kind": "petroleum"
+    },
+    {
+      "title": "Visual revisions, colour key and coral prototypes",
+      "page": 100,
+      "count": 8,
+      "kind": "visual-revisions"
+    },
+    {
+      "title": "Source periods and interpretation",
+      "page": 108,
+      "count": 3,
+      "kind": "notes"
+    },
+    {
+      "title": "Human reviews and next steps",
+      "page": 111,
+      "count": 1,
+      "kind": "reviews"
+    }
+  ],
+  "visual_review": "Reviewed current aggregate pages 10, 14 and 15 individually and contact sheets for pages 1\u201316 and 97\u2013111; all 111 pages rendered without warnings. Physical print proof remains pending."
+}

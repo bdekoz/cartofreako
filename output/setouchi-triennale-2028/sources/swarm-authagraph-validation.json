@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "partitions": [
+    {
+      "band": "ge-1080p",
+      "world_circles": 2804935,
+      "japan_circles": 144555,
+      "native_radius_colour_opacity_histogram": "exact match",
+      "japan_physical_radius_scale": "matches world; geographic enlargement compensated"
+    },
+    {
+      "band": "lt-1080p",
+      "world_circles": 876541,
+      "japan_circles": 44854,
+      "native_radius_colour_opacity_histogram": "exact match",
+      "japan_physical_radius_scale": "matches world; geographic enlargement compensated"
+    }
+  ],
+  "atmosphere": [
+    {
+      "scope": "world",
+      "land_paths": 51,
+      "fill_opacity": 0,
+      "visible_outline": "separate foreground coastline"
+    },
+    {
+      "scope": "japan",
+      "land_paths": 51,
+      "fill_opacity": 0,
+      "visible_outline": "separate foreground coastline"
+    }
+  ],
+  "note": "Original cumulative cache unchanged; projection and plate layout changed. Circle histogram includes every native radius and member colour."
+}

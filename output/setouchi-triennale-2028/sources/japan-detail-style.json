@@ -1,0 +1,184 @@
+{
+  "status": "passed",
+  "country_outlines": [
+    {
+      "file": "anthropocene-particulate-2025-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "anthropocene-particulate-2026-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "anthropocene-temperature-2025-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "anthropocene-temperature-2026-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "bathymetry-hamonshu-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "bathymetry-roulette-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "cloud-atmosphere-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "earth-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "geometry-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "graticules-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "network-cdn-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "network-fiber-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "network-groundstations-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "orbital-technosphere-global-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "petroleum-eia-liquids-2025-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "petroleum-opec-country-coverage-2026-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "petroleum-opec-liquids-projection-2030-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "resources-energy-nuclear-operating-capacity-2024-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "resources-energy-petrochemical-refinery-throughput-latest-2024-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "resources-energy-solar-capacity-2025-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "resources-energy-wind-capacity-2025-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "resources-fauna-fisheries-production-latest-2024-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "resources-flora-forest-area-percent-2024-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "resources-food-food-production-index-latest-2024-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "resources-human-bachelors-attainment-latest-2024-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "resources-human-population-over-60-2024-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "resources-human-population-under-30-2024-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "resources-human-resident-patent-applications-per-million-2019-2021-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "resources-human-upper-secondary-attainment-latest-2025-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    },
+    {
+      "file": "water-authagraph-44-19.052559-japan.svg",
+      "paths": 109,
+      "points": 1
+    }
+  ],
+  "landing_count": 2037,
+  "landing_outline_points": 0.5,
+  "landing_radius_multiplier": 0.5,
+  "route_points": 0.5,
+  "route_opacity": 0.75,
+  "route_count": 767,
+  "native_swarm_coastline": {
+    "effective_points": 1,
+    "panels": 3,
+    "outline_paths_per_panel": 3,
+    "evidence": "swarm-refresh.json"
+  },
+  "water_base_coastline": {
+    "effective_points": 1,
+    "source_paths": 4157,
+    "pdf_stroke_operations_visible": 314,
+    "stroke_opacity": 0.9,
+    "evidence": "water-coastline-style.json"
+  }
+}

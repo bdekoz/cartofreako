@@ -466,8 +466,7 @@ add_legend(generation::projection_document& document,
     + std::to_string(profile.calendar_year)
     + (profile.partial_year ? " PARTIAL YEAR" : "");
   const std::string note_text
-    = "Distinct particulate, fire, climate, and weather observations; not an attribution score. "
-      "EPA PM2.5 exposure remains separate from observed smoke.";
+    = "Source-separated observations; no attribution score. PM2.5 concentration, EPA AQI, sensors and smoke are separate. Coverage varies.";
   const std::string provenance_text = xml_escape(
     profile.snapshot_as_of_utc + "  |  "
       + std::to_string(dataset.features.size()) + " H3 r"

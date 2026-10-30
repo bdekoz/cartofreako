@@ -21,7 +21,8 @@ natural_earth_url='https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_a
 irena_url='https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2026/Mar/IRENA_DAT_RE_capacity_statistics_2026.pdf'
 usgs_url='https://pubs.usgs.gov/periodicals/mcs2026/mcs2026.pdf'
 iaea_url='https://www-pub.iaea.org/MTCD/publications/PDF/RDS-2-45_web.pdf'
-refinery_url='https://data.un.org/Handlers/DownloadHandler.ashx?DataFilter=cmID%3aGR%3btrID%3a086&DataMartId=EDATA&Format=csv'
+refinery_url='https://data.un.org/WS/rest/data/UNSD,DF_UNDATA_ENERGY,/A..GR.086/?startPeriod=2018&format=csv'
+refinery_structure_url='https://data.un.org/WS/rest/datastructure/UNSD/DSD_Energy/?references=all'
 reef_url='https://wriorg.s3.amazonaws.com/s3fs-public/reefs_at_risk_revisited_present.kmz'
 
 curl "${curl_args[@]}" --output "$work_dir/natural-earth.zip" \
@@ -29,18 +30,16 @@ curl "${curl_args[@]}" --output "$work_dir/natural-earth.zip" \
 curl "${curl_args[@]}" --output "$work_dir/irena-2026.pdf" "$irena_url"
 curl "${curl_args[@]}" --output "$work_dir/usgs-mcs2026.pdf" "$usgs_url"
 curl "${curl_args[@]}" --output "$work_dir/iaea-rds-2-45.pdf" "$iaea_url"
-curl "${curl_args[@]}" --output "$work_dir/undata-refinery.zip" \
+curl "${curl_args[@]}" --output "$work_dir/undata-refinery-sdmx.csv" \
   "$refinery_url"
+curl "${curl_args[@]}" --output "$work_dir/undata-energy-dsd.xml" \
+  "$refinery_structure_url"
 curl "${curl_args[@]}" --output "$work_dir/reefs-at-risk-present.kmz" \
   "$reef_url"
 unzip -q "$work_dir/natural-earth.zip" -d "$work_dir/natural-earth"
-refinery_member=$(unzip -Z1 "$work_dir/undata-refinery.zip")
-if [[ $refinery_member != UNdata_Export_*.csv ]]; then
-  echo "unexpected UNdata refinery archive layout" >&2
-  exit 1
-fi
-unzip -p "$work_dir/undata-refinery.zip" "$refinery_member" \
-  > "$work_dir/undata-refinery.csv"
+python3 -B scripts/normalize-undata-refinery.py \
+  "$work_dir/undata-refinery-sdmx.csv" "$work_dir/undata-energy-dsd.xml" \
+  "$work_dir/undata-refinery.csv"
 
 world_bank_codes=(
   AG.PRD.FOOD.XD AG.LND.FRST.ZS ER.FSH.PROD.MT IP.PAT.RESD

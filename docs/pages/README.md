@@ -33,6 +33,7 @@ AAO prefix.
 | Plan compressed GPU evidence, additional consumers, atoll expansion, and agentic research iteration | [Stage 16 development ledger](../development/20260815_stage-16.md) |
 | Inspect the implemented Equal Earth control, Africa-centered variant, and one-to-five slice queue | [Stage 16J positioning comparisons](../development/20260815_equal-earth-positioning-speculations-v01.md) |
 | Authorize and generate credentialed external products | [Configured generation](getting-started/generation.md#configured-development-generation), [Cloud-atmosphere generation](getting-started/generation.md#cloud-atmosphere-generation), and [P-Tree production download](data/ptree-download.md) |
+| Audit Japan, China and India PM2.5 observations, coverage and commercial sensor options | [Anthropocene particulate sources](data/anthropocene-particulate.md) |
 
 ## Pass catalog and lifecycle
 

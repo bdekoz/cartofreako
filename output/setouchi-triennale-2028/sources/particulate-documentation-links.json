@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "index_local_links": 318,
+  "particulate_page": "docs/pages/data/anthropocene-particulate.md",
+  "linked_from": [
+    "docs/pages/README.md",
+    "docs/pages/data/README.md",
+    "docs/pages/passes/anthropocene/implementation.md"
+  ]
+}

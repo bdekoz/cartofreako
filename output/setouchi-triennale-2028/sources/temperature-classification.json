@@ -1,0 +1,48 @@
+{
+  "bins": [
+    "0",
+    "1\u20135",
+    "6\u201310",
+    "11\u201320",
+    "21\u201340",
+    "41\u201380",
+    "81+"
+  ],
+  "reason": "Common absolute count bins separate typical counts and reserve red for >40 record days; 2026 is partial, so no annual trend is inferred.",
+  "years": {
+    "2025": {
+      "source": "assets.static/anthropocene/anthropocene-temperature-2025.geojson",
+      "sha256": "7dbb1858e357ff87b8fd4b7ee9874d0a9978a55ccfe7943e16ec7563e9a520c6",
+      "covered_cells": 11945,
+      "class_counts": [
+        292,
+        1603,
+        2696,
+        4678,
+        2337,
+        315,
+        24
+      ],
+      "red_cells": 339,
+      "max_record_days": 111,
+      "record_cell_day_sum": 178896
+    },
+    "2026": {
+      "source": "output/setouchi-triennale-2028/sources/data/anthropocene/anthropocene-temperature-2026.geojson",
+      "sha256": "57b58d7e77e4bc4392340014dfcd3471c419fcd186f8cba8ee723b962354ac3f",
+      "covered_cells": 11945,
+      "class_counts": [
+        436,
+        2506,
+        2997,
+        3648,
+        1832,
+        446,
+        80
+      ],
+      "red_cells": 526,
+      "max_record_days": 172,
+      "record_cell_day_sum": 167447
+    }
+  }
+}

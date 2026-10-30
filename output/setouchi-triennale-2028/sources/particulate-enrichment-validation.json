@@ -1,0 +1,160 @@
+{
+  "status": "passed",
+  "country_year_coverage": [
+    {
+      "year": 2025,
+      "country": "CHN",
+      "instrument_class": "monitor",
+      "stations": 1686,
+      "h3_cells": 562,
+      "first_date": "2025-01-01",
+      "last_date": "2025-12-31",
+      "distinct_dates": 358,
+      "valid_station_days": 547441,
+      "station_days_above_35": 158600,
+      "daily_mean_min_ug_m3": 2.333333,
+      "daily_mean_max_ug_m3": 1816.272727
+    },
+    {
+      "year": 2025,
+      "country": "IND",
+      "instrument_class": "monitor",
+      "stations": 16,
+      "h3_cells": 15,
+      "first_date": "2025-01-01",
+      "last_date": "2025-12-31",
+      "distinct_dates": 365,
+      "valid_station_days": 4006,
+      "station_days_above_35": 1951,
+      "daily_mean_min_ug_m3": 0.0,
+      "daily_mean_max_ug_m3": 1153.501957
+    },
+    {
+      "year": 2025,
+      "country": "IND",
+      "instrument_class": "sensor",
+      "stations": 1,
+      "h3_cells": 1,
+      "first_date": "2025-09-10",
+      "last_date": "2025-12-31",
+      "distinct_dates": 100,
+      "valid_station_days": 100,
+      "station_days_above_35": 98,
+      "daily_mean_min_ug_m3": 19.849194,
+      "daily_mean_max_ug_m3": 517.495311
+    },
+    {
+      "year": 2025,
+      "country": "JPN",
+      "instrument_class": "monitor",
+      "stations": 1076,
+      "h3_cells": 223,
+      "first_date": "2025-11-01",
+      "last_date": "2025-12-31",
+      "distinct_dates": 61,
+      "valid_station_days": 62014,
+      "station_days_above_35": 35,
+      "daily_mean_min_ug_m3": 0.0,
+      "daily_mean_max_ug_m3": 173.047619
+    },
+    {
+      "year": 2026,
+      "country": "CHN",
+      "instrument_class": "monitor",
+      "stations": 1345,
+      "h3_cells": 511,
+      "first_date": "2026-01-01",
+      "last_date": "2026-10-28",
+      "distinct_dates": 295,
+      "valid_station_days": 391529,
+      "station_days_above_35": 85278,
+      "daily_mean_min_ug_m3": 2.347826,
+      "daily_mean_max_ug_m3": 1034.416667
+    },
+    {
+      "year": 2026,
+      "country": "IND",
+      "instrument_class": "monitor",
+      "stations": 16,
+      "h3_cells": 15,
+      "first_date": "2026-01-01",
+      "last_date": "2026-10-26",
+      "distinct_dates": 299,
+      "valid_station_days": 3471,
+      "station_days_above_35": 1490,
+      "daily_mean_min_ug_m3": 0.0,
+      "daily_mean_max_ug_m3": 886.5
+    },
+    {
+      "year": 2026,
+      "country": "IND",
+      "instrument_class": "sensor",
+      "stations": 1,
+      "h3_cells": 1,
+      "first_date": "2026-01-01",
+      "last_date": "2026-10-02",
+      "distinct_dates": 245,
+      "valid_station_days": 245,
+      "station_days_above_35": 132,
+      "daily_mean_min_ug_m3": 4.191304,
+      "daily_mean_max_ug_m3": 278.921111
+    },
+    {
+      "year": 2026,
+      "country": "JPN",
+      "instrument_class": "monitor",
+      "stations": 1095,
+      "h3_cells": 226,
+      "first_date": "2026-01-01",
+      "last_date": "2026-09-30",
+      "distinct_dates": 273,
+      "valid_station_days": 283898,
+      "station_days_above_35": 100,
+      "daily_mean_min_ug_m3": 0.0,
+      "daily_mean_max_ug_m3": 415.05
+    }
+  ],
+  "independent_raw_day_checks": [
+    {
+      "source": "soramame",
+      "station": "04501010",
+      "date": "2026-02-06",
+      "valid_hours": 18,
+      "mean_ug_m3": 2.888888888888889
+    },
+    {
+      "source": "cnemc",
+      "station": "3614A",
+      "date": "2025-03-27",
+      "valid_hours": 22,
+      "mean_ug_m3": 1816.2727272727273
+    },
+    {
+      "source": "openaq",
+      "station": "6956",
+      "date": "2025-12-19",
+      "valid_hours": 23,
+      "mean_ug_m3": 1153.501956521739
+    }
+  ],
+  "unique_cell_days": 423169,
+  "legacy_feature_values_preserved": true,
+  "cell_day_ledger_matches_geojson": true,
+  "native_metric_layers_present": true,
+  "four_plate_triplets_current": true,
+  "raw_download_failures": 0,
+  "extreme_value_review": {
+    "threshold_daily_mean_ug_m3": 250,
+    "station_days": 694,
+    "action": "Retained provider-reported values pending station/operator quality review; 250 is a review trigger, not a validity cutoff or health standard."
+  },
+  "raw_download_sha256_checks": {
+    "files": 9894,
+    "status": "passed"
+  },
+  "native_tests": {
+    "particulate_generator": "passed",
+    "cloud_atmosphere_generator": "passed",
+    "fiber_generator": "passed; recorded before final palette/export pass"
+  }
+}

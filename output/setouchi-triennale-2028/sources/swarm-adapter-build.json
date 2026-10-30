@@ -1,0 +1,800 @@
+{
+  "command": [
+    "g++",
+    "-Da60_USE_GEO=6",
+    "-I/home/bkoz/src/alpha60/src",
+    "-I/home/bkoz/bin/H-libtorrent/include",
+    "-I/home/bkoz/bin/H-geolite2pp/include",
+    "-I/home/bkoz/src/izzi/src",
+    "-I/home/bkoz/src/cartofreako/src.projections",
+    "-isystem",
+    "/usr/include/rapidjson",
+    "-O2",
+    "-std=c++20",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-Wno-unused-local-typedefs",
+    "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/render_swarm_authagraph.cc",
+    "-o",
+    "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/render-swarm-authagraph",
+    "-Wl,-rpath,/home/bkoz/bin/H-libtorrent/lib64:/home/bkoz/bin/H-geolite2pp/lib",
+    "/usr/lib64/libssl.so",
+    "/usr/lib64/libcrypto.so",
+    "/home/bkoz/bin/H-libtorrent/lib64/libtorrent-rasterbar.so",
+    "/usr/lib64/libmaxminddb.so",
+    "/usr/lib64/libh3.so",
+    "/home/bkoz/bin/H-geolite2pp/lib/libgeolite2++.so"
+  ],
+  "binary_sha256": "510e332bf619a3d827470ee635d03e0580391a8827a114e01c99d6f2350b03a0",
+  "inputs": [
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-btiha-geojson.h",
+      "sha256": "efc3e98e3670929c5dd1b797668f119fa760a0e027e96bf60f6990a281963b8d"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-btiha-json.h",
+      "sha256": "9b3bf6d201807aac07e72ac20151c209292ed94a985008b5a3d6cdb2bb4da8b5"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-cache-artifact.h",
+      "sha256": "f7d3a646412c5ca2722acbc286f413cafda06a54ceba2bfcb79b0c7b2a8a4cb0"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-cache-update.h",
+      "sha256": "2fc47ecbcb51af853b251494e46c7b068e4c1f40d21d0f467a0a95752806bd12"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-carto-frame.h",
+      "sha256": "f8fbc45d4dca540ba512e188bfcd3e2af4dbdd9a7b8f873d41d592dfe7bf314e"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-carto-geo.cc",
+      "sha256": "e7e730939f6411f208224b67321358c06d1c3a0c42d1b2df47151bda2568fa78"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-carto-projection.h",
+      "sha256": "019c50ae1728094b1f7e86772d02064457be30fea95f197b64304fefba34780e"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-carto.h",
+      "sha256": "13d30118b46b2f35f6d9ce32395397a8e80f0341352b41094ef8fb8d37214539"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-cdn-cartography.h",
+      "sha256": "95dc589681b0743bd1f5854835e2aac6801f4d055fc4283968fb1602fece04e4"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-cdn-derived-cities.h",
+      "sha256": "e27b19ba4cb0858875643eebf254a3b5bfb8d9c11b68916b26aefea9a2ec7210"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-cdn-layout.h",
+      "sha256": "a460138e70a67fcadf2e5633c4619f0def0de180981fc9021bb4ed99184fd096"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-cdn-records.h",
+      "sha256": "03224dca2aeeeb1ac63933187f42a1bd724651ff25a68412726d7aef1a75abd6"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-cdn-spherical-geometry.h",
+      "sha256": "188f25801870e2db5b8f22825d521b51580147d376539f8a0c22b8a488213816"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-collection-base.h",
+      "sha256": "0f4e97ca70c62b021869152b21f0997fc1780e8014eaa807a1ee9430a0f1bcb5"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-collection-cache-json.h",
+      "sha256": "4e2fa3bc87db6e8acdf32841f36eb06c5a3eed888e99d57afccc3813f00de2ee"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-collection-cache.h",
+      "sha256": "84eeb34af78398ead12581d393e30759e0e6f32d6d8953223117184e3008e009"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-collection-coalesce-synthetic.h",
+      "sha256": "94ae80b6fcaaaf738f9349dd9c04f87389756759f0dd0be1faf83e77511a83ff"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-collection-coalesce.h",
+      "sha256": "86e2545c8553ceb58b4e7ec8132b9a11d0b7b318fc6d6b111179379f8d5f74fe"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-collection-duration.h",
+      "sha256": "aa50bcc0c0cf0ff22763b3e4827a4a774df99ee5faa5310b71a8721039fd9537"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-collection-factory.h",
+      "sha256": "92ec01a7e6b1cdf643b36ace8917d4af298cdc91726bedd2332f9527b440b735"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-collection-json.h",
+      "sha256": "d15e917d54e2b57f1d9208e195bfc24bd8136fa4e5ffd2309468f5fc75526940"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-collection-objects-auto.h",
+      "sha256": "f935f8a3d853efb103a555e1f7fdfc4b53989f956630b23d93f160dc1401c74c"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-collection-objects-factory.h",
+      "sha256": "0f2da4574ec83f27bf646bf325d03890a28a47e49a68164e99c48c08edc1fc0d"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-collection-persistent.h",
+      "sha256": "86f5b17259f2b01f23d1d3e31c121b8b7ef4280d5d9f4729c8e30928da0b79c5"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-collection-tabulate.h",
+      "sha256": "9e41b356fd17b018e03b865492f0b79f106de3a6eea86eeb98d8dc373ab0901b"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-countries.h",
+      "sha256": "0b0ad127b2a6abd2dfd2ee2c5eb651056e036b95da5d188d15550c367e90d243"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-demographia.h",
+      "sha256": "0fb3e5fbe68d33ffcffb4c9371ae561e3e44f2a019b9a0c5a9e95f1359ece162"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-encoding.h",
+      "sha256": "c4b68d8eb7f67f0d874768d2c29f3c9147e31e621688b026fcef6bd961283e1a"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-exit-nodes.h",
+      "sha256": "4d08fcf019f299bbe75fe70696f1d9ce83bddf7390319801d31e65e796658ce2"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-geo-base.h",
+      "sha256": "411d35bc34262978f7280319d6c90505581aaae5b06737781f8e4d2da0d612d7"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-geo-config.h",
+      "sha256": "7bd8771955152c7932e2cfabac6d5f7a4ae467e342e467e6c13a6cf07f6f938b"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-geo-functions.h",
+      "sha256": "928b8033d0297410389ef12e0bea388b60cbed09976d272493c4910d41eeb5e2"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-geo-hexagons.h",
+      "sha256": "1f9f6de4ed6ad86bbef972381b860f122eeea8890ce26d04b51ea9480f909792"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-geo-ipinfo.h",
+      "sha256": "718ca8ecdf196f9a23c000d7b575c4897bba7bb4a897d57f5848f5f4a0825a97"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-geo-maxmind-1.h",
+      "sha256": "1b9de6d9a9c86681739cd5c7149a96afaef84a147d24885525dce65a89e00149"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-geo-maxmind-2.h",
+      "sha256": "b8542a24f120308cc31b14615d2d43b4b623e612741d87bfb43b37e2dddae03e"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-geo-none.h",
+      "sha256": "b2c0af21fc699b3f79518196edc2d1457312e8c2c45c0c03949ef209343ab516"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-geo.h",
+      "sha256": "1d3c2ff2d9dc3ef350f19cfd854a7fbae9d9dbe69d284088f7d494162410c515"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-geojson.h",
+      "sha256": "970bf794c5957c564ad7e9bfd3a02e1092b67544fe1c0682c48fd91be583db51"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-io.h",
+      "sha256": "223d28ee9a8ce4a8fa6ef801676488f3495447b86dbec170f7407cfeb6c52ca2"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-ip-analysis.h",
+      "sha256": "6d12d3b78ca2406ff6fe429fc245747342ff5a38892b551ccb34e31596c5a1e5"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-json-cache.h",
+      "sha256": "06fa970ba0623ba4cad13d14b22849f74e31380d59f055c0105dd38987491082"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-json-fwd.h",
+      "sha256": "7dc084ac28bb2ba98d7099ca65da4d26e50a5819a98e21113d4c8797b60971fd"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-json.h",
+      "sha256": "50deb94586ef246b30253f56d19cc8f11d65cd73e5d8ffb35e4dd3251daf02fc"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-meta-collection-graph-geojson.h",
+      "sha256": "13940420c250869bb43658281274cd5c5fb519f552d2ad64dbb384053fd40d1a"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-meta-collection-graph-json.h",
+      "sha256": "6189157948485f63071b6b0c4492ebda324ff6922dfae1e5e9bf794bf28c6cfb"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-meta-collection-json.h",
+      "sha256": "e6fad32098e0a0b8bc6d54a521a2707524abcba0fe13b5249d319f761d21de6a"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-meta-collection-styling.h",
+      "sha256": "f91ffb27aa71e171f8935755a8e0fbe4e45dc48768f95cd1cc6555638fe1f3e0"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-meta-peer.h",
+      "sha256": "7eee6edd83711bd6bf695c63d3690fb731f708eb52c294fda3889c9b7e6de6b3"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-metadata-json.h",
+      "sha256": "5458991f299c4013acc5f48317f8069acc7a17bd9a5c65586c0031e62e295eaa"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-metadata-rank.h",
+      "sha256": "55e0e13bb5e861b00898272f750fc0c30ec88da7a9b89a39d972885a1f0d28fe"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-metadata.h",
+      "sha256": "6446991d78b6e3cdccbaef31dc6d5cdef346c5e2561f7b0e2dd176d178610994"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-network-functions.h",
+      "sha256": "53d9851205de1ba5efa2a6694e91a5b45a2c6d7e6e796002c99bb7ca70aa4aa2"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-numeric.h",
+      "sha256": "f7130be2e438bae6a3660a2dd5e59f59a2518e3d96f9754262c00dd7665f8bed"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-peer-types.h",
+      "sha256": "fed77f027b57a78e287ba937e0b591f47fc98e8b12c369f3a8a636c0683fa2e8"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-peer.h",
+      "sha256": "1180e450412b9244ff72915ed4fa4d2cbe40ee1ab53006d01575c06cb75ec1f6"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-published-btiha-contract.h",
+      "sha256": "af7e09a30f42db4ffb889c50d2929ce3354e9a89f370765cf5ddc3e8bb59f8bf"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-quiet.h",
+      "sha256": "29f980cac87bd8ad47d66c13bf2e176ddf3a28b1a488bd3967f10e2d8d7dc3f2"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-scheduler.h",
+      "sha256": "e72f41ca153d9fe9b67dfd42620b597ee3fee5f29f047e35f43b2be201e84890"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-string.h",
+      "sha256": "68790b89ffa696162376628d6109716a95cbb92badd0361bf8b1e3af93ed6bbd"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-svg-carto-geo.h",
+      "sha256": "9a90158332a5a55b9232c9881f56df6b4c58dd7979eef3d6d650c203ffbd01e1"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-svg-collection-color.h",
+      "sha256": "3f2999c985689c6c99555041a30dda04bcaab4d12e00ec8c3eb2dd11e3e76327"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-svg-collection-glyphs.h",
+      "sha256": "4a75561f66e730ce0dc2fe19e4c30f427ae3b48c81c4c4be0696a24031a7c9f9"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-svg-collection.h",
+      "sha256": "409d46fe5a89f2d456e13bbfcece3c56c2639ea3f3a46eb484425b7f83e86370"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-svg-cumulative-country.h",
+      "sha256": "85a837c02e5af7fc2db4d054ed7769c373bb240e1a0ae4e27ffae0a9b72007e2"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-svg-metadata-augment.h",
+      "sha256": "5ae01250b34c69be39a918818215bf282d5da9195c6363cca833348b9e864a42"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-svg-metadata-glyphs.h",
+      "sha256": "9299f84153b56a2ae608bf48db73623014ae9004d95591090429ed1a37bfdc5a"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-svg-metadata-startup-scan.h",
+      "sha256": "1bba15f3fc5ca4c9889803a86635f23ca07a865f298b5a003f2d09f4d612b440"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-svg-metadata.h",
+      "sha256": "573fc69e1b193cc6723045b915a4327d470502adc6a5f307a85d2d5c85ec72cb"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-svg-titles-and-legends.h",
+      "sha256": "c349a3fad0cc5bcca0262f4b7cf069d304920c70b84c9a8ad3a86b981d3a438c"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-swarm-cache-types.h",
+      "sha256": "2e715d58b53bbb2b8b8131f3ea1b15bc31bda85862c7f7ea780d07dd3d06d398"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-swarm-cache.h",
+      "sha256": "a06fe3b2effa028a09c2d99bf3c151b34a85ccf316621d16f8e01a06bf6eb70b"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-swarm-visual-contract.h",
+      "sha256": "9fb37391c353bfebfd21f573c7a9d7657b06eea4c5ba8367bcc2f26cc1538d53"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-swarm.h",
+      "sha256": "65b544de731c94e760c63e4081af3d21732e0d30de215d25757caa90897d2513"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-telecom-infrastructure.h",
+      "sha256": "665d11efe557893aa54218afc1e5ddc19537a7ee73bfed3825e45ff551d6b806"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-thread-pool-future.h",
+      "sha256": "c40d52176f4367382295e5ae543e862456c722592c0a570f35532d4d7495fa12"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-thread-pool.h",
+      "sha256": "b8e3e1d293d299a0f75314a3276339dcf5866a3927a7e0f28407fc918efa5485"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-timer.h",
+      "sha256": "9bcf5a784eafc59322c019af305c60f3247144f2673e7af8e9a543a783366c6a"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-torrent.h",
+      "sha256": "ce50d3378d5ec215546129338db7ba5a0c939bc6d95725c44166a3d2923792b4"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60-types.h",
+      "sha256": "2036f07f3b12a7544425959479e3d473e47f203b5175799dba8401e124802d2f"
+    },
+    {
+      "path": "/home/bkoz/src/alpha60/src/a60.h",
+      "sha256": "3f3abc2eac1662a885a43b9d75f4b9bdb8ae9fb44d20b313904a5516d2f4dbee"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/render_swarm_authagraph.cc",
+      "sha256": "0ad62a049b51bd7d667323e1a343cb7181da1f51702a1f8057104c6e11bbfabf"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/a60-carto-frame.h",
+      "sha256": "ca3a4d71d17fc8eb09be2745e8e84e63a483f8a3c2bb596a00fe78c08d1da977"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/a60-carto-projection-dymaxion.h",
+      "sha256": "68bc78344957bbe7f4c2c2a17225bdc52b765cdd5756ff4a879c0e6796e049dd"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/a60-carto-projection.h",
+      "sha256": "19234e7223a3448d6b8a779e62362dfe747090480424f2a3af998404708cd0d4"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/a60-carto.h",
+      "sha256": "83bcf32a5177720ffeed98f4e02a9bdd0da5da9acca4d00bf4e4b452fcba7411"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/a60-svg-carto-geo.h",
+      "sha256": "a2a30d26dd5e256ff125415eeb11f4f9bf38b17ab9908422785fa532afae4026"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-authagraph.h",
+      "sha256": "9263e8dfcc531538d75a7d6f895688dfe7c28525b58c1a17a5b380396fe34d88"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-cahill-keyes-functions.h",
+      "sha256": "0fc6d35e4fc36abe9fa2f18f6132cabf78ecdde8a03414fe0094b5a557589c29"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-cahill-keyes-slicing.h",
+      "sha256": "3e7e7dfe9f8a3aff52ed1182679b5d998ff917315225a60795e622ecc1f86c99"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-cahill-keyes.h",
+      "sha256": "0c3b945711e655d4dd70208457bca2f400fd6edc0869f1a1c87ad57847f56ba2"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-equal-earth.h",
+      "sha256": "75d91dd35a75ba8b82b81a44c5de09816a295cd72080cb13589601cab14a0976"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-myriahedral-perspective-afro-eur-asia-tree.inc",
+      "sha256": "a802f449429e340f7461ee665d67a56a742433ece4c86e18e5c71bdd2d7e3471"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-myriahedral-perspective-americas-tree.inc",
+      "sha256": "30dc362622ed5ee971a62509ba4721df8bde67c4fcf599800808ae7f27381dbb"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-myriahedral-perspective-antarctic-tree.inc",
+      "sha256": "05fd9fde482bf9f0ec9c702fe182a2c9f35c8a9f5e725348a8036c59eddc5d3f"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-myriahedral-perspective-atlantic-tree.inc",
+      "sha256": "5af1647356663ee9affd7d7c87eacd8a3ed2575952a5c9b882c2e149f0b964dd"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-myriahedral-perspective-pacific-tree.inc",
+      "sha256": "b0350cd818f935685f2e85aebd927ac418ca5bcd0f310b6164d8e85215aa132f"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-myriahedral-perspectives.h",
+      "sha256": "156c8030e0188453d106e51ffa96190ffa6e17bc4a5a5977af6f3e37dd3e6c35"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-myriahedral-slicing.h",
+      "sha256": "f934d4c9ec1443e7a18ce6c1469f532c3e07940618afbe562430e1c1539b82bf"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-myriahedral-tree.inc",
+      "sha256": "e52f7f8391f7742d81342c2ee09b8a88f4a559af828a0444644e7ab7b7c7ce7a"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-myriahedral.h",
+      "sha256": "ce206cda81e75ab454452c5858a251a720cd23900a96e42371825e8b031316f6"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-projection-geometry.h",
+      "sha256": "3261dbb198a9f971346956f025aedc2f1ff2e29133e3978eb1c7254ce983d14a"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-projection-runtime.h",
+      "sha256": "3a87548f9b7e6ddd87dacb4afb69111fdd41a5c25a4c068d703317f171e95807"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-projection-slicing.h",
+      "sha256": "4bb368dcfa2374174c52e2f16a0c7840945652e422096f3eb2661c6d94ab5386"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-star-x-functions.h",
+      "sha256": "0be0fada2707ddce635b4a1588dd3efe85b65746131d75ab9373a2fc8df0a178"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-star-x.h",
+      "sha256": "ba8fdca43592db1f9ecdbfdf99194ceb19d482bc652af2d4553a1dc00759505b"
+    },
+    {
+      "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-voronoi.h",
+      "sha256": "180f5ae23228cf2e630c661ee7adb05f3ca2c6cb0031515dc27f2c3da2fb4b1c"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-film-blister-fields.h",
+      "sha256": "777d066e9588285ea36ac10efbe02c48638c311d122ed047e893839cccc6a0ff"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-film-decay-fields.h",
+      "sha256": "2ca8d4bca8fcc79a573a332d6ff37e0dd598b0daea3c52d112e3f73e393719f3"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-film-decay-variants.h",
+      "sha256": "62f3871d8b63ab38556158b71c3e5ddb64be23185d91f95d058633c79223f1ee"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-json-basics.h",
+      "sha256": "e1e58c2b00f9175112754fe457a18bd28808e885a476aa95e597e607ce953419"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-levels-contours-regions.h",
+      "sha256": "c797c4932700396bed07737eca611c2c247bc51bd9b4c38e84c37452266c481d"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-media-supercut.h",
+      "sha256": "5b2e8e262897237100d407a766a7a7499e5f3e7d94dc9f278432f8a6a7119070"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-points-cluster.h",
+      "sha256": "24509fb7f25e3b5e8357bfe39f6e6c11270eebce59d191049aafeb6faf5070e1"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-points.h",
+      "sha256": "8ad5c21656e91a4242721c3ea279e04811089ade263e982a399ef6b730f9e7b5"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-review-catalog.h",
+      "sha256": "a05d491b7eb13208732ba643a1d3eaafcc0266300074818cfd1e30f8684a053b"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-review-descriptor.h",
+      "sha256": "6f4ee68e896224da6c1ad5b9ae8ab973cc4e8c054896b721b00f0df10c2d4c03"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-review-edge-tension.h",
+      "sha256": "ba6298302961c657b91c0d036c26e622ecc31002b4cb5bb7d62d323d9aeb2b63"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-review-extra.h",
+      "sha256": "ffa7c487f1f0a74bcadc899d79d3a844f3fc7e0fc8a5392fa617956609cc1290"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-screen-receiver.h",
+      "sha256": "d7899b1a867466686e5f52c90df5834daf58d87c550a0b7a7978e9992783fa39"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-base-types.h",
+      "sha256": "a1d22d0595c52c7bb63103072a0cfc5b0a32ee47a9b0b49413de7630b7d95a0b"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-codecvt.h",
+      "sha256": "505aa7a89fb5da9b08020929b2b5e26d63a55ecee4b60a39ea6670c0c75a4f0c"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-color-band.h",
+      "sha256": "5d66732d35fca975506e8fbabd3412d8fa4fdf3d8fdf9efae584d97acd5818b5"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-color-palette.h",
+      "sha256": "708621b95e22c11ada1cfdec678890112cc6ec3bb8cb2f1217a27243bc15320b"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-color-palettes.inc",
+      "sha256": "d1473030b1ea26a76fee6b7406f00a0f275e9a9522e1823c914455fb6a3ee364"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-color-rgb-map.inc",
+      "sha256": "61f310d7d420691d8b428f226572cefce8953a5a4bc35e8beac9b5bc751feb16"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-color.h",
+      "sha256": "21d0d622ea3691dfb7c16758055f87c1a460c7d68ccf87ce980f73f41b4e522e"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-composite-and-layer-basics.h",
+      "sha256": "b4d4b7e83cecb48a939436bf029c21aad6ceb973bf766dc75125a000a98fd36c"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-constants.h",
+      "sha256": "9c9b101fb377ef00c48849aa0c038ee25264abc443e74af4260a3646438f74fb"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-core.inc",
+      "sha256": "a9958d5565dc01a4850c0984534cd2325fba97101c3e9b61df9336eda6075884"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-curves-damped-harmonograph.h",
+      "sha256": "0d7265c47ffbf5ee2d365544ee02e78c3d42e3bd0c43006f337f3af23107b8e7"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-curves-grignani.h",
+      "sha256": "698d10db28af81f1fdc51bb618fc797ce8a50a01189e3a2757f72a8fc2997b2c"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-curves-hamonshu-v2.inc",
+      "sha256": "4bb6cab1fa128ac4250f7a78f3fbe04090e09042db4340d8012cdb1eb1e18386"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-curves-hamonshu.h",
+      "sha256": "f974b64d19637f455898d78a4af7d1b039ee977efb1040dab215864092de4133"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-curves-roulette.h",
+      "sha256": "fa9bbcb2d168bcf43b51c13ee0d74bffbce1f3db4d4ba2ee58de085147ec8738"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-edge-tension.h",
+      "sha256": "bb0ea308f7f5ed33ec7286c3ab2ebef6436288c17bf48449d6127fcbc0768fdd"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-elements-components.h",
+      "sha256": "dfe47b0c0fb6993e9053d8a0fcc841583e5691426c77c91320e02078d8b72ed1"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-elements.h",
+      "sha256": "751c51171379c33ee0db2ad167a57b80e05cc697c35cb4e6190c5373f3a73cdd"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-film-decay-json.h",
+      "sha256": "6dcbf2cd94b6da1ae828819ecd3409b0847845ed7d439b51bffb92c2cb8e665b"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-film-decay.h",
+      "sha256": "f44705e9c9964770938481a38f1c2243da83d80698f4f274f2184a8f2fa3c208"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-fonts.h",
+      "sha256": "bfc8c6f9cdcb4fa5c0df0e0aa1cc098dabcaad8d429f8d0ac906427d0a4df8a1"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-graph-guilloche.h",
+      "sha256": "be89e44f7de558a9502ec7512ebc2adb1cdf7794fe261d50dd22f8d5327e0ff1"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-graph-json.h",
+      "sha256": "62c1bc835cbd7b2cdf842b768fc4faf9db6181f9f0d23e12a61d53494d1a7ce7"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-graph.h",
+      "sha256": "ec75c4a55bd7bf1f12cde860e7f93ee101affaac341029fbe2f610a72a2f9bbf"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-graphs-bar.h",
+      "sha256": "6a064f6a7ce1ac8544684c1179bf2f40284ca253258d5f898bbe143b79135a5e"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-graphs-chord.h",
+      "sha256": "f66eb0818f9b44bf38c8979a8e0350dc871f92ec5c65f74086de6fcae393a7e1"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-graphs-line.h",
+      "sha256": "9568d4a97de6f70cf76a8770c3d5958be4c7175bcd41b5966b71cb520b8144ab"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-graphs-matrix.h",
+      "sha256": "258f2f417b0f2e64560d24d711f7919336a8f000ad94a31bc2c0076f975f5d03"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-grid-matrix-systems.h",
+      "sha256": "a9cf4b6cb3b9a6a0581cb2a1fd2ac11d498481f020f68b91c14590b4cbff4a21"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-guilloche-arabesque.inc",
+      "sha256": "f65ff78db1c6f0c62028ddc38d4f2689cbf8bd15299fda32ccf1956f8127af9e"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-guilloche-enrichment.inc",
+      "sha256": "393a13a6b93511f6d30bd3d35d9afa50e75900507b892746a4c37cecdd10535f"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-guilloche-json.h",
+      "sha256": "5911a21a76398a1a518eae3f332c5c4a75733efad59c41d79be2e40e083a0f8b"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-guilloche-meta.h",
+      "sha256": "e7c1eb17606e6282c3b082c4cee2861ecf23494a02b9dffebedf17c1d0136185"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-guilloche-muqarnas.h",
+      "sha256": "554532776b38723b7c48ea747fb0e9067fe0ed08b0254e97300445f660dd2f81"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-guilloche-optical.inc",
+      "sha256": "e781969e85af85a8b3677ffe6d72ee684f011974266102426193f4447460a211"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-guilloche-organic.inc",
+      "sha256": "22a583d4b998e65165846f478f6732765c1b5c10313614da23f8df3aff91d0b6"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-guilloche.h",
+      "sha256": "4633afefc038a885ecd14432daa193dc224422d4a423b417d5fa3847c97c6a94"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-independent-gauges.h",
+      "sha256": "7861dff5e2aeb24bf819abce521c5772870901ee6b19b2821022ef7bc83586a3"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-keyframes.h",
+      "sha256": "4906de8c70f547424510375f8854eeb3f92d1a9e969ab5ab1c25ad4d68c999a5"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-lenticular-json.h",
+      "sha256": "f79f1160e705ad3ad706ddf1c30057f8f212d74c5242156f3b063d489eb82ba5"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-lenticular.h",
+      "sha256": "f22db6977a0daa3ba0c10e2e17092fe2cce479f6c49154412eb8c021dd843b30"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-linear.h",
+      "sha256": "7bcc6928fd4672f43bf2f3d9d92fd16422061dfb96c16ededbe169983f752953"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-markers.h",
+      "sha256": "5f972d2abb46e4b33bf2f692fd7c8ad93345dd63e3c26c450d508363f5587677"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-matrix-geojson.h",
+      "sha256": "198f326611c4c7c70838d56d61d115f42c1992fb459f982d20061fbaa0dc2253"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-moire.h",
+      "sha256": "26e0ca2a021e857590218106d425f1e57e843e0c76d0d49d97e345b7beb8ac01"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-movement.h",
+      "sha256": "f03366c4f1bfd5fa2cb1927b42a3e0c0dba8dc4289ddf36f886b8f6843fbc8ef"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-polyhedral.h",
+      "sha256": "5f77966a731e518dc4a0a03563e3f50fd248cbe744855ff108a40e93a9d33c10"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-radial-arc.h",
+      "sha256": "6d4f17be2efcc4547f47aa65b5dd4c26e474fa069d7f9e19267d4ac8f4534f3d"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-radial-base.h",
+      "sha256": "999dea9bd5c8f824708aa0cacd4e5d08cca5ef4eb29369b0ee83b7bb9811b838"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-radial-direction-arc-glyph.h",
+      "sha256": "27b899fe85988d4a064c48a60a3ac4bb489d37e99ca860650e342b5bc4a1021b"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-radial-fill-hexagon.h",
+      "sha256": "ebed60cce6fde30474f5cbacafa4d64784b401487722a2f1585dd600b4cdacb9"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-radial-kusama.h",
+      "sha256": "6fdadf0560a51a29483dc774e7c11685ed3e2ba942ace5c69c25e01f56f01ce5"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-radial-swarm-metadata.h",
+      "sha256": "e6261111c8a143922e7e090181d1466454c05034ddf1aabf7c76a82783ec2877"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-radial.h",
+      "sha256": "8850d94d6d2904fde233f4b958e03db33423e6df1505f0d0184b5c88f5cee6da"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-reference-motion.h",
+      "sha256": "cc07fe3042ae76519eb2310f545cd7c3c64c4293cd2bf5cf6df08d907261f940"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-render-basics.h",
+      "sha256": "b72306b5a3deeeec44ef67d615ac28e42c40a5032c7c2ee922f4c43fc3879671"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-render-state.h",
+      "sha256": "91024f0033f8bbe2a9207355745e364cdcd067d4964cb810793e1ed96bb7fdf0"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-screen-glitch-json.h",
+      "sha256": "097fbca4bc463f45c6a87e25cdefead18ca18e100e96a632a81150ebba85dd92"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-screen-glitch.h",
+      "sha256": "f3f7c92c01d2c459d26df89765309c106f129f29539e2dbdd4e8aaf596a640d9"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-sequences.h",
+      "sha256": "03494e28874702324cc2d76d12d67d2959d8a4b540b803603376aae4246c65ab"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-surface-tension.h",
+      "sha256": "1894b4d8c5548012238cf3f39996f85f6f2e00f9eca4bd4c4a2d211bf03c34e7"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-text-overlay.h",
+      "sha256": "bf7dcd1fe155e97e9a6b42a8161670c8261ec408ed359bc541309e2980839b00"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-text-transcription-enrichment.h",
+      "sha256": "ad4c782af7344e5438c38a88adec14e17329a5a3d5a9678def5fabde4c472e80"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-video-glitch-json.h",
+      "sha256": "c6868cdf7bf9d7c46ba03db0032d16090de05ff04929d676059346ec94baaad2"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-video-glitch.h",
+      "sha256": "4f55f4259e3ad76b216075c620e3934ae91104c07b718bdc80241a469ea84ae2"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg-visualization.h",
+      "sha256": "e433035d8b7b89c3e06c8ccc0f77cc2dd6ee647b6d74661649e82bc8b74fc9a9"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-svg.h",
+      "sha256": "e26eb42761b51b2cd9f355945c7948ad80785a8df20c744a0cc6b8de2460dd07"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-swarm-metadata.h",
+      "sha256": "b97551ea84534fac23ae7293082c60c7d5bdd0cade6f7e061a04318db17dfa56"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-swarm-paired.h",
+      "sha256": "68de550444ed4f10c987d24a941d6ab2886d92d3d6ffff4f0aa2bd86aa07d368"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-swarm-series.h",
+      "sha256": "a77c6e165839caaed39f794614861744dcedd159f5ef884e3d3d898df632abba"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-swarm-transfer.h",
+      "sha256": "b53ad6acbee1194d1a2138effaecee983779d8a915c2e4cd750ccf89a2930a81"
+    },
+    {
+      "path": "/home/bkoz/src/izzi/src/izzi-tables.h",
+      "sha256": "6c849cb02cdda4be9e8753e16c00c0d8b51496020a7d195909cc0f1228dbf478"
+    }
+  ]
+}

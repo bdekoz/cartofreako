@@ -1,0 +1,834 @@
+[
+  {
+    "path": "/home/bkoz/src/alpha60/config/cartography/cdn-vendor-video-20261023-r8.json",
+    "sha256": "d4458f2d9f8eb4d54b354ab3d22460048496cd533dd2b57f4128ad54466d769e"
+  },
+  {
+    "path": "/home/bkoz/src/alpha60/src/a60-carto-frame.h",
+    "sha256": "f8fbc45d4dca540ba512e188bfcd3e2af4dbdd9a7b8f873d41d592dfe7bf314e"
+  },
+  {
+    "path": "/home/bkoz/src/alpha60/src/a60-carto-geo.cc",
+    "sha256": "e7e730939f6411f208224b67321358c06d1c3a0c42d1b2df47151bda2568fa78"
+  },
+  {
+    "path": "/home/bkoz/src/alpha60/src/a60-carto-projection.h",
+    "sha256": "019c50ae1728094b1f7e86772d02064457be30fea95f197b64304fefba34780e"
+  },
+  {
+    "path": "/home/bkoz/src/alpha60/src/a60-carto.h",
+    "sha256": "13d30118b46b2f35f6d9ce32395397a8e80f0341352b41094ef8fb8d37214539"
+  },
+  {
+    "path": "/home/bkoz/src/alpha60/src/a60-cdn-cartography.h",
+    "sha256": "95dc589681b0743bd1f5854835e2aac6801f4d055fc4283968fb1602fece04e4"
+  },
+  {
+    "path": "/home/bkoz/src/alpha60/src/a60-cdn-derived-cities.h",
+    "sha256": "e27b19ba4cb0858875643eebf254a3b5bfb8d9c11b68916b26aefea9a2ec7210"
+  },
+  {
+    "path": "/home/bkoz/src/alpha60/src/a60-cdn-layout.h",
+    "sha256": "a460138e70a67fcadf2e5633c4619f0def0de180981fc9021bb4ed99184fd096"
+  },
+  {
+    "path": "/home/bkoz/src/alpha60/src/a60-cdn-records.h",
+    "sha256": "03224dca2aeeeb1ac63933187f42a1bd724651ff25a68412726d7aef1a75abd6"
+  },
+  {
+    "path": "/home/bkoz/src/alpha60/src/a60-cdn-spherical-geometry.h",
+    "sha256": "188f25801870e2db5b8f22825d521b51580147d376539f8a0c22b8a488213816"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/Makefile",
+    "sha256": "73a3b3c5fe50c78ea7023f4e352419cb0be332ca7e09dea2ee7fd478e4cc57bd"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/contracts/print-products-v1.json",
+    "sha256": "29b02098cf0590f39cb32c485867a9dc3ca0c1c3cb99baddefc4d5503d915ca7"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_aggregate.py",
+    "sha256": "d3c162e8d244ebb25698110d319d40a6f9aaf840a4cf5acf1e49f157dad4d9ad"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_catalogs.py",
+    "sha256": "9ec1fd92933089c124bad769762f17d062721a5e8de026a7e9ba9c1323c7f90e"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_cdn.py",
+    "sha256": "a52d9ef3539abf92a21039220f1849749d6cb8303d27d919e12861fdb4da7729"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_index.py",
+    "sha256": "c9f78fc5cc1c2ddf9db28b6b7b11cf16587b91b9926c4b9635b239f341163fd0"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_japan.py",
+    "sha256": "b52627513c0d19071db1faac0cf3a5c9abaf9e90b8074e248f1487c60e4d6bbf"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_petroleum.py",
+    "sha256": "f730dc26bb3ea80cf85c8a31312166445e2e7ed1a3ef588c34357247a1247bec"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_reef_prototypes.py",
+    "sha256": "691a35eaecb740d9cd0b834a99a8ec3f763af3a135f3f7e5373b0a63b619b857"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_resource_key.py",
+    "sha256": "b4a47f68e59a06a4041a3276bd648c47a60a9c9d1b5a06d3bcc7ac185374e834"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_swarm.py",
+    "sha256": "25065e3dd1ff42e349d5ca659e26aee171e96f17ec3d7ae3a9d94652c3822ca7"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_swarm_authagraph.py",
+    "sha256": "35dd50edb451e2a214cd27d32e71fa5035f09b794ed8ec35968f6e7e962bded6"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/build_visual_annex.py",
+    "sha256": "23a5b2f2ab9256c0bd8767a00ecf80e77911b2c7f2bf8f7ec2eb25264c93d218"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/compile_swarm_authagraph.py",
+    "sha256": "41f20ddc46489be4d6a850188a7135a29d5349a1d81f3745844fde4cbddb7273"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/export_native_swarm.py",
+    "sha256": "ca1918c6565bb0cd2188d6d51974f93af4b954b5273bc1d1c848d93cdbb33c85"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/export_plates.py",
+    "sha256": "ee4753d3ba135c79197e7f10f2da29da3446ec08dba70ea85fd4e566068be34a"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/load_cdn.cc",
+    "sha256": "9aa1f804e7b7096b94ef68c8ccd9eb7274734d186dd8ed932bca3143a4884980"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/plate_tools.py",
+    "sha256": "f94d1fcbf2bcd8f382a0befc25241f5afbb829cf9eb5e73210a20cd40de47c5c"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/prepare-resources-current.py",
+    "sha256": "6067f19a004873a4f07cf0b21b304f6bcb2b2317869610e72639104f158e4ac5"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/project-points.cc",
+    "sha256": "23b3518deb265d36ed3fc8704562704a814322001e5fee1ef59c454dc332948a"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/refresh_manifest.py",
+    "sha256": "e41dea721cd3a0c8f7f8027d99337110b1ad960d28025f4c96334ad87523d21c"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/refresh_resources.py",
+    "sha256": "5a61db1b127a98129a2a9cdcc2a96f73a76bd30f3d586aaf2a4f325673ab4d8d"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/render_swarm_authagraph.cc",
+    "sha256": "0ad62a049b51bd7d667323e1a343cb7181da1f51702a1f8057104c6e11bbfabf"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/render_world.py",
+    "sha256": "1306ee3699fdd4a3b34d678d0b48d425bdb5ee2d57b759a37378ff43caed66d9"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/validate_aggregate.py",
+    "sha256": "825ee705caf04b1106f32cdf66ee99c649b6212290057a8c5c7f7391e10a3af1"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/validate_browser.py",
+    "sha256": "20025c383cf6add319c1e6cc897963ef63d3b35c64ccee25d3f25ac8f98a9a27"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/validate_delivery.py",
+    "sha256": "c3e7612c4901b0f21c1754bd96b96014d7129ce60ca8673589e1a7b96e1474e7"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/verify_pm25_enrichment.py",
+    "sha256": "372355359ade6395040f94a70e31f0dc5a30528cdaf5cbb7489dca8fdfc7fda9"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/verify_refinements.py",
+    "sha256": "2d042ce6f11152f612bbec31e5f196c5ec558edcf0fa66540f0a4d8c6c0f9f84"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/output/setouchi-triennale-2028/build/verify_swarm_authagraph.py",
+    "sha256": "02b77550bebd080a4a17a0e8e698d3e41a70366da31287ad8fb4201811d4c7f1"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/scripts/fetch-cnemc-pm25.py",
+    "sha256": "f5d701844774b5c51138188a5906b208313600e6ce9fe6bf3d4a33897fc5371f"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/scripts/fetch-itu-fiber.py",
+    "sha256": "11f44c202763f01be523e2aa603c02dffa5685496766ede72f51168ec80debee"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/scripts/fetch-openaq-pm25.py",
+    "sha256": "912123e9a002750c875eef51c690cdb4f56c34e444855d080c31e904aac0c6ea"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/scripts/fetch-soramame-pm25.py",
+    "sha256": "b25ec6c78db7361419ac39d33232b24c2c9d436e463f9de4e427af0f6ca8c7a2"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/scripts/normalize-undata-refinery.py",
+    "sha256": "571cb91f8293694ea4ead5edee1b918c90cc4f9fcd92b2a0edad66ae12d6ee09"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/scripts/prepare-asia-pm25.py",
+    "sha256": "f1d89a4c60f20b7f59b334efda80c3a627a5a27a9f28e0971d0651adb15d3253"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/scripts/prepare-petroleum-data.py",
+    "sha256": "678a6c5c1e5ead047f9e4371a9b531bf3573a0fa65ba8401cbe0566e2f787c93"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/scripts/prepare-resources-data.py",
+    "sha256": "4b9cc00782e8d6cf1c0e1cb7a6405ac9a1cfa72a6d86d874d3ba8d0cd2b29ec4"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/anthropocene-particulate-data.h",
+    "sha256": "c8195c959d7b9868570b1850070b8153f6adbc36e0f8b07a3f9f988a6b4997b4"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/anthropocene-particulate-generation.h",
+    "sha256": "700d271756e3c6df5c412479b0ca1c998c80aa2e55b0eafaf98d08ce215f1f7e"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/anthropocene-temperature-data.h",
+    "sha256": "10e336a379e30fd8b02bccda7a952486a8bc2f877844e24db37f078e4a59d354"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/anthropocene-temperature-generation.h",
+    "sha256": "79daef829b41406f1bd10bc24509cfc94d80611e69f3f189a336ecf1f6f9733f"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/astro-data.h",
+    "sha256": "d0e472d2dc2c4820b387f13d2d165d85135ac4f786993ba876f263def73e84cd"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/astro-generation.h",
+    "sha256": "433421d9e5c9f0a66d6c8681a297630e903685d46527ca9967b5159adb49d752"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/astro-observer.h",
+    "sha256": "4a74dceb7658d7c12a38cf1b0e8b9c448b0c4adbe41805708c3d15486ef253b0"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/bathymetry-hamonshu-style.h",
+    "sha256": "2819c133be7a4851941681f39646aba3f8a58707257cef4debe7628c2aae535b"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/bathymetry-roulette-style.h",
+    "sha256": "0e47b14928f6dd85b2dcf271ded1e1b2fb02a8240ebb02c710a7efab88818310"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/cloud-atmosphere-data.h",
+    "sha256": "b48a0b6b8e3b6789d2ee41a3728eee5539250a6664e71df818599191c4dc8cc7"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/cloud-atmosphere-generation.h",
+    "sha256": "29bdb911f807f2da93fb4a58ae114185d4be7ebf44dcbbd5233531e9bf1c5be2"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/fiber-synthesized-data.h",
+    "sha256": "facf841ef09b42cc14914690151577ddf306379ebd499b62c7b7caa7f55e841d"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/fiber-synthesized-generation.h",
+    "sha256": "f16d612f8389c319a704480883a996571df6f364d6984d71960922e59b28b7be"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/fuller-swarm-analysis.h",
+    "sha256": "4fa05dc9da1184c3f301a464d989a054b96b2667dbbd380e8384161dbe6c736a"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-4-slice.cc",
+    "sha256": "15341928856e3dda334f05602e42494d4f51dff1f695215b06f7da581aaff6d1"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-8-slice.cc",
+    "sha256": "41d81f85c58b70626100a369399324b0a8de018230449f22aebff74b3b59f1f3"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-anthropocene-particulate.cc",
+    "sha256": "86bdd6dbf7df0e89cd8f1c93c72733c0805e6a9caf680449ae7271933e486c7d"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-anthropocene-temperature.cc",
+    "sha256": "18c2da02f797a11cdb5f76c684fa1d40c21d7d600ede82a39b252469b22e70af"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-astro.cc",
+    "sha256": "e785c5cbe23c51899b57a634abfa3f204709777b429a12be25ed3eaa75bf59e4"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-bathymetry-hamonshu.cc",
+    "sha256": "ff558b89871c94e6debe15c8aba0fedf2fac1e386152f4906d88e08b9269eb39"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-bathymetry-roulette.cc",
+    "sha256": "470a6aa63302c1883fed175eeaf097e6e278641cda7bdb3248bf7a614a4cd1dc"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-cloud-atmosphere.cc",
+    "sha256": "4194d2d0d083b489c66218be19fde7dfdb4361372f4f001edf4e8ed9bc78147d"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-earth.cc",
+    "sha256": "24a4fdc4bfe436158c2e1f1365686b6830dcfd76da30605e488fc9db91b63ff1"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-fiber-synthesized.cc",
+    "sha256": "11157c5910b24ed46fc7de5bd7eb822f12ab58060f3f49b6519d6956bc040c66"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-geometry.cc",
+    "sha256": "3b7349c7b94435408ba93c0a78f23100a7360fe63cd91bb7f2258fe0db25d9ad"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-graticules.cc",
+    "sha256": "e5fae0c91de7ebe87bca6faf47ccdecd35c4f17e27517f041cc53e1e2626b7a7"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-myriahedral-slices.cc",
+    "sha256": "f72033befeeea6269944789c2698718cb32ca31b2a0aa477638670197d9b16a2"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-network-groundstations.cc",
+    "sha256": "44ffe4e52f67f0bcff356af0ad8acb0906509797c94496722b5be94d8a38961f"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-network-infrastructure.cc",
+    "sha256": "be102df3902a58eecff03af9d184d74c3d4b8a65959eb26caefe8807edfe4a3b"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-network-swarm.cc",
+    "sha256": "ffd4e041f8b696d44bd99dc3e3802edffcf7214cd6bb360761b569ae63e4cc61"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-orbiting.cc",
+    "sha256": "5ed6c5a2611758ed12ab089fe7d5077267b16c2809291e58c6e27447dbe1dda5"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-resources.cc",
+    "sha256": "68768a2152ba56e58728c7e4a79aa4334c293630fc42a193e9e6d25629fabd6a"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generate-water.cc",
+    "sha256": "6f58abf19c61beafc07b6247cd4843e029d1a911fff9d7721ade3b9fa72607f6"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generation-instant.h",
+    "sha256": "322857a30072f030acc7a39fb757ec033449843a8d358e7ae23a5bba2e3e8d1d"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generation-profile.h",
+    "sha256": "ac07ea40b9bea0da9c309888031c350c8b6e1d12f53ad8a86e0fb4da6359de4f"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/generation-typography.h",
+    "sha256": "b3d164da49e501125d383c9d1100b14277431fe10a34379177f4b8c330af5c3b"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/myriahedral-perspective-generation.h",
+    "sha256": "a3ba46daccc443ba2f7700ecfdcf262714c4b23405703d3ab65470f76dbbff82"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/natural-earth-generation.h",
+    "sha256": "f1251888ae391e46fff662dde0432c82e3944e7ae2d791bd0c00b4b9cadd9af4"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/network-groundstations-data.h",
+    "sha256": "3b11c3ca68cd25337e2ddcd960a99ee8efd7d58574e19ddb89555eadbf05cd11"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/network-groundstations-generation.h",
+    "sha256": "eaff1e83ff8c0ff3ef9b9eb1766b40c1f99e39f9f93e804a07ef8d06f55b62f9"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/network-infrastructure-clustering.h",
+    "sha256": "68e39186bb87d4f3b84fb66c3649977a858b67e62eddd57d08eb0104649c2249"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/network-infrastructure-data.h",
+    "sha256": "f525931c65acf22ba6bca642c78c239a61f61b4617fa0f275fda4d4f54638a88"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/network-infrastructure-generation.h",
+    "sha256": "88fbb8922e96dbed9765ea2c7280f11968916da187cd54239f5d7293ffea2696"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/network-swarm-clustering.h",
+    "sha256": "53431b0ca5cda55ca9dbe1a973abbce51a9493d28fbf4bed2eeac99b26af1a17"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/network-swarm-data.h",
+    "sha256": "57b18ae762f606d79254ddf4fc0a00ca3be7ebe6f42daf381bfc2631730919f3"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/network-swarm-generation.h",
+    "sha256": "a180ef3d6a9fa44226ac048f74de13892dd7734ef5cd66626858558799b17151"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/orbiting-data.h",
+    "sha256": "257d873859931aba8c433a0902dd4749f3eca46390a417f9a944d41f32079584"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/orbiting-generation.h",
+    "sha256": "1e91792ed5f259a2b910691409a67b9d90f4b86599c1bd6b9b160b0b771bc643"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/prepare-anthropocene-particulate.cc",
+    "sha256": "0d9db0d8ee8775fbcdf0ace9f4e12c3755633b7f1db4fea68f4be5407e9b31cb"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/prepare-anthropocene-temperature.cc",
+    "sha256": "d3a899ff64922d0389180a85afcb789702a4412ea6f4f51a7b80bac341d376bf"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/prepare-cloud-atmosphere.cc",
+    "sha256": "1fa3463f87f0f8c952a2d9c9d3edf9bfab692487cd4b32c4e62ba146dd62f7ea"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/projection-area-generation.h",
+    "sha256": "b342a0797323d99ce7a8ced465987b37ed3505c9c852264b45dbb1f39b416644"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/projection-generation-common.h",
+    "sha256": "522fbd26740fd633394d3f72b52f11206f31ce4e10d373a0e4cf5440a747c608"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/resolve-generation-profile.cc",
+    "sha256": "19742f46aaee6bbb4e1fdd67d269f947dd2736baea0a4084f6ffe10a00f716da"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/resource-colors.h",
+    "sha256": "f43d6a75481ca71ba9dac6d81b345dc7cbc4b9644fc387136f1735e5e25a07bc"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/resources-data.h",
+    "sha256": "d46be00644bb5ed7ca8ed3e5706b227c0d3c6f057054d1a9431693c8d5139026"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/resources-generation.h",
+    "sha256": "eafb57334a6fbf88c8baee6066dc1c9600083f4f78b7ad222b00a55fe4556105"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/solar-geometry.h",
+    "sha256": "1e9f79714b9eafec001e183e8dc17e441e37bae4f5b7a5eb8862d8a4e823f4c1"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/third_party/sgp4/SGP4.cpp",
+    "sha256": "2ee7ad0e8f201e8251894083fe21e33a7aace2f43c871bf04357eb44a891b06e"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.generate/third_party/sgp4/SGP4.h",
+    "sha256": "2a5ec44e059a52b3173d78d9a28bda8142b4f6497c1eb16febc2cea4b5006b0c"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/a60-carto-frame.h",
+    "sha256": "ca3a4d71d17fc8eb09be2745e8e84e63a483f8a3c2bb596a00fe78c08d1da977"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/a60-carto-projection-dymaxion.h",
+    "sha256": "68bc78344957bbe7f4c2c2a17225bdc52b765cdd5756ff4a879c0e6796e049dd"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/a60-carto-projection.h",
+    "sha256": "19234e7223a3448d6b8a779e62362dfe747090480424f2a3af998404708cd0d4"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/a60-carto.h",
+    "sha256": "83bcf32a5177720ffeed98f4e02a9bdd0da5da9acca4d00bf4e4b452fcba7411"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/a60-svg-carto-geo.h",
+    "sha256": "a2a30d26dd5e256ff125415eeb11f4f9bf38b17ab9908422785fa532afae4026"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-authagraph.h",
+    "sha256": "9263e8dfcc531538d75a7d6f895688dfe7c28525b58c1a17a5b380396fe34d88"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-cahill-keyes-functions.h",
+    "sha256": "0fc6d35e4fc36abe9fa2f18f6132cabf78ecdde8a03414fe0094b5a557589c29"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-cahill-keyes-slicing.h",
+    "sha256": "3e7e7dfe9f8a3aff52ed1182679b5d998ff917315225a60795e622ecc1f86c99"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-cahill-keyes.h",
+    "sha256": "0c3b945711e655d4dd70208457bca2f400fd6edc0869f1a1c87ad57847f56ba2"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-equal-earth.h",
+    "sha256": "75d91dd35a75ba8b82b81a44c5de09816a295cd72080cb13589601cab14a0976"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-myriahedral-perspectives.h",
+    "sha256": "156c8030e0188453d106e51ffa96190ffa6e17bc4a5a5977af6f3e37dd3e6c35"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-myriahedral-slicing.h",
+    "sha256": "f934d4c9ec1443e7a18ce6c1469f532c3e07940618afbe562430e1c1539b82bf"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-myriahedral.h",
+    "sha256": "ce206cda81e75ab454452c5858a251a720cd23900a96e42371825e8b031316f6"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-projection-geometry.h",
+    "sha256": "3261dbb198a9f971346956f025aedc2f1ff2e29133e3978eb1c7254ce983d14a"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-projection-runtime.h",
+    "sha256": "3a87548f9b7e6ddd87dacb4afb69111fdd41a5c25a4c068d703317f171e95807"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-projection-slicing.h",
+    "sha256": "4bb368dcfa2374174c52e2f16a0c7840945652e422096f3eb2661c6d94ab5386"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-star-x-functions.h",
+    "sha256": "0be0fada2707ddce635b4a1588dd3efe85b65746131d75ab9373a2fc8df0a178"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-star-x.h",
+    "sha256": "ba8fdca43592db1f9ecdbfdf99194ceb19d482bc652af2d4553a1dc00759505b"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/src.projections/cart0freak0-voronoi.h",
+    "sha256": "180f5ae23228cf2e630c661ee7adb05f3ca2c6cb0031515dc27f2c3da2fb4b1c"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/tests/test-anthropocene-temperature-generation.cc",
+    "sha256": "c6b28045f12c54876022b511b148d5745f2e250bb16541f4d1134a23fb53d8e2"
+  },
+  {
+    "path": "/home/bkoz/src/cartofreako/tests/test-resources-generation.cc",
+    "sha256": "667614737dd329bbeb2ab0e75274958d3b8bc7fd8841a063b8a8908759e8ecb5"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-film-blister-fields.h",
+    "sha256": "777d066e9588285ea36ac10efbe02c48638c311d122ed047e893839cccc6a0ff"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-film-decay-fields.h",
+    "sha256": "2ca8d4bca8fcc79a573a332d6ff37e0dd598b0daea3c52d112e3f73e393719f3"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-film-decay-variants.h",
+    "sha256": "62f3871d8b63ab38556158b71c3e5ddb64be23185d91f95d058633c79223f1ee"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-json-basics.h",
+    "sha256": "e1e58c2b00f9175112754fe457a18bd28808e885a476aa95e597e607ce953419"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-levels-contours-regions.h",
+    "sha256": "c797c4932700396bed07737eca611c2c247bc51bd9b4c38e84c37452266c481d"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-media-supercut.h",
+    "sha256": "5b2e8e262897237100d407a766a7a7499e5f3e7d94dc9f278432f8a6a7119070"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-points-cluster.h",
+    "sha256": "24509fb7f25e3b5e8357bfe39f6e6c11270eebce59d191049aafeb6faf5070e1"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-points.h",
+    "sha256": "8ad5c21656e91a4242721c3ea279e04811089ade263e982a399ef6b730f9e7b5"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-review-catalog.h",
+    "sha256": "a05d491b7eb13208732ba643a1d3eaafcc0266300074818cfd1e30f8684a053b"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-review-descriptor.h",
+    "sha256": "6f4ee68e896224da6c1ad5b9ae8ab973cc4e8c054896b721b00f0df10c2d4c03"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-review-edge-tension.h",
+    "sha256": "ba6298302961c657b91c0d036c26e622ecc31002b4cb5bb7d62d323d9aeb2b63"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-review-extra.h",
+    "sha256": "ffa7c487f1f0a74bcadc899d79d3a844f3fc7e0fc8a5392fa617956609cc1290"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-screen-receiver.h",
+    "sha256": "d7899b1a867466686e5f52c90df5834daf58d87c550a0b7a7978e9992783fa39"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-base-types.h",
+    "sha256": "a1d22d0595c52c7bb63103072a0cfc5b0a32ee47a9b0b49413de7630b7d95a0b"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-codecvt.h",
+    "sha256": "505aa7a89fb5da9b08020929b2b5e26d63a55ecee4b60a39ea6670c0c75a4f0c"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-color-band.h",
+    "sha256": "5d66732d35fca975506e8fbabd3412d8fa4fdf3d8fdf9efae584d97acd5818b5"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-color-palette.h",
+    "sha256": "708621b95e22c11ada1cfdec678890112cc6ec3bb8cb2f1217a27243bc15320b"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-color-palettes.inc",
+    "sha256": "d1473030b1ea26a76fee6b7406f00a0f275e9a9522e1823c914455fb6a3ee364"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-color-rgb-map.inc",
+    "sha256": "61f310d7d420691d8b428f226572cefce8953a5a4bc35e8beac9b5bc751feb16"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-color.h",
+    "sha256": "21d0d622ea3691dfb7c16758055f87c1a460c7d68ccf87ce980f73f41b4e522e"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-composite-and-layer-basics.h",
+    "sha256": "b4d4b7e83cecb48a939436bf029c21aad6ceb973bf766dc75125a000a98fd36c"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-constants.h",
+    "sha256": "9c9b101fb377ef00c48849aa0c038ee25264abc443e74af4260a3646438f74fb"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-curves-damped-harmonograph.h",
+    "sha256": "0d7265c47ffbf5ee2d365544ee02e78c3d42e3bd0c43006f337f3af23107b8e7"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-curves-grignani.h",
+    "sha256": "698d10db28af81f1fdc51bb618fc797ce8a50a01189e3a2757f72a8fc2997b2c"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-curves-hamonshu.h",
+    "sha256": "f974b64d19637f455898d78a4af7d1b039ee977efb1040dab215864092de4133"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-curves-roulette.h",
+    "sha256": "fa9bbcb2d168bcf43b51c13ee0d74bffbce1f3db4d4ba2ee58de085147ec8738"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-edge-tension.h",
+    "sha256": "bb0ea308f7f5ed33ec7286c3ab2ebef6436288c17bf48449d6127fcbc0768fdd"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-elements-components.h",
+    "sha256": "dfe47b0c0fb6993e9053d8a0fcc841583e5691426c77c91320e02078d8b72ed1"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-elements.h",
+    "sha256": "751c51171379c33ee0db2ad167a57b80e05cc697c35cb4e6190c5373f3a73cdd"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-film-decay-json.h",
+    "sha256": "6dcbf2cd94b6da1ae828819ecd3409b0847845ed7d439b51bffb92c2cb8e665b"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-film-decay.h",
+    "sha256": "f44705e9c9964770938481a38f1c2243da83d80698f4f274f2184a8f2fa3c208"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-fonts.h",
+    "sha256": "bfc8c6f9cdcb4fa5c0df0e0aa1cc098dabcaad8d429f8d0ac906427d0a4df8a1"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-graph-guilloche.h",
+    "sha256": "be89e44f7de558a9502ec7512ebc2adb1cdf7794fe261d50dd22f8d5327e0ff1"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-graph-json.h",
+    "sha256": "62c1bc835cbd7b2cdf842b768fc4faf9db6181f9f0d23e12a61d53494d1a7ce7"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-graph.h",
+    "sha256": "ec75c4a55bd7bf1f12cde860e7f93ee101affaac341029fbe2f610a72a2f9bbf"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-graphs-bar.h",
+    "sha256": "6a064f6a7ce1ac8544684c1179bf2f40284ca253258d5f898bbe143b79135a5e"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-graphs-chord.h",
+    "sha256": "f66eb0818f9b44bf38c8979a8e0350dc871f92ec5c65f74086de6fcae393a7e1"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-graphs-line.h",
+    "sha256": "9568d4a97de6f70cf76a8770c3d5958be4c7175bcd41b5966b71cb520b8144ab"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-graphs-matrix.h",
+    "sha256": "258f2f417b0f2e64560d24d711f7919336a8f000ad94a31bc2c0076f975f5d03"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-grid-matrix-systems.h",
+    "sha256": "a9cf4b6cb3b9a6a0581cb2a1fd2ac11d498481f020f68b91c14590b4cbff4a21"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-guilloche-json.h",
+    "sha256": "5911a21a76398a1a518eae3f332c5c4a75733efad59c41d79be2e40e083a0f8b"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-guilloche-meta.h",
+    "sha256": "e7c1eb17606e6282c3b082c4cee2861ecf23494a02b9dffebedf17c1d0136185"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-guilloche-muqarnas.h",
+    "sha256": "554532776b38723b7c48ea747fb0e9067fe0ed08b0254e97300445f660dd2f81"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-guilloche.h",
+    "sha256": "4633afefc038a885ecd14432daa193dc224422d4a423b417d5fa3847c97c6a94"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-independent-gauges.h",
+    "sha256": "7861dff5e2aeb24bf819abce521c5772870901ee6b19b2821022ef7bc83586a3"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-keyframes.h",
+    "sha256": "4906de8c70f547424510375f8854eeb3f92d1a9e969ab5ab1c25ad4d68c999a5"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-lenticular-json.h",
+    "sha256": "f79f1160e705ad3ad706ddf1c30057f8f212d74c5242156f3b063d489eb82ba5"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-lenticular.h",
+    "sha256": "f22db6977a0daa3ba0c10e2e17092fe2cce479f6c49154412eb8c021dd843b30"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-linear.h",
+    "sha256": "7bcc6928fd4672f43bf2f3d9d92fd16422061dfb96c16ededbe169983f752953"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-markers.h",
+    "sha256": "5f972d2abb46e4b33bf2f692fd7c8ad93345dd63e3c26c450d508363f5587677"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-matrix-geojson.h",
+    "sha256": "198f326611c4c7c70838d56d61d115f42c1992fb459f982d20061fbaa0dc2253"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-moire.h",
+    "sha256": "26e0ca2a021e857590218106d425f1e57e843e0c76d0d49d97e345b7beb8ac01"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-movement.h",
+    "sha256": "f03366c4f1bfd5fa2cb1927b42a3e0c0dba8dc4289ddf36f886b8f6843fbc8ef"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-polyhedral.h",
+    "sha256": "5f77966a731e518dc4a0a03563e3f50fd248cbe744855ff108a40e93a9d33c10"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-radial-arc.h",
+    "sha256": "6d4f17be2efcc4547f47aa65b5dd4c26e474fa069d7f9e19267d4ac8f4534f3d"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-radial-base.h",
+    "sha256": "999dea9bd5c8f824708aa0cacd4e5d08cca5ef4eb29369b0ee83b7bb9811b838"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-radial-direction-arc-glyph.h",
+    "sha256": "27b899fe85988d4a064c48a60a3ac4bb489d37e99ca860650e342b5bc4a1021b"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-radial-fill-hexagon.h",
+    "sha256": "ebed60cce6fde30474f5cbacafa4d64784b401487722a2f1585dd600b4cdacb9"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-radial-kusama.h",
+    "sha256": "6fdadf0560a51a29483dc774e7c11685ed3e2ba942ace5c69c25e01f56f01ce5"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-radial-swarm-metadata.h",
+    "sha256": "e6261111c8a143922e7e090181d1466454c05034ddf1aabf7c76a82783ec2877"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-radial.h",
+    "sha256": "8850d94d6d2904fde233f4b958e03db33423e6df1505f0d0184b5c88f5cee6da"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-reference-motion.h",
+    "sha256": "cc07fe3042ae76519eb2310f545cd7c3c64c4293cd2bf5cf6df08d907261f940"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-render-basics.h",
+    "sha256": "b72306b5a3deeeec44ef67d615ac28e42c40a5032c7c2ee922f4c43fc3879671"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-render-state.h",
+    "sha256": "91024f0033f8bbe2a9207355745e364cdcd067d4964cb810793e1ed96bb7fdf0"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-screen-glitch-json.h",
+    "sha256": "097fbca4bc463f45c6a87e25cdefead18ca18e100e96a632a81150ebba85dd92"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-screen-glitch.h",
+    "sha256": "f3f7c92c01d2c459d26df89765309c106f129f29539e2dbdd4e8aaf596a640d9"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-sequences.h",
+    "sha256": "03494e28874702324cc2d76d12d67d2959d8a4b540b803603376aae4246c65ab"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-surface-tension.h",
+    "sha256": "1894b4d8c5548012238cf3f39996f85f6f2e00f9eca4bd4c4a2d211bf03c34e7"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-text-overlay.h",
+    "sha256": "bf7dcd1fe155e97e9a6b42a8161670c8261ec408ed359bc541309e2980839b00"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-text-transcription-enrichment.h",
+    "sha256": "ad4c782af7344e5438c38a88adec14e17329a5a3d5a9678def5fabde4c472e80"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-video-glitch-json.h",
+    "sha256": "c6868cdf7bf9d7c46ba03db0032d16090de05ff04929d676059346ec94baaad2"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-video-glitch.h",
+    "sha256": "4f55f4259e3ad76b216075c620e3934ae91104c07b718bdc80241a469ea84ae2"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg-visualization.h",
+    "sha256": "e433035d8b7b89c3e06c8ccc0f77cc2dd6ee647b6d74661649e82bc8b74fc9a9"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-svg.h",
+    "sha256": "e26eb42761b51b2cd9f355945c7948ad80785a8df20c744a0cc6b8de2460dd07"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-swarm-metadata.h",
+    "sha256": "b97551ea84534fac23ae7293082c60c7d5bdd0cade6f7e061a04318db17dfa56"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-swarm-paired.h",
+    "sha256": "68de550444ed4f10c987d24a941d6ab2886d92d3d6ffff4f0aa2bd86aa07d368"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-swarm-series.h",
+    "sha256": "a77c6e165839caaed39f794614861744dcedd159f5ef884e3d3d898df632abba"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-swarm-transfer.h",
+    "sha256": "b53ad6acbee1194d1a2138effaecee983779d8a915c2e4cd750ccf89a2930a81"
+  },
+  {
+    "path": "/home/bkoz/src/izzi/src/izzi-tables.h",
+    "sha256": "6c849cb02cdda4be9e8753e16c00c0d8b51496020a7d195909cc0f1228dbf478"
+  }
+]

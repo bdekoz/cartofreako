@@ -93,37 +93,34 @@ add_fiber_routes(generation::projection_document& document,
       const bool is_current_only = !is_historical
         && route.snapshot_membership
              == dataset.profile.default_snapshot + "-only";
-      svg::style style;
+      // Map coordinates are inches: half a typographic point is 0.5 / 72.
+      const svg::style style
+        = {svg::color::none, 0, {0, 0, 0}, 0.75, 0.5 / 72.0};
       std::string attributes = route_attributes(route);
       if (is_historical)
         {
-          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.0115};
           attributes += " stroke-dasharray=\"0.0225 0.025\"";
           historical.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
       else if (route.planned)
         {
-          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.0115};
           attributes += " stroke-dasharray=\"0.0425 0.0275\"";
           planned.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
       else if (is_activated)
         {
-          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.0115};
           activated.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
       else if (is_current_only)
         {
-          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.0115};
           current_only.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
       else
         {
-          style = {svg::color::none, 0, {0, 0, 0}, 0.80, 0.0115};
           shared.add_element(svg::make_path(
             path_data, style, "", true, attributes));
         }
@@ -195,28 +192,83 @@ display_snapshot(std::string value)
 }
 
 inline void
+add_itu_routes(generation::projection_document& document,
+               const generation::projection_context& context,
+               const fiber_dataset& dataset)
+{
+  const fs::path path = dataset.profile.directory / "itu/terrestrial-fiber.geojson";
+  if (!fs::exists(path))
+    return;
+  const rj::Document source = infrastructure::read_json_document(path);
+  const rj::Value& features = infrastructure::required_member(source, "features", path.string());
+  infrastructure::infrastructure_require(features.IsArray(), "ITU features must be an array");
+  svg::group_element layer;
+  layer.start_element("network-fiber-itu-terrestrial");
+  layer.add_title("ITU public terrestrial fibre routes; Kelly green; 0.5 pt at 75 percent opacity");
+  std::set<std::size_t> identifiers;
+  for (const auto& feature : features.GetArray())
+    {
+      const auto& properties = infrastructure::required_member(feature, "properties", "ITU feature");
+      const auto& geometry = infrastructure::required_member(feature, "geometry", "ITU feature");
+      const std::size_t id = infrastructure::required_size(properties, "id", "ITU properties");
+      infrastructure::infrastructure_require(identifiers.insert(id).second, "Duplicate ITU route ID");
+      const std::string kind = infrastructure::required_string(properties, "type_inf", "ITU properties");
+      infrastructure::infrastructure_require(kind.starts_with("Fibre "), "Non-fibre ITU feature");
+      infrastructure::infrastructure_require(
+        infrastructure::required_string(geometry, "type", "ITU geometry") == "MultiLineString",
+        "ITU geometry must be MultiLineString");
+      const auto& lines = infrastructure::required_member(geometry, "coordinates", "ITU geometry");
+      infrastructure::infrastructure_require(lines.IsArray(), "ITU route coordinates must be an array");
+      std::string data;
+      for (const auto& line : lines.GetArray())
+        {
+          infrastructure::infrastructure_require(line.IsArray() && line.Size() >= 2, "Short ITU route");
+          std::vector<generation::geographic_point> points;
+          for (const auto& point : line.GetArray())
+            points.push_back(infrastructure::parse_point_coordinates(point, "ITU route point"));
+          data += infrastructure::project_open_path(context, points);
+        }
+      infrastructure::infrastructure_require(!data.empty(), "ITU route failed projection");
+      std::string attrs = "data-itu-fiber-route=\"true\" data-itu-id=\"" + std::to_string(id)
+        + "\" data-route-type=\"" + infrastructure::xml_escape(kind) + "\"";
+      if (kind != "Fibre Operational")
+        attrs += kind == "Fibre Under Construction"
+          ? " stroke-dasharray=\"0.07 0.025\"" : " stroke-dasharray=\"0.025 0.025\"";
+      layer.add_element(svg::make_path(data,
+        {svg::color::none, 0, {76, 187, 23}, 0.75, 0.5 / 72.0},
+        "itu-fiber-" + std::to_string(id), true, attrs));
+    }
+  layer.finish_element();
+  document.add_element(layer);
+}
+
+inline void
 add_fiber_legend(generation::projection_document& document,
                  const generation::projection_context& context,
                  const fiber_dataset& dataset)
 {
-  const std::string title_text = "NETWORK FIBER / "
-    + display_snapshot(dataset.profile.default_snapshot) + " DEFAULT";
+  const bool has_itu = fs::exists(dataset.profile.directory / "itu/terrestrial-fiber.geojson");
+  const std::string title_text = has_itu ? "NETWORK FIBER / OCEAN + LAND"
+    : "NETWORK FIBER / " + display_snapshot(dataset.profile.default_snapshot) + " DEFAULT";
   const std::string counts_text
     = std::to_string(dataset.current_routes) + " current route features  |  "
       + std::to_string(dataset.historical_routes)
       + " unmatched 2022-only routes  |  "
       + std::to_string(dataset.landings.size()) + " cleaned-union landings";
   const std::string semantics_text
-    = "green = current/activated  ·  black dashed = planned  ·  black dotted = 2022-only";
+    = has_itu ? "Kelly green = ITU land fibre  |  black = submarine cables  |  0.5 pt / 75%"
+      : "black solid = current  ·  black dashed = planned  ·  black dotted = 2022-only";
   const std::string note_text
     = "snapshot-only ≠ construction or decommission";
-  const std::string attribution_text = "TeleGeography map data · CC BY-NC-SA 3.0";
+  const std::string attribution_text = has_itu
+    ? "ITU BBmaps 29 Oct 2026; submarine snapshots 2022 / 5 Aug 2026 · TeleGeography CC BY-NC-SA 3.0"
+    : "TeleGeography map data · CC BY-NC-SA 3.0";
   constexpr double page_margin = 0.573;
   const double panel_width = std::clamp(
     generation::legend_text_width(title_text, 0.42) + 2 * page_margin,
     5.0,
     context.map_frame.width() - 0.6);
-  constexpr double panel_height = 1.88;
+  const double panel_height = has_itu ? 2.12 : 1.88;
   svg::group_element layer;
   layer.start_element("network-fiber-legend-and-provenance",
     generation::bottom_right_legend_transform(
@@ -245,12 +297,16 @@ add_fiber_legend(generation::projection_document& document,
     {panel_width - page_margin, 1.24}, body);
   svg::styled_text(layer, note_text,
     {panel_width - page_margin, 1.48}, body);
+  if (has_itu)
+    svg::styled_text(layer,
+      "ITU: solid operational; dash construction; dots planned/proposed. Black: dash planned; dots 2022-only.",
+      {panel_width - page_margin, 1.72}, body);
   svg::typography attribution = infrastructure::infrastructure_typography(
     0.12, {87, 82, 74});
   attribution._M_anchor = svg::typography::anchor::end;
   attribution._M_align = svg::typography::align::right;
   svg::styled_text(layer, attribution_text,
-    {panel_width - page_margin, 1.72}, attribution);
+    {panel_width - page_margin, has_itu ? 1.96 : 1.72}, attribution);
   layer.finish_element();
   document.add_element(layer);
 }
@@ -309,6 +365,7 @@ generate(const generation::projection_spec& spec,
   add_fiber_background(document, context);
   natural_earth::initialize_gdal();
   infrastructure::add_subdued_land(document, context);
+  add_itu_routes(document, context, dataset);
   add_fiber_routes(document, context, dataset);
   add_fiber_landings(document, context, dataset);
   add_fiber_legend(document, context, dataset);
