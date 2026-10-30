@@ -173,9 +173,9 @@ decision history; the following describes the final files.
 | `index.html` | Searchable review of 38 subjects, paired world/Japan maps and expandable legend/source sheets. |
 | `maps/{world,japan}/{svg,pdf,png,preview}/` | 76 legend-free cartographic/data sheets. |
 | `legends/{world,japan}/{svg,pdf,png,preview}/` | 76 separate legends, each with its data bibliography. Files pair as `network-fiber.svg` and `network-fiber-legend.svg`, for example. |
-| `setouchi-tri-explore-v2-world.pdf` | 79 pages: CARTOFREAKO/date title, World edition notes and index, then 38 world map/legend-bibliography pairs. |
-| `setouchi-tri-explore-v2-japan.pdf` | 79 pages: CARTOFREAKO/date title, Japan edition notes and index, then 38 Japan map/legend-bibliography pairs. |
-| `setouchi-tri-explore-v2.pdf` | Combined 155-page edition with the same title, edition notes and index, then world map, world legend/sources, Japan map and Japan legend/sources for each subject. No integrated bibliography is appended. |
+| `setouchi-tri-explore-v2-world.pdf` | 75 pages: CARTOFREAKO/date title, World edition notes and index, then 36 world map/legend-bibliography pairs. Bathymetry Roulette and Hamonshu are omitted. |
+| `setouchi-tri-explore-v2-japan.pdf` | 75 pages: CARTOFREAKO/date title, Japan edition notes and index, then 36 Japan map/legend-bibliography pairs. Bathymetry Roulette and Hamonshu are omitted. |
+| `setouchi-tri-explore-v2.pdf` | Combined 147-page edition with the same 36-subject selection, title, edition notes and index, then world map, world legend/sources, Japan map and Japan legend/sources for each subject. No integrated bibliography is appended. |
 | `proofs/43p5-antarctica-left/index.html` | Current fiber/groundstation proof, with a four-sheet `setouchi-network-separated-proof.pdf`. |
 | `contact-sheets/` | Eight world/Japan contact sheets and their combined PDF. |
 | `plate-source-bibliography.{json,md,html,pdf}` | Supplementary source audit copies, separate from the aggregate. |
@@ -319,7 +319,7 @@ sheet and two black Atkinson Hyperlegible Bold lines: `CARTOFREAKO` and
 font sizes are approximately **429.69 pt** and **563.21 pt**, respectively.
 There is no footer, page number or additional wording on the title sheet.
 
-The World and Japan files each contain **79 pages**: title, edition notes,
+The initial World and Japan files each contained **79 pages**: title, edition notes,
 scope-specific index, then 38 cartography/data and legend/data bibliography
 pairs. Their first subject occupies PDF pages 4–5 and the last occupies
 78–79. The combined edition is retained at the existing filename with
@@ -341,3 +341,30 @@ order and corrected index references. First, temperature and final legend
 pages match the corresponding standalone PDFs. The World and Japan title
 pages render identically, and Atkinson Bold is embedded. All 858 local
 review links resolve. The individual sheet-export manifest is unchanged.
+
+## Remove the two bathymetry studies from the PDFs — 2026-10-30
+
+The human requested removal of **Bathymetry Roulette** and **Bathymetry
+Hamonshu** from both the World and Japan PDFs. The PDF selection now omits
+`bathymetry-roulette` (plate 05) and `bathymetry-hamonshu` (plate 06), together
+with their separate legend/data bibliography sheets. Each scope has
+**36 map/legend pairs and 75 pages** including the three introductory pages.
+The combined PDF uses the same selection and has **147 pages**.
+
+The PDF indexes are rebuilt around the selected subjects. Plate identifiers
+remain stable, with 05 and 06 omitted: the first subject occupies pages 4–5
+and plate 38 ends on pages 74–75 in each scope. The oversized CARTOFREAKO/date
+title and the approved two-sheet format remain in use. The source masters
+and bibliography retain all 38 subjects; the review marks the two excluded
+studies as outside the current PDF editions.
+
+The exclusion is saved in `scripts/build-setouchi-revision-review.py`, and
+the revision manifest records the included stems and both excluded subjects.
+Future `make setouchi-st2` builds use this selection automatically.
+
+Verification passed for the 75-page World and Japan files and the 147-page
+combined file. Neither excluded title appears in the PDFs, all remaining
+legend pages match their standalone masters, and all index page references
+match the selected sequence. The title/date and individual sheet exports
+are preserved, and all 858 local review links resolve. The receipt is
+`sources/pdf-selection-validation.json`.

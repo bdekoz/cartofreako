@@ -498,9 +498,10 @@ attribution and physical print-proof reviews remain the production gates.
 The [second development pass](20261030_setouchi_triennale_explore_2.md)
 is implemented in `output/setouchi-triennale-2028-st2/`. It contains 76
 legend-free maps and 76 separate legend sheets, each carrying its data
-bibliography. Separate World and Japan PDFs each have 79 pages, including
+bibliography. Separate World and Japan PDFs each have 75 pages, including
 the requested **CARTOFREAKO / 2026-10-30** title page, edition notes and plate
-index. The combined 155-page `setouchi-tri-explore-v2.pdf` places each legend
+index and 36 map/legend pairs. Bathymetry Roulette and Bathymetry Hamonshu
+are excluded from the PDFs. The combined 147-page `setouchi-tri-explore-v2.pdf` places each legend
 immediately after its map and has no appended bibliography. The
 [source bibliography](../pages/gallery/setouchi-2028-bibliography.md) also
 provides a searchable documentation copy and checksum ledger.

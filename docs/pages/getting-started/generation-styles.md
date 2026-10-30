@@ -168,7 +168,10 @@ result. It reuses the recorded observations; it does not fetch new data.
 The saved presentation settings are:
 
 - Separate map and legend/source sheets for all 38 world/Japan pairs.
-- Separate World and Japan PDFs, each with 79 pages. Both start with a
+- Separate World and Japan PDFs, each with 75 pages and 36 map/legend pairs.
+  Bathymetry Roulette and Bathymetry Hamonshu, including their legend/source
+  sheets, are excluded from the PDFs. The source plate identifiers stay
+  fixed, so 05 and 06 are omitted from the indexes. Both PDFs start with a
   44-inch title sheet containing only `CARTOFREAKO` and the date, in bold
   type independently fitted to the 43.5-inch printable width. The build date
   defaults to the current date in Los Angeles; set
@@ -187,7 +190,7 @@ The saved presentation settings are:
   legend/sources for each subject. No bibliography is appended at the end.
 
 The separate PDFs are `setouchi-tri-explore-v2-world.pdf` and
-`setouchi-tri-explore-v2-japan.pdf`; the combined 155-page edition remains
+`setouchi-tri-explore-v2-japan.pdf`; the combined 147-page edition remains
 `setouchi-tri-explore-v2.pdf`. Each edition has its own page index following
 the title page and edition notes. Individual sheet numbering stays 01–38.
 

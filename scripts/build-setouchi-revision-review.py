@@ -14,6 +14,7 @@ from legend_informatics import ROOT, FONT_DIR, SUFFIX, WIDTH, HEIGHT, digest, re
 from setouchi_delivery import STANDARD_FILES
 
 FRONT_MATTER_PAGES = 3
+PDF_EXCLUDED_STEMS = frozenset({'bathymetry-roulette', 'bathymetry-hamonshu'})
 
 
 def page_count(path):
@@ -121,8 +122,11 @@ def build(output, cover_date):
     from reportlab.lib.utils import ImageReader
     book=json.loads((output/'plate-source-bibliography.json').read_text())
     entries=book['entries']
-    aggregate_pages=FRONT_MATTER_PAGES+4*len(entries)
-    scope_pages=FRONT_MATTER_PAGES+2*len(entries)
+    excluded=[e for e in entries if e['stem'] in PDF_EXCLUDED_STEMS]
+    assert {e['stem'] for e in excluded}==PDF_EXCLUDED_STEMS
+    pdf_entries=[e for e in entries if e['stem'] not in PDF_EXCLUDED_STEMS]
+    aggregate_pages=FRONT_MATTER_PAGES+4*len(pdf_entries)
+    scope_pages=FRONT_MATTER_PAGES+2*len(pdf_entries)
     exports=json.loads((output/'sources/sheet-export-manifest.json').read_text())['records']
     assert len(entries)==38 and len(exports)==152
     by_key={(r['stem'],r['scope'],r['kind']):r for r in exports}
@@ -150,12 +154,13 @@ def build(output, cover_date):
     html=['<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">',
           '<title>Setouchi 2028 — ST2 review</title><style>body{font:18px/1.5 system-ui;color:#292722;background:#faf9f6;margin:0;padding:2rem}main,header{max-width:1800px;margin:auto}h1,h2{line-height:1.15}h1{font-size:clamp(2rem,5vw,4rem)}a{color:#503b75}p{max-width:85ch}.controls{display:flex;gap:1.5rem;align-items:end;flex-wrap:wrap;padding:1rem;background:#fff;border:1px solid #ddd;position:sticky;top:0;z-index:2}input,select{font:inherit;padding:.5rem;max-width:100%;box-sizing:border-box}label{display:grid;gap:.25rem}.pair{border-top:1px solid #ccc;padding:2rem 0}.plates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}figure{margin:0;background:white;border:1px solid #ddd}img{display:block;width:100%;height:auto}figcaption{padding:.75rem}.downloads{display:flex;gap:1rem;flex-wrap:wrap}code{overflow-wrap:anywhere}small{display:block;color:#555}.note{padding:1rem;border-left:4px solid #503b75;background:white}button{font:inherit} [hidden]{display:none!important}@media(max-width:800px){body{padding:1rem}.plates{grid-template-columns:1fr}.controls{position:static}}</style>',
           '<header><p>CARTOFREAKO / SETOUCHI TRIENNALE 2028</p><h1>ST2 plate review</h1><p>38 world/Japan pairs: 76 legend-free maps and 76 separate legend sheets. Each legend contains its data bibliography. The outlined plate number is 36 pt bold, with white fill and a fully opaque black 0.5 pt stroke.</p>',
-          f'<p class="note"><strong>Separate World and Japan PDFs:</strong> <a href="setouchi-tri-explore-v2-world.pdf">World — {scope_pages} pages</a> · <a href="setouchi-tri-explore-v2-japan.pdf">Japan — {scope_pages} pages</a>. Each opens with CARTOFREAKO and the date in large bold type, then edition notes, an index and all 38 cartography/data sheets paired with their separate legend/data bibliography sheets.</p>',
+          f'<p class="note"><strong>Separate World and Japan PDFs:</strong> <a href="setouchi-tri-explore-v2-world.pdf">World — {scope_pages} pages</a> · <a href="setouchi-tri-explore-v2-japan.pdf">Japan — {scope_pages} pages</a>. Each opens with CARTOFREAKO and the date in large bold type, then edition notes, an index and {len(pdf_entries)} cartography/data sheets paired with their separate legend/data bibliography sheets. Bathymetry Roulette and Bathymetry Hamonshu are omitted from the PDFs.</p>',
           f'<p class="downloads"><a href="setouchi-tri-explore-v2-world.pdf">World PDF</a><a href="setouchi-tri-explore-v2-japan.pdf">Japan PDF</a><a href="setouchi-tri-explore-v2.pdf">Combined PDF — {aggregate_pages} pages</a><a href="proofs/43p5-antarctica-left/index.html">Approved network sample</a><a href="plate-source-bibliography.json">Source ledger</a><a href="contact-sheets/contact-sheets.pdf">Contact sheets</a><a href="prototypes/africa-framing/index.html">Earlier framing comparisons</a><a href="sources/sheets-validation.json">Validation</a></p>',
           '<p>Map image width is 43.5 inches on a 44 × 19.052559-inch sheet, with proportional scaling and centered margins. The world fiber and groundstation maps use the approved horizontal move; other map registrations are retained. PDF and SVG are full-size masters; PNGs are 300 dpi. Print at actual size to evaluate physical line weights.</p>',controls,'</header><main>']
     for e in entries:
         title=f"{e['ordinal']:02d} · {e['title']}"
-        html.append(f'<section class="pair" data-search="{escape((e["stem"]+" "+e["title"]).lower(),quote=True)}" id="{e["stem"]}"><h2>{escape(title)}</h2><p>{escape(e["interpretation"])}</p><p><a href="plate-source-bibliography.html#plate-{e["ordinal"]:02d}">Sources, dates and class definitions</a></p><div class="plates">')
+        selection_note='<p><strong>Not included in the current PDF editions.</strong></p>' if e['stem'] in PDF_EXCLUDED_STEMS else ''
+        html.append(f'<section class="pair" data-search="{escape((e["stem"]+" "+e["title"]).lower(),quote=True)}" id="{e["stem"]}"><h2>{escape(title)}</h2>{selection_note}<p>{escape(e["interpretation"])}</p><p><a href="plate-source-bibliography.html#plate-{e["ordinal"]:02d}">Sources, dates and class definitions</a></p><div class="plates">')
         for scope in ('world','japan'):
             html.append(f'<figure data-scope="{scope}"><a href="{path(e,scope,"png")}"><img loading="lazy" width="2200" height="953" src="{path(e,scope,"preview")}" alt="{escape(title)} — {scope}"></a><figcaption><strong>{scope.title()}</strong><span class="downloads">'+
                         ' '.join(f'<a href="{path(e,scope,kind)}">{label}</a>' for kind,label in [('svg','SVG'),('pdf','PDF'),('png','300 dpi PNG')])+
@@ -201,9 +206,9 @@ def build(output, cover_date):
     for scope in ('world','japan',None):
         suffix='-'+scope if scope else ''
         cover=output/'sources'/('revision-cover'+suffix+'.pdf')
-        introduction(cover,entries,cover_date,scope)
+        introduction(cover,pdf_entries,cover_date,scope)
         scopes=(scope,) if scope else ('world','japan')
-        documents=[title,cover]+[output/path(e,s,'pdf',sheet) for e in entries for s in scopes for sheet in ('map','legend')]
+        documents=[title,cover]+[output/path(e,s,'pdf',sheet) for e in pdf_entries for s in scopes for sheet in ('map','legend')]
         target=output/('setouchi-tri-explore-v2'+suffix+'.pdf')
         temporary=target.with_suffix('.tmp.pdf')
         subprocess.run(['pdfunite',*[str(p) for p in documents],str(temporary)],check=True)
@@ -211,12 +216,15 @@ def build(output, cover_date):
         assert sum(page_count(p) for p in documents)==expected
         assert page_count(temporary)==expected
         temporary.replace(target)
-        editions[scope or 'combined']={'pdf':str(target.relative_to(output)),'pages':expected,
+        editions[scope or 'combined']={'pdf':str(target.relative_to(output)),'pages':expected,'subjects':len(pdf_entries),
             'contents':[{'path':str(p.relative_to(output)),'pages':page_count(p)} for p in documents]}
         print(f'Built {scope or "combined"} PDF: {expected} pages.',flush=True)
     products=[output/'index.html',*[output/e['pdf'] for e in editions.values()],title,output/STANDARD_FILES,output/'plate-source-bibliography.json',output/'plate-source-bibliography.pdf',
               output/'plate-source-bibliography.html',contact/'contact-sheets.pdf']
     manifest={'edition':'Setouchi 2028 ST2','plate_pairs':38,'maps':76,'legend_source_sheets':76,'aggregate_pages':aggregate_pages,
+              'pdf_subjects':len(pdf_entries),
+              'pdf_selection':{'included_stems':[e['stem'] for e in pdf_entries],
+                               'excluded':[{'stem':e['stem'],'ordinal':e['ordinal'],'title':e['title']} for e in excluded]},
               'title_page':title_settings,
               'scope_editions':{scope:editions[scope] for scope in ('world','japan')},
               'aggregate_contents':editions['combined']['contents'],
