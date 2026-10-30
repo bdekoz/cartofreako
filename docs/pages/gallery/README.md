@@ -8,6 +8,12 @@ title: Cartofreako visual gallery
 
 # Visual gallery
 
+For the latest complete **Setouchi 2028 world and Japan plates**, open the
+[live review gallery](https://situationshipin.space/review/cartofreako-setouchi-2028-20261030/).
+It pairs 38 subjects across 76 plates, with search, zoom and saved feedback.
+The [review guide](setouchi-2028.md) covers the updated visualizations, how to
+return notes and where to find the print deliverables.
+
 The selected image backend ({{ backend_label }}) contains 33 standard
 whole-map passes in each of six projections. The contact sheets present 32
 plates in one canonical order on the top-of-tree snapshot (31 standard passes

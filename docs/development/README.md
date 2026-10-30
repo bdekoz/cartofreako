@@ -7,6 +7,7 @@ title: Development records
 
 [Documentation index](../pages/README.md) · [Historical records](../pages/history/README.md)
 
+- [Setouchi 2028 delivery, visual revisions and human review steps](20261029_setouchi_triennale_explore.md) · [World/Japan review guide](../pages/gallery/setouchi-2028.md)
 - [Stage 12 implementation](20260815_stage-12.md)
 - [Stage 13 convergence record](20260815_stage-13.md)
 - [Stage 14 convergence record](20260815_stage-14.md)

@@ -438,6 +438,10 @@ own dates and provenance; applying the defaults does not imply new observations.
 
 ### World and Japan web review — 2026-10-30
 
+The [review guide](../pages/gallery/setouchi-2028.md) is linked from the project
+homepage, repository README, documentation index and visual gallery. It gives
+reviewers the current collection, visual changes and feedback instructions.
+
 The [Setouchi review gallery](https://situationshipin.space/review/cartofreako-setouchi-2028-20261030/)
 pairs all **38 world plates and 38 Japan detail plates** from the latest
 complete delivery. It is also listed in the site's

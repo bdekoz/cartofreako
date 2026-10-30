@@ -24,6 +24,12 @@ standalone Equal Earth forward/reverse support, neutral PROJ/D3 comparison
 fixtures, and [five local positioning and slice studies](docs/development/20260815_equal-earth-positioning-speculations-v01.md)
 without changing the six-family release runtime.
 
+Review the latest complete **Setouchi 2028 world/Japan edition** in the
+[live gallery](https://situationshipin.space/review/cartofreako-setouchi-2028-20261030/):
+38 paired subjects, 76 zoomable plates and downloadable feedback. The
+[review guide](docs/pages/gallery/setouchi-2028.md) explains the visual changes,
+feedback workflow, source inventory and print deliverables.
+
 The top-level directories separate implementation, generation, verification,
 and artifacts:
 

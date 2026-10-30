@@ -19,6 +19,7 @@ anthropocene, and resource layers.</p>
 | Need | Go to |
 | --- | --- |
 | Browse the maps | [Visual gallery](docs/pages/gallery/README.md) |
+| Review the latest world and Japan plates | [Live Setouchi gallery](https://situationshipin.space/review/cartofreako-setouchi-2028-20261030/) · [Review guide](docs/pages/gallery/setouchi-2028.md) |
 | Build and generate artifacts | [Build and generated artifacts](docs/pages/getting-started/build.md) |
 | Track releases and preservation | [Releases and preservation](docs/pages/releases/README.md) |
 

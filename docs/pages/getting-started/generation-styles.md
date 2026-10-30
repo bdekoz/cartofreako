@@ -144,3 +144,5 @@ The [world and Japan review gallery](https://situationshipin.space/review/cartof
 shows the complete Setouchi edition as 38 plate pairs, with zoomable screen
 copies and downloadable feedback. It provides a visual reference for these
 defaults; source dates remain those recorded in the delivery.
+The [review guide](../gallery/setouchi-2028.md) explains the feedback workflow,
+screen copies, print deliverables and source inventory.

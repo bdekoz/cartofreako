@@ -9,6 +9,11 @@ Use the [visual gallery](gallery/README.md) to browse the release first. This pa
 the compact route into building, projection mathematics, pass semantics,
 browser integration, verification, and preservation.
 
+The [Setouchi 2028 review guide](gallery/setouchi-2028.md) leads to the
+[live world/Japan gallery](https://situationshipin.space/review/cartofreako-setouchi-2028-20261030/),
+with 38 paired subjects, 76 plates and downloadable review notes. It records
+the 2026-10-30 edition, its visual changes, source inventory and print files.
+
 The gallery serves the selected image backend: the committed top-of-tree
 snapshot under `assets.tot/` (the live default) or the immutable v14 AAO
 release, both containing 217 standard products across 33 pass IDs, including
