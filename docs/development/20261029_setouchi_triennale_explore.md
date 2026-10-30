@@ -434,3 +434,49 @@ receipts remain frozen; these defaults govern subsequent regenerations.
 reuse the defaults. The existing venue, attribution and physical print-proof
 reviews above remain the next production steps. Source refreshes retain their
 own dates and provenance; applying the defaults does not imply new observations.
+
+
+### World and Japan web review — 2026-10-30
+
+The [Setouchi review gallery](https://situationshipin.space/review/cartofreako-setouchi-2028-20261030/)
+pairs all **38 world plates and 38 Japan detail plates** from the latest
+complete delivery. It is also listed in the site's
+[Proofs catalog](https://situationshipin.space/proofs.html). Search and scope
+controls support paired, world-only and Japan-only viewing. Each plate opens
+a zoomable image and an individual review form; the collection can download
+all saved decisions and notes as one JSON file. Notes stay in the reviewer's
+browser until downloaded or submitted through the existing review workflow.
+
+Review images are **3,840 × 1,663 lossless WebP**, downsampled from the verified
+13,200 × 5,716 PNG masters. These are screen review copies; the existing
+300 dpi masters and aggregate PDF remain the print deliverables. The published
+[source inventory](https://situationshipin.space/review/media/cartofreako-setouchi-2028-20261030/plates.json)
+records every master and review-image SHA-256, source caption and dimensions.
+It identifies Cartofreako commit
+`385650cfd88f8596134b787cc87bcee59b171389` and delivery-manifest SHA-256
+`89ec09e943a2425ae488a5e04ff43898f7be2ac741e9153fc007d531118f05b9`.
+The frozen delivery itself was not modified for publication.
+
+The site implementation is commit
+`e3d0e5b03d5e776dc65e07b300052c3578749e08` in
+`bdekoz/situationshipin.space`. Its preparation and publication scripts retain
+the hash checks and regenerate the gallery from a complete delivery. Existing
+review entries are preserved. The new screen review package adds about
+60 MiB; the site's total review payload is about 251 MiB within its updated
+256 MiB cap.
+
+The [Pages deployment](https://github.com/bdekoz/situationshipin.space/actions/runs/41106927988)
+completed successfully. Live verification fetched **308 files**, including all
+76 full images, 76 thumbnails and 76 individual review pages with their
+manifests: every response was HTTP 200 and matched its prepared SHA-256.
+Desktop (1,440 px) and phone (390 px) browser checks passed for image loading,
+search, scope filters, note persistence, combined feedback download and the
+Proofs catalog link, with no horizontal overflow or script errors. Saved
+feedback with stale image hashes is excluded from the current collection.
+
+**Human review and next steps:** review the world and Japan companions in the
+gallery, save per-plate decisions and download the combined notes for the next
+revision. In particular, review both swarm resolution bands separately and
+check the enriched particulate coverage and thin ITU routes at both scales.
+Public availability does not approve an individual plate. The existing venue,
+attribution and physical print-proof reviews remain the production gates.

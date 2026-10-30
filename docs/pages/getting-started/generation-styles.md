@@ -139,3 +139,8 @@ between an unsplit swarm fixture and the ordered-layer exporter.
 The reviewed Setouchi delivery and its receipts remain a frozen edition.
 Future source refreshes use these defaults; source updates do not require
 reapplying exhibition-specific styling scripts.
+
+The [world and Japan review gallery](https://situationshipin.space/review/cartofreako-setouchi-2028-20261030/)
+shows the complete Setouchi edition as 38 plate pairs, with zoomable screen
+copies and downloadable feedback. It provides a visual reference for these
+defaults; source dates remain those recorded in the delivery.
