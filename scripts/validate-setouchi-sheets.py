@@ -16,6 +16,7 @@ from lxml import etree as E
 from PIL import Image
 from antarctica_inset import subpaths
 from legend_informatics import ROOT,WIDTH,HEIGHT,digest
+from setouchi_delivery import standard_files
 
 
 class Payload(xml.sax.ContentHandler):
@@ -149,6 +150,9 @@ def main():
         print('validated',kind,scope,stem,flush=True);return result
     with ThreadPoolExecutor(max_workers=2) as executor:records=list(executor.map(check,manifest['records']))
     receipt={'status':'passed','maps':76,'legend_source_sheets':76,'exports_checked':not args.skip_exports,'records':records}
+    if not args.skip_exports:
+        publication=standard_files(out,check=True)
+        receipt['standard_plate_files_checked']=publication['files']
     (out/'sources'/('sheets-validation-svg.json' if args.skip_exports else 'sheets-validation.json')).write_text(json.dumps(receipt,indent=2)+'\n')
     print('All 152 sheets passed.',flush=True)
 

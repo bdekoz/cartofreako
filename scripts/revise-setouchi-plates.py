@@ -14,6 +14,7 @@ from pathlib import Path
 from xml.sax.saxutils import XMLGenerator, quoteattr
 
 from legend_informatics import E, ROOT, NS, WIDTH, HEIGHT, SUFFIX, digest, el, text, save, legend_group, register_fonts
+from setouchi_delivery import COMPOSITION, migrate_composition
 
 REFERENCE = ROOT/'assets.static/legend-informatics/resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.legend-rework.svg'
 PALETTES = {
@@ -350,6 +351,7 @@ def main():
     args.output.mkdir(parents=True,exist_ok=True)
     if not (args.output/'.gitignore').exists():
         (args.output/'.gitignore').write_text('# Local generated print and review delivery.\n*\n')
+    migrate_composition(args.output)
     plan=json.loads((args.delivery/'sources/generation-plan.json').read_text())
     resources=json.loads((args.delivery/'sources/data/resources/resources-profile.json').read_text())
     catalog=[];records=[]
@@ -361,7 +363,7 @@ def main():
         catalog.append(encoded)
         for scope in ('world','japan'):
             name=item['stem']+SUFFIX+('-japan' if scope=='japan' else '')+'.svg'
-            source=args.delivery/'plates'/scope/'svg'/name;target=args.output/'plates'/scope/'svg'/name
+            source=args.delivery/'plates'/scope/'svg'/name;target=args.output/COMPOSITION/'plates'/scope/'svg'/name
             target.parent.mkdir(parents=True,exist_ok=True)
             if not m['has_legend'] and scope=='world':
                 shutil.copyfile(source,target)

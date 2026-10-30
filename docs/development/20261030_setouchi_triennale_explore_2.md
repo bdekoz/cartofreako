@@ -207,9 +207,10 @@ independently. Its deliberate displacement is explicit on the corresponding
 legend sheets. All other land geometry and all network data are preserved.
 The approved original groundstation SVG's local edits were retained.
 The earlier `proofs/43p5-cyclic/` files and `prototypes/africa-framing/`
-comparisons remain historical proofs; `plates/` contains intermediate
-combined sheets. Use `maps/`, `legends/` and the current review index for
-this edition.
+comparisons remain historical proofs; `plates/` contained intermediate
+combined sheets in the initial handoff. The standard-filename correction
+below moves those intermediates under `sources/composition/`; `plates/`
+now contains the approved separate map and legend files as well.
 
 ### Verification and reproduction
 
@@ -245,8 +246,10 @@ and its JSON ledger are linked from the Cartofreako gallery documentation.
 
 ### Remaining human review and next steps
 
-1. Review the current four-sheet network proof and approve the consolidated
-   Antarctica placement and the separate legend/source layout.
+1. **Approved:** the human accepted the network proof and confirmed that its
+   separate cartography/data and legend/data bibliography sheets apply to
+   every world and Japan plate. The standard-filename correction below
+   addresses the combined export found during that review.
 2. Print representative map and legend sheets at actual size. Check the
    proportional line weights, dense particulate bibliography and outlined
    36 pt plate number, along with the existing 5% swarm overprinting review.
@@ -258,3 +261,48 @@ and its JSON ledger are linked from the Cartofreako gallery documentation.
 
 No further source acquisition or account access is needed to review this
 revision. The first delivery remains available with its original receipts.
+
+## Human approval and standard-filename correction — 2026-10-30
+
+The human approved the network proof's **two-sheet setup** and repeated
+that it applies to **all plates**, then identified
+`anthropocene-temperature-2025-authagraph-44-19.052559.png` as still combining
+cartography and a legend. The file was an older combined ST2 export under
+`plates/world/png/`. The separate sheets and aggregate were correct, but
+leaving combined exports at the familiar filenames made the delivery
+inconsistent. Checking only the new map/legend folders missed that defect.
+
+The corrected delivery preserves the approved arrangement for every subject
+and both scopes: **cartography/data sheet, then legend/data bibliography
+sheet**. All 608 standard SVG, PDF, PNG and preview filenames now resolve
+to the verified 76 maps and 76 separate legend/source sheets. For example:
+
+- `plates/world/png/anthropocene-temperature-2025-authagraph-44-19.052559.png`
+  is cartography and data only.
+- `plates/world/png/anthropocene-temperature-2025-authagraph-44-19.052559-legend.png`
+  is the separate legend and data bibliography.
+
+The Japan filenames use the same pairing with their existing `-japan`
+suffix. The review index links to these standard files and leads with the
+complete 154-page proof. Each map remains immediately followed by its
+legend/bibliography in the PDF.
+
+Combined build inputs and old exports were preserved under
+`sources/composition/`. The composition and intermediate-export scripts
+now write there, so regeneration cannot put a combined sheet back under
+`plates/`. The Make target publishes and checks the standard filenames after
+export. `sources/standard-plate-files.json` records every binding and hash.
+
+The reported temperature map and its legend were inspected as two separate
+images. Regenerating the world/Japan temperature pair preserved all 12
+standard SVG/PDF/PNG checksums and the approved separation. Final checks
+cover every standard filename, its separate-sheet export checksum and the
+aggregate's map/legend sequence. The accepted network proof and underlying
+map data are retained. The remaining physical print, caption, attribution
+and venue reviews above still apply.
+
+The rebuilt review has 855 working local asset/download links and all 76
+map/legend pairs in the required PDF order. Desktop and phone browser checks
+passed with the corrected standard filenames, including the network sample.
+The full sheet validator passed all 152 sheets and all 608 standard filename
+bindings, including export checksums and preservation of the map data.

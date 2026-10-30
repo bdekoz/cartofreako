@@ -10,6 +10,7 @@ from xml.sax.saxutils import XMLGenerator
 
 from legend_informatics import E,ROOT,WIDTH,HEIGHT,SUFFIX,digest,el,save,register_fonts
 from legend_sources import bibliography
+from setouchi_delivery import COMPOSITION
 
 SCALE=43.5/WIDTH
 DX=(WIDTH-WIDTH*SCALE)/2
@@ -66,7 +67,7 @@ def main():
         m=copy.deepcopy(m)
         for key in m['keys']:key['shapes']=[E.fromstring(s.encode()) for s in key.pop('symbols')]
         for scope in ('world','japan'):
-            source=args.delivery/'plates'/scope/'svg'/(stem+SUFFIX+('-japan' if scope=='japan' else '')+'.svg')
+            source=args.delivery/COMPOSITION/'plates'/scope/'svg'/(stem+SUFFIX+('-japan' if scope=='japan' else '')+'.svg')
             target=args.delivery/'maps'/scope/'svg'/(stem+'.svg')
             legend_target=args.delivery/'legends'/scope/'svg'/(stem+'-legend.svg')
             target.parent.mkdir(parents=True,exist_ok=True)

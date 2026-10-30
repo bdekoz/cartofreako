@@ -26,6 +26,12 @@ world and Japan companions; they are independent of PDF page positions.
 The number alone appears in 36 pt bold with white fill and a fully opaque
 black 0.5 pt outline.
 
+The standard files under `plates/world/` and `plates/japan/` follow this
+same two-sheet arrangement. A base filename is the cartography/data sheet;
+the matching `-legend` filename is its legend/data bibliography sheet.
+This includes every SVG, PDF, PNG and preview, including both temperature
+years. Combined build intermediates are kept under `sources/composition/`.
+
 Every ST2 map has a 43.5-inch image width centered on its 44-inch sheet.
 The world fiber and groundstation maps also use the approved horizontal
 move and deliberately displaced Antarctica, consolidated at the lower left.

@@ -12,6 +12,7 @@ import xml.sax
 
 from PIL import Image
 from legend_informatics import ROOT, SUFFIX, WIDTH, HEIGHT, digest
+from setouchi_delivery import COMPOSITION
 
 
 class MapAudit(xml.sax.ContentHandler):
@@ -58,14 +59,14 @@ def main():
     book=json.loads((args.output/'plate-source-bibliography.json').read_text())
     assert len(revision['records'])==76 and len(book['entries'])==38
     cached={}
-    cache=args.output/'sources/validation-map-only.json'
+    cache=args.output/COMPOSITION/'validation-map-only.json'
     if args.reuse_map_audit and cache.exists():
         previous=json.loads(cache.read_text())
         if previous.get('status')=='passed':cached={(r['stem'],r['scope']):r for r in previous['records']}
 
     def verify(record):
         stem,scope=record['stem'],record['scope'];name=stem+SUFFIX+('-japan' if scope=='japan' else '')
-        source=args.source/'plates'/scope/'svg'/(name+'.svg');target=args.output/'plates'/scope/'svg'/(name+'.svg')
+        source=args.source/'plates'/scope/'svg'/(name+'.svg');target=args.output/COMPOSITION/'plates'/scope/'svg'/(name+'.svg')
         assert digest(source)==record['source_sha256'], 'Source changed: '+str(source)
         assert digest(target)==record['output_sha256'], 'Revision changed: '+str(target)
         prior=cached.get((stem,scope),{})
@@ -80,7 +81,7 @@ def main():
             result={'stem':stem,'scope':scope,'map_tree_unchanged':True,'shape_counts':after['shape_counts'],
                     'source_sha256':record['source_sha256'],'svg_sha256':record['output_sha256']}
         if not args.skip_exports:
-            export=json.loads((args.output/'sources/exports'/(scope+'-'+stem+'.json')).read_text())
+            export=json.loads((args.output/COMPOSITION/'exports'/(scope+'-'+stem+'.json')).read_text())
             assert export['fingerprint']['svg_sha256']==record['output_sha256']
             for key,r in export['outputs'].items():assert digest(args.output/r['path'])==r['sha256'],f'Export mismatch: {key}/{stem}'
             with Image.open(args.output/export['outputs']['png']['path']) as image:assert image.size==(13200,5716)
@@ -97,7 +98,7 @@ def main():
         for identifier in entry['source_ids']+entry['japan_source_ids']:assert identifier in book['sources']
     report={'status':'passed','plate_pairs':38,'plates':76,'bibliography_sources':len(book['sources']),
             'full_non_editorial_tree_conserved':True,'exports_checked':not args.skip_exports,'records':results}
-    (args.output/'sources'/('validation-map-only.json' if args.skip_exports else 'validation.json')).write_text(json.dumps(report,indent=2)+'\n')
+    (args.output/COMPOSITION/('validation-map-only.json' if args.skip_exports else 'validation.json')).write_text(json.dumps(report,indent=2)+'\n')
     print('All 76 plates passed; all 38 pairs have source attribution.',flush=True)
 
 

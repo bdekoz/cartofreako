@@ -183,7 +183,19 @@ The saved presentation settings are:
 
 Full-size masters are under `maps/{world,japan}/` and
 `legends/{world,japan}/`, with `svg`, `pdf`, `png` and `preview` subdirectories.
-The earlier combined sheets under `plates/` are composition intermediates.
+Standard filenames under `plates/{world,japan}/{svg,pdf,png}/` resolve to
+these same separate sheets. For example,
+`anthropocene-temperature-2025-authagraph-44-19.052559.png` contains only
+cartography/data; its `-legend.png` companion contains the legend and data
+bibliography. The same pairing applies to all 76 world/Japan maps and their
+previews. Combined composition intermediates live only under
+`sources/composition/`, outside the public plate folders.
+
+`scripts/publish-setouchi-plate-files.py` binds all 608 standard filenames
+to the verified separate SVG, PDF, PNG and preview files. The Make target
+publishes these after export, and final validation checks every binding and
+checksum. Use `python3 scripts/publish-setouchi-plate-files.py --check` to
+audit an existing delivery without regenerating it.
 The current network proof is under `proofs/43p5-antarctica-left/`; the
 `prototypes/africa-framing/` variants retain the earlier comparison study.
 

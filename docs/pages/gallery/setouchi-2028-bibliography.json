@@ -53,7 +53,7 @@
           "svg": "maps/world/svg/geometry.svg",
           "svg_sha256": "e7629ca5ab968c87c3a9f9ae625f8fc1dcdbc0faa6ecaaf31ca63a763c48cc63",
           "combined_source_sha256": "fb5f36df79772988d55a00f4aa34555c7a0592dfc3e605dcac5761781651afe4",
-          "source": "plates/world/svg/geometry-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/geometry-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -65,7 +65,7 @@
           "svg": "legends/world/svg/geometry-legend.svg",
           "svg_sha256": "442838514299e250d312c9c0c1eae07dc7c3a07b2e91c1e55894c8077baac11a",
           "combined_source_sha256": "fb5f36df79772988d55a00f4aa34555c7a0592dfc3e605dcac5761781651afe4",
-          "source": "plates/world/svg/geometry-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/geometry-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -77,7 +77,7 @@
           "svg": "maps/japan/svg/geometry.svg",
           "svg_sha256": "31012d61e2e9443702b48e993c7add1afd496a26208d050aaf926c99bc8a9892",
           "combined_source_sha256": "b653fc23bf64ba3062f145a3570aa30ffb93ca0dda19a566902ab8396b6d5ad8",
-          "source": "plates/japan/svg/geometry-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/geometry-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -89,7 +89,7 @@
           "svg": "legends/japan/svg/geometry-legend.svg",
           "svg_sha256": "c40e3e209fbdff62cc5fc28588d8fdc0a64102cc3f1c9adf719ae72571895d77",
           "combined_source_sha256": "b653fc23bf64ba3062f145a3570aa30ffb93ca0dda19a566902ab8396b6d5ad8",
-          "source": "plates/japan/svg/geometry-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/geometry-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -144,7 +144,7 @@
           "svg": "maps/world/svg/graticules.svg",
           "svg_sha256": "76e7a2119319d85de90ebf72d80cf52a990ecbad1c073f1b35912be1e090a825",
           "combined_source_sha256": "9d47faf167ee91bc59a11fee80350d831bab84e5aafbc6d95e21c158f3e18abb",
-          "source": "plates/world/svg/graticules-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/graticules-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -156,7 +156,7 @@
           "svg": "legends/world/svg/graticules-legend.svg",
           "svg_sha256": "d3c7aad0878172f1275c1e2f05b422a46febc8405643438ef9e9699fc7446941",
           "combined_source_sha256": "9d47faf167ee91bc59a11fee80350d831bab84e5aafbc6d95e21c158f3e18abb",
-          "source": "plates/world/svg/graticules-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/graticules-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -168,7 +168,7 @@
           "svg": "maps/japan/svg/graticules.svg",
           "svg_sha256": "744863b8b9059c00146f669e31f46191c8d70ddf3174e00e837e0cfbd14188d0",
           "combined_source_sha256": "1eab6c5e7de3f129aef9576fbb8244fb0354e933cd27db6013b1078f09b52ed7",
-          "source": "plates/japan/svg/graticules-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/graticules-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -180,7 +180,7 @@
           "svg": "legends/japan/svg/graticules-legend.svg",
           "svg_sha256": "6e940b2bf0ac7cbf02313d941c9deb016890d2df804030b75b8a237be94cffc0",
           "combined_source_sha256": "1eab6c5e7de3f129aef9576fbb8244fb0354e933cd27db6013b1078f09b52ed7",
-          "source": "plates/japan/svg/graticules-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/graticules-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -236,7 +236,7 @@
           "svg": "maps/world/svg/earth.svg",
           "svg_sha256": "1d470e1e50bf84cf1831299031da3f98a964dd03f0d71eced68f67a9615b3ca0",
           "combined_source_sha256": "63f31562df26c1d37476e7794e899f6739dc77ee7c8a0cddf13e0179c42f9e4a",
-          "source": "plates/world/svg/earth-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/earth-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -248,7 +248,7 @@
           "svg": "legends/world/svg/earth-legend.svg",
           "svg_sha256": "dc3b6c750ee1eeaebd47d8512ef0fdc8edda195333d1087244a83d34bb57a62c",
           "combined_source_sha256": "63f31562df26c1d37476e7794e899f6739dc77ee7c8a0cddf13e0179c42f9e4a",
-          "source": "plates/world/svg/earth-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/earth-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -260,7 +260,7 @@
           "svg": "maps/japan/svg/earth.svg",
           "svg_sha256": "c4f7322a1f31c5984cad13022dffa291979be5102730ae00088402e362e5504a",
           "combined_source_sha256": "efb8af8b90c0e2a5cdfe499c33534adfc9d23877439a79ecda675630fb1c556b",
-          "source": "plates/japan/svg/earth-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/earth-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -272,7 +272,7 @@
           "svg": "legends/japan/svg/earth-legend.svg",
           "svg_sha256": "357863a7a6a5a05a351cce04f57ddb85fbec5fda2287fb702c30c1530500fb24",
           "combined_source_sha256": "efb8af8b90c0e2a5cdfe499c33534adfc9d23877439a79ecda675630fb1c556b",
-          "source": "plates/japan/svg/earth-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/earth-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -328,7 +328,7 @@
           "svg": "maps/world/svg/water.svg",
           "svg_sha256": "42aab955aa6e34e311a94ff85adcb46dddd7289629b2a580135b1c35c94b1c61",
           "combined_source_sha256": "e351d3b97bbbf17d4a96de6b8675e68ebe13aa9950c3be3ac0abaa9aa193f51d",
-          "source": "plates/world/svg/water-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/water-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -340,7 +340,7 @@
           "svg": "legends/world/svg/water-legend.svg",
           "svg_sha256": "64aec8781fce3af1a1c26afeb301f509595bae6dbf455ee18ba6ca73896b1f51",
           "combined_source_sha256": "e351d3b97bbbf17d4a96de6b8675e68ebe13aa9950c3be3ac0abaa9aa193f51d",
-          "source": "plates/world/svg/water-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/water-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -352,7 +352,7 @@
           "svg": "maps/japan/svg/water.svg",
           "svg_sha256": "42488d7436d455823440cdee5086533b09c1f73c7a772813ea3f786ae41862b9",
           "combined_source_sha256": "fee07a381e234f1e5b39cd9a6226ca61a422265f0b7c2d91acefad2af0e85f94",
-          "source": "plates/japan/svg/water-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/water-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -364,7 +364,7 @@
           "svg": "legends/japan/svg/water-legend.svg",
           "svg_sha256": "14db615140ecfbb0a5238ccac8eb9e342a5ad419987fb44fc45eeedf1a0c458a",
           "combined_source_sha256": "fee07a381e234f1e5b39cd9a6226ca61a422265f0b7c2d91acefad2af0e85f94",
-          "source": "plates/japan/svg/water-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/water-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -474,7 +474,7 @@
           "svg": "maps/world/svg/bathymetry-roulette.svg",
           "svg_sha256": "e908fa1a94c5436966636cb2d5354161449aa4d07121d64fae90678690fc364a",
           "combined_source_sha256": "6af439b964f29e7e2c6932798fc936053be0a2695d328403ecd0af9eebc39b9c",
-          "source": "plates/world/svg/bathymetry-roulette-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/bathymetry-roulette-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -486,7 +486,7 @@
           "svg": "legends/world/svg/bathymetry-roulette-legend.svg",
           "svg_sha256": "da8b15f535cce0b1e79162f3db25927a979ac12728201d8c29a078f6952ad42c",
           "combined_source_sha256": "6af439b964f29e7e2c6932798fc936053be0a2695d328403ecd0af9eebc39b9c",
-          "source": "plates/world/svg/bathymetry-roulette-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/bathymetry-roulette-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -498,7 +498,7 @@
           "svg": "maps/japan/svg/bathymetry-roulette.svg",
           "svg_sha256": "5b34b8a584c1e67a7c3fd2658f91e5367f5028c4396be0824b0fdb18ccae2279",
           "combined_source_sha256": "e647d72fa15d70d18091adf9a57a4c4570aefa8b132daf23282255805f0a8ef2",
-          "source": "plates/japan/svg/bathymetry-roulette-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/bathymetry-roulette-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -510,7 +510,7 @@
           "svg": "legends/japan/svg/bathymetry-roulette-legend.svg",
           "svg_sha256": "91667d8b8f9d673c233cc3214dee3f86cd799bdbe863d2c6827bebf763812387",
           "combined_source_sha256": "e647d72fa15d70d18091adf9a57a4c4570aefa8b132daf23282255805f0a8ef2",
-          "source": "plates/japan/svg/bathymetry-roulette-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/bathymetry-roulette-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -620,7 +620,7 @@
           "svg": "maps/world/svg/bathymetry-hamonshu.svg",
           "svg_sha256": "ccf666cc67a261bfe94cc2f58b053995944a310aca4477e7398d4af87ccb59e1",
           "combined_source_sha256": "3fc49ab4d4729e2df02710653a3557449fbe7b54b6c4d4eea1c488eddf5527a6",
-          "source": "plates/world/svg/bathymetry-hamonshu-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/bathymetry-hamonshu-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -632,7 +632,7 @@
           "svg": "legends/world/svg/bathymetry-hamonshu-legend.svg",
           "svg_sha256": "cd74d7c368c4338d1843df2b3f611a0e38dade23be112d3ec6f2e8c7df4970f1",
           "combined_source_sha256": "3fc49ab4d4729e2df02710653a3557449fbe7b54b6c4d4eea1c488eddf5527a6",
-          "source": "plates/world/svg/bathymetry-hamonshu-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/bathymetry-hamonshu-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -644,7 +644,7 @@
           "svg": "maps/japan/svg/bathymetry-hamonshu.svg",
           "svg_sha256": "a227aa18ab69583081597bb8dcb02ef0166f975df4a80f17ff6ca6de8e000bc8",
           "combined_source_sha256": "39ea6012d6c22158064d46bb237dfad08de7945d3433812c89781d2487f16460",
-          "source": "plates/japan/svg/bathymetry-hamonshu-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/bathymetry-hamonshu-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -656,7 +656,7 @@
           "svg": "legends/japan/svg/bathymetry-hamonshu-legend.svg",
           "svg_sha256": "63d21d236e1be23d518362dd6d3147f4ada3169f813bab835892485ea16d1200",
           "combined_source_sha256": "39ea6012d6c22158064d46bb237dfad08de7945d3433812c89781d2487f16460",
-          "source": "plates/japan/svg/bathymetry-hamonshu-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/bathymetry-hamonshu-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -757,7 +757,7 @@
           "svg": "maps/world/svg/cloud-atmosphere.svg",
           "svg_sha256": "26c7f31327f8ba957b576a05cc07b5f4e78aaa02810269c7511d1a9ecfc3a1aa",
           "combined_source_sha256": "1d4ecaafdfae46538299491e54e0423c7a3d36d96b12d36dfdfd87e404ef826d",
-          "source": "plates/world/svg/cloud-atmosphere-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/cloud-atmosphere-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -769,7 +769,7 @@
           "svg": "legends/world/svg/cloud-atmosphere-legend.svg",
           "svg_sha256": "7fe30f130f6123cfdbe8d3015868d156b788fea6fa41aa4cc845dc91d1d59a86",
           "combined_source_sha256": "1d4ecaafdfae46538299491e54e0423c7a3d36d96b12d36dfdfd87e404ef826d",
-          "source": "plates/world/svg/cloud-atmosphere-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/cloud-atmosphere-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -781,7 +781,7 @@
           "svg": "maps/japan/svg/cloud-atmosphere.svg",
           "svg_sha256": "2da339720e8b24219c827cdb21684e512fbc46c0d78fa62a78c3478a3d904b4a",
           "combined_source_sha256": "363d3a5c08712be204d26d1f3a4c1be72656cb3c56cb777e890a45279376c890",
-          "source": "plates/japan/svg/cloud-atmosphere-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/cloud-atmosphere-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -793,7 +793,7 @@
           "svg": "legends/japan/svg/cloud-atmosphere-legend.svg",
           "svg_sha256": "102b74d05db4ebb4f6f4c360879b1d04742197008d7019f45042539af79db6a6",
           "combined_source_sha256": "363d3a5c08712be204d26d1f3a4c1be72656cb3c56cb777e890a45279376c890",
-          "source": "plates/japan/svg/cloud-atmosphere-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/cloud-atmosphere-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -958,7 +958,7 @@
           "svg": "maps/world/svg/network-cdn.svg",
           "svg_sha256": "484258408e7ece0b3e3eb803f7c19ddb10c61049dc76c72636f3e14f8e2fa495",
           "combined_source_sha256": "3f9c978b885065c07b94cd8bd530c8016fbac5ee8a52d463666618c718fe6cf3",
-          "source": "plates/world/svg/network-cdn-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/network-cdn-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -970,7 +970,7 @@
           "svg": "legends/world/svg/network-cdn-legend.svg",
           "svg_sha256": "c9f71450345b889125059072aec6b24b861f6e27a6fcde19beac74581a692950",
           "combined_source_sha256": "3f9c978b885065c07b94cd8bd530c8016fbac5ee8a52d463666618c718fe6cf3",
-          "source": "plates/world/svg/network-cdn-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/network-cdn-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -982,7 +982,7 @@
           "svg": "maps/japan/svg/network-cdn.svg",
           "svg_sha256": "6aa1523292f19a828b37fabb168ebee71005d627c7a78a72349db8c48a6143a1",
           "combined_source_sha256": "d8b44e5afb6b5862f6e1a2f61fdc8dd19e6f6205da1baf96f4db5a369cb51416",
-          "source": "plates/japan/svg/network-cdn-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/network-cdn-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -994,7 +994,7 @@
           "svg": "legends/japan/svg/network-cdn-legend.svg",
           "svg_sha256": "34440618cca5456152bf853c50de0607241b48983cf5da08280549a93fd414df",
           "combined_source_sha256": "d8b44e5afb6b5862f6e1a2f61fdc8dd19e6f6205da1baf96f4db5a369cb51416",
-          "source": "plates/japan/svg/network-cdn-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/network-cdn-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -1084,7 +1084,7 @@
           "svg": "maps/world/svg/network-fiber.svg",
           "svg_sha256": "5f6be855f18b2ffeb6e961a294284504033bff6526a22ca6cae418c7464508ce",
           "combined_source_sha256": "69d6b7556da47837f14a7cfc3b600a2148c655644ee5818c5e52aec725ba5522",
-          "source": "plates/world/svg/network-fiber-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/network-fiber-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": {
@@ -1148,7 +1148,7 @@
           "svg": "legends/world/svg/network-fiber-legend.svg",
           "svg_sha256": "a604a9935964aa3ac065997160bf9290e200cb4c5c4e5616104afb1a777f7ab8",
           "combined_source_sha256": "69d6b7556da47837f14a7cfc3b600a2148c655644ee5818c5e52aec725ba5522",
-          "source": "plates/world/svg/network-fiber-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/network-fiber-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -1160,7 +1160,7 @@
           "svg": "maps/japan/svg/network-fiber.svg",
           "svg_sha256": "d3a06ea434832960a3df8ee585984b9a2ec270a98d8223e09c2f7194b653472d",
           "combined_source_sha256": "b9e3b5c913749eb3b942f2f687ef89bb85a4ca4b8f37316e872bced221cb6b47",
-          "source": "plates/japan/svg/network-fiber-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/network-fiber-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -1172,7 +1172,7 @@
           "svg": "legends/japan/svg/network-fiber-legend.svg",
           "svg_sha256": "4f9825151d19f20702a16f6e7c3843b18647df96bd02cfeede2b97ae1eb3c0cc",
           "combined_source_sha256": "b9e3b5c913749eb3b942f2f687ef89bb85a4ca4b8f37316e872bced221cb6b47",
-          "source": "plates/japan/svg/network-fiber-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/network-fiber-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -1235,7 +1235,7 @@
           "svg": "maps/world/svg/network-groundstations.svg",
           "svg_sha256": "89b9258d82d00fa112225eaa658945fe26f8370ef1b1f9289457ee835f35957a",
           "combined_source_sha256": "add78e964164f1f91819eb5a74302d295af0a122478c6984fb8c940d18f60415",
-          "source": "plates/world/svg/network-groundstations-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/network-groundstations-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": {
@@ -1299,7 +1299,7 @@
           "svg": "legends/world/svg/network-groundstations-legend.svg",
           "svg_sha256": "57559ce328938fb48a1ab5b414dc8da90af6f36fdaa7f58d8b199f95825a90d4",
           "combined_source_sha256": "add78e964164f1f91819eb5a74302d295af0a122478c6984fb8c940d18f60415",
-          "source": "plates/world/svg/network-groundstations-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/network-groundstations-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -1311,7 +1311,7 @@
           "svg": "maps/japan/svg/network-groundstations.svg",
           "svg_sha256": "05e4d6496ee49e76beceebcea381d7fa5aac2195818d9d706e9f7d645b3b2d1a",
           "combined_source_sha256": "7abcd2e6ea69424cf07e65bcaccc830513acb64f2540627c8bf4570242c1e3f3",
-          "source": "plates/japan/svg/network-groundstations-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/network-groundstations-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -1323,7 +1323,7 @@
           "svg": "legends/japan/svg/network-groundstations-legend.svg",
           "svg_sha256": "0846779bd8ba96b497043b6dbc4846b63ccd8d6cee2e0102f8bc432a81b6d687",
           "combined_source_sha256": "7abcd2e6ea69424cf07e65bcaccc830513acb64f2540627c8bf4570242c1e3f3",
-          "source": "plates/japan/svg/network-groundstations-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/network-groundstations-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -1395,7 +1395,7 @@
           "svg": "maps/world/svg/network-swarm-ge-1080p.svg",
           "svg_sha256": "7a3f23f8cd79abf631bb95cb5a6ce9fce14da9e63d4f5c2c3aa8cdeb13d22448",
           "combined_source_sha256": "6adb3e0912656bfb839969b988ab09de46cfc50b51407a695612b8b4766e3842",
-          "source": "plates/world/svg/network-swarm-ge-1080p-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/network-swarm-ge-1080p-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -1407,7 +1407,7 @@
           "svg": "legends/world/svg/network-swarm-ge-1080p-legend.svg",
           "svg_sha256": "37b2ee267470ad31742fe4be07c9bd37fc6e71e13dbee3e0957d58e59e9b6f86",
           "combined_source_sha256": "6adb3e0912656bfb839969b988ab09de46cfc50b51407a695612b8b4766e3842",
-          "source": "plates/world/svg/network-swarm-ge-1080p-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/network-swarm-ge-1080p-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -1419,7 +1419,7 @@
           "svg": "maps/japan/svg/network-swarm-ge-1080p.svg",
           "svg_sha256": "4a8433faf0002fdaea7c74cf766fe704967f8695bfec0608cac8935fcdd260c5",
           "combined_source_sha256": "0b943c2a4c021a81b679fd50bfced29b22e5d44f0110c78dab3d8e664676acf6",
-          "source": "plates/japan/svg/network-swarm-ge-1080p-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/network-swarm-ge-1080p-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -1431,7 +1431,7 @@
           "svg": "legends/japan/svg/network-swarm-ge-1080p-legend.svg",
           "svg_sha256": "3b4a81e914259c0da0743dc90ea33d51c9f34dab047d1dce1a1731bacbf17c9a",
           "combined_source_sha256": "0b943c2a4c021a81b679fd50bfced29b22e5d44f0110c78dab3d8e664676acf6",
-          "source": "plates/japan/svg/network-swarm-ge-1080p-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/network-swarm-ge-1080p-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -1503,7 +1503,7 @@
           "svg": "maps/world/svg/network-swarm-lt-1080p.svg",
           "svg_sha256": "8441217123f54d2ec02ce258ed28df0003da17fa653e7f3ddecdc2aaad587ecc",
           "combined_source_sha256": "99c5ff3ccb02acb63f2c323c6978749d4a0d6de1b04e052eab6dc050f5a1e9fa",
-          "source": "plates/world/svg/network-swarm-lt-1080p-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/network-swarm-lt-1080p-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -1515,7 +1515,7 @@
           "svg": "legends/world/svg/network-swarm-lt-1080p-legend.svg",
           "svg_sha256": "690d6872e75d2a516436ca5d54946c747e1d141a3c8b76a67970b43c749388a4",
           "combined_source_sha256": "99c5ff3ccb02acb63f2c323c6978749d4a0d6de1b04e052eab6dc050f5a1e9fa",
-          "source": "plates/world/svg/network-swarm-lt-1080p-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/network-swarm-lt-1080p-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -1527,7 +1527,7 @@
           "svg": "maps/japan/svg/network-swarm-lt-1080p.svg",
           "svg_sha256": "c01fff30e204720aa30fd657d4ba227f46fec1945e119a9dc15dc395f1f78021",
           "combined_source_sha256": "67781fcd4244557ea50570a51a77fdae7ec37d97e4e5df29a247cd6e3266a621",
-          "source": "plates/japan/svg/network-swarm-lt-1080p-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/network-swarm-lt-1080p-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -1539,7 +1539,7 @@
           "svg": "legends/japan/svg/network-swarm-lt-1080p-legend.svg",
           "svg_sha256": "69ee275e55a42d446261677c5511982b1dc97c9e42607d79ad196a68b3193641",
           "combined_source_sha256": "67781fcd4244557ea50570a51a77fdae7ec37d97e4e5df29a247cd6e3266a621",
-          "source": "plates/japan/svg/network-swarm-lt-1080p-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/network-swarm-lt-1080p-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -1736,7 +1736,7 @@
           "svg": "maps/world/svg/anthropocene-particulate-2025.svg",
           "svg_sha256": "35480d7366fefab589b59a9110c07bdde58b932b05cfe3089836f6a4eafc48c7",
           "combined_source_sha256": "667998a0468e9b043441c6d6dcad435b8d9ee7e77f5a0e38ebd8b52d6c264c4a",
-          "source": "plates/world/svg/anthropocene-particulate-2025-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/anthropocene-particulate-2025-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -1748,7 +1748,7 @@
           "svg": "legends/world/svg/anthropocene-particulate-2025-legend.svg",
           "svg_sha256": "0c7bd3608c788e7c0cd3b8430536d893bad13a623209e449e2facf28603cf208",
           "combined_source_sha256": "667998a0468e9b043441c6d6dcad435b8d9ee7e77f5a0e38ebd8b52d6c264c4a",
-          "source": "plates/world/svg/anthropocene-particulate-2025-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/anthropocene-particulate-2025-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -1760,7 +1760,7 @@
           "svg": "maps/japan/svg/anthropocene-particulate-2025.svg",
           "svg_sha256": "f364fec9789af7d5a20f7adb82650336404bddc69142c7e1c96c1aa1a8560b9d",
           "combined_source_sha256": "812e2c22d9e61672b1fda21e41184d159934dfcf9c1febdac6d9fbb7089c75ee",
-          "source": "plates/japan/svg/anthropocene-particulate-2025-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/anthropocene-particulate-2025-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -1772,7 +1772,7 @@
           "svg": "legends/japan/svg/anthropocene-particulate-2025-legend.svg",
           "svg_sha256": "55e65ca0abc707cc5632ba7ecb36ab9125ce90df8c0a282e8fcd9371b2025b54",
           "combined_source_sha256": "812e2c22d9e61672b1fda21e41184d159934dfcf9c1febdac6d9fbb7089c75ee",
-          "source": "plates/japan/svg/anthropocene-particulate-2025-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/anthropocene-particulate-2025-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -1969,7 +1969,7 @@
           "svg": "maps/world/svg/anthropocene-particulate-2026.svg",
           "svg_sha256": "847602fbe50c62a8177a148bf9127ceef09c6169dcf9051d692f8a275dde61ee",
           "combined_source_sha256": "acf0ef8de5e4710a8aae831097cf185e0c8e37e1861ae3429b51e2fe42fdc36f",
-          "source": "plates/world/svg/anthropocene-particulate-2026-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/anthropocene-particulate-2026-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -1981,7 +1981,7 @@
           "svg": "legends/world/svg/anthropocene-particulate-2026-legend.svg",
           "svg_sha256": "a3e59c97c890dc162850a3e9631c640184de37bd6687d55155b948863e479639",
           "combined_source_sha256": "acf0ef8de5e4710a8aae831097cf185e0c8e37e1861ae3429b51e2fe42fdc36f",
-          "source": "plates/world/svg/anthropocene-particulate-2026-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/anthropocene-particulate-2026-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -1993,7 +1993,7 @@
           "svg": "maps/japan/svg/anthropocene-particulate-2026.svg",
           "svg_sha256": "16bdedaeb219c44e766031d25c836732f98fb11d836991245e615a88c44981bd",
           "combined_source_sha256": "f335cb0462b35d11912ca63593a21737d1fc1a06bbbc83972e249fbb2631daf7",
-          "source": "plates/japan/svg/anthropocene-particulate-2026-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/anthropocene-particulate-2026-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -2005,7 +2005,7 @@
           "svg": "legends/japan/svg/anthropocene-particulate-2026-legend.svg",
           "svg_sha256": "3257cccf367d0d8f5d7dcb76d67485cc9c4d8ccabed50b0f59fc7a3fcd0ebf37",
           "combined_source_sha256": "f335cb0462b35d11912ca63593a21737d1fc1a06bbbc83972e249fbb2631daf7",
-          "source": "plates/japan/svg/anthropocene-particulate-2026-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/anthropocene-particulate-2026-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -2110,7 +2110,7 @@
           "svg": "maps/world/svg/anthropocene-temperature-2025.svg",
           "svg_sha256": "1ef4b182669821ffcd2d77194249bfaf57df0a66b549ab32ece0748632650f67",
           "combined_source_sha256": "597dd9c56de33f0b9debfd61273991aab0c9b7eef33a9bd2cbecd52347ad99e8",
-          "source": "plates/world/svg/anthropocene-temperature-2025-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/anthropocene-temperature-2025-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -2122,7 +2122,7 @@
           "svg": "legends/world/svg/anthropocene-temperature-2025-legend.svg",
           "svg_sha256": "ff3a0e9173019e5fabf4e817a074ac3ee32775dd3ecc6b86a62fd3ab286cccfc",
           "combined_source_sha256": "597dd9c56de33f0b9debfd61273991aab0c9b7eef33a9bd2cbecd52347ad99e8",
-          "source": "plates/world/svg/anthropocene-temperature-2025-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/anthropocene-temperature-2025-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -2134,7 +2134,7 @@
           "svg": "maps/japan/svg/anthropocene-temperature-2025.svg",
           "svg_sha256": "cbfed0030572c364ee65fe3b9f120588106229bfde8f9ee1c66b9e6394b72936",
           "combined_source_sha256": "fe029d0ea87028a3f8b882901ff5cf866514b0c367d7e415db24778cd26dce88",
-          "source": "plates/japan/svg/anthropocene-temperature-2025-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/anthropocene-temperature-2025-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -2146,7 +2146,7 @@
           "svg": "legends/japan/svg/anthropocene-temperature-2025-legend.svg",
           "svg_sha256": "8ab33d3f76b77a1d8f77c829c467f5a3e78825513a14434f75a691ca0e118dd1",
           "combined_source_sha256": "fe029d0ea87028a3f8b882901ff5cf866514b0c367d7e415db24778cd26dce88",
-          "source": "plates/japan/svg/anthropocene-temperature-2025-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/anthropocene-temperature-2025-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -2251,7 +2251,7 @@
           "svg": "maps/world/svg/anthropocene-temperature-2026.svg",
           "svg_sha256": "22bc1a7051a17ab9ad561b621a5cbb00784eff6f6a288d75f31af169aa951954",
           "combined_source_sha256": "45b077c6193e1a6780e27e2870e4853baadc0691964b1628dc0d4350bcc942e9",
-          "source": "plates/world/svg/anthropocene-temperature-2026-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/anthropocene-temperature-2026-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -2263,7 +2263,7 @@
           "svg": "legends/world/svg/anthropocene-temperature-2026-legend.svg",
           "svg_sha256": "23bf0e9b1471df0e4364c4f658bc80e897e007d64f8cf4e5567e61fdc3057c12",
           "combined_source_sha256": "45b077c6193e1a6780e27e2870e4853baadc0691964b1628dc0d4350bcc942e9",
-          "source": "plates/world/svg/anthropocene-temperature-2026-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/anthropocene-temperature-2026-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -2275,7 +2275,7 @@
           "svg": "maps/japan/svg/anthropocene-temperature-2026.svg",
           "svg_sha256": "9eedcc726c1accda7cd0c436f4b1c13c4186ebbd4362171e3165ea62bcc7dbe1",
           "combined_source_sha256": "3fd2d810da060612e5281ee4982246aeb1504173edd6174910aea7a1b4b7fa07",
-          "source": "plates/japan/svg/anthropocene-temperature-2026-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/anthropocene-temperature-2026-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -2287,7 +2287,7 @@
           "svg": "legends/japan/svg/anthropocene-temperature-2026-legend.svg",
           "svg_sha256": "26ff1033b0a4449e48ff8fd4946dcd495e26056e5bf894a64bbf72d4575d7b1d",
           "combined_source_sha256": "3fd2d810da060612e5281ee4982246aeb1504173edd6174910aea7a1b4b7fa07",
-          "source": "plates/japan/svg/anthropocene-temperature-2026-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/anthropocene-temperature-2026-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -2358,7 +2358,7 @@
           "svg": "maps/world/svg/astro-all-sky.svg",
           "svg_sha256": "d59954ddcfdbeda1196c06516abb48cfe480f4b7c8c8edc9e5d8545bf23f0b8e",
           "combined_source_sha256": "6e48544dcec410d69a46b6c3c36fc0601b78a00f0a83b58f0899ac0437557ee9",
-          "source": "plates/world/svg/astro-all-sky-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/astro-all-sky-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -2370,7 +2370,7 @@
           "svg": "legends/world/svg/astro-all-sky-legend.svg",
           "svg_sha256": "7927376b82657a68cc668124c6bed497b813aa02c687864ba1f671b147d9771e",
           "combined_source_sha256": "6e48544dcec410d69a46b6c3c36fc0601b78a00f0a83b58f0899ac0437557ee9",
-          "source": "plates/world/svg/astro-all-sky-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/astro-all-sky-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -2382,7 +2382,7 @@
           "svg": "maps/japan/svg/astro-all-sky.svg",
           "svg_sha256": "0f00b12a25924c3a345cc58cfb077c078cf9bf92ef94ac5bfe94e5cb9cebad0d",
           "combined_source_sha256": "44135ac05be9138fb7154d9176b8206dd3844b4a8ce67eb159449404ffd6e312",
-          "source": "plates/japan/svg/astro-all-sky-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/astro-all-sky-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -2394,7 +2394,7 @@
           "svg": "legends/japan/svg/astro-all-sky-legend.svg",
           "svg_sha256": "95eb9218bc45aef0e6616e922330e67b6660e687079c2207fe4b49358c0797fa",
           "combined_source_sha256": "44135ac05be9138fb7154d9176b8206dd3844b4a8ce67eb159449404ffd6e312",
-          "source": "plates/japan/svg/astro-all-sky-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/astro-all-sky-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -2465,7 +2465,7 @@
           "svg": "maps/world/svg/astro-observer-ground-multiband.svg",
           "svg_sha256": "af481386476f551c71937721cabc21c0efa19fb340666a34177848abc6c6a4f0",
           "combined_source_sha256": "f74b8c4195470cef1e51463c1821f33ba329f4c460983d76508b4856fa8a5bd2",
-          "source": "plates/world/svg/astro-observer-ground-multiband-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/astro-observer-ground-multiband-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -2477,7 +2477,7 @@
           "svg": "legends/world/svg/astro-observer-ground-multiband-legend.svg",
           "svg_sha256": "b22ba7792e081c6d7d474a44d3d32358cb5f6e08aee0b3e4d6ac22d92b2d080d",
           "combined_source_sha256": "f74b8c4195470cef1e51463c1821f33ba329f4c460983d76508b4856fa8a5bd2",
-          "source": "plates/world/svg/astro-observer-ground-multiband-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/astro-observer-ground-multiband-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -2489,7 +2489,7 @@
           "svg": "maps/japan/svg/astro-observer-ground-multiband.svg",
           "svg_sha256": "10bd1de1baf4706e73470b8792cbf7c67face6133e03b5393584ae084e6e5439",
           "combined_source_sha256": "ecd06929d9582c9fa0da178758f22ef9c1e6be4b59e1cc99c1bcc690cd4e2bd4",
-          "source": "plates/japan/svg/astro-observer-ground-multiband-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/astro-observer-ground-multiband-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -2501,7 +2501,7 @@
           "svg": "legends/japan/svg/astro-observer-ground-multiband-legend.svg",
           "svg_sha256": "1db116a571d612caaae6b105cb2c4a228335217b72ab5a9c4a43dd85a6a88033",
           "combined_source_sha256": "ecd06929d9582c9fa0da178758f22ef9c1e6be4b59e1cc99c1bcc690cd4e2bd4",
-          "source": "plates/japan/svg/astro-observer-ground-multiband-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/astro-observer-ground-multiband-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -2573,7 +2573,7 @@
           "svg": "maps/world/svg/astro-observer-hubble.svg",
           "svg_sha256": "d5049b7b3d5cc04a3588f97de8127bd55f48e1a920625bf8328c4cd5f76882db",
           "combined_source_sha256": "6d210e237598ff94b348cf2f1fdc109f4ebf7c9075e3799128de5eaacfa1168a",
-          "source": "plates/world/svg/astro-observer-hubble-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/astro-observer-hubble-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -2585,7 +2585,7 @@
           "svg": "legends/world/svg/astro-observer-hubble-legend.svg",
           "svg_sha256": "c422ff7782d50e5f6d36db9bfd2dbb505b1628abed7ee56d219fcdfe27d3cdd1",
           "combined_source_sha256": "6d210e237598ff94b348cf2f1fdc109f4ebf7c9075e3799128de5eaacfa1168a",
-          "source": "plates/world/svg/astro-observer-hubble-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/astro-observer-hubble-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -2597,7 +2597,7 @@
           "svg": "maps/japan/svg/astro-observer-hubble.svg",
           "svg_sha256": "8c80720645bccf3c9d080540a513697997539b53cdcf3db17e4bfe8d0a102aef",
           "combined_source_sha256": "d64d73f8f64bcb1c8cc485762ccd0ebe17b3ea72cb53aa65ab42137ef15a5c02",
-          "source": "plates/japan/svg/astro-observer-hubble-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/astro-observer-hubble-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -2609,7 +2609,7 @@
           "svg": "legends/japan/svg/astro-observer-hubble-legend.svg",
           "svg_sha256": "8b572eda551eaf7246890a06814b664c38570ba48c06f7306d8156a97f5d1b0c",
           "combined_source_sha256": "d64d73f8f64bcb1c8cc485762ccd0ebe17b3ea72cb53aa65ab42137ef15a5c02",
-          "source": "plates/japan/svg/astro-observer-hubble-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/astro-observer-hubble-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -2680,7 +2680,7 @@
           "svg": "maps/world/svg/orbital-technosphere-global.svg",
           "svg_sha256": "f1bbe348bfb8948506ccf4d487f6cc33ff3a4cef97519819cef0ec03f07c20d6",
           "combined_source_sha256": "ddfdce2a07b37dac9c6ced19a98a44c4e44b71eb2f6103f2168958fb467a10ef",
-          "source": "plates/world/svg/orbital-technosphere-global-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/orbital-technosphere-global-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -2692,7 +2692,7 @@
           "svg": "legends/world/svg/orbital-technosphere-global-legend.svg",
           "svg_sha256": "13dcb25f3ff5336d195ab799cb879ac08817c8df5b221689a11f7631f4853700",
           "combined_source_sha256": "ddfdce2a07b37dac9c6ced19a98a44c4e44b71eb2f6103f2168958fb467a10ef",
-          "source": "plates/world/svg/orbital-technosphere-global-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/orbital-technosphere-global-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -2704,7 +2704,7 @@
           "svg": "maps/japan/svg/orbital-technosphere-global.svg",
           "svg_sha256": "0d871de9bd4a1b75d3238ffe730f2fc1f007e93d6b456add68fbc66f8afdda85",
           "combined_source_sha256": "6d1f0a2beee2996ec2e5305f5e1e718ef845c02521c21893762fbd5e6ff0e168",
-          "source": "plates/japan/svg/orbital-technosphere-global-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/orbital-technosphere-global-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -2716,7 +2716,7 @@
           "svg": "legends/japan/svg/orbital-technosphere-global-legend.svg",
           "svg_sha256": "b76060d6b87989490faabbf06aa200121619720387981a3f6a5cb289151800eb",
           "combined_source_sha256": "6d1f0a2beee2996ec2e5305f5e1e718ef845c02521c21893762fbd5e6ff0e168",
-          "source": "plates/japan/svg/orbital-technosphere-global-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/orbital-technosphere-global-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -2787,7 +2787,7 @@
           "svg": "maps/world/svg/orbital-technosphere-observer.svg",
           "svg_sha256": "b06ba892d9561ab3922378693e9332bdc1d6b3ce2d29bcead5167edd8fb38093",
           "combined_source_sha256": "a1ca627a703aaaf01cc4ac70985a0aa90c4ead4365a96662a0d0338b6dcfce24",
-          "source": "plates/world/svg/orbital-technosphere-observer-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/orbital-technosphere-observer-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -2799,7 +2799,7 @@
           "svg": "legends/world/svg/orbital-technosphere-observer-legend.svg",
           "svg_sha256": "63917233ee9507e0c807d545b9affde8f869ae5f8b4c74bd7cae53d0c17a0ff8",
           "combined_source_sha256": "a1ca627a703aaaf01cc4ac70985a0aa90c4ead4365a96662a0d0338b6dcfce24",
-          "source": "plates/world/svg/orbital-technosphere-observer-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/orbital-technosphere-observer-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -2811,7 +2811,7 @@
           "svg": "maps/japan/svg/orbital-technosphere-observer.svg",
           "svg_sha256": "bf5d56372fd7a91ef14d8a857a6b9d20f05316133dcb999bcf2b8a4250cf30f7",
           "combined_source_sha256": "ad39af79ae50d5b10bfdd3566ffeef3785d8bffb9f14c1dc0014a2c07fdb1049",
-          "source": "plates/japan/svg/orbital-technosphere-observer-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/orbital-technosphere-observer-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -2823,7 +2823,7 @@
           "svg": "legends/japan/svg/orbital-technosphere-observer-legend.svg",
           "svg_sha256": "352aa2648221f6265a4522e923a6a8289fd478b69de184cc9148fa51f05c1c90",
           "combined_source_sha256": "ad39af79ae50d5b10bfdd3566ffeef3785d8bffb9f14c1dc0014a2c07fdb1049",
-          "source": "plates/japan/svg/orbital-technosphere-observer-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/orbital-technosphere-observer-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -2936,7 +2936,7 @@
           "svg": "maps/world/svg/resources-energy-solar-capacity-2025.svg",
           "svg_sha256": "e6b68ddc28ceeb697168446a70742b917ebeddf1dfa14215f8c0f9d2f6a5c6f5",
           "combined_source_sha256": "ac1f5a7c1595cd0da312c48c3e4cfb0dbc9bb4791aee507b57778275832d0d1c",
-          "source": "plates/world/svg/resources-energy-solar-capacity-2025-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-energy-solar-capacity-2025-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -2948,7 +2948,7 @@
           "svg": "legends/world/svg/resources-energy-solar-capacity-2025-legend.svg",
           "svg_sha256": "0c85976db0dade478bbbc4d28519b71de74f7cbb9042d24f3ac62efdd10017e6",
           "combined_source_sha256": "ac1f5a7c1595cd0da312c48c3e4cfb0dbc9bb4791aee507b57778275832d0d1c",
-          "source": "plates/world/svg/resources-energy-solar-capacity-2025-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-energy-solar-capacity-2025-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -2960,7 +2960,7 @@
           "svg": "maps/japan/svg/resources-energy-solar-capacity-2025.svg",
           "svg_sha256": "d8716643133cf147d85c5f2b31aa1cc898f304d943032f59c1452622070a6d08",
           "combined_source_sha256": "38119a0e27c74908d8ef977b95ce1774926c24d6dbf5c0bf4a1fffb4e49cca1f",
-          "source": "plates/japan/svg/resources-energy-solar-capacity-2025-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-energy-solar-capacity-2025-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -2972,7 +2972,7 @@
           "svg": "legends/japan/svg/resources-energy-solar-capacity-2025-legend.svg",
           "svg_sha256": "dead307a3dfef636b8c81f596be924706c568ab182b8a62c2f5a70df0a09b085",
           "combined_source_sha256": "38119a0e27c74908d8ef977b95ce1774926c24d6dbf5c0bf4a1fffb4e49cca1f",
-          "source": "plates/japan/svg/resources-energy-solar-capacity-2025-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-energy-solar-capacity-2025-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -3084,7 +3084,7 @@
           "svg": "maps/world/svg/resources-energy-wind-capacity-2025.svg",
           "svg_sha256": "59ad067d63db5b96dfdc64d3bca4fec5bb7bc2f8b1ef3fd6285c9d32a78105fa",
           "combined_source_sha256": "2786d517998417d8b9c3b50e2804a73c7e8bff998990cfb3b9de283704e290b7",
-          "source": "plates/world/svg/resources-energy-wind-capacity-2025-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-energy-wind-capacity-2025-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -3096,7 +3096,7 @@
           "svg": "legends/world/svg/resources-energy-wind-capacity-2025-legend.svg",
           "svg_sha256": "085ef6e32f954d2c4751ec328b28a7031d02aa459e674f3515b64d5c18e52456",
           "combined_source_sha256": "2786d517998417d8b9c3b50e2804a73c7e8bff998990cfb3b9de283704e290b7",
-          "source": "plates/world/svg/resources-energy-wind-capacity-2025-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-energy-wind-capacity-2025-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -3108,7 +3108,7 @@
           "svg": "maps/japan/svg/resources-energy-wind-capacity-2025.svg",
           "svg_sha256": "fd8decbe9dcae02345a10b6453d834c0d6af42681fb36e249b69707223fbf7d2",
           "combined_source_sha256": "8f70a8bbfc4bfb6ca0aa36011397e3267b407bc0d8ca6b97945a91da6c27826b",
-          "source": "plates/japan/svg/resources-energy-wind-capacity-2025-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-energy-wind-capacity-2025-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -3120,7 +3120,7 @@
           "svg": "legends/japan/svg/resources-energy-wind-capacity-2025-legend.svg",
           "svg_sha256": "81248c4a56a517569bbf852cfe4e5faf2119ebfe5c35fc0f34f8ee3fcd69a0d6",
           "combined_source_sha256": "8f70a8bbfc4bfb6ca0aa36011397e3267b407bc0d8ca6b97945a91da6c27826b",
-          "source": "plates/japan/svg/resources-energy-wind-capacity-2025-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-energy-wind-capacity-2025-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -3232,7 +3232,7 @@
           "svg": "maps/world/svg/resources-energy-nuclear-operating-capacity-2024.svg",
           "svg_sha256": "43296682c3b65fa7664adf55dbcc35d374d485675dedca1bb11e6c3b68d8f698",
           "combined_source_sha256": "d97a98fa5acbc1aca2f94c744dd0689925f7de8ae4f3c1d5d793aac98407dda7",
-          "source": "plates/world/svg/resources-energy-nuclear-operating-capacity-2024-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-energy-nuclear-operating-capacity-2024-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -3244,7 +3244,7 @@
           "svg": "legends/world/svg/resources-energy-nuclear-operating-capacity-2024-legend.svg",
           "svg_sha256": "8900ea9de548ea8940f653af7ded4b0e51e39e844e05e64c57fc1651a8f2237c",
           "combined_source_sha256": "d97a98fa5acbc1aca2f94c744dd0689925f7de8ae4f3c1d5d793aac98407dda7",
-          "source": "plates/world/svg/resources-energy-nuclear-operating-capacity-2024-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-energy-nuclear-operating-capacity-2024-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -3256,7 +3256,7 @@
           "svg": "maps/japan/svg/resources-energy-nuclear-operating-capacity-2024.svg",
           "svg_sha256": "e46fee3a828b93ee80492275dc02fc6fff0c21b592f0a7d3f629164b9014d33b",
           "combined_source_sha256": "b892947330009d3a39a71e805e453441dfe581d759b090df65516682e6bb6aeb",
-          "source": "plates/japan/svg/resources-energy-nuclear-operating-capacity-2024-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-energy-nuclear-operating-capacity-2024-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -3268,7 +3268,7 @@
           "svg": "legends/japan/svg/resources-energy-nuclear-operating-capacity-2024-legend.svg",
           "svg_sha256": "6eb72173b697711235881e0af376690593da2c204adc3013ddbc294469f0c98d",
           "combined_source_sha256": "b892947330009d3a39a71e805e453441dfe581d759b090df65516682e6bb6aeb",
-          "source": "plates/japan/svg/resources-energy-nuclear-operating-capacity-2024-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-energy-nuclear-operating-capacity-2024-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -3380,7 +3380,7 @@
           "svg": "maps/world/svg/resources-energy-petrochemical-refinery-throughput-latest-2024.svg",
           "svg_sha256": "43870571b7bd062f3635cadfc57c10e507cefa0ed7632dff60126e32d438f47e",
           "combined_source_sha256": "8de143163c2eaaa5c4b4fe562692b81e3dceca7ff915134a4af43f22c4fde6cc",
-          "source": "plates/world/svg/resources-energy-petrochemical-refinery-throughput-latest-2024-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-energy-petrochemical-refinery-throughput-latest-2024-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -3392,7 +3392,7 @@
           "svg": "legends/world/svg/resources-energy-petrochemical-refinery-throughput-latest-2024-legend.svg",
           "svg_sha256": "ec65fd701765f0b403a57cbdc5ab4caf0883a1eb635e170ae083351fc6a755af",
           "combined_source_sha256": "8de143163c2eaaa5c4b4fe562692b81e3dceca7ff915134a4af43f22c4fde6cc",
-          "source": "plates/world/svg/resources-energy-petrochemical-refinery-throughput-latest-2024-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-energy-petrochemical-refinery-throughput-latest-2024-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -3404,7 +3404,7 @@
           "svg": "maps/japan/svg/resources-energy-petrochemical-refinery-throughput-latest-2024.svg",
           "svg_sha256": "4f34a28a0ffcb6944f997f9c8a247cac1506e1bc1863fec90e96114cb6de6c64",
           "combined_source_sha256": "6d3547c080bb96eec323434a872218d5dfb9a91a4ec0282702a77fe1368273d2",
-          "source": "plates/japan/svg/resources-energy-petrochemical-refinery-throughput-latest-2024-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-energy-petrochemical-refinery-throughput-latest-2024-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -3416,7 +3416,7 @@
           "svg": "legends/japan/svg/resources-energy-petrochemical-refinery-throughput-latest-2024-legend.svg",
           "svg_sha256": "d01f8604abdb4fe07b39d6cee7d4f585616dd6e1dffd84f0121a4b39a69ab3ce",
           "combined_source_sha256": "6d3547c080bb96eec323434a872218d5dfb9a91a4ec0282702a77fe1368273d2",
-          "source": "plates/japan/svg/resources-energy-petrochemical-refinery-throughput-latest-2024-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-energy-petrochemical-refinery-throughput-latest-2024-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -3528,7 +3528,7 @@
           "svg": "maps/world/svg/resources-food-food-production-index-latest-2024.svg",
           "svg_sha256": "f54434331599d65dd418f5c0cbf87c747a5510c0a63d69d663eea5f3520b2c3e",
           "combined_source_sha256": "55055e739ffc33493cbe3da0f0b50ecb34c5da93101a81550b1fed2c711f637a",
-          "source": "plates/world/svg/resources-food-food-production-index-latest-2024-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-food-food-production-index-latest-2024-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -3540,7 +3540,7 @@
           "svg": "legends/world/svg/resources-food-food-production-index-latest-2024-legend.svg",
           "svg_sha256": "06b6d87a851b310be64880defcd63999068b9a995c296cb1208417b8481c9cb2",
           "combined_source_sha256": "55055e739ffc33493cbe3da0f0b50ecb34c5da93101a81550b1fed2c711f637a",
-          "source": "plates/world/svg/resources-food-food-production-index-latest-2024-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-food-food-production-index-latest-2024-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -3552,7 +3552,7 @@
           "svg": "maps/japan/svg/resources-food-food-production-index-latest-2024.svg",
           "svg_sha256": "900456576834c27c2f35366ce17e8181f9022ce1f3628a92157c37e74678d331",
           "combined_source_sha256": "e6cc7d4dcbc709ee0378d1592bce1fceb69a03de5372354809adbe05beab6017",
-          "source": "plates/japan/svg/resources-food-food-production-index-latest-2024-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-food-food-production-index-latest-2024-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -3564,7 +3564,7 @@
           "svg": "legends/japan/svg/resources-food-food-production-index-latest-2024-legend.svg",
           "svg_sha256": "2c1e618197f5288b390e082dcb94821abbb28363f3642a81eae4fef42dba50f2",
           "combined_source_sha256": "e6cc7d4dcbc709ee0378d1592bce1fceb69a03de5372354809adbe05beab6017",
-          "source": "plates/japan/svg/resources-food-food-production-index-latest-2024-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-food-food-production-index-latest-2024-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -3676,7 +3676,7 @@
           "svg": "maps/world/svg/resources-fauna-fisheries-production-latest-2024.svg",
           "svg_sha256": "f5c87d2ae810b2cb009639078e27addca1b3de75f8ff18063b5b1808cb342805",
           "combined_source_sha256": "b4a6cdadc3a3c817b5e695c5ca4db77f45581fc7fd62895caf636aec7700a14b",
-          "source": "plates/world/svg/resources-fauna-fisheries-production-latest-2024-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-fauna-fisheries-production-latest-2024-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -3688,7 +3688,7 @@
           "svg": "legends/world/svg/resources-fauna-fisheries-production-latest-2024-legend.svg",
           "svg_sha256": "2bbebb4cf7f53f2ab15a44d60d5f1731c8f71d282917e1051284ccb7d61f571d",
           "combined_source_sha256": "b4a6cdadc3a3c817b5e695c5ca4db77f45581fc7fd62895caf636aec7700a14b",
-          "source": "plates/world/svg/resources-fauna-fisheries-production-latest-2024-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-fauna-fisheries-production-latest-2024-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -3700,7 +3700,7 @@
           "svg": "maps/japan/svg/resources-fauna-fisheries-production-latest-2024.svg",
           "svg_sha256": "bd85bbaceb4e34b6e5d38176a23de18f549c048c9e439268f91fc282a419bb39",
           "combined_source_sha256": "de5b91b1d768ac50fcfc3ea8bb8336c37a2acb872c51524cb78123380a7de872",
-          "source": "plates/japan/svg/resources-fauna-fisheries-production-latest-2024-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-fauna-fisheries-production-latest-2024-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -3712,7 +3712,7 @@
           "svg": "legends/japan/svg/resources-fauna-fisheries-production-latest-2024-legend.svg",
           "svg_sha256": "1f8d195a8422a9201a88521b373139ea4cd022820c8570644b8f59bdad6000b6",
           "combined_source_sha256": "de5b91b1d768ac50fcfc3ea8bb8336c37a2acb872c51524cb78123380a7de872",
-          "source": "plates/japan/svg/resources-fauna-fisheries-production-latest-2024-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-fauna-fisheries-production-latest-2024-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -3809,7 +3809,7 @@
           "svg": "maps/world/svg/resources-fauna-coral-reef-threat-2011.svg",
           "svg_sha256": "2930002e90ed701e54c9315ad45f6a84203078fe80c919ac142f3f989c21960b",
           "combined_source_sha256": "2b633bb3de65dbbb6eb8488a2596e6c6c8f621a1efda08687187e06a33c69f93",
-          "source": "plates/world/svg/resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -3821,7 +3821,7 @@
           "svg": "legends/world/svg/resources-fauna-coral-reef-threat-2011-legend.svg",
           "svg_sha256": "ab55ccaa006f88f65fdb7fdef2e5c7007111b0022f521a0b4fb73a949d316019",
           "combined_source_sha256": "2b633bb3de65dbbb6eb8488a2596e6c6c8f621a1efda08687187e06a33c69f93",
-          "source": "plates/world/svg/resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -3833,7 +3833,7 @@
           "svg": "maps/japan/svg/resources-fauna-coral-reef-threat-2011.svg",
           "svg_sha256": "b25d8058e07c609c51aa72206148e5a12210429a7b3056697eac8a3f04ecc993",
           "combined_source_sha256": "aa4b8c55f0ce774eb7af0e53dca98258ee3c4bc4aafbffd1ef7f836c3ac4f824",
-          "source": "plates/japan/svg/resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -3845,7 +3845,7 @@
           "svg": "legends/japan/svg/resources-fauna-coral-reef-threat-2011-legend.svg",
           "svg_sha256": "21af03e66de0d54dec49793ee113c09b58693c2d2558d8aa7fbb2aefac01ceed",
           "combined_source_sha256": "aa4b8c55f0ce774eb7af0e53dca98258ee3c4bc4aafbffd1ef7f836c3ac4f824",
-          "source": "plates/japan/svg/resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -3957,7 +3957,7 @@
           "svg": "maps/world/svg/resources-flora-forest-area-percent-2024.svg",
           "svg_sha256": "83bf09ee22a37c54b053258df802ced00b7e2f999798620f0ec78d731c117973",
           "combined_source_sha256": "92733dfeebd13ba62b03108b17e8f253aed1c127d5f8963777138ddcfc408622",
-          "source": "plates/world/svg/resources-flora-forest-area-percent-2024-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-flora-forest-area-percent-2024-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -3969,7 +3969,7 @@
           "svg": "legends/world/svg/resources-flora-forest-area-percent-2024-legend.svg",
           "svg_sha256": "57407cf4633dcb861c0c16a43a172f95aaa2f41624643621e982f8a531b32a05",
           "combined_source_sha256": "92733dfeebd13ba62b03108b17e8f253aed1c127d5f8963777138ddcfc408622",
-          "source": "plates/world/svg/resources-flora-forest-area-percent-2024-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-flora-forest-area-percent-2024-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -3981,7 +3981,7 @@
           "svg": "maps/japan/svg/resources-flora-forest-area-percent-2024.svg",
           "svg_sha256": "cb1577596a1241a65be9d56181ab687fb0c5a0dcff4b70c3ab076db6683f2188",
           "combined_source_sha256": "0183295e24eede41a7cdf1fae3f55fb8a79671c9e066e208e49e59fa03e51754",
-          "source": "plates/japan/svg/resources-flora-forest-area-percent-2024-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-flora-forest-area-percent-2024-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -3993,7 +3993,7 @@
           "svg": "legends/japan/svg/resources-flora-forest-area-percent-2024-legend.svg",
           "svg_sha256": "de8af74e52e6be835c223f79094bd550fec8899d8eec1660c04e92a6d03605d3",
           "combined_source_sha256": "0183295e24eede41a7cdf1fae3f55fb8a79671c9e066e208e49e59fa03e51754",
-          "source": "plates/japan/svg/resources-flora-forest-area-percent-2024-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-flora-forest-area-percent-2024-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -4105,7 +4105,7 @@
           "svg": "maps/world/svg/resources-mineral-rare-earth-mine-production-2025.svg",
           "svg_sha256": "090e40c9afb960b47677725e85fccfed668596f99709ec4c075c44957d761172",
           "combined_source_sha256": "473c36ad43ce288d34e1ef7e127f22e54eff847563768819efd0c5e3d4c2fd87",
-          "source": "plates/world/svg/resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -4117,7 +4117,7 @@
           "svg": "legends/world/svg/resources-mineral-rare-earth-mine-production-2025-legend.svg",
           "svg_sha256": "b434152831394df194e4d6a17ce3c3092d1575e43c91e84143d0fd9945f9d58f",
           "combined_source_sha256": "473c36ad43ce288d34e1ef7e127f22e54eff847563768819efd0c5e3d4c2fd87",
-          "source": "plates/world/svg/resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -4129,7 +4129,7 @@
           "svg": "maps/japan/svg/resources-mineral-rare-earth-mine-production-2025.svg",
           "svg_sha256": "67b4021de92630706d68f69b03c87742feb9683e153b48aaca56d2bc99473781",
           "combined_source_sha256": "11e05168a1ccd304b3b6fe56c84aa7186dd87870d8c62c7f394c4a93bc506e56",
-          "source": "plates/japan/svg/resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -4141,7 +4141,7 @@
           "svg": "legends/japan/svg/resources-mineral-rare-earth-mine-production-2025-legend.svg",
           "svg_sha256": "a452137ef47f89e8d23cbb6df22216b13f40920282ec894f43ef505a90e171b1",
           "combined_source_sha256": "11e05168a1ccd304b3b6fe56c84aa7186dd87870d8c62c7f394c4a93bc506e56",
-          "source": "plates/japan/svg/resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -4253,7 +4253,7 @@
           "svg": "maps/world/svg/resources-human-population-under-30-2024.svg",
           "svg_sha256": "eacd408f88d80f600917240e3c13bde971bd40c9fd6569effa0a0336576d3836",
           "combined_source_sha256": "a20908759abe1c4407d3fa84506a75cde5580e837e1ec1ccc99cec706d99560d",
-          "source": "plates/world/svg/resources-human-population-under-30-2024-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-human-population-under-30-2024-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -4265,7 +4265,7 @@
           "svg": "legends/world/svg/resources-human-population-under-30-2024-legend.svg",
           "svg_sha256": "2108db4a8cdba85f6093cdf6733d07531c42a9517386a8fa99e8396ec5ac81f4",
           "combined_source_sha256": "a20908759abe1c4407d3fa84506a75cde5580e837e1ec1ccc99cec706d99560d",
-          "source": "plates/world/svg/resources-human-population-under-30-2024-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-human-population-under-30-2024-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -4277,7 +4277,7 @@
           "svg": "maps/japan/svg/resources-human-population-under-30-2024.svg",
           "svg_sha256": "dddfa7bf4dfc4bf95d6816785051c624cef255c9860b9d98a25a7c1ce0901497",
           "combined_source_sha256": "34f1d6ef032e45d16920c3e6a928c8404a13668672dca80f6f7e8041ea5ef51c",
-          "source": "plates/japan/svg/resources-human-population-under-30-2024-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-human-population-under-30-2024-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -4289,7 +4289,7 @@
           "svg": "legends/japan/svg/resources-human-population-under-30-2024-legend.svg",
           "svg_sha256": "00deec9635d29b7abf7f2b06833658b1fe1f68eb1b1ec5c42881f6c190b6a8dc",
           "combined_source_sha256": "34f1d6ef032e45d16920c3e6a928c8404a13668672dca80f6f7e8041ea5ef51c",
-          "source": "plates/japan/svg/resources-human-population-under-30-2024-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-human-population-under-30-2024-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -4401,7 +4401,7 @@
           "svg": "maps/world/svg/resources-human-population-over-60-2024.svg",
           "svg_sha256": "9dbe7e00c18c4a20df4f88ff1f3d6f2d60ab1c7a5b3d57c3bf6ab310bf5b80f0",
           "combined_source_sha256": "3ab306340f847d50170ec236484a981d22121af1651db7ef5eabd58a16024100",
-          "source": "plates/world/svg/resources-human-population-over-60-2024-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-human-population-over-60-2024-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -4413,7 +4413,7 @@
           "svg": "legends/world/svg/resources-human-population-over-60-2024-legend.svg",
           "svg_sha256": "d79eb61f9f8d33947571a9362e7c1cfda21c77c3961705266cc00d78c36a066e",
           "combined_source_sha256": "3ab306340f847d50170ec236484a981d22121af1651db7ef5eabd58a16024100",
-          "source": "plates/world/svg/resources-human-population-over-60-2024-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-human-population-over-60-2024-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -4425,7 +4425,7 @@
           "svg": "maps/japan/svg/resources-human-population-over-60-2024.svg",
           "svg_sha256": "c3519b58fb1c94778ff35286754ef24904011987d15e22e05c473907a33a0c63",
           "combined_source_sha256": "8d15bfd4112fb7efb3eae2c862914f2ece696ef7fa1e2fe082e655909b7ed69f",
-          "source": "plates/japan/svg/resources-human-population-over-60-2024-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-human-population-over-60-2024-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -4437,7 +4437,7 @@
           "svg": "legends/japan/svg/resources-human-population-over-60-2024-legend.svg",
           "svg_sha256": "3ce0d7f1569d36dbb86c6e082f990735b46401cc1355ac5217549d10f101f5ef",
           "combined_source_sha256": "8d15bfd4112fb7efb3eae2c862914f2ece696ef7fa1e2fe082e655909b7ed69f",
-          "source": "plates/japan/svg/resources-human-population-over-60-2024-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-human-population-over-60-2024-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -4549,7 +4549,7 @@
           "svg": "maps/world/svg/resources-human-upper-secondary-attainment-latest-2025.svg",
           "svg_sha256": "f57905030140a355873a31a28f792427fae10d965badef540ab1c340cb3efbfc",
           "combined_source_sha256": "c019e39ef9e8eab8f203324ae6c31ab21bdee258978daf7374f76dc168ac211e",
-          "source": "plates/world/svg/resources-human-upper-secondary-attainment-latest-2025-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-human-upper-secondary-attainment-latest-2025-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -4561,7 +4561,7 @@
           "svg": "legends/world/svg/resources-human-upper-secondary-attainment-latest-2025-legend.svg",
           "svg_sha256": "6a3b457dc34d26743356a539e6f6c4c9e7a542a465e60358beee5814a71f39f2",
           "combined_source_sha256": "c019e39ef9e8eab8f203324ae6c31ab21bdee258978daf7374f76dc168ac211e",
-          "source": "plates/world/svg/resources-human-upper-secondary-attainment-latest-2025-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-human-upper-secondary-attainment-latest-2025-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -4573,7 +4573,7 @@
           "svg": "maps/japan/svg/resources-human-upper-secondary-attainment-latest-2025.svg",
           "svg_sha256": "043e469057eba005a4eab002e19b17556f9f7a3d3e573fc70cbdcd62b6d97ad6",
           "combined_source_sha256": "1a5d67d20e19cb73d367f2440f443e24d450b4aebf52313806b1ba755a059997",
-          "source": "plates/japan/svg/resources-human-upper-secondary-attainment-latest-2025-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-human-upper-secondary-attainment-latest-2025-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -4585,7 +4585,7 @@
           "svg": "legends/japan/svg/resources-human-upper-secondary-attainment-latest-2025-legend.svg",
           "svg_sha256": "cc0e787edc5c07945cbec7b8f5d6e0eb1562265e84757b51e3de29453a4790b8",
           "combined_source_sha256": "1a5d67d20e19cb73d367f2440f443e24d450b4aebf52313806b1ba755a059997",
-          "source": "plates/japan/svg/resources-human-upper-secondary-attainment-latest-2025-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-human-upper-secondary-attainment-latest-2025-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -4697,7 +4697,7 @@
           "svg": "maps/world/svg/resources-human-bachelors-attainment-latest-2024.svg",
           "svg_sha256": "5f3c631e527bec558594ec51fcf0665a20a44ff65643bbed534033318c511428",
           "combined_source_sha256": "03ec23da44bf3c61953234de3a39ad769c3d6a6c5e909330c40beb337cb99296",
-          "source": "plates/world/svg/resources-human-bachelors-attainment-latest-2024-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-human-bachelors-attainment-latest-2024-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -4709,7 +4709,7 @@
           "svg": "legends/world/svg/resources-human-bachelors-attainment-latest-2024-legend.svg",
           "svg_sha256": "95c007260634a8dec6e2bcee7c71e49fb1ac224b17e3cbe6d0324319e0e97335",
           "combined_source_sha256": "03ec23da44bf3c61953234de3a39ad769c3d6a6c5e909330c40beb337cb99296",
-          "source": "plates/world/svg/resources-human-bachelors-attainment-latest-2024-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-human-bachelors-attainment-latest-2024-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -4721,7 +4721,7 @@
           "svg": "maps/japan/svg/resources-human-bachelors-attainment-latest-2024.svg",
           "svg_sha256": "5ea98bdf6a1be558167d4f42eb779b6b053bbceb42b24f3a74d6f0272a2e88ee",
           "combined_source_sha256": "2377ea4ea8356fa60c8d08a7e26995ac1866c52c0d4ca5aeaf5d6d78d25ce79f",
-          "source": "plates/japan/svg/resources-human-bachelors-attainment-latest-2024-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-human-bachelors-attainment-latest-2024-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -4733,7 +4733,7 @@
           "svg": "legends/japan/svg/resources-human-bachelors-attainment-latest-2024-legend.svg",
           "svg_sha256": "b9f3747851723031641d82f78cbd3d9846bc0552d520f6df5fad691e3c48d44a",
           "combined_source_sha256": "2377ea4ea8356fa60c8d08a7e26995ac1866c52c0d4ca5aeaf5d6d78d25ce79f",
-          "source": "plates/japan/svg/resources-human-bachelors-attainment-latest-2024-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-human-bachelors-attainment-latest-2024-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -4845,7 +4845,7 @@
           "svg": "maps/world/svg/resources-human-resident-patent-applications-per-million-2019-2021.svg",
           "svg_sha256": "64ecb64f98f618d63d436e3f6675e2a62afe0539ffb19e4dddaba4aa2f56377a",
           "combined_source_sha256": "2991c79fa99b3a356de98140ad7251a2b2e83583367d452199fec419e41357ee",
-          "source": "plates/world/svg/resources-human-resident-patent-applications-per-million-2019-2021-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-human-resident-patent-applications-per-million-2019-2021-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -4857,7 +4857,7 @@
           "svg": "legends/world/svg/resources-human-resident-patent-applications-per-million-2019-2021-legend.svg",
           "svg_sha256": "90876d53048051e6b3a185b4930c7b1d6669a9fc8bfbc570628b91779d90d970",
           "combined_source_sha256": "2991c79fa99b3a356de98140ad7251a2b2e83583367d452199fec419e41357ee",
-          "source": "plates/world/svg/resources-human-resident-patent-applications-per-million-2019-2021-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/resources-human-resident-patent-applications-per-million-2019-2021-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -4869,7 +4869,7 @@
           "svg": "maps/japan/svg/resources-human-resident-patent-applications-per-million-2019-2021.svg",
           "svg_sha256": "6a68937cec36ce6ac52ae2e62a0ed42d2044afdb344dbce55d4680ad6ef15c27",
           "combined_source_sha256": "9fbc64ed7b955f7afa8d9f67c7aacdf972a7dae414a7886c8418e789a2e8624e",
-          "source": "plates/japan/svg/resources-human-resident-patent-applications-per-million-2019-2021-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-human-resident-patent-applications-per-million-2019-2021-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -4881,7 +4881,7 @@
           "svg": "legends/japan/svg/resources-human-resident-patent-applications-per-million-2019-2021-legend.svg",
           "svg_sha256": "c186bbaba2eaa5540c675dd1b0011ac268171600cb592171a4e1d47cb771cc89",
           "combined_source_sha256": "9fbc64ed7b955f7afa8d9f67c7aacdf972a7dae414a7886c8418e789a2e8624e",
-          "source": "plates/japan/svg/resources-human-resident-patent-applications-per-million-2019-2021-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/resources-human-resident-patent-applications-per-million-2019-2021-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -4993,7 +4993,7 @@
           "svg": "maps/world/svg/petroleum-eia-liquids-2025.svg",
           "svg_sha256": "42c7328ac8338155619dac91f94bd82d5ca3fd76b4d4fb2d0bc901d2de996713",
           "combined_source_sha256": "d1f1349e62ed2227979b8e1283cf03be89c35d265710d6e83dcc916c2866b780",
-          "source": "plates/world/svg/petroleum-eia-liquids-2025-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/petroleum-eia-liquids-2025-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -5005,7 +5005,7 @@
           "svg": "legends/world/svg/petroleum-eia-liquids-2025-legend.svg",
           "svg_sha256": "1bdf035a8c19d3fcfd95ef7c65e9ce684c8f8fe053ad26de16102f35df792a2e",
           "combined_source_sha256": "d1f1349e62ed2227979b8e1283cf03be89c35d265710d6e83dcc916c2866b780",
-          "source": "plates/world/svg/petroleum-eia-liquids-2025-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/petroleum-eia-liquids-2025-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -5017,7 +5017,7 @@
           "svg": "maps/japan/svg/petroleum-eia-liquids-2025.svg",
           "svg_sha256": "be53b3f15df40580e8081727d6f4a7950e5933bc2ffce908fc565e990056d7e1",
           "combined_source_sha256": "b93a8a4eb9bb40149f3adb0f1b8749493a7b036e1710aeb989b5a402994d8892",
-          "source": "plates/japan/svg/petroleum-eia-liquids-2025-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/petroleum-eia-liquids-2025-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -5029,7 +5029,7 @@
           "svg": "legends/japan/svg/petroleum-eia-liquids-2025-legend.svg",
           "svg_sha256": "a6649f16235490b2b5586431b575d5fc643cb4d57426ff5fc9e7022b46e7455f",
           "combined_source_sha256": "b93a8a4eb9bb40149f3adb0f1b8749493a7b036e1710aeb989b5a402994d8892",
-          "source": "plates/japan/svg/petroleum-eia-liquids-2025-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/petroleum-eia-liquids-2025-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -5140,7 +5140,7 @@
           "svg": "maps/world/svg/petroleum-opec-liquids-projection-2030.svg",
           "svg_sha256": "aded93abb02d90878716179903ce2b6602b219a8a08aedf44c97260d7d089fd9",
           "combined_source_sha256": "69188e364840468a0239854757243b539b3ba562a68670af85bf7b660bfe9d3c",
-          "source": "plates/world/svg/petroleum-opec-liquids-projection-2030-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/petroleum-opec-liquids-projection-2030-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -5152,7 +5152,7 @@
           "svg": "legends/world/svg/petroleum-opec-liquids-projection-2030-legend.svg",
           "svg_sha256": "3843c758af1779bbde6420090d261d2aa4a393b5430901d80ff28c1ad03b0fd5",
           "combined_source_sha256": "69188e364840468a0239854757243b539b3ba562a68670af85bf7b660bfe9d3c",
-          "source": "plates/world/svg/petroleum-opec-liquids-projection-2030-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/petroleum-opec-liquids-projection-2030-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -5164,7 +5164,7 @@
           "svg": "maps/japan/svg/petroleum-opec-liquids-projection-2030.svg",
           "svg_sha256": "7760b7ea4e926720c8f0e5ec4daf089aa4c14bd322ec3a5644f6796dbe8a2c0e",
           "combined_source_sha256": "e306f4beb4423f25f282ecb5e8602d181f6dbe5298ae686a7b11084becac5cce",
-          "source": "plates/japan/svg/petroleum-opec-liquids-projection-2030-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/petroleum-opec-liquids-projection-2030-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -5176,7 +5176,7 @@
           "svg": "legends/japan/svg/petroleum-opec-liquids-projection-2030-legend.svg",
           "svg_sha256": "b1630a01ef6a61399c25ab48dc283b80963d46057d320781b161a8e08611ae3c",
           "combined_source_sha256": "e306f4beb4423f25f282ecb5e8602d181f6dbe5298ae686a7b11084becac5cce",
-          "source": "plates/japan/svg/petroleum-opec-liquids-projection-2030-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/petroleum-opec-liquids-projection-2030-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -5267,7 +5267,7 @@
           "svg": "maps/world/svg/petroleum-opec-country-coverage-2026.svg",
           "svg_sha256": "174a3a2f7370803eb7e56bda7c671ed9d7c6fc8b704013b9556206d23d724074",
           "combined_source_sha256": "fd472a8de5105cfb6885bc393b059a2aab287e04de3020a8f8b9d40452700426",
-          "source": "plates/world/svg/petroleum-opec-country-coverage-2026-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/petroleum-opec-country-coverage-2026-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -5279,7 +5279,7 @@
           "svg": "legends/world/svg/petroleum-opec-country-coverage-2026-legend.svg",
           "svg_sha256": "33847f20b446f58911f2fc504515983b321dfa3be21aad30b380e06206db299e",
           "combined_source_sha256": "fd472a8de5105cfb6885bc393b059a2aab287e04de3020a8f8b9d40452700426",
-          "source": "plates/world/svg/petroleum-opec-country-coverage-2026-authagraph-44-19.052559.svg",
+          "source": "sources/composition/plates/world/svg/petroleum-opec-country-coverage-2026-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null
@@ -5291,7 +5291,7 @@
           "svg": "maps/japan/svg/petroleum-opec-country-coverage-2026.svg",
           "svg_sha256": "143cdf339a4e5833d7d8471666e17d5024d6ac76ddcaa6a8ec156401861f6036",
           "combined_source_sha256": "6088091bed6c1c2d710f2ff54f35cd58271c1bd6257887a84e6bb1153f276f53",
-          "source": "plates/japan/svg/petroleum-opec-country-coverage-2026-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/petroleum-opec-country-coverage-2026-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
           "framing_adjustment": null
@@ -5303,7 +5303,7 @@
           "svg": "legends/japan/svg/petroleum-opec-country-coverage-2026-legend.svg",
           "svg_sha256": "c45a5df25e2f560adff722f6305eb6724f724bb81a6cf46cf15ef6db1e465037",
           "combined_source_sha256": "6088091bed6c1c2d710f2ff54f35cd58271c1bd6257887a84e6bb1153f276f53",
-          "source": "plates/japan/svg/petroleum-opec-country-coverage-2026-authagraph-44-19.052559-japan.svg",
+          "source": "sources/composition/plates/japan/svg/petroleum-opec-country-coverage-2026-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
           "framing_adjustment": null

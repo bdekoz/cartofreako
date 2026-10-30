@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Resume full-size SVG/PDF/300 dpi PNG exports of the Setouchi legend revision."""
+"""Export combined composition intermediates under sources/composition, never plates/."""
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
@@ -11,6 +11,7 @@ import time
 from PIL import Image
 
 from legend_informatics import ROOT, FONT_DIR, WIDTH, HEIGHT, SUFFIX, digest, font_environment
+from setouchi_delivery import COMPOSITION
 
 
 def main():
@@ -22,16 +23,16 @@ def main():
     env = font_environment()
     revision = json.loads((args.delivery/'sources/legend-revision.json').read_text())
     font_hash = digest(FONT_DIR/'provenance.json')
-    sources = args.delivery/'sources/exports'
+    sources = args.delivery/COMPOSITION/'exports'
     sources.mkdir(parents=True, exist_ok=True)
 
     def export(record):
         scope, stem = record['scope'], record['stem']
         name = stem+SUFFIX+('-japan' if scope=='japan' else '')
-        svg = args.delivery/'plates'/scope/'svg'/(name+'.svg')
-        pdf = args.delivery/'plates'/scope/'pdf'/(name+'.pdf')
-        png = args.delivery/'plates'/scope/'png'/(name+'.png')
-        preview = args.delivery/'previews'/scope/(name+'.png')
+        svg = args.delivery/COMPOSITION/'plates'/scope/'svg'/(name+'.svg')
+        pdf = args.delivery/COMPOSITION/'plates'/scope/'pdf'/(name+'.pdf')
+        png = args.delivery/COMPOSITION/'plates'/scope/'png'/(name+'.png')
+        preview = args.delivery/COMPOSITION/'previews'/scope/(name+'.png')
         receipt = sources/(scope+'-'+stem+'.json')
         fingerprint = {'svg_sha256':digest(svg), 'font_provenance_sha256':font_hash,
                        'dpi':300, 'exporter':'setouchi-st2-v1'}
@@ -75,7 +76,7 @@ def main():
         futures=[executor.submit(export,r) for r in selected]
         results=[future.result() for future in as_completed(futures)]
     results.sort(key=lambda r:(r['scope'],r['stem']))
-    (args.delivery/'sources'/('export-manifest-selected.json' if args.only else 'export-manifest.json')).write_text(
+    (args.delivery/COMPOSITION/('export-manifest-selected.json' if args.only else 'export-manifest.json')).write_text(
         json.dumps({'font_provenance_sha256':font_hash,'records':results},indent=2)+'\n')
 
 

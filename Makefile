@@ -3354,6 +3354,7 @@ setouchi-st2: build/generation-context
 	python3 scripts/split-setouchi-legend-sheets.py --source-delivery "$(SETOUCHI_ST2_SOURCE)" --delivery "$(SETOUCHI_ST2_OUTPUT)"
 	python3 scripts/build-setouchi-bibliography.py --delivery "$(SETOUCHI_ST2_SOURCE)" --output "$(SETOUCHI_ST2_OUTPUT)" --docs-page docs/pages/gallery/setouchi-2028-bibliography.md
 	python3 scripts/export-setouchi-sheets.py --delivery "$(SETOUCHI_ST2_OUTPUT)" --workers "$(ASSET_JOBS)"
+	python3 scripts/publish-setouchi-plate-files.py --delivery "$(SETOUCHI_ST2_OUTPUT)"
 	python3 scripts/study-setouchi-africa-framing.py --delivery "$(SETOUCHI_ST2_SOURCE)" --output "$(SETOUCHI_ST2_OUTPUT)/prototypes/africa-framing" --variants original-100 centered-95 shifted-95 cyclic-95 --render
 	python3 scripts/build-setouchi-revision-review.py --output "$(SETOUCHI_ST2_OUTPUT)"
 	python3 scripts/validate-setouchi-sheets.py --delivery "$(SETOUCHI_ST2_OUTPUT)"
