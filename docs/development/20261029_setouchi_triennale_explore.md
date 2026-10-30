@@ -491,3 +491,28 @@ revision. In particular, review both swarm resolution bands separately and
 check the enriched particulate coverage and thin ITU routes at both scales.
 Public availability does not approve an individual plate. The existing venue,
 attribution and physical print-proof reviews remain the production gates.
+
+
+### ST2 separate map and legend/source edition — 2026-10-30
+
+The [second development pass](20261030_setouchi_triennale_explore_2.md)
+is implemented in `output/setouchi-triennale-2028-st2/`. It contains 76
+legend-free maps and 76 separate legend sheets, each carrying its data
+bibliography. The 154-page `setouchi-tri-explore-v2.pdf` places each legend
+immediately after its map and has no appended bibliography. The
+[source bibliography](../pages/gallery/setouchi-2028-bibliography.md) also
+provides a searchable documentation copy and checksum ledger.
+
+All maps have a centered 43.5-inch image on the 44-inch sheet. The world
+fiber and groundstation maps use the accepted horizontal move and the
+requested consolidated lower-left Antarctica. Plate numbers identify
+subjects 01–38, shared across world/Japan companions, in 36 pt bold with
+white fill and a fully opaque black 0.5 pt outline. Regeneration is saved
+as `make setouchi-st2`; the [generation guide](../pages/getting-started/generation-styles.md#setouchi-st2-print-layout)
+records dependencies and output locations.
+
+**Human review and next steps:** proof the consolidated Antarctica and the
+separate legend/source layout in the new local edition, including the
+outlined plate numbers at actual print size. The ST2 document records all
+checks and the remaining production decisions. The existing web gallery
+continues to show the first edition.

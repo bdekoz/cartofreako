@@ -14,6 +14,29 @@ plate set from the Setouchi delivery and is listed in the site's
 [Documentation index](../README.md) · [Visual gallery](README.md) ·
 [Default generation styles](../getting-started/generation-styles.md)
 
+The subsequent [ST2 revision](../../development/20261030_setouchi_triennale_explore_2.md)
+has a [plate-by-plate source bibliography](setouchi-2028-bibliography.md)
+covering all 38 pairs. The local edition in
+`output/setouchi-triennale-2028-st2/` contains **76 legend-free maps and 76
+separate legend/source sheets**, with each data bibliography on its matching
+legend. Its `index.html` opens the paired review and
+`setouchi-tri-explore-v2.pdf` contains 154 pages: two introductory pages and
+152 full-size sheets. Plate numbers identify subjects 01–38, shared by the
+world and Japan companions; they are independent of PDF page positions.
+The number alone appears in 36 pt bold with white fill and a fully opaque
+black 0.5 pt outline.
+
+Every ST2 map has a 43.5-inch image width centered on its 44-inch sheet.
+The world fiber and groundstation maps also use the approved horizontal
+move and deliberately displaced Antarctica, consolidated at the lower left.
+Their current four-sheet proof is
+`proofs/43p5-antarctica-left/setouchi-network-separated-proof.pdf` inside
+the ST2 delivery. The published gallery above remains the first edition.
+The bibliography documents the same observational inputs, with per-source
+dates, methods and a downloadable checksum ledger. The
+[regeneration instructions](../getting-started/generation-styles.md#setouchi-st2-print-layout)
+preserve the new layout and typography.
+
 ## Review and return feedback
 
 1. Search for a subject, such as fiber, particulate, petroleum or coral.

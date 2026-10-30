@@ -33,7 +33,10 @@ FENCE = re.compile(r"^\s*(```+|~~~+)")
 SKIP_PARTS = {".git", "_site", "assets.generated", "docs/doxygen", "build"}
 # Keep in sync with _config.yml. This frozen local delivery has its own
 # manifest validation; its generated print masters are absent from clones.
-LOCAL_DELIVERY_ROOTS = (Path("output/setouchi-triennale-2028"),)
+LOCAL_DELIVERY_ROOTS = (
+    Path("output/setouchi-triennale-2028"),
+    Path("output/setouchi-triennale-2028-st2"),
+)
 
 
 def local_delivery_path(path: Path) -> bool:

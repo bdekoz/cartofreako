@@ -146,3 +146,52 @@ copies and downloadable feedback. It provides a visual reference for these
 defaults; source dates remain those recorded in the delivery.
 The [review guide](../gallery/setouchi-2028.md) explains the feedback workflow,
 screen copies, print deliverables and source inventory.
+
+## Setouchi ST2 print layout
+
+The [second Setouchi revision](../../development/20261030_setouchi_triennale_explore_2.md)
+saves the subsequent print-layout decisions in the ST2 composition scripts.
+Regenerate the edition with:
+
+```sh
+make setouchi-st2 ASSET_JOBS=4
+```
+
+This reads the pinned first delivery at `output/setouchi-triennale-2028/`
+and its local source caches, then writes
+`output/setouchi-triennale-2028-st2/`. Override `SETOUCHI_ST2_SOURCE` and
+`SETOUCHI_ST2_OUTPUT` to select equivalent local delivery locations. The
+command rebuilds legends, source bibliographies, map/legend sheets, exports,
+the review index, framing comparisons and aggregate PDF, then validates the
+result. It reuses the recorded observations; it does not fetch new data.
+
+The saved presentation settings are:
+
+- Separate map and legend/source sheets for all 38 world/Japan pairs.
+- A centered 43.5-inch map image on a 44 × 19.052559-inch sheet. Proportional
+  scaling is 98.863636%; physical strokes scale with the artwork, while
+  opacity is retained. The original 0.5 pt fiber strokes print at 0.494318 pt.
+- The approved +4.35-inch printed horizontal move and consolidated lower-left
+  Antarctica on the world fiber and groundstation maps. Companion legends
+  explicitly describe the deliberate Antarctic displacement.
+- Atkinson Hyperlegible legends based on the supplied rare-earth reference,
+  with each plate's source bibliography alongside the key.
+- Plate numbers 01–38, shared by world and Japan companions, in 36 pt bold,
+  white fill, black 0.5 pt outline and 100% opacity. The footer is number only.
+- An aggregate ordered world map, world legend/sources, Japan map, Japan
+  legend/sources for each subject. No bibliography is appended at the end.
+
+Full-size masters are under `maps/{world,japan}/` and
+`legends/{world,japan}/`, with `svg`, `pdf`, `png` and `preview` subdirectories.
+The earlier combined sheets under `plates/` are composition intermediates.
+The current network proof is under `proofs/43p5-antarctica-left/`; the
+`prototypes/africa-framing/` variants retain the earlier comparison study.
+
+The build needs Python 3.11 or later, lxml, Shapely, Pillow and ReportLab;
+Inkscape, Fontconfig and Poppler (`pdfinfo`, `pdfunite`); and the native swarm
+export dependencies described above. `build/generation-context` uses the
+usual C++/GDAL build dependencies. The bundled
+[Atkinson Hyperlegible fonts](../../../assets/fonts/atkinson-hyperlegible/README.md)
+are checksum-verified and selected through repository-local Fontconfig.
+All 152 SVGs, PDFs and 300 dpi PNGs passed the layout, source, geometry and
+export checks recorded in `sources/sheets-validation.json` for this edition.

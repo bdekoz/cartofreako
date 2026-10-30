@@ -8,7 +8,10 @@ title: Cartofreako visual gallery
 
 # Visual gallery
 
-For the latest complete **Setouchi 2028 world and Japan plates**, open the
+[Setouchi plate bibliography](setouchi-2028-bibliography.md) records the
+providers, dates and methods for every world/Japan pair in the ST2 study.
+
+For the published **Setouchi 2028 world and Japan plates**, open the
 [live review gallery](https://situationshipin.space/review/cartofreako-setouchi-2028-20261030/).
 It pairs 38 subjects across 76 plates, with search, zoom and saved feedback.
 The [review guide](setouchi-2028.md) covers the updated visualizations, how to
