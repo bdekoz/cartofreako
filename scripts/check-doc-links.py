@@ -31,6 +31,13 @@ HTML_ID = re.compile(r"\b(?:id|name)\s*=\s*[\"']([^\"']+)[\"']", re.IGNORECASE)
 EXPLICIT_ID = re.compile(r"\{:\s*#([^\s}]+)[^}]*\}")
 FENCE = re.compile(r"^\s*(```+|~~~+)")
 SKIP_PARTS = {".git", "_site", "assets.generated", "docs/doxygen", "build"}
+# Keep in sync with _config.yml. This frozen local delivery has its own
+# manifest validation; its generated print masters are absent from clones.
+LOCAL_DELIVERY_ROOTS = (Path("output/setouchi-triennale-2028"),)
+
+
+def local_delivery_path(path: Path) -> bool:
+    return any(path.is_relative_to(root) for root in LOCAL_DELIVERY_ROOTS)
 
 
 def repository_files(root: Path) -> list[Path]:
@@ -53,6 +60,8 @@ def repository_files(root: Path) -> list[Path]:
     for name in result.stdout.splitlines():
         path = Path(name)
         if any(part in SKIP_PARTS for part in path.parts):
+            continue
+        if local_delivery_path(path):
             continue
         if (root / path).is_file():
             files.append(path)
@@ -237,6 +246,12 @@ def main() -> int:
             if target is None:
                 continue
             checked += 1
+            if target.is_relative_to(root) and local_delivery_path(target.relative_to(root)):
+                errors.append(
+                    f"{source}:{line}: local delivery target is not published: "
+                    f"{destination}; use a public review URL or a literal local path"
+                )
+                continue
             resolved = rendered_source(target)
             if resolved is None:
                 errors.append(f"{source}:{line}: missing local target: {destination}")

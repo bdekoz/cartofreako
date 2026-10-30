@@ -64,7 +64,8 @@ the delivery.
 The local delivery is `output/setouchi-triennale-2028/`. It contains the
 44 × 19.052559 inch SVG/PDF masters, 300 dpi PNGs, show catalogs and the
 aggregate `setouchi-tri-explore-v1.pdf`. The web review collection provides
-screen copies of the plates. Print legibility, Japanese captions, attribution
+screen copies of the plates. The local delivery index and print files are
+excluded from the Cartofreako documentation site. Print legibility, Japanese captions, attribution
 and venue decisions remain covered by the
 [development plan and human review steps](../../development/20261029_setouchi_triennale_explore.md).
 

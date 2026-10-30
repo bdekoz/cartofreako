@@ -4,6 +4,11 @@ show_downloads: false
 sass:
   style: compressed
 
+# The frozen print-delivery index links to locally generated masters. Its
+# screen review copies are published separately on situationshipin.space.
+exclude:
+  - output/setouchi-triennale-2028
+
 # Image backend selector. The authoritative deployment choice is recorded in
 # .github/deploy-backend and applied by the Pages workflow; this value is the
 # fallback for local builds and the default backend keys below.

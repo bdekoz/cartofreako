@@ -61,8 +61,9 @@ not backdated. Marker ID: `SD-EVENT-20261029-5c33b88e`.
 
 ## Produced outputs — 2026-10-29
 
-Open [the visual output index](../../output/setouchi-triennale-2028/index.html).
-All generated deliverables are in `output/setouchi-triennale-2028`.
+Open the [public world/Japan gallery](https://situationshipin.space/review/cartofreako-setouchi-2028-20261030/).
+The local visual index is `output/setouchi-triennale-2028/index.html`; all
+generated deliverables are in `output/setouchi-triennale-2028`.
 
 - **38 world plates and 38 Japan companions**, each in SVG, PDF and PNG:
   **228 print files**. The set includes the 32 reference-gallery plates, both
@@ -74,10 +75,10 @@ All generated deliverables are in `output/setouchi-triennale-2028`.
   (V1–V3), and three site installations (I1–I3). Each includes a visitor
   experience, candidate place, concept layout, materials, planning budget,
   schedule, source references and human review decisions.
-- An [eight-page application draft](../../output/setouchi-triennale-2028/proposal/shared-sea-atlas_application-draft.pdf),
-  [proposal and options](../../output/setouchi-triennale-2028/proposal/proposal-and-options.md),
+- An [eight-page application draft](https://github.com/bdekoz/cartofreako/blob/385650cfd88f8596134b787cc87bcee59b171389/output/setouchi-triennale-2028/proposal/shared-sea-atlas_application-draft.pdf),
+  [proposal and options](https://github.com/bdekoz/cartofreako/blob/385650cfd88f8596134b787cc87bcee59b171389/output/setouchi-triennale-2028/proposal/proposal-and-options.md),
   ten-page atlas contact sheets, and a four-page petroleum source annex.
-- An [offline petroleum source explorer](../../output/setouchi-triennale-2028/sources/petroleum-explorer.html),
+- An offline petroleum source explorer (`sources/petroleum-explorer.html`),
   source tables, observation-period notes, build scripts, validation results
   and checksums.
 
@@ -147,7 +148,7 @@ this does not provide surface PM2.5. The Japanese government PM2.5 route is now
 verified in the separate enrichment findings.
 NASA SSC validation-reference refresh timed out; the 16 successfully retrieved
 CelesTrak groups were retained. See
-[source periods and limits](../../output/setouchi-triennale-2028/sources/data-quality.md).
+[source periods and limits](https://github.com/bdekoz/cartofreako/blob/385650cfd88f8596134b787cc87bcee59b171389/output/setouchi-triennale-2028/sources/data-quality.md).
 The outputs should be described as a dated study edition rather than as a live
 atlas. Current code/izzi revisions, input hashes and commands are recorded in
 `sources/repository-state.json`, `sources/generation-plan.json` and `build/`.
@@ -231,12 +232,14 @@ Visual/browser scope: `sources/visual-review.json` and
 
 ### Aggregate exploration PDF — 2026-10-29
 
-The requested [setouchi-tri-explore-v1.pdf](../../output/setouchi-triennale-2028/setouchi-tri-explore-v1.pdf)
+The requested local `output/setouchi-triennale-2028/setouchi-tri-explore-v1.pdf`
 collects the visual index, all 38 world/Japan pairs, nine catalogs, application
 draft, contact sheets, petroleum annex, source-period notes and the human
 reviews above. The map artwork remains vector-based for zooming. This study
-volume is separate from the eventual ten-page application packet. The output
-index and aggregate are local, untracked files; no commit has been made.
+volume is separate from the eventual ten-page application packet. The aggregate
+and full-resolution plate masters remain local generated files. The index,
+previews and build scripts were subsequently committed; see
+[versioned review materials](https://github.com/bdekoz/cartofreako/blob/385650cfd88f8596134b787cc87bcee59b171389/output/setouchi-triennale-2028/GIT-CONTENTS.md).
 
 Rebuild with `build/build_aggregate.py` in the output directory using ReportLab,
 Beautiful Soup, Markdown, pdfrw and pypdf. Assembly provenance and PDF checks
@@ -315,9 +318,9 @@ and exported PDF graphics are recorded in `sources/water-river-style.json`.
   with numeric PM2.5 readings. PurpleAir is a conditional supplement, with
   no claim of superior Japan coverage without an inventory and calibration.
 
-Review the [colour key](../../output/setouchi-triennale-2028/sources/resource-color-key.html),
-[coral comparison](../../output/setouchi-triennale-2028/prototypes/coral-reef/index.html)
-and [visual annex](../../output/setouchi-triennale-2028/proposal/visual-revisions-and-coral-prototypes.pdf).
+Within the local delivery, review `sources/resource-color-key.html` and
+`prototypes/coral-reef/index.html`, plus the
+[visual annex](https://github.com/bdekoz/cartofreako/blob/385650cfd88f8596134b787cc87bcee59b171389/output/setouchi-triennale-2028/proposal/visual-revisions-and-coral-prototypes.pdf).
 The revised index, catalogs and aggregate retain the source periods and
 human reviews above. No submission, publication or commit is part of this pass.
 
@@ -441,6 +444,10 @@ own dates and provenance; applying the defaults does not imply new observations.
 The [review guide](../pages/gallery/setouchi-2028.md) is linked from the project
 homepage, repository README, documentation index and visual gallery. It gives
 reviewers the current collection, visual changes and feedback instructions.
+The frozen delivery tree is excluded from the documentation site because its
+print-download links require local generated files. The documentation link
+check validates public pages separately and rejects links into that local-only
+tree; retained source records are linked to their versioned GitHub files.
 
 The [Setouchi review gallery](https://situationshipin.space/review/cartofreako-setouchi-2028-20261030/)
 pairs all **38 world plates and 38 Japan detail plates** from the latest

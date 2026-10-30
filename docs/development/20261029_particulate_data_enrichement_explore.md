@@ -45,7 +45,8 @@ Numeric values include negatives (range -7 to 43); retain them with quality
 flags and consult official handling rules before aggregation. Neither missing
 strings nor suspect values should be silently converted to zero.
 
-The [retrieval receipt](../../output/setouchi-triennale-2028/sources/research/particulate/kagawa-api-probe.json)
+The local retrieval receipt,
+`output/setouchi-triennale-2028/sources/research/particulate/kagawa-api-probe.json`,
 records the request, digest and per-station counts. The adjacent raw response is
 preserved for inspection. This sample establishes usable nearby observations;
 it does not establish complete Setouchi island or national coverage.
