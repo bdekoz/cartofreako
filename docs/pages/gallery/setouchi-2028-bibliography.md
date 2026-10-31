@@ -68,6 +68,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -86,6 +88,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 **Japan companion:** AuthaGraph geographic reference frame around Japan; not observational data.
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -106,6 +110,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained. Ocean-colored editorial backing closes the former Antarctic land void; that backing is not a new bathymetric measurement. Existing subsea contours retain their source coordinates.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) ([record](#source-natural-earth-physical)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -124,6 +130,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 **Japan companion:** Same evidence in the Japan/Setouchi geographic viewport; neighboring countries may appear. No island-level value is inferred.
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained. Ocean-colored editorial backing closes the former Antarctic land void; that backing is not a new bathymetric measurement. Existing subsea contours retain their source coordinates.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) ([record](#source-natural-earth-physical)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -144,6 +152,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained. Ocean-colored editorial backing closes the former Antarctic land void; that backing is not a new bathymetric measurement. Existing subsea contours retain their source coordinates.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) ([record](#source-natural-earth-physical)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -162,6 +172,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 **Japan companion:** Same evidence in the Japan/Setouchi geographic viewport; neighboring countries may appear. No island-level value is inferred.
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained. Ocean-colored editorial backing closes the former Antarctic land void; that backing is not a new bathymetric measurement. Existing subsea contours retain their source coordinates.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) ([record](#source-natural-earth-physical)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -182,6 +194,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) ([record](#source-natural-earth-physical)); [JAXA P-Tree Himawari-9 Level-2 Cloud Property 1.0](ftps://ftp.ptree.jaxa.jp:990/pub/himawari/L2/CLP/010/) ([record](#source-jaxa-ptree-cloud)); [GCOM-C/SGLI daily daytime aerosol optical depth at 500 nm](https://data.earth.jaxa.jp/stac/cog/v1/catalog.json) ([record](#source-jaxa-gcom-c-aod)); [JAXA GSMaP daily gauge-adjusted precipitation rate](https://data.earth.jaxa.jp/stac/cog/v1/catalog.json) ([record](#source-jaxa-gsmap-precipitation)); [JASMES Aqua/MODIS daily surface shortwave radiation](https://data.earth.jaxa.jp/stac/cog/v1/catalog.json) ([record](#source-jaxa-jasmes-swr)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -200,6 +214,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 **Japan companion:** Same evidence in the Japan/Setouchi geographic viewport; neighboring countries may appear. No island-level value is inferred.
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) ([record](#source-natural-earth-physical)); [Cloud/CDN source cache and Alpha60 reference registries](https://github.com/bdekoz/cloud_cdn_cache.bkoz) ([record](#source-cdn-cache)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -220,7 +236,7 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes. Map route strokes become 0.494318 pt after reduction; opacity remains 75%.
 
-**World framing:** World map: horizontal cyclic move +4.35 printed inches. Antarctica deliberately translated to the lower-left corner as a consolidated silhouette; its displayed position is not geographically accurate. Network data coordinates are retained.
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) ([record](#source-natural-earth-physical)); [TeleGeography — Submarine Cable Map snapshots](https://github.com/telegeography/www.submarinecablemap.com) ([record](#source-telegeography)); [International Telecommunication Union — public terrestrial fibre](https://bbmaps.itu.int/bbmaps/) ([record](#source-itu)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -241,7 +257,7 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
-**World framing:** World map: horizontal cyclic move +4.35 printed inches. Antarctica deliberately translated to the lower-left corner as a consolidated silhouette; its displayed position is not geographically accurate. Network data coordinates are retained.
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) ([record](#source-natural-earth-physical)); [Alpha60 data — Starlink gateways and points of presence](https://github.com/bdekoz/alpha60-data/tree/2e0493073b01742bdd4dff9ace7126f5a97111a9) ([record](#source-groundstations)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -262,6 +278,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) ([record](#source-natural-earth-physical)); [Alpha60 — Dan Da Dan 210 cumulative sample cache](https://github.com/bdekoz/alpha60/blob/f5c65176e9326a6685105ae47604874384c27fab/src/a60-carto-geo.cc) ([record](#source-alpha60-swarm)); [IPinfo — Standard Location geolocation database](https://ipinfo.io/products/ip-geolocation-database) ([record](#source-ipinfo)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -280,6 +298,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 **Japan companion:** Same evidence in the Japan/Setouchi geographic viewport; neighboring countries may appear. No island-level value is inferred. Physical circle areas match the world scale. The 1080p/4K and 720p/lower-resolution partitions are separate plates.
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) ([record](#source-natural-earth-physical)); [Alpha60 — Dan Da Dan 210 cumulative sample cache](https://github.com/bdekoz/alpha60/blob/f5c65176e9326a6685105ae47604874384c27fab/src/a60-carto-geo.cc) ([record](#source-alpha60-swarm)); [IPinfo — Standard Location geolocation database](https://ipinfo.io/products/ip-geolocation-database) ([record](#source-ipinfo)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -304,6 +324,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) ([record](#source-natural-earth-physical)); [NOAA/NCEI — GHCN Daily, Global Surface Network stations](https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd_gsn.tar.gz) ([record](#source-noaa-ghcn-gsn-2025)); [US EPA — AirData PM2.5 AQI](https://aqs.epa.gov/aqsweb/airdata/daily_88101_2025.zip) ([record](#source-epa-airdata-pm25-2025)); [NOAA — Hazard Mapping System smoke polygons](https://satepsanone.nesdis.noaa.gov/pub/FIRE/web/HMS/Smoke_Polygons/Shapefile/Annual_Bundles/hms_smoke2025.zip) ([record](#source-noaa-hms-smoke-2025)); [NOAA/NCEI — Storm Events Database](https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/) ([record](#source-noaa-storm-events-2025)); [Natural Resources Canada — Canadian Wildland Fire Information System](https://cwfis.cfs.nrcan.gc.ca/downloads/hotspots/) ([record](#source-cwfis-hotspots-2025)); [Japan Ministry of the Environment — Soramame provisional PM2.5](https://soramame.env.go.jp/) ([record](#source-jp-moe-soramame-2025)); [China CNEMC — PM2.5 via Wang Xiaolei / Quotsoft](https://quotsoft.net/air/) ([record](#source-cnemc-quotsoft-2025)); [India CPCB — selected PM2.5 monitors via OpenAQ](https://openaq-data-archive.s3.amazonaws.com/) ([record](#source-openaq-cpcb-2025)); [AirNow — selected Indian PM2.5 monitors via OpenAQ](https://openaq-data-archive.s3.amazonaws.com/) ([record](#source-openaq-airnow-2025)); [AirGradient — Srinagar sensor via OpenAQ](https://explore.openaq.org/locations/5728639) ([record](#source-openaq-airgradient-2025)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -327,6 +349,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) ([record](#source-natural-earth-physical)); [NOAA/NCEI — GHCN Daily, Global Surface Network stations](https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd_gsn.tar.gz) ([record](#source-noaa-ghcn-gsn-2026)); [US EPA — AirData PM2.5 AQI](https://aqs.epa.gov/aqsweb/airdata/daily_88101_2026.zip) ([record](#source-epa-airdata-pm25-2026)); [NOAA — Hazard Mapping System smoke polygons](https://satepsanone.nesdis.noaa.gov/pub/FIRE/web/HMS/Smoke_Polygons/Shapefile/Annual_Bundles/hms_smoke2026.zip) ([record](#source-noaa-hms-smoke-2026)); [NOAA/NCEI — Storm Events Database](https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/) ([record](#source-noaa-storm-events-2026)); [Natural Resources Canada — Canadian Wildland Fire Information System](https://cwfis.cfs.nrcan.gc.ca/downloads/hotspots/) ([record](#source-cwfis-hotspots-2026)); [Japan Ministry of the Environment — Soramame provisional PM2.5](https://soramame.env.go.jp/) ([record](#source-jp-moe-soramame-2026)); [China CNEMC — PM2.5 via Wang Xiaolei / Quotsoft](https://quotsoft.net/air/) ([record](#source-cnemc-quotsoft-2026)); [India CPCB — selected PM2.5 monitors via OpenAQ](https://openaq-data-archive.s3.amazonaws.com/) ([record](#source-openaq-cpcb-2026)); [AirNow — selected Indian PM2.5 monitors via OpenAQ](https://openaq-data-archive.s3.amazonaws.com/) ([record](#source-openaq-airnow-2026)); [AirGradient — Srinagar sensor via OpenAQ](https://explore.openaq.org/locations/5728639) ([record](#source-openaq-airgradient-2026)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -347,6 +371,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 **Key definitions:** new daily high count. Classes: 1–5, 6–10, 11–20, 21–40, 41–80, ≥81. Neutral covered land: zero; blank: unobserved. Blue outlines encode record-low counts separately.
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) ([record](#source-natural-earth-physical)); [NOAA CPC / NOAA PSL — Global Unified Temperature V1.0](https://psl.noaa.gov/data/gridded/data.cpc.globaltemp.html) ([record](#source-noaa-cpc)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -369,6 +395,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) ([record](#source-natural-earth-physical)); [NOAA CPC / NOAA PSL — Global Unified Temperature V1.0](https://psl.noaa.gov/data/gridded/data.cpc.globaltemp.html) ([record](#source-noaa-cpc)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -387,6 +415,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 **Japan companion:** All-sky/Hubble sky context retained; a geographic Japan crop is undefined. Companion includes a geographic locator; the yellow reference is conceptual, not a confirmed venue.
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [ESA — Gaia DR3 bright-star selection](https://gea.esac.esa.int/tap-server/tap/sync) ([record](#source-gaia)); [NASA Exoplanet Archive — nearby host selection](https://exoplanetarchive.ipac.caltech.edu/TAP/sync) ([record](#source-exoplanets)); [NASA/JPL — Small-Body Database](https://ssd-api.jpl.nasa.gov/sbdb.api) ([record](#source-jpl-sbdb)); [Cartofreako — curated multi-band and transient context](https://heasarc.gsfc.nasa.gov/) ([record](#source-curated-sky)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -407,6 +437,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [ESA — Gaia DR3 bright-star selection](https://gea.esac.esa.int/tap-server/tap/sync) ([record](#source-gaia)); [NASA Exoplanet Archive — nearby host selection](https://exoplanetarchive.ipac.caltech.edu/TAP/sync) ([record](#source-exoplanets)); [NASA/JPL — Small-Body Database](https://ssd-api.jpl.nasa.gov/sbdb.api) ([record](#source-jpl-sbdb)); [Cartofreako — curated multi-band and transient context](https://heasarc.gsfc.nasa.gov/) ([record](#source-curated-sky)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -426,6 +458,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [ESA — Gaia DR3 bright-star selection](https://gea.esac.esa.int/tap-server/tap/sync) ([record](#source-gaia)); [NASA Exoplanet Archive — nearby host selection](https://exoplanetarchive.ipac.caltech.edu/TAP/sync) ([record](#source-exoplanets)); [NASA/JPL — Small-Body Database](https://ssd-api.jpl.nasa.gov/sbdb.api) ([record](#source-jpl-sbdb)); [Cartofreako — curated multi-band and transient context](https://heasarc.gsfc.nasa.gov/) ([record](#source-curated-sky)); [CelesTrak — general perturbations orbital element groups](https://celestrak.org/NORAD/elements/) ([record](#source-celestrak)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -444,6 +478,8 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 **Japan companion:** Same evidence in the Japan/Setouchi geographic viewport; neighboring countries may appear. No island-level value is inferred.
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) ([record](#source-natural-earth-physical)); [CelesTrak — general perturbations orbital element groups](https://celestrak.org/NORAD/elements/) ([record](#source-celestrak)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -465,6 +501,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 **Japan companion:** Celestial directions calculated from Setouchi, 34.45°N 133.99°E, with a geographic locator; not a geographic crop or observed satellite photograph.
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) ([record](#source-natural-earth-physical)); [CelesTrak — general perturbations orbital element groups](https://celestrak.org/NORAD/elements/) ([record](#source-celestrak)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -491,6 +529,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Admin 0 – Countries, 1:110m](https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip) ([record](#source-natural-earth-admin0)); [IRENA — Renewable Capacity Statistics 2026](https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2026/Mar/IRENA_DAT_RE_capacity_statistics_2026.pdf) ([record](#source-irena-rsc-2026)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -513,6 +553,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 **Coverage:** 124 of 176 mapped country geometries.
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Admin 0 – Countries, 1:110m](https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip) ([record](#source-natural-earth-admin0)); [IRENA — Renewable Capacity Statistics 2026](https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2026/Mar/IRENA_DAT_RE_capacity_statistics_2026.pdf) ([record](#source-irena-rsc-2026)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -537,6 +579,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Admin 0 – Countries, 1:110m](https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip) ([record](#source-natural-earth-admin0)); [IAEA — Operating Experience with Nuclear Power Stations in Member States in 2024](https://www-pub.iaea.org/MTCD/publications/PDF/RDS-2-45_web.pdf) ([record](#source-iaea-rds-2-45)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -559,6 +603,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 **Coverage:** 101 of 176 mapped country geometries.
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Admin 0 – Countries, 1:110m](https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip) ([record](#source-natural-earth-admin0)); [United Nations Statistics Division — Energy Statistics Database — total refinery throughput](https://data.un.org/WS/rest/data/UNSD,DF_UNDATA_ENERGY,/A..GR.086/?startPeriod=2018&format=csv) ([record](#source-unsd-energy-2025)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -583,6 +629,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Admin 0 – Countries, 1:110m](https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip) ([record](#source-natural-earth-admin0)); [World Bank — World Development Indicators](https://databank.worldbank.org/source/world-development-indicators) ([record](#source-wdi-2026-10-08)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -606,6 +654,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Admin 0 – Countries, 1:110m](https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip) ([record](#source-natural-earth-admin0)); [World Bank — World Development Indicators](https://databank.worldbank.org/source/world-development-indicators) ([record](#source-wdi-2026-10-08)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -626,6 +676,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 **Key definitions:** WRI source categories. Classes: Low, Medium, High, Very high. Historical threat ranks, not current coral cover or reef area.
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) ([record](#source-natural-earth-physical)); [World Resources Institute — Reefs at Risk Revisited — present reefs and integrated local threat](https://wriorg.s3.amazonaws.com/s3fs-public/reefs_at_risk_revisited_present.kmz) ([record](#source-wri-reefs-at-risk-2011)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -650,6 +702,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Admin 0 – Countries, 1:110m](https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip) ([record](#source-natural-earth-admin0)); [World Bank — World Development Indicators](https://databank.worldbank.org/source/world-development-indicators) ([record](#source-wdi-2026-10-08)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -672,6 +726,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 **Coverage:** 12 of 176 mapped country geometries.
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Admin 0 – Countries, 1:110m](https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip) ([record](#source-natural-earth-admin0)); [U.S. Geological Survey — Mineral Commodity Summaries 2026](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026.pdf) ([record](#source-usgs-mcs-2026)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -696,6 +752,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Admin 0 – Countries, 1:110m](https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip) ([record](#source-natural-earth-admin0)); [World Bank — World Development Indicators](https://databank.worldbank.org/source/world-development-indicators) ([record](#source-wdi-2026-10-08)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -718,6 +776,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 **Coverage:** 169 of 176 mapped country geometries.
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Admin 0 – Countries, 1:110m](https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip) ([record](#source-natural-earth-admin0)); [World Bank — World Development Indicators](https://databank.worldbank.org/source/world-development-indicators) ([record](#source-wdi-2026-10-08)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -742,6 +802,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Admin 0 – Countries, 1:110m](https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip) ([record](#source-natural-earth-admin0)); [World Bank — World Development Indicators](https://databank.worldbank.org/source/world-development-indicators) ([record](#source-wdi-2026-10-08)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -764,6 +826,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 **Coverage:** 149 of 176 mapped country geometries.
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Admin 0 – Countries, 1:110m](https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip) ([record](#source-natural-earth-admin0)); [World Bank — World Development Indicators](https://databank.worldbank.org/source/world-development-indicators) ([record](#source-wdi-2026-10-08)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -788,6 +852,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Admin 0 – Countries, 1:110m](https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip) ([record](#source-natural-earth-admin0)); [World Bank — World Development Indicators](https://databank.worldbank.org/source/world-development-indicators) ([record](#source-wdi-2026-10-08)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -810,6 +876,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 **Scope:** ANP Brazil, Statistics Canada and US national corroboration are supporting research, not substituted into these country fills. Austrian WKO and Energy Institute numerical data were not ingested.
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Admin 0 – Countries, 1:110m](https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip) ([record](#source-natural-earth-admin0)); [US EIA — Short-Term Energy Outlook, tables 3b and 3c](https://www.eia.gov/outlooks/steo/data.php?type=tables) ([record](#source-eia-steo)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
@@ -834,6 +902,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
 
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
+
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Admin 0 – Countries, 1:110m](https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip) ([record](#source-natural-earth-admin0)); [OPEC — World Oil Outlook 2026](https://publications.opec.org/woo) ([record](#source-opec-woo)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 
 
@@ -856,6 +926,8 @@ Validation-only context: NASA SSCWeb — retained validation reference. Historic
 **Scope:** ANP Brazil, Statistics Canada and US national corroboration are supporting research, not substituted into these country fills. Austrian WKO and Energy Institute numerical data were not ingested.
 
 **Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+
+**World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
 **Sources:** [Hajime Narukawa — AuthaGraph formulation](https://doi.org/10.11212/jjca.60.1_1) ([record](#source-authagraph)); [Natural Earth — Admin 0 – Countries, 1:110m](https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip) ([record](#source-natural-earth-admin0)); [OPEC — World Oil Outlook 2026](https://publications.opec.org/woo) ([record](#source-opec-woo)); [Natural Earth — Japan geographic boundary](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/) ([record](#source-japan-boundary)).
 

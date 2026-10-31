@@ -38,9 +38,10 @@ This includes every SVG, PDF, PNG and preview, including both temperature
 years. Combined build intermediates are kept under `sources/composition/`.
 
 Every ST2 map has a 43.5-inch image width centered on its 44-inch sheet.
-The world fiber and groundstation maps also use the approved horizontal
-move and deliberately displaced Antarctica, consolidated at the lower left.
-Their current four-sheet proof is
+Every world sheet uses the approved horizontal move. Terrestrial maps
+consolidate Antarctica at the same lower-left position, with its coastlines,
+ice and country fills; Japan detail views retain their Japan framing.
+The approved four-sheet network sample is
 `proofs/43p5-antarctica-left/setouchi-network-separated-proof.pdf` inside
 the ST2 delivery. The published gallery above remains the first edition.
 The bibliography documents the same observational inputs, with per-source

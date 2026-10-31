@@ -6,6 +6,7 @@ import io
 import json
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 import xml.sax
 from xml.etree import ElementTree as ET
@@ -24,6 +25,27 @@ def module(name):
 compiler = module('compile-generation-style')
 detail = module('generate-japan-detail')
 exporter = module('export-native-swarm')
+world_frame = module('setouchi_world_framing')
+
+
+class WorldFraming(unittest.TestCase):
+    def test_antarc_country_fill_keeps_style_and_all_vertices(self):
+        from lxml import etree
+        from shapely.geometry import box
+        from antarctica_inset import subpaths
+        root = etree.fromstring(b'''<g xmlns="http://www.w3.org/2000/svg" id="terrestrial-land"><g id="countries" fill="#ffee00">
+          <path id="mixed" data-iso3="ATA" fill-rule="evenodd"
+            d="M 39 12 L 40 12 L 40 14 L 39 14 Z M 10 2 L 11 2 L 11 3 Z"/>
+          </g></g>''')
+        before = subpaths(root[0][0].get('d'))
+        changes = []
+        inset = world_frame.partition(root, box(35, 9, 44, 18), changes)
+        after = subpaths(root[0][0].get('d')) + subpaths(inset[0][0].get('d'))
+        self.assertCountEqual(before, after)
+        self.assertEqual(inset[0].get('fill'), '#ffee00')
+        self.assertEqual(inset[0][0].get('data-iso3'), 'ATA')
+        self.assertEqual(inset[0][0].get('fill-rule'), 'evenodd')
+        self.assertEqual(changes[0]['vertices'], 4)
 
 
 class Styles(unittest.TestCase):
@@ -117,6 +139,48 @@ class Export(unittest.TestCase):
     def test_rejects_group_compositing_across_boundaries(self):
         with self.assertRaisesRegex(ValueError, 'compositing'):
             xml.sax.parseString('<svg><g opacity="0.5"><circle r="1"/></g></svg>', exporter.Layers('', lambda content: None))
+
+    def test_cyclic_swarm_render_matches_svg_uses_at_seam(self):
+        import cairo
+        import gi
+        gi.require_version('Rsvg', '2.0')
+        from gi.repository import Rsvg
+        source = '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            width="1in" height="1in" viewBox="0 0 96 96" data-cyclic-shift-in="10">
+          <rect id="st2-sheet-paper" width="96" height="96" fill="white"/>
+          <defs><g id="source-cartography"><style>.c{fill:#b24bc5;fill-opacity:0.15}</style>
+            <path d="M 0 0 L 96 0 L 96 30 L 0 30 Z" fill="#dddddd"/>
+            <circle class="c" cx="1" cy="40" r="12"/><circle class="c" cx="95" cy="40" r="12"/>
+            <circle class="c" cx="3" cy="40" r="10"/><circle class="c" cx="93" cy="40" r="10"/>
+            <circle class="c" cx="50" cy="60" r="10"/></g>
+            <clipPath id="clip"><rect width="96" height="96"/></clipPath></defs>
+          <g id="st2-image-frame" transform="translate(2 2) scale(0.95)">
+            <rect id="st2-image-background" width="96" height="96" fill="#fafafa"/>
+            <g id="st2-image-window" clip-path="url(#clip)">
+              <use xlink:href="#source-cartography" transform="translate(-86 0)"/>
+              <use xlink:href="#source-cartography" transform="translate(10 0)"/>
+              <use xlink:href="#source-cartography" transform="translate(106 0)"/>
+            </g><g id="antarctica-consolidated-inset" transform="translate(1 1)">
+              <path d="M 5 80 L 15 80 L 15 90 Z" fill="#99aaaa"/>
+            </g></g></svg>'''
+        parts = []
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'test.svg'
+            path.write_text(source)
+            total, _ = exporter.cyclic_layers(path, parts.append, limit=2)
+        self.assertEqual(total, 5)
+
+        def pixels(documents):
+            surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 192, 192)
+            for content in documents:
+                handle = Rsvg.Handle.new_from_data(content)
+                viewport = Rsvg.Rectangle()
+                viewport.x = viewport.y = 0
+                viewport.width = viewport.height = 192
+                self.assertTrue(handle.render_document(cairo.Context(surface), viewport))
+            surface.flush()
+            return bytes(surface.get_data())
+        self.assertEqual(pixels(parts), pixels([source.encode()]))
 
 
 if __name__ == '__main__':

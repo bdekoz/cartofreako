@@ -179,9 +179,11 @@ The saved presentation settings are:
 - A centered 43.5-inch map image on a 44 × 19.052559-inch sheet. Proportional
   scaling is 98.863636%; physical strokes scale with the artwork, while
   opacity is retained. The original 0.5 pt fiber strokes print at 0.494318 pt.
-- The approved +4.35-inch printed horizontal move and consolidated lower-left
-  Antarctica on the world fiber and groundstation maps. Companion legends
-  explicitly describe the deliberate Antarctic displacement.
+- The approved +4.35-inch printed horizontal move on every world sheet.
+  Terrestrial maps consolidate Antarctica at the same lower-left position,
+  including coastlines, ice and country fills. Japan views retain their
+  detail framing. Companion legends describe the deliberate displacement;
+  geophysical and network observations keep their source coordinates.
 - Atkinson Hyperlegible legends based on the supplied rare-earth reference,
   with each plate's source bibliography alongside the key.
 - Plate numbers 01–38, shared by world and Japan companions, in 36 pt bold,

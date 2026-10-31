@@ -15,7 +15,6 @@ from setouchi_delivery import COMPOSITION
 SCALE=43.5/WIDTH
 DX=(WIDTH-WIDTH*SCALE)/2
 DY=(HEIGHT-HEIGHT*SCALE)/2
-FRAMING={'scale':SCALE,'shift':4.4,'offset':0.0}
 
 
 class MapOnly(xml.sax.ContentHandler):
@@ -54,7 +53,7 @@ def main():
     parser.add_argument('--legends-only',action='store_true')
     args=parser.parse_args();register_fonts()
     revised=importlib.import_module('revise-setouchi-plates')
-    framing=importlib.import_module('study-setouchi-africa-framing')
+    framing=importlib.import_module('setouchi_world_framing')
     catalog=json.loads((args.delivery/'sources/legend-catalog.json').read_text())
     book=json.loads((args.delivery/'plate-source-bibliography.json').read_text())
     entries={e['stem']:e for e in book['entries']}
@@ -71,19 +70,21 @@ def main():
             target=args.delivery/'maps'/scope/'svg'/(stem+'.svg')
             legend_target=args.delivery/'legends'/scope/'svg'/(stem+'-legend.svg')
             target.parent.mkdir(parents=True,exist_ok=True)
-            special=scope=='world' and stem in ('network-fiber','network-groundstations')
+            special=scope=='world'
             adjustment=None
             if args.legends_only:
                 adjustment=prior[('map',scope,stem)].get('framing_adjustment')
             elif special:
-                adjustment=framing.make_plate(source,'cyclic-43p5-antarctica-left',FRAMING,target,
-                                             with_legend=False,consolidate_antarctica=True)
+                adjustment=framing.make_plate(source,target,legend_target.name)
             else:
                 with target.open('w') as stream:xml.sax.parse(str(source),MapOnly(stream,legend_target.name))
             legend=copy.deepcopy(m)
             if special:
-                legend['notes'].append('Antarctica is deliberately displaced and consolidated at the lower left. Its displayed position is not geographically accurate; network routes and landing data are retained.')
+                if adjustment['antarctica_adjustment']['present']:
+                    legend['notes'].append('Antarctica and its terrestrial outlines, ice and country fills are deliberately displaced to the lower left. This is an editorial position; geophysical fields and network observations retain their source coordinates.')
                 legend['notes'].append('AuthaGraph frame shifted horizontally by 10% of image width. All artwork scaled to a 43.5-inch image on the 44-inch sheet.')
+                if stem in ('earth','water','bathymetry-roulette','bathymetry-hamonshu'):
+                    legend['notes'].append('Ocean-colored backing closes the former Antarctic land void. This backing is editorial, not measured depth; subsea contours retain their source coordinates.')
             else:legend['notes'].append('Cartographic image width: 43.5 inches on a 44-inch sheet; artwork scaled proportionally to 98.863636%.')
             if stem=='network-fiber':legend['notes'].append('Printed route stroke: 0.494318 pt at 75% opacity (0.5 pt before proportional reduction).')
             document=el('svg',width='44in',height=f'{HEIGHT}in',viewBox=f'0 0 {WIDTH} {HEIGHT}',role='img',

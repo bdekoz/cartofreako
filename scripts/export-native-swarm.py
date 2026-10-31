@@ -10,6 +10,104 @@ import xml.sax
 from xml.sax.saxutils import XMLGenerator
 
 from cartofreako_style import digest
+from lxml import etree as E
+
+
+class FramedShell(xml.sax.ContentHandler):
+    """Retain the small frame and definitions, not the source geometry bank."""
+    def __init__(self):
+        self.buffer = io.StringIO()
+        self.writer = XMLGenerator(self.buffer, encoding='utf-8')
+        self.bank = self.style_depth = 0
+
+    def startElement(self, name, attrs):
+        if self.bank:
+            self.bank += 1
+            if self.style_depth or name in ('style', 'defs'):
+                self.style_depth += 1
+                self.writer.startElement(name, dict(attrs))
+        else:
+            self.writer.startElement(name, dict(attrs))
+            if attrs.get('id') == 'source-cartography':
+                self.bank = 1
+
+    def characters(self, value):
+        if not self.bank or self.style_depth:
+            self.writer.characters(value)
+
+    def endElement(self, name):
+        if self.bank:
+            self.bank -= 1
+            if self.style_depth:
+                self.writer.endElement(name)
+                self.style_depth -= 1
+            elif not self.bank:
+                self.writer.endElement(name)
+        else:
+            self.writer.endElement(name)
+
+
+class Bank(xml.sax.ContentHandler):
+    def __init__(self, layers):
+        self.layers = layers
+        self.depth = 0
+
+    def startElement(self, name, attrs):
+        if self.depth or attrs.get('id') == 'source-cartography':
+            self.depth += 1
+            self.layers.startElement(name, attrs)
+
+    def characters(self, value):
+        if self.depth:
+            self.layers.characters(value)
+
+    def endElement(self, name):
+        if self.depth:
+            self.layers.endElement(name)
+            self.depth -= 1
+
+
+def cyclic_layers(source, render, limit=50000):
+    """Replay each cyclic copy in full paint order, in bounded circle chunks."""
+    handler = FramedShell()
+    xml.sax.parse(str(source), handler)
+    shell = E.fromstring(handler.buffer.getvalue().encode())
+    select = lambda identifier: shell.xpath('//*[@id=$id]', id=identifier)[0]
+    frame, window = select('st2-image-frame'), select('st2-image-window')
+    copies = [dict(n.attrib) for n in window]
+    for node in list(window):
+        window.remove(node)
+    inset = shell.xpath('//*[@id="antarctica-consolidated-inset"]')
+    if inset:
+        frame.remove(inset[0])
+    render(E.tostring(shell))  # Paper and ocean are painted exactly once.
+    common = ''.join(E.tostring(n, encoding='unicode') for n in shell if E.QName(n).localname == 'defs')
+    root_attrs = dict(shell.attrib)
+    root_attrs.update({'xmlns': 'http://www.w3.org/2000/svg', 'xmlns:xlink': 'http://www.w3.org/1999/xlink'})
+    counts = []
+    layer_count = 1
+    for use in copies:
+        layers = Layers(common, render, limit=limit)
+        layers.startElement('svg', root_attrs)
+        layers.startElement('g', dict(frame.attrib))
+        layers.startElement('g', dict(window.attrib))
+        layers.startElement('g', {'transform': use['transform']})
+        xml.sax.parse(str(source), Bank(layers))
+        for name in ('g', 'g', 'g', 'svg'):
+            layers.endElement(name)
+        layers.endDocument()
+        counts.append(layers.total)
+        layer_count += layers.layer_count
+    if len(set(counts)) != 1:
+        raise ValueError('Cyclic copies did not retain the same native circles')
+    if inset:
+        for identifier in ('st2-sheet-paper', 'st2-image-background'):
+            node = select(identifier)
+            node.getparent().remove(node)
+        frame.append(inset[0])
+        render(E.tostring(shell))
+        layer_count += 1
+    return counts[0], layer_count
 
 
 class Definitions(xml.sax.ContentHandler):
@@ -130,9 +228,14 @@ def main():
     from gi.repository import Rsvg
     os.environ.setdefault('XDG_CACHE_HOME', '/tmp/cartofreako-render-cache')
 
+    for _, root in E.iterparse(str(args.source), events=('start',)):
+        root_attrs = dict(root.attrib)
+        break
+    cyclic = 'data-cyclic-shift-in' in root_attrs
     definitions = Definitions()
-    xml.sax.parse(str(args.source), definitions)
-    width, height = (inches(definitions.root[key]) for key in ('width', 'height'))
+    if not cyclic:
+        xml.sax.parse(str(args.source), definitions)
+    width, height = (inches(root_attrs[key]) for key in ('width', 'height'))
     dpi = args.long_side / max(width, height) if args.long_side else args.dpi or 300
     pixels = (round(width * dpi), round(height * dpi))
     targets = []
@@ -157,14 +260,18 @@ def main():
             if not handle.render_document(cairo.Context(surface), viewport):
                 raise RuntimeError('librsvg could not render a swarm layer')
 
-    layers = Layers(''.join(definitions.common), render)
-    xml.sax.parse(str(args.source), layers)
+    if cyclic:
+        total, layer_count = cyclic_layers(args.source, render)
+    else:
+        layers = Layers(''.join(definitions.common), render)
+        xml.sax.parse(str(args.source), layers)
+        total, layer_count = layers.total, layers.layer_count
     provenance = args.source.with_suffix('.provenance.json')
     if provenance.exists():
         record = json.loads(provenance.read_text())
         expected = record.get('japan_visible_circles', record.get('native_circles'))
-        if expected is not None and layers.total != expected:
-            raise ValueError(f'Circle conservation failed: {layers.total} != {expected}')
+        if expected is not None and total != expected:
+            raise ValueError(f'Circle conservation failed: {total} != {expected}')
     if args.pdf:
         pdf.finish()
         Path(str(args.pdf) + '.tmp').replace(args.pdf)
@@ -181,12 +288,12 @@ def main():
         temporary.replace(args.png)
     receipt = dict(source=str(args.source), source_sha256=digest(args.source),
                    renderer=f'librsvg / Cairo {cairo.cairo_version_string()}',
-                   native_circles_retained=layers.total, ordered_layers=layers.layer_count,
+                   native_circles_retained=total, ordered_layers=layer_count, cyclic_copies=3 if cyclic else 1,
                    vector_pdf=bool(args.pdf), pdf_points=[width * 72, height * 72] if args.pdf else None,
                    png_pixels=pixels if args.png else None, png_dpi=dpi if args.png else None,
                    partitioning='50,000 circles per layer; original paint order, ancestor transforms, clipping and styles')
     (args.pdf or args.png).with_suffix('.export.json').write_text(json.dumps(receipt, indent=2) + '\n')
-    print(f'Exported {layers.total} native circles in {layers.layer_count} ordered layers', flush=True)
+    print(f'Exported {total} native circles in {layer_count} ordered layers', flush=True)
 
 
 if __name__ == '__main__':

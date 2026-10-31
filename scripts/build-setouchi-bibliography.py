@@ -270,8 +270,9 @@ def build(delivery, revision):
             entry['excluded_sources']='ANP Brazil, Statistics Canada and US national corroboration are supporting research, not substituted into these country fills. Austrian WKO and Energy Institute numerical data were not ingested.'
         entry['japan_source_ids']=['japan-boundary']
         entry['presentation']='Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.'
-        if stem in ('network-fiber','network-groundstations'):
-            entry['world_presentation']='World map: horizontal cyclic move +4.35 printed inches. Antarctica deliberately translated to the lower-left corner as a consolidated silhouette; its displayed position is not geographically accurate. Network data coordinates are retained.'
+        entry['world_presentation']='Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.'
+        if stem in ('earth','water','bathymetry-roulette','bathymetry-hamonshu'):
+            entry['world_presentation']+=' Ocean-colored editorial backing closes the former Antarctic land void; that backing is not a new bathymetric measurement. Existing subsea contours retain their source coordinates.'
         if stem=='network-fiber':
             entry['presentation']+=' Map route strokes become 0.494318 pt after reduction; opacity remains 75%.'
         entry['separate_sheets']=[r for r in sheets if r['stem']==stem]

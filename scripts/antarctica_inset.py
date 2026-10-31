@@ -4,6 +4,7 @@ import hashlib
 import json
 import re
 import subprocess
+from functools import lru_cache
 
 from shapely.geometry import Point, Polygon
 from legend_informatics import E, ROOT, WIDTH, HEIGHT, el
@@ -44,8 +45,8 @@ def serialize(parts):
     return ' '.join('M '+' L '.join(f'{x:.12g},{y:.12g}' for x,y in points)+(' Z' if closed else '') for points,closed in parts)
 
 
-def consolidate(root):
-    """Isolate land south of 60°S in the unchanged projection, then translate it."""
+@lru_cache(maxsize=1)
+def antarctic_cap():
     coordinates=''.join(f'{lon} -60\n' for lon in range(-180,181))
     result=subprocess.run([str(ROOT/'build/generation-context'),'points','authagraph'],input=coordinates,
                           capture_output=True,text=True,check=True)
@@ -54,6 +55,18 @@ def consolidate(root):
     # around Antarctica before using it as a spatial predicate.
     cap=Polygon([(x+WIDTH if x<WIDTH/2 else x,y) for x,y in boundary])
     if not cap.is_valid:raise ValueError('Projected Antarctic cap must be continuous')
+    return cap
+
+
+def antarctic_part(points, closed, cap):
+    centre=Polygon(points).representative_point() if closed and len(points)>=3 else Point(points[0])
+    if centre.x<WIDTH/2:centre=Point(centre.x+WIDTH,centre.y)
+    return cap.covers(centre)
+
+
+def consolidate(root):
+    """Isolate land south of 60°S in the unchanged projection, then translate it."""
+    cap=antarctic_cap()
     groups=root.xpath('//*[@id="terrestrial-land"]')
     if len(groups)!=1:raise ValueError('Expected one terrestrial-land layer')
     pieces=[];all_points=[];kept=0

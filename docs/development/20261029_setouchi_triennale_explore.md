@@ -506,9 +506,9 @@ immediately after its map and has no appended bibliography. The
 [source bibliography](../pages/gallery/setouchi-2028-bibliography.md) also
 provides a searchable documentation copy and checksum ledger.
 
-All maps have a centered 43.5-inch image on the 44-inch sheet. The world
-fiber and groundstation maps use the accepted horizontal move and the
-requested consolidated lower-left Antarctica. Plate numbers identify
+All maps have a centered 43.5-inch image on the 44-inch sheet. Every world
+sheet uses the accepted horizontal move; terrestrial sheets consolidate
+Antarctica at the shared lower-left position. Plate numbers identify
 subjects 01–38, shared across world/Japan companions, in 36 pt bold with
 white fill and a fully opaque black 0.5 pt outline. Regeneration is saved
 as `make setouchi-st2`; the [generation guide](../pages/getting-started/generation-styles.md#setouchi-st2-print-layout)
@@ -519,3 +519,9 @@ separate legend/source layout in the new local edition, including the
 outlined plate numbers at actual print size. The ST2 document records all
 checks and the remaining production decisions. The existing web gallery
 continues to show the first edition.
+
+**2026-10-30 framing follow-up:** the approved horizontal move now applies to
+every world sheet, with Antarctic land, coastlines, ice and country fills
+consolidated at the shared lower-left position. Japan detail framing is
+retained. The ST2 document records the common generator, native swarm export
+checks and the editorial handling of the former Antarctic ocean void.

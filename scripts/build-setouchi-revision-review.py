@@ -80,7 +80,7 @@ def introduction(path, entries, cover_date, scope=None):
              'Map image width 43.5 inches, scale 98.863636%.',
              'Centered margins: 0.25 inches left/right, 0.108253 top/bottom.', '']
     if scope in (None, 'world'):
-        lines += ['World fiber/groundstations shift +4.35 printed inches.',
+        lines += ['Every world sheet uses the +4.35-inch horizontal move.',
                   'The Africa proof reconnects 14 matched cable endpoint pairs.',
                   'Antarctica is deliberately consolidated at the lower left.',
                   'The displayed Antarctic position is not geographically accurate.', '']
@@ -156,7 +156,7 @@ def build(output, cover_date):
           '<header><p>CARTOFREAKO / SETOUCHI TRIENNALE 2028</p><h1>ST2 plate review</h1><p>38 world/Japan pairs: 76 legend-free maps and 76 separate legend sheets. Each legend contains its data bibliography. The outlined plate number is 36 pt bold, with white fill and a fully opaque black 0.5 pt stroke.</p>',
           f'<p class="note"><strong>Separate World and Japan PDFs:</strong> <a href="setouchi-tri-explore-v2-world.pdf">World — {scope_pages} pages</a> · <a href="setouchi-tri-explore-v2-japan.pdf">Japan — {scope_pages} pages</a>. Each opens with CARTOFREAKO and the date in large bold type, then edition notes, an index and {len(pdf_entries)} cartography/data sheets paired with their separate legend/data bibliography sheets. Bathymetry Roulette and Bathymetry Hamonshu are omitted from the PDFs.</p>',
           f'<p class="downloads"><a href="setouchi-tri-explore-v2-world.pdf">World PDF</a><a href="setouchi-tri-explore-v2-japan.pdf">Japan PDF</a><a href="setouchi-tri-explore-v2.pdf">Combined PDF — {aggregate_pages} pages</a><a href="proofs/43p5-antarctica-left/index.html">Approved network sample</a><a href="plate-source-bibliography.json">Source ledger</a><a href="contact-sheets/contact-sheets.pdf">Contact sheets</a><a href="prototypes/africa-framing/index.html">Earlier framing comparisons</a><a href="sources/sheets-validation.json">Validation</a></p>',
-          '<p>Map image width is 43.5 inches on a 44 × 19.052559-inch sheet, with proportional scaling and centered margins. The world fiber and groundstation maps use the approved horizontal move; other map registrations are retained. PDF and SVG are full-size masters; PNGs are 300 dpi. Print at actual size to evaluate physical line weights.</p>',controls,'</header><main>']
+          '<p>Map image width is 43.5 inches on a 44 × 19.052559-inch sheet, with proportional scaling and centered margins. Every world sheet uses the approved horizontal move. Terrestrial plates consolidate Antarctica at the lower left, including its coastlines, ice and country fills. Japan detail views retain their Japan framing. PDF and SVG are full-size masters; PNGs are 300 dpi. Print at actual size to evaluate physical line weights.</p>',controls,'</header><main>']
     for e in entries:
         title=f"{e['ordinal']:02d} · {e['title']}"
         selection_note='<p><strong>Not included in the current PDF editions.</strong></p>' if e['stem'] in PDF_EXCLUDED_STEMS else ''

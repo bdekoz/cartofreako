@@ -368,3 +368,64 @@ legend pages match their standalone masters, and all index page references
 match the selected sequence. The title/date and individual sheet exports
 are preserved, and all 858 local review links resolve. The receipt is
 `sources/pdf-selection-validation.json`.
+
+## Extend the approved geometry to every world plate — 2026-10-30
+
+The human noted that only the two network samples used the adjusted geometry
+and requested the same framing throughout the atlas. This supersedes the
+earlier restriction to fiber and groundstations. Every world sheet now uses
+the same 43.5-inch image, proportional scale and **+4.35-inch printed cyclic
+move**. Earth maps place Antarctica at the common lower-left position; sky,
+projection and graticule sheets use the shared cyclic frame without adding
+terrestrial geography. Japan detail and observer views retain their existing
+Japan framing.
+
+`scripts/setouchi_world_framing.py` is the common world-sheet generator used
+by `make setouchi-st2`. The Antarctic translation is fixed at
+`(-37.3872, +1.550659)` source inches, matching the approved network proof.
+Compound land paths, nested country fills, coastline strokes and ice layers
+are partitioned together. Their vertices, values, colors and inherited paint
+attributes are retained. Resources and petroleum retain their no-data status
+for Antarctica. Temperature cells, atmospheric fields, network observations,
+orbital objects and celestial positions retain their original coordinates
+within the shared cyclic frame; the displaced land is an editorial inset.
+
+Water and Earth encode some land as negative space inside ocean polygons.
+An ocean-colored editorial backing closes the old Antarctic land void.
+This backing is explicitly identified in the legend and source bibliography
+as presentation, **not a depth measurement**. Subsea contours remain at their
+source coordinates, so the Southern Ocean shelf pattern is still visible.
+The two decorative bathymetry studies retain reference Antarctic land in the
+review archive and remain excluded from both PDF editions.
+
+The native swarm exporter now replays the three cyclic copies in order,
+using bounded batches of 50,000 circles. It paints the background once and
+the Antarctic inset last. A regression fixture verifies pixel-for-pixel
+agreement with a normal SVG render, including overlapping transparent
+circles on the cyclic seam. A second fixture verifies that splitting a
+country path preserves every vertex and its inherited color and data code.
+
+The review remains two sheets per subject: cartography/data, then its
+legend/data bibliography. The 36-point outlined plate number, title/date
+sheet and separate World/Japan PDFs are retained. Remaining human review:
+proof the all-plate framing at actual size, including the water plate's
+retained subsea geography and the intentionally displaced Antarctic inset.
+Physical printing, Japanese captions and exhibition decisions remain the
+previously recorded human tasks.
+
+Verification covers **38 shared world frames and 32 Antarctic insets**.
+The six remaining world sheets are projection, graticule, celestial or
+observer charts without terrestrial land. All 152 sheets passed geometry,
+legend and export checks, with 608 standard file bindings. The final
+background-paint correction in the two excluded archive studies was checked
+again; unchanged sheet checks were retained by SHA-256. All 14 Africa cable
+joins remain coincident to less than `1.1e-14` inches. Native swarm counts
+remain 2,804,935 and 876,541 circles in the two world partitions.
+
+The separate PDFs retain **75 pages each**, and the combined edition has
+147 pages. Title/date text, subject selection, map/legend sequence and every
+included legend page were checked against the standalone masters. All 808
+local links on the review index resolve. The generation-style tests pass
+eight cases; documentation checks pass 161 files and 1,600 local links.
+Receipts are `sources/sheets-validation.json` and
+`sources/shared-world-framing-validation.json` in the ST2 delivery.

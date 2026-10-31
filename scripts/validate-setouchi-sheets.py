@@ -17,6 +17,107 @@ from PIL import Image
 from antarctica_inset import subpaths
 from legend_informatics import ROOT,WIDTH,HEIGHT,digest
 from setouchi_delivery import standard_files
+from setouchi_world_framing import ANTARCTIC_TRANSLATION, SCALE, SHIFT, DX, DY
+
+
+class WorldPayload(xml.sax.ContentHandler):
+    """Compare every source shape, including split rings, in bounded memory.
+
+    A multiset checksum ignores the intentional regrouping of Antarctic paths,
+    while retaining coordinates, paint, metadata and inherited group attributes.
+    Editorial ocean backing and reference land are excluded from this data checksum.
+    """
+    def __init__(self, framed=False):
+        self.framed = framed
+        self.stack = []
+        self.active = not framed
+        self.skip = 0
+        self.total = 0
+        self.counts = Counter()
+        self.inset = None
+        self.frame = None
+        self.uses = []
+
+    def add(self, value, kind):
+        self.total = (self.total + int.from_bytes(hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':')).encode()).digest(), 'big')) % (1 << 256)
+        self.counts[kind] += 1
+
+    def startElement(self, name, attrs):
+        a = {k: v for k, v in attrs.items() if not k.startswith('xmlns')}
+        identifier = a.get('id', '')
+        if not self.stack:
+            self.stack.append((None, 'root'))
+            return
+        if self.framed and identifier in ('source-cartography', 'antarctica-consolidated-inset'):
+            self.active = True
+            if identifier == 'antarctica-consolidated-inset':
+                self.inset = a['transform']
+            self.stack.append((None, 'bank'))
+            return
+        if self.framed and identifier == 'st2-image-frame':
+            self.frame = a['transform']
+        if self.framed and name == 'use' and any(k.endswith(':href') and v == '#source-cartography' for k, v in a.items()):
+            self.uses.append(a['transform'])
+        if not self.active:
+            self.stack.append((None, 'outside'))
+            return
+        rejected = (identifier in ('antarctica-source-infill', 'antarctica-reference-silhouette') or (not self.framed and len(self.stack) == 1 and
+                    (name == 'rect' or identifier.endswith('-background') or 'legend' in identifier or identifier.endswith('-key'))))
+        if self.skip or rejected:
+            self.skip += 1
+            self.stack.append((None, 'skip'))
+            return
+        if identifier.endswith('-antarctic-inset'):
+            a['id'] = identifier.removesuffix('-antarctic-inset')
+        ancestry = [entry for entry, kind in self.stack if entry is not None]
+        if name == 'path':
+            value = a.pop('d', '')
+            if re.search('[AaCcQqSsTt]', value):
+                self.add([ancestry, name, a, value], name)
+            else:
+                for points, closed in subpaths(value):
+                    self.add([ancestry, name, a, [[float(f'{v:.12g}') for v in point] for point in points], closed], 'path_subpaths')
+        elif name in ('circle', 'rect', 'polygon', 'polyline', 'line', 'ellipse', 'use'):
+            self.add([ancestry, name, a], name)
+        self.stack.append(([name, a] if name in ('g', 'defs', 'clipPath') else None, 'content'))
+
+    def endElement(self, name):
+        _, kind = self.stack.pop()
+        if kind == 'skip':
+            self.skip -= 1
+        elif kind == 'bank':
+            self.active = False
+
+    def result(self):
+        return f'{self.total:064x}', dict(self.counts)
+
+
+def world_map(source, target, record):
+    before, after = WorldPayload(), WorldPayload(framed=True)
+    xml.sax.parse(str(source), before)
+    xml.sax.parse(str(target), after)
+    assert before.result() == after.result(), record['stem'] + ' source shapes, values or inherited styles changed'
+    expected = f'translate({DX} {DY}) scale({SCALE})'
+    assert after.frame == expected
+    assert after.uses == [f'translate({n} 0)' for n in (SHIFT-WIDTH, SHIFT, SHIFT+WIDTH)]
+    present = record['framing_adjustment']['antarctica_adjustment']['present']
+    non_terrestrial = record['stem'] in ('geometry', 'graticules', 'orbital-technosphere-observer') or record['stem'].startswith('astro-')
+    assert present != non_terrestrial, record['stem'] + ' missing or inappropriate Antarctic inset'
+    if present:
+        assert after.inset == f'translate({ANTARCTIC_TRANSLATION[0]:.12g} {ANTARCTIC_TRANSLATION[1]:.12g})'
+    else:
+        assert after.inset is None
+    result = {'source_shape_multiset_sha256_sum': after.result()[0], 'shape_counts': dict(after.counts),
+              'source_geometry_and_styles_conserved': True, 'common_cyclic_frame': True,
+              'antarctica_at_common_lower_left_position': present}
+    if record['stem'] == 'network-fiber':
+        framing = importlib.import_module('study-setouchi-africa-framing')
+        pairs = framing.boundary_pairs(E.parse(str(source)).getroot())
+        assert len(pairs) == 14
+        gap = max(SCALE*math.hypot(((p['left'][0]+SHIFT)%WIDTH)-((p['right'][0]+SHIFT)%WIDTH),p['left'][1]-p['right'][1]) for p in pairs)
+        assert gap < 1e-10
+        result.update(africa_matched_endpoint_pairs=14, africa_max_gap_inches=gap)
+    return result
 
 
 class Payload(xml.sax.ContentHandler):
@@ -41,65 +142,6 @@ class Payload(xml.sax.ContentHandler):
         if kind=='skip':self.skip-=1
         elif kind=='content':self.emit(['end',name])
     def result(self):return self.hash.hexdigest(),hashlib.sha256(' '.join(''.join(self.text).split()).encode()).hexdigest(),dict(self.counts)
-
-
-def tree_hash(node):
-    digest=hashlib.sha256()
-    def visit(node):
-        digest.update(json.dumps([E.QName(node).localname,sorted(node.attrib.items()),' '.join((node.text or '').split())],separators=(',',':')).encode())
-        for child in node:visit(child)
-        digest.update(b'/')
-    visit(node);return digest.hexdigest()
-
-
-def land_parts(group):
-    result={}
-    for node in group.iter():
-        if E.QName(node).localname!='path':continue
-        key=node.get('id').removesuffix('-antarctic-inset')
-        result.setdefault(key,[]).extend(subpaths(node.get('d','')))
-    return result
-
-
-def special_map(source,target,record):
-    original=E.parse(str(source)).getroot();revised=E.parse(str(target)).getroot()
-    groups=(['network-fiber-itu-terrestrial','network-fiber','network-fiber-landings'] if record['stem']=='network-fiber'
-            else ['starlink-gateway-links','starlink-gateways-20250902'])
-    for identifier in groups:
-        a=original.xpath('//*[@id=$id]',id=identifier);b=revised.xpath('//*[@id=$id]',id=identifier)
-        assert len(a)==len(b)==1
-        assert tree_hash(a[0])==tree_hash(b[0]),'Network data changed: '+identifier
-    before=land_parts(original.xpath('//*[@id="terrestrial-land"]')[0])
-    after=land_parts(revised.xpath('//*[@id="terrestrial-land"]')[0])
-    inset=revised.xpath('//*[@id="antarctica-consolidated-inset"]')
-    assert len(inset)==1
-    for key,value in land_parts(inset[0]).items():after.setdefault(key,[]).extend(value)
-    assert before.keys()==after.keys()
-    maximum_error=0;points=0
-    for key,parts in before.items():
-        unmatched=list(after[key]);assert len(parts)==len(unmatched)
-        for vertices,closed in parts:
-            match=None
-            for index,(candidate,candidate_closed) in enumerate(unmatched):
-                if closed!=candidate_closed or len(vertices)!=len(candidate):continue
-                if max(abs(x-y) for x,y in zip(vertices[0],candidate[0]))>1e-8:continue
-                error=max(abs(a-b) for p,q in zip(vertices,candidate) for a,b in zip(p,q))
-                if error<1e-8:match=index;maximum_error=max(maximum_error,error);points+=len(vertices);break
-            assert match is not None,'Lost or changed land path: '+key
-            unmatched.pop(match)
-    adjustment=record['framing_adjustment'];bounds=adjustment['antarctica_adjustment']['inset_bounds_inches']
-    assert 0<bounds[0]<bounds[2]<7 and 12<bounds[1]<bounds[3]<HEIGHT
-    assert len(revised.xpath('//*[@id="source-cartography"]'))==1
-    assert not revised.xpath('//*[@id="legend-informatics"]')
-    result={'data_layers_unchanged':groups,'land_vertices_conserved':points,'land_coordinate_roundtrip_max_error_inches':maximum_error,
-            'single_antarctic_inset':True,'antarctic_inset_bounds_source_inches':bounds}
-    if record['stem']=='network-fiber':
-        framing=importlib.import_module('study-setouchi-africa-framing')
-        pairs=framing.boundary_pairs(original);assert len(pairs)==14
-        shift=adjustment['shift'];scale=adjustment['scale']
-        gap=max(scale*math.hypot(((p['left'][0]+shift)%WIDTH)-((p['right'][0]+shift)%WIDTH),p['left'][1]-p['right'][1]) for p in pairs)
-        assert gap<1e-10;result.update(africa_matched_endpoint_pairs=14,africa_max_gap_inches=gap)
-    return result
 
 
 def main():
@@ -130,7 +172,7 @@ def main():
             result.update(plate_number='36 pt bold / white fill / black 0.5 pt outline / 100% opacity',source_ids=identifiers)
         else:
             source=out/record['source'];assert digest(source)==record['combined_source_sha256']
-            if record.get('framing_adjustment'):result.update(special_map(source,svg,record))
+            if record.get('framing_adjustment'):result.update(world_map(source,svg,record))
             else:
                 before=Payload();after=Payload();xml.sax.parse(str(source),before);xml.sax.parse(str(svg),after)
                 assert before.result()==after.result(),stem+'/'+scope+' payload changed'
