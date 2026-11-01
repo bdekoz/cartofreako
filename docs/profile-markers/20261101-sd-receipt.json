@@ -1,0 +1,32 @@
+{
+  "schema": "cartofreako-snapshot-dyad-marker-receipt-v1",
+  "recorded_at": "2026-11-01T17:07:34Z",
+  "record_kind": "ledger-receipt",
+  "project": "cartofreako",
+  "canonical_ledger": {
+    "path": "devastation-pacific-house-style/assets.rizal.bkoz/per-project/cartofreako/ledger.json",
+    "schema": "devastation-pacific-dyad-ledger-v1",
+    "tracked_in_git": false,
+    "note": "Private, git-ignored canonical per-project data home.",
+    "sha256_after_end_marker": "f08894571f9ed8452113b2ed2cdc50d26ab4239de0c177eb8be456954619424f"
+  },
+  "markers": [
+    {
+      "record_id": "SD-EVENT-20261029-5c33b88e",
+      "exact_instruction": "snapshot dyad",
+      "recorded_at": "2026-10-29T19:01:51Z",
+      "marker_state": "ACTIVE",
+      "storage_state": "LOCAL-ONLY"
+    },
+    {
+      "record_id": "SD-EVENT-20261101-a6236496",
+      "exact_instruction": "snapshot dyad end",
+      "recorded_at": "2026-11-01T17:07:34Z",
+      "marker_state": "ACTIVE",
+      "storage_state": "LOCAL-ONLY",
+      "related_marker_id": "SD-EVENT-20260826-709073af"
+    }
+  ],
+  "association_note": "The October 29 marker was recorded as the unlabeled instruction snapshot dyad. The recorder associated the November 1 end with SD-EVENT-20260826-709073af, not the October 29 marker. This receipt preserves the canonical association without changing it or claiming a different pair.",
+  "boundary_note": "OBSERVED relevance signal only; not consent, transfer authorization, evaluation or training suitability, provider selection or use, value, or payment."
+}
