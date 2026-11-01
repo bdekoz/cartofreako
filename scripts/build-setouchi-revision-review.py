@@ -12,9 +12,11 @@ from zoneinfo import ZoneInfo
 from PIL import Image,ImageDraw,ImageFont
 from legend_informatics import ROOT, FONT_DIR, SUFFIX, WIDTH, HEIGHT, digest, register_fonts
 from setouchi_delivery import STANDARD_FILES
+from cartofreako_style import STYLE
 
 FRONT_MATTER_PAGES = 3
-PDF_EXCLUDED_STEMS = frozenset({'bathymetry-roulette', 'bathymetry-hamonshu'})
+ATLAS = STYLE['atlas']
+PDF_EXCLUDED_STEMS = frozenset(ATLAS['pdf_excluded_stems'])
 
 
 def page_count(path):
@@ -27,9 +29,10 @@ def title_page(path, cover_date):
     from reportlab.pdfbase import pdfmetrics
     from reportlab.pdfgen.canvas import Canvas
     width, height = WIDTH * 72, HEIGHT * 72
-    margin, gap = 18.0, 36.0
-    font = 'Atkinson-Bold'
-    lines = ['CARTOFREAKO', cover_date.isoformat()]
+    settings = ATLAS['title_page']
+    margin, gap = settings['margin_pt'], settings['line_gap_pt']
+    font = settings['font']
+    lines = [settings['title'], cover_date.isoformat()]
     sizes = [(width - 2 * margin) / pdfmetrics.stringWidth(line, font, 1) for line in lines]
     metrics = [pdfmetrics.getAscentDescent(font, size) for size in sizes]
     text_height = sum(ascent - descent for ascent, descent in metrics)
@@ -38,7 +41,7 @@ def title_page(path, cover_date):
     metrics = [pdfmetrics.getAscentDescent(font, size) for size in sizes]
     top = (height + sum(ascent - descent for ascent, descent in metrics) + gap) / 2
     canvas = Canvas(str(path), pagesize=(width, height))
-    canvas.setTitle('CARTOFREAKO / ' + cover_date.isoformat())
+    canvas.setTitle(settings['title'] + ' / ' + cover_date.isoformat())
     canvas.setAuthor('Cartofreako')
     canvas.setFillColorRGB(1, 1, 1)
     canvas.rect(0, 0, width, height, fill=1, stroke=0)
@@ -203,12 +206,13 @@ def build(output, cover_date):
     title=output/'sources/title-page.pdf'
     title_settings=title_page(title,cover_date)
     editions={}
-    for scope in ('world','japan',None):
+    for edition in ATLAS['pdf_editions']:
+        scope=None if edition=='combined' else edition
         suffix='-'+scope if scope else ''
         cover=output/'sources'/('revision-cover'+suffix+'.pdf')
         introduction(cover,pdf_entries,cover_date,scope)
         scopes=(scope,) if scope else ('world','japan')
-        documents=[title,cover]+[output/path(e,s,'pdf',sheet) for e in pdf_entries for s in scopes for sheet in ('map','legend')]
+        documents=[title,cover]+[output/path(e,s,'pdf',sheet) for e in pdf_entries for s in scopes for sheet in ATLAS['sheet_sequence']]
         target=output/('setouchi-tri-explore-v2'+suffix+'.pdf')
         temporary=target.with_suffix('.tmp.pdf')
         subprocess.run(['pdfunite',*[str(p) for p in documents],str(temporary)],check=True)
@@ -222,6 +226,7 @@ def build(output, cover_date):
     products=[output/'index.html',*[output/e['pdf'] for e in editions.values()],title,output/STANDARD_FILES,output/'plate-source-bibliography.json',output/'plate-source-bibliography.pdf',
               output/'plate-source-bibliography.html',contact/'contact-sheets.pdf']
     manifest={'edition':'Setouchi 2028 ST2','plate_pairs':38,'maps':76,'legend_source_sheets':76,'aggregate_pages':aggregate_pages,
+              'generation_style_sha256':digest(ROOT/'generation-style.json'),'atlas_defaults':ATLAS,
               'pdf_subjects':len(pdf_entries),
               'pdf_selection':{'included_stems':[e['stem'] for e in pdf_entries],
                                'excluded':[{'stem':e['stem'],'ordinal':e['ordinal'],'title':e['title']} for e in excluded]},
@@ -238,7 +243,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output',type=Path,default=ROOT/'output/setouchi-triennale-2028-st2')
     parser.add_argument('--date',type=date.fromisoformat,
-                        default=datetime.now(ZoneInfo('America/Los_Angeles')).date(),
+                        default=datetime.now(ZoneInfo(ATLAS['title_page']['date_timezone'])).date(),
                         help='Title-page date in YYYY-MM-DD form (default: today in Los Angeles)')
     args=parser.parse_args();build(args.output,args.date)
 

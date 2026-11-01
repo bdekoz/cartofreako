@@ -12,13 +12,16 @@ from xml.sax.saxutils import XMLGenerator
 
 from antarctica_inset import subpaths, serialize, antarctic_cap, antarctic_part
 from legend_informatics import E, WIDTH, HEIGHT, XL, SUFFIX, digest, el, legend_group
+from cartofreako_style import STYLE
 
-SCALE = 43.5 / WIDTH
-SHIFT = 4.4
-DX, DY = .25, (HEIGHT - HEIGHT * SCALE) / 2
+ATLAS = STYLE['atlas']
+IMAGE_WIDTH = ATLAS['image_width_inches']
+SCALE = IMAGE_WIDTH / WIDTH
+SHIFT = ATLAS['world_shift_source_inches']
+DX, DY = (WIDTH - IMAGE_WIDTH) / 2, (HEIGHT - HEIGHT * SCALE) / 2
 # Exactly the translation approved in the network proof. Use it for every
 # layer, rather than fitting each source's differently simplified coastline.
-ANTARCTIC_TRANSLATION = (-37.3872, HEIGHT - .45 - 17.0519)
+ANTARCTIC_TRANSLATION = tuple(ATLAS['antarctica_translation_source_inches'])
 LAND = {'land', 'terrestrial-land', 'petroleum-country-geometry'}
 COAST = {'coastline', 'terrestrial-coastline', 'minor-islands', 'ice'}
 OCEAN = {'ocean', 'bathymetry', 'bathymetry-roulette', 'bathymetry-hamonshu'}
@@ -195,7 +198,7 @@ def make_plate(source, destination, legend_name):
     doc = el('svg', width='44in', height=f'{HEIGHT}in', viewBox=f'0 0 {WIDTH} {HEIGHT}', role='img',
              data_framing_variant='cyclic-43p5-antarctica-left', data_source_sha256=digest(source),
              data_legend_style='separate-sheet', data_legend_companion=legend_name,
-             data_image_width_in='43.5', data_cyclic_shift_in=SHIFT)
+             data_image_width_in=IMAGE_WIDTH, data_cyclic_shift_in=SHIFT)
     el('rect', doc, id='st2-sheet-paper', width=WIDTH, height=HEIGHT, fill='white')
     defs = el('defs', doc)
     defs.append(E.Comment('SOURCE-CARTOGRAPHY'))
@@ -221,7 +224,7 @@ def make_plate(source, destination, legend_name):
     temporary.replace(destination)
     return {'variant': 'cyclic-43p5-antarctica-left', 'scale': SCALE, 'shift': SHIFT, 'offset': 0,
             'translation_inches': [DX, DY], 'sheet_inches': [WIDTH, HEIGHT],
-            'image_inches': [43.5, HEIGHT*SCALE], 'cyclic_move_on_sheet_inches': SHIFT*SCALE,
+            'image_inches': [IMAGE_WIDTH, HEIGHT*SCALE], 'cyclic_move_on_sheet_inches': SHIFT*SCALE,
             'all_artwork_scaled_proportionally': True, 'legend_included': False,
             'non_terrestrial_data_coordinates_unchanged': True,
             'editorial_land_reference_sha256': reference_sha256,

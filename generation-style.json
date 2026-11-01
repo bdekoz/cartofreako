@@ -1,12 +1,40 @@
 {
   "schema_version": 1,
   "name": "Reviewed Cartofreako generation defaults",
-  "reviewed_on": "2026-10-29",
+  "reviewed_on": "2026-11-01",
   "default_projection": "authagraph",
   "reference_sheet_inches": [
     44,
     19.052559
   ],
+  "atlas": {
+    "preset": "setouchi-st2",
+    "reference_render_date": "2026-10-31",
+    "reference_generation_commit": "098e9f1",
+    "sheet_sequence": ["map", "legend"],
+    "bibliography": "per-legend-sheet",
+    "pdf_editions": ["world", "japan", "combined"],
+    "pdf_excluded_stems": ["bathymetry-roulette", "bathymetry-hamonshu"],
+    "image_width_inches": 43.5,
+    "world_shift_source_inches": 4.4,
+    "antarctica_translation_source_inches": [-37.3872, 1.5506589999999996],
+    "plate_number": {
+      "size_pt": 36,
+      "weight": "700",
+      "fill": "#ffffff",
+      "stroke": "#000000",
+      "stroke_width_pt": 0.5,
+      "opacity": 1
+    },
+    "title_page": {
+      "title": "CARTOFREAKO",
+      "font": "Atkinson-Bold",
+      "margin_pt": 18.0,
+      "line_gap_pt": 36.0,
+      "date_timezone": "America/Los_Angeles"
+    },
+    "png_dpi": 300
+  },
   "fiber": {
     "width_pt": 0.5,
     "opacity": 0.75,

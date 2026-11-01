@@ -10,6 +10,9 @@ import time
 
 from PIL import Image
 from legend_informatics import ROOT,FONT_DIR,digest,font_environment
+from cartofreako_style import STYLE
+
+DPI=STYLE['atlas']['png_dpi']
 
 
 def main():
@@ -25,7 +28,7 @@ def main():
         svg=args.delivery/record['svg'];base=svg.parent.parent;name=svg.stem
         pdf=base/'pdf'/(name+'.pdf');png=base/'png'/(name+'.png');preview=base/'preview'/(name+'.png')
         key=f'{kind}-{scope}-{stem}';receipt=receipts/(key+'.json')
-        fingerprint={'svg_sha256':digest(svg),'font_provenance_sha256':font_hash,'dpi':300,'exporter':'separate-sheets-v1'}
+        fingerprint={'svg_sha256':digest(svg),'font_provenance_sha256':font_hash,'dpi':DPI,'exporter':'separate-sheets-v1'}
         if receipt.exists():
             previous=json.loads(receipt.read_text())
             if previous['fingerprint']==fingerprint and all(
@@ -37,10 +40,10 @@ def main():
         with (receipts/(key+'.log')).open('w') as log:
             if native:
                 commands=[[sys.executable,str(ROOT/'scripts/export-native-swarm.py'),str(svg),'--pdf',str(pdf),
-                           '--png',str(png),'--preview',str(preview),'--dpi','300']]
+                           '--png',str(png),'--preview',str(preview),'--dpi',str(DPI)]]
             else:
                 commands=[['inkscape',str(svg),'--export-area-page','--export-filename='+str(pdf)],
-                          ['inkscape',str(svg),'--export-area-page','--export-dpi=300','--export-background=white',
+                          ['inkscape',str(svg),'--export-area-page',f'--export-dpi={DPI}','--export-background=white',
                            '--export-background-opacity=255','--export-png-color-mode=RGB_8','--export-filename='+str(png)]]
                 if kind=='legend':commands.append(['inkscape',str(svg),'--export-area-drawing','--export-width=3840',
                            '--export-background=white','--export-background-opacity=255','--export-filename='+str(preview)])

@@ -13,6 +13,26 @@ def compile_style(profile):
         raise ValueError('unsupported generation-style schema')
     if profile['default_projection'] not in ('cahill-keyes', 'authagraph', 'dymaxion', 'myriahedral', 'star-x', 'voronoi'):
         raise ValueError('unsupported default projection')
+    atlas = profile['atlas']
+    if (atlas['preset'] != 'setouchi-st2' or atlas['sheet_sequence'] != ['map', 'legend']
+            or atlas['bibliography'] != 'per-legend-sheet'
+            or atlas['pdf_editions'] != ['world', 'japan', 'combined']):
+        raise ValueError('atlas preset requires paired map/legend sheets and World, Japan and combined PDFs')
+    if profile['reference_sheet_inches'] != [44, 19.052559] or atlas['png_dpi'] != 300:
+        raise ValueError('ST2 export dimensions require 44 x 19.052559 inch sheets at 300 dpi')
+    if not 0 < atlas['image_width_inches'] < profile['reference_sheet_inches'][0]:
+        raise ValueError('atlas image must fit inside the sheet with margins')
+    if not 0 <= atlas['world_shift_source_inches'] < profile['reference_sheet_inches'][0]:
+        raise ValueError('atlas cyclic shift must be within one sheet width')
+    translation = atlas['antarctica_translation_source_inches']
+    if len(translation) != 2 or any(type(v) not in (int, float) or not math.isfinite(v) for v in translation):
+        raise ValueError('atlas Antarctic translation requires two finite coordinates')
+    number_style = atlas['plate_number']
+    if number_style['size_pt'] <= 0 or number_style['stroke_width_pt'] < 0 or not 0 <= number_style['opacity'] <= 1:
+        raise ValueError('invalid atlas plate-number style')
+    cover = atlas['title_page']
+    if cover['font'] != 'Atkinson-Bold' or cover['margin_pt'] <= 0 or cover['line_gap_pt'] < 0:
+        raise ValueError('atlas title requires the bundled bold font and positive margins')
     for family in ('fiber', 'water', 'coastline', 'resources', 'atmosphere', 'cdn', 'swarm'):
         for key, value in profile[family].items():
             if 'opacity' in key and (type(value) not in (int, float) or not 0 <= value <= 1):

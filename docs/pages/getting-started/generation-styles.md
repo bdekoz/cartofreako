@@ -11,8 +11,16 @@ title: Default generation styles
 The styles approved during the Setouchi 2028 review are the defaults for
 ordinary Cartofreako regeneration. They are saved in
 [`generation-style.json`](../../../generation-style.json), used by the native
-generators and the CDN, swarm and Japan detail builders. No script or file
-under `output/setouchi-triennale-2028/` is required to generate them.
+generators and the CDN, swarm and Japan detail builders. These layer generators
+do not require files under `output/setouchi-triennale-2028/`.
+
+The **current default atlas** was approved on **2026-11-01**, using the
+**2026-10-31 ST2 generation** at commit `098e9f1` as its reference. The `atlas`
+section of the same JSON saves its print framing, Antarctic position,
+map/legend sequence, PDF selection, plate numbers, title typography and
+300 dpi export settings. `make atlas` builds this edition with the saved
+layer styles, including fill-only swarm location names in both resolutions
+and scopes. The local source-delivery requirement is described below.
 
 [`generation-profile.json`](../../../generation-profile.json) selects which
 passes to run. Its development selection is AuthaGraph, Earth and Water.
@@ -150,17 +158,18 @@ screen copies, print deliverables and source inventory.
 ## Setouchi ST2 print layout
 
 The [second Setouchi revision](../../development/20261030_setouchi_triennale_explore_2.md)
-saves the subsequent print-layout decisions in the ST2 composition scripts.
-Regenerate the edition with:
+is the current atlas default. Its composition scripts read the saved `atlas`
+settings in `generation-style.json`. Regenerate the edition with:
 
 ```sh
-make setouchi-st2 ASSET_JOBS=4
+make atlas ASSET_JOBS=4
 ```
 
 This reads the pinned first delivery at `output/setouchi-triennale-2028/`
 and its local source caches, then writes
 `output/setouchi-triennale-2028-st2/`. Override `SETOUCHI_ST2_SOURCE` and
 `SETOUCHI_ST2_OUTPUT` to select equivalent local delivery locations. The
+existing `make setouchi-st2` command runs the same build. The
 command rebuilds legends, source bibliographies, map/legend sheets, exports,
 the review index, framing comparisons and aggregate PDF, then validates the
 result. It reuses the recorded observations; it does not fetch new data.
@@ -175,7 +184,7 @@ The saved presentation settings are:
   44-inch title sheet containing only `CARTOFREAKO` and the date, in bold
   type independently fitted to the 43.5-inch printable width. The build date
   defaults to the current date in Los Angeles; set
-  `SETOUCHI_ST2_DATE=2026-10-30` to reproduce this title date.
+  `SETOUCHI_ST2_DATE=2026-10-31` to reproduce the approved reference title date.
 - A centered 43.5-inch map image on a 44 × 19.052559-inch sheet. Proportional
   scaling is 98.863636%; physical strokes scale with the artwork, while
   opacity is retained. The original 0.5 pt fiber strokes print at 0.494318 pt.
@@ -190,6 +199,10 @@ The saved presentation settings are:
   white fill, black 0.5 pt outline and 100% opacity. The footer is number only.
 - An aggregate ordered world map, world legend/sources, Japan map, Japan
   legend/sources for each subject. No bibliography is appended at the end.
+
+Each new revision manifest records the atlas settings and the SHA-256 of
+`generation-style.json`. The reference render date identifies the approved
+appearance; it does not freeze future title dates or change observation dates.
 
 The separate PDFs are `setouchi-tri-explore-v2-world.pdf` and
 `setouchi-tri-explore-v2-japan.pdf`; the combined 147-page edition remains

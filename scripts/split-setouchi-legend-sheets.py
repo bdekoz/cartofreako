@@ -11,8 +11,11 @@ from xml.sax.saxutils import XMLGenerator
 from legend_informatics import E,ROOT,WIDTH,HEIGHT,SUFFIX,digest,el,save,register_fonts
 from legend_sources import bibliography
 from setouchi_delivery import COMPOSITION
+from cartofreako_style import STYLE
 
-SCALE=43.5/WIDTH
+ATLAS=STYLE['atlas']
+IMAGE_WIDTH=ATLAS['image_width_inches']
+SCALE=IMAGE_WIDTH/WIDTH
 DX=(WIDTH-WIDTH*SCALE)/2
 DY=(HEIGHT-HEIGHT*SCALE)/2
 
@@ -25,7 +28,7 @@ class MapOnly(xml.sax.ContentHandler):
     def startElement(self,name,attrs):
         a=dict(attrs)
         if not self.depth:
-            a['data-legend-style']='separate-sheet';a['data-image-width-in']='43.5'
+            a['data-legend-style']='separate-sheet';a['data-image-width-in']=str(IMAGE_WIDTH)
             a['data-legend-companion']=self.legend_name
             self.writer.startElement(name,a)
             self.stream.write(f'<rect id="st2-sheet-paper" width="44" height="{HEIGHT}" fill="white"/>'
@@ -95,10 +98,11 @@ def main():
             for node in legend_group.iter():
                 if E.QName(node).localname=='text' and (node.text or '').startswith('Sources and class definitions:'):
                     node.text=f"{m['ordinal']:02d}";node.set('id','plate-number')
-                    node.set('font-size',str(36/72));node.set('font-weight','700');node.set('font-style','normal')
-                    node.set('fill','#ffffff');node.set('fill-opacity','1')
-                    node.set('stroke','#000000');node.set('stroke-opacity','1')
-                    node.set('stroke-width',str(.5/72));node.set('opacity','1')
+                    number=ATLAS['plate_number']
+                    node.set('font-size',str(number['size_pt']/72));node.set('font-weight',number['weight']);node.set('font-style','normal')
+                    node.set('fill',number['fill']);node.set('fill-opacity','1')
+                    node.set('stroke',number['stroke']);node.set('stroke-opacity','1')
+                    node.set('stroke-width',str(number['stroke_width_pt']/72));node.set('opacity',str(number['opacity']))
             document.append(legend_group)
             bibliography(document,entries[stem],book['sources'],scope)
             save(document,legend_target)
@@ -106,7 +110,7 @@ def main():
                 records.append({'kind':kind,'scope':scope,'stem':stem,'svg':str(path.relative_to(args.delivery)),
                                 'svg_sha256':digest(path),'combined_source_sha256':digest(source),
                                 'source':str(source.relative_to(args.delivery)),
-                                'image_width_inches':43.5 if kind=='map' else None,
+                                'image_width_inches':IMAGE_WIDTH if kind=='map' else None,
                                 'scale':SCALE if kind=='map' else 1.0,
                                 'framing_adjustment':adjustment if kind=='map' else None})
             print('separated',scope,stem,flush=True)
@@ -117,7 +121,7 @@ def main():
         target.write_text(json.dumps(previous,indent=2)+'\n')
     else:
         target.write_text(json.dumps({'schema':'setouchi-separate-map-legend-sheets-v1','sheet_inches':[WIDTH,HEIGHT],
-                         'map_image_inches':[43.5,HEIGHT*SCALE],'scale':SCALE,'margins_inches':[DX,DY,DX,DY],
+                         'map_image_inches':[IMAGE_WIDTH,HEIGHT*SCALE],'scale':SCALE,'margins_inches':[DX,DY,DX,DY],
                          'records':records},indent=2)+'\n')
 
 

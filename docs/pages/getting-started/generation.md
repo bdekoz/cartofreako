@@ -36,6 +36,12 @@ A separate C++20 profile resolver validates the user-configurable projection
 and pass selection used by a bare `make`. It chooses existing Make targets; it
 does not duplicate generation logic or filter SVG layers after generation.
 
+For the approved World/Japan atlas, use `make atlas ASSET_JOBS=4`. This reads
+the atlas and layer defaults in `generation-style.json` and rebuilds the ST2
+edition from its pinned local delivery. See
+[Default atlas settings](generation-styles.md#setouchi-st2-print-layout)
+for the source requirements, output locations and title-date override.
+
 | Artifact | Generator | Principal input |
 | --- | --- | --- |
 | Geometry | [`src.generate/generate-geometry.cc`](../../../src.generate/generate-geometry.cc) | Native projection faces and screen quadrants |

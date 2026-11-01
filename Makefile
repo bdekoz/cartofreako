@@ -3348,7 +3348,10 @@ $(foreach source,$(NETWORK_SWARM_SVGS),$(eval $(call NATIVE_SWARM_EXPORT_RULES,$
 SETOUCHI_ST2_SOURCE ?= output/setouchi-triennale-2028
 SETOUCHI_ST2_OUTPUT ?= output/setouchi-triennale-2028-st2
 SETOUCHI_ST2_DATE ?=
-.PHONY: setouchi-st2
+.PHONY: atlas setouchi-st2
+# The approved ST2 edition is the default atlas build.
+atlas: setouchi-st2
+
 setouchi-st2: build/generation-context
 	python3 scripts/revise-setouchi-plates.py --delivery "$(SETOUCHI_ST2_SOURCE)" --output "$(SETOUCHI_ST2_OUTPUT)"
 	python3 scripts/build-setouchi-bibliography.py --delivery "$(SETOUCHI_ST2_SOURCE)" --output "$(SETOUCHI_ST2_OUTPUT)"

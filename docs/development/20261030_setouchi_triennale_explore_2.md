@@ -467,3 +467,33 @@ The rebuilt PDFs pass title, page-count and map/legend sequence checks:
 75 pages each for World and Japan, 147 combined. All included legend pages
 match their standalone masters, and all 808 review links resolve. The
 receipt is `sources/swarm-label-pdf-validation.json`.
+
+## Current default atlas approved — 2026-11-01
+
+The human approved saving the complete 2026-10-31 generation at commit
+`098e9f1` as the current atlas defaults. `generation-style.json` now records
+that reference and the complete atlas presentation alongside the existing
+layer styles. The atlas builders consume the saved image width, cyclic
+shift, Antarctic translation, plate-number styling, title settings, PDF
+selection and ordering, and export resolution.
+
+`make atlas ASSET_JOBS=4` is the standard build command; `make setouchi-st2`
+remains equivalent. Both use the pinned first delivery and produce the
+separate World and Japan PDFs, plus the combined edition, with separate
+map and legend/data bibliography sheets. The two decorative bathymetry
+studies stay excluded from the PDFs. Swarm location names remain fill only
+in both scopes and resolutions. Each future revision manifest records the
+settings and style-file checksum used to build it.
+
+This saves the approved settings without replacing the reviewed PDFs or
+changing their observation dates. Future title dates use the Los Angeles
+build date; `SETOUCHI_ST2_DATE=2026-10-31` reproduces the reference date.
+Physical print proofing, Japanese captions and exhibition decisions remain
+the previously recorded human review tasks.
+
+Verification matched the saved framing against all 76 reviewed maps and
+the PDF selection against the existing revision manifest. Regenerating the
+World and Japan fiber maps and their two legends produced byte-identical
+SVGs. The reference title page also reproduced its exact font sizes and
+text bounds. The default `make atlas` build plan uses the existing complete
+ST2 pipeline.
