@@ -497,3 +497,11 @@ World and Japan fiber maps and their two legends produced byte-identical
 SVGs. The reference title page also reproduced its exact font sizes and
 text bounds. The default `make atlas` build plan uses the existing complete
 ST2 pipeline.
+
+## Remaining work carried forward — 2026-11-01
+
+The active task list is now
+[ST3: remaining work](20261101_setouchi_triennale_explore_3.md): the application
+decision and deadline, physical proofs and production, publication of the
+latest ST2 web review, and further particulate enrichment. The completed
+atlas work and its validation history remain recorded in this document.
