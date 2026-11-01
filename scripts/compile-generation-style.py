@@ -17,6 +17,8 @@ def compile_style(profile):
         for key, value in profile[family].items():
             if 'opacity' in key and (type(value) not in (int, float) or not 0 <= value <= 1):
                 raise ValueError(f'{family}.{key} must be in [0, 1]')
+    if type(profile['swarm']['location_label_outline']) is not bool:
+        raise ValueError('swarm.location_label_outline must be a boolean')
     for family, key, minimum in (('coral', 'display_cell_cap', 4), ('cdn', 'record_cap', 1), ('cdn', 'maximum_labels_per_vendor', 0)):
         if type(profile[family][key]) is not int or profile[family][key] < minimum:
             raise ValueError(f'{family}.{key} must be an integer >= {minimum}')

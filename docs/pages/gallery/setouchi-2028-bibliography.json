@@ -6867,7 +6867,7 @@
           "stem": "network-swarm-ge-1080p",
           "status": "revised",
           "source_sha256": "f6bb70095e0b471b680034b252fdee690a59feac860f6288085343f5fd032b37",
-          "output_sha256": "6adb3e0912656bfb839969b988ab09de46cfc50b51407a695612b8b4766e3842",
+          "output_sha256": "d2b9885377c8d5383ca8de7c836d7f7e504cf5fa473df1d5529af8580c254164",
           "cartography_sha256": "7b6a8cbf94967dfcd3448a41689c5a7b665f8f88e92bc5c41dc388d441f49a6b",
           "cartography_shape_counts": {
             "rect": 2,
@@ -6880,7 +6880,7 @@
           "stem": "network-swarm-ge-1080p",
           "status": "revised",
           "source_sha256": "27b3f3a854a7d65681f3c5529a4488a204a72e8d25e1b94645b48a741b6699fb",
-          "output_sha256": "0b943c2a4c021a81b679fd50bfced29b22e5d44f0110c78dab3d8e664676acf6",
+          "output_sha256": "77e8fad71a4666dc20b9f85f43f146a8a736be12515216c10a9a860073e24f5e",
           "cartography_sha256": "54ec340a2bc4ceb779bef9637953c4379ecfff4e6056e9bbd83c61d3bc6c1f3c",
           "cartography_shape_counts": {
             "rect": 3,
@@ -6892,7 +6892,7 @@
       "japan_source_ids": [
         "japan-boundary"
       ],
-      "presentation": "Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.",
+      "presentation": "Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes. Location names use fill only, with zero text stroke width, in both world and Japan views.",
       "world_presentation": "Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.",
       "separate_sheets": [
         {
@@ -6900,8 +6900,8 @@
           "scope": "world",
           "stem": "network-swarm-ge-1080p",
           "svg": "maps/world/svg/network-swarm-ge-1080p.svg",
-          "svg_sha256": "2f1105c4831d8501965f6f6aba63ef7304240bc3262ba83da4a94aa40826e5bb",
-          "combined_source_sha256": "6adb3e0912656bfb839969b988ab09de46cfc50b51407a695612b8b4766e3842",
+          "svg_sha256": "8a7cfbde5dc88537f2fe021decbf24f7f6446ce38c6ef6c8d226116766d5cd6c",
+          "combined_source_sha256": "d2b9885377c8d5383ca8de7c836d7f7e504cf5fa473df1d5529af8580c254164",
           "source": "sources/composition/plates/world/svg/network-swarm-ge-1080p-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
@@ -8253,7 +8253,7 @@
           "stem": "network-swarm-ge-1080p",
           "svg": "legends/world/svg/network-swarm-ge-1080p-legend.svg",
           "svg_sha256": "f5f8796f3a03afc72465ff85f9cc145169a7c9429283841aadf42ffb21099818",
-          "combined_source_sha256": "6adb3e0912656bfb839969b988ab09de46cfc50b51407a695612b8b4766e3842",
+          "combined_source_sha256": "d2b9885377c8d5383ca8de7c836d7f7e504cf5fa473df1d5529af8580c254164",
           "source": "sources/composition/plates/world/svg/network-swarm-ge-1080p-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
@@ -8264,8 +8264,8 @@
           "scope": "japan",
           "stem": "network-swarm-ge-1080p",
           "svg": "maps/japan/svg/network-swarm-ge-1080p.svg",
-          "svg_sha256": "4a8433faf0002fdaea7c74cf766fe704967f8695bfec0608cac8935fcdd260c5",
-          "combined_source_sha256": "0b943c2a4c021a81b679fd50bfced29b22e5d44f0110c78dab3d8e664676acf6",
+          "svg_sha256": "e337b23f78d8aa86dab4774bb9fb15e8f6bc38293413adae2f57c8a08784e94a",
+          "combined_source_sha256": "77e8fad71a4666dc20b9f85f43f146a8a736be12515216c10a9a860073e24f5e",
           "source": "sources/composition/plates/japan/svg/network-swarm-ge-1080p-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
@@ -8277,7 +8277,7 @@
           "stem": "network-swarm-ge-1080p",
           "svg": "legends/japan/svg/network-swarm-ge-1080p-legend.svg",
           "svg_sha256": "3b4a81e914259c0da0743dc90ea33d51c9f34dab047d1dce1a1731bacbf17c9a",
-          "combined_source_sha256": "0b943c2a4c021a81b679fd50bfced29b22e5d44f0110c78dab3d8e664676acf6",
+          "combined_source_sha256": "77e8fad71a4666dc20b9f85f43f146a8a736be12515216c10a9a860073e24f5e",
           "source": "sources/composition/plates/japan/svg/network-swarm-ge-1080p-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,
@@ -8316,7 +8316,7 @@
           "stem": "network-swarm-lt-1080p",
           "status": "revised",
           "source_sha256": "e9a15ab1ae99a9a9243f3b2382b4049c779ae135b77de545deac9c9d19aec034",
-          "output_sha256": "99c5ff3ccb02acb63f2c323c6978749d4a0d6de1b04e052eab6dc050f5a1e9fa",
+          "output_sha256": "27eaed1aa1c250aa7cc9fb6fa522243309c91b587bbe4feba3e7da94caf42c19",
           "cartography_sha256": "ca366dbfbc25ed3e07b295195487ff3bd8069879e05ac9b889b2d14977aed7c5",
           "cartography_shape_counts": {
             "rect": 2,
@@ -8329,7 +8329,7 @@
           "stem": "network-swarm-lt-1080p",
           "status": "revised",
           "source_sha256": "0715d7c3f03e10e8a71b73efe6d24c9a432de4354fdd6a4fe431e3e2740bc749",
-          "output_sha256": "67781fcd4244557ea50570a51a77fdae7ec37d97e4e5df29a247cd6e3266a621",
+          "output_sha256": "58e3c5d9575fa07baf7f3ef5eda4c36321cf12313ee03a916d6af17917f21938",
           "cartography_sha256": "d7979059b7c42a7880754a62aeadbd64c890d2dd68af5655cea359072bfd46d5",
           "cartography_shape_counts": {
             "rect": 3,
@@ -8341,7 +8341,7 @@
       "japan_source_ids": [
         "japan-boundary"
       ],
-      "presentation": "Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.",
+      "presentation": "Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes. Location names use fill only, with zero text stroke width, in both world and Japan views.",
       "world_presentation": "Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.",
       "separate_sheets": [
         {
@@ -8349,8 +8349,8 @@
           "scope": "world",
           "stem": "network-swarm-lt-1080p",
           "svg": "maps/world/svg/network-swarm-lt-1080p.svg",
-          "svg_sha256": "4964056ea0e71f1270c0b297649276cca4e2635c1c7da1c4bf79df77ba8ecde6",
-          "combined_source_sha256": "99c5ff3ccb02acb63f2c323c6978749d4a0d6de1b04e052eab6dc050f5a1e9fa",
+          "svg_sha256": "c18bddb1c2d3472ab97165561cbf4db6d937e43d072174da5fe7eb38034e4758",
+          "combined_source_sha256": "27eaed1aa1c250aa7cc9fb6fa522243309c91b587bbe4feba3e7da94caf42c19",
           "source": "sources/composition/plates/world/svg/network-swarm-lt-1080p-authagraph-44-19.052559.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
@@ -9702,7 +9702,7 @@
           "stem": "network-swarm-lt-1080p",
           "svg": "legends/world/svg/network-swarm-lt-1080p-legend.svg",
           "svg_sha256": "a8afa925890fc50fd99fdcf940328ebe0d370b6088d55df946547ffe55e7fec9",
-          "combined_source_sha256": "99c5ff3ccb02acb63f2c323c6978749d4a0d6de1b04e052eab6dc050f5a1e9fa",
+          "combined_source_sha256": "27eaed1aa1c250aa7cc9fb6fa522243309c91b587bbe4feba3e7da94caf42c19",
           "source": "sources/composition/plates/world/svg/network-swarm-lt-1080p-authagraph-44-19.052559.svg",
           "image_width_inches": null,
           "scale": 1.0,
@@ -9713,8 +9713,8 @@
           "scope": "japan",
           "stem": "network-swarm-lt-1080p",
           "svg": "maps/japan/svg/network-swarm-lt-1080p.svg",
-          "svg_sha256": "c01fff30e204720aa30fd657d4ba227f46fec1945e119a9dc15dc395f1f78021",
-          "combined_source_sha256": "67781fcd4244557ea50570a51a77fdae7ec37d97e4e5df29a247cd6e3266a621",
+          "svg_sha256": "4db045a8530a972709dfd04cbe35446a6a760a448710fc165d123bde6a6148e1",
+          "combined_source_sha256": "58e3c5d9575fa07baf7f3ef5eda4c36321cf12313ee03a916d6af17917f21938",
           "source": "sources/composition/plates/japan/svg/network-swarm-lt-1080p-authagraph-44-19.052559-japan.svg",
           "image_width_inches": 43.5,
           "scale": 0.9886363636363636,
@@ -9726,7 +9726,7 @@
           "stem": "network-swarm-lt-1080p",
           "svg": "legends/japan/svg/network-swarm-lt-1080p-legend.svg",
           "svg_sha256": "69ee275e55a42d446261677c5511982b1dc97c9e42607d79ad196a68b3193641",
-          "combined_source_sha256": "67781fcd4244557ea50570a51a77fdae7ec37d97e4e5df29a247cd6e3266a621",
+          "combined_source_sha256": "58e3c5d9575fa07baf7f3ef5eda4c36321cf12313ee03a916d6af17917f21938",
           "source": "sources/composition/plates/japan/svg/network-swarm-lt-1080p-authagraph-44-19.052559-japan.svg",
           "image_width_inches": null,
           "scale": 1.0,

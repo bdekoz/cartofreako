@@ -8,6 +8,16 @@ STYLE = json.loads((ROOT / 'generation-style.json').read_text())
 NS = 'http://www.w3.org/2000/svg'
 PARSER = E.XMLParser(huge_tree=True)
 
+def swarm_label_attributes(attributes):
+    """Keep native location label fills and typography, without text outlines."""
+    attributes = dict(attributes)
+    if not STYLE['swarm']['location_label_outline']:
+        style = dict(part.strip().split(':', 1) for part in attributes.get('style', '').split(';') if ':' in part)
+        style.update({'stroke': 'none', 'stroke-width': '0'})
+        attributes.update({'stroke': 'none', 'stroke-width': '0',
+                           'style': ';'.join(key + ':' + value for key, value in style.items())})
+    return attributes
+
 def digest(path):
     with Path(path).open('rb') as stream: return hashlib.file_digest(stream, 'sha256').hexdigest()
 

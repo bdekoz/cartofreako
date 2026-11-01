@@ -276,7 +276,7 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 
 **Japan companion:** Same evidence in the Japan/Setouchi geographic viewport; neighboring countries may appear. No island-level value is inferred. Physical circle areas match the world scale. The 1080p/4K and 720p/lower-resolution partitions are separate plates.
 
-**Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+**Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes. Location names use fill only, with zero text stroke width, in both world and Japan views.
 
 **World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 
@@ -297,7 +297,7 @@ Sources for all 38 world/Japan pairs. Plate numbers match the revised legend foo
 
 **Japan companion:** Same evidence in the Japan/Setouchi geographic viewport; neighboring countries may appear. No island-level value is inferred. Physical circle areas match the world scale. The 1080p/4K and 720p/lower-resolution partitions are separate plates.
 
-**Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.
+**Presentation:** Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes. Location names use fill only, with zero text stroke width, in both world and Japan views.
 
 **World framing:** Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.
 

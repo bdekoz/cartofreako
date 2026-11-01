@@ -445,6 +445,7 @@
     "collection": "dan-da-dan-210",
     "cache_archive": "../alpha60-samples-cache/dan-da-dan-210.cache/cache.20260304.tar.xz",
     "fill_opacity": 0.05,
+    "location_label_outline": false,
     "partitions": {
       "ge-1080p": "1080p / 4K",
       "lt-1080p": "720p / SD"

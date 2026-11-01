@@ -33,7 +33,7 @@ projections retain their own geometry and use the same physical style values.
 | Cloud / atmosphere | Opaque pink cloud classes, blue precipitation, separate aerosol and shortwave outlines. Foreground land has **0 fill opacity**; visible coastlines remain above the data. |
 | Coral threat | Radial honeycombs on a **0.16 in** grouping grid, up to **61 displayed cells** per group. Every source membership and threat class is retained; capped groups preserve the class mix and every present class. Symbol footprints are not reef area. |
 | CDN | Alpha60 vendor-reel r8 colors, **33% fill** honeycombs, a **320-record** display cap, approximate-reference triangles, separate locality claims and restrained labels. |
-| Network swarm | Native **alpha60-carto-geo** weighted member circles, **5% opacity**, Dan Da Dan 210. **1080p/4K and 720p/SD are separate plates**. Japan retains the world plate's physical circle areas. |
+| Network swarm | Native **alpha60-carto-geo** weighted member circles, **5% opacity**, Dan Da Dan 210. **1080p/4K and 720p/SD are separate plates**. Japan retains the world plate's physical circle areas. Location names use fill only, with **0 stroke width**, in both scopes and resolutions. |
 
 The shared resource opacity takes precedence over the legacy `display` opacity
 field in source profiles. Source years, units, coverage, classification rules

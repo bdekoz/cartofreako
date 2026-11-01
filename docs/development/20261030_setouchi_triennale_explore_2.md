@@ -429,3 +429,41 @@ local links on the review index resolve. The generation-style tests pass
 eight cases; documentation checks pass 161 files and 1,600 local links.
 Receipts are `sources/sheets-validation.json` and
 `sources/shared-world-framing-validation.json` in the ST2 delivery.
+
+## Fill-only swarm location labels — 2026-10-31
+
+The human requested removal of the outlines on the top location names and
+confirmed the scope: **World and Japan, both 1080p/4K and 720p/SD**. All four
+swarm maps now use `stroke: none` and `stroke-width: 0` on their location
+labels. Fill colors and opacity, wording, font, size and position are retained.
+The circle data, resolution partitions, Japan crop and approved world framing
+remain in place, as do the separate legend/data bibliography sheets.
+
+The default is saved as `swarm.location_label_outline: false` in
+`generation-style.json`. The native composer, Japan detail generator and ST2
+revision builder apply the same label rule. The first delivery remains a
+frozen source; its styles do not override the new ST2 default.
+
+The four SVG, PDF, 300 dpi PNG and preview exports are rebuilt, together with
+the review and World/Japan PDFs. Their title date is now **2026-10-31**; this
+is a render date and does not change the observation periods. The PDFs retain
+75 pages per scope, with the two bathymetry studies excluded. The remaining
+human review is the legibility of the fill-only location names at print size.
+
+The SVG comparison checks all 40 location-label nodes (10 per map). It
+confirms zero stroke in both the presentation attributes and inline style,
+and identical remaining SVG content after excluding the requested stroke
+properties and updated source checksum. Circle counts remain 2,804,935 and
+876,541 in the world plates, and 144,555 and 44,854 in the Japan plates.
+The check is recorded in `sources/swarm-label-fill-validation.json`.
+
+Export verification confirms all four full-size PDFs and 300 dpi PNGs,
+their margins and the 608 standard file bindings. The other 148 sheet
+checks remain valid against unchanged SVG checksums. The refreshed receipt
+is `sources/sheets-validation.json`; generation-style, documentation and
+accepted snapshot checks pass.
+
+The rebuilt PDFs pass title, page-count and map/legend sequence checks:
+75 pages each for World and Japan, 147 combined. All included legend pages
+match their standalone masters, and all 808 review links resolve. The
+receipt is `sources/swarm-label-pdf-validation.json`.

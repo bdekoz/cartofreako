@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Generate a geographic Japan companion with the shared physical stroke defaults."""
-from cartofreako_style import ROOT, STYLE, Projection, E, digest, el, txt, save
+from cartofreako_style import ROOT, STYLE, Projection, E, digest, el, txt, save, swarm_label_attributes
 from pathlib import Path
 import argparse, io, json, re, subprocess, tempfile, textwrap, xml.sax
 from xml.sax.saxutils import XMLGenerator
@@ -50,6 +50,8 @@ class Detail(xml.sax.ContentHandler):
             if 'stroke-width' in a:a['stroke-width']=divided(a['stroke-width'],self.scale)
             if 'stroke-width' in style:style['stroke-width']=divided(style['stroke-width'],self.scale)
         if style:a['style']=';'.join(k+':'+v for k,v in style.items())
+        if self.swarm and name in ('text','tspan') and any('text-geolocation-text' in identifier for identifier in parents):
+            a=swarm_label_attributes(a)
         if keep:self.writer.startElement(name,a)
         self.stack.append((name,a,keep))
     def endElement(self,name):

@@ -21,7 +21,7 @@ covering all 38 pairs. The local edition in
 separate legend/source sheets**, with each data bibliography on its matching
 legend. Its `index.html` opens the paired review. The separate
 `setouchi-tri-explore-v2-world.pdf` and `setouchi-tri-explore-v2-japan.pdf`
-contain **75 pages each**: a large **CARTOFREAKO / 2026-10-30** title page,
+contain **75 pages each**: a large **CARTOFREAKO / 2026-10-31** title page,
 edition notes, a plate index, and 36 cartography/data sheets each followed
 by its legend/data bibliography. The combined
 `setouchi-tri-explore-v2.pdf` has 147 pages. The PDF editions omit Bathymetry
@@ -41,6 +41,8 @@ Every ST2 map has a 43.5-inch image width centered on its 44-inch sheet.
 Every world sheet uses the approved horizontal move. Terrestrial maps
 consolidate Antarctica at the same lower-left position, with its coastlines,
 ice and country fills; Japan detail views retain their Japan framing.
+Both swarm resolutions use fill-only location names, with zero text stroke
+width, in the world and Japan views.
 The approved four-sheet network sample is
 `proofs/43p5-antarctica-left/setouchi-network-separated-proof.pdf` inside
 the ST2 delivery. The published gallery above remains the first edition.

@@ -15,6 +15,7 @@ from xml.sax.saxutils import XMLGenerator, quoteattr
 
 from legend_informatics import E, ROOT, NS, WIDTH, HEIGHT, SUFFIX, digest, el, text, save, legend_group, register_fonts
 from setouchi_delivery import COMPOSITION, migrate_composition
+from cartofreako_style import swarm_label_attributes
 
 REFERENCE = ROOT/'assets.static/legend-informatics/resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.legend-rework.svg'
 PALETTES = {
@@ -317,10 +318,11 @@ def make_legend(m,scope,delivery):
 
 
 class Rewrite(xml.sax.ContentHandler):
-    def __init__(self,stream,legend,scope):
+    def __init__(self,stream,legend,scope,stem=''):
         self.writer=XMLGenerator(stream,encoding='utf-8');self.stream=stream
         self.legend=legend;self.scope=scope;self.stack=[];self.skip=0
         self.hash=hashlib.sha256();self.counts=Counter()
+        self.swarm=stem.startswith('network-swarm-');self.label_depth=0
     def startDocument(self):self.writer.startDocument()
     def startElement(self,name,attrs):
         a=dict(attrs);depth=len(self.stack)
@@ -329,6 +331,10 @@ class Rewrite(xml.sax.ContentHandler):
         if self.skip or rejected:
             self.skip+=1;self.stack.append(False);return
         if depth==0:a['data-legend-style']='setouchi-st2'
+        if self.swarm and name=='g' and 'text-geolocation-text' in a.get('id',''):
+            self.label_depth=depth+1
+        if self.label_depth and name in ('text','tspan'):
+            a=swarm_label_attributes(a)
         if name in SHAPES:
             self.hash.update(json.dumps([name,sorted(a.items())],separators=(',',':')).encode());self.counts[name]+=1
         self.writer.startElement(name,a);self.stack.append(True)
@@ -336,6 +342,7 @@ class Rewrite(xml.sax.ContentHandler):
         if not self.skip:self.writer.characters(value)
     def endElement(self,name):
         keep=self.stack.pop()
+        if len(self.stack)<self.label_depth:self.label_depth=0
         if not keep:self.skip-=1;return
         if not self.stack:self.stream.write(E.tostring(self.legend,encoding='unicode'))
         self.writer.endElement(name)
@@ -371,7 +378,7 @@ def main():
             else:
                 legend=make_legend(m,scope,args.delivery)
                 with target.open('w') as stream:
-                    handler=Rewrite(stream,legend,scope);xml.sax.parse(str(source),handler)
+                    handler=Rewrite(stream,legend,scope,item['stem']);xml.sax.parse(str(source),handler)
                 record={'scope':scope,'stem':item['stem'],'status':'revised','source_sha256':digest(source),
                         'output_sha256':digest(target),'cartography_sha256':handler.hash.hexdigest(),'cartography_shape_counts':dict(handler.counts)}
             records.append(record);print(scope,item['stem'],record['status'],flush=True)

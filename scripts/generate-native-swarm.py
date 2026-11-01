@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Render separate native Alpha60 resolution plates with Cartofreako projections."""
-from cartofreako_style import ROOT, STYLE, Projection, E, digest, el, txt
+from cartofreako_style import ROOT, STYLE, Projection, E, digest, el, txt, swarm_label_attributes
 from pathlib import Path
 import argparse, collections, copy, fcntl, json, os, re, shutil, subprocess, tarfile, xml.sax
 from xml.sax.saxutils import XMLGenerator
@@ -8,12 +8,15 @@ from xml.sax.saxutils import XMLGenerator
 class Native(xml.sax.ContentHandler):
     def __init__(self, stream, band):
         self.writer=XMLGenerator(stream,encoding='utf-8');self.band=band
-        self.depth=0;self.active=False;self.styles={};self.ids=collections.Counter();self.count=0
+        self.depth=0;self.active=False;self.locations=False;self.styles={};self.ids=collections.Counter();self.count=0
     def startElement(self,name,attrs):
         self.depth+=1;a=dict(attrs)
         if self.depth==2:
             self.active=a.get('id','').startswith('vector-peer-clouds-') or a.get('id')=='text-geolocation-text'
+            self.locations=a.get('id')=='text-geolocation-text'
         if not self.active:return
+        if self.locations and name in ('text', 'tspan'):
+            a=swarm_label_attributes(a)
         if name=='image' or name=='g' and 'transform' in a:
             raise ValueError('Unexpected transform or raster in native cloud groups')
         if 'id' in a:

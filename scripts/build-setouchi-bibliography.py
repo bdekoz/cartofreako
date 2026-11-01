@@ -275,6 +275,8 @@ def build(delivery, revision):
             entry['world_presentation']+=' Ocean-colored editorial backing closes the former Antarctic land void; that backing is not a new bathymetric measurement. Existing subsea contours retain their source coordinates.'
         if stem=='network-fiber':
             entry['presentation']+=' Map route strokes become 0.494318 pt after reduction; opacity remains 75%.'
+        if stem.startswith('network-swarm-'):
+            entry['presentation']+=' Location names use fill only, with zero text stroke width, in both world and Japan views.'
         entry['separate_sheets']=[r for r in sheets if r['stem']==stem]
         entries.append(entry)
     assert len(entries)==38
