@@ -32,10 +32,10 @@ creation record.
   `SD-EVENT-20260825-495cb184` dyad pair, including the canonical ledger
   SHA-256 after the end marker.
 - [`20261101-sd-receipt.json`](20261101-sd-receipt.json) — a tracked receipt
-  for the October 29 marker and November 1 end marker, with the canonical
-  ledger SHA-256. It preserves the recorder's association of the end marker
-  with the older August 26 begin marker; it does not claim an October 29 /
-  November 1 pair.
+  for the corrected October 29 / November 1 association. An append-only
+  canonical correction retains the original erroneous association as
+  historical evidence, restores the older August marker's own closure and
+  limits this pair to the current chat. Both ledger checksums are recorded.
 
 ## SUPERSEDED — frozen 2026-08-15
 

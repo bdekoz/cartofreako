@@ -8,7 +8,8 @@
     "schema": "devastation-pacific-dyad-ledger-v1",
     "tracked_in_git": false,
     "note": "Private, git-ignored canonical per-project data home.",
-    "sha256_after_end_marker": "f08894571f9ed8452113b2ed2cdc50d26ab4239de0c177eb8be456954619424f"
+    "sha256_after_end_marker": "f08894571f9ed8452113b2ed2cdc50d26ab4239de0c177eb8be456954619424f",
+    "sha256_after_correction": "f694cd4b0713082c279891ae3a69e72bfe144251141a144c645eb8ed347d1009"
   },
   "markers": [
     {
@@ -24,9 +25,24 @@
       "recorded_at": "2026-11-01T17:07:34Z",
       "marker_state": "ACTIVE",
       "storage_state": "LOCAL-ONLY",
-      "related_marker_id": "SD-EVENT-20260826-709073af"
+      "related_marker_id": "SD-EVENT-20261029-5c33b88e",
+      "association_corrected_by": "PL-CORRECTION-20261101-7a9fd78c"
     }
   ],
-  "association_note": "The October 29 marker was recorded as the unlabeled instruction snapshot dyad. The recorder associated the November 1 end with SD-EVENT-20260826-709073af, not the October 29 marker. This receipt preserves the canonical association without changing it or claiming a different pair.",
-  "boundary_note": "OBSERVED relevance signal only; not consent, transfer authorization, evaluation or training suitability, provider selection or use, value, or payment."
+  "association_note": "The effective November 1 end now closes this chat\u2019s October 29 marker. An append-only canonical correction supersedes the erroneous August association; original marker records and the original ledger checksum are preserved.",
+  "boundary_note": "OBSERVED relevance signal only; not consent, transfer authorization, evaluation or training suitability, provider selection or use, value, or payment.",
+  "correction": {
+    "record_id": "PL-CORRECTION-20261101-7a9fd78c",
+    "recorded_at": "2026-11-01T17:26:23Z",
+    "session_started_at": "2026-10-29T18:18:38.416Z",
+    "previous_related_marker_id": "SD-EVENT-20260826-709073af",
+    "effective_related_marker_id": "SD-EVENT-20261029-5c33b88e",
+    "window_state": "CLOSED",
+    "restored_historical_closure": {
+      "marker_id": "SD-EVENT-20260826-709073af",
+      "end_marker_id": "SD-EVENT-20260826-bb6406d2",
+      "closed_at": "2026-08-26T22:56:38Z"
+    },
+    "original_markers_preserved": true
+  }
 }
