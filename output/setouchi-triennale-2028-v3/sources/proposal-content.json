@@ -1,0 +1,642 @@
+[
+  {
+    "title": "Cartofreako × Setouchi",
+    "subtitle": "A public atlas studio · Benjamin De Kosnik · Setouchi Triennale 2028",
+    "nodes": [
+      {
+        "kind": "heading",
+        "text": "Concept"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Cartofreako is a tool to approach the world and learn, design, and anticipate possible futures. For the 2028 Setouchi Triennale, it becomes an open studio where residents and visitors read maps, exchange knowledge and make new work in public. A Japan atlas and a world atlas connect the Seto Inland Sea with communications networks, media circulation, atmosphere, oceans, food, energy and minerals from around the world."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Large paired maps establish a shared reference. Around a table, participants trace water patterns, compare map projections, question digital infrastructure and propose subjects rooted in island life. Drawing and discussion produce an evolving display of annotated maps, paper experiments and questions. The project draws on R. Buckminster Fuller’s Dymaxion Map and World Game as prompts for collective inquiry."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Awashima is the preferred setting for autumn 2028. Its maritime history offers a starting point for conversations about routes and exchange. Local collaborators will help select questions and adapt the studio to an agreed indoor room. Other festival venues remain possible."
+      },
+      {
+        "kind": "figures",
+        "items": [
+          {
+            "stem": "water",
+            "scope": "world",
+            "caption": "World · Water. Natural Earth physical geography; generalized bathymetry."
+          },
+          {
+            "stem": "water",
+            "scope": "japan",
+            "caption": "Japan · Water. The same sources at a closer geographic scale."
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "One installation, five ways to take part"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Five events and workshops are proposed, with two detailed in this proposal: Hamonshu Revisited; Dymaxion and AuthaGraph; Ocean Changes and Climate; Video Common Market Revisited; and an open invitation to propose further sessions."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Proposed category: interaction and exchange. Indoor installation with workshops; preferred season: autumn, 29 September–12 November 2028. Requested production allowance: <b>JPY 2,310,000</b>."
+      },
+      {
+        "kind": "small",
+        "text": "Project page: <a href=\"https://benjamin.dekosnik.com/futures/setouchi-2028/\">https://benjamin.dekosnik.com/futures/setouchi-2028/</a>"
+      }
+    ]
+  },
+  {
+    "title": "A room for maps and conversation",
+    "subtitle": "Installation · materials · dimensions · visitor experience",
+    "nodes": [
+      {
+        "kind": "paragraph",
+        "text": "A room of approximately 6 × 8 m holds six world/Japan map pairs, two reading and making tables, and a movable display for work made during the Triennale. Visitors can enter for a brief look, read the sources while seated, or stay for a guided session."
+      },
+      {
+        "kind": "diagram"
+      },
+      {
+        "kind": "paragraph",
+        "text": "<b>Display:</b> twelve pigment-printed wall maps, each <b>111.76 × 48.39 cm</b>; readable Japanese/English source keys; two table reference sets; reusable supports; paper, pencils, tracing sheets and folding templates. Washi is a proposed material for selected editions, subject to print trials."
+      },
+      {
+        "kind": "paragraph",
+        "text": "<b>Reading sequence:</b> choose a subject, compare its world and Japan views, consult the dated key, then add a question or make a paper response. The initial subjects are Water, Fiber, CDN and Cloud, Coral Threat, Temperature and Rare-earth Production. Other atlas subjects can rotate into the display."
+      },
+      {
+        "kind": "small",
+        "text": "<b>Site:</b> an accessible indoor room on Awashima, selected with the festival and a host. The tour report identifies former shops and school buildings as places visited; this drawing does not assign a particular property. Supports and circulation will be adjusted after measurement. [2]"
+      }
+    ]
+  },
+  {
+    "title": "Two atlases, 36 subjects",
+    "subtitle": "Japan and World · the same subject identifiers in both volumes",
+    "nodes": [
+      {
+        "kind": "paragraph",
+        "text": "Each 75-page volume opens with a cover, edition notes and an index, followed by 36 maps and their separate legend/source sheets. The printed index retains the archive’s subject numbers. Subjects 05 and 06 are outside this selection."
+      },
+      {
+        "kind": "index",
+        "entries": [
+          {
+            "number": 1,
+            "title": "Cartography Geometry"
+          },
+          {
+            "number": 2,
+            "title": "Cartographic Graticules"
+          },
+          {
+            "number": 3,
+            "title": "Earth"
+          },
+          {
+            "number": 4,
+            "title": "Water"
+          },
+          {
+            "number": 7,
+            "title": "Atmosphere"
+          },
+          {
+            "number": 8,
+            "title": "Network CDN and Cloud"
+          },
+          {
+            "number": 9,
+            "title": "Network Fiber"
+          },
+          {
+            "number": 10,
+            "title": "Network Starlink Groundstations"
+          },
+          {
+            "number": 11,
+            "title": "Network swarm / Dan Da Dan / 1080p / 4K"
+          },
+          {
+            "number": 12,
+            "title": "Network swarm / Dan Da Dan / 720p / SD"
+          },
+          {
+            "number": 13,
+            "title": "Particulate 2025"
+          },
+          {
+            "number": 14,
+            "title": "Particulate 2026"
+          },
+          {
+            "number": 15,
+            "title": "Temperature 2025"
+          },
+          {
+            "number": 16,
+            "title": "Temperature 2026"
+          },
+          {
+            "number": 17,
+            "title": "Astronomy: all sky"
+          },
+          {
+            "number": 18,
+            "title": "Astronomy: ground observer"
+          },
+          {
+            "number": 19,
+            "title": "Astronomy: Hubble observer"
+          },
+          {
+            "number": 20,
+            "title": "Orbital Technosphere: global"
+          },
+          {
+            "number": 21,
+            "title": "Orbital Technosphere: observer"
+          },
+          {
+            "number": 22,
+            "title": "Installed solar generating capacity"
+          },
+          {
+            "number": 23,
+            "title": "Installed wind generating capacity"
+          },
+          {
+            "number": 24,
+            "title": "Operating nuclear net electrical capacity"
+          },
+          {
+            "number": 25,
+            "title": "Petroleum refinery throughput"
+          },
+          {
+            "number": 26,
+            "title": "Food production index"
+          },
+          {
+            "number": 27,
+            "title": "Total fisheries production"
+          },
+          {
+            "number": 28,
+            "title": "Coral reef integrated local threat"
+          },
+          {
+            "number": 29,
+            "title": "Forest area"
+          },
+          {
+            "number": 30,
+            "title": "Rare-earth mine production"
+          },
+          {
+            "number": 31,
+            "title": "Population under age 30"
+          },
+          {
+            "number": 32,
+            "title": "Population age 60 and older"
+          },
+          {
+            "number": 33,
+            "title": "Completed ISCED 3 or higher, age 25+"
+          },
+          {
+            "number": 34,
+            "title": "Completed ISCED 6 or higher, age 25+"
+          },
+          {
+            "number": 35,
+            "title": "Resident patent applications"
+          },
+          {
+            "number": 36,
+            "title": "Petroleum and other liquid fuels / 2025"
+          },
+          {
+            "number": 37,
+            "title": "OPEC total liquids / 2030 projection"
+          },
+          {
+            "number": 38,
+            "title": "World Oil Outlook / country coverage"
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Read the evidence at its own scale"
+      },
+      {
+        "kind": "paragraph",
+        "text": "The atlas is a dated study edition. A Japan detail can contain nearby countries; national statistics do not measure an individual island. Celestial subjects use an observer/context view. Each legend preserves source dates, units and methods. The world framing places Antarctica at the lower left as an editorial choice."
+      }
+    ]
+  },
+  {
+    "title": "Hamonshu Revisited",
+    "subtitle": "Workshop 1 · water, pattern and print · proposed 90-minute session",
+    "nodes": [
+      {
+        "kind": "paragraph",
+        "text": "Begin with the wave and ripple designs in Mori Yūzan’s 1903 <i>Hamonshū</i>, as proposed in the artist’s project description. Participants discuss how a line can describe movement, then group and redraw patterns. They apply their own derived patterns to transparent overlays over the Water plate’s colour fields."
+      },
+      {
+        "kind": "figures",
+        "items": [
+          {
+            "stem": "water",
+            "scope": "japan",
+            "caption": "Plate 04 · Japan Water. Source: Natural Earth. Generalized depths provide a drawing surface; they are not a navigation chart."
+          }
+        ]
+      },
+      {
+        "kind": "figures",
+        "items": [
+          {
+            "stem": "water",
+            "scope": "world",
+            "caption": "Plate 04 · World Water. Its published source geometry is retained in this application."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "text": "<b>Format:</b> up to 16 participants; a short introduction, small-group pattern classification, a drawing/printing exercise and a shared viewing. Use tracing sheets, pencils, water-based print materials and study maps. Provide a seated and no-cut version."
+      },
+      {
+        "kind": "small",
+        "text": "<b>Result:</b> a small collection of participant-made pattern sheets beside the maps. The overlays are artistic responses, separately labelled from measured geography. Participants choose whether to display their work or take it home."
+      }
+    ]
+  },
+  {
+    "title": "Dymaxion and AuthaGraph",
+    "subtitle": "Workshop 2 · projection, collective design and AI-assisted cartography",
+    "nodes": [
+      {
+        "kind": "figures",
+        "items": [
+          {
+            "stem": "geometry",
+            "scope": "world",
+            "caption": "Plate 01 · Cartography Geometry. Cartofreako’s native AuthaGraph construction."
+          },
+          {
+            "stem": "graticules",
+            "scope": "world",
+            "caption": "Plate 02 · Cartographic Graticules. A coordinate framework for the same map."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "text": "Compare ways of unfolding a world and choosing what sits near the centre or edge. The session connects Fuller’s Dymaxion Map and World Game with the AuthaGraph formulation and the practical choices of the Cartofreako atlas. Participants trace a route, fold a study map and explain what each representation makes easy or difficult to see."
+      },
+      {
+        "kind": "heading",
+        "text": "A proposed conversation with Hajime Narukawa"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Invite Narukawa to discuss AuthaGraph, cartographic design and the role of AI-assisted tools. His participation and the session format remain to be agreed. The artist can lead the paper exercise independently; remote guest participation is included in the planning model."
+      },
+      {
+        "kind": "heading",
+        "text": "A resource exercise"
+      },
+      {
+        "kind": "figures",
+        "items": [
+          {
+            "stem": "resources-mineral-rare-earth-mine-production-2025",
+            "scope": "world",
+            "caption": "Plate 30 · Rare-earth mine production, 2025. Source: USGS as recorded in the atlas. Country values describe production, not mineral reserves."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "text": "Choose a material used by a familiar device. Compare the resource map with the paths and institutions needed to make, circulate and repair that device. Small groups sketch a possible future and list what additional evidence they would need to evaluate it."
+      },
+      {
+        "kind": "small",
+        "text": "Proposed 90 minutes, up to 16 participants. Large study sheets, folding templates and written prompts support discussion in Japanese and English."
+      }
+    ]
+  },
+  {
+    "title": "Video Common Market Revisited",
+    "subtitle": "Workshop 3 · media circulation and its physical infrastructure",
+    "nodes": [
+      {
+        "kind": "figures",
+        "items": [
+          {
+            "stem": "network-fiber",
+            "scope": "world",
+            "caption": "Plate 09 · World Fiber. TeleGeography snapshots, 2022/2026; ITU public terrestrial routes, retrieved October 2026. Routes are schematic."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "text": "Begin with a proposed conversation between Lisa Nakamura and Abigail De Kosnik about contemporary media circulation. Read the cable, cloud/CDN, Starlink groundstation and orbital maps alongside the distribution of Japan-origin media. Ask how a familiar screen experience depends on distant materials, institutions and places."
+      },
+      {
+        "kind": "figures",
+        "items": [
+          {
+            "stem": "network-cdn",
+            "scope": "japan",
+            "caption": "Plate 08 · Japan CDN and Cloud. Cache dated 21 October 2026; typed source records and approximate reference positions."
+          },
+          {
+            "stem": "network-swarm-ge-1080p",
+            "scope": "world",
+            "caption": "Plate 11 · Dan Da Dan, 1080p/4K. Alpha60 observations, 4 September 2025–4 March 2026."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "text": "<b>Format:</b> a 90-minute public conversation and map-reading workshop, approximately 20 seated participants. A local respondent and the audience bring examples of viewing and sharing. The speakers are proposed invitees; remote participation is the budget assumption."
+      },
+      {
+        "kind": "small",
+        "text": "<b>Interpretation:</b> CDN marks do not count unique active facilities or measure traffic. Swarm circles represent cumulative downloader observations, not unique viewers; the 720p/SD partition is a separate atlas subject. Keep these distinctions on the table while discussing culture and distribution."
+      }
+    ]
+  },
+  {
+    "title": "Ocean Changes and Climate",
+    "subtitle": "Workshop 4 · what a map tells us, and what it leaves open",
+    "nodes": [
+      {
+        "kind": "figures",
+        "items": [
+          {
+            "stem": "resources-fauna-coral-reef-threat-2011",
+            "scope": "world",
+            "caption": "Plate 28 · World coral threat. WRI Reefs at Risk Revisited, 2011. Honeycombs retain source-cell threat classes."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "text": "Invite an ocean or climate specialist and a local respondent to begin from a question chosen with the host: a change noticed, a resource used, or a future worth investigating. The atlas supplies comparisons rather than a ready-made account of island conditions. The scientific contributors are to be selected with the host."
+      },
+      {
+        "kind": "figures",
+        "items": [
+          {
+            "stem": "anthropocene-temperature-2026",
+            "scope": "world",
+            "caption": "Plate 16 · World land-temperature records. NOAA CPC data through 28 October 2026."
+          },
+          {
+            "stem": "anthropocene-temperature-2026",
+            "scope": "japan",
+            "caption": "Plate 16 · Japan view. Counts of record days; 2026 is a partial year."
+          }
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "text": "<b>Format:</b> 90 minutes, up to 16 participants. Read a source key together, compare the two scales, write questions that the maps cannot answer, then propose observations or collaborations that could extend the discussion."
+      },
+      {
+        "kind": "small",
+        "text": "<b>Careful comparisons:</b> the reef layer is a historical threat assessment, not current coral cover; symbol area is not reef area. The temperature maps describe land, not sea temperature. Differences between the displayed years are not a direct estimate of warming. Fresh local knowledge and future source updates will be dated and credited separately."
+      }
+    ]
+  },
+  {
+    "title": "Working in public",
+    "subtitle": "Open invitation · collaborators · production and installation schedule",
+    "nodes": [
+      {
+        "kind": "heading",
+        "text": "A fifth strand: an open studio"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Residents, visitors and other interested parties can propose a topic, bring a question or help make a session. The host and artist choose feasible additions to the programme. A bilingual facilitator supports conversation and written participation. Contributors choose their credit and whether a drawing is displayed, returned or reproduced; public documentation uses separately agreed selections."
+      },
+      {
+        "kind": "heading",
+        "text": "Proposed technical consultations"
+      },
+      {
+        "kind": "paragraph",
+        "text": "The supplied project description names <b>Tomiyoshi Tsukada</b> in Nagano for print production, <b>Hajime Narukawa / AuthaGraph</b> for cartography, and <b>Awagami</b> for washi. These are proposed consultations, with availability, roles and fees to be agreed. Local collaborators help determine the questions, language and daily welcome."
+      },
+      {
+        "kind": "table",
+        "widths": [
+          125,
+          394.27559055118115
+        ],
+        "rows": [
+          [
+            "Period",
+            "Production and care"
+          ],
+          [
+            "2027: after selection",
+            "Agree a host and room; measure access and walls; confirm contributors, quotations, rights and responsibilities."
+          ],
+          [
+            "Jan–Jun 2028",
+            "Co-design local prompts; test papers, scale, colour and mounting; prepare Japanese/English text and workshop templates."
+          ],
+          [
+            "Aug–Sep 2028",
+            "Refresh selected data 6–8 weeks before opening; check sources and captions; make final prints, spares and care instructions."
+          ],
+          [
+            "24–28 Sep 2028",
+            "Proposed installation window: install supports and prints, check circulation and seating, rehearse with the local host."
+          ],
+          [
+            "29 Sep–12 Nov 2028",
+            "Autumn display. Plan 21 artist nights across installation and workshop blocks; schedule the four sessions and open studio with the host. Local care continues between visits."
+          ],
+          [
+            "13–15 Nov 2028",
+            "Remove supports, restore the room, return materials and agree the final participant-work selection and documentation."
+          ]
+        ]
+      },
+      {
+        "kind": "small",
+        "text": "The installation is designed to remain legible and usable throughout the autumn session. Daily checks cover print condition, supports, table supplies and clear routes. Keep spare labels and prints on site; agree any closure or repair with the host."
+      }
+    ]
+  },
+  {
+    "title": "Production budget",
+    "subtitle": "One integrated proposal · inclusive planning allowances in Japanese yen",
+    "nodes": [
+      {
+        "kind": "table",
+        "widths": [
+          419.27559055118115,
+          100
+        ],
+        "rows": [
+          [
+            "Item",
+            "JPY"
+          ],
+          [
+            "Artist: development, preparation and facilitation",
+            "250,000"
+          ],
+          [
+            "Local co-facilitation and host support",
+            "180,000"
+          ],
+          [
+            "Japanese translation and event interpretation",
+            "200,000"
+          ],
+          [
+            "Technical consultations and guest honoraria",
+            "160,000"
+          ],
+          [
+            "Paper, colour and legibility proofs",
+            "80,000"
+          ],
+          [
+            "Twelve wall maps, source labels and spare prints",
+            "200,000"
+          ],
+          [
+            "Reusable supports and reversible mounting",
+            "150,000"
+          ],
+          [
+            "Table hire, study atlases and workshop materials",
+            "80,000"
+          ],
+          [
+            "Artist international return travel",
+            "220,000"
+          ],
+          [
+            "Japan transport, freight and packing",
+            "140,000"
+          ],
+          [
+            "Artist accommodation: 21 nights × JPY 10,000",
+            "210,000"
+          ],
+          [
+            "Venue and utilities allowance",
+            "100,000"
+          ],
+          [
+            "Small AV rental and remote guest connections",
+            "60,000"
+          ],
+          [
+            "Exhibition care, removal and return",
+            "70,000"
+          ],
+          [
+            "Subtotal",
+            "2,100,000"
+          ],
+          [
+            "Contingency (10%)",
+            "210,000"
+          ],
+          [
+            "Total requested",
+            "2,310,000"
+          ]
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "text": "This estimate covers the installation, four named workshops and the open-studio strand. It includes travel, accommodation, exhibition care and removal. The artist plans 21 nights on site; international guests participate remotely unless a revised budget supports travel."
+      },
+      {
+        "kind": "paragraph",
+        "text": "The proposed funding source is the festival production subsidy, subject to selection and the agreed estimate. No sales or ticket income is assumed. Amounts include tax allowances where applicable and must be replaced by quotations after the room, paper and programme are agreed."
+      },
+      {
+        "kind": "paragraph",
+        "text": "If quotations exceed the allowance, reduce the number of full-size display pairs or use standard paper for most editions while retaining both table atlases, readable source keys, interpretation and the core workshops. Record the revised scope with the host before production."
+      }
+    ]
+  },
+  {
+    "title": "Artist and references",
+    "subtitle": "Benjamin De Kosnik · selected CV from the supplied 1 November 2026 document",
+    "nodes": [
+      {
+        "kind": "heading",
+        "text": "Selected CV"
+      },
+      {
+        "kind": "paragraph",
+        "text": "<b>Education:</b> MFA, Studio Art, California College of the Arts (2016); BA, Mathematics, University of Texas at Austin (1995). <b>Selected exhibitions:</b> <i>Another Light Show</i>, with Kristen Wong, 500 Capp Street, San Francisco (2026); <i>Transmarcations: X is not for destination …</i>, Beursschouwburg, Brussels (2017); CCA MFA Exhibition (2016); Bay Area Digitalists, Root Division (2015); Hong Kong Open Printshop Graphic Arts Fiesta (2014); Tokyo Screen Print Biennial (2011, 2013)."
+      },
+      {
+        "kind": "paragraph",
+        "text": "<b>Selected talks:</b> <i>Piracy is the Past, Present, and Future of Streaming</i>, HOPE_16, with Abigail De Kosnik (2025); <i>War, Weapons, and the Web: Tracing Cyberwar Leaks and 3D-Printed Firearms as Distributed Network Swarms</i>, Association of Internet Researchers, Rio, with Abigail De Kosnik and Aaron Zolla (2025); <i>Digital Expansionism and Counter-Expansionism as Cyberwarfare: Analyzing Leaks in the Russo-Ukrainian War</i>, International Communications Association Post Conference, Sydney, with Abigail De Kosnik (2024); <i>UKR-RUS Leak Analysis</i>, HOT FOCI, USENIX (2022); <i>Peer Phenomena as Nam June Paik’s Video Common Market</i>, Decentralized Web Summit (2018); <i>Alpha-60 Bittorrent Cartography</i>, Venice Research Pavilion, with Abigail De Kosnik (2017); <i>Writing Art in Digital Space</i>, International Conference on Artistic Research, The Hague (2016); <i>The Machine is Learning Aesthetics</i>, Digital Craftsmanship Workshop, Designing Interactive Systems Conference, ACM SIGCHI, Brisbane (2016)."
+      },
+      {
+        "kind": "paragraph",
+        "text": "<b>Public Collections:</b> Freehome, Berlin, Germany; Hong Kong Open Printshop, Hong Kong; New Holland Island, St. Petersburg, Russia; Garage Archive Collection, Moscow, Russia; HDK, Gothenburg, Sweden; Printed Matter, NY, NY."
+      },
+      {
+        "kind": "paragraph",
+        "text": "<b>Selected distinction:</b> Special Jury Prize, Tokyo Screen Print Biennial (2011). <b>Related experience:</b> Data Discovery Program, University of California Berkeley (2025)."
+      },
+      {
+        "kind": "small",
+        "text": "Contact: studio.dekosnik@gmail.com · benjamin.dekosnik.com"
+      },
+      {
+        "kind": "heading",
+        "text": "References and visual sources"
+      },
+      {
+        "kind": "small",
+        "text": "[1] Setouchi Triennale 2028, official call and applicant guidelines, checked 1 November 2026. <a href=\"https://setouchi-artfest.jp/en/proposals\">setouchi-artfest.jp/en/proposals</a>."
+      },
+      {
+        "kind": "small",
+        "text": "[2] Setouchi Triennale 2028, <i>Report on the On-site Tours</i>, September–October 2026. Awashima’s maritime history and candidate building types inform this proposed setting. <a href=\"https://setouchi-artfest.jp/files/uploads/en_Report_On-Site_Tour.pdf\">Official tour report</a>."
+      },
+      {
+        "kind": "small",
+        "text": "[3] Benjamin De Kosnik, supplied project description and two-page art CV, 1 November 2026; Cartofreako public-work memo, 21 October 2026. The selected CV above is an excerpt. The full supplied CV remains in the local source package."
+      },
+      {
+        "kind": "small",
+        "text": "[4] Cartofreako, Japan and World atlases, ST2 map edition, 31 October 2026; front matter revised 1 November 2026. Figures in this proposal reproduce those maps. The adjoining atlas legend sheets carry provider URLs, snapshots, units and methods. Core sources shown here: AuthaGraph/Narukawa; Natural Earth; USGS; TeleGeography; ITU; cloud_cdn_cache.bkoz; Alpha60; WRI; NOAA CPC."
+      },
+      {
+        "kind": "small",
+        "text": "Current atlas files and project material: <a href=\"https://benjamin.dekosnik.com/futures/setouchi-2028/\">https://benjamin.dekosnik.com/futures/setouchi-2028/</a>. The application is self-contained; the two full-size atlas volumes are supplementary reading."
+      }
+    ]
+  }
+]

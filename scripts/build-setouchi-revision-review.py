@@ -17,6 +17,12 @@ from cartofreako_style import STYLE
 FRONT_MATTER_PAGES = 3
 ATLAS = STYLE['atlas']
 PDF_EXCLUDED_STEMS = frozenset(ATLAS['pdf_excluded_stems'])
+INDEX_TITLES = {
+    'geometry': 'Cartography Geometry',
+    'graticules': 'Cartographic Graticules',
+    'network-cdn': 'Network CDN and Cloud',
+    'network-groundstations': 'Network Starlink Groundstations',
+}
 
 
 def page_count(path):
@@ -24,24 +30,27 @@ def page_count(path):
     return int(re.search(r'Pages:\s+(\d+)',info)[1])
 
 
-def title_page(path, cover_date):
-    """Fit each bold line to the full printable width of a landscape atlas sheet."""
+def title_page(path, cover_date, scope=None):
+    """Center title/date/scope, with matching title/scope sizes and a half-size date."""
     from reportlab.pdfbase import pdfmetrics
     from reportlab.pdfgen.canvas import Canvas
     width, height = WIDTH * 72, HEIGHT * 72
     settings = ATLAS['title_page']
     margin, gap = settings['margin_pt'], settings['line_gap_pt']
     font = settings['font']
-    lines = [settings['title'], cover_date.isoformat()]
-    sizes = [(width - 2 * margin) / pdfmetrics.stringWidth(line, font, 1) for line in lines]
+    lines = [settings['title'], cover_date.isoformat(), scope.upper() if scope else 'WORLD + JAPAN']
+    ratios = [1, settings['date_size_ratio'], 1]
+    size = min((width - 2 * margin) / pdfmetrics.stringWidth(line, font, ratio)
+               for line, ratio in zip(lines, ratios))
+    sizes = [size * ratio for ratio in ratios]
     metrics = [pdfmetrics.getAscentDescent(font, size) for size in sizes]
     text_height = sum(ascent - descent for ascent, descent in metrics)
-    scale = min(1.0, (height - 2 * margin - gap) / text_height)
+    scale = min(1.0, (height - 2 * margin - 2 * gap) / text_height)
     sizes = [size * scale for size in sizes]
     metrics = [pdfmetrics.getAscentDescent(font, size) for size in sizes]
-    top = (height + sum(ascent - descent for ascent, descent in metrics) + gap) / 2
+    top = (height + sum(ascent - descent for ascent, descent in metrics) + 2 * gap) / 2
     canvas = Canvas(str(path), pagesize=(width, height))
-    canvas.setTitle(settings['title'] + ' / ' + cover_date.isoformat())
+    canvas.setTitle(' / '.join(lines))
     canvas.setAuthor('Cartofreako')
     canvas.setFillColorRGB(1, 1, 1)
     canvas.rect(0, 0, width, height, fill=1, stroke=0)
@@ -57,7 +66,8 @@ def title_page(path, cover_date):
                                       (width + line_width) / 2, baseline + ascent]})
         top = baseline + descent - gap
     canvas.save()
-    return {'date': cover_date.isoformat(), 'sheet_inches': [WIDTH, HEIGHT],
+    return {'date': cover_date.isoformat(), 'scope': scope or 'combined',
+            'sheet_inches': [WIDTH, HEIGHT],
             'font': 'Atkinson Hyperlegible Bold', 'margin_inches': margin / 72,
             'lines': records}
 
@@ -68,7 +78,7 @@ def introduction(path, entries, cover_date, scope=None):
     from reportlab.lib.pagesizes import A4
     canvas = Canvas(str(path), pagesize=A4)
     _, height = A4
-    label = 'ST2 revised atlas' if scope is None else f'ST2 {scope.title()} atlas'
+    label = 'World and Japan Atlas' if scope is None else f'{scope.title()} Atlas'
     canvas.setTitle('Setouchi Triennale 2028 — ' + label)
     canvas.setFont('Atkinson-Bold', 32)
     canvas.drawString(42, height - 82, 'Setouchi Triennale 2028')
@@ -79,11 +89,9 @@ def introduction(path, entries, cover_date, scope=None):
              if scope is None else f'{len(entries)} {scope.title()} maps + {len(entries)} legend/source sheets')
     lines = [count, 'Each map is followed by its legend and data bibliography.',
              f'Prepared {cover_date.day} {cover_date.strftime("%B %Y")}', '',
-             'Atlas sheets: 44 × 19.052559 inches.',
-             'Map image width 43.5 inches, scale 98.863636%.',
-             'Centered margins: 0.25 inches left/right, 0.108253 top/bottom.', '']
+             f'Atlas sheets: {WIDTH * 2.54:.2f} × {HEIGHT * 2.54:.2f} cm.', '']
     if scope in (None, 'world'):
-        lines += ['Every world sheet uses the +4.35-inch horizontal move.',
+        lines += ['Every world sheet uses the approved horizontal move.',
                   'The Africa proof reconnects 14 matched cable endpoint pairs.',
                   'Antarctica is deliberately consolidated at the lower left.',
                   'The displayed Antarctic position is not geographically accurate.', '']
@@ -94,7 +102,7 @@ def introduction(path, entries, cover_date, scope=None):
     lines += ['A new render does not update an observation period.',
               'Each legend records its providers, snapshots and methods.',
               'Physical proofing, Japanese captions and exhibition decisions',
-              'remain recorded in the ST2 development document.']
+              'remain recorded in the development document.']
     for i, line in enumerate(lines):
         canvas.drawString(42, height - 180 - i * 24, line)
     canvas.showPage()
@@ -112,7 +120,7 @@ def introduction(path, entries, cover_date, scope=None):
         canvas.setFont('Atkinson-Bold', 9)
         canvas.drawString(x, y, f"Plate {entry['ordinal']:02d} / PDF pages {first}–{first+sheets_per_subject-1}")
         canvas.setFont('Atkinson-Regular', 8)
-        canvas.drawString(x, y - 12, entry['title'][:54])
+        canvas.drawString(x, y - 12, INDEX_TITLES.get(entry['stem'], entry['title'])[:54])
     canvas.setFont('Atkinson-Regular', 10)
     canvas.drawString(42, 52, 'Plate numbers identify subjects; PDF page positions are separate.')
     canvas.save()
@@ -157,7 +165,7 @@ def build(output, cover_date):
     html=['<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">',
           '<title>Setouchi 2028 — ST2 review</title><style>body{font:18px/1.5 system-ui;color:#292722;background:#faf9f6;margin:0;padding:2rem}main,header{max-width:1800px;margin:auto}h1,h2{line-height:1.15}h1{font-size:clamp(2rem,5vw,4rem)}a{color:#503b75}p{max-width:85ch}.controls{display:flex;gap:1.5rem;align-items:end;flex-wrap:wrap;padding:1rem;background:#fff;border:1px solid #ddd;position:sticky;top:0;z-index:2}input,select{font:inherit;padding:.5rem;max-width:100%;box-sizing:border-box}label{display:grid;gap:.25rem}.pair{border-top:1px solid #ccc;padding:2rem 0}.plates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}figure{margin:0;background:white;border:1px solid #ddd}img{display:block;width:100%;height:auto}figcaption{padding:.75rem}.downloads{display:flex;gap:1rem;flex-wrap:wrap}code{overflow-wrap:anywhere}small{display:block;color:#555}.note{padding:1rem;border-left:4px solid #503b75;background:white}button{font:inherit} [hidden]{display:none!important}@media(max-width:800px){body{padding:1rem}.plates{grid-template-columns:1fr}.controls{position:static}}</style>',
           '<header><p>CARTOFREAKO / SETOUCHI TRIENNALE 2028</p><h1>ST2 plate review</h1><p>38 world/Japan pairs: 76 legend-free maps and 76 separate legend sheets. Each legend contains its data bibliography. The outlined plate number is 36 pt bold, with white fill and a fully opaque black 0.5 pt stroke.</p>',
-          f'<p class="note"><strong>Separate World and Japan PDFs:</strong> <a href="setouchi-tri-explore-v2-world.pdf">World — {scope_pages} pages</a> · <a href="setouchi-tri-explore-v2-japan.pdf">Japan — {scope_pages} pages</a>. Each opens with CARTOFREAKO and the date in large bold type, then edition notes, an index and {len(pdf_entries)} cartography/data sheets paired with their separate legend/data bibliography sheets. Bathymetry Roulette and Bathymetry Hamonshu are omitted from the PDFs.</p>',
+          f'<p class="note"><strong>Separate World and Japan PDFs:</strong> <a href="setouchi-tri-explore-v2-world.pdf">World — {scope_pages} pages</a> · <a href="setouchi-tri-explore-v2-japan.pdf">Japan — {scope_pages} pages</a>. Each opens with CARTOFREAKO, the date at half size, and WORLD or JAPAN in matching large bold type, then edition notes, an index and {len(pdf_entries)} cartography/data sheets paired with their separate legend/data bibliography sheets. Bathymetry Roulette and Bathymetry Hamonshu are omitted from the PDFs.</p>',
           f'<p class="downloads"><a href="setouchi-tri-explore-v2-world.pdf">World PDF</a><a href="setouchi-tri-explore-v2-japan.pdf">Japan PDF</a><a href="setouchi-tri-explore-v2.pdf">Combined PDF — {aggregate_pages} pages</a><a href="proofs/43p5-antarctica-left/index.html">Approved network sample</a><a href="plate-source-bibliography.json">Source ledger</a><a href="contact-sheets/contact-sheets.pdf">Contact sheets</a><a href="prototypes/africa-framing/index.html">Earlier framing comparisons</a><a href="sources/sheets-validation.json">Validation</a></p>',
           '<p>Map image width is 43.5 inches on a 44 × 19.052559-inch sheet, with proportional scaling and centered margins. Every world sheet uses the approved horizontal move. Terrestrial plates consolidate Antarctica at the lower left, including its coastlines, ice and country fills. Japan detail views retain their Japan framing. PDF and SVG are full-size masters; PNGs are 300 dpi. Print at actual size to evaluate physical line weights.</p>',controls,'</header><main>']
     for e in entries:
@@ -203,12 +211,13 @@ def build(output, cover_date):
                 pdf.drawString(x,y-ih-16,label[:55])
             pdf.showPage()
     pdf.save()
-    title=output/'sources/title-page.pdf'
-    title_settings=title_page(title,cover_date)
-    editions={}
+    editions={}; title_settings={}; titles=[]
     for edition in ATLAS['pdf_editions']:
         scope=None if edition=='combined' else edition
         suffix='-'+scope if scope else ''
+        title=output/'sources'/('title-page'+suffix+'.pdf')
+        title_settings[edition]=title_page(title,cover_date,scope)
+        titles.append(title)
         cover=output/'sources'/('revision-cover'+suffix+'.pdf')
         introduction(cover,pdf_entries,cover_date,scope)
         scopes=(scope,) if scope else ('world','japan')
@@ -223,14 +232,14 @@ def build(output, cover_date):
         editions[scope or 'combined']={'pdf':str(target.relative_to(output)),'pages':expected,'subjects':len(pdf_entries),
             'contents':[{'path':str(p.relative_to(output)),'pages':page_count(p)} for p in documents]}
         print(f'Built {scope or "combined"} PDF: {expected} pages.',flush=True)
-    products=[output/'index.html',*[output/e['pdf'] for e in editions.values()],title,output/STANDARD_FILES,output/'plate-source-bibliography.json',output/'plate-source-bibliography.pdf',
+    products=[output/'index.html',*[output/e['pdf'] for e in editions.values()],*titles,output/STANDARD_FILES,output/'plate-source-bibliography.json',output/'plate-source-bibliography.pdf',
               output/'plate-source-bibliography.html',contact/'contact-sheets.pdf']
     manifest={'edition':'Setouchi 2028 ST2','plate_pairs':38,'maps':76,'legend_source_sheets':76,'aggregate_pages':aggregate_pages,
               'generation_style_sha256':digest(ROOT/'generation-style.json'),'atlas_defaults':ATLAS,
               'pdf_subjects':len(pdf_entries),
               'pdf_selection':{'included_stems':[e['stem'] for e in pdf_entries],
                                'excluded':[{'stem':e['stem'],'ordinal':e['ordinal'],'title':e['title']} for e in excluded]},
-              'title_page':title_settings,
+              'title_page':title_settings['combined'], 'title_pages':title_settings,
               'scope_editions':{scope:editions[scope] for scope in ('world','japan')},
               'aggregate_contents':editions['combined']['contents'],
               'products':[{'path':str(p.relative_to(output)),'sha256':digest(p),'bytes':p.stat().st_size} for p in products],

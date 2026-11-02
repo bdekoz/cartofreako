@@ -9,6 +9,7 @@ sass:
 exclude:
   - output/setouchi-triennale-2028
   - output/setouchi-triennale-2028-st2
+  - output/setouchi-triennale-2028-v3
 
 # Image backend selector. The authoritative deployment choice is recorded in
 # .github/deploy-backend and applied by the Pages workflow; this value is the

@@ -1,0 +1,36 @@
+{
+  "checked_date": "2026-11-01",
+  "method": "official web page and linked official PDFs read with web tool",
+  "url": "https://setouchi-artfest.jp/en/proposals",
+  "guidelines_url": "https://setouchi-artfest.jp/files/uploads/en_ApplicationGuidelines2028.pdf",
+  "tour_url": "https://setouchi-artfest.jp/files/uploads/en_Report_On-Site_Tour.pdf",
+  "deadline_jst": "2026-11-02T10:00:00+09:00",
+  "deadline_los_angeles": "2026-11-01T17:00:00-08:00",
+  "maximum_a4_pages_proposal_and_references": 10,
+  "maximum_plans": 3,
+  "maximum_file_bytes": 2000000000,
+  "language": [
+    "English",
+    "Japanese"
+  ],
+  "concept_and_cv_guidance": "About half an A4 page each in English",
+  "required": [
+    "title",
+    "concept",
+    "description",
+    "production process",
+    "materials",
+    "size",
+    "production and installation schedule",
+    "estimated budget",
+    "visuals",
+    "CV or previous work",
+    "payment evidence separately"
+  ],
+  "fee_jpy_per_plan": 1500,
+  "production_subsidy_ceiling_approximately_jpy": 2500000,
+  "application_submission_performed": false,
+  "payment_performed": false,
+  "submitted_plan_count": 0,
+  "prepared_plan_count": 1
+}

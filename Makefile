@@ -3362,3 +3362,11 @@ setouchi-st2: build/generation-context
 	python3 scripts/study-setouchi-africa-framing.py --delivery "$(SETOUCHI_ST2_SOURCE)" --output "$(SETOUCHI_ST2_OUTPUT)/prototypes/africa-framing" --variants original-100 centered-95 shifted-95 cyclic-95 --render
 	python3 scripts/build-setouchi-revision-review.py --output "$(SETOUCHI_ST2_OUTPUT)" $(if $(strip $(SETOUCHI_ST2_DATE)),--date "$(SETOUCHI_ST2_DATE)")
 	python3 scripts/validate-setouchi-sheets.py --delivery "$(SETOUCHI_ST2_OUTPUT)"
+
+# ST31–ST33 reuses the completed ST2 sheets; no data fetch or atlas rerender.
+SETOUCHI_V3_OUTPUT ?= output/setouchi-triennale-2028-v3
+SETOUCHI_V3_DATE ?=
+.PHONY: setouchi-v3
+setouchi-v3:
+	python3 scripts/build-setouchi-proposal.py --source "$(SETOUCHI_ST2_OUTPUT)" --output "$(SETOUCHI_V3_OUTPUT)" $(if $(strip $(SETOUCHI_V3_DATE)),--date "$(SETOUCHI_V3_DATE)")
+	python3 scripts/validate-setouchi-proposal.py --output "$(SETOUCHI_V3_OUTPUT)"

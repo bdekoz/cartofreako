@@ -1,0 +1,302 @@
+{
+  "status": "passed",
+  "atlases": {
+    "world": {
+      "pages": 75,
+      "all_page_dimensions_checked": true,
+      "cover_type_sizes_pt": [
+        408.0,
+        204.0,
+        408.0
+      ],
+      "cover_centering_and_order": true,
+      "edition_notes": true,
+      "index_titles": true,
+      "retained_sheet_checksums": 72,
+      "retained_page_text_comparisons": 72
+    },
+    "japan": {
+      "pages": 75,
+      "all_page_dimensions_checked": true,
+      "cover_type_sizes_pt": [
+        408.0,
+        204.0,
+        408.0
+      ],
+      "cover_centering_and_order": true,
+      "edition_notes": true,
+      "index_titles": true,
+      "retained_sheet_checksums": 72,
+      "retained_page_text_comparisons": 72
+    }
+  },
+  "application": {
+    "pages": 10,
+    "all_a4": true,
+    "bytes": 20616132,
+    "section_order": true,
+    "text_bounds": [
+      {
+        "page": 1,
+        "body_bottom_pt": 617.78
+      },
+      {
+        "page": 2,
+        "body_bottom_pt": 651.76
+      },
+      {
+        "page": 3,
+        "body_bottom_pt": 697.54
+      },
+      {
+        "page": 4,
+        "body_bottom_pt": 747.43
+      },
+      {
+        "page": 5,
+        "body_bottom_pt": 764.76
+      },
+      {
+        "page": 6,
+        "body_bottom_pt": 678.67
+      },
+      {
+        "page": 7,
+        "body_bottom_pt": 652.96
+      },
+      {
+        "page": 8,
+        "body_bottom_pt": 577.66
+      },
+      {
+        "page": 9,
+        "body_bottom_pt": 715.75
+      },
+      {
+        "page": 10,
+        "body_bottom_pt": 654.97
+      }
+    ],
+    "concept_with_hero_upper_bound_pt": 337.59,
+    "selected_cv_height_pt": 362.5,
+    "distinct_source_figures": 11,
+    "minimum_figure_dpi": 456.0,
+    "budget_total_jpy": 2310000
+  },
+  "cv_a4": {
+    "pages": 2,
+    "all_a4": true,
+    "all_text_tokens_preserved": true,
+    "embedded_fonts": 3,
+    "raster_images": 0,
+    "hyperlink_targets_preserved": 5,
+    "bytes": 35157
+  },
+  "local_pages": [
+    {
+      "page": "index.html",
+      "local_resources": 14,
+      "alt_text": true
+    },
+    {
+      "page": "proposal.html",
+      "local_resources": 16,
+      "alt_text": true
+    },
+    {
+      "page": "wordpress/preview.html",
+      "local_resources": 7,
+      "alt_text": true
+    },
+    {
+      "page": "wordpress/page-content.html",
+      "local_resources": 7,
+      "alt_text": true
+    }
+  ],
+  "raster_conservation": [
+    {
+      "scope": "world",
+      "stem": "water",
+      "kind": "map",
+      "pixel_identical_at_1400_px": true
+    },
+    {
+      "scope": "japan",
+      "stem": "water",
+      "kind": "map",
+      "pixel_identical_at_1400_px": true
+    },
+    {
+      "scope": "world",
+      "stem": "network-fiber",
+      "kind": "legend",
+      "pixel_identical_at_1400_px": true
+    },
+    {
+      "scope": "japan",
+      "stem": "network-swarm-ge-1080p",
+      "kind": "map",
+      "pixel_identical_at_1400_px": true
+    }
+  ],
+  "browser": [
+    {
+      "viewport": [
+        1440,
+        1100
+      ],
+      "no_horizontal_overflow": true,
+      "loaded_images": 1,
+      "all_images_loaded": true,
+      "headings": 1,
+      "links": 16,
+      "page": "index.html",
+      "page_sha256": "05f1254ea69cefe48d9cd9ac36447a3dbdc3b0a866b2efc0b8ce763d25be5634"
+    },
+    {
+      "viewport": [
+        390,
+        900
+      ],
+      "no_horizontal_overflow": true,
+      "loaded_images": 1,
+      "all_images_loaded": true,
+      "headings": 1,
+      "links": 16,
+      "page": "index.html",
+      "page_sha256": "05f1254ea69cefe48d9cd9ac36447a3dbdc3b0a866b2efc0b8ce763d25be5634"
+    },
+    {
+      "viewport": [
+        1440,
+        1100
+      ],
+      "no_horizontal_overflow": true,
+      "loaded_images": 14,
+      "all_images_loaded": true,
+      "headings": 10,
+      "links": 6,
+      "page": "proposal.html",
+      "page_sha256": "ddd7d6d517a484e2f5eb59f46a2c8df89c8624e90fdff2942b2f93dc273c381c"
+    },
+    {
+      "viewport": [
+        390,
+        900
+      ],
+      "no_horizontal_overflow": true,
+      "loaded_images": 14,
+      "all_images_loaded": true,
+      "headings": 10,
+      "links": 6,
+      "page": "proposal.html",
+      "page_sha256": "ddd7d6d517a484e2f5eb59f46a2c8df89c8624e90fdff2942b2f93dc273c381c"
+    },
+    {
+      "viewport": [
+        1440,
+        1100
+      ],
+      "no_horizontal_overflow": true,
+      "loaded_images": 4,
+      "all_images_loaded": true,
+      "headings": 1,
+      "links": 4,
+      "page": "wordpress/preview.html",
+      "page_sha256": "5530450bdddf5707207042b147652583c36ae50effcb17171a131d0fa7d51a88"
+    },
+    {
+      "viewport": [
+        390,
+        900
+      ],
+      "no_horizontal_overflow": true,
+      "loaded_images": 4,
+      "all_images_loaded": true,
+      "headings": 1,
+      "links": 4,
+      "page": "wordpress/preview.html",
+      "page_sha256": "5530450bdddf5707207042b147652583c36ae50effcb17171a131d0fa7d51a88"
+    }
+  ],
+  "browser_checked": true,
+  "remote_publication_verified": false,
+  "validated_products": [
+    {
+      "path": "cartofreako-x-setouchi-proposal.pdf",
+      "sha256": "bcec5676f053751a7e36d1e1cf5d7cf5a8ba46503bfe4e159e4f021f1af8d096",
+      "bytes": 20616132
+    },
+    {
+      "path": "20261101-art-cv-2p-a4.pdf",
+      "sha256": "6b81bb64ce51d11e6b9de619e4339c2546861f230bea56cd4e0ddd938d4695c8",
+      "bytes": 35157
+    },
+    {
+      "path": "setouchi-tri-explore-v3-world.pdf",
+      "sha256": "075703d353daa4fe9a8100a2c452f30cd3692591d53f721eda7e31f59b68c052",
+      "bytes": 313820610
+    },
+    {
+      "path": "setouchi-tri-explore-v3-japan.pdf",
+      "sha256": "7af2d1b098e98eb34078469833f4072b39c506a3b2cfedd4d913b49346fb2666",
+      "bytes": 41090735
+    },
+    {
+      "path": "index.html",
+      "sha256": "05f1254ea69cefe48d9cd9ac36447a3dbdc3b0a866b2efc0b8ce763d25be5634",
+      "bytes": 4185
+    },
+    {
+      "path": "proposal.html",
+      "sha256": "ddd7d6d517a484e2f5eb59f46a2c8df89c8624e90fdff2942b2f93dc273c381c",
+      "bytes": 24844
+    },
+    {
+      "path": "wordpress/preview.html",
+      "sha256": "5530450bdddf5707207042b147652583c36ae50effcb17171a131d0fa7d51a88",
+      "bytes": 8292
+    },
+    {
+      "path": "wordpress/page-content.html",
+      "sha256": "0dd5fd17deb93a55cf25a123ac31ca2362037c9e290923530faed0a48a389488",
+      "bytes": 6608
+    }
+  ],
+  "browser_execution": "Approved escalation: Chrome setsockopt blocked in the sandbox; local file previews only",
+  "generation_style_tests": {
+    "passed": 8,
+    "command": "python3 tests/test-generation-style.py"
+  },
+  "opening_revision": {
+    "verified_phrases": [
+      "Cartofreako is a tool to approach the world and learn, design, and anticipate possible futures.",
+      "For the 2028 Setouchi Triennale,",
+      "connect the Seto Inland Sea with communications networks, media circulation, atmosphere, oceans, food, energy and minerals from around the world"
+    ],
+    "text_after_page_one_preserved": true
+  },
+  "workshops_intro_revision": {
+    "verified_text": "Five events and workshops are proposed, with two detailed in this proposal: Hamonshu Revisited;",
+    "text_after_page_one_preserved": true
+  },
+  "page_10_revision": {
+    "additional_talks": [
+      "War, Weapons, and the Web: Tracing Cyberwar Leaks and 3D-Printed Firearms as Distributed Network Swarms",
+      "Digital Expansionism and Counter-Expansionism as Cyberwarfare: Analyzing Leaks in the Russo-Ukrainian War",
+      "UKR-RUS Leak Analysis",
+      "Writing Art in Digital Space",
+      "The Machine is Learning Aesthetics"
+    ],
+    "public_collections": [
+      "Freehome, Berlin, Germany",
+      "Hong Kong Open Printshop, Hong Kong",
+      "New Holland Island, St. Petersburg, Russia",
+      "Garage Archive Collection, Moscow, Russia",
+      "HDK, Gothenburg, Sweden",
+      "Printed Matter, NY, NY"
+    ],
+    "text_on_pages_1_to_9_preserved": true
+  }
+}

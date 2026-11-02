@@ -181,8 +181,11 @@ The saved presentation settings are:
   Bathymetry Roulette and Bathymetry Hamonshu, including their legend/source
   sheets, are excluded from the PDFs. The source plate identifiers stay
   fixed, so 05 and 06 are omitted from the indexes. Both PDFs start with a
-  44-inch title sheet containing only `CARTOFREAKO` and the date, in bold
-  type independently fitted to the 43.5-inch printable width. The build date
+  111.76 × 48.39 cm title sheet containing `CARTOFREAKO`, the date at half
+  the title's type size, and `WORLD` or `JAPAN` at the same size as the title.
+  All three lines are centered; the combined edition uses `WORLD + JAPAN`.
+  Edition notes use centimetres and the index uses the ST31 subject titles.
+  The build date
   defaults to the current date in Los Angeles; set
   `SETOUCHI_ST2_DATE=2026-10-31` to reproduce the approved reference title date.
 - A centered 43.5-inch map image on a 44 × 19.052559-inch sheet. Proportional
@@ -226,6 +229,23 @@ checksum. Use `python3 scripts/publish-setouchi-plate-files.py --check` to
 audit an existing delivery without regenerating it.
 The current network proof is under `proofs/43p5-antarctica-left/`; the
 `prototypes/africa-framing/` variants retain the earlier comparison study.
+
+### Setouchi application edition (ST31–ST33)
+
+To assemble the revised World/Japan covers and indexes, the ten-page A4
+application, the complete two-page CV converted to A4, and a WordPress draft:
+
+```sh
+make setouchi-v3 SETOUCHI_V3_DATE=2026-11-01
+```
+
+This reads the completed `output/setouchi-triennale-2028-st2/` delivery and
+writes `output/setouchi-triennale-2028-v3/`; it preserves the existing map
+and legend PDFs. The [ST3 proposal record](../../development/20261101_setouchi_triennale_proposal.md)
+documents the application, source materials, canonical WordPress page 3175,
+validation and publication handoff. Ghostscript is required for the full CV
+conversion. The builder and validator also produce an offline HTML index,
+source receipts and checksums. No WordPress write is part of this Make target.
 
 The build needs Python 3.11 or later, lxml, Shapely, Pillow and ReportLab;
 Inkscape, Fontconfig and Poppler (`pdfinfo`, `pdfunite`); and the native swarm

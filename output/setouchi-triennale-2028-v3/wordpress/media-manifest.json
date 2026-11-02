@@ -1,0 +1,37 @@
+[
+  {
+    "path": "cartofreako-x-setouchi-proposal.pdf",
+    "sha256": "bcec5676f053751a7e36d1e1cf5d7cf5a8ba46503bfe4e159e4f021f1af8d096",
+    "bytes": 20616132
+  },
+  {
+    "path": "media/japan-water.png",
+    "sha256": "d63c41c5fd51b029e5bf53fcf0c0bcf11a9e57c26fbdbbfae37c3a2f0bf0ead6",
+    "bytes": 1074463
+  },
+  {
+    "path": "media/world-network-fiber.png",
+    "sha256": "9cd9a1929e4059b09bda2db713c8ee20eb38bf8d521b834ee93e4dbade6aaa18",
+    "bytes": 3664142
+  },
+  {
+    "path": "media/world-resources-fauna-coral-reef-threat-2011.png",
+    "sha256": "2c4313b6b248e34197a20c0111b0bef1ec754d7cd9e0b64b5e736dffc2bc93cb",
+    "bytes": 531753
+  },
+  {
+    "path": "media/world-resources-mineral-rare-earth-mine-production-2025.png",
+    "sha256": "5cf377961ef9102d74b80f453d1cb93349bbb58bb5df98e923f62665456cf9f6",
+    "bytes": 491851
+  },
+  {
+    "path": "setouchi-tri-explore-v3-japan.pdf",
+    "sha256": "7af2d1b098e98eb34078469833f4072b39c506a3b2cfedd4d913b49346fb2666",
+    "bytes": 41090735
+  },
+  {
+    "path": "setouchi-tri-explore-v3-world.pdf",
+    "sha256": "075703d353daa4fe9a8100a2c452f30cd3692591d53f721eda7e31f59b68c052",
+    "bytes": 313820610
+  }
+]

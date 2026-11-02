@@ -1,0 +1,4 @@
+# Generated-file checksums refer to exact bytes, including text receipts.
+* -text
+# PDF streams may be ASCII-encoded, but must still be handled as binary.
+*.pdf binary

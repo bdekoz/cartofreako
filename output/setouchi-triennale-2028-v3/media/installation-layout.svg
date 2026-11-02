@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="519.2755905511812" height="340" preserveAspectRatio="xMinYMin meet" viewBox="0 0 519 340" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="519.2755905511812" height="340"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-340)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="40" y="22" width="225.0" height="300.0" style="stroke: rgb(12%,16%,18%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<path d="M 112,22 L 172,22 Z" style="stroke: rgb(100%,100%,100%); stroke-linecap: butt; stroke-width: 3;"/>
+			<text x="112" y="9" style="font-family: Atkinson-Regular; font-size: 9px;fill: rgb(12%,16%,18%); stroke:none;" transform="translate(0,18) scale(1,-1)">ENTRY / 1.6 m opening</text>
+			<text x="143.31" y="331.0" style="font-family: Atkinson-Bold; font-size: 10px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,662) scale(1,-1)">6 m</text>
+			<text x="8" y="172.0" style="font-family: Atkinson-Bold; font-size: 10px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,344) scale(1,-1)">8 m</text>
+			<rect x="44" y="88" width="6" height="42" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(9%,40%,47%); fill-rule: evenodd;"/>
+			<text x="59" y="105" style="font-family: Atkinson-Bold; font-size: 10px;fill: rgb(9%,40%,47%); stroke:none;" transform="translate(0,210) scale(1,-1)">1</text>
+			<rect x="255.0" y="88" width="6.0" height="42" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(9%,40%,47%); fill-rule: evenodd;"/>
+			<text x="242.0" y="105" style="font-family: Atkinson-Bold; font-size: 10px;fill: rgb(9%,40%,47%); stroke:none;" transform="translate(0,210) scale(1,-1)">4</text>
+			<rect x="44" y="164" width="6" height="42" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(9%,40%,47%); fill-rule: evenodd;"/>
+			<text x="59" y="181" style="font-family: Atkinson-Bold; font-size: 10px;fill: rgb(9%,40%,47%); stroke:none;" transform="translate(0,362) scale(1,-1)">2</text>
+			<rect x="255.0" y="164" width="6.0" height="42" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(9%,40%,47%); fill-rule: evenodd;"/>
+			<text x="242.0" y="181" style="font-family: Atkinson-Bold; font-size: 10px;fill: rgb(9%,40%,47%); stroke:none;" transform="translate(0,362) scale(1,-1)">5</text>
+			<rect x="44" y="240" width="6" height="42" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(9%,40%,47%); fill-rule: evenodd;"/>
+			<text x="59" y="257" style="font-family: Atkinson-Bold; font-size: 10px;fill: rgb(9%,40%,47%); stroke:none;" transform="translate(0,514) scale(1,-1)">3</text>
+			<rect x="255.0" y="240" width="6.0" height="42" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(9%,40%,47%); fill-rule: evenodd;"/>
+			<text x="242.0" y="257" style="font-family: Atkinson-Bold; font-size: 10px;fill: rgb(9%,40%,47%); stroke:none;" transform="translate(0,514) scale(1,-1)">6</text>
+			<rect x="117" y="134" width="67.5" height="30.0" style="stroke: rgb(9%,40%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,95%); fill-rule: evenodd;"/>
+			<text x="137.2165" y="145" style="font-family: Atkinson-Bold; font-size: 9px;fill: rgb(9%,40%,47%); stroke:none;" transform="translate(0,290) scale(1,-1)">TABLE</text>
+			<rect x="117" y="224" width="67.5" height="30.0" style="stroke: rgb(9%,40%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,95%); fill-rule: evenodd;"/>
+			<text x="137.2165" y="235" style="font-family: Atkinson-Bold; font-size: 9px;fill: rgb(9%,40%,47%); stroke:none;" transform="translate(0,470) scale(1,-1)">TABLE</text>
+			<path d="M 151,167 L 151,221 Z" style="stroke: rgb(34%,38%,41%); stroke-linecap: butt; stroke-width: 1; stroke-dasharray: 3, 3;"/>
+			<text x="158" y="192" style="font-family: Atkinson-Regular; font-size: 8px;fill: rgb(34%,38%,41%); stroke:none;" transform="translate(0,384) scale(1,-1)">1.6 m</text>
+			<text x="292" y="311" style="font-family: Atkinson-Bold; font-size: 9px;fill: rgb(9%,40%,47%); stroke:none;" transform="translate(0,622) scale(1,-1)">SIX WORLD / JAPAN PAIRS</text>
+			<text x="292" y="293" style="font-family: Atkinson-Regular; font-size: 9px;fill: rgb(12%,16%,18%); stroke:none;" transform="translate(0,586) scale(1,-1)">1  Water</text>
+			<text x="292" y="275" style="font-family: Atkinson-Regular; font-size: 9px;fill: rgb(12%,16%,18%); stroke:none;" transform="translate(0,550) scale(1,-1)">2  Fiber</text>
+			<text x="292" y="257" style="font-family: Atkinson-Regular; font-size: 9px;fill: rgb(12%,16%,18%); stroke:none;" transform="translate(0,514) scale(1,-1)">3  CDN and Cloud</text>
+			<text x="292" y="239" style="font-family: Atkinson-Regular; font-size: 9px;fill: rgb(12%,16%,18%); stroke:none;" transform="translate(0,478) scale(1,-1)">4  Coral threat</text>
+			<text x="292" y="221" style="font-family: Atkinson-Regular; font-size: 9px;fill: rgb(12%,16%,18%); stroke:none;" transform="translate(0,442) scale(1,-1)">5  Temperature</text>
+			<text x="292" y="203" style="font-family: Atkinson-Regular; font-size: 9px;fill: rgb(12%,16%,18%); stroke:none;" transform="translate(0,406) scale(1,-1)">6  Rare-earth production</text>
+			<text x="292" y="185" style="font-family: Atkinson-Regular; font-size: 9px;fill: rgb(12%,16%,18%); stroke:none;" transform="translate(0,370) scale(1,-1)"></text>
+			<text x="292" y="167" style="font-family: Atkinson-Regular; font-size: 9px;fill: rgb(12%,16%,18%); stroke:none;" transform="translate(0,334) scale(1,-1)">Two 1.8 × 0.8 m tables</text>
+			<text x="292" y="149" style="font-family: Atkinson-Regular; font-size: 9px;fill: rgb(12%,16%,18%); stroke:none;" transform="translate(0,298) scale(1,-1)">Seated reading / drawing</text>
+			<text x="292" y="131" style="font-family: Atkinson-Regular; font-size: 9px;fill: rgb(12%,16%,18%); stroke:none;" transform="translate(0,262) scale(1,-1)">Clear routes at least 1.2 m</text>
+			<text x="292" y="113" style="font-family: Atkinson-Regular; font-size: 9px;fill: rgb(12%,16%,18%); stroke:none;" transform="translate(0,226) scale(1,-1)"></text>
+			<text x="292" y="95" style="font-family: Atkinson-Regular; font-size: 9px;fill: rgb(12%,16%,18%); stroke:none;" transform="translate(0,190) scale(1,-1)">A3 source keys alongside maps</text>
+			<text x="292" y="77" style="font-family: Atkinson-Regular; font-size: 9px;fill: rgb(12%,16%,18%); stroke:none;" transform="translate(0,154) scale(1,-1)">Ephemera on a movable board</text>
+			<text x="292" y="59" style="font-family: Atkinson-Regular; font-size: 9px;fill: rgb(12%,16%,18%); stroke:none;" transform="translate(0,118) scale(1,-1)"></text>
+			<text x="292" y="41" style="font-family: Atkinson-Regular; font-size: 9px;fill: rgb(12%,16%,18%); stroke:none;" transform="translate(0,82) scale(1,-1)">Concept layout; site to be agreed</text>
+		</g>
+	</g>
+</svg>

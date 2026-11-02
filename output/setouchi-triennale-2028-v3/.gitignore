@@ -1,0 +1,16 @@
+# Version the application package; full-size atlases and source originals stay local.
+/*
+!/.gitignore
+!/.gitattributes
+!/GIT-CONTENTS.md
+!/index.html
+!/proposal.html
+!/cartofreako-x-setouchi-proposal.pdf
+!/20261101-art-cv-2p-a4.pdf
+!/manifest.json
+!/SHA256SUMS
+!/media/
+!/wordpress/
+!/sources/
+/sources/*
+!/sources/*.json

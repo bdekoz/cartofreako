@@ -1,0 +1,80 @@
+[
+  {
+    "viewport": [
+      1440,
+      1100
+    ],
+    "no_horizontal_overflow": true,
+    "loaded_images": 1,
+    "all_images_loaded": true,
+    "headings": 1,
+    "links": 16,
+    "page": "index.html",
+    "page_sha256": "05f1254ea69cefe48d9cd9ac36447a3dbdc3b0a866b2efc0b8ce763d25be5634"
+  },
+  {
+    "viewport": [
+      390,
+      900
+    ],
+    "no_horizontal_overflow": true,
+    "loaded_images": 1,
+    "all_images_loaded": true,
+    "headings": 1,
+    "links": 16,
+    "page": "index.html",
+    "page_sha256": "05f1254ea69cefe48d9cd9ac36447a3dbdc3b0a866b2efc0b8ce763d25be5634"
+  },
+  {
+    "viewport": [
+      1440,
+      1100
+    ],
+    "no_horizontal_overflow": true,
+    "loaded_images": 14,
+    "all_images_loaded": true,
+    "headings": 10,
+    "links": 6,
+    "page": "proposal.html",
+    "page_sha256": "ddd7d6d517a484e2f5eb59f46a2c8df89c8624e90fdff2942b2f93dc273c381c"
+  },
+  {
+    "viewport": [
+      390,
+      900
+    ],
+    "no_horizontal_overflow": true,
+    "loaded_images": 14,
+    "all_images_loaded": true,
+    "headings": 10,
+    "links": 6,
+    "page": "proposal.html",
+    "page_sha256": "ddd7d6d517a484e2f5eb59f46a2c8df89c8624e90fdff2942b2f93dc273c381c"
+  },
+  {
+    "viewport": [
+      1440,
+      1100
+    ],
+    "no_horizontal_overflow": true,
+    "loaded_images": 4,
+    "all_images_loaded": true,
+    "headings": 1,
+    "links": 4,
+    "page": "wordpress/preview.html",
+    "page_sha256": "5530450bdddf5707207042b147652583c36ae50effcb17171a131d0fa7d51a88"
+  },
+  {
+    "viewport": [
+      390,
+      900
+    ],
+    "no_horizontal_overflow": true,
+    "loaded_images": 4,
+    "all_images_loaded": true,
+    "headings": 1,
+    "links": 4,
+    "page": "wordpress/preview.html",
+    "page_sha256": "5530450bdddf5707207042b147652583c36ae50effcb17171a131d0fa7d51a88"
+  }
+]

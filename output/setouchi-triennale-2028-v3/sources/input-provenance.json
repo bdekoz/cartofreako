@@ -1,0 +1,27 @@
+[
+  {
+    "path": "assets.static/setouchi-triennale/20261101 setouchi proposal.pdf",
+    "sha256": "10a8b186a461902231ef1098462081695528e81c762deea0a1d245d227705220",
+    "bytes": 35808
+  },
+  {
+    "path": "assets.static/setouchi-triennale/20261101-art-cv-2p.pdf",
+    "sha256": "3b70d13eaa0eea70ab3d0f2cc308303786a3a92569f8f57b5bba8601b8afaa03",
+    "bytes": 70865
+  },
+  {
+    "path": "assets.static/setouchi-triennale/20261021 cartofreako freakout.pdf",
+    "sha256": "bb9b3c2c3fd8ba68bbe01a09c6b65acaf02e2530988190c1cb3807712f9c557c",
+    "bytes": 28409
+  },
+  {
+    "path": "assets.static/setouchi-triennale/en_ApplicationGuidelines2028.pdf",
+    "sha256": "082493f7419cd5c03d4005103cdf41feffc3a4c8bf90ab5e6b2784aefbdb550b",
+    "bytes": 113149
+  },
+  {
+    "path": "assets.static/setouchi-triennale/en_Report_On-Site_Tour.pdf",
+    "sha256": "311f5450bc5fdace1a02ea922ad303641b9891a1efe9affe98e559c23dcbf6b1",
+    "bytes": 295386
+  }
+]

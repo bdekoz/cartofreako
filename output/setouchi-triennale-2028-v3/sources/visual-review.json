@@ -1,0 +1,21 @@
+{
+  "status": "reviewed",
+  "scope": [
+    "All ten proposal pages in contact sheet; full-size ocean/climate page",
+    "Both converted CV pages at 1500-pixel height",
+    "Japan cover typography at 1500-pixel width"
+  ],
+  "findings": [
+    "No clipped content found",
+    "Room diagram and source captions are readable",
+    "Cover title and scope match in size; date is centered and half size",
+    "CV retains both pages, line arrangement, font styling and links"
+  ],
+  "limitations": [
+    "Digital inspection only; physical print proofs remain production work",
+    "WordPress theme rendering awaits upload to the existing site"
+  ],
+  "opening_revision_review": "Updated first-page rendering inspected after all three requested wording edits; text and figures fit.",
+  "workshops_intro_review": "Updated paragraph under One installation, five ways to take part inspected on page 1; text fits.",
+  "page_10_revision_review": "Expanded selected talks (eight total) and all six Public Collections inspected on page 10. Text is readable, references fit and the selected CV occupies 362.5 pt, below half an A4 page."
+}

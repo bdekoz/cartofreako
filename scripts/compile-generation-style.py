@@ -33,6 +33,8 @@ def compile_style(profile):
     cover = atlas['title_page']
     if cover['font'] != 'Atkinson-Bold' or cover['margin_pt'] <= 0 or cover['line_gap_pt'] < 0:
         raise ValueError('atlas title requires the bundled bold font and positive margins')
+    if cover['date_size_ratio'] != 0.5:
+        raise ValueError('atlas cover date must be half the title and scope type size')
     for family in ('fiber', 'water', 'coastline', 'resources', 'atmosphere', 'cdn', 'swarm'):
         for key, value in profile[family].items():
             if 'opacity' in key and (type(value) not in (int, float) or not 0 <= value <= 1):

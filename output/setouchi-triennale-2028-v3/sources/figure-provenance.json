@@ -1,0 +1,278 @@
+[
+  {
+    "path": "media/world-water.png",
+    "sha256": "819a87b54e97a666706a64234a23543b3f668a9341700b2187f46be3bf23657a",
+    "bytes": 4663164,
+    "source": {
+      "path": "output/setouchi-triennale-2028-st2/previews/world/water-authagraph-44-19.052559.png",
+      "sha256": "819a87b54e97a666706a64234a23543b3f668a9341700b2187f46be3bf23657a",
+      "bytes": 4663164
+    },
+    "stem": "water",
+    "scope": "world",
+    "pixels": [
+      3840,
+      1663
+    ],
+    "uses": [
+      {
+        "page": 1,
+        "caption": "World · Water. Natural Earth physical geography; generalized bathymetry.",
+        "width_pt": 252.63779527559058,
+        "effective_dpi": 1094.4
+      },
+      {
+        "page": 4,
+        "caption": "Plate 04 · World Water. Its published source geometry is retained in this application.",
+        "width_pt": 519.2755905511812,
+        "effective_dpi": 532.4
+      }
+    ]
+  },
+  {
+    "path": "media/japan-water.png",
+    "sha256": "d63c41c5fd51b029e5bf53fcf0c0bcf11a9e57c26fbdbbfae37c3a2f0bf0ead6",
+    "bytes": 1074463,
+    "source": {
+      "path": "output/setouchi-triennale-2028-st2/previews/japan/water-authagraph-44-19.052559-japan.png",
+      "sha256": "d63c41c5fd51b029e5bf53fcf0c0bcf11a9e57c26fbdbbfae37c3a2f0bf0ead6",
+      "bytes": 1074463
+    },
+    "stem": "water",
+    "scope": "japan",
+    "pixels": [
+      3840,
+      1663
+    ],
+    "uses": [
+      {
+        "page": 1,
+        "caption": "Japan · Water. The same sources at a closer geographic scale.",
+        "width_pt": 252.63779527559058,
+        "effective_dpi": 1094.4
+      },
+      {
+        "page": 4,
+        "caption": "Plate 04 · Japan Water. Source: Natural Earth. Generalized depths provide a drawing surface; they are not a navigation chart.",
+        "width_pt": 519.2755905511812,
+        "effective_dpi": 532.4
+      }
+    ]
+  },
+  {
+    "path": "media/world-geometry.png",
+    "sha256": "516441ce2a17f8c2f3927bbd629868d62f46a70b98c68665e8ed72e4e65634bb",
+    "bytes": 475032,
+    "source": {
+      "path": "output/setouchi-triennale-2028-st2/previews/world/geometry-authagraph-44-19.052559.png",
+      "sha256": "516441ce2a17f8c2f3927bbd629868d62f46a70b98c68665e8ed72e4e65634bb",
+      "bytes": 475032
+    },
+    "stem": "geometry",
+    "scope": "world",
+    "pixels": [
+      3840,
+      1663
+    ],
+    "uses": [
+      {
+        "page": 5,
+        "caption": "Plate 01 · Cartography Geometry. Cartofreako’s native AuthaGraph construction.",
+        "width_pt": 252.63779527559058,
+        "effective_dpi": 1094.4
+      }
+    ]
+  },
+  {
+    "path": "media/world-graticules.png",
+    "sha256": "5160f9a216035ec376c1be89a8d5a6609990ff634f8060c61ef2dece2d544abf",
+    "bytes": 1706680,
+    "source": {
+      "path": "output/setouchi-triennale-2028-st2/previews/world/graticules-authagraph-44-19.052559.png",
+      "sha256": "5160f9a216035ec376c1be89a8d5a6609990ff634f8060c61ef2dece2d544abf",
+      "bytes": 1706680
+    },
+    "stem": "graticules",
+    "scope": "world",
+    "pixels": [
+      3840,
+      1663
+    ],
+    "uses": [
+      {
+        "page": 5,
+        "caption": "Plate 02 · Cartographic Graticules. A coordinate framework for the same map.",
+        "width_pt": 252.63779527559058,
+        "effective_dpi": 1094.4
+      }
+    ]
+  },
+  {
+    "path": "media/world-resources-mineral-rare-earth-mine-production-2025.png",
+    "sha256": "5cf377961ef9102d74b80f453d1cb93349bbb58bb5df98e923f62665456cf9f6",
+    "bytes": 491851,
+    "source": {
+      "path": "output/setouchi-triennale-2028-st2/previews/world/resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559.png",
+      "sha256": "5cf377961ef9102d74b80f453d1cb93349bbb58bb5df98e923f62665456cf9f6",
+      "bytes": 491851
+    },
+    "stem": "resources-mineral-rare-earth-mine-production-2025",
+    "scope": "world",
+    "pixels": [
+      3840,
+      1663
+    ],
+    "uses": [
+      {
+        "page": 5,
+        "caption": "Plate 30 · Rare-earth mine production, 2025. Source: USGS as recorded in the atlas. Country values describe production, not mineral reserves.",
+        "width_pt": 519.2755905511812,
+        "effective_dpi": 532.4
+      }
+    ]
+  },
+  {
+    "path": "media/world-network-fiber.png",
+    "sha256": "9cd9a1929e4059b09bda2db713c8ee20eb38bf8d521b834ee93e4dbade6aaa18",
+    "bytes": 3664142,
+    "source": {
+      "path": "output/setouchi-triennale-2028-st2/previews/world/network-fiber-authagraph-44-19.052559.png",
+      "sha256": "9cd9a1929e4059b09bda2db713c8ee20eb38bf8d521b834ee93e4dbade6aaa18",
+      "bytes": 3664142
+    },
+    "stem": "network-fiber",
+    "scope": "world",
+    "pixels": [
+      3840,
+      1663
+    ],
+    "uses": [
+      {
+        "page": 6,
+        "caption": "Plate 09 · World Fiber. TeleGeography snapshots, 2022/2026; ITU public terrestrial routes, retrieved October 2026. Routes are schematic.",
+        "width_pt": 519.2755905511812,
+        "effective_dpi": 532.4
+      }
+    ]
+  },
+  {
+    "path": "media/japan-network-cdn.png",
+    "sha256": "375a6632583cac2a9a39f53a672ba8e5f91de4058eae7a4ad7885b431d6750ec",
+    "bytes": 494836,
+    "source": {
+      "path": "output/setouchi-triennale-2028-st2/previews/japan/network-cdn-authagraph-44-19.052559-japan.png",
+      "sha256": "375a6632583cac2a9a39f53a672ba8e5f91de4058eae7a4ad7885b431d6750ec",
+      "bytes": 494836
+    },
+    "stem": "network-cdn",
+    "scope": "japan",
+    "pixels": [
+      3840,
+      1663
+    ],
+    "uses": [
+      {
+        "page": 6,
+        "caption": "Plate 08 · Japan CDN and Cloud. Cache dated 21 October 2026; typed source records and approximate reference positions.",
+        "width_pt": 252.63779527559058,
+        "effective_dpi": 1094.4
+      }
+    ]
+  },
+  {
+    "path": "media/world-network-swarm-ge-1080p.png",
+    "sha256": "42d1629f6967db33d99b96418930882748df46cd7472251a478725f84dc6bb3b",
+    "bytes": 587889,
+    "source": {
+      "path": "output/setouchi-triennale-2028-st2/previews/world/network-swarm-ge-1080p-authagraph-44-19.052559.png",
+      "sha256": "42d1629f6967db33d99b96418930882748df46cd7472251a478725f84dc6bb3b",
+      "bytes": 587889
+    },
+    "stem": "network-swarm-ge-1080p",
+    "scope": "world",
+    "pixels": [
+      1600,
+      693
+    ],
+    "uses": [
+      {
+        "page": 6,
+        "caption": "Plate 11 · Dan Da Dan, 1080p/4K. Alpha60 observations, 4 September 2025–4 March 2026.",
+        "width_pt": 252.63779527559058,
+        "effective_dpi": 456.0
+      }
+    ]
+  },
+  {
+    "path": "media/world-resources-fauna-coral-reef-threat-2011.png",
+    "sha256": "2c4313b6b248e34197a20c0111b0bef1ec754d7cd9e0b64b5e736dffc2bc93cb",
+    "bytes": 531753,
+    "source": {
+      "path": "output/setouchi-triennale-2028-st2/previews/world/resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559.png",
+      "sha256": "2c4313b6b248e34197a20c0111b0bef1ec754d7cd9e0b64b5e736dffc2bc93cb",
+      "bytes": 531753
+    },
+    "stem": "resources-fauna-coral-reef-threat-2011",
+    "scope": "world",
+    "pixels": [
+      3840,
+      1663
+    ],
+    "uses": [
+      {
+        "page": 7,
+        "caption": "Plate 28 · World coral threat. WRI Reefs at Risk Revisited, 2011. Honeycombs retain source-cell threat classes.",
+        "width_pt": 519.2755905511812,
+        "effective_dpi": 532.4
+      }
+    ]
+  },
+  {
+    "path": "media/world-anthropocene-temperature-2026.png",
+    "sha256": "01dc0e4e69ca4d4785e7af28f04ea7d18e0ed47a045d6e48660a12b50b1a4d91",
+    "bytes": 3098624,
+    "source": {
+      "path": "output/setouchi-triennale-2028-st2/previews/world/anthropocene-temperature-2026-authagraph-44-19.052559.png",
+      "sha256": "01dc0e4e69ca4d4785e7af28f04ea7d18e0ed47a045d6e48660a12b50b1a4d91",
+      "bytes": 3098624
+    },
+    "stem": "anthropocene-temperature-2026",
+    "scope": "world",
+    "pixels": [
+      3840,
+      1663
+    ],
+    "uses": [
+      {
+        "page": 7,
+        "caption": "Plate 16 · World land-temperature records. NOAA CPC data through 28 October 2026.",
+        "width_pt": 252.63779527559058,
+        "effective_dpi": 1094.4
+      }
+    ]
+  },
+  {
+    "path": "media/japan-anthropocene-temperature-2026.png",
+    "sha256": "3992833d9a81e051d64f2ed4add7011aa0c0f43981e8ba813172dfa5ab788747",
+    "bytes": 988810,
+    "source": {
+      "path": "output/setouchi-triennale-2028-st2/previews/japan/anthropocene-temperature-2026-authagraph-44-19.052559-japan.png",
+      "sha256": "3992833d9a81e051d64f2ed4add7011aa0c0f43981e8ba813172dfa5ab788747",
+      "bytes": 988810
+    },
+    "stem": "anthropocene-temperature-2026",
+    "scope": "japan",
+    "pixels": [
+      3840,
+      1663
+    ],
+    "uses": [
+      {
+        "page": 7,
+        "caption": "Plate 16 · Japan view. Counts of record days; 2026 is a partial year.",
+        "width_pt": 252.63779527559058,
+        "effective_dpi": 1094.4
+      }
+    ]
+  }
+]

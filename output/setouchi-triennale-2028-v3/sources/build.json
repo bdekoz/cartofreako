@@ -1,0 +1,14 @@
+{
+  "issued": "2026-11-01",
+  "source_delivery": "output/setouchi-triennale-2028-st2",
+  "canonical_url": "https://benjamin.dekosnik.com/futures/setouchi-2028/",
+  "source_script": {
+    "path": "scripts/build-setouchi-proposal.py",
+    "sha256": "817a7910071c73b2d1638d8db434142cdb08855e186ef8f56d7751728d8b99e9",
+    "bytes": 57117
+  },
+  "git_head_at_build": "c482a19fa207329b8d7c3fb72eae37d7a6446c32",
+  "command": "make setouchi-v3 SETOUCHI_V3_DATE=2026-11-01",
+  "source_data_refreshed": false,
+  "latest_revision": "Page 10: five additional CV talks and all six Public Collections; proposal PDF and HTML regenerated."
+}

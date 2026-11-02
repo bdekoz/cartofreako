@@ -1,0 +1,360 @@
+{
+  "edition": "Setouchi 2028 v3",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "73f3609f26f6610081b660b55d8662713cc72266a703eb3494c5e61b3830aa35",
+      "bytes": 168
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "ed8c1a0369a5f4839a4e92b0b95e4f2061a58a6b9d4946b530fad142c0880ebd",
+      "bytes": 322
+    },
+    {
+      "path": "20261101-art-cv-2p-a4.pdf",
+      "sha256": "6b81bb64ce51d11e6b9de619e4339c2546861f230bea56cd4e0ddd938d4695c8",
+      "bytes": 35157
+    },
+    {
+      "path": "GIT-CONTENTS.md",
+      "sha256": "6754b341e465ccabd2d28476c2e5866f76624c31a4e7df247f0ae7d7179c79c6",
+      "bytes": 1754
+    },
+    {
+      "path": "cartofreako-x-setouchi-proposal.pdf",
+      "sha256": "bcec5676f053751a7e36d1e1cf5d7cf5a8ba46503bfe4e159e4f021f1af8d096",
+      "bytes": 20616132
+    },
+    {
+      "path": "index.html",
+      "sha256": "05f1254ea69cefe48d9cd9ac36447a3dbdc3b0a866b2efc0b8ce763d25be5634",
+      "bytes": 4185
+    },
+    {
+      "path": "media/installation-layout.svg",
+      "sha256": "ba7fbf31e5f77060cf377203ce6448387a0f9c6a0b8ac2e48ffa39b2100e59b0",
+      "bytes": 7221
+    },
+    {
+      "path": "media/japan-anthropocene-temperature-2026.png",
+      "sha256": "3992833d9a81e051d64f2ed4add7011aa0c0f43981e8ba813172dfa5ab788747",
+      "bytes": 988810
+    },
+    {
+      "path": "media/japan-network-cdn.png",
+      "sha256": "375a6632583cac2a9a39f53a672ba8e5f91de4058eae7a4ad7885b431d6750ec",
+      "bytes": 494836
+    },
+    {
+      "path": "media/japan-water.png",
+      "sha256": "d63c41c5fd51b029e5bf53fcf0c0bcf11a9e57c26fbdbbfae37c3a2f0bf0ead6",
+      "bytes": 1074463
+    },
+    {
+      "path": "media/world-anthropocene-temperature-2026.png",
+      "sha256": "01dc0e4e69ca4d4785e7af28f04ea7d18e0ed47a045d6e48660a12b50b1a4d91",
+      "bytes": 3098624
+    },
+    {
+      "path": "media/world-geometry.png",
+      "sha256": "516441ce2a17f8c2f3927bbd629868d62f46a70b98c68665e8ed72e4e65634bb",
+      "bytes": 475032
+    },
+    {
+      "path": "media/world-graticules.png",
+      "sha256": "5160f9a216035ec376c1be89a8d5a6609990ff634f8060c61ef2dece2d544abf",
+      "bytes": 1706680
+    },
+    {
+      "path": "media/world-network-fiber.png",
+      "sha256": "9cd9a1929e4059b09bda2db713c8ee20eb38bf8d521b834ee93e4dbade6aaa18",
+      "bytes": 3664142
+    },
+    {
+      "path": "media/world-network-swarm-ge-1080p.png",
+      "sha256": "42d1629f6967db33d99b96418930882748df46cd7472251a478725f84dc6bb3b",
+      "bytes": 587889
+    },
+    {
+      "path": "media/world-resources-fauna-coral-reef-threat-2011.png",
+      "sha256": "2c4313b6b248e34197a20c0111b0bef1ec754d7cd9e0b64b5e736dffc2bc93cb",
+      "bytes": 531753
+    },
+    {
+      "path": "media/world-resources-mineral-rare-earth-mine-production-2025.png",
+      "sha256": "5cf377961ef9102d74b80f453d1cb93349bbb58bb5df98e923f62665456cf9f6",
+      "bytes": 491851
+    },
+    {
+      "path": "media/world-water.png",
+      "sha256": "819a87b54e97a666706a64234a23543b3f668a9341700b2187f46be3bf23657a",
+      "bytes": 4663164
+    },
+    {
+      "path": "proposal.html",
+      "sha256": "ddd7d6d517a484e2f5eb59f46a2c8df89c8624e90fdff2942b2f93dc273c381c",
+      "bytes": 24844
+    },
+    {
+      "path": "setouchi-tri-explore-v3-japan.pdf",
+      "sha256": "7af2d1b098e98eb34078469833f4072b39c506a3b2cfedd4d913b49346fb2666",
+      "bytes": 41090735
+    },
+    {
+      "path": "setouchi-tri-explore-v3-world.pdf",
+      "sha256": "075703d353daa4fe9a8100a2c452f30cd3692591d53f721eda7e31f59b68c052",
+      "bytes": 313820610
+    },
+    {
+      "path": "sources/atlas-revision.json",
+      "sha256": "1c3006af49f36232feb757ed7d82ed05fa20cb12c48a71cad99bf1263f67f718",
+      "bytes": 62835
+    },
+    {
+      "path": "sources/browser-validation.json",
+      "sha256": "ec18b11d180f10e94e7a6bf40e330dfda4ba57d87cfc9036ea55bbdf55ffc69d",
+      "bytes": 1803
+    },
+    {
+      "path": "sources/budget.json",
+      "sha256": "6c7319a1553db36a0041f75d309fcde62f905931e8bed64fd66440d9e5c27543",
+      "bytes": 1518
+    },
+    {
+      "path": "sources/build.json",
+      "sha256": "d2b1a32b707bc8d15841779a3c5e8f84611a9d3a8da76f441dd0d657c9fc21df",
+      "bytes": 627
+    },
+    {
+      "path": "sources/call-requirements.json",
+      "sha256": "dc8cf34ace3589d710ed5b2a04c664798160184be21321f85e8265d0fd22ce4e",
+      "bytes": 1166
+    },
+    {
+      "path": "sources/cv-a4-conversion.json",
+      "sha256": "2d338b59c182677e44e7adf180a0beae74b4ae6d4392c10b88b6048160cf0ac7",
+      "bytes": 1030
+    },
+    {
+      "path": "sources/edition-notes-japan.pdf",
+      "sha256": "19922928b7d8b86e88d82f3c912bcf9690f2a1dbdba17ed23adbf86f52c14a52",
+      "bytes": 30278
+    },
+    {
+      "path": "sources/edition-notes-world.pdf",
+      "sha256": "70112002d82360066b2a44ab6a26d7a29fa6277a79130af0a811aec963e41bfb",
+      "bytes": 30350
+    },
+    {
+      "path": "sources/figure-provenance.json",
+      "sha256": "6583a750614702ae0a0659865e8d156fdc1f9417784771ddeaf2f552c3b7ce6c",
+      "bytes": 8827
+    },
+    {
+      "path": "sources/input/20261021 cartofreako freakout.pdf",
+      "sha256": "bb9b3c2c3fd8ba68bbe01a09c6b65acaf02e2530988190c1cb3807712f9c557c",
+      "bytes": 28409
+    },
+    {
+      "path": "sources/input/20261021 cartofreako freakout.txt",
+      "sha256": "e426fe9e8e8ac1d985ce0abb132c14197305dbcf75b138152a6bd9701ddaa5aa",
+      "bytes": 1526
+    },
+    {
+      "path": "sources/input/20261101 setouchi proposal.pdf",
+      "sha256": "10a8b186a461902231ef1098462081695528e81c762deea0a1d245d227705220",
+      "bytes": 35808
+    },
+    {
+      "path": "sources/input/20261101 setouchi proposal.txt",
+      "sha256": "4ab555d242c5f03a64cbb4df6f3d68d0b7a0302e8f75558128f33ee971cba1ea",
+      "bytes": 3578
+    },
+    {
+      "path": "sources/input/20261101-art-cv-2p.pdf",
+      "sha256": "3b70d13eaa0eea70ab3d0f2cc308303786a3a92569f8f57b5bba8601b8afaa03",
+      "bytes": 70865
+    },
+    {
+      "path": "sources/input/20261101-art-cv-2p.txt",
+      "sha256": "5ac2d720cc2068ed7464894eebc400712cf54dde6b5d48ca8327f5e3cb9e349e",
+      "bytes": 6153
+    },
+    {
+      "path": "sources/input/en_ApplicationGuidelines2028.pdf",
+      "sha256": "082493f7419cd5c03d4005103cdf41feffc3a4c8bf90ab5e6b2784aefbdb550b",
+      "bytes": 113149
+    },
+    {
+      "path": "sources/input/en_ApplicationGuidelines2028.txt",
+      "sha256": "85109992cfa760e9c3405b989596c9382d19d7bec00869360d41bc7bef1dd2d0",
+      "bytes": 10916
+    },
+    {
+      "path": "sources/input/en_Report_On-Site_Tour.pdf",
+      "sha256": "311f5450bc5fdace1a02ea922ad303641b9891a1efe9affe98e559c23dcbf6b1",
+      "bytes": 295386
+    },
+    {
+      "path": "sources/input/en_Report_On-Site_Tour.txt",
+      "sha256": "4f57c1691c098a22dc363bbbf54474ed1a3d38de8fb8ed7ece54b8274eea9197",
+      "bytes": 7492
+    },
+    {
+      "path": "sources/input-provenance.json",
+      "sha256": "0fe3f1726c9f143fe8de8c8f90c5321b5274578dff721bfacbe954cc3252c8d4",
+      "bytes": 943
+    },
+    {
+      "path": "sources/plate-source-bibliography.json",
+      "sha256": "7252ebeecebf4049e63985e1314320b4ce70606bf535c95bbd0b286a9af32b40",
+      "bytes": 706969
+    },
+    {
+      "path": "sources/proposal-content.json",
+      "sha256": "2c694e2519a8539ffcd65445e63359c1d649a6dffc2b223100a7842c5d262d59",
+      "bytes": 27629
+    },
+    {
+      "path": "sources/qa/cv-a4-1.png",
+      "sha256": "0376f407b1e2ddff63eda29b89623e66e417a38cf3e501e43fb7eecf49c7583f",
+      "bytes": 225577
+    },
+    {
+      "path": "sources/qa/cv-a4-2.png",
+      "sha256": "2c1462ea916b7ff034c76a0da391c9875cd54a953edb7d1182dbb1eb760f37a4",
+      "bytes": 252726
+    },
+    {
+      "path": "sources/qa/japan-01.png",
+      "sha256": "3d11af53b6f21f750cb81791df8b8fa2911ac1bfee103aed13b0d97b063c697d",
+      "bytes": 36104
+    },
+    {
+      "path": "sources/qa/japan-02.png",
+      "sha256": "b83e0837bbea44b78aee29d7817a4cad0060e32e52d6fff573d7894357d2b05b",
+      "bytes": 98980
+    },
+    {
+      "path": "sources/qa/japan-03.png",
+      "sha256": "93061fda4b9ca4745ea749516f0f43e3296613b29bd5cc330ff43a390f5719e3",
+      "bytes": 211272
+    },
+    {
+      "path": "sources/qa/proposal-01.png",
+      "sha256": "21fc944bf1ada7e4cb5d27068165153fa0bd6ccc3bd4201d58276441c4763698",
+      "bytes": 391579
+    },
+    {
+      "path": "sources/qa/proposal-02.png",
+      "sha256": "f937be5e7170e705cda7032dcd2dbf31bf738d896d83b6b6c64261f654057dce",
+      "bytes": 183776
+    },
+    {
+      "path": "sources/qa/proposal-03.png",
+      "sha256": "9daae38c729e4afdcafe246ff06d9f9cea2f7a2316ca5e1c8e604186c6623240",
+      "bytes": 218690
+    },
+    {
+      "path": "sources/qa/proposal-04.png",
+      "sha256": "c8503d14cf2b38ea7b77d8efa49dad9f27aa80113f0fcc93edfe7c28162c490e",
+      "bytes": 708972
+    },
+    {
+      "path": "sources/qa/proposal-05.png",
+      "sha256": "391fac63e3f996822f148306d9b72a5b08be1c433b1958a58ab0d166c81950c0",
+      "bytes": 333597
+    },
+    {
+      "path": "sources/qa/proposal-06.png",
+      "sha256": "61d42d794892068727aaf0ac062ef5b7beb0dcb84efc9d45296ab41f95068689",
+      "bytes": 535436
+    },
+    {
+      "path": "sources/qa/proposal-07.png",
+      "sha256": "78ddab43c68ba48735f10c674ffddb63e1ba9b35fe1a7fb5b077ebc7202df6ef",
+      "bytes": 308949
+    },
+    {
+      "path": "sources/qa/proposal-08.png",
+      "sha256": "3b6888c814fcb5a793fe900ba5e050ff0dbd871807f232de32342d246d27590c",
+      "bytes": 216637
+    },
+    {
+      "path": "sources/qa/proposal-09.png",
+      "sha256": "edd411b495ec7f549cb9b5d4e6b1a5b171761b30409e6eb4be6ecf8affbda398",
+      "bytes": 202168
+    },
+    {
+      "path": "sources/qa/proposal-10.png",
+      "sha256": "dbd1c140b6d0cb8546bcb3f1c1b9aabb576403cd3e36012cdb74189134f63ab1",
+      "bytes": 379409
+    },
+    {
+      "path": "sources/qa/proposal-contact.png",
+      "sha256": "45e56855cf607b62b22577194da3a63898d8181d16dce51e3c3c654e6fac45f3",
+      "bytes": 1103239
+    },
+    {
+      "path": "sources/qa/world-01.png",
+      "sha256": "c6aa585e6abccf0e8e11cfb3696f265746bb02afd3eaf9bee55020baed8e3835",
+      "bytes": 40731
+    },
+    {
+      "path": "sources/qa/world-02.png",
+      "sha256": "2b566ecde56aa056ffe9d4d3601c91c7bf5b44a5d1b7f59eff5550b3719b3524",
+      "bytes": 106404
+    },
+    {
+      "path": "sources/qa/world-03.png",
+      "sha256": "5f7a5f32945c01a5d78661faa1f7ada66deab38daf4b1585a5c870030c375237",
+      "bytes": 211533
+    },
+    {
+      "path": "sources/title-page-japan.pdf",
+      "sha256": "6e35f49bf0dbd7cee1ab8804bd1dbaf114fc51857d8166f8c274b4cfc6984d58",
+      "bytes": 14741
+    },
+    {
+      "path": "sources/title-page-world.pdf",
+      "sha256": "0725ba64fc5a543ccc43d1d6fabcb19b4d306850aa6c44110f8b030117b90345",
+      "bytes": 14741
+    },
+    {
+      "path": "sources/validation.json",
+      "sha256": "56d3a3991ddd84dd4582b301b6acbfbe9b23d59f422f4ef62875538c99531f35",
+      "bytes": 7839
+    },
+    {
+      "path": "sources/visual-review.json",
+      "sha256": "c6866896b38025bb6f7dfbb72acc7832e692f9d57377775ee946ae4bebf908aa",
+      "bytes": 1122
+    },
+    {
+      "path": "wordpress/README.txt",
+      "sha256": "4d9835cda719c112c9ff2cce5ba90297efeb495684bdc009132380b801295233",
+      "bytes": 1210
+    },
+    {
+      "path": "wordpress/media-manifest.json",
+      "sha256": "cc64a889904ba8d52c559a045f48e4290cc4fb421a5160644db74cdc71b4d688",
+      "bytes": 1171
+    },
+    {
+      "path": "wordpress/page-content.html",
+      "sha256": "0dd5fd17deb93a55cf25a123ac31ca2362037c9e290923530faed0a48a389488",
+      "bytes": 6608
+    },
+    {
+      "path": "wordpress/page.json",
+      "sha256": "281e73f6bc6078ee3dd617322e994f55831b35983e4df3877466657f6d65f1e6",
+      "bytes": 512
+    },
+    {
+      "path": "wordpress/preview.html",
+      "sha256": "5530450bdddf5707207042b147652583c36ae50effcb17171a131d0fa7d51a88",
+      "bytes": 8292
+    }
+  ]
+}

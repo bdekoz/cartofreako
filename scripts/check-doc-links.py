@@ -36,6 +36,7 @@ SKIP_PARTS = {".git", "_site", "assets.generated", "docs/doxygen", "build"}
 LOCAL_DELIVERY_ROOTS = (
     Path("output/setouchi-triennale-2028"),
     Path("output/setouchi-triennale-2028-st2"),
+    Path("output/setouchi-triennale-2028-v3"),
 )
 
 

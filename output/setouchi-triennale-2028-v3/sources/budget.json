@@ -1,0 +1,66 @@
+{
+  "currency": "JPY",
+  "basis": "inclusive planning allowances, not quotations",
+  "items": [
+    {
+      "item": "Artist: development, preparation and facilitation",
+      "amount": 250000
+    },
+    {
+      "item": "Local co-facilitation and host support",
+      "amount": 180000
+    },
+    {
+      "item": "Japanese translation and event interpretation",
+      "amount": 200000
+    },
+    {
+      "item": "Technical consultations and guest honoraria",
+      "amount": 160000
+    },
+    {
+      "item": "Paper, colour and legibility proofs",
+      "amount": 80000
+    },
+    {
+      "item": "Twelve wall maps, source labels and spare prints",
+      "amount": 200000
+    },
+    {
+      "item": "Reusable supports and reversible mounting",
+      "amount": 150000
+    },
+    {
+      "item": "Table hire, study atlases and workshop materials",
+      "amount": 80000
+    },
+    {
+      "item": "Artist international return travel",
+      "amount": 220000
+    },
+    {
+      "item": "Japan transport, freight and packing",
+      "amount": 140000
+    },
+    {
+      "item": "Artist accommodation: 21 nights × JPY 10,000",
+      "amount": 210000
+    },
+    {
+      "item": "Venue and utilities allowance",
+      "amount": 100000
+    },
+    {
+      "item": "Small AV rental and remote guest connections",
+      "amount": 60000
+    },
+    {
+      "item": "Exhibition care, removal and return",
+      "amount": 70000
+    }
+  ],
+  "subtotal": 2100000,
+  "contingency_rate": 0.1,
+  "contingency": 210000,
+  "total": 2310000
+}
