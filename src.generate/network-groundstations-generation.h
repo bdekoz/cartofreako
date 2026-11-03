@@ -191,7 +191,7 @@ add_gateways(generation::projection_document& document,
              const groundstations_profile& profile)
 {
   svg::group_element layer;
-  layer.start_element("starlink-gateways-20250902");
+  layer.start_element("starlink-gateways-" + dataset.datestamp);
   const svg::style gateway_style {
     {255, 29, 16}, 0.33, {255, 29, 16}, 1.0, 0.010,
   };
@@ -234,7 +234,7 @@ add_legend(generation::projection_document& document,
   const std::string provenance_text = xml_escape(
     std::to_string(dataset.stations.size())
       + " Starlink gateway/pop records  |  "
-      + profile.source_repository);
+      + profile.source_title);
   constexpr double page_margin = 0.573;
   const double panel_width = std::clamp(
     generation::legend_text_width(title_text, 0.42) + 2 * page_margin,
@@ -283,10 +283,14 @@ metadata_element(const generation::projection_spec& spec,
     " data-datestamp=\"" + xml_escape(dataset.datestamp) + "\""
     " data-feature-count=\"" + std::to_string(dataset.stations.size()) + "\""
     " data-source-repository=\"" + xml_escape(profile.source_repository) + "\""
+    " data-source-title=\"" + xml_escape(profile.source_title) + "\""
     " data-source-commit=\"" + xml_escape(profile.source_commit) + "\""
     " data-source-license=\"" + xml_escape(profile.source_license) + "\""
+    " data-source-gateways-file=\"" + xml_escape(profile.gateways_file) + "\""
     " data-source-gateways-sha256=\""
       + xml_escape(profile.gateways_sha256) + "\""
+    " data-source-kml-file=\"" + xml_escape(profile.kml_file) + "\""
+    " data-source-kml-sha256=\"" + xml_escape(profile.kml_sha256) + "\""
     "></metadata>\n";
 }
 
@@ -347,9 +351,9 @@ verify(const std::string& generated,
     generated.find(generation::view_box_fragment(context))
       != std::string::npos,
     "generated Network-groundstations SVG has the wrong viewBox");
-  constexpr std::array layers {
+  const std::array<std::string, 5> layers {
     "network-groundstations-background", "terrestrial-land",
-    "starlink-gateway-links", "starlink-gateways-20250902",
+    "starlink-gateway-links", "starlink-gateways-" + dataset.datestamp,
     "network-groundstations-legend-and-provenance",
   };
   for (const std::string_view layer : layers)
@@ -392,7 +396,7 @@ run(const int argc, char** argv)
   const groundstations_profile profile = load_groundstations_profile(
     data_dir / "network-groundstations-profile.json");
   const groundstations_dataset dataset = load_groundstations_dataset(
-    data_dir / "starlink-global-gateways-pops.20250902.json", profile);
+    data_dir / profile.gateways_file, profile);
   const std::string basename = output_basename(spec);
   const generation::projection_context context(spec, basename);
   generate(spec, profile, dataset);

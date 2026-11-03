@@ -6,16 +6,58 @@
 ## Status and scope
 
 `network-groundstations` is a **standard, default-rendered pass** drawing the
-alpha60 Starlink gateway/POP records in every projection. Its checked-in
+Starlink gateway/POP records in every projection. Its checked-in
 input lives in `assets.static/network-groundstations`, so ordinary generation
 does not need network access.
 
-The dataset is the alpha60 `starlink-global-gateways-pops.20250902` snapshot
-(618 records) from
-[`bdekoz/alpha60-data`](https://github.com/bdekoz/alpha60-data), vendored with
-its SHA-256 pin. Each record is either a gateway `Point` or a
-gateway-to-POP `LineString`; the first coordinate of each record is rendered
-as the groundstation mark.
+The current input is `starlink-global-gateways-pops.20261103.geojson`, converted
+from the supplied **Unofficial Starlink Global Gateways & PoPs** KML snapshot.
+It contains 780 records: 656 `Point` features and 124 `LineString` features,
+with 1,009 coordinate tuples across 10 source folders. The first coordinate
+of each record is rendered as a mark; lines include backbone and community
+gateway links as described by the source. Records are retained in source
+order, including repeated locations and links. Their presence does not
+establish current operation.
+
+The profile selects the input with `source.geojson` and pins both the KML
+and GeoJSON hashes. The supplied KML does not identify a repository commit
+or a license, so those details are not inherited from the older alpha60
+snapshot. The 618-record `20250902` input remains available for historical
+products.
+
+## Reproduce the conversion
+
+```sh
+python3 scripts/convert-kml-geojson.py \
+  assets.static/network-groundstations/starlink-global-gateways-pops.20261103.kml \
+  assets.static/network-groundstations/starlink-global-gateways-pops.20261103.geojson
+```
+
+The converter uses Python's standard library. Add `--check` to compare the
+existing output with a fresh conversion without writing. It preserves
+longitude, latitude and altitude without rounding or simplifying; all
+source coordinate decimals in this snapshot are verified against the output.
+
+Each feature exposes `Name`, `description` (HTML retained), `styleUrl`,
+`folder_path`, and ordered `extended_data` entries. In this input, 294
+records repeat custom field names, so entries remain an ordered list with
+empty strings preserved. Names, status text, links and Unicode are retained.
+
+The complete Placemark XML information is retained as a JSON tree in
+`properties.kml`. Collection-level `kml.document` retains the document and
+folder hierarchy, all 118 styles and 59 style maps, and references to features
+by `feature_id`. Tree nodes carry namespace-qualified `tag`, optional
+`attributes`, `text`, ordered `children` and significant `tail` text. This
+also preserves geometry settings such as `tessellate`, original coordinate
+text and fields without GeoJSON equivalents. XML formatting whitespace,
+namespace prefixes and CDATA wrappers are not retained. URLs remain data;
+the converter does not retrieve them.
+
+The converter supports Point, LineString, LinearRing, Polygon and
+MultiGeometry inputs and rejects unsupported geometry or NetworkLink inputs
+explicitly. Conversion is deterministic and replaces the destination only
+after successful validation. After intentionally refreshing the input,
+update the profile's feature count, date and hashes, then `SHA256SUMS`.
 
 ## Default rendering
 
@@ -24,8 +66,10 @@ The pass follows the alpha60 Starlink gateway style:
 | Layer | Mark |
 | --- | --- |
 | `starlink-gateway-links` | thin red lines for gateway-to-POP links |
-| `starlink-gateways-20250902` | red triangles (`rgb(255,29,16)`) at gateways, fill opacity 0.33 |
+| `starlink-gateways-20261103` | red triangles (`rgb(255,29,16)`) at record locations, fill opacity 0.33 |
 
+The group date follows the selected profile. The source's KML styles are
+preserved in GeoJSON; rendering continues to use the pass's red symbols.
 The legend states `NETWORK GROUNDSTATIONS / <datestamp>` and the record count.
 All products use the Stage 13 light-gray background and 2× plate title.
 
@@ -47,6 +91,9 @@ graph.
 Network Groundstations is a new v14 pass and is present in all six
 whole-map projections of the immutable v14 AAO release:
 
+These published previews use the historical `20250902` snapshot. Local
+regeneration uses the current profile and does not modify the release.
+
 | Projection | Full PNG |
 | --- | --- |
 | Cahill-Keyes | [PNG](https://s3-ewh.ist.berkeley.edu/adekosnik-bucket01/cartofreako/v14/products/standard/cahill-keyes/full/network-groundstations-ck-44-22.png) |
@@ -63,6 +110,9 @@ directory.
 ## Verification
 
 `make check-network-groundstations` verifies every checked static payload
-against `SHA256SUMS`. The generator reopens every SVG and checks its viewBox,
+against `SHA256SUMS`, checks reproducible conversion, and runs the converter
+tests. The tests compare all coordinates and custom fields with the KML,
+reconstruct its XML information from the GeoJSON, and exercise invalid
+inputs and output preservation. The generator reopens every SVG and checks its viewBox,
 required semantic groups, exact groundstation element counts, provenance
 metadata, font, and finite coordinates.

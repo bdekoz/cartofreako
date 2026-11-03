@@ -193,7 +193,10 @@ NETWORK_GROUNDSTATIONS_DATA_DIR ?= $(STATIC_ASSET_DIR)/network-groundstations
 NETWORK_GROUNDSTATIONS_PROFILE ?= \
 	$(NETWORK_GROUNDSTATIONS_DATA_DIR)/network-groundstations-profile.json
 NETWORK_GROUNDSTATIONS_GATEWAYS := \
-	$(NETWORK_GROUNDSTATIONS_DATA_DIR)/starlink-global-gateways-pops.20250902.json
+	$(NETWORK_GROUNDSTATIONS_DATA_DIR)/starlink-global-gateways-pops.20261103.geojson
+NETWORK_GROUNDSTATIONS_KML := \
+	$(NETWORK_GROUNDSTATIONS_DATA_DIR)/starlink-global-gateways-pops.20261103.kml
+KML_GEOJSON_CONVERTER := scripts/convert-kml-geojson.py
 NETWORK_GROUNDSTATIONS_CHECKSUMS := \
 	$(NETWORK_GROUNDSTATIONS_DATA_DIR)/SHA256SUMS
 PREREQUISITE_CHECKER := scripts/check-prerequisites.sh
@@ -1392,8 +1395,13 @@ check-resources-svg-archives: $(RESOURCES_SVG_ARCHIVES)
 check-network-fiber: $(FIBER_SYNTHESIZED_CHECKSUMS)
 	cd "$(FIBER_SYNTHESIZED_DATA_DIR)" && sha256sum -c SHA256SUMS
 
-check-network-groundstations: $(NETWORK_GROUNDSTATIONS_CHECKSUMS)
+check-network-groundstations: $(NETWORK_GROUNDSTATIONS_CHECKSUMS) \
+		$(NETWORK_GROUNDSTATIONS_GATEWAYS) $(NETWORK_GROUNDSTATIONS_KML) \
+		$(KML_GEOJSON_CONVERTER)
 	cd "$(NETWORK_GROUNDSTATIONS_DATA_DIR)" && sha256sum -c SHA256SUMS
+	python3 "$(KML_GEOJSON_CONVERTER)" "$(NETWORK_GROUNDSTATIONS_KML)" \
+		"$(NETWORK_GROUNDSTATIONS_GATEWAYS)" --check
+	python3 tests/test-convert-kml-geojson.py
 
 $(TEST_DIR)/test-forward-reverse-projection-api: \
 		$(TEST_DIR)/test-forward-reverse-projection-api.cc \

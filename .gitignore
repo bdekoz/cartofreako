@@ -119,6 +119,14 @@ __pycache__/
 # Canonical private-assets root (assets.<hostname>.<user>).
 /assets.*/
 
+# Version the supplied groundstation snapshot and its reproducible conversion.
+!/assets.static/
+/assets.static/*
+!/assets.static/network-groundstations/
+/assets.static/network-groundstations/*
+!/assets.static/network-groundstations/starlink-global-gateways-pops.20261103.kml
+!/assets.static/network-groundstations/starlink-global-gateways-pops.20261103.geojson
+
 # Repo-local top-of-tree preview snapshot (tracked; staged by
 # scripts/build-tot-preview.sh).
 !/assets.tot/

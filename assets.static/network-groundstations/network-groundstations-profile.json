@@ -2,17 +2,21 @@
   "schema_version": 1,
   "name": "network-groundstations",
   "clustering": {
-    "marker_radius_inches": 0.030,
+    "marker_radius_inches": 0.03,
     "minimum_nonzero_opacity": 0.18
   },
   "display": {
-    "expected_features": 618
+    "expected_features": 780
   },
   "source": {
-    "repository": "https://github.com/bdekoz/alpha60-data",
-    "commit": "2e0493073b01742bdd4dff9ace7126f5a97111a9",
-    "license": "public data — see alpha60-data README",
-    "datestamp": "20250902",
-    "gateways_sha256": "282269e2185302c44c855a9f6a5512ce9aded0dcf6e85ea674c331c27bee27f7"
+    "title": "Unofficial Starlink Global Gateways & PoPs",
+    "repository": "",
+    "commit": "",
+    "license": "Not specified in the supplied KML",
+    "datestamp": "20261103",
+    "geojson": "starlink-global-gateways-pops.20261103.geojson",
+    "gateways_sha256": "83929aa67dffac33dd85ef536e490fc7e6b239b486446f187bb95ab00612470a",
+    "kml": "starlink-global-gateways-pops.20261103.kml",
+    "kml_sha256": "8fc79a58f69f007a8321768200ee9beb816376cb1338f157f4c73c777d660c55"
   }
 }

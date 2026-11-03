@@ -114,10 +114,14 @@ struct groundstations_profile
   double minimum_nonzero_opacity = 0.18;
   std::uint64_t expected_features = 0;
   std::string source_repository;
+  std::string source_title;
   std::string source_commit;
   std::string source_license;
   std::string datestamp;
+  std::string gateways_file;
   std::string gateways_sha256;
+  std::string kml_file;
+  std::string kml_sha256;
 };
 
 inline groundstations_profile
@@ -151,11 +155,27 @@ parse_groundstations_profile(const rj::Document& document,
   const std::string source_context = context + ".source";
   result.source_repository = required_string(
     source, "repository", source_context);
+  result.source_title = source.HasMember("title")
+    ? required_string(source, "title", source_context)
+    : result.source_repository;
   result.source_commit = required_string(source, "commit", source_context);
   result.source_license = required_string(source, "license", source_context);
   result.datestamp = required_string(source, "datestamp", source_context);
+  result.gateways_file = source.HasMember("geojson")
+    ? required_string(source, "geojson", source_context)
+    : "starlink-global-gateways-pops." + result.datestamp + ".json";
   result.gateways_sha256 = required_string(
     source, "gateways_sha256", source_context);
+  if (source.HasMember("kml"))
+    {
+      result.kml_file = required_string(source, "kml", source_context);
+      result.kml_sha256 = required_string(source, "kml_sha256", source_context);
+    }
+
+  network_groundstations_require(!result.gateways_file.empty()
+                             && fs::path(result.gateways_file).filename()
+                                  == fs::path(result.gateways_file),
+    source_context + ".geojson must be a filename within the data directory");
 
   network_groundstations_require(result.marker_radius > 0
                              && result.marker_radius <= 0.25,
@@ -205,6 +225,16 @@ parse_groundstations_dataset(const rj::Document& document,
   result.datestamp = profile.datestamp;
   result.source = profile.source_repository;
   result.source_sha256 = profile.gateways_sha256;
+
+  if (!profile.kml_file.empty())
+    {
+      const rj::Value& source = required_member(document, "source", context);
+      network_groundstations_require(
+        required_string(source, "file", context + ".source") == profile.kml_file
+        && required_string(source, "sha256", context + ".source")
+             == profile.kml_sha256,
+        context + " KML provenance differs from the profile");
+    }
 
   const rj::Value& features = required_member(document, "features", context);
   network_groundstations_require(features.IsArray(),
