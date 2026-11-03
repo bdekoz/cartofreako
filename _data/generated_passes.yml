@@ -33,9 +33,11 @@
     - label: Orbital Technosphere — observer
       stem: orbital-technosphere-observer
       alt: observer orbital technosphere
+      tot_legend: true
     - label: Orbital Technosphere — global
       stem: orbital-technosphere-global
       alt: global orbital technosphere
+      tot_legend: true
 
 - title: Networks
   id: networks

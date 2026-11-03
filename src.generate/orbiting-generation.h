@@ -289,6 +289,8 @@ inline svg::style
 marker_style(const propagated_object& object,
              const constellation_configuration* constellation = nullptr)
 {
+  if (object.role == "debris")
+    return {svg::color::black, 1, svg::color::none, 0, 0};
   svg::color_qi color = svg::color::gray75;
   if (object.role == "megaconstellation")
     color = svg::color_qi {255, 29, 16};
@@ -302,8 +304,6 @@ marker_style(const propagated_object& object,
     color = svg::color::redorange;
   else if (object.role == "science")
     color = svg::color::lightblue;
-  else if (object.role == "debris")
-    color = svg::color::orange;
   if (constellation != nullptr)
     color = constellation_color(*constellation);
   return {color, object.sunlit ? 0.88 : 0.36,
@@ -315,6 +315,9 @@ marker_style(const propagated_object& object,
 inline double
 marker_radius(const propagated_object& object)
 {
+  if (std::find(object.source.group_ids.begin(), object.source.group_ids.end(),
+                "starlink") != object.source.group_ids.end())
+    return 0.032;
   if (object.role == "human-presence")
     return 0.066;
   if (object.role == "navigation" || object.role == "earth-observation"
@@ -325,7 +328,7 @@ marker_radius(const propagated_object& object)
   if (object.role == "megaconstellation")
     return 0.024;
   if (object.role == "debris")
-    return 0.014;
+    return 0.022;
   return 0.019;
 }
 
@@ -367,6 +370,98 @@ object_attributes(const propagated_object& object)
   return result;
 }
 
+enum class marker_shape { circle, cross, sunburst, square, triangle };
+
+inline marker_shape
+symbol_shape(const std::string_view role, const std::string_view group)
+{
+  if (role == "debris") return marker_shape::cross;
+  if (group == "starlink") return marker_shape::sunburst;
+  if (group == "intelsat") return marker_shape::square;
+  if (role == "earth-observation") return marker_shape::triangle;
+  return marker_shape::circle;
+}
+
+inline std::string_view
+shape_name(const marker_shape shape)
+{
+  switch (shape)
+    {
+    case marker_shape::cross: return "x";
+    case marker_shape::sunburst: return "sunburst";
+    case marker_shape::square: return "square";
+    case marker_shape::triangle: return "triangle";
+    case marker_shape::circle: return "circle";
+    }
+  return "circle";
+}
+
+inline void
+add_marker_symbol(svg::group_element& layer, const svg::point_2t point,
+                  const double radius, const svg::style& style,
+                  const marker_shape shape, const std::string& attributes)
+{
+  const auto [x, y] = point;
+  const std::string attrs = attributes + " data-marker-shape=\""
+    + std::string(shape_name(shape)) + "\"";
+  if (shape != marker_shape::circle)
+    {
+      svg::vrange vertices;
+      svg::style path_style = style;
+      if (shape == marker_shape::cross)
+        {
+          const double arm = radius / std::sqrt(2.0);
+          vertices = {{x - arm, y - arm}, {x + arm, y + arm},
+                      {x - arm, y + arm}, {x + arm, y - arm}};
+          path_style = {svg::color::none, 0, svg::color::black, 1, radius * 0.4};
+        }
+      else if (shape == marker_shape::square)
+        {
+          const double side = radius / std::sqrt(2.0);
+          vertices = {{x - side, y - side}, {x + side, y - side},
+                      {x + side, y + side}, {x - side, y + side}};
+        }
+      else if (shape == marker_shape::triangle)
+        {
+          const double half_width = radius * std::sqrt(3.0) / 2;
+          vertices = {{x, y - radius}, {x + half_width, y + radius / 2},
+                      {x - half_width, y + radius / 2}};
+        }
+      else // Eight alternating outer and inner vertices form a sunburst.
+        for (unsigned index = 0; index < 16; ++index)
+          {
+            const double angle = degrees_to_radians(index * 22.5 - 90);
+            const double r = radius * (index % 2 == 0 ? 1.0 : 0.45);
+            vertices.emplace_back(x + r * std::cos(angle), y + r * std::sin(angle));
+          }
+      std::ostringstream path;
+      path << std::setprecision(12);
+      for (std::size_t index = 0; index < vertices.size(); ++index)
+        path << (index == 0 || (shape == marker_shape::cross && index == 2)
+                   ? "M " : "L ")
+             << std::get<0>(vertices[index]) << ' '
+             << std::get<1>(vertices[index]) << ' ';
+      if (shape != marker_shape::cross) path << 'Z';
+      svg::path_element marker;
+      marker.start_element();
+      marker.add_data({path.str(), 0});
+      marker.add_style(path_style);
+      marker.add_raw(attrs);
+      marker.finish_element();
+      layer.add_element(marker);
+    }
+  else
+    {
+      svg::circle_element marker;
+      marker.start_element();
+      marker.add_data({x, y, radius});
+      marker.add_style(style);
+      marker.add_raw(attrs);
+      marker.finish_element();
+      layer.add_element(marker);
+    }
+}
+
 inline void
 add_marker(svg::group_element& layer,
            const generation::projection_context& context,
@@ -376,18 +471,20 @@ add_marker(svg::group_element& layer,
 {
   const svg::point_2t point = generation::project_point(
     context, projection_point(object, config, product));
-  svg::circle_element marker;
-  marker.start_element();
-  marker.add_data({std::get<0>(point), std::get<1>(point),
-                   marker_radius(object)});
-  marker.add_style(marker_style(object, constellation));
-  marker.add_raw("id=\"norad-" + xml_escape(object.source.norad_id) + "\""
-                 + object_attributes(object)
-                 + " data-display-group=\""
-                 + (constellation ? constellation->id : "objects-" + object.role)
-                 + "\" data-object-kind=\"locpoint\"");
-  marker.finish_element();
-  layer.add_element(marker);
+  std::string symbol_group = constellation ? constellation->id : "";
+  // Historical profiles also retain membership-specific symbols.
+  if (!constellation)
+    for (const std::string_view name : {"starlink", "intelsat"})
+      if (std::find(object.source.group_ids.begin(), object.source.group_ids.end(),
+                    name) != object.source.group_ids.end())
+        { symbol_group = name; break; }
+  add_marker_symbol(layer, point, marker_radius(object),
+    marker_style(object, constellation), symbol_shape(object.role, symbol_group),
+    "id=\"norad-" + xml_escape(object.source.norad_id) + "\""
+    + object_attributes(object)
+    + " data-display-group=\""
+    + (constellation ? constellation->id : "objects-" + object.role)
+    + "\" data-object-kind=\"locpoint\"");
 }
 
 inline svg::typography
@@ -694,12 +791,16 @@ add_constellation_legend(generation::projection_document& document,
       else if (entry.constellation)
         style._M_fill_color = constellation_color(*entry.constellation);
       style._M_fill_opacity = 1;
-      svg::circle_element key;
-      key.start_element();
-      key.add_data({x + 0.055, y, 0.045});
-      key.add_style(style);
-      key.finish_element();
-      legend.add_element(key);
+      std::string role;
+      if (!entry.objects.empty())
+        role = entry.objects.front()->role;
+      else
+        for (const group_configuration& source : config.groups)
+          if (source.constellation && source.constellation->id == entry.id)
+            { role = source.role; break; }
+      add_marker_symbol(legend, {x + 0.055, y}, 0.045, style,
+        symbol_shape(role, entry.id), "id=\"legend-" + entry.id + "\""
+        + " data-display-group=\"" + entry.id + "\" data-role=\"" + role + "\"");
       svg::styled_text(legend, entry.name + "  " + std::to_string(entry.objects.size()),
                        {x + 0.18, y}, text);
     }

@@ -56,6 +56,7 @@ revision and inventory.
         <a href="{{ projection_tree }}/full/{{ artifact_name }}{{ full_suffix }}"><img class="defer-render" loading="lazy" decoding="async" src="{{ preview_base }}/{{ artifact_name }}.png" width="360" alt="{{ page.projection_name }} {{ pass.alt }} preview"></a>
         <nav class="artifact-actions" aria-label="{{ page.projection_name }} {{ pass.label }} formats">
           <a href="{{ projection_tree }}/full/{{ artifact_name }}{{ full_suffix }}">{{ full_label }}</a>
+          {%- if backend_id == "tot" and pass.tot_legend %}<a href="{{ projection_tree }}/full/{{ artifact_name }}-legend{{ full_suffix }}">Legend and attribution</a>{% endif %}
           {%- if show_layered %}<a href="{{ viewer_query }}{{ artifact_name }}.svg.gz">Layered SVG</a>{% endif %}
           {%- if show_print %}<a href="{{ projection_tree }}/print/{{ artifact_name }}.pdf">Print PDF</a>{% endif %}
         </nav>

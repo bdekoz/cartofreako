@@ -151,23 +151,40 @@ These names describe source catalogs, not an exhaustive operator registry.
 
 Each parent contains `name` and `locpoint` sublayers, for example
 `starlink/name` and `starlink/locpoint`. They are marked as editable Inkscape
-layers. Every plotted satellite has one vector dot and a separate text label
+layers. Every plotted object has one vector marker and a separate text label
 using its original `OBJECT_NAME`; both carry the same `data-norad-id`.
 Names default to hidden, with `display.show_satellite_names` available to
-enable them. The name's `data-locpoint-id` identifies its matching dot.
+enable them. The name's `data-locpoint-id` identifies its matching marker.
+
+Both products use black `x` marks for debris, eight-point sunbursts for
+Starlink, squares for Intelsat, and upright triangles for the remaining
+Earth-observation objects (including Planet and Spire). Other objects use
+circles. Named groups retain their assigned colors. Debris remains solid
+black while retaining illumination metadata.
+
+On the global map, `starlink/id` contains visible NORAD catalog IDs at a
+physical 10 pt after map framing. No other vendor receives an ID layer;
+observer ID layers are absent. The original name layers remain hidden.
 
 Named membership is joined by NORAD ID. If catalogs overlap, the first named
 catalog in profile order selects the one displayed parent; all memberships
 remain in `data-groups`. The legend counts the displayed objects once and
-uses the same colors as their dots. Iridium 33 debris remains in the debris
-layer. The complete provenance and derived state are
+uses the same colors and shapes as their markers. Iridium 33 debris remains
+in the debris layer. The complete provenance and derived state are
 embedded as `data-*` attributes, including catalog ID, COSPAR ID, group,
 element epoch and age, terrestrial and observer coordinates, illumination,
 candidate state, and source URL. Named profiles retain every admitted label;
 the legacy label budget applies only to historical profiles without named
 constellations. Representative tracks remain budgeted overlays.
 
-Run all 12 SVG products with:
+Each map has a separate `-legend.svg` companion using the Setouchi ST2
+typography, vertical headings, stacked keys and source bibliography. The
+map has proportional white margins and no overlaid legend. Both sheets
+carry the calculation timestamp and source metadata; the legend embeds the
+acquisition ledger. The Make composition step is
+[`split-orbiting-plates.py`](../../../scripts/split-orbiting-plates.py).
+
+Run all twelve map/legend pairs (24 SVG sheets) with:
 
 ```sh
 make generate-orbiting
@@ -176,7 +193,15 @@ make generate-orbiting
 Family targets are `generate-orbiting-global` and
 `generate-orbiting-observer`; projection targets use
 `generate-orbiting-PROJECTION`. Override the input with
-`ORBITING_PROFILE=/absolute/path/profile.json`.
+`ORBITING_PROFILE=/absolute/path/profile.json` using a current named-group
+profile. `generate-orbiting-artifacts` also exports PDF and PNG companions.
+
+The separate [MSP print studies](../../../output/msp-speculations-20261103/index.html)
+cover the updated groundstations and both orbital subjects in the confirmed
+Setouchi AuthaGraph frame, including its +4.35-inch printed horizontal move.
+Three dark, green-biased palettes explore the reported violet cast on metallic
+glossy paper; their exact recipes and source/output hashes accompany them.
+They are unmeasured print hypotheses. Rebuild with `make msp-speculations`.
 
 ## Verification and accuracy boundary
 
@@ -190,9 +215,11 @@ visualization-scale tolerances.
 
 `make check-orbiting` runs the historical reference tests, the named grouping
 tests and current snapshot checksums. `scripts/verify-orbiting-layers.py`
-checks unique SVG IDs, exact dot/name pairing, original names, layer nesting,
-visibility and conserved per-group counts against the selected profile.
-All twelve global/observer projection products were checked for this snapshot;
+checks unique SVG IDs, exact marker/name pairing, original names, layer nesting,
+visibility and conserved per-group counts against the selected profile. It
+also verifies each marker shape, black debris strokes, matching companion
+keys and attribution, and Starlink-only 10 pt IDs on global plates.
+All twelve global/observer map/legend pairs were checked for this snapshot;
 each global product has 17,909 pairs and each observer product has 1,088 pairs.
 
 Each generator reopens its SVG and checks the projection viewBox, semantic

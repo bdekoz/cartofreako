@@ -517,7 +517,12 @@ ORBITING_OBSERVER_SVGS := \
 	$(call generated_svg,orbital-technosphere-observer-myriahedral-44-24.75.svg) \
 	$(call generated_svg,orbital-technosphere-observer-star-x-34-44.svg) \
 	$(call generated_svg,orbital-technosphere-observer-voronoi-44-22.916667.svg)
-ORBITING_SVGS := $(ORBITING_GLOBAL_SVGS) $(ORBITING_OBSERVER_SVGS)
+ORBITING_MAP_SVGS := $(ORBITING_GLOBAL_SVGS) $(ORBITING_OBSERVER_SVGS)
+ORBITING_LEGEND_SVGS := $(ORBITING_MAP_SVGS:.svg=-legend.svg)
+ORBITING_SVGS := $(ORBITING_MAP_SVGS) $(ORBITING_LEGEND_SVGS)
+ORBITING_PLATE_SCRIPTS := scripts/split-orbiting-plates.py \
+	scripts/legend_informatics.py scripts/revise-setouchi-plates.py \
+	scripts/cartofreako_style.py generation-style.json
 ORBITING_PDFS := $(call svg_to_pdf,$(ORBITING_SVGS))
 ORBITING_PNGS := $(call svg_to_png,$(ORBITING_SVGS))
 
@@ -717,7 +722,7 @@ GENERATED_SVGS := \
 	$(CK_EARTH_SVG) $(CK_WATER_SVG) $(CK_SLICE_SVGS) \
 	$(REQUESTED_PROJECTION_SVGS) \
 	$(MYRIAHEDRAL_PERSPECTIVE_WATER_SVGS) $(MYRIAHEDRAL_SLICE_SVGS) \
-	$(ASTRO_SVGS) $(ORBITING_SVGS) $(NETWORK_SWARM_SVGS) \
+	$(ASTRO_SVGS) $(ORBITING_MAP_SVGS) $(NETWORK_SWARM_SVGS) \
 	$(NETWORK_INFRASTRUCTURE_SITES_SVGS) $(FIBER_SYNTHESIZED_SVGS) \
 	$(NETWORK_GROUNDSTATIONS_SVGS) \
 	$(ACCEPTED_EXPERIMENTAL_SVGS) \
@@ -763,7 +768,9 @@ ASTRO_STAR_X_SVGS := \
 ASTRO_STAR_X_PNGS := $(call svg_to_png,$(ASTRO_STAR_X_SVGS))
 ORBITING_STAR_X_SVGS := \
 	$(call generated_svg,orbital-technosphere-global-star-x-34-44.svg) \
-	$(call generated_svg,orbital-technosphere-observer-star-x-34-44.svg)
+	$(call generated_svg,orbital-technosphere-observer-star-x-34-44.svg) \
+	$(call generated_svg,orbital-technosphere-global-star-x-34-44-legend.svg) \
+	$(call generated_svg,orbital-technosphere-observer-star-x-34-44-legend.svg)
 ORBITING_STAR_X_PNGS := $(call svg_to_png,$(ORBITING_STAR_X_SVGS))
 NETWORK_SWARM_STAR_X_PNG := $(filter %-star-x-34-44.png,$(NETWORK_SWARM_PNGS))
 NETWORK_INFRASTRUCTURE_SITES_STAR_X_PNG := \
@@ -2541,21 +2548,31 @@ generate-cloud-atmosphere-artifacts: $(CLOUD_ATMOSPHERE_SVGS) \
 
 # $(1): command-line projection name; $(2)-$(3): Orbital Technosphere products.
 define ORBITING_PROJECTION_RULES
-generate-orbiting-$(1): $(2) $(3)
-$(2): $(ORBITING_GENERATOR) $(ORBITING_PROFILE) $(ORBITING_CATALOGS) \
+generate-orbiting-$(1): $(2) $(3) $(2:.svg=-legend.svg) $(3:.svg=-legend.svg)
+$(2) $(2:.svg=-legend.svg) &: $(ORBITING_GENERATOR) $(ORBITING_PROFILE) $(ORBITING_CATALOGS) \
+		$(ORBITING_PLATE_SCRIPTS) \
 		$(NATURAL_EARTH_STAMP) | $(call artifact_directory,$(2))
-	cd "$(call artifact_directory,$(2))" && \
+	mkdir -p "$(call artifact_directory,$(2))/../composition"
+	cd "$(call artifact_directory,$(2))/../composition" && \
 		NATURAL_EARTH_DIR="$(abspath $(NATURAL_EARTH_DIR))" \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(ORBITING_GENERATOR))" $(1) global \
 		"$(abspath $(ORBITING_PROFILE))"
+	python3 scripts/split-orbiting-plates.py \
+		--source "$(call artifact_directory,$(2))/../composition/$(notdir $(2))" \
+		--map "$(strip $(2))" --profile "$(ORBITING_PROFILE)"
 
-$(3): $(ORBITING_GENERATOR) $(ORBITING_PROFILE) $(ORBITING_CATALOGS) \
+$(3) $(3:.svg=-legend.svg) &: $(ORBITING_GENERATOR) $(ORBITING_PROFILE) $(ORBITING_CATALOGS) \
+		$(ORBITING_PLATE_SCRIPTS) \
 		| $(call artifact_directory,$(3))
-	cd "$(call artifact_directory,$(3))" && \
+	mkdir -p "$(call artifact_directory,$(3))/../composition"
+	cd "$(call artifact_directory,$(3))/../composition" && \
 		CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" \
 		"$(abspath $(ORBITING_GENERATOR))" $(1) observer \
 		"$(abspath $(ORBITING_PROFILE))"
+	python3 scripts/split-orbiting-plates.py \
+		--source "$(call artifact_directory,$(3))/../composition/$(notdir $(3))" \
+		--map "$(strip $(3))" --profile "$(ORBITING_PROFILE)"
 endef
 
 $(eval $(call ORBITING_PROJECTION_RULES,cahill-keyes,\
@@ -2577,12 +2594,21 @@ $(eval $(call ORBITING_PROJECTION_RULES,voronoi,\
 	$(call generated_svg,orbital-technosphere-global-voronoi-44-22.916667.svg),\
 	$(call generated_svg,orbital-technosphere-observer-voronoi-44-22.916667.svg)))
 
-generate-orbiting-global: $(ORBITING_GLOBAL_SVGS)
-generate-orbiting-observer: $(ORBITING_OBSERVER_SVGS)
+generate-orbiting-global: $(ORBITING_GLOBAL_SVGS) $(ORBITING_GLOBAL_SVGS:.svg=-legend.svg)
+generate-orbiting-observer: $(ORBITING_OBSERVER_SVGS) $(ORBITING_OBSERVER_SVGS:.svg=-legend.svg)
 generate-orbiting: $(ORBITING_SVGS)
 generate-orbiting-projections: $(ORBITING_SVGS)
 generate-orbiting-artifacts: $(ORBITING_SVGS) $(ORBITING_PDFS) \
 	$(ORBITING_PNGS)
+
+MSP_OUTPUT ?= output/msp-speculations-20261103
+.PHONY: msp-speculations
+msp-speculations: generate-orbiting-authagraph \
+		generate-network-groundstations-authagraph build/generation-context
+	python3 scripts/build-msp-speculations.py --build-root "$(GENERATED_DIR)" \
+		--output "$(MSP_OUTPUT)" --workers "$(ASSET_JOBS)"
+	python3 scripts/verify-msp-speculations.py --output "$(MSP_OUTPUT)" \
+		--profile "$(ORBITING_PROFILE)"
 
 # $(1): projection; $(2): 2025 particulate SVG; $(3): 2026 particulate SVG.
 define ANTHROPOCENE_PARTICULATE_PROJECTION_RULES
@@ -3198,9 +3224,11 @@ NETWORK_SWARM_THUMBNAILS := $(subst /svg/,/thumbnail/,$(NETWORK_SWARM_SVGS:.svg=
 NATIVE_SWARM_PNG_LONG_SIDE := $(PNG_LONG_SIDE)
 
 ALL_EXPORT_PDFS := $(sort $(GENERATED_PDFS) \
-	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_PDFS) $(CLOUD_ATMOSPHERE_PDFS))
+	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_PDFS) $(CLOUD_ATMOSPHERE_PDFS) \
+	$(ORBITING_PDFS))
 ALL_LANDSCAPE_PNGS := $(sort $(LANDSCAPE_PNGS) \
-	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_LANDSCAPE_PNGS))
+	$(NETWORK_INFRASTRUCTURE_TOPOLOGY_LANDSCAPE_PNGS) \
+	$(filter-out $(ORBITING_STAR_X_PNGS),$(ORBITING_PNGS)))
 ALL_EXPORT_THUMBNAILS := $(sort $(SNAPSHOT_THUMBNAILS))
 
 define PROJECTION_EXPORT_RULES

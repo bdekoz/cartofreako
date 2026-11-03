@@ -388,8 +388,9 @@ snapshot checksum manifest, generator source hashes, six source SVG hashes
 and all 18 derivative hashes. `assets.tot/manifest.json` records this as a
 partial update, retaining the historical base revision for the other maps.
 The preview checker validates every updated product against this receipt.
-Observer SVGs were regenerated and checked locally; the website's observer
-previews retain their older capture.
+At this first preview refresh, observer SVGs were regenerated and checked
+locally while the website's observer previews retained their older capture.
+The subsequent debris-symbol update below refreshes both products.
 
 The editable AuthaGraph master is
 `build/orbital-technosphere-20261103/authagraph/svg/orbital-technosphere-global-authagraph-44-19.052559.svg`.
@@ -411,3 +412,223 @@ The downloaded CSVs retain their original CRLF bytes. A scoped
 `.gitattributes` rule prevents Git newline normalization from changing their
 acquisition hashes on checkout. The earlier Starlink groundstation work and
 the historical orbital input bytes remain intact.
+
+### Initial debris symbol follow-up: both plates (superseded below)
+
+The requested mark for debris is a **black triangle**. The final scope is
+both global and observer plates, across all six projections, with matching
+legend keys. Each debris object keeps its NORAD ID, metadata, projected
+position and separate `name`/`locpoint` layers. The shared renderer supplies
+an upright equilateral triangle centered on the position, with an opaque
+black fill. Its 0.022-inch circumradius preserves approximately the filled
+area of the previous 0.014-inch circular mark. Illumination state remains in
+the metadata; other object styles retain their illumination treatment.
+
+The staged plan is:
+
+1. Update the shared object and legend symbol renderer for both products.
+2. Extend the SVG validator to check closed, nondegenerate black triangles,
+   matching legend keys and the existing one-to-one name associations.
+3. Regenerate and verify all twelve SVGs, visually inspect both AuthaGraph
+   plates, and export their six-projection PNG/WebP previews.
+4. Extend the preview script with `--product global|observer`, retain a
+   separate source receipt for each product, check the documentation and
+   preview receipts, then commit and push.
+
+The observer website previews will now use the same pinned November
+snapshot as the global previews. No new acquisition or propagation instant
+is introduced for this symbol change. After all twelve PNGs are exported at
+a 3,840-pixel long side, stage both products with:
+
+```sh
+for product in global observer; do
+  python3 scripts/stage-orbiting-preview.py \
+    --product "$product" \
+    --build-root build/orbital-technosphere-20261103 \
+    --profile assets.static/orbital-technosphere/20261103/orbital-technosphere-profile.json
+done
+python3 scripts/check-tot-snapshot.py
+```
+
+### Revised symbols and Setouchi plate layout: complete follow-up scope
+
+This update covers every request since the named-constellation delivery.
+The initial request was a black debris triangle on the observer plate,
+expanded to both global and observer plates. That intermediate renderer was
+built and checked locally, with 1,101 debris markers per global plate and
+53 per observer plate; it was not committed or published. The following
+symbol rules supersede it and apply to **both products in all six projections**:
+
+| Object or display group | Marker | Color |
+| --- | --- | --- |
+| Debris, including Iridium 33 debris | `x` | Solid black |
+| Starlink | Sunburst | Existing Starlink red |
+| Intelsat | Square | Existing Intelsat color |
+| Remaining Earth-observation objects, including Planet and Spire | Upright triangle | Existing group/role color |
+| Other objects | Circle | Existing group/role color |
+
+Debris takes precedence, followed by the named Starlink and Intelsat rules,
+then the Earth-observation role. Each object retains its catalog ID, original
+name, source memberships and position. The `name` and `locpoint` children
+remain independently editable, with names hidden by default. Legend keys
+must use the same shape and color as the corresponding location markers.
+
+The requested presentation adopts the Setouchi ST2 separate-sheet style:
+one map plate and one matching legend/attribution plate for every projection
+and product. Map plates have no overlaid legend. Legend plates use Atkinson
+Hyperlegible, vertical right-edge headings, stacked keys with counts, and
+the source bibliography at left. Proportional white map margins follow the
+saved atlas scale; each projection retains its geographic/celestial framing.
+The source panel credits CelesTrak, the SGP4 reference implementation,
+Natural Earth where used, Cartofreako and the projection documentation. It
+identifies the pinned calculation time and separates the historical NASA
+SSC validation reference from the current plotted element data.
+
+The revised staging is:
+
+1. Implement the shared marker rules and matching legend symbols, including
+   named and residual Earth-observation groups and any empty legend entries.
+2. Add a durable map/legend composition step to the orbital Make targets,
+   using the existing Setouchi typography helpers and saved atlas style.
+3. Verify all twelve map/legend pairs for symbol geometry, black debris,
+   preserved names/IDs/counts, independent layers, separation, attribution,
+   matching companion filenames and complete source provenance.
+4. Export the separate plates, visually inspect global and observer examples,
+   refresh both preview families, and expose each companion legend from the
+   gallery. Update receipts and documentation, then commit and push.
+
+The preview script's new `--product global|observer` selection and separate
+receipts are retained. The observer website previews advance to the same
+November snapshot already used by the global product. The calculation
+instant remains `2026-11-03T17:10:00Z`; no new source capture is required.
+
+### Global Starlink IDs and three metallic-paper speculations
+
+The global plate must show Starlink catalog IDs at **10 pt**. The request's
+"NOAH id" is interpreted as **NORAD catalog ID**, the identifier present in
+these source catalogs. A visible `starlink/id` text layer is added only to
+the global map, alongside the existing hidden `name` layer and visible
+`locpoint` layer. Other vendors receive no ID layers. Observer names remain
+hidden. The final physical type size accounts for the proportional sheet
+framing; each ID links to its corresponding marker by NORAD ID.
+
+The print study was initially requested as **MSP speculation 1** and is now
+expanded to **three speculations**. Its subject scope is limited to the
+updated `network-groundstations`, `orbital-technosphere-global`, and
+`orbital-technosphere-observer` plates, each with its separate legend and
+attribution companion. The groundstation source is the high-fidelity
+20261103 Starlink conversion completed earlier in this record. Projection
+coverage is **AuthaGraph only**, as confirmed in the follow-up. The studies
+use the complete Setouchi setup: a 43.5-inch image on the 44-inch sheet,
+the +4.35-inch printed cyclic horizontal adjustment, and the established
+lower-left Antarctic land inset where terrestrial land is present. The
+observer sheet uses the same cyclic frame without terrestrial land. This
+is separate from the standard six-projection orbital update.
+
+The supplied physical observations are: an Epson Stylus Pro 9000 running
+low on cyan and light magenta, metallic glossy paper, better results with
+dark backgrounds, and grays printing as pale violet. The observed violet
+cast takes precedence over a generic assumption that reducing ink supply
+predicts a known color response. The studies will therefore use dark,
+green-biased neutral backgrounds and restrained magenta reduction, with
+different documented strengths. Pure-black debris x marks remain black;
+lighter text and sufficient background separation must keep symbols and
+10 pt IDs legible. Shapes, source data, geometry and group identities remain
+constant across the color studies.
+
+These are reproducible visual hypotheses, not measured device corrections.
+The cartridge warning does not quantify channel loss, and no measured
+printer/paper ICC profile or printed color target was supplied. The exact
+paper brand is unspecified. The [Epson Pro 9000 manual](https://files.support.epson.com/pdf/pro9k_/pro9k_u1.pdf)
+documents the six ink channels and low/empty indicators;
+[Epson's metallic glossy paper description](https://epson.com/For-Work/Paper/Pro-Imaging/Metallic-Photo-Paper-Glossy/m/S045590)
+provides general paper context, not identification or calibration of the
+user's stock. The compensation parameters will be saved with each study.
+
+Additional stages are: build the three color variants from the verified
+separate plates; export matching map/legend previews and print files; supply
+an inspectable comparison and color recipe; verify source identities,
+black debris, retained symbol shapes and Starlink-only 10 pt IDs; append
+results here and include the completed work in the authorized commit/push.
+
+### Completed follow-up and print-study delivery
+
+All revised stages are implemented. The standard orbital build now produces
+**twelve map/legend pairs (24 sheets)** across six projections. Both products
+use black debris x marks, Starlink sunbursts, Intelsat squares and triangles
+for the remaining Earth-observation objects. The global plates have
+**11,155 visible Starlink NORAD IDs at 10 pt** in `starlink/id`. No other
+vendor has an ID layer, and observer IDs are absent. Original satellite
+names remain in the hidden `name` sublayers. Each global plate retains
+17,909 objects, including 1,101 debris; each observer plate retains 1,088
+objects, including 53 debris.
+
+All twelve standard map/legend pairs were exported to SVG, PDF and PNG.
+The map and legend WebP/thumbnail/screen derivatives are staged under
+`assets.tot`, with separate global and observer receipts. The gallery now
+provides a **Legend and attribution** action for each orbital map. The
+standard artifact manifest remains scoped to its existing map inventory;
+companion legends have dedicated export targets and preview receipts.
+
+The [MSP review index](../../output/msp-speculations-20261103/index.html)
+contains **three studies × three subjects × map/legend = 18 sheets**. The
+subjects are the current groundstations, global orbital technosphere and
+observer orbital technosphere, all in the confirmed Setouchi AuthaGraph
+frame. The existing `setouchi_world_framing.py` supplies the exact 43.5-inch
+image, +4.35-inch printed cyclic move and common lower-left Antarctic inset.
+No Antarctic inset appears on the celestial observer sheet.
+
+| Study | Background | Land | Magenta reduction | Cyan emphasis | Saturation factor | Foreground lightness floor |
+| --- | --- | --- | ---: | ---: | ---: | ---: |
+| MSP speculation 1 / Charcoal green | `#26382f` | `#4c6655` | 0.10 | 0.06 | 0.90 | 0.50 |
+| MSP speculation 2 / Olive graphite | `#343b24` | `#68764a` | 0.18 | 0.12 | 0.82 | 0.56 |
+| MSP speculation 3 / Deep forest | `#152e28` | `#3a6d59` | 0.26 | 0.18 | 0.75 | 0.62 |
+
+These are chosen recipe parameters, not measured percentages of lost ink.
+For chromatic foreground colors, the recipe subtracts the common black
+component in a simple CMY decomposition, emphasizes residual cyan and
+reduces residual magenta, then applies the saved HLS lightness floor and
+saturation factor. Near-neutral colors use explicit green-biased replacements.
+Background, land and text colors are assigned explicitly. Every debris x
+retains its opaque black stroke; a pale backing stroke provides contrast on
+the dark paper field. Map and legend keys use the same color transformation.
+The groundstation symbols and supplied route geometry remain intact.
+
+The exact recipes are in
+[`config/msp-speculations-20261103.json`](../../config/msp-speculations-20261103.json).
+[`build-msp-speculations.py`](../../scripts/build-msp-speculations.py) saves
+source/output hashes, framing records and the old-to-new color mapping.
+Its geometry comparison checks that color processing preserves source
+coordinates, names, IDs and type. Exports are cached only when the SVG,
+font provenance and delivered file hashes agree.
+
+Each of the 18 MSP sheets has a full-size vector PDF, a 3,840-pixel WebP and
+a compressed editable SVG: **54 delivered files**, plus the index, recipes,
+manifest and validation report. Uncompressed SVG and PNG working masters
+are under `build/msp-speculations-20261103/`. The PDFs retain the physical
+44 × 19.052559-inch sheet; Atkinson Hyperlegible is embedded. All three
+palettes and the revised attribution layout were visually inspected.
+
+Validation passed for the orbital and groundstation tests, pinned source
+hashes, all twelve standard map/legend pairs, all 18 delivered MSP sheets
+and their 54 file hashes, source counts, exact Setouchi framing, black debris,
+marker geometry, matching names, Starlink-only 10 pt IDs and PDF page sizes.
+The groundstation studies retain all 780 current placemarks and both the
+KML and GeoJSON hashes. Documentation links, preview receipts and the
+standard artifact manifest checks passed. The dense global ID field is
+intentional: every admitted Starlink ID is shown as requested, with the
+editable `id` layer available separately from the markers.
+
+Reproduce the print study after generating the current standard inputs:
+
+```sh
+make msp-speculations \
+  GENERATED_DIR=build/orbital-technosphere-20261103 ASSET_JOBS=2
+python3 scripts/verify-msp-speculations.py
+```
+
+On this restricted host, `CXX=/usr/bin/g++` remains the compiler-cache
+workaround. The MSP exporter uses the repository-local, verified font
+environment and direct Inkscape export. The historical NASA reference
+remains explicitly historical; these print studies do not refresh source
+data or establish a calibrated printer/paper correction.

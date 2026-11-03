@@ -1,0 +1,537 @@
+{
+  "schema": "cartofreako-orbital-preview-update-v1",
+  "generatedAt": "2026-11-03T18:18:00+00:00",
+  "sourceRevision": {
+    "gitCommit": "96d369c072e4d040a15bc2fe29c1d4ad1d288ac9",
+    "workingTree": "modified"
+  },
+  "pass": "orbital-technosphere-observer",
+  "timestamp": "2026-11-03T17:10:00Z",
+  "sourceProfile": {
+    "path": "assets.static/orbital-technosphere/20261103/orbital-technosphere-profile.json",
+    "sha256": "a35b339f60189aa964c0a1617bb98b7213be016c8b3e007b0ee724860a38b66b",
+    "bytes": 10541
+  },
+  "snapshotChecksums": {
+    "path": "assets.static/orbital-technosphere/20261103/SHA256SUMS",
+    "sha256": "5e4d1287622ddf8020d5c3ca5c57e028ba27b5f1cb74f75b6ae2375146702ec5",
+    "bytes": 2594
+  },
+  "sourceFiles": [
+    {
+      "path": "src.generate/orbiting-data.h",
+      "sha256": "055768f9219eaac96ae2df340fa22496e488fa2ebe0f9ed4eb64736e8d1d8486",
+      "bytes": 38966
+    },
+    {
+      "path": "src.generate/orbiting-generation.h",
+      "sha256": "c17191074e53923f408b4d5978961d5ad33030fe0cb3ffb53e40cf211e626994",
+      "bytes": 42785
+    },
+    {
+      "path": "scripts/stage-orbiting-preview.py",
+      "sha256": "ed4d37b61e82e2d5c64e1c4ff2dc04d14bf4c242e2ff875fbbeeaae797763b31",
+      "bytes": 5660
+    },
+    {
+      "path": "scripts/split-orbiting-plates.py",
+      "sha256": "66083fad8682b3994551d11956bcf73ba0381f11cfd5345ed9f1e1a63c70745a",
+      "bytes": 12965
+    },
+    {
+      "path": "generation-style.json",
+      "sha256": "e92736f1c4f63191766c69626a3cc7092929acbbb80315d93af8afd35c99d5a6",
+      "bytes": 10557
+    },
+    {
+      "path": "assets/fonts/atkinson-hyperlegible/provenance.json",
+      "sha256": "f86dd1f054d92d7c2355db628042097be483219bc5bde06fc360cb9a8339a876",
+      "bytes": 1808
+    }
+  ],
+  "layers": "constellation/name,locpoint",
+  "namesVisible": false,
+  "starlinkIds": {
+    "visible": false,
+    "fontSizePt": 10
+  },
+  "layout": "setouchi-st2-separate-map-legend",
+  "namedGroups": [
+    {
+      "id": "starlink",
+      "name": "Starlink",
+      "color_rgb": [
+        214,
+        56,
+        50
+      ]
+    },
+    {
+      "id": "oneweb",
+      "name": "OneWeb",
+      "color_rgb": [
+        0,
+        114,
+        178
+      ]
+    },
+    {
+      "id": "kuiper",
+      "name": "Kuiper",
+      "color_rgb": [
+        230,
+        126,
+        0
+      ]
+    },
+    {
+      "id": "qianfan",
+      "name": "Qianfan",
+      "color_rgb": [
+        136,
+        70,
+        167
+      ]
+    },
+    {
+      "id": "hulianwang",
+      "name": "Hulianwang",
+      "color_rgb": [
+        0,
+        142,
+        115
+      ]
+    },
+    {
+      "id": "iridium",
+      "name": "Iridium",
+      "color_rgb": [
+        55,
+        90,
+        176
+      ]
+    },
+    {
+      "id": "globalstar",
+      "name": "Globalstar",
+      "color_rgb": [
+        187,
+        72,
+        130
+      ]
+    },
+    {
+      "id": "orbcomm",
+      "name": "ORBCOMM",
+      "color_rgb": [
+        150,
+        115,
+        26
+      ]
+    },
+    {
+      "id": "planet",
+      "name": "Planet",
+      "color_rgb": [
+        0,
+        154,
+        170
+      ]
+    },
+    {
+      "id": "spire",
+      "name": "Spire",
+      "color_rgb": [
+        98,
+        137,
+        48
+      ]
+    },
+    {
+      "id": "intelsat",
+      "name": "Intelsat",
+      "color_rgb": [
+        164,
+        96,
+        55
+      ]
+    },
+    {
+      "id": "ses",
+      "name": "SES",
+      "color_rgb": [
+        95,
+        90,
+        173
+      ]
+    },
+    {
+      "id": "eutelsat",
+      "name": "Eutelsat",
+      "color_rgb": [
+        191,
+        112,
+        19
+      ]
+    },
+    {
+      "id": "telesat",
+      "name": "Telesat",
+      "color_rgb": [
+        125,
+        76,
+        101
+      ]
+    },
+    {
+      "id": "gps",
+      "name": "GPS",
+      "color_rgb": [
+        147,
+        131,
+        0
+      ]
+    },
+    {
+      "id": "glonass",
+      "name": "GLONASS",
+      "color_rgb": [
+        58,
+        113,
+        113
+      ]
+    },
+    {
+      "id": "galileo",
+      "name": "Galileo",
+      "color_rgb": [
+        81,
+        123,
+        177
+      ]
+    },
+    {
+      "id": "beidou",
+      "name": "BeiDou",
+      "color_rgb": [
+        162,
+        91,
+        30
+      ]
+    }
+  ],
+  "products": [
+    {
+      "projection": "authagraph",
+      "kind": "map",
+      "sourceSvg": {
+        "path": "build/orbital-technosphere-20261103/authagraph/svg/orbital-technosphere-observer-authagraph-44-19.052559.svg",
+        "sha256": "31fd17f8a2fa3208bad559f66cadba6d580f70d514d43c6b716bdb929f0cd761",
+        "bytes": 1745448
+      },
+      "files": [
+        {
+          "path": "assets.tot/products/standard/authagraph/full/orbital-technosphere-observer-authagraph-44-19.052559.webp",
+          "sha256": "a9def4d6069cf70eade417394b567213c8b4432fe3f2324d3a4d2d59a72fa2d9",
+          "bytes": 64726
+        },
+        {
+          "path": "assets.tot/products/standard/authagraph/thumbnail/orbital-technosphere-observer-authagraph-44-19.052559.png",
+          "sha256": "0cc02eab3d622870fa3f83bb9086f0cea7303f25776ee87cbecd008595803a3a",
+          "bytes": 26401
+        },
+        {
+          "path": "assets.tot/products/standard/authagraph/screen-1080p/webp/orbital-technosphere-observer-authagraph-44-19.052559.webp",
+          "sha256": "89759dfba23e3af72d28a32d2243024a7989ed7e94c8edac3625daadf9bb02db",
+          "bytes": 32558
+        }
+      ]
+    },
+    {
+      "projection": "authagraph",
+      "kind": "legend",
+      "sourceSvg": {
+        "path": "build/orbital-technosphere-20261103/authagraph/svg/orbital-technosphere-observer-authagraph-44-19.052559-legend.svg",
+        "sha256": "df30eae4a4bdd66bc2f7b1b99915db986ff6ad565a20ebb7628b6d6db44cc735",
+        "bytes": 36566
+      },
+      "files": [
+        {
+          "path": "assets.tot/products/standard/authagraph/full/orbital-technosphere-observer-authagraph-44-19.052559-legend.webp",
+          "sha256": "faef7c31f61ced71f1bc996017ce31bbe18eb431048f15eda2615ebdf33b339f",
+          "bytes": 270946
+        },
+        {
+          "path": "assets.tot/products/standard/authagraph/thumbnail/orbital-technosphere-observer-authagraph-44-19.052559-legend.png",
+          "sha256": "965e605026ef852a44becd5f802d178e0caa4e02dca718e43cd2a6527ee7c77b",
+          "bytes": 37259
+        },
+        {
+          "path": "assets.tot/products/standard/authagraph/screen-1080p/webp/orbital-technosphere-observer-authagraph-44-19.052559-legend.webp",
+          "sha256": "7ff51342253a18b23f8caff881bcc2c4ca8a8630f5beef32ec254bb0e1ec719e",
+          "bytes": 106786
+        }
+      ]
+    },
+    {
+      "projection": "cahill-keyes",
+      "kind": "map",
+      "sourceSvg": {
+        "path": "build/orbital-technosphere-20261103/cahill-keyes/svg/orbital-technosphere-observer-ck-44-22.svg",
+        "sha256": "37ecdcf7180005fa0941cc141482c5207f23fd5e44fc5d686551892801c0bb53",
+        "bytes": 1745659
+      },
+      "files": [
+        {
+          "path": "assets.tot/products/standard/cahill-keyes/full/orbital-technosphere-observer-ck-44-22.webp",
+          "sha256": "ea3b577eea99ca0cfc1b5e762ed6bd51ef66360cb23239db425bd2829bcbf44b",
+          "bytes": 63864
+        },
+        {
+          "path": "assets.tot/products/standard/cahill-keyes/thumbnail/orbital-technosphere-observer-ck-44-22.png",
+          "sha256": "56590954aa2d07d1c89ebf06682663af871857d37b6c63a0bea4863ab7b68da9",
+          "bytes": 24159
+        },
+        {
+          "path": "assets.tot/products/standard/cahill-keyes/screen-1080p/webp/orbital-technosphere-observer-ck-44-22.webp",
+          "sha256": "9d09f53f5aab921998fa470475b21fa5e96f2c7e16f485fe37111c6b73570532",
+          "bytes": 30750
+        }
+      ]
+    },
+    {
+      "projection": "cahill-keyes",
+      "kind": "legend",
+      "sourceSvg": {
+        "path": "build/orbital-technosphere-20261103/cahill-keyes/svg/orbital-technosphere-observer-ck-44-22-legend.svg",
+        "sha256": "55b77fee34645b1d11b9b39b2f2eb35d1868161700f9884c480aa27bddd43a47",
+        "bytes": 36541
+      },
+      "files": [
+        {
+          "path": "assets.tot/products/standard/cahill-keyes/full/orbital-technosphere-observer-ck-44-22-legend.webp",
+          "sha256": "f852c654a67f4b6ee8da8cfe2f633e392ff4e96dc945924340b857c29112160a",
+          "bytes": 272844
+        },
+        {
+          "path": "assets.tot/products/standard/cahill-keyes/thumbnail/orbital-technosphere-observer-ck-44-22-legend.png",
+          "sha256": "6dfd44705b6b019a51bf8dbdfa4d94a2a2b811f93047bb6eda1a4e09820ee747",
+          "bytes": 37656
+        },
+        {
+          "path": "assets.tot/products/standard/cahill-keyes/screen-1080p/webp/orbital-technosphere-observer-ck-44-22-legend.webp",
+          "sha256": "d544e3a2d64c3d7aaebd754fc6a54e538d4b48e6c1ca1495e3c9ecc2bfcc000a",
+          "bytes": 106988
+        }
+      ]
+    },
+    {
+      "projection": "dymaxion",
+      "kind": "map",
+      "sourceSvg": {
+        "path": "build/orbital-technosphere-20261103/dymaxion/svg/orbital-technosphere-observer-dymaxion-44-20.78461.svg",
+        "sha256": "c6ae55ed62e1ab03b56235503c08b8eb865f91b7c92bddd40308be14bb340459",
+        "bytes": 1746922
+      },
+      "files": [
+        {
+          "path": "assets.tot/products/standard/dymaxion/full/orbital-technosphere-observer-dymaxion-44-20.78461.webp",
+          "sha256": "b17af272e522d62cd0bb838d77a7ba062e2ef6503cacf6760f861868dcb7d176",
+          "bytes": 62850
+        },
+        {
+          "path": "assets.tot/products/standard/dymaxion/thumbnail/orbital-technosphere-observer-dymaxion-44-20.78461.png",
+          "sha256": "c0adc7bedf87a97ba19a1cefa582334139bdb633ec3bd3644fd3fb8fd05594d5",
+          "bytes": 23673
+        },
+        {
+          "path": "assets.tot/products/standard/dymaxion/screen-1080p/webp/orbital-technosphere-observer-dymaxion-44-20.78461.webp",
+          "sha256": "3ab1ca304b3b6f48c6027efc14b75ee05d13aa824b21798fc47d3a66c659ea56",
+          "bytes": 30372
+        }
+      ]
+    },
+    {
+      "projection": "dymaxion",
+      "kind": "legend",
+      "sourceSvg": {
+        "path": "build/orbital-technosphere-20261103/dymaxion/svg/orbital-technosphere-observer-dymaxion-44-20.78461-legend.svg",
+        "sha256": "9a06a0a7c26df5a06423c05d18bc5c127c2587588468b6e07155b6e48a458064",
+        "bytes": 36549
+      },
+      "files": [
+        {
+          "path": "assets.tot/products/standard/dymaxion/full/orbital-technosphere-observer-dymaxion-44-20.78461-legend.webp",
+          "sha256": "2b9f71d488af2ebcbf30676700c1c3494301ea5af98879956b21785d57b46f75",
+          "bytes": 271318
+        },
+        {
+          "path": "assets.tot/products/standard/dymaxion/thumbnail/orbital-technosphere-observer-dymaxion-44-20.78461-legend.png",
+          "sha256": "2f2cecc803a2cad6ad2ef9288c4282662252684c2c1c1fba2acb2bb879eebaa2",
+          "bytes": 37433
+        },
+        {
+          "path": "assets.tot/products/standard/dymaxion/screen-1080p/webp/orbital-technosphere-observer-dymaxion-44-20.78461-legend.webp",
+          "sha256": "23b5247e31272bc030383323d9ecc34d00321271b0fa749c8e3444c0a709c6db",
+          "bytes": 106300
+        }
+      ]
+    },
+    {
+      "projection": "myriahedral",
+      "kind": "map",
+      "sourceSvg": {
+        "path": "build/orbital-technosphere-20261103/myriahedral/svg/orbital-technosphere-observer-myriahedral-44-24.75.svg",
+        "sha256": "6f563da51b939c6dbf10e42befdbf2defed3b099cdd4ceaaf26ca8eb9a1830b2",
+        "bytes": 1768878
+      },
+      "files": [
+        {
+          "path": "assets.tot/products/standard/myriahedral/full/orbital-technosphere-observer-myriahedral-44-24.75.webp",
+          "sha256": "9f6e7cbcd7bb1f810242b43ae8b136bfd2e3b600985cb927b13138f65ef3281c",
+          "bytes": 63082
+        },
+        {
+          "path": "assets.tot/products/standard/myriahedral/thumbnail/orbital-technosphere-observer-myriahedral-44-24.75.png",
+          "sha256": "d66e25e7a6dd10e42f5bc197e40429c01d861dcc928f5986e25a7928f0dd0548",
+          "bytes": 22460
+        },
+        {
+          "path": "assets.tot/products/standard/myriahedral/screen-1080p/webp/orbital-technosphere-observer-myriahedral-44-24.75.webp",
+          "sha256": "aca3e0888c5b995c9b23c8d7d3de91a7ba4a85d0a51b3f90cd3451ca4297e8ec",
+          "bytes": 28860
+        }
+      ]
+    },
+    {
+      "projection": "myriahedral",
+      "kind": "legend",
+      "sourceSvg": {
+        "path": "build/orbital-technosphere-20261103/myriahedral/svg/orbital-technosphere-observer-myriahedral-44-24.75-legend.svg",
+        "sha256": "fd2675f77b22af27a8b05e30f11b82735b7513bb434f07b2065df27406d16616",
+        "bytes": 36552
+      },
+      "files": [
+        {
+          "path": "assets.tot/products/standard/myriahedral/full/orbital-technosphere-observer-myriahedral-44-24.75-legend.webp",
+          "sha256": "923c248394de3e6acecf67e95aed4fc9f278a885a7f53964e82863ab54cc444b",
+          "bytes": 274414
+        },
+        {
+          "path": "assets.tot/products/standard/myriahedral/thumbnail/orbital-technosphere-observer-myriahedral-44-24.75-legend.png",
+          "sha256": "fff84aac986e276e5ddd78278bafb5abaf16262df99727804d0bdf237359f8ac",
+          "bytes": 37755
+        },
+        {
+          "path": "assets.tot/products/standard/myriahedral/screen-1080p/webp/orbital-technosphere-observer-myriahedral-44-24.75-legend.webp",
+          "sha256": "026c564a365f93a5190c56b99a30654277a28790ce14281e5b9e65d6db0af52e",
+          "bytes": 106968
+        }
+      ]
+    },
+    {
+      "projection": "star-x",
+      "kind": "map",
+      "sourceSvg": {
+        "path": "build/orbital-technosphere-20261103/star-x/svg/orbital-technosphere-observer-star-x-34-44.svg",
+        "sha256": "01721fbf596ba8ad7667c1a290c9b91d4c5e4b1510883d4a8983aab163643a06",
+        "bytes": 1746183
+      },
+      "files": [
+        {
+          "path": "assets.tot/products/standard/star-x/full/orbital-technosphere-observer-star-x-34-44.webp",
+          "sha256": "142a5c4b35caa4ce2fa8105113d51c86496543bed0612e738fc7cc451d6a2b0d",
+          "bytes": 74874
+        },
+        {
+          "path": "assets.tot/products/standard/star-x/thumbnail/orbital-technosphere-observer-star-x-34-44.png",
+          "sha256": "1434cdae858054ae0f5bd7bdcc82c4000a324445c7ba9d9a2b9094388db74f68",
+          "bytes": 28658
+        },
+        {
+          "path": "assets.tot/products/standard/star-x/screen-1080p/webp/orbital-technosphere-observer-star-x-34-44.webp",
+          "sha256": "b2299d20d1f44a2668d27550b656b70dd7e7da0feda960def2388cae5ee9335c",
+          "bytes": 17810
+        }
+      ]
+    },
+    {
+      "projection": "star-x",
+      "kind": "legend",
+      "sourceSvg": {
+        "path": "build/orbital-technosphere-20261103/star-x/svg/orbital-technosphere-observer-star-x-34-44-legend.svg",
+        "sha256": "084cc7cb3c6c9b9f03403cafb514853c92a2344c13db9505ad2afc60fe67874c",
+        "bytes": 38399
+      },
+      "files": [
+        {
+          "path": "assets.tot/products/standard/star-x/full/orbital-technosphere-observer-star-x-34-44-legend.webp",
+          "sha256": "4003adba4dd7715f797e26ce60d9158df1c4276deee53bb5c6121db1826d92ea",
+          "bytes": 279800
+        },
+        {
+          "path": "assets.tot/products/standard/star-x/thumbnail/orbital-technosphere-observer-star-x-34-44-legend.png",
+          "sha256": "00c5c2d686417da426344717b7024b055e5266bdfda41fab82ee91f93c325a67",
+          "bytes": 37602
+        },
+        {
+          "path": "assets.tot/products/standard/star-x/screen-1080p/webp/orbital-technosphere-observer-star-x-34-44-legend.webp",
+          "sha256": "c3f68716ffceef3a999f5cbda57cfb02b6d81a73abc3a8aa22d7f59901ef4338",
+          "bytes": 42982
+        }
+      ]
+    },
+    {
+      "projection": "voronoi",
+      "kind": "map",
+      "sourceSvg": {
+        "path": "build/orbital-technosphere-20261103/voronoi/svg/orbital-technosphere-observer-voronoi-44-22.916667.svg",
+        "sha256": "52405ea2343d6c4b82c345fb544ba47ba805ff69fdadda356cea4e585392d296",
+        "bytes": 1745568
+      },
+      "files": [
+        {
+          "path": "assets.tot/products/standard/voronoi/full/orbital-technosphere-observer-voronoi-44-22.916667.webp",
+          "sha256": "40ab06b0c6c63a02d03ddf110e3b4ea03590fead6a49a24d846227893ca944dd",
+          "bytes": 59798
+        },
+        {
+          "path": "assets.tot/products/standard/voronoi/thumbnail/orbital-technosphere-observer-voronoi-44-22.916667.png",
+          "sha256": "34b7d81d63cbad31290f6304fc79e3065697f5dd56019cfee5b64c18fed2e754",
+          "bytes": 21959
+        },
+        {
+          "path": "assets.tot/products/standard/voronoi/screen-1080p/webp/orbital-technosphere-observer-voronoi-44-22.916667.webp",
+          "sha256": "3abdd9735ab41686a1e040a4624c38f40368b644c0e1eab151a870d574a3718f",
+          "bytes": 28436
+        }
+      ]
+    },
+    {
+      "projection": "voronoi",
+      "kind": "legend",
+      "sourceSvg": {
+        "path": "build/orbital-technosphere-20261103/voronoi/svg/orbital-technosphere-observer-voronoi-44-22.916667-legend.svg",
+        "sha256": "0740301b67363e18eb3fbfd6dd93ab237032b3acbe91cbf764dc8231306ac748",
+        "bytes": 36548
+      },
+      "files": [
+        {
+          "path": "assets.tot/products/standard/voronoi/full/orbital-technosphere-observer-voronoi-44-22.916667-legend.webp",
+          "sha256": "ceb30b986eb93a6c13c6d820f8d264800aa42962c2e7824fb1b4b28ce48f3313",
+          "bytes": 271302
+        },
+        {
+          "path": "assets.tot/products/standard/voronoi/thumbnail/orbital-technosphere-observer-voronoi-44-22.916667-legend.png",
+          "sha256": "a122716d886235d3567498f1c646c1002e4bc08388da536e41e6fde081acdf30",
+          "bytes": 37086
+        },
+        {
+          "path": "assets.tot/products/standard/voronoi/screen-1080p/webp/orbital-technosphere-observer-voronoi-44-22.916667-legend.webp",
+          "sha256": "87f6c24328cfa1a166754ebe931f0be173e44420ebf3f3fee93befe5922c0be9",
+          "bytes": 105970
+        }
+      ]
+    }
+  ]
+}

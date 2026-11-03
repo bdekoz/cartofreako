@@ -1,0 +1,35 @@
+{
+  "schema": "cartofreako-msp-color-studies-v1",
+  "projection": "authagraph",
+  "framing": "setouchi-st2-cyclic-43p5-antarctica-left",
+  "subjects": ["network-groundstations", "orbital-technosphere-global", "orbital-technosphere-observer"],
+  "reported_conditions": {
+    "printer": "Epson Stylus Pro 9000",
+    "low_inks": ["cyan", "light magenta"],
+    "paper": "metallic glossy, brand unspecified",
+    "observations": ["Grays print as pale violet", "Darker backgrounds print better than white"]
+  },
+  "method": "Artist-selected RGB prebias: retain black; modestly emphasize chromatic cyan and reduce chromatic magenta in a simple CMY decomposition; lift foreground lightness and compress saturation for dark-ground contrast. Neutral grays use explicit green-biased replacements. This does not control six-channel ink separation or emulate a measured ICC profile.",
+  "calibration": "Unmeasured visual hypotheses; parameters are not estimates of ink loss or paper response.",
+  "references": [
+    "https://files.support.epson.com/pdf/pro9k_/pro9k_u1.pdf",
+    "https://epson.com/For-Work/Paper/Pro-Imaging/Metallic-Photo-Paper-Glossy/m/S045590"
+  ],
+  "studies": [
+    {
+      "id": "msp-speculation-1", "title": "MSP speculation 1", "palette": "Charcoal green",
+      "background": "#26382f", "land": "#4c6655", "text": "#e4ecd3", "neutral": "#c6d0b1", "halo": "#b4c5a7",
+      "cyan_emphasis": 0.06, "magenta_reduction": 0.10, "saturation_factor": 0.90, "foreground_lightness_floor": 0.50
+    },
+    {
+      "id": "msp-speculation-2", "title": "MSP speculation 2", "palette": "Olive graphite",
+      "background": "#343b24", "land": "#68764a", "text": "#e1ebba", "neutral": "#cbd5a2", "halo": "#bdcb94",
+      "cyan_emphasis": 0.12, "magenta_reduction": 0.18, "saturation_factor": 0.82, "foreground_lightness_floor": 0.56
+    },
+    {
+      "id": "msp-speculation-3", "title": "MSP speculation 3", "palette": "Deep forest",
+      "background": "#152e28", "land": "#3a6d59", "text": "#d4edcf", "neutral": "#b3d1ad", "halo": "#a5c7a0",
+      "cyan_emphasis": 0.18, "magenta_reduction": 0.26, "saturation_factor": 0.75, "foreground_lightness_floor": 0.62
+    }
+  ]
+}
