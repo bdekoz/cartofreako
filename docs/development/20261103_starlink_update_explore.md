@@ -632,3 +632,79 @@ workaround. The MSP exporter uses the repository-local, verified font
 environment and direct Inkscape export. The historical NASA reference
 remains explicitly historical; these print studies do not refresh source
 data or establish a calibrated printer/paper correction.
+
+### Typography revision: global Starlink text at 9 pt
+
+The subsequent request reduces global Starlink text from 10 pt to **9 pt**.
+This applies to the visible `starlink/id` NORAD labels and the hidden
+`starlink/name` text layer. Both use 9 physical points after the proportional
+map framing. Other vendor labels and the observer plate are unchanged.
+
+Regenerate all six standard global map/legend pairs, then the global
+map/legend pair in each of the three MSP studies. Preserve the existing
+9-point label setting when transferring the standard Starlink name and ID
+layers into the Setouchi cyclic frame. Update the legend explanation,
+review index, preview receipts and validators; verify every global Starlink
+name and ID size, then commit and push the revision. The prior 10 pt results
+above describe the earlier delivery; this section supersedes that type size.
+
+Completed the 9 pt revision: all six standard global map/legend pairs and
+all three MSP global pairs were regenerated. SVG checks verified both the
+hidden names and visible NORAD IDs after framing; all 18 MSP sheets and
+54 delivered files passed validation. The six standard global preview
+pairs and receipts were restaged.
+
+### Groundstation capability studies: request, evidence and staging
+
+The next request targets `network-groundstations-authagraph-44-19.052559.pdf`:
+scale the groundstation marks by antenna size/capability, reuse the CDN
+grouping and honeycomb layout, replace each hexagonal mark with an
+equilateral triangle centered in its hexagonal cell, and compare one to
+three radial fill treatments for different capabilities. Continue the
+Setouchi AuthaGraph horizontal framing and separate map/legend sheets with
+attribution. Use one dark MSP palette across the three pattern studies so
+the comparison changes the symbol treatment rather than the paper recipe.
+
+The source contains 590 antenna-site point records, 66 PoP point records,
+and 124 link records. All 590 antenna-site records have ExtendedData.
+These are source records, not a verified census of unique, operating sites:
+four coordinate pairs repeat, including upgrades and a duplicate place
+name. Retain their identities in grouping and evidence; do not silently
+merge the records or turn link endpoints into antenna sites.
+
+1. **Normalize and inspect evidence.** Preserve raw ExtendedData, source IDs,
+   status, dates, application links and coordinates in a durable capability
+   receipt. Strictly parse positive diameters and integral antenna counts.
+   Examples needing attention include three E-band counts of `1.85`, two
+   composite `1.85+1.999` sizes, partially built inventories and contradictory
+   frequency/operational fields. Missing or ambiguous values stay unknown.
+2. **Define the visual quantity.** Use the largest complete documented
+   antenna bank's geometric aperture, `max(N × π × D² / 4)`, as a size proxy.
+   Do not sum across bands: shared Ka/E hardware and overlapping records
+   could otherwise be double-counted. This is listed hardware, potentially
+   licensed or planned, not measured throughput, installed capacity or
+   operational RF performance. Preserve incomplete-bank flags and distinguish
+   unknown size from zero. Validate the interpretation of diameter units
+   against primary technical material without imputing a generic model to
+   every station.
+3. **Reuse CDN placement.** Use its projected grouping grid and shared
+   `hexoffsets` routine, one source point per cell, with a centered equilateral
+   triangle for each antenna record. Keep true positions and displacement
+   tethers inspectable. Use sufficient cell spacing for the largest triangle;
+   do not change grouping totals or cap away small records. Keep PoPs and
+   supplied lines as distinct network context.
+4. **Compare three fills.** Build radial spokes, concentric arcs and radial
+   petals with explicit keys for the source's capability classes. Keep the
+   size mapping, grouping, source records, frame and palette identical.
+   Show reported operational versus unconfirmed/planned/retired status
+   separately from capability, and retain unknown capability marks.
+5. **Deliver and verify.** Export three map/legend PDF pairs, editable SVGs,
+   previews and a review index. Check source accounting, scaling, triangle
+   geometry, placement, pattern coverage, page dimensions and attribution;
+   visually inspect the maps, legends and enlarged symbols. Append results,
+   remaining evidence limits and reproduction commands here; commit and push.
+
+This section records all decisions since the preceding typography entry.
+The earlier MSP color hypotheses and the 9 pt global Starlink setting
+remain in effect. Groundstation capability studies are a separate comparison
+set, so the original three color proofs remain available.

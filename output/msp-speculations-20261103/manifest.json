@@ -73,7 +73,7 @@
     ]
   },
   "recipe_sha256": "0ea7c51b9c55b4c73aa6b22a6b859631e36a6fca1a61bb53546c245268c290e4",
-  "builder_sha256": "fae7dbf243704c6972fed2824442b5ac19747e2d6d67fd7b924925c8286270f8",
+  "builder_sha256": "365278d89b6bae26de8681619ce8c6e24e8fc02b3299ab656183cada5c96da9f",
   "font_sha256": "f86dd1f054d92d7c2355db628042097be483219bc5bde06fc360cb9a8339a876",
   "inputs": {
     "network-groundstations": {
@@ -82,7 +82,7 @@
     },
     "orbital-technosphere-global": {
       "path": "build/orbital-technosphere-20261103/authagraph/svg/orbital-technosphere-global-authagraph-44-19.052559.svg",
-      "sha256": "11f130a23bca7c39e87c0ac8c041663ed8838479983145fc910976ac269c7af4"
+      "sha256": "e9382399081f0c17dd953c64ef49c264d5fa61fda14823e9a6a74b69d8bc430b"
     },
     "orbital-technosphere-observer": {
       "path": "build/orbital-technosphere-20261103/authagraph/svg/orbital-technosphere-observer-authagraph-44-19.052559.svg",
@@ -607,8 +607,8 @@
       "study": "msp-speculation-1",
       "subject": "orbital-technosphere-global",
       "kind": "map",
-      "source_svg_sha256": "9ffa2868604b05bf448934056083e36df76a2cd4cf1c0df8e12d5e42c6fec340",
-      "svg_sha256": "8beef579b17a9f210ebf3d331d672d4fa50f15c9276a988ab1045b6be6670817",
+      "source_svg_sha256": "3a7426cbe59758dfb53abe446fce94655213155ff831630d63797c675f703430",
+      "svg_sha256": "24aa43d87afd8859e164ac8a15687e581d9aa91efc823ac92f30808845a47a63",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -872,18 +872,18 @@
       "outputs": [
         {
           "path": "msp-speculation-1/orbital-technosphere-global-authagraph-44-19.052559.pdf",
-          "sha256": "1d9be1e251ae04f613402b068110631e4f3449390a93cf6e24435e471d208c58",
-          "bytes": 2784709
+          "sha256": "3abd631e73ced29c62105717ddfe12b3b30ae3d1ce63400bea14c192572ae4ec",
+          "bytes": 2789357
         },
         {
           "path": "msp-speculation-1/orbital-technosphere-global-authagraph-44-19.052559.webp",
-          "sha256": "7811df5367f3a2938bd88151754af2f518beb616e34cfa83a92af38cf17f37c1",
-          "bytes": 2653560
+          "sha256": "a5cfcd38a3bd97864205a6cfcb2c1d578a0867e3ce8119add033c359eafda100",
+          "bytes": 2493942
         },
         {
           "path": "msp-speculation-1/orbital-technosphere-global-authagraph-44-19.052559.svg.gz",
-          "sha256": "91caf6c64d014bb269bc4e3c7195938ccfef8291b19e521c71a171b3feb3a79f",
-          "bytes": 4715787
+          "sha256": "856c0a0ecff3a28219948638de2be57f3b3530fa89b400bc1bbba0e8b7998626",
+          "bytes": 4722586
         }
       ]
     },
@@ -891,8 +891,8 @@
       "study": "msp-speculation-1",
       "subject": "orbital-technosphere-global",
       "kind": "legend",
-      "source_svg_sha256": "8bb4c51a2dee3544dc63fe408b63faecd6b9a29b8d3bca2cf6d42ea16cc908b7",
-      "svg_sha256": "c5b3e9334357f0a7d76931a441667431cb9b420399fe399df23e5ebd35106cf7",
+      "source_svg_sha256": "9e6a49027477afb8359c1123037a94b49383f3c24be85d2a619cf54a61d03505",
+      "svg_sha256": "062221f8f10291602f303b63a6892fc93dc4df3ceb7f791646f640c03c9c25a1",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -1153,17 +1153,17 @@
       "outputs": [
         {
           "path": "msp-speculation-1/orbital-technosphere-global-authagraph-44-19.052559-legend.pdf",
-          "sha256": "a7d09ca9fe3008214ac32c143d7a85ee88e6ece4f357eba6eab98479ab0532ab",
-          "bytes": 32569
+          "sha256": "efa4d348dfafacfa69df887ea8929df9c55370ebf3da177f122757d32d2a8889",
+          "bytes": 32566
         },
         {
           "path": "msp-speculation-1/orbital-technosphere-global-authagraph-44-19.052559-legend.webp",
-          "sha256": "b2687fa870c47a6e41a140bbbb8c82b62dd96a112d50b7bb2a9ba884dcee4a5e",
-          "bytes": 370518
+          "sha256": "32ace1fdd51e4716236bc83d68235f6e82dcd2eb501e17a43ff6fff8afa301e6",
+          "bytes": 370570
         },
         {
           "path": "msp-speculation-1/orbital-technosphere-global-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "0b04c6adee66f86b99773c0d8ddf930888c06f173eb1274c1f271396bc82dbb2",
+          "sha256": "615a26cd7e46e5cc1ab1554a86379e07a1cf36d4f8aaa5bf9df4dd6f3a8492a6",
           "bytes": 8593
         }
       ]
@@ -1860,8 +1860,8 @@
       "study": "msp-speculation-2",
       "subject": "orbital-technosphere-global",
       "kind": "map",
-      "source_svg_sha256": "9ffa2868604b05bf448934056083e36df76a2cd4cf1c0df8e12d5e42c6fec340",
-      "svg_sha256": "fda63f278fdadb7c8cc83fcf9ba347ad79d6ca06a598d6a195ee6f556e1ec8c4",
+      "source_svg_sha256": "3a7426cbe59758dfb53abe446fce94655213155ff831630d63797c675f703430",
+      "svg_sha256": "72854393ba6f052ddf5eaa197735579c88d3400ca2ffbcbe02a318adaf7e82fd",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -2125,18 +2125,18 @@
       "outputs": [
         {
           "path": "msp-speculation-2/orbital-technosphere-global-authagraph-44-19.052559.pdf",
-          "sha256": "f63b6b30a68a3d000c7314b1452bd8febb376b3882f2c2244278378b3b8d2d73",
-          "bytes": 2784696
+          "sha256": "2450a6b0e8c8a193156fe195d0e3b5c6bcce5d1d6bf9fc2c366faade9cd781ef",
+          "bytes": 2789350
         },
         {
           "path": "msp-speculation-2/orbital-technosphere-global-authagraph-44-19.052559.webp",
-          "sha256": "8ac139f52b9e73daf8bec5ea1e88d04614c640907b99e448f0547b7de3c74609",
-          "bytes": 2564986
+          "sha256": "7d8e4220ed3be581b9d995b88205d91ee3b033a0e837f56bc29ff87ade992cb5",
+          "bytes": 2360818
         },
         {
           "path": "msp-speculation-2/orbital-technosphere-global-authagraph-44-19.052559.svg.gz",
-          "sha256": "d182e95f642871c4e96984358866806304d59b925abb9b4fe881cf597335a7b9",
-          "bytes": 4715813
+          "sha256": "aa00a75c83ab45631da4119944a0823d1ef2e14ee904fefd60926c080759e4ad",
+          "bytes": 4722619
         }
       ]
     },
@@ -2144,8 +2144,8 @@
       "study": "msp-speculation-2",
       "subject": "orbital-technosphere-global",
       "kind": "legend",
-      "source_svg_sha256": "8bb4c51a2dee3544dc63fe408b63faecd6b9a29b8d3bca2cf6d42ea16cc908b7",
-      "svg_sha256": "687c1c96693d939d1a0384f42b6a8116dc2b6157c643ec8a9bcedcbacd98aa8a",
+      "source_svg_sha256": "9e6a49027477afb8359c1123037a94b49383f3c24be85d2a619cf54a61d03505",
+      "svg_sha256": "a5a272773b3cf10208a20dbdb5f265bab49ee3b8d45a0e1b9b88b9809bf789cb",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -2406,18 +2406,18 @@
       "outputs": [
         {
           "path": "msp-speculation-2/orbital-technosphere-global-authagraph-44-19.052559-legend.pdf",
-          "sha256": "ef4cfd95d950e130aa87ed65cc38ed94de5d42a8d669e2a293d12ec137d8409f",
-          "bytes": 32583
+          "sha256": "95ca2a9e6d1fc4cceaf84c4569ac26dafd12918e447010486be441ae13ca6efe",
+          "bytes": 32580
         },
         {
           "path": "msp-speculation-2/orbital-technosphere-global-authagraph-44-19.052559-legend.webp",
-          "sha256": "22c20785ed7eb4c85d26a3c65d56b92684e7a3228125bf82045eb20e4e66fe2f",
-          "bytes": 359148
+          "sha256": "e81a35c93e5bf06da77e02b934120b97e94892bb79f2a262faa1ed0f5e6ca61b",
+          "bytes": 359076
         },
         {
           "path": "msp-speculation-2/orbital-technosphere-global-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "9a9d0f70a250bc7b6bc720609a62f07c2feca836f18986ea5cec370d72c47ff7",
-          "bytes": 8589
+          "sha256": "c26a4cfdd9f0080ed8dc464f669966e652e1e4f99972ea00525c7c06ba12554d",
+          "bytes": 8588
         }
       ]
     },
@@ -3113,8 +3113,8 @@
       "study": "msp-speculation-3",
       "subject": "orbital-technosphere-global",
       "kind": "map",
-      "source_svg_sha256": "9ffa2868604b05bf448934056083e36df76a2cd4cf1c0df8e12d5e42c6fec340",
-      "svg_sha256": "f548412d33c62918b92df53bd7a302f77126e5391c2dd71bce7c6b424b10fe66",
+      "source_svg_sha256": "3a7426cbe59758dfb53abe446fce94655213155ff831630d63797c675f703430",
+      "svg_sha256": "c1a29eabc217ab681cedced09cc5309937aec3ed190ffa50d3ddc2ba1702ffc1",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -3378,18 +3378,18 @@
       "outputs": [
         {
           "path": "msp-speculation-3/orbital-technosphere-global-authagraph-44-19.052559.pdf",
-          "sha256": "201c3a3ee500b9306b752bdbdb593428be8836108738a466264335e4c93ced21",
-          "bytes": 2784698
+          "sha256": "10d907339e8238a3bf29c88d5e64c8cac918e4bf0eba7074d2a7216dde49b8ef",
+          "bytes": 2789359
         },
         {
           "path": "msp-speculation-3/orbital-technosphere-global-authagraph-44-19.052559.webp",
-          "sha256": "a00140a0e5d8ba8623a7577c647729fa4cc5ad71edf0198fee086b5343193a07",
-          "bytes": 2713608
+          "sha256": "f3b5d07b957821c613e4e25e06ffa8092fb0e566611e18532bbc799e8a505212",
+          "bytes": 2521006
         },
         {
           "path": "msp-speculation-3/orbital-technosphere-global-authagraph-44-19.052559.svg.gz",
-          "sha256": "1f3ab3ca8b827ac40d86f79ed739872425cb818bb8113dd86f25bdc748f33491",
-          "bytes": 4715784
+          "sha256": "8da7330797ee00c364a6231acc2b9561ca1859db5d3c9bd4a25643512680c317",
+          "bytes": 4722594
         }
       ]
     },
@@ -3397,8 +3397,8 @@
       "study": "msp-speculation-3",
       "subject": "orbital-technosphere-global",
       "kind": "legend",
-      "source_svg_sha256": "8bb4c51a2dee3544dc63fe408b63faecd6b9a29b8d3bca2cf6d42ea16cc908b7",
-      "svg_sha256": "24e39be3c3a5ee6e6bed1ff019502768b4a3bd049f1017277cc1bca202686df0",
+      "source_svg_sha256": "9e6a49027477afb8359c1123037a94b49383f3c24be85d2a619cf54a61d03505",
+      "svg_sha256": "084d9b3d526a88e0daa98c17018976c336f3d4c88c2ac167a342cc59de5aaa7e",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -3659,17 +3659,17 @@
       "outputs": [
         {
           "path": "msp-speculation-3/orbital-technosphere-global-authagraph-44-19.052559-legend.pdf",
-          "sha256": "3038a4fff32ae8f145b8681f355672411a13416289861a2f4627160871dca0f7",
-          "bytes": 32576
+          "sha256": "7a3e4a50f0bf8be5b6cddc5bebc2ba3c743348fcac7f9ddd925563b6872c01d0",
+          "bytes": 32574
         },
         {
           "path": "msp-speculation-3/orbital-technosphere-global-authagraph-44-19.052559-legend.webp",
-          "sha256": "0394c48d7ca836862d0e99bf4c3cf2a617a417d020d78ce778aac6983f91173a",
-          "bytes": 366098
+          "sha256": "de105949c48354108f280a01c226cde521e9a6e0c7866eebe5de76b2c8be19d2",
+          "bytes": 366012
         },
         {
           "path": "msp-speculation-3/orbital-technosphere-global-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "9339f47ffeadd15fe726c0869af1c65dbb56d408c0641218869eeaf07fcc0c1d",
+          "sha256": "9ff75c7d1bbe7f896c64aed4ef14467c54c03d7f95965fcdbc842127f2266b80",
           "bytes": 8597
         }
       ]

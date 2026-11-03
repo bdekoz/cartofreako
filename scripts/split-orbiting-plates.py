@@ -14,6 +14,7 @@ LAYOUT = importlib.import_module("revise-setouchi-plates")
 SITE = "https://bdekoz.github.io/cartofreako"
 REPO = "https://github.com/bdekoz/cartofreako/blob/main/"
 INKSCAPE = "http://www.inkscape.org/namespaces/inkscape"
+STARLINK_LABEL_SIZE_PT = 9
 
 
 def wrapped(value, size, width, role="Regular"):
@@ -131,7 +132,7 @@ def legend_plate(source, profile, profile_path, map_path, projection):
     y += .35
     notes = [
         "One object per NORAD ID. Overlapping named memberships use profile order.",
-        ("Starlink NORAD IDs are visible at 10 pt in a separate id layer. All name layers are hidden."
+        (f"Starlink NORAD IDs are visible at {STARLINK_LABEL_SIZE_PT} pt in a separate id layer. All name layers are hidden."
          if product == "global" else "Name and locpoint sublayers are independent. Names are hidden by default."),
         "Black x: debris. Sunburst: Starlink. Square: Intelsat. Triangle: remaining Earth observation.",
         "Active-marker opacity records illumination. Debris remains solid black.",
@@ -205,15 +206,16 @@ def split(source_path, map_path, profile_path):
     metadata = source.find(f"{{{NS}}}metadata[@id='orbital-technosphere-metadata']")
     if metadata.get("data-product") == "global":
         starlink = source.find(f"{{{NS}}}g[@id='starlink']")
-        ids = el("g", starlink, id="starlink-id", data_font_size_pt="10")
+        ids = el("g", starlink, id="starlink-id", data_font_size_pt=STARLINK_LABEL_SIZE_PT)
         ids.set("{"+INKSCAPE+"}groupmode", "layer")
         ids.set("{"+INKSCAPE+"}label", "id")
         for name in starlink.find(f"{{{NS}}}g[@id='starlink-name']"):
+            name.set("font-size", str(STARLINK_LABEL_SIZE_PT/72/scale))
             label = copy.deepcopy(name)
             label.set("id", "id-norad-"+label.get("data-norad-id"))
             label.set("data-object-kind", "id")
             # Unitless SVG size is in sheet inches; compensate for map framing.
-            label.set("font-size", str(10/72/scale))
+            label.set("font-size", str(STARLINK_LABEL_SIZE_PT/72/scale))
             label.text = label.get("data-norad-id")
             ids.append(label)
     frame = el("g", id="orbital-image-frame",

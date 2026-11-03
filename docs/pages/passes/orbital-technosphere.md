@@ -163,7 +163,8 @@ circles. Named groups retain their assigned colors. Debris remains solid
 black while retaining illumination metadata.
 
 On the global map, `starlink/id` contains visible NORAD catalog IDs at a
-physical 10 pt after map framing. No other vendor receives an ID layer;
+physical 9 pt after map framing. The hidden Starlink name layer also uses
+9 pt. No other vendor receives an ID layer;
 observer ID layers are absent. The original name layers remain hidden.
 
 Named membership is joined by NORAD ID. If catalogs overlap, the first named
@@ -218,7 +219,7 @@ tests and current snapshot checksums. `scripts/verify-orbiting-layers.py`
 checks unique SVG IDs, exact marker/name pairing, original names, layer nesting,
 visibility and conserved per-group counts against the selected profile. It
 also verifies each marker shape, black debris strokes, matching companion
-keys and attribution, and Starlink-only 10 pt IDs on global plates.
+keys and attribution, and Starlink-only 9 pt IDs on global plates.
 All twelve global/observer map/legend pairs were checked for this snapshot;
 each global product has 17,909 pairs and each observer product has 1,088 pairs.
 

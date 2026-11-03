@@ -96,7 +96,7 @@ def main():
         for item in report["orbital"]:
             item["file"] = str(Path(item["file"]).relative_to(temporary))
     (args.output/"validation.json").write_text(json.dumps(report, indent=2)+"\n")
-    print(f"Verified {report['sheets']} sheets, {report['verified_files']} delivered files, Setouchi framing, source counts, symbols and 10 pt Starlink IDs")
+    print(f"Verified {report['sheets']} sheets, {report['verified_files']} delivered files, Setouchi framing, source counts, symbols and 9 pt Starlink IDs")
 
 
 if __name__ == "__main__":

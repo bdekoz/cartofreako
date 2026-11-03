@@ -107,8 +107,11 @@ def prepare_sources(build, work):
             original = build/"authagraph/composition"/filename
             source = read_svg(original)
             if subject.endswith("global"):
-                source.find(f"{{{NS}}}g[@id='starlink']").append(
-                    copy.deepcopy(read_svg(current).xpath('//*[@id="starlink-id"]')[0]))
+                starlink = source.find(f"{{{NS}}}g[@id='starlink']")
+                current_starlink = read_svg(current).xpath('//*[@id="starlink"]')[0]
+                starlink.remove(starlink.find(f"{{{NS}}}g[@id='starlink-name']"))
+                for suffix in ("name", "id"):
+                    starlink.append(copy.deepcopy(current_starlink.find(f"{{{NS}}}g[@id='starlink-{suffix}']")))
             legend = read_svg(current.with_name(current.stem+"-legend.svg"))
             note = el("g", legend, id="setouchi-framing-note")
             for i, line in enumerate(ORBITAL.wrapped(
@@ -317,7 +320,7 @@ def main():
     page = '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MSP print speculations</title>'
     page += '<style>body{font:17px system-ui;background:#17231c;color:#e5eadc;max-width:1600px;margin:auto;padding:32px}a{color:#c5d99a}h1{font-size:40px}p{max-width:90ch;line-height:1.5}.plates{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px}article{border:1px solid #71816a;padding:16px}img{width:100%;height:auto}section{margin:48px 0}nav{display:flex;gap:24px;flex-wrap:wrap}</style>'
     page += '<h1>MSP print speculations</h1><p>Three studies for the Epson Stylus Pro 9000 on metallic glossy paper, responding to reported low cyan/light magenta, a violet cast in grays, and stronger results with dark backgrounds. These are unmeasured color hypotheses.</p>'
-    page += '<p>Setouchi AuthaGraph framing: 43.5-inch image on a 44-inch sheet, +4.35-inch printed horizontal move and lower-left Antarctic land inset. Each map has a separate legend with attribution. Global Starlink NORAD IDs print at 10 pt.</p>'
+    page += f'<p>Setouchi AuthaGraph framing: 43.5-inch image on a 44-inch sheet, +4.35-inch printed horizontal move and lower-left Antarctic land inset. Each map has a separate legend with attribution. Global Starlink NORAD IDs print at {ORBITAL.STARLINK_LABEL_SIZE_PT} pt.</p>'
     page += '<nav>'+''.join(f'<a href="#{r["id"]}">{r["title"]}</a>' for r in config['studies'])+'</nav>'
     page += '<p><a href="color-recipes.json">Color recipes</a> · <a href="manifest.json">Sources and output checksums</a></p>'+''.join(cards)+'</html>'
     (args.output/"index.html").write_text(page)

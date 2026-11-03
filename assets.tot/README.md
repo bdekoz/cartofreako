@@ -8,7 +8,7 @@ The twelve **Orbital Technosphere / Global** and **Observer** maps and their
 twelve separate legend/attribution previews use the 3 November 2026 snapshot.
 Named constellation layers retain independent names and markers. Symbols
 are black x marks for debris, Starlink sunbursts, Intelsat squares and
-Earth-observation triangles; global Starlink IDs are visible at 10 pt. The
+Earth-observation triangles; global Starlink IDs are visible at 9 pt. The
 [global receipt](orbital-technosphere-20261103.json) and
 [observer receipt](orbital-technosphere-observer-20261103.json) record their
 actual source inputs and product hashes. The base revision above continues

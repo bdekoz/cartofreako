@@ -36,6 +36,8 @@
         "galileo": 31,
         "beidou": 52
       },
+      "visible_starlink_ids": 11155,
+      "starlink_font_size_pt": 9,
       "skipped_stale": 44,
       "failed_propagation": 0
     },
@@ -71,6 +73,8 @@
         "galileo": 13,
         "beidou": 13
       },
+      "visible_starlink_ids": 0,
+      "starlink_font_size_pt": null,
       "skipped_stale": 44,
       "failed_propagation": 0
     },
@@ -106,6 +110,8 @@
         "galileo": 31,
         "beidou": 52
       },
+      "visible_starlink_ids": 11155,
+      "starlink_font_size_pt": 9,
       "skipped_stale": 44,
       "failed_propagation": 0
     },
@@ -141,6 +147,8 @@
         "galileo": 13,
         "beidou": 13
       },
+      "visible_starlink_ids": 0,
+      "starlink_font_size_pt": null,
       "skipped_stale": 44,
       "failed_propagation": 0
     },
@@ -176,6 +184,8 @@
         "galileo": 31,
         "beidou": 52
       },
+      "visible_starlink_ids": 11155,
+      "starlink_font_size_pt": 9,
       "skipped_stale": 44,
       "failed_propagation": 0
     },
@@ -211,6 +221,8 @@
         "galileo": 13,
         "beidou": 13
       },
+      "visible_starlink_ids": 0,
+      "starlink_font_size_pt": null,
       "skipped_stale": 44,
       "failed_propagation": 0
     }

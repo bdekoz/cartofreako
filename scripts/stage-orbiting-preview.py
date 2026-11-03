@@ -81,7 +81,7 @@ def main():
                    "generation-style.json", "assets/fonts/atkinson-hyperlegible/provenance.json")],
                "layers": "constellation/name,locpoint",
                "namesVisible": profile["display"].get("show_satellite_names", False),
-               "starlinkIds": {"visible": args.product == "global", "fontSizePt": 10},
+               "starlinkIds": {"visible": args.product == "global", "fontSizePt": 9},
                "layout": "setouchi-st2-separate-map-legend",
                "namedGroups": [g["constellation"] for g in profile["catalogs"]["groups"] if "constellation" in g],
                "products": products}

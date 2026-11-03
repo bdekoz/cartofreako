@@ -115,7 +115,9 @@ def verify(path, profile, names):
             assert label.tag == SVG + "text" and label.text == label.get("data-norad-id")
             assert label.get("data-display-group") == "starlink"
             assert label.get("data-locpoint-id") == dot_ids[label.text].get("id")
-            assert math.isclose(float(label.get("font-size"))*scale*72, 10)
+            assert math.isclose(float(label.get("font-size"))*scale*72, 9)
+        for label in by_id["starlink-name"]:
+            assert math.isclose(float(label.get("font-size"))*scale*72, 9)
     named = {g["constellation"]["id"] for g in profile["catalogs"]["groups"] if "constellation" in g}
     assert named.issubset(counts)
     assert sum(counts.values()) == len(dots)
@@ -139,9 +141,11 @@ def verify(path, profile, names):
         if count or ident in named:
             verify_marker(legend_ids["legend-" + ident])
     print(f"{path.name}: {len(dots)} markers and paired names, {len(named)} named groups, "
-          f"{len(ids)} Starlink IDs at 10 pt; symbols and separate attribution legend verified")
+          f"{len(ids)} Starlink IDs at 9 pt; symbols and separate attribution legend verified")
     return {"file": str(path), "timestamp": profile["timestamp"], "objects": len(dots),
-            "groups": counts, "skipped_stale": int(metadata.get("data-skipped-stale")),
+            "groups": counts, "visible_starlink_ids": len(ids),
+            "starlink_font_size_pt": 9 if ids else None,
+            "skipped_stale": int(metadata.get("data-skipped-stale")),
             "failed_propagation": int(metadata.get("data-failed-propagation"))}
 
 
