@@ -1,0 +1,58 @@
+{
+  "schema": "cartofreako-randoma11y-pairs-v1",
+  "source": "https://randoma11y.com/",
+  "captured_date": "2026-11-03",
+  "method": "Pairs generated with the public Randoma11y Generate control, HEX format and its default APCA mode. Values and share URLs captured from the browser DOM; dark member selected for the map ground. sRGB contrast ratios below calculated independently, not taken as a print guarantee.",
+  "application_bundle": "https://randoma11y.com/assets/index-BjxfMyFz.js",
+  "application_bundle_sha256": "6191054d2da0bb18741aeff4cb3ee028ff1c59b37a3cfebbe4f761786ab33ce8",
+  "pairs": [
+    {
+      "id": "wine-amber",
+      "name": "Wine / amber",
+      "url": "https://randoma11y.com/%23fcc553/%23240413",
+      "original_background": "#fcc553",
+      "original_foreground": "#240413",
+      "original_css": "--bg: #fcc553; --fg: #240413; --bg-alt: #240413; --fg-alt: #fcc553; --app-radius: 0px; background-color: rgb(252, 197, 83);",
+      "ground": "#240413",
+      "foreground": "#fcc553",
+      "reversed": true,
+      "srgb_contrast_ratio": 12.0264
+    },
+    {
+      "id": "ultramarine-porcelain",
+      "name": "Ultramarine / porcelain",
+      "url": "https://randoma11y.com/%23193fb8/%23f5eae7",
+      "original_background": "#193fb8",
+      "original_foreground": "#f5eae7",
+      "original_css": "--bg: #193fb8; --fg: #f5eae7; --bg-alt: #f5eae7; --fg-alt: #193fb8; --app-radius: 0px; background-color: rgb(25, 63, 184);",
+      "ground": "#193fb8",
+      "foreground": "#f5eae7",
+      "reversed": false,
+      "srgb_contrast_ratio": 7.284
+    },
+    {
+      "id": "plum-ice",
+      "name": "Plum / ice blue",
+      "url": "https://randoma11y.com/%2373def9/%232a0c41",
+      "original_background": "#73def9",
+      "original_foreground": "#2a0c41",
+      "original_css": "--bg: #73def9; --fg: #2a0c41; --bg-alt: #2a0c41; --fg-alt: #73def9; --app-radius: 0px; background-color: rgb(115, 222, 249);",
+      "ground": "#2a0c41",
+      "foreground": "#73def9",
+      "reversed": true,
+      "srgb_contrast_ratio": 11.0361
+    },
+    {
+      "id": "midnight-champagne",
+      "name": "Midnight blue / champagne",
+      "url": "https://randoma11y.com/%23ead784/%23010434",
+      "original_background": "#ead784",
+      "original_foreground": "#010434",
+      "original_css": "--bg: #ead784; --fg: #010434; --bg-alt: #010434; --fg-alt: #ead784; --app-radius: 0px; background-color: rgb(234, 215, 132);",
+      "ground": "#010434",
+      "foreground": "#ead784",
+      "reversed": true,
+      "srgb_contrast_ratio": 13.6222
+    }
+  ]
+}

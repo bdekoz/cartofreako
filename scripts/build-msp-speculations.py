@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-"""Build three documented metallic-paper color studies in the Setouchi frame."""
+"""Build documented metallic-paper color and layout studies in the Setouchi frame."""
 
 import argparse
-import colorsys
 from concurrent.futures import ThreadPoolExecutor
 import copy
 import gzip
@@ -113,6 +112,9 @@ def prepare_sources(build, work):
                 for suffix in ("name", "id"):
                     starlink.append(copy.deepcopy(current_starlink.find(f"{{{NS}}}g[@id='starlink-{suffix}']")))
             legend = read_svg(current.with_name(current.stem+"-legend.svg"))
+            for label in legend.xpath('//*[local-name()="text"]'):
+                if label.text:
+                    label.text = label.text.replace("white margins", "sheet margins")
             note = el("g", legend, id="setouchi-framing-note")
             for i, line in enumerate(ORBITAL.wrapped(
                     "Setouchi AuthaGraph: +4.35-inch printed horizontal move on a 43.5-inch image. "
@@ -137,6 +139,77 @@ def prepare_sources(build, work):
     return sources
 
 
+def capability_sources(directory, work, study):
+    """Reuse the audited, framed capability map and its complete companion legend."""
+    manifest = json.loads((directory/"manifest.json").read_text())
+    evidence = directory/"capability-evidence.json"
+    assert digest(evidence) == manifest["evidence_sha256"]
+    result = {"input": evidence, "framing": manifest["framing"][study],
+              "capability_study": study, "capability_manifest_sha256": digest(directory/"manifest.json")}
+    for kind in ("map", "legend"):
+        record = next(r for r in manifest["records"] if r["study"] == study and r["kind"] == kind)
+        archive = next(f for f in record["outputs"] if f["path"].endswith(".svg.gz"))
+        source = directory/archive["path"]
+        assert digest(source) == archive["sha256"]
+        target = work/"capability-sources"/source.name.removesuffix(".gz")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(gzip.decompress(source.read_bytes()))
+        assert digest(target) == record["svg_sha256"]
+        result[kind] = target
+    return result
+
+
+def scale_sunburst(marker, factor):
+    """Scale vertices about their centroid without moving the satellite position."""
+    assert marker.get("data-marker-shape") == "sunburst"
+    tokens = marker.get("d").split()
+    vertices = [(float(tokens[i]), float(tokens[i+1])) for i in range(1, 48, 3)]
+    assert len(tokens) == 49 and tokens[::3] == ["M"]+["L"]*15+["Z"]
+    center = [sum(v[axis] for v in vertices)/16 for axis in (0, 1)]
+    for i, vertex in enumerate(vertices):
+        tokens[1+3*i:3+3*i] = [f"{c+factor*(v-c):.12g}" for v, c in zip(vertex, center)]
+    marker.set("d", " ".join(tokens))
+    marker.set("data-marker-linear-scale", str(factor))
+
+
+def apply_variant(root, recipe, subject, kind):
+    variant = recipe.get("variant", {})
+    if not variant or not subject.startswith("orbital"):
+        return {}
+    factor = variant["starlink_marker_linear_scale"]
+    for marker in root.xpath('//*[@data-display-group="starlink" and @data-marker-shape]'):
+        scale_sunburst(marker, factor)
+    global_plate = subject.endswith("global")
+    if global_plate and kind == "map":
+        starlink = root.xpath('//*[@id="starlink"]')[0]
+        for suffix in ("name", "id"):
+            for label in starlink.find(f"{{{NS}}}g[@id='starlink-{suffix}']"):
+                label.set("font-size", str(variant["global_starlink_font_size_pt"]/72/SCALE))
+        # Paint Starlink text before its own symbols and every other foreground group.
+        locpoints = starlink.find(f"{{{NS}}}g[@id='starlink-locpoint']")
+        starlink.remove(locpoints)
+        starlink.append(locpoints)
+        parent = starlink.getparent()
+        parent.remove(starlink)
+        land = parent.find(f"{{{NS}}}g[@id='terrestrial-land']")
+        assert land is not None
+        parent.insert(parent.index(land)+1, starlink)
+    if kind == "legend":
+        if global_plate:
+            for label in root.xpath('//*[local-name()="text"]'):
+                if label.text:
+                    label.text = label.text.replace("9 pt", f"{variant['global_starlink_font_size_pt']} pt")
+        note = el("g", root, id="msp-variant-note", data_presentation_only="true")
+        lines = ["Starlink sunbursts: 1.5× linear size on both orbital maps."]
+        if global_plate:
+            lines += ["Starlink text: 7 pt; all satellite markers paint above it.",
+                      "All terrestrial land, including Antarctica, paints below the data."]
+        for i, line in enumerate(lines):
+            text(note, 42.38, 12.15+i*.32, line, 14/72, text_anchor="end")
+    el("metadata", root, id="msp-layout-variant").text = json.dumps(variant, sort_keys=True)
+    return variant
+
+
 def rgb(value):
     if re.fullmatch(r"#[0-9a-fA-F]{6}", value):
         return tuple(int(value[i:i+2], 16) for i in (1, 3, 5))
@@ -148,20 +221,44 @@ def adjusted(value, recipe):
     original = rgb(value)
     if original is None or max(original) < 5:
         return value
-    if max(original)-min(original) < 15:
-        return recipe["neutral"]
-    c, m, y = (1-v/255 for v in original)
-    k = min(c, m, y)
-    c = min(1, k+(c-k)*(1+recipe["cyan_emphasis"]))
-    m = k+(m-k)*(1-recipe["magenta_reduction"])
-    hue, light, saturation = colorsys.rgb_to_hls(1-c, 1-m, 1-y)
-    result = colorsys.hls_to_rgb(hue, max(light, recipe["foreground_lightness_floor"]),
-                                saturation*recipe["saturation_factor"])
-    return "#"+"".join(f"{round(channel*255):02x}" for channel in result)
+    return recipe["text"]
+
+
+def palette_metadata(root, recipe):
+    for node in root.xpath('//*[@id="msp-color-recipe"]'):
+        node.getparent().remove(node)
+    root.set("data-color-study", recipe["title"])
+    el("metadata", root, id="msp-color-recipe").text = json.dumps(recipe, sort_keys=True)
+
+
+def print_note(root, recipe):
+    for node in root.xpath('//*[@id="msp-print-note"]'):
+        node.getparent().remove(node)
+    note = el("g", root, id="msp-print-note", data_presentation_only="true")
+    text(note, .8, 17.0, recipe["title"]+" / "+recipe["palette"], 22/72,
+         font_weight="700").set("fill", recipe["text"])
+    lines = [f'Randoma11y: ground {recipe["background"]}; marks/type {recipe["text"]}. sRGB contrast {recipe["srgb_contrast_ratio"]:.2f}:1 (screen only).',
+             recipe["source_url"],
+             "Epson Stylus Pro 9000 / metallic glossy paper / cyan and light magenta reported low; grays reportedly print violet.",
+             "Intended RGB hues; final printed hue is unmeasured. No green correction, ink separation or metallic reflection simulation."]
+    y = 17.45
+    for line in lines:
+        for row in ORBITAL.wrapped(line, 14/72, 27):
+            text(note, .8, y, row, 14/72).set("fill", recipe["text"])
+            y += .27
 
 
 def apply_palette(root, recipe, kind):
     translations = {}
+    # Capability sheets already have semantic ground/land/foreground colors.
+    # Preserve those roles when adopting the petal study in a different pair.
+    original_recipe = root.xpath('//*[@id="msp-color-recipe"]')
+    roles = {}
+    if original_recipe:
+        previous = json.loads(original_recipe[0].text)
+        roles = {previous[key]: recipe[key] for key in ("background", "land", "text", "neutral", "halo")}
+    def paint(value):
+        return roles.get(value, adjusted(value, recipe))
     for node in root.iter():
         if not isinstance(node.tag, str):
             continue
@@ -172,11 +269,11 @@ def apply_palette(root, recipe, kind):
         for attr in ("fill", "stroke"):
             if node.get(attr):
                 old = node.get(attr)
-                node.set(attr, adjusted(old, recipe))
+                node.set(attr, paint(old))
                 translations[old] = node.get(attr)
             if attr in current:
                 old = current[attr]
-                current[attr] = adjusted(old, recipe)
+                current[attr] = paint(old)
                 translations[old] = current[attr]
         if current:
             node.set("style", ";".join(k+":"+v for k, v in current.items()))
@@ -205,19 +302,13 @@ def apply_palette(root, recipe, kind):
         else:
             marker.addprevious(halo)
         set_style(marker, fill_opacity=0, stroke="rgb(0,0,0)", stroke_opacity=1)
-    root.set("data-color-study", recipe["title"])
-    el("metadata", root, id="msp-color-recipe").text = json.dumps(recipe, sort_keys=True)
+    palette_metadata(root, recipe)
+    for metadata in root.xpath('//*[@id="groundstation-capability-metadata"]'):
+        content = json.loads(metadata.text)
+        content["palette"] = recipe
+        metadata.text = json.dumps(content, sort_keys=True)
     if kind == "legend":
-        note = el("g", root, id="msp-print-note", data_presentation_only="true")
-        text(note, .8, 17.0, recipe["title"]+" / "+recipe["palette"], 22/72, font_weight="700").set("fill", recipe["text"])
-        lines = ["Metallic glossy paper / Epson Stylus Pro 9000 / cyan and light magenta reported low.",
-                 "Green-biased neutrals respond to the reported violet gray cast. Dark backgrounds follow the supplied print observation.",
-                 "Unmeasured color study. The saved recipe does not predict ink-channel output or simulate metallic reflection."]
-        y = 17.45
-        for line in lines:
-            for row in ORBITAL.wrapped(line, 14/72, 27):
-                text(note, .8, y, row, 14/72).set("fill", recipe["text"])
-                y += .27
+        print_note(root, recipe)
     return translations
 
 
@@ -226,7 +317,7 @@ def payload(root):
     for node in root.iter():
         if not isinstance(node.tag, str) or node.get("data-presentation-only") == "true" or any(a.get("data-presentation-only") == "true" for a in node.iterancestors()):
             continue
-        if E.QName(node).localname not in ("g", "path", "circle", "rect", "text", "line", "use"):
+        if E.QName(node).localname not in ("g", "path", "circle", "rect", "text", "line", "use", "polygon", "polyline", "ellipse"):
             continue
         attrs = {k: v for k, v in node.attrib.items() if k not in ("style", "fill", "stroke", "fill-opacity", "stroke-opacity", "stroke-width", "opacity")}
         records.append((node.tag, attrs, node.text if E.QName(node).localname == "text" else None))
@@ -238,11 +329,13 @@ def main():
     parser.add_argument("--build-root", type=Path, required=True)
     parser.add_argument("--output", type=Path, default=ROOT/"output/msp-speculations-20261103")
     parser.add_argument("--work", type=Path, default=ROOT/"build/msp-speculations-20261103")
+    parser.add_argument("--capability-root", type=Path, default=ROOT/"output/groundstation-capabilities-20261103")
     parser.add_argument("--workers", type=int, default=2)
     args = parser.parse_args()
     register_fonts()
     config = json.loads(CONFIG.read_text())
     sources = prepare_sources(args.build_root, args.work)
+    capability = capability_sources(args.capability_root, args.work, "option-3-petals")
     env = font_environment()
     manifest_path = args.output/"manifest.json"
     previous = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
@@ -251,26 +344,34 @@ def main():
     records = []
     jobs = []
     for recipe in config["studies"]:
-        for subject, inputs in sources.items():
+        for subject, baseline in sources.items():
+            inputs = (capability if subject == "network-groundstations" and
+                      recipe.get("variant", {}).get("groundstation_study") == "option-3-petals" else baseline)
             for kind in ("map", "legend"):
                 source = inputs[kind]
                 root = read_svg(source)
+                variant = apply_variant(root, recipe, subject, kind)
                 before = payload(root)
                 translations = apply_palette(root, recipe, kind)
                 assert payload(root) == before, "Color study changed source geometry, IDs, names or type"
                 svg = args.work/recipe["id"]/"authagraph/svg"/source.name
                 save(root, svg)
-                jobs.append((recipe, subject, kind, svg, source, translations))
+                jobs.append((recipe, subject, kind, svg, source, inputs, variant, translations))
 
     def export(job):
-        recipe, subject, kind, svg, source, translations = job
+        recipe, subject, kind, svg, source, inputs, variant, translations = job
+        result = {"study": recipe["id"], "subject": subject, "kind": kind,
+                  "source_svg_sha256": digest(source), "svg_sha256": digest(svg),
+                  "framing": inputs["framing"], "color_replacements": translations,
+                  "layout_variant": variant, "capability_study": inputs.get("capability_study"),
+                  "palette_preserves_geometry_ids_names_and_type": True}
         prior = cached.get((recipe["id"], subject, kind))
         if (prior and prior["svg_sha256"] == digest(svg)
                 and previous.get("font_sha256") == font_sha256
                 and all((args.output/f["path"]).is_file()
                         and digest(args.output/f["path"]) == f["sha256"] for f in prior["outputs"])):
             print("Cached", recipe["id"], subject, kind, flush=True)
-            return prior
+            return {**result, "outputs": prior["outputs"]}
         directory = args.output/recipe["id"]
         directory.mkdir(parents=True, exist_ok=True)
         pdf = directory/(svg.stem+".pdf")
@@ -290,10 +391,7 @@ def main():
             with gzip.GzipFile(fileobj=output, mode="wb", mtime=0, filename="") as archive:
                 shutil.copyfileobj(stream, archive)
         outputs = [{"path": str(p.relative_to(args.output)), "sha256": digest(p), "bytes": p.stat().st_size} for p in (pdf, webp, compressed)]
-        result = {"study": recipe["id"], "subject": subject, "kind": kind,
-                  "source_svg_sha256": digest(source), "svg_sha256": digest(svg),
-                  "framing": sources[subject]["framing"], "color_replacements": translations,
-                  "geometry_ids_names_and_type_preserved": True, "outputs": outputs}
+        result["outputs"] = outputs
         print("Exported", recipe["id"], subject, kind, flush=True)
         return result
 
@@ -301,14 +399,28 @@ def main():
         records = list(executor.map(export, jobs))
     manifest = {"schema": "cartofreako-msp-delivery-v1", "configuration": config,
                 "recipe_sha256": digest(CONFIG), "builder_sha256": digest(Path(__file__)),
+                "framing_sha256": digest(ROOT/"scripts/setouchi_world_framing.py"),
+                "palette_provenance_sha256": digest(ROOT/config["palette_provenance"]),
                 "font_sha256": font_sha256,
                 "inputs": {subject: {"path": str(v["input"].resolve().relative_to(ROOT)), "sha256": digest(v["input"])} for subject, v in sources.items()},
+                "capability_input": {"study": capability["capability_study"],
+                                     "manifest_path": str((args.capability_root/"manifest.json").resolve().relative_to(ROOT)),
+                                     "manifest_sha256": capability["capability_manifest_sha256"],
+                                     "evidence_path": str(capability["input"].resolve().relative_to(ROOT)),
+                                     "evidence_sha256": digest(capability["input"])},
                 "records": records}
     (args.output/"manifest.json").write_text(json.dumps(manifest, indent=2)+"\n")
     (args.output/"color-recipes.json").write_text(json.dumps(config, indent=2)+"\n")
+    (args.output/"palette-sources.json").write_bytes((ROOT/config["palette_provenance"]).read_bytes())
     cards = []
     for recipe in config["studies"]:
-        cards.append(f'<section id="{recipe["id"]}"><h2>{recipe["title"]} · {recipe["palette"]}</h2><div class="plates">')
+        cards.append(f'<section id="{recipe["id"]}" style="--ground:{recipe["background"]};--ink:{recipe["text"]}"><h2>{recipe["title"]} · {recipe["palette"]}</h2>'
+                     f'<p><a href="{recipe["source_url"]}">Randoma11y pair</a>: ground {recipe["background"]}, marks and type {recipe["text"]}. '
+                     f'Source sRGB contrast {recipe["srgb_contrast_ratio"]:.2f}:1; printed contrast and hue remain unmeasured.</p>')
+        if recipe.get("variant"):
+            cards.append('<p>Petal capability triangles on the groundstation map. Both orbital maps use 1.5× Starlink sunbursts; '
+                         'global Starlink IDs use 7 pt type beneath all satellite markers. Antarctic land paints below labels and marks.</p>')
+        cards.append('<div class="plates">')
         for subject in config["subjects"]:
             stem = recipe["id"]+"/"+subject+SUFFIX
             title = subject.replace("-", " ").title()
@@ -318,11 +430,11 @@ def main():
                          f'<p><a href="{stem}-legend.pdf">Legend PDF</a> · <a href="{stem}-legend.svg.gz">Legend SVG (gzip)</a></p></article>')
         cards.append('</div></section>')
     page = '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MSP print speculations</title>'
-    page += '<style>body{font:17px system-ui;background:#17231c;color:#e5eadc;max-width:1600px;margin:auto;padding:32px}a{color:#c5d99a}h1{font-size:40px}p{max-width:90ch;line-height:1.5}.plates{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px}article{border:1px solid #71816a;padding:16px}img{width:100%;height:auto}section{margin:48px 0}nav{display:flex;gap:24px;flex-wrap:wrap}</style>'
-    page += '<h1>MSP print speculations</h1><p>Three studies for the Epson Stylus Pro 9000 on metallic glossy paper, responding to reported low cyan/light magenta, a violet cast in grays, and stronger results with dark backgrounds. These are unmeasured color hypotheses.</p>'
-    page += f'<p>Setouchi AuthaGraph framing: 43.5-inch image on a 44-inch sheet, +4.35-inch printed horizontal move and lower-left Antarctic land inset. Each map has a separate legend with attribution. Global Starlink NORAD IDs print at {ORBITAL.STARLINK_LABEL_SIZE_PT} pt.</p>'
+    page += '<style>body{font:17px system-ui;background:#121119;color:#f5eae7;max-width:1600px;margin:auto;padding:32px}a{color:inherit}h1{font-size:40px}p{max-width:90ch;line-height:1.5}.plates{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px}article{border:1px solid currentColor;padding:16px}img{width:100%;height:auto}section{margin:48px 0;padding:24px;background:var(--ground);color:var(--ink)}nav{display:flex;gap:24px;flex-wrap:wrap}</style>'
+    page += '<h1>MSP print speculations</h1><p>Four Randoma11y color studies for the Epson Stylus Pro 9000 on metallic glossy paper. The new pairs replace the green palettes. Cyan and light magenta are reported low, grays print violet, and dark backgrounds work better. These are intended RGB design choices, without a measured prediction of the printed hue.</p>'
+    page += f'<p>Setouchi AuthaGraph framing: 43.5-inch image on a 44-inch sheet, +4.35-inch printed horizontal move and lower-left Antarctic land inset beneath the data. Each map has a separate legend with attribution. Global Starlink NORAD IDs print at {ORBITAL.STARLINK_LABEL_SIZE_PT} pt in studies 1–3 and 7 pt in study 4.</p>'
     page += '<nav>'+''.join(f'<a href="#{r["id"]}">{r["title"]}</a>' for r in config['studies'])+'</nav>'
-    page += '<p><a href="color-recipes.json">Color recipes</a> · <a href="manifest.json">Sources and output checksums</a></p>'+''.join(cards)+'</html>'
+    page += '<p><a href="color-recipes.json">Color recipes</a> · <a href="palette-sources.json">Randoma11y provenance</a> · <a href="manifest.json">Sources and output checksums</a> · <a href="../groundstation-capabilities-20261103/capability-evidence.json">Capability source fields and placement</a></p>'+''.join(cards)+'</html>'
     (args.output/"index.html").write_text(page)
     print(f"Completed {len(records)} map/legend sheets: {args.output/'index.html'}")
 

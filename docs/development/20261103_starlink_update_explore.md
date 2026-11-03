@@ -838,3 +838,128 @@ The build target generates the current native groundstation input if
 needed, runs the interpretation tests, exports all six capability sheets,
 and validates the delivery. The original KML and high-fidelity GeoJSON
 are inputs and are not rewritten by the study builder.
+
+## Randoma11y redesign and MSP speculation 4 / subsequent decisions
+
+The user asked whether the green represented the intended design or the
+predicted printed result. Green was an earlier design choice and an
+unmeasured attempt to counter the reported violet cast; it was never a
+measured prediction of the final hue. The user subsequently rejected green,
+requested a different Randoma11y pair for each capability option, and
+extended the redesign to the MSP studies. The current recipes supersede
+the green palettes described above; those descriptions remain a record of
+the earlier proofs.
+
+Use each selected pair's dark member for the ground and its light member
+for foreground marks and type. This was the stated working assumption
+after the optional palette-role question received no answer. Do not apply
+the earlier CMY/green adjustment to these new colors. Land is a 16% blend
+of foreground into ground, and muted context a 68% blend. Debris remains
+black x marks with a light backing stroke for contrast. Color differences
+between vendors give way to the selected foreground hue; editable vendor
+groups, marker shapes and illumination opacity remain available.
+
+These pairs were generated on the public Randoma11y website using HEX
+format and its default APCA mode. Original browser values, CSS, share
+URLs, orientation and application-bundle hash are retained in
+[the palette source receipt](../../config/randoma11y-pairs-20261103.json).
+The contrast ratios below are independently calculated for the exact sRGB
+pair. They describe the source colors, not metallic-paper contrast or
+accessibility of the complete plate. Printed hue remains unmeasured with
+low cyan and light magenta; blue, violet and amber are design intentions.
+
+| Study / capability option | Design | Ground | Marks and type | Source sRGB contrast |
+| --- | --- | --- | --- | ---: |
+| MSP 1 / option 1 spokes | [Wine / amber](https://randoma11y.com/%23fcc553/%23240413) | `#240413` | `#fcc553` | 12.03:1 |
+| MSP 2 / option 2 rings | [Ultramarine / porcelain](https://randoma11y.com/%23193fb8/%23f5eae7) | `#193fb8` | `#f5eae7` | 7.28:1 |
+| MSP 3 / option 3 petals | [Plum / ice blue](https://randoma11y.com/%2373def9/%232a0c41) | `#2a0c41` | `#73def9` | 11.04:1 |
+| MSP 4 / adopted petals | [Midnight blue / champagne](https://randoma11y.com/%23ead784/%23010434) | `#010434` | `#ead784` | 13.62:1 |
+
+MSP speculation 4 contains all three subjects with separate map and
+legend/attribution sheets:
+
+- **Orbital global:** Starlink's visible NORAD ID layer and hidden full-name
+  layer use 7 physical points. Keep the editable `starlink/name`,
+  `starlink/id` and `starlink/locpoint` children. Paint the text first,
+  then Starlink's own sunbursts, then every other satellite marker group.
+  Other vendors retain their hidden names and have no visible ID layer.
+- **Both orbital plates:** Starlink uses the sunburst shape at 1.5 times its
+  previous linear dimensions, centered on the same satellite position.
+  Scale the corresponding legend key too. Observer name visibility and
+  type size retain their earlier settings.
+- **Groundstations:** adopt the complete `option-3-petals` capability
+  visualization, including 590 antenna triangles, 66 PoPs, 124 supplied
+  links, all size/status conventions, source-position tethers and separate
+  attribution legend. Apply MSP 4's midnight/champagne pair to it.
+- **Land order:** Antarctica is basemap artwork, like the other continents.
+  Move its inset before the cyclic source window in the shared Setouchi
+  framing function so labels and vectors draw above it. Regenerate the
+  current MSP and capability studies with that ordering. Keep the
+  43.5-inch image and +4.35-inch printed horizontal adjustment.
+
+The staged implementation and review plan is:
+
+1. Save the four actual Randoma11y pairs and replace the green recipes.
+   Give each capability option its own pair without changing its records,
+   antenna interpretation, triangle sizes or CDN grouping/placement.
+2. Correct the shared land ordering. Add the MSP 4 font, marker and paint
+   order variant. Reuse the audited petal map and its full legend as MSP 4's
+   groundstation source rather than reconstructing a separate inventory.
+3. Regenerate six capability sheets and 24 MSP sheets as vector PDF,
+   editable SVG.gz and WebP. Update review pages, color/source receipts and
+   pass documentation; retain the existing standard products separately.
+4. Verify pair provenance and actual SVG paint, record accounting,
+   unchanged capability geometry, 7/9 pt global text, 1.5× sunburst geometry
+   and fixed centroids, marker order, Antarctic order, page dimensions and
+   delivery hashes. Inspect rendered maps, legends and review pages.
+5. Append validation results here, then commit and push under the user's
+   standing instruction.
+
+### Delivery and validation
+
+The [MSP review page](../../output/msp-speculations-20261103/index.html)
+now contains four studies and 24 map/legend sheets. The
+[capability review page](../../output/groundstation-capabilities-20261103/index.html)
+contains the three recolored pattern pairs, with enlarged pattern keys.
+All 30 sheets have PDF, SVG.gz and WebP companions: 90 delivered files.
+The source pairs are linked on the review pages and printed on the legends.
+
+Validation passed for all output hashes, unique SVG IDs, source accounting,
+cyclic framing, palette receipt and actual SVG paint, and single-page PDF
+dimensions of 44 × 19.052559 inches. The capability records, summary and
+placement were compared with the preceding committed study and are
+identical; the 538 sized / 52 unknown split remains unchanged. Nine focused
+source-interpretation tests also pass.
+
+MSP 4's groundstation map and legend preserve option 3's geometry and
+text outside the color note. Both orbital variants preserve satellite
+positions and non-Starlink marker geometry. All **11,155 global** and
+**549 observer** Starlink sunbursts, plus their legend keys, are exactly
+1.5× in linear size about the original centroids. The global name/ID text
+measures 7 physical points; studies 1–3 remain 9 points. The observer's
+hidden name geometry and type size are unchanged. The final SVG ordering
+puts all global satellite markers after Starlink text and all Antarctic
+land before the data window. Black debris x marks and the existing shape
+rules remain intact.
+
+Rendered maps, legends and both complete browser overviews were inspected.
+All 30 WebP images loaded at their expected 3840-pixel width, with no browser
+runtime errors or horizontal overflow at the reviewed 1600-pixel viewport.
+The review pages' 127 local links/image references resolve. Sampled MSP 4
+PDFs embed Atkinson Hyperlegible. The documentation checker passed 166
+files and 1,771 local links; the existing ToT snapshot check also passed.
+These checks validate source files and digital delivery, not the final
+printed hue on the unmeasured printer/paper combination.
+
+```sh
+make msp-speculations \
+  GENERATED_DIR=build/orbital-technosphere-20261103 \
+  CXX=/usr/bin/g++ ASSET_JOBS=2
+python3 scripts/verify-msp-speculations.py
+python3 scripts/verify-groundstation-capabilities.py
+```
+
+The MSP target now builds and verifies the capability studies before using
+the petal source. Its receipt records the adopted capability manifest and
+evidence hashes, and distinguishes the deliberate MSP 4 geometry/type
+changes from the subsequent color-only operation.

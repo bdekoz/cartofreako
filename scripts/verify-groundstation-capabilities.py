@@ -16,6 +16,7 @@ from cartofreako_style import STYLE, hexoffsets
 from groundstation_capabilities import normalize, CAPABILITIES
 from legend_informatics import ROOT, NS, WIDTH, HEIGHT, digest
 from setouchi_world_framing import SCALE, SHIFT
+from print_palette_validation import verify_palette, verify_land_order
 
 
 def main():
@@ -28,6 +29,11 @@ def main():
     config = json.loads((ROOT/"config/groundstation-capabilities-20261103.json").read_text())
     assert manifest["configuration"] == evidence["configuration"] == config
     assert manifest["evidence_sha256"] == digest(evidence_path)
+    palette_source = ROOT/"config/randoma11y-pairs-20261103.json"
+    assert manifest["palette_provenance_sha256"] == digest(palette_source)
+    provenance = json.loads(palette_source.read_text())
+    recipes = {r["id"]: r for r in json.loads((ROOT/"config/msp-speculations-20261103.json").read_text())["studies"]}
+    assert manifest["palettes"] == {s["id"]: recipes[s["palette"]] for s in config["studies"]}
     for path, sha in manifest["scripts"].items():
         assert digest(ROOT/path) == sha, path
     assert digest(ROOT/"assets/fonts/atkinson-hyperlegible/provenance.json") == manifest["font_sha256"]
@@ -82,7 +88,8 @@ def main():
               "equilateral_centered_triangles": 590, "overlapping_mark_bounds": 0,
               "checks": ["source identity and raw field preservation", "blank duplicate reconciliation", "no summed bands",
                          "CDN grid membership and shared hex lattice", "proportional radius with explicit floor and unknown size",
-                         "triangle geometry and cell containment", "separate map and attribution sheets", "single-page physical PDF dimensions"]}
+                         "triangle geometry and cell containment", "separate map and attribution sheets", "single-page physical PDF dimensions",
+                         "distinct Randoma11y pairs and actual SVG colors", "Antarctic land below source data"]}
     for record in manifest["records"]:
         root = None
         for output in record["outputs"]:
@@ -106,6 +113,7 @@ def main():
         identifiers = root.xpath("//*[@id]/@id")
         assert len(identifiers) == len(set(identifiers))
         assert root.get("data-sheet-kind") == record["kind"]
+        verify_palette(root, manifest["palettes"][record["study"]], provenance)
         if record["kind"] == "legend":
             assert root.xpath('//*[@id="capability-legend-ledger"]')[0].get("data-receipt-sha256") == digest(evidence_path)
             assert set(root.xpath('//*[@data-marker-shape="equilateral-triangle"]/@data-capability')) == set(CAPABILITIES)
@@ -115,6 +123,7 @@ def main():
             continue
         assert float(root.get("data-cyclic-shift-in")) == SHIFT
         assert root.xpath('//*[@id="antarctica-consolidated-inset"]')
+        verify_land_order(root)
         frame = root.xpath('//*[@id="st2-image-frame"]')[0]
         assert f"scale({SCALE})" in frame.get("transform")
         assert len(root.xpath('//*[@id="st2-image-window"]/*[local-name()="use"]')) == 3

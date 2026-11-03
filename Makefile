@@ -2604,9 +2604,10 @@ generate-orbiting-artifacts: $(ORBITING_SVGS) $(ORBITING_PDFS) \
 MSP_OUTPUT ?= output/msp-speculations-20261103
 .PHONY: msp-speculations
 msp-speculations: generate-orbiting-authagraph \
-		generate-network-groundstations-authagraph build/generation-context
+		groundstation-capability-studies build/generation-context
 	python3 scripts/build-msp-speculations.py --build-root "$(GENERATED_DIR)" \
-		--output "$(MSP_OUTPUT)" --workers "$(ASSET_JOBS)"
+		--output "$(MSP_OUTPUT)" --capability-root "$(GROUNDSTATION_CAPABILITY_OUTPUT)" \
+		--workers "$(ASSET_JOBS)"
 	python3 scripts/verify-msp-speculations.py --output "$(MSP_OUTPUT)" \
 		--profile "$(ORBITING_PROFILE)"
 

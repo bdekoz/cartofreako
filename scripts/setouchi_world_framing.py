@@ -206,12 +206,14 @@ def make_plate(source, destination, legend_name):
     el('rect', clip, width=WIDTH, height=HEIGHT)
     frame = el('g', doc, id='st2-image-frame', transform=f'translate({DX} {DY}) scale({SCALE})')
     el('rect', frame, id='st2-image-background', width=WIDTH, height=HEIGHT, fill=collected.background)
+    # The editorial land inset is basemap artwork. Paint it before the cyclic
+    # source window so source labels and vector observations remain above it.
+    if len(inset):
+        frame.append(inset)
     plot = el('g', frame, id='st2-image-window', clip_path='url(#cyclic-frame)')
     for offset in (SHIFT-WIDTH, SHIFT, SHIFT+WIDTH):
         use = el('use', plot, transform=f'translate({offset} 0)')
         use.set('{'+XL+'}href', '#source-cartography')
-    if len(inset):
-        frame.append(inset)
     prefix, suffix = E.tostring(doc, encoding='unicode').split('<!--SOURCE-CARTOGRAPHY-->')
     destination.parent.mkdir(parents=True, exist_ok=True)
     temporary = destination.with_suffix('.svg.tmp')
@@ -226,6 +228,7 @@ def make_plate(source, destination, legend_name):
             'translation_inches': [DX, DY], 'sheet_inches': [WIDTH, HEIGHT],
             'image_inches': [IMAGE_WIDTH, HEIGHT*SCALE], 'cyclic_move_on_sheet_inches': SHIFT*SCALE,
             'all_artwork_scaled_proportionally': True, 'legend_included': False,
+            'antarctica_paint_order': 'below-source-labels-and-markers',
             'non_terrestrial_data_coordinates_unchanged': True,
             'editorial_land_reference_sha256': reference_sha256,
             'antarctica_adjustment': {'translation_source_inches': list(ANTARCTIC_TRANSLATION),

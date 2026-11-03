@@ -1,8 +1,8 @@
 {
-  "sheets": 18,
-  "maps": 9,
-  "legends": 9,
-  "verified_files": 54,
+  "sheets": 24,
+  "maps": 12,
+  "legends": 12,
+  "verified_files": 72,
   "orbital": [
     {
       "file": "msp-speculation-1/orbital-technosphere-global-authagraph-44-19.052559.svg",
@@ -225,6 +225,91 @@
       "starlink_font_size_pt": null,
       "skipped_stale": 44,
       "failed_propagation": 0
+    },
+    {
+      "file": "msp-speculation-4/orbital-technosphere-global-authagraph-44-19.052559.svg",
+      "timestamp": "2026-11-03T17:10:00Z",
+      "objects": 17909,
+      "groups": {
+        "starlink": 11155,
+        "objects-debris": 1101,
+        "objects-other-active": 3247,
+        "objects-communications": 0,
+        "objects-navigation": 19,
+        "objects-earth-observation": 154,
+        "objects-science": 43,
+        "objects-megaconstellation": 0,
+        "objects-human-presence": 19,
+        "oneweb": 651,
+        "kuiper": 391,
+        "qianfan": 256,
+        "hulianwang": 235,
+        "iridium": 80,
+        "globalstar": 36,
+        "orbcomm": 14,
+        "planet": 129,
+        "spire": 72,
+        "intelsat": 55,
+        "ses": 67,
+        "eutelsat": 29,
+        "telesat": 17,
+        "gps": 32,
+        "glonass": 24,
+        "galileo": 31,
+        "beidou": 52
+      },
+      "visible_starlink_ids": 11155,
+      "starlink_font_size_pt": 7,
+      "skipped_stale": 44,
+      "failed_propagation": 0
+    },
+    {
+      "file": "msp-speculation-4/orbital-technosphere-observer-authagraph-44-19.052559.svg",
+      "timestamp": "2026-11-03T17:10:00Z",
+      "objects": 1088,
+      "groups": {
+        "objects-debris": 53,
+        "objects-other-active": 220,
+        "objects-communications": 0,
+        "objects-navigation": 2,
+        "objects-earth-observation": 6,
+        "objects-science": 2,
+        "objects-megaconstellation": 0,
+        "objects-human-presence": 1,
+        "starlink": 549,
+        "oneweb": 44,
+        "kuiper": 31,
+        "qianfan": 20,
+        "hulianwang": 21,
+        "iridium": 5,
+        "globalstar": 4,
+        "orbcomm": 0,
+        "planet": 0,
+        "spire": 2,
+        "intelsat": 38,
+        "ses": 26,
+        "eutelsat": 7,
+        "telesat": 12,
+        "gps": 11,
+        "glonass": 8,
+        "galileo": 13,
+        "beidou": 13
+      },
+      "visible_starlink_ids": 0,
+      "starlink_font_size_pt": null,
+      "skipped_stale": 44,
+      "failed_propagation": 0
     }
-  ]
+  ],
+  "checks": [
+    "source Randoma11y pairs and actual SVG paint",
+    "Antarctic inset below source data",
+    "MSP 4 Starlink centroids fixed, sunburst linear size 1.5x",
+    "all global markers above 7 pt Starlink text",
+    "MSP 4 groundstation geometry identical to option-3-petals"
+  ],
+  "scaled_starlink_markers": {
+    "global": 11155,
+    "observer": 549
+  }
 }

@@ -91,8 +91,10 @@ graph.
 The [three capability studies](../../../output/groundstation-capabilities-20261103/index.html)
 compare radial spokes, concentric rings and radial petals. Each has a
 44 × 19.052559-inch map PDF, a separate Setouchi legend/attribution PDF,
-editable compressed SVGs and WebP previews. They use the same dark
-MSP speculation 1 palette and the confirmed horizontal AuthaGraph framing.
+editable compressed SVGs and WebP previews. Each uses a different
+Randoma11y pair: wine/amber for spokes, ultramarine/porcelain for rings,
+and plum/ice blue for petals. The confirmed horizontal AuthaGraph framing,
+records, symbol sizes and placement match across all three.
 
 The studies distinguish **590 antenna-site point records**, **66 PoPs** and
 **124 supplied links**. Antenna triangles occupy the centers of invisible
@@ -124,8 +126,11 @@ make groundstation-capability-studies \
 python3 scripts/verify-groundstation-capabilities.py
 ```
 
-The three pattern studies are a separate comparison set; the standard
-rendering and original MSP color proofs remain available. The detailed
+The [MSP studies](../../../output/msp-speculations-20261103/index.html)
+use four non-green Randoma11y palettes. MSP speculation 4 adopts the petal
+capability map and legend in midnight blue/champagne. These are intended
+RGB colors; the final hue on metallic paper with low cyan/light magenta
+remains unmeasured. The standard rendering remains available. The detailed
 decisions and validation record are in the
 [November 3 work log](../../development/20261103_starlink_update_explore.md).
 

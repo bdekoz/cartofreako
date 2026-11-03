@@ -200,9 +200,19 @@ profile. `generate-orbiting-artifacts` also exports PDF and PNG companions.
 The separate [MSP print studies](../../../output/msp-speculations-20261103/index.html)
 cover the updated groundstations and both orbital subjects in the confirmed
 Setouchi AuthaGraph frame, including its +4.35-inch printed horizontal move.
-Three dark, green-biased palettes explore the reported violet cast on metallic
-glossy paper; their exact recipes and source/output hashes accompany them.
-They are unmeasured print hypotheses. Rebuild with `make msp-speculations`.
+Four Randoma11y pairs replace the earlier green palettes: wine/amber,
+ultramarine/porcelain, plum/ice blue and midnight blue/champagne. The light
+member supplies marks and type over the dark ground. These are intended
+RGB hues; final printed color remains unmeasured with the reported low inks
+and metallic glossy paper. Exact source pairs, recipes and hashes accompany
+the sheets.
+
+MSP speculation 4 uses 1.5× Starlink sunbursts on both orbital plates.
+Its global plate uses 7 pt Starlink IDs beneath all satellite markers;
+studies 1–3 retain 9 pt. All current MSP terrestrial sheets place Antarctica
+below labels and vectors. MSP 4's groundstation companion adopts the petal
+capability visualization. Rebuild with `make msp-speculations`, which also
+builds and verifies the capability studies used by that companion.
 
 ## Verification and accuracy boundary
 

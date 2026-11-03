@@ -59,7 +59,7 @@ def verify_marker(marker):
         assert all(radii[i] > 2*radii[i+1] for i in range(0, size, 2))
 
 
-def verify(path, profile, names):
+def verify(path, profile, names, starlink_font_size_pt=9):
     root = ET.parse(path).getroot()
     elements = list(root.iter())
     ids = [e.get("id") for e in elements if e.get("id")]
@@ -115,9 +115,9 @@ def verify(path, profile, names):
             assert label.tag == SVG + "text" and label.text == label.get("data-norad-id")
             assert label.get("data-display-group") == "starlink"
             assert label.get("data-locpoint-id") == dot_ids[label.text].get("id")
-            assert math.isclose(float(label.get("font-size"))*scale*72, 9)
+            assert math.isclose(float(label.get("font-size"))*scale*72, starlink_font_size_pt)
         for label in by_id["starlink-name"]:
-            assert math.isclose(float(label.get("font-size"))*scale*72, 9)
+            assert math.isclose(float(label.get("font-size"))*scale*72, starlink_font_size_pt)
     named = {g["constellation"]["id"] for g in profile["catalogs"]["groups"] if "constellation" in g}
     assert named.issubset(counts)
     assert sum(counts.values()) == len(dots)
@@ -141,10 +141,10 @@ def verify(path, profile, names):
         if count or ident in named:
             verify_marker(legend_ids["legend-" + ident])
     print(f"{path.name}: {len(dots)} markers and paired names, {len(named)} named groups, "
-          f"{len(ids)} Starlink IDs at 9 pt; symbols and separate attribution legend verified")
+          f"{len(ids)} Starlink IDs at {starlink_font_size_pt} pt; symbols and separate attribution legend verified")
     return {"file": str(path), "timestamp": profile["timestamp"], "objects": len(dots),
             "groups": counts, "visible_starlink_ids": len(ids),
-            "starlink_font_size_pt": 9 if ids else None,
+            "starlink_font_size_pt": starlink_font_size_pt if ids else None,
             "skipped_stale": int(metadata.get("data-skipped-stale")),
             "failed_propagation": int(metadata.get("data-failed-propagation"))}
 
@@ -153,6 +153,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--profile", type=Path, required=True)
     parser.add_argument("--report", type=Path)
+    parser.add_argument("--starlink-font-size-pt", type=float, default=9)
     parser.add_argument("svg", type=Path, nargs="+")
     args = parser.parse_args()
     profile = json.loads(args.profile.read_text())
@@ -161,7 +162,7 @@ def main():
         with (args.profile.parent / group["file"]).open(newline="") as stream:
             for row in csv.DictReader(stream):
                 names.setdefault(row["NORAD_CAT_ID"], row["OBJECT_NAME"])
-    reports = [verify(path, profile, names) for path in args.svg if not path.stem.endswith("-legend")]
+    reports = [verify(path, profile, names, args.starlink_font_size_pt) for path in args.svg if not path.stem.endswith("-legend")]
     if args.report:
         args.report.write_text(json.dumps(reports, indent=2) + "\n")
 

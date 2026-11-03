@@ -4,7 +4,6 @@
     "schema": "cartofreako-groundstation-capability-studies-v1",
     "source": "assets.static/network-groundstations/starlink-global-gateways-pops.20261103.geojson",
     "source_profile": "assets.static/network-groundstations/network-groundstations-profile.json",
-    "palette": "msp-speculation-1",
     "scope": "Source records from the supplied 20261103 collection; not a unique or operating-facility census",
     "size": {
       "quantity": "Largest complete listed antenna-bank geometric aperture",
@@ -31,19 +30,22 @@
         "id": "option-1-spokes",
         "name": "Radial spokes",
         "pattern": "spokes",
-        "note": "A clipped wheel of rays; different ray counts distinguish capability classes."
+        "note": "A clipped wheel of rays; different ray counts distinguish capability classes.",
+        "palette": "msp-speculation-1"
       },
       {
         "id": "option-2-rings",
         "name": "Concentric rings",
         "pattern": "rings",
-        "note": "Concentric circles and broken arcs clipped to each triangle; selected classes use dashed rings."
+        "note": "Concentric circles and broken arcs clipped to each triangle; selected classes use dashed rings.",
+        "palette": "msp-speculation-2"
       },
       {
         "id": "option-3-petals",
         "name": "Radial petals",
         "pattern": "petals",
-        "note": "Filled tapered petals radiate from the centroid; wider light areas may survive the metallic print better."
+        "note": "Filled tapered petals radiate from the centroid; wider light areas may survive the metallic print better.",
+        "palette": "msp-speculation-3"
       }
     ],
     "references": [
@@ -64,27 +66,59 @@
       }
     ]
   },
-  "evidence_sha256": "a35e1a276774e2ba35f61c59e4ad36614100a903b337e5b1e041c42bd98e3bef",
+  "evidence_sha256": "30fb906994b46358d560eda2eb02e7b18b978aa03127e2a7744888c6bc9486a4",
   "source_svg_sha256": "0255a267f2edafa3671c25c3a09b6575185e74e6b2206d7ac8ea0b7e6c5492cf",
-  "palette": {
-    "id": "msp-speculation-1",
-    "title": "MSP speculation 1",
-    "palette": "Charcoal green",
-    "background": "#26382f",
-    "land": "#4c6655",
-    "text": "#e4ecd3",
-    "neutral": "#c6d0b1",
-    "halo": "#b4c5a7",
-    "cyan_emphasis": 0.06,
-    "magenta_reduction": 0.1,
-    "saturation_factor": 0.9,
-    "foreground_lightness_floor": 0.5
+  "palettes": {
+    "option-1-spokes": {
+      "id": "msp-speculation-1",
+      "title": "MSP speculation 1",
+      "palette": "Wine / amber",
+      "color_mode": "randoma11y-pair",
+      "randoma11y_pair": "wine-amber",
+      "source_url": "https://randoma11y.com/%23fcc553/%23240413",
+      "srgb_contrast_ratio": 12.0264,
+      "background": "#240413",
+      "land": "#47231d",
+      "text": "#fcc553",
+      "neutral": "#b7873f",
+      "halo": "#fcc553"
+    },
+    "option-2-rings": {
+      "id": "msp-speculation-2",
+      "title": "MSP speculation 2",
+      "palette": "Ultramarine / porcelain",
+      "color_mode": "randoma11y-pair",
+      "randoma11y_pair": "ultramarine-porcelain",
+      "source_url": "https://randoma11y.com/%23193fb8/%23f5eae7",
+      "srgb_contrast_ratio": 7.284,
+      "background": "#193fb8",
+      "land": "#3c5ac0",
+      "text": "#f5eae7",
+      "neutral": "#afb3d8",
+      "halo": "#f5eae7"
+    },
+    "option-3-petals": {
+      "id": "msp-speculation-3",
+      "title": "MSP speculation 3",
+      "palette": "Plum / ice blue",
+      "color_mode": "randoma11y-pair",
+      "randoma11y_pair": "plum-ice",
+      "source_url": "https://randoma11y.com/%2373def9/%232a0c41",
+      "srgb_contrast_ratio": 11.0361,
+      "background": "#2a0c41",
+      "land": "#362e5e",
+      "text": "#73def9",
+      "neutral": "#5c9bbe",
+      "halo": "#73def9"
+    }
   },
+  "palette_provenance_sha256": "6385f7843e990dd5211678042494e587b3dfe702ed0fdd96711f3faf6116e326",
   "scripts": {
-    "scripts/build-groundstation-capabilities.py": "1c042b8af58e81def442c8c695db9ebc3e79808a81cb1ff5c71aaab908457d8b",
+    "scripts/build-groundstation-capabilities.py": "1447f720ffdf35405547be9b504151ab8c7ca67828fa07a4e8918d5b06f053f0",
     "scripts/groundstation_capabilities.py": "188bd9aea87ff7356a9b0e2014ecf61ed2bab901d18ce8c87723cd0b3198b43b",
     "scripts/cartofreako_style.py": "7ea8a09f807d7466cb66513fc7f0e8e580cf086fd9633450d7d74f594167f6a1",
-    "scripts/setouchi_world_framing.py": "5b4e47920fb76be403e01febf343238872f73ace11c416544ab315b7d14472d5"
+    "scripts/setouchi_world_framing.py": "d38aecbb5f156646be3909c80863903212715244721fd4ac6819e7a73e4d53ba",
+    "scripts/build-msp-speculations.py": "2068d48026c3a91ee075388c5fd55af95d28f0bf853b235dbdb7a2b485fb9281"
   },
   "font_sha256": "f86dd1f054d92d7c2355db628042097be483219bc5bde06fc360cb9a8339a876",
   "framing": {
@@ -108,6 +142,7 @@
       "cyclic_move_on_sheet_inches": 4.3500000000000005,
       "all_artwork_scaled_proportionally": true,
       "legend_included": false,
+      "antarctica_paint_order": "below-source-labels-and-markers",
       "non_terrestrial_data_coordinates_unchanged": true,
       "editorial_land_reference_sha256": null,
       "antarctica_adjustment": {
@@ -333,6 +368,7 @@
       "cyclic_move_on_sheet_inches": 4.3500000000000005,
       "all_artwork_scaled_proportionally": true,
       "legend_included": false,
+      "antarctica_paint_order": "below-source-labels-and-markers",
       "non_terrestrial_data_coordinates_unchanged": true,
       "editorial_land_reference_sha256": null,
       "antarctica_adjustment": {
@@ -558,6 +594,7 @@
       "cyclic_move_on_sheet_inches": 4.3500000000000005,
       "all_artwork_scaled_proportionally": true,
       "legend_included": false,
+      "antarctica_paint_order": "below-source-labels-and-markers",
       "non_terrestrial_data_coordinates_unchanged": true,
       "editorial_land_reference_sha256": null,
       "antarctica_adjustment": {
@@ -768,132 +805,132 @@
     {
       "study": "option-1-spokes",
       "kind": "map",
-      "svg_sha256": "c25b7c722aa7b4e55849a69965a6763151d6ed946c40f494936efdbc362ef493",
+      "svg_sha256": "d463963e756e0218e2cc5036f8cb2bc78faa50dbc1067d7a1e3f798db853c829",
       "outputs": [
         {
           "path": "option-1-spokes/network-groundstations-authagraph-44-19.052559.pdf",
-          "bytes": 965857,
-          "sha256": "a92b4bee191729e5a53a92e102ea56dd83aa498f5c85297ae95a271166d584de"
+          "bytes": 965609,
+          "sha256": "cd2542c1a1390659db88c3c125433fd12c2c20e4971c380b7761ae9a8485b625"
         },
         {
           "path": "option-1-spokes/network-groundstations-authagraph-44-19.052559.webp",
-          "bytes": 283360,
-          "sha256": "556a4e8a4a29cc71ec9ccf5f4ef9f48f928a2b3f5250b268179da3b7fec56cdf"
+          "bytes": 301946,
+          "sha256": "c33ec86c7ddbf4aaa4417536830268a728d43f27d25ab7628ac899a768e7f6c0"
         },
         {
           "path": "option-1-spokes/network-groundstations-authagraph-44-19.052559.svg.gz",
-          "bytes": 687006,
-          "sha256": "b25b8f437f63914434b7ee46e959c4bad4a65895738fa2a0b2abc7464a3c42cd"
+          "bytes": 687309,
+          "sha256": "f9ad12ce90c63c0b3a4b35fb974142202a43c6473f6ceb421a2486f7855a4788"
         }
       ]
     },
     {
       "study": "option-1-spokes",
       "kind": "legend",
-      "svg_sha256": "47165e0ffdacf5222465c6a58bd0cc300d1ed86da51a39c50c4a4ebcce1407b5",
+      "svg_sha256": "bef2f4770b50ed730ea9c32f4e69993b065539dd172fea9d80c902f3645f6901",
       "outputs": [
         {
           "path": "option-1-spokes/network-groundstations-authagraph-44-19.052559-legend.pdf",
-          "bytes": 35431,
-          "sha256": "17a7ef59207bd8b294e190c15182e232eef1036ec10e7d3b35e6f2aede811289"
+          "bytes": 35779,
+          "sha256": "4c2e9e8b399fdfa3f13ece3b948b6ba4bc5eaf5df1773941f901af3e1eb627c9"
         },
         {
           "path": "option-1-spokes/network-groundstations-authagraph-44-19.052559-legend.webp",
-          "bytes": 368136,
-          "sha256": "6d4c5f4d0d3164216a2cb069b6916df3d45947deb78ca8b19474b17faa54f58d"
+          "bytes": 452226,
+          "sha256": "e569c6811eae28a6295279b22db95922a082b3ab5e92d06f9db7ce5df4630384"
         },
         {
           "path": "option-1-spokes/network-groundstations-authagraph-44-19.052559-legend.svg.gz",
-          "bytes": 6268,
-          "sha256": "77b47b2173181004b2c5da7b216eee79b19be6ab44892b437be9d91b1e4b2542"
+          "bytes": 6535,
+          "sha256": "7f594f0919aa7f0b91e0890652c6d5232628d1db92a5e67a040c77fe6d167ee7"
         }
       ]
     },
     {
       "study": "option-2-rings",
       "kind": "map",
-      "svg_sha256": "7a578cc61f7a544fbe061baee4bc1cc5f5279259b9da35d713df4ee02ce6f109",
+      "svg_sha256": "21892ca21cdf2b692d58e750193b551d418b41f343925d1b9af165f96cb9f19b",
       "outputs": [
         {
           "path": "option-2-rings/network-groundstations-authagraph-44-19.052559.pdf",
-          "bytes": 1013825,
-          "sha256": "fe6e920e39e2925184e5b443b64d38204e2a0fb5bd2a5e6a1c97081e03614af4"
+          "bytes": 1014103,
+          "sha256": "646575b485c45bb0ffe5f3a4972b5dad393da8fbbf5bd35e2ece904baabf7d68"
         },
         {
           "path": "option-2-rings/network-groundstations-authagraph-44-19.052559.webp",
-          "bytes": 281492,
-          "sha256": "40a39287610d86464707adb573efb33b96c012c8b217fee12f71fad3238d5dc9"
+          "bytes": 301254,
+          "sha256": "6dce442e4a41d33b6435dfde406ac05fe6216811ed2a2a617c6742c42d66e6f4"
         },
         {
           "path": "option-2-rings/network-groundstations-authagraph-44-19.052559.svg.gz",
-          "bytes": 679671,
-          "sha256": "35a73883bf5e1607db41acf94490322d882c67f36dcfdd2c408069616f7c3f33"
+          "bytes": 680052,
+          "sha256": "e7ea5e9e856e1f84ce8ff6ef1e03d942be99b665822446b8ca820a85ef6a1d85"
         }
       ]
     },
     {
       "study": "option-2-rings",
       "kind": "legend",
-      "svg_sha256": "9cba2d1e58df6d6587fd1ef4ad591920e393fc98dabf1181e7e0c11a18a2784b",
+      "svg_sha256": "e4382c219a3fe120dbe1846fd1600f224e065aa467f2d63e1e55ac95cba84f9a",
       "outputs": [
         {
           "path": "option-2-rings/network-groundstations-authagraph-44-19.052559-legend.pdf",
-          "bytes": 36919,
-          "sha256": "0d6c82ba14a97e1499966187b180d849b4c5242fd31b0460e3ae91bc8277cb4a"
+          "bytes": 37462,
+          "sha256": "f48f1f4ddc271c7c6866977e8186cff06fc1d15a1d95ebaf413649dba9309af4"
         },
         {
           "path": "option-2-rings/network-groundstations-authagraph-44-19.052559-legend.webp",
-          "bytes": 368314,
-          "sha256": "23d7fa6846b2102d63de38605196cc01a44b3ea3290ac01a790a93fda44b3a05"
+          "bytes": 457912,
+          "sha256": "612030111464167c55588b7f3a9633409c98a789ebbc63c380689cb811ae0e1e"
         },
         {
           "path": "option-2-rings/network-groundstations-authagraph-44-19.052559-legend.svg.gz",
-          "bytes": 5568,
-          "sha256": "fca6b6593bc6a3ddf14942bfda1f6cdee5b72211d089ecf74eda8469d2d8c1f9"
+          "bytes": 5816,
+          "sha256": "f678ebd54fd5fa77f4ea3b43c8068fbffc1b6747f052f6cac8fd8ef1b4053b7c"
         }
       ]
     },
     {
       "study": "option-3-petals",
       "kind": "map",
-      "svg_sha256": "1285ef894aa89d845172296cd395945463001e2411393b102fdb96703513d7c8",
+      "svg_sha256": "0dff8aafdb15b1ab80924665e26dbda030ba33daf313c1bcb9a51f7104ae553c",
       "outputs": [
         {
           "path": "option-3-petals/network-groundstations-authagraph-44-19.052559.pdf",
-          "bytes": 1054191,
-          "sha256": "c2eae71d7ae4da31696511a566d5d2a1efb59d0a67c969c9f0d889451ab55616"
+          "bytes": 1054209,
+          "sha256": "9d7272d2b50896eeecd400e796fa5c455c3e00abf02e38ce224d921d25d3e16d"
         },
         {
           "path": "option-3-petals/network-groundstations-authagraph-44-19.052559.webp",
-          "bytes": 291248,
-          "sha256": "0ad684597e0a6c90db14100cd4cb9825e975ceebdb606082308ef3d86c80111b"
+          "bytes": 283186,
+          "sha256": "b05b74d61677da0891e5aab5b792ee18cdd8e7e323362be0057e7c624dd692e8"
         },
         {
           "path": "option-3-petals/network-groundstations-authagraph-44-19.052559.svg.gz",
-          "bytes": 700829,
-          "sha256": "6510bb9bb52fdc934a2d64458a03b510c40c39da7553fa888d7a368a75e62b42"
+          "bytes": 701210,
+          "sha256": "147febcdaa01460122edbc9333cd4d22000788610c8ae7816f141125ff1890db"
         }
       ]
     },
     {
       "study": "option-3-petals",
       "kind": "legend",
-      "svg_sha256": "9aeb60259e7f66612acc265199a571423b54af9c094b586137f59e97827a0feb",
+      "svg_sha256": "dd51a46050bbe4856537b775370bbf175c8880e191b7f4e23b35ba41f2cb092f",
       "outputs": [
         {
           "path": "option-3-petals/network-groundstations-authagraph-44-19.052559-legend.pdf",
-          "bytes": 37987,
-          "sha256": "c59b583044ecb9d44be6c7d81276e61004244868174b3dd0c32c858e5c1586b3"
+          "bytes": 38245,
+          "sha256": "7e41ab2f1a701907231ce8501b3148a5b824de58561bc8653170bef959865e2b"
         },
         {
           "path": "option-3-petals/network-groundstations-authagraph-44-19.052559-legend.webp",
-          "bytes": 368294,
-          "sha256": "9a44447da681fa775d28e5c7a196645dd56412bff7865bd90c3827a817ef4d33"
+          "bytes": 430772,
+          "sha256": "9f26f3327297a5cb4b52720692905ca499ecdaf4a34390fa9e337681f1913d9e"
         },
         {
           "path": "option-3-petals/network-groundstations-authagraph-44-19.052559-legend.svg.gz",
-          "bytes": 7723,
-          "sha256": "1391d6488bac73c0e30ee851bff7e8cb0dcc24c67e79ef35a7c441616f6d2890"
+          "bytes": 8003,
+          "sha256": "784a09a7ad41c10b376be551e5b21e99d700c64ad6b064b20749a1341112dfa4"
         }
       ]
     }

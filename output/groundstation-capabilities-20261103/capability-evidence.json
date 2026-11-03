@@ -8,7 +8,6 @@
     "schema": "cartofreako-groundstation-capability-studies-v1",
     "source": "assets.static/network-groundstations/starlink-global-gateways-pops.20261103.geojson",
     "source_profile": "assets.static/network-groundstations/network-groundstations-profile.json",
-    "palette": "msp-speculation-1",
     "scope": "Source records from the supplied 20261103 collection; not a unique or operating-facility census",
     "size": {
       "quantity": "Largest complete listed antenna-bank geometric aperture",
@@ -35,19 +34,22 @@
         "id": "option-1-spokes",
         "name": "Radial spokes",
         "pattern": "spokes",
-        "note": "A clipped wheel of rays; different ray counts distinguish capability classes."
+        "note": "A clipped wheel of rays; different ray counts distinguish capability classes.",
+        "palette": "msp-speculation-1"
       },
       {
         "id": "option-2-rings",
         "name": "Concentric rings",
         "pattern": "rings",
-        "note": "Concentric circles and broken arcs clipped to each triangle; selected classes use dashed rings."
+        "note": "Concentric circles and broken arcs clipped to each triangle; selected classes use dashed rings.",
+        "palette": "msp-speculation-2"
       },
       {
         "id": "option-3-petals",
         "name": "Radial petals",
         "pattern": "petals",
-        "note": "Filled tapered petals radiate from the centroid; wider light areas may survive the metallic print better."
+        "note": "Filled tapered petals radiate from the centroid; wider light areas may survive the metallic print better.",
+        "palette": "msp-speculation-3"
       }
     ],
     "references": [

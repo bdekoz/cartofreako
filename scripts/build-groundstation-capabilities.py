@@ -268,11 +268,8 @@ def legend(config, study, recipe, summary, placement, receipt_hash):
         y += .25
     if y > 16.6:
         raise ValueError(f"Legend bibliography exceeds its panel: {y}")
-    tx(.8, 17.0, "MSP speculation 1 / Charcoal green", 22/72, font_weight="700")
-    for i, line in enumerate(("Epson Stylus Pro 9000 · metallic glossy paper · cyan and light magenta reported low.",
-                              "Dark, green-biased ground responds to reported violet grays. This is an unmeasured print hypothesis.",
-                              "All three capability studies use the same palette, records, size mapping and placement.")):
-        tx(.8, 17.55+i*.35, line, 16/72)
+    MSP.palette_metadata(root, recipe)
+    MSP.print_note(root, recipe)
     tx(42.1, .85, "Capability pattern / source record count", 21/72, text_anchor="end", font_weight="700")
     for i, (capability, (label, _, _)) in enumerate(CAPABILITIES.items()):
         yy = 1.55+i*.74
@@ -318,7 +315,7 @@ def main():
         raise ValueError("Groundstation source checksum mismatch")
     records, summary = normalize(json.loads(source.read_text()))
     placement = layout(records, Projection("authagraph", args.work/"projection"), config)
-    recipe = next(s for s in json.loads(MSP.CONFIG.read_text())["studies"] if s["id"] == config["palette"])
+    palettes = {r["id"]: r for r in json.loads(MSP.CONFIG.read_text())["studies"]}
     args.output.mkdir(parents=True, exist_ok=True)
     evidence = {"schema": "cartofreako-groundstation-capability-evidence-v1", "source": config["source"],
                 "source_sha256": digest(source), "source_kml": profile["source"]["kml"],
@@ -330,6 +327,7 @@ def main():
     original = args.build_root/"authagraph/svg"/(STEM+".svg")
     jobs, framings = [], {}
     for study in config["studies"]:
+        recipe = palettes[study["palette"]]
         unframed = args.work/study["id"]/(STEM+"-source.svg")
         save(map_source(original, records, placement, config, study, recipe, receipt_hash), unframed)
         svg = args.work/study["id"]/(STEM+".svg")
@@ -337,6 +335,7 @@ def main():
         root = MSP.read_svg(svg)
         root.set("data-sheet-kind", "map")
         root.set("data-study", study["id"])
+        MSP.palette_metadata(root, recipe)
         for node in root.xpath('//*[@id="st2-sheet-paper" or @id="st2-image-background"]'):
             node.set("fill", recipe["background"])
         save(root, svg)
@@ -364,13 +363,16 @@ def main():
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         outputs = list(pool.map(export, jobs))
     manifest = {"schema": "cartofreako-groundstation-capability-delivery-v1", "configuration": config,
-                "evidence_sha256": receipt_hash, "source_svg_sha256": digest(original), "palette": recipe,
-                "scripts": {str(p.relative_to(ROOT)): digest(p) for p in [Path(__file__), ROOT/"scripts/groundstation_capabilities.py", ROOT/"scripts/cartofreako_style.py", ROOT/"scripts/setouchi_world_framing.py"]},
+                "evidence_sha256": receipt_hash, "source_svg_sha256": digest(original),
+                "palettes": {s["id"]: palettes[s["palette"]] for s in config["studies"]},
+                "palette_provenance_sha256": digest(ROOT/"config/randoma11y-pairs-20261103.json"),
+                "scripts": {str(p.relative_to(ROOT)): digest(p) for p in [Path(__file__), ROOT/"scripts/groundstation_capabilities.py", ROOT/"scripts/cartofreako_style.py", ROOT/"scripts/setouchi_world_framing.py", ROOT/"scripts/build-msp-speculations.py"]},
                 "font_sha256": digest(ROOT/"assets/fonts/atkinson-hyperlegible/provenance.json"),
                 "framing": framings, "records": outputs}
     (args.output/"manifest.json").write_text(json.dumps(manifest, indent=2)+"\n")
     cards = []
     for study in config["studies"]:
+        recipe = palettes[study["palette"]]
         stem = study["id"]+"/"+STEM
         key = []
         for capability, (label, _, _) in CAPABILITIES.items():
@@ -379,17 +381,19 @@ def main():
             example = {"capability": capability, "status": "reported-operational", "aperture_proxy_m2": 50}
             symbol(svg, defs, example, study["pattern"], recipe, "web-"+study["id"]+"-"+capability, 0, 0, .27, True)
             key.append('<figure>'+E.tostring(svg, encoding="unicode")+'<figcaption>'+html.escape(label)+'</figcaption></figure>')
-        cards.append(f'<section id="{study["id"]}"><h2>{html.escape(study["name"])}</h2><p>{html.escape(study["note"])}</p>'
+        cards.append(f'<section id="{study["id"]}" style="--ground:{recipe["background"]};--ink:{recipe["text"]}"><h2>{html.escape(study["name"])}</h2><p>{html.escape(study["note"])}</p>'
+                     f'<p>{recipe["palette"]} · <a href="{recipe["source_url"]}">Randoma11y pair</a>: ground {recipe["background"]}, marks and type {recipe["text"]}. '
+                     f'{recipe["srgb_contrast_ratio"]:.2f}:1 source sRGB contrast (screen only).</p>'
                      +'<p>Enlarged pattern key, uniform example size:</p><div class="symbols">'+''.join(key)+'</div><div class="pair">'
                      f'<article><a href="{stem}.webp"><img src="{stem}.webp" alt="{study["name"]} map"></a><p><a href="{stem}.pdf">Map PDF</a> · <a href="{stem}.svg.gz">Editable map SVG</a></p></article>'
                      f'<article><a href="{stem}-legend.webp"><img src="{stem}-legend.webp" alt="{study["name"]} legend and attribution"></a><p><a href="{stem}-legend.pdf">Legend PDF</a> · <a href="{stem}-legend.svg.gz">Editable legend SVG</a></p></article></div></section>')
     page = '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Groundstation capability studies</title>'
-    page += '<style>body{font:18px system-ui;background:#26382f;color:#e4ecd3;max-width:1800px;margin:auto;padding:32px}a{color:#d6e5a7}p{max-width:100ch;line-height:1.5}h1{font-size:40px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:24px}img{width:100%;height:auto}section{margin:48px 0}nav{display:flex;gap:24px;flex-wrap:wrap}.symbols{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:14px;margin:24px 0 40px}.symbols figure{margin:0;text-align:center;font-size:14px}.symbols svg{width:100%;height:110px}@media(max-width:800px){.pair{grid-template-columns:1fr}body{padding:16px}}</style>'
-    page += '<h1>Groundstation capability studies</h1><p>Three radial fills on the same Setouchi AuthaGraph map. Triangles sit at the centers of hexagonal cells; their areas scale with the largest complete listed antenna bank’s aperture. All three use MSP speculation 1’s dark palette.</p>'
+    page += '<style>body{font:18px system-ui;background:#121119;color:#f5eae7;max-width:1800px;margin:auto;padding:32px}a{color:inherit}p{max-width:100ch;line-height:1.5}h1{font-size:40px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:24px}img{width:100%;height:auto}section{margin:48px 0;padding:24px;background:var(--ground);color:var(--ink)}nav{display:flex;gap:24px;flex-wrap:wrap}.symbols{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:14px;margin:24px 0 40px}.symbols figure{margin:0;text-align:center;font-size:14px}.symbols svg{width:100%;height:110px}@media(max-width:800px){.pair{grid-template-columns:1fr}body{padding:16px}}</style>'
+    page += '<h1>Groundstation capability studies</h1><p>Three radial fills on the same Setouchi AuthaGraph map, each with a different Randoma11y pair. Triangles sit at the centers of hexagonal cells; their areas scale with the largest complete listed antenna bank’s aperture. Records, sizes and placement match across all three. Colors express design intent; the ink shortage and metallic paper make printed hues uncertain.</p>'
     page += f'<p><strong>{summary["sized_sites"]} antenna records can be sized; {summary["unknown_size_sites"]} have unknown sizes.</strong> The 590 antenna records include planned and retired installations. The 66 PoPs and 124 supplied lines remain separate. This is a hardware proxy, not measured throughput or a verified census of operating sites.</p>'
     page += '<p>Solid, dashed and dotted triangle outlines distinguish source-reported operation, unconfirmed/planned status and retirement. A hollow central square marks unknown size. The categorical patterns are not antenna counts or radiation diagrams. Open the vector PDFs to inspect fine patterns at print size.</p>'
     page += '<nav>'+''.join(f'<a href="#{s["id"]}">{s["name"]}</a>' for s in config["studies"])+'</nav>'
-    page += '<p><a href="capability-evidence.json">Source fields, calculations and placement</a> · <a href="manifest.json">Delivery checksums</a> · <a href="../msp-speculations-20261103/index.html">Original MSP color proofs</a></p>'+''.join(cards)+'</html>'
+    page += '<p><a href="capability-evidence.json">Source fields, calculations and placement</a> · <a href="manifest.json">Delivery checksums</a> · <a href="../msp-speculations-20261103/index.html">MSP color studies, including petals in study 4</a></p>'+''.join(cards)+'</html>'
     (args.output/"index.html").write_text(page)
     print(json.dumps(summary, indent=2))
     print("Completed six map/legend sheets:", args.output/"index.html")
