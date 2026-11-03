@@ -40,6 +40,9 @@ def verify_palette(root, recipe, provenance):
         if identifier in by_id:
             assert paint(by_id[identifier], "fill") == recipe["background"], identifier
     for node in elements:
+        if node.get("data-gateway-link") == "true" or node.get("data-role") == "gateway-link-key":
+            assert paint(node, "stroke") == recipe["text"]
+            assert float(paint(node, "stroke-opacity")) == 1
         if node.tag.endswith("}text"):
             assert paint(node, "fill") in (recipe["text"], recipe["neutral"]), node.text
         if node.get("id", "").startswith("terrestrial-land"):

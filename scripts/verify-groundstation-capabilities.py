@@ -89,7 +89,8 @@ def main():
               "checks": ["source identity and raw field preservation", "blank duplicate reconciliation", "no summed bands",
                          "CDN grid membership and shared hex lattice", "proportional radius with explicit floor and unknown size",
                          "triangle geometry and cell containment", "separate map and attribution sheets", "single-page physical PDF dimensions",
-                         "distinct Randoma11y pairs and actual SVG colors", "Antarctic land below source data"]}
+                         "distinct Randoma11y pairs and actual SVG colors", "Antarctic land below source data",
+                         "fiber links use pair foreground at full opacity"]}
     for record in manifest["records"]:
         root = None
         for output in record["outputs"]:

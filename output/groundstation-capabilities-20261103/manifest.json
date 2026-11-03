@@ -114,11 +114,11 @@
   },
   "palette_provenance_sha256": "6385f7843e990dd5211678042494e587b3dfe702ed0fdd96711f3faf6116e326",
   "scripts": {
-    "scripts/build-groundstation-capabilities.py": "1447f720ffdf35405547be9b504151ab8c7ca67828fa07a4e8918d5b06f053f0",
+    "scripts/build-groundstation-capabilities.py": "402ce3fa21906e872b67e80fc8c1828aa176794c02d8704f2cf802cad13ef67d",
     "scripts/groundstation_capabilities.py": "188bd9aea87ff7356a9b0e2014ecf61ed2bab901d18ce8c87723cd0b3198b43b",
     "scripts/cartofreako_style.py": "7ea8a09f807d7466cb66513fc7f0e8e580cf086fd9633450d7d74f594167f6a1",
     "scripts/setouchi_world_framing.py": "d38aecbb5f156646be3909c80863903212715244721fd4ac6819e7a73e4d53ba",
-    "scripts/build-msp-speculations.py": "2068d48026c3a91ee075388c5fd55af95d28f0bf853b235dbdb7a2b485fb9281"
+    "scripts/build-msp-speculations.py": "11d97677a2c889b2cf3d57c3a5fc8e9db33130d8636cc9e69941c481ce484e4c"
   },
   "font_sha256": "f86dd1f054d92d7c2355db628042097be483219bc5bde06fc360cb9a8339a876",
   "framing": {
@@ -805,132 +805,132 @@
     {
       "study": "option-1-spokes",
       "kind": "map",
-      "svg_sha256": "d463963e756e0218e2cc5036f8cb2bc78faa50dbc1067d7a1e3f798db853c829",
+      "svg_sha256": "3fcc8104d1db2e487084f6167ab08a767ecd21988974de113ca182ffe5ebc955",
       "outputs": [
         {
           "path": "option-1-spokes/network-groundstations-authagraph-44-19.052559.pdf",
-          "bytes": 965609,
-          "sha256": "cd2542c1a1390659db88c3c125433fd12c2c20e4971c380b7761ae9a8485b625"
+          "bytes": 965553,
+          "sha256": "c4fc2186800d38026d3dc3485497e723d9d1dfa9102a8cb4fd937e1de496bb30"
         },
         {
           "path": "option-1-spokes/network-groundstations-authagraph-44-19.052559.webp",
-          "bytes": 301946,
-          "sha256": "c33ec86c7ddbf4aaa4417536830268a728d43f27d25ab7628ac899a768e7f6c0"
+          "bytes": 384616,
+          "sha256": "c575214d6d4f85435b0a4ececeb055f054bba8484d32c6d86740db0b530627aa"
         },
         {
           "path": "option-1-spokes/network-groundstations-authagraph-44-19.052559.svg.gz",
-          "bytes": 687309,
-          "sha256": "f9ad12ce90c63c0b3a4b35fb974142202a43c6473f6ceb421a2486f7855a4788"
+          "bytes": 687306,
+          "sha256": "88c31311acf034b798dba1a405be89c08186bcbba2ec168255527020d78088ea"
         }
       ]
     },
     {
       "study": "option-1-spokes",
       "kind": "legend",
-      "svg_sha256": "bef2f4770b50ed730ea9c32f4e69993b065539dd172fea9d80c902f3645f6901",
+      "svg_sha256": "30b195abef8017de4e18815723f6f60de104e51c70e10cb7bd1a065e3c7a0fe2",
       "outputs": [
         {
           "path": "option-1-spokes/network-groundstations-authagraph-44-19.052559-legend.pdf",
-          "bytes": 35779,
-          "sha256": "4c2e9e8b399fdfa3f13ece3b948b6ba4bc5eaf5df1773941f901af3e1eb627c9"
+          "bytes": 35824,
+          "sha256": "8fbb5949a931488338dd0f87930d78397d5b652c7cec8c2d8d06ab5d7e5853b2"
         },
         {
           "path": "option-1-spokes/network-groundstations-authagraph-44-19.052559-legend.webp",
-          "bytes": 452226,
-          "sha256": "e569c6811eae28a6295279b22db95922a082b3ab5e92d06f9db7ce5df4630384"
+          "bytes": 461852,
+          "sha256": "cb5f719a54b5c6bb24f1639f917f162e11d84dee3438301abac47d92c749a039"
         },
         {
           "path": "option-1-spokes/network-groundstations-authagraph-44-19.052559-legend.svg.gz",
-          "bytes": 6535,
-          "sha256": "7f594f0919aa7f0b91e0890652c6d5232628d1db92a5e67a040c77fe6d167ee7"
+          "bytes": 6570,
+          "sha256": "58804f9b8b1dfac13811284ebccdf2746c6e249f731da0b2b64cf1eb7918a1ee"
         }
       ]
     },
     {
       "study": "option-2-rings",
       "kind": "map",
-      "svg_sha256": "21892ca21cdf2b692d58e750193b551d418b41f343925d1b9af165f96cb9f19b",
+      "svg_sha256": "50986b20e7becc9a58e21b62efdf1ff78d0abdca4ac532d761ac213916f603e5",
       "outputs": [
         {
           "path": "option-2-rings/network-groundstations-authagraph-44-19.052559.pdf",
-          "bytes": 1014103,
-          "sha256": "646575b485c45bb0ffe5f3a4972b5dad393da8fbbf5bd35e2ece904baabf7d68"
+          "bytes": 1014015,
+          "sha256": "b083e259638b4a1154917b3a7e6c95b64987c5426eb531541824b7f40449dc15"
         },
         {
           "path": "option-2-rings/network-groundstations-authagraph-44-19.052559.webp",
-          "bytes": 301254,
-          "sha256": "6dce442e4a41d33b6435dfde406ac05fe6216811ed2a2a617c6742c42d66e6f4"
+          "bytes": 385502,
+          "sha256": "9ca1274d0501809dd94509ba2742bc30928a95a436ff7adf40fcbaa35099b2a0"
         },
         {
           "path": "option-2-rings/network-groundstations-authagraph-44-19.052559.svg.gz",
-          "bytes": 680052,
-          "sha256": "e7ea5e9e856e1f84ce8ff6ef1e03d942be99b665822446b8ca820a85ef6a1d85"
+          "bytes": 680039,
+          "sha256": "3aee79fcfc29229bd567adf08279a3650a6e5cc18bcb3186eef6062f89e650af"
         }
       ]
     },
     {
       "study": "option-2-rings",
       "kind": "legend",
-      "svg_sha256": "e4382c219a3fe120dbe1846fd1600f224e065aa467f2d63e1e55ac95cba84f9a",
+      "svg_sha256": "86244e7e9a819603e882ea70716197251f14525687810e9f1371290f00db4748",
       "outputs": [
         {
           "path": "option-2-rings/network-groundstations-authagraph-44-19.052559-legend.pdf",
-          "bytes": 37462,
-          "sha256": "f48f1f4ddc271c7c6866977e8186cff06fc1d15a1d95ebaf413649dba9309af4"
+          "bytes": 37502,
+          "sha256": "f624650f3fbb6f79468f1b9419bcd54f15ff75b7454b99686a8f53cfd8550432"
         },
         {
           "path": "option-2-rings/network-groundstations-authagraph-44-19.052559-legend.webp",
-          "bytes": 457912,
-          "sha256": "612030111464167c55588b7f3a9633409c98a789ebbc63c380689cb811ae0e1e"
+          "bytes": 467870,
+          "sha256": "4ff219ec013398467f59a37fdb577fbb555054d36bac9ec49a3a3eebbdf3ee44"
         },
         {
           "path": "option-2-rings/network-groundstations-authagraph-44-19.052559-legend.svg.gz",
-          "bytes": 5816,
-          "sha256": "f678ebd54fd5fa77f4ea3b43c8068fbffc1b6747f052f6cac8fd8ef1b4053b7c"
+          "bytes": 5850,
+          "sha256": "273af202d0955f65b6cba0705394c782b2fe8bff5618761147de10a9399d3bc8"
         }
       ]
     },
     {
       "study": "option-3-petals",
       "kind": "map",
-      "svg_sha256": "0dff8aafdb15b1ab80924665e26dbda030ba33daf313c1bcb9a51f7104ae553c",
+      "svg_sha256": "c1f64307ac46dbb17fa490e058b8e650bd0acdc3aa2f4f089ffe0f84f10d0f5d",
       "outputs": [
         {
           "path": "option-3-petals/network-groundstations-authagraph-44-19.052559.pdf",
-          "bytes": 1054209,
-          "sha256": "9d7272d2b50896eeecd400e796fa5c455c3e00abf02e38ce224d921d25d3e16d"
+          "bytes": 1054152,
+          "sha256": "56d14d760be42a74076c0fe0e694ea5791728e77013e46d5defdd8c301376d4c"
         },
         {
           "path": "option-3-petals/network-groundstations-authagraph-44-19.052559.webp",
-          "bytes": 283186,
-          "sha256": "b05b74d61677da0891e5aab5b792ee18cdd8e7e323362be0057e7c624dd692e8"
+          "bytes": 360360,
+          "sha256": "d7cdbf85603810b00ce1fd731c8dd2d1dc4cce81ed15c3cb2966b2c06527602e"
         },
         {
           "path": "option-3-petals/network-groundstations-authagraph-44-19.052559.svg.gz",
-          "bytes": 701210,
-          "sha256": "147febcdaa01460122edbc9333cd4d22000788610c8ae7816f141125ff1890db"
+          "bytes": 701199,
+          "sha256": "8fdb053f4b6d424b80a327f0130fee147a463176e4ca8d3ae41e32d22f98663e"
         }
       ]
     },
     {
       "study": "option-3-petals",
       "kind": "legend",
-      "svg_sha256": "dd51a46050bbe4856537b775370bbf175c8880e191b7f4e23b35ba41f2cb092f",
+      "svg_sha256": "a27fc5a50b92220e616c884b0bf5a8329c984af7207328634a4337e9aa279265",
       "outputs": [
         {
           "path": "option-3-petals/network-groundstations-authagraph-44-19.052559-legend.pdf",
-          "bytes": 38245,
-          "sha256": "7e41ab2f1a701907231ce8501b3148a5b824de58561bc8653170bef959865e2b"
+          "bytes": 38281,
+          "sha256": "246e33618f1deee95d896211d70ab43f16b5c327f645108125aaace53da80c9a"
         },
         {
           "path": "option-3-petals/network-groundstations-authagraph-44-19.052559-legend.webp",
-          "bytes": 430772,
-          "sha256": "9f26f3327297a5cb4b52720692905ca499ecdaf4a34390fa9e337681f1913d9e"
+          "bytes": 438698,
+          "sha256": "87ec863acb56638d539dc1d28dd309b82aeff418fe93bc5735e4e2ce04ad35e5"
         },
         {
           "path": "option-3-petals/network-groundstations-authagraph-44-19.052559-legend.svg.gz",
-          "bytes": 8003,
-          "sha256": "784a09a7ad41c10b376be551e5b21e99d700c64ad6b064b20749a1341112dfa4"
+          "bytes": 8032,
+          "sha256": "83424c910ca404c005a0862df78ff37f14d5facb2635849c73fac6ac59b1c258"
         }
       ]
     }

@@ -155,6 +155,9 @@ layers. Every plotted object has one vector marker and a separate text label
 using its original `OBJECT_NAME`; both carry the same `data-norad-id`.
 Names default to hidden, with `display.show_satellite_names` available to
 enable them. The name's `data-locpoint-id` identifies its matching marker.
+The earlier observer map showed a small representative selection of names.
+The named-constellation renderer replaced that selection with the complete
+hidden name layers; all 1,088 observer names remain in the current SVG.
 
 Both products use black `x` marks for debris, eight-point sunbursts for
 Starlink, squares for Intelsat, and upright triangles for the remaining
@@ -202,13 +205,16 @@ cover the updated groundstations and both orbital subjects in the confirmed
 Setouchi AuthaGraph frame, including its +4.35-inch printed horizontal move.
 Four Randoma11y pairs replace the earlier green palettes: wine/amber,
 ultramarine/porcelain, plum/ice blue and midnight blue/champagne. The light
-member supplies marks and type over the dark ground. These are intended
+member supplies type and groundstation marks/links over the dark ground.
+Orbital markers and legend keys retain their original vendor/group colors.
+These are intended
 RGB hues; final printed color remains unmeasured with the reported low inks
 and metallic glossy paper. Exact source pairs, recipes and hashes accompany
 the sheets.
 
-MSP speculation 4 uses 1.5× Starlink sunbursts on both orbital plates.
-Its global plate uses 7 pt Starlink IDs beneath all satellite markers;
+MSP speculation 4 is available in all four color pairs, each with the three
+map/legend companions. It uses 1.5× Starlink sunbursts on both orbital plates.
+Every MSP 4 global plate uses 6 pt Starlink IDs beneath all satellite markers;
 studies 1–3 retain 9 pt. All current MSP terrestrial sheets place Antarctica
 below labels and vectors. MSP 4's groundstation companion adopts the petal
 capability visualization. Rebuild with `make msp-speculations`, which also

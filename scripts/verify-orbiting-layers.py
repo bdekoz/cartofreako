@@ -110,6 +110,7 @@ def verify(path, profile, names, starlink_font_size_pt=9):
     if ids:
         layer = by_id["starlink-id"]
         assert layer.get(INKSCAPE + "label") == "id" and layer.get("style") != "display:none"
+        assert float(layer.get("data-font-size-pt")) == starlink_font_size_pt
         scale = float(root.get("data-image-scale"))
         for label in ids:
             assert label.tag == SVG + "text" and label.text == label.get("data-norad-id")
@@ -140,8 +141,9 @@ def verify(path, profile, names, starlink_font_size_pt=9):
     for ident, count in counts.items():
         if count or ident in named:
             verify_marker(legend_ids["legend-" + ident])
+    label_note = f"{len(ids)} Starlink IDs at {starlink_font_size_pt} pt" if ids else "no visible satellite labels; name layers retained"
     print(f"{path.name}: {len(dots)} markers and paired names, {len(named)} named groups, "
-          f"{len(ids)} Starlink IDs at {starlink_font_size_pt} pt; symbols and separate attribution legend verified")
+          f"{label_note}; symbols and separate attribution legend verified")
     return {"file": str(path), "timestamp": profile["timestamp"], "objects": len(dots),
             "groups": counts, "visible_starlink_ids": len(ids),
             "starlink_font_size_pt": starlink_font_size_pt if ids else None,

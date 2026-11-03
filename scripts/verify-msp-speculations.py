@@ -14,7 +14,7 @@ import subprocess
 import tempfile
 import xml.etree.ElementTree as ET
 
-from print_palette_validation import verify_palette, verify_land_order
+from print_palette_validation import verify_palette, verify_land_order, paint
 
 ROOT = Path(__file__).resolve().parents[1]
 SVG = "{http://www.w3.org/2000/svg}"
@@ -28,6 +28,20 @@ def digest(path):
 def vertices(marker):
     tokens = marker.get("d").split()
     return [(float(tokens[i]), float(tokens[i+1])) for i in range(1, 48, 3)]
+
+
+def group_colors(root, vendor_colors):
+    colors = {}
+    assert root.get("data-marker-color-policy") == "preserve-source-groups"
+    for marker in root.iter():
+        group = marker.get("data-display-group")
+        if not group or not marker.get("data-marker-shape"):
+            continue
+        color = paint(marker, "stroke" if marker.get("data-marker-shape") == "x" else "fill")
+        if group in vendor_colors:
+            assert color == vendor_colors[group], (group, color, vendor_colors[group])
+        assert colors.setdefault(group, color) == color
+    return colors
 
 
 def compare_orbital_variant(original, variant, global_plate):
@@ -109,19 +123,30 @@ def main():
     expected = {(r["id"], subject, kind) for r in config["studies"]
                 for subject in config["subjects"] for kind in ("map", "legend")}
     records = manifest["records"]
-    assert len(records) == len(expected) == 24 and {(r["study"], r["subject"], r["kind"]) for r in records} == expected
+    assert len(records) == len(expected) == 42 and {(r["study"], r["subject"], r["kind"]) for r in records} == expected
+    fourth_studies = [r for r in config["studies"] if r.get("family") == "msp-speculation-4"]
+    assert len(fourth_studies) == 4 and {r["randoma11y_pair"] for r in fourth_studies} == {p["id"] for p in provenance["pairs"]}
+    assert all(r["variant"]["global_starlink_font_size_pt"] == 6 for r in fourth_studies)
     profile = json.loads(args.profile.read_text())
+    vendor_colors = {g["constellation"]["id"]: "rgb("+",".join(map(str, g["constellation"]["color_rgb"]))+")"
+                     for g in profile["catalogs"]["groups"] if "constellation" in g}
+    assert len(vendor_colors) == len(set(vendor_colors.values())) == 18
     names = {}
     for group in [profile["catalogs"]["primary"], *profile["catalogs"]["groups"]]:
         with (args.profile.parent/group["file"]).open(newline="") as stream:
             for row in csv.DictReader(stream):
                 names.setdefault(row["NORAD_CAT_ID"], row["OBJECT_NAME"])
-    report = {"sheets": 24, "maps": 12, "legends": 12, "verified_files": 0, "orbital": [],
+    report = {"sheets": len(expected), "maps": len(expected)//2, "legends": len(expected)//2,
+              "verified_files": 0, "orbital": [], "vendor_colors": vendor_colors,
               "checks": ["source Randoma11y pairs and actual SVG paint", "Antarctic inset below source data",
-                         "MSP 4 Starlink centroids fixed, sunburst linear size 1.5x", "all global markers above 7 pt Starlink text",
+                         "all four color pairs delivered for the complete MSP 4 set",
+                         "MSP 4 Starlink centroids fixed, sunburst linear size 1.5x", "all global markers above 6 pt Starlink text",
+                         "18 original vendor colors and matching map/legend keys on both orbital subjects",
+                         "groundstation fiber links use pair foreground at full opacity",
                          "MSP 4 groundstation geometry identical to option-3-petals"]}
     with tempfile.TemporaryDirectory(prefix="cartofreako-msp-audit-") as temporary:
         maps = []
+        colors_by_sheet = {}
         for record in records:
             recipe = next(r for r in config["studies"] if r["id"] == record["study"])
             framing = record["framing"]
@@ -175,6 +200,9 @@ def main():
                         assert "msp-print-note" in by_id
                         assert "plate-source-bibliography" in by_id or "capability-legend-ledger" in by_id
                     verify_palette(root, recipe, provenance)
+                    if record["subject"].startswith("orbital"):
+                        assert record["marker_color_policy"] == config["orbital_marker_colors"] == "preserve-source-groups"
+                        colors_by_sheet[(record["study"], record["subject"], record["kind"])] = group_colors(root, vendor_colors)
                     if record["kind"] == "map":
                         verify_land_order(root)
                     if record.get("capability_study"):
@@ -185,16 +213,24 @@ def main():
                         assert capability_geometry(root) == capability_geometry(original)
         report["orbital"] = [VERIFY.verify(path, profile, names, font) for path, font in maps]
         report["scaled_starlink_markers"] = {}
-        for subject in ("global", "observer"):
-            stem = "orbital-technosphere-"+subject+"-authagraph-44-19.052559.svg"
-            report["scaled_starlink_markers"][subject] = compare_orbital_variant(
-                Path(temporary)/"msp-speculation-1"/stem,
-                Path(temporary)/"msp-speculation-4"/stem, subject == "global")
+        for recipe in config["studies"]:
+            for subject in ("orbital-technosphere-global", "orbital-technosphere-observer"):
+                map_colors = colors_by_sheet[(recipe["id"], subject, "map")]
+                legend_colors = colors_by_sheet[(recipe["id"], subject, "legend")]
+                assert set(vendor_colors).issubset(legend_colors)
+                assert all(color == legend_colors[group] for group, color in map_colors.items())
+        for recipe in fourth_studies:
+            report["scaled_starlink_markers"][recipe["id"]] = {}
+            for subject in ("global", "observer"):
+                stem = "orbital-technosphere-"+subject+"-authagraph-44-19.052559.svg"
+                report["scaled_starlink_markers"][recipe["id"]][subject] = compare_orbital_variant(
+                    Path(temporary)/"msp-speculation-1"/stem,
+                    Path(temporary)/recipe["id"]/stem, subject == "global")
         for item in report["orbital"]:
             item["file"] = str(Path(item["file"]).relative_to(temporary))
-    assert report["verified_files"] == 72
+    assert report["verified_files"] == len(expected)*3
     (args.output/"validation.json").write_text(json.dumps(report, indent=2)+"\n")
-    print(f"Verified {report['sheets']} sheets, {report['verified_files']} files, Randoma11y pairs, land order, 7/9 pt IDs, 1.5x sunbursts and petal capabilities")
+    print(f"Verified {report['sheets']} sheets, {report['verified_files']} files, all four MSP 4 palettes, 18 vendor colors, bright fiber links, 6/9 pt IDs, layer order and 1.5x sunbursts")
 
 
 if __name__ == "__main__":

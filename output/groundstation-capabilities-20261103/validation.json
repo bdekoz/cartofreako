@@ -71,6 +71,7 @@
     "separate map and attribution sheets",
     "single-page physical PDF dimensions",
     "distinct Randoma11y pairs and actual SVG colors",
-    "Antarctic land below source data"
+    "Antarctic land below source data",
+    "fiber links use pair foreground at full opacity"
   ]
 }

@@ -56,7 +56,8 @@ def ground_legend(source, map_name):
     icon = el("g", key, transform=f"translate(42.14 2.1) scale(4) translate({-(x0+x1)/2} {-(y0+y1)/2})")
     icon.append(symbol)
     text(key, 41.7, 2.1, "Gateway / PoP record position", 18/72, text_anchor="end")
-    el("path", key, d="M 41.96 2.65 L 42.32 2.65", style="fill:none;stroke:rgb(255,29,16);stroke-width:0.0115;stroke-opacity:0.45")
+    el("path", key, d="M 41.96 2.65 L 42.32 2.65", data_role="gateway-link-key",
+       style="fill:none;stroke:rgb(255,29,16);stroke-width:0.0115;stroke-opacity:1")
     text(key, 41.7, 2.65, "Supplied link geometry", 18/72, text_anchor="end")
     y = 3.5
     for note in ["Source line placemarks also retain their representative position marker.",
@@ -183,7 +184,9 @@ def apply_variant(root, recipe, subject, kind):
     if global_plate and kind == "map":
         starlink = root.xpath('//*[@id="starlink"]')[0]
         for suffix in ("name", "id"):
-            for label in starlink.find(f"{{{NS}}}g[@id='starlink-{suffix}']"):
+            layer = starlink.find(f"{{{NS}}}g[@id='starlink-{suffix}']")
+            layer.set("data-font-size-pt", str(variant["global_starlink_font_size_pt"]))
+            for label in layer:
                 label.set("font-size", str(variant["global_starlink_font_size_pt"]/72/SCALE))
         # Paint Starlink text before its own symbols and every other foreground group.
         locpoints = starlink.find(f"{{{NS}}}g[@id='starlink-locpoint']")
@@ -202,7 +205,7 @@ def apply_variant(root, recipe, subject, kind):
         note = el("g", root, id="msp-variant-note", data_presentation_only="true")
         lines = ["Starlink sunbursts: 1.5× linear size on both orbital maps."]
         if global_plate:
-            lines += ["Starlink text: 7 pt; all satellite markers paint above it.",
+            lines += [f"Starlink text: {variant['global_starlink_font_size_pt']} pt; all satellite markers paint above it.",
                       "All terrestrial land, including Antarctica, paints below the data."]
         for i, line in enumerate(lines):
             text(note, 42.38, 12.15+i*.32, line, 14/72, text_anchor="end")
@@ -237,7 +240,10 @@ def print_note(root, recipe):
     note = el("g", root, id="msp-print-note", data_presentation_only="true")
     text(note, .8, 17.0, recipe["title"]+" / "+recipe["palette"], 22/72,
          font_weight="700").set("fill", recipe["text"])
-    lines = [f'Randoma11y: ground {recipe["background"]}; marks/type {recipe["text"]}. sRGB contrast {recipe["srgb_contrast_ratio"]:.2f}:1 (screen only).',
+    orbital = bool(root.xpath('//*[@id="orbital-technosphere-metadata"]'))
+    foreground_role = "type" if orbital else "marks/type/fiber links"
+    detail = " Vendor markers retain source colors." if orbital else " Fiber links use full opacity."
+    lines = [f'Randoma11y: ground {recipe["background"]}; {foreground_role} {recipe["text"]}. sRGB contrast {recipe["srgb_contrast_ratio"]:.2f}:1 (screen only).'+detail,
              recipe["source_url"],
              "Epson Stylus Pro 9000 / metallic glossy paper / cyan and light magenta reported low; grays reportedly print violet.",
              "Intended RGB hues; final printed hue is unmeasured. No green correction, ink separation or metallic reflection simulation."]
@@ -248,7 +254,7 @@ def print_note(root, recipe):
             y += .27
 
 
-def apply_palette(root, recipe, kind):
+def apply_palette(root, recipe, kind, preserve_orbital_colors=True):
     translations = {}
     # Capability sheets already have semantic ground/land/foreground colors.
     # Preserve those roles when adopting the petal study in a different pair.
@@ -264,6 +270,11 @@ def apply_palette(root, recipe, kind):
             continue
         tag = E.QName(node).localname
         if tag not in ("g", "path", "circle", "rect", "text", "line", "polygon", "polyline", "ellipse"):
+            continue
+        # Categorical marker colors are data encoding. Keep their source RGB
+        # values, including the companion legend keys, while recoloring type
+        # and the ground. The debris pass below retains its black x and halo.
+        if preserve_orbital_colors and node.get("data-display-group") and node.get("data-marker-shape"):
             continue
         current = style(node)
         for attr in ("fill", "stroke"):
@@ -283,6 +294,8 @@ def apply_palette(root, recipe, kind):
             set_style(node, fill=recipe["background"], fill_opacity=1, stroke_opacity=0)
         if tag == "path" and any(a.get("id", "").startswith("terrestrial-land") for a in node.iterancestors()):
             set_style(node, fill=recipe["land"])
+        if node.get("data-gateway-link") == "true" or node.get("data-role") == "gateway-link-key":
+            set_style(node, stroke=recipe["text"], stroke_opacity=1)
     # Keep the requested black x visible against a dark field without recoloring it.
     debris = root.xpath('//*[@data-role="debris" and @data-marker-shape="x"]')
     halos = None
@@ -303,6 +316,8 @@ def apply_palette(root, recipe, kind):
             marker.addprevious(halo)
         set_style(marker, fill_opacity=0, stroke="rgb(0,0,0)", stroke_opacity=1)
     palette_metadata(root, recipe)
+    if preserve_orbital_colors and root.xpath('//*[@id="orbital-technosphere-metadata"]'):
+        root.set("data-marker-color-policy", "preserve-source-groups")
     for metadata in root.xpath('//*[@id="groundstation-capability-metadata"]'):
         content = json.loads(metadata.text)
         content["palette"] = recipe
@@ -352,7 +367,8 @@ def main():
                 root = read_svg(source)
                 variant = apply_variant(root, recipe, subject, kind)
                 before = payload(root)
-                translations = apply_palette(root, recipe, kind)
+                translations = apply_palette(root, recipe, kind,
+                                             config["orbital_marker_colors"] == "preserve-source-groups")
                 assert payload(root) == before, "Color study changed source geometry, IDs, names or type"
                 svg = args.work/recipe["id"]/"authagraph/svg"/source.name
                 save(root, svg)
@@ -364,6 +380,7 @@ def main():
                   "source_svg_sha256": digest(source), "svg_sha256": digest(svg),
                   "framing": inputs["framing"], "color_replacements": translations,
                   "layout_variant": variant, "capability_study": inputs.get("capability_study"),
+                  "marker_color_policy": config["orbital_marker_colors"] if subject.startswith("orbital") else "randoma11y-foreground",
                   "palette_preserves_geometry_ids_names_and_type": True}
         prior = cached.get((recipe["id"], subject, kind))
         if (prior and prior["svg_sha256"] == digest(svg)
@@ -415,11 +432,13 @@ def main():
     cards = []
     for recipe in config["studies"]:
         cards.append(f'<section id="{recipe["id"]}" style="--ground:{recipe["background"]};--ink:{recipe["text"]}"><h2>{recipe["title"]} · {recipe["palette"]}</h2>'
-                     f'<p><a href="{recipe["source_url"]}">Randoma11y pair</a>: ground {recipe["background"]}, marks and type {recipe["text"]}. '
+                     f'<p><a href="{recipe["source_url"]}">Randoma11y pair</a>: ground {recipe["background"]}, type and groundstation fiber lines {recipe["text"]}. '
+                     'Orbital markers retain their vendor colors. '
                      f'Source sRGB contrast {recipe["srgb_contrast_ratio"]:.2f}:1; printed contrast and hue remain unmeasured.</p>')
         if recipe.get("variant"):
             cards.append('<p>Petal capability triangles on the groundstation map. Both orbital maps use 1.5× Starlink sunbursts; '
-                         'global Starlink IDs use 7 pt type beneath all satellite markers. Antarctic land paints below labels and marks.</p>')
+                         f'global Starlink IDs use {recipe["variant"]["global_starlink_font_size_pt"]} pt type beneath all satellite markers. '
+                         'Antarctic land paints below labels and marks.</p>')
         cards.append('<div class="plates">')
         for subject in config["subjects"]:
             stem = recipe["id"]+"/"+subject+SUFFIX
@@ -431,8 +450,10 @@ def main():
         cards.append('</div></section>')
     page = '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MSP print speculations</title>'
     page += '<style>body{font:17px system-ui;background:#121119;color:#f5eae7;max-width:1600px;margin:auto;padding:32px}a{color:inherit}h1{font-size:40px}p{max-width:90ch;line-height:1.5}.plates{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px}article{border:1px solid currentColor;padding:16px}img{width:100%;height:auto}section{margin:48px 0;padding:24px;background:var(--ground);color:var(--ink)}nav{display:flex;gap:24px;flex-wrap:wrap}</style>'
-    page += '<h1>MSP print speculations</h1><p>Four Randoma11y color studies for the Epson Stylus Pro 9000 on metallic glossy paper. The new pairs replace the green palettes. Cyan and light magenta are reported low, grays print violet, and dark backgrounds work better. These are intended RGB design choices, without a measured prediction of the printed hue.</p>'
-    page += f'<p>Setouchi AuthaGraph framing: 43.5-inch image on a 44-inch sheet, +4.35-inch printed horizontal move and lower-left Antarctic land inset beneath the data. Each map has a separate legend with attribution. Global Starlink NORAD IDs print at {ORBITAL.STARLINK_LABEL_SIZE_PT} pt in studies 1–3 and 7 pt in study 4.</p>'
+    page += '<h1>MSP print speculations</h1><p>MSP speculation 4 is available in all four Randoma11y pairs, each with groundstation, orbital global and orbital observer map/legend companions. Studies 1–3 remain available for comparison. Orbital vendors retain their distinct source colors; the pairs control backgrounds, type and bright groundstation fiber lines.</p>'
+    page += '<p>Epson Stylus Pro 9000 on metallic glossy paper: cyan and light magenta are reported low, grays print violet, and dark backgrounds work better. These are intended RGB design choices, without a measured prediction of the printed hue.</p>'
+    fourth_size = next(r["variant"]["global_starlink_font_size_pt"] for r in config["studies"] if r.get("family") == "msp-speculation-4")
+    page += f'<p>Setouchi AuthaGraph framing: 43.5-inch image on a 44-inch sheet, +4.35-inch printed horizontal move and lower-left Antarctic land inset beneath the data. Each map has a separate legend with attribution. Global Starlink NORAD IDs print at {ORBITAL.STARLINK_LABEL_SIZE_PT} pt in studies 1–3 and {fourth_size} pt in every MSP 4 palette.</p>'
     page += '<nav>'+''.join(f'<a href="#{r["id"]}">{r["title"]}</a>' for r in config['studies'])+'</nav>'
     page += '<p><a href="color-recipes.json">Color recipes</a> · <a href="palette-sources.json">Randoma11y provenance</a> · <a href="manifest.json">Sources and output checksums</a> · <a href="../groundstation-capabilities-20261103/capability-evidence.json">Capability source fields and placement</a></p>'+''.join(cards)+'</html>'
     (args.output/"index.html").write_text(page)

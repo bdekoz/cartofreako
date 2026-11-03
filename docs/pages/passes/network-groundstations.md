@@ -102,7 +102,9 @@ hexagonal cells, using the CDN projected grouping grid and shared honeycomb
 offset routine. Cell spacing accommodates each group's largest triangle;
 collision displacement is recorded and drawn with source-position tethers.
 PoPs remain fixed-size open circles; line endpoints do not acquire antenna
-marks in these studies.
+marks in these studies. Supplied fiber links use each pair's light foreground
+color at full opacity against its dark background; displacement tethers
+remain muted.
 
 For 538 antenna records, triangle area follows the largest complete listed
 bank aperture, `max(N × π × D² / 4)`. The remaining 52 have a hollow square
@@ -128,7 +130,8 @@ python3 scripts/verify-groundstation-capabilities.py
 
 The [MSP studies](../../../output/msp-speculations-20261103/index.html)
 use four non-green Randoma11y palettes. MSP speculation 4 adopts the petal
-capability map and legend in midnight blue/champagne. These are intended
+capability map and legend in all four pairs: wine/amber, ultramarine/porcelain,
+plum/ice blue and midnight blue/champagne. These are intended
 RGB colors; the final hue on metallic paper with low cyan/light magenta
 remains unmeasured. The standard rendering remains available. The detailed
 decisions and validation record are in the

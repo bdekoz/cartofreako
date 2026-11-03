@@ -21,7 +21,7 @@
         "Darker backgrounds print better than white"
       ]
     },
-    "method": "Randoma11y source RGB pairs: dark member for ground, light member for marks and text. Land is a 16% foreground blend into the ground; muted context is a 68% blend. Black debris x marks retain a light halo. These design choices replace the earlier green prebias; no ink compensation or six-channel separation is simulated.",
+    "method": "Randoma11y source RGB pairs: dark member for ground, light member for type and groundstation marks and fiber links. Fiber links use full stroke opacity. Orbital markers and their legend keys retain the original vendor/group colors. Land is a 16% foreground blend into the ground; muted context is a 68% blend. Black debris x marks retain a light halo. No ink compensation or six-channel separation is simulated.",
     "calibration": "Unmeasured visual hypotheses; parameters are not estimates of ink loss or paper response.",
     "references": [
       "https://files.support.epson.com/pdf/pro9k_/pro9k_u1.pdf",
@@ -72,8 +72,77 @@
         "halo": "#73def9"
       },
       {
+        "id": "msp-speculation-4-wine-amber",
+        "title": "MSP speculation 4 / palette 1",
+        "palette": "Wine / amber",
+        "color_mode": "randoma11y-pair",
+        "randoma11y_pair": "wine-amber",
+        "source_url": "https://randoma11y.com/%23fcc553/%23240413",
+        "srgb_contrast_ratio": 12.0264,
+        "background": "#240413",
+        "land": "#47231d",
+        "text": "#fcc553",
+        "neutral": "#b7873f",
+        "halo": "#fcc553",
+        "family": "msp-speculation-4",
+        "palette_option": 1,
+        "variant": {
+          "starlink_marker_shape": "sunburst",
+          "starlink_marker_linear_scale": 1.5,
+          "global_starlink_font_size_pt": 6,
+          "global_markers_above_starlink_text": true,
+          "groundstation_study": "option-3-petals"
+        }
+      },
+      {
+        "id": "msp-speculation-4-ultramarine-porcelain",
+        "title": "MSP speculation 4 / palette 2",
+        "palette": "Ultramarine / porcelain",
+        "color_mode": "randoma11y-pair",
+        "randoma11y_pair": "ultramarine-porcelain",
+        "source_url": "https://randoma11y.com/%23193fb8/%23f5eae7",
+        "srgb_contrast_ratio": 7.284,
+        "background": "#193fb8",
+        "land": "#3c5ac0",
+        "text": "#f5eae7",
+        "neutral": "#afb3d8",
+        "halo": "#f5eae7",
+        "family": "msp-speculation-4",
+        "palette_option": 2,
+        "variant": {
+          "starlink_marker_shape": "sunburst",
+          "starlink_marker_linear_scale": 1.5,
+          "global_starlink_font_size_pt": 6,
+          "global_markers_above_starlink_text": true,
+          "groundstation_study": "option-3-petals"
+        }
+      },
+      {
+        "id": "msp-speculation-4-plum-ice",
+        "title": "MSP speculation 4 / palette 3",
+        "palette": "Plum / ice blue",
+        "color_mode": "randoma11y-pair",
+        "randoma11y_pair": "plum-ice",
+        "source_url": "https://randoma11y.com/%2373def9/%232a0c41",
+        "srgb_contrast_ratio": 11.0361,
+        "background": "#2a0c41",
+        "land": "#362e5e",
+        "text": "#73def9",
+        "neutral": "#5c9bbe",
+        "halo": "#73def9",
+        "family": "msp-speculation-4",
+        "palette_option": 3,
+        "variant": {
+          "starlink_marker_shape": "sunburst",
+          "starlink_marker_linear_scale": 1.5,
+          "global_starlink_font_size_pt": 6,
+          "global_markers_above_starlink_text": true,
+          "groundstation_study": "option-3-petals"
+        }
+      },
+      {
         "id": "msp-speculation-4",
-        "title": "MSP speculation 4",
+        "title": "MSP speculation 4 / palette 4",
         "palette": "Midnight blue / champagne",
         "color_mode": "randoma11y-pair",
         "randoma11y_pair": "midnight-champagne",
@@ -87,16 +156,19 @@
         "variant": {
           "starlink_marker_shape": "sunburst",
           "starlink_marker_linear_scale": 1.5,
-          "global_starlink_font_size_pt": 7,
+          "global_starlink_font_size_pt": 6,
           "global_markers_above_starlink_text": true,
           "groundstation_study": "option-3-petals"
-        }
+        },
+        "family": "msp-speculation-4",
+        "palette_option": 4
       }
     ],
-    "palette_provenance": "config/randoma11y-pairs-20261103.json"
+    "palette_provenance": "config/randoma11y-pairs-20261103.json",
+    "orbital_marker_colors": "preserve-source-groups"
   },
-  "recipe_sha256": "59dcdf2a5c4df207895b7f156fae0c2442271e7fc36950a278f1349dbe5e5f2e",
-  "builder_sha256": "2068d48026c3a91ee075388c5fd55af95d28f0bf853b235dbdb7a2b485fb9281",
+  "recipe_sha256": "b6535699653c7ad7195575af8959c2401da1fb0e16d451ff4707f36cd0acba1c",
+  "builder_sha256": "11d97677a2c889b2cf3d57c3a5fc8e9db33130d8636cc9e69941c481ce484e4c",
   "framing_sha256": "d38aecbb5f156646be3909c80863903212715244721fd4ac6819e7a73e4d53ba",
   "palette_provenance_sha256": "6385f7843e990dd5211678042494e587b3dfe702ed0fdd96711f3faf6116e326",
   "font_sha256": "f86dd1f054d92d7c2355db628042097be483219bc5bde06fc360cb9a8339a876",
@@ -117,7 +189,7 @@
   "capability_input": {
     "study": "option-3-petals",
     "manifest_path": "output/groundstation-capabilities-20261103/manifest.json",
-    "manifest_sha256": "9da098bf6e907078a6591c0e25c4677e5983226ddfadefe13eb933337aa4ac1d",
+    "manifest_sha256": "54b7c36af8329e0204f07d19a5f8bf835f72c7bab980b8cf34e91683706f3978",
     "evidence_path": "output/groundstation-capabilities-20261103/capability-evidence.json",
     "evidence_sha256": "30fb906994b46358d560eda2eb02e7b18b978aa03127e2a7744888c6bc9486a4"
   },
@@ -127,7 +199,7 @@
       "subject": "network-groundstations",
       "kind": "map",
       "source_svg_sha256": "2b81bf503e7cc795ec91fbb48abedf51f206c07f28b0e608097782ef0a6a42da",
-      "svg_sha256": "337b49279479be515f75b7388757b65dd9fe0a6e34b7b6e68d0a19be858f159d",
+      "svg_sha256": "71a768abe9cff3f40c98c833aefc71bd8d468e0d141a6c8d19232aaee8e34b9c",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -363,22 +435,23 @@
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "randoma11y-foreground",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-1/network-groundstations-authagraph-44-19.052559.pdf",
-          "sha256": "24ca123cf4127bbe557f7e21d7041678f7e4d52eace91b5653ef0ac62564112d",
-          "bytes": 627672
+          "sha256": "981aedd483631a73bccd2a830224b2762115b718440df36547e199e7d85deeef",
+          "bytes": 627601
         },
         {
           "path": "msp-speculation-1/network-groundstations-authagraph-44-19.052559.webp",
-          "sha256": "3402b3a0fd8dbd0b8fc5077db9642c7658445eefbd8665309534c2f29ee606cc",
-          "bytes": 461394
+          "sha256": "2a6d5f62bc2b7b075ac65b9aa09087cad195b37199804a9ed4283c9e68ab770f",
+          "bytes": 516550
         },
         {
           "path": "msp-speculation-1/network-groundstations-authagraph-44-19.052559.svg.gz",
-          "sha256": "22e060fc8f23a18df3e7ad363fdec130952a2475af6768187ab5f1095c5c7832",
-          "bytes": 568184
+          "sha256": "c0828a104e10bfedee8dd844db43b8fde77170ac6ce822c803b625c6170b9684",
+          "bytes": 568174
         }
       ]
     },
@@ -386,8 +459,8 @@
       "study": "msp-speculation-1",
       "subject": "network-groundstations",
       "kind": "legend",
-      "source_svg_sha256": "5698e3d6066ab5092ea98055d971629db287f321b29d8de914c0f77d858a27ce",
-      "svg_sha256": "f47e45130dc796458c71e84f62e0bc5ed1140ee817c8c2eef18d0f2fccf348aa",
+      "source_svg_sha256": "50ef0b55d6d4fb20c7b911694290dd5cff26bf4b48e2f404beabdadfb999ed7e",
+      "svg_sha256": "8896f36e41fe194e4ba00527a24bd8f23813b49bce045dc7f6440a936f75dec9",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -622,22 +695,23 @@
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "randoma11y-foreground",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-1/network-groundstations-authagraph-44-19.052559-legend.pdf",
-          "sha256": "6de9b7ad06f1e41a5e986bfd0a94c9721b11f297e24a1a6d9181aba06465ca55",
-          "bytes": 21004
+          "sha256": "e7dd9103e8011881bf667f12dbc2447b6fd0aac76f8bf93098e701421854c40f",
+          "bytes": 20987
         },
         {
           "path": "msp-speculation-1/network-groundstations-authagraph-44-19.052559-legend.webp",
-          "sha256": "c88ec48833b74ebcb0ae820fd9997a1dce887535b9f940d736575cdd4032747a",
-          "bytes": 221508
+          "sha256": "7d2d2ffb1cc6931b133e7f575eb1d49ebb6527081225fac9540055f2de756178",
+          "bytes": 224470
         },
         {
           "path": "msp-speculation-1/network-groundstations-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "25a94fd454309b207d7519d9854bae191c6f4ba699d470709ec873167bfc536d",
-          "bytes": 2480
+          "sha256": "bd78d9f2bae353472893e9bd5afdab9f060d2313b2bc853bef484bf590c6f53e",
+          "bytes": 2511
         }
       ]
     },
@@ -646,7 +720,7 @@
       "subject": "orbital-technosphere-global",
       "kind": "map",
       "source_svg_sha256": "cbc8128ffc9ec4855a2e1559f47d76ab25d7392f4714ab68f58d2a0514e1d25a",
-      "svg_sha256": "023764034aa837f8001a183def1626a1c483657b5e1e44f699522ece3ed4775f",
+      "svg_sha256": "6ad4dce1e889c0807067bc370036075ad9d4388414e7ea6d5bb076bda7156048",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -879,52 +953,30 @@
         "rgb(1,0,0)": "rgb(1,0,0)",
         "rgb(75,75,75)": "#fcc553",
         "rgb(90,90,90)": "#fcc553",
-        "rgb(0,0,0)": "rgb(0,0,0)",
         "rgb(40,42,46)": "#fcc553",
-        "rgb(64,64,64)": "#fcc553",
-        "rgb(255,215,0)": "#fcc553",
-        "rgb(127,255,212)": "#fcc553",
-        "rgb(173,216,230)": "#fcc553",
         "rgb(220,48,35)": "#fcc553",
-        "rgb(214,56,50)": "#fcc553",
-        "rgb(0,114,178)": "#fcc553",
-        "rgb(230,126,0)": "#fcc553",
-        "rgb(136,70,167)": "#fcc553",
-        "rgb(0,142,115)": "#fcc553",
-        "rgb(55,90,176)": "#fcc553",
-        "rgb(187,72,130)": "#fcc553",
-        "rgb(150,115,26)": "#fcc553",
-        "rgb(0,154,170)": "#fcc553",
-        "rgb(98,137,48)": "#fcc553",
-        "rgb(164,96,55)": "#fcc553",
-        "rgb(95,90,173)": "#fcc553",
-        "rgb(191,112,19)": "#fcc553",
-        "rgb(125,76,101)": "#fcc553",
-        "rgb(147,131,0)": "#fcc553",
-        "rgb(58,113,113)": "#fcc553",
-        "rgb(81,123,177)": "#fcc553",
-        "rgb(162,91,30)": "#fcc553",
         "rgb(255,255,255)": "#fcc553",
         "rgb(242,244,243)": "#fcc553"
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-1/orbital-technosphere-global-authagraph-44-19.052559.pdf",
-          "sha256": "d57feb30f0a971331a8a309200d759db630f3dd0aa97792b44016cc15fc270cb",
-          "bytes": 2788552
+          "sha256": "77fd466a8d3cdb25fe6cca72ec494bf2aea722d8e48f57848dd9ff5ff654df71",
+          "bytes": 2789310
         },
         {
           "path": "msp-speculation-1/orbital-technosphere-global-authagraph-44-19.052559.webp",
-          "sha256": "53568009b0c59f891326de36367f856c49b52e797f05946eae739840922ba872",
-          "bytes": 2861580
+          "sha256": "8db3e218cf58acd00dc163a1119763dac872ccf9ddb9ba399e6368110f880f26",
+          "bytes": 2813500
         },
         {
           "path": "msp-speculation-1/orbital-technosphere-global-authagraph-44-19.052559.svg.gz",
-          "sha256": "3e02780efd1b462ee418f4bfca032776d3581d346de91b6f9355453139a9b67a",
-          "bytes": 4722340
+          "sha256": "5fdd85a60d9e77f5ac411cda7d38fc122cd57e7d5dfcc6c8770cc60561f92825",
+          "bytes": 4724140
         }
       ]
     },
@@ -933,7 +985,7 @@
       "subject": "orbital-technosphere-global",
       "kind": "legend",
       "source_svg_sha256": "4b6aa3a47baf3ad5362e0944231893b03db851e3cf2f398419ee8017cd3d7126",
-      "svg_sha256": "dffda5ff7ee2ef449f307fba0b5ca21d3fa780459ed80bf3e6d8afcaac6f73d0",
+      "svg_sha256": "b664821e5768d6cbb1376612263756ae2dc42862093259631a4363f0bed8c513",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -1163,52 +1215,28 @@
       "color_replacements": {
         "white": "white",
         "#2a2824": "#fcc553",
-        "rgb(214,56,50)": "#fcc553",
-        "rgb(1,0,0)": "rgb(1,0,0)",
-        "rgb(0,114,178)": "#fcc553",
-        "rgb(230,126,0)": "#fcc553",
-        "rgb(136,70,167)": "#fcc553",
-        "rgb(0,142,115)": "#fcc553",
-        "rgb(55,90,176)": "#fcc553",
-        "rgb(187,72,130)": "#fcc553",
-        "rgb(150,115,26)": "#fcc553",
-        "rgb(0,154,170)": "#fcc553",
-        "rgb(98,137,48)": "#fcc553",
-        "rgb(164,96,55)": "#fcc553",
-        "rgb(95,90,173)": "#fcc553",
-        "rgb(191,112,19)": "#fcc553",
-        "rgb(125,76,101)": "#fcc553",
-        "rgb(147,131,0)": "#fcc553",
-        "rgb(58,113,113)": "#fcc553",
-        "rgb(81,123,177)": "#fcc553",
-        "rgb(162,91,30)": "#fcc553",
-        "rgb(0,0,0)": "rgb(0,0,0)",
-        "rgb(64,64,64)": "#fcc553",
-        "rgb(255,215,0)": "#fcc553",
-        "rgb(127,255,212)": "#fcc553",
-        "rgb(173,216,230)": "#fcc553",
-        "rgb(220,48,35)": "#fcc553",
         "#ffffff": "#fcc553",
         "#000000": "#000000"
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-1/orbital-technosphere-global-authagraph-44-19.052559-legend.pdf",
-          "sha256": "1041235c17b14c6982f2a134e13eded545f2f6832c45782e6c0bc1b0c5401939",
-          "bytes": 32562
+          "sha256": "d18131e8a86038d65feb94545464d96c0f39cca4103391c4c5b3cf661de62db5",
+          "bytes": 32872
         },
         {
           "path": "msp-speculation-1/orbital-technosphere-global-authagraph-44-19.052559-legend.webp",
-          "sha256": "d2f73865fce6ab2dd5db5d17c636c3c54ae0202e66a518164189a2dc0a326a81",
-          "bytes": 463524
+          "sha256": "fdadece9dec8e7bb3048892649a7e7caed66c5c2f481b152d77ccdd817bd5b1d",
+          "bytes": 464756
         },
         {
           "path": "msp-speculation-1/orbital-technosphere-global-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "aa46cf6280f1d86442c994f9096f18ccaaddcf23be26d9bc5962eff8ed422139",
-          "bytes": 8459
+          "sha256": "d210c66c9b7fd5f2da9d4d9287839046242afabd4224ffdb9f8e6746d626ab6f",
+          "bytes": 8698
         }
       ]
     },
@@ -1217,7 +1245,7 @@
       "subject": "orbital-technosphere-observer",
       "kind": "map",
       "source_svg_sha256": "adaa1680a57a2c3c038cc3a021c88faff598ab6e2f18b3754f6727d78a8b3f1c",
-      "svg_sha256": "dacbdf1016b39c4168e5d5b041a5778f7f8a38bfa40d246061b79e0d07bda37b",
+      "svg_sha256": "86899646f1dff3b21e0fb9e39e761c47450767ec216b05623a0e3b6eab322178",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -1256,49 +1284,28 @@
         "rgb(1,0,0)": "rgb(1,0,0)",
         "rgb(75,75,75)": "#fcc553",
         "rgb(236,75,37)": "#fcc553",
-        "rgb(0,0,0)": "rgb(0,0,0)",
         "rgb(40,42,46)": "#fcc553",
-        "rgb(64,64,64)": "#fcc553",
-        "rgb(255,215,0)": "#fcc553",
-        "rgb(127,255,212)": "#fcc553",
-        "rgb(173,216,230)": "#fcc553",
-        "rgb(220,48,35)": "#fcc553",
-        "rgb(214,56,50)": "#fcc553",
-        "rgb(0,114,178)": "#fcc553",
-        "rgb(230,126,0)": "#fcc553",
-        "rgb(136,70,167)": "#fcc553",
-        "rgb(0,142,115)": "#fcc553",
-        "rgb(55,90,176)": "#fcc553",
-        "rgb(187,72,130)": "#fcc553",
-        "rgb(98,137,48)": "#fcc553",
-        "rgb(164,96,55)": "#fcc553",
-        "rgb(95,90,173)": "#fcc553",
-        "rgb(191,112,19)": "#fcc553",
-        "rgb(125,76,101)": "#fcc553",
-        "rgb(147,131,0)": "#fcc553",
-        "rgb(58,113,113)": "#fcc553",
-        "rgb(81,123,177)": "#fcc553",
-        "rgb(162,91,30)": "#fcc553",
         "rgb(148,148,148)": "#fcc553"
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-1/orbital-technosphere-observer-authagraph-44-19.052559.pdf",
-          "sha256": "f28e58b24eb3d9700a01edc97d95db471410b9f44875bc8beedb699d9dfe9e07",
-          "bytes": 99655
+          "sha256": "194b906bbecf33730fab26f944729e13bc7de2e8ebc6d8f87198388f61563615",
+          "bytes": 100143
         },
         {
           "path": "msp-speculation-1/orbital-technosphere-observer-authagraph-44-19.052559.webp",
-          "sha256": "2caae6029dca334932311de206a9bf1841fd63ddb6ee48b953d7991a8c07074d",
-          "bytes": 107066
+          "sha256": "858ed96a294e074dbe54b934fc2929ed8dc6e73fbbf59facc8fca3c9e950c305",
+          "bytes": 94906
         },
         {
           "path": "msp-speculation-1/orbital-technosphere-observer-authagraph-44-19.052559.svg.gz",
-          "sha256": "4d94b9334d9536b0ebf1986624948cd1d95141a781575b398d948d1315558954",
-          "bytes": 234695
+          "sha256": "0d99894d530f7f50234e67854710b12da5a59794f343ad2254e150d3ee50b2bb",
+          "bytes": 235141
         }
       ]
     },
@@ -1307,7 +1314,7 @@
       "subject": "orbital-technosphere-observer",
       "kind": "legend",
       "source_svg_sha256": "96d5b4575170e051e42b6d28efedefbc5c094a8533e68ad1c4928a988b54fb50",
-      "svg_sha256": "fb0bda268de4ba1bbd3d93b6253a7f9fbbefa7cda3b365ec91d5eeaf991959eb",
+      "svg_sha256": "d231864305944184ac2b46cef8edcac1d20c71af50ba18481111af8854c7f6ee",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -1344,52 +1351,28 @@
       "color_replacements": {
         "white": "white",
         "#2a2824": "#fcc553",
-        "rgb(214,56,50)": "#fcc553",
-        "rgb(1,0,0)": "rgb(1,0,0)",
-        "rgb(0,114,178)": "#fcc553",
-        "rgb(230,126,0)": "#fcc553",
-        "rgb(136,70,167)": "#fcc553",
-        "rgb(0,142,115)": "#fcc553",
-        "rgb(55,90,176)": "#fcc553",
-        "rgb(187,72,130)": "#fcc553",
-        "rgb(150,115,26)": "#fcc553",
-        "rgb(0,154,170)": "#fcc553",
-        "rgb(98,137,48)": "#fcc553",
-        "rgb(164,96,55)": "#fcc553",
-        "rgb(95,90,173)": "#fcc553",
-        "rgb(191,112,19)": "#fcc553",
-        "rgb(125,76,101)": "#fcc553",
-        "rgb(147,131,0)": "#fcc553",
-        "rgb(58,113,113)": "#fcc553",
-        "rgb(81,123,177)": "#fcc553",
-        "rgb(162,91,30)": "#fcc553",
-        "rgb(0,0,0)": "rgb(0,0,0)",
-        "rgb(64,64,64)": "#fcc553",
-        "rgb(255,215,0)": "#fcc553",
-        "rgb(127,255,212)": "#fcc553",
-        "rgb(173,216,230)": "#fcc553",
-        "rgb(220,48,35)": "#fcc553",
         "#ffffff": "#fcc553",
         "#000000": "#000000"
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-1/orbital-technosphere-observer-authagraph-44-19.052559-legend.pdf",
-          "sha256": "fb9a5124e3b547c69d18c2c435a68390b0943f4847a68ccf80c7a824688ebe1a",
-          "bytes": 32117
+          "sha256": "1c3d77b7c55c1ba1a0dc79ef1afcc691572e00e517beb4225e499d901e12f676",
+          "bytes": 32425
         },
         {
           "path": "msp-speculation-1/orbital-technosphere-observer-authagraph-44-19.052559-legend.webp",
-          "sha256": "cf7d7d724004dfdb23ab34105e7f2c1b5a534ce88876afa2cdda236bf8a8f5f6",
-          "bytes": 429818
+          "sha256": "78d9f726c60407b79c650f9a8a8ecdffe1c5ab80271b251d29f46892205b67a3",
+          "bytes": 431112
         },
         {
           "path": "msp-speculation-1/orbital-technosphere-observer-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "3f62fbc69b8cf106032c6c76fbd798cb805210e993311718baefd62227f8ae93",
-          "bytes": 8274
+          "sha256": "99396bf3e04e0561f1a7f1f667ac413133039ee9a2c8ad25cc8247a4682ae87a",
+          "bytes": 8507
         }
       ]
     },
@@ -1398,7 +1381,7 @@
       "subject": "network-groundstations",
       "kind": "map",
       "source_svg_sha256": "2b81bf503e7cc795ec91fbb48abedf51f206c07f28b0e608097782ef0a6a42da",
-      "svg_sha256": "9f0ebe94c867f2c68baf9d2111bed31de8496218f78c1df48bce8aa68e199441",
+      "svg_sha256": "52e58a22bc4018dd6d8707cffb8b7df27c7f307245ee802ad1d395ede8412291",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -1634,22 +1617,23 @@
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "randoma11y-foreground",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-2/network-groundstations-authagraph-44-19.052559.pdf",
-          "sha256": "c47c11a64afaa1c880ad853bbff69a4a655dacbd3a538f28fa3e249276145e23",
-          "bytes": 627646
+          "sha256": "401356400ab00a64c4b101e9222ff04072648e93c136539127b3cdc6dad1ef97",
+          "bytes": 627579
         },
         {
           "path": "msp-speculation-2/network-groundstations-authagraph-44-19.052559.webp",
-          "sha256": "643fe08d7389ff50b9cb13126dae27993dc05e4b62ebba6a7c72377ea9327340",
-          "bytes": 461978
+          "sha256": "55804b08e82cf90b6ea6cf5fa1ec1dc08b23ed287a48224a0f414f25c0cfc2b3",
+          "bytes": 518650
         },
         {
           "path": "msp-speculation-2/network-groundstations-authagraph-44-19.052559.svg.gz",
-          "sha256": "0bca3931b2a19f2bb7eeedcdd65444cc3cec844a7f5778f8c0a448236eb815fc",
-          "bytes": 568218
+          "sha256": "74076a90faf74e9b9b43cccd799b96c4ef075082325875f48b8ad1406474a8bc",
+          "bytes": 568206
         }
       ]
     },
@@ -1657,8 +1641,8 @@
       "study": "msp-speculation-2",
       "subject": "network-groundstations",
       "kind": "legend",
-      "source_svg_sha256": "5698e3d6066ab5092ea98055d971629db287f321b29d8de914c0f77d858a27ce",
-      "svg_sha256": "b133332e047340b8cd642893ac11474d76acdd57b3de6c65a5e10e8ae5cd7cfe",
+      "source_svg_sha256": "50ef0b55d6d4fb20c7b911694290dd5cff26bf4b48e2f404beabdadfb999ed7e",
+      "svg_sha256": "c14c108aa2aba1b0041778f60b2061f4dabc7bccb4b2f41f0380191aeed77e0c",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -1893,22 +1877,23 @@
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "randoma11y-foreground",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-2/network-groundstations-authagraph-44-19.052559-legend.pdf",
-          "sha256": "18f50b121687a3e4d2edfd1253e693f603fc73bd2b54b44377afa25aaa635e8f",
-          "bytes": 20884
+          "sha256": "2ed5e43007394a771fc0ea1eadf2bde5b079aa0513a405ec3ab68be9aa92a644",
+          "bytes": 20869
         },
         {
           "path": "msp-speculation-2/network-groundstations-authagraph-44-19.052559-legend.webp",
-          "sha256": "5dcc318439ded45edc8c585292743c84c06b515fed5627702fcc57d4516f9a4d",
-          "bytes": 225782
+          "sha256": "adccbb12799bb4f92b188e90ebf8008bf1922380db2b299da9d87efc97eb3646",
+          "bytes": 228732
         },
         {
           "path": "msp-speculation-2/network-groundstations-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "3a778876e0b87a6f77e4ae853b3c221201aeec447bf3dc1d94593d557c4e7c72",
-          "bytes": 2483
+          "sha256": "beeb0a818b2f93c0f69fc940d1cc23348804391b9d694c554c0694165c74f353",
+          "bytes": 2515
         }
       ]
     },
@@ -1917,7 +1902,7 @@
       "subject": "orbital-technosphere-global",
       "kind": "map",
       "source_svg_sha256": "cbc8128ffc9ec4855a2e1559f47d76ab25d7392f4714ab68f58d2a0514e1d25a",
-      "svg_sha256": "b439e9c1234b6da3945bb5bafc9dbdba71514789297bf3e3cfe928a802df92b1",
+      "svg_sha256": "7179fd1b2e11474de17e969503f13d6e7e47c1cc022b5de58e43f28111c70358",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -2150,52 +2135,30 @@
         "rgb(1,0,0)": "rgb(1,0,0)",
         "rgb(75,75,75)": "#f5eae7",
         "rgb(90,90,90)": "#f5eae7",
-        "rgb(0,0,0)": "rgb(0,0,0)",
         "rgb(40,42,46)": "#f5eae7",
-        "rgb(64,64,64)": "#f5eae7",
-        "rgb(255,215,0)": "#f5eae7",
-        "rgb(127,255,212)": "#f5eae7",
-        "rgb(173,216,230)": "#f5eae7",
         "rgb(220,48,35)": "#f5eae7",
-        "rgb(214,56,50)": "#f5eae7",
-        "rgb(0,114,178)": "#f5eae7",
-        "rgb(230,126,0)": "#f5eae7",
-        "rgb(136,70,167)": "#f5eae7",
-        "rgb(0,142,115)": "#f5eae7",
-        "rgb(55,90,176)": "#f5eae7",
-        "rgb(187,72,130)": "#f5eae7",
-        "rgb(150,115,26)": "#f5eae7",
-        "rgb(0,154,170)": "#f5eae7",
-        "rgb(98,137,48)": "#f5eae7",
-        "rgb(164,96,55)": "#f5eae7",
-        "rgb(95,90,173)": "#f5eae7",
-        "rgb(191,112,19)": "#f5eae7",
-        "rgb(125,76,101)": "#f5eae7",
-        "rgb(147,131,0)": "#f5eae7",
-        "rgb(58,113,113)": "#f5eae7",
-        "rgb(81,123,177)": "#f5eae7",
-        "rgb(162,91,30)": "#f5eae7",
         "rgb(255,255,255)": "#f5eae7",
         "rgb(242,244,243)": "#f5eae7"
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-2/orbital-technosphere-global-authagraph-44-19.052559.pdf",
-          "sha256": "2cdd172e67b8685b6ac27fa35d25fcfd3c2a4b8a1f283671d16e518d9cef47c0",
-          "bytes": 2788587
+          "sha256": "fb40069950091e9fa4ea22148acfa25767ee3e16d2f3d8132bfcf265d99ef990",
+          "bytes": 2789337
         },
         {
           "path": "msp-speculation-2/orbital-technosphere-global-authagraph-44-19.052559.webp",
-          "sha256": "c1fe9c99d8b23b58d82ea1cf91d549257c326124b31f7f84a8bc8650254e228f",
-          "bytes": 2839812
+          "sha256": "9abc93bcb86a73b07ea4debdf57b9a4aeee49e1cfad95ed8f586a0a8222a5258",
+          "bytes": 2731876
         },
         {
           "path": "msp-speculation-2/orbital-technosphere-global-authagraph-44-19.052559.svg.gz",
-          "sha256": "58267939c9bcbfa1409d44f5380f3720f53ddb6baaea4e54b13edfd449285e67",
-          "bytes": 4722402
+          "sha256": "7e5dc540008f8b32b37e84ea62ba8ae4ac54fe258bcae8d7e1f0635ae0719c4e",
+          "bytes": 4724156
         }
       ]
     },
@@ -2204,7 +2167,7 @@
       "subject": "orbital-technosphere-global",
       "kind": "legend",
       "source_svg_sha256": "4b6aa3a47baf3ad5362e0944231893b03db851e3cf2f398419ee8017cd3d7126",
-      "svg_sha256": "47e01b9021f224839984d267d4da260e5538871c25c368b29fe99473edd5c3f4",
+      "svg_sha256": "9668ca7e000b36d56e21e665ed982bebca1e8e03bb83f718120585ef7e58b16b",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -2434,52 +2397,28 @@
       "color_replacements": {
         "white": "white",
         "#2a2824": "#f5eae7",
-        "rgb(214,56,50)": "#f5eae7",
-        "rgb(1,0,0)": "rgb(1,0,0)",
-        "rgb(0,114,178)": "#f5eae7",
-        "rgb(230,126,0)": "#f5eae7",
-        "rgb(136,70,167)": "#f5eae7",
-        "rgb(0,142,115)": "#f5eae7",
-        "rgb(55,90,176)": "#f5eae7",
-        "rgb(187,72,130)": "#f5eae7",
-        "rgb(150,115,26)": "#f5eae7",
-        "rgb(0,154,170)": "#f5eae7",
-        "rgb(98,137,48)": "#f5eae7",
-        "rgb(164,96,55)": "#f5eae7",
-        "rgb(95,90,173)": "#f5eae7",
-        "rgb(191,112,19)": "#f5eae7",
-        "rgb(125,76,101)": "#f5eae7",
-        "rgb(147,131,0)": "#f5eae7",
-        "rgb(58,113,113)": "#f5eae7",
-        "rgb(81,123,177)": "#f5eae7",
-        "rgb(162,91,30)": "#f5eae7",
-        "rgb(0,0,0)": "rgb(0,0,0)",
-        "rgb(64,64,64)": "#f5eae7",
-        "rgb(255,215,0)": "#f5eae7",
-        "rgb(127,255,212)": "#f5eae7",
-        "rgb(173,216,230)": "#f5eae7",
-        "rgb(220,48,35)": "#f5eae7",
         "#ffffff": "#f5eae7",
         "#000000": "#000000"
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-2/orbital-technosphere-global-authagraph-44-19.052559-legend.pdf",
-          "sha256": "738155bd24b6f06511b38871ad6b9d3f1318fecefceeb0e7111438ffbd48a5a0",
-          "bytes": 32659
+          "sha256": "8d39a16c7019e24845377a19c55765eec3ec34f8676fb8150a54aaf710ff81b1",
+          "bytes": 32971
         },
         {
           "path": "msp-speculation-2/orbital-technosphere-global-authagraph-44-19.052559-legend.webp",
-          "sha256": "1fe1e123530260778dd4141bbddb8a18b57823378b1cdd3e8caa1a8cb730818c",
-          "bytes": 470988
+          "sha256": "c67811f06459f8bbb88c54af0566e320a68216c763f41629ed80881e98b8d85c",
+          "bytes": 476990
         },
         {
           "path": "msp-speculation-2/orbital-technosphere-global-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "6d0fbb9991aa5044844927df46af57d48804e5975e57cb58030947d352e476e9",
-          "bytes": 8467
+          "sha256": "b7a5eba8796e7e8a2b8e8b346ae70597df72d95098c2a01374554305a4faa4a6",
+          "bytes": 8707
         }
       ]
     },
@@ -2488,7 +2427,7 @@
       "subject": "orbital-technosphere-observer",
       "kind": "map",
       "source_svg_sha256": "adaa1680a57a2c3c038cc3a021c88faff598ab6e2f18b3754f6727d78a8b3f1c",
-      "svg_sha256": "16aba3e882588817f01f0ac8d8f1ebbb1ec5367996f8f096bce0e2ef625c1997",
+      "svg_sha256": "3c31d02ff4bff15d1e343860a2e55f2c11f07dc78f8b3149ba9e934855ab8315",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -2527,49 +2466,28 @@
         "rgb(1,0,0)": "rgb(1,0,0)",
         "rgb(75,75,75)": "#f5eae7",
         "rgb(236,75,37)": "#f5eae7",
-        "rgb(0,0,0)": "rgb(0,0,0)",
         "rgb(40,42,46)": "#f5eae7",
-        "rgb(64,64,64)": "#f5eae7",
-        "rgb(255,215,0)": "#f5eae7",
-        "rgb(127,255,212)": "#f5eae7",
-        "rgb(173,216,230)": "#f5eae7",
-        "rgb(220,48,35)": "#f5eae7",
-        "rgb(214,56,50)": "#f5eae7",
-        "rgb(0,114,178)": "#f5eae7",
-        "rgb(230,126,0)": "#f5eae7",
-        "rgb(136,70,167)": "#f5eae7",
-        "rgb(0,142,115)": "#f5eae7",
-        "rgb(55,90,176)": "#f5eae7",
-        "rgb(187,72,130)": "#f5eae7",
-        "rgb(98,137,48)": "#f5eae7",
-        "rgb(164,96,55)": "#f5eae7",
-        "rgb(95,90,173)": "#f5eae7",
-        "rgb(191,112,19)": "#f5eae7",
-        "rgb(125,76,101)": "#f5eae7",
-        "rgb(147,131,0)": "#f5eae7",
-        "rgb(58,113,113)": "#f5eae7",
-        "rgb(81,123,177)": "#f5eae7",
-        "rgb(162,91,30)": "#f5eae7",
         "rgb(148,148,148)": "#f5eae7"
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-2/orbital-technosphere-observer-authagraph-44-19.052559.pdf",
-          "sha256": "c7e460cc2dcfb7e7123f2827247049fc3785910d13654da62fcc9d7a40d42b71",
-          "bytes": 99656
+          "sha256": "8ce68ae8db64231297cb8cc9a8ebe64269a9b2d4d7f358060ef42f106390652b",
+          "bytes": 100146
         },
         {
           "path": "msp-speculation-2/orbital-technosphere-observer-authagraph-44-19.052559.webp",
-          "sha256": "cd456d61675fe8d7cd0129ba74ea0490b1c73dae878a7491c9748b2e4067dd10",
-          "bytes": 109274
+          "sha256": "b86cecf05a881212051f1a535a9010091260b86c4096a77af69a5537a6d6aa41",
+          "bytes": 96080
         },
         {
           "path": "msp-speculation-2/orbital-technosphere-observer-authagraph-44-19.052559.svg.gz",
-          "sha256": "fd09da1b089c132e90beda723b2adeb1c04dae7161f2fbbb2a1adbb0417154c9",
-          "bytes": 234710
+          "sha256": "56e74a58854e5c58282d83a9a1cd03e34fde1a9e6efb9bb56cfb08f786f02277",
+          "bytes": 235154
         }
       ]
     },
@@ -2578,7 +2496,7 @@
       "subject": "orbital-technosphere-observer",
       "kind": "legend",
       "source_svg_sha256": "96d5b4575170e051e42b6d28efedefbc5c094a8533e68ad1c4928a988b54fb50",
-      "svg_sha256": "b333a763798407becda20670ff28bc0df1ac137b0a0435cc02418814942bbf28",
+      "svg_sha256": "fd82164ee8204728b487d33a7e49422af4d3d6fe2cb6a5666b5c0a5259dc06e4",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -2615,52 +2533,28 @@
       "color_replacements": {
         "white": "white",
         "#2a2824": "#f5eae7",
-        "rgb(214,56,50)": "#f5eae7",
-        "rgb(1,0,0)": "rgb(1,0,0)",
-        "rgb(0,114,178)": "#f5eae7",
-        "rgb(230,126,0)": "#f5eae7",
-        "rgb(136,70,167)": "#f5eae7",
-        "rgb(0,142,115)": "#f5eae7",
-        "rgb(55,90,176)": "#f5eae7",
-        "rgb(187,72,130)": "#f5eae7",
-        "rgb(150,115,26)": "#f5eae7",
-        "rgb(0,154,170)": "#f5eae7",
-        "rgb(98,137,48)": "#f5eae7",
-        "rgb(164,96,55)": "#f5eae7",
-        "rgb(95,90,173)": "#f5eae7",
-        "rgb(191,112,19)": "#f5eae7",
-        "rgb(125,76,101)": "#f5eae7",
-        "rgb(147,131,0)": "#f5eae7",
-        "rgb(58,113,113)": "#f5eae7",
-        "rgb(81,123,177)": "#f5eae7",
-        "rgb(162,91,30)": "#f5eae7",
-        "rgb(0,0,0)": "rgb(0,0,0)",
-        "rgb(64,64,64)": "#f5eae7",
-        "rgb(255,215,0)": "#f5eae7",
-        "rgb(127,255,212)": "#f5eae7",
-        "rgb(173,216,230)": "#f5eae7",
-        "rgb(220,48,35)": "#f5eae7",
         "#ffffff": "#f5eae7",
         "#000000": "#000000"
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-2/orbital-technosphere-observer-authagraph-44-19.052559-legend.pdf",
-          "sha256": "efa3a7f4ead4006a10606af4530a0c932a4d7f2aa649eb3351ec7bc1d62fe8bc",
-          "bytes": 32208
+          "sha256": "53371a827892967bc2e98344f9ea2b38bc4740d4bb598cf35b432f2dd78c7672",
+          "bytes": 32514
         },
         {
           "path": "msp-speculation-2/orbital-technosphere-observer-authagraph-44-19.052559-legend.webp",
-          "sha256": "64bf8248d88a36652428d65e1f067a9fd12559992cf07b7146b4b16e906e706d",
-          "bytes": 436820
+          "sha256": "f2f8a0ec1580d8ce9fd02eaac4be95b6d70de47aca7c72eaa8f7475760098d74",
+          "bytes": 437736
         },
         {
           "path": "msp-speculation-2/orbital-technosphere-observer-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "ff5df2d1d71a931a7714a8548b7d32191197aa985613d3245180e0741618e7da",
-          "bytes": 8284
+          "sha256": "31eb4ad5bef9e9bb36daa0e36c42d28be21940c3f0cfcc9eeaa2d148531751f9",
+          "bytes": 8516
         }
       ]
     },
@@ -2669,7 +2563,7 @@
       "subject": "network-groundstations",
       "kind": "map",
       "source_svg_sha256": "2b81bf503e7cc795ec91fbb48abedf51f206c07f28b0e608097782ef0a6a42da",
-      "svg_sha256": "2873bc471f1e42c09c4e207f5d2e258085a28a5b8fffbc3993040227e19fbb3b",
+      "svg_sha256": "2ba16c9247390cc96cb9b4d67f570091c29eb09a5906ddd5d3b034704cb4a28b",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -2905,22 +2799,23 @@
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "randoma11y-foreground",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-3/network-groundstations-authagraph-44-19.052559.pdf",
-          "sha256": "47774ece427124db204d0b4292149e0845f114868dad2f96fac9213821170b70",
-          "bytes": 627711
+          "sha256": "80ac09bcbe54c57f71e77473de58e5d218f7075010b7b9e1fcc6d9e4c7f2791d",
+          "bytes": 627638
         },
         {
           "path": "msp-speculation-3/network-groundstations-authagraph-44-19.052559.webp",
-          "sha256": "4fbdea99c9cff730437d83546092a4e16b26f9bba2144ab5b492086ed46f8c3d",
-          "bytes": 419178
+          "sha256": "db87cf70728799689dd3e6e0937d18c3d6c56d7da4eee0ea95e790b4ca8a159a",
+          "bytes": 473578
         },
         {
           "path": "msp-speculation-3/network-groundstations-authagraph-44-19.052559.svg.gz",
-          "sha256": "3b5b9f30ed81e0b15bb0eb13a55dbad02467fe9f43b99bbf87380936eb3febf0",
-          "bytes": 568196
+          "sha256": "49a1ec3dc06db0e7f276eb3fa67e6aae909e41081cab9ee4e4a0464fcda893a1",
+          "bytes": 568187
         }
       ]
     },
@@ -2928,8 +2823,8 @@
       "study": "msp-speculation-3",
       "subject": "network-groundstations",
       "kind": "legend",
-      "source_svg_sha256": "5698e3d6066ab5092ea98055d971629db287f321b29d8de914c0f77d858a27ce",
-      "svg_sha256": "da368b569c06426ba7b1238214911201abb0d2544e0374ebb7818380824207b3",
+      "source_svg_sha256": "50ef0b55d6d4fb20c7b911694290dd5cff26bf4b48e2f404beabdadfb999ed7e",
+      "svg_sha256": "133578bca000c6be2b6a3d5cd0402debe95950507d579860af5d751845cd001e",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -3164,22 +3059,23 @@
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "randoma11y-foreground",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-3/network-groundstations-authagraph-44-19.052559-legend.pdf",
-          "sha256": "6e6fe103e9c9ce3358ea28fc0c8379c20a245a297c10d263055b96778d8bec8f",
-          "bytes": 20872
+          "sha256": "9a62ce66b31f1d906f8338f6f7248684d9be0211cf881b7cd5bbace8c96c32c3",
+          "bytes": 20853
         },
         {
           "path": "msp-speculation-3/network-groundstations-authagraph-44-19.052559-legend.webp",
-          "sha256": "15c346ca454aa620a437a75f1c0aeae8a9cdf8b32903a837f689f2668471ddc6",
-          "bytes": 205670
+          "sha256": "0cf7a5af54dd1e291dfcba4854dc5b29ea9a38bed9db1e574c964a66f948171f",
+          "bytes": 208446
         },
         {
           "path": "msp-speculation-3/network-groundstations-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "769a9feca851af934390a800978980399ccd9115f0e2ec7be8c216a6e84eaf1f",
-          "bytes": 2482
+          "sha256": "3eec306011123e6ad40140c3588e0b473ee32d797b6f61ed69bae921416bc8f0",
+          "bytes": 2515
         }
       ]
     },
@@ -3188,7 +3084,7 @@
       "subject": "orbital-technosphere-global",
       "kind": "map",
       "source_svg_sha256": "cbc8128ffc9ec4855a2e1559f47d76ab25d7392f4714ab68f58d2a0514e1d25a",
-      "svg_sha256": "814f3dc91d2e0491688b6676e93d6106bd61c31de2ee1f9238d46eb6abf93038",
+      "svg_sha256": "81ec8815d7ce7ab7d9c8946c08dfee0a89621ce91d5c4c4b4971fba56f3493e6",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -3421,52 +3317,30 @@
         "rgb(1,0,0)": "rgb(1,0,0)",
         "rgb(75,75,75)": "#73def9",
         "rgb(90,90,90)": "#73def9",
-        "rgb(0,0,0)": "rgb(0,0,0)",
         "rgb(40,42,46)": "#73def9",
-        "rgb(64,64,64)": "#73def9",
-        "rgb(255,215,0)": "#73def9",
-        "rgb(127,255,212)": "#73def9",
-        "rgb(173,216,230)": "#73def9",
         "rgb(220,48,35)": "#73def9",
-        "rgb(214,56,50)": "#73def9",
-        "rgb(0,114,178)": "#73def9",
-        "rgb(230,126,0)": "#73def9",
-        "rgb(136,70,167)": "#73def9",
-        "rgb(0,142,115)": "#73def9",
-        "rgb(55,90,176)": "#73def9",
-        "rgb(187,72,130)": "#73def9",
-        "rgb(150,115,26)": "#73def9",
-        "rgb(0,154,170)": "#73def9",
-        "rgb(98,137,48)": "#73def9",
-        "rgb(164,96,55)": "#73def9",
-        "rgb(95,90,173)": "#73def9",
-        "rgb(191,112,19)": "#73def9",
-        "rgb(125,76,101)": "#73def9",
-        "rgb(147,131,0)": "#73def9",
-        "rgb(58,113,113)": "#73def9",
-        "rgb(81,123,177)": "#73def9",
-        "rgb(162,91,30)": "#73def9",
         "rgb(255,255,255)": "#73def9",
         "rgb(242,244,243)": "#73def9"
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-3/orbital-technosphere-global-authagraph-44-19.052559.pdf",
-          "sha256": "7923d833954ee087b97d5a69386a10fc83f91ad97a8bb432a4674e9f3b99e502",
-          "bytes": 2788590
+          "sha256": "c19d4412b82a85bb7786d0ade822c1072810d11d70650840a8298feacdca6674",
+          "bytes": 2789327
         },
         {
           "path": "msp-speculation-3/orbital-technosphere-global-authagraph-44-19.052559.webp",
-          "sha256": "e23dc2e84a0da1589fbb227af1d13b7443a5c15b4f150b8fb2697a94acedae8c",
-          "bytes": 2716068
+          "sha256": "7e487dc9f492fc67ffc12f4208ce39bdf07524dbb072f84411e34dde19966a1c",
+          "bytes": 2675202
         },
         {
           "path": "msp-speculation-3/orbital-technosphere-global-authagraph-44-19.052559.svg.gz",
-          "sha256": "823df9741595cf361a7b1745fb8f980935f226f685db3ad7a211beb06de75a63",
-          "bytes": 4722374
+          "sha256": "db476f161752a7ed0e98418db519878a8dabbc7cea3d536e7572f99ef9dfad31",
+          "bytes": 4724128
         }
       ]
     },
@@ -3475,7 +3349,7 @@
       "subject": "orbital-technosphere-global",
       "kind": "legend",
       "source_svg_sha256": "4b6aa3a47baf3ad5362e0944231893b03db851e3cf2f398419ee8017cd3d7126",
-      "svg_sha256": "4275046eb135aa5dc61391fb37187ebd51143e00b7a735767cb13c0b6c331e7e",
+      "svg_sha256": "cb5145558bcfad8f6ed91facb5c89218b3dea3086a282bcf909721542c715eef",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -3705,52 +3579,28 @@
       "color_replacements": {
         "white": "white",
         "#2a2824": "#73def9",
-        "rgb(214,56,50)": "#73def9",
-        "rgb(1,0,0)": "rgb(1,0,0)",
-        "rgb(0,114,178)": "#73def9",
-        "rgb(230,126,0)": "#73def9",
-        "rgb(136,70,167)": "#73def9",
-        "rgb(0,142,115)": "#73def9",
-        "rgb(55,90,176)": "#73def9",
-        "rgb(187,72,130)": "#73def9",
-        "rgb(150,115,26)": "#73def9",
-        "rgb(0,154,170)": "#73def9",
-        "rgb(98,137,48)": "#73def9",
-        "rgb(164,96,55)": "#73def9",
-        "rgb(95,90,173)": "#73def9",
-        "rgb(191,112,19)": "#73def9",
-        "rgb(125,76,101)": "#73def9",
-        "rgb(147,131,0)": "#73def9",
-        "rgb(58,113,113)": "#73def9",
-        "rgb(81,123,177)": "#73def9",
-        "rgb(162,91,30)": "#73def9",
-        "rgb(0,0,0)": "rgb(0,0,0)",
-        "rgb(64,64,64)": "#73def9",
-        "rgb(255,215,0)": "#73def9",
-        "rgb(127,255,212)": "#73def9",
-        "rgb(173,216,230)": "#73def9",
-        "rgb(220,48,35)": "#73def9",
         "#ffffff": "#73def9",
         "#000000": "#000000"
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-3/orbital-technosphere-global-authagraph-44-19.052559-legend.pdf",
-          "sha256": "574a898955427c1e23993bc7e0bad86c464af7cbf851d27960e7c2cbdf9663f3",
-          "bytes": 32561
+          "sha256": "f2cb7f49b377471c490207c860492ee2b196c51fbfa471e58f07566a1963f180",
+          "bytes": 32872
         },
         {
           "path": "msp-speculation-3/orbital-technosphere-global-authagraph-44-19.052559-legend.webp",
-          "sha256": "860935e33c4b2e6df2f8026bf8eadfeaabcd56383edaee9997ea442cff9324aa",
-          "bytes": 429876
+          "sha256": "15ae4d097847c0d8485932fae645770ec55d16970855a84304c1bbc431d87071",
+          "bytes": 431438
         },
         {
           "path": "msp-speculation-3/orbital-technosphere-global-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "0612d9cf27dd1a940126c4c55fd9ff377e643becae909bd5610bb6aa2c092daa",
-          "bytes": 8464
+          "sha256": "c3122ba6b9ace573c3b4757e99ddaaa424cb465c91a4db1547b951e0e520def5",
+          "bytes": 8705
         }
       ]
     },
@@ -3759,7 +3609,7 @@
       "subject": "orbital-technosphere-observer",
       "kind": "map",
       "source_svg_sha256": "adaa1680a57a2c3c038cc3a021c88faff598ab6e2f18b3754f6727d78a8b3f1c",
-      "svg_sha256": "c9160b4894e54fdf70304afe3260fb0cdc882b48408f1051b098939d575d78d8",
+      "svg_sha256": "9ff7690ef246c7094e4fee20cd241befbe183c1c795597473a9a8548e0d6af39",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -3798,49 +3648,28 @@
         "rgb(1,0,0)": "rgb(1,0,0)",
         "rgb(75,75,75)": "#73def9",
         "rgb(236,75,37)": "#73def9",
-        "rgb(0,0,0)": "rgb(0,0,0)",
         "rgb(40,42,46)": "#73def9",
-        "rgb(64,64,64)": "#73def9",
-        "rgb(255,215,0)": "#73def9",
-        "rgb(127,255,212)": "#73def9",
-        "rgb(173,216,230)": "#73def9",
-        "rgb(220,48,35)": "#73def9",
-        "rgb(214,56,50)": "#73def9",
-        "rgb(0,114,178)": "#73def9",
-        "rgb(230,126,0)": "#73def9",
-        "rgb(136,70,167)": "#73def9",
-        "rgb(0,142,115)": "#73def9",
-        "rgb(55,90,176)": "#73def9",
-        "rgb(187,72,130)": "#73def9",
-        "rgb(98,137,48)": "#73def9",
-        "rgb(164,96,55)": "#73def9",
-        "rgb(95,90,173)": "#73def9",
-        "rgb(191,112,19)": "#73def9",
-        "rgb(125,76,101)": "#73def9",
-        "rgb(147,131,0)": "#73def9",
-        "rgb(58,113,113)": "#73def9",
-        "rgb(81,123,177)": "#73def9",
-        "rgb(162,91,30)": "#73def9",
         "rgb(148,148,148)": "#73def9"
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-3/orbital-technosphere-observer-authagraph-44-19.052559.pdf",
-          "sha256": "b3b125aa4e506dd30636c49baba219aed6b6d6fa6a4c368f4179c59661d75be5",
-          "bytes": 99655
+          "sha256": "8799ffff38665366e5ae109a263eafe2220576b96e9ad27c6d394f05c1004c36",
+          "bytes": 100144
         },
         {
           "path": "msp-speculation-3/orbital-technosphere-observer-authagraph-44-19.052559.webp",
-          "sha256": "f291ca25985d9ed0b0f67073251cb24e790962f86a572bdc374dbb663d868645",
-          "bytes": 98012
+          "sha256": "0bc3aa0367e1e9a5d193d6adaf424a7b45e68bfbf0862f08d38a7f662ae0c7c6",
+          "bytes": 92020
         },
         {
           "path": "msp-speculation-3/orbital-technosphere-observer-authagraph-44-19.052559.svg.gz",
-          "sha256": "3e70ba852f44e74b51b6a11460568432e608d8b9456432099d7df274432272d1",
-          "bytes": 234702
+          "sha256": "6f627538193410a08d8d21248bd7e4e332a0164c089ba1e96b85182086ae7ad6",
+          "bytes": 235144
         }
       ]
     },
@@ -3849,7 +3678,7 @@
       "subject": "orbital-technosphere-observer",
       "kind": "legend",
       "source_svg_sha256": "96d5b4575170e051e42b6d28efedefbc5c094a8533e68ad1c4928a988b54fb50",
-      "svg_sha256": "2b04f51b73064ad1af04106a18c3319917b933ef1ce3567b904edebecd545711",
+      "svg_sha256": "04a1f63df15dbc62dae3cb448e859a0e32eda68f7c776062e660c427afca3ad9",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -3886,52 +3715,3649 @@
       "color_replacements": {
         "white": "white",
         "#2a2824": "#73def9",
-        "rgb(214,56,50)": "#73def9",
-        "rgb(1,0,0)": "rgb(1,0,0)",
-        "rgb(0,114,178)": "#73def9",
-        "rgb(230,126,0)": "#73def9",
-        "rgb(136,70,167)": "#73def9",
-        "rgb(0,142,115)": "#73def9",
-        "rgb(55,90,176)": "#73def9",
-        "rgb(187,72,130)": "#73def9",
-        "rgb(150,115,26)": "#73def9",
-        "rgb(0,154,170)": "#73def9",
-        "rgb(98,137,48)": "#73def9",
-        "rgb(164,96,55)": "#73def9",
-        "rgb(95,90,173)": "#73def9",
-        "rgb(191,112,19)": "#73def9",
-        "rgb(125,76,101)": "#73def9",
-        "rgb(147,131,0)": "#73def9",
-        "rgb(58,113,113)": "#73def9",
-        "rgb(81,123,177)": "#73def9",
-        "rgb(162,91,30)": "#73def9",
-        "rgb(0,0,0)": "rgb(0,0,0)",
-        "rgb(64,64,64)": "#73def9",
-        "rgb(255,215,0)": "#73def9",
-        "rgb(127,255,212)": "#73def9",
-        "rgb(173,216,230)": "#73def9",
-        "rgb(220,48,35)": "#73def9",
         "#ffffff": "#73def9",
         "#000000": "#000000"
       },
       "layout_variant": {},
       "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-3/orbital-technosphere-observer-authagraph-44-19.052559-legend.pdf",
-          "sha256": "2aacead17448086c914fe5afcad3db91f16037169d34c85e55f706703fee6111",
-          "bytes": 32114
+          "sha256": "04bf51ca73d4fea87055d70b9e8a020767c01ff902313f3b5d72d4358322322c",
+          "bytes": 32422
         },
         {
           "path": "msp-speculation-3/orbital-technosphere-observer-authagraph-44-19.052559-legend.webp",
-          "sha256": "729e3bb5949f61a026c299bd80206f6ad65528b6c6218a17296eed15806d646d",
-          "bytes": 403926
+          "sha256": "dc61a47217a2b8f106c3a566ba44203ce6540d22a378207b6bf42f2108cf9e33",
+          "bytes": 405152
         },
         {
           "path": "msp-speculation-3/orbital-technosphere-observer-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "839795daab269a89c225645a67829142939b92ebc23240e780e490cb627f6ce7",
-          "bytes": 8279
+          "sha256": "44be31a1c1a6b75e965d7bbb11cd6404425634eaa6a29beb84627e6c14cca4db",
+          "bytes": 8511
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-wine-amber",
+      "subject": "network-groundstations",
+      "kind": "map",
+      "source_svg_sha256": "c1f64307ac46dbb17fa490e058b8e650bd0acdc3aa2f4f089ffe0f84f10d0f5d",
+      "svg_sha256": "e6e0e4f71865a51ab34bb7c550c2888e9785fa84ca5bc87cdda4b1fbe85ed557",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": true,
+          "changed_paths": [
+            {
+              "id": "terrestrial-land-feature-1-band-1",
+              "iso3": null,
+              "subpaths": 56,
+              "vertices": 1405
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-2",
+              "iso3": null,
+              "subpaths": 98,
+              "vertices": 2569
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-3",
+              "iso3": null,
+              "subpaths": 87,
+              "vertices": 2509
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-4",
+              "iso3": null,
+              "subpaths": 101,
+              "vertices": 2643
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-5",
+              "iso3": null,
+              "subpaths": 30,
+              "vertices": 714
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-2",
+              "iso3": null,
+              "subpaths": 25,
+              "vertices": 98
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-3",
+              "iso3": null,
+              "subpaths": 4,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-4",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 20
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-5",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-1",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 73
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-2",
+              "iso3": null,
+              "subpaths": 26,
+              "vertices": 124
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-3",
+              "iso3": null,
+              "subpaths": 9,
+              "vertices": 41
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-4",
+              "iso3": null,
+              "subpaths": 7,
+              "vertices": 33
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-5",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 34
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-2",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 52
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-3",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 32
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-2",
+              "iso3": null,
+              "subpaths": 12,
+              "vertices": 50
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-4",
+              "iso3": null,
+              "subpaths": 3,
+              "vertices": 11
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 45
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-2",
+              "iso3": null,
+              "subpaths": 28,
+              "vertices": 279
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-3",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 43
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-4",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 6
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-1",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 84
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-2",
+              "iso3": null,
+              "subpaths": 16,
+              "vertices": 294
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-8-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-9-band-2",
+              "iso3": null,
+              "subpaths": 2,
+              "vertices": 30
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-1",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-2",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            }
+          ],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "#2a0c41": "#240413",
+        "#362e5e": "#47231d",
+        "none": "none",
+        "rgb(1,0,0)": "rgb(1,0,0)",
+        "#73def9": "#fcc553",
+        "#5c9bbe": "#b7873f"
+      },
+      "layout_variant": {},
+      "capability_study": "option-3-petals",
+      "marker_color_policy": "randoma11y-foreground",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-wine-amber/network-groundstations-authagraph-44-19.052559.pdf",
+          "sha256": "e382df6298277035cc2c65d7f712652d3ecc45df1b2e1f82b71a7edbb0587549",
+          "bytes": 1053712
+        },
+        {
+          "path": "msp-speculation-4-wine-amber/network-groundstations-authagraph-44-19.052559.webp",
+          "sha256": "2e62df7665e4a821df86477cf0b73c37899f2ce93a0886afc6faefcdf25736df",
+          "bytes": 344214
+        },
+        {
+          "path": "msp-speculation-4-wine-amber/network-groundstations-authagraph-44-19.052559.svg.gz",
+          "sha256": "16c037662865efd0a229146fedd99f4b2aae416bdd95fb95c33e41d0c2fceec4",
+          "bytes": 702517
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-wine-amber",
+      "subject": "network-groundstations",
+      "kind": "legend",
+      "source_svg_sha256": "a27fc5a50b92220e616c884b0bf5a8329c984af7207328634a4337e9aa279265",
+      "svg_sha256": "7be851618d6163e125bbec81341ff1d49991f049844abf5c3b49328ac44a6179",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": true,
+          "changed_paths": [
+            {
+              "id": "terrestrial-land-feature-1-band-1",
+              "iso3": null,
+              "subpaths": 56,
+              "vertices": 1405
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-2",
+              "iso3": null,
+              "subpaths": 98,
+              "vertices": 2569
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-3",
+              "iso3": null,
+              "subpaths": 87,
+              "vertices": 2509
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-4",
+              "iso3": null,
+              "subpaths": 101,
+              "vertices": 2643
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-5",
+              "iso3": null,
+              "subpaths": 30,
+              "vertices": 714
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-2",
+              "iso3": null,
+              "subpaths": 25,
+              "vertices": 98
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-3",
+              "iso3": null,
+              "subpaths": 4,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-4",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 20
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-5",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-1",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 73
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-2",
+              "iso3": null,
+              "subpaths": 26,
+              "vertices": 124
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-3",
+              "iso3": null,
+              "subpaths": 9,
+              "vertices": 41
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-4",
+              "iso3": null,
+              "subpaths": 7,
+              "vertices": 33
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-5",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 34
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-2",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 52
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-3",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 32
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-2",
+              "iso3": null,
+              "subpaths": 12,
+              "vertices": 50
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-4",
+              "iso3": null,
+              "subpaths": 3,
+              "vertices": 11
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 45
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-2",
+              "iso3": null,
+              "subpaths": 28,
+              "vertices": 279
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-3",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 43
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-4",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 6
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-1",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 84
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-2",
+              "iso3": null,
+              "subpaths": 16,
+              "vertices": 294
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-8-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-9-band-2",
+              "iso3": null,
+              "subpaths": 2,
+              "vertices": 30
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-1",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-2",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            }
+          ],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "#2a0c41": "#240413",
+        "#73def9": "#fcc553",
+        "none": "none",
+        "#5c9bbe": "#b7873f"
+      },
+      "layout_variant": {},
+      "capability_study": "option-3-petals",
+      "marker_color_policy": "randoma11y-foreground",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-wine-amber/network-groundstations-authagraph-44-19.052559-legend.pdf",
+          "sha256": "20b98994b62b80ba8209a10beb94260f0bf2bf6180a32a07995579513c9b1e39",
+          "bytes": 38517
+        },
+        {
+          "path": "msp-speculation-4-wine-amber/network-groundstations-authagraph-44-19.052559-legend.webp",
+          "sha256": "4cb01bde5404397f2befa1547ea151697620377d01a1746ce72e1927cfa2e2b4",
+          "bytes": 412018
+        },
+        {
+          "path": "msp-speculation-4-wine-amber/network-groundstations-authagraph-44-19.052559-legend.svg.gz",
+          "sha256": "23cfc33236156c8a0a723d2bf139baa3ad026dc9975f40fb4b6b9a3c89e26ad0",
+          "bytes": 8299
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-wine-amber",
+      "subject": "orbital-technosphere-global",
+      "kind": "map",
+      "source_svg_sha256": "cbc8128ffc9ec4855a2e1559f47d76ab25d7392f4714ab68f58d2a0514e1d25a",
+      "svg_sha256": "62f7d2910fa89bbfca8c7675e753a70ec4920379f8eaecb3ba5b7343209edac4",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": true,
+          "changed_paths": [
+            {
+              "id": "terrestrial-land-feature-1-band-1",
+              "iso3": null,
+              "subpaths": 56,
+              "vertices": 1405
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-2",
+              "iso3": null,
+              "subpaths": 98,
+              "vertices": 2569
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-3",
+              "iso3": null,
+              "subpaths": 87,
+              "vertices": 2509
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-4",
+              "iso3": null,
+              "subpaths": 101,
+              "vertices": 2643
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-5",
+              "iso3": null,
+              "subpaths": 30,
+              "vertices": 714
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-2",
+              "iso3": null,
+              "subpaths": 25,
+              "vertices": 98
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-3",
+              "iso3": null,
+              "subpaths": 4,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-4",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 20
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-5",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-1",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 73
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-2",
+              "iso3": null,
+              "subpaths": 26,
+              "vertices": 124
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-3",
+              "iso3": null,
+              "subpaths": 9,
+              "vertices": 41
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-4",
+              "iso3": null,
+              "subpaths": 7,
+              "vertices": 33
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-5",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 34
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-2",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 52
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-3",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 32
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-2",
+              "iso3": null,
+              "subpaths": 12,
+              "vertices": 50
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-4",
+              "iso3": null,
+              "subpaths": 3,
+              "vertices": 11
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 45
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-2",
+              "iso3": null,
+              "subpaths": 28,
+              "vertices": 279
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-3",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 43
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-4",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 6
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-1",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 84
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-2",
+              "iso3": null,
+              "subpaths": 16,
+              "vertices": 294
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-8-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-9-band-2",
+              "iso3": null,
+              "subpaths": 2,
+              "vertices": 30
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-1",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-2",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            }
+          ],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "white": "white",
+        "rgb(216,221,219)": "#fcc553",
+        "rgb(40,42,46)": "#fcc553",
+        "rgb(1,0,0)": "rgb(1,0,0)",
+        "rgb(75,75,75)": "#fcc553",
+        "rgb(90,90,90)": "#fcc553",
+        "rgb(220,48,35)": "#fcc553",
+        "rgb(255,255,255)": "#fcc553",
+        "rgb(242,244,243)": "#fcc553"
+      },
+      "layout_variant": {
+        "starlink_marker_shape": "sunburst",
+        "starlink_marker_linear_scale": 1.5,
+        "global_starlink_font_size_pt": 6,
+        "global_markers_above_starlink_text": true,
+        "groundstation_study": "option-3-petals"
+      },
+      "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-wine-amber/orbital-technosphere-global-authagraph-44-19.052559.pdf",
+          "sha256": "634abbf857aa2466929c53d4e182e17a9d012bdceff84728ca1f5bd515c488e8",
+          "bytes": 2782155
+        },
+        {
+          "path": "msp-speculation-4-wine-amber/orbital-technosphere-global-authagraph-44-19.052559.webp",
+          "sha256": "58e5083ffccece0cd0afe93e9ceb5f5f8d94fef7e27264f0f30cd009bc162ba0",
+          "bytes": 2165302
+        },
+        {
+          "path": "msp-speculation-4-wine-amber/orbital-technosphere-global-authagraph-44-19.052559.svg.gz",
+          "sha256": "3f43ff72fff219a3d9efd84f123fa1d60bb4f4f68d6b890f562d63ac118fd23b",
+          "bytes": 4764546
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-wine-amber",
+      "subject": "orbital-technosphere-global",
+      "kind": "legend",
+      "source_svg_sha256": "4b6aa3a47baf3ad5362e0944231893b03db851e3cf2f398419ee8017cd3d7126",
+      "svg_sha256": "3223d7843640f6f43151c3b6c3a8b378b127b9f6a3cb429cdc416feb13371c89",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": true,
+          "changed_paths": [
+            {
+              "id": "terrestrial-land-feature-1-band-1",
+              "iso3": null,
+              "subpaths": 56,
+              "vertices": 1405
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-2",
+              "iso3": null,
+              "subpaths": 98,
+              "vertices": 2569
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-3",
+              "iso3": null,
+              "subpaths": 87,
+              "vertices": 2509
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-4",
+              "iso3": null,
+              "subpaths": 101,
+              "vertices": 2643
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-5",
+              "iso3": null,
+              "subpaths": 30,
+              "vertices": 714
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-2",
+              "iso3": null,
+              "subpaths": 25,
+              "vertices": 98
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-3",
+              "iso3": null,
+              "subpaths": 4,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-4",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 20
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-5",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-1",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 73
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-2",
+              "iso3": null,
+              "subpaths": 26,
+              "vertices": 124
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-3",
+              "iso3": null,
+              "subpaths": 9,
+              "vertices": 41
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-4",
+              "iso3": null,
+              "subpaths": 7,
+              "vertices": 33
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-5",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 34
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-2",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 52
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-3",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 32
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-2",
+              "iso3": null,
+              "subpaths": 12,
+              "vertices": 50
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-4",
+              "iso3": null,
+              "subpaths": 3,
+              "vertices": 11
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 45
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-2",
+              "iso3": null,
+              "subpaths": 28,
+              "vertices": 279
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-3",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 43
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-4",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 6
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-1",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 84
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-2",
+              "iso3": null,
+              "subpaths": 16,
+              "vertices": 294
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-8-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-9-band-2",
+              "iso3": null,
+              "subpaths": 2,
+              "vertices": 30
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-1",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-2",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            }
+          ],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "white": "white",
+        "#2a2824": "#fcc553",
+        "#ffffff": "#fcc553",
+        "#000000": "#000000"
+      },
+      "layout_variant": {
+        "starlink_marker_shape": "sunburst",
+        "starlink_marker_linear_scale": 1.5,
+        "global_starlink_font_size_pt": 6,
+        "global_markers_above_starlink_text": true,
+        "groundstation_study": "option-3-petals"
+      },
+      "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-wine-amber/orbital-technosphere-global-authagraph-44-19.052559-legend.pdf",
+          "sha256": "65019bfabc0029404cac2472926938849f4acd2d4933e6756df0cc76ff552f2f",
+          "bytes": 33270
+        },
+        {
+          "path": "msp-speculation-4-wine-amber/orbital-technosphere-global-authagraph-44-19.052559-legend.webp",
+          "sha256": "01376e9ac301dc105aff99924ba4c41440f6308affdcdad60d0c8d6001ced860",
+          "bytes": 479066
+        },
+        {
+          "path": "msp-speculation-4-wine-amber/orbital-technosphere-global-authagraph-44-19.052559-legend.svg.gz",
+          "sha256": "692816d5be491ba4a18b4a4d0ac7c7d907ada2fe21417358a2361b479d183769",
+          "bytes": 8998
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-wine-amber",
+      "subject": "orbital-technosphere-observer",
+      "kind": "map",
+      "source_svg_sha256": "adaa1680a57a2c3c038cc3a021c88faff598ab6e2f18b3754f6727d78a8b3f1c",
+      "svg_sha256": "bc7d65fff0a30fb2dbb95e2ae40f8393865426d54318c174453180eb790646a3",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": false,
+          "changed_paths": [],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "white": "white",
+        "rgb(1,0,0)": "rgb(1,0,0)",
+        "rgb(75,75,75)": "#fcc553",
+        "rgb(236,75,37)": "#fcc553",
+        "rgb(40,42,46)": "#fcc553",
+        "rgb(148,148,148)": "#fcc553"
+      },
+      "layout_variant": {
+        "starlink_marker_shape": "sunburst",
+        "starlink_marker_linear_scale": 1.5,
+        "global_starlink_font_size_pt": 6,
+        "global_markers_above_starlink_text": true,
+        "groundstation_study": "option-3-petals"
+      },
+      "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-wine-amber/orbital-technosphere-observer-authagraph-44-19.052559.pdf",
+          "sha256": "b3275a3e511715a93d04de737f39bad0bd43e6f35e3854f2dfda82bfdeac83e5",
+          "bytes": 99945
+        },
+        {
+          "path": "msp-speculation-4-wine-amber/orbital-technosphere-observer-authagraph-44-19.052559.webp",
+          "sha256": "a23d81529679e1e0a84eeb5dbf73940c41fbbfab382a7d78d86c01452048de6c",
+          "bytes": 108392
+        },
+        {
+          "path": "msp-speculation-4-wine-amber/orbital-technosphere-observer-authagraph-44-19.052559.svg.gz",
+          "sha256": "cfc66f3ecdee39eebd956761cf8f711d7556592a91392ef3e5b32007253f725c",
+          "bytes": 237507
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-wine-amber",
+      "subject": "orbital-technosphere-observer",
+      "kind": "legend",
+      "source_svg_sha256": "96d5b4575170e051e42b6d28efedefbc5c094a8533e68ad1c4928a988b54fb50",
+      "svg_sha256": "97516e2ec078ce87f77ae448296e7ee2021255c999319aef556dcb1a58bdb26b",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": false,
+          "changed_paths": [],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "white": "white",
+        "#2a2824": "#fcc553",
+        "#ffffff": "#fcc553",
+        "#000000": "#000000"
+      },
+      "layout_variant": {
+        "starlink_marker_shape": "sunburst",
+        "starlink_marker_linear_scale": 1.5,
+        "global_starlink_font_size_pt": 6,
+        "global_markers_above_starlink_text": true,
+        "groundstation_study": "option-3-petals"
+      },
+      "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-wine-amber/orbital-technosphere-observer-authagraph-44-19.052559-legend.pdf",
+          "sha256": "2c6eabebc0777f6b84eec73703ea6dff1cbbec3821b8a7e6328f90f0ea64c26a",
+          "bytes": 32740
+        },
+        {
+          "path": "msp-speculation-4-wine-amber/orbital-technosphere-observer-authagraph-44-19.052559-legend.webp",
+          "sha256": "e7edbf9211c7d797230180f992828250fc8f0792f55c40eb6b24100c478a201f",
+          "bytes": 436864
+        },
+        {
+          "path": "msp-speculation-4-wine-amber/orbital-technosphere-observer-authagraph-44-19.052559-legend.svg.gz",
+          "sha256": "a90dd5d955972b05f551c1d5c22d29e58d60fbe9d58cce8435ac92c3a52432ad",
+          "bytes": 8741
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-ultramarine-porcelain",
+      "subject": "network-groundstations",
+      "kind": "map",
+      "source_svg_sha256": "c1f64307ac46dbb17fa490e058b8e650bd0acdc3aa2f4f089ffe0f84f10d0f5d",
+      "svg_sha256": "72659e1db221f5e5e7d523f6012559d14a8c454350e347a4c02f4551aee6afb6",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": true,
+          "changed_paths": [
+            {
+              "id": "terrestrial-land-feature-1-band-1",
+              "iso3": null,
+              "subpaths": 56,
+              "vertices": 1405
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-2",
+              "iso3": null,
+              "subpaths": 98,
+              "vertices": 2569
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-3",
+              "iso3": null,
+              "subpaths": 87,
+              "vertices": 2509
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-4",
+              "iso3": null,
+              "subpaths": 101,
+              "vertices": 2643
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-5",
+              "iso3": null,
+              "subpaths": 30,
+              "vertices": 714
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-2",
+              "iso3": null,
+              "subpaths": 25,
+              "vertices": 98
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-3",
+              "iso3": null,
+              "subpaths": 4,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-4",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 20
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-5",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-1",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 73
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-2",
+              "iso3": null,
+              "subpaths": 26,
+              "vertices": 124
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-3",
+              "iso3": null,
+              "subpaths": 9,
+              "vertices": 41
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-4",
+              "iso3": null,
+              "subpaths": 7,
+              "vertices": 33
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-5",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 34
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-2",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 52
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-3",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 32
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-2",
+              "iso3": null,
+              "subpaths": 12,
+              "vertices": 50
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-4",
+              "iso3": null,
+              "subpaths": 3,
+              "vertices": 11
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 45
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-2",
+              "iso3": null,
+              "subpaths": 28,
+              "vertices": 279
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-3",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 43
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-4",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 6
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-1",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 84
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-2",
+              "iso3": null,
+              "subpaths": 16,
+              "vertices": 294
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-8-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-9-band-2",
+              "iso3": null,
+              "subpaths": 2,
+              "vertices": 30
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-1",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-2",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            }
+          ],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "#2a0c41": "#193fb8",
+        "#362e5e": "#3c5ac0",
+        "none": "none",
+        "rgb(1,0,0)": "rgb(1,0,0)",
+        "#73def9": "#f5eae7",
+        "#5c9bbe": "#afb3d8"
+      },
+      "layout_variant": {},
+      "capability_study": "option-3-petals",
+      "marker_color_policy": "randoma11y-foreground",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/network-groundstations-authagraph-44-19.052559.pdf",
+          "sha256": "7eccfedb6e236301a1e33ff676352ae101bf4e7d4bfd3e3cbeffbd0b1d3ca210",
+          "bytes": 1054511
+        },
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/network-groundstations-authagraph-44-19.052559.webp",
+          "sha256": "9084d6c31ce6c532080028d90661c10b9989cbc5e479fb329e534513b61021d0",
+          "bytes": 346332
+        },
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/network-groundstations-authagraph-44-19.052559.svg.gz",
+          "sha256": "3e2b26068808a55c433f6f0ade1cf15865b8de6a25cb66183196662fb190ef75",
+          "bytes": 702588
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-ultramarine-porcelain",
+      "subject": "network-groundstations",
+      "kind": "legend",
+      "source_svg_sha256": "a27fc5a50b92220e616c884b0bf5a8329c984af7207328634a4337e9aa279265",
+      "svg_sha256": "1120f61231e8bc9680953fa2806aea95da83ae62f8361492ccdb013fff247a41",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": true,
+          "changed_paths": [
+            {
+              "id": "terrestrial-land-feature-1-band-1",
+              "iso3": null,
+              "subpaths": 56,
+              "vertices": 1405
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-2",
+              "iso3": null,
+              "subpaths": 98,
+              "vertices": 2569
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-3",
+              "iso3": null,
+              "subpaths": 87,
+              "vertices": 2509
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-4",
+              "iso3": null,
+              "subpaths": 101,
+              "vertices": 2643
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-5",
+              "iso3": null,
+              "subpaths": 30,
+              "vertices": 714
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-2",
+              "iso3": null,
+              "subpaths": 25,
+              "vertices": 98
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-3",
+              "iso3": null,
+              "subpaths": 4,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-4",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 20
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-5",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-1",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 73
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-2",
+              "iso3": null,
+              "subpaths": 26,
+              "vertices": 124
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-3",
+              "iso3": null,
+              "subpaths": 9,
+              "vertices": 41
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-4",
+              "iso3": null,
+              "subpaths": 7,
+              "vertices": 33
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-5",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 34
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-2",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 52
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-3",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 32
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-2",
+              "iso3": null,
+              "subpaths": 12,
+              "vertices": 50
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-4",
+              "iso3": null,
+              "subpaths": 3,
+              "vertices": 11
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 45
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-2",
+              "iso3": null,
+              "subpaths": 28,
+              "vertices": 279
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-3",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 43
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-4",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 6
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-1",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 84
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-2",
+              "iso3": null,
+              "subpaths": 16,
+              "vertices": 294
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-8-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-9-band-2",
+              "iso3": null,
+              "subpaths": 2,
+              "vertices": 30
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-1",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-2",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            }
+          ],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "#2a0c41": "#193fb8",
+        "#73def9": "#f5eae7",
+        "none": "none",
+        "#5c9bbe": "#afb3d8"
+      },
+      "layout_variant": {},
+      "capability_study": "option-3-petals",
+      "marker_color_policy": "randoma11y-foreground",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/network-groundstations-authagraph-44-19.052559-legend.pdf",
+          "sha256": "3da629f868182890a500d95066827a968d6f98f9af7c572f035ff8d4c3ef7fa3",
+          "bytes": 38517
+        },
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/network-groundstations-authagraph-44-19.052559-legend.webp",
+          "sha256": "26036ce141a049b0ce4a87896870dd834fed4a7dffa67ffd511f31f82c52286d",
+          "bytes": 418360
+        },
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/network-groundstations-authagraph-44-19.052559-legend.svg.gz",
+          "sha256": "a66b6757a36677bc9e8721bc10052f6c93b1890ebaace975d17338db0cdc4630",
+          "bytes": 8311
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-ultramarine-porcelain",
+      "subject": "orbital-technosphere-global",
+      "kind": "map",
+      "source_svg_sha256": "cbc8128ffc9ec4855a2e1559f47d76ab25d7392f4714ab68f58d2a0514e1d25a",
+      "svg_sha256": "3b717e043dfeb8a2ece7f91f9f33f3d40aa28f3a1f4c403402ec17bc03d8f6e3",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": true,
+          "changed_paths": [
+            {
+              "id": "terrestrial-land-feature-1-band-1",
+              "iso3": null,
+              "subpaths": 56,
+              "vertices": 1405
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-2",
+              "iso3": null,
+              "subpaths": 98,
+              "vertices": 2569
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-3",
+              "iso3": null,
+              "subpaths": 87,
+              "vertices": 2509
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-4",
+              "iso3": null,
+              "subpaths": 101,
+              "vertices": 2643
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-5",
+              "iso3": null,
+              "subpaths": 30,
+              "vertices": 714
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-2",
+              "iso3": null,
+              "subpaths": 25,
+              "vertices": 98
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-3",
+              "iso3": null,
+              "subpaths": 4,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-4",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 20
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-5",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-1",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 73
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-2",
+              "iso3": null,
+              "subpaths": 26,
+              "vertices": 124
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-3",
+              "iso3": null,
+              "subpaths": 9,
+              "vertices": 41
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-4",
+              "iso3": null,
+              "subpaths": 7,
+              "vertices": 33
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-5",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 34
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-2",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 52
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-3",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 32
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-2",
+              "iso3": null,
+              "subpaths": 12,
+              "vertices": 50
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-4",
+              "iso3": null,
+              "subpaths": 3,
+              "vertices": 11
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 45
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-2",
+              "iso3": null,
+              "subpaths": 28,
+              "vertices": 279
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-3",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 43
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-4",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 6
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-1",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 84
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-2",
+              "iso3": null,
+              "subpaths": 16,
+              "vertices": 294
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-8-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-9-band-2",
+              "iso3": null,
+              "subpaths": 2,
+              "vertices": 30
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-1",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-2",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            }
+          ],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "white": "white",
+        "rgb(216,221,219)": "#f5eae7",
+        "rgb(40,42,46)": "#f5eae7",
+        "rgb(1,0,0)": "rgb(1,0,0)",
+        "rgb(75,75,75)": "#f5eae7",
+        "rgb(90,90,90)": "#f5eae7",
+        "rgb(220,48,35)": "#f5eae7",
+        "rgb(255,255,255)": "#f5eae7",
+        "rgb(242,244,243)": "#f5eae7"
+      },
+      "layout_variant": {
+        "starlink_marker_shape": "sunburst",
+        "starlink_marker_linear_scale": 1.5,
+        "global_starlink_font_size_pt": 6,
+        "global_markers_above_starlink_text": true,
+        "groundstation_study": "option-3-petals"
+      },
+      "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/orbital-technosphere-global-authagraph-44-19.052559.pdf",
+          "sha256": "d490ff92c8e89a665867975b2571e8d3477268933d9a1c38b03141b8fb810465",
+          "bytes": 2782182
+        },
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/orbital-technosphere-global-authagraph-44-19.052559.webp",
+          "sha256": "13aeab545d538d5f8574614627232b30345bd0227a692d14c6e5a64c1a4e81cc",
+          "bytes": 2092724
+        },
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/orbital-technosphere-global-authagraph-44-19.052559.svg.gz",
+          "sha256": "08776a8d62098bd11136a206e18ed2b310ee489ca97288578eeb71ccad8f476b",
+          "bytes": 4764583
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-ultramarine-porcelain",
+      "subject": "orbital-technosphere-global",
+      "kind": "legend",
+      "source_svg_sha256": "4b6aa3a47baf3ad5362e0944231893b03db851e3cf2f398419ee8017cd3d7126",
+      "svg_sha256": "a876e34ac713c6840a9afab3dfb79c7479a3c0489500ffda4fbfe7be58db766a",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": true,
+          "changed_paths": [
+            {
+              "id": "terrestrial-land-feature-1-band-1",
+              "iso3": null,
+              "subpaths": 56,
+              "vertices": 1405
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-2",
+              "iso3": null,
+              "subpaths": 98,
+              "vertices": 2569
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-3",
+              "iso3": null,
+              "subpaths": 87,
+              "vertices": 2509
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-4",
+              "iso3": null,
+              "subpaths": 101,
+              "vertices": 2643
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-5",
+              "iso3": null,
+              "subpaths": 30,
+              "vertices": 714
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-2",
+              "iso3": null,
+              "subpaths": 25,
+              "vertices": 98
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-3",
+              "iso3": null,
+              "subpaths": 4,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-4",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 20
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-5",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-1",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 73
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-2",
+              "iso3": null,
+              "subpaths": 26,
+              "vertices": 124
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-3",
+              "iso3": null,
+              "subpaths": 9,
+              "vertices": 41
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-4",
+              "iso3": null,
+              "subpaths": 7,
+              "vertices": 33
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-5",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 34
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-2",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 52
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-3",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 32
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-2",
+              "iso3": null,
+              "subpaths": 12,
+              "vertices": 50
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-4",
+              "iso3": null,
+              "subpaths": 3,
+              "vertices": 11
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 45
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-2",
+              "iso3": null,
+              "subpaths": 28,
+              "vertices": 279
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-3",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 43
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-4",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 6
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-1",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 84
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-2",
+              "iso3": null,
+              "subpaths": 16,
+              "vertices": 294
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-8-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-9-band-2",
+              "iso3": null,
+              "subpaths": 2,
+              "vertices": 30
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-1",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-2",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            }
+          ],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "white": "white",
+        "#2a2824": "#f5eae7",
+        "#ffffff": "#f5eae7",
+        "#000000": "#000000"
+      },
+      "layout_variant": {
+        "starlink_marker_shape": "sunburst",
+        "starlink_marker_linear_scale": 1.5,
+        "global_starlink_font_size_pt": 6,
+        "global_markers_above_starlink_text": true,
+        "groundstation_study": "option-3-petals"
+      },
+      "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/orbital-technosphere-global-authagraph-44-19.052559-legend.pdf",
+          "sha256": "5ba7134da81242ef485fd5818bfb451239f0c85a561b59694a214f090f6df08a",
+          "bytes": 33364
+        },
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/orbital-technosphere-global-authagraph-44-19.052559-legend.webp",
+          "sha256": "a17a5af054912576b99a833e312f681ca6b3e8202f0a98690f9f50759ee23796",
+          "bytes": 491538
+        },
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/orbital-technosphere-global-authagraph-44-19.052559-legend.svg.gz",
+          "sha256": "25d5de1ba3927dce59068b5b9404d73e4caabbd0cf996e25ce3100eacecc2a8b",
+          "bytes": 9006
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-ultramarine-porcelain",
+      "subject": "orbital-technosphere-observer",
+      "kind": "map",
+      "source_svg_sha256": "adaa1680a57a2c3c038cc3a021c88faff598ab6e2f18b3754f6727d78a8b3f1c",
+      "svg_sha256": "e40975cb3f7cbed2fc38f642f0917578a5bf284c2513a9a12f545577fa3c55f0",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": false,
+          "changed_paths": [],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "white": "white",
+        "rgb(1,0,0)": "rgb(1,0,0)",
+        "rgb(75,75,75)": "#f5eae7",
+        "rgb(236,75,37)": "#f5eae7",
+        "rgb(40,42,46)": "#f5eae7",
+        "rgb(148,148,148)": "#f5eae7"
+      },
+      "layout_variant": {
+        "starlink_marker_shape": "sunburst",
+        "starlink_marker_linear_scale": 1.5,
+        "global_starlink_font_size_pt": 6,
+        "global_markers_above_starlink_text": true,
+        "groundstation_study": "option-3-petals"
+      },
+      "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/orbital-technosphere-observer-authagraph-44-19.052559.pdf",
+          "sha256": "af575092c7c7079a2d3e1e31c3a3f45de7b03922b7b9ba0b0ef61619010a7b55",
+          "bytes": 99950
+        },
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/orbital-technosphere-observer-authagraph-44-19.052559.webp",
+          "sha256": "001edddea487213eb2a13ac4b3e928f7e541f1cbe0b9e92b3b5028c09599fee6",
+          "bytes": 105104
+        },
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/orbital-technosphere-observer-authagraph-44-19.052559.svg.gz",
+          "sha256": "76c3554a7e7f387d93133b241ab7b357fc5d4c0a06bc3bb4d1cbe95358bbe508",
+          "bytes": 237523
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-ultramarine-porcelain",
+      "subject": "orbital-technosphere-observer",
+      "kind": "legend",
+      "source_svg_sha256": "96d5b4575170e051e42b6d28efedefbc5c094a8533e68ad1c4928a988b54fb50",
+      "svg_sha256": "28eec4eef623aef95e02a10eee61a79868cea68de32257e4d80a793da2e996f7",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": false,
+          "changed_paths": [],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "white": "white",
+        "#2a2824": "#f5eae7",
+        "#ffffff": "#f5eae7",
+        "#000000": "#000000"
+      },
+      "layout_variant": {
+        "starlink_marker_shape": "sunburst",
+        "starlink_marker_linear_scale": 1.5,
+        "global_starlink_font_size_pt": 6,
+        "global_markers_above_starlink_text": true,
+        "groundstation_study": "option-3-petals"
+      },
+      "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/orbital-technosphere-observer-authagraph-44-19.052559-legend.pdf",
+          "sha256": "5d6d1f02d2a3a7e3f1daf175ed5dc6e32790c553756197e82a5e61902f56a8c9",
+          "bytes": 32831
+        },
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/orbital-technosphere-observer-authagraph-44-19.052559-legend.webp",
+          "sha256": "756ac444cf1ea23a1273cf0766f862d9dad4efd0a22e0a4a1c57aafbbd92bd6f",
+          "bytes": 443682
+        },
+        {
+          "path": "msp-speculation-4-ultramarine-porcelain/orbital-technosphere-observer-authagraph-44-19.052559-legend.svg.gz",
+          "sha256": "4e1a7485ce3f3de80ceaf908e8992348812b3d79bd2a557690c3d0d7aac15d20",
+          "bytes": 8748
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-plum-ice",
+      "subject": "network-groundstations",
+      "kind": "map",
+      "source_svg_sha256": "c1f64307ac46dbb17fa490e058b8e650bd0acdc3aa2f4f089ffe0f84f10d0f5d",
+      "svg_sha256": "f5306536811e53ec9c48be4d6e49a69db207807b4660b427b43fab139f708490",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": true,
+          "changed_paths": [
+            {
+              "id": "terrestrial-land-feature-1-band-1",
+              "iso3": null,
+              "subpaths": 56,
+              "vertices": 1405
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-2",
+              "iso3": null,
+              "subpaths": 98,
+              "vertices": 2569
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-3",
+              "iso3": null,
+              "subpaths": 87,
+              "vertices": 2509
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-4",
+              "iso3": null,
+              "subpaths": 101,
+              "vertices": 2643
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-5",
+              "iso3": null,
+              "subpaths": 30,
+              "vertices": 714
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-2",
+              "iso3": null,
+              "subpaths": 25,
+              "vertices": 98
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-3",
+              "iso3": null,
+              "subpaths": 4,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-4",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 20
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-5",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-1",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 73
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-2",
+              "iso3": null,
+              "subpaths": 26,
+              "vertices": 124
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-3",
+              "iso3": null,
+              "subpaths": 9,
+              "vertices": 41
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-4",
+              "iso3": null,
+              "subpaths": 7,
+              "vertices": 33
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-5",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 34
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-2",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 52
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-3",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 32
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-2",
+              "iso3": null,
+              "subpaths": 12,
+              "vertices": 50
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-4",
+              "iso3": null,
+              "subpaths": 3,
+              "vertices": 11
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 45
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-2",
+              "iso3": null,
+              "subpaths": 28,
+              "vertices": 279
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-3",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 43
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-4",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 6
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-1",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 84
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-2",
+              "iso3": null,
+              "subpaths": 16,
+              "vertices": 294
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-8-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-9-band-2",
+              "iso3": null,
+              "subpaths": 2,
+              "vertices": 30
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-1",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-2",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            }
+          ],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "#2a0c41": "#2a0c41",
+        "#362e5e": "#362e5e",
+        "none": "none",
+        "rgb(1,0,0)": "rgb(1,0,0)",
+        "#73def9": "#73def9",
+        "#5c9bbe": "#5c9bbe"
+      },
+      "layout_variant": {},
+      "capability_study": "option-3-petals",
+      "marker_color_policy": "randoma11y-foreground",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-plum-ice/network-groundstations-authagraph-44-19.052559.pdf",
+          "sha256": "6dda3e0c3a44fabe5d17f834b1d9de4fcc4f1065db37eb434f743c3e64837c64",
+          "bytes": 1054152
+        },
+        {
+          "path": "msp-speculation-4-plum-ice/network-groundstations-authagraph-44-19.052559.webp",
+          "sha256": "74f59ddb2a23ccb08e2c30d5243b1632830d4511caa73eb4853c8b82e8c3654a",
+          "bytes": 315282
+        },
+        {
+          "path": "msp-speculation-4-plum-ice/network-groundstations-authagraph-44-19.052559.svg.gz",
+          "sha256": "3975bd23ced71c4172b19460d4b47debf1d8d1c011cf1a1949fc72b195fa13f7",
+          "bytes": 702562
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-plum-ice",
+      "subject": "network-groundstations",
+      "kind": "legend",
+      "source_svg_sha256": "a27fc5a50b92220e616c884b0bf5a8329c984af7207328634a4337e9aa279265",
+      "svg_sha256": "2aa27966b15a647657ae63e63f878bdfdff3206ea332a03269af0c0379d6f0a0",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": true,
+          "changed_paths": [
+            {
+              "id": "terrestrial-land-feature-1-band-1",
+              "iso3": null,
+              "subpaths": 56,
+              "vertices": 1405
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-2",
+              "iso3": null,
+              "subpaths": 98,
+              "vertices": 2569
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-3",
+              "iso3": null,
+              "subpaths": 87,
+              "vertices": 2509
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-4",
+              "iso3": null,
+              "subpaths": 101,
+              "vertices": 2643
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-5",
+              "iso3": null,
+              "subpaths": 30,
+              "vertices": 714
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-2",
+              "iso3": null,
+              "subpaths": 25,
+              "vertices": 98
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-3",
+              "iso3": null,
+              "subpaths": 4,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-4",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 20
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-5",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-1",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 73
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-2",
+              "iso3": null,
+              "subpaths": 26,
+              "vertices": 124
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-3",
+              "iso3": null,
+              "subpaths": 9,
+              "vertices": 41
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-4",
+              "iso3": null,
+              "subpaths": 7,
+              "vertices": 33
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-5",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 34
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-2",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 52
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-3",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 32
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-2",
+              "iso3": null,
+              "subpaths": 12,
+              "vertices": 50
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-4",
+              "iso3": null,
+              "subpaths": 3,
+              "vertices": 11
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 45
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-2",
+              "iso3": null,
+              "subpaths": 28,
+              "vertices": 279
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-3",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 43
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-4",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 6
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-1",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 84
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-2",
+              "iso3": null,
+              "subpaths": 16,
+              "vertices": 294
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-8-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-9-band-2",
+              "iso3": null,
+              "subpaths": 2,
+              "vertices": 30
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-1",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-2",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            }
+          ],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "#2a0c41": "#2a0c41",
+        "#73def9": "#73def9",
+        "none": "none",
+        "#5c9bbe": "#5c9bbe"
+      },
+      "layout_variant": {},
+      "capability_study": "option-3-petals",
+      "marker_color_policy": "randoma11y-foreground",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-plum-ice/network-groundstations-authagraph-44-19.052559-legend.pdf",
+          "sha256": "6e936373010e0fb7cb29e8e0464a7d483a3bb5bbcf4c1a527963e8e4f4324f1a",
+          "bytes": 38399
+        },
+        {
+          "path": "msp-speculation-4-plum-ice/network-groundstations-authagraph-44-19.052559-legend.webp",
+          "sha256": "6af87bc10018bc9df742893e8b05d33f0000a80ae68c11a923e542d614f02a7f",
+          "bytes": 386844
+        },
+        {
+          "path": "msp-speculation-4-plum-ice/network-groundstations-authagraph-44-19.052559-legend.svg.gz",
+          "sha256": "1867a29d9fb68e2876086d2432158acd56656922f69849842b75833f28191c26",
+          "bytes": 8304
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-plum-ice",
+      "subject": "orbital-technosphere-global",
+      "kind": "map",
+      "source_svg_sha256": "cbc8128ffc9ec4855a2e1559f47d76ab25d7392f4714ab68f58d2a0514e1d25a",
+      "svg_sha256": "7025b0622d5038cbeeb1c5e8956b80e7fb9771fb7d6327b41e2a025ef006f2fb",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": true,
+          "changed_paths": [
+            {
+              "id": "terrestrial-land-feature-1-band-1",
+              "iso3": null,
+              "subpaths": 56,
+              "vertices": 1405
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-2",
+              "iso3": null,
+              "subpaths": 98,
+              "vertices": 2569
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-3",
+              "iso3": null,
+              "subpaths": 87,
+              "vertices": 2509
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-4",
+              "iso3": null,
+              "subpaths": 101,
+              "vertices": 2643
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-5",
+              "iso3": null,
+              "subpaths": 30,
+              "vertices": 714
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-2",
+              "iso3": null,
+              "subpaths": 25,
+              "vertices": 98
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-3",
+              "iso3": null,
+              "subpaths": 4,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-4",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 20
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-5",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-1",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 73
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-2",
+              "iso3": null,
+              "subpaths": 26,
+              "vertices": 124
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-3",
+              "iso3": null,
+              "subpaths": 9,
+              "vertices": 41
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-4",
+              "iso3": null,
+              "subpaths": 7,
+              "vertices": 33
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-5",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 34
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-2",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 52
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-3",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 32
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-2",
+              "iso3": null,
+              "subpaths": 12,
+              "vertices": 50
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-4",
+              "iso3": null,
+              "subpaths": 3,
+              "vertices": 11
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 45
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-2",
+              "iso3": null,
+              "subpaths": 28,
+              "vertices": 279
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-3",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 43
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-4",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 6
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-1",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 84
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-2",
+              "iso3": null,
+              "subpaths": 16,
+              "vertices": 294
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-8-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-9-band-2",
+              "iso3": null,
+              "subpaths": 2,
+              "vertices": 30
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-1",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-2",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            }
+          ],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "white": "white",
+        "rgb(216,221,219)": "#73def9",
+        "rgb(40,42,46)": "#73def9",
+        "rgb(1,0,0)": "rgb(1,0,0)",
+        "rgb(75,75,75)": "#73def9",
+        "rgb(90,90,90)": "#73def9",
+        "rgb(220,48,35)": "#73def9",
+        "rgb(255,255,255)": "#73def9",
+        "rgb(242,244,243)": "#73def9"
+      },
+      "layout_variant": {
+        "starlink_marker_shape": "sunburst",
+        "starlink_marker_linear_scale": 1.5,
+        "global_starlink_font_size_pt": 6,
+        "global_markers_above_starlink_text": true,
+        "groundstation_study": "option-3-petals"
+      },
+      "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-plum-ice/orbital-technosphere-global-authagraph-44-19.052559.pdf",
+          "sha256": "d335d1b10d38cadccf7668f8eed26d2ecf630ced4ad7af7bbe6d445e66097d66",
+          "bytes": 2782204
+        },
+        {
+          "path": "msp-speculation-4-plum-ice/orbital-technosphere-global-authagraph-44-19.052559.webp",
+          "sha256": "6b0d17af5b847f285cae6cca86b2dcf01c718e9627f9c75a626edd7a11460ab0",
+          "bytes": 2073366
+        },
+        {
+          "path": "msp-speculation-4-plum-ice/orbital-technosphere-global-authagraph-44-19.052559.svg.gz",
+          "sha256": "954f3ad7bdcd3bf3ab70c5579b39746881f32b3590c3e3051b84475b6d36750c",
+          "bytes": 4764554
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-plum-ice",
+      "subject": "orbital-technosphere-global",
+      "kind": "legend",
+      "source_svg_sha256": "4b6aa3a47baf3ad5362e0944231893b03db851e3cf2f398419ee8017cd3d7126",
+      "svg_sha256": "1bb1e584aead920d6acf14bd5e0612bd2d48fa932aeeb6299806639370e0000f",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": true,
+          "changed_paths": [
+            {
+              "id": "terrestrial-land-feature-1-band-1",
+              "iso3": null,
+              "subpaths": 56,
+              "vertices": 1405
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-2",
+              "iso3": null,
+              "subpaths": 98,
+              "vertices": 2569
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-3",
+              "iso3": null,
+              "subpaths": 87,
+              "vertices": 2509
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-4",
+              "iso3": null,
+              "subpaths": 101,
+              "vertices": 2643
+            },
+            {
+              "id": "terrestrial-land-feature-1-band-5",
+              "iso3": null,
+              "subpaths": 30,
+              "vertices": 714
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-2",
+              "iso3": null,
+              "subpaths": 25,
+              "vertices": 98
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-3",
+              "iso3": null,
+              "subpaths": 4,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-4",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 20
+            },
+            {
+              "id": "terrestrial-land-feature-2-band-5",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 17
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-1",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 73
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-2",
+              "iso3": null,
+              "subpaths": 26,
+              "vertices": 124
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-3",
+              "iso3": null,
+              "subpaths": 9,
+              "vertices": 41
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-4",
+              "iso3": null,
+              "subpaths": 7,
+              "vertices": 33
+            },
+            {
+              "id": "terrestrial-land-feature-3-band-5",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 34
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-2",
+              "iso3": null,
+              "subpaths": 15,
+              "vertices": 52
+            },
+            {
+              "id": "terrestrial-land-feature-4-band-3",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 32
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-2",
+              "iso3": null,
+              "subpaths": 12,
+              "vertices": 50
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-4",
+              "iso3": null,
+              "subpaths": 3,
+              "vertices": 11
+            },
+            {
+              "id": "terrestrial-land-feature-5-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-1",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 45
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-2",
+              "iso3": null,
+              "subpaths": 28,
+              "vertices": 279
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-3",
+              "iso3": null,
+              "subpaths": 6,
+              "vertices": 43
+            },
+            {
+              "id": "terrestrial-land-feature-6-band-4",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 6
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-1",
+              "iso3": null,
+              "subpaths": 5,
+              "vertices": 84
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-2",
+              "iso3": null,
+              "subpaths": 16,
+              "vertices": 294
+            },
+            {
+              "id": "terrestrial-land-feature-7-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 21
+            },
+            {
+              "id": "terrestrial-land-feature-8-band-5",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 3
+            },
+            {
+              "id": "terrestrial-land-feature-9-band-2",
+              "iso3": null,
+              "subpaths": 2,
+              "vertices": 30
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-1",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            },
+            {
+              "id": "terrestrial-land-feature-10-band-2",
+              "iso3": null,
+              "subpaths": 1,
+              "vertices": 4
+            }
+          ],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "white": "white",
+        "#2a2824": "#73def9",
+        "#ffffff": "#73def9",
+        "#000000": "#000000"
+      },
+      "layout_variant": {
+        "starlink_marker_shape": "sunburst",
+        "starlink_marker_linear_scale": 1.5,
+        "global_starlink_font_size_pt": 6,
+        "global_markers_above_starlink_text": true,
+        "groundstation_study": "option-3-petals"
+      },
+      "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-plum-ice/orbital-technosphere-global-authagraph-44-19.052559-legend.pdf",
+          "sha256": "8467cc1d62d507d1b94d91e3d8bdc08af31c82d0ae54b38d19a9bf8008fd97ed",
+          "bytes": 33269
+        },
+        {
+          "path": "msp-speculation-4-plum-ice/orbital-technosphere-global-authagraph-44-19.052559-legend.webp",
+          "sha256": "53b699dab5bb6e6232819271c6b3c474a9ff5111e0e21ff798a0fa95fdb24a7b",
+          "bytes": 444606
+        },
+        {
+          "path": "msp-speculation-4-plum-ice/orbital-technosphere-global-authagraph-44-19.052559-legend.svg.gz",
+          "sha256": "51702f149a08ac64d13e6e712c65cce620ea3ba94c2e396e2c7d60f4f8010c01",
+          "bytes": 9000
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-plum-ice",
+      "subject": "orbital-technosphere-observer",
+      "kind": "map",
+      "source_svg_sha256": "adaa1680a57a2c3c038cc3a021c88faff598ab6e2f18b3754f6727d78a8b3f1c",
+      "svg_sha256": "3b15a6a341127df2c5bfa3009042f921a3b8fb6a63cdb2cdec80d14ff40ce4f1",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": false,
+          "changed_paths": [],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "white": "white",
+        "rgb(1,0,0)": "rgb(1,0,0)",
+        "rgb(75,75,75)": "#73def9",
+        "rgb(236,75,37)": "#73def9",
+        "rgb(40,42,46)": "#73def9",
+        "rgb(148,148,148)": "#73def9"
+      },
+      "layout_variant": {
+        "starlink_marker_shape": "sunburst",
+        "starlink_marker_linear_scale": 1.5,
+        "global_starlink_font_size_pt": 6,
+        "global_markers_above_starlink_text": true,
+        "groundstation_study": "option-3-petals"
+      },
+      "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-plum-ice/orbital-technosphere-observer-authagraph-44-19.052559.pdf",
+          "sha256": "33b0eea504eb9dfe50bef4ab049a89e98b3ac0a9df854ebea2376cce772c7656",
+          "bytes": 99947
+        },
+        {
+          "path": "msp-speculation-4-plum-ice/orbital-technosphere-observer-authagraph-44-19.052559.webp",
+          "sha256": "d132c15ade09508223a5d047ea8292e6719ba62a07f7abfd12a39ba18eb475f7",
+          "bytes": 105624
+        },
+        {
+          "path": "msp-speculation-4-plum-ice/orbital-technosphere-observer-authagraph-44-19.052559.svg.gz",
+          "sha256": "5cc8b9b9a0ae6e9bd3f950284e28a993bc974bd37e6ac054405502354ea47749",
+          "bytes": 237512
+        }
+      ]
+    },
+    {
+      "study": "msp-speculation-4-plum-ice",
+      "subject": "orbital-technosphere-observer",
+      "kind": "legend",
+      "source_svg_sha256": "96d5b4575170e051e42b6d28efedefbc5c094a8533e68ad1c4928a988b54fb50",
+      "svg_sha256": "2f97bd0936275c8df1592fc9cf9b22051dd3b2b435416aeed36dcfff18c722a4",
+      "framing": {
+        "variant": "cyclic-43p5-antarctica-left",
+        "scale": 0.9886363636363636,
+        "shift": 4.4,
+        "offset": 0,
+        "translation_inches": [
+          0.25,
+          0.10825317613636365
+        ],
+        "sheet_inches": [
+          44.0,
+          19.052559
+        ],
+        "image_inches": [
+          43.5,
+          18.83605264772727
+        ],
+        "cyclic_move_on_sheet_inches": 4.3500000000000005,
+        "all_artwork_scaled_proportionally": true,
+        "legend_included": false,
+        "antarctica_paint_order": "below-source-labels-and-markers",
+        "non_terrestrial_data_coordinates_unchanged": true,
+        "editorial_land_reference_sha256": null,
+        "antarctica_adjustment": {
+          "translation_source_inches": [
+            -37.3872,
+            1.5506589999999996
+          ],
+          "present": false,
+          "changed_paths": [],
+          "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+        }
+      },
+      "color_replacements": {
+        "white": "white",
+        "#2a2824": "#73def9",
+        "#ffffff": "#73def9",
+        "#000000": "#000000"
+      },
+      "layout_variant": {
+        "starlink_marker_shape": "sunburst",
+        "starlink_marker_linear_scale": 1.5,
+        "global_starlink_font_size_pt": 6,
+        "global_markers_above_starlink_text": true,
+        "groundstation_study": "option-3-petals"
+      },
+      "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
+      "palette_preserves_geometry_ids_names_and_type": true,
+      "outputs": [
+        {
+          "path": "msp-speculation-4-plum-ice/orbital-technosphere-observer-authagraph-44-19.052559-legend.pdf",
+          "sha256": "7fa462d2a25619a07832fcfa16c6cfc0cf8f8b0be3e2988eb1ee6df63fcf5579",
+          "bytes": 32736
+        },
+        {
+          "path": "msp-speculation-4-plum-ice/orbital-technosphere-observer-authagraph-44-19.052559-legend.webp",
+          "sha256": "6ed20704b5054f434c32e9228fc061cf76bcc1796dd0b2c9c28239d9e7aaf0b3",
+          "bytes": 405554
+        },
+        {
+          "path": "msp-speculation-4-plum-ice/orbital-technosphere-observer-authagraph-44-19.052559-legend.svg.gz",
+          "sha256": "2f6f259e5fd6ef6d8a9d864a8f8a2f061c6d6226aca0d601b3a15aaacce6800f",
+          "bytes": 8742
         }
       ]
     },
@@ -3939,8 +7365,8 @@
       "study": "msp-speculation-4",
       "subject": "network-groundstations",
       "kind": "map",
-      "source_svg_sha256": "0dff8aafdb15b1ab80924665e26dbda030ba33daf313c1bcb9a51f7104ae553c",
-      "svg_sha256": "d3af30a59c988c8d132d3bcbaa0801ef8ca77eaafac52c4d04586a621389ab14",
+      "source_svg_sha256": "c1f64307ac46dbb17fa490e058b8e650bd0acdc3aa2f4f089ffe0f84f10d0f5d",
+      "svg_sha256": "6fb8e8a8b7516386eb8fc1e02ac619cdcf305323e046d7df289255d36b978729",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -4172,27 +7598,28 @@
         "#362e5e": "#262641",
         "none": "none",
         "rgb(1,0,0)": "rgb(1,0,0)",
-        "#5c9bbe": "#9f936a",
-        "#73def9": "#ead784"
+        "#73def9": "#ead784",
+        "#5c9bbe": "#9f936a"
       },
       "layout_variant": {},
       "capability_study": "option-3-petals",
+      "marker_color_policy": "randoma11y-foreground",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-4/network-groundstations-authagraph-44-19.052559.pdf",
-          "sha256": "10ea7d31e7dec2465956427c6b8bdf3ba74b79be95bbf3240beea923af2d0901",
-          "bytes": 1053663
+          "sha256": "0079029ff28be323cf965233737436823937d268afff47f6768ddce2ab4a6ad7",
+          "bytes": 1053616
         },
         {
           "path": "msp-speculation-4/network-groundstations-authagraph-44-19.052559.webp",
-          "sha256": "6b048a4226817d18e333e35b720efb8e6fa55e3f269cace317e0a305326fb7df",
-          "bytes": 268742
+          "sha256": "586fb1063fa9b9978a34e1ab71ca76668a3f4250c565c4845ce00fee649c4da9",
+          "bytes": 350872
         },
         {
           "path": "msp-speculation-4/network-groundstations-authagraph-44-19.052559.svg.gz",
-          "sha256": "f89fc9d42a1eccfac0c9cc993ea17b1a39ba5f9d7cb7a3fce1b1ad50a7f8bd23",
-          "bytes": 702475
+          "sha256": "1665752263851535fcfafb603b8723fd427e615e1893a9d88c20fea93ed3cb25",
+          "bytes": 702527
         }
       ]
     },
@@ -4200,8 +7627,8 @@
       "study": "msp-speculation-4",
       "subject": "network-groundstations",
       "kind": "legend",
-      "source_svg_sha256": "dd51a46050bbe4856537b775370bbf175c8880e191b7f4e23b35ba41f2cb092f",
-      "svg_sha256": "b31bd39818a2c44d7c0f115aa7590dca0d6bbecd02d3133f2943d94c91cb1843",
+      "source_svg_sha256": "a27fc5a50b92220e616c884b0bf5a8329c984af7207328634a4337e9aa279265",
+      "svg_sha256": "323303ef6f1191c70c90e03c627117bbce4d4384e67a29b4c15098bfa718dab1",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -4436,22 +7863,23 @@
       },
       "layout_variant": {},
       "capability_study": "option-3-petals",
+      "marker_color_policy": "randoma11y-foreground",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-4/network-groundstations-authagraph-44-19.052559-legend.pdf",
-          "sha256": "771691c46115d0a3eff015647ab347be6a1307a005622b38241690f9712aa779",
-          "bytes": 38556
+          "sha256": "cfec3b447899dce4008374b312148f6b149f3add29657b6cb3ebccc3216ddd62",
+          "bytes": 38602
         },
         {
           "path": "msp-speculation-4/network-groundstations-authagraph-44-19.052559-legend.webp",
-          "sha256": "862b24768fa1b736e315a516c97f3714802a25769d7cf0cf4e8a26732a21cb1d",
-          "bytes": 411512
+          "sha256": "6ae8cd2e555df1857b02eaa15491eef8c987a9e5469ccff8aa4f2ddc19540788",
+          "bytes": 420868
         },
         {
           "path": "msp-speculation-4/network-groundstations-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "687fa04fee48025270779b91dc7e57f0ad0915061109c3330b77b4e8075cd454",
-          "bytes": 8236
+          "sha256": "1b55cb8a468e80bf1ade342716beab183fec4cae4668bbbe5b358e922604b6ec",
+          "bytes": 8301
         }
       ]
     },
@@ -4460,7 +7888,7 @@
       "subject": "orbital-technosphere-global",
       "kind": "map",
       "source_svg_sha256": "cbc8128ffc9ec4855a2e1559f47d76ab25d7392f4714ab68f58d2a0514e1d25a",
-      "svg_sha256": "cec457a80dcaa9726c800d57f7681856e6cf6c3cf67cc308fc4de9c9497ee62f",
+      "svg_sha256": "a01d750a3ca63d7aa72120d5da46b7e850d488880e358eacf07eb5d7541b2744",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -4692,59 +8120,37 @@
         "rgb(216,221,219)": "#ead784",
         "rgb(40,42,46)": "#ead784",
         "rgb(1,0,0)": "rgb(1,0,0)",
-        "rgb(214,56,50)": "#ead784",
         "rgb(75,75,75)": "#ead784",
         "rgb(90,90,90)": "#ead784",
-        "rgb(0,0,0)": "rgb(0,0,0)",
-        "rgb(64,64,64)": "#ead784",
-        "rgb(255,215,0)": "#ead784",
-        "rgb(127,255,212)": "#ead784",
-        "rgb(173,216,230)": "#ead784",
         "rgb(220,48,35)": "#ead784",
-        "rgb(0,114,178)": "#ead784",
-        "rgb(230,126,0)": "#ead784",
-        "rgb(136,70,167)": "#ead784",
-        "rgb(0,142,115)": "#ead784",
-        "rgb(55,90,176)": "#ead784",
-        "rgb(187,72,130)": "#ead784",
-        "rgb(150,115,26)": "#ead784",
-        "rgb(0,154,170)": "#ead784",
-        "rgb(98,137,48)": "#ead784",
-        "rgb(164,96,55)": "#ead784",
-        "rgb(95,90,173)": "#ead784",
-        "rgb(191,112,19)": "#ead784",
-        "rgb(125,76,101)": "#ead784",
-        "rgb(147,131,0)": "#ead784",
-        "rgb(58,113,113)": "#ead784",
-        "rgb(81,123,177)": "#ead784",
-        "rgb(162,91,30)": "#ead784",
         "rgb(255,255,255)": "#ead784",
         "rgb(242,244,243)": "#ead784"
       },
       "layout_variant": {
         "starlink_marker_shape": "sunburst",
         "starlink_marker_linear_scale": 1.5,
-        "global_starlink_font_size_pt": 7,
+        "global_starlink_font_size_pt": 6,
         "global_markers_above_starlink_text": true,
         "groundstation_study": "option-3-petals"
       },
       "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-4/orbital-technosphere-global-authagraph-44-19.052559.pdf",
-          "sha256": "7a98db32b983ffcdb544c1b9e9f50a3fe138821042bf9104fe30c3a48ba1d6d8",
-          "bytes": 2784305
+          "sha256": "a1f469214007eb1fd3beaab41196239e846318d98e215cf96536f48727c48ed7",
+          "bytes": 2782079
         },
         {
           "path": "msp-speculation-4/orbital-technosphere-global-authagraph-44-19.052559.webp",
-          "sha256": "1635a1ef6c8d7b2c1000792e00eb9dc7a24ff37ca7c7be655b90d75be5934d97",
-          "bytes": 2597204
+          "sha256": "a6122db7b11d1aab46a4eb58880ab8a4aa7cf4865b2efcee20338d285d0702ca",
+          "bytes": 2234850
         },
         {
           "path": "msp-speculation-4/orbital-technosphere-global-authagraph-44-19.052559.svg.gz",
-          "sha256": "c3a6b88f27105042a26067bfdbe19dfd15da71e90cb99edab92bc691a911665a",
-          "bytes": 4758058
+          "sha256": "fc738f93d34fb4cb1042a89851cbe418baf822d81f0f70f39ed5114038edb523",
+          "bytes": 4764548
         }
       ]
     },
@@ -4753,7 +8159,7 @@
       "subject": "orbital-technosphere-global",
       "kind": "legend",
       "source_svg_sha256": "4b6aa3a47baf3ad5362e0944231893b03db851e3cf2f398419ee8017cd3d7126",
-      "svg_sha256": "50d2fe2c75626729e81f7c6dd396a27eab60f52c812dc63c3bf543d2c642b043",
+      "svg_sha256": "488ff88a20b9a12a763c6bb74e0b5f3cd84909268aaa08dadc05efb831fe733f",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -4983,58 +8389,34 @@
       "color_replacements": {
         "white": "white",
         "#2a2824": "#ead784",
-        "rgb(214,56,50)": "#ead784",
-        "rgb(1,0,0)": "rgb(1,0,0)",
-        "rgb(0,114,178)": "#ead784",
-        "rgb(230,126,0)": "#ead784",
-        "rgb(136,70,167)": "#ead784",
-        "rgb(0,142,115)": "#ead784",
-        "rgb(55,90,176)": "#ead784",
-        "rgb(187,72,130)": "#ead784",
-        "rgb(150,115,26)": "#ead784",
-        "rgb(0,154,170)": "#ead784",
-        "rgb(98,137,48)": "#ead784",
-        "rgb(164,96,55)": "#ead784",
-        "rgb(95,90,173)": "#ead784",
-        "rgb(191,112,19)": "#ead784",
-        "rgb(125,76,101)": "#ead784",
-        "rgb(147,131,0)": "#ead784",
-        "rgb(58,113,113)": "#ead784",
-        "rgb(81,123,177)": "#ead784",
-        "rgb(162,91,30)": "#ead784",
-        "rgb(0,0,0)": "rgb(0,0,0)",
-        "rgb(64,64,64)": "#ead784",
-        "rgb(255,215,0)": "#ead784",
-        "rgb(127,255,212)": "#ead784",
-        "rgb(173,216,230)": "#ead784",
-        "rgb(220,48,35)": "#ead784",
         "#ffffff": "#ead784",
         "#000000": "#000000"
       },
       "layout_variant": {
         "starlink_marker_shape": "sunburst",
         "starlink_marker_linear_scale": 1.5,
-        "global_starlink_font_size_pt": 7,
+        "global_starlink_font_size_pt": 6,
         "global_markers_above_starlink_text": true,
         "groundstation_study": "option-3-petals"
       },
       "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-4/orbital-technosphere-global-authagraph-44-19.052559-legend.pdf",
-          "sha256": "72f63fdf506c651f1d6ffcfe336db7844ef1a6e877d2147276da9ac1db6444af",
-          "bytes": 32982
+          "sha256": "36f54b611170ae193011280cce58ec7d9b117ccbf8efc1d63ee1b4f8d19a0bda",
+          "bytes": 33280
         },
         {
           "path": "msp-speculation-4/orbital-technosphere-global-authagraph-44-19.052559-legend.webp",
-          "sha256": "e1125d79a22e3282460fd2c21b3735050727bcd59e7ae3911cadc954853e23b5",
-          "bytes": 492732
+          "sha256": "1b4c38ff3f77cf045c10a14e22058e3b351bc7a04f0674c9075bbbf50b557a02",
+          "bytes": 495758
         },
         {
           "path": "msp-speculation-4/orbital-technosphere-global-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "d001dc85bae1ddc914a291563e05653cff542d2b14e8e935db88e2bcc94fab2d",
-          "bytes": 8731
+          "sha256": "ba8fa37a5341545f18b7ac5b391e9802066a9feb452f7c3b88ec763c48932092",
+          "bytes": 9001
         }
       ]
     },
@@ -5043,7 +8425,7 @@
       "subject": "orbital-technosphere-observer",
       "kind": "map",
       "source_svg_sha256": "adaa1680a57a2c3c038cc3a021c88faff598ab6e2f18b3754f6727d78a8b3f1c",
-      "svg_sha256": "27c3636cce4718769c4d22055eb6e623c79616c481b1a0db1cb531b9d6309ed1",
+      "svg_sha256": "dd2273c058edda2657a91263d5d7cc1dd25da7875d075fe4498b0dd2431b75c2",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -5082,55 +8464,34 @@
         "rgb(1,0,0)": "rgb(1,0,0)",
         "rgb(75,75,75)": "#ead784",
         "rgb(236,75,37)": "#ead784",
-        "rgb(0,0,0)": "rgb(0,0,0)",
         "rgb(40,42,46)": "#ead784",
-        "rgb(64,64,64)": "#ead784",
-        "rgb(255,215,0)": "#ead784",
-        "rgb(127,255,212)": "#ead784",
-        "rgb(173,216,230)": "#ead784",
-        "rgb(220,48,35)": "#ead784",
-        "rgb(214,56,50)": "#ead784",
-        "rgb(0,114,178)": "#ead784",
-        "rgb(230,126,0)": "#ead784",
-        "rgb(136,70,167)": "#ead784",
-        "rgb(0,142,115)": "#ead784",
-        "rgb(55,90,176)": "#ead784",
-        "rgb(187,72,130)": "#ead784",
-        "rgb(98,137,48)": "#ead784",
-        "rgb(164,96,55)": "#ead784",
-        "rgb(95,90,173)": "#ead784",
-        "rgb(191,112,19)": "#ead784",
-        "rgb(125,76,101)": "#ead784",
-        "rgb(147,131,0)": "#ead784",
-        "rgb(58,113,113)": "#ead784",
-        "rgb(81,123,177)": "#ead784",
-        "rgb(162,91,30)": "#ead784",
         "rgb(148,148,148)": "#ead784"
       },
       "layout_variant": {
         "starlink_marker_shape": "sunburst",
         "starlink_marker_linear_scale": 1.5,
-        "global_starlink_font_size_pt": 7,
+        "global_starlink_font_size_pt": 6,
         "global_markers_above_starlink_text": true,
         "groundstation_study": "option-3-petals"
       },
       "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-4/orbital-technosphere-observer-authagraph-44-19.052559.pdf",
-          "sha256": "3c0457eb4860d07c84ba2b1481446fd211e05cda99200dbefd4a897d9fcd36ba",
-          "bytes": 99455
+          "sha256": "0a63078b185759f9a890b626ecc9b604aa97cd00710d0257dc8f937c477a6515",
+          "bytes": 99944
         },
         {
           "path": "msp-speculation-4/orbital-technosphere-observer-authagraph-44-19.052559.webp",
-          "sha256": "2829393cb857828f5d40255957aa17ec26bbbb187a32d67ba3d0aa61de224037",
-          "bytes": 125104
+          "sha256": "686243df87216054f125ad89f9eaf20e897bb82ec8f6429c9d9bf2f0541f1d50",
+          "bytes": 114490
         },
         {
           "path": "msp-speculation-4/orbital-technosphere-observer-authagraph-44-19.052559.svg.gz",
-          "sha256": "16b0a48cb743a91f9dc45f5943dbc71616d9b4fe6b0343f0d17361ec0dc3c514",
-          "bytes": 237082
+          "sha256": "ae635f7d3310e6d4937fc899617f1bfec06bf9b5309bd74b4157e06269f487f0",
+          "bytes": 237514
         }
       ]
     },
@@ -5139,7 +8500,7 @@
       "subject": "orbital-technosphere-observer",
       "kind": "legend",
       "source_svg_sha256": "96d5b4575170e051e42b6d28efedefbc5c094a8533e68ad1c4928a988b54fb50",
-      "svg_sha256": "71ffa4624d2d1ea54846d52545b19bfa2a0d855cec0df3345d11deba0d4bc715",
+      "svg_sha256": "c860a1223f1338021208724715fb9814d5e26a5076cba29c903146b6027d19ad",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -5176,58 +8537,34 @@
       "color_replacements": {
         "white": "white",
         "#2a2824": "#ead784",
-        "rgb(214,56,50)": "#ead784",
-        "rgb(1,0,0)": "rgb(1,0,0)",
-        "rgb(0,114,178)": "#ead784",
-        "rgb(230,126,0)": "#ead784",
-        "rgb(136,70,167)": "#ead784",
-        "rgb(0,142,115)": "#ead784",
-        "rgb(55,90,176)": "#ead784",
-        "rgb(187,72,130)": "#ead784",
-        "rgb(150,115,26)": "#ead784",
-        "rgb(0,154,170)": "#ead784",
-        "rgb(98,137,48)": "#ead784",
-        "rgb(164,96,55)": "#ead784",
-        "rgb(95,90,173)": "#ead784",
-        "rgb(191,112,19)": "#ead784",
-        "rgb(125,76,101)": "#ead784",
-        "rgb(147,131,0)": "#ead784",
-        "rgb(58,113,113)": "#ead784",
-        "rgb(81,123,177)": "#ead784",
-        "rgb(162,91,30)": "#ead784",
-        "rgb(0,0,0)": "rgb(0,0,0)",
-        "rgb(64,64,64)": "#ead784",
-        "rgb(255,215,0)": "#ead784",
-        "rgb(127,255,212)": "#ead784",
-        "rgb(173,216,230)": "#ead784",
-        "rgb(220,48,35)": "#ead784",
         "#ffffff": "#ead784",
         "#000000": "#000000"
       },
       "layout_variant": {
         "starlink_marker_shape": "sunburst",
         "starlink_marker_linear_scale": 1.5,
-        "global_starlink_font_size_pt": 7,
+        "global_starlink_font_size_pt": 6,
         "global_markers_above_starlink_text": true,
         "groundstation_study": "option-3-petals"
       },
       "capability_study": null,
+      "marker_color_policy": "preserve-source-groups",
       "palette_preserves_geometry_ids_names_and_type": true,
       "outputs": [
         {
           "path": "msp-speculation-4/orbital-technosphere-observer-authagraph-44-19.052559-legend.pdf",
-          "sha256": "4ff5b9cd177e9ee63c437e14932f3f050605fe2d4ead0ac35ec4b3d650f92367",
-          "bytes": 32442
+          "sha256": "56c57026b5240bc3707fa47f06c7964bfbb9e8b39b14fa50ba20fb27fbb90e56",
+          "bytes": 32749
         },
         {
           "path": "msp-speculation-4/orbital-technosphere-observer-authagraph-44-19.052559-legend.webp",
-          "sha256": "e823f7dd1de327324cfee6e731c158e786d00ad0efb084c6500c451ebe1f9af8",
-          "bytes": 444050
+          "sha256": "6769622f100bfd4a7c4f916a5235b5d22d41db8659ec30f5f317ab0968bcc3bc",
+          "bytes": 446972
         },
         {
           "path": "msp-speculation-4/orbital-technosphere-observer-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "1aee4aea0fe51bd5e99a193fe209cbf63d50e619fb133db2e0cb821a023f4aa7",
-          "bytes": 8480
+          "sha256": "89c36f5628d583e8c385dcf01e6bbc564bb4b49b74317852abe44fdc14799a30",
+          "bytes": 8744
         }
       ]
     }

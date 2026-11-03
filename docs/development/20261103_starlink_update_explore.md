@@ -963,3 +963,90 @@ The MSP target now builds and verifies the capability studies before using
 the petal source. Its receipt records the adopted capability manifest and
 evidence hashes, and distinguishes the deliberate MSP 4 geometry/type
 changes from the subsequent color-only operation.
+
+## MSP 4: 6 pt text, vendor colors, all four pairs and readable fiber links
+
+The subsequent requests were to reduce global AuthaGraph text to 6 pt,
+retain different vendor colors on both orbital subjects, explain the missing
+observer labels, render MSP speculation 4 in all four color choices, and
+use the opposite member of each Randoma11y pair for groundstation fiber
+lines against the background.
+
+The 6 pt setting applies to MSP 4's global Starlink `id` and hidden `name`
+layers in every palette. Studies 1–3 retain their earlier 9 pt setting for
+comparison. Marker shape, 1.5× Starlink scale, marker-over-text order,
+Antarctic land order and the Setouchi horizontal framing carry forward.
+Layer font-size metadata follows the actual physical type size.
+
+Restore the original source colors of orbital marker groups and their
+legend keys throughout the MSP studies. The profile has 18 distinct named
+vendor/fleet colors; residual role colors also remain intact. The paired
+light color still supplies text, while the dark color supplies the ground.
+This supersedes the preceding decision to collapse vendor markers to one
+foreground color. It does not recolor the source profiles or change the
+existing black debris x rule.
+
+The observer-label investigation found that the earlier role renderer
+selected a limited set of visible names using `maximum_labels`. Commit
+`96d369c` introduced a name for every object in each vendor's `name` layer,
+with `display.show_satellite_names` defaulting to false. The new renderer
+left the legacy `labels` group empty. That change dropped the earlier
+visible selection; it was not caused by the latest palette change. The
+current observer SVG contains **1,088 complete names**, all in hidden
+name layers. The separate legend also contains vendor names and counts.
+This finding was reported to the user; this revision changes observer
+colors and retains the existing name visibility.
+
+MSP 4 now has a full groundstation/global/observer set for each pair,
+including a separate legend and attribution sheet for every map:
+
+| MSP 4 palette | Directory within the MSP output | Ground | Text and fiber lines |
+| --- | --- | --- | --- |
+| 1 / Wine–amber | `msp-speculation-4-wine-amber` | `#240413` | `#fcc553` |
+| 2 / Ultramarine–porcelain | `msp-speculation-4-ultramarine-porcelain` | `#193fb8` | `#f5eae7` |
+| 3 / Plum–ice blue | `msp-speculation-4-plum-ice` | `#2a0c41` | `#73def9` |
+| 4 / Midnight blue–champagne | `msp-speculation-4` | `#010434` | `#ead784` |
+
+The existing midnight/champagne directory stays at its original path.
+There are 24 MSP 4 sheets plus the 18 earlier comparison sheets: **42 MSP
+sheets**, with 126 PDF/SVG.gz/WebP files. The three capability options
+remain a separate six-sheet comparison set.
+
+All supplied groundstation fiber links use the pair's light foreground
+color at **100% stroke opacity**. This replaces the capability maps' muted
+68% blend at 22% opacity and the earlier plain-map line treatment. Apply
+the change to the three capability options and every MSP groundstation
+map, with matching plain-map legend keys. Preserve line geometry and width;
+keep displacement tethers visually separate and muted.
+
+Stages: update the saved recipes and renderer; rebuild capability sources;
+render all seven MSP configurations; verify the 6 pt type, all four MSP 4
+sets, original vendor colors and matching legends, full-opacity fiber
+strokes, object counts, geometry, layer order and output files; inspect
+the rendered sheets; append results and commit/push.
+
+Delivery is complete: the MSP validator passed **42 sheets / 126 files**,
+including all four complete MSP 4 palettes, and the capability validator
+passed its **six sheets / 18 files**. The delivered SVGs confirm 6 physical
+points for every MSP 4 global Starlink ID/name, the 18 original vendor RGB
+values on both orbital subjects, matching map/legend colors for every
+populated group, and the paired foreground color at full opacity on every
+supplied fiber line. All four MSP 4 variants retain the 1.5× Starlink
+sunbursts, fixed satellite positions, marker-over-text order and Antarctic
+land beneath the data.
+
+The capability evidence JSON exactly matches the preceding committed
+version, including all raw records, aperture calculations and display
+placement. The 590 antenna records, 66 PoPs and 124 links remain accounted
+for. The observer name audit confirms that all 1,088 names remain present
+and hidden; this color revision deletes none of them.
+
+The four MSP 4 browser sections and rendered map/legend examples were
+inspected. All 42 MSP preview images loaded at 3840 pixels wide, with no
+browser runtime errors or horizontal overflow at the reviewed 1600-pixel
+viewport. All 199 local links/image references across the two review pages
+resolve, as do their navigation anchors. All 48 PDFs retain the physical
+44 × 19.052559-inch sheet, and the sampled 6 pt global PDF embeds Atkinson
+Hyperlegible. Documentation and existing ToT checks passed. The review
+page and saved recipes identify each MSP 4 palette separately, including
+the unchanged midnight/champagne directory path.

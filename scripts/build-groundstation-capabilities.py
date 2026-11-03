@@ -182,7 +182,7 @@ def map_source(source, records, placement, config, study, recipe, receipt_hash):
         raise ValueError("Projected link accounting differs from the source")
     for node, record in zip(links, link_records):
         node.set("data-record-id", record["id"])
-        MSP.set_style(node, stroke=recipe["neutral"], stroke_opacity=.22, stroke_width=.008)
+        MSP.set_style(node, stroke=recipe["text"], stroke_opacity=1, stroke_width=.008)
     for node in root.xpath('//*[@id="network-groundstations-ocean"]'):
         MSP.set_style(node, fill=recipe["background"])
     for node in root.xpath('//*[@id="terrestrial-land"]//*[local-name()="path"]'):
@@ -249,7 +249,7 @@ def legend(config, study, recipe, summary, placement, receipt_hash):
             "A hollow central square means size unknown. Small known triangles have a 0.04-inch source radius floor. Capability patterns are categorical: their rings, rays and petals are not antenna counts or RF beam diagrams.",
             "Solid outline: at least one source operational flag is TRUE. Dashed: unconfirmed or planned. Dotted, muted outline: source says retired/withdrawn. Flags are not independently verified; raw status remains in the evidence receipt.",
             "One point record per hex cell; triangles are centered inside the invisible cells. CDN grouping uses the same 0.0625-inch projected grid and hexoffsets routine. Cells fit the largest triangle in each group; a collision pass moves groups when needed. Tethers end at source positions.",
-            "PoPs remain small open circles. Lines retain supplied geometry and have no antenna symbol. Repeated coordinates are retained as distinct source records, including upgrade proposals; no record is counted twice as a line endpoint.",
+            "PoPs remain small open circles. Fiber links retain supplied geometry, use the palette foreground at full opacity, and have no antenna symbol. Repeated coordinates are distinct source records, including upgrade proposals; no line endpoint is counted twice.",
         ]),
         ("Sources / attribution", [
             "Unofficial Starlink Global Gateways & PoPs: user-supplied starlink-global-gateways-pops.20261103.kml and lossless-metadata GeoJSON conversion. The supplied file specifies neither author nor license. Antenna counts, bands and statuses come from its ExtendedData.",
@@ -392,6 +392,7 @@ def main():
     page += '<h1>Groundstation capability studies</h1><p>Three radial fills on the same Setouchi AuthaGraph map, each with a different Randoma11y pair. Triangles sit at the centers of hexagonal cells; their areas scale with the largest complete listed antenna bank’s aperture. Records, sizes and placement match across all three. Colors express design intent; the ink shortage and metallic paper make printed hues uncertain.</p>'
     page += f'<p><strong>{summary["sized_sites"]} antenna records can be sized; {summary["unknown_size_sites"]} have unknown sizes.</strong> The 590 antenna records include planned and retired installations. The 66 PoPs and 124 supplied lines remain separate. This is a hardware proxy, not measured throughput or a verified census of operating sites.</p>'
     page += '<p>Solid, dashed and dotted triangle outlines distinguish source-reported operation, unconfirmed/planned status and retirement. A hollow central square marks unknown size. The categorical patterns are not antenna counts or radiation diagrams. Open the vector PDFs to inspect fine patterns at print size.</p>'
+    page += '<p>Supplied fiber lines use the light member of each Randoma11y pair at full opacity against its dark ground. Muted displacement tethers remain separate.</p>'
     page += '<nav>'+''.join(f'<a href="#{s["id"]}">{s["name"]}</a>' for s in config["studies"])+'</nav>'
     page += '<p><a href="capability-evidence.json">Source fields, calculations and placement</a> · <a href="manifest.json">Delivery checksums</a> · <a href="../msp-speculations-20261103/index.html">MSP color studies, including petals in study 4</a></p>'+''.join(cards)+'</html>'
     (args.output/"index.html").write_text(page)

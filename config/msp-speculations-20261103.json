@@ -19,7 +19,7 @@
       "Darker backgrounds print better than white"
     ]
   },
-  "method": "Randoma11y source RGB pairs: dark member for ground, light member for marks and text. Land is a 16% foreground blend into the ground; muted context is a 68% blend. Black debris x marks retain a light halo. These design choices replace the earlier green prebias; no ink compensation or six-channel separation is simulated.",
+  "method": "Randoma11y source RGB pairs: dark member for ground, light member for type and groundstation marks and fiber links. Fiber links use full stroke opacity. Orbital markers and their legend keys retain the original vendor/group colors. Land is a 16% foreground blend into the ground; muted context is a 68% blend. Black debris x marks retain a light halo. No ink compensation or six-channel separation is simulated.",
   "calibration": "Unmeasured visual hypotheses; parameters are not estimates of ink loss or paper response.",
   "references": [
     "https://files.support.epson.com/pdf/pro9k_/pro9k_u1.pdf",
@@ -70,8 +70,77 @@
       "halo": "#73def9"
     },
     {
+      "id": "msp-speculation-4-wine-amber",
+      "title": "MSP speculation 4 / palette 1",
+      "palette": "Wine / amber",
+      "color_mode": "randoma11y-pair",
+      "randoma11y_pair": "wine-amber",
+      "source_url": "https://randoma11y.com/%23fcc553/%23240413",
+      "srgb_contrast_ratio": 12.0264,
+      "background": "#240413",
+      "land": "#47231d",
+      "text": "#fcc553",
+      "neutral": "#b7873f",
+      "halo": "#fcc553",
+      "family": "msp-speculation-4",
+      "palette_option": 1,
+      "variant": {
+        "starlink_marker_shape": "sunburst",
+        "starlink_marker_linear_scale": 1.5,
+        "global_starlink_font_size_pt": 6,
+        "global_markers_above_starlink_text": true,
+        "groundstation_study": "option-3-petals"
+      }
+    },
+    {
+      "id": "msp-speculation-4-ultramarine-porcelain",
+      "title": "MSP speculation 4 / palette 2",
+      "palette": "Ultramarine / porcelain",
+      "color_mode": "randoma11y-pair",
+      "randoma11y_pair": "ultramarine-porcelain",
+      "source_url": "https://randoma11y.com/%23193fb8/%23f5eae7",
+      "srgb_contrast_ratio": 7.284,
+      "background": "#193fb8",
+      "land": "#3c5ac0",
+      "text": "#f5eae7",
+      "neutral": "#afb3d8",
+      "halo": "#f5eae7",
+      "family": "msp-speculation-4",
+      "palette_option": 2,
+      "variant": {
+        "starlink_marker_shape": "sunburst",
+        "starlink_marker_linear_scale": 1.5,
+        "global_starlink_font_size_pt": 6,
+        "global_markers_above_starlink_text": true,
+        "groundstation_study": "option-3-petals"
+      }
+    },
+    {
+      "id": "msp-speculation-4-plum-ice",
+      "title": "MSP speculation 4 / palette 3",
+      "palette": "Plum / ice blue",
+      "color_mode": "randoma11y-pair",
+      "randoma11y_pair": "plum-ice",
+      "source_url": "https://randoma11y.com/%2373def9/%232a0c41",
+      "srgb_contrast_ratio": 11.0361,
+      "background": "#2a0c41",
+      "land": "#362e5e",
+      "text": "#73def9",
+      "neutral": "#5c9bbe",
+      "halo": "#73def9",
+      "family": "msp-speculation-4",
+      "palette_option": 3,
+      "variant": {
+        "starlink_marker_shape": "sunburst",
+        "starlink_marker_linear_scale": 1.5,
+        "global_starlink_font_size_pt": 6,
+        "global_markers_above_starlink_text": true,
+        "groundstation_study": "option-3-petals"
+      }
+    },
+    {
       "id": "msp-speculation-4",
-      "title": "MSP speculation 4",
+      "title": "MSP speculation 4 / palette 4",
       "palette": "Midnight blue / champagne",
       "color_mode": "randoma11y-pair",
       "randoma11y_pair": "midnight-champagne",
@@ -85,11 +154,14 @@
       "variant": {
         "starlink_marker_shape": "sunburst",
         "starlink_marker_linear_scale": 1.5,
-        "global_starlink_font_size_pt": 7,
+        "global_starlink_font_size_pt": 6,
         "global_markers_above_starlink_text": true,
         "groundstation_study": "option-3-petals"
-      }
+      },
+      "family": "msp-speculation-4",
+      "palette_option": 4
     }
   ],
-  "palette_provenance": "config/randoma11y-pairs-20261103.json"
+  "palette_provenance": "config/randoma11y-pairs-20261103.json",
+  "orbital_marker_colors": "preserve-source-groups"
 }
