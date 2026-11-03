@@ -1,0 +1,37 @@
+{
+  "schema": "cartofreako-groundstation-capability-studies-v1",
+  "source": "assets.static/network-groundstations/starlink-global-gateways-pops.20261103.geojson",
+  "source_profile": "assets.static/network-groundstations/network-groundstations-profile.json",
+  "palette": "msp-speculation-1",
+  "scope": "Source records from the supplied 20261103 collection; not a unique or operating-facility census",
+  "size": {
+    "quantity": "Largest complete listed antenna-bank geometric aperture",
+    "formula": "max(N * pi * D^2 / 4); never sum bands",
+    "diameter_unit": "m",
+    "diameter_unit_basis": "Interpret numeric source antenna sizes as dish diameters in metres, consistent with FCC 1.47 m and 1.85 m listings; the KML omits explicit units. No per-site regulatory verification or generic diameter imputation.",
+    "reference_aperture_m2": 13.577335130284366,
+    "reference_radius_inches": 0.045,
+    "minimum_radius_inches": 0.04,
+    "unknown_radius_inches": 0.055,
+    "scope": "Listed hardware may be planned, licensed, partially built or retired. Aperture is not throughput, gain, usable bandwidth or installed capacity. Incomplete banks remain flagged."
+  },
+  "layout": {
+    "group_grid": "generation-style.json:cdn.group_grid_in",
+    "offsets": "scripts/cartofreako_style.py:hexoffsets",
+    "one_cell_per_record": true,
+    "record_cap": null,
+    "cell_radius_min_inches": 0.08,
+    "cell_radius_to_maximum_triangle_radius": 1.24,
+    "collision_padding_inches": 0.012
+  },
+  "studies": [
+    {"id": "option-1-spokes", "name": "Radial spokes", "pattern": "spokes", "note": "A clipped wheel of rays; different ray counts distinguish capability classes."},
+    {"id": "option-2-rings", "name": "Concentric rings", "pattern": "rings", "note": "Concentric circles and broken arcs clipped to each triangle; selected classes use dashed rings."},
+    {"id": "option-3-petals", "name": "Radial petals", "pattern": "petals", "note": "Filled tapered petals radiate from the centroid; wider light areas may survive the metallic print better."}
+  ],
+  "references": [
+    {"title": "FCC earth-station public notice DOC-374641A1", "url": "https://docs.fcc.gov/public/attachments/DOC-374641A1.pdf", "use": "SpaceX antenna listing gives 1.47 metres; indexed primary-source excerpt inspected, direct PDF request returned HTTP 403."},
+    {"title": "FCC earth-station public notice DOC-395259A1", "url": "https://docs.fcc.gov/public/attachments/DOC-395259A1.pdf", "use": "SpaceX antenna listing gives 1.85 metres; indexed primary-source excerpt inspected, direct PDF request returned HTTP 403."},
+    {"title": "Starlink supporting submission to Ofcom, 19 March 2025", "url": "https://www.ofcom.org.uk/siteassets/resources/documents/consultations/category-3-4-weeks/consultation-temporary-ngso-gateway-access-to-e-band/starlink-supporting-submission-for-temporary-e-band-ngso-gateway-licence.pdf?v=397735", "use": "Pages 4–5 describe V4 dual Ka/E transmission on existing hardware; supports avoiding a sum across band inventories, not a 2026 per-site status claim."}
+  ]
+}

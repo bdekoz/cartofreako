@@ -708,3 +708,133 @@ This section records all decisions since the preceding typography entry.
 The earlier MSP color hypotheses and the 9 pt global Starlink setting
 remain in effect. Groundstation capability studies are a separate comparison
 set, so the original three color proofs remain available.
+
+### Capability study implementation and results
+
+Completed all three pattern options in
+[the capability review](../../output/groundstation-capabilities-20261103/index.html):
+radial spokes, concentric rings and radial petals. Each option contains
+`network-groundstations-authagraph-44-19.052559.pdf` and its separate
+`-legend.pdf`, plus editable `.svg.gz` and 3840-pixel WebP previews.
+The review page includes enlarged vector pattern keys. There are six
+print sheets and 18 PDF/SVG/WebP delivery files; the evidence receipt,
+manifest and validation record accompany them.
+
+All options use MSP speculation 1's charcoal-green background, its pale
+green neutral for the pattern interiors, and its adjusted red for the
+triangle outlines. Pattern interiors were lightened after inspecting the
+first proofs. Ring radii fit inside the triangle's incircle so the second
+ring remains distinguishable from a single ring; petals have a wider
+interior than spokes. Unknown size uses a hollow central square, which
+cannot be confused with the circular pattern in the ring study. These are categorical textures, not radiation
+patterns, antenna counts or a new RF model. No pattern has been promoted
+to the ordinary six-projection pass. The earlier MSP color proofs remain
+available unchanged, and global Starlink text remains at 9 pt.
+
+The durable implementation is
+[`groundstation_capabilities.py`](../../scripts/groundstation_capabilities.py)
+for interpretation and
+[`build-groundstation-capabilities.py`](../../scripts/build-groundstation-capabilities.py)
+for layout, symbols, sheets and exports. The saved
+[configuration](../../config/groundstation-capabilities-20261103.json)
+records the formula, scale, palette, patterns and primary-source references.
+
+| Evidence or display quantity | Result |
+| --- | ---: |
+| Source antenna-site records | 590 |
+| Records with a usable listed bank aperture | 538 |
+| Unknown-size records | 52 |
+| Records with at least one incomplete bank inventory | 91 |
+| Source PoP points / supplied links | 66 / 124 |
+| Repeated field sets reconciled | 294 |
+| Invalid fractional count fields / composite diameter fields | 3 / 2 |
+| Records whose status describes a partial build | 113 |
+| Exact-coordinate duplicate groups / records in those groups | 4 / 8 |
+| Records with no source date | 123 |
+| Projected CDN-style groups / largest group | 493 / 10 |
+| Small known records using the radius floor | 23 |
+
+An initial last-value read of repeated fields produced 498 usable records
+and 92 unknown sizes. The source-preserving review found 163 repeated-field
+sets containing one populated value and a blank, plus the equivalent
+`5.0`/`5` pair. Reconciliation recovered 40 records with usable size pairs,
+giving the final **538 / 52** split. Identical repetitions are also recorded;
+ordered raw entries remain intact. The parser accepts `32.` as the integral
+number 32, rejects `1.85` as an antenna count, and does not treat
+`1.85+1.999` as one diameter. A future conflict between different populated
+values is explicitly unresolved rather than resolved by entry order.
+
+The source does not state diameter units in its field labels. This study
+interprets numeric antenna sizes as metres, consistent with the FCC's
+SpaceX listings of 1.47 m and 1.85 m antennas. The indexed primary-source
+excerpts were inspected; direct requests for those two FCC PDFs returned
+HTTP 403. The complete
+[Starlink submission to Ofcom, 19 March 2025](https://www.ofcom.org.uk/siteassets/resources/documents/consultations/category-3-4-weeks/consultation-temporary-ngso-gateway-access-to-e-band/starlink-supporting-submission-for-temporary-e-band-ngso-gateway-licence.pdf?v=397735)
+was inspected: pp. 4–5 describe existing V4 hardware supporting both Ka and
+E transmission. This supports avoiding a sum of band inventories. It does
+not independently verify the supplied 2026 site inventory. The FCC source
+references are
+[DOC-374641A1](https://docs.fcc.gov/public/attachments/DOC-374641A1.pdf) and
+[DOC-395259A1](https://docs.fcc.gov/public/attachments/DOC-395259A1.pdf).
+
+The visual quantity is the largest **complete listed bank** among the
+available Ka, E, combined Ka/E, Q/V and W fields. Incomplete banks remain
+flagged even when another bank can size the record. No diameters are
+imputed from a generic antenna model or a free-text sighting. Port speeds,
+uplink/downlink fields, frequency availability and operational booleans
+are not converted into throughput. Source capability keys are Ka (217),
+Ka+E (243), E-only (9), Q/V (1), quad-band (66), community gateway (21),
+TT&C (4), Ku (1), and unspecified/conflicting band (28). Community gateway
+is a source role; it is not a separate RF band.
+
+321 records have at least one TRUE operational flag without an overriding
+negative status; 250 are unconfirmed/planned; 19 have retired/withdrawn
+status text. These are source-claim classes. The two conflicts between an
+operational flag and an explicit negative status, four band/operational
+disagreements, and all partial-build statements are retained in the
+[evidence receipt](../../output/groundstation-capabilities-20261103/capability-evidence.json).
+A license or a listed 40-antenna inventory is not relabeled as 40 installed,
+working dishes.
+
+Placement reuses `generation-style.json:cdn.group_grid_in` (0.0625 source
+inch), the CDN's source-family grouping principle, and the exact shared
+`cartofreako_style.hexoffsets` function. One point record occupies each cell,
+with no record cap. Antenna radius is `0.045 × sqrt(A / 13.577335130284366)`
+source inches, floored at 0.04; an unknown-size triangle uses 0.055.
+Each group's hex radius is at least 0.08 inch and 1.24 times its largest
+triangle radius. A deterministic collision pass moves whole groups to the
+nearest clear honeycomb offset. This preserves membership and readable
+symbols but displaces display positions: the median displacement is 0.265
+printed inch and the maximum 1.924 inches. Tethers show the source positions;
+all positions and group movements are in the receipt. There are no
+overlapping symbol circumcircle bounds in the delivered layout.
+
+Each capability has separate editable `locpoint` and hidden `name` layers;
+names use 9 physical points. Hex construction guides are also a hidden
+editable layer. The Setouchi frame retains the 43.5-inch image, +4.35-inch
+printed horizontal shift and lower-left Antarctic terrestrial inset. The
+infrastructure's geographic reference is retained separately from display
+placement and from the editorial land inset.
+
+Validation passed nine focused interpretation tests, source hash and
+record accounting, all 590 triangles' equal side lengths and centroids,
+containment inside their hex cells, CDN grouping/offset membership,
+collision bounds, radial pattern primitives and clipping, matching hidden
+name records, identical geometry across all three options, and all 18
+delivered file hashes. All six PDFs are one page at 44 × 19.052559 inches;
+the sampled legend PDF embeds Atkinson Hyperlegible. Rendered maps and
+legends were inspected, along with the browser review page and enlarged
+keys. These are screen and vector checks; physical metallic-paper output
+has not been measured.
+
+```sh
+make groundstation-capability-studies \
+  GENERATED_DIR=build/orbital-technosphere-20261103 \
+  CXX=/usr/bin/g++ ASSET_JOBS=2
+python3 scripts/verify-groundstation-capabilities.py
+```
+
+The build target generates the current native groundstation input if
+needed, runs the interpretation tests, exports all six capability sheets,
+and validates the delivery. The original KML and high-fidelity GeoJSON
+are inputs and are not rewritten by the study builder.

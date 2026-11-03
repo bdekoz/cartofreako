@@ -2610,6 +2610,17 @@ msp-speculations: generate-orbiting-authagraph \
 	python3 scripts/verify-msp-speculations.py --output "$(MSP_OUTPUT)" \
 		--profile "$(ORBITING_PROFILE)"
 
+GROUNDSTATION_CAPABILITY_OUTPUT ?= output/groundstation-capabilities-20261103
+.PHONY: groundstation-capability-studies check-groundstation-capabilities
+groundstation-capability-studies: generate-network-groundstations-authagraph \
+		build/generation-context check-groundstation-capabilities
+	python3 scripts/build-groundstation-capabilities.py --build-root "$(GENERATED_DIR)" \
+		--output "$(GROUNDSTATION_CAPABILITY_OUTPUT)" --workers "$(ASSET_JOBS)"
+	python3 scripts/verify-groundstation-capabilities.py --output "$(GROUNDSTATION_CAPABILITY_OUTPUT)"
+
+check-groundstation-capabilities:
+	python3 tests/test-groundstation-capabilities.py
+
 # $(1): projection; $(2): 2025 particulate SVG; $(3): 2026 particulate SVG.
 define ANTHROPOCENE_PARTICULATE_PROJECTION_RULES
 generate-anthropocene-atlas-$(1): $(2) $(3)

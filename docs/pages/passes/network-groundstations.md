@@ -86,6 +86,49 @@ generation-profile aliases. Because the pass is standard, its six SVG, PDF,
 PNG, and Cahill–Keyes snapshot products are part of the ordinary `make all`
 graph.
 
+## Antenna capability studies / Setouchi AuthaGraph
+
+The [three capability studies](../../../output/groundstation-capabilities-20261103/index.html)
+compare radial spokes, concentric rings and radial petals. Each has a
+44 × 19.052559-inch map PDF, a separate Setouchi legend/attribution PDF,
+editable compressed SVGs and WebP previews. They use the same dark
+MSP speculation 1 palette and the confirmed horizontal AuthaGraph framing.
+
+The studies distinguish **590 antenna-site point records**, **66 PoPs** and
+**124 supplied links**. Antenna triangles occupy the centers of invisible
+hexagonal cells, using the CDN projected grouping grid and shared honeycomb
+offset routine. Cell spacing accommodates each group's largest triangle;
+collision displacement is recorded and drawn with source-position tethers.
+PoPs remain fixed-size open circles; line endpoints do not acquire antenna
+marks in these studies.
+
+For 538 antenna records, triangle area follows the largest complete listed
+bank aperture, `max(N × π × D² / 4)`. The remaining 52 have a hollow square
+at the triangle center to mark unknown size. Band inventories are never summed. The source includes plans,
+partial builds and retired records, so this is a listed-hardware proxy,
+not measured throughput or installed capacity. A minimum source radius of
+0.04 inch applies to 23 small known records. Patterns encode capability
+categories; outlines encode source-reported status.
+
+The [evidence receipt](../../../output/groundstation-capabilities-20261103/capability-evidence.json)
+retains raw ordered fields, duplicate-field resolutions, calculation inputs,
+exceptions, source IDs, coordinates and display positions. The source has
+294 repeated-field sets: populated/blank pairs are reconciled without
+discarding the populated value, numerically equivalent values agree, and
+conflicting populated values remain unresolved. Three fractional antenna
+counts and two composite diameters are excluded from numeric interpretation.
+
+```sh
+make groundstation-capability-studies \
+  GENERATED_DIR=build/orbital-technosphere-20261103 ASSET_JOBS=2
+python3 scripts/verify-groundstation-capabilities.py
+```
+
+The three pattern studies are a separate comparison set; the standard
+rendering and original MSP color proofs remain available. The detailed
+decisions and validation record are in the
+[November 3 work log](../../development/20261103_starlink_update_explore.md).
+
 ## Published v14 previews
 
 Network Groundstations is a new v14 pass and is present in all six

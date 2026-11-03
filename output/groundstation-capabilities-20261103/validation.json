@@ -1,0 +1,74 @@
+{
+  "sheets": 6,
+  "files": 18,
+  "summary": {
+    "source_records": 780,
+    "kinds": {
+      "pop": 66,
+      "link": 124,
+      "antenna-site": 590
+    },
+    "capabilities": {
+      "ka": 217,
+      "unknown": 28,
+      "ka-e": 243,
+      "ttc": 4,
+      "e": 9,
+      "ku": 1,
+      "community": 21,
+      "qv": 1,
+      "quad": 66
+    },
+    "statuses": {
+      "reported-operational": 321,
+      "unconfirmed": 250,
+      "retired": 19
+    },
+    "sized_sites": 538,
+    "unknown_size_sites": 52,
+    "incomplete_inventories": 91,
+    "issue_counts": {
+      "unrecognized-frequency": 2,
+      "frequency-operational-conflict": 4,
+      "partial-build-status": 113,
+      "incomplete-bank-inventory": 91,
+      "shared-source-coordinate": 8,
+      "operational-status-conflict": 2,
+      "invalid-count": 3,
+      "invalid-or-composite-diameter": 2
+    },
+    "coincident_record_groups": [
+      [
+        "placemark-000404",
+        "placemark-000757"
+      ],
+      [
+        "placemark-000419",
+        "placemark-000607"
+      ],
+      [
+        "placemark-000425",
+        "placemark-000731"
+      ],
+      [
+        "placemark-000537",
+        "placemark-000780"
+      ]
+    ],
+    "blank_source_dates": 123,
+    "resolved_repeated_fields": 294
+  },
+  "groups": 493,
+  "equilateral_centered_triangles": 590,
+  "overlapping_mark_bounds": 0,
+  "checks": [
+    "source identity and raw field preservation",
+    "blank duplicate reconciliation",
+    "no summed bands",
+    "CDN grid membership and shared hex lattice",
+    "proportional radius with explicit floor and unknown size",
+    "triangle geometry and cell containment",
+    "separate map and attribution sheets",
+    "single-page physical PDF dimensions"
+  ]
+}
