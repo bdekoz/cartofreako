@@ -3,3 +3,6 @@
 
 # Preserve the checksum-pinned upstream font license, including its whitespace.
 assets/fonts/atkinson-hyperlegible/OFL.txt -text -whitespace
+
+# Keep upstream OMM bytes (including CRLF) identical to their acquisition hashes.
+assets.static/orbital-technosphere/20261103/*.csv -text -whitespace

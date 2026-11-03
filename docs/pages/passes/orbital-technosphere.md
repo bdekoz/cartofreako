@@ -32,7 +32,7 @@ actually support:
 | Source | Evaluation | Role in this pass |
 | --- | --- | --- |
 | [NASA Planetary Data System](https://planetary.data.nasa.gov/find-data) | Durable archive for planetary missions, instruments, and derived data; not a comprehensive current Earth-satellite element catalog | Mission/archive context and the starting point requested for NASA research |
-| [NASA SSCWeb REST services](https://sscweb.gsfc.nasa.gov/WebServices/REST/) | Authoritative ephemeris service for selected scientific spacecraft | Checked-in independent position reference for ISS, Aqua, Landsat 9, and GOES 19 |
+| [NASA SSCWeb REST services](https://sscweb.gsfc.nasa.gov/WebServices/REST/) | Authoritative ephemeris service for selected scientific spacecraft | Historical regression reference for ISS, Aqua, Landsat 9, and GOES 19 |
 | [JPL Horizons](https://ssd.jpl.nasa.gov/horizons/) | High-value ephemerides but only a small subset of artificial Earth satellites | Evaluated, not used as the population feed |
 | [CelesTrak GP data](https://celestrak.org/NORAD/documentation/gp-data-formats.php) | Broad public general-perturbations catalog with OMM-compatible CSV and documented SGP4 conventions | Primary active population, category membership, and bounded debris-event supplements |
 | [Vallado/Crawford/Hujsak/Kelso SGP4](https://celestrak.org/publications/AIAA/2006-6753/) | Published reference implementation and verification vectors | Vendored propagation core |
@@ -52,10 +52,10 @@ stores catalog IDs as strings and initializes SGP4 directly from OMM fields.
 
 ## Reproducible profile and acquisition
 
-[`orbital-technosphere-profile.json`](../../../assets.static/orbital-technosphere/orbital-technosphere-profile.json)
+[`orbital-technosphere-profile.json`](../../../assets.static/orbital-technosphere/20261103/orbital-technosphere-profile.json)
 is authoritative. It records:
 
-- calculation time `2026-08-13T15:36:00Z`;
+- calculation time `2026-11-03T17:10:00Z`;
 - the make-invocation reference point, San Francisco at `37.7749° N`,
   `122.4194° W`, elevation 16 m, as an explicit profile value;
 - SGP4, WGS-72, and AFSPC compatibility mode;
@@ -67,19 +67,30 @@ is authoritative. It records:
 Generation never infers a location from an IP address and never silently
 uses the host clock. This keeps one build repeatable from any machine.
 
-[`scripts/fetch-orbiting-data.sh`](../../../scripts/fetch-orbiting-data.sh) performs
-the explicit network refresh. It downloads OMM CSV groups and the NASA
-SSCWeb JSON response into a temporary directory, checks schemas and a minimum
-active-catalog size, installs the complete set only after all requests pass,
-and writes `SHA256SUMS`. Ordinary generation and `make check` are offline.
-The profile time and NASA query interval must be updated together for a new
-capture.
+[`scripts/fetch-orbiting-data.sh`](../../../scripts/fetch-orbiting-data.sh)
+invokes [the snapshot recorder](../../../scripts/refresh-orbiting-snapshot.py).
+It reads all catalog URLs from the profile, validates OMM schemas, unique
+NORAD IDs, finite elements, population limits and epoch freshness, then
+installs a new dated directory with acquisition receipts and `SHA256SUMS`.
+`make fetch-orbiting-data` writes a new directory under `build/`; use
+`ORBITING_REFRESH_DIR` to select another new destination and
+`ORBITING_TIMESTAMP` for an explicit calculation time. Selecting a refreshed
+snapshot for generation is a separate profile change. Existing snapshots
+are preserved. Ordinary generation and `make check-orbiting` are offline.
 
 The fetcher honors CelesTrak's current usage policy: it reuses a complete
-snapshot inside the service's two-hour update interval and stops on any HTTP
-error instead of retrying a 403 or 404. An intentional same-window request
-requires `ORBITING_FORCE_REFRESH=1`; it should only be used after confirming
-that no other process has downloaded the large groups for the current update.
+download inside the service's two-hour update interval and stops on any
+CelesTrak HTTP error instead of retrying a 403 or 404. The shared download
+cache is `build/orbital-technosphere-download-cache`.
+
+The November snapshot contains 16,844 primary active records and 25
+membership/debris catalogs. At the pinned instant, 17,909 objects are plotted:
+16,808 active records and 1,101 bounded debris records. Forty-four records
+are excluded by the epoch filter; none failed propagation. The original
+August snapshot remains the historical SGP4/NASA and Hubble test input.
+The current NASA query was unreachable, so the new profile explicitly retains
+the August reference as `historical-validation-only`; it is not a current
+independent ephemeris comparison.
 
 The active catalog is the one object population. Starlink, OneWeb, Kuiper,
 Qianfan, Hulianwang, GNSS, communications, Earth-resource, science, and space
@@ -132,13 +143,29 @@ The pass creates two products across all six projections:
   reference layers.
 
 This is a true generate pass, not a raster-tile mosaic. Every object is an
-independent SVG marker in a semantic role layer: megaconstellation,
-navigation, communications, Earth observation, science, human presence,
-other active, or debris. The complete provenance and derived state are
+independent SVG marker. The current profile defines 18 named constellation
+or fleet layers: Starlink, OneWeb, Kuiper, Qianfan, Hulianwang, Iridium,
+Globalstar, ORBCOMM, Planet, Spire, Intelsat, SES, Eutelsat, Telesat, GPS,
+GLONASS, Galileo and BeiDou. Generic role layers retain the other objects.
+These names describe source catalogs, not an exhaustive operator registry.
+
+Each parent contains `name` and `locpoint` sublayers, for example
+`starlink/name` and `starlink/locpoint`. They are marked as editable Inkscape
+layers. Every plotted satellite has one vector dot and a separate text label
+using its original `OBJECT_NAME`; both carry the same `data-norad-id`.
+Names default to hidden, with `display.show_satellite_names` available to
+enable them. The name's `data-locpoint-id` identifies its matching dot.
+
+Named membership is joined by NORAD ID. If catalogs overlap, the first named
+catalog in profile order selects the one displayed parent; all memberships
+remain in `data-groups`. The legend counts the displayed objects once and
+uses the same colors as their dots. Iridium 33 debris remains in the debris
+layer. The complete provenance and derived state are
 embedded as `data-*` attributes, including catalog ID, COSPAR ID, group,
 element epoch and age, terrestrial and observer coordinates, illumination,
-candidate state, and source URL. Labels and tracks are budgeted overlays;
-they do not reduce the underlying marker population.
+candidate state, and source URL. Named profiles retain every admitted label;
+the legacy label budget applies only to historical profiles without named
+constellations. Representative tracks remain budgeted overlays.
 
 Run all 12 SVG products with:
 
@@ -160,6 +187,13 @@ and solar geometry. Its first propagation reproduces the published Vanguard
 1 SGP4 TEME reference vector. ISS and GOES 19 are also compared with the
 checked-in NASA SSCWeb GEO response at 15:36 UTC with deliberately
 visualization-scale tolerances.
+
+`make check-orbiting` runs the historical reference tests, the named grouping
+tests and current snapshot checksums. `scripts/verify-orbiting-layers.py`
+checks unique SVG IDs, exact dot/name pairing, original names, layer nesting,
+visibility and conserved per-group counts against the selected profile.
+All twelve global/observer projection products were checked for this snapshot;
+each global product has 17,909 pairs and each observer product has 1,088 pairs.
 
 Each generator reopens its SVG and checks the projection viewBox, semantic
 layers, profile timestamp, object count, horizon or terrestrial base, and

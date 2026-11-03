@@ -277,8 +277,17 @@ add_reference_lines(generation::projection_document& document,
   document.add_element(layer);
 }
 
+inline svg::color_qi
+constellation_color(const constellation_configuration& constellation)
+{
+  return {static_cast<svg::color_qi::itype>(constellation.color_rgb[0]),
+          static_cast<svg::color_qi::itype>(constellation.color_rgb[1]),
+          static_cast<svg::color_qi::itype>(constellation.color_rgb[2])};
+}
+
 inline svg::style
-marker_style(const propagated_object& object)
+marker_style(const propagated_object& object,
+             const constellation_configuration* constellation = nullptr)
 {
   svg::color_qi color = svg::color::gray75;
   if (object.role == "megaconstellation")
@@ -295,6 +304,8 @@ marker_style(const propagated_object& object)
     color = svg::color::lightblue;
   else if (object.role == "debris")
     color = svg::color::orange;
+  if (constellation != nullptr)
+    color = constellation_color(*constellation);
   return {color, object.sunlit ? 0.88 : 0.36,
           object.optical_candidate ? svg::color_qi {40, 42, 46}
                                    : svg::color::none,
@@ -360,7 +371,8 @@ inline void
 add_marker(svg::group_element& layer,
            const generation::projection_context& context,
            const profile& config, const product_kind product,
-           const propagated_object& object)
+           const propagated_object& object,
+           const constellation_configuration* constellation = nullptr)
 {
   const svg::point_2t point = generation::project_point(
     context, projection_point(object, config, product));
@@ -368,9 +380,12 @@ add_marker(svg::group_element& layer,
   marker.start_element();
   marker.add_data({std::get<0>(point), std::get<1>(point),
                    marker_radius(object)});
-  marker.add_style(marker_style(object));
+  marker.add_style(marker_style(object, constellation));
   marker.add_raw("id=\"norad-" + xml_escape(object.source.norad_id) + "\""
-                 + object_attributes(object));
+                 + object_attributes(object)
+                 + " data-display-group=\""
+                 + (constellation ? constellation->id : "objects-" + object.role)
+                 + "\" data-object-kind=\"locpoint\"");
   marker.finish_element();
   layer.add_element(marker);
 }
@@ -469,7 +484,7 @@ add_tracks(generation::projection_document& document,
 }
 
 inline void
-add_objects(generation::projection_document& document,
+add_role_objects(generation::projection_document& document,
             const generation::projection_context& context,
             const profile& config, const product_kind product,
             const propagated_catalog& catalog)
@@ -511,6 +526,191 @@ add_objects(generation::projection_document& document,
     }
   labels.finish_element();
   document.add_element(labels);
+}
+
+struct display_group
+{
+  std::string id;
+  std::string name;
+  const constellation_configuration* constellation = nullptr;
+  std::vector<const propagated_object*> objects;
+};
+
+inline std::vector<display_group>
+group_objects(const propagated_catalog& catalog, const profile& config,
+              const product_kind product)
+{
+  std::vector<display_group> groups {
+    {"objects-debris", "Debris", nullptr, {}},
+    {"objects-other-active", "Other active", nullptr, {}},
+    {"objects-communications", "Other communications", nullptr, {}},
+    {"objects-navigation", "Other navigation", nullptr, {}},
+    {"objects-earth-observation", "Other Earth observation", nullptr, {}},
+    {"objects-science", "Science", nullptr, {}},
+    {"objects-megaconstellation", "Other constellations", nullptr, {}},
+    {"objects-human-presence", "Human presence", nullptr, {}},
+  };
+  std::unordered_map<std::string, std::size_t> indices;
+  for (std::size_t i = 0; i < groups.size(); ++i)
+    indices.emplace(groups[i].id, i);
+  for (const group_configuration& source : config.groups)
+    if (source.constellation && !indices.contains(source.constellation->id))
+      {
+        indices.emplace(source.constellation->id, groups.size());
+        groups.push_back({source.constellation->id, source.constellation->name,
+                          &*source.constellation, {}});
+      }
+  for (const propagated_object& object : catalog.objects)
+    if (visible_in_product(object, config, product))
+      {
+        const auto* constellation = display_constellation(object.source, config);
+        const std::string id = constellation ? constellation->id
+                                            : "objects-" + object.role;
+        groups.at(indices.at(id)).objects.push_back(&object);
+      }
+  return groups;
+}
+
+inline std::string
+editor_layer_attributes(const std::string& name, const bool hidden = false)
+{
+  return "xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" "
+    "inkscape:groupmode=\"layer\" inkscape:label=\"" + xml_escape(name) + "\""
+    + (hidden ? " style=\"display:none\"" : "");
+}
+
+inline void
+add_satellite_name(svg::group_element& names,
+                   const generation::projection_context& context,
+                   const profile& config, const product_kind product,
+                   const propagated_object& object, const std::string& group_id)
+{
+  const svg::point_2t point = generation::project_point(
+    context, projection_point(object, config, product));
+  svg::text_element label;
+  label.start_element();
+  label.add_raw("id=\"name-norad-" + xml_escape(object.source.norad_id)
+    + "\" data-norad-id=\"" + xml_escape(object.source.norad_id)
+    + "\" data-locpoint-id=\"norad-" + xml_escape(object.source.norad_id)
+    + "\" data-display-group=\"" + xml_escape(group_id)
+    + "\" data-object-kind=\"name\" ");
+  // text_element escapes the original name; do not pre-escape it.
+  label.add_data({std::min(context.map_frame.width() - 0.05,
+                          std::get<0>(point) + marker_radius(object) + 0.035),
+                  std::get<1>(point), object.source.name, label_typography(product)});
+  label.finish_element();
+  names.add_element(label);
+}
+
+inline void
+add_constellation_objects(generation::projection_document& document,
+                          const generation::projection_context& context,
+                          const profile& config, const product_kind product,
+                          const std::vector<display_group>& groups)
+{
+  for (const display_group& group : groups)
+    {
+      svg::group_element layer;
+      layer.start_element(group.id, svg::k::no_style,
+        editor_layer_attributes(group.name)
+        + " data-display-group=\"" + group.id + "\" data-object-count=\""
+        + std::to_string(group.objects.size()) + "\"");
+      layer.add_title(group.name);
+      svg::group_element points;
+      points.start_element(group.id + "-locpoint", svg::k::no_style,
+                           editor_layer_attributes("locpoint"));
+      svg::group_element names;
+      names.start_element(group.id + "-name", svg::k::no_style,
+        editor_layer_attributes("name", !config.display.show_satellite_names));
+      for (const propagated_object* object : group.objects)
+        {
+          add_marker(points, context, config, product, *object, group.constellation);
+          add_satellite_name(names, context, config, product, *object, group.id);
+        }
+      points.finish_element();
+      names.finish_element();
+      layer.add_element(points);
+      layer.add_element(names);
+      layer.finish_element();
+      document.add_element(layer);
+    }
+  // Retain the legacy semantic group for consumers of older SVG products.
+  svg::group_element labels;
+  labels.start_element("labels");
+  labels.finish_element();
+  document.add_element(labels);
+}
+
+inline void
+add_constellation_legend(generation::projection_document& document,
+                         const generation::projection_context& context,
+                         const profile& config, const product_kind product,
+                         const std::vector<display_group>& groups,
+                         const propagated_catalog& catalog)
+{
+  std::vector<const display_group*> entries;
+  std::size_t total = 0;
+  for (const display_group& group : groups)
+    {
+      total += group.objects.size();
+      if (group.constellation != nullptr)
+        entries.push_back(&group);
+    }
+  for (const display_group& group : groups)
+    if (group.constellation == nullptr && !group.objects.empty())
+      entries.push_back(&group);
+  constexpr std::size_t columns = 4;
+  const std::size_t rows = (entries.size() + columns - 1) / columns;
+  const double width = std::min(26.0, context.map_frame.width() - 1.2);
+  const double height = 1.3 + rows * 0.29;
+  svg::group_element legend;
+  legend.start_element("constellation-legend",
+    generation::bottom_right_legend_transform(context, width, height));
+  svg::rect_element panel;
+  panel.start_element();
+  panel.add_data({0, 0, width, height});
+  panel.add_style({svg::color::white, 0.95, svg::color::none, 0, 0});
+  panel.finish_element();
+  legend.add_element(panel);
+  svg::typography title = label_typography(product);
+  title._M_size = 0.36;
+  title._M_w = svg::typography::weight::bold;
+  svg::styled_text(legend, "ORBITAL TECHNOSPHERE / "
+    + std::string(product == product_kind::global ? "GLOBAL" : "OBSERVER"),
+    {0.35, 0.38}, title);
+  svg::typography text = label_typography(product);
+  text._M_size = 0.17;
+  svg::styled_text(legend, config.calculation_time.iso_utc + "  |  "
+    + std::to_string(total) + " plotted objects  |  CelesTrak / SGP4",
+    {0.35, 0.75}, text);
+  for (std::size_t index = 0; index < entries.size(); ++index)
+    {
+      const display_group& entry = *entries[index];
+      const double x = 0.35 + (index % columns) * ((width - 0.7) / columns);
+      const double y = 1.09 + (index / columns) * 0.29;
+      svg::style style {svg::color::gray75, 1, svg::color::none, 0, 0};
+      if (!entry.objects.empty())
+        style = marker_style(*entry.objects.front(), entry.constellation);
+      else if (entry.constellation)
+        style._M_fill_color = constellation_color(*entry.constellation);
+      style._M_fill_opacity = 1;
+      svg::circle_element key;
+      key.start_element();
+      key.add_data({x + 0.055, y, 0.045});
+      key.add_style(style);
+      key.finish_element();
+      legend.add_element(key);
+      svg::styled_text(legend, entry.name + "  " + std::to_string(entry.objects.size()),
+                       {x + 0.18, y}, text);
+    }
+  text._M_size = 0.13;
+  svg::styled_text(legend, "One object per NORAD ID; overlapping memberships use profile order. "
+    "Age-filtered: " + std::to_string(catalog.skipped_stale)
+    + "; propagation failures: " + std::to_string(catalog.failed_propagation)
+    + ". Name sublayers are " + (config.display.show_satellite_names ? "visible." : "hidden."),
+    {0.35, height - 0.16}, text);
+  legend.finish_element();
+  document.add_element(legend);
 }
 
 inline void
@@ -576,6 +776,7 @@ metadata_element(const profile& config, const product_kind product,
     " data-nasa-ssc-query=\"" + xml_escape(config.nasa_query_url) + "\""
     " data-input-checksums=\""
       + xml_escape(config.checksum_file.filename().string()) + "\""
+    " data-layer-membership-rule=\"first-named-catalog-in-profile-order\""
     " data-primary-records=\"" + std::to_string(loaded.active_records) + "\""
     " data-debris-records=\"" + std::to_string(loaded.debris_records) + "\""
     " data-propagated-records=\""
@@ -624,7 +825,16 @@ generate(const generation::projection_spec& spec, const product_kind product,
     }
   add_reference_lines(document, context, config, product);
   add_tracks(document, context, config, loaded, product);
-  add_objects(document, context, config, product, propagated);
+  const bool named_groups = std::any_of(config.groups.begin(), config.groups.end(),
+    [](const group_configuration& group) { return group.constellation.has_value(); });
+  if (named_groups)
+    {
+      const auto groups = group_objects(propagated, config, product);
+      add_constellation_objects(document, context, config, product, groups);
+      add_constellation_legend(document, context, config, product, groups, propagated);
+    }
+  else
+    add_role_objects(document, context, config, product, propagated);
   add_observer_site(document, context, config, product);
 }
 
@@ -688,6 +898,22 @@ verify(const std::string& generated,
                    "generated Orbital Technosphere SVG is missing metadata");
   orbiting_require(token_count(generated, "data-norad-id=") > 100,
                    "generated Orbital Technosphere SVG has too few objects");
+  if (std::any_of(config.groups.begin(), config.groups.end(),
+      [](const group_configuration& group) { return group.constellation.has_value(); }))
+    {
+      orbiting_require(token_count(generated, "data-object-kind=\"locpoint\"")
+                         == token_count(generated, "data-object-kind=\"name\""),
+                       "satellite name and location counts differ");
+      orbiting_require(generated.find("id=\"constellation-legend\"") != std::string::npos,
+                       "named constellation legend is missing");
+      for (const group_configuration& group : config.groups)
+        if (group.constellation)
+          for (const std::string& suffix : {std::string {}, std::string {"-name"},
+                                           std::string {"-locpoint"}})
+            orbiting_require(generated.find("<g id=\"" + group.constellation->id
+                                              + suffix + "\"") != std::string::npos,
+                             "missing named constellation layer " + group.constellation->id + suffix);
+    }
   if (product == product_kind::global)
     orbiting_require(generated.find("<g id=\"terrestrial-land\">")
                         != std::string::npos

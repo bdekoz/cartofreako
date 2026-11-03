@@ -181,3 +181,233 @@ Generated build products and unrelated local archives are excluded.
 
 See the maintained [Network Groundstations implementation notes](../pages/passes/network-groundstations.md)
 for the conversion metadata layout and rendering details.
+
+## Orbital Technosphere follow-up: named constellations
+
+Requested on 3 November 2026: inspect and update the
+[published AuthaGraph global map](https://bdekoz.github.io/cartofreako/assets.tot/products/standard/authagraph/full/orbital-technosphere-global-authagraph-44-19.052559.webp),
+and group satellite constellations by name. Starlink and Iridium are examples;
+the grouping should also cover other named constellations and fleets.
+The agreed presentation is separate named SVG groups and legend entries,
+while retaining each satellite at its calculated geographic position.
+The user also requested individual satellite names on a layer separate from
+the vector dots. The OMM feed provides `OBJECT_NAME` and `NORAD_CAT_ID`.
+The user specified the hierarchy as `starlink/name,locpoint`: each named
+constellation is a parent layer containing `name` and `locpoint` sublayers.
+Every admitted satellite receives a name label and a vector dot, joined by
+NORAD ID. XML IDs are unique across the SVG (for example `starlink-name` and
+`starlink-locpoint`), while the editor sublayer names are `name` and
+`locpoint`. Name layers
+will default to hidden to keep the full-population map legible and can be
+enabled in an SVG editor. This supersedes the former small label budget for
+the new profile.
+
+The downloaded published image matches the local preview byte for byte
+(SHA-256 `61acd99b4b9f45ff00634b757191b259cff7a55deaa66a2b32cd966607b7c07a`).
+Its generation profile uses `2026-08-13T15:36:00Z`. The renderer currently
+groups objects by broad role; Starlink, OneWeb, Kuiper, Qianfan and Hulianwang
+share the red megaconstellation layer, while Iridium NEXT, Globalstar and
+ORBCOMM share the communications layer. Membership is already joined by
+NORAD catalog ID, providing a foundation for named groups without adding
+duplicate satellite marks.
+
+### Implementation plan and staging
+
+| Stage | Current status | Work and acceptance |
+| --- | --- | --- |
+| O1. Inspect the published map and source pipeline | Complete | Confirm the published bytes, snapshot date, existing role groups, membership joins and shared historical dependencies. |
+| O2. Capture a current dated snapshot | Complete | Retrieve the active catalog and configured membership/debris feeds; record acquisition times, source URLs and hashes; use an explicit propagation instant. Preserve the historical snapshot. |
+| O3. Define named constellations and fleets | Complete | Add profile-driven IDs, display names and colors; include the named communications, Earth-observation and navigation groups supplied by CelesTrak. Keep generic and unmatched populations visible. |
+| O4. Render named groups and a count legend | Complete | Emit one satellite mark per NORAD ID, named editable SVG groups, consistent colors and legend counts. Retain all source memberships and handle overlapping fleet catalogs deterministically. |
+| O5. Validate and review | Complete | Test membership/overlap behavior, count conservation, source freshness and propagation; render global and observer products across projections; visually inspect AuthaGraph. |
+| O6. Refresh previews and record results | Complete | Refresh the relevant preview assets with a dated provenance receipt; document actual source coverage, exclusions, commands and remaining limitations here. |
+
+The initial named coverage is Starlink, OneWeb, Kuiper, Qianfan, Hulianwang,
+Iridium, Globalstar, ORBCOMM, Intelsat, SES, Eutelsat, Telesat, Planet, Spire,
+GPS, GLONASS, Galileo and BeiDou. These are catalog-defined constellations or
+fleets; the term megaconstellation is not imposed on every group. The
+[current CelesTrak directory](https://celestrak.org/NORAD/elements/)
+supplies the membership feeds. A residual role group remains necessary for
+objects outside these named catalogs; this is not a complete operator registry.
+
+### Working notes
+
+- Preserve the existing August data: historical orbital regression tests and
+  the Hubble astronomy profile refer to it. The new snapshot gets a dated
+  directory and becomes the default for new Orbital Technosphere generation.
+- Keep the active catalog as the primary population. Membership files classify
+  existing objects; bounded debris supplements remain separate, including
+  Iridium 33 debris rather than folding it into the active Iridium fleet.
+- Overlapping memberships must not create duplicate marks or inflated totals.
+  Retain all memberships in metadata and use documented profile precedence
+  for the single displayed group.
+- Source acquisition must stop on HTTP errors and respect the provider's
+  two-hour cache interval. Do not report a failed refresh as current data.
+  [CelesTrak GP format and usage documentation](https://celestrak.org/NORAD/documentation/gp-data-formats.php)
+- Refreshing catalog elements and choosing a propagation instant are separate
+  operations. Keep the existing seven-day age and six-hour future tolerances
+  and report rejected or failed objects.
+- NASA SSC reference data is an independent validation input. Its timestamp
+  must remain explicit if current ephemerides cannot be retrieved; retaining
+  the historical reference does not make it a current validation observation.
+- Representative tracks and labels are overlays, not membership evidence.
+  Named groups should remain selectable even where orbital tracks overlap.
+
+### Agreed satellite layer structure
+
+```text
+starlink
+  name       satellite names; hidden by default
+  locpoint   satellite vector dots
+iridium
+  name
+  locpoint
+oneweb
+  name
+  locpoint
+...one parent for each configured constellation or fleet
+```
+
+The parent selects the whole constellation; its two children can be toggled
+or styled independently in an SVG editor. A dot keeps its source coordinates,
+object name and NORAD ID. The corresponding text uses the source object name
+and carries the same NORAD ID plus a reference to the dot's SVG ID. Both
+children retain the displayed constellation ID. The text and dot have
+different globally unique SVG IDs.
+
+Implementation order: define and validate the named membership registry;
+assign each admitted satellite to one display parent; emit every dot into
+`locpoint`; emit every corresponding name into `name`; add the named count
+legend; then validate the SVG hierarchy and all associations. Overlapping
+source memberships remain available in metadata and resolve by explicit
+profile order, so a satellite appears in one display group. Every visible
+object in the global product must have exactly one dot and one name, and
+the observer product must apply the same horizon filter to both children.
+
+Acceptance checks will compare per-layer counts with the admitted catalog,
+verify unique SVG IDs and matching NORAD IDs, ensure the name layer contains
+text while `locpoint` contains markers, and confirm that toggling names does
+not alter satellite positions or the constellation totals. Default PNG/WebP
+exports show the dots and legend; editable SVGs retain the complete names.
+
+### Implemented snapshot and validation results
+
+The current dataset is
+`assets.static/orbital-technosphere/20261103/orbital-technosphere-profile.json`.
+Its explicit propagation instant is **2026-11-03T17:10:00Z**. Acquisition
+retrieved 26 CelesTrak OMM catalogs: the active population and 25 membership
+or debris feeds. `acquisition.json` records the URL, retrieval time, SHA-256,
+record count and epoch coverage for each feed; `SHA256SUMS` pins the complete
+snapshot, profile and receipt.
+
+The active input contains 16,844 records. After the existing seven-day age
+and six-hour future filters, the global product plots **17,909 objects**:
+16,808 active objects and 1,101 bounded debris records. Forty-four loaded
+records were filtered by epoch; zero failed SGP4 propagation. The observer
+product plots 1,088 objects above the captured San Francisco horizon.
+
+The current NASA SSC query failed with a network-unreachable error. Its
+historical response remains explicitly tagged `historical-validation-only`
+at `2026-08-13T15:36:00Z`. The refreshed November positions use the current
+CelesTrak elements and SGP4; the historical NASA reference is not evidence
+of a contemporaneous independent comparison.
+
+| Named parent | Plotted objects in the global product |
+| --- | ---: |
+| Starlink (`starlink`) | 11,155 |
+| OneWeb (`oneweb`) | 651 |
+| Kuiper (`kuiper`) | 391 |
+| Qianfan (`qianfan`) | 256 |
+| Hulianwang (`hulianwang`) | 235 |
+| Iridium (`iridium`) | 80 |
+| Globalstar (`globalstar`) | 36 |
+| ORBCOMM (`orbcomm`) | 14 |
+| Planet (`planet`) | 129 |
+| Spire (`spire`) | 72 |
+| Intelsat (`intelsat`) | 55 |
+| SES (`ses`) | 67 |
+| Eutelsat (`eutelsat`) | 29 |
+| Telesat (`telesat`) | 17 |
+| GPS (`gps`) | 32 |
+| GLONASS (`glonass`) | 24 |
+| Galileo (`galileo`) | 31 |
+| BeiDou (`beidou`) | 52 |
+
+Residual role layers account for 3,247 other active objects, 154 other
+Earth-observation objects, 43 science objects, 19 other navigation objects,
+19 human-presence objects and 1,101 debris records. These groups also use
+separate `name` and `locpoint` children. The named display assignment follows
+profile order and preserves all original membership IDs on the dot.
+
+`make check-orbiting` covers the historical SGP4/NASA reference test, the
+new named-group conservation/overlap tests and the current snapshot hashes.
+All passed. Four additional acquisition tests passed: duplicate IDs are
+rejected, fresh cached payloads are reused, a failed partial capture installs
+nothing, and an existing snapshot cannot be overwritten.
+
+All twelve global/observer SVGs generated successfully across Cahill–Keyes,
+AuthaGraph, Dymaxion, Myriahedral, Star-X and Voronoi. The independent XML
+validator verified unique SVG IDs, exact source names, layer types, hidden
+name-layer defaults, and matching NORAD IDs for every dot/name pair. Each
+global SVG contains 17,909 pairs and each observer SVG contains 1,088 pairs.
+The AuthaGraph raster was visually inspected with the named count legend.
+
+The durable implementation is in `src.generate/orbiting-data.h` and
+`src.generate/orbiting-generation.h`. The default Make input selects the new
+dated profile; Hubble's astronomy input and the historical orbital tests keep
+the August elements. `scripts/refresh-orbiting-snapshot.py` and the existing
+shell entry point capture future snapshots in new directories rather than
+mutating a checked reference. Active populations exceeding the configured
+budget now fail explicitly instead of being silently truncated.
+
+```sh
+make check-orbiting
+make -j2 generate-orbiting GENERATED_DIR=build/orbital-technosphere-20261103
+python3 scripts/verify-orbiting-layers.py \
+  --profile assets.static/orbital-technosphere/20261103/orbital-technosphere-profile.json \
+  --report build/orbital-technosphere-20261103/validation.json \
+  build/orbital-technosphere-20261103/*/svg/orbital-technosphere-*.svg
+```
+
+On the restricted development host, `CXX=/usr/bin/g++` bypassed a read-only
+compiler cache and `INKSCAPE_RUNNER=env` bypassed unavailable D-Bus sockets
+for PNG export. These were command-line environment workarounds, not changes
+to the compiler or renderer defaults.
+
+### Preview refresh and delivery
+
+The six global previews under `assets.tot/products/standard/<projection>/`
+now use the November snapshot. Full WebP, 480-pixel thumbnail PNG and
+1920 × 1080 WebP variants were refreshed. The screen derivatives use the
+existing contain layout with `#f4f5f5` padding. The original AuthaGraph URL
+therefore resolves to the updated image once these repository changes are
+deployed by Pages.
+
+`assets.tot/orbital-technosphere-20261103.json` records the source profile,
+snapshot checksum manifest, generator source hashes, six source SVG hashes
+and all 18 derivative hashes. `assets.tot/manifest.json` records this as a
+partial update, retaining the historical base revision for the other maps.
+The preview checker validates every updated product against this receipt.
+Observer SVGs were regenerated and checked locally; the website's observer
+previews retain their older capture.
+
+The editable AuthaGraph master is
+`build/orbital-technosphere-20261103/authagraph/svg/orbital-technosphere-global-authagraph-44-19.052559.svg`.
+The raster preview cannot contain editable SVG layers; open the master in an
+SVG editor to toggle `starlink/name`, `starlink/locpoint`, and the corresponding
+children of the other constellations. All names are present in that master.
+
+After exporting the six global PNGs at a 3,840-pixel long side, the focused
+preview update is reproducible with:
+
+```sh
+python3 scripts/stage-orbiting-preview.py \
+  --build-root build/orbital-technosphere-20261103 \
+  --profile assets.static/orbital-technosphere/20261103/orbital-technosphere-profile.json
+python3 scripts/check-tot-snapshot.py
+```
+
+The downloaded CSVs retain their original CRLF bytes. A scoped
+`.gitattributes` rule prevents Git newline normalization from changing their
+acquisition hashes on checkout. The earlier Starlink groundstation work and
+the historical orbital input bytes remain intact.

@@ -24,10 +24,18 @@
     "screen-1080p/webp",
     "full"
   ],
-  "storedBytes": 105371862,
+  "storedBytes": 105000480,
   "fullWebp": {
     "mode": "lossy",
     "quality": 90
   },
-  "mutability": "mutable local preview; not an AAO publication"
+  "mutability": "mutable local preview; not an AAO publication",
+  "updates": [
+    {
+      "pass": "orbital-technosphere-global",
+      "receipt": "orbital-technosphere-20261103.json",
+      "timestamp": "2026-11-03T17:10:00Z",
+      "artifactCount": 6
+    }
+  ]
 }

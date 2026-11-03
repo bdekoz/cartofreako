@@ -12,6 +12,7 @@ cannot change the staged imagery.
 from __future__ import annotations
 
 import json
+import hashlib
 import sys
 from pathlib import Path
 
@@ -60,7 +61,20 @@ def main() -> int:
             )
             return 1
 
-    print(f"tot snapshot check passed at {revision}")
+    for update in manifest.get("updates", []):
+        receipt_path = MANIFEST_PATH.parent / update["receipt"]
+        receipt = load_json(receipt_path)
+        if len(receipt["products"]) != update["artifactCount"]:
+            print(f"partial preview update count differs: {receipt_path}", file=sys.stderr)
+            return 1
+        for product in receipt["products"]:
+            for file in product["files"]:
+                path = ROOT / file["path"]
+                if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != file["sha256"]:
+                    print(f"partial preview update checksum differs: {path}", file=sys.stderr)
+                    return 1
+
+    print(f"tot snapshot check passed at {revision} with {len(manifest.get('updates', []))} recorded updates")
     return 0
 
 

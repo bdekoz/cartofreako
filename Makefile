@@ -94,10 +94,11 @@ CLOUD_ATMOSPHERE_STAC_RESOLVER := scripts/resolve-jaxa-stac.py
 CLOUD_ATMOSPHERE_PREPARATION_SCRIPT := \
 	scripts/prepare-cloud-atmosphere-data.sh
 CLOUD_ATMOSPHERE_VERIFIER := scripts/verify-cloud-atmosphere-data.sh
-ORBITING_DATA_DIR ?= $(STATIC_ASSET_DIR)/orbital-technosphere
+ORBITING_DATA_DIR ?= $(STATIC_ASSET_DIR)/orbital-technosphere/20261103
 ORBITING_PROFILE ?= \
 	$(ORBITING_DATA_DIR)/orbital-technosphere-profile.json
 ORBITING_FETCHER := scripts/fetch-orbiting-data.sh
+ORBITING_REFRESH_DIR ?= build/orbital-technosphere-refresh-$(shell date -u +%Y%m%dT%H%M%SZ)
 ANTHROPOCENE_DATA_DIR ?= $(STATIC_ASSET_DIR)/anthropocene
 ANTHROPOCENE_PARTICULATE_PROFILE_2025 ?= \
 	$(ANTHROPOCENE_DATA_DIR)/anthropocene-particulate-2025-profile.json
@@ -398,7 +399,8 @@ SGP4_OBJECT := $(GENERATOR_SRC_DIR)/third_party/sgp4/SGP4.o
 ASTRO_PROFILE_DIR := $(dir $(ASTRO_PROFILE))
 ASTRO_CATALOGS := $(filter-out $(ASTRO_PROFILE) $(ASTRO_HUBBLE_PROFILE),\
 	$(wildcard $(ASTRO_PROFILE_DIR)*.csv $(ASTRO_PROFILE_DIR)*.json))
-ASTRO_HUBBLE_OMM := $(ORBITING_DATA_DIR)/celestrak-science.csv
+# Hubble's historical profile keeps its own pinned element epoch.
+ASTRO_HUBBLE_OMM := $(STATIC_ASSET_DIR)/orbital-technosphere/celestrak-science.csv
 ORBITING_PROFILE_DIR := $(dir $(ORBITING_PROFILE))
 ORBITING_CATALOGS := $(filter-out $(ORBITING_PROFILE),\
 	$(wildcard $(ORBITING_PROFILE_DIR)*.csv $(ORBITING_PROFILE_DIR)*.json \
@@ -1755,7 +1757,7 @@ check-anthropocene-particulate: \
 		"$(ANTHROPOCENE_PARTICULATE_GEOJSON_2026)"
 	$(TEST_DIR)/test-anthropocene-particulate-generation
 
-check: check-generation-style check-pass-status check-anthropocene-particulate \
+check: check-generation-style check-pass-status check-anthropocene-particulate check-orbiting \
 		$(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) \
 		$(ANTHROPOCENE_PARTICULATE_GEOJSON_2025) \
 		$(ANTHROPOCENE_PARTICULATE_GEOJSON_2026) \
@@ -1842,11 +1844,6 @@ check: check-generation-style check-pass-status check-anthropocene-particulate \
 	printf '%s  %s\n' \
 		'9fbd453d174df834208718e110396c5a22bff4312aeeff3e42d0175510b0ff69' \
 		'$(abspath $(NETWORK_SWARM_GEOJSON))' | sha256sum -c -
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
-		$(TEST_DIR)/test-orbiting-generation.cc $(SGP4_OBJECT) \
-		-o $(TEST_DIR)/test-orbiting-generation
-	$(TEST_DIR)/test-orbiting-generation
-	sha256sum -c $(ORBITING_DATA_DIR)/SHA256SUMS
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-cahill-keyes-projection.cc \
 		-o $(TEST_DIR)/test-cahill-keyes-projection
@@ -2218,8 +2215,23 @@ $(CLOUD_ATMOSPHERE_GEOJSON):
 	"$(MAKE)" --no-print-directory fetch-cloud-atmosphere-data
 	"$(MAKE)" --no-print-directory prepare-cloud-atmosphere-data
 
-fetch-orbiting-data: $(ORBITING_FETCHER) $(ORBITING_PROFILE)
-	$(ORBITING_FETCHER) "$(ORBITING_DATA_DIR)"
+fetch-orbiting-data: $(ORBITING_FETCHER) scripts/refresh-orbiting-snapshot.py $(ORBITING_PROFILE)
+	ORBITING_PROFILE="$(abspath $(ORBITING_PROFILE))" \
+		$(ORBITING_FETCHER) "$(ORBITING_REFRESH_DIR)"
+
+.PHONY: check-orbiting
+check-orbiting: $(SGP4_OBJECT)
+	python3 tests/test-refresh-orbiting-snapshot.py
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
+		$(TEST_DIR)/test-orbiting-generation.cc $(SGP4_OBJECT) \
+		-o $(TEST_DIR)/test-orbiting-generation
+	$(TEST_DIR)/test-orbiting-generation
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$(TEST_DIR)/test-orbiting-constellations.cc $(SGP4_OBJECT) \
+		$(shell $(GDAL_CONFIG) --libs) -o $(TEST_DIR)/test-orbiting-constellations
+	$(TEST_DIR)/test-orbiting-constellations
+	cd "$(ORBITING_DATA_DIR)" && sha256sum -c SHA256SUMS
 
 fetch-anthropocene-particulate-2025: \
 		$(ANTHROPOCENE_PARTICULATE_FETCHER) \

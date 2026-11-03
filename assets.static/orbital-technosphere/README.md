@@ -1,5 +1,11 @@
 # Orbital Technosphere snapshots
 
+The root-level files preserve the August 2026 historical snapshot used by
+orbital regression tests and the Hubble profile. The default Orbital
+Technosphere input is now `20261103/orbital-technosphere-profile.json`, with
+18 named constellation/fleet layers and separate `name`/`locpoint` children.
+See the [current pass documentation](../../docs/pages/passes/orbital-technosphere.md).
+
 This directory is the offline, reproducible input profile for the
 `generate-orbiting` pass. The profile fixes both the calculation instant and
 the observer at the location where this Stage 4.2 capture was invoked.
@@ -25,16 +31,17 @@ NASA sources provide context and independent checks:
   directs comprehensive catalog use to services such as CelesTrak or
   Space-Track. That is why this pass deliberately uses a hybrid source model.
 
-Run `make fetch-orbiting-data` to refresh all network snapshots atomically.
-Refreshing changes the orbital state represented by the files; update the
-profile timestamp and SSCWeb interval together before committing a new
-reproducible capture. `SHA256SUMS` records every fetched input.
+Run `make fetch-orbiting-data` to capture a new snapshot under `build/`.
+`ORBITING_REFRESH_DIR` selects a new destination; `ORBITING_TIMESTAMP` can
+pin the calculation instant. The fetcher preserves existing snapshots,
+updates the SSCWeb interval, and writes per-source receipts and checksums.
+Select the new profile explicitly after validation.
 
 The fetcher follows CelesTrak's two-hour update/cache policy. A complete
-snapshot less than two hours old is reused without a request, and any HTTP
-error stops the refresh without replacing old inputs. Set
-`ORBITING_FORCE_REFRESH=1` only for a deliberate refresh after confirming no
-other process has downloaded the large groups during the current update.
+cached download less than two hours old is reused without a request, and any
+CelesTrak HTTP error stops the refresh without replacing old inputs. A failed
+NASA query can retain the explicitly dated historical reference; this does
+not establish a current independent position comparison.
 
 The results are visualization-grade. Public general-perturbations elements,
 the TEME-to-Earth rotation, and the low-precision solar illumination model do

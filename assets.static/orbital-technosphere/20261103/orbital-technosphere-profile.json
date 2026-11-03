@@ -1,0 +1,377 @@
+{
+  "schema_version": 1,
+  "name": "San Francisco Orbital Technosphere",
+  "timestamp": "2026-11-03T17:10:00Z",
+  "products": [
+    "global",
+    "observer"
+  ],
+  "reference_point": {
+    "name": "San Francisco, California, USA",
+    "latitude_deg": 37.7749,
+    "longitude_deg_east": -122.4194,
+    "elevation_m": 16.0,
+    "capture_method": "explicit profile value at make invocation"
+  },
+  "orientation": {
+    "observer_handedness": "celestial",
+    "central_right_ascension_hours": 12.0
+  },
+  "propagation": {
+    "model": "SGP4",
+    "gravity_model": "WGS72",
+    "operation_mode": "AFSPC",
+    "maximum_element_age_days": 7.0,
+    "maximum_future_epoch_hours": 6.0
+  },
+  "visibility": {
+    "minimum_elevation_deg": 0.0,
+    "require_sunlit_for_optical_candidate": true,
+    "maximum_solar_altitude_deg": -6.0
+  },
+  "display": {
+    "maximum_active_objects": 20000,
+    "maximum_debris_per_group": 500,
+    "maximum_labels": 40,
+    "maximum_tracks_per_group": 1,
+    "track_minutes_each_side": 45,
+    "track_step_minutes": 3,
+    "show_reference_lines": true
+  },
+  "catalogs": {
+    "primary": {
+      "id": "active",
+      "role": "active",
+      "file": "celestrak-active.csv",
+      "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=csv"
+    },
+    "groups": [
+      {
+        "id": "starlink",
+        "role": "megaconstellation",
+        "file": "celestrak-starlink.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=csv",
+        "constellation": {
+          "id": "starlink",
+          "name": "Starlink",
+          "color_rgb": [
+            214,
+            56,
+            50
+          ]
+        }
+      },
+      {
+        "id": "oneweb",
+        "role": "megaconstellation",
+        "file": "celestrak-oneweb.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=oneweb&FORMAT=csv",
+        "constellation": {
+          "id": "oneweb",
+          "name": "OneWeb",
+          "color_rgb": [
+            0,
+            114,
+            178
+          ]
+        }
+      },
+      {
+        "id": "kuiper",
+        "role": "megaconstellation",
+        "file": "celestrak-kuiper.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=kuiper&FORMAT=csv",
+        "constellation": {
+          "id": "kuiper",
+          "name": "Kuiper",
+          "color_rgb": [
+            230,
+            126,
+            0
+          ]
+        }
+      },
+      {
+        "id": "qianfan",
+        "role": "megaconstellation",
+        "file": "celestrak-qianfan.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=qianfan&FORMAT=csv",
+        "constellation": {
+          "id": "qianfan",
+          "name": "Qianfan",
+          "color_rgb": [
+            136,
+            70,
+            167
+          ]
+        }
+      },
+      {
+        "id": "hulianwang",
+        "role": "megaconstellation",
+        "file": "celestrak-hulianwang.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=hulianwang&FORMAT=csv",
+        "constellation": {
+          "id": "hulianwang",
+          "name": "Hulianwang",
+          "color_rgb": [
+            0,
+            142,
+            115
+          ]
+        }
+      },
+      {
+        "id": "gnss",
+        "role": "navigation",
+        "file": "celestrak-gnss.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=gnss&FORMAT=csv"
+      },
+      {
+        "id": "iridium-next",
+        "role": "communications",
+        "file": "celestrak-iridium-next.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=iridium-NEXT&FORMAT=csv",
+        "constellation": {
+          "id": "iridium",
+          "name": "Iridium",
+          "color_rgb": [
+            55,
+            90,
+            176
+          ]
+        }
+      },
+      {
+        "id": "globalstar",
+        "role": "communications",
+        "file": "celestrak-globalstar.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=globalstar&FORMAT=csv",
+        "constellation": {
+          "id": "globalstar",
+          "name": "Globalstar",
+          "color_rgb": [
+            187,
+            72,
+            130
+          ]
+        }
+      },
+      {
+        "id": "orbcomm",
+        "role": "communications",
+        "file": "celestrak-orbcomm.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=orbcomm&FORMAT=csv",
+        "constellation": {
+          "id": "orbcomm",
+          "name": "ORBCOMM",
+          "color_rgb": [
+            150,
+            115,
+            26
+          ]
+        }
+      },
+      {
+        "id": "resource",
+        "role": "earth-observation",
+        "file": "celestrak-resource.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=resource&FORMAT=csv"
+      },
+      {
+        "id": "science",
+        "role": "science",
+        "file": "celestrak-science.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=science&FORMAT=csv"
+      },
+      {
+        "id": "stations",
+        "role": "human-presence",
+        "file": "celestrak-stations.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=stations&FORMAT=csv"
+      },
+      {
+        "id": "fengyun-1c-debris",
+        "role": "debris",
+        "file": "celestrak-fengyun-1c-debris.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=fengyun-1c-debris&FORMAT=csv"
+      },
+      {
+        "id": "iridium-33-debris",
+        "role": "debris",
+        "file": "celestrak-iridium-33-debris.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=iridium-33-debris&FORMAT=csv"
+      },
+      {
+        "id": "cosmos-2251-debris",
+        "role": "debris",
+        "file": "celestrak-cosmos-2251-debris.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=cosmos-2251-debris&FORMAT=csv"
+      },
+      {
+        "id": "planet",
+        "role": "earth-observation",
+        "file": "celestrak-planet.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=planet&FORMAT=csv",
+        "constellation": {
+          "id": "planet",
+          "name": "Planet",
+          "color_rgb": [
+            0,
+            154,
+            170
+          ]
+        }
+      },
+      {
+        "id": "spire",
+        "role": "earth-observation",
+        "file": "celestrak-spire.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=spire&FORMAT=csv",
+        "constellation": {
+          "id": "spire",
+          "name": "Spire",
+          "color_rgb": [
+            98,
+            137,
+            48
+          ]
+        }
+      },
+      {
+        "id": "intelsat",
+        "role": "communications",
+        "file": "celestrak-intelsat.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=intelsat&FORMAT=csv",
+        "constellation": {
+          "id": "intelsat",
+          "name": "Intelsat",
+          "color_rgb": [
+            164,
+            96,
+            55
+          ]
+        }
+      },
+      {
+        "id": "ses",
+        "role": "communications",
+        "file": "celestrak-ses.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=ses&FORMAT=csv",
+        "constellation": {
+          "id": "ses",
+          "name": "SES",
+          "color_rgb": [
+            95,
+            90,
+            173
+          ]
+        }
+      },
+      {
+        "id": "eutelsat",
+        "role": "communications",
+        "file": "celestrak-eutelsat.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=eutelsat&FORMAT=csv",
+        "constellation": {
+          "id": "eutelsat",
+          "name": "Eutelsat",
+          "color_rgb": [
+            191,
+            112,
+            19
+          ]
+        }
+      },
+      {
+        "id": "telesat",
+        "role": "communications",
+        "file": "celestrak-telesat.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=telesat&FORMAT=csv",
+        "constellation": {
+          "id": "telesat",
+          "name": "Telesat",
+          "color_rgb": [
+            125,
+            76,
+            101
+          ]
+        }
+      },
+      {
+        "id": "gps-ops",
+        "role": "navigation",
+        "file": "celestrak-gps-ops.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=gps-ops&FORMAT=csv",
+        "constellation": {
+          "id": "gps",
+          "name": "GPS",
+          "color_rgb": [
+            147,
+            131,
+            0
+          ]
+        }
+      },
+      {
+        "id": "glo-ops",
+        "role": "navigation",
+        "file": "celestrak-glo-ops.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=glo-ops&FORMAT=csv",
+        "constellation": {
+          "id": "glonass",
+          "name": "GLONASS",
+          "color_rgb": [
+            58,
+            113,
+            113
+          ]
+        }
+      },
+      {
+        "id": "galileo",
+        "role": "navigation",
+        "file": "celestrak-galileo.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=galileo&FORMAT=csv",
+        "constellation": {
+          "id": "galileo",
+          "name": "Galileo",
+          "color_rgb": [
+            81,
+            123,
+            177
+          ]
+        }
+      },
+      {
+        "id": "beidou",
+        "role": "navigation",
+        "file": "celestrak-beidou.csv",
+        "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=beidou&FORMAT=csv",
+        "constellation": {
+          "id": "beidou",
+          "name": "BeiDou",
+          "color_rgb": [
+            162,
+            91,
+            30
+          ]
+        }
+      }
+    ],
+    "nasa_ssc_reference": {
+      "file": "nasa-ssc-reference.json",
+      "query_url": "https://sscweb.gsfc.nasa.gov/WS/sscr/2/locations/iss,aqua,landsat9,goes19/20260813T153000Z,20260813T154000Z/geo,geij2000/",
+      "source_url": "https://sscweb.gsfc.nasa.gov/WebServices/REST/",
+      "reference_timestamp": "2026-08-13T15:36:00Z",
+      "reference_status": "historical-validation-only",
+      "refresh_error": "<urlopen error [Errno 101] Network is unreachable>"
+    }
+  },
+  "snapshot": {
+    "collection_started_at": "2026-11-03T17:13:12Z",
+    "collection_completed_at": "2026-11-03T17:14:05Z",
+    "checksum_file": "SHA256SUMS",
+    "receipt_file": "acquisition.json"
+  }
+}

@@ -23,6 +23,7 @@
 /tests/test-generation-profile
 /tests/test-generation-typography
 /tests/test-orbiting-generation
+/tests/test-orbiting-constellations
 /tests/test-network-infrastructure-generation
 /tests/test-network-swarm-generation
 /tests/test-fiber-synthesized-generation
@@ -119,13 +120,16 @@ __pycache__/
 # Canonical private-assets root (assets.<hostname>.<user>).
 /assets.*/
 
-# Version the supplied groundstation snapshot and its reproducible conversion.
+# Version the reviewed groundstation and orbital snapshots.
 !/assets.static/
 /assets.static/*
 !/assets.static/network-groundstations/
 /assets.static/network-groundstations/*
 !/assets.static/network-groundstations/starlink-global-gateways-pops.20261103.kml
 !/assets.static/network-groundstations/starlink-global-gateways-pops.20261103.geojson
+!/assets.static/orbital-technosphere/
+/assets.static/orbital-technosphere/*
+!/assets.static/orbital-technosphere/20261103/
 
 # Repo-local top-of-tree preview snapshot (tracked; staged by
 # scripts/build-tot-preview.sh).

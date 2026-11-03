@@ -219,12 +219,20 @@ struct reference_point
   std::string capture_method;
 };
 
+struct constellation_configuration
+{
+  std::string id;
+  std::string name;
+  std::array<int, 3> color_rgb;
+};
+
 struct group_configuration
 {
   std::string id;
   std::string role;
   fs::path file;
   std::string source_url;
+  std::optional<constellation_configuration> constellation = std::nullopt;
 };
 
 struct propagation_configuration
@@ -249,6 +257,7 @@ struct display_configuration
   int track_minutes_each_side;
   int track_step_minutes;
   bool show_reference_lines;
+  bool show_satellite_names = false;
 };
 
 struct profile
@@ -272,12 +281,39 @@ inline group_configuration
 load_group_configuration(const rj::Value& value, const fs::path& directory,
                          const std::string_view context)
 {
-  return {
+  group_configuration result {
     required_string(value, "id", context),
     required_string(value, "role", context),
     directory / required_string(value, "file", context),
     required_string(value, "source_url", context),
   };
+  if (value.HasMember("constellation"))
+    {
+      const rj::Value& entry = value["constellation"];
+      constellation_configuration constellation {
+        required_string(entry, "id", context),
+        required_string(entry, "name", context), {},
+      };
+      orbiting_require(!constellation.id.empty() && !constellation.name.empty()
+        && std::all_of(constellation.id.begin(), constellation.id.end(),
+          [](const char c) { return (c >= 'a' && c <= 'z')
+            || (c >= '0' && c <= '9') || c == '-'; }),
+        "constellation id must use lowercase letters, digits and hyphens");
+      const rj::Value& color = required_member(entry, "color_rgb", context);
+      orbiting_require(color.IsArray() && color.Size() == 3,
+                       "constellation color_rgb must have three components");
+      for (rj::SizeType i = 0; i < 3; ++i)
+        {
+          orbiting_require(color[i].IsInt() && color[i].GetInt() >= 0
+                            && color[i].GetInt() <= 255,
+                           "constellation color_rgb must be integers in [0,255]");
+          constellation.color_rgb[i] = color[i].GetInt();
+        }
+      orbiting_require(result.role != "debris",
+                       "debris must not be assigned to an active constellation");
+      result.constellation = std::move(constellation);
+    }
+  return result;
 }
 
 inline profile
@@ -376,6 +412,8 @@ load_profile(const fs::path& path)
     static_cast<int>(required_size(display, "track_step_minutes",
                                    "profile.display")),
     required_bool(display, "show_reference_lines", "profile.display"),
+    display.HasMember("show_satellite_names")
+      ? required_bool(display, "show_satellite_names", "profile.display") : false,
   };
   orbiting_require(display_config.maximum_active_objects > 0
                      && display_config.track_step_minutes > 0,
@@ -401,6 +439,14 @@ load_profile(const fs::path& path)
         groups_value[index], directory, context);
       orbiting_require(group_ids.insert(group.id).second,
                        "duplicate catalog group id " + group.id);
+      if (group.constellation)
+        for (const group_configuration& previous : groups)
+          if (previous.constellation
+              && previous.constellation->id == group.constellation->id)
+            orbiting_require(previous.constellation->name == group.constellation->name
+              && previous.constellation->color_rgb == group.constellation->color_rgb,
+              "conflicting display definitions for constellation "
+                + group.constellation->id);
       groups.push_back(std::move(group));
     }
   const rj::Value& nasa = required_member(
@@ -500,6 +546,19 @@ struct orbital_object
   std::vector<std::string> roles;
   std::string source_url;
 };
+
+inline const constellation_configuration*
+display_constellation(const orbital_object& object, const profile& config)
+{
+  // A satellite can belong to several catalogs. Profile order chooses its
+  // one display parent; all source memberships remain on the object.
+  for (const group_configuration& group : config.groups)
+    if (group.constellation
+        && std::find(object.group_ids.begin(), object.group_ids.end(), group.id)
+             != object.group_ids.end())
+      return &*group.constellation;
+  return nullptr;
+}
 
 inline std::vector<orbital_object>
 load_omm_catalog(const fs::path& path, const std::string& source_url)
@@ -602,14 +661,16 @@ load_catalogs(const profile& config)
 {
   std::vector<orbital_object> active = load_omm_catalog(
     config.primary.file, config.primary.source_url);
-  if (active.size() > config.display.maximum_active_objects)
-    active.resize(config.display.maximum_active_objects);
+  orbiting_require(active.size() <= config.display.maximum_active_objects,
+                   "active population exceeds maximum_active_objects; review the profile budget");
   std::unordered_map<std::string, std::size_t> active_indices;
   active_indices.reserve(active.size());
   for (std::size_t index = 0; index < active.size(); ++index)
-    active_indices.emplace(active[index].norad_id, index);
+    orbiting_require(active_indices.emplace(active[index].norad_id, index).second,
+                     "duplicate primary NORAD id " + active[index].norad_id);
 
   std::vector<orbital_object> debris;
+  std::unordered_map<std::string, std::size_t> debris_indices;
   for (const group_configuration& group : config.groups)
     {
       std::vector<orbital_object> members = load_omm_catalog(
@@ -626,8 +687,15 @@ load_catalogs(const profile& config)
             {
               if (active_indices.contains(member.norad_id))
                 continue;
+              const auto previous = debris_indices.find(member.norad_id);
+              if (previous != debris_indices.end())
+                {
+                  append_unique(debris[previous->second].group_ids, group.id);
+                  continue;
+                }
               append_unique(member.group_ids, group.id);
               append_unique(member.roles, group.role);
+              debris_indices.emplace(member.norad_id, debris.size());
               debris.push_back(std::move(member));
             }
           continue;
