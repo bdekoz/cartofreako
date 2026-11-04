@@ -31,6 +31,16 @@ three comets, gamma-ray bursts, magnetar candidates, and X-ray transients. The
 output is an instrument-aware map of source positions, not a simulated
 photograph, mission pointing product, or physical spectral-energy rendering.
 
+The [MSP print studies](../../../output/msp-speculations-20261103/index.html)
+include an astronomy all-sky map and separate attribution legend in each of
+the four MSP speculation 5 palettes. These reuse the pinned Setouchi ST2 sky
+calculated at **29 October 2026, 20:00 UTC**, with its 43.5-inch image and
++4.35-inch printed horizontal move. Each map takes the Randoma11y pair's
+dark background and light typography, preserving all source symbol colors,
+positions and 35 labels. The [pinned source receipt](../../../assets.static/astronomy/msp-setouchi-20261029/provenance.json)
+and [source notes](../../../assets.static/astronomy/msp-setouchi-20261029/README.md)
+make these palette studies reproducible without the local Setouchi export tree.
+
 ## Authoritative JSON profile
 
 [`astro-profile.json`](../../../assets.static/astronomy/astro-profile.json) and

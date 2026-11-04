@@ -2,6 +2,7 @@
 """Audit the delivered MSP sheets, sources, framing, symbols and physical sizes."""
 
 import argparse
+from collections import Counter
 import csv
 import gzip
 import hashlib
@@ -44,7 +45,7 @@ def group_colors(root, vendor_colors):
     return colors
 
 
-def compare_orbital_variant(original, variant, global_plate):
+def compare_orbital_variant(original, variant, global_plate, observer_names=False, track_width_scale=1):
     base = ET.parse(original).getroot()
     changed = ET.parse(variant).getroot()
     base_marks = {n.get("data-norad-id"): n for n in base.iter() if n.get("data-object-kind") == "locpoint"}
@@ -72,13 +73,29 @@ def compare_orbital_variant(original, variant, global_plate):
             a = labels[label.get("id")]
             for key in ("x", "y", "transform", "data-norad-id"):
                 assert label.get(key) == a.get(key)
-            if not global_plate or label.get("data-display-group") != "starlink":
+            if label.get("data-display-group") != "starlink" or (not global_plate and not observer_names):
                 assert label.get("font-size") == a.get("font-size")
-    if global_plate:
+    if global_plate or observer_names:
         elements = list(changed.iter())
         text_order = [i for i, n in enumerate(elements) if n.get("data-display-group") == "starlink" and n.get("data-object-kind") in ("name", "id")]
         marker_order = [i for i, n in enumerate(elements) if n.get("data-object-kind") == "locpoint"]
         assert max(text_order) < min(marker_order)
+    if global_plate:
+        for identifier, multiplier in (("representative-ground-tracks", track_width_scale), ("terrestrial-reference", 1)):
+            original_layer = next(n for n in base.iter() if n.get("id") == identifier)
+            changed_layer = next(n for n in changed.iter() if n.get("id") == identifier)
+            assert len(original_layer) == len(changed_layer) > 0
+            for a, b in zip(original_layer, changed_layer):
+                assert a.attrib.keys() == b.attrib.keys()
+                for key in a.attrib.keys()-{"style"}:
+                    assert a.get(key) == b.get(key), (identifier, key)
+                original_style = dict(s.strip().split(":", 1) for s in a.get("style", "").split(";") if ":" in s)
+                changed_style = dict(s.strip().split(":", 1) for s in b.get("style", "").split(";") if ":" in s)
+                # Foreground RGB varies by palette; widths and opacity are compared separately.
+                for key in original_style.keys()-{"fill", "stroke", "stroke-width"}:
+                    assert original_style[key] == changed_style[key]
+                if "stroke-width" in original_style:
+                    assert math.isclose(float(changed_style["stroke-width"]), float(original_style["stroke-width"])*multiplier)
     baseline_legend = original.with_name(original.stem+"-legend.svg")
     variant_legend = variant.with_name(variant.stem+"-legend.svg")
     a = next(n for n in ET.parse(baseline_legend).getroot().iter() if n.get("id") == "legend-starlink")
@@ -103,6 +120,24 @@ def capability_geometry(root):
     return list(walk(root))
 
 
+def astronomy_cartography(root):
+    """Compare every source object, coordinate, symbol color and label geometry."""
+    source = next(n for n in root.iter() if n.get("id") == "source-cartography")
+    records = []
+    for node in source.iter():
+        attrs = dict(node.attrib)
+        if node.tag == SVG+"text":
+            # Palette typography is the only allowed change inside the sky.
+            for attr in ("fill", "stroke", "stroke-opacity"):
+                attrs.pop(attr, None)
+            style = dict(s.strip().split(":", 1) for s in attrs.get("style", "").split(";") if ":" in s)
+            for attr in ("fill", "stroke", "stroke-opacity"):
+                style.pop(attr, None)
+            attrs["style"] = tuple(sorted(style.items()))
+        records.append((node.tag, attrs, (node.text or "").strip()))
+    return records
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=ROOT/"output/msp-speculations-20261103")
@@ -120,13 +155,30 @@ def main():
     assert digest(ROOT/capability["manifest_path"]) == capability["manifest_sha256"]
     assert digest(ROOT/capability["evidence_path"]) == capability["evidence_sha256"]
     cap_manifest = json.loads((ROOT/capability["manifest_path"]).read_text())
+    astronomy_dir = ROOT/config["astronomy_source"]
+    astronomy_receipt = json.loads((astronomy_dir/"provenance.json").read_text())
+    assert manifest["inputs"]["astro-all-sky"]["sha256"] == digest(astronomy_dir/"provenance.json")
+    astronomy_sources = {}
+    for kind, record in astronomy_receipt["files"].items():
+        archive = astronomy_dir/record["file"]
+        assert digest(archive) == record["sha256"]
+        data = gzip.decompress(archive.read_bytes())
+        assert hashlib.sha256(data).hexdigest() == record["svg_sha256"]
+        astronomy_sources[kind] = ET.fromstring(data)
     expected = {(r["id"], subject, kind) for r in config["studies"]
-                for subject in config["subjects"] for kind in ("map", "legend")}
+                for subject in config["subjects"]+r.get("additional_subjects", []) for kind in ("map", "legend")}
     records = manifest["records"]
-    assert len(records) == len(expected) == 42 and {(r["study"], r["subject"], r["kind"]) for r in records} == expected
+    assert len(records) == len(expected) == 74 and {(r["study"], r["subject"], r["kind"]) for r in records} == expected
     fourth_studies = [r for r in config["studies"] if r.get("family") == "msp-speculation-4"]
     assert len(fourth_studies) == 4 and {r["randoma11y_pair"] for r in fourth_studies} == {p["id"] for p in provenance["pairs"]}
     assert all(r["variant"]["global_starlink_font_size_pt"] == 6 for r in fourth_studies)
+    fifth_studies = [r for r in config["studies"] if r.get("family") == "msp-speculation-5"]
+    assert len(fifth_studies) == 4 and {r["randoma11y_pair"] for r in fifth_studies} == {p["id"] for p in provenance["pairs"]}
+    assert all(r["directory"] == "msp-speculation-5/"+r["randoma11y_pair"] for r in fifth_studies)
+    assert all(r["variant"]["global_starlink_font_size_pt"] == 6 and r["variant"]["global_track_width_scale"] == 2 for r in fifth_studies)
+    assert all(r.get("additional_subjects") == ["astro-all-sky"] for r in fifth_studies)
+    assert all(r["variant"]["observer_starlink_names"] and r["variant"]["observer_starlink_font_size_pt"] == 6
+               for r in fifth_studies)
     profile = json.loads(args.profile.read_text())
     vendor_colors = {g["constellation"]["id"]: "rgb("+",".join(map(str, g["constellation"]["color_rgb"]))+")"
                      for g in profile["catalogs"]["groups"] if "constellation" in g}
@@ -137,11 +189,15 @@ def main():
             for row in csv.DictReader(stream):
                 names.setdefault(row["NORAD_CAT_ID"], row["OBJECT_NAME"])
     report = {"sheets": len(expected), "maps": len(expected)//2, "legends": len(expected)//2,
-              "verified_files": 0, "orbital": [], "vendor_colors": vendor_colors,
+              "verified_files": 0, "orbital": [], "astronomy": [], "vendor_colors": vendor_colors,
               "checks": ["source Randoma11y pairs and actual SVG paint", "Antarctic inset below source data",
                          "all four color pairs delivered for the complete MSP 4 set",
                          "MSP 4 Starlink centroids fixed, sunburst linear size 1.5x", "all global markers above 6 pt Starlink text",
                          "18 original vendor colors and matching map/legend keys on both orbital subjects",
+                         "all four MSP 5 palette directories nested inside msp-speculation-5",
+                         "MSP 5 observer names visible only for Starlink at 6 pt, beneath all satellite markers",
+                         "MSP 5 global trajectory widths doubled; graticule widths and all line geometry retained",
+                         "all four MSP 5 astronomy backgrounds match their pairs; source positions, colors and 35 labels retained",
                          "groundstation fiber links use pair foreground at full opacity",
                          "MSP 4 groundstation geometry identical to option-3-petals"]}
     with tempfile.TemporaryDirectory(prefix="cartofreako-msp-audit-") as temporary:
@@ -152,9 +208,10 @@ def main():
             framing = record["framing"]
             assert math.isclose(framing["cyclic_move_on_sheet_inches"], 4.35)
             assert framing["image_inches"] == [43.5, 19.052559*(43.5/44)]
-            assert framing["antarctica_adjustment"]["present"] == (record["subject"] != "orbital-technosphere-observer")
+            assert framing["antarctica_adjustment"]["present"] == (record["subject"] in ("network-groundstations", "orbital-technosphere-global"))
             for item in record["outputs"]:
                 path = args.output/item["path"]
+                assert path.parent.relative_to(args.output).as_posix() == recipe.get("directory", recipe["id"])
                 assert path.is_file() and digest(path) == item["sha256"] and path.stat().st_size == item["bytes"]
                 report["verified_files"] += 1
                 if path.suffix == ".pdf":
@@ -183,7 +240,20 @@ def main():
                         assert not any(e.get("id") in ("constellation-legend", "groundstation-legend") for e in elements)
                         if record["subject"].startswith("orbital"):
                             font = recipe.get("variant", {}).get("global_starlink_font_size_pt", 9)
-                            maps.append((target, font))
+                            observer_font = recipe.get("variant", {}).get("observer_starlink_font_size_pt")
+                            maps.append((target, font, observer_font))
+                        elif record["subject"] == "astro-all-sky":
+                            assert root.get("data-legend-companion") == target.stem+"-legend.svg"
+                            assert astronomy_cartography(root) == astronomy_cartography(astronomy_sources["map"])
+                            assert by_id["astro-metadata"].get("data-timestamp") == astronomy_receipt["calculation_timestamp"]
+                            counts = dict(Counter(e.get("data-kind") for e in elements if e.get("data-kind")))
+                            assert counts == astronomy_receipt["object_counts"]
+                            assert len(by_id["labels"]) == astronomy_receipt["label_count"] == 35
+                            assert "legend-informatics" not in by_id and "plate-source-bibliography" not in by_id
+                            report["astronomy"].append({"study": record["study"], "background": recipe["background"],
+                                                       "timestamp": astronomy_receipt["calculation_timestamp"],
+                                                       "object_counts": counts, "labels": len(by_id["labels"]),
+                                                       "source_geometry_and_symbol_colors_unchanged": True})
                         else:
                             metadata = by_id["network-groundstations-metadata"]
                             assert metadata.get("data-datestamp") == "20261103"
@@ -199,10 +269,18 @@ def main():
                     else:
                         assert "msp-print-note" in by_id
                         assert "plate-source-bibliography" in by_id or "capability-legend-ledger" in by_id
+                        if record["subject"] == "astro-all-sky":
+                            original_text = [e.text for e in astronomy_sources["legend"].iter() if e.tag == SVG+"text"]
+                            actual_text = [e.text for e in elements if e.tag == SVG+"text"]
+                            assert actual_text[:len(original_text)] == original_text
+                            assert root.get("data-map-companion") == target.name.replace("-legend", "")
+                            assert by_id["astro-metadata"].get("data-timestamp") == astronomy_receipt["calculation_timestamp"]
                     verify_palette(root, recipe, provenance)
                     if record["subject"].startswith("orbital"):
                         assert record["marker_color_policy"] == config["orbital_marker_colors"] == "preserve-source-groups"
                         colors_by_sheet[(record["study"], record["subject"], record["kind"])] = group_colors(root, vendor_colors)
+                    elif record["subject"] == "astro-all-sky":
+                        assert record["marker_color_policy"] == root.get("data-marker-color-policy") == "preserve-source-astronomy"
                     if record["kind"] == "map":
                         verify_land_order(root)
                     if record.get("capability_study"):
@@ -211,7 +289,7 @@ def main():
                         cap_source = (ROOT/capability["manifest_path"]).parent/archive["path"]
                         original = ET.fromstring(gzip.decompress(cap_source.read_bytes()))
                         assert capability_geometry(root) == capability_geometry(original)
-        report["orbital"] = [VERIFY.verify(path, profile, names, font) for path, font in maps]
+        report["orbital"] = [VERIFY.verify(path, profile, names, font, observer_font) for path, font, observer_font in maps]
         report["scaled_starlink_markers"] = {}
         for recipe in config["studies"]:
             for subject in ("orbital-technosphere-global", "orbital-technosphere-observer"):
@@ -219,18 +297,21 @@ def main():
                 legend_colors = colors_by_sheet[(recipe["id"], subject, "legend")]
                 assert set(vendor_colors).issubset(legend_colors)
                 assert all(color == legend_colors[group] for group, color in map_colors.items())
-        for recipe in fourth_studies:
+        for recipe in fourth_studies+fifth_studies:
             report["scaled_starlink_markers"][recipe["id"]] = {}
             for subject in ("global", "observer"):
                 stem = "orbital-technosphere-"+subject+"-authagraph-44-19.052559.svg"
                 report["scaled_starlink_markers"][recipe["id"]][subject] = compare_orbital_variant(
                     Path(temporary)/"msp-speculation-1"/stem,
-                    Path(temporary)/recipe["id"]/stem, subject == "global")
+                    Path(temporary)/recipe["id"]/stem, subject == "global",
+                    recipe["variant"].get("observer_starlink_names", False),
+                    recipe["variant"].get("global_track_width_scale", 1))
         for item in report["orbital"]:
             item["file"] = str(Path(item["file"]).relative_to(temporary))
     assert report["verified_files"] == len(expected)*3
+    assert len(report["astronomy"]) == 4
     (args.output/"validation.json").write_text(json.dumps(report, indent=2)+"\n")
-    print(f"Verified {report['sheets']} sheets, {report['verified_files']} files, all four MSP 4 palettes, 18 vendor colors, bright fiber links, 6/9 pt IDs, layer order and 1.5x sunbursts")
+    print(f"Verified {report['sheets']} sheets, {report['verified_files']} files, four astronomy palettes, Starlink-only observer names, 18 vendor colors, bright fiber links, 6/9 pt type, layer order and 1.5x sunbursts")
 
 
 if __name__ == "__main__":

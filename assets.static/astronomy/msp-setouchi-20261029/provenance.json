@@ -1,0 +1,449 @@
+{
+  "schema": "cartofreako-msp-astronomy-source-v1",
+  "description": "Pinned existing Setouchi ST2 world astronomy all-sky map and separate legend, for palette-only presentation studies. The source sky is evaluated at 2026-10-29T20:00:00Z.",
+  "calculation_timestamp": "2026-10-29T20:00:00Z",
+  "files": {
+    "map": {
+      "file": "astro-all-sky.svg.gz",
+      "sha256": "2fe4ab40c844a2ae4b146a9e4b8c26471e3e1a851235663666df966126fc4141",
+      "svg_sha256": "6e6a9b217c06c6ac9906b19a5a343887570016248d56919f03032804a10b0838",
+      "source_path": "output/setouchi-triennale-2028-st2/maps/world/svg/astro-all-sky.svg",
+      "source_receipt": {
+        "kind": "map",
+        "scope": "world",
+        "stem": "astro-all-sky",
+        "svg": "maps/world/svg/astro-all-sky.svg",
+        "svg_sha256": "6e6a9b217c06c6ac9906b19a5a343887570016248d56919f03032804a10b0838",
+        "combined_source_sha256": "6e48544dcec410d69a46b6c3c36fc0601b78a00f0a83b58f0899ac0437557ee9",
+        "source": "sources/composition/plates/world/svg/astro-all-sky-authagraph-44-19.052559.svg",
+        "image_width_inches": 43.5,
+        "scale": 0.9886363636363636,
+        "framing_adjustment": {
+          "variant": "cyclic-43p5-antarctica-left",
+          "scale": 0.9886363636363636,
+          "shift": 4.4,
+          "offset": 0,
+          "translation_inches": [
+            0.25,
+            0.10825317613636365
+          ],
+          "sheet_inches": [
+            44.0,
+            19.052559
+          ],
+          "image_inches": [
+            43.5,
+            18.83605264772727
+          ],
+          "cyclic_move_on_sheet_inches": 4.3500000000000005,
+          "all_artwork_scaled_proportionally": true,
+          "legend_included": false,
+          "non_terrestrial_data_coordinates_unchanged": true,
+          "antarctica_adjustment": {
+            "translation_source_inches": [
+              -37.3872,
+              1.5506589999999996
+            ],
+            "present": false,
+            "changed_paths": [],
+            "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+          }
+        }
+      }
+    },
+    "legend": {
+      "file": "astro-all-sky-legend.svg.gz",
+      "sha256": "1f2211bc4d2aca4dd7ff017aa89a578319643065df40d9b8a2732d13993cdb8d",
+      "svg_sha256": "2c1a192d10aa378b39fc59ff8586630f4b688d03dc222ba391a7940a60495112",
+      "source_path": "output/setouchi-triennale-2028-st2/legends/world/svg/astro-all-sky-legend.svg",
+      "source_receipt": {
+        "kind": "legend",
+        "scope": "world",
+        "stem": "astro-all-sky",
+        "svg": "legends/world/svg/astro-all-sky-legend.svg",
+        "svg_sha256": "2c1a192d10aa378b39fc59ff8586630f4b688d03dc222ba391a7940a60495112",
+        "combined_source_sha256": "6e48544dcec410d69a46b6c3c36fc0601b78a00f0a83b58f0899ac0437557ee9",
+        "source": "sources/composition/plates/world/svg/astro-all-sky-authagraph-44-19.052559.svg",
+        "image_width_inches": null,
+        "scale": 1.0,
+        "framing_adjustment": null
+      }
+    }
+  },
+  "bibliography": {
+    "entry": {
+      "ordinal": 17,
+      "stem": "astro-all-sky",
+      "title": "Astronomy: all sky",
+      "period_and_units": "Celestial directions / calculation at 29 October 2026, 20:00 UTC",
+      "interpretation": "Celestial coordinates. Refreshed astronomy catalogs, calculated at 2026-10-29T20:00:00Z. The world ground-observer reference remains San Francisco; the Japan companion uses Setouchi.",
+      "source_ids": [
+        "authagraph",
+        "gaia",
+        "exoplanets",
+        "jpl-sbdb",
+        "curated-sky"
+      ],
+      "method": "Selected Gaia, NASA and JPL catalogs; not a census of the sky",
+      "japan": "All-sky/Hubble sky context retained; a geographic Japan crop is undefined. Companion includes a geographic locator; the yellow reference is conceptual, not a confirmed venue.",
+      "inputs": [
+        {
+          "path": "output/setouchi-triennale-2028/sources/data/astronomy/astro-profile.json",
+          "sha256": "0e486df9f4cbf5d840ee9332c5148cb15b118dd3b6e9af221c963306f3202d33",
+          "bytes": 1621
+        },
+        {
+          "path": "output/setouchi-triennale-2028/sources/data/astronomy/astro-setouchi-profile.json",
+          "sha256": "edec2e489287500a33acbc5bdf350e7afc5beb2e2ef7504f7b661c67b7cd2ee2",
+          "bytes": 1603
+        }
+      ],
+      "key": [],
+      "plate_inputs": [
+        {
+          "scope": "world",
+          "stem": "astro-all-sky",
+          "status": "no-existing-legend",
+          "source_sha256": "6e48544dcec410d69a46b6c3c36fc0601b78a00f0a83b58f0899ac0437557ee9",
+          "output_sha256": "6e48544dcec410d69a46b6c3c36fc0601b78a00f0a83b58f0899ac0437557ee9"
+        },
+        {
+          "scope": "japan",
+          "stem": "astro-all-sky",
+          "status": "revised",
+          "source_sha256": "edfde7c92883ceade14adf107032ce232634fd16e8c9effa5a32584142900056",
+          "output_sha256": "44135ac05be9138fb7154d9176b8206dd3844b4a8ce67eb159449404ffd6e312",
+          "cartography_sha256": "0de1fb82957accb35e3fc66bb4486527b7954d0539f4d5358cb59850ec1902f9",
+          "cartography_shape_counts": {
+            "rect": 4,
+            "path": 72,
+            "circle": 686,
+            "line": 180,
+            "use": 2
+          }
+        }
+      ],
+      "japan_source_ids": [
+        "japan-boundary"
+      ],
+      "presentation": "Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.",
+      "world_presentation": "Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.",
+      "separate_sheets": [
+        {
+          "kind": "map",
+          "scope": "world",
+          "stem": "astro-all-sky",
+          "svg": "maps/world/svg/astro-all-sky.svg",
+          "svg_sha256": "6e6a9b217c06c6ac9906b19a5a343887570016248d56919f03032804a10b0838",
+          "combined_source_sha256": "6e48544dcec410d69a46b6c3c36fc0601b78a00f0a83b58f0899ac0437557ee9",
+          "source": "sources/composition/plates/world/svg/astro-all-sky-authagraph-44-19.052559.svg",
+          "image_width_inches": 43.5,
+          "scale": 0.9886363636363636,
+          "framing_adjustment": {
+            "variant": "cyclic-43p5-antarctica-left",
+            "scale": 0.9886363636363636,
+            "shift": 4.4,
+            "offset": 0,
+            "translation_inches": [
+              0.25,
+              0.10825317613636365
+            ],
+            "sheet_inches": [
+              44.0,
+              19.052559
+            ],
+            "image_inches": [
+              43.5,
+              18.83605264772727
+            ],
+            "cyclic_move_on_sheet_inches": 4.3500000000000005,
+            "all_artwork_scaled_proportionally": true,
+            "legend_included": false,
+            "non_terrestrial_data_coordinates_unchanged": true,
+            "antarctica_adjustment": {
+              "translation_source_inches": [
+                -37.3872,
+                1.5506589999999996
+              ],
+              "present": false,
+              "changed_paths": [],
+              "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+            }
+          }
+        },
+        {
+          "kind": "legend",
+          "scope": "world",
+          "stem": "astro-all-sky",
+          "svg": "legends/world/svg/astro-all-sky-legend.svg",
+          "svg_sha256": "2c1a192d10aa378b39fc59ff8586630f4b688d03dc222ba391a7940a60495112",
+          "combined_source_sha256": "6e48544dcec410d69a46b6c3c36fc0601b78a00f0a83b58f0899ac0437557ee9",
+          "source": "sources/composition/plates/world/svg/astro-all-sky-authagraph-44-19.052559.svg",
+          "image_width_inches": null,
+          "scale": 1.0,
+          "framing_adjustment": null
+        },
+        {
+          "kind": "map",
+          "scope": "japan",
+          "stem": "astro-all-sky",
+          "svg": "maps/japan/svg/astro-all-sky.svg",
+          "svg_sha256": "0f00b12a25924c3a345cc58cfb077c078cf9bf92ef94ac5bfe94e5cb9cebad0d",
+          "combined_source_sha256": "44135ac05be9138fb7154d9176b8206dd3844b4a8ce67eb159449404ffd6e312",
+          "source": "sources/composition/plates/japan/svg/astro-all-sky-authagraph-44-19.052559-japan.svg",
+          "image_width_inches": 43.5,
+          "scale": 0.9886363636363636,
+          "framing_adjustment": null
+        },
+        {
+          "kind": "legend",
+          "scope": "japan",
+          "stem": "astro-all-sky",
+          "svg": "legends/japan/svg/astro-all-sky-legend.svg",
+          "svg_sha256": "95eb9218bc45aef0e6616e922330e67b6660e687079c2207fe4b49358c0797fa",
+          "combined_source_sha256": "44135ac05be9138fb7154d9176b8206dd3844b4a8ce67eb159449404ffd6e312",
+          "source": "sources/composition/plates/japan/svg/astro-all-sky-authagraph-44-19.052559-japan.svg",
+          "image_width_inches": null,
+          "scale": 1.0,
+          "framing_adjustment": null
+        }
+      ]
+    },
+    "sources": {
+      "authagraph": {
+        "id": "authagraph",
+        "title": "Hajime Narukawa \u2014 AuthaGraph formulation",
+        "url": "https://doi.org/10.11212/jjca.60.1_1",
+        "period": "2022 formulation; native Cartofreako implementation",
+        "notes": "Projection and graticules are mathematical constructions. Horizontal periodicity supports the ST2 framing study.",
+        "license": "",
+        "inputs": [
+          {
+            "path": "src.projections/cart0freak0-authagraph.h",
+            "sha256": "9263e8dfcc531538d75a7d6f895688dfe7c28525b58c1a17a5b380396fe34d88",
+            "bytes": 22115
+          }
+        ]
+      },
+      "gaia": {
+        "id": "gaia",
+        "title": "ESA \u2014 Gaia DR3 bright-star selection",
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "period": "Retrieved 29 October 2026; Gaia DR3",
+        "notes": "ADQL: TOP 500 sources with phot_g_mean_mag < 5.5, ordered by magnitude. A bounded catalogue selection, not all stars.",
+        "license": "Retain ESA/Gaia/DPAC acknowledgments.",
+        "inputs": [
+          {
+            "path": "output/setouchi-triennale-2028/sources/data/astronomy/gaia-dr3-bright.csv",
+            "sha256": "a7f3a3fcc49405ee2d651bbd70e827bb41ad66a78aa4f5bf6b9b79c7ce6034a4",
+            "bytes": 63732
+          },
+          {
+            "path": "scripts/fetch-astro-data.sh",
+            "sha256": "225faed6fcaeb462f03d457db4cc4198b31a28d1c4208b7c914e998afe75ecf2",
+            "bytes": 2216
+          }
+        ]
+      },
+      "exoplanets": {
+        "id": "exoplanets",
+        "title": "NASA Exoplanet Archive \u2014 nearby host selection",
+        "url": "https://exoplanetarchive.ipac.caltech.edu/TAP/sync",
+        "period": "Retrieved 29 October 2026",
+        "notes": "TOP 250 pscomppars entries with RA/Dec, ordered by system distance. Host positions, not resolved planet surfaces.",
+        "license": "NASA Exoplanet Archive acknowledgment.",
+        "inputs": [
+          {
+            "path": "output/setouchi-triennale-2028/sources/data/astronomy/nasa-exoplanet-nearby.csv",
+            "sha256": "56bd4672ac88fbf6e9189a13e7aaf4b6519c6114434ecfbc49f6382b74209f89",
+            "bytes": 21403
+          }
+        ]
+      },
+      "jpl-sbdb": {
+        "id": "jpl-sbdb",
+        "title": "NASA/JPL \u2014 Small-Body Database",
+        "url": "https://ssd-api.jpl.nasa.gov/sbdb.api",
+        "period": "Retrieved 29 October 2026; evaluated 29 October 2026 at 20:00 UTC",
+        "notes": "Ceres, Vesta, Eros, Apophis, Halley, Encke and 67P. Approximate two-body propagation; not a mission-navigation ephemeris.",
+        "license": "NASA/JPL source acknowledgment.",
+        "inputs": [
+          {
+            "path": "output/setouchi-triennale-2028/sources/data/astronomy/sbdb-67p.json",
+            "sha256": "b3a735e91356290f1f1162dc37928c738ab0cb57ce962a28a2736d5eb076b9ac",
+            "bytes": 4197
+          },
+          {
+            "path": "output/setouchi-triennale-2028/sources/data/astronomy/sbdb-apophis.json",
+            "sha256": "c54f495be94c975fdeabe726f5ad3fd8a4027b323a9ac08211170d27f9b2fd5b",
+            "bytes": 4547
+          },
+          {
+            "path": "output/setouchi-triennale-2028/sources/data/astronomy/sbdb-ceres.json",
+            "sha256": "7607a3ce1a45073f9c5fd50fdc1510e0198190e83d9a61ce8970d496215469d8",
+            "bytes": 4915
+          },
+          {
+            "path": "output/setouchi-triennale-2028/sources/data/astronomy/sbdb-encke.json",
+            "sha256": "967a6effc10235ada1b349d2b0dac66799c76370f296adbd9112c6e3350c2500",
+            "bytes": 3628
+          },
+          {
+            "path": "output/setouchi-triennale-2028/sources/data/astronomy/sbdb-eros.json",
+            "sha256": "cf428c6ecb7c934ea9898d225c9de405c6e8115baa268340451ac63d907dac51",
+            "bytes": 6357
+          },
+          {
+            "path": "output/setouchi-triennale-2028/sources/data/astronomy/sbdb-halley.json",
+            "sha256": "fc3447fb09e5a6501f077a4887598f1e25d91229cf36ed549bfd5f4097c8a001",
+            "bytes": 4077
+          },
+          {
+            "path": "output/setouchi-triennale-2028/sources/data/astronomy/sbdb-vesta.json",
+            "sha256": "8e5bc2328fb7af20ddff481e0ff641a97c0924274eafd4d25ed3158aedfec3a5",
+            "bytes": 5024
+          }
+        ]
+      },
+      "curated-sky": {
+        "id": "curated-sky",
+        "title": "Cartofreako \u2014 curated multi-band and transient context",
+        "url": "https://heasarc.gsfc.nasa.gov/",
+        "period": "Pinned curated entries retained; individual dates and roles remain in curated-sky.json",
+        "notes": "Curated positions and mission context are not a new transient survey. Discovery/context-only source links do not imply ingested measurements.",
+        "license": "Retain each underlying provider acknowledgment.",
+        "inputs": [
+          {
+            "path": "output/setouchi-triennale-2028/sources/data/astronomy/curated-sky.json",
+            "sha256": "2c5680e1cbe4e8c3bdd51526c9506adedb91349960e37561a6dd2b9c8c838d39",
+            "bytes": 6092
+          }
+        ],
+        "references": [
+          {
+            "layer": "curated object source",
+            "url": "https://heasarc.gsfc.nasa.gov/"
+          }
+        ]
+      }
+    }
+  },
+  "framing": {
+    "variant": "cyclic-43p5-antarctica-left",
+    "scale": 0.9886363636363636,
+    "shift": 4.4,
+    "offset": 0,
+    "translation_inches": [
+      0.25,
+      0.10825317613636365
+    ],
+    "sheet_inches": [
+      44.0,
+      19.052559
+    ],
+    "image_inches": [
+      43.5,
+      18.83605264772727
+    ],
+    "cyclic_move_on_sheet_inches": 4.3500000000000005,
+    "all_artwork_scaled_proportionally": true,
+    "legend_included": false,
+    "non_terrestrial_data_coordinates_unchanged": true,
+    "antarctica_adjustment": {
+      "translation_source_inches": [
+        -37.3872,
+        1.5506589999999996
+      ],
+      "present": false,
+      "changed_paths": [],
+      "scope": "terrestrial silhouettes, coastlines, ice and attached country fills; editorial ocean backing closes the old land void"
+    }
+  },
+  "object_counts": {
+    "star": 500,
+    "exoplanet-host": 158,
+    "galaxy": 3,
+    "nebula": 1,
+    "supernova-remnant": 2,
+    "black-hole": 2,
+    "x-ray-binary": 1,
+    "active-galaxy": 1,
+    "quasar": 1,
+    "sun": 1,
+    "moon": 1,
+    "planet": 7,
+    "asteroid": 4,
+    "comet": 3
+  },
+  "label_count": 35,
+  "profile": {
+    "schema_version": 2,
+    "name": "San Francisco ground multi-band sky",
+    "timestamp": "2026-10-29T20:00:00Z",
+    "products": [
+      "all-sky",
+      "observer"
+    ],
+    "observer": {
+      "id": "ground-multiband",
+      "name": "San Francisco, California, USA",
+      "kind": "terrestrial",
+      "latitude_deg": 37.7749,
+      "longitude_deg_east": -122.4194,
+      "elevation_m": 16.0
+    },
+    "orientation": {
+      "handedness": "celestial",
+      "central_right_ascension_hours": 12.0
+    },
+    "instrumentation": {
+      "id": "generic-ground-multiband",
+      "name": "Generic ground multi-band reference",
+      "mode": "ground-multi-band",
+      "bands": [
+        "radio",
+        "microwave",
+        "infrared",
+        "optical",
+        "ultraviolet",
+        "x-ray",
+        "gamma-ray",
+        "neutrino",
+        "gravitational-wave"
+      ],
+      "night_required_bands": [
+        "infrared",
+        "optical",
+        "ultraviolet"
+      ],
+      "optical_limiting_magnitude": 5.5,
+      "minimum_altitude_deg": 0.0,
+      "astronomical_twilight_sun_altitude_deg": -18.0
+    },
+    "dynamic_events": {
+      "lookback_days": 7.0
+    },
+    "display": {
+      "maximum_stars": 500,
+      "maximum_exoplanet_hosts": 250,
+      "maximum_labels": 40,
+      "show_reference_lines": true,
+      "show_below_horizon_reference": true
+    },
+    "catalogs": {
+      "gaia_dr3": "gaia-dr3-bright.csv",
+      "nasa_exoplanets": "nasa-exoplanet-nearby.csv",
+      "curated_sky": "curated-sky.json",
+      "small_bodies": [
+        "sbdb-ceres.json",
+        "sbdb-vesta.json",
+        "sbdb-eros.json",
+        "sbdb-apophis.json",
+        "sbdb-halley.json",
+        "sbdb-encke.json",
+        "sbdb-67p.json"
+      ]
+    }
+  },
+  "profile_sha256": "0e486df9f4cbf5d840ee9332c5148cb15b118dd3b6e9af221c963306f3202d33"
+}

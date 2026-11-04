@@ -8,6 +8,7 @@ import gzip
 import importlib
 import json
 from pathlib import Path
+import posixpath
 import re
 import shutil
 import subprocess
@@ -140,6 +141,44 @@ def prepare_sources(build, work):
     return sources
 
 
+def study_subjects(config, recipe):
+    return config["subjects"] + recipe.get("additional_subjects", [])
+
+
+def study_directory(recipe):
+    return recipe.get("directory", recipe["id"])
+
+
+def astronomy_sources(directory, work):
+    """Reuse the pinned ST2 sky and bibliography without reframing the sky twice."""
+    receipt_path = directory/"provenance.json"
+    receipt = json.loads(receipt_path.read_text())
+    result = {"input": receipt_path, "framing": receipt["framing"]}
+    filename = "astro-all-sky"+SUFFIX
+    for kind in ("map", "legend"):
+        record = receipt["files"][kind]
+        archive = directory/record["file"]
+        assert digest(archive) == record["sha256"]
+        target = work/"astronomy-sources"/(filename+("-legend" if kind == "legend" else "")+".svg")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(gzip.decompress(archive.read_bytes()))
+        assert digest(target) == record["svg_sha256"]
+        root = read_svg(target)
+        root.set("data-sheet-kind", kind)
+        if kind == "map":
+            root.set("data-image-scale", str(SCALE))
+            root.set("data-legend-companion", filename+"-legend.svg")
+        else:
+            root.set("data-map-companion", filename+".svg")
+            root.append(copy.deepcopy(read_svg(result["map"]).xpath('//*[@id="astro-metadata"]')[0]))
+            paper = el("rect", id="legend-paper", width=44, height=HEIGHT, fill="white")
+            root.insert(0, paper)
+        root.set("data-marker-color-policy", "preserve-source-astronomy")
+        save(root, target)
+        result[kind] = target
+    return result
+
+
 def capability_sources(directory, work, study):
     """Reuse the audited, framed capability map and its complete companion legend."""
     manifest = json.loads((directory/"manifest.json").read_text())
@@ -182,6 +221,11 @@ def apply_variant(root, recipe, subject, kind):
         scale_sunburst(marker, factor)
     global_plate = subject.endswith("global")
     if global_plate and kind == "map":
+        if "global_track_width_scale" in variant:
+            tracks = root.xpath('//*[@id="representative-ground-tracks"]')[0]
+            for path in tracks:
+                if E.QName(path).localname == "path":
+                    set_style(path, stroke_width=float(style(path)["stroke-width"])*variant["global_track_width_scale"])
         starlink = root.xpath('//*[@id="starlink"]')[0]
         for suffix in ("name", "id"):
             layer = starlink.find(f"{{{NS}}}g[@id='starlink-{suffix}']")
@@ -197,16 +241,40 @@ def apply_variant(root, recipe, subject, kind):
         land = parent.find(f"{{{NS}}}g[@id='terrestrial-land']")
         assert land is not None
         parent.insert(parent.index(land)+1, starlink)
+    elif kind == "map" and variant.get("observer_starlink_names"):
+        starlink = root.xpath('//*[@id="starlink"]')[0]
+        names = starlink.find(f"{{{NS}}}g[@id='starlink-name']")
+        size = variant["observer_starlink_font_size_pt"]
+        set_style(names, display="inline")
+        names.set("data-font-size-pt", str(size))
+        for label in names:
+            label.set("font-size", str(size/72/SCALE))
+        # Put every marker above the now-visible Starlink names.
+        starlink.remove(names)
+        starlink.insert(0, names)
+        parent = starlink.getparent()
+        parent.remove(starlink)
+        first_group = next(n for n in parent if n.get("data-object-count") is not None)
+        parent.insert(parent.index(first_group), starlink)
+        root.set("data-satellite-name-display", "starlink-only")
     if kind == "legend":
         if global_plate:
             for label in root.xpath('//*[local-name()="text"]'):
                 if label.text:
                     label.text = label.text.replace("9 pt", f"{variant['global_starlink_font_size_pt']} pt")
+        elif variant.get("observer_starlink_names"):
+            for label in root.xpath('//*[local-name()="text"]'):
+                if label.text == "Name and locpoint sublayers are independent. Names are hidden by default.":
+                    label.text = "Starlink names are visible; all other satellite name layers are hidden."
         note = el("g", root, id="msp-variant-note", data_presentation_only="true")
         lines = ["Starlink sunbursts: 1.5× linear size on both orbital maps."]
         if global_plate:
             lines += [f"Starlink text: {variant['global_starlink_font_size_pt']} pt; all satellite markers paint above it.",
                       "All terrestrial land, including Antarctica, paints below the data."]
+            if "global_track_width_scale" in variant:
+                lines.append(f"Representative ground tracks: {variant['global_track_width_scale']}× stroke width.")
+        elif variant.get("observer_starlink_names"):
+            lines.append(f"Starlink names: {variant['observer_starlink_font_size_pt']} pt in the separate name layer, beneath satellite markers.")
         for i, line in enumerate(lines):
             text(note, 42.38, 12.15+i*.32, line, 14/72, text_anchor="end")
     el("metadata", root, id="msp-layout-variant").text = json.dumps(variant, sort_keys=True)
@@ -241,8 +309,10 @@ def print_note(root, recipe):
     text(note, .8, 17.0, recipe["title"]+" / "+recipe["palette"], 22/72,
          font_weight="700").set("fill", recipe["text"])
     orbital = bool(root.xpath('//*[@id="orbital-technosphere-metadata"]'))
-    foreground_role = "type" if orbital else "marks/type/fiber links"
-    detail = " Vendor markers retain source colors." if orbital else " Fiber links use full opacity."
+    astronomy = bool(root.xpath('//*[@id="astro-metadata"]'))
+    foreground_role = "type" if orbital or astronomy else "marks/type/fiber links"
+    detail = (" Vendor markers retain source colors." if orbital else
+              " Astronomy symbols retain source colors." if astronomy else " Fiber links use full opacity.")
     lines = [f'Randoma11y: ground {recipe["background"]}; {foreground_role} {recipe["text"]}. sRGB contrast {recipe["srgb_contrast_ratio"]:.2f}:1 (screen only).'+detail,
              recipe["source_url"],
              "Epson Stylus Pro 9000 / metallic glossy paper / cyan and light magenta reported low; grays reportedly print violet.",
@@ -256,6 +326,8 @@ def print_note(root, recipe):
 
 def apply_palette(root, recipe, kind, preserve_orbital_colors=True):
     translations = {}
+    astronomy = bool(root.xpath('//*[@id="astro-metadata"]'))
+    backgrounds = ("st2-sheet-paper", "st2-image-background", "legend-paper")
     # Capability sheets already have semantic ground/land/foreground colors.
     # Preserve those roles when adopting the petal study in a different pair.
     original_recipe = root.xpath('//*[@id="msp-color-recipe"]')
@@ -270,6 +342,8 @@ def apply_palette(root, recipe, kind, preserve_orbital_colors=True):
             continue
         tag = E.QName(node).localname
         if tag not in ("g", "path", "circle", "rect", "text", "line", "polygon", "polyline", "ellipse"):
+            continue
+        if astronomy and tag != "text" and node.get("id") not in backgrounds:
             continue
         # Categorical marker colors are data encoding. Keep their source RGB
         # values, including the companion legend keys, while recoloring type
@@ -290,7 +364,7 @@ def apply_palette(root, recipe, kind, preserve_orbital_colors=True):
             node.set("style", ";".join(k+":"+v for k, v in current.items()))
         if tag == "text":
             set_style(node, fill=recipe["text"], stroke="none", stroke_opacity=0)
-        if node.get("id") in ("st2-sheet-paper", "st2-image-background", "legend-paper"):
+        if node.get("id") in backgrounds:
             set_style(node, fill=recipe["background"], fill_opacity=1, stroke_opacity=0)
         if tag == "path" and any(a.get("id", "").startswith("terrestrial-land") for a in node.iterancestors()):
             set_style(node, fill=recipe["land"])
@@ -350,6 +424,8 @@ def main():
     register_fonts()
     config = json.loads(CONFIG.read_text())
     sources = prepare_sources(args.build_root, args.work)
+    if any("astro-all-sky" in study_subjects(config, recipe) for recipe in config["studies"]):
+        sources["astro-all-sky"] = astronomy_sources(ROOT/config["astronomy_source"], args.work)
     capability = capability_sources(args.capability_root, args.work, "option-3-petals")
     env = font_environment()
     manifest_path = args.output/"manifest.json"
@@ -359,7 +435,8 @@ def main():
     records = []
     jobs = []
     for recipe in config["studies"]:
-        for subject, baseline in sources.items():
+        for subject in study_subjects(config, recipe):
+            baseline = sources[subject]
             inputs = (capability if subject == "network-groundstations" and
                       recipe.get("variant", {}).get("groundstation_study") == "option-3-petals" else baseline)
             for kind in ("map", "legend"):
@@ -380,7 +457,8 @@ def main():
                   "source_svg_sha256": digest(source), "svg_sha256": digest(svg),
                   "framing": inputs["framing"], "color_replacements": translations,
                   "layout_variant": variant, "capability_study": inputs.get("capability_study"),
-                  "marker_color_policy": config["orbital_marker_colors"] if subject.startswith("orbital") else "randoma11y-foreground",
+                  "marker_color_policy": (config["orbital_marker_colors"] if subject.startswith("orbital") else
+                                          config["astronomy_marker_colors"] if subject == "astro-all-sky" else "randoma11y-foreground"),
                   "palette_preserves_geometry_ids_names_and_type": True}
         prior = cached.get((recipe["id"], subject, kind))
         if (prior and prior["svg_sha256"] == digest(svg)
@@ -389,7 +467,7 @@ def main():
                         and digest(args.output/f["path"]) == f["sha256"] for f in prior["outputs"])):
             print("Cached", recipe["id"], subject, kind, flush=True)
             return {**result, "outputs": prior["outputs"]}
-        directory = args.output/recipe["id"]
+        directory = args.output/study_directory(recipe)
         directory.mkdir(parents=True, exist_ok=True)
         pdf = directory/(svg.stem+".pdf")
         webp = directory/(svg.stem+".webp")
@@ -429,8 +507,18 @@ def main():
     (args.output/"manifest.json").write_text(json.dumps(manifest, indent=2)+"\n")
     (args.output/"color-recipes.json").write_text(json.dumps(config, indent=2)+"\n")
     (args.output/"palette-sources.json").write_bytes((ROOT/config["palette_provenance"]).read_bytes())
+    (args.output/"index.html").write_text(review_page(config, config["studies"]))
+    family = "msp-speculation-5"
+    (args.output/family/"index.html").write_text(review_page(
+        config, [r for r in config["studies"] if r.get("family") == family], family))
+    print(f"Completed {len(records)} map/legend sheets: {args.output/family/'index.html'}")
+
+
+def review_page(config, recipes, directory="."):
+    """Render both the full comparison and a self-contained nested revision index."""
+    root_link = posixpath.relpath(".", directory)+"/"
     cards = []
-    for recipe in config["studies"]:
+    for recipe in recipes:
         cards.append(f'<section id="{recipe["id"]}" style="--ground:{recipe["background"]};--ink:{recipe["text"]}"><h2>{recipe["title"]} · {recipe["palette"]}</h2>'
                      f'<p><a href="{recipe["source_url"]}">Randoma11y pair</a>: ground {recipe["background"]}, type and groundstation fiber lines {recipe["text"]}. '
                      'Orbital markers retain their vendor colors. '
@@ -439,25 +527,34 @@ def main():
             cards.append('<p>Petal capability triangles on the groundstation map. Both orbital maps use 1.5× Starlink sunbursts; '
                          f'global Starlink IDs use {recipe["variant"]["global_starlink_font_size_pt"]} pt type beneath all satellite markers. '
                          'Antarctic land paints below labels and marks.</p>')
+            if recipe["variant"].get("observer_starlink_names"):
+                cards.append(f'<p>Observer Starlink names use {recipe["variant"]["observer_starlink_font_size_pt"]} pt type; other satellite names stay hidden. '
+                             f'Global ground tracks use {recipe["variant"]["global_track_width_scale"]}× their original line width.</p>')
+        if "astro-all-sky" in study_subjects(config, recipe):
+            cards.append('<p>Astronomy all sky retains its 29 October 2026, 20:00 UTC source positions, symbol colors and 35 labels. '
+                         'Its background follows this color set, with light typography and a separate source legend.</p>')
         cards.append('<div class="plates">')
-        for subject in config["subjects"]:
-            stem = recipe["id"]+"/"+subject+SUFFIX
-            title = subject.replace("-", " ").title()
+        for subject in study_subjects(config, recipe):
+            stem = posixpath.relpath(study_directory(recipe), directory)+"/"+subject+SUFFIX
+            title = "Astronomy / all sky" if subject == "astro-all-sky" else subject.replace("-", " ").title()
             cards.append(f'<article><h3>{title}</h3><a href="{stem}.webp"><img src="{stem}.webp" alt="{title} map" loading="lazy"></a>'
                          f'<p><a href="{stem}.pdf">Map PDF</a> · <a href="{stem}.svg.gz">Editable SVG (gzip)</a></p>'
                          f'<a href="{stem}-legend.webp"><img src="{stem}-legend.webp" alt="{title} legend and attribution" loading="lazy"></a>'
                          f'<p><a href="{stem}-legend.pdf">Legend PDF</a> · <a href="{stem}-legend.svg.gz">Legend SVG (gzip)</a></p></article>')
         cards.append('</div></section>')
-    page = '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MSP print speculations</title>'
+    title = "MSP speculation 5" if directory != "." else "MSP print speculations"
+    page = f'<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{title}</title>'
     page += '<style>body{font:17px system-ui;background:#121119;color:#f5eae7;max-width:1600px;margin:auto;padding:32px}a{color:inherit}h1{font-size:40px}p{max-width:90ch;line-height:1.5}.plates{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px}article{border:1px solid currentColor;padding:16px}img{width:100%;height:auto}section{margin:48px 0;padding:24px;background:var(--ground);color:var(--ink)}nav{display:flex;gap:24px;flex-wrap:wrap}</style>'
-    page += '<h1>MSP print speculations</h1><p>MSP speculation 4 is available in all four Randoma11y pairs, each with groundstation, orbital global and orbital observer map/legend companions. Studies 1–3 remain available for comparison. Orbital vendors retain their distinct source colors; the pairs control backgrounds, type and bright groundstation fiber lines.</p>'
+    page += f'<h1>{title}</h1><p>MSP speculation 5 is available in all four Randoma11y pairs, each with groundstation, orbital global, orbital observer and astronomy all-sky map/legend companions. Orbital vendors and astronomy symbols retain their distinct source colors; the pairs control backgrounds, type and bright groundstation fiber lines.</p>'
+    page += ('<p><a href="msp-speculation-5/index.html">Open MSP speculation 5 — all four nested color variations</a>. '
+             'Studies 1–4 remain available below as the previous revisions.</p>' if directory == "." else
+             '<p><a href="../index.html">All MSP studies, including the previous revisions</a>.</p>')
     page += '<p>Epson Stylus Pro 9000 on metallic glossy paper: cyan and light magenta are reported low, grays print violet, and dark backgrounds work better. These are intended RGB design choices, without a measured prediction of the printed hue.</p>'
     fourth_size = next(r["variant"]["global_starlink_font_size_pt"] for r in config["studies"] if r.get("family") == "msp-speculation-4")
-    page += f'<p>Setouchi AuthaGraph framing: 43.5-inch image on a 44-inch sheet, +4.35-inch printed horizontal move and lower-left Antarctic land inset beneath the data. Each map has a separate legend with attribution. Global Starlink NORAD IDs print at {ORBITAL.STARLINK_LABEL_SIZE_PT} pt in studies 1–3 and {fourth_size} pt in every MSP 4 palette.</p>'
-    page += '<nav>'+''.join(f'<a href="#{r["id"]}">{r["title"]}</a>' for r in config['studies'])+'</nav>'
-    page += '<p><a href="color-recipes.json">Color recipes</a> · <a href="palette-sources.json">Randoma11y provenance</a> · <a href="manifest.json">Sources and output checksums</a> · <a href="../groundstation-capabilities-20261103/capability-evidence.json">Capability source fields and placement</a></p>'+''.join(cards)+'</html>'
-    (args.output/"index.html").write_text(page)
-    print(f"Completed {len(records)} map/legend sheets: {args.output/'index.html'}")
+    page += f'<p>Setouchi AuthaGraph framing: 43.5-inch image on a 44-inch sheet, +4.35-inch printed horizontal move and lower-left Antarctic land inset beneath terrestrial data. Each map has a separate legend with attribution. Global Starlink NORAD IDs print at {ORBITAL.STARLINK_LABEL_SIZE_PT} pt in studies 1–3 and {fourth_size} pt in every MSP 4 and MSP 5 palette.</p>'
+    page += '<nav>'+''.join(f'<a href="#{r["id"]}">{r["title"]}</a>' for r in recipes)+'</nav>'
+    page += f'<p><a href="{root_link}color-recipes.json">Color recipes</a> · <a href="{root_link}palette-sources.json">Randoma11y provenance</a> · <a href="{root_link}manifest.json">Sources and output checksums</a> · <a href="{root_link}../groundstation-capabilities-20261103/capability-evidence.json">Capability source fields and placement</a> · <a href="{root_link}../../assets.static/astronomy/msp-setouchi-20261029/provenance.json">Astronomy source receipt</a></p>'+''.join(cards)+'</html>'
+    return page
 
 
 if __name__ == "__main__":

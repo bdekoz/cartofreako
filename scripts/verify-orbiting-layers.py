@@ -59,7 +59,7 @@ def verify_marker(marker):
         assert all(radii[i] > 2*radii[i+1] for i in range(0, size, 2))
 
 
-def verify(path, profile, names, starlink_font_size_pt=9):
+def verify(path, profile, names, starlink_font_size_pt=9, observer_starlink_font_size_pt=None):
     root = ET.parse(path).getroot()
     elements = list(root.iter())
     ids = [e.get("id") for e in elements if e.get("id")]
@@ -68,6 +68,9 @@ def verify(path, profile, names, starlink_font_size_pt=9):
     metadata = by_id["orbital-technosphere-metadata"]
     assert metadata.get("data-timestamp") == profile["timestamp"]
     product = metadata.get("data-product")
+    observer_names = product == "observer" and observer_starlink_font_size_pt is not None
+    if observer_names:
+        assert root.get("data-satellite-name-display") == "starlink-only"
     assert root.get("data-sheet-kind") == "map"
     assert "constellation-legend" not in by_id
     dots = [e for e in elements if e.get("data-object-kind") == "locpoint"]
@@ -99,7 +102,14 @@ def verify(path, profile, names, starlink_font_size_pt=9):
             assert all(e.get("data-object-kind") == suffix for e in layer)
             assert all(e.get("data-display-group") == ident for e in layer)
             assert len(layer) == int(group.get("data-object-count"))
-        if not profile["display"].get("show_satellite_names", False):
+        if observer_names and ident == "starlink":
+            layer = children[ident + "-name"]
+            assert layer.get("style") == "display:inline"
+            assert float(layer.get("data-font-size-pt")) == observer_starlink_font_size_pt
+            scale = float(root.get("data-image-scale"))
+            for label in layer:
+                assert math.isclose(float(label.get("font-size"))*scale*72, observer_starlink_font_size_pt)
+        elif observer_names or not profile["display"].get("show_satellite_names", False):
             assert children[ident + "-name"].get("style") == "display:none"
         counts[ident] = len(children[ident + "-locpoint"])
     ids = [e for e in elements if e.get("data-object-kind") == "id"]
@@ -141,12 +151,17 @@ def verify(path, profile, names, starlink_font_size_pt=9):
     for ident, count in counts.items():
         if count or ident in named:
             verify_marker(legend_ids["legend-" + ident])
-    label_note = f"{len(ids)} Starlink IDs at {starlink_font_size_pt} pt" if ids else "no visible satellite labels; name layers retained"
+    visible_names = counts["starlink"] if observer_names else 0
+    label_note = (f"{len(ids)} Starlink IDs at {starlink_font_size_pt} pt" if ids else
+                  f"{visible_names} Starlink names at {observer_starlink_font_size_pt} pt; other satellite names hidden" if observer_names else
+                  "no visible satellite labels; name layers retained")
     print(f"{path.name}: {len(dots)} markers and paired names, {len(named)} named groups, "
           f"{label_note}; symbols and separate attribution legend verified")
     return {"file": str(path), "timestamp": profile["timestamp"], "objects": len(dots),
             "groups": counts, "visible_starlink_ids": len(ids),
             "starlink_font_size_pt": starlink_font_size_pt if ids else None,
+            "visible_starlink_names": visible_names,
+            "observer_starlink_font_size_pt": observer_starlink_font_size_pt if observer_names else None,
             "skipped_stale": int(metadata.get("data-skipped-stale")),
             "failed_propagation": int(metadata.get("data-failed-propagation"))}
 
@@ -156,6 +171,7 @@ def main():
     parser.add_argument("--profile", type=Path, required=True)
     parser.add_argument("--report", type=Path)
     parser.add_argument("--starlink-font-size-pt", type=float, default=9)
+    parser.add_argument("--observer-starlink-font-size-pt", type=float)
     parser.add_argument("svg", type=Path, nargs="+")
     args = parser.parse_args()
     profile = json.loads(args.profile.read_text())
@@ -164,7 +180,8 @@ def main():
         with (args.profile.parent / group["file"]).open(newline="") as stream:
             for row in csv.DictReader(stream):
                 names.setdefault(row["NORAD_CAT_ID"], row["OBJECT_NAME"])
-    reports = [verify(path, profile, names, args.starlink_font_size_pt) for path in args.svg if not path.stem.endswith("-legend")]
+    reports = [verify(path, profile, names, args.starlink_font_size_pt, args.observer_starlink_font_size_pt)
+               for path in args.svg if not path.stem.endswith("-legend")]
     if args.report:
         args.report.write_text(json.dumps(reports, indent=2) + "\n")
 

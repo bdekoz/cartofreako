@@ -220,6 +220,16 @@ below labels and vectors. MSP 4's groundstation companion adopts the petal
 capability visualization. Rebuild with `make msp-speculations`, which also
 builds and verifies the capability studies used by that companion.
 
+MSP speculation 5 is nested under
+[`msp-speculation-5/`](../../../output/msp-speculations-20261103/msp-speculation-5/index.html),
+with one subdirectory for each of the four color pairs. It adds the astronomy
+all-sky map and attribution companion, using each pair's background and the
+pinned 29 October 2026 sky. Both orbital plates retain distinct vendor colors
+and 1.5× Starlink sunbursts. Global Starlink IDs remain 6 pt; representative
+ground tracks use twice their original stroke width, with graticule widths
+retained. Observer plates show only Starlink names, at 6 pt in their separate
+name layer beneath all satellite markers.
+
 ## Verification and accuracy boundary
 
 [`tests/test-orbiting-generation.cc`](../../../tests/test-orbiting-generation.cc)

@@ -1050,3 +1050,88 @@ resolve, as do their navigation anchors. All 48 PDFs retain the physical
 Hyperlegible. Documentation and existing ToT checks passed. The review
 page and saved recipes identify each MSP 4 palette separately, including
 the unchanged midnight/champagne directory path.
+
+## Astronomy addition, observer Starlink names and heavier global tracks
+
+The next requested revision adds **Astronomy / all sky** as a fourth subject
+in each of the four MSP speculation 5 color sets. It also enables labels for
+Starlink objects on the orbital observer plate and doubles the orbital global
+trajectory line widths. These requests apply to all four MSP 5 palettes;
+the existing MSP 1–4 sheets remain available as the previous revisions.
+
+Reuse the existing Setouchi ST2 astronomy world map and its separate
+legend/bibliography. Its pinned sky calculation is **29 October 2026,
+20:00 UTC**, with 500 stars, 158 exoplanet hosts, 11 curated deep-sky objects,
+the Sun and Moon, seven planets, four asteroids and three comets. Retain all
+35 source labels, object colors, celestial coordinates and identifiers.
+Use each Randoma11y pair's dark member for the sheet and sky background and
+its light member for typography. Retain the 43.5-inch image and +4.35-inch
+printed horizontal move directly from the existing framed source, without
+applying a second framing transform. Celestial maps have no Antarctic inset.
+
+Pin the original map and legend SVGs, their source receipts, profile and
+bibliography in `assets.static/astronomy/msp-setouchi-20261029/`. This makes the
+palette build reproducible without relying on an ignored local Setouchi
+export tree. The source dates and provider acknowledgments remain on each
+separate legend. This is a presentation addition using the existing sky,
+not a new astronomy catalog acquisition.
+
+For the orbital observer plates, show all **549 Starlink satellite names**
+in the existing separate `starlink/name` layer, using **6 physical points**
+to match the global plate's text size. These are satellite names such as
+`STARLINK-1017`; the global plate continues to show NORAD IDs. Other vendors'
+name layers remain hidden, and their distinct marker colors remain visible.
+Place all satellite markers above the Starlink text. Keep the 1.5× sunbursts
+on both orbital plates.
+
+On orbital global, the requested non-graticule lines are the
+`representative-ground-tracks` layer. Double all 73 path segments from
+0.012 to **0.024 source inches**, or approximately **1.708 pt** on the framed
+sheet. Preserve track geometry and opacity. Keep the `terrestrial-reference`
+graticules at their existing stroke widths.
+
+Staging and checks:
+
+1. Save the dated astronomy source and extend the four MSP 5 recipes with
+   that subject, observer name visibility/type size and track-width factor.
+2. Extend the durable builder, companion-legend notes and review page;
+   rebuild PDFs, editable SVG.gz files and WebP previews for affected sheets.
+3. Verify all four astronomy backgrounds against their pairs, exact source
+   geometry and symbol colors, 35 retained sky labels, 549 visible observer
+   Starlink names at 6 pt, hidden names for other vendors, marker paint order,
+   doubled global track widths and unchanged graticules. Check source hashes,
+   separate attribution sheets and physical page dimensions.
+4. Inspect the exported maps, legends and review page; append the outcomes,
+   then commit and push under the standing delivery instruction.
+
+The expanded delivery contains **74 MSP sheets / 222 files**: 32 MSP 5
+sheets across four subjects and four palettes, plus the 42 earlier MSP 1–4
+sheets. The six groundstation-capability experiment sheets are separate.
+
+The user named this revision **MSP speculation 5**, correcting the directory
+spelling to `msp-speculation-5`. Nest all four color variations within that
+top-level directory: `wine-amber/`, `ultramarine-porcelain/`, `plum-ice/` and
+`midnight-champagne/`, with an index page alongside them. The existing MSP 4
+outputs retain their prior layout. The user also reaffirmed **6 pt Starlink
+ID text on orbital global**; keep and verify that physical size in every
+MSP 5 palette.
+
+Delivery and validation completed. The 32 new MSP 5 sheets are available as
+96 PDF, SVG.gz and WebP files under the four nested palette directories,
+with their own [review page](../../output/msp-speculations-20261103/msp-speculation-5/index.html).
+The expanded validator passed all **74 sheets / 222 files**. It confirmed
+the four astronomy backgrounds, all 685 source objects and 35 sky labels,
+unchanged astronomy symbol colors/coordinates, 549 visible Starlink observer
+names per palette, 6 pt physical text on both orbital subjects, marker-over-text
+order, and 2× global track widths with unchanged graticule widths and line
+geometry. Separate legends retain the source attribution and dates.
+
+All 126 PDF/SVG.gz/WebP files from MSP 1–4 exactly match their previous
+committed checksums. The new PDFs retain the 44 × 19.052559-inch sheet, and
+the sampled observer PDF embeds Atkinson Hyperlegible. All 32 MSP 5 browser
+previews loaded at 3840 pixels wide with no runtime errors or horizontal
+overflow at the reviewed 1600-pixel viewport. All four palette sections and
+representative full map/legend renders were inspected. The main and nested
+review pages passed 451 local reference checks, including navigation anchors.
+Documentation checks passed for 168 files and 2,123 local links; Python syntax
+and whitespace checks also passed. The work is ready for commit and push.
