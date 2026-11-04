@@ -3367,6 +3367,7 @@ $(GENERATOR_SRC_DIR)/generation-style.h: generation-style.json scripts/compile-g
 check-generation-style: $(GENERATOR_SRC_DIR)/generation-style.h build/test-generation-honeycomb
 	python3 scripts/compile-generation-style.py --check
 	python3 tests/test-generation-style.py
+	python3 tests/test-atlas-presentation.py
 	build/test-generation-honeycomb
 
 build/test-generation-honeycomb: tests/test-generation-honeycomb.cc src.generate/generation-honeycomb.h
@@ -3408,9 +3409,25 @@ $(foreach source,$(NETWORK_SWARM_SVGS),$(eval $(call NATIVE_SWARM_EXPORT_RULES,$
 SETOUCHI_ST2_SOURCE ?= output/setouchi-triennale-2028
 SETOUCHI_ST2_OUTPUT ?= output/setouchi-triennale-2028-st2
 SETOUCHI_ST2_DATE ?=
-.PHONY: atlas setouchi-st2
-# The approved ST2 edition is the default atlas build.
-atlas: setouchi-st2
+ATLAS_SOURCE ?= $(SETOUCHI_ST2_SOURCE)
+ATLAS_BASE ?= build/atlas-st2-base
+ATLAS_OUTPUT ?= output/atlas
+.PHONY: atlas atlas-sheets setouchi-st2
+# The default edition uses the approved MSP 5 presentation; dated ST2 stays separate.
+atlas-sheets: build/generation-context
+	python3 scripts/compile-generation-style.py --check
+	python3 scripts/revise-setouchi-plates.py --delivery "$(ATLAS_SOURCE)" --output "$(ATLAS_BASE)"
+	python3 scripts/build-setouchi-bibliography.py --delivery "$(ATLAS_SOURCE)" --output "$(ATLAS_BASE)"
+	python3 scripts/split-setouchi-legend-sheets.py --source-delivery "$(ATLAS_SOURCE)" --delivery "$(ATLAS_BASE)"
+	python3 scripts/validate-setouchi-sheets.py --delivery "$(ATLAS_BASE)" --skip-exports
+	python3 scripts/build-atlas-defaults.py --source "$(ATLAS_BASE)" --output "$(ATLAS_OUTPUT)"
+	python3 scripts/build-atlas-defaults.py --output "$(ATLAS_OUTPUT)" --check --skip-exports
+
+atlas: atlas-sheets
+	python3 scripts/export-setouchi-sheets.py --delivery "$(ATLAS_OUTPUT)" --workers "$(ASSET_JOBS)"
+	python3 scripts/publish-setouchi-plate-files.py --delivery "$(ATLAS_OUTPUT)"
+	python3 scripts/build-setouchi-revision-review.py --output "$(ATLAS_OUTPUT)" $(if $(strip $(SETOUCHI_ST2_DATE)),--date "$(SETOUCHI_ST2_DATE)")
+	python3 scripts/build-atlas-defaults.py --output "$(ATLAS_OUTPUT)" --check
 
 setouchi-st2: build/generation-context
 	python3 scripts/revise-setouchi-plates.py --delivery "$(SETOUCHI_ST2_SOURCE)" --output "$(SETOUCHI_ST2_OUTPUT)"

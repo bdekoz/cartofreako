@@ -1173,3 +1173,89 @@ legend notes, saved configuration and review pages are included in `d1118f3`.
 The final validation receipt passes **74 sheets / 222 files**. Documentation
 checks pass, and the 198 exports for other plates retain their prior
 checksums. The astronomy size change and its delivery are complete.
+
+## Promote MSP 5 to the atlas defaults
+
+The user requested adopting the latest settings as the default atlas and
+explicitly selected **wine / amber**. Save that selection in
+`generation-style.json`, referencing the approved MSP 5 recipe rather than
+copying a second set of typography and symbol constants. Preserve the other
+three palette choices and the dated study deliveries.
+
+The default keeps the Setouchi AuthaGraph frame, 43.5-inch image, horizontal
+adjustment, land beneath data and separate map/legend/attribution sheets.
+Carry over the 6 pt Starlink NORAD IDs on global, Starlink-only 6 pt names on
+observer, 1.5× sunbursts on both, vendor colors, black debris x marks, Intelsat
+squares, residual Earth-observation triangles, marker-over-label ordering,
+2× global trajectory strokes, groundstation option-3 petals with amber fiber
+links, and 12 pt all-sky astronomy labels. Wine `#240413` and amber `#fcc553`
+remain intended RGB colors, with no measured prediction of the depleted-ink
+print result.
+
+The atlas has 38 world/Japan pairs, so implementation must update the actual
+`make atlas` path, not only save the study recipe. Stage a separate default
+delivery in `output/atlas/`. Prepare the existing ST2 framing inputs, apply
+the page theme across the atlas without overwriting measured or categorical
+colors, and adopt the approved four world map/legend pairs with their source
+ledgers. Use their updated geographic artwork in the Japan groundstation and
+global-orbit viewports; retain the Japan all-sky locator.
+
+The Japan orbital observer is a distinct Setouchi observer, not the San
+Francisco observer used by the reviewed world plate. Keep its October 29
+positions, time and source memberships, and apply the new name/marker
+presentation without substituting a different sky. Its legend must say so.
+Compensate the Japan viewport transforms so 6 pt satellite labels and 12 pt
+all-sky labels remain those sizes on paper.
+
+Staging and validation:
+
+1. Save and validate the default palette/recipe; keep historical ST2 generation
+   separate from the default atlas target.
+2. Add a durable atlas composer with streaming theme application for native
+   swarm sheets, source checksums and geometry/value conservation checks.
+3. Adapt exports, covers and review assembly for colored page margins and
+   separate `atlas-world.pdf`, `atlas-japan.pdf` and `atlas.pdf` editions.
+4. Compose and audit all 152 SVG sheets. Test palette selection, preservation
+   of data paint, physical type and observer positions; render representative
+   map/legend PDFs and inspect their fonts, margins and artwork. A full 300 dpi
+   atlas rerender is available through `make atlas`; it is not needed to save
+   and verify the default-setting change.
+5. Update the default-generation guide and this log with outcomes, then commit
+   and push under the standing instruction.
+
+Completed the default-setting implementation. `make atlas` now selects the
+saved wine/amber recipe and writes a separate `output/atlas/` edition;
+`make atlas-sheets` provides the SVG-only stage. The durable composer is
+`scripts/build-atlas-defaults.py`, with shared streaming page-theme handling
+in `scripts/atlas_presentation.py`. The full build retains paired sheets,
+source bibliographies, World/Japan/combined PDFs and the existing PDF subject
+selection. Covers, margins, bibliography text and Japan locator basemaps use
+the selected pair. The archived ST2 and four MSP palette deliveries remain
+inputs.
+
+Validation passed for **152 SVG sheets**. Geometry, source values and text
+were conserved during page-theme application, including the native swarm
+sheets. The approved world orbital population remains **17,909 objects /
+11,155 Starlink IDs**, and the world observer remains **1,088 objects /
+549 Starlink names**. Japan global uses the same refreshed population; the
+retained Setouchi observer has **1,078 objects / 471 Starlink names**. The
+separate Japan observer legend identifies its October date and memberships.
+Both all-sky views retain 35 object labels; both groundstation views retain
+124 full-opacity paired-color links.
+
+Exported and checked **20 map/legend sheets** covering Earth and the four
+updated subjects in both scopes. All have 44 × 19.052559-inch PDFs and
+13,200 × 5,716-pixel, 300 dpi PNGs. Independent PDF text inspection confirms
+**6 pt** on both orbital subjects and **12 pt** on all-sky astronomy, in
+both World and Japan. The rendered maps, companion legend and wine/amber
+cover were inspected. This review also caught and corrected the old locator
+colors and legacy observer outlines that obscured the vendor fills.
+
+The shared generation-style checks pass, including 12 Python tests and the
+native honeycomb check. Documentation checks pass for 168 files and 2,125
+local links; syntax and whitespace checks pass. Source and export hashes are
+recorded under the local default delivery's `sources/` directory. The full
+152-sheet 300 dpi export and aggregate atlas assembly were not rerun for
+this settings change; `make atlas` is wired to perform those stages. The
+configuration, builders, tests and documentation are ready for the requested
+commit and push.

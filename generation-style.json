@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "name": "Reviewed Cartofreako generation defaults",
-  "reviewed_on": "2026-11-01",
+  "reviewed_on": "2026-11-03",
   "default_projection": "authagraph",
   "reference_sheet_inches": [
     44,
@@ -9,8 +9,16 @@
   ],
   "atlas": {
     "preset": "setouchi-st2",
-    "reference_render_date": "2026-10-31",
-    "reference_generation_commit": "098e9f1",
+    "reference_render_date": "2026-11-03",
+    "reference_generation_commit": "d1118f3",
+    "presentation": {
+      "family": "msp-speculation-5",
+      "default_palette": "wine-amber",
+      "recipe_file": "config/msp-speculations-20261103.json",
+      "approved_delivery": "output/msp-speculations-20261103",
+      "data_colors": "preserve-source",
+      "base_edition": "setouchi-st2"
+    },
     "sheet_sequence": ["map", "legend"],
     "bibliography": "per-legend-sheet",
     "pdf_editions": ["world", "japan", "combined"],

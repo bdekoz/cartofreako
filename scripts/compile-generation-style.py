@@ -5,6 +5,7 @@ import json
 import math
 from pathlib import Path
 import re
+from atlas_presentation import settings as atlas_settings
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -14,6 +15,7 @@ def compile_style(profile):
     if profile['default_projection'] not in ('cahill-keyes', 'authagraph', 'dymaxion', 'myriahedral', 'star-x', 'voronoi'):
         raise ValueError('unsupported default projection')
     atlas = profile['atlas']
+    atlas_settings(profile)
     if (atlas['preset'] != 'setouchi-st2' or atlas['sheet_sequence'] != ['map', 'legend']
             or atlas['bibliography'] != 'per-legend-sheet'
             or atlas['pdf_editions'] != ['world', 'japan', 'combined']):

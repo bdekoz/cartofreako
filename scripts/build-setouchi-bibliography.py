@@ -315,14 +315,19 @@ def write_outputs(book,output,docs_page):
     from reportlab.lib.pagesizes import A4
     from reportlab.lib.styles import ParagraphStyle
     from reportlab.platypus import SimpleDocTemplate,Paragraph,Spacer,PageBreak,KeepTogether
+    palette=book.get('palette')
+    foreground=palette['text'] if palette else '#272523'
+    link_color=palette['text'] if palette else '#503b75'
+    edition=book['edition'] if palette else 'Setouchi Triennale 2028'
+    prepared=book['prepared_on'] if palette else '30 October 2026'
     styles={name:ParagraphStyle(name,fontName='Atkinson-'+role,fontSize=size,leading=leading,
-                                spaceAfter=space,textColor=colors.HexColor('#272523'),keepWithNext=keep)
+                                spaceAfter=space,textColor=colors.HexColor(foreground),keepWithNext=keep)
             for name,role,size,leading,space,keep in [('title','Bold',24,28,18,True),('h1','Bold',16,20,10,True),
                 ('h2','Bold',12,15,8,True),('body','Regular',9.3,13,8,False),('small','Regular',8,11,6,False)]}
     def para(value,style='body'):return Paragraph(value,styles[style])
     intro='Sources for all 38 world/Japan pairs. Plate numbers match the revised legend footers. This bibliography identifies the snapshots actually drawn; a new render does not make dated observations current. Full file paths and SHA-256 hashes are in the accompanying JSON ledger.'
-    pdf=[para('Setouchi Triennale 2028','title'),para('Data plate bibliography · ST2','h1'),para(escape(intro)),
-         para('Prepared 30 October 2026. Country statistics use national geometries; the Japan detail does not infer local values. Missing data are not zero. Exact formulas and full-precision boundaries are retained in the JSON ledger; printed legend labels are rounded.')]
+    pdf=[para(escape(edition),'title'),para('Data plate bibliography'+('' if palette else ' · ST2'),'h1'),para(escape(intro)),
+         para('Prepared '+prepared+'. Country statistics use national geometries; the Japan detail does not infer local values. Missing data are not zero. Exact formulas and full-precision boundaries are retained in the JSON ledger; printed legend labels are rounded.')]
     md=['---','layout: default','title: Setouchi 2028 plate bibliography','---','','# Setouchi 2028 plate bibliography','',intro,'',
         '[Review guide](setouchi-2028.md) · [Particulate source detail](../data/anthropocene-particulate.md)','','## Plate index','']
     html=['<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">',
@@ -346,7 +351,7 @@ def write_outputs(book,output,docs_page):
         links=[]
         for identifier in ids:
             s=book['sources'][identifier]
-            links.append(f'<link href="{escape(s["url"],quote=True)}" color="#503b75">{escape(s["title"])}</link> [{escape(identifier)}]')
+            links.append(f'<link href="{escape(s["url"],quote=True)}" color="{link_color}">{escape(s["title"])}</link> [{escape(identifier)}]')
         pdf.append(para('<b>Sources:</b> '+'; '.join(links)+'.','small'))
         md += ['**Sources:** '+ '; '.join(f'[{book["sources"][i]["title"]}]({book["sources"][i]["url"]}) ([record](#source-{i}))' for i in ids)+'.','']
         html.append('<p><strong>Sources:</strong> '+'; '.join(f'<a href="#source-{i}">{escape(book["sources"][i]["title"])}</a>' for i in ids)+'.</p></article>')
@@ -360,7 +365,7 @@ def write_outputs(book,output,docs_page):
         pdf += [Spacer(1,8),para(escape(s['title']),'h2')]
         md += [f'<a id="source-{identifier}"></a>','',f'### {s["title"]}','',f'[{s["title"]}]({s["url"]}) · `{identifier}`','']
         html.append(f'<article id="source-{identifier}"><h3>{escape(s["title"])}</h3><p><a href="{escape(s["url"],quote=True)}">Provider/source page</a> · <code>{identifier}</code></p>')
-        pdf.append(para(f'<link href="{escape(s["url"],quote=True)}" color="#503b75">{escape(s["url"])}</link>','small'))
+        pdf.append(para(f'<link href="{escape(s["url"],quote=True)}" color="{link_color}">{escape(s["url"])}</link>','small'))
         for value in [s['period'],s['notes'],s['license']]:
             if value:
                 pdf.append(para(escape(value),'small'));md += [value,''];html.append('<p>'+escape(value)+'</p>')
@@ -373,17 +378,24 @@ def write_outputs(book,output,docs_page):
                 label=ref['layer'];url=ref['url']
                 md.append(f'- [{label}]({url})')
                 html.append(f'<li><a href="{escape(url,quote=True)}">{escape(label)}</a></li>')
-                pdf.append(para(f'{escape(label)}: <link href="{escape(url,quote=True)}" color="#503b75">{escape(url)}</link>','small'))
+                pdf.append(para(f'{escape(label)}: <link href="{escape(url,quote=True)}" color="{link_color}">{escape(url)}</link>','small'))
             md += [''];html.append('</ul>')
         html.append('</article>')
     html.append('</html>')
     def footer(canvas,document):
-        canvas.setFont('Atkinson-Regular',8);canvas.setFillColor(colors.HexColor('#666666'))
-        canvas.drawString(42,24,'Setouchi 2028 · ST2 source bibliography · 30 October 2026')
+        if palette:
+            canvas.setFillColor(colors.HexColor(palette['background']))
+            canvas.rect(0,0,*A4,fill=1,stroke=0)
+        canvas.setFont('Atkinson-Regular',8);canvas.setFillColor(colors.HexColor(foreground if palette else '#666666'))
+        canvas.drawString(42,24,edition+' · source bibliography · '+prepared if palette
+                          else 'Setouchi 2028 · ST2 source bibliography · 30 October 2026')
         canvas.drawRightString(A4[0]-42,24,str(document.page))
     SimpleDocTemplate(str(output/'plate-source-bibliography.pdf'),pagesize=A4,leftMargin=42,rightMargin=42,
                       topMargin=42,bottomMargin=42,title='Setouchi 2028 — Data plate bibliography',author='Cartofreako').build(pdf,onFirstPage=footer,onLaterPages=footer)
-    (output/'plate-source-bibliography.html').write_text('\n'.join(html)+'\n')
+    markup='\n'.join(html)+'\n'
+    if palette:
+        markup=markup.replace('</style>',f"body{{background:{palette['background']};color:{foreground}}}a,small{{color:{foreground}}}</style>",1)
+    (output/'plate-source-bibliography.html').write_text(markup)
     markdown='\n'.join(md).rstrip()+'\n'
     (output/'plate-source-bibliography.md').write_text(markdown.replace('[Review guide](setouchi-2028.md)',
         '[Plate review](index.html)').replace('(../data/anthropocene-particulate.md)',

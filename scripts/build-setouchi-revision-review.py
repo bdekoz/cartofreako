@@ -30,7 +30,14 @@ def page_count(path):
     return int(re.search(r'Pages:\s+(\d+)',info)[1])
 
 
-def title_page(path, cover_date, scope=None):
+def page_colors(canvas, width, height, palette=None):
+    from reportlab.lib.colors import HexColor
+    canvas.setFillColor(HexColor(palette['background'] if palette else '#ffffff'))
+    canvas.rect(0, 0, width, height, fill=1, stroke=0)
+    canvas.setFillColor(HexColor(palette['text'] if palette else '#000000'))
+
+
+def title_page(path, cover_date, scope=None, palette=None):
     """Center title/date/scope, with matching title/scope sizes and a half-size date."""
     from reportlab.pdfbase import pdfmetrics
     from reportlab.pdfgen.canvas import Canvas
@@ -52,9 +59,7 @@ def title_page(path, cover_date, scope=None):
     canvas = Canvas(str(path), pagesize=(width, height))
     canvas.setTitle(' / '.join(lines))
     canvas.setAuthor('Cartofreako')
-    canvas.setFillColorRGB(1, 1, 1)
-    canvas.rect(0, 0, width, height, fill=1, stroke=0)
-    canvas.setFillColorRGB(0, 0, 0)
+    page_colors(canvas, width, height, palette)
     records = []
     for line, size, (ascent, descent) in zip(lines, sizes, metrics):
         baseline = top - ascent
@@ -72,12 +77,13 @@ def title_page(path, cover_date, scope=None):
             'lines': records}
 
 
-def introduction(path, entries, cover_date, scope=None):
+def introduction(path, entries, cover_date, scope=None, palette=None):
     """Write edition notes and an index whose page references match this scope."""
     from reportlab.pdfgen.canvas import Canvas
     from reportlab.lib.pagesizes import A4
     canvas = Canvas(str(path), pagesize=A4)
     _, height = A4
+    page_colors(canvas, *A4, palette)
     label = 'World and Japan Atlas' if scope is None else f'{scope.title()} Atlas'
     canvas.setTitle('Setouchi Triennale 2028 — ' + label)
     canvas.setFont('Atkinson-Bold', 32)
@@ -106,6 +112,7 @@ def introduction(path, entries, cover_date, scope=None):
     for i, line in enumerate(lines):
         canvas.drawString(42, height - 180 - i * 24, line)
     canvas.showPage()
+    page_colors(canvas, *A4, palette)
     canvas.setFont('Atkinson-Bold', 22)
     canvas.drawString(42, height - 48, 'Plate index')
     canvas.setFont('Atkinson-Regular', 10)
@@ -132,6 +139,9 @@ def build(output, cover_date):
     from reportlab.lib.pagesizes import A3,landscape
     from reportlab.lib.utils import ImageReader
     book=json.loads((output/'plate-source-bibliography.json').read_text())
+    palette=book.get('palette')
+    edition_title='Default atlas / '+palette['palette'] if palette else 'Setouchi ST2'
+    pdf_prefix='atlas' if palette else 'setouchi-tri-explore-v2'
     entries=book['entries']
     excluded=[e for e in entries if e['stem'] in PDF_EXCLUDED_STEMS]
     assert {e['stem'] for e in excluded}==PDF_EXCLUDED_STEMS
@@ -182,14 +192,21 @@ def build(output, cover_date):
                         '</span></details></figcaption></figure>')
         html.append('</div></section>')
     html.append('''</main><script>const search=document.querySelector('#search'),scope=document.querySelector('#scope');function update(){let subjects=0,plates=0;const query=search.value.trim().toLowerCase();for(const row of document.querySelectorAll('.pair')){row.hidden=!row.dataset.search.includes(query);if(!row.hidden)subjects++;for(const figure of row.querySelectorAll('figure')){figure.hidden=scope.value!=='both'&&figure.dataset.scope!==scope.value;if(!row.hidden&&!figure.hidden)plates++;}}document.querySelector('#count').textContent=`${subjects} subjects · ${plates} plates`;}search.addEventListener('input',update);scope.addEventListener('change',update);</script></html>''')
-    (output/'index.html').write_text('\n'.join(html)+'\n')
+    markup='\n'.join(html)+'\n'
+    if palette:
+        markup=markup.replace('setouchi-tri-explore-v2',pdf_prefix).replace('ST2 plate review',edition_title)
+        markup=markup.replace('The outlined plate number is 36 pt bold, with white fill and a fully opaque black 0.5 pt stroke.',
+                              'Wine ground and amber typography; data colors retain their source encodings.')
+        markup=markup.replace('<a href="prototypes/africa-framing/index.html">Earlier framing comparisons</a>','')
+        markup=markup.replace('</style>',f"body,figure,.controls,.note{{background:{palette['background']};color:{palette['text']}}}a,small{{color:{palette['text']}}}</style>",1)
+    (output/'index.html').write_text(markup)
     contact=output/'contact-sheets';contact.mkdir(exist_ok=True)
     pdf=Canvas(str(contact/'contact-sheets.pdf'),pagesize=landscape(A3));pw,ph=landscape(A3)
     font=ImageFont.truetype(str(FONT_DIR/'AtkinsonHyperlegible-Regular.ttf'),23)
     for scope in ('world','japan'):
         for page in range(4):
-            sheet=Image.new('RGB',(2400,2900),'white');draw=ImageDraw.Draw(sheet)
-            draw.text((40,20),f'Setouchi ST2 / {scope.title()} / {page+1}',font=font,fill='#292722')
+            sheet=Image.new('RGB',(2400,2900),palette['background'] if palette else 'white');draw=ImageDraw.Draw(sheet)
+            draw.text((40,20),f'{edition_title} / {scope.title()} / {page+1}',font=font,fill=palette['text'] if palette else '#292722')
             subset=entries[page*10:(page+1)*10]
             for i,e in enumerate(subset):
                 col,row=i%2,i//2;x,y=40+col*1180,90+row*560
@@ -199,9 +216,10 @@ def build(output, cover_date):
                 if draw.textlength(title,font=font)>1130:
                     while draw.textlength(title+'…',font=font)>1130:title=title[:-1]
                     title+='…'
-                draw.text((x,y+495),title,font=font,fill='#292722')
+                draw.text((x,y+495),title,font=font,fill=palette['text'] if palette else '#292722')
             png=contact/f'{scope}-{page+1}.png';sheet.save(png)
-            pdf.setFont('Atkinson-Bold',18);pdf.drawString(30,ph-30,f'Setouchi ST2 / {scope.title()} / {page+1}')
+            page_colors(pdf,pw,ph,palette)
+            pdf.setFont('Atkinson-Bold',18);pdf.drawString(30,ph-30,f'{edition_title} / {scope.title()} / {page+1}')
             # Four columns × three rows on A3 landscape for an inspectable compact PDF.
             for i,e in enumerate(subset):
                 col,row=i%4,i//4;x=30+col*(pw-60)/4;y=ph-85-row*245
@@ -216,13 +234,13 @@ def build(output, cover_date):
         scope=None if edition=='combined' else edition
         suffix='-'+scope if scope else ''
         title=output/'sources'/('title-page'+suffix+'.pdf')
-        title_settings[edition]=title_page(title,cover_date,scope)
+        title_settings[edition]=title_page(title,cover_date,scope,palette)
         titles.append(title)
         cover=output/'sources'/('revision-cover'+suffix+'.pdf')
-        introduction(cover,pdf_entries,cover_date,scope)
+        introduction(cover,pdf_entries,cover_date,scope,palette)
         scopes=(scope,) if scope else ('world','japan')
         documents=[title,cover]+[output/path(e,s,'pdf',sheet) for e in pdf_entries for s in scopes for sheet in ATLAS['sheet_sequence']]
-        target=output/('setouchi-tri-explore-v2'+suffix+'.pdf')
+        target=output/(pdf_prefix+suffix+'.pdf')
         temporary=target.with_suffix('.tmp.pdf')
         subprocess.run(['pdfunite',*[str(p) for p in documents],str(temporary)],check=True)
         expected=scope_pages if scope else aggregate_pages
@@ -234,7 +252,7 @@ def build(output, cover_date):
         print(f'Built {scope or "combined"} PDF: {expected} pages.',flush=True)
     products=[output/'index.html',*[output/e['pdf'] for e in editions.values()],*titles,output/STANDARD_FILES,output/'plate-source-bibliography.json',output/'plate-source-bibliography.pdf',
               output/'plate-source-bibliography.html',contact/'contact-sheets.pdf']
-    manifest={'edition':'Setouchi 2028 ST2','plate_pairs':38,'maps':76,'legend_source_sheets':76,'aggregate_pages':aggregate_pages,
+    manifest={'edition':edition_title if palette else 'Setouchi 2028 ST2','plate_pairs':38,'maps':76,'legend_source_sheets':76,'aggregate_pages':aggregate_pages,
               'generation_style_sha256':digest(ROOT/'generation-style.json'),'atlas_defaults':ATLAS,
               'pdf_subjects':len(pdf_entries),
               'pdf_selection':{'included_stems':[e['stem'] for e in pdf_entries],

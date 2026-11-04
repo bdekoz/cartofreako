@@ -14,13 +14,12 @@ ordinary Cartofreako regeneration. They are saved in
 generators and the CDN, swarm and Japan detail builders. These layer generators
 do not require files under `output/setouchi-triennale-2028/`.
 
-The **current default atlas** was approved on **2026-11-01**, using the
-**2026-10-31 ST2 generation** at commit `098e9f1` as its reference. The `atlas`
-section of the same JSON saves its print framing, Antarctic position,
-map/legend sequence, PDF selection, plate numbers, title typography and
-300 dpi export settings. `make atlas` builds this edition with the saved
-layer styles, including fill-only swarm location names in both resolutions
-and scopes. The local source-delivery requirement is described below.
+The **current default atlas** uses the **2026-11-03 MSP 5 settings** with
+**wine/amber** selected: `#240413` ground and `#fcc553` text. The `atlas`
+section of the same JSON selects the approved recipe and saves the Setouchi
+frame, map/legend sequence, PDF selection, title typography and 300 dpi
+exports. Data colors remain distinct. `make atlas` applies this presentation
+to all 38 world/Japan pairs; the dated ST2 and MSP deliveries remain inputs.
 
 [`generation-profile.json`](../../../generation-profile.json) selects which
 passes to run. Its development selection is AuthaGraph, Earth and Water.
@@ -158,21 +157,57 @@ screen copies, print deliverables and source inventory.
 ## Setouchi ST2 print layout
 
 The [second Setouchi revision](../../development/20261030_setouchi_triennale_explore_2.md)
-is the current atlas default. Its composition scripts read the saved `atlas`
-settings in `generation-style.json`. Regenerate the edition with:
+provides the atlas frame. The [MSP 5 review](../../development/20261103_starlink_update_explore.md)
+provides its current presentation defaults. Generate the complete edition with:
 
 ```sh
 make atlas ASSET_JOBS=4
 ```
 
 This reads the pinned first delivery at `output/setouchi-triennale-2028/`
-and its local source caches, then writes
-`output/setouchi-triennale-2028-st2/`. Override `SETOUCHI_ST2_SOURCE` and
-`SETOUCHI_ST2_OUTPUT` to select equivalent local delivery locations. The
-existing `make setouchi-st2` command runs the same build. The
-command rebuilds legends, source bibliographies, map/legend sheets, exports,
-the review index, framing comparisons and aggregate PDF, then validates the
-result. It reuses the recorded observations; it does not fetch new data.
+and its local source caches, prepares ST2 composition inputs in
+`build/atlas-st2-base/`, then writes the default edition to `output/atlas/`.
+Override `ATLAS_SOURCE`, `ATLAS_BASE` and `ATLAS_OUTPUT` for equivalent local
+locations. `make atlas-sheets` stops after composing and validating the 152
+SVG map and legend sheets. `make atlas` also exports 300 dpi PNGs, vector PDFs,
+previews, source bibliographies, a review index and the World/Japan/combined
+PDF editions. The historical `make setouchi-st2` target still writes its
+separate dated delivery.
+
+The approved MSP 5 map/legend pairs supply the world groundstations, orbital
+global, orbital observer and all-sky astronomy subjects. Geographic Japan
+views use the updated groundstation and global orbital artwork in their
+existing viewport. The Japan all-sky view retains its locator and shared sky.
+The **Japan orbital observer retains its 29 October Setouchi positions** and
+source memberships; its markers and separate name layers receive the new
+presentation. Re-rendering does not fetch or imply new observations.
+
+`atlas.presentation.default_palette` selects `wine-amber` by default. The
+other approved choices remain `ultramarine-porcelain`, `plum-ice` and
+`midnight-champagne`. The recipe stays in
+[`config/msp-speculations-20261103.json`](../../../config/msp-speculations-20261103.json),
+so there is one saved definition of the approved point sizes and symbols.
+The page theme changes backgrounds, text and unmeasured basemap decoration;
+measured and categorical source palettes remain intact.
+
+The subject defaults are:
+
+- Groundstations: option 3 radial petals, aperture-proxy triangle areas,
+  honeycomb grouping and full-opacity amber fiber links. The November source
+  has 590 antenna records, 66 PoPs and 124 links; proxy size is not throughput.
+- Orbital global: Starlink NORAD IDs at **6 physical pt**, with other vendors'
+  name layers hidden. Representative ground tracks use **2×** stroke width;
+  reference graticules retain their widths.
+- Orbital observer: only Starlink names visible, at **6 physical pt**.
+  Named fleets retain separate name and location-point layers.
+- Both orbital subjects: Starlink **1.5× sunbursts**, Intelsat squares,
+  residual Earth observation triangles, black debris x marks with light halos,
+  distinct vendor colors and all satellite markers above the Starlink text.
+- All-sky astronomy: **12 physical pt** object labels and original symbol
+  colors. Japan viewport scaling is compensated to preserve the printed size.
+
+Wine and amber describe intended RGB hues. The saved palette is not a measured
+printer profile or a prediction of the hue produced with depleted inks.
 
 The saved presentation settings are:
 
@@ -198,8 +233,9 @@ The saved presentation settings are:
   geophysical and network observations keep their source coordinates.
 - Atkinson Hyperlegible legends based on the supplied rare-earth reference,
   with each plate's source bibliography alongside the key.
-- Plate numbers 01–38, shared by world and Japan companions, in 36 pt bold,
-  white fill, black 0.5 pt outline and 100% opacity. The footer is number only.
+- Plate numbers 01–38, shared by world and Japan companions, in 36 pt bold
+  amber. The footer is number only. The historical ST2 number treatment
+  remains in its source edition.
 - An aggregate ordered world map, world legend/sources, Japan map, Japan
   legend/sources for each subject. No bibliography is appended at the end.
 
@@ -207,9 +243,8 @@ Each new revision manifest records the atlas settings and the SHA-256 of
 `generation-style.json`. The reference render date identifies the approved
 appearance; it does not freeze future title dates or change observation dates.
 
-The separate PDFs are `setouchi-tri-explore-v2-world.pdf` and
-`setouchi-tri-explore-v2-japan.pdf`; the combined 147-page edition remains
-`setouchi-tri-explore-v2.pdf`. Each edition has its own page index following
+The separate default PDFs are `atlas-world.pdf` and `atlas-japan.pdf`;
+the combined 147-page edition is `atlas.pdf`. Each edition has its own page index following
 the title page and edition notes. Individual sheet numbering stays 01–38.
 
 Full-size masters are under `maps/{world,japan}/` and

@@ -8,7 +8,7 @@ import subprocess
 import sys
 import time
 
-from PIL import Image
+from PIL import Image, ImageColor
 from legend_informatics import ROOT,FONT_DIR,digest,font_environment
 from cartofreako_style import STYLE
 
@@ -28,6 +28,7 @@ def main():
         svg=args.delivery/record['svg'];base=svg.parent.parent;name=svg.stem
         pdf=base/'pdf'/(name+'.pdf');png=base/'png'/(name+'.png');preview=base/'preview'/(name+'.png')
         key=f'{kind}-{scope}-{stem}';receipt=receipts/(key+'.json')
+        background=record.get('sheet_background', 'white')
         fingerprint={'svg_sha256':digest(svg),'font_provenance_sha256':font_hash,'dpi':DPI,'exporter':'separate-sheets-v1'}
         if receipt.exists():
             previous=json.loads(receipt.read_text())
@@ -43,21 +44,21 @@ def main():
                            '--png',str(png),'--preview',str(preview),'--dpi',str(DPI)]]
             else:
                 commands=[['inkscape',str(svg),'--export-area-page','--export-filename='+str(pdf)],
-                          ['inkscape',str(svg),'--export-area-page',f'--export-dpi={DPI}','--export-background=white',
+                          ['inkscape',str(svg),'--export-area-page',f'--export-dpi={DPI}','--export-background='+background,
                            '--export-background-opacity=255','--export-png-color-mode=RGB_8','--export-filename='+str(png)]]
                 if kind=='legend':commands.append(['inkscape',str(svg),'--export-area-drawing','--export-width=3840',
-                           '--export-background=white','--export-background-opacity=255','--export-filename='+str(preview)])
+                           '--export-background='+background,'--export-background-opacity=255','--export-filename='+str(preview)])
             for command in commands:subprocess.run(command,env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
         with Image.open(png) as image:
             assert image.size==(13200,5716),(key,image.size)
             if kind=='map' and not native:
                 image.thumbnail((3840,3840),Image.Resampling.LANCZOS);image.convert('RGB').save(preview)
             if kind=='map':
-                # Test only the clear parts of the expected white margin bands,
+                # Test only the clear parts of the configured margin bands,
                 # avoiding antialiasing at the exact image boundary.
                 with Image.open(png) as full:
                     for box in [(0,0,74,5716),(13126,0,13200,5716),(0,0,13200,31),(0,5685,13200,5716)]:
-                        assert all(v==(255,255) for v in full.crop(box).convert('RGB').getextrema()),key+' margin'
+                        assert full.crop(box).convert('RGB').getextrema()==tuple((v,v) for v in ImageColor.getrgb(background)),key+' margin'
         result={'kind':kind,'scope':scope,'stem':stem,'svg':record['svg'],'fingerprint':fingerprint,
                 'elapsed_seconds':round(time.monotonic()-start,2),'pixel_dimensions':[13200,5716],
                 'outputs':{key:{'path':str(path.relative_to(args.delivery)),'sha256':digest(path),'bytes':path.stat().st_size}
