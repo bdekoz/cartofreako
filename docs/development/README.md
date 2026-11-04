@@ -7,6 +7,7 @@ title: Development records
 
 [Documentation index](../pages/README.md) · [Historical records](../pages/history/README.md)
 
+- [MSP duotone formulations, low-ink production notes and four-palette test strip](20261104_msp_duotone_low_ink_formulation.md)
 - [November Starlink refresh, constellation layers, capability studies and MSP 5 atlas defaults](20261103_starlink_update_explore.md) · [Current atlas settings and build stages](../pages/getting-started/generation-styles.md#setouchi-st2-print-layout)
 - [Setouchi 2028 delivery, visual revisions and human review steps](20261029_setouchi_triennale_explore.md) · [World/Japan review guide](../pages/gallery/setouchi-2028.md)
 - [Setouchi ST2: legend informatics, source bibliography and Africa framing proof](20261030_setouchi_triennale_explore_2.md) · [Plate bibliography](../pages/gallery/setouchi-2028-bibliography.md)

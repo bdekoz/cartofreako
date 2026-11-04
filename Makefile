@@ -2602,7 +2602,10 @@ generate-orbiting-artifacts: $(ORBITING_SVGS) $(ORBITING_PDFS) \
 	$(ORBITING_PNGS)
 
 MSP_OUTPUT ?= output/msp-speculations-20261103
-.PHONY: msp-speculations
+.PHONY: msp-speculations msp-ink-profile
+msp-ink-profile:
+	python3 scripts/build-msp-ink-profile.py --output "$(MSP_OUTPUT)/msp-speculation-5"
+
 msp-speculations: generate-orbiting-authagraph \
 		groundstation-capability-studies build/generation-context
 	python3 scripts/build-msp-speculations.py --build-root "$(GENERATED_DIR)" \

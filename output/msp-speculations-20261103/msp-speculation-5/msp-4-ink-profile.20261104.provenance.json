@@ -1,0 +1,281 @@
+{
+  "schema": "cartofreako-msp-ink-proof-v1",
+  "date": "2026-11-04",
+  "source_family": "msp-speculation-5",
+  "filename": "msp-4-ink-profile.20261104",
+  "sheet_inches": [
+    44.0,
+    7.874015748031496
+  ],
+  "sheet_mm": [
+    1117.6,
+    200
+  ],
+  "panel_width_inches": 10.5,
+  "side_margins_inches": [
+    1,
+    1
+  ],
+  "png_dpi": 300,
+  "builder_sha256": "d90a34a2cb6a1de711e76d7d38f4c36ca37a8d80a4e8566741da378eeb2fc626",
+  "recipe_sha256": "9c66b5dad5137e55de7459059bb5d99646aa86c27de10c02e0a51e3aac9ecc96",
+  "source_manifest_sha256": "1773dffb926fd1dac380334358c1e153b295af3fd39681050231db0ad4d3174f",
+  "font_sha256": "f86dd1f054d92d7c2355db628042097be483219bc5bde06fc360cb9a8339a876",
+  "palettes": [
+    {
+      "name": "Wine / amber",
+      "background": "rgb(36,4,19)",
+      "foreground": "rgb(252,197,83)",
+      "url": "https://randoma11y.com/%23fcc553/%23240413"
+    },
+    {
+      "name": "Ultramarine / porcelain",
+      "background": "rgb(25,63,184)",
+      "foreground": "rgb(245,234,231)",
+      "url": "https://randoma11y.com/%23193fb8/%23f5eae7"
+    },
+    {
+      "name": "Plum / ice blue",
+      "background": "rgb(42,12,65)",
+      "foreground": "rgb(115,222,249)",
+      "url": "https://randoma11y.com/%2373def9/%232a0c41"
+    },
+    {
+      "name": "Midnight blue / champagne",
+      "background": "rgb(1,4,52)",
+      "foreground": "rgb(234,215,132)",
+      "url": "https://randoma11y.com/%23ead784/%23010434"
+    }
+  ],
+  "inputs": [
+    {
+      "palette": "wine-amber",
+      "subject": "astro-all-sky",
+      "path": "output/msp-speculations-20261103/msp-speculation-5/wine-amber/astro-all-sky-authagraph-44-19.052559.svg.gz",
+      "sha256": "e4f3965d9db88fd886d307f7c8f17316c556c752acf05fa808d4ec718199114e",
+      "source_svg_sha256": "1c5cb3197859aa4c16ef66ac219c1aa0ebe177c5a92f85d4560e9bad8430f604",
+      "crop_inches": [
+        10.0,
+        8.5,
+        9.85,
+        1.15
+      ],
+      "sample_scale": 1,
+      "label_size_pt": 12
+    },
+    {
+      "palette": "wine-amber",
+      "subject": "orbital-technosphere-global",
+      "path": "output/msp-speculations-20261103/msp-speculation-5/wine-amber/orbital-technosphere-global-authagraph-44-19.052559.svg.gz",
+      "sha256": "995a3adb62c6b9d61ffd19b326a818e0a71eb291ca2e7d79f35d3b7977d3de2c",
+      "source_svg_sha256": "86ca7e85bd605446019dc429afb458bdd8fbe89238c164548f0da835451e702b",
+      "crop_inches": [
+        18.25,
+        13.25,
+        9.85,
+        1.15
+      ],
+      "sample_scale": 1,
+      "label_size_pt": 6
+    },
+    {
+      "palette": "wine-amber",
+      "subject": "orbital-technosphere-observer",
+      "path": "output/msp-speculations-20261103/msp-speculation-5/wine-amber/orbital-technosphere-observer-authagraph-44-19.052559.svg.gz",
+      "sha256": "473d7282fd91388988546aa0fa4b162633f1810188a5a552b17365912b1901f1",
+      "source_svg_sha256": "7824364fb3c379dea376e1496bf2c4b904a804d0cf0a0e083d4fb41f570dc36b",
+      "crop_inches": [
+        31.0,
+        7.75,
+        9.85,
+        1.15
+      ],
+      "sample_scale": 1,
+      "label_size_pt": 6
+    },
+    {
+      "palette": "ultramarine-porcelain",
+      "subject": "astro-all-sky",
+      "path": "output/msp-speculations-20261103/msp-speculation-5/ultramarine-porcelain/astro-all-sky-authagraph-44-19.052559.svg.gz",
+      "sha256": "cf34122d2472e32000437f153cdd41433d173abeb8928e0d0c6e816d7f4e1ebc",
+      "source_svg_sha256": "6ce8dafc531f5208f79edf9d76659b57f3b392acda5632f3c1aea307c41afdd9",
+      "crop_inches": [
+        10.0,
+        8.5,
+        9.85,
+        1.15
+      ],
+      "sample_scale": 1,
+      "label_size_pt": 12
+    },
+    {
+      "palette": "ultramarine-porcelain",
+      "subject": "orbital-technosphere-global",
+      "path": "output/msp-speculations-20261103/msp-speculation-5/ultramarine-porcelain/orbital-technosphere-global-authagraph-44-19.052559.svg.gz",
+      "sha256": "d57fa580e4a3357868c14a959b9968d8d2194bdf4bf5fa40b6f0666305c3a3d6",
+      "source_svg_sha256": "fed9323048a0236d80e1bc99a4e2253c159a70e2739a3a3e9d7c60e22188d60e",
+      "crop_inches": [
+        18.25,
+        13.25,
+        9.85,
+        1.15
+      ],
+      "sample_scale": 1,
+      "label_size_pt": 6
+    },
+    {
+      "palette": "ultramarine-porcelain",
+      "subject": "orbital-technosphere-observer",
+      "path": "output/msp-speculations-20261103/msp-speculation-5/ultramarine-porcelain/orbital-technosphere-observer-authagraph-44-19.052559.svg.gz",
+      "sha256": "b3a788025c2097760511404a5dcb7bde957e14ee56f8897feeef777c5c17d716",
+      "source_svg_sha256": "518d9fe4719a23d69019fbf77accfa9715fe16a0dc574ec9a668a06f24477e7f",
+      "crop_inches": [
+        31.0,
+        7.75,
+        9.85,
+        1.15
+      ],
+      "sample_scale": 1,
+      "label_size_pt": 6
+    },
+    {
+      "palette": "plum-ice",
+      "subject": "astro-all-sky",
+      "path": "output/msp-speculations-20261103/msp-speculation-5/plum-ice/astro-all-sky-authagraph-44-19.052559.svg.gz",
+      "sha256": "0716ae83dfd00c620ccd46e7bbfc704c9c4f3f47eb21542770a8490b6ca62cc9",
+      "source_svg_sha256": "b3d821f5fb3d77a93ec175b7fd18d8fb5614220fb2eda1d6b8934dfe9af57aea",
+      "crop_inches": [
+        10.0,
+        8.5,
+        9.85,
+        1.15
+      ],
+      "sample_scale": 1,
+      "label_size_pt": 12
+    },
+    {
+      "palette": "plum-ice",
+      "subject": "orbital-technosphere-global",
+      "path": "output/msp-speculations-20261103/msp-speculation-5/plum-ice/orbital-technosphere-global-authagraph-44-19.052559.svg.gz",
+      "sha256": "f7e6e9c504e70a8df2bffd46ab916acb5d02fbeef58103c6f5c6c99ee74d55f5",
+      "source_svg_sha256": "e93c17a995b7e6bd18b4ac6af1bd831bdc42e02a88a448e6cd9590580c4a6625",
+      "crop_inches": [
+        18.25,
+        13.25,
+        9.85,
+        1.15
+      ],
+      "sample_scale": 1,
+      "label_size_pt": 6
+    },
+    {
+      "palette": "plum-ice",
+      "subject": "orbital-technosphere-observer",
+      "path": "output/msp-speculations-20261103/msp-speculation-5/plum-ice/orbital-technosphere-observer-authagraph-44-19.052559.svg.gz",
+      "sha256": "90e795319df6be16991f21f90c114f65f719a644a020a6dc541280510f9076c0",
+      "source_svg_sha256": "fe76e0f62741afa5ad4e690ce344531235e3999c450c3c3a9ba1ab88b365cba9",
+      "crop_inches": [
+        31.0,
+        7.75,
+        9.85,
+        1.15
+      ],
+      "sample_scale": 1,
+      "label_size_pt": 6
+    },
+    {
+      "palette": "midnight-champagne",
+      "subject": "astro-all-sky",
+      "path": "output/msp-speculations-20261103/msp-speculation-5/midnight-champagne/astro-all-sky-authagraph-44-19.052559.svg.gz",
+      "sha256": "93a742399a5ef345f3ce0fcfc7e3a3c3e40716fb14692cceb9995da813861cef",
+      "source_svg_sha256": "3968cee1057a38437d71620e658f4afb3ec4456b251061a2d103b8ef6f59854b",
+      "crop_inches": [
+        10.0,
+        8.5,
+        9.85,
+        1.15
+      ],
+      "sample_scale": 1,
+      "label_size_pt": 12
+    },
+    {
+      "palette": "midnight-champagne",
+      "subject": "orbital-technosphere-global",
+      "path": "output/msp-speculations-20261103/msp-speculation-5/midnight-champagne/orbital-technosphere-global-authagraph-44-19.052559.svg.gz",
+      "sha256": "713a3919c376b8fabf5ecb6d434d187c769b4eb85abf0d972bf0c5e3a0c6a63d",
+      "source_svg_sha256": "1f8f5faed44d46ddbeb394e7e87772f32817a48a7b42405a3d60c3f105feb433",
+      "crop_inches": [
+        18.25,
+        13.25,
+        9.85,
+        1.15
+      ],
+      "sample_scale": 1,
+      "label_size_pt": 6
+    },
+    {
+      "palette": "midnight-champagne",
+      "subject": "orbital-technosphere-observer",
+      "path": "output/msp-speculations-20261103/msp-speculation-5/midnight-champagne/orbital-technosphere-observer-authagraph-44-19.052559.svg.gz",
+      "sha256": "2fac2f1f02175ef8c472b56eec93e94eee388aa7a61715d89d1d53b6ea51383d",
+      "source_svg_sha256": "b36d8d83c7d165b2062aef3217371be2922a1523e046aa6df256000fe70c7c5b",
+      "crop_inches": [
+        31.0,
+        7.75,
+        9.85,
+        1.15
+      ],
+      "sample_scale": 1,
+      "label_size_pt": 6
+    }
+  ],
+  "crop_checks": [
+    {
+      "subject": "astro-all-sky",
+      "dpi": 300,
+      "pixel_equal_to_unmodified_crop": true
+    },
+    {
+      "subject": "orbital-technosphere-global",
+      "dpi": 300,
+      "pixel_equal_to_unmodified_crop": true
+    },
+    {
+      "subject": "orbital-technosphere-observer",
+      "dpi": 300,
+      "pixel_equal_to_unmodified_crop": true
+    }
+  ],
+  "validation": {
+    "svg_dimensions_and_panels": true,
+    "rgb_swatch_labels_match": true,
+    "all_eight_rendered_swatch_centers_match_rgb": true,
+    "embedded_ids_unique_and_references_resolve": true,
+    "png_dimensions": [
+      13200,
+      2362
+    ],
+    "pdf_page_points": [
+      3168.0,
+      566.929
+    ],
+    "randoma11y_pdf_links": 4
+  },
+  "outputs": [
+    {
+      "path": "msp-4-ink-profile.20261104.svg",
+      "sha256": "f99c211d995621c8b06b8f112c41b38380b37189b491de57e746cc4cfb470a18",
+      "bytes": 13123585
+    },
+    {
+      "path": "msp-4-ink-profile.20261104.png",
+      "sha256": "da505ae39da94d986f953745d26409fddae1ef64094c9fe5aa35fd20fcd44290",
+      "bytes": 4618002
+    },
+    {
+      "path": "msp-4-ink-profile.20261104.pdf",
+      "sha256": "f735d12b395fe4117a90d27c08f213adaf6f5d460b30c1b4343e2b4a5ea4be67",
+      "bytes": 3592614
+    }
+  ]
+}
