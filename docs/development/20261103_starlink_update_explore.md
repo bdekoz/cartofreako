@@ -1157,3 +1157,19 @@ validation and documentation checks passed. The rendered map and companion
 note were inspected; all 198 exports for other plates retain their preceding
 checksums. The updated recipe, builder, previews and this work log are ready
 for commit and push.
+
+## Status after the astronomy type-size update
+
+The MSP 5 delivery was committed and pushed to `origin/main` as `28e79fe`.
+The subsequent 12 pt astronomy-label revision was committed and pushed as
+`d1118f3`. These deliveries complete the commit/push stages recorded above.
+
+All four color variations remain nested under `msp-speculation-5/`:
+wine/amber, ultramarine/porcelain, plum/ice blue and midnight/champagne.
+Each astronomy map now has 35 labels at **12 physical points**, confirmed
+in both the SVG audit and exported PDF. Updated PDF, SVG.gz and WebP files,
+legend notes, saved configuration and review pages are included in `d1118f3`.
+
+The final validation receipt passes **74 sheets / 222 files**. Documentation
+checks pass, and the 198 exports for other plates retain their prior
+checksums. The astronomy size change and its delivery are complete.
