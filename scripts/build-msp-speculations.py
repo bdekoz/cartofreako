@@ -149,7 +149,7 @@ def study_directory(recipe):
     return recipe.get("directory", recipe["id"])
 
 
-def astronomy_sources(directory, work):
+def astronomy_sources(directory, work, label_font_size_pt):
     """Reuse the pinned ST2 sky and bibliography without reframing the sky twice."""
     receipt_path = directory/"provenance.json"
     receipt = json.loads(receipt_path.read_text())
@@ -168,11 +168,18 @@ def astronomy_sources(directory, work):
         if kind == "map":
             root.set("data-image-scale", str(SCALE))
             root.set("data-legend-companion", filename+"-legend.svg")
+            labels = root.xpath('//*[@id="labels"]')[0]
+            labels.set("data-font-size-pt", str(label_font_size_pt))
+            for label in labels:
+                label.set("font-size", str(label_font_size_pt/72/SCALE))
         else:
             root.set("data-map-companion", filename+".svg")
             root.append(copy.deepcopy(read_svg(result["map"]).xpath('//*[@id="astro-metadata"]')[0]))
             paper = el("rect", id="legend-paper", width=44, height=HEIGHT, fill="white")
             root.insert(0, paper)
+            note = el("g", root, id="astronomy-type-note", data_presentation_only="true")
+            text(note, 42.38, 4.3, f"Sky object labels: {label_font_size_pt} pt on the full-size sheet.",
+                 14/72, text_anchor="end")
         root.set("data-marker-color-policy", "preserve-source-astronomy")
         save(root, target)
         result[kind] = target
@@ -425,7 +432,8 @@ def main():
     config = json.loads(CONFIG.read_text())
     sources = prepare_sources(args.build_root, args.work)
     if any("astro-all-sky" in study_subjects(config, recipe) for recipe in config["studies"]):
-        sources["astro-all-sky"] = astronomy_sources(ROOT/config["astronomy_source"], args.work)
+        sources["astro-all-sky"] = astronomy_sources(
+            ROOT/config["astronomy_source"], args.work, config["astronomy_label_font_size_pt"])
     capability = capability_sources(args.capability_root, args.work, "option-3-petals")
     env = font_environment()
     manifest_path = args.output/"manifest.json"
@@ -532,6 +540,7 @@ def review_page(config, recipes, directory="."):
                              f'Global ground tracks use {recipe["variant"]["global_track_width_scale"]}× their original line width.</p>')
         if "astro-all-sky" in study_subjects(config, recipe):
             cards.append('<p>Astronomy all sky retains its 29 October 2026, 20:00 UTC source positions, symbol colors and 35 labels. '
+                         f'Sky labels use {config["astronomy_label_font_size_pt"]} pt type on the full-size sheet. '
                          'Its background follows this color set, with light typography and a separate source legend.</p>')
         cards.append('<div class="plates">')
         for subject in study_subjects(config, recipe):

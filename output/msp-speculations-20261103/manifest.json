@@ -287,10 +287,11 @@
     "palette_provenance": "config/randoma11y-pairs-20261103.json",
     "orbital_marker_colors": "preserve-source-groups",
     "astronomy_source": "assets.static/astronomy/msp-setouchi-20261029",
-    "astronomy_marker_colors": "preserve-source-astronomy"
+    "astronomy_marker_colors": "preserve-source-astronomy",
+    "astronomy_label_font_size_pt": 12
   },
-  "recipe_sha256": "02d444431e75472ae0a0f242ff9a6f8d0f4d78fc0e639ff2c700ad3178489a19",
-  "builder_sha256": "b007a6bfec16e1d527d430484b968a582b0c9c2cd23bbdc1b45287affcb04245",
+  "recipe_sha256": "9c66b5dad5137e55de7459059bb5d99646aa86c27de10c02e0a51e3aac9ecc96",
+  "builder_sha256": "c6f41f0015b9749c93cc626bb1ac7b0b13a61e161a0b3cc70e0110151e1f47c2",
   "framing_sha256": "d38aecbb5f156646be3909c80863903212715244721fd4ac6819e7a73e4d53ba",
   "palette_provenance_sha256": "6385f7843e990dd5211678042494e587b3dfe702ed0fdd96711f3faf6116e326",
   "font_sha256": "f86dd1f054d92d7c2355db628042097be483219bc5bde06fc360cb9a8339a876",
@@ -9917,8 +9918,8 @@
       "study": "msp-speculation-5-wine-amber",
       "subject": "astro-all-sky",
       "kind": "map",
-      "source_svg_sha256": "36bf68e55e36fea495282fff2169ec53f48fb3f7c8b451d13d569b618da3db7f",
-      "svg_sha256": "3f3cdb5c5c79d54e859fcf119f32260387ab0ef18b5290ca8c28a1a88bcfb87b",
+      "source_svg_sha256": "de4dc53853612a5af5dbb59cd0c77644151cc22a33a2e04af2c486d1fb95a56e",
+      "svg_sha256": "1c5cb3197859aa4c16ef66ac219c1aa0ebe177c5a92f85d4560e9bad8430f604",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -9963,18 +9964,18 @@
       "outputs": [
         {
           "path": "msp-speculation-5/wine-amber/astro-all-sky-authagraph-44-19.052559.pdf",
-          "sha256": "86cc606db974a9fad4b08a46242f100a13f1d2b80789ea8b0ca1d08ee67a91ba",
-          "bytes": 83493
+          "sha256": "fa19576ad06e886f7b72639919a4b7885ac44673c7ddc3b3f959ff048a022c78",
+          "bytes": 83285
         },
         {
           "path": "msp-speculation-5/wine-amber/astro-all-sky-authagraph-44-19.052559.webp",
-          "sha256": "deca6a9cb84684ef807dcd107773299ad18b0158c10929ff8bbd966973d1c37b",
-          "bytes": 176474
+          "sha256": "fba216802ab999aed32157fdbc9bacf51326a868e405fbc6b135fc0fd9866a09",
+          "bytes": 163438
         },
         {
           "path": "msp-speculation-5/wine-amber/astro-all-sky-authagraph-44-19.052559.svg.gz",
-          "sha256": "71bbd935d40d4d68aef96106596906bf2ba1a63c9f647f4a24295face60726ae",
-          "bytes": 59290
+          "sha256": "e4f3965d9db88fd886d307f7c8f17316c556c752acf05fa808d4ec718199114e",
+          "bytes": 59333
         }
       ]
     },
@@ -9982,8 +9983,8 @@
       "study": "msp-speculation-5-wine-amber",
       "subject": "astro-all-sky",
       "kind": "legend",
-      "source_svg_sha256": "11440067ce9bb1841f4c6f4d37147031ecfd8e4be7cd755abe68a08e0211b59d",
-      "svg_sha256": "fe3d837ea5894bc97be6864bfc8bda4b69dc0a293c6c4dadedb808cb40cf09d7",
+      "source_svg_sha256": "110e964a98e7c22ba29afb3c3b6c33063c3374a3e840440c8fa8c0a3cd3fdfe8",
+      "svg_sha256": "e9d3f70b0c4bcc4bafdc37a50b2d17d69bfa784fb6b6e1441a9b0eca4db925e9",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -10028,18 +10029,18 @@
       "outputs": [
         {
           "path": "msp-speculation-5/wine-amber/astro-all-sky-authagraph-44-19.052559-legend.pdf",
-          "sha256": "d09497393a08d70ad30b7a212b82939e084510bdb7c9c792ec1f0f5bf5954b4b",
-          "bytes": 30231
+          "sha256": "a1432233f3163e713cd1bf2fe10255d72252d507f3a70987ca6e4605df2cf973",
+          "bytes": 30274
         },
         {
           "path": "msp-speculation-5/wine-amber/astro-all-sky-authagraph-44-19.052559-legend.webp",
-          "sha256": "e795eedc9bc3ea042cfe3f41e4e7ca79a90499a7bc942c6d8242b676146302a7",
-          "bytes": 324618
+          "sha256": "c86de410eee2c5bcd67e80274db6e810dd2859280563c5a4901aa7d46ac31992",
+          "bytes": 328022
         },
         {
           "path": "msp-speculation-5/wine-amber/astro-all-sky-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "a3ac918cd3626bd1aa5ff292fc5490cb5f0b8c8f2b9d6080257ce64aadcb2935",
-          "bytes": 3431
+          "sha256": "b04aa400c16ad00cdef68c22d7584908adc99a88e28e2dff7e9c5cdd30614be6",
+          "bytes": 3479
         }
       ]
     },
@@ -11266,8 +11267,8 @@
       "study": "msp-speculation-5-ultramarine-porcelain",
       "subject": "astro-all-sky",
       "kind": "map",
-      "source_svg_sha256": "36bf68e55e36fea495282fff2169ec53f48fb3f7c8b451d13d569b618da3db7f",
-      "svg_sha256": "3afbb3e53a5eaad3a04355094804e29da0eaf37dfdf032fcfe5976032b82ba60",
+      "source_svg_sha256": "de4dc53853612a5af5dbb59cd0c77644151cc22a33a2e04af2c486d1fb95a56e",
+      "svg_sha256": "6ce8dafc531f5208f79edf9d76659b57f3b392acda5632f3c1aea307c41afdd9",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -11312,18 +11313,18 @@
       "outputs": [
         {
           "path": "msp-speculation-5/ultramarine-porcelain/astro-all-sky-authagraph-44-19.052559.pdf",
-          "sha256": "58abc5a380c64803da57fb0410acd3670381ba54209ff2cd13f47749574e79a2",
-          "bytes": 83502
+          "sha256": "cbd96819eff105fce18666d768b02a1924ba6536ba19ece50b6703d119901c4a",
+          "bytes": 83288
         },
         {
           "path": "msp-speculation-5/ultramarine-porcelain/astro-all-sky-authagraph-44-19.052559.webp",
-          "sha256": "4ec265db2bf3bb3b8dbf66fe3dc6db0df27bef240e9d6e8b74b1f9e03daf81bb",
-          "bytes": 186988
+          "sha256": "277290fbb255d90c161693e2198ec22da5cefcb85b309a268844306c4073725b",
+          "bytes": 171800
         },
         {
           "path": "msp-speculation-5/ultramarine-porcelain/astro-all-sky-authagraph-44-19.052559.svg.gz",
-          "sha256": "a16d0e5e47a59a883b5acdf714c4dcdfbe0567f7c3d89c0c5b521d791ca60c68",
-          "bytes": 59299
+          "sha256": "cf34122d2472e32000437f153cdd41433d173abeb8928e0d0c6e816d7f4e1ebc",
+          "bytes": 59339
         }
       ]
     },
@@ -11331,8 +11332,8 @@
       "study": "msp-speculation-5-ultramarine-porcelain",
       "subject": "astro-all-sky",
       "kind": "legend",
-      "source_svg_sha256": "11440067ce9bb1841f4c6f4d37147031ecfd8e4be7cd755abe68a08e0211b59d",
-      "svg_sha256": "2af4b58353b48fc1dc12ea7cd6f024ba366def20f0b4e61c24b0c16518e82306",
+      "source_svg_sha256": "110e964a98e7c22ba29afb3c3b6c33063c3374a3e840440c8fa8c0a3cd3fdfe8",
+      "svg_sha256": "541daecb48a62a9883d53d6d7d900344ade0c1b179f8d2ccefd0c34d09ff4999",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -11377,18 +11378,18 @@
       "outputs": [
         {
           "path": "msp-speculation-5/ultramarine-porcelain/astro-all-sky-authagraph-44-19.052559-legend.pdf",
-          "sha256": "93179c204bc0206eb19c9bf5e24c3c9af76e93b9edf31dd963200abf8d9cc57b",
-          "bytes": 30236
+          "sha256": "73d53064bf7182cd25b0529be3c40275fb2b64aa283a48864ab18fd7d6ca791a",
+          "bytes": 30277
         },
         {
           "path": "msp-speculation-5/ultramarine-porcelain/astro-all-sky-authagraph-44-19.052559-legend.webp",
-          "sha256": "00da6d9349c5353796cf0eafacdec9f5815608ea3cd535f517129286755cc759",
-          "bytes": 326300
+          "sha256": "6eba688c7392f03d38b0fb71696bb4ddabba294b1259f55a1b52b78c304f7922",
+          "bytes": 329680
         },
         {
           "path": "msp-speculation-5/ultramarine-porcelain/astro-all-sky-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "ad4a2da0d3b83964590103ab47959d200f9f9ec8d9dc7af283108b6c36916b30",
-          "bytes": 3433
+          "sha256": "850c0b4e40dabec822d10c040756ee8d4004687f485746c22060410b0712e06a",
+          "bytes": 3482
         }
       ]
     },
@@ -12615,8 +12616,8 @@
       "study": "msp-speculation-5-plum-ice",
       "subject": "astro-all-sky",
       "kind": "map",
-      "source_svg_sha256": "36bf68e55e36fea495282fff2169ec53f48fb3f7c8b451d13d569b618da3db7f",
-      "svg_sha256": "00f3da068c58e8d2487918e244615ed16b2a5065941e9e97eaae2c3536038b6e",
+      "source_svg_sha256": "de4dc53853612a5af5dbb59cd0c77644151cc22a33a2e04af2c486d1fb95a56e",
+      "svg_sha256": "b3d821f5fb3d77a93ec175b7fd18d8fb5614220fb2eda1d6b8934dfe9af57aea",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -12661,18 +12662,18 @@
       "outputs": [
         {
           "path": "msp-speculation-5/plum-ice/astro-all-sky-authagraph-44-19.052559.pdf",
-          "sha256": "66f1afb7bd84133338013e30fffca49cadaef29aa4fa522c9b4c166ef91ceb4f",
-          "bytes": 83494
+          "sha256": "cd1f253035fe78929dc7485f48c581c4b6f7bbcfe5f1f4c1fcfc58ac038e4d30",
+          "bytes": 83285
         },
         {
           "path": "msp-speculation-5/plum-ice/astro-all-sky-authagraph-44-19.052559.webp",
-          "sha256": "4697c13951b38476391c2c7eaf1223ef80e86cbb9927d08dc743ef74308c00db",
-          "bytes": 175952
+          "sha256": "d4279377a01190657537aa80a047e496f9e578cd76d6f1c7462a4ca102b5a0fa",
+          "bytes": 158826
         },
         {
           "path": "msp-speculation-5/plum-ice/astro-all-sky-authagraph-44-19.052559.svg.gz",
-          "sha256": "c45f7fde8c0add549a0f7e2620a7c34ee6d627d42c823a6a742e3907cdbb7729",
-          "bytes": 59287
+          "sha256": "0716ae83dfd00c620ccd46e7bbfc704c9c4f3f47eb21542770a8490b6ca62cc9",
+          "bytes": 59328
         }
       ]
     },
@@ -12680,8 +12681,8 @@
       "study": "msp-speculation-5-plum-ice",
       "subject": "astro-all-sky",
       "kind": "legend",
-      "source_svg_sha256": "11440067ce9bb1841f4c6f4d37147031ecfd8e4be7cd755abe68a08e0211b59d",
-      "svg_sha256": "3389c46b44397dd20e14749c3beea43ae2272823fbf159c1fbc58ac043da50d7",
+      "source_svg_sha256": "110e964a98e7c22ba29afb3c3b6c33063c3374a3e840440c8fa8c0a3cd3fdfe8",
+      "svg_sha256": "c5ee81e3ae6cf79836e3a3d9f81265bf4b8780d1e126bec172d6917b699cc29a",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -12726,18 +12727,18 @@
       "outputs": [
         {
           "path": "msp-speculation-5/plum-ice/astro-all-sky-authagraph-44-19.052559-legend.pdf",
-          "sha256": "c397279953b2ac70eefc7b7f67e9e1bfbf4c1e99688ddaa4d0c56df8e8777d5e",
-          "bytes": 30226
+          "sha256": "397b9b99d334c47d8ff861b36b83be693e3800d8d5296f37312f8757588f5d26",
+          "bytes": 30268
         },
         {
           "path": "msp-speculation-5/plum-ice/astro-all-sky-authagraph-44-19.052559-legend.webp",
-          "sha256": "418b09f3188c3cb5937f289320c662fd8347cfe2ab7db8a727326c02a613d0bb",
-          "bytes": 301842
+          "sha256": "477306c7994a49572263db728ab98576716dc0cf938a1761f861bf6cb7f5c012",
+          "bytes": 305028
         },
         {
           "path": "msp-speculation-5/plum-ice/astro-all-sky-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "2c08a9334d1fb1734acfa381a71d14494f1bd9047250fa81e923bbbd286197aa",
-          "bytes": 3430
+          "sha256": "ba9a5e4555aea4a195b267ef08f78ba66c774a32cf2d35c7e52b7b965deee277",
+          "bytes": 3478
         }
       ]
     },
@@ -13964,8 +13965,8 @@
       "study": "msp-speculation-5-midnight-champagne",
       "subject": "astro-all-sky",
       "kind": "map",
-      "source_svg_sha256": "36bf68e55e36fea495282fff2169ec53f48fb3f7c8b451d13d569b618da3db7f",
-      "svg_sha256": "24b982f4aa9d73914ed83c4c48ee2cf41e8729669e2ba8648a521c87ac1704b4",
+      "source_svg_sha256": "de4dc53853612a5af5dbb59cd0c77644151cc22a33a2e04af2c486d1fb95a56e",
+      "svg_sha256": "3968cee1057a38437d71620e658f4afb3ec4456b251061a2d103b8ef6f59854b",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -14010,18 +14011,18 @@
       "outputs": [
         {
           "path": "msp-speculation-5/midnight-champagne/astro-all-sky-authagraph-44-19.052559.pdf",
-          "sha256": "9a92463237e5d62741d4233d917401bed70a6f2f258c57c2e421b7c026501037",
-          "bytes": 83482
+          "sha256": "225b006104511336f54f9b2e82378079bc8cfb56056fb9f8375b1abdac6eba9a",
+          "bytes": 83274
         },
         {
           "path": "msp-speculation-5/midnight-champagne/astro-all-sky-authagraph-44-19.052559.webp",
-          "sha256": "cf7ab098cd645c4da8c0ab8ec19be06d8a45e486e19ed635b13dbe8398c93d5b",
-          "bytes": 185266
+          "sha256": "a93ddd1ee5fd9443fa2054008bd0d6487151e482cda6345355afdb80296abff7",
+          "bytes": 170118
         },
         {
           "path": "msp-speculation-5/midnight-champagne/astro-all-sky-authagraph-44-19.052559.svg.gz",
-          "sha256": "51599fe60d21d6f4f342423e8d0c4f7ef8f78894e0970e2e2561ff99a8951da1",
-          "bytes": 59299
+          "sha256": "93a742399a5ef345f3ce0fcfc7e3a3c3e40716fb14692cceb9995da813861cef",
+          "bytes": 59341
         }
       ]
     },
@@ -14029,8 +14030,8 @@
       "study": "msp-speculation-5-midnight-champagne",
       "subject": "astro-all-sky",
       "kind": "legend",
-      "source_svg_sha256": "11440067ce9bb1841f4c6f4d37147031ecfd8e4be7cd755abe68a08e0211b59d",
-      "svg_sha256": "beea44efedb1cf071d2add95fd288eb9472abba08ec742646f66918eb3d1fd85",
+      "source_svg_sha256": "110e964a98e7c22ba29afb3c3b6c33063c3374a3e840440c8fa8c0a3cd3fdfe8",
+      "svg_sha256": "513c54afc75a348dc2300d50b50e5d861af15276376124998d8f4c6a03ce4bf4",
       "framing": {
         "variant": "cyclic-43p5-antarctica-left",
         "scale": 0.9886363636363636,
@@ -14075,18 +14076,18 @@
       "outputs": [
         {
           "path": "msp-speculation-5/midnight-champagne/astro-all-sky-authagraph-44-19.052559-legend.pdf",
-          "sha256": "fefa3589f27b12fdae355fc9aff68b26906f39220078418f3b3d7b26b986454e",
-          "bytes": 30239
+          "sha256": "034d8492357f068bf02e54194b3981a8f6d5456f60e94c2ba615f2751b945161",
+          "bytes": 30280
         },
         {
           "path": "msp-speculation-5/midnight-champagne/astro-all-sky-authagraph-44-19.052559-legend.webp",
-          "sha256": "94dbb8ac341b29e69cc463cb3c4ee51de6eb74f221fbefcd7af071986ac2ed3e",
-          "bytes": 332886
+          "sha256": "5582578b1441388c51de099db6b2181402c26de88f5f82ae0fb334cd909819a2",
+          "bytes": 336288
         },
         {
           "path": "msp-speculation-5/midnight-champagne/astro-all-sky-authagraph-44-19.052559-legend.svg.gz",
-          "sha256": "d0057c66ee24ad6905e82bf29f5a641df8ee78d3c16135a4305fe425de3e6aa2",
-          "bytes": 3440
+          "sha256": "8de76ac0ad15155f547c2b5e01fd6f4b46b3f77951acc391e1c084d49da67653",
+          "bytes": 3488
         }
       ]
     }

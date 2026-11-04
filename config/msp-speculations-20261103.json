@@ -285,5 +285,6 @@
   "palette_provenance": "config/randoma11y-pairs-20261103.json",
   "orbital_marker_colors": "preserve-source-groups",
   "astronomy_source": "assets.static/astronomy/msp-setouchi-20261029",
-  "astronomy_marker_colors": "preserve-source-astronomy"
+  "astronomy_marker_colors": "preserve-source-astronomy",
+  "astronomy_label_font_size_pt": 12
 }

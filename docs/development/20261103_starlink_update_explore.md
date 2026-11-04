@@ -1135,3 +1135,25 @@ representative full map/legend renders were inspected. The main and nested
 review pages passed 451 local reference checks, including navigation anchors.
 Documentation checks passed for 168 files and 2,123 local links; Python syntax
 and whitespace checks also passed. The work is ready for commit and push.
+
+## MSP 5 astronomy labels at 12 pt
+
+The user requested reducing the astronomy object labels from approximately
+16.13 printed points to **12 physical points** in all four MSP 5 palettes.
+Keep all 35 label strings and positions, and retain Atkinson Hyperlegible
+Regular. The separate legend's typography retains its existing sizes.
+
+Record the size in the saved configuration and apply it through the durable
+builder. Use a unitless SVG font size of `12 / 72 / (43.5 / 44)` so that the
+Setouchi image scale produces exactly 12 pt on the full 44-inch sheet. Update
+the astronomy legend note and review pages to state the label size. Rebuild
+the four astronomy maps and their companions, check SVG and PDF font sizes,
+inspect a rendered sheet, update validation, then commit and push.
+
+Completed all four astronomy map/legend pairs. The SVG audit verifies all
+35 labels at 12 physical points in each palette, and independent PDF text
+inspection reports 12 pt in all four map PDFs. The full 74-sheet / 222-file
+validation and documentation checks passed. The rendered map and companion
+note were inspected; all 198 exports for other plates retain their preceding
+checksums. The updated recipe, builder, previews and this work log are ready
+for commit and push.

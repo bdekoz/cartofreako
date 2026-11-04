@@ -885,6 +885,7 @@
         "comet": 3
       },
       "labels": 35,
+      "label_font_size_pt": 12,
       "source_geometry_and_symbol_colors_unchanged": true
     },
     {
@@ -908,6 +909,7 @@
         "comet": 3
       },
       "labels": 35,
+      "label_font_size_pt": 12,
       "source_geometry_and_symbol_colors_unchanged": true
     },
     {
@@ -931,6 +933,7 @@
         "comet": 3
       },
       "labels": 35,
+      "label_font_size_pt": 12,
       "source_geometry_and_symbol_colors_unchanged": true
     },
     {
@@ -954,6 +957,7 @@
         "comet": 3
       },
       "labels": 35,
+      "label_font_size_pt": 12,
       "source_geometry_and_symbol_colors_unchanged": true
     }
   ],
@@ -988,6 +992,7 @@
     "MSP 5 observer names visible only for Starlink at 6 pt, beneath all satellite markers",
     "MSP 5 global trajectory widths doubled; graticule widths and all line geometry retained",
     "all four MSP 5 astronomy backgrounds match their pairs; source positions, colors and 35 labels retained",
+    "all 35 astronomy labels use 12 physical points on every MSP 5 map",
     "groundstation fiber links use pair foreground at full opacity",
     "MSP 4 groundstation geometry identical to option-3-petals"
   ],

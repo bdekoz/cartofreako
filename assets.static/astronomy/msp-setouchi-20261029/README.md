@@ -16,8 +16,9 @@ bibliography. The builder reads these pinned files directly; the original
 local Setouchi export directory is not required to rebuild the color studies.
 
 The MSP presentation keeps the original symbol/reference colors and label
-geometry, changes the ground to each Randoma11y pair's dark member, and uses
-the light member for typography. The existing 43.5-inch image and +4.35-inch
+positions, sets the sky labels to 12 physical points, changes the ground to
+each Randoma11y pair's dark member, and uses the light member for typography.
+The existing 43.5-inch image and +4.35-inch
 printed horizontal move are retained without applying the frame twice.
 
 Source credits: ESA/Gaia/DPAC; NASA Exoplanet Archive; NASA/JPL; and the

@@ -121,14 +121,16 @@ def capability_geometry(root):
 
 
 def astronomy_cartography(root):
-    """Compare every source object, coordinate, symbol color and label geometry."""
+    """Compare source objects, coordinates, symbol colors and label positions."""
     source = next(n for n in root.iter() if n.get("id") == "source-cartography")
     records = []
     for node in source.iter():
         attrs = dict(node.attrib)
+        if node.get("id") == "labels":
+            attrs.pop("data-font-size-pt", None)
         if node.tag == SVG+"text":
-            # Palette typography is the only allowed change inside the sky.
-            for attr in ("fill", "stroke", "stroke-opacity"):
+            # Type size is checked separately against the physical sheet scale.
+            for attr in ("fill", "stroke", "stroke-opacity", "font-size"):
                 attrs.pop(attr, None)
             style = dict(s.strip().split(":", 1) for s in attrs.get("style", "").split(";") if ":" in s)
             for attr in ("fill", "stroke", "stroke-opacity"):
@@ -156,6 +158,7 @@ def main():
     assert digest(ROOT/capability["evidence_path"]) == capability["evidence_sha256"]
     cap_manifest = json.loads((ROOT/capability["manifest_path"]).read_text())
     astronomy_dir = ROOT/config["astronomy_source"]
+    assert config["astronomy_label_font_size_pt"] == 12
     astronomy_receipt = json.loads((astronomy_dir/"provenance.json").read_text())
     assert manifest["inputs"]["astro-all-sky"]["sha256"] == digest(astronomy_dir/"provenance.json")
     astronomy_sources = {}
@@ -198,6 +201,7 @@ def main():
                          "MSP 5 observer names visible only for Starlink at 6 pt, beneath all satellite markers",
                          "MSP 5 global trajectory widths doubled; graticule widths and all line geometry retained",
                          "all four MSP 5 astronomy backgrounds match their pairs; source positions, colors and 35 labels retained",
+                         "all 35 astronomy labels use 12 physical points on every MSP 5 map",
                          "groundstation fiber links use pair foreground at full opacity",
                          "MSP 4 groundstation geometry identical to option-3-petals"]}
     with tempfile.TemporaryDirectory(prefix="cartofreako-msp-audit-") as temporary:
@@ -249,10 +253,15 @@ def main():
                             counts = dict(Counter(e.get("data-kind") for e in elements if e.get("data-kind")))
                             assert counts == astronomy_receipt["object_counts"]
                             assert len(by_id["labels"]) == astronomy_receipt["label_count"] == 35
+                            font_size = config["astronomy_label_font_size_pt"]
+                            assert float(by_id["labels"].get("data-font-size-pt")) == font_size
+                            for label in by_id["labels"]:
+                                assert math.isclose(float(paint(label, "font-size"))*float(root.get("data-image-scale"))*72, font_size)
                             assert "legend-informatics" not in by_id and "plate-source-bibliography" not in by_id
                             report["astronomy"].append({"study": record["study"], "background": recipe["background"],
                                                        "timestamp": astronomy_receipt["calculation_timestamp"],
                                                        "object_counts": counts, "labels": len(by_id["labels"]),
+                                                       "label_font_size_pt": font_size,
                                                        "source_geometry_and_symbol_colors_unchanged": True})
                         else:
                             metadata = by_id["network-groundstations-metadata"]
@@ -311,7 +320,7 @@ def main():
     assert report["verified_files"] == len(expected)*3
     assert len(report["astronomy"]) == 4
     (args.output/"validation.json").write_text(json.dumps(report, indent=2)+"\n")
-    print(f"Verified {report['sheets']} sheets, {report['verified_files']} files, four astronomy palettes, Starlink-only observer names, 18 vendor colors, bright fiber links, 6/9 pt type, layer order and 1.5x sunbursts")
+    print(f"Verified {report['sheets']} sheets, {report['verified_files']} files, four astronomy palettes with 12 pt labels, Starlink-only observer names, 18 vendor colors, bright fiber links, 6/9 pt satellite type, layer order and 1.5x sunbursts")
 
 
 if __name__ == "__main__":

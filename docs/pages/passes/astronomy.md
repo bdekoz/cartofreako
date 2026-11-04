@@ -37,7 +37,8 @@ the four MSP speculation 5 palettes. These reuse the pinned Setouchi ST2 sky
 calculated at **29 October 2026, 20:00 UTC**, with its 43.5-inch image and
 +4.35-inch printed horizontal move. Each map takes the Randoma11y pair's
 dark background and light typography, preserving all source symbol colors,
-positions and 35 labels. The [pinned source receipt](../../../assets.static/astronomy/msp-setouchi-20261029/provenance.json)
+positions and 35 labels. Sky object labels use **12 physical points** on the
+full-size MSP sheet. The [pinned source receipt](../../../assets.static/astronomy/msp-setouchi-20261029/provenance.json)
 and [source notes](../../../assets.static/astronomy/msp-setouchi-20261029/README.md)
 make these palette studies reproducible without the local Setouchi export tree.
 
