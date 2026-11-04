@@ -137,6 +137,15 @@ remains unmeasured. The standard rendering remains available. The detailed
 decisions and validation record are in the
 [November 3 work log](../../development/20261103_starlink_update_explore.md).
 
+The [default atlas](../getting-started/generation-styles.md#setouchi-st2-print-layout)
+now adopts the **MSP 5 wine/amber** petal map and attribution legend.
+`make atlas` uses wine `#240413` for the ground and amber `#fcc553` for type,
+capability symbols and full-opacity supplied fiber links. Its World and Japan
+views share the November source: 590 antenna records, 66 PoPs and 124 links.
+The Japan map places that artwork in its existing geographic viewport;
+the complete source counts are not Japan-only totals. The aperture and
+capability qualifications above remain part of the separate legend.
+
 ## Published v14 previews
 
 Network Groundstations is a new v14 pass and is present in all six

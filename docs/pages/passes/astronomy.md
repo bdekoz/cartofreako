@@ -42,6 +42,14 @@ full-size MSP sheet. The [pinned source receipt](../../../assets.static/astronom
 and [source notes](../../../assets.static/astronomy/msp-setouchi-20261029/README.md)
 make these palette studies reproducible without the local Setouchi export tree.
 
+The [default atlas](../getting-started/generation-styles.md#setouchi-st2-print-layout)
+uses this all-sky map with the **wine/amber** pair: `#240413` ground and
+`#fcc553` text. Both World and Japan all-sky views retain **685 objects and
+35 labels at 12 physical pt**, with the Japan viewport scale compensated
+and its geographic locator retained. The locator uses the page palette;
+sky symbols retain their source colors. These settings reuse the October 29
+sky and are applied by the atlas composer, with a separate attribution sheet.
+
 ## Authoritative JSON profile
 
 [`astro-profile.json`](../../../assets.static/astronomy/astro-profile.json) and

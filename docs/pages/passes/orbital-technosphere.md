@@ -153,8 +153,9 @@ Each parent contains `name` and `locpoint` sublayers, for example
 `starlink/name` and `starlink/locpoint`. They are marked as editable Inkscape
 layers. Every plotted object has one vector marker and a separate text label
 using its original `OBJECT_NAME`; both carry the same `data-norad-id`.
-Names default to hidden, with `display.show_satellite_names` available to
-enable them. The name's `data-locpoint-id` identifies its matching marker.
+In native generation, names default to hidden, with
+`display.show_satellite_names` available to enable them. The name's
+`data-locpoint-id` identifies its matching marker.
 The earlier observer map showed a small representative selection of names.
 The named-constellation renderer replaced that selection with the complete
 hidden name layers; all 1,088 observer names remain in the current SVG.
@@ -165,8 +166,8 @@ Earth-observation objects (including Planet and Spire). Other objects use
 circles. Named groups retain their assigned colors. Debris remains solid
 black while retaining illumination metadata.
 
-On the global map, `starlink/id` contains visible NORAD catalog IDs at a
-physical 9 pt after map framing. The hidden Starlink name layer also uses
+On the native global sheet, `starlink/id` contains visible NORAD catalog IDs
+at a physical 9 pt after map framing. The hidden Starlink name layer also uses
 9 pt. No other vendor receives an ID layer;
 observer ID layers are absent. The original name layers remain hidden.
 
@@ -183,7 +184,7 @@ constellations. Representative tracks remain budgeted overlays.
 
 Each map has a separate `-legend.svg` companion using the Setouchi ST2
 typography, vertical headings, stacked keys and source bibliography. The
-map has proportional white margins and no overlaid legend. Both sheets
+native map has proportional white margins and no overlaid legend. Both sheets
 carry the calculation timestamp and source metadata; the legend embeds the
 acquisition ledger. The Make composition step is
 [`split-orbiting-plates.py`](../../../scripts/split-orbiting-plates.py).
@@ -230,6 +231,30 @@ ground tracks use twice their original stroke width, with graticule widths
 retained. Observer plates show only Starlink names, at 6 pt in their separate
 name layer beneath all satellite markers.
 
+### Default atlas presentation
+
+`make atlas` adopts MSP 5 with **wine/amber** selected: `#240413` background
+and `#fcc553` typography. Both orbital subjects use 1.5× Starlink sunbursts
+and retain distinct vendor colors, black debris x marks with light halos,
+Intelsat squares and residual Earth-observation triangles. Global Starlink
+NORAD IDs and observer Starlink names use **6 physical pt**, with all satellite
+markers above the text. Other name layers remain hidden. Global ground tracks
+use twice the source stroke width; graticule widths are retained.
+
+World global and observer sheets use the November 3 snapshot: **17,909 global
+objects / 11,155 Starlink IDs**, and **1,088 observer objects / 549 Starlink
+names**. The Japan global viewport uses those same global observations. The
+Japan observer retains its **October 29 Setouchi** positions and memberships:
+**1,078 objects / 471 Starlink names**. Its label size is compensated for the
+viewport scale, and its separate legend records the older observation time.
+
+These atlas settings are applied by
+[`build-atlas-defaults.py`](../../../scripts/build-atlas-defaults.py).
+The [atlas build guide](../getting-started/generation-styles.md#setouchi-st2-print-layout)
+lists the saved recipe, build stages and validation commands. The native
+`generate-orbiting` sheets described above retain 9 pt global IDs and hidden
+observer names.
+
 ## Verification and accuracy boundary
 
 [`tests/test-orbiting-generation.cc`](../../../tests/test-orbiting-generation.cc)
@@ -245,9 +270,15 @@ tests and current snapshot checksums. `scripts/verify-orbiting-layers.py`
 checks unique SVG IDs, exact marker/name pairing, original names, layer nesting,
 visibility and conserved per-group counts against the selected profile. It
 also verifies each marker shape, black debris strokes, matching companion
-keys and attribution, and Starlink-only 9 pt IDs on global plates.
+keys and attribution, and Starlink-only 9 pt IDs on native global plates.
 All twelve global/observer map/legend pairs were checked for this snapshot;
 each global product has 17,909 pairs and each observer product has 1,088 pairs.
+
+For a composed default atlas, run
+`python3 scripts/build-atlas-defaults.py --output output/atlas --check --skip-exports`
+to verify the SVG receipts, 6 pt labels, name visibility, marker ordering,
+sunburst scale and global track widths. Omit `--skip-exports` after a complete
+atlas export to include the export hashes.
 
 Each generator reopens its SVG and checks the projection viewBox, semantic
 layers, profile timestamp, object count, horizon or terrestrial base, and

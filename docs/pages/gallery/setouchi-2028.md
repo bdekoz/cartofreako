@@ -14,6 +14,12 @@ plate set from the Setouchi delivery and is listed in the site's
 [Documentation index](../README.md) · [Visual gallery](README.md) ·
 [Default generation styles](../getting-started/generation-styles.md)
 
+The current [atlas build](../getting-started/generation-styles.md#setouchi-st2-print-layout)
+adopts the November MSP 5 wine/amber settings and writes to `output/atlas/`.
+Its 152 SVG sheets and 20 selected print sheets have been validated; the full
+print atlas has not yet been assembled with this presentation. The published
+gallery above and the ST2 delivery described below retain their dated editions.
+
 The subsequent [ST2 revision](../../development/20261030_setouchi_triennale_explore_2.md)
 has a [plate-by-plate source bibliography](setouchi-2028-bibliography.md)
 covering all 38 pairs. The local edition in

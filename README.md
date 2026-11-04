@@ -30,6 +30,13 @@ Review the latest complete **Setouchi 2028 world/Japan edition** in the
 [review guide](docs/pages/gallery/setouchi-2028.md) explains the visual changes,
 feedback workflow, source inventory and print deliverables.
 
+The current [atlas defaults](docs/pages/getting-started/generation-styles.md#setouchi-st2-print-layout)
+use the approved MSP 5 **wine/amber** presentation in the Setouchi AuthaGraph
+frame. `make atlas-sheets` composes and validates the 152 SVG map/legend
+sheets; `make atlas ASSET_JOBS=4` also exports and assembles the print edition
+under `output/atlas/`. The [November work record](docs/development/20261103_starlink_update_explore.md)
+records the approved settings, source dates and completed validation.
+
 The top-level directories separate implementation, generation, verification,
 and artifacts:
 

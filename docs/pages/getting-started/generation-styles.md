@@ -20,6 +20,9 @@ section of the same JSON selects the approved recipe and saves the Setouchi
 frame, map/legend sequence, PDF selection, title typography and 300 dpi
 exports. Data colors remain distinct. `make atlas` applies this presentation
 to all 38 world/Japan pairs; the dated ST2 and MSP deliveries remain inputs.
+The implementation was committed and pushed as `97cb9a9`. Its completed
+review covers all 152 SVG sheets and 20 selected print sheets; the full print
+atlas has not yet been assembled with these defaults.
 
 [`generation-profile.json`](../../../generation-profile.json) selects which
 passes to run. Its development selection is AuthaGraph, Earth and Water.
@@ -220,9 +223,9 @@ The saved presentation settings are:
   the title's type size, and `WORLD` or `JAPAN` at the same size as the title.
   All three lines are centered; the combined edition uses `WORLD + JAPAN`.
   Edition notes use centimetres and the index uses the ST31 subject titles.
-  The build date
-  defaults to the current date in Los Angeles; set
-  `SETOUCHI_ST2_DATE=2026-10-31` to reproduce the approved reference title date.
+  The build date defaults to the current date in Los Angeles. For a fixed
+  cover date, use `make atlas SETOUCHI_ST2_DATE=2026-11-03`; this override
+  changes the cover date, not the observation dates.
 - A centered 43.5-inch map image on a 44 × 19.052559-inch sheet. Proportional
   scaling is 98.863636%; physical strokes scale with the artwork, while
   opacity is retained. The original 0.5 pt fiber strokes print at 0.494318 pt.
@@ -244,8 +247,9 @@ Each new revision manifest records the atlas settings and the SHA-256 of
 appearance; it does not freeze future title dates or change observation dates.
 
 The separate default PDFs are `atlas-world.pdf` and `atlas-japan.pdf`;
-the combined 147-page edition is `atlas.pdf`. Each edition has its own page index following
-the title page and edition notes. Individual sheet numbering stays 01–38.
+the combined 147-page edition is `atlas.pdf`. These are the outputs of the
+full build. Each edition has its own page index following the title page and
+edition notes. Individual sheet numbering stays 01–38.
 
 Full-size masters are under `maps/{world,japan}/` and
 `legends/{world,japan}/`, with `svg`, `pdf`, `png` and `preview` subdirectories.
@@ -254,16 +258,62 @@ these same separate sheets. For example,
 `anthropocene-temperature-2025-authagraph-44-19.052559.png` contains only
 cartography/data; its `-legend.png` companion contains the legend and data
 bibliography. The same pairing applies to all 76 world/Japan maps and their
-previews. Combined composition intermediates live only under
-`sources/composition/`, outside the public plate folders.
+previews. The default build prepares composition intermediates under
+`build/atlas-st2-base/sources/composition/`, outside the public plate folders.
+The dated ST2 delivery retains its own `sources/composition/` directory.
 
 `scripts/publish-setouchi-plate-files.py` binds all 608 standard filenames
 to the verified separate SVG, PDF, PNG and preview files. The Make target
-publishes these after export, and final validation checks every binding and
-checksum. Use `python3 scripts/publish-setouchi-plate-files.py --check` to
-audit an existing delivery without regenerating it.
-The current network proof is under `proofs/43p5-antarctica-left/`; the
-`prototypes/africa-framing/` variants retain the earlier comparison study.
+publishes these after export and verifies their bindings and checksums.
+The full review assembly also creates a four-sheet network proof under
+`proofs/43p5-antarctica-left/`. Earlier `prototypes/africa-framing/`
+comparisons belong to the historical ST2 delivery.
+
+### Build stages and validation status
+
+The default-setting review composed **152 SVG sheets** and exported **20
+selected sheets**: Earth, network groundstations, orbital global, orbital
+observer and all-sky astronomy, each with World/Japan maps and separate
+legends. PDF font inspection confirmed 6 pt satellite labels and 12 pt all-sky
+labels in both scopes. The selected PDFs use the full 44 × 19.052559-inch
+sheet; their 300 dpi PNGs are 13,200 × 5,716 pixels.
+
+The full 152-sheet print export, public filename bindings, review index and
+aggregate PDFs remain a subsequent `make atlas` build. The validated SVG
+stage and the full build can be invoked separately:
+
+```sh
+make atlas-sheets
+python3 scripts/build-atlas-defaults.py --output output/atlas --check --skip-exports
+
+make atlas ASSET_JOBS=4
+python3 scripts/build-atlas-defaults.py --output output/atlas --check
+python3 scripts/publish-setouchi-plate-files.py --delivery output/atlas --check
+```
+
+Checks read the saved inputs and output hashes; they do not fetch new data.
+If a complete local ST2 base already exists, the composition step can also
+reuse it directly:
+
+```sh
+python3 scripts/build-atlas-defaults.py \
+  --source output/setouchi-triennale-2028-st2 --output output/atlas
+```
+
+The local review used that existing base. Receipts under `output/atlas/sources/`
+identify the actual input paths, selected recipe and generated files:
+
+| Receipt | Scope |
+| --- | --- |
+| `atlas-presentation.json` | Configuration, builder and source hashes; all 152 SVG records |
+| `sheets-validation-svg.json` | Passed SVG audit, including subject counts, label sizes and marker settings |
+| `sheet-export-manifest-selected.json` | The 20 selected PDF, PNG and preview exports |
+| `selected-export-validation.json` | Recorded inspection of those 20 exports, page dimensions and PDF type sizes |
+| `sheet-export-manifest.json`, `standard-plate-files.json`, `revision-manifest.json`, `sheets-validation.json` | Complete export, filename binding, assembly and validation receipts produced by the full build |
+
+These delivery files are local build products. The committed sources are the
+saved configuration, durable builders, tests, approved study inputs and
+[work record](../../development/20261103_starlink_update_explore.md).
 
 ### Setouchi application edition (ST31–ST33)
 
@@ -288,5 +338,6 @@ export dependencies described above. `build/generation-context` uses the
 usual C++/GDAL build dependencies. The bundled
 [Atkinson Hyperlegible fonts](../../../assets/fonts/atkinson-hyperlegible/README.md)
 are checksum-verified and selected through repository-local Fontconfig.
-All 152 SVGs, PDFs and 300 dpi PNGs passed the layout, source, geometry and
-export checks recorded in `sources/sheets-validation.json` for this edition.
+The historical ST2 edition passed its 152-sheet SVG, PDF and 300 dpi PNG
+checks, recorded in that delivery's `sources/sheets-validation.json`.
+The current wine/amber atlas validation scope is recorded above.

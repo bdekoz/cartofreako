@@ -1,12 +1,21 @@
 # Starlink groundstation update: work record and staged plan
 
 Implementation date: 3 November 2026.
+Latest status update: 4 November 2026.
 
 The `network-groundstations` pass now reads the supplied
 `starlink-global-gateways-pops.20261103.kml` snapshot through a reproducible,
 high-fidelity GeoJSON conversion. Conversion, native integration and local
-validation are complete. The remaining stages below describe optional source
-exploration and a subsequent product refresh.
+validation are complete. The dated sections below record the subsequent
+orbital refresh, named layers, capability studies and adoption of MSP 5 as
+the atlas default.
+
+The current atlas uses **wine/amber**, delivered in commit `97cb9a9` and
+pushed to `origin/main`. All **152 SVG sheets** and **20 selected print
+sheets** have been validated. The full print atlas assembly is available
+through `make atlas`; it was not rerun for the default-setting change. See
+the [build and validation guide](../pages/getting-started/generation-styles.md#build-stages-and-validation-status)
+for output paths and receipt scopes.
 
 ## Objective and source scope
 
@@ -1259,3 +1268,31 @@ recorded under the local default delivery's `sources/` directory. The full
 this settings change; `make atlas` is wired to perform those stages. The
 configuration, builders, tests and documentation are ready for the requested
 commit and push.
+
+## Status after atlas-default delivery — 4 November 2026
+
+The atlas-default implementation was committed and pushed to `origin/main`
+as **`97cb9a9`**, completing the commit/push stage recorded above. The saved
+selection is `atlas.presentation.default_palette: wine-amber` in
+`generation-style.json`, using the approved MSP 5 recipe. Its source
+presentation remains the 12 pt astronomy revision at `d1118f3`.
+
+The local receipts confirm 152 composed and validated SVG sheets and 20
+checked map/legend exports. The selected exports cover Earth, groundstations,
+both orbital subjects and all-sky astronomy in World and Japan. The default
+delivery has no complete export manifest or aggregate revision manifest yet; the full
+print build remains `make atlas ASSET_JOBS=4`. The live Setouchi review
+gallery and dated ST2/MSP study deliveries retain their recorded editions.
+
+This documentation update adds the current defaults to the repository and
+development indexes and to the groundstation, orbital and astronomy pass
+pages. It distinguishes native orbital rendering's 9 pt IDs and hidden names
+from the default atlas's 6 pt Starlink text, records the older Setouchi
+observer snapshot, and corrects the atlas composition paths and delivery
+checks. The build guide now identifies which receipts cover SVG composition,
+selected print proofs and a complete atlas export. No data or render settings
+change in this documentation update.
+
+Documentation checks passed for **168 files / 2,138 local links**, and the
+whitespace check passed. The current configuration, recipe, builder and theme
+hashes match the atlas presentation receipt used for the status statements.

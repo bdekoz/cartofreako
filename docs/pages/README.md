@@ -32,6 +32,7 @@ AAO prefix.
 | Map repository directories and individual source files | [Source layout conventions](getting-started/source_layout_conventions.md) |
 | Generate SVG, PDF, PNG, thumbnails, slices, and projection families | [Generation guide](getting-started/generation.md) |
 | Reuse approved line weights, colors, honeycombs and native swarm rendering | [Default generation styles](getting-started/generation-styles.md) |
+| Build the wine/amber atlas with separate map and attribution sheets | [Atlas defaults and build stages](getting-started/generation-styles.md#setouchi-st2-print-layout), [November review and delivery record](../development/20261103_starlink_update_explore.md) |
 | Understand the selected profile, pass evaluation, and exact versus family workflows | [Generation methods and decision record](getting-started/generation-methods.md) |
 | Review the complete Stage 13 development manifest | [Stage 13 convergence notes](../development/20260815_stage-13.md) |
 | Follow the Stage 14 plan, implementation changes, and verification evidence | [Stage 14 convergence ledger](../development/20260815_stage-14.md) |
