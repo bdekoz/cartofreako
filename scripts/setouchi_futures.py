@@ -221,6 +221,9 @@ def resize_image(image, path, width):
 
 
 def build_map(config, output, build, item, scope, env, bibliography, radiation=None):
+    if item.get('prepared_plate'):
+        from setouchi_selected_plates import build_selected_plate
+        return build_selected_plate(config, output, build, item, scope, env, bibliography)
     stem = item['stem']
     ident = f'{scope}-{stem}'
     atlas = ROOT / config['atlas']
@@ -448,13 +451,15 @@ a { color: inherit; text-underline-offset: .16em; }
 
 def write_preview(prepared, output):
     fragment = gallery_blocks(prepared, local=True)
+    print_link = (' · <a href="print/index.html">H3r' + str(prepared['selected_print']['h3_resolution']) +
+                  ' print plates</a>') if prepared.get('selected_print') else ''
     html = ('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             '<title>Cartofreako × Setouchi · gallery preview</title><style>' + PREVIEW_CSS + '</style></head><body><main>'
             '<h1>Cartofreako × Setouchi</h1><aside class="preview-note"><p><strong>Local insertion preview</strong></p>'
             '<p>Place these galleries after the existing three lists and before “Two atlases, one shared table.”</p>'
             '<p>Preview type is a temporary reading style. Published blocks inherit the WordPress theme; '
             'the Star-X reference page’s exact styling is awaiting access.</p>'
-            '<p><a href="README.md">Production notes</a> · <a href="outreach/brief.pdf">Illustrated brief</a></p></aside>'
+            '<p><a href="README.md">Production notes</a> · <a href="outreach/brief.pdf">Illustrated brief</a>' + print_link + '</p></aside>'
             + fragment + '<hr><h2>Two atlases, one shared table</h2>'
             '<p class="preview-note">The existing page continues here. Its current text and lists are preserved by the publisher.</p>'
             '</main></body></html>')
@@ -534,7 +539,7 @@ def prepare(manifest=DEFAULT_MANIFEST, output=None, workers=2, hamonshu_root=Non
     bibliography = json.loads((ROOT / config['atlas'] / 'plate-source-bibliography.json').read_text())
     env = font_environment()
     radiation = {item['stem']: prepare_cells(item['radiation_opacity'], build)
-                 for item in config['maps'] if item.get('radiation_opacity')}
+                 for item in config['maps'] if item.get('radiation_opacity') and not item.get('prepared_plate')}
     tasks = [(item, scope) for scope in ['world', 'japan'] for item in config['maps']]
     with ThreadPoolExecutor(max_workers=workers) as executor:
         futures = [executor.submit(build_map, config, output, build, item, scope, env, bibliography,
@@ -547,6 +552,9 @@ def prepare(manifest=DEFAULT_MANIFEST, output=None, workers=2, hamonshu_root=Non
                 'provenance': [result['provenance'] for result in maps + crops],
                 'theme_status': 'inherited-on-WordPress; live reference not yet verified',
                 'publication_status': 'local-only'}
+    if any(item.get('prepared_plate') for item in config['maps']):
+        from setouchi_selected_plates import assemble_print_edition
+        prepared['selected_print'] = assemble_print_edition(config, output, maps)
     write_json(output / 'prepared.json', prepared)
     write_preview(prepared, output)
     build_brief(prepared, output)

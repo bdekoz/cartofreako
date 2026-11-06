@@ -1,6 +1,6 @@
 # Setouchi 2028 futures: image grids, website publishing, and outreach
 
-Date: 2026-11-06. Status: local update prepared and validated; current presentation saved; separate H3r5/H3r8 trials completed and validated; WordPress publication deferred.
+Date: 2026-11-06. Status: H3r5 selected for Atmosphere and Temperature in both views; local gallery and print edition regenerated and validated; WordPress publication deferred.
 
 ## Task and accumulated decisions
 
@@ -15,7 +15,7 @@ Include a script-based publishing workflow that avoids routine WordPress UI
 work. Finish with contact approaches for AuthaGraph author Hajime Narukawa.
 
 The plan was approved, followed by the instruction to **prepare the local
-update first**. The [local preview](../../output/setouchi-futures-20261106/index.html),
+update first**. The [local preview](../../output/setouchi-futures-h3r5-20261106/index.html),
 image package, publishing script, and unsent illustrated outreach brief are
 prepared. The website, its media library, and its theme have not been changed.
 No outreach has been sent. Exact live typography and authenticated publishing
@@ -24,12 +24,13 @@ remain to be checked through a supported site connection.
 ## Current saved settings — 6 November 2026
 
 The [active manifest](../../config/setouchi-futures-20261106.json) and
-[saved baseline](../../config/setouchi-futures-20261106-baseline.json) record
-the approved local World/Japan presentation through implementation commit
-`6fd6433`. The baseline is an exact copy of the settings used by the current
-prepared artwork. Its SHA-256 is
+[saved H3r5 settings](../../config/setouchi-futures-20261106-h3r5.json) select
+the approved H3r5 products for Atmosphere and Temperature, World and Japan.
+They pin the validated trial plates from `9537304` and retain the presentation
+below. The [original H3r3 settings](../../config/setouchi-futures-20261106-baseline.json)
+and its [saved preview](../../output/setouchi-futures-20261106/index.html) remain
+the control used by the resolution comparison. The r3 settings SHA-256 remains
 `9b7c40362b6fcc2204462b21d9758e79f0419635148a5f6533126e80473eb6ae`.
-It preserves the validated H3r3 edition before the subsequent H3r8 request.
 
 | Setting | Saved value |
 | --- | --- |
@@ -38,7 +39,8 @@ It preserves the validated H3r3 edition before the subsequent H3r8 request.
 | Atmosphere background | Light amber `#fcc553`, `rgb(252,197,83)`, for both views and their thumbnail frames. |
 | Atmosphere land outlines | White `#ffffff`, full opacity, in the final top layer; nominal **0.66 pt** in both views, including relocated Antarctica. Japan magnification is compensated; the outer frame gives **0.6525 pt** on the 44-inch sheets. |
 | Solar-radiation opacity | **100** equally spaced levels from 0 to 1, selected per measured cell on a shared **0–400 W/m²** scale. Preserve gold strokes, source widths, and missing observations. |
-| Source snapshot | Pinned October atmosphere profile and GeoJSON; radiation observation ends **15 October 2026, 23:59 UTC**. Current H3r3 artwork has 30,982 radiation cells and 98 occupied opacity levels. |
+| Analysis resolution | **H3r5** for Atmosphere and Temperature, in both World and Japan. Original source-center sampling and dates retained. |
+| Source snapshot | Pinned October products; radiation observation ends **15 October 2026, 23:59 UTC**. H3r5 has 1,448,374 radiation cells and all 100 opacity levels occupied; Temperature has 62,035 covered cells. |
 | Image delivery | 640/1280-pixel cards, 3840-pixel full-sheet details, separate legend/source PDFs. |
 | Japan card crops | Water, Atmosphere, and Temperature: `[0.5, 1.75, 29.1, 17.25]` inches. Full sheets remain linked; Fiber and Observer retain the full composition. |
 | Gallery layout | Two geographic rows of two maps, then a full-width observer panorama per scope; three Hamonshū crops in equal 4:3 frames; stacked phone layout. |
@@ -48,12 +50,14 @@ Reproduce this saved edition from the repository root:
 
 ```sh
 python3 scripts/update-setouchi-futures.py prepare \
-  --manifest config/setouchi-futures-20261106-baseline.json --workers 2
+  --manifest config/setouchi-futures-20261106-h3r5.json --workers 2
 ```
 
-The saved settings match the current `prepared.json` configuration and its
-validation receipt. Print atlas masters remain the upstream sources; this
-checkpoint applies to the local website package. WordPress publication and
+The selected print edition is included under
+[`print/`](../../output/setouchi-futures-h3r5-20261106/print/index.html), with
+four maps and separate legends. The original atlas masters remain upstream
+references. This selection applies to these four Setouchi plates and the local
+website package. WordPress publication and
 outreach remain deferred. The revision notes below preserve the sequence of
 decisions; the table above is the authoritative saved presentation.
 
@@ -242,9 +246,9 @@ See the [previous delivery record](20261101_setouchi_triennale_proposal.md).
 
 Durable entry point: `scripts/update-setouchi-futures.py`, with a
 versioned content manifest at `config/setouchi-futures-20261106.json` and
-generated assets under `output/setouchi-futures-20261106/`. These paths and
+generated assets under `output/setouchi-futures-h3r5-20261106/`. These paths and
 commands are now implemented. See the
-[delivery README](../../output/setouchi-futures-20261106/README.md) for setup,
+[delivery README](../../output/setouchi-futures-h3r5-20261106/README.md) for setup,
 rebuild, credential handling, publication, and recovery instructions.
 
 ### Transport choices
@@ -274,8 +278,8 @@ python3 scripts/validate-setouchi-futures.py --browser
 
 # Later, through the site's supported authenticated connection.
 python3 scripts/update-setouchi-futures.py plan --page-id 3175 --transport rest
-python3 scripts/update-setouchi-futures.py apply --plan output/setouchi-futures-20261106/private/publish-plan.json
-python3 scripts/update-setouchi-futures.py verify --receipt output/setouchi-futures-20261106/private/publish-receipt.json --public
+python3 scripts/update-setouchi-futures.py apply --plan output/setouchi-futures-h3r5-20261106/private/publish-plan.json
+python3 scripts/update-setouchi-futures.py verify --receipt output/setouchi-futures-h3r5-20261106/private/publish-receipt.json --public
 python3 scripts/update-setouchi-futures.py restore --backup /path/to/saved-page.json
 ```
 
@@ -505,9 +509,9 @@ only changed media are the six atmosphere images and their two legend PDFs.
 Use **H3 resolution 8 uniformly for the gridded analyses**, with World and
 Japan drawing from the same dated products, units, quality rules, and missing
 data policy. This is a new data-preparation requirement. The saved presentation
-above and the current preview still use **H3r3** atmosphere and temperature
-products; neither their metadata nor their grid identifiers have been relabeled.
-No H3r8 replacement product was found in the local project inventory.
+at that checkpoint and the original preview used **H3r3** atmosphere and
+temperature products; neither their metadata nor their grid identifiers were
+relabeled. No H3r8 replacement product was then found in the local inventory.
 
 The proposed scope is every gridded analysis in these two galleries:
 Atmosphere's seven observed layers and the 2026 temperature-record fields.
@@ -565,8 +569,8 @@ allocation method before making cross-layer comparisons.
    100-band radiation scale. No coarser display grid is substituted.
 5. **Render and save — complete for both trials.** Save eight maps, separate
    legends, an r3/r5/r8 comparison gallery, and provenance. Desktop and phone
-   checks pass. The H3r3 baseline remains available; adopting either trial as
-   the atlas or website default is a separate decision.
+   checks pass. The H3r3 baseline remains available. The later selection below
+   adopts H3r5 for the four Setouchi plates and their website images.
 
 The documentation/settings checkpoint at `1ef3114` did **not** run an H3r8
 migration. The baseline artwork and its existing validation receipt remain
@@ -688,6 +692,70 @@ Intermediate GeoJSON products and rendering caches stay in
 contract, and raw-input manifest hashes are saved with the delivery under
 `output/setouchi-h3-trials-20261106/sources/`. Rebuilding verifies the original
 JAXA and CPC file hashes; no network refresh or WordPress publication occurs.
+
+### Selected H3r5 edition — 6 November 2026
+
+The user selected **H3r5** after reviewing the trials and requested regeneration.
+The selection covers Atmosphere and Temperature records · 2026, World and
+Japan. The [current gallery](../../output/setouchi-futures-h3r5-20261106/index.html)
+now uses those four r5 plates alongside the existing Water, Fiber, Observer,
+and Hamonshū images. The [print index](../../output/setouchi-futures-h3r5-20261106/print/index.html)
+provides individual PDF/SVG/300 dpi PNG maps and separate legend/source sheets.
+Combined [World](../../output/setouchi-futures-h3r5-20261106/print/world.pdf) and
+[Japan](../../output/setouchi-futures-h3r5-20261106/print/japan.pdf) PDFs each
+contain four pages alternating map and legend.
+
+The [active manifest](../../config/setouchi-futures-20261106.json) and exact
+[saved r5 settings](../../config/setouchi-futures-20261106-h3r5.json) record the
+selection. Their SHA-256 is
+`7afab010d98256abb1cba97fd8eca50be4db746f8457e1a39d073b4255c98de7`.
+The output directory is `output/setouchi-futures-h3r5-20261106/`; the original
+r3 package and r3/r5/r8 comparison keep their existing paths.
+
+Completed stages:
+
+1. **Select and pin.** Select the r5 product hashes and validated plate
+   manifest from `9537304`. Both geographic views use the same product for
+   each subject. Retain the original source-center sampling, dates, quality
+   rules, and count calculations.
+2. **Regenerate.** The durable website builder now accepts a pinned prepared
+   plate per subject. It verifies every source artifact, retains the exact
+   validated print layers, regenerates legends as the selected edition, and
+   produces 640/1280-pixel cards, 3840-pixel details, and combined print PDFs.
+   It does not reapply the already-rendered outline or radiation styling.
+3. **Save and route.** Save r5 as the active local Setouchi edition. Default
+   validation and publication planning follow the active manifest's output,
+   avoiding accidental selection of the archived r3 package. Website captions
+   and alternative text identify H3r5. Print files stay outside the publisher's
+   36 gallery upload assets.
+4. **Validate.** All four selected map/legend pairs passed resolution, product,
+   source-artifact, and print-file checks. Combined PDFs each have four pages;
+   all local links resolve. Desktop and phone browser checks passed for all
+   thirteen images. The existing 23 publishing tests and six radiation tests
+   passed. Negative checks reject a changed source manifest, mismatched
+   resolution/product, changed outline styling, and changed radiation scale.
+
+The implementation is in
+[setouchi_selected_plates.py](../../scripts/setouchi_selected_plates.py), called
+by the existing `update-setouchi-futures.py prepare` workflow. Rebuilding this
+edition uses the checked r5 plate exports, so the large intermediate GeoJSON
+files are not required. Reaggregating the raw observations remains the trial
+builder's responsibility. The [delivery README](../../output/setouchi-futures-h3r5-20261106/README.md)
+records both rebuild paths, formats, provenance, and later publication commands.
+
+Atmosphere retains the amber background, white topmost nominal 0.66 pt outlines,
+and 100 radiation-opacity levels. Its r5 product has 1,448,374 radiation cells
+and occupies all 100 levels. Temperature retains its wine background and count
+classes, with 62,035 covered r5 cells. The previous sampling caveat continues
+to apply: an empty finer cell can lack a source center, and finer indexing
+does not add measurements or fill the original raster pixel footprint.
+
+The [validation receipt](../../output/setouchi-futures-h3r5-20261106/validation.json)
+pins the new prepared package and preview. The r3 preview and prepared-manifest
+hashes, all trial artifacts, and original atlas masters remain unchanged.
+The Water, Fiber, Observer, and Hamonshū image hashes also match the r3 package;
+their legend PDFs were re-exported without visual changes. WordPress content
+and media remain unpublished, and the outreach brief and draft remain unsent.
 
 ## Contact approaches: Hajime Narukawa
 

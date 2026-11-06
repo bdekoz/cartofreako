@@ -8,7 +8,7 @@ import tempfile
 from urllib.parse import unquote, urlsplit
 
 from bs4 import BeautifulSoup
-from setouchi_futures import ROOT, digest, write_json
+from setouchi_futures import ROOT, digest, load_config, write_json
 from setouchi_futures_publish import load_prepared, parse_blocks, used_keys
 
 
@@ -113,7 +113,7 @@ def browser_checks(output, temp):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output', type=Path, default=ROOT / 'output/setouchi-futures-20261106')
+    parser.add_argument('--output', type=Path, default=ROOT / load_config()['output'])
     parser.add_argument('--browser', action='store_true')
     parser.add_argument('--qa-dir', type=Path, default=ROOT / 'build/setouchi-futures-qa')
     args = parser.parse_args()
@@ -134,12 +134,52 @@ def main():
     if sum(b['name'] == 'image' for b in blocks) != 13:
         raise ValueError('Wrong WordPress figure count')
     sources_checked = 0
+    atlas_sources_checked = 0
+    selected_plates = []
     for item in prepared['provenance']:
         if 'source_svg' in item:
             for source_key, hash_key in [('source_svg', 'source_sha256'), ('legend_svg', 'legend_sha256')]:
                 if digest(ROOT / item[source_key]) != item[hash_key]:
                     raise ValueError('Atlas master changed: ' + item['id'])
                 sources_checked += 1
+                if not item.get('selected_plate'):
+                    atlas_sources_checked += 1
+        if item.get('selected_plate'):
+            from setouchi_selected_plates import load_selection
+            scope, stem = item['id'].split('-', 1)
+            settings = next(m for m in prepared['config']['maps'] if m['stem'] == stem)
+            _, selected = load_selection(settings, scope)
+            resolution = prepared['config']['analysis_h3_resolution']
+            if item['h3_resolution'] != resolution or selected['h3_resolution'] != resolution:
+                raise ValueError('Mixed H3 resolutions in selected edition')
+            if item['product_sha256'] != selected['fingerprint']['snapshot_sha256']:
+                raise ValueError('Selected product differs from provenance')
+            for file in item['print_files']:
+                if digest(output / file['path']) != file['sha256']:
+                    raise ValueError('Changed selected print artifact: ' + file['path'])
+            legend = subprocess.check_output(['pdftotext', str(output / ('media/' + item['id'] + '-legend.pdf')), '-'], text=True)
+            if f'H3r{resolution} selected edition' not in legend or 'H3 resolution 3' in legend:
+                raise ValueError('Selected legend uses a stale resolution')
+            selected_plates.append({'id': item['id'], 'h3_resolution': resolution,
+                                    'product_sha256': item['product_sha256'], 'print_files_checked': len(item['print_files'])})
+    if prepared.get('selected_print'):
+        expected = {(scope + '-' + m['stem']) for scope in ['world', 'japan']
+                    for m in prepared['config']['maps'] if m.get('prepared_plate')}
+        if {p['id'] for p in selected_plates} != expected:
+            raise ValueError('Missing selected print plates')
+        for file in prepared['selected_print']['files']:
+            if digest(output / file['path']) != file['sha256']:
+                raise ValueError('Changed combined print file')
+            if file['path'].endswith('.pdf'):
+                info = subprocess.check_output(['pdfinfo', str(output / file['path'])], text=True)
+                pages = next(int(line.split(':')[1]) for line in info.splitlines() if line.startswith('Pages:'))
+                if pages != len(expected):
+                    raise ValueError('Combined print PDF has the wrong page count')
+        print_page = BeautifulSoup((output / 'print/index.html').read_text(), 'html.parser')
+        for node in print_page.select('[href], [src]'):
+            value = node.get('href') or node.get('src')
+            if not urlsplit(value).scheme and not (output / 'print' / unquote(value.split('#')[0])).exists():
+                raise ValueError('Broken print index link: ' + value)
     for scope in ['world', 'japan']:
         pdf = output / f'media/{scope}-network-fiber-legend.pdf'
         text = subprocess.check_output(['pdftotext', '-layout', str(pdf), '-'], text=True)
@@ -147,12 +187,13 @@ def main():
             raise ValueError('Fiber legend text does not match the web variation')
     radiation = []
     for item in prepared['provenance']:
-        record = item.get('web_radiation_opacity')
+        record = item.get('web_radiation_opacity') or item.get('selected_radiation_opacity')
         if not record:
             continue
-        for name in ('snapshot', 'profile'):
-            if digest(ROOT / record['inputs'][name]) != record['inputs'][name + '_sha256']:
-                raise ValueError('Radiation source changed: ' + name)
+        if record.get('inputs'):
+            for name in ('snapshot', 'profile'):
+                if digest(ROOT / record['inputs'][name]) != record['inputs'][name + '_sha256']:
+                    raise ValueError('Radiation source changed: ' + name)
         pdf = output / ('media/' + item['id'] + '-legend.pdf')
         legend = subprocess.check_output(['pdftotext', '-layout', str(pdf), '-'], text=True)
         if (f'{record["bands"]} opacity bands' not in legend
@@ -166,7 +207,8 @@ def main():
     result = {'schema': 'cartofreako-setouchi-futures-validation-v1', 'status': 'local-only',
         'prepared_sha256': digest(output / 'prepared.json'), 'preview_sha256': digest(output / 'index.html'),
         'media_assets': len(prepared['assets']), 'upload_assets': len(used_keys(prepared)),
-        'figures': 13, 'map_legend_pairs': 10, 'unchanged_atlas_masters': sources_checked,
+        'figures': 13, 'map_legend_pairs': 10, 'unchanged_atlas_masters': atlas_sources_checked,
+        'source_sheets_checked': sources_checked, 'selected_h3_plates': selected_plates,
         'broken_local_links': broken, 'fiber_legend_text_verified': True, 'outreach_pdf_pages': 1,
         'radiation_opacity': radiation, 'browser': []}
     if args.browser:

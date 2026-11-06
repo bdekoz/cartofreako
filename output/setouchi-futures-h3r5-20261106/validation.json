@@ -1,0 +1,209 @@
+{
+  "schema": "cartofreako-setouchi-futures-validation-v1",
+  "status": "local-only",
+  "prepared_sha256": "f8ccd44baa7d3f14554b26485fdff79fd2a7357a822c55b49398026afc32fa7c",
+  "preview_sha256": "663c136141aa99543fe8f3138c5ce27a838a4edb40819ef2300f9df9db634fe0",
+  "media_assets": 49,
+  "upload_assets": 36,
+  "figures": 13,
+  "map_legend_pairs": 10,
+  "unchanged_atlas_masters": 12,
+  "source_sheets_checked": 20,
+  "selected_h3_plates": [
+    {
+      "id": "world-cloud-atmosphere",
+      "h3_resolution": 5,
+      "product_sha256": "a8b78d1afb708df84a68e51a5e2f64302a8cbd64eba7c1330634d441e6b825b3",
+      "print_files_checked": 12
+    },
+    {
+      "id": "world-anthropocene-temperature-2026",
+      "h3_resolution": 5,
+      "product_sha256": "cb148a97515ed560058dbb2bc875768d7cfaa0b53e28c3a9c2ac4a814d3cc6d0",
+      "print_files_checked": 8
+    },
+    {
+      "id": "japan-cloud-atmosphere",
+      "h3_resolution": 5,
+      "product_sha256": "a8b78d1afb708df84a68e51a5e2f64302a8cbd64eba7c1330634d441e6b825b3",
+      "print_files_checked": 12
+    },
+    {
+      "id": "japan-anthropocene-temperature-2026",
+      "h3_resolution": 5,
+      "product_sha256": "cb148a97515ed560058dbb2bc875768d7cfaa0b53e28c3a9c2ac4a814d3cc6d0",
+      "print_files_checked": 8
+    }
+  ],
+  "broken_local_links": [],
+  "fiber_legend_text_verified": true,
+  "outreach_pdf_pages": 1,
+  "radiation_opacity": [
+    {
+      "id": "world-cloud-atmosphere",
+      "bands": 100,
+      "observed_cells": 1448374,
+      "populated_bands": 100,
+      "legend_verified": true
+    },
+    {
+      "id": "japan-cloud-atmosphere",
+      "bands": 100,
+      "observed_cells": 1448374,
+      "populated_bands": 100,
+      "legend_verified": true
+    }
+  ],
+  "browser": [
+    {
+      "viewport": [
+        1440,
+        1100
+      ],
+      "no_horizontal_overflow": true,
+      "image_count": 13,
+      "all_images_loaded": true,
+      "all_have_alt": true,
+      "stacked_on_phone": true,
+      "gallery_sections": [
+        "World",
+        "Japan / Setouchi",
+        "Hamonshū Revisited"
+      ],
+      "images_inside_viewport": true,
+      "hamonshu_heights": [
+        250,
+        250,
+        250
+      ],
+      "section": "World",
+      "lazy_loading_declared": true,
+      "images_decoded_before_capture": true
+    },
+    {
+      "viewport": [
+        1440,
+        1100
+      ],
+      "no_horizontal_overflow": true,
+      "image_count": 13,
+      "all_images_loaded": true,
+      "all_have_alt": true,
+      "stacked_on_phone": true,
+      "gallery_sections": [
+        "World",
+        "Japan / Setouchi",
+        "Hamonshū Revisited"
+      ],
+      "images_inside_viewport": true,
+      "hamonshu_heights": [
+        250,
+        250,
+        250
+      ],
+      "section": "Japan / Setouchi",
+      "lazy_loading_declared": true,
+      "images_decoded_before_capture": true
+    },
+    {
+      "viewport": [
+        1440,
+        1100
+      ],
+      "no_horizontal_overflow": true,
+      "image_count": 13,
+      "all_images_loaded": true,
+      "all_have_alt": true,
+      "stacked_on_phone": true,
+      "gallery_sections": [
+        "World",
+        "Japan / Setouchi",
+        "Hamonshū Revisited"
+      ],
+      "images_inside_viewport": true,
+      "hamonshu_heights": [
+        250,
+        250,
+        250
+      ],
+      "section": "Hamonshū Revisited",
+      "lazy_loading_declared": true,
+      "images_decoded_before_capture": true
+    },
+    {
+      "viewport": [
+        390,
+        900
+      ],
+      "no_horizontal_overflow": true,
+      "image_count": 13,
+      "all_images_loaded": true,
+      "all_have_alt": true,
+      "stacked_on_phone": true,
+      "gallery_sections": [
+        "World",
+        "Japan / Setouchi",
+        "Hamonshū Revisited"
+      ],
+      "images_inside_viewport": true,
+      "hamonshu_heights": [
+        257,
+        257,
+        257
+      ],
+      "section": "World",
+      "lazy_loading_declared": true,
+      "images_decoded_before_capture": true
+    },
+    {
+      "viewport": [
+        390,
+        900
+      ],
+      "no_horizontal_overflow": true,
+      "image_count": 13,
+      "all_images_loaded": true,
+      "all_have_alt": true,
+      "stacked_on_phone": true,
+      "gallery_sections": [
+        "World",
+        "Japan / Setouchi",
+        "Hamonshū Revisited"
+      ],
+      "images_inside_viewport": true,
+      "hamonshu_heights": [
+        257,
+        257,
+        257
+      ],
+      "section": "Japan / Setouchi",
+      "lazy_loading_declared": true,
+      "images_decoded_before_capture": true
+    },
+    {
+      "viewport": [
+        390,
+        900
+      ],
+      "no_horizontal_overflow": true,
+      "image_count": 13,
+      "all_images_loaded": true,
+      "all_have_alt": true,
+      "stacked_on_phone": true,
+      "gallery_sections": [
+        "World",
+        "Japan / Setouchi",
+        "Hamonshū Revisited"
+      ],
+      "images_inside_viewport": true,
+      "hamonshu_heights": [
+        257,
+        257,
+        257
+      ],
+      "section": "Hamonshū Revisited",
+      "lazy_loading_declared": true,
+      "images_decoded_before_capture": true
+    }
+  ]
+}

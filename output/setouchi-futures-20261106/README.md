@@ -1,4 +1,7 @@
-# Setouchi futures — local website update
+# Setouchi futures — saved H3r3 website update
+
+This is the archived H3r3 control. The selected edition is now the
+[H3r5 gallery and print package](../setouchi-futures-h3r5-20261106/index.html).
 
 Open [index.html](index.html) to review two five-plate galleries and the
 three-image Hamonshū strip. The geographic maps retain the modified Setouchi
@@ -52,18 +55,18 @@ JavaScript is required.
 The exact settings for this validated edition are saved in
 [setouchi-futures-20261106-baseline.json](../../config/setouchi-futures-20261106-baseline.json).
 They retain the amber atmosphere background, white 0.66 pt top outlines, and
-100 radiation-opacity levels. Atmosphere and Temperature currently use H3r3;
-the subsequent uniform H3r8 request and migration stages are recorded in the
+100 radiation-opacity levels. This saved Atmosphere and Temperature edition
+uses H3r3; the subsequent r5/r8 trials and r5 selection are recorded in the
 [development plan](../../docs/development/20261106_setouchi_triennale_futures.md#uniform-h3r8-analysis-products--follow-up-request).
-The current assets have not been converted to H3r8.
+These archived assets retain H3r3.
 
 Run from the Cartofreako repository root:
 
 ```sh
-python3 scripts/update-setouchi-futures.py prepare --workers 2
+python3 scripts/update-setouchi-futures.py prepare --manifest config/setouchi-futures-20261106-baseline.json --workers 2
 python3 tests/test-setouchi-futures.py
 python3 tests/test-setouchi-radiation.py
-python3 scripts/validate-setouchi-futures.py --browser
+python3 scripts/validate-setouchi-futures.py --output output/setouchi-futures-20261106 --browser
 ```
 
 To reproduce the saved settings explicitly, add
@@ -101,7 +104,7 @@ An application password is independently revocable; it does not require
 giving the script the normal WordPress login password.
 
 ```sh
-python3 scripts/update-setouchi-futures.py plan --transport rest
+python3 scripts/update-setouchi-futures.py plan --bundle output/setouchi-futures-20261106 --transport rest
 python3 scripts/update-setouchi-futures.py apply \
   --plan output/setouchi-futures-20261106/private/publish-plan.json
 python3 scripts/update-setouchi-futures.py verify \

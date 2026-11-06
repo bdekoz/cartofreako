@@ -6,7 +6,7 @@ from pathlib import Path
 import sys
 import requests
 
-from setouchi_futures import DEFAULT_MANIFEST, ROOT, prepare
+from setouchi_futures import DEFAULT_MANIFEST, ROOT, load_config, prepare
 from setouchi_futures_publish import (RestBackend, WpCliBackend, apply_plan, load_prepared,
                                       make_plan, restore_backup, verify_receipt)
 
@@ -32,7 +32,7 @@ def main():
         p.add_argument('--ssh-host')
         p.add_argument('--wp-path')
         if command == 'plan':
-            p.add_argument('--bundle', type=Path, default=ROOT / 'output/setouchi-futures-20261106')
+            p.add_argument('--bundle', type=Path, default=ROOT / load_config()['output'])
             p.add_argument('--page-id', type=int, default=3175)
             p.add_argument('--transport', choices=['rest', 'wp-cli'], default='rest')
             p.add_argument('--page-file', type=Path, help='Read an exported context=edit page; no remote connection')
