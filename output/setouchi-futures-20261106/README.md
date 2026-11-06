@@ -49,6 +49,14 @@ JavaScript is required.
 
 ## Rebuild and check
 
+The exact settings for this validated edition are saved in
+[setouchi-futures-20261106-baseline.json](../../config/setouchi-futures-20261106-baseline.json).
+They retain the amber atmosphere background, white 0.66 pt top outlines, and
+100 radiation-opacity levels. Atmosphere and Temperature currently use H3r3;
+the subsequent uniform H3r8 request and migration stages are recorded in the
+[development plan](../../docs/development/20261106_setouchi_triennale_futures.md#uniform-h3r8-analysis-products--follow-up-request).
+The current assets have not been converted to H3r8.
+
 Run from the Cartofreako repository root:
 
 ```sh
@@ -57,6 +65,9 @@ python3 tests/test-setouchi-futures.py
 python3 tests/test-setouchi-radiation.py
 python3 scripts/validate-setouchi-futures.py --browser
 ```
+
+To reproduce the saved settings explicitly, add
+`--manifest config/setouchi-futures-20261106-baseline.json` to `prepare`.
 
 The build needs the existing `output/atlas/` SVGs and bibliography, the pinned
 Atkinson fonts, Python packages Pillow/lxml/Beautiful Soup/ReportLab/requests,

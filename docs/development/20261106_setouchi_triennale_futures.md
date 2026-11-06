@@ -1,6 +1,6 @@
 # Setouchi 2028 futures: image grids, website publishing, and outreach
 
-Date: 2026-11-06. Status: local update prepared and validated; publication deferred.
+Date: 2026-11-06. Status: local update prepared and validated; current presentation saved; H3r8 migration scoped below; publication deferred.
 
 ## Task and accumulated decisions
 
@@ -20,6 +20,42 @@ image package, publishing script, and unsent illustrated outreach brief are
 prepared. The website, its media library, and its theme have not been changed.
 No outreach has been sent. Exact live typography and authenticated publishing
 remain to be checked through a supported site connection.
+
+## Current saved settings — 6 November 2026
+
+The [active manifest](../../config/setouchi-futures-20261106.json) and
+[saved baseline](../../config/setouchi-futures-20261106-baseline.json) record
+the approved local World/Japan presentation through implementation commit
+`6fd6433`. The baseline is an exact copy of the settings used by the current
+prepared artwork. Its SHA-256 is
+`9b7c40362b6fcc2204462b21d9758e79f0419635148a5f6533126e80473eb6ae`.
+It preserves the validated H3r3 edition before the subsequent H3r8 request.
+
+| Setting | Saved value |
+| --- | --- |
+| Geographic composition | Modified Setouchi AuthaGraph with the existing horizontal adjustment; World and Japan views. |
+| Default artwork colors | Wine `#240413` background; amber `#fcc553` submarine routes at full opacity; retained thematic and satellite-vendor colors. |
+| Atmosphere background | Light amber `#fcc553`, `rgb(252,197,83)`, for both views and their thumbnail frames. |
+| Atmosphere land outlines | White `#ffffff`, full opacity, in the final top layer; nominal **0.66 pt** in both views, including relocated Antarctica. Japan magnification is compensated; the outer frame gives **0.6525 pt** on the 44-inch sheets. |
+| Solar-radiation opacity | **100** equally spaced levels from 0 to 1, selected per measured cell on a shared **0–400 W/m²** scale. Preserve gold strokes, source widths, and missing observations. |
+| Source snapshot | Pinned October atmosphere profile and GeoJSON; radiation observation ends **15 October 2026, 23:59 UTC**. Current H3r3 artwork has 30,982 radiation cells and 98 occupied opacity levels. |
+| Image delivery | 640/1280-pixel cards, 3840-pixel full-sheet details, separate legend/source PDFs. |
+| Japan card crops | Water, Atmosphere, and Temperature: `[0.5, 1.75, 29.1, 17.25]` inches. Full sheets remain linked; Fiber and Observer retain the full composition. |
+| Gallery layout | Two geographic rows of two maps, then a full-width observer panorama per scope; three Hamonshū crops in equal 4:3 frames; stacked phone layout. |
+| Website scope | Local insertion after the three lists and before “Two atlases, one shared table”; existing theme typography inherited when published. |
+
+Reproduce this saved edition from the repository root:
+
+```sh
+python3 scripts/update-setouchi-futures.py prepare \
+  --manifest config/setouchi-futures-20261106-baseline.json --workers 2
+```
+
+The saved settings match the current `prepared.json` configuration and its
+validation receipt. Print atlas masters remain the upstream sources; this
+checkpoint applies to the local website package. WordPress publication and
+outreach remain deferred. The revision notes below preserve the sequence of
+decisions; the table above is the authoritative saved presentation.
 
 ## Recommended composition: two grids and a Hamonshū strip
 
@@ -233,6 +269,7 @@ access path; do not assume it proves a missing password or a disabled REST API.
 # Local preparation; no credentials or remote writes.
 python3 scripts/update-setouchi-futures.py prepare --manifest config/setouchi-futures-20261106.json
 python3 tests/test-setouchi-futures.py
+python3 tests/test-setouchi-radiation.py
 python3 scripts/validate-setouchi-futures.py --browser
 
 # Later, through the site's supported authenticated connection.
@@ -290,7 +327,7 @@ Hamonshū details link to the verified original 1600-pixel JPEG crops.
 | F01 — establish current page/style | Pending live access | Page 3175 is identified by the earlier package. Current raw content, insertion boundary, and measured Star-X typography still need authenticated/site access. |
 | F02 — curate and export | Complete locally | Ten maps, ten legend PDFs, three Hamonshū crops; manifest with checksums, captions, dates, crop bounds, and credits. |
 | F03 — compose | Complete locally; live theme pending | Two native grids and Hamonshū strip checked at desktop and phone widths. Preview type is explicitly temporary; published blocks inherit the theme. |
-| F04 — automate | Implemented and tested offline | REST and SSH/WP-CLI transports; 23 tests cover insertion, reruns, stale edits, failed uploads, recovery, and transport handling. Actual server integration remains untested. |
+| F04 — automate | Implemented and tested offline | REST and SSH/WP-CLI transports; 23 publishing tests plus six radiation tests (29 total) cover publication guards and per-cell opacity/provenance. Actual server integration remains untested. |
 | F05 — publish and verify | Deferred: local preparation first | No WordPress writes. Later: read current page, inspect plan, apply, verify saved content/media and frontend appearance. |
 | F06 — prepare outreach | Prepared, unsent | Verified lab contact route, message draft, and one-page illustrated brief. Update the page before using the revised gallery link in outreach. |
 
@@ -326,10 +363,13 @@ bundle contains no credentials or publication state.
 
 Validation on 6 November:
 
-- **23 offline tests passed**, including preservation of surrounding content,
+- **29 offline tests passed**: 23 publishing tests plus six radiation tests.
+  Publishing checks include preservation of surrounding content,
   duplicate-free reruns, stale title/content detection, upload interruption,
   concurrent edits during uploads and before readback, server filtering, and
   guarded restoration. Unexpected readback never authorizes automatic restore.
+  Radiation checks cover the 100-level scale, per-cell opacity, retained
+  geometry and widths, source identity, and missing-data guards.
 - **Six Chrome captures** covered World, Japan, and Hamonshū at 1440 × 1100
   and 390 × 900. Images loaded and decoded before capture; phone figures stack,
   all thirteen images have alt text, and no horizontal overflow was found.
@@ -374,11 +414,11 @@ source coastlines were already last inside the shared data group, but their
 thin amber strokes were faint against the newly amber background. The web
 builder now separates those existing paths into a final `web-land-outlines`
 layer and paints them white `#ffffff` at full opacity, following the user's
-color correction. Original coastline geometry and line widths are retained;
-land remains unfilled.
-The first outline revision used **0.5 pt for World** and **1 pt for Japan**. After the
-Setouchi framing scale, the physical weights on the 44-inch sheets are about
-0.494 pt and 0.989 pt; responsive web previews scale those lines with the image.
+color correction. That first revision retained the original coastline geometry
+and line widths; land remained unfilled. It used **0.5 pt for World** and
+**1 pt for Japan**, approximately 0.494 pt and 0.989 pt after the Setouchi
+framing scale. The subsequent common **0.66 pt** setting supersedes those
+weights; responsive web previews scale the strokes with the image.
 
 The World overlay preserves the three cyclic placements and their clipping,
 and includes the relocated Antarctica coastline. Japan retains its viewport
@@ -393,7 +433,7 @@ viewport transforms, and clips. World uses 4,343 coastline paths including
 Antarctica; Japan uses 4,157. Both white-outline exports were visually checked.
 The 23 publishing tests and desktop/phone gallery checks passed.
 
-### Atmosphere outline-weight trial — 6 November 2026
+### Atmosphere saved outline weight — 6 November 2026
 
 Set both white land outlines to a nominal **0.66 pt**, replacing the differing
 World/Japan weights above. The durable `land_outline.width_pt` setting converts
@@ -459,6 +499,76 @@ Validation passed: 23 publishing tests plus six radiation tests, all source
 checksums, both legend descriptions, and desktop/phone gallery checks. The
 World and Japan exports and the new legend key were visually reviewed. The
 only changed media are the six atmosphere images and their two legend PDFs.
+
+### Uniform H3r8 analysis products — follow-up request
+
+Use **H3 resolution 8 uniformly for the gridded analyses**, with World and
+Japan drawing from the same dated products, units, quality rules, and missing
+data policy. This is a new data-preparation requirement. The saved presentation
+above and the current preview still use **H3r3** atmosphere and temperature
+products; neither their metadata nor their grid identifiers have been relabeled.
+No H3r8 replacement product was found in the local project inventory.
+
+The proposed scope is every gridded analysis in these two galleries:
+Atmosphere's seven observed layers and the 2026 temperature-record fields.
+Water's coastlines, rivers, and bathymetric contours, Fiber's route geometry,
+and Observer's calculated sky positions retain their native representations.
+Atmosphere's calculated solar contours also remain vectors. The user was
+asked whether the intended scope includes Temperature or is limited to
+Atmosphere, and whether individual H3r8 cells should be drawn or aggregated
+for legibility. Those choices remain pending; the broader scope and aggregated
+display are the proposed approach, not a completed conversion.
+
+#### Source and implementation findings
+
+| Product | Current input | Work needed for H3r8 |
+| --- | --- | --- |
+| Atmosphere | October archived profile and snapshot at H3r3; all 25 original JAXA raster files are present. | Rebuild from the original rasters with a shared r8 policy. Review the current `maximum_samples_per_axis: 720` reduction before preparing finer cells. Preserve observation timestamps, quality masks, and nulls. |
+| Temperature records | October archived H3r3 product; 96 staged NOAA CPC annual TMAX/TMIN files are present, with a 0.5° source grid. | Revise the preparation/storage contract before an r8 run. Preserve the 1979–2025 baseline, strict record comparison, minimum 30 history years, and 28 October cutoff. Recompute from daily inputs; record counts cannot simply be summed over spatial cells. |
+| World / Japan pairing | Two viewports of shared geographic products. | Validate actual H3 identifiers as resolution 8 in every analysis product. Use the same underlying values for both views; cropping must not renormalize the radiation opacity scale. |
+
+H3r8 has **691,776,122 cells globally**, with an average hexagon area of about
+**0.737 km²**. These are grid statistics, not the spatial resolution of the
+observations. See the [official H3 cell statistics](https://h3geo.org/docs/core-library/restable/).
+The current temperature preparer enumerates every global cell and allocates
+416 calendar slots per cell for historical extrema and history counts. At r8,
+those two arrays alone would require about **1.44 TB** in decimal units. Its
+existing reader also requires a fully enumerated global GeoJSON. Changing
+only `h3_resolution` would therefore be an unsuitable implementation.
+
+Use tiled or partitioned processing with an explicit coverage/missing-data
+contract. Finer indexing must retain the original source footprint and
+effective observation resolution. Do not turn existing r3 means into claimed
+independent r8 measurements, silently interpolate gaps, or interpret absent
+sample centers as proof that the surrounding source pixel was unobserved.
+For coarse rasters, choose and record the source-to-cell sampling or area
+allocation method before making cross-layer comparisons.
+
+#### Migration stages
+
+1. **Inventory — complete.** Verify the current r3 profiles, locate their dated
+   raw inputs, and save the validated visual baseline separately.
+2. **Scope and representation — awaiting the two clarification choices.**
+   Confirm the gridded subjects and whether the display uses individual r8
+   cells or a declared aggregation of r8 products. Keep the analysis grid
+   consistent across included subjects and both views.
+3. **Prepare — pending.** Implement bounded-memory source processing and
+   partitioned r8 products. Pin input hashes and dates; preserve units,
+   source resolution, quality information, coverage, and nulls. Distinguish
+   resampling from additional observational detail.
+4. **Validate — pending.** Reject mixed-resolution identifiers; check source
+   coverage, valid fractions, regional values, and the daily-record method.
+   Compare Japan's values with the corresponding World subset. If a coarser
+   display is used, record its resolution and aggregation independently of
+   analysis resolution; retain the shared 100-band radiation scale.
+5. **Render and save — pending.** Rebuild the affected maps, separate legends,
+   captions, and provenance with the saved amber/white presentation. Check
+   desktop and phone exports, then save the new product hashes and settings
+   as an H3r8 edition. Retain the current baseline for reproduction.
+
+This documentation/settings checkpoint does **not** claim the H3r8 migration
+has run. The checked artwork and its existing validation receipt remain the
+saved H3r3 edition until the replacement products and renders pass those stages.
 
 ## Contact approaches: Hajime Narukawa
 
