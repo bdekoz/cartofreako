@@ -376,7 +376,7 @@ builder now separates those existing paths into a final `web-land-outlines`
 layer and paints them white `#ffffff` at full opacity, following the user's
 color correction. Original coastline geometry and line widths are retained;
 land remains unfilled.
-The nominal weights are **0.5 pt for World** and **1 pt for Japan**. After the
+The first outline revision used **0.5 pt for World** and **1 pt for Japan**. After the
 Setouchi framing scale, the physical weights on the 44-inch sheets are about
 0.494 pt and 0.989 pt; responsive web previews scale those lines with the image.
 
@@ -392,6 +392,21 @@ Structural checks verified all path geometry, data styles, line widths,
 viewport transforms, and clips. World uses 4,343 coastline paths including
 Antarctica; Japan uses 4,157. Both white-outline exports were visually checked.
 The 23 publishing tests and desktop/phone gallery checks passed.
+
+### Atmosphere outline-weight trial — 6 November 2026
+
+Set both white land outlines to a nominal **0.66 pt**, replacing the differing
+World/Japan weights above. The durable `land_outline.width_pt` setting converts
+points to SVG units and compensates for Japan's viewport magnification; the
+World Antarctica inset uses the same weight. The common Setouchi frame scale
+then produces **0.6525 pt** on the 44-inch sheets. Web previews scale the strokes
+with the image. White, full opacity, top-layer placement, and the light amber
+background remain the selected presentation.
+
+Rebuilt all six atmosphere image derivatives and visually reviewed the World
+and Japan previews. Every coastline path, including the World Antarctica inset, was checked at 0.66 pt
+nominal. Other media and legends retain their previous bytes. The 23 publishing
+tests and desktop/phone gallery checks passed.
 
 ## Contact approaches: Hajime Narukawa
 

@@ -4,6 +4,7 @@ from copy import deepcopy
 from hashlib import sha256
 from html import escape
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -72,8 +73,11 @@ def background_variation(tree, color):
 def land_outline_overlay(tree, settings):
     """Draw existing coastlines last, preserving every viewport transform and clip."""
     color, opacity = settings['color'], settings['opacity']
+    width = settings.get('width_pt')
     if not re.fullmatch(r'#[0-9a-fA-F]{6}', color) or not 0 <= opacity <= 1:
         raise ValueError('Invalid land outline paint')
+    if width is not None and (not math.isfinite(width) or width <= 0):
+        raise ValueError('Land outline width must be positive and finite')
     frames = tree.xpath('//*[@id="st2-image-frame"]')
     coastlines = tree.xpath('//*[@id="terrestrial-coastline"]')
     if len(frames) != 1 or len(coastlines) != 1:
@@ -90,6 +94,32 @@ def land_outline_overlay(tree, settings):
         raise ValueError('No placed views of the source cartography')
     overlay = etree.Element('{' + SVG + '}g', id='web-land-outlines')
     overlay.set('data-layer-order', 'top')
+
+    def view_scale(node):
+        # These plate viewports use translation and uniform scaling. Nominal
+        # point weights exclude the common outer Setouchi image-frame scale.
+        scale = 1.0
+        while node is not frame:
+            transform = node.get('transform', '')
+            pattern = r'(translate|scale)\s*\(([^)]*)\)'
+            if re.sub(pattern, '', transform).strip(' ,\t\n'):
+                raise ValueError('Unsupported outline viewport transform')
+            for kind, args in re.findall(pattern, transform):
+                if kind == 'scale':
+                    values = [float(v) for v in re.split(r'[\s,]+', args.strip())]
+                    if len(values) not in (1, 2) or not math.isfinite(values[0]) or values[0] <= 0:
+                        raise ValueError('Invalid outline viewport scale')
+                    if len(values) == 2 and not math.isclose(values[0], values[1]):
+                        raise ValueError('Outline point width requires uniform scaling')
+                    scale *= values[0]
+            node = node.getparent()
+            if node is None:
+                raise ValueError('Outline placement is outside the image frame')
+        return scale
+
+    scales = {view_scale(use) for use in uses}
+    if len(scales) != 1:
+        raise ValueError('Shared coastline views must have the same scale')
 
     def wrapper_for(node):
         ancestors = []
@@ -114,21 +144,26 @@ def land_outline_overlay(tree, settings):
     # Remove coastlines from the data composition; the new overlay references
     # their original paths from a separate definition, avoiding a double stroke.
     definitions.append(coastline)
-    groups = [coastline]
+    groups = [(coastline, scales.pop())]
     inset = tree.xpath('//*[@id="terrestrial-coastline-antarctic-inset"]')
     for group in inset:
+        scale = view_scale(group)
         target = wrapper_for(group)
         target.append(group)
-        groups.append(group)
+        groups.append((group, scale))
     paths = 0
-    for group in groups:
+    for group, scale in groups:
         for path in group.iter('{' + SVG + '}path'):
-            set_style(path, stroke=color, stroke_opacity=opacity)
+            paint = {'stroke': color, 'stroke_opacity': opacity}
+            if width is not None:
+                paint['stroke_width'] = f'{width / 72 / scale:.12g}'
+            set_style(path, **paint)
             paths += 1
     frame.append(overlay)
     return {'layer': 'web-land-outlines', 'position': 'top', 'color': color, 'opacity': opacity,
             'paths': paths, 'placed_views': len(uses), 'antarctica_inset': bool(inset),
-            'geometry_changed': False, 'line_widths_changed': False}
+            'geometry_changed': False, 'line_widths_changed': width is not None,
+            'nominal_width_pt': width, 'width_reference': 'before Setouchi image-frame scaling'}
 
 
 def fiber_variation(tree, config, legend=False):
