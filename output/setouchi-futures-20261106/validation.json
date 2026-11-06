@@ -1,0 +1,166 @@
+{
+  "schema": "cartofreako-setouchi-futures-validation-v1",
+  "status": "local-only",
+  "prepared_sha256": "200a7d9172374b6d2c84d0603f26a89db126baa3ffd066dba9f428473c724112",
+  "preview_sha256": "0b599d4f9b3f1de6e767df27452c0a7068cf5c340b03aea9943c24e9d5496137",
+  "media_assets": 49,
+  "upload_assets": 36,
+  "figures": 13,
+  "map_legend_pairs": 10,
+  "unchanged_atlas_masters": 20,
+  "broken_local_links": [],
+  "fiber_legend_text_verified": true,
+  "outreach_pdf_pages": 1,
+  "browser": [
+    {
+      "viewport": [
+        1440,
+        1100
+      ],
+      "no_horizontal_overflow": true,
+      "image_count": 13,
+      "all_images_loaded": true,
+      "all_have_alt": true,
+      "stacked_on_phone": true,
+      "gallery_sections": [
+        "World",
+        "Japan / Setouchi",
+        "Hamonshū Revisited"
+      ],
+      "images_inside_viewport": true,
+      "hamonshu_heights": [
+        250,
+        250,
+        250
+      ],
+      "section": "World",
+      "lazy_loading_declared": true,
+      "images_decoded_before_capture": true
+    },
+    {
+      "viewport": [
+        1440,
+        1100
+      ],
+      "no_horizontal_overflow": true,
+      "image_count": 13,
+      "all_images_loaded": true,
+      "all_have_alt": true,
+      "stacked_on_phone": true,
+      "gallery_sections": [
+        "World",
+        "Japan / Setouchi",
+        "Hamonshū Revisited"
+      ],
+      "images_inside_viewport": true,
+      "hamonshu_heights": [
+        250,
+        250,
+        250
+      ],
+      "section": "Japan / Setouchi",
+      "lazy_loading_declared": true,
+      "images_decoded_before_capture": true
+    },
+    {
+      "viewport": [
+        1440,
+        1100
+      ],
+      "no_horizontal_overflow": true,
+      "image_count": 13,
+      "all_images_loaded": true,
+      "all_have_alt": true,
+      "stacked_on_phone": true,
+      "gallery_sections": [
+        "World",
+        "Japan / Setouchi",
+        "Hamonshū Revisited"
+      ],
+      "images_inside_viewport": true,
+      "hamonshu_heights": [
+        250,
+        250,
+        250
+      ],
+      "section": "Hamonshū Revisited",
+      "lazy_loading_declared": true,
+      "images_decoded_before_capture": true
+    },
+    {
+      "viewport": [
+        390,
+        900
+      ],
+      "no_horizontal_overflow": true,
+      "image_count": 13,
+      "all_images_loaded": true,
+      "all_have_alt": true,
+      "stacked_on_phone": true,
+      "gallery_sections": [
+        "World",
+        "Japan / Setouchi",
+        "Hamonshū Revisited"
+      ],
+      "images_inside_viewport": true,
+      "hamonshu_heights": [
+        257,
+        257,
+        257
+      ],
+      "section": "World",
+      "lazy_loading_declared": true,
+      "images_decoded_before_capture": true
+    },
+    {
+      "viewport": [
+        390,
+        900
+      ],
+      "no_horizontal_overflow": true,
+      "image_count": 13,
+      "all_images_loaded": true,
+      "all_have_alt": true,
+      "stacked_on_phone": true,
+      "gallery_sections": [
+        "World",
+        "Japan / Setouchi",
+        "Hamonshū Revisited"
+      ],
+      "images_inside_viewport": true,
+      "hamonshu_heights": [
+        257,
+        257,
+        257
+      ],
+      "section": "Japan / Setouchi",
+      "lazy_loading_declared": true,
+      "images_decoded_before_capture": true
+    },
+    {
+      "viewport": [
+        390,
+        900
+      ],
+      "no_horizontal_overflow": true,
+      "image_count": 13,
+      "all_images_loaded": true,
+      "all_have_alt": true,
+      "stacked_on_phone": true,
+      "gallery_sections": [
+        "World",
+        "Japan / Setouchi",
+        "Hamonshū Revisited"
+      ],
+      "images_inside_viewport": true,
+      "hamonshu_heights": [
+        257,
+        257,
+        257
+      ],
+      "section": "Hamonshū Revisited",
+      "lazy_loading_declared": true,
+      "images_decoded_before_capture": true
+    }
+  ]
+}

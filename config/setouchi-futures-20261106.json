@@ -1,0 +1,90 @@
+{
+  "schema": "cartofreako-setouchi-futures-v1",
+  "edition": "2026-11-06",
+  "site_url": "https://benjamin.dekosnik.com",
+  "page_id": 3175,
+  "page_url": "https://benjamin.dekosnik.com/futures/setouchi-2028/",
+  "design_reference": "https://benjamin.dekosnik.com/work/202x/star-x-internet-maps/",
+  "design_reference_scope": "Website typography and spacing only. All geographic artwork retains the modified Setouchi AuthaGraph composition.",
+  "insertion_heading": "Two atlases, one shared table",
+  "preceding_list_count": 3,
+  "anchor": "setouchi-futures-visuals",
+  "atlas": "output/atlas",
+  "output": "output/setouchi-futures-20261106",
+  "background": "#240413",
+  "fiber_ocean_color": "#fcc553",
+  "fiber_ocean_opacity": 1,
+  "detail_width": 3840,
+  "card_widths": [640, 1280],
+  "maps": [
+    {
+      "stem": "water",
+      "title": "Water",
+      "world_caption": "Rivers, coastlines, and generalized ocean depths.",
+      "japan_caption": "Japan and its surrounding seas, with the Setouchi reference point.",
+      "world_alt": "Modified AuthaGraph world map with blue ocean depths, wine-colored land, and branching rivers.",
+      "japan_alt": "Japan and neighboring seas, showing ocean depth bands, rivers, and a yellow Setouchi locator.",
+      "japan_crop_inches": [0.5, 1.75, 29.1, 17.25]
+    },
+    {
+      "stem": "network-fiber",
+      "title": "Fiber",
+      "world_caption": "Submarine and terrestrial cable routes connect continents. Routes are schematic; source snapshots span 2022–2026.",
+      "japan_caption": "Japan’s cable landings and terrestrial networks. Amber ocean routes and green land routes; schematic locations.",
+      "world_alt": "World network map with amber submarine cables crossing oceans and green terrestrial fiber networks.",
+      "japan_alt": "Fiber routes around Japan, with amber cables extending into the Pacific and green routes over land."
+    },
+    {
+      "stem": "cloud-atmosphere",
+      "title": "Atmosphere",
+      "world_caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
+      "japan_caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
+      "world_alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world.",
+      "japan_alt": "Atmospheric observation cells over Japan and nearby seas, with the Setouchi reference point.",
+      "japan_crop_inches": [0.5, 1.75, 29.1, 17.25]
+    },
+    {
+      "stem": "anthropocene-temperature-2026",
+      "title": "Temperature records · 2026",
+      "world_caption": "Daily land-temperature record counts through 28 October 2026. A partial-year count, not a temperature anomaly.",
+      "japan_caption": "The same daily record-count classes around Japan, through 28 October 2026.",
+      "world_alt": "Land-temperature record counts shown as orange, yellow, and pale hexagons on a modified AuthaGraph world map.",
+      "japan_alt": "Temperature record-count hexagons over Japan and neighboring land, with the Setouchi reference point.",
+      "japan_crop_inches": [0.5, 1.75, 29.1, 17.25]
+    },
+    {
+      "stem": "orbital-technosphere-observer",
+      "title": "Starlink and the orbital sky",
+      "world_caption": "World atlas observer plate: San Francisco reference, 3 November 2026, 17:10 UTC. Starlink names and distinct vendor symbols.",
+      "japan_caption": "Setouchi observer at 34.45° N, 133.99° E, 29 October 2026, 20:00 UTC. Sky field and Japan locator shown together.",
+      "world_alt": "Calculated satellite positions across a dark wine sky, with Starlink names, colored vendor markers, and curved reference lines.",
+      "japan_alt": "Satellite positions for the Setouchi observer, with Starlink names and a separate Japan locator inset."
+    }
+  ],
+  "hamonshu": [
+    {
+      "id": "hamonshu_1-005e",
+      "book": 1,
+      "title": "Book 1 · 005e",
+      "caption": "Repeating wave arcs.",
+      "alt": "Overlapping groups of concentric wave arcs, printed in dark ink on aged paper.",
+      "sha256": "72bf5cf9668930d34e29f64383699a913dec7d2456a1f29add579f9226730c0d"
+    },
+    {
+      "id": "hamonshu_2-003a",
+      "book": 2,
+      "title": "Book 2 · 003a",
+      "caption": "Flowing currents and eddies.",
+      "alt": "Interlacing curved lines form a field of flowing water and small eddies.",
+      "sha256": "4f37bd971f2e8cf112e5325c5b547f319ad238a6732ded784239ea8c2b134f5a"
+    },
+    {
+      "id": "hamonshu_3-003f",
+      "book": 3,
+      "title": "Book 3 · 003f",
+      "caption": "A dotted breaking wave.",
+      "alt": "Curling wave shapes with dotted foam and broad dark areas.",
+      "sha256": "c702e2aa6ccc78d1f84a0dc16176e91dde77498aa7cb22d0eed88893194edd38"
+    }
+  ]
+}

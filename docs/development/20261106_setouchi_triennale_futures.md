@@ -1,6 +1,6 @@
 # Setouchi 2028 futures: image grids, website publishing, and outreach
 
-Date: 2026-11-06. Status: researched proposal and implementation plan.
+Date: 2026-11-06. Status: local update prepared and validated; publication deferred.
 
 ## Task and accumulated decisions
 
@@ -14,9 +14,12 @@ typography and design of the existing
 Include a script-based publishing workflow that avoids routine WordPress UI
 work. Finish with contact approaches for AuthaGraph author Hajime Narukawa.
 
-This document records the plan. The website, its media library, and its theme
-have not been changed; the proposed publishing script is not implemented yet.
-No outreach has been sent.
+The plan was approved, followed by the instruction to **prepare the local
+update first**. The [local preview](../../output/setouchi-futures-20261106/index.html),
+image package, publishing script, and unsent illustrated outreach brief are
+prepared. The website, its media library, and its theme have not been changed.
+No outreach has been sent. Exact live typography and authenticated publishing
+remain to be checked through a supported site connection.
 
 ## Recommended composition: two grids and a Hamonshū strip
 
@@ -41,12 +44,13 @@ An optional sixth selection is
 geographic global-orbit plate to both grids, making six images per grid.
 The observer view and the geographic orbit view remain separately captioned.
 
-At a sufficiently wide content width, use three images in the first row and
-two wider images in the second. With six selections, use two rows of three.
-Reduce to two columns, then one column as the actual theme's content width
-requires. Test a minimum useful image width around 320 CSS pixels; three
-columns should not be forced into a narrow article column. Use the same
-ordering in the DOM, on screen, and in keyboard navigation.
+The implemented five-subject layout uses **two rows of two geographic maps,
+followed by a full-width observer panorama** in each grid. This refines the
+initial three-plus-two suggestion: core WordPress Columns blocks provide a
+simple mobile stack, while the dense observer sky gets more room. The three
+Hamonshū images use one three-column row. Use the same ordering in the DOM,
+on screen, and in keyboard navigation. Confirm the actual theme's content
+width when site access is available.
 
 Each image gets a short visible title, one concise caption, a full-image link,
 and a quieter **Legend & sources** link. Keep the detailed legend on its
@@ -164,7 +168,8 @@ The published manifests contain crop bounds and source-scan hashes:
 
 ## Typography and page design
 
-The Star-X page is the visual reference. Reuse the site's active theme and
+The Star-X page is the **web typography and spacing reference only**; it does
+not change the modified AuthaGraph map projection. Reuse the site's active theme and
 native content blocks for headings, body copy, image captions, links, image
 alignment, and section spacing. Inherit font families, weights, line heights,
 and colors. Add only the local gallery layout rules needed for the grids.
@@ -192,15 +197,17 @@ and keyboard focus must work without a custom gallery script.
 ## Scripted website updates
 
 Automated page and media updates are supported by WordPress. The available
-transport for this installation still needs to be established. The current
-local workflow generates blocks and expects a manual media upload and paste;
-replace that publishing step while retaining the existing proposal builder.
+transport for this installation still needs to be established. The new
+publisher replaces the earlier manual media-upload and block-paste step;
+the existing proposal builder is retained.
 See the [previous delivery record](20261101_setouchi_triennale_proposal.md).
 
-Proposed durable entry point: `scripts/update-setouchi-futures.py`, with a
+Durable entry point: `scripts/update-setouchi-futures.py`, with a
 versioned content manifest at `config/setouchi-futures-20261106.json` and
 generated assets under `output/setouchi-futures-20261106/`. These paths and
-commands are an implementation specification, not existing runnable tools.
+commands are now implemented. See the
+[delivery README](../../output/setouchi-futures-20261106/README.md) for setup,
+rebuild, credential handling, publication, and recovery instructions.
 
 ### Transport choices
 
@@ -218,14 +225,18 @@ Neither SSH access nor an authenticated REST connection has been tested in
 this task. The observed HTTP 403 must be resolved through the site's supported
 access path; do not assume it proves a missing password or a disabled REST API.
 
-### Proposed command behavior
+### Implemented command behavior
 
 ```sh
-# Planned interface; implement before running.
+# Local preparation; no credentials or remote writes.
 python3 scripts/update-setouchi-futures.py prepare --manifest config/setouchi-futures-20261106.json
-python3 scripts/update-setouchi-futures.py plan --page-id 3175 --transport wp-cli
-python3 scripts/update-setouchi-futures.py apply --plan output/setouchi-futures-20261106/publish-plan.json
-python3 scripts/update-setouchi-futures.py verify --receipt output/setouchi-futures-20261106/publish-receipt.json
+python3 tests/test-setouchi-futures.py
+python3 scripts/validate-setouchi-futures.py --browser
+
+# Later, through the site's supported authenticated connection.
+python3 scripts/update-setouchi-futures.py plan --page-id 3175 --transport rest
+python3 scripts/update-setouchi-futures.py apply --plan output/setouchi-futures-20261106/private/publish-plan.json
+python3 scripts/update-setouchi-futures.py verify --receipt output/setouchi-futures-20261106/private/publish-receipt.json --public
 python3 scripts/update-setouchi-futures.py restore --backup /path/to/saved-page.json
 ```
 
@@ -235,7 +246,7 @@ without remote writes. `apply` executes that saved plan; it should not ask for
 another web-UI operation. `verify` reads back the result. `restore` is an
 explicit recovery command and never deletes uploaded media automatically.
 
-The script should:
+The script implements these requirements:
 
 1. Verify that page 3175 resolves to the requested Setouchi permalink. Save
    its raw content, status, parent, slug, template, modification time, and
@@ -254,8 +265,8 @@ The script should:
 5. Save the planned base hash and re-read before applying. If another edit
    changed the page, rebuild the plan instead of overwriting it. A REST
    read-before-write check reduces races but is not an atomic compare-and-swap;
-   document that limitation, or implement an atomic hash check in the
-   server-side WP-CLI path if concurrent editing needs stronger protection.
+   both transports document that limitation. Avoid editing the same page
+   during apply. Neither transport implements a database-level atomic update.
 6. Update the managed gallery content while preserving the page's publication
    status, title, permalink, parent, and template. Record the resulting content
    and media receipt. Keep backup/state files outside the public asset set.
@@ -264,27 +275,74 @@ The script should:
    Validate the served page when access permits and report any remaining
    frontend access restriction separately.
 
-Prepare approximately 640/1280-pixel responsive derivatives and a larger
-detail image, using WebP where fine lines remain clear. Include intrinsic
-dimensions and appropriate `srcset`/`sizes`; lazy-load images below the initial
-viewport. Full-resolution print files stay behind explicit download links.
-Each selected subject keeps a link to its matching legend/source sheet.
+The package contains 640/1280-pixel WebP derivatives and 3840-pixel map detail
+images, with intrinsic dimensions and local `srcset`/`sizes`. WordPress media
+IDs support the site's responsive-image generation when published. All figures
+are lazy-loaded. Each map links to its complete sheet and matching legend PDF.
+Hamonshū details link to the verified original 1600-pixel JPEG crops.
 
 ## Staging and completion criteria
 
-| Stage | Work | Completion evidence |
+| Stage | Status | Completion evidence / remaining work |
 | --- | --- | --- |
-| F01 — establish current page/style | Obtain the supported read/publish connection, confirm page 3175 and the insertion boundary, inspect Star-X typography. | Saved current page and style measurements; no guessed font settings. |
-| F02 — curate and export | Finalize five or six subjects per grid; record the two observer contexts; prepare the three Hamonshū selections, fiber contrast variation, and Japan crops. | Image manifest with source hashes, captions, credits, crop bounds, dates, and verified legend links. |
-| F03 — compose | Build the two grids and Hamonshū strip using the site's typography and spacing. | Desktop and phone previews; all subjects visible, captions legible, no clipping or horizontal overflow. |
-| F04 — automate | Implement the publisher, manifest reuse, backups, targeted block replacement, and preview mode. | Focused tests for duplicate-free reruns, stale-page detection, missing/duplicate anchors, failed uploads, and recovery. |
-| F05 — publish and verify | Apply the prepared page update through the selected supported transport. | Saved before/after receipt; media and legend links resolve; public page matches the reviewed layout. |
-| F06 — prepare outreach | Refine the Narukawa message and a small illustrated brief after the page is ready. | Contact route, unsent draft, accurate project status, and two or three selected examples. |
+| F01 — establish current page/style | Pending live access | Page 3175 is identified by the earlier package. Current raw content, insertion boundary, and measured Star-X typography still need authenticated/site access. |
+| F02 — curate and export | Complete locally | Ten maps, ten legend PDFs, three Hamonshū crops; manifest with checksums, captions, dates, crop bounds, and credits. |
+| F03 — compose | Complete locally; live theme pending | Two native grids and Hamonshū strip checked at desktop and phone widths. Preview type is explicitly temporary; published blocks inherit the theme. |
+| F04 — automate | Implemented and tested offline | REST and SSH/WP-CLI transports; 23 tests cover insertion, reruns, stale edits, failed uploads, recovery, and transport handling. Actual server integration remains untested. |
+| F05 — publish and verify | Deferred: local preparation first | No WordPress writes. Later: read current page, inspect plan, apply, verify saved content/media and frontend appearance. |
+| F06 — prepare outreach | Prepared, unsent | Verified lab contact route, message draft, and one-page illustrated brief. Update the page before using the revised gallery link in outreach. |
 
-The research and plan are complete; F01–F06 describe subsequent implementation
-and outreach preparation. The implementation should leave the three existing
-lists followed by both image grids and the Hamonshū strip, then the existing
-atlas section. Repeating the update must not duplicate blocks or media.
+The prepared insertion leaves the three existing lists followed by both image
+grids and the Hamonshū strip, then the existing atlas section. The publisher
+reads the current page and refuses missing or ambiguous insertion headings;
+it never uses the stale November proposal export as replacement content.
+
+## Local implementation record — 6 November 2026
+
+The [preview](../../output/setouchi-futures-20261106/index.html) contains ten
+map figures and three Hamonshū details. The
+[manifest](../../output/setouchi-futures-20261106/prepared.json) records 49 media
+files, of which 36 are used for eventual WordPress upload. The remaining
+640-pixel derivatives serve the local responsive preview. Original atlas map
+and legend masters remain unchanged; twenty source checksums were verified.
+
+Both fiber variations recolor 767 submarine path elements to amber `#fcc553`
+at full opacity, retaining line widths, dashes, geometry, and green land routes.
+Three swatches and the explanatory text in each matching legend were updated.
+Japan Water, Atmosphere, and Temperature thumbnails use bounds
+`[0.5, 1.75, 29.1, 17.25]` inches on the print sheet. Complete detail images
+remain linked. Fiber and observer compositions retain the full sheet so their
+extended routes and sky locator are preserved.
+
+The [entry point](../../scripts/update-setouchi-futures.py) supports `prepare`,
+`plan`, `apply`, `verify`, and `restore`. Plans, before/after content, media state,
+backups, and receipts use a private, Git-ignored directory. Content-addressed
+media names allow reuse after interrupted uploads. Checks before and after
+uploads detect page edits; readback checks saved content and metadata. Restore
+refuses subsequent edits and never deletes uploaded media. The checked local
+bundle contains no credentials or publication state.
+
+Validation on 6 November:
+
+- **23 offline tests passed**, including preservation of surrounding content,
+  duplicate-free reruns, stale title/content detection, upload interruption,
+  concurrent edits during uploads and before readback, server filtering, and
+  guarded restoration. Unexpected readback never authorizes automatic restore.
+- **Six Chrome captures** covered World, Japan, and Hamonshū at 1440 × 1100
+  and 390 × 900. Images loaded and decoded before capture; phone figures stack,
+  all thirteen images have alt text, and no horizontal overflow was found.
+  Hamonshū frames have equal heights. The captures were visually reviewed.
+- All local image, detail, and legend links resolve; media checksums match;
+  both fiber legend texts match the amber web variation.
+- The [illustrated brief](../../output/setouchi-futures-20261106/outreach/brief.pdf)
+  fits one A4 page and was visually reviewed. It includes the World/Japan Water
+  pair, one orbital example, and the three Hamonshū details.
+
+Machine-readable results are in
+[validation.json](../../output/setouchi-futures-20261106/validation.json).
+Chrome proof captures stay in the ignored `build/setouchi-futures-qa/` directory.
+No live WordPress authentication, media upload, editor round-trip, theme-layout
+verification, or outreach delivery is claimed by these local checks.
 
 ## Contact approaches: Hajime Narukawa
 

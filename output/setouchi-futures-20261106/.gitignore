@@ -1,0 +1,4 @@
+private/
+publish-plan.json
+publish-receipt.json
+*.local.json
