@@ -18,9 +18,17 @@ separate top layer, using white `#ffffff` at full opacity. The World layer
 includes the relocated Antarctica outline. Both use a nominal **0.66 pt**
 outline, with Japan's viewport magnification compensated (approximately
 0.6525 pt after the Setouchi framing scale on the 44-inch sheets).
-Atmospheric data colors, opacity, and geometry are retained. Submarine fiber routes
-are amber at full opacity, with matching legend swatches; land routes remain
-green. Route geometry and dash classes are retained. Water, atmosphere, and
+
+For shortwave radiation, each measured cell selects
+the nearest of **100 levels from 0% to 100%**, on a shared **0–400 W/m²** scale.
+The 15 October snapshot supplies 30,982 cells and occupies 98 of those levels;
+unused levels are retained in the scale. Original gold radiation strokes and
+their widths are preserved. The companion legends explain the mapping.
+Other atmospheric data keeps its previous paint and opacity.
+
+Submarine fiber routes are amber at full opacity, with matching legend
+swatches; land routes remain green. Route geometry and dash classes are
+retained. Water, atmosphere, and
 temperature thumbnails trim the unused part of the Japan print sheet. The
 larger links retain the full sheets. Fiber and observer previews retain their
 full composition. The observer dates and temperature cutoff are in captions.
@@ -46,6 +54,7 @@ Run from the Cartofreako repository root:
 ```sh
 python3 scripts/update-setouchi-futures.py prepare --workers 2
 python3 tests/test-setouchi-futures.py
+python3 tests/test-setouchi-radiation.py
 python3 scripts/validate-setouchi-futures.py --browser
 ```
 
@@ -56,6 +65,15 @@ Inkscape, and the verified Hamonshū review crops in the adjacent
 or `--download-sources` to retrieve the three pinned public JPEGs. Chrome is
 used only for browser checks. Build intermediates and caches stay under
 `build/setouchi-futures/`; no observational data is refreshed.
+
+The radiation variation also needs the pinned October atmosphere profile and
+prepared GeoJSON under `output/setouchi-triennale-2028/sources/data/cloud-atmosphere/`.
+The manifest records their hashes and rejects a different snapshot. `prepare`
+builds `scripts/export-atmosphere-cells.cc` through Make using the repository's
+existing C++20, GDAL, H3, Alpha60, and Izzi dependencies. The helper uses the same
+projection code as the atlas; every reconstructed path must match the original
+six radiation groups before it can be regrouped by opacity. The projected-cell
+cache is checksum-verified and remains under `build/`.
 
 ## Publish later without routine WordPress UI work
 

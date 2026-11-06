@@ -145,6 +145,21 @@ def main():
         text = subprocess.check_output(['pdftotext', '-layout', str(pdf), '-'], text=True)
         if 'Amber (web edition)' not in text or 'Submarine cables: Black' in text:
             raise ValueError('Fiber legend text does not match the web variation')
+    radiation = []
+    for item in prepared['provenance']:
+        record = item.get('web_radiation_opacity')
+        if not record:
+            continue
+        for name in ('snapshot', 'profile'):
+            if digest(ROOT / record['inputs'][name]) != record['inputs'][name + '_sha256']:
+                raise ValueError('Radiation source changed: ' + name)
+        pdf = output / ('media/' + item['id'] + '-legend.pdf')
+        legend = subprocess.check_output(['pdftotext', '-layout', str(pdf), '-'], text=True)
+        if (f'{record["bands"]} opacity bands' not in legend
+                or 'Missing observations are not zero.' not in legend):
+            raise ValueError('Radiation legend does not describe the opacity scale')
+        radiation.append({'id': item['id'], 'bands': record['bands'], 'observed_cells': record['observed_cells'],
+                          'populated_bands': record['populated_bands'], 'legend_verified': True})
     brief = subprocess.check_output(['pdfinfo', str(output / 'outreach/brief.pdf')], text=True)
     if not any(line.startswith('Pages:') and line.split()[-1] == '1' for line in brief.splitlines()):
         raise ValueError('Outreach brief must fit on one A4 page')
@@ -153,7 +168,7 @@ def main():
         'media_assets': len(prepared['assets']), 'upload_assets': len(used_keys(prepared)),
         'figures': 13, 'map_legend_pairs': 10, 'unchanged_atlas_masters': sources_checked,
         'broken_local_links': broken, 'fiber_legend_text_verified': True, 'outreach_pdf_pages': 1,
-        'browser': []}
+        'radiation_opacity': radiation, 'browser': []}
     if args.browser:
         args.qa_dir.mkdir(parents=True, exist_ok=True)
         result['browser'] = browser_checks(output, args.qa_dir.resolve())

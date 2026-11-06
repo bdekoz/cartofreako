@@ -1,7 +1,7 @@
 {
   "schema": "cartofreako-setouchi-futures-validation-v1",
   "status": "local-only",
-  "prepared_sha256": "aceb6c501a9ff53b7bd0c1ed26f03a628f254f9803cc1c81d3b9f4da2b674f63",
+  "prepared_sha256": "e9329f974dda0694c77a2314ca743e3ca397306eb4e920c98adedc441bec6a41",
   "preview_sha256": "e7372cb27125ca8e4e309ba99e1257071698d495261a99dd08bba216c0460b9b",
   "media_assets": 49,
   "upload_assets": 36,
@@ -11,6 +11,22 @@
   "broken_local_links": [],
   "fiber_legend_text_verified": true,
   "outreach_pdf_pages": 1,
+  "radiation_opacity": [
+    {
+      "id": "world-cloud-atmosphere",
+      "bands": 100,
+      "observed_cells": 30982,
+      "populated_bands": 98,
+      "legend_verified": true
+    },
+    {
+      "id": "japan-cloud-atmosphere",
+      "bands": 100,
+      "observed_cells": 30982,
+      "populated_bands": 98,
+      "legend_verified": true
+    }
+  ],
   "browser": [
     {
       "viewport": [

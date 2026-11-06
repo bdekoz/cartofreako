@@ -39,6 +39,15 @@
       "title": "Atmosphere",
       "background": "#fcc553",
       "land_outline": {"color": "#ffffff", "opacity": 1, "width_pt": 0.66},
+      "radiation_opacity": {
+        "bands": 100,
+        "scale_min": 0,
+        "scale_max": 400,
+        "profile": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/cloud-atmosphere-profile.json",
+        "profile_sha256": "90385c469a7d65775f990e51f75760e5d31ebf9563001e847fa81221cc8d2747",
+        "snapshot": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/.prepared/cloud-atmosphere-latest.geojson",
+        "snapshot_sha256": "2cc4b93634732766c71c9a8ba70406a94e276dcf9e4bce2e78c103644e748b0d"
+      },
       "world_caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
       "japan_caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
       "world_alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",

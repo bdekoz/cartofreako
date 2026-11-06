@@ -17,6 +17,7 @@ from lxml import etree
 from PIL import Image
 
 from legend_informatics import ROOT, digest, font_environment
+from setouchi_radiation import prepare_cells, apply_opacity, update_legend as radiation_legend
 
 SCHEMA = "cartofreako-setouchi-futures-prepared-v1"
 SVG = "http://www.w3.org/2000/svg"
@@ -219,7 +220,7 @@ def resize_image(image, path, width):
     target.convert('RGB').save(path, 'WEBP', quality=94, method=6)
 
 
-def build_map(config, output, build, item, scope, env, bibliography):
+def build_map(config, output, build, item, scope, env, bibliography, radiation=None):
     stem = item['stem']
     ident = f'{scope}-{stem}'
     atlas = ROOT / config['atlas']
@@ -231,6 +232,8 @@ def build_map(config, output, build, item, scope, env, bibliography):
                    'widths': [config['detail_width'], config['card_widths']],
                    'builder_sha256': digest(Path(__file__)),
                    'bibliography_sha256': digest(atlas / 'plate-source-bibliography.json')}
+    if radiation:
+        fingerprint['radiation_inputs'] = radiation['fingerprint']
     receipt_path = build / (ident + '.json')
     if receipt_path.exists():
         old = json.loads(receipt_path.read_text())
@@ -242,12 +245,15 @@ def build_map(config, output, build, item, scope, env, bibliography):
     counts = None
     background = None
     outlines = None
-    if item.get('background') or item.get('land_outline'):
+    radiation_result = None
+    if item.get('background') or item.get('land_outline') or radiation:
         tree = etree.parse(str(working))
         if item.get('background'):
             background = background_variation(tree, item['background'])
         if item.get('land_outline'):
             outlines = land_outline_overlay(tree, item['land_outline'])
+        if radiation:
+            radiation_result = apply_opacity(tree, radiation['data'], item['radiation_opacity'])
         working = build / (ident + '.svg')
         tree.write(str(working), xml_declaration=True, encoding='UTF-8')
     if stem == 'network-fiber':
@@ -262,6 +268,11 @@ def build_map(config, output, build, item, scope, env, bibliography):
         counts = {'route_paths': count, 'legend_swatches': swatches,
                   'color': config['fiber_ocean_color'], 'opacity': config['fiber_ocean_opacity'],
                   'geometry_changed': False}
+    if radiation:
+        tree = etree.parse(str(working_legend))
+        radiation_legend(tree, item['radiation_opacity'], item.get('background', config['background']))
+        working_legend = build / (ident + '-legend.svg')
+        tree.write(str(working_legend), xml_declaration=True, encoding='UTF-8')
     raster = build / (ident + '.png')
     render_svg(working, raster, env, config['detail_width'])
     title = f'{item["title"]} · {"World" if scope == "world" else "Japan / Setouchi"}'
@@ -309,6 +320,11 @@ def build_map(config, output, build, item, scope, env, bibliography):
         provenance['web_background_variation'] = background
     if outlines:
         provenance['web_land_outline_overlay'] = outlines
+    if radiation_result:
+        provenance['web_radiation_opacity'] = {**radiation_result, 'inputs': radiation['inputs']}
+        provenance['interpretation'] += (
+            f' Web edition: shortwave cell opacity uses {radiation_result["bands"]} equally spaced levels '
+            'from transparent at 0 to opaque at 400 W/m², on the same scale in both views.')
     result = {'fingerprint': fingerprint, 'assets': assets, 'provenance': provenance}
     write_json(receipt_path, result)
     print('Prepared', ident, flush=True)
@@ -517,9 +533,12 @@ def prepare(manifest=DEFAULT_MANIFEST, output=None, workers=2, hamonshu_root=Non
     build.mkdir(parents=True, exist_ok=True)
     bibliography = json.loads((ROOT / config['atlas'] / 'plate-source-bibliography.json').read_text())
     env = font_environment()
+    radiation = {item['stem']: prepare_cells(item['radiation_opacity'], build)
+                 for item in config['maps'] if item.get('radiation_opacity')}
     tasks = [(item, scope) for scope in ['world', 'japan'] for item in config['maps']]
     with ThreadPoolExecutor(max_workers=workers) as executor:
-        futures = [executor.submit(build_map, config, output, build, item, scope, env, bibliography) for item, scope in tasks]
+        futures = [executor.submit(build_map, config, output, build, item, scope, env, bibliography,
+                                   radiation.get(item['stem'])) for item, scope in tasks]
         maps = [future.result() for future in futures]
     crops = [build_hamonshu(config, output, item, Path(hamonshu_root or ROOT.parent / 'situationshipin.space'), download)
              for item in config['hamonshu']]

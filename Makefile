@@ -2066,6 +2066,13 @@ $(CLOUD_ATMOSPHERE_PREPARER): \
 	$(CXX) $(CPPFLAGS) $(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
 
+build/setouchi-futures-tools/export-atmosphere-cells: \
+		scripts/export-atmosphere-cells.cc $(CLOUD_ATMOSPHERE_GENERATOR_HEADERS)
+	@mkdir -p $(@D)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
+		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
+
 $(GENERATION_PROFILE_RESOLVER): \
 		$(GENERATOR_SRC_DIR)/resolve-generation-profile.cc \
 		$(GENERATOR_SRC_DIR)/generation-profile.h

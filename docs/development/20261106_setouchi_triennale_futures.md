@@ -408,6 +408,58 @@ and Japan previews. Every coastline path, including the World Antarctica inset, 
 nominal. Other media and legends retain their previous bytes. The 23 publishing
 tests and desktop/phone gallery checks passed.
 
+### Radiation opacity by measured cell value — 6 November 2026
+
+Make shortwave-radiation opacity respond to each cell's measured strength;
+the follow-up instruction sets **100 opacity bands**. Both web plates use the
+same fixed **0–400 W/m²** domain from the original atmosphere profile. Normalize
+the value to that range, clamp to 0–1, and select the nearest of 100 equally
+spaced opacity levels, including transparent and fully opaque endpoints:
+
+```text
+level = floor(clamp(value / 400, 0, 1) × 99 + 0.5)
+opacity = level / 99
+```
+
+Use the matching archived JASMES observation ending **15 October 2026,
+23:59 UTC**, within the 29 October atmosphere snapshot. It contains **30,982**
+observed radiation cells, ranging from about **0.151 to 393.795 W/m²**. These
+values occupy **98** of the 100 available levels; the two highest levels are
+unused. Keep the common domain for World and Japan. Do not stretch each view
+to a separate observed maximum or create values for missing observations.
+The small observed values that quantize to zero opacity remain in the SVG;
+transparent appearance does not prove missing data or an exact zero value.
+
+The original renderer merged cells into six intensity paths. A new small
+C++ exporter uses the existing H3 and AuthaGraph projection code to recover
+the exact projected path for each archived cell. Before changing the layer,
+the builder reconstructs the six original paths and checks their geometry,
+counts, observation date, and dataset identity. It then groups by opacity.
+The original gold stroke color, six source stroke widths, source geometry,
+and radiation layer position are retained. A few opacity levels cross an
+existing width boundary, so 98 occupied levels require **101 path groups**;
+that does not add opacity levels. The white 0.66 pt land outline stays on top.
+
+The durable settings live in `radiation_opacity` in the content manifest.
+Implementation is in [setouchi_radiation.py](../../scripts/setouchi_radiation.py)
+and [export-atmosphere-cells.cc](../../scripts/export-atmosphere-cells.cc),
+with a Make target used automatically by `prepare`. The archived snapshot hash
+is `2cc4b93634732766c71c9a8ba70406a94e276dcf9e4bce2e78c103644e748b0d`.
+The profile hash is `90385c469a7d65775f990e51f75760e5d31ebf9563001e847fa81221cc8d2747`.
+The prepared manifest records these inputs, the mapping, counts per level,
+and the geometry check. Neither input is refreshed during a web rebuild.
+
+Both companion legends gain a labeled 100-step opacity key against the amber
+map background. Their missing-data wording distinguishes unobserved cells
+from low-opacity observations. Six focused tests cover the full scale,
+per-cell assignment, preserved geometry/widths, date mismatch, damaged paths,
+duplicate/poor-quality cells, and missing-data guards.
+
+Validation passed: 23 publishing tests plus six radiation tests, all source
+checksums, both legend descriptions, and desktop/phone gallery checks. The
+World and Japan exports and the new legend key were visually reviewed. The
+only changed media are the six atmosphere images and their two legend PDFs.
+
 ## Contact approaches: Hajime Narukawa
 
 Keio's current [faculty profile](https://www.keio.ac.jp/en/faculty/k_100012208/)
