@@ -11,7 +11,10 @@ reading style; the native WordPress blocks inherit the installed theme when
 published. The current page and Star-X styling were inaccessible to automated
 reads, so the preview does not recreate or replace their unseen content.
 
-The images use the approved wine/amber presentation. Submarine fiber routes
+The images use the approved wine/amber presentation. Both Atmosphere plates
+use the lighter amber `#fcc553` (`rgb(252,197,83)`) as their background, including
+the thumbnail frames and full-sheet detail images. Atmospheric data colors,
+opacity, and geometry are retained. Submarine fiber routes
 are amber at full opacity, with matching legend swatches; land routes remain
 green. Route geometry and dash classes are retained. Water, atmosphere, and
 temperature thumbnails trim the unused part of the Japan print sheet. The

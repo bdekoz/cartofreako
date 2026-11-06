@@ -51,6 +51,24 @@ def set_style(element, **values):
     element.set('style', ';'.join(f'{key}:{value}' for key, value in style.items()))
 
 
+def background_variation(tree, color):
+    """Repaint the sheet and nested background rectangles without touching data."""
+    original = tree.getroot().get('data-sheet-background')
+    if not original or not re.fullmatch(r'#[0-9a-fA-F]{6}', color):
+        raise ValueError('A declared source background and a six-digit target color are required')
+    count = 0
+    for element in tree.iter('{' + SVG + '}rect'):
+        style = {key.strip(): value.strip() for key, value in css_values(element).items()}
+        if style.get('fill', element.get('fill')) == original:
+            element.set('fill', color)
+            set_style(element, fill=color)
+            count += 1
+    if not count:
+        raise ValueError('No source background rectangles found')
+    tree.getroot().set('data-sheet-background', color)
+    return {'from': original, 'to': color, 'rectangles': count, 'geometry_changed': False}
+
+
 def fiber_variation(tree, config, legend=False):
     """Change display paint only; all path geometry, dash classes, and data stay put."""
     color = config['fiber_ocean_color']
@@ -125,8 +143,14 @@ def build_map(config, output, build, item, scope, env, bibliography):
     working = source
     working_legend = legend
     counts = None
+    background = None
+    if item.get('background'):
+        tree = etree.parse(str(working))
+        background = background_variation(tree, item['background'])
+        working = build / (ident + '.svg')
+        tree.write(str(working), xml_declaration=True, encoding='UTF-8')
     if stem == 'network-fiber':
-        tree = etree.parse(str(source))
+        tree = etree.parse(str(working))
         count = fiber_variation(tree, config)
         working = build / (ident + '.svg')
         tree.write(str(working), xml_declaration=True, encoding='UTF-8')
@@ -180,6 +204,8 @@ def build_map(config, output, build, item, scope, env, bibliography):
     if counts:
         provenance['interpretation'] = provenance['interpretation'].replace('black submarine routes: 0.5 pt, 75% opacity',
             'amber submarine routes at full opacity in this web edition; source widths retained')
+    if background:
+        provenance['web_background_variation'] = background
     result = {'fingerprint': fingerprint, 'assets': assets, 'provenance': provenance}
     write_json(receipt_path, result)
     print('Prepared', ident, flush=True)
@@ -230,11 +256,11 @@ def gallery_blocks(prepared, media=None, local=False):
             return media[key]['url']
         return assets[key]['path'] if local else '{{asset:' + key + '}}'
 
-    def figure(ident, title, caption, alt, legend=None, review=None):
+    def figure(ident, title, caption, alt, legend=None, review=None, background=None):
         key = ident + '-1280'
         image = assets[key]
         ratio = '4/3' if review else '44/19.052559'
-        ground = '#f4efe4' if review else config['background']
+        ground = '#f4efe4' if review else (background or config['background'])
         attrs = {'sizeSlug': 'full', 'linkDestination': 'custom', 'aspectRatio': ratio, 'scale': 'contain'}
         cls = ''
         if media is not None:
@@ -263,7 +289,8 @@ def gallery_blocks(prepared, media=None, local=False):
     for scope, title in [('world', 'World'), ('japan', 'Japan / Setouchi')]:
         body += block('heading', f'<h3 class="wp-block-heading">{title}</h3>', {'level': 3})
         figures = [figure(scope + '-' + item['stem'], item['title'], item[scope + '_caption'], item[scope + '_alt'],
-                          legend=scope + '-' + item['stem'] + '-legend') for item in config['maps']]
+                          legend=scope + '-' + item['stem'] + '-legend', background=item.get('background'))
+                   for item in config['maps']]
         # Four geographic images in two native two-column rows; a panorama gives the observer sky room.
         for start in range(0, len(figures), 2):
             subset = figures[start:start + 2]

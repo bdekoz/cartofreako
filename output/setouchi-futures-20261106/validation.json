@@ -1,8 +1,8 @@
 {
   "schema": "cartofreako-setouchi-futures-validation-v1",
   "status": "local-only",
-  "prepared_sha256": "200a7d9172374b6d2c84d0603f26a89db126baa3ffd066dba9f428473c724112",
-  "preview_sha256": "0b599d4f9b3f1de6e767df27452c0a7068cf5c340b03aea9943c24e9d5496137",
+  "prepared_sha256": "913f00ad7bd32fe3f61b2c82aa1c07e64b30b02e9d8dacd130e0ee0a034217bb",
+  "preview_sha256": "e7372cb27125ca8e4e309ba99e1257071698d495261a99dd08bba216c0460b9b",
   "media_assets": 49,
   "upload_assets": 36,
   "figures": 13,

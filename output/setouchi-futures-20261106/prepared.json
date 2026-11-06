@@ -47,10 +47,11 @@
       {
         "stem": "cloud-atmosphere",
         "title": "Atmosphere",
+        "background": "#fcc553",
         "world_caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
         "japan_caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
-        "world_alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world.",
-        "japan_alt": "Atmospheric observation cells over Japan and nearby seas, with the Setouchi reference point.",
+        "world_alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
+        "japan_alt": "Atmospheric observation cells over Japan and nearby seas on a light amber background, with the Setouchi reference point.",
         "japan_crop_inches": [
           0.5,
           1.75,
@@ -108,7 +109,7 @@
       }
     ]
   },
-  "config_sha256": "7301e8bd6377de8a13246e2967360bb383a0aeeb9e84e2235753ad3cf9e24fb4",
+  "config_sha256": "c949df660a0fc12f1cd301a46e191ed001ba91139ffe9b8446a990f1f13263cd",
   "assets": [
     {
       "key": "world-water-detail",
@@ -197,10 +198,10 @@
     {
       "key": "world-cloud-atmosphere-detail",
       "path": "media/world-cloud-atmosphere-detail.webp",
-      "sha256": "7464bcf1596b1c8cd76b5cfc30b26cb56a2a9f1b8b7a28eed7882ef8d3c8c802",
-      "bytes": 2081180,
+      "sha256": "f51ba471542c5bbc2742561880612b52966853268a3263be3588a18cc05b699a",
+      "bytes": 1227078,
       "title": "Atmosphere · World",
-      "alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world.",
+      "alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
       "caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
       "width": 3840,
       "height": 1663
@@ -208,10 +209,10 @@
     {
       "key": "world-cloud-atmosphere-640",
       "path": "media/world-cloud-atmosphere-640.webp",
-      "sha256": "ee2227f27e7970fc002577fb2a833ee7f4a0f015447b42a526dec98ae7b98a47",
-      "bytes": 74640,
+      "sha256": "7b12bc1857661952a1bd6048eb8983a73fb047415b4c600de00df96f65d47729",
+      "bytes": 53080,
       "title": "Atmosphere · World",
-      "alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world.",
+      "alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
       "caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
       "width": 640,
       "height": 277
@@ -219,10 +220,10 @@
     {
       "key": "world-cloud-atmosphere-1280",
       "path": "media/world-cloud-atmosphere-1280.webp",
-      "sha256": "4f1478c6fd184f845bf739bb39c7a8406a7196d8a0ec1f8c5c722a7b21bdedea",
-      "bytes": 334586,
+      "sha256": "8352b5b1230ba9a059402359e391f48312e6b39b0b7c9194ef9fd3f713ee3f60",
+      "bytes": 200722,
       "title": "Atmosphere · World",
-      "alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world.",
+      "alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
       "caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
       "width": 1280,
       "height": 554
@@ -407,10 +408,10 @@
     {
       "key": "japan-cloud-atmosphere-detail",
       "path": "media/japan-cloud-atmosphere-detail.webp",
-      "sha256": "40a5df22952087f09c20898d6ea6e2a57b706aec04f67ba78095b62f1abeab53",
-      "bytes": 496318,
+      "sha256": "07412da6dc4e235f42646f9ac97c51ce1e3769e4f33d19ae6ee49196836ef721",
+      "bytes": 418476,
       "title": "Atmosphere · Japan / Setouchi",
-      "alt": "Atmospheric observation cells over Japan and nearby seas, with the Setouchi reference point.",
+      "alt": "Atmospheric observation cells over Japan and nearby seas on a light amber background, with the Setouchi reference point.",
       "caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
       "width": 3840,
       "height": 1663
@@ -418,10 +419,10 @@
     {
       "key": "japan-cloud-atmosphere-640",
       "path": "media/japan-cloud-atmosphere-640.webp",
-      "sha256": "8ae938b6b892b239d600ca69e118f5b6ae95263acd0dbc061aff00d888b99e55",
-      "bytes": 83982,
+      "sha256": "602d1cf3e4339e623b288a59a2a66d4f71a79072cd018a6a8e31c1e84ccc7e19",
+      "bytes": 62084,
       "title": "Atmosphere · Japan / Setouchi",
-      "alt": "Atmospheric observation cells over Japan and nearby seas, with the Setouchi reference point.",
+      "alt": "Atmospheric observation cells over Japan and nearby seas on a light amber background, with the Setouchi reference point.",
       "caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
       "width": 640,
       "height": 347
@@ -429,10 +430,10 @@
     {
       "key": "japan-cloud-atmosphere-1280",
       "path": "media/japan-cloud-atmosphere-1280.webp",
-      "sha256": "f859145000a419e489f1ba2eb1b8aa554f5a0e8a24ef382fc39798116aeda554",
-      "bytes": 211492,
+      "sha256": "479933f6e5c0e9ed7ffd21a228979179cc53eff76ff4ec926324fe9e55f9bafb",
+      "bytes": 165988,
       "title": "Atmosphere · Japan / Setouchi",
-      "alt": "Atmospheric observation cells over Japan and nearby seas, with the Setouchi reference point.",
+      "alt": "Atmospheric observation cells over Japan and nearby seas on a light amber background, with the Setouchi reference point.",
       "caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
       "width": 1280,
       "height": 694
@@ -788,7 +789,13 @@
       ],
       "projection": "Setouchi modified AuthaGraph; existing observer geometry retained for sky subjects",
       "atlas_presentation": "Wine / amber ground #240413 / type #fcc553; source data colors retained. Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.",
-      "world_framing": "Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained."
+      "world_framing": "Every world sheet uses the same horizontal cyclic move of +4.35 printed inches. Where terrestrial geography is present, Antarctica, its coastlines, ice and attached country fills share the approved lower-left translation. This position is editorial, not geographically accurate. Network, climate, orbital and celestial observations retain their source coordinates within the shifted frame. Japan detail framing is retained.",
+      "web_background_variation": {
+        "from": "#240413",
+        "to": "#fcc553",
+        "rectangles": 3,
+        "geometry_changed": false
+      }
     },
     {
       "id": "world-anthropocene-temperature-2026",
@@ -1047,7 +1054,13 @@
       ],
       "projection": "Setouchi modified AuthaGraph; existing observer geometry retained for sky subjects",
       "atlas_presentation": "Wine / amber ground #240413 / type #fcc553; source data colors retained. Separate map and legend/source sheets. Maps use a centered 43.5-inch image on the 44-inch sheet (98.863636% proportional scale); legend typography retains its declared physical sizes.",
-      "world_framing": null
+      "world_framing": null,
+      "web_background_variation": {
+        "from": "#240413",
+        "to": "#fcc553",
+        "rectangles": 3,
+        "geometry_changed": false
+      }
     },
     {
       "id": "japan-anthropocene-temperature-2026",

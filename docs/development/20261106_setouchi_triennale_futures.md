@@ -64,6 +64,8 @@ MSP 5 wine/amber presentation, the Setouchi horizontal adjustment, and separate
 map and legend sheets. Preserve source data colors and distinct satellite
 vendor colors. The website's surrounding typography and background follow its
 existing theme; wine/amber belongs to the artwork.
+The subsequent atmosphere revision uses the pair's lighter amber `#fcc553`
+as the background for both World and Japan web plates.
 
 | Order | Subject / source stem | World image and suggested caption | Japan image and suggested caption |
 | --- | --- | --- | --- |
@@ -343,6 +345,27 @@ Machine-readable results are in
 Chrome proof captures stay in the ignored `build/setouchi-futures-qa/` directory.
 No live WordPress authentication, media upload, editor round-trip, theme-layout
 verification, or outreach delivery is claimed by these local checks.
+
+### Atmosphere background revision — 6 November 2026
+
+Replace the dark wine background on both Atmosphere web plates with the lighter
+member of the selected Randoma11y pair: **amber `#fcc553`, `rgb(252,197,83)`**.
+The per-subject setting is recorded in `config/setouchi-futures-20261106.json`
+and applied by the durable builder to the sheet and nested background
+rectangles. Each source has three matching rectangles; their paint changes
+without changing observation geometry, data colors, opacity, or layer order.
+
+Rebuilt all six atmosphere WebPs (640, 1280, and 3840 pixels for each scope),
+and used the same amber behind the contained images in the gallery so Japan's
+thumbnail framing does not retain dark side bands. The full-sheet links use
+the revised background too. Alt text and provenance record the lighter ground.
+This is a local website variation; atlas print masters retain their existing
+presentation. The legend data keys and observation dates continue to apply.
+
+Verification confirmed exactly three background-fill changes in each SVG,
+with all geometry and data styles identical. The 23 publishing tests and
+desktop/phone gallery checks passed; both revised image exports and their
+gallery framing were visually reviewed.
 
 ## Contact approaches: Hajime Narukawa
 

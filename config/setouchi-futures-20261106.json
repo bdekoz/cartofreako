@@ -37,10 +37,11 @@
     {
       "stem": "cloud-atmosphere",
       "title": "Atmosphere",
+      "background": "#fcc553",
       "world_caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
       "japan_caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
-      "world_alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world.",
-      "japan_alt": "Atmospheric observation cells over Japan and nearby seas, with the Setouchi reference point.",
+      "world_alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
+      "japan_alt": "Atmospheric observation cells over Japan and nearby seas on a light amber background, with the Setouchi reference point.",
       "japan_crop_inches": [0.5, 1.75, 29.1, 17.25]
     },
     {
