@@ -69,6 +69,68 @@ def background_variation(tree, color):
     return {'from': original, 'to': color, 'rectangles': count, 'geometry_changed': False}
 
 
+def land_outline_overlay(tree, settings):
+    """Draw existing coastlines last, preserving every viewport transform and clip."""
+    color, opacity = settings['color'], settings['opacity']
+    if not re.fullmatch(r'#[0-9a-fA-F]{6}', color) or not 0 <= opacity <= 1:
+        raise ValueError('Invalid land outline paint')
+    frames = tree.xpath('//*[@id="st2-image-frame"]')
+    coastlines = tree.xpath('//*[@id="terrestrial-coastline"]')
+    if len(frames) != 1 or len(coastlines) != 1:
+        raise ValueError('Expected one image frame and coastline group')
+    frame, coastline = frames[0], coastlines[0]
+    source = coastline.getparent()
+    definitions = source.getparent()
+    if etree.QName(definitions).localname != 'defs':
+        raise ValueError('Expected coastlines in the shared source definition')
+    href = '{http://www.w3.org/1999/xlink}href'
+    uses = [n for n in frame.iter('{' + SVG + '}use')
+            if n.get(href, n.get('href')) == '#' + source.get('id')]
+    if not uses:
+        raise ValueError('No placed views of the source cartography')
+    overlay = etree.Element('{' + SVG + '}g', id='web-land-outlines')
+    overlay.set('data-layer-order', 'top')
+
+    def wrapper_for(node):
+        ancestors = []
+        parent = node.getparent()
+        while parent is not frame:
+            if parent is None or etree.QName(parent).localname == 'defs':
+                raise ValueError('Outline placement is outside the rendered image frame')
+            ancestors.append(parent)
+            parent = parent.getparent()
+        target = overlay
+        for ancestor in reversed(ancestors):
+            # Keep clipping, transforms, and presentation, without duplicating IDs.
+            attrs = {key: value for key, value in ancestor.attrib.items() if key != 'id'}
+            target = etree.SubElement(target, ancestor.tag, attrs)
+        return target
+
+    for use in uses:
+        placed = deepcopy(use)
+        placed.attrib.pop('id', None)
+        placed.set(href if href in placed.attrib else 'href', '#terrestrial-coastline')
+        wrapper_for(use).append(placed)
+    # Remove coastlines from the data composition; the new overlay references
+    # their original paths from a separate definition, avoiding a double stroke.
+    definitions.append(coastline)
+    groups = [coastline]
+    inset = tree.xpath('//*[@id="terrestrial-coastline-antarctic-inset"]')
+    for group in inset:
+        target = wrapper_for(group)
+        target.append(group)
+        groups.append(group)
+    paths = 0
+    for group in groups:
+        for path in group.iter('{' + SVG + '}path'):
+            set_style(path, stroke=color, stroke_opacity=opacity)
+            paths += 1
+    frame.append(overlay)
+    return {'layer': 'web-land-outlines', 'position': 'top', 'color': color, 'opacity': opacity,
+            'paths': paths, 'placed_views': len(uses), 'antarctica_inset': bool(inset),
+            'geometry_changed': False, 'line_widths_changed': False}
+
+
 def fiber_variation(tree, config, legend=False):
     """Change display paint only; all path geometry, dash classes, and data stay put."""
     color = config['fiber_ocean_color']
@@ -144,9 +206,13 @@ def build_map(config, output, build, item, scope, env, bibliography):
     working_legend = legend
     counts = None
     background = None
-    if item.get('background'):
+    outlines = None
+    if item.get('background') or item.get('land_outline'):
         tree = etree.parse(str(working))
-        background = background_variation(tree, item['background'])
+        if item.get('background'):
+            background = background_variation(tree, item['background'])
+        if item.get('land_outline'):
+            outlines = land_outline_overlay(tree, item['land_outline'])
         working = build / (ident + '.svg')
         tree.write(str(working), xml_declaration=True, encoding='UTF-8')
     if stem == 'network-fiber':
@@ -206,6 +272,8 @@ def build_map(config, output, build, item, scope, env, bibliography):
             'amber submarine routes at full opacity in this web edition; source widths retained')
     if background:
         provenance['web_background_variation'] = background
+    if outlines:
+        provenance['web_land_outline_overlay'] = outlines
     result = {'fingerprint': fingerprint, 'assets': assets, 'provenance': provenance}
     write_json(receipt_path, result)
     print('Prepared', ident, flush=True)

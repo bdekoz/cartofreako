@@ -48,6 +48,10 @@
         "stem": "cloud-atmosphere",
         "title": "Atmosphere",
         "background": "#fcc553",
+        "land_outline": {
+          "color": "#ffffff",
+          "opacity": 1
+        },
         "world_caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
         "japan_caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
         "world_alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
@@ -109,7 +113,7 @@
       }
     ]
   },
-  "config_sha256": "c949df660a0fc12f1cd301a46e191ed001ba91139ffe9b8446a990f1f13263cd",
+  "config_sha256": "dc3e8ad1e43f9b6f1f576fa1d07b835786fb9a6b35140ebfa5703bb37ead2df0",
   "assets": [
     {
       "key": "world-water-detail",
@@ -198,8 +202,8 @@
     {
       "key": "world-cloud-atmosphere-detail",
       "path": "media/world-cloud-atmosphere-detail.webp",
-      "sha256": "f51ba471542c5bbc2742561880612b52966853268a3263be3588a18cc05b699a",
-      "bytes": 1227078,
+      "sha256": "042b03ed32b5c41766be84cff1785f614b44b6572d5cb75633aaa76fac08ad93",
+      "bytes": 1289334,
       "title": "Atmosphere · World",
       "alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
       "caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
@@ -209,8 +213,8 @@
     {
       "key": "world-cloud-atmosphere-640",
       "path": "media/world-cloud-atmosphere-640.webp",
-      "sha256": "7b12bc1857661952a1bd6048eb8983a73fb047415b4c600de00df96f65d47729",
-      "bytes": 53080,
+      "sha256": "7ce0f83ed17e27f51a69247d34641925b90734cb47ade1f7f0351813129548e7",
+      "bytes": 55326,
       "title": "Atmosphere · World",
       "alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
       "caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
@@ -220,8 +224,8 @@
     {
       "key": "world-cloud-atmosphere-1280",
       "path": "media/world-cloud-atmosphere-1280.webp",
-      "sha256": "8352b5b1230ba9a059402359e391f48312e6b39b0b7c9194ef9fd3f713ee3f60",
-      "bytes": 200722,
+      "sha256": "d926babb7124bd26b77549980431ccc7e8a4da94ef0505869540fd3302490eb0",
+      "bytes": 209424,
       "title": "Atmosphere · World",
       "alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
       "caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
@@ -408,8 +412,8 @@
     {
       "key": "japan-cloud-atmosphere-detail",
       "path": "media/japan-cloud-atmosphere-detail.webp",
-      "sha256": "07412da6dc4e235f42646f9ac97c51ce1e3769e4f33d19ae6ee49196836ef721",
-      "bytes": 418476,
+      "sha256": "2fb5f4e793334ebf1f344b1425ea7cd1f913687027fbf15066de07bc9353bcf0",
+      "bytes": 434998,
       "title": "Atmosphere · Japan / Setouchi",
       "alt": "Atmospheric observation cells over Japan and nearby seas on a light amber background, with the Setouchi reference point.",
       "caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
@@ -419,8 +423,8 @@
     {
       "key": "japan-cloud-atmosphere-640",
       "path": "media/japan-cloud-atmosphere-640.webp",
-      "sha256": "602d1cf3e4339e623b288a59a2a66d4f71a79072cd018a6a8e31c1e84ccc7e19",
-      "bytes": 62084,
+      "sha256": "b4e146465038dbee5e0a06ba0887f988dd1671e0bf56519dacd2d58e7904ba53",
+      "bytes": 62552,
       "title": "Atmosphere · Japan / Setouchi",
       "alt": "Atmospheric observation cells over Japan and nearby seas on a light amber background, with the Setouchi reference point.",
       "caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
@@ -430,8 +434,8 @@
     {
       "key": "japan-cloud-atmosphere-1280",
       "path": "media/japan-cloud-atmosphere-1280.webp",
-      "sha256": "479933f6e5c0e9ed7ffd21a228979179cc53eff76ff4ec926324fe9e55f9bafb",
-      "bytes": 165988,
+      "sha256": "42102a91db1b49ee64f26d3587271f4728c6d3fd6c5b78a50ad1481e6d32e9ea",
+      "bytes": 165798,
       "title": "Atmosphere · Japan / Setouchi",
       "alt": "Atmospheric observation cells over Japan and nearby seas on a light amber background, with the Setouchi reference point.",
       "caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
@@ -795,6 +799,17 @@
         "to": "#fcc553",
         "rectangles": 3,
         "geometry_changed": false
+      },
+      "web_land_outline_overlay": {
+        "layer": "web-land-outlines",
+        "position": "top",
+        "color": "#ffffff",
+        "opacity": 1,
+        "paths": 4343,
+        "placed_views": 3,
+        "antarctica_inset": true,
+        "geometry_changed": false,
+        "line_widths_changed": false
       }
     },
     {
@@ -1060,6 +1075,17 @@
         "to": "#fcc553",
         "rectangles": 3,
         "geometry_changed": false
+      },
+      "web_land_outline_overlay": {
+        "layer": "web-land-outlines",
+        "position": "top",
+        "color": "#ffffff",
+        "opacity": 1,
+        "paths": 4157,
+        "placed_views": 1,
+        "antarctica_inset": false,
+        "geometry_changed": false,
+        "line_widths_changed": false
       }
     },
     {

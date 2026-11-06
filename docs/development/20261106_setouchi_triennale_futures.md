@@ -367,6 +367,32 @@ with all geometry and data styles identical. The 23 publishing tests and
 desktop/phone gallery checks passed; both revised image exports and their
 gallery framing were visually reviewed.
 
+### Atmosphere land-outline revision — 6 November 2026
+
+Place land outlines above every atmospheric layer in both web plates. The
+source coastlines were already last inside the shared data group, but their
+thin amber strokes were faint against the newly amber background. The web
+builder now separates those existing paths into a final `web-land-outlines`
+layer and paints them white `#ffffff` at full opacity, following the user's
+color correction. Original coastline geometry and line widths are retained;
+land remains unfilled.
+The nominal weights are **0.5 pt for World** and **1 pt for Japan**. After the
+Setouchi framing scale, the physical weights on the 44-inch sheets are about
+0.494 pt and 0.989 pt; responsive web previews scale those lines with the image.
+
+The World overlay preserves the three cyclic placements and their clipping,
+and includes the relocated Antarctica coastline. Japan retains its viewport
+clip and scaling. Coastlines are removed from the underlying data composition
+to avoid drawing them twice. The final outline layer is above the complete
+image composition. Atmospheric observations and the light amber ground retain
+their prior settings. The six web derivatives were rebuilt, with overlay
+settings recorded in the prepared manifest.
+
+Structural checks verified all path geometry, data styles, line widths,
+viewport transforms, and clips. World uses 4,343 coastline paths including
+Antarctica; Japan uses 4,157. Both white-outline exports were visually checked.
+The 23 publishing tests and desktop/phone gallery checks passed.
+
 ## Contact approaches: Hajime Narukawa
 
 Keio's current [faculty profile](https://www.keio.ac.jp/en/faculty/k_100012208/)

@@ -13,8 +13,12 @@ reads, so the preview does not recreate or replace their unseen content.
 
 The images use the approved wine/amber presentation. Both Atmosphere plates
 use the lighter amber `#fcc553` (`rgb(252,197,83)`) as their background, including
-the thumbnail frames and full-sheet detail images. Atmospheric data colors,
-opacity, and geometry are retained. Submarine fiber routes
+the thumbnail frames and full-sheet detail images. Land outlines sit in a
+separate top layer, using white `#ffffff` at full opacity with their original
+line widths. The World layer includes the relocated Antarctica outline.
+Nominal outline weights are 0.5 pt for World and 1 pt for Japan (approximately
+0.49 pt and 0.99 pt after the Setouchi framing scale on the 44-inch sheets).
+Atmospheric data colors, opacity, and geometry are retained. Submarine fiber routes
 are amber at full opacity, with matching legend swatches; land routes remain
 green. Route geometry and dash classes are retained. Water, atmosphere, and
 temperature thumbnails trim the unused part of the Japan print sheet. The

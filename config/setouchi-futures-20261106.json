@@ -38,6 +38,7 @@
       "stem": "cloud-atmosphere",
       "title": "Atmosphere",
       "background": "#fcc553",
+      "land_outline": {"color": "#ffffff", "opacity": 1},
       "world_caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
       "japan_caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
       "world_alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
