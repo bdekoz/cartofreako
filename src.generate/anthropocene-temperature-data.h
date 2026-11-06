@@ -23,6 +23,7 @@
 #include <h3/h3api.h>
 #include <rapidjson/document.h>
 #include <rapidjson/error/en.h>
+#include "temperature-source-grid.h"
 
 namespace cart0freak0::anthropocene_temperature_generation {
 
@@ -46,6 +47,7 @@ struct temperature_profile
   std::string snapshot_as_of_utc;
   std::string data_through;
   unsigned h3_resolution = 3;
+  std::string cell_domain = "global";
   int baseline_start = 1979;
   int baseline_end = 0;
   unsigned minimum_history_years = 30;
@@ -91,6 +93,7 @@ struct temperature_dataset
   std::string snapshot_as_of_utc;
   std::string data_through;
   unsigned h3_resolution = 0;
+  std::string cell_domain = "global";
   int baseline_start = 0;
   int baseline_end = 0;
   unsigned minimum_history_years = 0;
@@ -306,6 +309,10 @@ load_temperature_profile(const fs::path& path)
       "unsupported temperature source-grid aggregation");
   result.h3_resolution = temperature_uint(
     aggregation, "h3_resolution", "aggregation");
+  if (aggregation.HasMember("cell_domain"))
+    result.cell_domain = temperature_string(aggregation, "cell_domain", "aggregation");
+  temperature_require(result.cell_domain == "global" || result.cell_domain == "source-grid-centers",
+                      "unsupported temperature cell domain");
 
   const rj::Value& records = temperature_member(
     document, "records", path.string());
@@ -409,6 +416,8 @@ load_temperature_dataset(const fs::path& path,
     metadata, "partial_year", "metadata");
   result.h3_resolution = temperature_uint(
     metadata, "h3_resolution", "metadata");
+  if (metadata.HasMember("cell_domain"))
+    result.cell_domain = temperature_string(metadata, "cell_domain", "metadata");
   result.source_grid_aggregation = temperature_string(
     metadata, "source_grid_aggregation", "metadata");
   result.reporting_day = temperature_string(
@@ -453,6 +462,7 @@ load_temperature_dataset(const fs::path& path,
                         && result.data_through == profile.data_through
                         && result.partial_year == profile.partial_year
                         && result.h3_resolution == profile.h3_resolution
+                        && result.cell_domain == profile.cell_domain
                         && result.baseline_start == profile.baseline_start
                         && result.baseline_end == profile.baseline_end
                         && result.minimum_history_years
@@ -473,11 +483,20 @@ load_temperature_dataset(const fs::path& path,
                         && feature_count == features.Size(),
                       "temperature feature_count differs from features");
   int64_t expected_cells = 0;
-  temperature_require(getNumCells(profile.h3_resolution, &expected_cells)
-                        == E_SUCCESS
-                        && feature_count
-                             == static_cast<std::uint64_t>(expected_cells),
-                      "temperature field is not globally non-sparse");
+  std::vector<H3Index> source_domain;
+  if (profile.cell_domain == "source-grid-centers")
+    {
+      source_domain = cpc_source_cell_domain(profile.h3_resolution);
+      expected_cells = source_domain.size();
+      temperature_require(temperature_string(metadata, "unstored_cell_semantics", "metadata")
+        == "No source-grid center; unobserved, not zero. Source pixel footprints are not filled.",
+        "temperature source-grid domain lacks explicit missing semantics");
+    }
+  else
+    temperature_require(getNumCells(profile.h3_resolution, &expected_cells) == E_SUCCESS,
+                        "cannot size global temperature domain");
+  temperature_require(feature_count == static_cast<std::uint64_t>(expected_cells),
+                      "temperature field does not cover its declared cell domain");
   result.cells.reserve(features.Size());
   H3Index previous = H3_NULL;
   std::uint64_t calculated_covered = 0;
@@ -509,6 +528,9 @@ load_temperature_dataset(const fs::path& path,
                           context + " id and properties.h3 differ");
       temperature_cell cell;
       cell.h3 = temperature_h3(id, context);
+      if (!source_domain.empty())
+        temperature_require(cell.h3 == source_domain[index],
+                            "temperature field differs from the CPC source-center domain");
       cell.longitude = coordinates[0].GetDouble();
       cell.latitude = coordinates[1].GetDouble();
       cell.record_high_days = temperature_uint64(

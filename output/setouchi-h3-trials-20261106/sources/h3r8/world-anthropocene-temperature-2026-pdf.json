@@ -1,0 +1,13 @@
+{
+  "input_sha256": "7248ea7786d9bb0d9b9328b83f45e4ad2ac412eb8d2111b99aa1bb124708f3cf",
+  "output_sha256": "a91c84094c8fa11255b3f4501e69c7072eb4a1af60e006b5957a1d32dd6d99bf",
+  "input_bytes": 14085467,
+  "output_bytes": 5332768,
+  "normalized_single_hue_images": 2,
+  "deduplicated_image_objects": 6,
+  "maximum_premultiplied_channel_change_255": 0.9686274528503418,
+  "alpha_planes_unchanged": true,
+  "image_dimensions_unchanged": true,
+  "optimizer_sha256": "298692abf19d8d017708d30b12de77978c6fcc0889f04a2f0ffd68312ec610a1",
+  "pikepdf_version": "10.17.0"
+}

@@ -1,0 +1,13 @@
+{
+  "snapshot": "build/setouchi-h3-trials-20261106/h3r8/data/anthropocene-temperature-2026.geojson",
+  "snapshot_sha256": "3373813e2251244bf4fcfed366a8176be635a5fe7e881ff6cddaf54a61daf5e8",
+  "bytes": 73202568,
+  "subject": "temperature",
+  "stem": "anthropocene-temperature-2026",
+  "h3_resolution": 8,
+  "profile": "output/setouchi-h3-trials-20261106/sources/h3r8/anthropocene-temperature-2026-profile.json",
+  "profile_sha256": "33f2bd64791301e6e206bb82a509a33521f66bda0de160cc538fbd0ea0e1f05a",
+  "preparer_sha256": "3bb54f1a33c0c2544db4a570ff59131c7409de226423a228826b402d5fb1e7e0",
+  "raw_manifest_sha256": "9cae26a32bf3ad11fbb5e8e0244cf860d0c131617ba2d8c4f64957e34d706800",
+  "sampling": "original source-center sampling; no spatial interpolation"
+}

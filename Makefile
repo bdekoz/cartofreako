@@ -976,6 +976,7 @@ ANTHROPOCENE_PARTICULATE_GENERATOR_HEADERS := \
 	$(NATURAL_EARTH_GENERATOR_HEADER) \
 	$(GENERATOR_HEADERS)
 ANTHROPOCENE_TEMPERATURE_GENERATOR_HEADERS := \
+	$(GENERATOR_SRC_DIR)/temperature-source-grid.h \
 	$(GENERATOR_SRC_DIR)/anthropocene-temperature-data.h \
 	$(GENERATOR_SRC_DIR)/anthropocene-temperature-generation.h \
 	$(NATURAL_EARTH_GENERATOR_HEADER) \
@@ -2107,9 +2108,48 @@ $(ANTHROPOCENE_TEMPERATURE_GENERATOR): \
 		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
 
 $(ANTHROPOCENE_TEMPERATURE_PREPARER): \
-		$(GENERATOR_SRC_DIR)/prepare-anthropocene-temperature.cc
+		$(GENERATOR_SRC_DIR)/prepare-anthropocene-temperature.cc \
+		$(GENERATOR_SRC_DIR)/temperature-source-grid.h
 	$(CXX) $(CPPFLAGS) $(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) \
 		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
+
+build/setouchi-h3-tools/prepare-temperature: \
+		$(GENERATOR_SRC_DIR)/prepare-anthropocene-temperature.cc \
+		$(GENERATOR_SRC_DIR)/temperature-source-grid.h
+	@mkdir -p $(@D)
+	$(CXX) $(CPPFLAGS) $(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) -O2 \
+		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
+
+build/setouchi-h3-tools/prepare-atmosphere: \
+		$(GENERATOR_SRC_DIR)/prepare-cloud-atmosphere.cc \
+		$(GENERATOR_SRC_DIR)/cloud-atmosphere-data.h $(GENERATOR_SRC_DIR)/generation-instant.h
+	@mkdir -p $(@D)
+	$(CXX) $(CPPFLAGS) $(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) -O2 \
+		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
+
+build/setouchi-h3-tools/render-cells: scripts/render-setouchi-h3-cells.cc \
+		$(CLOUD_ATMOSPHERE_GENERATOR_HEADERS) $(ANTHROPOCENE_TEMPERATURE_GENERATOR_HEADERS)
+	@mkdir -p $(@D)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(shell pkg-config --cflags cairo) $(CXXFLAGS) -O2 \
+		$< $(shell $(GDAL_CONFIG) --libs) $(shell pkg-config --libs cairo) -lh3 -o $@
+
+build/setouchi-h3-tools/test-source-domain: tests/test-temperature-source-domain.cc \
+		$(GENERATOR_SRC_DIR)/anthropocene-temperature-data.h $(GENERATOR_SRC_DIR)/temperature-source-grid.h
+	@mkdir -p $(@D)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -O2 $< -lh3 -o $@
+
+build/setouchi-h3-tools/test-temperature: tests/test-anthropocene-temperature-generation.cc \
+		$(ANTHROPOCENE_TEMPERATURE_GENERATOR_HEADERS)
+	@mkdir -p $(@D)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) -O2 \
+		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
+
+.PHONY: check-setouchi-h3
+check-setouchi-h3: build/setouchi-h3-tools/test-source-domain build/setouchi-h3-tools/test-temperature
+	build/setouchi-h3-tools/test-source-domain build/setouchi-h3-trials-tests
+	build/setouchi-h3-tools/test-temperature
 
 $(RESOURCES_GENERATOR): \
 		$(GENERATOR_SRC_DIR)/generate-resources.cc \

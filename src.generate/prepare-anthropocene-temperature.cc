@@ -28,6 +28,7 @@
 #include <rapidjson/error/en.h>
 #include <rapidjson/ostreamwrapper.h>
 #include <rapidjson/writer.h>
+#include "temperature-source-grid.h"
 
 namespace fs = std::filesystem;
 namespace rj = rapidjson;
@@ -51,6 +52,7 @@ struct target_configuration
   std::string data_through;
   std::chrono::sys_days last_day;
   int h3_resolution = 3;
+  std::string cell_domain = "global";
   int baseline_start = 1979;
   int baseline_end = 0;
   unsigned minimum_history_years = 30;
@@ -199,6 +201,10 @@ load_configuration(const fs::path& profile_path, const fs::path& output_path)
           "unsupported aggregation.source_grid_aggregation");
   result.h3_resolution = integer_member(
     aggregation, "h3_resolution", "aggregation");
+  if (aggregation.HasMember("cell_domain"))
+    result.cell_domain = string_member(aggregation, "cell_domain", "aggregation");
+  require(result.cell_domain == "global" || result.cell_domain == "source-grid-centers",
+          "aggregation.cell_domain must be global or source-grid-centers");
 
   const rj::Value& records = member(document, "records", context);
   result.baseline_start = integer_member(
@@ -518,6 +524,13 @@ write_geojson(const target_values& target,
   writer.Bool(target.configuration.partial_year);
   writer.Key("h3_resolution");
   writer.Int(target.configuration.h3_resolution);
+  if (target.configuration.cell_domain != "global")
+    {
+      writer.Key("cell_domain");
+      writer.String(target.configuration.cell_domain.c_str());
+      writer.Key("unstored_cell_semantics");
+      writer.String("No source-grid center; unobserved, not zero. Source pixel footprints are not filled.");
+    }
   writer.Key("source_grid_aggregation");
   writer.String("mean-of-valid-grid-cell-centers");
   writer.Key("reporting_day");
@@ -626,6 +639,7 @@ run(const int argc, char** argv)
   for (const target_values& target : targets)
     require(target.configuration.h3_resolution
               == targets.front().configuration.h3_resolution
+              && target.configuration.cell_domain == targets.front().configuration.cell_domain
               && target.configuration.baseline_start
                    == targets.front().configuration.baseline_start
               && target.configuration.minimum_history_years
@@ -635,8 +649,10 @@ run(const int argc, char** argv)
             "target profiles disagree on CPC processing contract");
 
   GDALAllRegister();
-  const std::vector<H3Index> cells = global_cells(
-    targets.front().configuration.h3_resolution);
+  const auto& config = targets.front().configuration;
+  const std::vector<H3Index> cells = config.cell_domain == "global"
+    ? global_cells(config.h3_resolution)
+    : cart0freak0::anthropocene_temperature_generation::cpc_source_cell_domain(config.h3_resolution);
   const std::vector<std::uint32_t> grid_cells = pixel_cells(
     cells, targets.front().configuration.h3_resolution);
   for (target_values& target : targets)

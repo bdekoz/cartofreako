@@ -1,0 +1,95 @@
+{
+  "schema": "cartofreako-setouchi-h3-trial-products-v1",
+  "config": {
+    "schema": "cartofreako-setouchi-h3-trials-v1",
+    "edition": "2026-11-06",
+    "resolutions": [
+      5,
+      8
+    ],
+    "baseline": {
+      "path": "config/setouchi-futures-20261106-baseline.json",
+      "sha256": "9b7c40362b6fcc2204462b21d9758e79f0419635148a5f6533126e80473eb6ae"
+    },
+    "output": "output/setouchi-h3-trials-20261106",
+    "build": "build/setouchi-h3-trials-20261106",
+    "data_raster_dpi": 300,
+    "analysis_method": "Retain original source-center sampling and aggregation; vary H3 resolution only. No child-cell replication or gap interpolation.",
+    "atmosphere": {
+      "profile": {
+        "path": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/cloud-atmosphere-profile.json",
+        "sha256": "90385c469a7d65775f990e51f75760e5d31ebf9563001e847fa81221cc8d2747"
+      },
+      "fetch_manifest": {
+        "path": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/.raw/cloud-atmosphere-fetch-manifest.json",
+        "sha256": "791950bac90370d76f350e263b19565e465df1360579ec3b3ab7db013c36f355"
+      }
+    },
+    "temperature": {
+      "profile": {
+        "path": "output/setouchi-triennale-2028/sources/data/anthropocene/anthropocene-temperature-2026-profile.json",
+        "sha256": "68b11e084fd10ebb6a6250d299f214fb853883669a5a4df60185191b97005b79"
+      },
+      "raw_manifest": {
+        "path": "output/setouchi-triennale-2028/sources/data/anthropocene/.raw/cpc/SHA256SUMS",
+        "sha256": "9cae26a32bf3ad11fbb5e8e0244cf860d0c131617ba2d8c4f64957e34d706800"
+      },
+      "cell_domain": "source-grid-centers"
+    }
+  },
+  "config_sha256": "20e6c0c6a3b613acac14b730a04a20e8bc515f99e118a4923a1d2dc1f456a7bb",
+  "products": [
+    {
+      "snapshot": "build/setouchi-h3-trials-20261106/h3r5/data/cloud-atmosphere.geojson",
+      "snapshot_sha256": "a8b78d1afb708df84a68e51a5e2f64302a8cbd64eba7c1330634d441e6b825b3",
+      "bytes": 588544169,
+      "subject": "atmosphere",
+      "stem": "cloud-atmosphere",
+      "h3_resolution": 5,
+      "profile": "output/setouchi-h3-trials-20261106/sources/h3r5/cloud-atmosphere-profile.json",
+      "profile_sha256": "a0242fdf77763ed03106afa46a0aa451e1b46dba5601e8d87d0cd57275e4ab25",
+      "preparer_sha256": "4689c976a18bdb7e66a59364e86ec6fb984f959ad40d06ad506f7f9bcf24d74d",
+      "raw_manifest_sha256": "791950bac90370d76f350e263b19565e465df1360579ec3b3ab7db013c36f355",
+      "sampling": "original source-center sampling; no spatial interpolation"
+    },
+    {
+      "snapshot": "build/setouchi-h3-trials-20261106/h3r5/data/anthropocene-temperature-2026.geojson",
+      "snapshot_sha256": "cb148a97515ed560058dbb2bc875768d7cfaa0b53e28c3a9c2ac4a814d3cc6d0",
+      "bytes": 66945347,
+      "subject": "temperature",
+      "stem": "anthropocene-temperature-2026",
+      "h3_resolution": 5,
+      "profile": "output/setouchi-h3-trials-20261106/sources/h3r5/anthropocene-temperature-2026-profile.json",
+      "profile_sha256": "2afd235103a937654d6f4fa2a3bb3f6473f18bb3bb3c4110b18b177f160a457f",
+      "preparer_sha256": "3bb54f1a33c0c2544db4a570ff59131c7409de226423a228826b402d5fb1e7e0",
+      "raw_manifest_sha256": "9cae26a32bf3ad11fbb5e8e0244cf860d0c131617ba2d8c4f64957e34d706800",
+      "sampling": "original source-center sampling; no spatial interpolation"
+    },
+    {
+      "snapshot": "build/setouchi-h3-trials-20261106/h3r8/data/cloud-atmosphere.geojson",
+      "snapshot_sha256": "c54580f632cc13e51ecc92292b846ccb5982b1857c4dfe35632390cd80d088af",
+      "bytes": 1055382486,
+      "subject": "atmosphere",
+      "stem": "cloud-atmosphere",
+      "h3_resolution": 8,
+      "profile": "output/setouchi-h3-trials-20261106/sources/h3r8/cloud-atmosphere-profile.json",
+      "profile_sha256": "268daa8c609c2d6fbfb117359b79e3e8641e1b2e4cd1914c9d8b96e161228d64",
+      "preparer_sha256": "4689c976a18bdb7e66a59364e86ec6fb984f959ad40d06ad506f7f9bcf24d74d",
+      "raw_manifest_sha256": "791950bac90370d76f350e263b19565e465df1360579ec3b3ab7db013c36f355",
+      "sampling": "original source-center sampling; no spatial interpolation"
+    },
+    {
+      "snapshot": "build/setouchi-h3-trials-20261106/h3r8/data/anthropocene-temperature-2026.geojson",
+      "snapshot_sha256": "3373813e2251244bf4fcfed366a8176be635a5fe7e881ff6cddaf54a61daf5e8",
+      "bytes": 73202568,
+      "subject": "temperature",
+      "stem": "anthropocene-temperature-2026",
+      "h3_resolution": 8,
+      "profile": "output/setouchi-h3-trials-20261106/sources/h3r8/anthropocene-temperature-2026-profile.json",
+      "profile_sha256": "33f2bd64791301e6e206bb82a509a33521f66bda0de160cc538fbd0ea0e1f05a",
+      "preparer_sha256": "3bb54f1a33c0c2544db4a570ff59131c7409de226423a228826b402d5fb1e7e0",
+      "raw_manifest_sha256": "9cae26a32bf3ad11fbb5e8e0244cf860d0c131617ba2d8c4f64957e34d706800",
+      "sampling": "original source-center sampling; no spatial interpolation"
+    }
+  ]
+}

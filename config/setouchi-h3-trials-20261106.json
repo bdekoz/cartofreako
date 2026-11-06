@@ -1,0 +1,37 @@
+{
+  "schema": "cartofreako-setouchi-h3-trials-v1",
+  "edition": "2026-11-06",
+  "resolutions": [
+    5,
+    8
+  ],
+  "baseline": {
+    "path": "config/setouchi-futures-20261106-baseline.json",
+    "sha256": "9b7c40362b6fcc2204462b21d9758e79f0419635148a5f6533126e80473eb6ae"
+  },
+  "output": "output/setouchi-h3-trials-20261106",
+  "build": "build/setouchi-h3-trials-20261106",
+  "data_raster_dpi": 300,
+  "analysis_method": "Retain original source-center sampling and aggregation; vary H3 resolution only. No child-cell replication or gap interpolation.",
+  "atmosphere": {
+    "profile": {
+      "path": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/cloud-atmosphere-profile.json",
+      "sha256": "90385c469a7d65775f990e51f75760e5d31ebf9563001e847fa81221cc8d2747"
+    },
+    "fetch_manifest": {
+      "path": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/.raw/cloud-atmosphere-fetch-manifest.json",
+      "sha256": "791950bac90370d76f350e263b19565e465df1360579ec3b3ab7db013c36f355"
+    }
+  },
+  "temperature": {
+    "profile": {
+      "path": "output/setouchi-triennale-2028/sources/data/anthropocene/anthropocene-temperature-2026-profile.json",
+      "sha256": "68b11e084fd10ebb6a6250d299f214fb853883669a5a4df60185191b97005b79"
+    },
+    "raw_manifest": {
+      "path": "output/setouchi-triennale-2028/sources/data/anthropocene/.raw/cpc/SHA256SUMS",
+      "sha256": "9cae26a32bf3ad11fbb5e8e0244cf860d0c131617ba2d8c4f64957e34d706800"
+    },
+    "cell_domain": "source-grid-centers"
+  }
+}

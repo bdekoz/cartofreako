@@ -1,6 +1,6 @@
 # Setouchi 2028 futures: image grids, website publishing, and outreach
 
-Date: 2026-11-06. Status: local update prepared and validated; current presentation saved; H3r8 migration scoped below; publication deferred.
+Date: 2026-11-06. Status: local update prepared and validated; current presentation saved; separate H3r5/H3r8 trials completed and validated; WordPress publication deferred.
 
 ## Task and accumulated decisions
 
@@ -516,8 +516,10 @@ and Observer's calculated sky positions retain their native representations.
 Atmosphere's calculated solar contours also remain vectors. The user was
 asked whether the intended scope includes Temperature or is limited to
 Atmosphere, and whether individual H3r8 cells should be drawn or aggregated
-for legibility. Those choices remain pending; the broader scope and aggregated
-display are the proposed approach, not a completed conversion.
+for legibility. The later request to try the four affected plates at **both
+H3r5 and H3r8** resolves the trial scope: both subjects, both views, and actual
+cells at each resolution. The controlled trials below supersede the pending
+scope decision; an atlas-wide change of defaults remains separate.
 
 #### Source and implementation findings
 
@@ -530,11 +532,12 @@ display are the proposed approach, not a completed conversion.
 H3r8 has **691,776,122 cells globally**, with an average hexagon area of about
 **0.737 km²**. These are grid statistics, not the spatial resolution of the
 observations. See the [official H3 cell statistics](https://h3geo.org/docs/core-library/restable/).
-The current temperature preparer enumerates every global cell and allocates
-416 calendar slots per cell for historical extrema and history counts. At r8,
-those two arrays alone would require about **1.44 TB** in decimal units. Its
-existing reader also requires a fully enumerated global GeoJSON. Changing
-only `h3_resolution` would therefore be an unsuitable implementation.
+At the baseline checkpoint, the temperature preparer enumerated every global
+cell and allocated 416 calendar slots per cell for historical extrema and
+history counts. At r8, those two arrays alone would require about **1.44 TB**
+in decimal units. Its reader also required a fully enumerated global GeoJSON.
+Changing only `h3_resolution` would therefore have been unsuitable; the trial
+implementation below adds an explicit source-center domain.
 
 Use tiled or partitioned processing with an explicit coverage/missing-data
 contract. Finer indexing must retain the original source footprint and
@@ -548,27 +551,143 @@ allocation method before making cross-layer comparisons.
 
 1. **Inventory — complete.** Verify the current r3 profiles, locate their dated
    raw inputs, and save the validated visual baseline separately.
-2. **Scope and representation — awaiting the two clarification choices.**
-   Confirm the gridded subjects and whether the display uses individual r8
-   cells or a declared aggregation of r8 products. Keep the analysis grid
+2. **Scope and representation — confirmed for the controlled trials below.**
+   Atmosphere and Temperature, World and Japan, at both r5 and r8. Draw actual
+   cells rather than a coarser display aggregation. Keep the analysis grid
    consistent across included subjects and both views.
-3. **Prepare — pending.** Implement bounded-memory source processing and
-   partitioned r8 products. Pin input hashes and dates; preserve units,
-   source resolution, quality information, coverage, and nulls. Distinguish
-   resampling from additional observational detail.
-4. **Validate — pending.** Reject mixed-resolution identifiers; check source
-   coverage, valid fractions, regional values, and the daily-record method.
-   Compare Japan's values with the corresponding World subset. If a coarser
-   display is used, record its resolution and aggregation independently of
-   analysis resolution; retain the shared 100-band radiation scale.
-5. **Render and save — pending.** Rebuild the affected maps, separate legends,
-   captions, and provenance with the saved amber/white presentation. Check
-   desktop and phone exports, then save the new product hashes and settings
-   as an H3r8 edition. Retain the current baseline for reproduction.
+3. **Prepare — complete for both trials.** Reaggregate the pinned raw samples
+   at r5 and r8. Temperature's bounded source-center domain replaces the
+   proposed global allocation; Atmosphere retains its observed-cell domain.
+   Preserve units, source resolution, quality information, and nulls.
+4. **Validate — complete for both trials.** Check actual H3 resolutions,
+   declared domains, source hashes, and the unchanged daily-record method.
+   World and Japan render the same validated products and share the fixed
+   100-band radiation scale. No coarser display grid is substituted.
+5. **Render and save — complete for both trials.** Save eight maps, separate
+   legends, an r3/r5/r8 comparison gallery, and provenance. Desktop and phone
+   checks pass. The H3r3 baseline remains available; adopting either trial as
+   the atlas or website default is a separate decision.
 
-This documentation/settings checkpoint does **not** claim the H3r8 migration
-has run. The checked artwork and its existing validation receipt remain the
-saved H3r3 edition until the replacement products and renders pass those stages.
+The documentation/settings checkpoint at `1ef3114` did **not** run an H3r8
+migration. The baseline artwork and its existing validation receipt remain
+the saved H3r3 edition. The subsequent trials are a separate delivery.
+
+### Controlled H3r5 and H3r8 plate trials — 6 November 2026
+
+The user requested **Atmosphere and Temperature records · 2026, World and
+Japan, at both H3r5 and H3r8**: eight new map plates and eight separate
+legend/source sheets. Preserve the H3r3 website package as the control.
+The [trial settings](../../config/setouchi-h3-trials-20261106.json) pin that
+baseline and the October raw-source manifests. The durable entry point is
+[build-setouchi-h3-trials.py](../../scripts/build-setouchi-h3-trials.py).
+
+**Completed and validated:** open the
+[r3/r5/r8 comparison gallery](../../output/setouchi-h3-trials-20261106/index.html).
+Each new map has PDF, SVG, 300 dpi PNG, and WebP exports, with a separate
+legend/source sheet. The combined four-page editions alternate map and legend:
+
+- H3r5: [World](../../output/setouchi-h3-trials-20261106/h3r5/world.pdf) ·
+  [Japan](../../output/setouchi-h3-trials-20261106/h3r5/japan.pdf).
+- H3r8: [World](../../output/setouchi-h3-trials-20261106/h3r8/world.pdf) ·
+  [Japan](../../output/setouchi-h3-trials-20261106/h3r8/japan.pdf).
+
+For this experiment, change the cell resolution while keeping the observation
+dates, sampled source locations, quality masks, classification, and physical
+line weights fixed. Atmosphere retains `maximum_samples_per_axis: 720` from
+the baseline; Temperature retains NOAA CPC's 720 × 360 source-center grid.
+Both trials reaggregate the raw samples directly into their requested H3
+cells. They do not subdivide an existing r3 mean or introduce interpolated
+observations. The resulting gaps describe **sample-center support**, not
+the complete footprint of the original raster pixels or necessarily a gap
+in the original observations. This qualifies these as resolution experiments,
+not new higher-detail observational products.
+
+Temperature storage now has an explicit, optional
+`aggregation.cell_domain: "source-grid-centers"` mode. It enumerates at most
+259,200 source centers, while preserving the daily spatial mean, same-day
+historical comparison, valid-day counts, and strict-record rules. Unstored
+cells have no sampled center and are unobserved, never analyzed zero. The
+default remains the original explicit global domain. The reader checks the
+entire declared source-center domain, actual H3 resolutions, sorted unique
+IDs, count totals, and missing-data contract. Thus this trial path avoids the
+global-allocation problem without changing the record calculation.
+
+| Trial product | Stored cells | Cells with temperature observations |
+| --- | ---: | ---: |
+| Atmosphere H3r5 | 1,851,097 | — |
+| Atmosphere H3r8 | 3,646,239 | — |
+| Temperature H3r5 | 235,802 | 62,035 |
+| Temperature H3r8 | 257,960 | 62,881 |
+
+Atmosphere counts are the union of cells with a valid value in at least one
+layer. Each layer retains its own missingness and valid fraction. Temperature
+counts include stored source-center cells with no valid land-temperature
+observations; those remain explicitly unobserved. Counts across resolutions
+are not an increase in observations and must not be interpreted as warming.
+
+The renderer projects the actual H3 boundaries with the existing AuthaGraph
+code. It paints cells using the source SVG's colors, widths, and bin order;
+radiation uses the saved 100-level opacity mapping on 0–400 W/m². Data layers
+are rasterized at **300 dpi at their placed size**, including Japan's zoom.
+Each SVG keeps named, separately replaceable data layers linked to adjacent
+PNGs; PDFs embed those layers. Land outlines, solar contours, frames, and text
+remain vectors. The atmosphere background stays amber, with white nominal
+0.66 pt land outlines above the data. Temperature retains its wine background.
+
+Individual r8 cells can be smaller than a print pixel, and the retained stroke
+width can dominate their appearance. The trial deliberately preserves that
+weight for comparison. A later visual refinement can scale the strokes, but
+would be a separate design variable. The H3r3 control remains an original
+vector-derived website export; the finer trials use raster data layers.
+
+The visual review favors **r5 for legibility at the current sheet size**.
+Atmosphere reveals more of the original observation swaths; their uncovered
+areas were already present in the source product. R8 makes the source-sampling
+lattice and gaps more apparent. For Temperature, covered cells increase only
+from 62,035 at r5 to 62,881 at r8, while their printed footprints become much
+smaller. The warm fills fade at overview scale and the retained blue strokes
+become relatively prominent. These changes are consequences of sampling and
+mark size, not changes in climate or new measurements.
+
+PDF packaging shares duplicate raster objects used by the cyclic World
+composition. It preserves all alpha planes and dimensions, with no
+downsampling or JPEG encoding. On single-hue layers it restores the source
+RGB after renderer rounding; the maximum premultiplied channel change is
+one 8-bit step. Packaging receipts accompany the product provenance. The
+largest combined PDF is 96.53 MB, retaining 300 dpi data layers.
+
+Validation is saved in
+[validation.json](../../output/setouchi-h3-trials-20261106/validation.json).
+All eight pairs passed artifact checksums, product identity, reference-vector
+geometry, linked image checks, decoded PDF image dimensions, and updated legend
+resolution checks. All twelve comparison images load, with three columns at
+1440 px and one column at 390 px, meaningful alternative text, and no horizontal
+overflow. The existing Temperature generation test and the new source-domain
+test passed; the latter checks r3/r5/r8 domains, rejects invalid domains, and
+confirms exact per-cell values and totals when the existing r3 product is
+represented in the source-center domain. The saved website preview and
+prepared-manifest hashes remain unchanged.
+
+Rebuild from the repository root:
+
+```sh
+python3 -m pip install --target build/setouchi-h3-python -r scripts/requirements-setouchi-h3.txt
+python3 scripts/build-setouchi-h3-trials.py
+make check-setouchi-h3
+python3 scripts/validate-setouchi-h3-trials.py --browser
+```
+
+Use `--prepare-only`, `--render-only`, or `--package-only` to resume a stage.
+Inkscape needs its local D-Bus image decoder when rendering the linked PNGs;
+the builder fails on decoder errors, and validation checks the embedded PDF
+images independently. The [delivery notes](../../output/setouchi-h3-trials-20261106/README.md)
+record dependencies, export formats, and cache locations.
+
+Intermediate GeoJSON products and rendering caches stay in
+`build/setouchi-h3-trials-20261106/`. Their hashes, source profiles, sampling
+contract, and raw-input manifest hashes are saved with the delivery under
+`output/setouchi-h3-trials-20261106/sources/`. Rebuilding verifies the original
+JAXA and CPC file hashes; no network refresh or WordPress publication occurs.
 
 ## Contact approaches: Hajime Narukawa
 

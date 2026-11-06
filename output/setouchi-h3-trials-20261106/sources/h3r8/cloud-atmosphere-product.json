@@ -1,0 +1,13 @@
+{
+  "snapshot": "build/setouchi-h3-trials-20261106/h3r8/data/cloud-atmosphere.geojson",
+  "snapshot_sha256": "c54580f632cc13e51ecc92292b846ccb5982b1857c4dfe35632390cd80d088af",
+  "bytes": 1055382486,
+  "subject": "atmosphere",
+  "stem": "cloud-atmosphere",
+  "h3_resolution": 8,
+  "profile": "output/setouchi-h3-trials-20261106/sources/h3r8/cloud-atmosphere-profile.json",
+  "profile_sha256": "268daa8c609c2d6fbfb117359b79e3e8641e1b2e4cd1914c9d8b96e161228d64",
+  "preparer_sha256": "4689c976a18bdb7e66a59364e86ec6fb984f959ad40d06ad506f7f9bcf24d74d",
+  "raw_manifest_sha256": "791950bac90370d76f350e263b19565e465df1360579ec3b3ab7db013c36f355",
+  "sampling": "original source-center sampling; no spatial interpolation"
+}

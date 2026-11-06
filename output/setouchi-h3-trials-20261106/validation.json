@@ -1,0 +1,100 @@
+{
+  "schema": "cartofreako-setouchi-h3-validation-v1",
+  "plates": [
+    {
+      "resolution": 5,
+      "scope": "world",
+      "stem": "cloud-atmosphere",
+      "reference_geometry_retained": true,
+      "data_layers": 7,
+      "decoded_pdf_images": 14,
+      "legend_resolution_checked": true
+    },
+    {
+      "resolution": 5,
+      "scope": "japan",
+      "stem": "cloud-atmosphere",
+      "reference_geometry_retained": true,
+      "data_layers": 7,
+      "decoded_pdf_images": 7,
+      "legend_resolution_checked": true
+    },
+    {
+      "resolution": 5,
+      "scope": "world",
+      "stem": "anthropocene-temperature-2026",
+      "reference_geometry_retained": true,
+      "data_layers": 3,
+      "decoded_pdf_images": 6,
+      "legend_resolution_checked": true
+    },
+    {
+      "resolution": 5,
+      "scope": "japan",
+      "stem": "anthropocene-temperature-2026",
+      "reference_geometry_retained": true,
+      "data_layers": 3,
+      "decoded_pdf_images": 3,
+      "legend_resolution_checked": true
+    },
+    {
+      "resolution": 8,
+      "scope": "world",
+      "stem": "cloud-atmosphere",
+      "reference_geometry_retained": true,
+      "data_layers": 7,
+      "decoded_pdf_images": 14,
+      "legend_resolution_checked": true
+    },
+    {
+      "resolution": 8,
+      "scope": "japan",
+      "stem": "cloud-atmosphere",
+      "reference_geometry_retained": true,
+      "data_layers": 7,
+      "decoded_pdf_images": 7,
+      "legend_resolution_checked": true
+    },
+    {
+      "resolution": 8,
+      "scope": "world",
+      "stem": "anthropocene-temperature-2026",
+      "reference_geometry_retained": true,
+      "data_layers": 3,
+      "decoded_pdf_images": 6,
+      "legend_resolution_checked": true
+    },
+    {
+      "resolution": 8,
+      "scope": "japan",
+      "stem": "anthropocene-temperature-2026",
+      "reference_geometry_retained": true,
+      "data_layers": 3,
+      "decoded_pdf_images": 3,
+      "legend_resolution_checked": true
+    }
+  ],
+  "pairs": 8,
+  "comparison_figures": 12,
+  "baseline_unchanged": true,
+  "plates_sha256": "959007dbc70e26ea6dca1ebff354b45b8ab113ff1b3539de4128ea1e66141aa5",
+  "products_sha256": "d04bc3ce24ff411a662551cbe061ebe3a9e486b5b267bcd7c177e59a151b493a",
+  "browser": [
+    {
+      "width": 1440,
+      "figures": 12,
+      "decoded": true,
+      "alt": true,
+      "no_overflow": true,
+      "columns": 3
+    },
+    {
+      "width": 390,
+      "figures": 12,
+      "decoded": true,
+      "alt": true,
+      "no_overflow": true,
+      "columns": 1
+    }
+  ]
+}

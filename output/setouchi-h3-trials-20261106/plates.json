@@ -1,0 +1,3433 @@
+{
+  "schema": "cartofreako-setouchi-h3-trial-plates-v1",
+  "config": {
+    "schema": "cartofreako-setouchi-h3-trials-v1",
+    "edition": "2026-11-06",
+    "resolutions": [
+      5,
+      8
+    ],
+    "baseline": {
+      "path": "config/setouchi-futures-20261106-baseline.json",
+      "sha256": "9b7c40362b6fcc2204462b21d9758e79f0419635148a5f6533126e80473eb6ae"
+    },
+    "output": "output/setouchi-h3-trials-20261106",
+    "build": "build/setouchi-h3-trials-20261106",
+    "data_raster_dpi": 300,
+    "analysis_method": "Retain original source-center sampling and aggregation; vary H3 resolution only. No child-cell replication or gap interpolation.",
+    "atmosphere": {
+      "profile": {
+        "path": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/cloud-atmosphere-profile.json",
+        "sha256": "90385c469a7d65775f990e51f75760e5d31ebf9563001e847fa81221cc8d2747"
+      },
+      "fetch_manifest": {
+        "path": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/.raw/cloud-atmosphere-fetch-manifest.json",
+        "sha256": "791950bac90370d76f350e263b19565e465df1360579ec3b3ab7db013c36f355"
+      }
+    },
+    "temperature": {
+      "profile": {
+        "path": "output/setouchi-triennale-2028/sources/data/anthropocene/anthropocene-temperature-2026-profile.json",
+        "sha256": "68b11e084fd10ebb6a6250d299f214fb853883669a5a4df60185191b97005b79"
+      },
+      "raw_manifest": {
+        "path": "output/setouchi-triennale-2028/sources/data/anthropocene/.raw/cpc/SHA256SUMS",
+        "sha256": "9cae26a32bf3ad11fbb5e8e0244cf860d0c131617ba2d8c4f64957e34d706800"
+      },
+      "cell_domain": "source-grid-centers"
+    }
+  },
+  "plates": [
+    {
+      "scope": "world",
+      "stem": "cloud-atmosphere",
+      "h3_resolution": 5,
+      "source_svg": "output/atlas/maps/world/svg/cloud-atmosphere.svg",
+      "legend_svg": "output/atlas/legends/world/svg/cloud-atmosphere-legend.svg",
+      "fingerprint": {
+        "builder_sha256": "d81699a66e5c30a9d61e65988972704001dd6f225283b8dc03e747c1e92da1b4",
+        "source_sha256": "1daafa3ddab04d37ea8fefd8e8310658dba2cb9b550b68218b5c92941c2575c1",
+        "legend_sha256": "04e9edad73908c94e3e13335c9e08f9607bebbe137e99378280b8c5b183913d8",
+        "render_sha256": "dbb793f9d3fdaec44cdb96f550da5d792ec4fa88b4df82e820bd283d1d1697be",
+        "tiles_sha256": "2899c192adfb5a4670016750590c8ae0ed292a50c850c2dd8c502ec6d7d61721",
+        "baseline": {
+          "schema": "cartofreako-setouchi-futures-v1",
+          "edition": "2026-11-06",
+          "site_url": "https://benjamin.dekosnik.com",
+          "page_id": 3175,
+          "page_url": "https://benjamin.dekosnik.com/futures/setouchi-2028/",
+          "design_reference": "https://benjamin.dekosnik.com/work/202x/star-x-internet-maps/",
+          "design_reference_scope": "Website typography and spacing only. All geographic artwork retains the modified Setouchi AuthaGraph composition.",
+          "insertion_heading": "Two atlases, one shared table",
+          "preceding_list_count": 3,
+          "anchor": "setouchi-futures-visuals",
+          "atlas": "output/atlas",
+          "output": "output/setouchi-futures-20261106",
+          "background": "#240413",
+          "fiber_ocean_color": "#fcc553",
+          "fiber_ocean_opacity": 1,
+          "detail_width": 3840,
+          "card_widths": [
+            640,
+            1280
+          ],
+          "maps": [
+            {
+              "stem": "water",
+              "title": "Water",
+              "world_caption": "Rivers, coastlines, and generalized ocean depths.",
+              "japan_caption": "Japan and its surrounding seas, with the Setouchi reference point.",
+              "world_alt": "Modified AuthaGraph world map with blue ocean depths, wine-colored land, and branching rivers.",
+              "japan_alt": "Japan and neighboring seas, showing ocean depth bands, rivers, and a yellow Setouchi locator.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "network-fiber",
+              "title": "Fiber",
+              "world_caption": "Submarine and terrestrial cable routes connect continents. Routes are schematic; source snapshots span 2022–2026.",
+              "japan_caption": "Japan’s cable landings and terrestrial networks. Amber ocean routes and green land routes; schematic locations.",
+              "world_alt": "World network map with amber submarine cables crossing oceans and green terrestrial fiber networks.",
+              "japan_alt": "Fiber routes around Japan, with amber cables extending into the Pacific and green routes over land."
+            },
+            {
+              "stem": "cloud-atmosphere",
+              "title": "Atmosphere",
+              "background": "#fcc553",
+              "land_outline": {
+                "color": "#ffffff",
+                "opacity": 1,
+                "width_pt": 0.66
+              },
+              "radiation_opacity": {
+                "bands": 100,
+                "scale_min": 0,
+                "scale_max": 400,
+                "profile": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/cloud-atmosphere-profile.json",
+                "profile_sha256": "90385c469a7d65775f990e51f75760e5d31ebf9563001e847fa81221cc8d2747",
+                "snapshot": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/.prepared/cloud-atmosphere-latest.geojson",
+                "snapshot_sha256": "2cc4b93634732766c71c9a8ba70406a94e276dcf9e4bce2e78c103644e748b0d"
+              },
+              "world_caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
+              "japan_caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
+              "world_alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
+              "japan_alt": "Atmospheric observation cells over Japan and nearby seas on a light amber background, with the Setouchi reference point.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "anthropocene-temperature-2026",
+              "title": "Temperature records · 2026",
+              "world_caption": "Daily land-temperature record counts through 28 October 2026. A partial-year count, not a temperature anomaly.",
+              "japan_caption": "The same daily record-count classes around Japan, through 28 October 2026.",
+              "world_alt": "Land-temperature record counts shown as orange, yellow, and pale hexagons on a modified AuthaGraph world map.",
+              "japan_alt": "Temperature record-count hexagons over Japan and neighboring land, with the Setouchi reference point.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "orbital-technosphere-observer",
+              "title": "Starlink and the orbital sky",
+              "world_caption": "World atlas observer plate: San Francisco reference, 3 November 2026, 17:10 UTC. Starlink names and distinct vendor symbols.",
+              "japan_caption": "Setouchi observer at 34.45° N, 133.99° E, 29 October 2026, 20:00 UTC. Sky field and Japan locator shown together.",
+              "world_alt": "Calculated satellite positions across a dark wine sky, with Starlink names, colored vendor markers, and curved reference lines.",
+              "japan_alt": "Satellite positions for the Setouchi observer, with Starlink names and a separate Japan locator inset."
+            }
+          ],
+          "hamonshu": [
+            {
+              "id": "hamonshu_1-005e",
+              "book": 1,
+              "title": "Book 1 · 005e",
+              "caption": "Repeating wave arcs.",
+              "alt": "Overlapping groups of concentric wave arcs, printed in dark ink on aged paper.",
+              "sha256": "72bf5cf9668930d34e29f64383699a913dec7d2456a1f29add579f9226730c0d"
+            },
+            {
+              "id": "hamonshu_2-003a",
+              "book": 2,
+              "title": "Book 2 · 003a",
+              "caption": "Flowing currents and eddies.",
+              "alt": "Interlacing curved lines form a field of flowing water and small eddies.",
+              "sha256": "4f37bd971f2e8cf112e5325c5b547f319ad238a6732ded784239ea8c2b134f5a"
+            },
+            {
+              "id": "hamonshu_3-003f",
+              "book": 3,
+              "title": "Book 3 · 003f",
+              "caption": "A dotted breaking wave.",
+              "alt": "Curling wave shapes with dotted foam and broad dark areas.",
+              "sha256": "c702e2aa6ccc78d1f84a0dc16176e91dde77498aa7cb22d0eed88893194edd38"
+            }
+          ]
+        },
+        "snapshot_sha256": "a8b78d1afb708df84a68e51a5e2f64302a8cbd64eba7c1330634d441e6b825b3",
+        "export_contract": "linked-png-checked-decoder-v1"
+      },
+      "files": [
+        {
+          "path": "h3r5/maps/world/cloud-atmosphere.svg",
+          "sha256": "ab98f617f58b1e6b035930c75ccaab1fcb519749767eae2f1624d5e25ac155e6",
+          "bytes": 3618294
+        },
+        {
+          "path": "h3r5/maps/world/cloud-atmosphere.pdf",
+          "sha256": "d9c489bb5c8bb8a424b287fbbe68c07785143109adcdae0df92c56594812e19b",
+          "bytes": 72874287
+        },
+        {
+          "path": "h3r5/maps/world/layers/cloud-atmosphere-aerosol-optical-depth.png",
+          "sha256": "46b1346ddecf9db0019dcccb3543c84d6d4539a0baa5ad967784bf02884ed58f",
+          "bytes": 18136866
+        },
+        {
+          "path": "h3r5/maps/world/layers/cloud-atmosphere-cloud-fraction.png",
+          "sha256": "d4e85664dd10431f74f39b118de5148f323be14ec3270d6ff191e3eeb9d956e1",
+          "bytes": 2941194
+        },
+        {
+          "path": "h3r5/maps/world/layers/cloud-atmosphere-cloud-optical-thickness.png",
+          "sha256": "6f8da714a0825a06ece1f4114e2189fcd5d08e6e3bad34c327161e8e3d695388",
+          "bytes": 2674990
+        },
+        {
+          "path": "h3r5/maps/world/layers/cloud-atmosphere-cloud-top-height.png",
+          "sha256": "ee94fdcdbb5023261039eb496b169010893cfb31e6298df172eeb11fc25fbe46",
+          "bytes": 2552799
+        },
+        {
+          "path": "h3r5/maps/world/layers/cloud-atmosphere-cloud-type.png",
+          "sha256": "59e96143b65b1643b227bbdc11521dcfc52c4b4d60ffeaba3380de5ed0d42afb",
+          "bytes": 2588585
+        },
+        {
+          "path": "h3r5/maps/world/layers/cloud-atmosphere-precipitation-rate.png",
+          "sha256": "c3182b0145a66053bd56451fad31944f963ba76cad39a4ba25c7fd584ec439d7",
+          "bytes": 24867205
+        },
+        {
+          "path": "h3r5/maps/world/layers/cloud-atmosphere-surface-shortwave-radiation.png",
+          "sha256": "4b10ea7a38d91c8fdc9e5e44d614941a36096b22b13456aaa948dd1d0c1e939f",
+          "bytes": 46557387
+        },
+        {
+          "path": "h3r5/maps/world/cloud-atmosphere.png",
+          "sha256": "729c42e25532370de5261d5ef63d1b638dc9cc712a7db7d63458266a0ab7f4a9",
+          "bytes": 90478493
+        },
+        {
+          "path": "h3r5/maps/world/cloud-atmosphere.webp",
+          "sha256": "2c60c5e90f0c3a68e92a2e17022b72d5bbe9cb3596a226c9ed53c53439870fbc",
+          "bytes": 1508296
+        },
+        {
+          "path": "h3r5/maps/world/cloud-atmosphere-1280.webp",
+          "sha256": "de58bca677f43cfc2225f605216fd538087b3ac6fd2360a914a51b303277664a",
+          "bytes": 222028
+        },
+        {
+          "path": "h3r5/legends/world/cloud-atmosphere-legend.svg",
+          "sha256": "bda255edeaa16b3d54711ef0d456b166f41b58de3ea13c9d025e626129b3d2bf",
+          "bytes": 33905
+        },
+        {
+          "path": "h3r5/legends/world/cloud-atmosphere-legend.pdf",
+          "sha256": "d3144c52e0f9e25a178d399d90222e871f1719bf7460279cc08900a0d40e4bbd",
+          "bytes": 37054
+        }
+      ],
+      "layers": [
+        {
+          "id": "surface-shortwave-radiation",
+          "observed_cells": 1448374,
+          "drawn_cells": 1448374,
+          "value_range": [
+            0.0,
+            406.4
+          ],
+          "band_counts": {
+            "0": 19301,
+            "1": 7684,
+            "2": 8470,
+            "3": 8093,
+            "4": 9511,
+            "5": 8792,
+            "6": 10878,
+            "7": 10205,
+            "8": 12057,
+            "9": 11270,
+            "10": 14383,
+            "11": 13959,
+            "12": 12760,
+            "13": 14232,
+            "14": 12847,
+            "15": 14361,
+            "16": 12675,
+            "17": 14001,
+            "18": 12830,
+            "19": 13662,
+            "20": 12563,
+            "21": 13608,
+            "22": 12758,
+            "23": 13795,
+            "24": 11847,
+            "25": 13802,
+            "26": 11952,
+            "27": 13454,
+            "28": 11805,
+            "29": 13471,
+            "30": 15474,
+            "31": 12621,
+            "32": 14505,
+            "33": 12820,
+            "34": 15204,
+            "35": 13694,
+            "36": 16119,
+            "37": 14533,
+            "38": 16295,
+            "39": 14742,
+            "40": 16753,
+            "41": 14435,
+            "42": 16761,
+            "43": 15026,
+            "44": 17808,
+            "45": 15629,
+            "46": 18375,
+            "47": 15901,
+            "48": 18441,
+            "49": 15281,
+            "50": 19282,
+            "51": 17530,
+            "52": 15219,
+            "53": 18974,
+            "54": 16966,
+            "55": 20255,
+            "56": 16886,
+            "57": 20295,
+            "58": 17382,
+            "59": 20889,
+            "60": 17742,
+            "61": 21147,
+            "62": 17269,
+            "63": 21140,
+            "64": 17766,
+            "65": 22888,
+            "66": 19107,
+            "67": 24407,
+            "68": 20039,
+            "69": 27985,
+            "70": 24964,
+            "71": 19720,
+            "72": 24622,
+            "73": 19871,
+            "74": 25772,
+            "75": 21244,
+            "76": 26506,
+            "77": 21101,
+            "78": 28136,
+            "79": 24321,
+            "80": 34044,
+            "81": 27128,
+            "82": 32362,
+            "83": 11973,
+            "84": 6383,
+            "85": 3367,
+            "86": 3627,
+            "87": 2200,
+            "88": 2440,
+            "89": 2585,
+            "90": 1891,
+            "91": 2311,
+            "92": 1579,
+            "93": 1772,
+            "94": 991,
+            "95": 1102,
+            "96": 798,
+            "97": 774,
+            "98": 142,
+            "99": 37
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-surface-shortwave-radiation.png",
+              "visible_cells": 1448374,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-surface-shortwave-radiation.png",
+              "visible_cells": 63658,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "aerosol-optical-depth",
+          "observed_cells": 394475,
+          "drawn_cells": 394475,
+          "value_range": [
+            0.0009999999747378752,
+            4.999999873689376
+          ],
+          "band_counts": {
+            "1": 96158,
+            "2": 98794,
+            "3": 87871,
+            "4": 52914,
+            "5": 26906,
+            "6": 31832
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-aerosol-optical-depth.png",
+              "visible_cells": 394475,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-aerosol-optical-depth.png",
+              "visible_cells": 26176,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "precipitation-rate",
+          "observed_cells": 1722341,
+          "drawn_cells": 685961,
+          "value_range": [
+            0.0,
+            40.723751068115234
+          ],
+          "band_counts": {
+            "1": 1715580,
+            "2": 5450,
+            "3": 997,
+            "4": 220,
+            "5": 52,
+            "6": 42
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-precipitation-rate.png",
+              "visible_cells": 685961,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-precipitation-rate.png",
+              "visible_cells": 32062,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cloud-fraction",
+          "observed_cells": 466097,
+          "drawn_cells": 48168,
+          "value_range": [
+            0.0,
+            1.0
+          ],
+          "band_counts": {
+            "1": 417929,
+            "4": 1114,
+            "6": 47054
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cloud-fraction.png",
+              "visible_cells": 48168,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cloud-fraction.png",
+              "visible_cells": 0,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cloud-optical-thickness",
+          "observed_cells": 51275,
+          "drawn_cells": 51275,
+          "value_range": [
+            0.0,
+            149.99999664723873
+          ],
+          "band_counts": {
+            "1": 45545,
+            "2": 2057,
+            "3": 788,
+            "4": 332,
+            "5": 193,
+            "6": 2360
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cloud-optical-thickness.png",
+              "visible_cells": 51275,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cloud-optical-thickness.png",
+              "visible_cells": 0,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cloud-top-height",
+          "observed_cells": 51275,
+          "drawn_cells": 51275,
+          "value_range": [
+            0.06600000313483179,
+            16.635000790120102
+          ],
+          "band_counts": {
+            "1": 8555,
+            "2": 18358,
+            "3": 12357,
+            "4": 7544,
+            "5": 3594,
+            "6": 867
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cloud-top-height.png",
+              "visible_cells": 51275,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cloud-top-height.png",
+              "visible_cells": 0,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cloud-type",
+          "observed_cells": 44999,
+          "drawn_cells": 44999,
+          "value_range": [
+            1.0,
+            9.0
+          ],
+          "band_counts": {
+            "1": 10926,
+            "2": 6314,
+            "3": 19796,
+            "4": 1663,
+            "5": 6184,
+            "6": 116
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cloud-type.png",
+              "visible_cells": 44999,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cloud-type.png",
+              "visible_cells": 0,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        }
+      ],
+      "pdf_packaging": {
+        "input_sha256": "d9c489bb5c8bb8a424b287fbbe68c07785143109adcdae0df92c56594812e19b",
+        "output_sha256": "d9c489bb5c8bb8a424b287fbbe68c07785143109adcdae0df92c56594812e19b",
+        "input_bytes": 72874287,
+        "output_bytes": 72874287,
+        "normalized_single_hue_images": 6,
+        "deduplicated_image_objects": 0,
+        "maximum_premultiplied_channel_change_255": 0.0,
+        "alpha_planes_unchanged": true,
+        "image_dimensions_unchanged": true,
+        "optimizer_sha256": "298692abf19d8d017708d30b12de77978c6fcc0889f04a2f0ffd68312ec610a1",
+        "pikepdf_version": "10.17.0"
+      }
+    },
+    {
+      "scope": "japan",
+      "stem": "cloud-atmosphere",
+      "h3_resolution": 5,
+      "source_svg": "output/atlas/maps/japan/svg/cloud-atmosphere.svg",
+      "legend_svg": "output/atlas/legends/japan/svg/cloud-atmosphere-legend.svg",
+      "fingerprint": {
+        "builder_sha256": "d81699a66e5c30a9d61e65988972704001dd6f225283b8dc03e747c1e92da1b4",
+        "source_sha256": "8e5b2971a46823b55e92e0af306877fcec776dd5a1513adc97e5b7e87f9c0970",
+        "legend_sha256": "9d3da110a25e9c33f78bfd001757e621c3c6909a1a5e63093403cb439052ba4e",
+        "render_sha256": "dbb793f9d3fdaec44cdb96f550da5d792ec4fa88b4df82e820bd283d1d1697be",
+        "tiles_sha256": "2899c192adfb5a4670016750590c8ae0ed292a50c850c2dd8c502ec6d7d61721",
+        "baseline": {
+          "schema": "cartofreako-setouchi-futures-v1",
+          "edition": "2026-11-06",
+          "site_url": "https://benjamin.dekosnik.com",
+          "page_id": 3175,
+          "page_url": "https://benjamin.dekosnik.com/futures/setouchi-2028/",
+          "design_reference": "https://benjamin.dekosnik.com/work/202x/star-x-internet-maps/",
+          "design_reference_scope": "Website typography and spacing only. All geographic artwork retains the modified Setouchi AuthaGraph composition.",
+          "insertion_heading": "Two atlases, one shared table",
+          "preceding_list_count": 3,
+          "anchor": "setouchi-futures-visuals",
+          "atlas": "output/atlas",
+          "output": "output/setouchi-futures-20261106",
+          "background": "#240413",
+          "fiber_ocean_color": "#fcc553",
+          "fiber_ocean_opacity": 1,
+          "detail_width": 3840,
+          "card_widths": [
+            640,
+            1280
+          ],
+          "maps": [
+            {
+              "stem": "water",
+              "title": "Water",
+              "world_caption": "Rivers, coastlines, and generalized ocean depths.",
+              "japan_caption": "Japan and its surrounding seas, with the Setouchi reference point.",
+              "world_alt": "Modified AuthaGraph world map with blue ocean depths, wine-colored land, and branching rivers.",
+              "japan_alt": "Japan and neighboring seas, showing ocean depth bands, rivers, and a yellow Setouchi locator.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "network-fiber",
+              "title": "Fiber",
+              "world_caption": "Submarine and terrestrial cable routes connect continents. Routes are schematic; source snapshots span 2022–2026.",
+              "japan_caption": "Japan’s cable landings and terrestrial networks. Amber ocean routes and green land routes; schematic locations.",
+              "world_alt": "World network map with amber submarine cables crossing oceans and green terrestrial fiber networks.",
+              "japan_alt": "Fiber routes around Japan, with amber cables extending into the Pacific and green routes over land."
+            },
+            {
+              "stem": "cloud-atmosphere",
+              "title": "Atmosphere",
+              "background": "#fcc553",
+              "land_outline": {
+                "color": "#ffffff",
+                "opacity": 1,
+                "width_pt": 0.66
+              },
+              "radiation_opacity": {
+                "bands": 100,
+                "scale_min": 0,
+                "scale_max": 400,
+                "profile": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/cloud-atmosphere-profile.json",
+                "profile_sha256": "90385c469a7d65775f990e51f75760e5d31ebf9563001e847fa81221cc8d2747",
+                "snapshot": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/.prepared/cloud-atmosphere-latest.geojson",
+                "snapshot_sha256": "2cc4b93634732766c71c9a8ba70406a94e276dcf9e4bce2e78c103644e748b0d"
+              },
+              "world_caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
+              "japan_caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
+              "world_alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
+              "japan_alt": "Atmospheric observation cells over Japan and nearby seas on a light amber background, with the Setouchi reference point.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "anthropocene-temperature-2026",
+              "title": "Temperature records · 2026",
+              "world_caption": "Daily land-temperature record counts through 28 October 2026. A partial-year count, not a temperature anomaly.",
+              "japan_caption": "The same daily record-count classes around Japan, through 28 October 2026.",
+              "world_alt": "Land-temperature record counts shown as orange, yellow, and pale hexagons on a modified AuthaGraph world map.",
+              "japan_alt": "Temperature record-count hexagons over Japan and neighboring land, with the Setouchi reference point.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "orbital-technosphere-observer",
+              "title": "Starlink and the orbital sky",
+              "world_caption": "World atlas observer plate: San Francisco reference, 3 November 2026, 17:10 UTC. Starlink names and distinct vendor symbols.",
+              "japan_caption": "Setouchi observer at 34.45° N, 133.99° E, 29 October 2026, 20:00 UTC. Sky field and Japan locator shown together.",
+              "world_alt": "Calculated satellite positions across a dark wine sky, with Starlink names, colored vendor markers, and curved reference lines.",
+              "japan_alt": "Satellite positions for the Setouchi observer, with Starlink names and a separate Japan locator inset."
+            }
+          ],
+          "hamonshu": [
+            {
+              "id": "hamonshu_1-005e",
+              "book": 1,
+              "title": "Book 1 · 005e",
+              "caption": "Repeating wave arcs.",
+              "alt": "Overlapping groups of concentric wave arcs, printed in dark ink on aged paper.",
+              "sha256": "72bf5cf9668930d34e29f64383699a913dec7d2456a1f29add579f9226730c0d"
+            },
+            {
+              "id": "hamonshu_2-003a",
+              "book": 2,
+              "title": "Book 2 · 003a",
+              "caption": "Flowing currents and eddies.",
+              "alt": "Interlacing curved lines form a field of flowing water and small eddies.",
+              "sha256": "4f37bd971f2e8cf112e5325c5b547f319ad238a6732ded784239ea8c2b134f5a"
+            },
+            {
+              "id": "hamonshu_3-003f",
+              "book": 3,
+              "title": "Book 3 · 003f",
+              "caption": "A dotted breaking wave.",
+              "alt": "Curling wave shapes with dotted foam and broad dark areas.",
+              "sha256": "c702e2aa6ccc78d1f84a0dc16176e91dde77498aa7cb22d0eed88893194edd38"
+            }
+          ]
+        },
+        "snapshot_sha256": "a8b78d1afb708df84a68e51a5e2f64302a8cbd64eba7c1330634d441e6b825b3",
+        "export_contract": "linked-png-checked-decoder-v1"
+      },
+      "files": [
+        {
+          "path": "h3r5/maps/japan/cloud-atmosphere.svg",
+          "sha256": "8c1e1bb786195398568861afc677ef4ea2becba76927c30d4978e16b09b72334",
+          "bytes": 3739696
+        },
+        {
+          "path": "h3r5/maps/japan/cloud-atmosphere.pdf",
+          "sha256": "01e9d8762fe5cf29aecb79a37d6e4bf97ea34b532906a9636ad44963c57eb421",
+          "bytes": 19839744
+        },
+        {
+          "path": "h3r5/maps/japan/layers/cloud-atmosphere-aerosol-optical-depth.png",
+          "sha256": "feb890408cd405d6d537a8ee0a5cc8f045f96e2131d183eaa39eab632705356f",
+          "bytes": 5537204
+        },
+        {
+          "path": "h3r5/maps/japan/layers/cloud-atmosphere-cloud-fraction.png",
+          "sha256": "287e38125ce377cb6197971bfa67c6785b485397b64ab7922b6d60025a6f5b66",
+          "bytes": 155392
+        },
+        {
+          "path": "h3r5/maps/japan/layers/cloud-atmosphere-cloud-optical-thickness.png",
+          "sha256": "9475b1e12f9756abc7d786f6b2b4584c04876f245b3e5a63334377f3c22fdbee",
+          "bytes": 164692
+        },
+        {
+          "path": "h3r5/maps/japan/layers/cloud-atmosphere-cloud-top-height.png",
+          "sha256": "0cb33624e96a4709bbf7d3dc000e19c98b6da07baf97a6036be515f5f2e998b6",
+          "bytes": 164692
+        },
+        {
+          "path": "h3r5/maps/japan/layers/cloud-atmosphere-cloud-type.png",
+          "sha256": "dcd82da3e9789cfa9110b17cb275e0dc7d397e768a36d8dd28b09f6bbbe78d30",
+          "bytes": 164692
+        },
+        {
+          "path": "h3r5/maps/japan/layers/cloud-atmosphere-precipitation-rate.png",
+          "sha256": "7c536c91d2c09cfe991c7c04bfea1096cd7e519d23494cbb0f5d3279ef422511",
+          "bytes": 7810055
+        },
+        {
+          "path": "h3r5/maps/japan/layers/cloud-atmosphere-surface-shortwave-radiation.png",
+          "sha256": "f53184f28879d8399913c04089d4c633277e856f210a64816b7b12545cbac386",
+          "bytes": 13149160
+        },
+        {
+          "path": "h3r5/maps/japan/cloud-atmosphere.png",
+          "sha256": "d05b40637362a8cf0f6c3ccade63c22d15289f3d9fa6e7d41b23e850a7e5d9c5",
+          "bytes": 32204112
+        },
+        {
+          "path": "h3r5/maps/japan/cloud-atmosphere.webp",
+          "sha256": "c25ef935ebe8c0f4220b32df5755cdb6606c4de38deca3d896e9a425cd2e2bf3",
+          "bytes": 889906
+        },
+        {
+          "path": "h3r5/maps/japan/cloud-atmosphere-1280.webp",
+          "sha256": "a73bdaa154840a11181f561c22fe14cd877e666f12e39148831e9231dc48aef1",
+          "bytes": 260714
+        },
+        {
+          "path": "h3r5/legends/japan/cloud-atmosphere-legend.svg",
+          "sha256": "ddfd5cd41fc03a16807fe31329b2a78025c42b3085c768316138d0a255a6f8ee",
+          "bytes": 34966
+        },
+        {
+          "path": "h3r5/legends/japan/cloud-atmosphere-legend.pdf",
+          "sha256": "adc97ce9e39242a988c12bf42693010adc02dc9fab418bf893974d3d71509557",
+          "bytes": 37965
+        }
+      ],
+      "layers": [
+        {
+          "id": "surface-shortwave-radiation",
+          "observed_cells": 1448374,
+          "drawn_cells": 1448374,
+          "value_range": [
+            0.0,
+            406.4
+          ],
+          "band_counts": {
+            "0": 19301,
+            "1": 7684,
+            "2": 8470,
+            "3": 8093,
+            "4": 9511,
+            "5": 8792,
+            "6": 10878,
+            "7": 10205,
+            "8": 12057,
+            "9": 11270,
+            "10": 14383,
+            "11": 13959,
+            "12": 12760,
+            "13": 14232,
+            "14": 12847,
+            "15": 14361,
+            "16": 12675,
+            "17": 14001,
+            "18": 12830,
+            "19": 13662,
+            "20": 12563,
+            "21": 13608,
+            "22": 12758,
+            "23": 13795,
+            "24": 11847,
+            "25": 13802,
+            "26": 11952,
+            "27": 13454,
+            "28": 11805,
+            "29": 13471,
+            "30": 15474,
+            "31": 12621,
+            "32": 14505,
+            "33": 12820,
+            "34": 15204,
+            "35": 13694,
+            "36": 16119,
+            "37": 14533,
+            "38": 16295,
+            "39": 14742,
+            "40": 16753,
+            "41": 14435,
+            "42": 16761,
+            "43": 15026,
+            "44": 17808,
+            "45": 15629,
+            "46": 18375,
+            "47": 15901,
+            "48": 18441,
+            "49": 15281,
+            "50": 19282,
+            "51": 17530,
+            "52": 15219,
+            "53": 18974,
+            "54": 16966,
+            "55": 20255,
+            "56": 16886,
+            "57": 20295,
+            "58": 17382,
+            "59": 20889,
+            "60": 17742,
+            "61": 21147,
+            "62": 17269,
+            "63": 21140,
+            "64": 17766,
+            "65": 22888,
+            "66": 19107,
+            "67": 24407,
+            "68": 20039,
+            "69": 27985,
+            "70": 24964,
+            "71": 19720,
+            "72": 24622,
+            "73": 19871,
+            "74": 25772,
+            "75": 21244,
+            "76": 26506,
+            "77": 21101,
+            "78": 28136,
+            "79": 24321,
+            "80": 34044,
+            "81": 27128,
+            "82": 32362,
+            "83": 11973,
+            "84": 6383,
+            "85": 3367,
+            "86": 3627,
+            "87": 2200,
+            "88": 2440,
+            "89": 2585,
+            "90": 1891,
+            "91": 2311,
+            "92": 1579,
+            "93": 1772,
+            "94": 991,
+            "95": 1102,
+            "96": 798,
+            "97": 774,
+            "98": 142,
+            "99": 37
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-surface-shortwave-radiation.png",
+              "visible_cells": 1448374,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-surface-shortwave-radiation.png",
+              "visible_cells": 63658,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "aerosol-optical-depth",
+          "observed_cells": 394475,
+          "drawn_cells": 394475,
+          "value_range": [
+            0.0009999999747378752,
+            4.999999873689376
+          ],
+          "band_counts": {
+            "1": 96158,
+            "2": 98794,
+            "3": 87871,
+            "4": 52914,
+            "5": 26906,
+            "6": 31832
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-aerosol-optical-depth.png",
+              "visible_cells": 394475,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-aerosol-optical-depth.png",
+              "visible_cells": 26176,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "precipitation-rate",
+          "observed_cells": 1722341,
+          "drawn_cells": 685961,
+          "value_range": [
+            0.0,
+            40.723751068115234
+          ],
+          "band_counts": {
+            "1": 1715580,
+            "2": 5450,
+            "3": 997,
+            "4": 220,
+            "5": 52,
+            "6": 42
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-precipitation-rate.png",
+              "visible_cells": 685961,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-precipitation-rate.png",
+              "visible_cells": 32062,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cloud-fraction",
+          "observed_cells": 466097,
+          "drawn_cells": 48168,
+          "value_range": [
+            0.0,
+            1.0
+          ],
+          "band_counts": {
+            "1": 417929,
+            "4": 1114,
+            "6": 47054
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cloud-fraction.png",
+              "visible_cells": 48168,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cloud-fraction.png",
+              "visible_cells": 0,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cloud-optical-thickness",
+          "observed_cells": 51275,
+          "drawn_cells": 51275,
+          "value_range": [
+            0.0,
+            149.99999664723873
+          ],
+          "band_counts": {
+            "1": 45545,
+            "2": 2057,
+            "3": 788,
+            "4": 332,
+            "5": 193,
+            "6": 2360
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cloud-optical-thickness.png",
+              "visible_cells": 51275,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cloud-optical-thickness.png",
+              "visible_cells": 0,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cloud-top-height",
+          "observed_cells": 51275,
+          "drawn_cells": 51275,
+          "value_range": [
+            0.06600000313483179,
+            16.635000790120102
+          ],
+          "band_counts": {
+            "1": 8555,
+            "2": 18358,
+            "3": 12357,
+            "4": 7544,
+            "5": 3594,
+            "6": 867
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cloud-top-height.png",
+              "visible_cells": 51275,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cloud-top-height.png",
+              "visible_cells": 0,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cloud-type",
+          "observed_cells": 44999,
+          "drawn_cells": 44999,
+          "value_range": [
+            1.0,
+            9.0
+          ],
+          "band_counts": {
+            "1": 10926,
+            "2": 6314,
+            "3": 19796,
+            "4": 1663,
+            "5": 6184,
+            "6": 116
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cloud-type.png",
+              "visible_cells": 44999,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cloud-type.png",
+              "visible_cells": 0,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        }
+      ],
+      "pdf_packaging": {
+        "input_sha256": "0aa54febd3680e81e914fb69bd27c4542d0ce9c21484d056ebf9a161fc682ba1",
+        "output_sha256": "01e9d8762fe5cf29aecb79a37d6e4bf97ea34b532906a9636ad44963c57eb421",
+        "input_bytes": 38784340,
+        "output_bytes": 19839744,
+        "normalized_single_hue_images": 3,
+        "deduplicated_image_objects": 6,
+        "maximum_premultiplied_channel_change_255": 0.9647058844566345,
+        "alpha_planes_unchanged": true,
+        "image_dimensions_unchanged": true,
+        "optimizer_sha256": "298692abf19d8d017708d30b12de77978c6fcc0889f04a2f0ffd68312ec610a1",
+        "pikepdf_version": "10.17.0"
+      }
+    },
+    {
+      "scope": "world",
+      "stem": "anthropocene-temperature-2026",
+      "h3_resolution": 5,
+      "source_svg": "output/atlas/maps/world/svg/anthropocene-temperature-2026.svg",
+      "legend_svg": "output/atlas/legends/world/svg/anthropocene-temperature-2026-legend.svg",
+      "fingerprint": {
+        "builder_sha256": "d81699a66e5c30a9d61e65988972704001dd6f225283b8dc03e747c1e92da1b4",
+        "source_sha256": "0ee9d3bbf2d2979b4499e742f503f46697e04b5683fba0effd3787b217ab4d10",
+        "legend_sha256": "4c3875894683ddcc3a88421918885d54d673e95ab5e1d38784be0c05a085fd28",
+        "render_sha256": "de475d1a5f0b73e3e3ecbe158fe9e44780b60b465228aafa045f32817c8fc8a4",
+        "tiles_sha256": "79eb0a2d4091b56d4302db7d54f95913a8dfbece6abaacfcc864fc8608187c9c",
+        "baseline": {
+          "schema": "cartofreako-setouchi-futures-v1",
+          "edition": "2026-11-06",
+          "site_url": "https://benjamin.dekosnik.com",
+          "page_id": 3175,
+          "page_url": "https://benjamin.dekosnik.com/futures/setouchi-2028/",
+          "design_reference": "https://benjamin.dekosnik.com/work/202x/star-x-internet-maps/",
+          "design_reference_scope": "Website typography and spacing only. All geographic artwork retains the modified Setouchi AuthaGraph composition.",
+          "insertion_heading": "Two atlases, one shared table",
+          "preceding_list_count": 3,
+          "anchor": "setouchi-futures-visuals",
+          "atlas": "output/atlas",
+          "output": "output/setouchi-futures-20261106",
+          "background": "#240413",
+          "fiber_ocean_color": "#fcc553",
+          "fiber_ocean_opacity": 1,
+          "detail_width": 3840,
+          "card_widths": [
+            640,
+            1280
+          ],
+          "maps": [
+            {
+              "stem": "water",
+              "title": "Water",
+              "world_caption": "Rivers, coastlines, and generalized ocean depths.",
+              "japan_caption": "Japan and its surrounding seas, with the Setouchi reference point.",
+              "world_alt": "Modified AuthaGraph world map with blue ocean depths, wine-colored land, and branching rivers.",
+              "japan_alt": "Japan and neighboring seas, showing ocean depth bands, rivers, and a yellow Setouchi locator.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "network-fiber",
+              "title": "Fiber",
+              "world_caption": "Submarine and terrestrial cable routes connect continents. Routes are schematic; source snapshots span 2022–2026.",
+              "japan_caption": "Japan’s cable landings and terrestrial networks. Amber ocean routes and green land routes; schematic locations.",
+              "world_alt": "World network map with amber submarine cables crossing oceans and green terrestrial fiber networks.",
+              "japan_alt": "Fiber routes around Japan, with amber cables extending into the Pacific and green routes over land."
+            },
+            {
+              "stem": "cloud-atmosphere",
+              "title": "Atmosphere",
+              "background": "#fcc553",
+              "land_outline": {
+                "color": "#ffffff",
+                "opacity": 1,
+                "width_pt": 0.66
+              },
+              "radiation_opacity": {
+                "bands": 100,
+                "scale_min": 0,
+                "scale_max": 400,
+                "profile": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/cloud-atmosphere-profile.json",
+                "profile_sha256": "90385c469a7d65775f990e51f75760e5d31ebf9563001e847fa81221cc8d2747",
+                "snapshot": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/.prepared/cloud-atmosphere-latest.geojson",
+                "snapshot_sha256": "2cc4b93634732766c71c9a8ba70406a94e276dcf9e4bce2e78c103644e748b0d"
+              },
+              "world_caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
+              "japan_caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
+              "world_alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
+              "japan_alt": "Atmospheric observation cells over Japan and nearby seas on a light amber background, with the Setouchi reference point.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "anthropocene-temperature-2026",
+              "title": "Temperature records · 2026",
+              "world_caption": "Daily land-temperature record counts through 28 October 2026. A partial-year count, not a temperature anomaly.",
+              "japan_caption": "The same daily record-count classes around Japan, through 28 October 2026.",
+              "world_alt": "Land-temperature record counts shown as orange, yellow, and pale hexagons on a modified AuthaGraph world map.",
+              "japan_alt": "Temperature record-count hexagons over Japan and neighboring land, with the Setouchi reference point.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "orbital-technosphere-observer",
+              "title": "Starlink and the orbital sky",
+              "world_caption": "World atlas observer plate: San Francisco reference, 3 November 2026, 17:10 UTC. Starlink names and distinct vendor symbols.",
+              "japan_caption": "Setouchi observer at 34.45° N, 133.99° E, 29 October 2026, 20:00 UTC. Sky field and Japan locator shown together.",
+              "world_alt": "Calculated satellite positions across a dark wine sky, with Starlink names, colored vendor markers, and curved reference lines.",
+              "japan_alt": "Satellite positions for the Setouchi observer, with Starlink names and a separate Japan locator inset."
+            }
+          ],
+          "hamonshu": [
+            {
+              "id": "hamonshu_1-005e",
+              "book": 1,
+              "title": "Book 1 · 005e",
+              "caption": "Repeating wave arcs.",
+              "alt": "Overlapping groups of concentric wave arcs, printed in dark ink on aged paper.",
+              "sha256": "72bf5cf9668930d34e29f64383699a913dec7d2456a1f29add579f9226730c0d"
+            },
+            {
+              "id": "hamonshu_2-003a",
+              "book": 2,
+              "title": "Book 2 · 003a",
+              "caption": "Flowing currents and eddies.",
+              "alt": "Interlacing curved lines form a field of flowing water and small eddies.",
+              "sha256": "4f37bd971f2e8cf112e5325c5b547f319ad238a6732ded784239ea8c2b134f5a"
+            },
+            {
+              "id": "hamonshu_3-003f",
+              "book": 3,
+              "title": "Book 3 · 003f",
+              "caption": "A dotted breaking wave.",
+              "alt": "Curling wave shapes with dotted foam and broad dark areas.",
+              "sha256": "c702e2aa6ccc78d1f84a0dc16176e91dde77498aa7cb22d0eed88893194edd38"
+            }
+          ]
+        },
+        "snapshot_sha256": "cb148a97515ed560058dbb2bc875768d7cfaa0b53e28c3a9c2ac4a814d3cc6d0",
+        "export_contract": "linked-png-checked-decoder-v1"
+      },
+      "files": [
+        {
+          "path": "h3r5/maps/world/anthropocene-temperature-2026.svg",
+          "sha256": "501e9c50b27abe1f9ee1b1855b6332d3316ca72539906a13cbd048019333022a",
+          "bytes": 1747938
+        },
+        {
+          "path": "h3r5/maps/world/anthropocene-temperature-2026.pdf",
+          "sha256": "5a4cc21378678d26c901fa063310a8849a6a27627ecebcb3f0c6cbbfbb48063d",
+          "bytes": 23580911
+        },
+        {
+          "path": "h3r5/maps/world/layers/anthropocene-temperature-2026-cpc-temperature-coverage.png",
+          "sha256": "45f947f8aaf3c9fd4a02744cfb91d9aacc18113763334754f4c6ec503f1a5670",
+          "bytes": 12300955
+        },
+        {
+          "path": "h3r5/maps/world/layers/anthropocene-temperature-2026-cpc-temperature-record-high-days.png",
+          "sha256": "85613e0b26ad7f078d8f58a6618844dde65527c50fe13728c4da2bb18f1d9748",
+          "bytes": 10557768
+        },
+        {
+          "path": "h3r5/maps/world/layers/anthropocene-temperature-2026-cpc-temperature-record-low-days.png",
+          "sha256": "21c23a83ddebd3a5fecfcc6cf8bd9f188da01d3df02b34ff8ab4a1652ec57e6b",
+          "bytes": 8155697
+        },
+        {
+          "path": "h3r5/maps/world/anthropocene-temperature-2026.png",
+          "sha256": "2da5dff52f1f4738712edf9ecb53a29e0802983837d82558083440152e82e353",
+          "bytes": 21395054
+        },
+        {
+          "path": "h3r5/maps/world/anthropocene-temperature-2026.webp",
+          "sha256": "3f89470deea11a04df57c1e7037872482d065d2cff5451b7dce7f30faf286b78",
+          "bytes": 1136550
+        },
+        {
+          "path": "h3r5/maps/world/anthropocene-temperature-2026-1280.webp",
+          "sha256": "e76d50aef16e33c9e61a03ea0b36ac6be6957e80f32542352fdcc25eb920a7e2",
+          "bytes": 124106
+        },
+        {
+          "path": "h3r5/legends/world/anthropocene-temperature-2026-legend.svg",
+          "sha256": "8c7f439184e5c824f7b6df391c99122bd1400312f3aa1629cd0460c628239900",
+          "bytes": 15348
+        },
+        {
+          "path": "h3r5/legends/world/anthropocene-temperature-2026-legend.pdf",
+          "sha256": "6ffaf59334ef96d015ec13647a44265e529a03c909be8a50ea37bd110abffc08",
+          "bytes": 34060
+        }
+      ],
+      "layers": [
+        {
+          "id": "cpc-temperature-coverage",
+          "observed_cells": 62035,
+          "drawn_cells": 62035,
+          "value_range": [
+            1.0,
+            1.0
+          ],
+          "band_counts": {
+            "0": 62035
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cpc-temperature-coverage.png",
+              "visible_cells": 62035,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cpc-temperature-coverage.png",
+              "visible_cells": 2311,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cpc-temperature-record-high-days",
+          "observed_cells": 59632,
+          "drawn_cells": 59632,
+          "value_range": [
+            1.0,
+            176.0
+          ],
+          "band_counts": {
+            "1": 13412,
+            "2": 16386,
+            "3": 18955,
+            "4": 8794,
+            "5": 1766,
+            "6": 319
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cpc-temperature-record-high-days.png",
+              "visible_cells": 59632,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cpc-temperature-record-high-days.png",
+              "visible_cells": 2308,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cpc-temperature-record-low-days",
+          "observed_cells": 45818,
+          "drawn_cells": 45818,
+          "value_range": [
+            1.0,
+            273.0
+          ],
+          "band_counts": {
+            "1": 10222,
+            "2": 14076,
+            "3": 8839,
+            "4": 8423,
+            "5": 3090,
+            "6": 1168
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cpc-temperature-record-low-days.png",
+              "visible_cells": 45818,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cpc-temperature-record-low-days.png",
+              "visible_cells": 1694,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        }
+      ],
+      "pdf_packaging": {
+        "input_sha256": "2587a6a4771e592ca1677cd46277cac676c20a9736f41b99424d850e2a4de060",
+        "output_sha256": "5a4cc21378678d26c901fa063310a8849a6a27627ecebcb3f0c6cbbfbb48063d",
+        "input_bytes": 57357269,
+        "output_bytes": 23580911,
+        "normalized_single_hue_images": 2,
+        "deduplicated_image_objects": 6,
+        "maximum_premultiplied_channel_change_255": 0.9686274528503418,
+        "alpha_planes_unchanged": true,
+        "image_dimensions_unchanged": true,
+        "optimizer_sha256": "298692abf19d8d017708d30b12de77978c6fcc0889f04a2f0ffd68312ec610a1",
+        "pikepdf_version": "10.17.0"
+      }
+    },
+    {
+      "scope": "japan",
+      "stem": "anthropocene-temperature-2026",
+      "h3_resolution": 5,
+      "source_svg": "output/atlas/maps/japan/svg/anthropocene-temperature-2026.svg",
+      "legend_svg": "output/atlas/legends/japan/svg/anthropocene-temperature-2026-legend.svg",
+      "fingerprint": {
+        "builder_sha256": "d81699a66e5c30a9d61e65988972704001dd6f225283b8dc03e747c1e92da1b4",
+        "source_sha256": "43dd1072252545449cceacab8fa1fee8555665af737ab5881f7d817621e12b39",
+        "legend_sha256": "d66db9bace5ebfc4fc11a325020fba76551d80a6a1a74119cf64235f3763eb14",
+        "render_sha256": "de475d1a5f0b73e3e3ecbe158fe9e44780b60b465228aafa045f32817c8fc8a4",
+        "tiles_sha256": "79eb0a2d4091b56d4302db7d54f95913a8dfbece6abaacfcc864fc8608187c9c",
+        "baseline": {
+          "schema": "cartofreako-setouchi-futures-v1",
+          "edition": "2026-11-06",
+          "site_url": "https://benjamin.dekosnik.com",
+          "page_id": 3175,
+          "page_url": "https://benjamin.dekosnik.com/futures/setouchi-2028/",
+          "design_reference": "https://benjamin.dekosnik.com/work/202x/star-x-internet-maps/",
+          "design_reference_scope": "Website typography and spacing only. All geographic artwork retains the modified Setouchi AuthaGraph composition.",
+          "insertion_heading": "Two atlases, one shared table",
+          "preceding_list_count": 3,
+          "anchor": "setouchi-futures-visuals",
+          "atlas": "output/atlas",
+          "output": "output/setouchi-futures-20261106",
+          "background": "#240413",
+          "fiber_ocean_color": "#fcc553",
+          "fiber_ocean_opacity": 1,
+          "detail_width": 3840,
+          "card_widths": [
+            640,
+            1280
+          ],
+          "maps": [
+            {
+              "stem": "water",
+              "title": "Water",
+              "world_caption": "Rivers, coastlines, and generalized ocean depths.",
+              "japan_caption": "Japan and its surrounding seas, with the Setouchi reference point.",
+              "world_alt": "Modified AuthaGraph world map with blue ocean depths, wine-colored land, and branching rivers.",
+              "japan_alt": "Japan and neighboring seas, showing ocean depth bands, rivers, and a yellow Setouchi locator.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "network-fiber",
+              "title": "Fiber",
+              "world_caption": "Submarine and terrestrial cable routes connect continents. Routes are schematic; source snapshots span 2022–2026.",
+              "japan_caption": "Japan’s cable landings and terrestrial networks. Amber ocean routes and green land routes; schematic locations.",
+              "world_alt": "World network map with amber submarine cables crossing oceans and green terrestrial fiber networks.",
+              "japan_alt": "Fiber routes around Japan, with amber cables extending into the Pacific and green routes over land."
+            },
+            {
+              "stem": "cloud-atmosphere",
+              "title": "Atmosphere",
+              "background": "#fcc553",
+              "land_outline": {
+                "color": "#ffffff",
+                "opacity": 1,
+                "width_pt": 0.66
+              },
+              "radiation_opacity": {
+                "bands": 100,
+                "scale_min": 0,
+                "scale_max": 400,
+                "profile": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/cloud-atmosphere-profile.json",
+                "profile_sha256": "90385c469a7d65775f990e51f75760e5d31ebf9563001e847fa81221cc8d2747",
+                "snapshot": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/.prepared/cloud-atmosphere-latest.geojson",
+                "snapshot_sha256": "2cc4b93634732766c71c9a8ba70406a94e276dcf9e4bce2e78c103644e748b0d"
+              },
+              "world_caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
+              "japan_caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
+              "world_alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
+              "japan_alt": "Atmospheric observation cells over Japan and nearby seas on a light amber background, with the Setouchi reference point.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "anthropocene-temperature-2026",
+              "title": "Temperature records · 2026",
+              "world_caption": "Daily land-temperature record counts through 28 October 2026. A partial-year count, not a temperature anomaly.",
+              "japan_caption": "The same daily record-count classes around Japan, through 28 October 2026.",
+              "world_alt": "Land-temperature record counts shown as orange, yellow, and pale hexagons on a modified AuthaGraph world map.",
+              "japan_alt": "Temperature record-count hexagons over Japan and neighboring land, with the Setouchi reference point.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "orbital-technosphere-observer",
+              "title": "Starlink and the orbital sky",
+              "world_caption": "World atlas observer plate: San Francisco reference, 3 November 2026, 17:10 UTC. Starlink names and distinct vendor symbols.",
+              "japan_caption": "Setouchi observer at 34.45° N, 133.99° E, 29 October 2026, 20:00 UTC. Sky field and Japan locator shown together.",
+              "world_alt": "Calculated satellite positions across a dark wine sky, with Starlink names, colored vendor markers, and curved reference lines.",
+              "japan_alt": "Satellite positions for the Setouchi observer, with Starlink names and a separate Japan locator inset."
+            }
+          ],
+          "hamonshu": [
+            {
+              "id": "hamonshu_1-005e",
+              "book": 1,
+              "title": "Book 1 · 005e",
+              "caption": "Repeating wave arcs.",
+              "alt": "Overlapping groups of concentric wave arcs, printed in dark ink on aged paper.",
+              "sha256": "72bf5cf9668930d34e29f64383699a913dec7d2456a1f29add579f9226730c0d"
+            },
+            {
+              "id": "hamonshu_2-003a",
+              "book": 2,
+              "title": "Book 2 · 003a",
+              "caption": "Flowing currents and eddies.",
+              "alt": "Interlacing curved lines form a field of flowing water and small eddies.",
+              "sha256": "4f37bd971f2e8cf112e5325c5b547f319ad238a6732ded784239ea8c2b134f5a"
+            },
+            {
+              "id": "hamonshu_3-003f",
+              "book": 3,
+              "title": "Book 3 · 003f",
+              "caption": "A dotted breaking wave.",
+              "alt": "Curling wave shapes with dotted foam and broad dark areas.",
+              "sha256": "c702e2aa6ccc78d1f84a0dc16176e91dde77498aa7cb22d0eed88893194edd38"
+            }
+          ]
+        },
+        "snapshot_sha256": "cb148a97515ed560058dbb2bc875768d7cfaa0b53e28c3a9c2ac4a814d3cc6d0",
+        "export_contract": "linked-png-checked-decoder-v1"
+      },
+      "files": [
+        {
+          "path": "h3r5/maps/japan/anthropocene-temperature-2026.svg",
+          "sha256": "d5a22ebb7a23c9b93440ca00ef64975fb7a6c3a7686b2c549c9619adbc4538b5",
+          "bytes": 1901906
+        },
+        {
+          "path": "h3r5/maps/japan/anthropocene-temperature-2026.pdf",
+          "sha256": "f905190fccad7d10bb3880d8128977a15fb0f46ca90bc694a942cf057ca81be7",
+          "bytes": 5972085
+        },
+        {
+          "path": "h3r5/maps/japan/layers/anthropocene-temperature-2026-cpc-temperature-coverage.png",
+          "sha256": "b280641f18bc0761ee1a4e87936d377633bedcce1653a58ad7eb9eb44d405bdb",
+          "bytes": 2903589
+        },
+        {
+          "path": "h3r5/maps/japan/layers/anthropocene-temperature-2026-cpc-temperature-record-high-days.png",
+          "sha256": "696782d5a3634d569101797d92f635b76f824bdbf6233c71d03a5ee7a5af9285",
+          "bytes": 1973029
+        },
+        {
+          "path": "h3r5/maps/japan/layers/anthropocene-temperature-2026-cpc-temperature-record-low-days.png",
+          "sha256": "58bb5b22a81082e01d5e377267670fee0ec518b9d749abfc0add5ace8f86658f",
+          "bytes": 1465515
+        },
+        {
+          "path": "h3r5/maps/japan/anthropocene-temperature-2026.png",
+          "sha256": "3306c95720a948f63ef78d2f11d790d19be4c5a3837b635056b4264c5a5796ba",
+          "bytes": 5094041
+        },
+        {
+          "path": "h3r5/maps/japan/anthropocene-temperature-2026.webp",
+          "sha256": "394ba366ffe998126ab71d0e87280fa55bd3e5efeca4596fb9e44a8588ed7a4c",
+          "bytes": 336244
+        },
+        {
+          "path": "h3r5/maps/japan/anthropocene-temperature-2026-1280.webp",
+          "sha256": "c27f8544e96ea32faf5a3877004e8eb51d241304510a0349278baf75e1fdd811",
+          "bytes": 130638
+        },
+        {
+          "path": "h3r5/legends/japan/anthropocene-temperature-2026-legend.svg",
+          "sha256": "49c70a98eef4221c76c9d072fdab585c860a532b7eb48d39da03bc4fc07ee90f",
+          "bytes": 16124
+        },
+        {
+          "path": "h3r5/legends/japan/anthropocene-temperature-2026-legend.pdf",
+          "sha256": "80a49d61398cc6101b061beaf15c9291ed4ef14b9a534e4e29a817bae66e5634",
+          "bytes": 34732
+        }
+      ],
+      "layers": [
+        {
+          "id": "cpc-temperature-coverage",
+          "observed_cells": 62035,
+          "drawn_cells": 62035,
+          "value_range": [
+            1.0,
+            1.0
+          ],
+          "band_counts": {
+            "0": 62035
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cpc-temperature-coverage.png",
+              "visible_cells": 62035,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cpc-temperature-coverage.png",
+              "visible_cells": 2311,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cpc-temperature-record-high-days",
+          "observed_cells": 59632,
+          "drawn_cells": 59632,
+          "value_range": [
+            1.0,
+            176.0
+          ],
+          "band_counts": {
+            "1": 13412,
+            "2": 16386,
+            "3": 18955,
+            "4": 8794,
+            "5": 1766,
+            "6": 319
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cpc-temperature-record-high-days.png",
+              "visible_cells": 59632,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cpc-temperature-record-high-days.png",
+              "visible_cells": 2308,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cpc-temperature-record-low-days",
+          "observed_cells": 45818,
+          "drawn_cells": 45818,
+          "value_range": [
+            1.0,
+            273.0
+          ],
+          "band_counts": {
+            "1": 10222,
+            "2": 14076,
+            "3": 8839,
+            "4": 8423,
+            "5": 3090,
+            "6": 1168
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cpc-temperature-record-low-days.png",
+              "visible_cells": 45818,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cpc-temperature-record-low-days.png",
+              "visible_cells": 1694,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        }
+      ],
+      "pdf_packaging": {
+        "input_sha256": "8b632d6c03e430a4e4d24d153e0f5f1c3578a2b999d651ff87fad132ab7f7e7e",
+        "output_sha256": "f905190fccad7d10bb3880d8128977a15fb0f46ca90bc694a942cf057ca81be7",
+        "input_bytes": 7040582,
+        "output_bytes": 5972085,
+        "normalized_single_hue_images": 1,
+        "deduplicated_image_objects": 0,
+        "maximum_premultiplied_channel_change_255": 0.9686274528503418,
+        "alpha_planes_unchanged": true,
+        "image_dimensions_unchanged": true,
+        "optimizer_sha256": "298692abf19d8d017708d30b12de77978c6fcc0889f04a2f0ffd68312ec610a1",
+        "pikepdf_version": "10.17.0"
+      }
+    },
+    {
+      "scope": "world",
+      "stem": "cloud-atmosphere",
+      "h3_resolution": 8,
+      "source_svg": "output/atlas/maps/world/svg/cloud-atmosphere.svg",
+      "legend_svg": "output/atlas/legends/world/svg/cloud-atmosphere-legend.svg",
+      "fingerprint": {
+        "builder_sha256": "d81699a66e5c30a9d61e65988972704001dd6f225283b8dc03e747c1e92da1b4",
+        "source_sha256": "1daafa3ddab04d37ea8fefd8e8310658dba2cb9b550b68218b5c92941c2575c1",
+        "legend_sha256": "04e9edad73908c94e3e13335c9e08f9607bebbe137e99378280b8c5b183913d8",
+        "render_sha256": "f2466190077220dbc0545c7b77f1460f858e6df52c87ce6f1c1f928c058af28d",
+        "tiles_sha256": "6574c06eb3c5a7effc7a2023f93464210a4709d9fb538d2e12b9880ddb4726e9",
+        "baseline": {
+          "schema": "cartofreako-setouchi-futures-v1",
+          "edition": "2026-11-06",
+          "site_url": "https://benjamin.dekosnik.com",
+          "page_id": 3175,
+          "page_url": "https://benjamin.dekosnik.com/futures/setouchi-2028/",
+          "design_reference": "https://benjamin.dekosnik.com/work/202x/star-x-internet-maps/",
+          "design_reference_scope": "Website typography and spacing only. All geographic artwork retains the modified Setouchi AuthaGraph composition.",
+          "insertion_heading": "Two atlases, one shared table",
+          "preceding_list_count": 3,
+          "anchor": "setouchi-futures-visuals",
+          "atlas": "output/atlas",
+          "output": "output/setouchi-futures-20261106",
+          "background": "#240413",
+          "fiber_ocean_color": "#fcc553",
+          "fiber_ocean_opacity": 1,
+          "detail_width": 3840,
+          "card_widths": [
+            640,
+            1280
+          ],
+          "maps": [
+            {
+              "stem": "water",
+              "title": "Water",
+              "world_caption": "Rivers, coastlines, and generalized ocean depths.",
+              "japan_caption": "Japan and its surrounding seas, with the Setouchi reference point.",
+              "world_alt": "Modified AuthaGraph world map with blue ocean depths, wine-colored land, and branching rivers.",
+              "japan_alt": "Japan and neighboring seas, showing ocean depth bands, rivers, and a yellow Setouchi locator.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "network-fiber",
+              "title": "Fiber",
+              "world_caption": "Submarine and terrestrial cable routes connect continents. Routes are schematic; source snapshots span 2022–2026.",
+              "japan_caption": "Japan’s cable landings and terrestrial networks. Amber ocean routes and green land routes; schematic locations.",
+              "world_alt": "World network map with amber submarine cables crossing oceans and green terrestrial fiber networks.",
+              "japan_alt": "Fiber routes around Japan, with amber cables extending into the Pacific and green routes over land."
+            },
+            {
+              "stem": "cloud-atmosphere",
+              "title": "Atmosphere",
+              "background": "#fcc553",
+              "land_outline": {
+                "color": "#ffffff",
+                "opacity": 1,
+                "width_pt": 0.66
+              },
+              "radiation_opacity": {
+                "bands": 100,
+                "scale_min": 0,
+                "scale_max": 400,
+                "profile": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/cloud-atmosphere-profile.json",
+                "profile_sha256": "90385c469a7d65775f990e51f75760e5d31ebf9563001e847fa81221cc8d2747",
+                "snapshot": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/.prepared/cloud-atmosphere-latest.geojson",
+                "snapshot_sha256": "2cc4b93634732766c71c9a8ba70406a94e276dcf9e4bce2e78c103644e748b0d"
+              },
+              "world_caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
+              "japan_caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
+              "world_alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
+              "japan_alt": "Atmospheric observation cells over Japan and nearby seas on a light amber background, with the Setouchi reference point.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "anthropocene-temperature-2026",
+              "title": "Temperature records · 2026",
+              "world_caption": "Daily land-temperature record counts through 28 October 2026. A partial-year count, not a temperature anomaly.",
+              "japan_caption": "The same daily record-count classes around Japan, through 28 October 2026.",
+              "world_alt": "Land-temperature record counts shown as orange, yellow, and pale hexagons on a modified AuthaGraph world map.",
+              "japan_alt": "Temperature record-count hexagons over Japan and neighboring land, with the Setouchi reference point.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "orbital-technosphere-observer",
+              "title": "Starlink and the orbital sky",
+              "world_caption": "World atlas observer plate: San Francisco reference, 3 November 2026, 17:10 UTC. Starlink names and distinct vendor symbols.",
+              "japan_caption": "Setouchi observer at 34.45° N, 133.99° E, 29 October 2026, 20:00 UTC. Sky field and Japan locator shown together.",
+              "world_alt": "Calculated satellite positions across a dark wine sky, with Starlink names, colored vendor markers, and curved reference lines.",
+              "japan_alt": "Satellite positions for the Setouchi observer, with Starlink names and a separate Japan locator inset."
+            }
+          ],
+          "hamonshu": [
+            {
+              "id": "hamonshu_1-005e",
+              "book": 1,
+              "title": "Book 1 · 005e",
+              "caption": "Repeating wave arcs.",
+              "alt": "Overlapping groups of concentric wave arcs, printed in dark ink on aged paper.",
+              "sha256": "72bf5cf9668930d34e29f64383699a913dec7d2456a1f29add579f9226730c0d"
+            },
+            {
+              "id": "hamonshu_2-003a",
+              "book": 2,
+              "title": "Book 2 · 003a",
+              "caption": "Flowing currents and eddies.",
+              "alt": "Interlacing curved lines form a field of flowing water and small eddies.",
+              "sha256": "4f37bd971f2e8cf112e5325c5b547f319ad238a6732ded784239ea8c2b134f5a"
+            },
+            {
+              "id": "hamonshu_3-003f",
+              "book": 3,
+              "title": "Book 3 · 003f",
+              "caption": "A dotted breaking wave.",
+              "alt": "Curling wave shapes with dotted foam and broad dark areas.",
+              "sha256": "c702e2aa6ccc78d1f84a0dc16176e91dde77498aa7cb22d0eed88893194edd38"
+            }
+          ]
+        },
+        "snapshot_sha256": "c54580f632cc13e51ecc92292b846ccb5982b1857c4dfe35632390cd80d088af",
+        "export_contract": "linked-png-checked-decoder-v1"
+      },
+      "files": [
+        {
+          "path": "h3r8/maps/world/cloud-atmosphere.svg",
+          "sha256": "3fcb55b36e4c6ebceeb5f9219126eb35b3e8f1c93e2298dc734f41d49258ad5b",
+          "bytes": 3618295
+        },
+        {
+          "path": "h3r8/maps/world/cloud-atmosphere.pdf",
+          "sha256": "8bb35a66f5e195c1786d47d66239e017d4485c31ac1e192d63df0ca1f70ee9a5",
+          "bytes": 68178475
+        },
+        {
+          "path": "h3r8/maps/world/layers/cloud-atmosphere-aerosol-optical-depth.png",
+          "sha256": "d47793b99388a20b6283aa3b380c4bc578c1ddc2bbc9e9a0c10844a0b2d51a75",
+          "bytes": 18114882
+        },
+        {
+          "path": "h3r8/maps/world/layers/cloud-atmosphere-cloud-fraction.png",
+          "sha256": "ac6db1e006f536db3fdaf0e35596d5296ca67adf1dada581df88a35ad8489089",
+          "bytes": 1328718
+        },
+        {
+          "path": "h3r8/maps/world/layers/cloud-atmosphere-cloud-optical-thickness.png",
+          "sha256": "b3dd59fd7469b88f5c97822471fc7abf5c2151b61d7d00cc4c768be8edf36273",
+          "bytes": 2462796
+        },
+        {
+          "path": "h3r8/maps/world/layers/cloud-atmosphere-cloud-top-height.png",
+          "sha256": "4d7abf35e7237a8d150480edd46fa7e1dcb32a80aa6791ed88570f5112cc37c4",
+          "bytes": 2855519
+        },
+        {
+          "path": "h3r8/maps/world/layers/cloud-atmosphere-cloud-type.png",
+          "sha256": "ddea6155712223e4ec1b1eef9287c5deb6d565823143d5669417afd6b42c79a2",
+          "bytes": 2595850
+        },
+        {
+          "path": "h3r8/maps/world/layers/cloud-atmosphere-precipitation-rate.png",
+          "sha256": "fa0a33ea66d700f3462231933695aeaf04a2d647786e1c48caffdf4e07394bb3",
+          "bytes": 12706736
+        },
+        {
+          "path": "h3r8/maps/world/layers/cloud-atmosphere-surface-shortwave-radiation.png",
+          "sha256": "9b455c4207ec672c4e5cfd3b3fb1a226545ba561c3ac4f5bda1d9b82134ed849",
+          "bytes": 54172195
+        },
+        {
+          "path": "h3r8/maps/world/cloud-atmosphere.png",
+          "sha256": "cd8ed5325a67ee30fd9d9c906e3ec4d8b52aef14865e121d6bcb516be3581fe5",
+          "bytes": 85062994
+        },
+        {
+          "path": "h3r8/maps/world/cloud-atmosphere.webp",
+          "sha256": "3767b72f7b5bf21867efb18b0fbf498323f150dcbf95fb04e49084ba5bd43edd",
+          "bytes": 1248186
+        },
+        {
+          "path": "h3r8/maps/world/cloud-atmosphere-1280.webp",
+          "sha256": "c42c740d52a9ebcce2835dbd216342e550d77e9fbf23c56a9654d409f726451d",
+          "bytes": 168118
+        },
+        {
+          "path": "h3r8/legends/world/cloud-atmosphere-legend.svg",
+          "sha256": "92fb0535bc46a17e986469cc90e112304164c0102e4a0c2155920cadfaa95856",
+          "bytes": 33905
+        },
+        {
+          "path": "h3r8/legends/world/cloud-atmosphere-legend.pdf",
+          "sha256": "436f0eb9c3de0e3c5e681dc943c2444c99b7997ff46c5a37dccddd80ae09d0c0",
+          "bytes": 37051
+        }
+      ],
+      "layers": [
+        {
+          "id": "surface-shortwave-radiation",
+          "observed_cells": 2533737,
+          "drawn_cells": 2533737,
+          "value_range": [
+            0.0,
+            406.4
+          ],
+          "band_counts": {
+            "0": 60800,
+            "1": 15709,
+            "2": 22211,
+            "3": 15125,
+            "4": 23708,
+            "5": 16779,
+            "6": 27254,
+            "7": 19224,
+            "8": 30794,
+            "9": 21261,
+            "10": 33122,
+            "11": 34859,
+            "12": 23110,
+            "13": 34496,
+            "14": 22957,
+            "15": 34576,
+            "16": 22640,
+            "17": 32960,
+            "18": 22189,
+            "19": 32723,
+            "20": 21526,
+            "21": 32040,
+            "22": 20913,
+            "23": 30714,
+            "24": 19672,
+            "25": 29583,
+            "26": 19261,
+            "27": 28432,
+            "28": 18950,
+            "29": 28339,
+            "30": 29397,
+            "31": 19836,
+            "32": 30952,
+            "33": 20988,
+            "34": 32608,
+            "35": 22316,
+            "36": 33624,
+            "37": 22586,
+            "38": 33085,
+            "39": 22117,
+            "40": 33366,
+            "41": 21481,
+            "42": 32732,
+            "43": 21913,
+            "44": 33267,
+            "45": 22762,
+            "46": 34823,
+            "47": 23658,
+            "48": 35112,
+            "49": 23502,
+            "50": 34052,
+            "51": 33620,
+            "52": 23145,
+            "53": 36453,
+            "54": 26019,
+            "55": 37801,
+            "56": 24492,
+            "57": 37053,
+            "58": 25183,
+            "59": 36734,
+            "60": 24590,
+            "61": 36962,
+            "62": 24368,
+            "63": 36476,
+            "64": 24896,
+            "65": 38272,
+            "66": 26159,
+            "67": 39921,
+            "68": 27045,
+            "69": 42121,
+            "70": 39949,
+            "71": 25836,
+            "72": 39027,
+            "73": 26620,
+            "74": 41139,
+            "75": 28099,
+            "76": 41768,
+            "77": 28245,
+            "78": 45042,
+            "79": 32770,
+            "80": 53309,
+            "81": 36261,
+            "82": 48991,
+            "83": 15770,
+            "84": 10550,
+            "85": 4763,
+            "86": 5917,
+            "87": 2937,
+            "88": 3921,
+            "89": 3701,
+            "90": 2552,
+            "91": 3655,
+            "92": 2329,
+            "93": 3017,
+            "94": 1477,
+            "95": 1904,
+            "96": 1192,
+            "97": 1295,
+            "98": 215,
+            "99": 72
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-surface-shortwave-radiation.png",
+              "visible_cells": 2533737,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-surface-shortwave-radiation.png",
+              "visible_cells": 94329,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "aerosol-optical-depth",
+          "observed_cells": 627582,
+          "drawn_cells": 627582,
+          "value_range": [
+            0.0009999999747378752,
+            4.999999873689376
+          ],
+          "band_counts": {
+            "1": 163056,
+            "2": 155510,
+            "3": 134709,
+            "4": 80356,
+            "5": 41120,
+            "6": 52831
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-aerosol-optical-depth.png",
+              "visible_cells": 627582,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-aerosol-optical-depth.png",
+              "visible_cells": 36814,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "precipitation-rate",
+          "observed_cells": 2755919,
+          "drawn_cells": 1090541,
+          "value_range": [
+            0.0,
+            40.723751068115234
+          ],
+          "band_counts": {
+            "1": 2746254,
+            "2": 7807,
+            "3": 1397,
+            "4": 314,
+            "5": 77,
+            "6": 70
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-precipitation-rate.png",
+              "visible_cells": 1090541,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-precipitation-rate.png",
+              "visible_cells": 47161,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cloud-fraction",
+          "observed_cells": 518400,
+          "drawn_cells": 52149,
+          "value_range": [
+            0.0,
+            1.0
+          ],
+          "band_counts": {
+            "1": 466251,
+            "6": 52149
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cloud-fraction.png",
+              "visible_cells": 52149,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cloud-fraction.png",
+              "visible_cells": 0,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cloud-optical-thickness",
+          "observed_cells": 56208,
+          "drawn_cells": 56208,
+          "value_range": [
+            0.0,
+            149.99999664723873
+          ],
+          "band_counts": {
+            "1": 50296,
+            "2": 2166,
+            "3": 807,
+            "4": 332,
+            "5": 206,
+            "6": 2401
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cloud-optical-thickness.png",
+              "visible_cells": 56208,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cloud-optical-thickness.png",
+              "visible_cells": 0,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cloud-top-height",
+          "observed_cells": 56208,
+          "drawn_cells": 56208,
+          "value_range": [
+            0.06600000313483179,
+            16.635000790120102
+          ],
+          "band_counts": {
+            "1": 10317,
+            "2": 20397,
+            "3": 13260,
+            "4": 7710,
+            "5": 3639,
+            "6": 885
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cloud-top-height.png",
+              "visible_cells": 56208,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cloud-top-height.png",
+              "visible_cells": 0,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cloud-type",
+          "observed_cells": 48719,
+          "drawn_cells": 48719,
+          "value_range": [
+            1.0,
+            9.0
+          ],
+          "band_counts": {
+            "1": 11165,
+            "2": 6623,
+            "3": 21416,
+            "4": 1980,
+            "5": 7405,
+            "6": 130
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cloud-type.png",
+              "visible_cells": 48719,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cloud-type.png",
+              "visible_cells": 0,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        }
+      ],
+      "pdf_packaging": {
+        "input_sha256": "af98695b5ede8bf9d255c1fec2b201e45b126be7c74a1163337dd9e7793e1ed8",
+        "output_sha256": "8bb35a66f5e195c1786d47d66239e017d4485c31ac1e192d63df0ca1f70ee9a5",
+        "input_bytes": 272840332,
+        "output_bytes": 68178475,
+        "normalized_single_hue_images": 12,
+        "deduplicated_image_objects": 14,
+        "maximum_premultiplied_channel_change_255": 0.9647058844566345,
+        "alpha_planes_unchanged": true,
+        "image_dimensions_unchanged": true,
+        "optimizer_sha256": "298692abf19d8d017708d30b12de77978c6fcc0889f04a2f0ffd68312ec610a1",
+        "pikepdf_version": "10.17.0"
+      }
+    },
+    {
+      "scope": "japan",
+      "stem": "cloud-atmosphere",
+      "h3_resolution": 8,
+      "source_svg": "output/atlas/maps/japan/svg/cloud-atmosphere.svg",
+      "legend_svg": "output/atlas/legends/japan/svg/cloud-atmosphere-legend.svg",
+      "fingerprint": {
+        "builder_sha256": "d81699a66e5c30a9d61e65988972704001dd6f225283b8dc03e747c1e92da1b4",
+        "source_sha256": "8e5b2971a46823b55e92e0af306877fcec776dd5a1513adc97e5b7e87f9c0970",
+        "legend_sha256": "9d3da110a25e9c33f78bfd001757e621c3c6909a1a5e63093403cb439052ba4e",
+        "render_sha256": "f2466190077220dbc0545c7b77f1460f858e6df52c87ce6f1c1f928c058af28d",
+        "tiles_sha256": "6574c06eb3c5a7effc7a2023f93464210a4709d9fb538d2e12b9880ddb4726e9",
+        "baseline": {
+          "schema": "cartofreako-setouchi-futures-v1",
+          "edition": "2026-11-06",
+          "site_url": "https://benjamin.dekosnik.com",
+          "page_id": 3175,
+          "page_url": "https://benjamin.dekosnik.com/futures/setouchi-2028/",
+          "design_reference": "https://benjamin.dekosnik.com/work/202x/star-x-internet-maps/",
+          "design_reference_scope": "Website typography and spacing only. All geographic artwork retains the modified Setouchi AuthaGraph composition.",
+          "insertion_heading": "Two atlases, one shared table",
+          "preceding_list_count": 3,
+          "anchor": "setouchi-futures-visuals",
+          "atlas": "output/atlas",
+          "output": "output/setouchi-futures-20261106",
+          "background": "#240413",
+          "fiber_ocean_color": "#fcc553",
+          "fiber_ocean_opacity": 1,
+          "detail_width": 3840,
+          "card_widths": [
+            640,
+            1280
+          ],
+          "maps": [
+            {
+              "stem": "water",
+              "title": "Water",
+              "world_caption": "Rivers, coastlines, and generalized ocean depths.",
+              "japan_caption": "Japan and its surrounding seas, with the Setouchi reference point.",
+              "world_alt": "Modified AuthaGraph world map with blue ocean depths, wine-colored land, and branching rivers.",
+              "japan_alt": "Japan and neighboring seas, showing ocean depth bands, rivers, and a yellow Setouchi locator.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "network-fiber",
+              "title": "Fiber",
+              "world_caption": "Submarine and terrestrial cable routes connect continents. Routes are schematic; source snapshots span 2022–2026.",
+              "japan_caption": "Japan’s cable landings and terrestrial networks. Amber ocean routes and green land routes; schematic locations.",
+              "world_alt": "World network map with amber submarine cables crossing oceans and green terrestrial fiber networks.",
+              "japan_alt": "Fiber routes around Japan, with amber cables extending into the Pacific and green routes over land."
+            },
+            {
+              "stem": "cloud-atmosphere",
+              "title": "Atmosphere",
+              "background": "#fcc553",
+              "land_outline": {
+                "color": "#ffffff",
+                "opacity": 1,
+                "width_pt": 0.66
+              },
+              "radiation_opacity": {
+                "bands": 100,
+                "scale_min": 0,
+                "scale_max": 400,
+                "profile": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/cloud-atmosphere-profile.json",
+                "profile_sha256": "90385c469a7d65775f990e51f75760e5d31ebf9563001e847fa81221cc8d2747",
+                "snapshot": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/.prepared/cloud-atmosphere-latest.geojson",
+                "snapshot_sha256": "2cc4b93634732766c71c9a8ba70406a94e276dcf9e4bce2e78c103644e748b0d"
+              },
+              "world_caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
+              "japan_caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
+              "world_alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
+              "japan_alt": "Atmospheric observation cells over Japan and nearby seas on a light amber background, with the Setouchi reference point.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "anthropocene-temperature-2026",
+              "title": "Temperature records · 2026",
+              "world_caption": "Daily land-temperature record counts through 28 October 2026. A partial-year count, not a temperature anomaly.",
+              "japan_caption": "The same daily record-count classes around Japan, through 28 October 2026.",
+              "world_alt": "Land-temperature record counts shown as orange, yellow, and pale hexagons on a modified AuthaGraph world map.",
+              "japan_alt": "Temperature record-count hexagons over Japan and neighboring land, with the Setouchi reference point.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "orbital-technosphere-observer",
+              "title": "Starlink and the orbital sky",
+              "world_caption": "World atlas observer plate: San Francisco reference, 3 November 2026, 17:10 UTC. Starlink names and distinct vendor symbols.",
+              "japan_caption": "Setouchi observer at 34.45° N, 133.99° E, 29 October 2026, 20:00 UTC. Sky field and Japan locator shown together.",
+              "world_alt": "Calculated satellite positions across a dark wine sky, with Starlink names, colored vendor markers, and curved reference lines.",
+              "japan_alt": "Satellite positions for the Setouchi observer, with Starlink names and a separate Japan locator inset."
+            }
+          ],
+          "hamonshu": [
+            {
+              "id": "hamonshu_1-005e",
+              "book": 1,
+              "title": "Book 1 · 005e",
+              "caption": "Repeating wave arcs.",
+              "alt": "Overlapping groups of concentric wave arcs, printed in dark ink on aged paper.",
+              "sha256": "72bf5cf9668930d34e29f64383699a913dec7d2456a1f29add579f9226730c0d"
+            },
+            {
+              "id": "hamonshu_2-003a",
+              "book": 2,
+              "title": "Book 2 · 003a",
+              "caption": "Flowing currents and eddies.",
+              "alt": "Interlacing curved lines form a field of flowing water and small eddies.",
+              "sha256": "4f37bd971f2e8cf112e5325c5b547f319ad238a6732ded784239ea8c2b134f5a"
+            },
+            {
+              "id": "hamonshu_3-003f",
+              "book": 3,
+              "title": "Book 3 · 003f",
+              "caption": "A dotted breaking wave.",
+              "alt": "Curling wave shapes with dotted foam and broad dark areas.",
+              "sha256": "c702e2aa6ccc78d1f84a0dc16176e91dde77498aa7cb22d0eed88893194edd38"
+            }
+          ]
+        },
+        "snapshot_sha256": "c54580f632cc13e51ecc92292b846ccb5982b1857c4dfe35632390cd80d088af",
+        "export_contract": "linked-png-checked-decoder-v1"
+      },
+      "files": [
+        {
+          "path": "h3r8/maps/japan/cloud-atmosphere.svg",
+          "sha256": "587e5325907e9795c21b00fa2c934b4b8a374b5d37cf80c0396b8de9fd7e89d1",
+          "bytes": 3739696
+        },
+        {
+          "path": "h3r8/maps/japan/cloud-atmosphere.pdf",
+          "sha256": "fe4d617f402e79c031d9407a5ad96d6a1e871b68de91f62736145e30f59a00b3",
+          "bytes": 17806701
+        },
+        {
+          "path": "h3r8/maps/japan/layers/cloud-atmosphere-aerosol-optical-depth.png",
+          "sha256": "14f8a7fb3184a366108073e63653e5a5436686ff3ccdeb1dfce28e3288daca3b",
+          "bytes": 6515886
+        },
+        {
+          "path": "h3r8/maps/japan/layers/cloud-atmosphere-cloud-fraction.png",
+          "sha256": "287e38125ce377cb6197971bfa67c6785b485397b64ab7922b6d60025a6f5b66",
+          "bytes": 155392
+        },
+        {
+          "path": "h3r8/maps/japan/layers/cloud-atmosphere-cloud-optical-thickness.png",
+          "sha256": "9475b1e12f9756abc7d786f6b2b4584c04876f245b3e5a63334377f3c22fdbee",
+          "bytes": 164692
+        },
+        {
+          "path": "h3r8/maps/japan/layers/cloud-atmosphere-cloud-top-height.png",
+          "sha256": "0cb33624e96a4709bbf7d3dc000e19c98b6da07baf97a6036be515f5f2e998b6",
+          "bytes": 164692
+        },
+        {
+          "path": "h3r8/maps/japan/layers/cloud-atmosphere-cloud-type.png",
+          "sha256": "dcd82da3e9789cfa9110b17cb275e0dc7d397e768a36d8dd28b09f6bbbe78d30",
+          "bytes": 164692
+        },
+        {
+          "path": "h3r8/maps/japan/layers/cloud-atmosphere-precipitation-rate.png",
+          "sha256": "8be3e103fb7832f2e08866bf49114e1f0e7c1f40e05b0f0630ae36385b24702c",
+          "bytes": 3388525
+        },
+        {
+          "path": "h3r8/maps/japan/layers/cloud-atmosphere-surface-shortwave-radiation.png",
+          "sha256": "0b68e7b431f687dfd27f13ca9a0b16d16d4139fc25e15a277d7658bf3fad009b",
+          "bytes": 14784466
+        },
+        {
+          "path": "h3r8/maps/japan/cloud-atmosphere.png",
+          "sha256": "9d35be40205ef23cf2c94f9cab1a18b90e8fa700f17db8b98718e6b6940e4ebd",
+          "bytes": 29021691
+        },
+        {
+          "path": "h3r8/maps/japan/cloud-atmosphere.webp",
+          "sha256": "06bbfda0e7a32fd547c3af5b00a6c9a7e43a7dcc5ce8ae848bd3ea4ef74d9dbe",
+          "bytes": 829750
+        },
+        {
+          "path": "h3r8/maps/japan/cloud-atmosphere-1280.webp",
+          "sha256": "015ce7f4e7e4be579d66f87d89afeb48f45c9ee7f1af30a02c56e9b2fc624f01",
+          "bytes": 214690
+        },
+        {
+          "path": "h3r8/legends/japan/cloud-atmosphere-legend.svg",
+          "sha256": "ec532eac87cbf37b6e71aa1c37ecaa3f6fa71f6c02dca464a44d875457185548",
+          "bytes": 34966
+        },
+        {
+          "path": "h3r8/legends/japan/cloud-atmosphere-legend.pdf",
+          "sha256": "a0a2ca8b6bc674661bba648ea2e1ff2bf8774cb055bb0e98e9e83a9c02bd5d4b",
+          "bytes": 37957
+        }
+      ],
+      "layers": [
+        {
+          "id": "surface-shortwave-radiation",
+          "observed_cells": 2533737,
+          "drawn_cells": 2533737,
+          "value_range": [
+            0.0,
+            406.4
+          ],
+          "band_counts": {
+            "0": 60800,
+            "1": 15709,
+            "2": 22211,
+            "3": 15125,
+            "4": 23708,
+            "5": 16779,
+            "6": 27254,
+            "7": 19224,
+            "8": 30794,
+            "9": 21261,
+            "10": 33122,
+            "11": 34859,
+            "12": 23110,
+            "13": 34496,
+            "14": 22957,
+            "15": 34576,
+            "16": 22640,
+            "17": 32960,
+            "18": 22189,
+            "19": 32723,
+            "20": 21526,
+            "21": 32040,
+            "22": 20913,
+            "23": 30714,
+            "24": 19672,
+            "25": 29583,
+            "26": 19261,
+            "27": 28432,
+            "28": 18950,
+            "29": 28339,
+            "30": 29397,
+            "31": 19836,
+            "32": 30952,
+            "33": 20988,
+            "34": 32608,
+            "35": 22316,
+            "36": 33624,
+            "37": 22586,
+            "38": 33085,
+            "39": 22117,
+            "40": 33366,
+            "41": 21481,
+            "42": 32732,
+            "43": 21913,
+            "44": 33267,
+            "45": 22762,
+            "46": 34823,
+            "47": 23658,
+            "48": 35112,
+            "49": 23502,
+            "50": 34052,
+            "51": 33620,
+            "52": 23145,
+            "53": 36453,
+            "54": 26019,
+            "55": 37801,
+            "56": 24492,
+            "57": 37053,
+            "58": 25183,
+            "59": 36734,
+            "60": 24590,
+            "61": 36962,
+            "62": 24368,
+            "63": 36476,
+            "64": 24896,
+            "65": 38272,
+            "66": 26159,
+            "67": 39921,
+            "68": 27045,
+            "69": 42121,
+            "70": 39949,
+            "71": 25836,
+            "72": 39027,
+            "73": 26620,
+            "74": 41139,
+            "75": 28099,
+            "76": 41768,
+            "77": 28245,
+            "78": 45042,
+            "79": 32770,
+            "80": 53309,
+            "81": 36261,
+            "82": 48991,
+            "83": 15770,
+            "84": 10550,
+            "85": 4763,
+            "86": 5917,
+            "87": 2937,
+            "88": 3921,
+            "89": 3701,
+            "90": 2552,
+            "91": 3655,
+            "92": 2329,
+            "93": 3017,
+            "94": 1477,
+            "95": 1904,
+            "96": 1192,
+            "97": 1295,
+            "98": 215,
+            "99": 72
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-surface-shortwave-radiation.png",
+              "visible_cells": 2533737,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-surface-shortwave-radiation.png",
+              "visible_cells": 94329,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "aerosol-optical-depth",
+          "observed_cells": 627582,
+          "drawn_cells": 627582,
+          "value_range": [
+            0.0009999999747378752,
+            4.999999873689376
+          ],
+          "band_counts": {
+            "1": 163056,
+            "2": 155510,
+            "3": 134709,
+            "4": 80356,
+            "5": 41120,
+            "6": 52831
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-aerosol-optical-depth.png",
+              "visible_cells": 627582,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-aerosol-optical-depth.png",
+              "visible_cells": 36814,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "precipitation-rate",
+          "observed_cells": 2755919,
+          "drawn_cells": 1090541,
+          "value_range": [
+            0.0,
+            40.723751068115234
+          ],
+          "band_counts": {
+            "1": 2746254,
+            "2": 7807,
+            "3": 1397,
+            "4": 314,
+            "5": 77,
+            "6": 70
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-precipitation-rate.png",
+              "visible_cells": 1090541,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-precipitation-rate.png",
+              "visible_cells": 47161,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cloud-fraction",
+          "observed_cells": 518400,
+          "drawn_cells": 52149,
+          "value_range": [
+            0.0,
+            1.0
+          ],
+          "band_counts": {
+            "1": 466251,
+            "6": 52149
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cloud-fraction.png",
+              "visible_cells": 52149,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cloud-fraction.png",
+              "visible_cells": 0,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cloud-optical-thickness",
+          "observed_cells": 56208,
+          "drawn_cells": 56208,
+          "value_range": [
+            0.0,
+            149.99999664723873
+          ],
+          "band_counts": {
+            "1": 50296,
+            "2": 2166,
+            "3": 807,
+            "4": 332,
+            "5": 206,
+            "6": 2401
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cloud-optical-thickness.png",
+              "visible_cells": 56208,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cloud-optical-thickness.png",
+              "visible_cells": 0,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cloud-top-height",
+          "observed_cells": 56208,
+          "drawn_cells": 56208,
+          "value_range": [
+            0.06600000313483179,
+            16.635000790120102
+          ],
+          "band_counts": {
+            "1": 10317,
+            "2": 20397,
+            "3": 13260,
+            "4": 7710,
+            "5": 3639,
+            "6": 885
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cloud-top-height.png",
+              "visible_cells": 56208,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cloud-top-height.png",
+              "visible_cells": 0,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cloud-type",
+          "observed_cells": 48719,
+          "drawn_cells": 48719,
+          "value_range": [
+            1.0,
+            9.0
+          ],
+          "band_counts": {
+            "1": 11165,
+            "2": 6623,
+            "3": 21416,
+            "4": 1980,
+            "5": 7405,
+            "6": 130
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cloud-type.png",
+              "visible_cells": 48719,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cloud-type.png",
+              "visible_cells": 0,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        }
+      ],
+      "pdf_packaging": {
+        "input_sha256": "62bbfdee55f4b25bedc838fdb2d42a12bc45e4c22ea9b8a61c9b8b5b5772b31a",
+        "output_sha256": "fe4d617f402e79c031d9407a5ad96d6a1e871b68de91f62736145e30f59a00b3",
+        "input_bytes": 37341968,
+        "output_bytes": 17806701,
+        "normalized_single_hue_images": 3,
+        "deduplicated_image_objects": 6,
+        "maximum_premultiplied_channel_change_255": 0.9490196108818054,
+        "alpha_planes_unchanged": true,
+        "image_dimensions_unchanged": true,
+        "optimizer_sha256": "298692abf19d8d017708d30b12de77978c6fcc0889f04a2f0ffd68312ec610a1",
+        "pikepdf_version": "10.17.0"
+      }
+    },
+    {
+      "scope": "world",
+      "stem": "anthropocene-temperature-2026",
+      "h3_resolution": 8,
+      "source_svg": "output/atlas/maps/world/svg/anthropocene-temperature-2026.svg",
+      "legend_svg": "output/atlas/legends/world/svg/anthropocene-temperature-2026-legend.svg",
+      "fingerprint": {
+        "builder_sha256": "d81699a66e5c30a9d61e65988972704001dd6f225283b8dc03e747c1e92da1b4",
+        "source_sha256": "0ee9d3bbf2d2979b4499e742f503f46697e04b5683fba0effd3787b217ab4d10",
+        "legend_sha256": "4c3875894683ddcc3a88421918885d54d673e95ab5e1d38784be0c05a085fd28",
+        "render_sha256": "cc18046197f15502da872f5f852a71a70bbdb21bf5a4ed8249aedd79872cd1a7",
+        "tiles_sha256": "5233ff65419f1fa8365ff6508227dec92501d4f2c7b60b8615b2def4c46321d1",
+        "baseline": {
+          "schema": "cartofreako-setouchi-futures-v1",
+          "edition": "2026-11-06",
+          "site_url": "https://benjamin.dekosnik.com",
+          "page_id": 3175,
+          "page_url": "https://benjamin.dekosnik.com/futures/setouchi-2028/",
+          "design_reference": "https://benjamin.dekosnik.com/work/202x/star-x-internet-maps/",
+          "design_reference_scope": "Website typography and spacing only. All geographic artwork retains the modified Setouchi AuthaGraph composition.",
+          "insertion_heading": "Two atlases, one shared table",
+          "preceding_list_count": 3,
+          "anchor": "setouchi-futures-visuals",
+          "atlas": "output/atlas",
+          "output": "output/setouchi-futures-20261106",
+          "background": "#240413",
+          "fiber_ocean_color": "#fcc553",
+          "fiber_ocean_opacity": 1,
+          "detail_width": 3840,
+          "card_widths": [
+            640,
+            1280
+          ],
+          "maps": [
+            {
+              "stem": "water",
+              "title": "Water",
+              "world_caption": "Rivers, coastlines, and generalized ocean depths.",
+              "japan_caption": "Japan and its surrounding seas, with the Setouchi reference point.",
+              "world_alt": "Modified AuthaGraph world map with blue ocean depths, wine-colored land, and branching rivers.",
+              "japan_alt": "Japan and neighboring seas, showing ocean depth bands, rivers, and a yellow Setouchi locator.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "network-fiber",
+              "title": "Fiber",
+              "world_caption": "Submarine and terrestrial cable routes connect continents. Routes are schematic; source snapshots span 2022–2026.",
+              "japan_caption": "Japan’s cable landings and terrestrial networks. Amber ocean routes and green land routes; schematic locations.",
+              "world_alt": "World network map with amber submarine cables crossing oceans and green terrestrial fiber networks.",
+              "japan_alt": "Fiber routes around Japan, with amber cables extending into the Pacific and green routes over land."
+            },
+            {
+              "stem": "cloud-atmosphere",
+              "title": "Atmosphere",
+              "background": "#fcc553",
+              "land_outline": {
+                "color": "#ffffff",
+                "opacity": 1,
+                "width_pt": 0.66
+              },
+              "radiation_opacity": {
+                "bands": 100,
+                "scale_min": 0,
+                "scale_max": 400,
+                "profile": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/cloud-atmosphere-profile.json",
+                "profile_sha256": "90385c469a7d65775f990e51f75760e5d31ebf9563001e847fa81221cc8d2747",
+                "snapshot": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/.prepared/cloud-atmosphere-latest.geojson",
+                "snapshot_sha256": "2cc4b93634732766c71c9a8ba70406a94e276dcf9e4bce2e78c103644e748b0d"
+              },
+              "world_caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
+              "japan_caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
+              "world_alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
+              "japan_alt": "Atmospheric observation cells over Japan and nearby seas on a light amber background, with the Setouchi reference point.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "anthropocene-temperature-2026",
+              "title": "Temperature records · 2026",
+              "world_caption": "Daily land-temperature record counts through 28 October 2026. A partial-year count, not a temperature anomaly.",
+              "japan_caption": "The same daily record-count classes around Japan, through 28 October 2026.",
+              "world_alt": "Land-temperature record counts shown as orange, yellow, and pale hexagons on a modified AuthaGraph world map.",
+              "japan_alt": "Temperature record-count hexagons over Japan and neighboring land, with the Setouchi reference point.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "orbital-technosphere-observer",
+              "title": "Starlink and the orbital sky",
+              "world_caption": "World atlas observer plate: San Francisco reference, 3 November 2026, 17:10 UTC. Starlink names and distinct vendor symbols.",
+              "japan_caption": "Setouchi observer at 34.45° N, 133.99° E, 29 October 2026, 20:00 UTC. Sky field and Japan locator shown together.",
+              "world_alt": "Calculated satellite positions across a dark wine sky, with Starlink names, colored vendor markers, and curved reference lines.",
+              "japan_alt": "Satellite positions for the Setouchi observer, with Starlink names and a separate Japan locator inset."
+            }
+          ],
+          "hamonshu": [
+            {
+              "id": "hamonshu_1-005e",
+              "book": 1,
+              "title": "Book 1 · 005e",
+              "caption": "Repeating wave arcs.",
+              "alt": "Overlapping groups of concentric wave arcs, printed in dark ink on aged paper.",
+              "sha256": "72bf5cf9668930d34e29f64383699a913dec7d2456a1f29add579f9226730c0d"
+            },
+            {
+              "id": "hamonshu_2-003a",
+              "book": 2,
+              "title": "Book 2 · 003a",
+              "caption": "Flowing currents and eddies.",
+              "alt": "Interlacing curved lines form a field of flowing water and small eddies.",
+              "sha256": "4f37bd971f2e8cf112e5325c5b547f319ad238a6732ded784239ea8c2b134f5a"
+            },
+            {
+              "id": "hamonshu_3-003f",
+              "book": 3,
+              "title": "Book 3 · 003f",
+              "caption": "A dotted breaking wave.",
+              "alt": "Curling wave shapes with dotted foam and broad dark areas.",
+              "sha256": "c702e2aa6ccc78d1f84a0dc16176e91dde77498aa7cb22d0eed88893194edd38"
+            }
+          ]
+        },
+        "snapshot_sha256": "3373813e2251244bf4fcfed366a8176be635a5fe7e881ff6cddaf54a61daf5e8",
+        "export_contract": "linked-png-checked-decoder-v1"
+      },
+      "files": [
+        {
+          "path": "h3r8/maps/world/anthropocene-temperature-2026.svg",
+          "sha256": "0f984137a7e8ba9ac99bdb53490d9532f51966f047a49c1c1bf206fec39eacb7",
+          "bytes": 1747938
+        },
+        {
+          "path": "h3r8/maps/world/anthropocene-temperature-2026.pdf",
+          "sha256": "a91c84094c8fa11255b3f4501e69c7072eb4a1af60e006b5957a1d32dd6d99bf",
+          "bytes": 5332768
+        },
+        {
+          "path": "h3r8/maps/world/layers/anthropocene-temperature-2026-cpc-temperature-coverage.png",
+          "sha256": "ca100332cf8cebf3b43379ec8fcc2400a593a4ef0ecd72f72b35b96d9f6462c7",
+          "bytes": 1191423
+        },
+        {
+          "path": "h3r8/maps/world/layers/anthropocene-temperature-2026-cpc-temperature-record-high-days.png",
+          "sha256": "3dbc59f90f30ddd59e1a6487061c089693203fd8407d49b027982395ae60704d",
+          "bytes": 1238570
+        },
+        {
+          "path": "h3r8/maps/world/layers/anthropocene-temperature-2026-cpc-temperature-record-low-days.png",
+          "sha256": "523fd940802607e63e2a5c7bf1fc3ac4d752fdf7062f0c6ab08854f0ad2b0b6c",
+          "bytes": 3010501
+        },
+        {
+          "path": "h3r8/maps/world/anthropocene-temperature-2026.png",
+          "sha256": "cbd797a0eb0e4c55c0919d47414d600575b8bbcb3df133e803ece82804a05b4d",
+          "bytes": 7764531
+        },
+        {
+          "path": "h3r8/maps/world/anthropocene-temperature-2026.webp",
+          "sha256": "2c4d60ff1482b7f9b7a51f65cc2e815384b2f8bd880d7116249984c45a4108d5",
+          "bytes": 532096
+        },
+        {
+          "path": "h3r8/maps/world/anthropocene-temperature-2026-1280.webp",
+          "sha256": "db271421cfef7fc20b7765a0afb8f7f8e0cd2be064f2e589cffb4bc2eb7afe0b",
+          "bytes": 42722
+        },
+        {
+          "path": "h3r8/legends/world/anthropocene-temperature-2026-legend.svg",
+          "sha256": "8a999e3da541811fc667a3186dedf29d135630786261887515cdf19ac21181d6",
+          "bytes": 15348
+        },
+        {
+          "path": "h3r8/legends/world/anthropocene-temperature-2026-legend.pdf",
+          "sha256": "c3f03d3eef7076ec97f70822aac3a4678450aece0fa11a85da3993f9363dc891",
+          "bytes": 33862
+        }
+      ],
+      "layers": [
+        {
+          "id": "cpc-temperature-coverage",
+          "observed_cells": 62881,
+          "drawn_cells": 62881,
+          "value_range": [
+            1.0,
+            1.0
+          ],
+          "band_counts": {
+            "0": 62881
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cpc-temperature-coverage.png",
+              "visible_cells": 62881,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cpc-temperature-coverage.png",
+              "visible_cells": 2288,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cpc-temperature-record-high-days",
+          "observed_cells": 60406,
+          "drawn_cells": 60406,
+          "value_range": [
+            1.0,
+            176.0
+          ],
+          "band_counts": {
+            "1": 13545,
+            "2": 16787,
+            "3": 19191,
+            "4": 8798,
+            "5": 1766,
+            "6": 319
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cpc-temperature-record-high-days.png",
+              "visible_cells": 60406,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cpc-temperature-record-high-days.png",
+              "visible_cells": 2281,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cpc-temperature-record-low-days",
+          "observed_cells": 46161,
+          "drawn_cells": 46161,
+          "value_range": [
+            1.0,
+            273.0
+          ],
+          "band_counts": {
+            "1": 10301,
+            "2": 14186,
+            "3": 8902,
+            "4": 8478,
+            "5": 3126,
+            "6": 1168
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cpc-temperature-record-low-days.png",
+              "visible_cells": 46161,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cpc-temperature-record-low-days.png",
+              "visible_cells": 1671,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        }
+      ],
+      "pdf_packaging": {
+        "input_sha256": "7248ea7786d9bb0d9b9328b83f45e4ad2ac412eb8d2111b99aa1bb124708f3cf",
+        "output_sha256": "a91c84094c8fa11255b3f4501e69c7072eb4a1af60e006b5957a1d32dd6d99bf",
+        "input_bytes": 14085467,
+        "output_bytes": 5332768,
+        "normalized_single_hue_images": 2,
+        "deduplicated_image_objects": 6,
+        "maximum_premultiplied_channel_change_255": 0.9686274528503418,
+        "alpha_planes_unchanged": true,
+        "image_dimensions_unchanged": true,
+        "optimizer_sha256": "298692abf19d8d017708d30b12de77978c6fcc0889f04a2f0ffd68312ec610a1",
+        "pikepdf_version": "10.17.0"
+      }
+    },
+    {
+      "scope": "japan",
+      "stem": "anthropocene-temperature-2026",
+      "h3_resolution": 8,
+      "source_svg": "output/atlas/maps/japan/svg/anthropocene-temperature-2026.svg",
+      "legend_svg": "output/atlas/legends/japan/svg/anthropocene-temperature-2026-legend.svg",
+      "fingerprint": {
+        "builder_sha256": "d81699a66e5c30a9d61e65988972704001dd6f225283b8dc03e747c1e92da1b4",
+        "source_sha256": "43dd1072252545449cceacab8fa1fee8555665af737ab5881f7d817621e12b39",
+        "legend_sha256": "d66db9bace5ebfc4fc11a325020fba76551d80a6a1a74119cf64235f3763eb14",
+        "render_sha256": "cc18046197f15502da872f5f852a71a70bbdb21bf5a4ed8249aedd79872cd1a7",
+        "tiles_sha256": "5233ff65419f1fa8365ff6508227dec92501d4f2c7b60b8615b2def4c46321d1",
+        "baseline": {
+          "schema": "cartofreako-setouchi-futures-v1",
+          "edition": "2026-11-06",
+          "site_url": "https://benjamin.dekosnik.com",
+          "page_id": 3175,
+          "page_url": "https://benjamin.dekosnik.com/futures/setouchi-2028/",
+          "design_reference": "https://benjamin.dekosnik.com/work/202x/star-x-internet-maps/",
+          "design_reference_scope": "Website typography and spacing only. All geographic artwork retains the modified Setouchi AuthaGraph composition.",
+          "insertion_heading": "Two atlases, one shared table",
+          "preceding_list_count": 3,
+          "anchor": "setouchi-futures-visuals",
+          "atlas": "output/atlas",
+          "output": "output/setouchi-futures-20261106",
+          "background": "#240413",
+          "fiber_ocean_color": "#fcc553",
+          "fiber_ocean_opacity": 1,
+          "detail_width": 3840,
+          "card_widths": [
+            640,
+            1280
+          ],
+          "maps": [
+            {
+              "stem": "water",
+              "title": "Water",
+              "world_caption": "Rivers, coastlines, and generalized ocean depths.",
+              "japan_caption": "Japan and its surrounding seas, with the Setouchi reference point.",
+              "world_alt": "Modified AuthaGraph world map with blue ocean depths, wine-colored land, and branching rivers.",
+              "japan_alt": "Japan and neighboring seas, showing ocean depth bands, rivers, and a yellow Setouchi locator.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "network-fiber",
+              "title": "Fiber",
+              "world_caption": "Submarine and terrestrial cable routes connect continents. Routes are schematic; source snapshots span 2022–2026.",
+              "japan_caption": "Japan’s cable landings and terrestrial networks. Amber ocean routes and green land routes; schematic locations.",
+              "world_alt": "World network map with amber submarine cables crossing oceans and green terrestrial fiber networks.",
+              "japan_alt": "Fiber routes around Japan, with amber cables extending into the Pacific and green routes over land."
+            },
+            {
+              "stem": "cloud-atmosphere",
+              "title": "Atmosphere",
+              "background": "#fcc553",
+              "land_outline": {
+                "color": "#ffffff",
+                "opacity": 1,
+                "width_pt": 0.66
+              },
+              "radiation_opacity": {
+                "bands": 100,
+                "scale_min": 0,
+                "scale_max": 400,
+                "profile": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/cloud-atmosphere-profile.json",
+                "profile_sha256": "90385c469a7d65775f990e51f75760e5d31ebf9563001e847fa81221cc8d2747",
+                "snapshot": "output/setouchi-triennale-2028/sources/data/cloud-atmosphere/.prepared/cloud-atmosphere-latest.geojson",
+                "snapshot_sha256": "2cc4b93634732766c71c9a8ba70406a94e276dcf9e4bce2e78c103644e748b0d"
+              },
+              "world_caption": "Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026.",
+              "japan_caption": "Atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.",
+              "world_alt": "Hexagonal atmospheric observation fields, including pink cloud patterns and blue precipitation, across the world on a light amber background.",
+              "japan_alt": "Atmospheric observation cells over Japan and nearby seas on a light amber background, with the Setouchi reference point.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "anthropocene-temperature-2026",
+              "title": "Temperature records · 2026",
+              "world_caption": "Daily land-temperature record counts through 28 October 2026. A partial-year count, not a temperature anomaly.",
+              "japan_caption": "The same daily record-count classes around Japan, through 28 October 2026.",
+              "world_alt": "Land-temperature record counts shown as orange, yellow, and pale hexagons on a modified AuthaGraph world map.",
+              "japan_alt": "Temperature record-count hexagons over Japan and neighboring land, with the Setouchi reference point.",
+              "japan_crop_inches": [
+                0.5,
+                1.75,
+                29.1,
+                17.25
+              ]
+            },
+            {
+              "stem": "orbital-technosphere-observer",
+              "title": "Starlink and the orbital sky",
+              "world_caption": "World atlas observer plate: San Francisco reference, 3 November 2026, 17:10 UTC. Starlink names and distinct vendor symbols.",
+              "japan_caption": "Setouchi observer at 34.45° N, 133.99° E, 29 October 2026, 20:00 UTC. Sky field and Japan locator shown together.",
+              "world_alt": "Calculated satellite positions across a dark wine sky, with Starlink names, colored vendor markers, and curved reference lines.",
+              "japan_alt": "Satellite positions for the Setouchi observer, with Starlink names and a separate Japan locator inset."
+            }
+          ],
+          "hamonshu": [
+            {
+              "id": "hamonshu_1-005e",
+              "book": 1,
+              "title": "Book 1 · 005e",
+              "caption": "Repeating wave arcs.",
+              "alt": "Overlapping groups of concentric wave arcs, printed in dark ink on aged paper.",
+              "sha256": "72bf5cf9668930d34e29f64383699a913dec7d2456a1f29add579f9226730c0d"
+            },
+            {
+              "id": "hamonshu_2-003a",
+              "book": 2,
+              "title": "Book 2 · 003a",
+              "caption": "Flowing currents and eddies.",
+              "alt": "Interlacing curved lines form a field of flowing water and small eddies.",
+              "sha256": "4f37bd971f2e8cf112e5325c5b547f319ad238a6732ded784239ea8c2b134f5a"
+            },
+            {
+              "id": "hamonshu_3-003f",
+              "book": 3,
+              "title": "Book 3 · 003f",
+              "caption": "A dotted breaking wave.",
+              "alt": "Curling wave shapes with dotted foam and broad dark areas.",
+              "sha256": "c702e2aa6ccc78d1f84a0dc16176e91dde77498aa7cb22d0eed88893194edd38"
+            }
+          ]
+        },
+        "snapshot_sha256": "3373813e2251244bf4fcfed366a8176be635a5fe7e881ff6cddaf54a61daf5e8",
+        "export_contract": "linked-png-checked-decoder-v1"
+      },
+      "files": [
+        {
+          "path": "h3r8/maps/japan/anthropocene-temperature-2026.svg",
+          "sha256": "bbc4e458e8450bfec54fcadbf3ddf62ec9447b6c410a1ad18267f89ec4138d5a",
+          "bytes": 1901906
+        },
+        {
+          "path": "h3r8/maps/japan/anthropocene-temperature-2026.pdf",
+          "sha256": "839cd2d32a4a0c3aa25bdc5423626d47e770c84b4bd1dab6a1ec6d7f7ef97baf",
+          "bytes": 1609579
+        },
+        {
+          "path": "h3r8/maps/japan/layers/anthropocene-temperature-2026-cpc-temperature-coverage.png",
+          "sha256": "8af2c089efbe999aa8b11462e47254256a107ebbdb21698ab0672fe33b5dc7af",
+          "bytes": 390142
+        },
+        {
+          "path": "h3r8/maps/japan/layers/anthropocene-temperature-2026-cpc-temperature-record-high-days.png",
+          "sha256": "b4cb2d6eab4489b289fe10fe45927cdaa8de5d658fc5af8246e3ee19718de6c6",
+          "bytes": 325061
+        },
+        {
+          "path": "h3r8/maps/japan/layers/anthropocene-temperature-2026-cpc-temperature-record-low-days.png",
+          "sha256": "385768f051268332d6ec953f3d3ebe136d85faf29d59cb81c79572c25d117dd4",
+          "bytes": 557581
+        },
+        {
+          "path": "h3r8/maps/japan/anthropocene-temperature-2026.png",
+          "sha256": "cafa3ddc1d2d05fa4cbec7b95bd306c6a707d443c4729d2aa572c48168f5f54b",
+          "bytes": 1850461
+        },
+        {
+          "path": "h3r8/maps/japan/anthropocene-temperature-2026.webp",
+          "sha256": "dcc4410427f0915dbc72ef8236f2e6e02d255ec801255a727ae9f6fa350923c8",
+          "bytes": 143906
+        },
+        {
+          "path": "h3r8/maps/japan/anthropocene-temperature-2026-1280.webp",
+          "sha256": "095404f840c8089a6a49c0391afbfb12fed5de9d84e01531570e9d58a2e2629d",
+          "bytes": 64048
+        },
+        {
+          "path": "h3r8/legends/japan/anthropocene-temperature-2026-legend.svg",
+          "sha256": "f80372fc8ed1abeeb15d6e8e6081fdfff7de9f7a720511780495dfeb192810d3",
+          "bytes": 16124
+        },
+        {
+          "path": "h3r8/legends/japan/anthropocene-temperature-2026-legend.pdf",
+          "sha256": "379e25132286a9823252790cb076cd73d3ada2322c53d1c5d3074e23e4310cbc",
+          "bytes": 34526
+        }
+      ],
+      "layers": [
+        {
+          "id": "cpc-temperature-coverage",
+          "observed_cells": 62881,
+          "drawn_cells": 62881,
+          "value_range": [
+            1.0,
+            1.0
+          ],
+          "band_counts": {
+            "0": 62881
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cpc-temperature-coverage.png",
+              "visible_cells": 62881,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cpc-temperature-coverage.png",
+              "visible_cells": 2288,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cpc-temperature-record-high-days",
+          "observed_cells": 60406,
+          "drawn_cells": 60406,
+          "value_range": [
+            1.0,
+            176.0
+          ],
+          "band_counts": {
+            "1": 13545,
+            "2": 16787,
+            "3": 19191,
+            "4": 8798,
+            "5": 1766,
+            "6": 319
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cpc-temperature-record-high-days.png",
+              "visible_cells": 60406,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cpc-temperature-record-high-days.png",
+              "visible_cells": 2281,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        },
+        {
+          "id": "cpc-temperature-record-low-days",
+          "observed_cells": 46161,
+          "drawn_cells": 46161,
+          "value_range": [
+            1.0,
+            273.0
+          ],
+          "band_counts": {
+            "1": 10301,
+            "2": 14186,
+            "3": 8902,
+            "4": 8478,
+            "5": 3126,
+            "6": 1168
+          },
+          "tiles": [
+            {
+              "scope": "world",
+              "file": "world-cpc-temperature-record-low-days.png",
+              "visible_cells": 46161,
+              "width_px": 13200,
+              "height_px": 5716
+            },
+            {
+              "scope": "japan",
+              "file": "japan-cpc-temperature-record-low-days.png",
+              "visible_cells": 1671,
+              "width_px": 8560,
+              "height_px": 4660
+            }
+          ]
+        }
+      ],
+      "pdf_packaging": {
+        "input_sha256": "91f8fd30e3e709a9323d0b3b715577df4b728892479902043e7be3eb8f45e436",
+        "output_sha256": "839cd2d32a4a0c3aa25bdc5423626d47e770c84b4bd1dab6a1ec6d7f7ef97baf",
+        "input_bytes": 1975327,
+        "output_bytes": 1609579,
+        "normalized_single_hue_images": 1,
+        "deduplicated_image_objects": 0,
+        "maximum_premultiplied_channel_change_255": 0.9686274528503418,
+        "alpha_planes_unchanged": true,
+        "image_dimensions_unchanged": true,
+        "optimizer_sha256": "298692abf19d8d017708d30b12de77978c6fcc0889f04a2f0ffd68312ec610a1",
+        "pikepdf_version": "10.17.0"
+      }
+    }
+  ],
+  "publication_status": "local-only"
+}
