@@ -1,0 +1,129 @@
+01 | World | Water
+CAPTION:
+Water
+Rivers, coastlines, and generalized ocean depths.
+ALT TEXT:
+Modified AuthaGraph world map with blue ocean depths, wine-colored land, and branching rivers.
+CARD FILE: 01-world-water-card.webp
+DETAIL FILE: 01-world-water-detail.webp
+LEGEND FILE: 01-world-water-legend.pdf
+
+02 | World | Fiber
+CAPTION:
+Fiber
+Submarine and terrestrial cable routes connect continents. Routes are schematic; source snapshots span 2022–2026.
+ALT TEXT:
+World network map with amber submarine cables crossing oceans and green terrestrial fiber networks.
+CARD FILE: 02-world-network-fiber-card.webp
+DETAIL FILE: 02-world-network-fiber-detail.webp
+LEGEND FILE: 02-world-network-fiber-legend.pdf
+
+03 | World | Atmosphere
+CAPTION:
+Atmosphere
+Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026, indexed at H3r5.
+ALT TEXT:
+Fine H3r5 atmospheric observation cells across a modified AuthaGraph world map, with pink fields, blue precipitation, and white land outlines on amber.
+CARD FILE: 03-world-cloud-atmosphere-card.webp
+DETAIL FILE: 03-world-cloud-atmosphere-detail.webp
+LEGEND FILE: 03-world-cloud-atmosphere-legend.pdf
+
+04 | World | Temperature records · 2026
+CAPTION:
+Temperature records · 2026
+Daily land-temperature record counts on H3r5 cells through 28 October 2026. A partial-year count, not a temperature anomaly.
+ALT TEXT:
+Fine H3r5 land-temperature cells with warm record-high fills and blue record-low outlines on a wine-colored modified AuthaGraph world map.
+CARD FILE: 04-world-anthropocene-temperature-2026-card.webp
+DETAIL FILE: 04-world-anthropocene-temperature-2026-detail.webp
+LEGEND FILE: 04-world-anthropocene-temperature-2026-legend.pdf
+
+05 | World | Starlink and the orbital sky
+CAPTION:
+Starlink and the orbital sky
+World atlas observer plate: San Francisco reference, 3 November 2026, 17:10 UTC. Starlink names and distinct vendor symbols.
+ALT TEXT:
+Calculated satellite positions across a dark wine sky, with Starlink names, colored vendor markers, and curved reference lines.
+CARD FILE: 05-world-orbital-technosphere-observer-card.webp
+DETAIL FILE: 05-world-orbital-technosphere-observer-detail.webp
+LEGEND FILE: 05-world-orbital-technosphere-observer-legend.pdf
+
+06 | Japan / Setouchi | Water
+CAPTION:
+Water
+Japan and its surrounding seas, with the Setouchi reference point.
+ALT TEXT:
+Japan and neighboring seas, showing ocean depth bands, rivers, and a yellow Setouchi locator.
+CARD FILE: 06-japan-water-card.webp
+DETAIL FILE: 06-japan-water-detail.webp
+LEGEND FILE: 06-japan-water-legend.pdf
+
+07 | Japan / Setouchi | Fiber
+CAPTION:
+Fiber
+Japan’s cable landings and terrestrial networks. Amber ocean routes and green land routes; schematic locations.
+ALT TEXT:
+Fiber routes around Japan, with amber cables extending into the Pacific and green routes over land.
+CARD FILE: 07-japan-network-fiber-card.webp
+DETAIL FILE: 07-japan-network-fiber-detail.webp
+LEGEND FILE: 07-japan-network-fiber-legend.pdf
+
+08 | Japan / Setouchi | Atmosphere
+CAPTION:
+Atmosphere
+H3r5 atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.
+ALT TEXT:
+Fine H3r5 atmospheric observation cells around Japan on amber, with white land outlines and the Setouchi reference point.
+CARD FILE: 08-japan-cloud-atmosphere-card.webp
+DETAIL FILE: 08-japan-cloud-atmosphere-detail.webp
+LEGEND FILE: 08-japan-cloud-atmosphere-legend.pdf
+
+09 | Japan / Setouchi | Temperature records · 2026
+CAPTION:
+Temperature records · 2026
+The same daily record-count classes on H3r5 cells around Japan, through 28 October 2026.
+ALT TEXT:
+Small H3r5 temperature record-count cells over Japan and neighboring land, with blue record-low outlines and the Setouchi reference point.
+CARD FILE: 09-japan-anthropocene-temperature-2026-card.webp
+DETAIL FILE: 09-japan-anthropocene-temperature-2026-detail.webp
+LEGEND FILE: 09-japan-anthropocene-temperature-2026-legend.pdf
+
+10 | Japan / Setouchi | Starlink and the orbital sky
+CAPTION:
+Starlink and the orbital sky
+Setouchi observer at 34.45° N, 133.99° E, 29 October 2026, 20:00 UTC. Sky field and Japan locator shown together.
+ALT TEXT:
+Satellite positions for the Setouchi observer, with Starlink names and a separate Japan locator inset.
+CARD FILE: 10-japan-orbital-technosphere-observer-card.webp
+DETAIL FILE: 10-japan-orbital-technosphere-observer-detail.webp
+LEGEND FILE: 10-japan-orbital-technosphere-observer-legend.pdf
+
+11 | Hamonshū Revisited | Book 1 · 005e
+CAPTION:
+Book 1 · 005e
+Repeating wave arcs.
+ALT TEXT:
+Overlapping groups of concentric wave arcs, printed in dark ink on aged paper.
+CARD FILE: 11-hamonshu_1-005e-card.webp
+DETAIL FILE: 11-hamonshu_1-005e-detail.jpg
+BOOK REVIEW URL: https://situationshipin.space/review/hamonshu-v2-book1/
+
+12 | Hamonshū Revisited | Book 2 · 003a
+CAPTION:
+Book 2 · 003a
+Flowing currents and eddies.
+ALT TEXT:
+Interlacing curved lines form a field of flowing water and small eddies.
+CARD FILE: 12-hamonshu_2-003a-card.webp
+DETAIL FILE: 12-hamonshu_2-003a-detail.jpg
+BOOK REVIEW URL: https://situationshipin.space/review/hamonshu-v2-book2/
+
+13 | Hamonshū Revisited | Book 3 · 003f
+CAPTION:
+Book 3 · 003f
+A dotted breaking wave.
+ALT TEXT:
+Curling wave shapes with dotted foam and broad dark areas.
+CARD FILE: 13-hamonshu_3-003f-card.webp
+DETAIL FILE: 13-hamonshu_3-003f-detail.jpg
+BOOK REVIEW URL: https://situationshipin.space/review/hamonshu-v2-book3/

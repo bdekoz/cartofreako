@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Setouchi H3r5 · manual WordPress update</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #faf8f3; color: #292323; font: 17px/1.6 system-ui, sans-serif; }
+    main { max-width: 1100px; margin: auto; padding: 36px 24px 80px; }
+    h1, h2, h3 { font-family: Georgia, serif; font-weight: 400; line-height: 1.25; }
+    h1 { font-size: 2.3rem; } h2 { margin-top: 2.8rem; } h3 { font-size: 1.3rem; }
+    a { color: #6f183c; text-underline-offset: .18em; overflow-wrap: anywhere; }
+    p, li { max-width: 85ch; } li { margin-bottom: .55rem; }
+    code { overflow-wrap: anywhere; }
+    .intro { border-left: 5px solid #fcc553; padding: 12px 20px; background: #fff; }
+    nav { display: flex; flex-wrap: wrap; gap: 12px 24px; margin: 1.5rem 0; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; background: #fff; }
+    td, th { padding: 12px; border: 1px solid #d6cfc5; text-align: left; vertical-align: top; }
+    .note { font-size: .9rem; color: #554b4b; }
+    .credits { background: #fff; padding: 18px; border: 1px solid #d6cfc5; }
+    .figure-nav { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
+    .asset-card { margin: 28px 0; padding: 22px; border: 1px solid #d6cfc5; background: #fff; }
+    .asset-card img { width: 100%; max-width: 720px; height: auto; display: block; }
+    .asset-card dt { font-weight: 600; margin-top: 12px; }
+    .asset-card dd { margin-left: 0; font-size: .92rem; }
+    textarea { display: block; width: 100%; padding: 10px; resize: vertical; font: inherit;
+      background: #faf8f3; border: 1px solid #b7aa9c; color: #292323; }
+    label { display: block; font-weight: 600; margin-top: 14px; }
+    button { margin: 8px 0 10px; padding: 9px 14px; cursor: pointer; color: #fff; background: #6f183c;
+      border: 1px solid #6f183c; border-radius: 3px; font: inherit; }
+    .done label { font-size: .95rem; font-weight: 400; }
+    input[type=checkbox] { width: 18px; height: 18px; vertical-align: middle; }
+    :focus-visible { outline: 3px solid #236797; outline-offset: 4px; }
+    #copy-status { position: fixed; bottom: 12px; right: 12px; max-width: 80vw; background: #240413;
+      color: #fcc553; padding: 10px 16px; border-radius: 4px; }
+    #copy-status:empty { display: none; }
+    @media(max-width:700px) { main { padding: 22px 16px 60px; } .figure-nav { grid-template-columns: 1fr; }
+      .asset-card { padding: 14px; } h1 { font-size: 1.9rem; } }
+    @media print { button, nav, #copy-status { display: none; } body { background: #fff; }
+      .asset-card { break-inside: avoid; } textarea { border: 0; } }
+  </style>
+</head>
+<body><main>
+  <p class="note">@@EDITION@@ · Selected H3r5 edition · Manual handoff</p>
+  <h1>Update the Setouchi page in WordPress</h1>
+  <div class="intro">
+    <p>Unzip the package and open this file in your browser. Keep it beside the WordPress editor.
+      The package contains <strong>@@UPLOAD_COUNT@@ upload files, @@UPLOAD_MB@@ MB total</strong>:
+      thirteen gallery images, thirteen larger images, and ten legend PDFs.</p>
+    <p>Use your normal WordPress login. These instructions use the visual block editor and require
+      no application password, terminal commands, or plugin installation.</p>
+    <p><a href="@@EDIT_URL@@">Open the existing page editor</a> ·
+      <a href="@@PAGE_URL@@">View the destination page</a> ·
+      <a href="preview.html">Open the offline gallery reference</a></p>
+  </div>
+  <nav aria-label="Guide sections">
+    <a href="#upload">1. Upload</a><a href="#placement">2. Placement</a><a href="#layout">3. Layout</a>
+    <a href="#images">4. Images and links</a><a href="#finish">5. Preview and save</a>
+    <a href="#copy-sheet">Captions and alt text</a>
+  </nav>
+
+  <h2 id="upload">1. Upload the web files</h2>
+  <ol>
+    <li>In the WordPress dashboard, open <strong>Media → Add New</strong>. Select the
+      thirty-six files inside this package’s <code>uploads</code> folder. Upload the files themselves;
+      the ZIP and this guide stay on your computer.</li>
+    <li>Wait for the uploads to finish. Names begin with placement numbers <strong>01–13</strong>.
+      Each map has <code>-card</code>, <code>-detail</code>, and <code>-legend</code> files.
+      Hamonshū has a card and a detail.</li>
+    <li>Keep <strong>Media → Library</strong> open in a second tab. Open each detail image or PDF
+      and use <strong>Copy URL to clipboard</strong> when a link is needed.
+      <a href="https://wordpress.org/documentation/article/media-library-screen/">WordPress media instructions</a>.</li>
+  </ol>
+  <p>The optional <a href="UPLOAD-CHECKLIST.csv">upload worksheet</a> lists every file, its role,
+    and a blank column for its uploaded URL. Get URLs from WordPress; filenames alone are not links.</p>
+  <p><strong>Keep the larger map details:</strong> WordPress may create a smaller
+    <code>-scaled</code> version during upload. For the supplied 3840-pixel map details,
+    use the <strong>Original image</strong> link in the attachment details when it appears:
+    open that link and copy its address for the image’s detail link. Otherwise use the file URL.
+    <a href="https://developer.wordpress.org/reference/hooks/big_image_size_threshold/">WordPress image scaling</a> ·
+    <a href="https://developer.wordpress.org/reference/functions/wp_print_media_templates/">Original-image control</a>.</p>
+  <p class="note"><strong>If the gallery already exists and you only need the r5 change:</strong>
+    upload the twelve files numbered <strong>03, 04, 08, and 09</strong>. Replace those four image blocks,
+    captions, alt text, detail links, and legend links. Keep the existing gallery in its current position.</p>
+
+  <h2 id="placement">2. Locate the insertion point</h2>
+  <ol>
+    <li>Open <strong>Pages → All Pages</strong> and edit the existing Setouchi 2028 page, or use
+      the editor link above. Confirm its permalink is <code>/futures/setouchi-2028/</code>.</li>
+    <li>Open <strong>Document Overview → List View</strong>. Find the heading
+      <strong>“Two atlases, one shared table”</strong>. Use its three-dot menu’s <strong>Add before</strong>
+      control to insert the gallery immediately before it, after the three existing lists.
+      <a href="https://wordpress.org/documentation/article/list-view/">WordPress List View instructions</a>.</li>
+    <li>Add a <strong>Group</strong> block. In its <strong>Advanced → HTML anchor</strong> field,
+      enter <code>@@ANCHOR@@</code>. Put all the new gallery content inside this Group.
+      If that Group already exists, edit its contents instead of inserting a second one.
+      <a href="https://wordpress.org/documentation/article/group-block/">WordPress Group instructions</a>.</li>
+  </ol>
+  <p>Keep the existing lists, following heading, and surrounding page text in place. Retain the
+    theme’s typography; the Star-X reference applies to web typography and spacing. The map
+    artwork already uses the approved modified Setouchi AuthaGraph composition.</p>
+
+  <h2 id="layout">3. Build the two grids and Hamonshū row</h2>
+  <p>Add the three section headings as <strong>Heading level 3</strong>. Use <strong>Columns</strong>
+    blocks with equal widths for the rows below. Keep <strong>Stack on mobile</strong> enabled.
+    The observer image sits directly in the Group, below its two rows, and spans the gallery’s content width.
+    <a href="https://wordpress.org/documentation/article/columns-block/">WordPress Columns instructions</a>.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Section</th><th>First row: two columns</th><th>Second row: two columns</th><th>Full-width image</th></tr></thead>
+    <tbody>
+      <tr><th>World</th><td><a href="#figure-01">01 Water</a> · <a href="#figure-02">02 Fiber</a></td>
+        <td><a href="#figure-03">03 Atmosphere</a> · <a href="#figure-04">04 Temperature</a></td><td><a href="#figure-05">05 Orbital observer</a></td></tr>
+      <tr><th>Japan / Setouchi</th><td><a href="#figure-06">06 Water</a> · <a href="#figure-07">07 Fiber</a></td>
+        <td><a href="#figure-08">08 Atmosphere</a> · <a href="#figure-09">09 Temperature</a></td><td><a href="#figure-10">10 Orbital observer</a></td></tr>
+      <tr><th>Hamonshū Revisited</th><td colspan="3">One three-column row:
+        <a href="#figure-11">11 Book 1 · 005e</a> · <a href="#figure-12">12 Book 2 · 003a</a> · <a href="#figure-13">13 Book 3 · 003f</a></td></tr>
+    </tbody>
+  </table></div>
+  <p>After the Japan observer and before the Hamonshū heading, add this attribution paragraph:</p>
+  <div class="credits">Cartofreako · Benjamin De Kosnik. Geographic plates use the modified Setouchi AuthaGraph layout.
+    Observer plates retain their own sky geometry and dated reference points. Data credits accompany each legend.</div>
+  <p>After the Hamonshū row, add:</p>
+  <div class="credits">Mori Yūzan, <em>Hamonshū</em> (1903). Three water-pattern details, segmented for the Izzi review collection.</div>
+
+  <h2 id="images">4. Add each image, caption, and link</h2>
+  <ol>
+    <li>Inside its column or full-width position, add an <strong>Image</strong> block.
+      Choose <strong>Media Library</strong> and select that figure’s <code>-card</code> file.
+      Use the full 1280-pixel card, with automatic height and enough width to fill its column.</li>
+    <li>Paste the supplied <strong>alt text</strong> into the Image block’s alternative-text field.
+      Paste the two-line <strong>caption</strong> below the image; bold its title line.
+      Use a soft line break between the title and description if the editor needs one.</li>
+    <li>Use the Image block’s <strong>Link</strong> control to paste the uploaded URL of its
+      matching <code>-detail</code> file. This opens the larger view, including the full Japan sheet.</li>
+    <li>For maps, add <strong>Legend &amp; sources</strong> as another caption line, select that text,
+      and link it to the corresponding uploaded <code>-legend.pdf</code> URL. For Hamonshū,
+      use <strong>Book review</strong> and the review URL supplied below.</li>
+  </ol>
+  <p class="note"><a href="https://wordpress.org/documentation/article/image-block/">WordPress Image block instructions</a> ·
+    <a href="https://wordpress.org/documentation/article/link-editing/">Link controls</a>.</p>
+  <p><strong>Framing:</strong> keep complete images visible. Use <strong>Contain</strong> when
+    setting an aspect ratio. The reference uses <strong>44:19.052559</strong> frames for maps;
+    if your editor has no custom-ratio control, use <strong>Original</strong> for the map cards.
+    The three Japan crops will then be taller than the full-sheet cards. Use <strong>4:3 + Contain</strong>
+    for all three Hamonshū images.</p>
+  <p>The colors are already in the artwork. Atmosphere uses amber <code>#fcc553</code>,
+    white 0.66 pt outlines, and 100 radiation-opacity bands. Keep the source colors, including
+    the distinct orbital vendors, by leaving WordPress’s duotone/image filters unset.</p>
+
+  <h2 id="finish">5. Preview, then save the page</h2>
+  <p>Preview both desktop and phone layouts. Compare the order with <a href="preview.html">the reference</a>:
+    thirteen images, ten legend links, three review links, two observer panoramas, and both attribution paragraphs.
+    Check that each image opens its matching larger version and that all four Atmosphere/Temperature
+    captions and legends say <strong>H3r5</strong>.</p>
+  <p>Confirm the three original lists and the “Two atlases, one shared table” section are still present.
+    When the result is ready, use the page editor’s <strong>Save / Update</strong> action and inspect
+    the public page. The installed theme determines final typography and spacing.
+    <a href="https://wordpress.org/documentation/article/wordpress-block-editor/">WordPress editor reference</a>.</p>
+  <p class="note">This package was checked locally. The site’s installed editor version and theme
+    were not accessed during packaging; control labels can vary. The offline preview is a placement
+    reference, not a replacement for the existing page.</p>
+
+  <h2 id="copy-sheet">Copy sheet: thirteen figures in page order</h2>
+  <p>Use the copy buttons, or select text in a box and copy it normally. Completion checkboxes are
+    temporary and reset when this guide is reopened. A plain-text copy is available in
+    <a href="CAPTIONS-AND-ALT-TEXT.txt">CAPTIONS-AND-ALT-TEXT.txt</a>.</p>
+  <nav class="figure-nav" aria-label="Figure copy sheets">@@FIGURE_LINKS@@</nav>
+  @@CARDS@@
+  <p><a href="preview.html">Gallery reference</a> · <a href="README.md">Package notes</a> ·
+    <a href="UPLOAD-CHECKLIST.csv">Upload worksheet</a> · <a href="manifest.json">Source inventory</a> ·
+    <a href="validation.json">Validation</a> · <a href="SHA256SUMS">Checksums</a></p>
+</main>
+<p id="copy-status" role="status" aria-live="polite"></p>
+<script>
+document.querySelectorAll('[data-copy]').forEach(button => {
+  button.addEventListener('click', async () => {
+    const field = document.getElementById(button.dataset.copy);
+    const status = document.getElementById('copy-status');
+    field.focus(); field.select();
+    try {
+      if (!navigator.clipboard) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(field.value);
+      status.textContent = 'Copied.';
+    } catch (_) {
+      status.textContent = 'Text selected. Press Ctrl+C or Command+C to copy.';
+    }
+  });
+});
+</script>
+</body></html>

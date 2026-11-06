@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Setouchi H3r5 · manual WordPress update</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #faf8f3; color: #292323; font: 17px/1.6 system-ui, sans-serif; }
+    main { max-width: 1100px; margin: auto; padding: 36px 24px 80px; }
+    h1, h2, h3 { font-family: Georgia, serif; font-weight: 400; line-height: 1.25; }
+    h1 { font-size: 2.3rem; } h2 { margin-top: 2.8rem; } h3 { font-size: 1.3rem; }
+    a { color: #6f183c; text-underline-offset: .18em; overflow-wrap: anywhere; }
+    p, li { max-width: 85ch; } li { margin-bottom: .55rem; }
+    code { overflow-wrap: anywhere; }
+    .intro { border-left: 5px solid #fcc553; padding: 12px 20px; background: #fff; }
+    nav { display: flex; flex-wrap: wrap; gap: 12px 24px; margin: 1.5rem 0; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; background: #fff; }
+    td, th { padding: 12px; border: 1px solid #d6cfc5; text-align: left; vertical-align: top; }
+    .note { font-size: .9rem; color: #554b4b; }
+    .credits { background: #fff; padding: 18px; border: 1px solid #d6cfc5; }
+    .figure-nav { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
+    .asset-card { margin: 28px 0; padding: 22px; border: 1px solid #d6cfc5; background: #fff; }
+    .asset-card img { width: 100%; max-width: 720px; height: auto; display: block; }
+    .asset-card dt { font-weight: 600; margin-top: 12px; }
+    .asset-card dd { margin-left: 0; font-size: .92rem; }
+    textarea { display: block; width: 100%; padding: 10px; resize: vertical; font: inherit;
+      background: #faf8f3; border: 1px solid #b7aa9c; color: #292323; }
+    label { display: block; font-weight: 600; margin-top: 14px; }
+    button { margin: 8px 0 10px; padding: 9px 14px; cursor: pointer; color: #fff; background: #6f183c;
+      border: 1px solid #6f183c; border-radius: 3px; font: inherit; }
+    .done label { font-size: .95rem; font-weight: 400; }
+    input[type=checkbox] { width: 18px; height: 18px; vertical-align: middle; }
+    :focus-visible { outline: 3px solid #236797; outline-offset: 4px; }
+    #copy-status { position: fixed; bottom: 12px; right: 12px; max-width: 80vw; background: #240413;
+      color: #fcc553; padding: 10px 16px; border-radius: 4px; }
+    #copy-status:empty { display: none; }
+    @media(max-width:700px) { main { padding: 22px 16px 60px; } .figure-nav { grid-template-columns: 1fr; }
+      .asset-card { padding: 14px; } h1 { font-size: 1.9rem; } }
+    @media print { button, nav, #copy-status { display: none; } body { background: #fff; }
+      .asset-card { break-inside: avoid; } textarea { border: 0; } }
+  </style>
+</head>
+<body><main>
+  <p class="note">2026-11-06 · Selected H3r5 edition · Manual handoff</p>
+  <h1>Update the Setouchi page in WordPress</h1>
+  <div class="intro">
+    <p>Unzip the package and open this file in your browser. Keep it beside the WordPress editor.
+      The package contains <strong>36 upload files, 11.0 MB total</strong>:
+      thirteen gallery images, thirteen larger images, and ten legend PDFs.</p>
+    <p>Use your normal WordPress login. These instructions use the visual block editor and require
+      no application password, terminal commands, or plugin installation.</p>
+    <p><a href="https://benjamin.dekosnik.com/wp-admin/post.php?post=3175&amp;action=edit">Open the existing page editor</a> ·
+      <a href="https://benjamin.dekosnik.com/futures/setouchi-2028/">View the destination page</a> ·
+      <a href="preview.html">Open the offline gallery reference</a></p>
+  </div>
+  <nav aria-label="Guide sections">
+    <a href="#upload">1. Upload</a><a href="#placement">2. Placement</a><a href="#layout">3. Layout</a>
+    <a href="#images">4. Images and links</a><a href="#finish">5. Preview and save</a>
+    <a href="#copy-sheet">Captions and alt text</a>
+  </nav>
+
+  <h2 id="upload">1. Upload the web files</h2>
+  <ol>
+    <li>In the WordPress dashboard, open <strong>Media → Add New</strong>. Select the
+      thirty-six files inside this package’s <code>uploads</code> folder. Upload the files themselves;
+      the ZIP and this guide stay on your computer.</li>
+    <li>Wait for the uploads to finish. Names begin with placement numbers <strong>01–13</strong>.
+      Each map has <code>-card</code>, <code>-detail</code>, and <code>-legend</code> files.
+      Hamonshū has a card and a detail.</li>
+    <li>Keep <strong>Media → Library</strong> open in a second tab. Open each detail image or PDF
+      and use <strong>Copy URL to clipboard</strong> when a link is needed.
+      <a href="https://wordpress.org/documentation/article/media-library-screen/">WordPress media instructions</a>.</li>
+  </ol>
+  <p>The optional <a href="UPLOAD-CHECKLIST.csv">upload worksheet</a> lists every file, its role,
+    and a blank column for its uploaded URL. Get URLs from WordPress; filenames alone are not links.</p>
+  <p><strong>Keep the larger map details:</strong> WordPress may create a smaller
+    <code>-scaled</code> version during upload. For the supplied 3840-pixel map details,
+    use the <strong>Original image</strong> link in the attachment details when it appears:
+    open that link and copy its address for the image’s detail link. Otherwise use the file URL.
+    <a href="https://developer.wordpress.org/reference/hooks/big_image_size_threshold/">WordPress image scaling</a> ·
+    <a href="https://developer.wordpress.org/reference/functions/wp_print_media_templates/">Original-image control</a>.</p>
+  <p class="note"><strong>If the gallery already exists and you only need the r5 change:</strong>
+    upload the twelve files numbered <strong>03, 04, 08, and 09</strong>. Replace those four image blocks,
+    captions, alt text, detail links, and legend links. Keep the existing gallery in its current position.</p>
+
+  <h2 id="placement">2. Locate the insertion point</h2>
+  <ol>
+    <li>Open <strong>Pages → All Pages</strong> and edit the existing Setouchi 2028 page, or use
+      the editor link above. Confirm its permalink is <code>/futures/setouchi-2028/</code>.</li>
+    <li>Open <strong>Document Overview → List View</strong>. Find the heading
+      <strong>“Two atlases, one shared table”</strong>. Use its three-dot menu’s <strong>Add before</strong>
+      control to insert the gallery immediately before it, after the three existing lists.
+      <a href="https://wordpress.org/documentation/article/list-view/">WordPress List View instructions</a>.</li>
+    <li>Add a <strong>Group</strong> block. In its <strong>Advanced → HTML anchor</strong> field,
+      enter <code>setouchi-futures-visuals</code>. Put all the new gallery content inside this Group.
+      If that Group already exists, edit its contents instead of inserting a second one.
+      <a href="https://wordpress.org/documentation/article/group-block/">WordPress Group instructions</a>.</li>
+  </ol>
+  <p>Keep the existing lists, following heading, and surrounding page text in place. Retain the
+    theme’s typography; the Star-X reference applies to web typography and spacing. The map
+    artwork already uses the approved modified Setouchi AuthaGraph composition.</p>
+
+  <h2 id="layout">3. Build the two grids and Hamonshū row</h2>
+  <p>Add the three section headings as <strong>Heading level 3</strong>. Use <strong>Columns</strong>
+    blocks with equal widths for the rows below. Keep <strong>Stack on mobile</strong> enabled.
+    The observer image sits directly in the Group, below its two rows, and spans the gallery’s content width.
+    <a href="https://wordpress.org/documentation/article/columns-block/">WordPress Columns instructions</a>.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Section</th><th>First row: two columns</th><th>Second row: two columns</th><th>Full-width image</th></tr></thead>
+    <tbody>
+      <tr><th>World</th><td><a href="#figure-01">01 Water</a> · <a href="#figure-02">02 Fiber</a></td>
+        <td><a href="#figure-03">03 Atmosphere</a> · <a href="#figure-04">04 Temperature</a></td><td><a href="#figure-05">05 Orbital observer</a></td></tr>
+      <tr><th>Japan / Setouchi</th><td><a href="#figure-06">06 Water</a> · <a href="#figure-07">07 Fiber</a></td>
+        <td><a href="#figure-08">08 Atmosphere</a> · <a href="#figure-09">09 Temperature</a></td><td><a href="#figure-10">10 Orbital observer</a></td></tr>
+      <tr><th>Hamonshū Revisited</th><td colspan="3">One three-column row:
+        <a href="#figure-11">11 Book 1 · 005e</a> · <a href="#figure-12">12 Book 2 · 003a</a> · <a href="#figure-13">13 Book 3 · 003f</a></td></tr>
+    </tbody>
+  </table></div>
+  <p>After the Japan observer and before the Hamonshū heading, add this attribution paragraph:</p>
+  <div class="credits">Cartofreako · Benjamin De Kosnik. Geographic plates use the modified Setouchi AuthaGraph layout.
+    Observer plates retain their own sky geometry and dated reference points. Data credits accompany each legend.</div>
+  <p>After the Hamonshū row, add:</p>
+  <div class="credits">Mori Yūzan, <em>Hamonshū</em> (1903). Three water-pattern details, segmented for the Izzi review collection.</div>
+
+  <h2 id="images">4. Add each image, caption, and link</h2>
+  <ol>
+    <li>Inside its column or full-width position, add an <strong>Image</strong> block.
+      Choose <strong>Media Library</strong> and select that figure’s <code>-card</code> file.
+      Use the full 1280-pixel card, with automatic height and enough width to fill its column.</li>
+    <li>Paste the supplied <strong>alt text</strong> into the Image block’s alternative-text field.
+      Paste the two-line <strong>caption</strong> below the image; bold its title line.
+      Use a soft line break between the title and description if the editor needs one.</li>
+    <li>Use the Image block’s <strong>Link</strong> control to paste the uploaded URL of its
+      matching <code>-detail</code> file. This opens the larger view, including the full Japan sheet.</li>
+    <li>For maps, add <strong>Legend &amp; sources</strong> as another caption line, select that text,
+      and link it to the corresponding uploaded <code>-legend.pdf</code> URL. For Hamonshū,
+      use <strong>Book review</strong> and the review URL supplied below.</li>
+  </ol>
+  <p class="note"><a href="https://wordpress.org/documentation/article/image-block/">WordPress Image block instructions</a> ·
+    <a href="https://wordpress.org/documentation/article/link-editing/">Link controls</a>.</p>
+  <p><strong>Framing:</strong> keep complete images visible. Use <strong>Contain</strong> when
+    setting an aspect ratio. The reference uses <strong>44:19.052559</strong> frames for maps;
+    if your editor has no custom-ratio control, use <strong>Original</strong> for the map cards.
+    The three Japan crops will then be taller than the full-sheet cards. Use <strong>4:3 + Contain</strong>
+    for all three Hamonshū images.</p>
+  <p>The colors are already in the artwork. Atmosphere uses amber <code>#fcc553</code>,
+    white 0.66 pt outlines, and 100 radiation-opacity bands. Keep the source colors, including
+    the distinct orbital vendors, by leaving WordPress’s duotone/image filters unset.</p>
+
+  <h2 id="finish">5. Preview, then save the page</h2>
+  <p>Preview both desktop and phone layouts. Compare the order with <a href="preview.html">the reference</a>:
+    thirteen images, ten legend links, three review links, two observer panoramas, and both attribution paragraphs.
+    Check that each image opens its matching larger version and that all four Atmosphere/Temperature
+    captions and legends say <strong>H3r5</strong>.</p>
+  <p>Confirm the three original lists and the “Two atlases, one shared table” section are still present.
+    When the result is ready, use the page editor’s <strong>Save / Update</strong> action and inspect
+    the public page. The installed theme determines final typography and spacing.
+    <a href="https://wordpress.org/documentation/article/wordpress-block-editor/">WordPress editor reference</a>.</p>
+  <p class="note">This package was checked locally. The site’s installed editor version and theme
+    were not accessed during packaging; control labels can vary. The offline preview is a placement
+    reference, not a replacement for the existing page.</p>
+
+  <h2 id="copy-sheet">Copy sheet: thirteen figures in page order</h2>
+  <p>Use the copy buttons, or select text in a box and copy it normally. Completion checkboxes are
+    temporary and reset when this guide is reopened. A plain-text copy is available in
+    <a href="CAPTIONS-AND-ALT-TEXT.txt">CAPTIONS-AND-ALT-TEXT.txt</a>.</p>
+  <nav class="figure-nav" aria-label="Figure copy sheets"><a href="#figure-01">01 · Water</a>
+<a href="#figure-02">02 · Fiber</a>
+<a href="#figure-03">03 · Atmosphere</a>
+<a href="#figure-04">04 · Temperature records · 2026</a>
+<a href="#figure-05">05 · Starlink and the orbital sky</a>
+<a href="#figure-06">06 · Water</a>
+<a href="#figure-07">07 · Fiber</a>
+<a href="#figure-08">08 · Atmosphere</a>
+<a href="#figure-09">09 · Temperature records · 2026</a>
+<a href="#figure-10">10 · Starlink and the orbital sky</a>
+<a href="#figure-11">11 · Book 1 · 005e</a>
+<a href="#figure-12">12 · Book 2 · 003a</a>
+<a href="#figure-13">13 · Book 3 · 003f</a></nav>
+  <article class="asset-card" id="figure-01"><h3>01 · World · Water</h3><a href="uploads/01-world-water-detail.webp"><img loading="lazy" src="uploads/01-world-water-card.webp" alt="Modified AuthaGraph world map with blue ocean depths, wine-colored land, and branching rivers." style="aspect-ratio:44/19.052559;object-fit:contain;background:#240413"></a><dl>
+<dt>Insert this image</dt><dd><a href="uploads/01-world-water-card.webp">01-world-water-card.webp</a></dd>
+<dt>Link the image to this file</dt><dd><a href="uploads/01-world-water-detail.webp">01-world-water-detail.webp</a></dd>
+<dt>Link “Legend &amp; sources” to this PDF</dt><dd><a href="uploads/01-world-water-legend.pdf">01-world-water-legend.pdf</a></dd>
+</dl>
+<label for="caption-1">Caption</label><textarea id="caption-1" readonly rows="3">Water
+Rivers, coastlines, and generalized ocean depths.</textarea><button type="button" data-copy="caption-1">Copy caption</button>
+<label for="alt-1">Alt text</label><textarea id="alt-1" readonly rows="3">Modified AuthaGraph world map with blue ocean depths, wine-colored land, and branching rivers.</textarea><button type="button" data-copy="alt-1">Copy alt text</button>
+<p class="done"><label><input type="checkbox"> Image, caption, alt text, and links added</label></p></article>
+<article class="asset-card" id="figure-02"><h3>02 · World · Fiber</h3><a href="uploads/02-world-network-fiber-detail.webp"><img loading="lazy" src="uploads/02-world-network-fiber-card.webp" alt="World network map with amber submarine cables crossing oceans and green terrestrial fiber networks." style="aspect-ratio:44/19.052559;object-fit:contain;background:#240413"></a><dl>
+<dt>Insert this image</dt><dd><a href="uploads/02-world-network-fiber-card.webp">02-world-network-fiber-card.webp</a></dd>
+<dt>Link the image to this file</dt><dd><a href="uploads/02-world-network-fiber-detail.webp">02-world-network-fiber-detail.webp</a></dd>
+<dt>Link “Legend &amp; sources” to this PDF</dt><dd><a href="uploads/02-world-network-fiber-legend.pdf">02-world-network-fiber-legend.pdf</a></dd>
+</dl>
+<label for="caption-2">Caption</label><textarea id="caption-2" readonly rows="3">Fiber
+Submarine and terrestrial cable routes connect continents. Routes are schematic; source snapshots span 2022–2026.</textarea><button type="button" data-copy="caption-2">Copy caption</button>
+<label for="alt-2">Alt text</label><textarea id="alt-2" readonly rows="3">World network map with amber submarine cables crossing oceans and green terrestrial fiber networks.</textarea><button type="button" data-copy="alt-2">Copy alt text</button>
+<p class="done"><label><input type="checkbox"> Image, caption, alt text, and links added</label></p></article>
+<article class="asset-card" id="figure-03"><h3>03 · World · Atmosphere</h3><a href="uploads/03-world-cloud-atmosphere-detail.webp"><img loading="lazy" src="uploads/03-world-cloud-atmosphere-card.webp" alt="Fine H3r5 atmospheric observation cells across a modified AuthaGraph world map, with pink fields, blue precipitation, and white land outlines on amber." style="aspect-ratio:44/19.052559;object-fit:contain;background:#fcc553"></a><dl>
+<dt>Insert this image</dt><dd><a href="uploads/03-world-cloud-atmosphere-card.webp">03-world-cloud-atmosphere-card.webp</a></dd>
+<dt>Link the image to this file</dt><dd><a href="uploads/03-world-cloud-atmosphere-detail.webp">03-world-cloud-atmosphere-detail.webp</a></dd>
+<dt>Link “Legend &amp; sources” to this PDF</dt><dd><a href="uploads/03-world-cloud-atmosphere-legend.pdf">03-world-cloud-atmosphere-legend.pdf</a></dd>
+</dl>
+<label for="caption-3">Caption</label><textarea id="caption-3" readonly rows="3">Atmosphere
+Cloud, precipitation, aerosol, and radiation observations from 15–29 October 2026, indexed at H3r5.</textarea><button type="button" data-copy="caption-3">Copy caption</button>
+<label for="alt-3">Alt text</label><textarea id="alt-3" readonly rows="3">Fine H3r5 atmospheric observation cells across a modified AuthaGraph world map, with pink fields, blue precipitation, and white land outlines on amber.</textarea><button type="button" data-copy="alt-3">Copy alt text</button>
+<p class="done"><label><input type="checkbox"> Image, caption, alt text, and links added</label></p></article>
+<article class="asset-card" id="figure-04"><h3>04 · World · Temperature records · 2026</h3><a href="uploads/04-world-anthropocene-temperature-2026-detail.webp"><img loading="lazy" src="uploads/04-world-anthropocene-temperature-2026-card.webp" alt="Fine H3r5 land-temperature cells with warm record-high fills and blue record-low outlines on a wine-colored modified AuthaGraph world map." style="aspect-ratio:44/19.052559;object-fit:contain;background:#240413"></a><dl>
+<dt>Insert this image</dt><dd><a href="uploads/04-world-anthropocene-temperature-2026-card.webp">04-world-anthropocene-temperature-2026-card.webp</a></dd>
+<dt>Link the image to this file</dt><dd><a href="uploads/04-world-anthropocene-temperature-2026-detail.webp">04-world-anthropocene-temperature-2026-detail.webp</a></dd>
+<dt>Link “Legend &amp; sources” to this PDF</dt><dd><a href="uploads/04-world-anthropocene-temperature-2026-legend.pdf">04-world-anthropocene-temperature-2026-legend.pdf</a></dd>
+</dl>
+<label for="caption-4">Caption</label><textarea id="caption-4" readonly rows="3">Temperature records · 2026
+Daily land-temperature record counts on H3r5 cells through 28 October 2026. A partial-year count, not a temperature anomaly.</textarea><button type="button" data-copy="caption-4">Copy caption</button>
+<label for="alt-4">Alt text</label><textarea id="alt-4" readonly rows="3">Fine H3r5 land-temperature cells with warm record-high fills and blue record-low outlines on a wine-colored modified AuthaGraph world map.</textarea><button type="button" data-copy="alt-4">Copy alt text</button>
+<p class="done"><label><input type="checkbox"> Image, caption, alt text, and links added</label></p></article>
+<article class="asset-card" id="figure-05"><h3>05 · World · Starlink and the orbital sky</h3><a href="uploads/05-world-orbital-technosphere-observer-detail.webp"><img loading="lazy" src="uploads/05-world-orbital-technosphere-observer-card.webp" alt="Calculated satellite positions across a dark wine sky, with Starlink names, colored vendor markers, and curved reference lines." style="aspect-ratio:44/19.052559;object-fit:contain;background:#240413"></a><dl>
+<dt>Insert this image</dt><dd><a href="uploads/05-world-orbital-technosphere-observer-card.webp">05-world-orbital-technosphere-observer-card.webp</a></dd>
+<dt>Link the image to this file</dt><dd><a href="uploads/05-world-orbital-technosphere-observer-detail.webp">05-world-orbital-technosphere-observer-detail.webp</a></dd>
+<dt>Link “Legend &amp; sources” to this PDF</dt><dd><a href="uploads/05-world-orbital-technosphere-observer-legend.pdf">05-world-orbital-technosphere-observer-legend.pdf</a></dd>
+</dl>
+<label for="caption-5">Caption</label><textarea id="caption-5" readonly rows="3">Starlink and the orbital sky
+World atlas observer plate: San Francisco reference, 3 November 2026, 17:10 UTC. Starlink names and distinct vendor symbols.</textarea><button type="button" data-copy="caption-5">Copy caption</button>
+<label for="alt-5">Alt text</label><textarea id="alt-5" readonly rows="3">Calculated satellite positions across a dark wine sky, with Starlink names, colored vendor markers, and curved reference lines.</textarea><button type="button" data-copy="alt-5">Copy alt text</button>
+<p class="done"><label><input type="checkbox"> Image, caption, alt text, and links added</label></p></article>
+<article class="asset-card" id="figure-06"><h3>06 · Japan / Setouchi · Water</h3><a href="uploads/06-japan-water-detail.webp"><img loading="lazy" src="uploads/06-japan-water-card.webp" alt="Japan and neighboring seas, showing ocean depth bands, rivers, and a yellow Setouchi locator." style="aspect-ratio:44/19.052559;object-fit:contain;background:#240413"></a><dl>
+<dt>Insert this image</dt><dd><a href="uploads/06-japan-water-card.webp">06-japan-water-card.webp</a></dd>
+<dt>Link the image to this file</dt><dd><a href="uploads/06-japan-water-detail.webp">06-japan-water-detail.webp</a></dd>
+<dt>Link “Legend &amp; sources” to this PDF</dt><dd><a href="uploads/06-japan-water-legend.pdf">06-japan-water-legend.pdf</a></dd>
+</dl>
+<label for="caption-6">Caption</label><textarea id="caption-6" readonly rows="3">Water
+Japan and its surrounding seas, with the Setouchi reference point.</textarea><button type="button" data-copy="caption-6">Copy caption</button>
+<label for="alt-6">Alt text</label><textarea id="alt-6" readonly rows="3">Japan and neighboring seas, showing ocean depth bands, rivers, and a yellow Setouchi locator.</textarea><button type="button" data-copy="alt-6">Copy alt text</button>
+<p class="done"><label><input type="checkbox"> Image, caption, alt text, and links added</label></p></article>
+<article class="asset-card" id="figure-07"><h3>07 · Japan / Setouchi · Fiber</h3><a href="uploads/07-japan-network-fiber-detail.webp"><img loading="lazy" src="uploads/07-japan-network-fiber-card.webp" alt="Fiber routes around Japan, with amber cables extending into the Pacific and green routes over land." style="aspect-ratio:44/19.052559;object-fit:contain;background:#240413"></a><dl>
+<dt>Insert this image</dt><dd><a href="uploads/07-japan-network-fiber-card.webp">07-japan-network-fiber-card.webp</a></dd>
+<dt>Link the image to this file</dt><dd><a href="uploads/07-japan-network-fiber-detail.webp">07-japan-network-fiber-detail.webp</a></dd>
+<dt>Link “Legend &amp; sources” to this PDF</dt><dd><a href="uploads/07-japan-network-fiber-legend.pdf">07-japan-network-fiber-legend.pdf</a></dd>
+</dl>
+<label for="caption-7">Caption</label><textarea id="caption-7" readonly rows="3">Fiber
+Japan’s cable landings and terrestrial networks. Amber ocean routes and green land routes; schematic locations.</textarea><button type="button" data-copy="caption-7">Copy caption</button>
+<label for="alt-7">Alt text</label><textarea id="alt-7" readonly rows="3">Fiber routes around Japan, with amber cables extending into the Pacific and green routes over land.</textarea><button type="button" data-copy="alt-7">Copy alt text</button>
+<p class="done"><label><input type="checkbox"> Image, caption, alt text, and links added</label></p></article>
+<article class="asset-card" id="figure-08"><h3>08 · Japan / Setouchi · Atmosphere</h3><a href="uploads/08-japan-cloud-atmosphere-detail.webp"><img loading="lazy" src="uploads/08-japan-cloud-atmosphere-card.webp" alt="Fine H3r5 atmospheric observation cells around Japan on amber, with white land outlines and the Setouchi reference point." style="aspect-ratio:44/19.052559;object-fit:contain;background:#fcc553"></a><dl>
+<dt>Insert this image</dt><dd><a href="uploads/08-japan-cloud-atmosphere-card.webp">08-japan-cloud-atmosphere-card.webp</a></dd>
+<dt>Link the image to this file</dt><dd><a href="uploads/08-japan-cloud-atmosphere-detail.webp">08-japan-cloud-atmosphere-detail.webp</a></dd>
+<dt>Link “Legend &amp; sources” to this PDF</dt><dd><a href="uploads/08-japan-cloud-atmosphere-legend.pdf">08-japan-cloud-atmosphere-legend.pdf</a></dd>
+</dl>
+<label for="caption-8">Caption</label><textarea id="caption-8" readonly rows="3">Atmosphere
+H3r5 atmospheric observations from 15–29 October 2026. Missing daytime cloud retrievals do not mean clear sky.</textarea><button type="button" data-copy="caption-8">Copy caption</button>
+<label for="alt-8">Alt text</label><textarea id="alt-8" readonly rows="3">Fine H3r5 atmospheric observation cells around Japan on amber, with white land outlines and the Setouchi reference point.</textarea><button type="button" data-copy="alt-8">Copy alt text</button>
+<p class="done"><label><input type="checkbox"> Image, caption, alt text, and links added</label></p></article>
+<article class="asset-card" id="figure-09"><h3>09 · Japan / Setouchi · Temperature records · 2026</h3><a href="uploads/09-japan-anthropocene-temperature-2026-detail.webp"><img loading="lazy" src="uploads/09-japan-anthropocene-temperature-2026-card.webp" alt="Small H3r5 temperature record-count cells over Japan and neighboring land, with blue record-low outlines and the Setouchi reference point." style="aspect-ratio:44/19.052559;object-fit:contain;background:#240413"></a><dl>
+<dt>Insert this image</dt><dd><a href="uploads/09-japan-anthropocene-temperature-2026-card.webp">09-japan-anthropocene-temperature-2026-card.webp</a></dd>
+<dt>Link the image to this file</dt><dd><a href="uploads/09-japan-anthropocene-temperature-2026-detail.webp">09-japan-anthropocene-temperature-2026-detail.webp</a></dd>
+<dt>Link “Legend &amp; sources” to this PDF</dt><dd><a href="uploads/09-japan-anthropocene-temperature-2026-legend.pdf">09-japan-anthropocene-temperature-2026-legend.pdf</a></dd>
+</dl>
+<label for="caption-9">Caption</label><textarea id="caption-9" readonly rows="3">Temperature records · 2026
+The same daily record-count classes on H3r5 cells around Japan, through 28 October 2026.</textarea><button type="button" data-copy="caption-9">Copy caption</button>
+<label for="alt-9">Alt text</label><textarea id="alt-9" readonly rows="3">Small H3r5 temperature record-count cells over Japan and neighboring land, with blue record-low outlines and the Setouchi reference point.</textarea><button type="button" data-copy="alt-9">Copy alt text</button>
+<p class="done"><label><input type="checkbox"> Image, caption, alt text, and links added</label></p></article>
+<article class="asset-card" id="figure-10"><h3>10 · Japan / Setouchi · Starlink and the orbital sky</h3><a href="uploads/10-japan-orbital-technosphere-observer-detail.webp"><img loading="lazy" src="uploads/10-japan-orbital-technosphere-observer-card.webp" alt="Satellite positions for the Setouchi observer, with Starlink names and a separate Japan locator inset." style="aspect-ratio:44/19.052559;object-fit:contain;background:#240413"></a><dl>
+<dt>Insert this image</dt><dd><a href="uploads/10-japan-orbital-technosphere-observer-card.webp">10-japan-orbital-technosphere-observer-card.webp</a></dd>
+<dt>Link the image to this file</dt><dd><a href="uploads/10-japan-orbital-technosphere-observer-detail.webp">10-japan-orbital-technosphere-observer-detail.webp</a></dd>
+<dt>Link “Legend &amp; sources” to this PDF</dt><dd><a href="uploads/10-japan-orbital-technosphere-observer-legend.pdf">10-japan-orbital-technosphere-observer-legend.pdf</a></dd>
+</dl>
+<label for="caption-10">Caption</label><textarea id="caption-10" readonly rows="3">Starlink and the orbital sky
+Setouchi observer at 34.45° N, 133.99° E, 29 October 2026, 20:00 UTC. Sky field and Japan locator shown together.</textarea><button type="button" data-copy="caption-10">Copy caption</button>
+<label for="alt-10">Alt text</label><textarea id="alt-10" readonly rows="3">Satellite positions for the Setouchi observer, with Starlink names and a separate Japan locator inset.</textarea><button type="button" data-copy="alt-10">Copy alt text</button>
+<p class="done"><label><input type="checkbox"> Image, caption, alt text, and links added</label></p></article>
+<article class="asset-card" id="figure-11"><h3>11 · Hamonshū Revisited · Book 1 · 005e</h3><a href="uploads/11-hamonshu_1-005e-detail.jpg"><img loading="lazy" src="uploads/11-hamonshu_1-005e-card.webp" alt="Overlapping groups of concentric wave arcs, printed in dark ink on aged paper." style="aspect-ratio:4/3;object-fit:contain;background:#f4efe4"></a><dl>
+<dt>Insert this image</dt><dd><a href="uploads/11-hamonshu_1-005e-card.webp">11-hamonshu_1-005e-card.webp</a></dd>
+<dt>Link the image to this file</dt><dd><a href="uploads/11-hamonshu_1-005e-detail.jpg">11-hamonshu_1-005e-detail.jpg</a></dd>
+</dl>
+<label for="caption-11">Caption</label><textarea id="caption-11" readonly rows="3">Book 1 · 005e
+Repeating wave arcs.</textarea><button type="button" data-copy="caption-11">Copy caption</button>
+<label for="alt-11">Alt text</label><textarea id="alt-11" readonly rows="3">Overlapping groups of concentric wave arcs, printed in dark ink on aged paper.</textarea><button type="button" data-copy="alt-11">Copy alt text</button>
+<label for="review-11">Book review URL</label><textarea id="review-11" readonly rows="3">https://situationshipin.space/review/hamonshu-v2-book1/</textarea><button type="button" data-copy="review-11">Copy book review url</button>
+<p class="done"><label><input type="checkbox"> Image, caption, alt text, and links added</label></p></article>
+<article class="asset-card" id="figure-12"><h3>12 · Hamonshū Revisited · Book 2 · 003a</h3><a href="uploads/12-hamonshu_2-003a-detail.jpg"><img loading="lazy" src="uploads/12-hamonshu_2-003a-card.webp" alt="Interlacing curved lines form a field of flowing water and small eddies." style="aspect-ratio:4/3;object-fit:contain;background:#f4efe4"></a><dl>
+<dt>Insert this image</dt><dd><a href="uploads/12-hamonshu_2-003a-card.webp">12-hamonshu_2-003a-card.webp</a></dd>
+<dt>Link the image to this file</dt><dd><a href="uploads/12-hamonshu_2-003a-detail.jpg">12-hamonshu_2-003a-detail.jpg</a></dd>
+</dl>
+<label for="caption-12">Caption</label><textarea id="caption-12" readonly rows="3">Book 2 · 003a
+Flowing currents and eddies.</textarea><button type="button" data-copy="caption-12">Copy caption</button>
+<label for="alt-12">Alt text</label><textarea id="alt-12" readonly rows="3">Interlacing curved lines form a field of flowing water and small eddies.</textarea><button type="button" data-copy="alt-12">Copy alt text</button>
+<label for="review-12">Book review URL</label><textarea id="review-12" readonly rows="3">https://situationshipin.space/review/hamonshu-v2-book2/</textarea><button type="button" data-copy="review-12">Copy book review url</button>
+<p class="done"><label><input type="checkbox"> Image, caption, alt text, and links added</label></p></article>
+<article class="asset-card" id="figure-13"><h3>13 · Hamonshū Revisited · Book 3 · 003f</h3><a href="uploads/13-hamonshu_3-003f-detail.jpg"><img loading="lazy" src="uploads/13-hamonshu_3-003f-card.webp" alt="Curling wave shapes with dotted foam and broad dark areas." style="aspect-ratio:4/3;object-fit:contain;background:#f4efe4"></a><dl>
+<dt>Insert this image</dt><dd><a href="uploads/13-hamonshu_3-003f-card.webp">13-hamonshu_3-003f-card.webp</a></dd>
+<dt>Link the image to this file</dt><dd><a href="uploads/13-hamonshu_3-003f-detail.jpg">13-hamonshu_3-003f-detail.jpg</a></dd>
+</dl>
+<label for="caption-13">Caption</label><textarea id="caption-13" readonly rows="3">Book 3 · 003f
+A dotted breaking wave.</textarea><button type="button" data-copy="caption-13">Copy caption</button>
+<label for="alt-13">Alt text</label><textarea id="alt-13" readonly rows="3">Curling wave shapes with dotted foam and broad dark areas.</textarea><button type="button" data-copy="alt-13">Copy alt text</button>
+<label for="review-13">Book review URL</label><textarea id="review-13" readonly rows="3">https://situationshipin.space/review/hamonshu-v2-book3/</textarea><button type="button" data-copy="review-13">Copy book review url</button>
+<p class="done"><label><input type="checkbox"> Image, caption, alt text, and links added</label></p></article>
+  <p><a href="preview.html">Gallery reference</a> · <a href="README.md">Package notes</a> ·
+    <a href="UPLOAD-CHECKLIST.csv">Upload worksheet</a> · <a href="manifest.json">Source inventory</a> ·
+    <a href="validation.json">Validation</a> · <a href="SHA256SUMS">Checksums</a></p>
+</main>
+<p id="copy-status" role="status" aria-live="polite"></p>
+<script>
+document.querySelectorAll('[data-copy]').forEach(button => {
+  button.addEventListener('click', async () => {
+    const field = document.getElementById(button.dataset.copy);
+    const status = document.getElementById('copy-status');
+    field.focus(); field.select();
+    try {
+      if (!navigator.clipboard) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(field.value);
+      status.textContent = 'Copied.';
+    } catch (_) {
+      status.textContent = 'Text selected. Press Ctrl+C or Command+C to copy.';
+    }
+  });
+});
+</script>
+</body></html>

@@ -6,6 +6,13 @@ Japan. The two galleries retain Water, Fiber, the orbital observer, and the
 three Hamonshū details. This is the current local edition selected after the
 [r3/r5/r8 comparison](../setouchi-h3-trials-20261106/index.html).
 
+For a manual WordPress update, download the
+[web UI package](../setouchi-futures-h3r5-manual-20261106.zip) (about 11 MB),
+unzip it, and open `START-HERE.html`. The
+[browser guide](../setouchi-futures-h3r5-manual-20261106/START-HERE.html) includes
+the upload order, block layout, captions, alt text, and detail/legend links.
+It uses the normal WordPress page editor and login.
+
 - [World maps and legends](print/world.pdf), four 44 × 19.052559-inch pages.
 - [Japan maps and legends](print/japan.pdf), four pages of the same size.
 - [Saved settings](../../config/setouchi-futures-20261106-h3r5.json).
@@ -76,6 +83,13 @@ for another checkout or `--download-sources` for the three pinned public JPEGs.
 Chrome is used for browser validation. Build caches stay under `build/`.
 
 ## Publishing later
+
+The manual handoff is self-contained: 36 web uploads, an offline gallery
+reference, and instructions for building the two grids and Hamonshū row in
+the visual editor. It also identifies the twelve files needed if an existing
+gallery only needs its four Atmosphere/Temperature figures changed to r5.
+Rebuild the handoff from the validated edition with
+`python3 scripts/package-setouchi-futures-manual.py`.
 
 The current website and media library have not been updated. The new print
 files are local/repository deliverables; the publisher still uploads only the

@@ -1,6 +1,6 @@
 # Setouchi 2028 futures: image grids, website publishing, and outreach
 
-Date: 2026-11-06. Status: H3r5 selected for Atmosphere and Temperature in both views; local gallery and print edition regenerated and validated; WordPress publication deferred.
+Date: 2026-11-06. Status: selected H3r5 gallery and print edition validated; manual WordPress web UI package prepared; WordPress publication deferred.
 
 ## Task and accumulated decisions
 
@@ -756,6 +756,71 @@ hashes, all trial artifacts, and original atlas masters remain unchanged.
 The Water, Fiber, Observer, and Hamonshū image hashes also match the r3 package;
 their legend PDFs were re-exported without visual changes. WordPress content
 and media remain unpublished, and the outreach brief and draft remain unsent.
+
+### Manual WordPress web UI package — 6 November 2026
+
+The user requested a package with instructions for completing the update
+manually in the web UI. The
+[ZIP handoff](../../output/setouchi-futures-h3r5-manual-20261106.zip) contains
+the selected r5 gallery media and a standalone browser guide. Unzip it and
+open `START-HERE.html`; the [guide can also be opened locally here](../../output/setouchi-futures-h3r5-manual-20261106/START-HERE.html).
+The workflow uses the ordinary WordPress login and visual page editor.
+
+Completed stages:
+
+1. **Select the website media.** Verify the selected edition's prepared and
+   validation manifests, then copy exactly the 36 assets used by the gallery:
+   13 cards, 13 larger images, and 10 source-legend PDFs. Prefix filenames with
+   their 01–13 placement order and retain every media byte and source hash.
+2. **Write the handoff.** Include the five-step guide, a numbered layout table,
+   per-figure caption and alt-text copy fields, a plain-text copy sheet, and a
+   CSV upload worksheet. Provide a self-contained offline gallery reference.
+   Instructions cover the Group anchor, equal-width Columns, full-width
+   observer rows, Hamonshū triptych, and both attribution paragraphs.
+3. **Cover both update cases.** A first insertion uploads all 36 files and
+   places the Group after the three lists and before “Two atlases, one shared
+   table.” If the gallery is already present, files 03, 04, 08, and 09 provide
+   the four r5 replacements: twelve uploads including detail images and
+   legends. The surrounding page remains in place.
+4. **Package and check.** Create a reproducible ZIP containing 44 files,
+   approximately 11 MB, with an explicit file allowlist, source inventory,
+   validation receipt, and SHA-256 checksums. Verify extraction, matching
+   media hashes, every local link, decoded images, alt text, and copy-field
+   targets. The package contains website media; the large print masters stay
+   in their existing edition.
+
+Browser checks used the extracted ZIP through local file URLs at desktop
+(1440 px) and phone (390 px) widths. Both the guide and preview loaded all
+13 images without horizontal overflow. All 29 copy controls passed their
+target checks, and the manual-selection fallback worked when clipboard
+access was unavailable.
+
+The durable entry point is
+[package-setouchi-futures-manual.py](../../scripts/package-setouchi-futures-manual.py),
+with a [browser-guide template](../../scripts/templates/setouchi-futures-manual.html):
+
+```sh
+python3 scripts/package-setouchi-futures-manual.py
+```
+
+WordPress steps were checked against its current official
+[Media Library](https://wordpress.org/documentation/article/media-library-screen/),
+[Image block](https://wordpress.org/documentation/article/image-block/),
+[Columns](https://wordpress.org/documentation/article/columns-block/),
+[Group](https://wordpress.org/documentation/article/group-block/), and
+[List View](https://wordpress.org/documentation/article/list-view/) documentation.
+The guide uses actual uploaded file URLs and explains the Original image link
+for retaining the supplied 3840-pixel details when WordPress makes a scaled
+copy. This follows the documented
+[large-image behavior](https://developer.wordpress.org/reference/hooks/big_image_size_threshold/)
+and [media template](https://developer.wordpress.org/reference/functions/wp_print_media_templates/).
+
+The live editor and theme remain unverified. The guide keeps the site's
+typography and uses complete images with Contain framing. If the installed
+editor lacks a custom 44:19.052559 ratio, its documented fallback is Original
+for maps; the three Japan crop cards will then be taller. Hamonshū uses 4:3
+Contain. This affects web framing only; the selected artwork is unchanged.
+The package performs no WordPress writes or outreach.
 
 ## Contact approaches: Hajime Narukawa
 
