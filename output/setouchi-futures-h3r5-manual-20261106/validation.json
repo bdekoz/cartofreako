@@ -1,8 +1,8 @@
 {
   "schema": "cartofreako-setouchi-manual-validation-v1",
-  "figures": 13,
-  "upload_files": 36,
-  "image_files": 26,
+  "figures": 10,
+  "upload_files": 30,
+  "image_files": 20,
   "legend_pdfs": 10,
   "source_checksums_match": true,
   "local_links_valid": true,

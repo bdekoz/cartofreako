@@ -48,7 +48,7 @@
   <div class="intro">
     <p>Unzip the package and open this file in your browser. Keep it beside the WordPress editor.
       The package contains <strong>@@UPLOAD_COUNT@@ upload files, @@UPLOAD_MB@@ MB total</strong>:
-      thirteen gallery images, thirteen larger images, and ten legend PDFs.</p>
+      @@FIGURE_COUNT@@ gallery images, @@FIGURE_COUNT@@ larger images, and @@LEGEND_COUNT@@ legend PDFs.</p>
     <p>Use your normal WordPress login. These instructions use the visual block editor and require
       no application password, terminal commands, or plugin installation.</p>
     <p><a href="@@EDIT_URL@@">Open the existing page editor</a> ·
@@ -64,11 +64,11 @@
   <h2 id="upload">1. Upload the web files</h2>
   <ol>
     <li>In the WordPress dashboard, open <strong>Media → Add New</strong>. Select the
-      thirty-six files inside this package’s <code>uploads</code> folder. Upload the files themselves;
+      @@UPLOAD_COUNT@@ files inside this package’s <code>uploads</code> folder. Upload the files themselves;
       the ZIP and this guide stay on your computer.</li>
-    <li>Wait for the uploads to finish. Names begin with placement numbers <strong>01–13</strong>.
+    <li>Wait for the uploads to finish. Names begin with placement numbers <strong>01–@@FIGURE_COUNT@@</strong>.
       Each map has <code>-card</code>, <code>-detail</code>, and <code>-legend</code> files.
-      Hamonshū has a card and a detail.</li>
+      <!-- IF_HAMONSHU -->Hamonshū has a card and a detail.<!-- END_IF_HAMONSHU --></li>
     <li>Keep <strong>Media → Library</strong> open in a second tab. Open each detail image or PDF
       and use <strong>Copy URL to clipboard</strong> when a link is needed.
       <a href="https://wordpress.org/documentation/article/media-library-screen/">WordPress media instructions</a>.</li>
@@ -84,14 +84,19 @@
   <p class="note"><strong>If the gallery already exists and you only need the r5 change:</strong>
     upload the twelve files numbered <strong>03, 04, 08, and 09</strong>. Replace those four image blocks,
     captions, alt text, detail links, and legend links. Keep the existing gallery in its current position.</p>
+  <!-- IF_NO_HAMONSHU -->
+  <p><strong>For an existing gallery with the older Hamonshū image section:</strong> delete its
+    “Hamonshū Revisited” heading, three-column image row, and Mori Yūzan attribution paragraph
+    from the gallery Group. Keep the map attribution. The next section is “Two atlases, one shared table.”</p>
+  <!-- END_IF_NO_HAMONSHU -->
 
   <h2 id="placement">2. Locate the insertion point</h2>
   <ol>
     <li>Open <strong>Pages → All Pages</strong> and edit the existing Setouchi 2028 page, or use
       the editor link above. Confirm its permalink is <code>/futures/setouchi-2028/</code>.</li>
-    <li>Open <strong>Document Overview → List View</strong>. Find the heading
+    <li>Open <strong>Document Overview → List View</strong>. Find the section title
       <strong>“Two atlases, one shared table”</strong>. Use its three-dot menu’s <strong>Add before</strong>
-      control to insert the gallery immediately before it, after the three existing lists.
+      control to insert the gallery immediately before it, after the three proposal/atlas links.
       <a href="https://wordpress.org/documentation/article/list-view/">WordPress List View instructions</a>.</li>
     <li>Add a <strong>Group</strong> block. In its <strong>Advanced → HTML anchor</strong> field,
       enter <code>@@ANCHOR@@</code>. Put all the new gallery content inside this Group.
@@ -102,8 +107,8 @@
     theme’s typography; the Star-X reference applies to web typography and spacing. The map
     artwork already uses the approved modified Setouchi AuthaGraph composition.</p>
 
-  <h2 id="layout">3. Build the two grids and Hamonshū row</h2>
-  <p>Add the three section headings as <strong>Heading level 3</strong>. Use <strong>Columns</strong>
+  <h2 id="layout">3. Build the image grids</h2>
+  <p>Add the @@SECTION_COUNT@@ section headings as <strong>Heading level 3</strong>. Use <strong>Columns</strong>
     blocks with equal widths for the rows below. Keep <strong>Stack on mobile</strong> enabled.
     The observer image sits directly in the Group, below its two rows, and spans the gallery’s content width.
     <a href="https://wordpress.org/documentation/article/columns-block/">WordPress Columns instructions</a>.</p>
@@ -114,15 +119,15 @@
         <td><a href="#figure-03">03 Atmosphere</a> · <a href="#figure-04">04 Temperature</a></td><td><a href="#figure-05">05 Orbital observer</a></td></tr>
       <tr><th>Japan / Setouchi</th><td><a href="#figure-06">06 Water</a> · <a href="#figure-07">07 Fiber</a></td>
         <td><a href="#figure-08">08 Atmosphere</a> · <a href="#figure-09">09 Temperature</a></td><td><a href="#figure-10">10 Orbital observer</a></td></tr>
-      <tr><th>Hamonshū Revisited</th><td colspan="3">One three-column row:
-        <a href="#figure-11">11 Book 1 · 005e</a> · <a href="#figure-12">12 Book 2 · 003a</a> · <a href="#figure-13">13 Book 3 · 003f</a></td></tr>
+      <!-- IF_HAMONSHU --><tr><th>Hamonshū Revisited</th><td colspan="3">One three-column row:
+        <a href="#figure-11">11 Book 1 · 005e</a> · <a href="#figure-12">12 Book 2 · 003a</a> · <a href="#figure-13">13 Book 3 · 003f</a></td></tr><!-- END_IF_HAMONSHU -->
     </tbody>
   </table></div>
-  <p>After the Japan observer and before the Hamonshū heading, add this attribution paragraph:</p>
+  <p>After the Japan observer, add this attribution paragraph:</p>
   <div class="credits">Cartofreako · Benjamin De Kosnik. Geographic plates use the modified Setouchi AuthaGraph layout.
     Observer plates retain their own sky geometry and dated reference points. Data credits accompany each legend.</div>
-  <p>After the Hamonshū row, add:</p>
-  <div class="credits">Mori Yūzan, <em>Hamonshū</em> (1903). Three water-pattern details, segmented for the Izzi review collection.</div>
+  <!-- IF_HAMONSHU --><p>After the Hamonshū row, add:</p>
+  <div class="credits">Mori Yūzan, <em>Hamonshū</em> (1903). Three water-pattern details, segmented for the Izzi review collection.</div><!-- END_IF_HAMONSHU -->
 
   <h2 id="images">4. Add each image, caption, and link</h2>
   <ol>
@@ -135,26 +140,26 @@
     <li>Use the Image block’s <strong>Link</strong> control to paste the uploaded URL of its
       matching <code>-detail</code> file. This opens the larger view, including the full Japan sheet.</li>
     <li>For maps, add <strong>Legend &amp; sources</strong> as another caption line, select that text,
-      and link it to the corresponding uploaded <code>-legend.pdf</code> URL. For Hamonshū,
-      use <strong>Book review</strong> and the review URL supplied below.</li>
+      and link it to the corresponding uploaded <code>-legend.pdf</code> URL. <!-- IF_HAMONSHU -->For Hamonshū,
+      use <strong>Book review</strong> and the review URL supplied below.<!-- END_IF_HAMONSHU --></li>
   </ol>
   <p class="note"><a href="https://wordpress.org/documentation/article/image-block/">WordPress Image block instructions</a> ·
     <a href="https://wordpress.org/documentation/article/link-editing/">Link controls</a>.</p>
   <p><strong>Framing:</strong> keep complete images visible. Use <strong>Contain</strong> when
     setting an aspect ratio. The reference uses <strong>44:19.052559</strong> frames for maps;
     if your editor has no custom-ratio control, use <strong>Original</strong> for the map cards.
-    The three Japan crops will then be taller than the full-sheet cards. Use <strong>4:3 + Contain</strong>
-    for all three Hamonshū images.</p>
+    The three Japan crops will then be taller than the full-sheet cards. <!-- IF_HAMONSHU -->Use <strong>4:3 + Contain</strong>
+    for all three Hamonshū images.<!-- END_IF_HAMONSHU --></p>
   <p>The colors are already in the artwork. Atmosphere uses amber <code>#fcc553</code>,
     white 0.66 pt outlines, and 100 radiation-opacity bands. Keep the source colors, including
     the distinct orbital vendors, by leaving WordPress’s duotone/image filters unset.</p>
 
   <h2 id="finish">5. Preview, then save the page</h2>
   <p>Preview both desktop and phone layouts. Compare the order with <a href="preview.html">the reference</a>:
-    thirteen images, ten legend links, three review links, two observer panoramas, and both attribution paragraphs.
+    @@FIGURE_COUNT@@ images, @@LEGEND_COUNT@@ legend links, <!-- IF_HAMONSHU -->three review links, <!-- END_IF_HAMONSHU -->two observer panoramas, and the attribution text.
     Check that each image opens its matching larger version and that all four Atmosphere/Temperature
     captions and legends say <strong>H3r5</strong>.</p>
-  <p>Confirm the three original lists and the “Two atlases, one shared table” section are still present.
+  <p>Confirm the three proposal/atlas links and the “Two atlases, one shared table” section are still present.
     When the result is ready, use the page editor’s <strong>Save / Update</strong> action and inspect
     the public page. The installed theme determines final typography and spacing.
     <a href="https://wordpress.org/documentation/article/wordpress-block-editor/">WordPress editor reference</a>.</p>
@@ -162,7 +167,7 @@
     were not accessed during packaging; control labels can vary. The offline preview is a placement
     reference, not a replacement for the existing page.</p>
 
-  <h2 id="copy-sheet">Copy sheet: thirteen figures in page order</h2>
+  <h2 id="copy-sheet">Copy sheet: @@FIGURE_COUNT@@ figures in page order</h2>
   <p>Use the copy buttons, or select text in a box and copy it normally. Completion checkboxes are
     temporary and reset when this guide is reopened. A plain-text copy is available in
     <a href="CAPTIONS-AND-ALT-TEXT.txt">CAPTIONS-AND-ALT-TEXT.txt</a>.</p>

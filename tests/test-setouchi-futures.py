@@ -59,6 +59,7 @@ class FuturesTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.bundle = Path(self.temp.name)
         self.config = load_config()
+        self.config['include_hamonshu_gallery'] = True  # Keep coverage of the original thirteen-figure edition.
         prefix = '<p>Keep my introduction &amp; punctuation.</p>\n'
         prefix += ''.join(block('list', f'<ul><li>Existing list {i}</li></ul>') for i in range(3))
         suffix = block('heading', '<h2 class="wp-block-heading">Two atlases, one shared table</h2>')

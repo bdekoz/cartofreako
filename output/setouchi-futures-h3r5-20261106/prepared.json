@@ -11,6 +11,7 @@
     "insertion_heading": "Two atlases, one shared table",
     "preceding_list_count": 3,
     "anchor": "setouchi-futures-visuals",
+    "include_hamonshu_gallery": false,
     "atlas": "output/atlas",
     "output": "output/setouchi-futures-h3r5-20261106",
     "background": "#240413",
@@ -134,7 +135,7 @@
     ],
     "analysis_h3_resolution": 5
   },
-  "config_sha256": "7afab010d98256abb1cba97fd8eca50be4db746f8457e1a39d073b4255c98de7",
+  "config_sha256": "808b55a673d0fa80c3dc6e92092bb44b50f1d364f1048449ddc829f1682fbb4c",
   "assets": [
     {
       "key": "world-water-detail",

@@ -368,6 +368,10 @@ def block(name, html, attrs=None):
     return f'<!-- wp:{name}{suffix} -->\n{html}\n<!-- /wp:{name} -->\n'
 
 
+def gallery_hamonshu(config):
+    return config['hamonshu'] if config.get('include_hamonshu_gallery', True) else []
+
+
 def gallery_blocks(prepared, media=None, local=False):
     """Native core blocks inherit the installed WordPress theme's typography."""
     config = prepared['config']
@@ -419,10 +423,11 @@ def gallery_blocks(prepared, media=None, local=False):
             body += row(subset) if len(subset) == 2 else subset[0]
     body += block('paragraph', '<p>Cartofreako · Benjamin De Kosnik. Geographic plates use the modified Setouchi AuthaGraph layout. '
                   'Observer plates retain their own sky geometry and dated reference points. Data credits accompany each legend.</p>')
-    body += block('heading', '<h3 class="wp-block-heading">Hamonshū Revisited</h3>', {'level': 3})
-    body += row([figure(item['id'], item['title'], item['caption'], item['alt'],
-                        review=f'https://situationshipin.space/review/hamonshu-v2-book{item["book"]}/') for item in config['hamonshu']])
-    body += block('paragraph', '<p>Mori Yūzan, <em>Hamonshū</em> (1903). Three water-pattern details, segmented for the Izzi review collection.</p>')
+    if gallery_hamonshu(config):
+        body += block('heading', '<h3 class="wp-block-heading">Hamonshū Revisited</h3>', {'level': 3})
+        body += row([figure(item['id'], item['title'], item['caption'], item['alt'],
+                            review=f'https://situationshipin.space/review/hamonshu-v2-book{item["book"]}/') for item in gallery_hamonshu(config)])
+        body += block('paragraph', '<p>Mori Yūzan, <em>Hamonshū</em> (1903). Three water-pattern details, segmented for the Izzi review collection.</p>')
     return block('group', f'<div id="{config["anchor"]}" class="wp-block-group setouchi-futures-gallery">\n{body}</div>',
                  {'anchor': config['anchor'], 'className': 'setouchi-futures-gallery', 'layout': {'type': 'default'}})
 

@@ -97,33 +97,3 @@ Satellite positions for the Setouchi observer, with Starlink names and a separat
 CARD FILE: 10-japan-orbital-technosphere-observer-card.webp
 DETAIL FILE: 10-japan-orbital-technosphere-observer-detail.webp
 LEGEND FILE: 10-japan-orbital-technosphere-observer-legend.pdf
-
-11 | Hamonshū Revisited | Book 1 · 005e
-CAPTION:
-Book 1 · 005e
-Repeating wave arcs.
-ALT TEXT:
-Overlapping groups of concentric wave arcs, printed in dark ink on aged paper.
-CARD FILE: 11-hamonshu_1-005e-card.webp
-DETAIL FILE: 11-hamonshu_1-005e-detail.jpg
-BOOK REVIEW URL: https://situationshipin.space/review/hamonshu-v2-book1/
-
-12 | Hamonshū Revisited | Book 2 · 003a
-CAPTION:
-Book 2 · 003a
-Flowing currents and eddies.
-ALT TEXT:
-Interlacing curved lines form a field of flowing water and small eddies.
-CARD FILE: 12-hamonshu_2-003a-card.webp
-DETAIL FILE: 12-hamonshu_2-003a-detail.jpg
-BOOK REVIEW URL: https://situationshipin.space/review/hamonshu-v2-book2/
-
-13 | Hamonshū Revisited | Book 3 · 003f
-CAPTION:
-Book 3 · 003f
-A dotted breaking wave.
-ALT TEXT:
-Curling wave shapes with dotted foam and broad dark areas.
-CARD FILE: 13-hamonshu_3-003f-card.webp
-DETAIL FILE: 13-hamonshu_3-003f-detail.jpg
-BOOK REVIEW URL: https://situationshipin.space/review/hamonshu-v2-book3/

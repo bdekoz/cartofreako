@@ -2,12 +2,13 @@
 
 Open the [website gallery](index.html) or the [four print plates](print/index.html).
 Atmosphere and Temperature records · 2026 now use **H3r5** in both World and
-Japan. The two galleries retain Water, Fiber, the orbital observer, and the
-three Hamonshū details. This is the current local edition selected after the
+Japan. The two galleries also retain Water, Fiber, and the orbital observer.
+The Hamonshū image section was removed on 7 November; the ten map figures now
+lead directly to “Two atlases, one shared table.” This is the current edition selected after the
 [r3/r5/r8 comparison](../setouchi-h3-trials-20261106/index.html).
 
 For a manual WordPress update, download the
-[web UI package](../setouchi-futures-h3r5-manual-20261106.zip) (about 11 MB),
+[web UI package](../setouchi-futures-h3r5-manual-20261106.zip) (about 8.9 MB),
 unzip it, and open `START-HERE.html`. The
 [browser guide](../setouchi-futures-h3r5-manual-20261106/START-HERE.html) includes
 the upload order, block layout, captions, alt text, and detail/legend links.
@@ -50,7 +51,9 @@ The website package includes 640/1280-pixel cards, 3840-pixel details, and
 separate legend PDFs. Japan's Water, Atmosphere, and Temperature cards keep
 the saved crop; full sheets remain available. Fiber and Observer retain the
 complete composition. Native WordPress blocks provide the two-column grids,
-full-width observer rows, and three-column Hamonshū strip, stacked on phones.
+and full-width observer rows, stacked on phones. The selected manifests set
+`include_hamonshu_gallery: false`; retained Hamonshū source assets still support
+the original archived edition and unsent outreach brief.
 
 ## Rebuild and check
 
@@ -86,22 +89,25 @@ Chrome is used for browser validation. Build caches stay under `build/`.
 
 The selected gallery was published on 6 November 2026 to
 [the Setouchi page](https://benjamin.dekosnik.com/futures/setouchi-2028/)
-through the WordPress REST API. Page 3175 contains all thirteen figures with
+through the WordPress REST API and revised on 7 November to remove the
+Hamonshū image section. Page 3175 contains ten map figures with
 their captions, alternative text, detail links, legends, and attributions.
 The publisher preserved the surrounding raw editor content and page metadata.
-All 36 public media files match their local source hashes, and the public page
-contains the expected thirteen images and links. SiteDistrict blocks automated
+The initial 36 public media files were verified against their local source hashes.
+The current page references 30 of those assets, with the ten map figures unchanged.
+Public readback confirms the image section was removed. SiteDistrict blocks automated
 Chrome access, so live visual inspection remains unverified; the local desktop
 and phone gallery checks passed before publication.
 
-The manual handoff is self-contained: 36 web uploads, an offline gallery
-reference, and instructions for building the two grids and Hamonshū row in
+The manual handoff is self-contained: 30 web uploads, an offline gallery
+reference, and instructions for building the two grids in
 the visual editor. It also identifies the twelve files needed if an existing
 gallery only needs its four Atmosphere/Temperature figures changed to r5.
 Rebuild the handoff from the validated edition with
 `python3 scripts/package-setouchi-futures-manual.py`.
 
-The publisher uploaded the 36 media assets used by the gallery blocks; print
+The initial publisher uploaded 36 media assets; the removal reused existing
+map attachments and left the original uploads available. Print
 masters remain repository deliverables. Its default bundle follows the active
 manifest, so future plans select H3r5. The current page uses a bold-paragraph
 section title and a single list of three atlas links. The publisher recognizes
@@ -122,14 +128,14 @@ Use the current bundle paths above. Keep credentials, backups, and receipts
 private; they are ignored by Git. Preparation, tests, and validation perform
 no publishing or outreach. The illustrated brief and contact draft remain unsent.
 
-The original editor backup is
-`private/page-backup-6260d20b9a7720cd.json`, with the publication receipt at
+The backup immediately before the Hamonshū removal is
+`private/page-backup-50ddd17718a7372b.json`, with the current publication receipt at
 `private/publish-receipt.json`. To restore that saved content with authenticated
 access, run:
 
 ```sh
 python3 scripts/update-setouchi-futures.py restore \
-  --backup output/setouchi-futures-h3r5-20261106/private/page-backup-6260d20b9a7720cd.json
+  --backup output/setouchi-futures-h3r5-20261106/private/page-backup-50ddd17718a7372b.json
 ```
 
 Restoration checks the published content hash first and refuses to overwrite

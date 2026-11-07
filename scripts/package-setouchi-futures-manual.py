@@ -14,7 +14,7 @@ import zipfile
 from bs4 import BeautifulSoup
 from PIL import Image
 
-from setouchi_futures import ROOT, PREVIEW_CSS, digest, gallery_blocks, load_config, write_json
+from setouchi_futures import ROOT, PREVIEW_CSS, digest, gallery_blocks, gallery_hamonshu, load_config, write_json
 from setouchi_futures_publish import load_prepared, used_keys
 
 TEMPLATE = ROOT / 'scripts/templates/setouchi-futures-manual.html'
@@ -46,7 +46,7 @@ def ordered_figures(prepared):
                             'caption': item[scope + '_caption'], 'alt': item[scope + '_alt'],
                             'background': item.get('background', config['background']),
                             'kind': 'map', 'roles': ['card', 'detail', 'legend']})
-    for item in config['hamonshu']:
+    for item in gallery_hamonshu(config):
         figures.append({'id': item['id'], 'section': 'Hamonshū Revisited', 'title': item['title'],
                         'caption': item['caption'], 'alt': item['alt'], 'kind': 'hamonshu',
                         'background': '#f4efe4', 'roles': ['card', 'detail'],
@@ -85,10 +85,16 @@ def write_guide(output, prepared, figures, uploads):
         captions.append('')
         outline.append(f'<a href="#figure-{number:02d}">{number:02d} · {escape(figure["title"])}</a>')
     guide = TEMPLATE.read_text()
+    has_hamonshu = bool(gallery_hamonshu(config))
+    for name, include in [('HAMONSHU', has_hamonshu), ('NO_HAMONSHU', not has_hamonshu)]:
+        guide = re.sub(r'<!-- IF_' + name + r' -->(.*?)<!-- END_IF_' + name + r' -->',
+                       lambda match: match[1] if include else '', guide, flags=re.S)
     replacements = {
         'PAGE_URL': escape(config['page_url'], quote=True),
         'EDIT_URL': escape(config['site_url'] + f'/wp-admin/post.php?post={config["page_id"]}&action=edit', quote=True),
         'UPLOAD_COUNT': str(len(uploads)), 'UPLOAD_MB': f'{sum(a["bytes"] for a in uploads) / 1e6:.1f}',
+        'FIGURE_COUNT': str(len(figures)), 'SECTION_COUNT': str(2 + has_hamonshu),
+        'LEGEND_COUNT': str(sum(a['role'] == 'legend' for a in uploads)),
         'CARDS': '\n'.join(cards), 'FIGURE_LINKS': '\n'.join(outline),
         'EDITION': config['edition'], 'ANCHOR': escape(config['anchor']),
     }
@@ -96,6 +102,7 @@ def write_guide(output, prepared, figures, uploads):
         guide = guide.replace('@@' + key + '@@', value)
     if re.search(r'@@[A-Z_]+@@', guide):
         raise ValueError('Unfilled guide field')
+    guide = re.sub(r'(?m)^[ \t]+$', '', guide)
     (output / 'START-HERE.html').write_text(guide)
     (output / 'CAPTIONS-AND-ALT-TEXT.txt').write_text('\n'.join(captions))
 
@@ -108,15 +115,17 @@ def write_guide(output, prepared, figures, uploads):
         '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
         '<title>Setouchi H3r5 · manual update preview</title><style>' + PREVIEW_CSS + '</style><main>'
         '<h1>Cartofreako × Setouchi</h1><p class="preview-note">Gallery placement reference. '
-        'Insert after the three existing lists and before “Two atlases, one shared table.” '
+        'Insert after the three proposal/atlas links and before “Two atlases, one shared table.” '
         'Live typography comes from your WordPress theme. <a href="START-HERE.html">Return to instructions</a>.</p>'
         + fragment + '<hr><h2>Two atlases, one shared table</h2>'
         '<p>The existing page continues here.</p></main></html>')
 
 
 def validate_package(output, prepared, figures, uploads, files):
-    if len(figures) != 13 or len(uploads) != 36:
-        raise ValueError('Expected thirteen figures and thirty-six upload files')
+    map_count = len(prepared['config']['maps']) * 2
+    figure_count = map_count + len(gallery_hamonshu(prepared['config']))
+    if len(figures) != figure_count or len(uploads) != figure_count * 2 + map_count:
+        raise ValueError('Figure or upload count differs from the selected gallery configuration')
     if {a['source_key'] for a in uploads} != used_keys(prepared):
         raise ValueError('Manual package does not match the gallery media')
     for asset in uploads:
@@ -127,7 +136,7 @@ def validate_package(output, prepared, figures, uploads, files):
                 image.verify()
     for name in ['START-HERE.html', 'preview.html']:
         soup = BeautifulSoup((output / name).read_text(), 'html.parser')
-        if len(soup.select('img')) != 13 or any(not node.get('alt') for node in soup.select('img')):
+        if len(soup.select('img')) != figure_count or any(not node.get('alt') for node in soup.select('img')):
             raise ValueError('Missing image or alternative text in ' + name)
         ids = [node['id'] for node in soup.select('[id]')]
         if len(ids) != len(set(ids)):
@@ -145,8 +154,8 @@ def validate_package(output, prepared, figures, uploads, files):
                 raise ValueError('Link leaves the package: ' + target)
             if not path and anchor and anchor not in ids:
                 raise ValueError('Missing guide anchor: ' + anchor)
-    return {'schema': 'cartofreako-setouchi-manual-validation-v1', 'figures': 13, 'upload_files': 36,
-            'image_files': 26, 'legend_pdfs': 10, 'source_checksums_match': True,
+    return {'schema': 'cartofreako-setouchi-manual-validation-v1', 'figures': figure_count, 'upload_files': len(uploads),
+            'image_files': figure_count * 2, 'legend_pdfs': map_count, 'source_checksums_match': True,
             'local_links_valid': True, 'images_decode': True, 'all_images_have_alt': True,
             'unresolved_asset_tokens': False, 'private_or_print_master_files_included': False}
 
@@ -164,10 +173,12 @@ def main():
     validated = json.loads((bundle / 'validation.json').read_text())
     if validated['prepared_sha256'] != digest(bundle / 'prepared.json'):
         raise ValueError('Validate the selected edition before packaging')
+    previous_uploads = []
     if output.exists() and any(output.iterdir()):
         existing = output / 'manifest.json'
         if not existing.exists() or json.loads(existing.read_text()).get('schema') != SCHEMA:
             raise ValueError('Output directory is not a previous manual package')
+        previous_uploads = json.loads(existing.read_text()).get('uploads', [])
     output.mkdir(parents=True, exist_ok=True)
     (output / 'uploads').mkdir(exist_ok=True)
     assets = {a['key']: a for a in prepared['assets']}
@@ -186,6 +197,16 @@ def main():
                             'bytes': asset['bytes'], 'title': asset['title'],
                             'alt': figure['alt'] if role != 'legend' else '',
                             'caption': figure['caption'] if role != 'legend' else ''})
+    current_paths = {a['path'] for a in uploads}
+    for old in previous_uploads:
+        if old['path'] not in current_paths:
+            stale = (output / old['path']).resolve()
+            if not stale.is_relative_to((output / 'uploads').resolve()):
+                raise ValueError('Previous upload path leaves the package')
+            if stale.exists():
+                if digest(stale) != old['sha256']:
+                    raise ValueError('Obsolete packaged upload was modified; preserve it before rebuilding')
+                stale.unlink()
     with (output / 'UPLOAD-CHECKLIST.csv').open('w', newline='') as stream:
         writer = csv.writer(stream, lineterminator='\n')
         writer.writerow(['figure', 'section', 'role', 'filename', 'title', 'alt_text', 'caption', 'uploaded_file_url'])
@@ -208,16 +229,16 @@ def main():
         'Keep it open beside the WordPress page editor. Use your normal WordPress login; '
         'no application password, command line, or plugin installation is required for these steps.\n\n'
         'The guide covers uploading the files, placing the World and Japan grids after the three '
-        'existing lists, adding the Hamonshū row, and linking larger images and source legends. '
-        'It includes copy-ready captions and alternative text for all thirteen figures.\n\n'
-        '- `uploads/`: the 36 web files, numbered in placement order.\n'
+        'proposal/atlas links, and linking larger images and source legends. '
+        f'It includes copy-ready captions and alternative text for all {len(figures)} figures.\n\n'
+        f'- `uploads/`: the {len(uploads)} web files, numbered in placement order.\n'
         '- [preview.html](preview.html): an offline layout and image reference.\n'
         '- [CAPTIONS-AND-ALT-TEXT.txt](CAPTIONS-AND-ALT-TEXT.txt): plain-text copy sheet.\n'
         '- [UPLOAD-CHECKLIST.csv](UPLOAD-CHECKLIST.csv): filename/role mapping and an optional URL worksheet.\n'
         '- [manifest.json](manifest.json): H3r5 selection, source hashes, and media inventory.\n'
         '- [validation.json](validation.json) and [SHA256SUMS](SHA256SUMS): package checks.\n\n'
         'Only the files in `uploads/` go into the WordPress Media Library. The guide, preview, '
-        'and worksheets are local references. The package contains 13 gallery cards, 13 larger '
+        f'and worksheets are local references. The package contains {len(figures)} gallery cards, {len(figures)} larger '
         'images, and 10 source-legend PDFs. All media bytes match the validated selected edition.\n\n'
         'The much larger 300 dpi print masters remain in the repository’s selected H3r5 print '
         'edition; they are not needed for this website update. The website and its media library '

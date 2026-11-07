@@ -8,7 +8,7 @@ import tempfile
 from urllib.parse import unquote, urlsplit
 
 from bs4 import BeautifulSoup
-from setouchi_futures import ROOT, digest, load_config, write_json
+from setouchi_futures import ROOT, digest, gallery_hamonshu, load_config, write_json
 from setouchi_futures_publish import load_prepared, parse_blocks, used_keys
 
 
@@ -22,6 +22,10 @@ def browser_checks(output, temp):
     import time
     from urllib.request import urlopen
     helpers = runpy.run_path(str(ROOT / 'scripts/run-wasm-browser-smoke.py'))
+    config = load_prepared(output)['config']
+    hamonshu_count = len(gallery_hamonshu(config))
+    figure_count = len(config['maps']) * 2 + hamonshu_count
+    sections = ['World', 'Japan / Setouchi'] + (['Hamonshū Revisited'] if hamonshu_count else [])
     handler = functools.partial(helpers['QuietHandler'], directory=str(output))
     server = http.server.ThreadingHTTPServer(('127.0.0.1', 0), handler)
     threading.Thread(target=server.serve_forever, daemon=True).start()
@@ -73,11 +77,11 @@ def browser_checks(output, temp):
                 url = f'http://127.0.0.1:{server.server_port}/index.html?viewport={width}'
                 client.call('Page.navigate', {'url': url})
                 wait_for('location.href===' + json.dumps(url) +
-                         " && document.readyState==='complete' && document.images.length===13")
+                         " && document.readyState==='complete' && document.images.length===" + str(figure_count))
                 lazy = evaluate("[...document.images].every(i=>i.loading==='lazy')")
                 evaluate("[...document.images].forEach(i=>{i.loading='eager';})")
                 wait_for("[...document.images].every(i=>i.complete&&i.naturalWidth>0)")
-                for section in ['World', 'Japan / Setouchi', 'Hamonshū Revisited']:
+                for section in sections:
                     section_json = json.dumps(section)
                     evaluate("(()=>{const h=[...document.querySelectorAll('h3')].find(h=>h.textContent===" + section_json +
                              ");scrollTo(0,h.getBoundingClientRect().top+scrollY-20);})()")
@@ -94,7 +98,9 @@ def browser_checks(output, temp):
                     for key in ['no_horizontal_overflow', 'all_images_loaded', 'all_have_alt', 'lazy_loading_declared', 'stacked_on_phone', 'images_inside_viewport']:
                         if not values[key]:
                             raise ValueError(f'{width} {section}: failed {key}')
-                    if values['viewport'] != [width, height] or len(set(values['hamonshu_heights'])) != 1:
+                    if not hamonshu_count:
+                        values['hamonshu_heights'] = []
+                    if values['viewport'] != [width, height] or (hamonshu_count and len(set(values['hamonshu_heights'])) != 1):
                         raise ValueError('Unexpected viewport or unequal Hamonshū frames')
                     stem = f'{width}-' + ('world' if section == 'World' else 'japan' if section.startswith('Japan') else 'hamonshu')
                     data = client.call('Page.captureScreenshot', {'format': 'png', 'captureBeyondViewport': False})
@@ -119,6 +125,7 @@ def main():
     args = parser.parse_args()
     output = args.output.resolve()
     prepared = load_prepared(output)
+    figure_count = len(prepared['config']['maps']) * 2 + len(gallery_hamonshu(prepared['config']))
     document = BeautifulSoup((output / 'index.html').read_text(), 'html.parser')
     broken = []
     for node in document.select('[href], [src]'):
@@ -128,10 +135,10 @@ def main():
                 broken.append(value)
     if broken:
         raise ValueError('Broken local links: ' + ', '.join(broken))
-    if len(document.select('figure img')) != 13:
-        raise ValueError('Expected ten maps and three Hamonshū details')
+    if len(document.select('figure img')) != figure_count:
+        raise ValueError('Preview figure count differs from the selected gallery configuration')
     blocks = parse_blocks((output / 'gallery-blocks.html').read_text())
-    if sum(b['name'] == 'image' for b in blocks) != 13:
+    if sum(b['name'] == 'image' for b in blocks) != figure_count:
         raise ValueError('Wrong WordPress figure count')
     sources_checked = 0
     atlas_sources_checked = 0
@@ -207,7 +214,7 @@ def main():
     result = {'schema': 'cartofreako-setouchi-futures-validation-v1', 'status': 'local-only',
         'prepared_sha256': digest(output / 'prepared.json'), 'preview_sha256': digest(output / 'index.html'),
         'media_assets': len(prepared['assets']), 'upload_assets': len(used_keys(prepared)),
-        'figures': 13, 'map_legend_pairs': 10, 'unchanged_atlas_masters': atlas_sources_checked,
+        'figures': figure_count, 'map_legend_pairs': 10, 'unchanged_atlas_masters': atlas_sources_checked,
         'source_sheets_checked': sources_checked, 'selected_h3_plates': selected_plates,
         'broken_local_links': broken, 'fiber_legend_text_verified': True, 'outreach_pdf_pages': 1,
         'radiation_opacity': radiation, 'browser': []}

@@ -1,6 +1,6 @@
 # Setouchi 2028 futures: image grids, website publishing, and outreach
 
-Date: 2026-11-06. Status: selected H3r5 gallery published through REST on page 3175; saved content and all public media verified; host blocks automated live-browser inspection.
+Date: 2026-11-07. Status: ten-map H3r5 gallery published on page 3175; Hamonshū image section removed; public content verified; host blocks automated live-browser inspection.
 
 ## Task and accumulated decisions
 
@@ -15,13 +15,14 @@ Include a script-based publishing workflow that avoids routine WordPress UI
 work. Finish with contact approaches for AuthaGraph author Hajime Narukawa.
 
 The plan was approved, followed first by local preparation and then explicit
-authorization to publish through REST. The selected gallery and its 36 media
-files are now on page 3175. The
+authorization to publish through REST. On 7 November the user requested removal
+of the Hamonshū image section, so the current page has ten map figures using
+30 media files and proceeds directly to “Two atlases, one shared table.” The
 [local preview](../../output/setouchi-futures-h3r5-20261106/index.html), manual
 package, publishing script, and private restoration backup remain available.
 The gallery inherits the site's theme. No outreach has been sent.
 
-## Current saved settings — 6 November 2026
+## Current saved settings — 7 November 2026
 
 The [active manifest](../../config/setouchi-futures-20261106.json) and
 [saved H3r5 settings](../../config/setouchi-futures-20261106-h3r5.json) select
@@ -43,7 +44,7 @@ the control used by the resolution comparison. The r3 settings SHA-256 remains
 | Source snapshot | Pinned October products; radiation observation ends **15 October 2026, 23:59 UTC**. H3r5 has 1,448,374 radiation cells and all 100 opacity levels occupied; Temperature has 62,035 covered cells. |
 | Image delivery | 640/1280-pixel cards, 3840-pixel full-sheet details, separate legend/source PDFs. |
 | Japan card crops | Water, Atmosphere, and Temperature: `[0.5, 1.75, 29.1, 17.25]` inches. Full sheets remain linked; Fiber and Observer retain the full composition. |
-| Gallery layout | Two geographic rows of two maps, then a full-width observer panorama per scope; three Hamonshū crops in equal 4:3 frames; stacked phone layout. |
+| Gallery layout | Two geographic rows of two maps, then a full-width observer panorama per scope; stacked phone layout; `include_hamonshu_gallery: false`. |
 | Website scope | Published after the three proposal/atlas links and before “Two atlases, one shared table”; existing theme typography inherited. |
 
 Reproduce this saved edition from the repository root:
@@ -60,7 +61,7 @@ references. This selection applies to these four Setouchi plates and the
 published website gallery. Outreach remains deferred. The revision notes below preserve the sequence of
 decisions; the table above is the authoritative saved presentation.
 
-## Recommended composition: two grids and a Hamonshū strip
+## Current composition: two grids
 
 Use **static grids with links to larger images**. Readers can scan the subjects
 and compare the World and Japan editions without operating a carousel. The
@@ -73,8 +74,7 @@ Reading order:
 1. Existing introduction and three proposal/atlas links.
 2. **World** image grid.
 3. **Japan / Setouchi** image grid, in the same subject order.
-4. **Hamonshū Revisited**: three individual images presented as a triptych.
-5. Existing **Two atlases, one shared table** section.
+4. Existing **Two atlases, one shared table** section, immediately after the map attribution.
 
 Use five subjects per grid for the initial proposal. “Starlink global observer”
 is interpreted as the World edition's `orbital-technosphere-observer` plate.
@@ -86,8 +86,7 @@ The observer view and the geographic orbit view remain separately captioned.
 The implemented five-subject layout uses **two rows of two geographic maps,
 followed by a full-width observer panorama** in each grid. This refines the
 initial three-plus-two suggestion: core WordPress Columns blocks provide a
-simple mobile stack, while the dense observer sky gets more room. The three
-Hamonshū images use one three-column row. Use the same ordering in the DOM,
+simple mobile stack, while the dense observer sky gets more room. Use the same ordering in the DOM,
 on screen, and in keyboard navigation. Confirm the actual theme's content
 width when site access is available.
 
@@ -165,7 +164,11 @@ and the [dated public review gallery](https://situationshipin.space/review/carto
   text and marker settings in the source plate. Supply a larger linked image
   instead of enlarging source type solely for a thumbnail.
 
-## Hamonshū: three specific segmented images
+## Hamonshū source selection — retained reference
+
+The following selection records the original image row. It was removed from
+the website gallery on 7 November; the source images and unsent outreach
+material remain available.
 
 Use one selection from each book. They move from a simple repeating motif to
 a flowing field and then an expressive wave. These are scanned book details,
@@ -898,6 +901,40 @@ inspection at desktop and phone sizes could not be completed. The prior local
 gallery checks remain valid, but they are not evidence of the current live
 theme's exact appearance. No host or theme settings were changed to bypass
 that restriction.
+
+### Remove the Hamonshū image section — 7 November 2026
+
+The user requested removing “Hamonshū Revisited” with its images and proceeding
+directly to “Two atlases, one shared table.” Removed the gallery's heading,
+three-column image row, and Mori Yūzan attribution. The ten map figures and
+map attribution are unchanged. The existing workshop discussion later in the
+article is outside this image-section edit.
+
+Set `include_hamonshu_gallery: false` in the active manifest, saved H3r5
+manifest, and prepared edition. Regenerated the local preview and WordPress
+blocks without rebuilding map or print assets. The renderer defaults to the
+original image row for older manifests; the selected configuration now omits
+it from future publishes. Validation and the manual packager derive their
+figure counts from the gallery selection. The updated manual ZIP has 38 files,
+30 uploads, and ten figures (about 8.9 MB), including instructions for removing
+the older image row through the web UI.
+
+Published through REST using the existing map attachment IDs and URLs. The
+new raw content matched the planned removal and is idempotent. Public HTML
+returned HTTP 200, contains ten map images, and places “Two atlases, one shared
+table” immediately after the gallery. The original map figure markup remains
+identical. No Media Library attachments were deleted.
+
+The private backup immediately before removal is
+`output/setouchi-futures-h3r5-20261106/private/page-backup-50ddd17718a7372b.json`.
+The initial publication receipt is retained separately as
+`private/publish-receipt-initial-20261106.json`; the current receipt describes
+the ten-map page. The verification record is
+`private/hamonshu-removal-verification-20261107.json`. All 27 existing publisher
+tests pass, and local validation confirms ten figures and 30 upload assets.
+Four local browser captures cover both grids at desktop and phone widths;
+all ten images load with alt text, and the phone layout stacks without
+horizontal overflow.
 
 ## Contact approaches: Hajime Narukawa
 

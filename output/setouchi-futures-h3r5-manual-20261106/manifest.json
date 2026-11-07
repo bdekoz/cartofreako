@@ -5,10 +5,10 @@
   "destination": "https://benjamin.dekosnik.com/futures/setouchi-2028/",
   "page_id": 3175,
   "source_bundle": "output/setouchi-futures-h3r5-20261106",
-  "prepared_sha256": "f8ccd44baa7d3f14554b26485fdff79fd2a7357a822c55b49398026afc32fa7c",
-  "source_validation_sha256": "1815343299c17a48ccc235c5d3f8feb4a001847c73d3851855a0d705049ebf27",
-  "builder_sha256": "7fb2cae09bd810ca8ec42246b5069cbe8c9e5218785f03f64a6d43d55c23c25e",
-  "guide_template_sha256": "6c4d0b78009ceb6d7225c948afc5067c936dbd64acf16bb80c29d6f5cc01152d",
+  "prepared_sha256": "199d4f5e13ef655bfe81b3a5d2a600f5c89d3080ec539534c07f9af73a0cd29a",
+  "source_validation_sha256": "e51e0d8b847fd6203fa970743bfe526f5d766c85ce62cff96ba42053ad5c9838",
+  "builder_sha256": "22afe237e20c5482df75aa1309f56d06dfbcb27d0b08998148d87569bb659faf",
+  "guide_template_sha256": "4e0e7ef8ce3a06ec17cde4ca97a49e9a752ea74c2a54cd20ddeea64410fb72e5",
   "documentation_sources": {
     "media": "https://wordpress.org/documentation/article/media-library-screen/",
     "image": "https://wordpress.org/documentation/article/image-block/",
@@ -169,51 +169,6 @@
         "legend"
       ],
       "order": 10
-    },
-    {
-      "id": "hamonshu_1-005e",
-      "section": "Hamonshū Revisited",
-      "title": "Book 1 · 005e",
-      "caption": "Repeating wave arcs.",
-      "alt": "Overlapping groups of concentric wave arcs, printed in dark ink on aged paper.",
-      "kind": "hamonshu",
-      "background": "#f4efe4",
-      "roles": [
-        "card",
-        "detail"
-      ],
-      "review_url": "https://situationshipin.space/review/hamonshu-v2-book1/",
-      "order": 11
-    },
-    {
-      "id": "hamonshu_2-003a",
-      "section": "Hamonshū Revisited",
-      "title": "Book 2 · 003a",
-      "caption": "Flowing currents and eddies.",
-      "alt": "Interlacing curved lines form a field of flowing water and small eddies.",
-      "kind": "hamonshu",
-      "background": "#f4efe4",
-      "roles": [
-        "card",
-        "detail"
-      ],
-      "review_url": "https://situationshipin.space/review/hamonshu-v2-book2/",
-      "order": 12
-    },
-    {
-      "id": "hamonshu_3-003f",
-      "section": "Hamonshū Revisited",
-      "title": "Book 3 · 003f",
-      "caption": "A dotted breaking wave.",
-      "alt": "Curling wave shapes with dotted foam and broad dark areas.",
-      "kind": "hamonshu",
-      "background": "#f4efe4",
-      "roles": [
-        "card",
-        "detail"
-      ],
-      "review_url": "https://situationshipin.space/review/hamonshu-v2-book3/",
-      "order": 13
     }
   ],
   "uploads": [
@@ -606,84 +561,6 @@
       "title": "Starlink and the orbital sky · Japan / Setouchi · Legend and sources",
       "alt": "",
       "caption": ""
-    },
-    {
-      "figure": 11,
-      "section": "Hamonshū Revisited",
-      "role": "card",
-      "source_key": "hamonshu_1-005e-1280",
-      "source_path": "media/hamonshu_1-005e-1280.webp",
-      "path": "uploads/11-hamonshu_1-005e-card.webp",
-      "sha256": "3642a8bcf14504e720e958b42aaf2a68ff78a63f6be915a34619aedf2c0e94e9",
-      "bytes": 103772,
-      "title": "Book 1 · 005e",
-      "alt": "Overlapping groups of concentric wave arcs, printed in dark ink on aged paper.",
-      "caption": "Repeating wave arcs."
-    },
-    {
-      "figure": 11,
-      "section": "Hamonshū Revisited",
-      "role": "detail",
-      "source_key": "hamonshu_1-005e-detail",
-      "source_path": "media/hamonshu_1-005e-detail.jpg",
-      "path": "uploads/11-hamonshu_1-005e-detail.jpg",
-      "sha256": "72bf5cf9668930d34e29f64383699a913dec7d2456a1f29add579f9226730c0d",
-      "bytes": 182294,
-      "title": "Book 1 · 005e",
-      "alt": "Overlapping groups of concentric wave arcs, printed in dark ink on aged paper.",
-      "caption": "Repeating wave arcs."
-    },
-    {
-      "figure": 12,
-      "section": "Hamonshū Revisited",
-      "role": "card",
-      "source_key": "hamonshu_2-003a-1280",
-      "source_path": "media/hamonshu_2-003a-1280.webp",
-      "path": "uploads/12-hamonshu_2-003a-card.webp",
-      "sha256": "57ccfb3c5b4605a76c0a53f4e510ceda2dd27f3236ac55a845e89cb12fa043a1",
-      "bytes": 376858,
-      "title": "Book 2 · 003a",
-      "alt": "Interlacing curved lines form a field of flowing water and small eddies.",
-      "caption": "Flowing currents and eddies."
-    },
-    {
-      "figure": 12,
-      "section": "Hamonshū Revisited",
-      "role": "detail",
-      "source_key": "hamonshu_2-003a-detail",
-      "source_path": "media/hamonshu_2-003a-detail.jpg",
-      "path": "uploads/12-hamonshu_2-003a-detail.jpg",
-      "sha256": "4f37bd971f2e8cf112e5325c5b547f319ad238a6732ded784239ea8c2b134f5a",
-      "bytes": 532050,
-      "title": "Book 2 · 003a",
-      "alt": "Interlacing curved lines form a field of flowing water and small eddies.",
-      "caption": "Flowing currents and eddies."
-    },
-    {
-      "figure": 13,
-      "section": "Hamonshū Revisited",
-      "role": "card",
-      "source_key": "hamonshu_3-003f-1280",
-      "source_path": "media/hamonshu_3-003f-1280.webp",
-      "path": "uploads/13-hamonshu_3-003f-card.webp",
-      "sha256": "d6c927850d6c64c5f97087b462fb75f6a044dc1a1d0a26e74712cb0f89b34bbd",
-      "bytes": 336850,
-      "title": "Book 3 · 003f",
-      "alt": "Curling wave shapes with dotted foam and broad dark areas.",
-      "caption": "A dotted breaking wave."
-    },
-    {
-      "figure": 13,
-      "section": "Hamonshū Revisited",
-      "role": "detail",
-      "source_key": "hamonshu_3-003f-detail",
-      "source_path": "media/hamonshu_3-003f-detail.jpg",
-      "path": "uploads/13-hamonshu_3-003f-detail.jpg",
-      "sha256": "c702e2aa6ccc78d1f84a0dc16176e91dde77498aa7cb22d0eed88893194edd38",
-      "bytes": 485495,
-      "title": "Book 3 · 003f",
-      "alt": "Curling wave shapes with dotted foam and broad dark areas.",
-      "caption": "A dotted breaking wave."
     }
   ],
   "publication_status": "not-published"
