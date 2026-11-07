@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 from setouchi_futures import SCHEMA, block, gallery_blocks, load_config, write_json
 from setouchi_futures_publish import (RestBackend, WpCliBackend, apply_plan, load_prepared, make_plan,
-    page_text, parse_blocks, patch_gallery, restore_backup, text_hash, verify_receipt)
+    media_url, page_text, parse_blocks, patch_gallery, restore_backup, text_hash, verify_receipt)
 
 
 class FakeWordPress:
@@ -121,6 +121,52 @@ class FuturesTests(unittest.TestCase):
     def test_malformed_blocks_stop(self):
         with self.assertRaises(ValueError):
             patch_gallery('<!-- wp:group -->' + page_text(self.page), gallery_blocks(self.prepared), self.config)
+
+    def test_classic_title_and_three_linked_items_preserve_legacy_suffix(self):
+        prefix = block('paragraph', '<p>Keep this introduction.</p>')
+        prefix += '<ul>\r\n' + ''.join(f'<li><a href="/{i}.pdf">Atlas {i}</a></li>\r\n' for i in range(3)) + '</ul>\r\n'
+        suffix = ('<p><b>Two atlases, one shared table</b></p>\r\n<p>Existing article.</p>\r\n'
+                  '<!-- /wp:post-content -->\r\n<!-- wp:heading -->\r\n<p><b>Events</b></p>')
+        source = prefix + suffix
+        fragment = gallery_blocks(self.prepared)
+        result = patch_gallery(source, fragment, self.config)
+        self.assertEqual(result, prefix + fragment.rstrip() + '\n\n' + suffix)
+        self.assertEqual(patch_gallery(result, fragment, self.config), result)
+        replacement = fragment.replace('World</h3>', 'World atlas</h3>')
+        self.assertEqual(patch_gallery(result, replacement, self.config), prefix + replacement.rstrip() + '\n\n' + suffix)
+        with self.assertRaises(ValueError):
+            patch_gallery('<!-- wp:group -->' + source, fragment, self.config)
+        with self.assertRaises(ValueError):
+            patch_gallery(source + '<div id="setouchi-futures-visuals"></div>', fragment, self.config)
+        with self.assertRaises(ValueError):
+            patch_gallery(source + '<p><strong>Two atlases, one shared table</strong></p>', fragment, self.config)
+
+    def test_paragraph_block_title_inserts_before_its_wrapper(self):
+        suffix = block('paragraph', '<p><strong>Two atlases, one shared table</strong></p>')
+        fragment = gallery_blocks(self.prepared)
+        result = patch_gallery(self.prefix + suffix, fragment, self.config)
+        self.assertEqual(result, self.prefix + fragment.rstrip() + '\n\n' + suffix)
+        parse_blocks(result)
+
+    def test_prose_or_unlinked_items_are_not_an_insertion_boundary(self):
+        fragment = gallery_blocks(self.prepared)
+        for title in ['<p>Two atlases, one shared table</p>',
+                      '<p><b>Two atlases</b>, one shared table</p>']:
+            with self.assertRaisesRegex(ValueError, 'insertion heading'):
+                patch_gallery(self.prefix + title, fragment, self.config)
+        prefix = '<ul><li>One</li><li>Two</li><li>Three</li></ul>'
+        with self.assertRaises(ValueError):
+            patch_gallery(prefix + '<p><b>Two atlases, one shared table</b></p>', fragment, self.config)
+
+    def test_detail_url_uses_original_image_metadata(self):
+        remote = {'source_url': 'https://example.test/uploads/map-scaled.webp',
+                  'media_details': {'original_image': 'map.webp'}}
+        self.assertEqual(media_url(remote, 'world-water-detail'), 'https://example.test/uploads/map.webp')
+        self.assertEqual(media_url(remote, 'world-water-1280'), remote['source_url'])
+        self.assertEqual(media_url({'source_url': remote['source_url']}, 'world-water-detail'), remote['source_url'])
+        remote['media_details']['original_image'] = '../elsewhere.webp'
+        with self.assertRaises(ValueError):
+            media_url(remote, 'world-water-detail')
 
     def test_plan_is_local_read_only_and_private(self):
         path = self.plan()

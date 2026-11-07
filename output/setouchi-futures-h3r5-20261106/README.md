@@ -82,7 +82,17 @@ in the adjacent `situationshipin.space` checkout. Use `--hamonshu-root PATH`
 for another checkout or `--download-sources` for the three pinned public JPEGs.
 Chrome is used for browser validation. Build caches stay under `build/`.
 
-## Publishing later
+## Publication and recovery
+
+The selected gallery was published on 6 November 2026 to
+[the Setouchi page](https://benjamin.dekosnik.com/futures/setouchi-2028/)
+through the WordPress REST API. Page 3175 contains all thirteen figures with
+their captions, alternative text, detail links, legends, and attributions.
+The publisher preserved the surrounding raw editor content and page metadata.
+All 36 public media files match their local source hashes, and the public page
+contains the expected thirteen images and links. SiteDistrict blocks automated
+Chrome access, so live visual inspection remains unverified; the local desktop
+and phone gallery checks passed before publication.
 
 The manual handoff is self-contained: 36 web uploads, an offline gallery
 reference, and instructions for building the two grids and Hamonshū row in
@@ -91,10 +101,12 @@ gallery only needs its four Atmosphere/Temperature figures changed to r5.
 Rebuild the handoff from the validated edition with
 `python3 scripts/package-setouchi-futures-manual.py`.
 
-The current website and media library have not been updated. The new print
-files are local/repository deliverables; the publisher still uploads only the
-36 media assets used by the gallery blocks. Its default bundle now follows
-the active manifest, so planning selects H3r5 rather than the archived r3 set.
+The publisher uploaded the 36 media assets used by the gallery blocks; print
+masters remain repository deliverables. Its default bundle follows the active
+manifest, so future plans select H3r5. The current page uses a bold-paragraph
+section title and a single list of three atlas links. The publisher recognizes
+that boundary while preserving unrelated legacy markup. Original-image URLs
+retain the supplied detail resolution when WordPress creates scaled copies.
 
 ```sh
 python3 scripts/update-setouchi-futures.py plan --transport rest
@@ -109,6 +121,19 @@ Authentication, WP-CLI, conflict detection, and recovery retain the
 Use the current bundle paths above. Keep credentials, backups, and receipts
 private; they are ignored by Git. Preparation, tests, and validation perform
 no publishing or outreach. The illustrated brief and contact draft remain unsent.
+
+The original editor backup is
+`private/page-backup-6260d20b9a7720cd.json`, with the publication receipt at
+`private/publish-receipt.json`. To restore that saved content with authenticated
+access, run:
+
+```sh
+python3 scripts/update-setouchi-futures.py restore \
+  --backup output/setouchi-futures-h3r5-20261106/private/page-backup-6260d20b9a7720cd.json
+```
+
+Restoration checks the published content hash first and refuses to overwrite
+subsequent edits. Media uploads remain available after a content restoration.
 
 The [saved H3r3 gallery](../setouchi-futures-20261106/index.html), original atlas
 masters, and [resolution comparison](../setouchi-h3-trials-20261106/index.html)

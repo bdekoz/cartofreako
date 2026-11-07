@@ -7,7 +7,7 @@ from pathlib import Path
 import re
 import shlex
 import subprocess
-from urllib.parse import urlsplit
+from urllib.parse import quote, urljoin, urlsplit
 
 from bs4 import BeautifulSoup
 import requests
@@ -79,35 +79,72 @@ def parse_blocks(content):
 
 
 def patch_gallery(content, fragment, config):
-    blocks = parse_blocks(content)
     headings = []
-    for match in re.finditer(r'<h2\b[^>]*>.*?</h2\s*>', content, re.I | re.S):
-        value = ' '.join(BeautifulSoup(match.group(), 'html.parser').get_text(' ', strip=True).split())
+    for match in re.finditer(r'<(h2|p)\b[^>]*>.*?</\1\s*>', content, re.I | re.S):
+        node = BeautifulSoup(match.group(), 'html.parser').find(match[1].lower())
+        value = ' '.join(node.get_text(' ', strip=True).split())
+        if node.name == 'p':
+            bold = node.find(['b', 'strong'])
+            if bold is None or ' '.join(bold.get_text(' ', strip=True).split()) != value:
+                continue
         if value == config['insertion_heading']:
             headings.append(match)
     if len(headings) != 1:
         raise ValueError('Expected one exact insertion heading; found ' + str(len(headings)))
     heading = headings[0]
+    try:
+        blocks = parse_blocks(content)
+    except ValueError:
+        if heading[1].lower() != 'p':
+            raise
+        # Classic-editor pages can have malformed block comments later in the
+        # article. Only accept a complete block prefix before a standalone bold
+        # paragraph; the suffix is preserved byte-for-byte, never repaired here.
+        blocks = parse_blocks(content[:heading.start()])
     managed = [b for b in blocks if b['name'] == 'group' and b['attrs'].get('anchor') == config['anchor']]
     if len(managed) > 1:
         raise ValueError('Duplicate managed gallery blocks')
+    anchors = BeautifulSoup(content, 'html.parser').find_all(id=config['anchor'])
+    if len(anchors) > 1:
+        raise ValueError('Duplicate gallery HTML anchors')
     if managed:
         old = managed[0]
         if old['end'] > heading.start():
             raise ValueError('Managed gallery is not before the insertion heading')
+        if not BeautifulSoup(content[old['start']:old['end']], 'html.parser').find(id=config['anchor']):
+            raise ValueError('Managed Group is missing its gallery HTML anchor')
         return content[:old['start']] + fragment.rstrip() + content[old['end']:]
     # A matching HTML ID outside the managed group is not ours to replace.
-    if BeautifulSoup(content, 'html.parser').find(id=config['anchor']):
+    if anchors:
         raise ValueError('Gallery anchor exists outside the managed Group block')
     insertion = heading.start()
-    owners = [b for b in blocks if b['name'] == 'heading' and b['start'] <= insertion < b['end']]
+    owners = [b for b in blocks if b['name'] in ('heading', 'paragraph') and b['start'] <= insertion < b['end']]
     if owners:
         insertion = min(b['start'] for b in owners)
     before = BeautifulSoup(content[:insertion], 'html.parser')
     lists = [node for node in before.find_all(['ul', 'ol']) if not node.find_parent(['ul', 'ol'])]
     if len(lists) < config['preceding_list_count']:
-        raise ValueError('The current page does not contain the expected three preceding lists')
+        items = lists[0].find_all('li', recursive=False) if len(lists) == 1 else []
+        linked_items = (len(items) == config['preceding_list_count'] and all(
+            not item.find(['ul', 'ol']) and len(item.find_all('a', href=True)) == 1
+            and item.get_text(' ', strip=True) == item.find('a').get_text(' ', strip=True)
+            for item in items))
+        if not linked_items:
+            raise ValueError('The current page does not contain the expected three preceding lists or linked atlas items')
     return content[:insertion] + fragment.rstrip() + '\n\n' + content[insertion:]
+
+
+def media_url(remote, key):
+    """Link detail images to the original when WordPress makes a scaled copy."""
+    url = remote.get('source_url', '')
+    if urlsplit(url).scheme != 'https':
+        raise ValueError('WordPress returned a non-HTTPS media URL')
+    original = remote.get('media_details', {}).get('original_image')
+    if key.endswith('-detail') and original:
+        if not isinstance(original, str) or '/' in original or '\\' in original or original in ('.', '..'):
+            raise ValueError('WordPress returned an invalid original image filename')
+        url = urljoin(url, quote(original, safe=''))
+    return url
 
 
 def load_prepared(directory):
@@ -278,9 +315,7 @@ def apply_plan(plan_path, backend):
             remote = backend.upload(asset, directory / asset['path'], slug)
         if remote.get('slug') != slug or not isinstance(remote.get('id'), int):
             raise ValueError('Unexpected media identity returned by WordPress')
-        url = remote.get('source_url', '')
-        if urlsplit(url).scheme != 'https':
-            raise ValueError('WordPress returned a non-HTTPS media URL')
+        url = media_url(remote, key)
         mapping[key] = {'id': remote['id'], 'url': url, 'sha256': asset['sha256'], 'slug': slug}
         state[key] = mapping[key]
         private_json(state_path, state)

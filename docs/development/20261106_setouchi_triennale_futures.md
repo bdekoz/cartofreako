@@ -1,11 +1,11 @@
 # Setouchi 2028 futures: image grids, website publishing, and outreach
 
-Date: 2026-11-06. Status: selected H3r5 edition and manual package validated; REST publication authorized, but authentication currently returns HTTP 401; website unchanged by the publisher.
+Date: 2026-11-06. Status: selected H3r5 gallery published through REST on page 3175; saved content and all public media verified; host blocks automated live-browser inspection.
 
 ## Task and accumulated decisions
 
 Add a visual introduction to [Cartofreako × Setouchi](https://benjamin.dekosnik.com/futures/setouchi-2028/),
-**after the three existing lists and before “Two atlases, one shared table.”**
+**after the three proposal/atlas links and before “Two atlases, one shared table.”**
 The requested subjects are the Starlink observer plate, Water, Network Fiber,
 Atmosphere, and Anthropocene Temperature. Consider separate World and Japan
 grids, include two or three segmented Hamonshū review images, and adopt the
@@ -14,12 +14,12 @@ typography and design of the existing
 Include a script-based publishing workflow that avoids routine WordPress UI
 work. Finish with contact approaches for AuthaGraph author Hajime Narukawa.
 
-The plan was approved, followed by the instruction to **prepare the local
-update first**. The [local preview](../../output/setouchi-futures-h3r5-20261106/index.html),
-image package, publishing script, and unsent illustrated outreach brief are
-prepared. The website, its media library, and its theme have not been changed.
-No outreach has been sent. Exact live typography and authenticated publishing
-remain to be checked through a supported site connection.
+The plan was approved, followed first by local preparation and then explicit
+authorization to publish through REST. The selected gallery and its 36 media
+files are now on page 3175. The
+[local preview](../../output/setouchi-futures-h3r5-20261106/index.html), manual
+package, publishing script, and private restoration backup remain available.
+The gallery inherits the site's theme. No outreach has been sent.
 
 ## Current saved settings — 6 November 2026
 
@@ -44,7 +44,7 @@ the control used by the resolution comparison. The r3 settings SHA-256 remains
 | Image delivery | 640/1280-pixel cards, 3840-pixel full-sheet details, separate legend/source PDFs. |
 | Japan card crops | Water, Atmosphere, and Temperature: `[0.5, 1.75, 29.1, 17.25]` inches. Full sheets remain linked; Fiber and Observer retain the full composition. |
 | Gallery layout | Two geographic rows of two maps, then a full-width observer panorama per scope; three Hamonshū crops in equal 4:3 frames; stacked phone layout. |
-| Website scope | Local insertion after the three lists and before “Two atlases, one shared table”; existing theme typography inherited when published. |
+| Website scope | Published after the three proposal/atlas links and before “Two atlases, one shared table”; existing theme typography inherited. |
 
 Reproduce this saved edition from the repository root:
 
@@ -56,9 +56,8 @@ python3 scripts/update-setouchi-futures.py prepare \
 The selected print edition is included under
 [`print/`](../../output/setouchi-futures-h3r5-20261106/print/index.html), with
 four maps and separate legends. The original atlas masters remain upstream
-references. This selection applies to these four Setouchi plates and the local
-website package. WordPress publication and
-outreach remain deferred. The revision notes below preserve the sequence of
+references. This selection applies to these four Setouchi plates and the
+published website gallery. Outreach remains deferred. The revision notes below preserve the sequence of
 decisions; the table above is the authoritative saved presentation.
 
 ## Recommended composition: two grids and a Hamonshū strip
@@ -71,7 +70,7 @@ and hides examples in this short introduction. Avoid automatic advancement.
 
 Reading order:
 
-1. Existing introduction and three lists.
+1. Existing introduction and three proposal/atlas links.
 2. **World** image grid.
 3. **Japan / Setouchi** image grid, in the same subject order.
 4. **Hamonshū Revisited**: three individual images presented as a triptych.
@@ -822,7 +821,7 @@ for maps; the three Japan crop cards will then be taller. Hamonshū uses 4:3
 Contain. This affects web framing only; the selected artwork is unchanged.
 The package performs no WordPress writes or outreach.
 
-### REST publication attempt — 6 November 2026
+### Initial REST publication attempt — 6 November 2026
 
 The user authorized publishing the prepared gallery to WordPress page 3175
 with the supplied application password. The credential was read into memory
@@ -835,25 +834,70 @@ Application Passwords. Authenticated page access failed with HTTP 401.
 uncached checks through the normal route and `index.php?rest_route=...`.
 The client verified that it sent the correct Basic Authorization header.
 Removing the password's display spaces did not change the result. These
-checks do not establish whether the credential is valid or whether server
-configuration prevents WordPress from processing it. The remaining check is
-the credential's site/account association, then host/plugin authentication
-configuration if that association is correct. WordPress documents these
+checks did not establish whether the credential was valid or whether server
+configuration prevented WordPress from processing it. The user was asked to
+confirm the credential's site/account association. WordPress documents these
 [application-password troubleshooting checks](https://developer.wordpress.org/advanced-administration/security/application-passwords/).
 
-No media were uploaded and no page writes were attempted. All 49 local media
+During this initial attempt, no media were uploaded and no page writes were attempted. All 49 local media
 hashes still match the validated selected edition, the gallery requires 36
 uploads and 13 figures, and all 23 publisher tests passed. A private public-page
 reference was saved under the selected edition's ignored `private/` directory;
 this is not an authenticated, restorable backup of the raw editor content.
 
-The current public page also differs from the original insertion assumptions:
+The public page also differed from the original insertion assumptions:
 the three proposal/atlas links are items in one list, and “Two atlases, one
-shared table” is a bold paragraph rather than an H2. Once authenticated access
-works, inspect and back up `content.raw`, adapt the insertion check to this
-observed structure, preserve all surrounding content, then upload, apply, and
-verify the public gallery. Do not substitute rendered public HTML for the raw
-editor content when publishing or restoring.
+shared table” is a bold paragraph rather than an H2. The next step was to
+inspect and back up authenticated `content.raw`, adapt the insertion check,
+and preserve all surrounding content during publication. Rendered public HTML
+was not used as a substitute for raw editor content.
+
+### REST publication with the confirmed login — 6 November 2026
+
+The user supplied the correct WordPress login, resolving authentication. The
+publisher retrieved and privately backed up `content.raw` for page 3175,
+then uploaded the 36 selected media files and inserted the 13-figure gallery
+at [the live Setouchi page](https://benjamin.dekosnik.com/futures/setouchi-2028/).
+WordPress readback matched the complete planned content and existing page
+metadata. Publication remained enabled throughout the update.
+
+The authenticated source confirmed a single list of three proposal/atlas links
+followed by a bold-paragraph title. It also contains older, unbalanced block
+comments later in the article. The publisher now recognizes that insertion
+boundary and checks the complete block prefix before it; the unrelated suffix
+is preserved exactly. It still rejects unbalanced prefixes, duplicate targets
+or gallery anchors, and missing introductory links. Native H2 and paragraph
+block targets remain supported. New regression tests cover insertion, repeat
+updates, and exact preservation of the legacy content; all 27 tests pass.
+
+Detail links use the original filename returned in WordPress media metadata
+when upload processing creates a scaled copy. The local media, map designs,
+H3 resolution, and captions are unchanged.
+
+The private receipt is
+`output/setouchi-futures-h3r5-20261106/private/publish-receipt.json`; the original
+editor backup is `private/page-backup-6260d20b9a7720cd.json` under that edition.
+Before-content SHA-256:
+`6260d20b9a7720cdd636ed827eb767fbf06db25260ebb306c2ef62d8605312b9`.
+Published-content SHA-256:
+`50ddd17718a7372b437f62f97368818beb220c44a187c846ed083e3faa50dbba`.
+Credentials, backups, media state, and publication receipts stay outside Git.
+
+Public verification fetched all 36 media files and the page successfully.
+Every media SHA-256 matches the selected local source; all ten map details
+retain their full 3840 × 1663 pixels. The public page contains one gallery,
+13 figures, ten legend links, three book-review links, and four H3r5 captions.
+Removing the inserted gallery from the saved raw content reproduces the
+original page exactly. The private verification record is
+`private/public-verification.json` under the selected edition.
+
+The host initially rate-limited concurrent verification downloads. Sequential
+requests at a slower rate completed all file and page checks. SiteDistrict
+separately denies access to the automated Chrome browser, so a live visual
+inspection at desktop and phone sizes could not be completed. The prior local
+gallery checks remain valid, but they are not evidence of the current live
+theme's exact appearance. No host or theme settings were changed to bypass
+that restriction.
 
 ## Contact approaches: Hajime Narukawa
 
