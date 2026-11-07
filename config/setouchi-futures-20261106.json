@@ -10,6 +10,10 @@
   "preceding_list_count": 3,
   "anchor": "setouchi-futures-visuals",
   "include_hamonshu_gallery": false,
+  "map_caption_details": {
+    "class": "bkoz-txt-details",
+    "text_align": "left"
+  },
   "atlas": "output/atlas",
   "output": "output/setouchi-futures-h3r5-20261106",
   "background": "#240413",

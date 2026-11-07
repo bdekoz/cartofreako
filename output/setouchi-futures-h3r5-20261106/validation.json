@@ -1,8 +1,8 @@
 {
   "schema": "cartofreako-setouchi-futures-validation-v1",
   "status": "local-only",
-  "prepared_sha256": "199d4f5e13ef655bfe81b3a5d2a600f5c89d3080ec539534c07f9af73a0cd29a",
-  "preview_sha256": "8ac313f9383739c9c5590d62a60e66b4a42c8c7c120706a0f9194408e936d35a",
+  "prepared_sha256": "46da96b87b98a5fa41ec77baa8767b342bcf248a2544cecbf9a22c8b806fb727",
+  "preview_sha256": "f97206f356c5cfcd3aede468eca657c44034348061292f048bfa4e689541b2ca",
   "media_assets": 49,
   "upload_assets": 30,
   "figures": 10,
@@ -70,6 +70,16 @@
         "Japan / Setouchi"
       ],
       "images_inside_viewport": true,
+      "caption_details_count": 10,
+      "caption_details_classes": [
+        "bkoz-txt-details"
+      ],
+      "caption_alignments": [
+        "left"
+      ],
+      "caption_font_sizes": [
+        "14px"
+      ],
       "hamonshu_heights": [],
       "section": "World",
       "lazy_loading_declared": true,
@@ -90,6 +100,16 @@
         "Japan / Setouchi"
       ],
       "images_inside_viewport": true,
+      "caption_details_count": 10,
+      "caption_details_classes": [
+        "bkoz-txt-details"
+      ],
+      "caption_alignments": [
+        "left"
+      ],
+      "caption_font_sizes": [
+        "14px"
+      ],
       "hamonshu_heights": [],
       "section": "Japan / Setouchi",
       "lazy_loading_declared": true,
@@ -110,6 +130,16 @@
         "Japan / Setouchi"
       ],
       "images_inside_viewport": true,
+      "caption_details_count": 10,
+      "caption_details_classes": [
+        "bkoz-txt-details"
+      ],
+      "caption_alignments": [
+        "left"
+      ],
+      "caption_font_sizes": [
+        "14px"
+      ],
       "hamonshu_heights": [],
       "section": "World",
       "lazy_loading_declared": true,
@@ -130,6 +160,16 @@
         "Japan / Setouchi"
       ],
       "images_inside_viewport": true,
+      "caption_details_count": 10,
+      "caption_details_classes": [
+        "bkoz-txt-details"
+      ],
+      "caption_alignments": [
+        "left"
+      ],
+      "caption_font_sizes": [
+        "14px"
+      ],
       "hamonshu_heights": [],
       "section": "Japan / Setouchi",
       "lazy_loading_declared": true,

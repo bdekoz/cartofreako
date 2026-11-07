@@ -372,6 +372,16 @@ def gallery_hamonshu(config):
     return config['hamonshu'] if config.get('include_hamonshu_gallery', True) else []
 
 
+def caption_details_html(value, config):
+    settings = config.get('map_caption_details')
+    if not settings:
+        return value
+    if settings['text_align'] not in ('left', 'center', 'right', 'justify'):
+        raise ValueError('Unsupported caption text alignment')
+    return (f'<div class="{escape(settings["class"], quote=True)}" '
+            f'style="text-align:{settings["text_align"]}">{value}</div>')
+
+
 def gallery_blocks(prepared, media=None, local=False):
     """Native core blocks inherit the installed WordPress theme's typography."""
     config = prepared['config']
@@ -400,6 +410,8 @@ def gallery_blocks(prepared, media=None, local=False):
             credit += f'<br><a href="{escape(asset_url(legend), quote=True)}">Legend &amp; sources</a>'
         if review:
             credit += f'<br><a href="{escape(review, quote=True)}">Book review</a>'
+        if legend:
+            credit = caption_details_html(credit, config)
         html = (f'<figure class="wp-block-image size-full"><a href="{escape(asset_url(ident + "-detail"), quote=True)}">'
                 f'<img src="{escape(asset_url(key), quote=True)}" alt="{escape(alt, quote=True)}"'
                 f' width="{image["width"]}" height="{image["height"]}" loading="lazy" decoding="async"'
@@ -447,6 +459,8 @@ a { color: inherit; text-underline-offset: .16em; }
 .wp-block-image img { display: block; max-width: 100%; height: auto; width: 100%; }
 .wp-element-caption { font-size: .85rem; line-height: 1.5; margin-top: 12px; }
 .wp-element-caption a { display: inline-block; padding: 4px 0; }
+.bkoz-txt-details { font-family: 'Raleway', sans-serif; font-weight: 400; font-size: 14px;
+  line-height: 16px; text-align: center; width: 100%; padding: 7px; color: gray; }
 .preview-note { font: 14px/1.5 system-ui, sans-serif; padding: 16px; border: 1px solid #ddd; background: #fafafa; }
 .preview-note p { margin: 0 0 8px; } .preview-note p:last-child { margin-bottom: 0; }
 :focus-visible { outline: 3px solid #225caa; outline-offset: 4px; }

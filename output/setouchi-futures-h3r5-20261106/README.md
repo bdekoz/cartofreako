@@ -55,6 +55,11 @@ and full-width observer rows, stacked on phones. The selected manifests set
 `include_hamonshu_gallery: false`; retained Hamonshū source assets still support
 the original archived edition and unsent outreach brief.
 
+World and Japan captions use `<div class="bkoz-txt-details" style="text-align:left">`
+inside their `figcaption`. The class inherits the site's details typography;
+the inline alignment keeps these ten captions left-aligned. This setting is
+saved in `map_caption_details` in the selected manifests.
+
 ## Rebuild and check
 
 From the repository root:
@@ -128,14 +133,14 @@ Use the current bundle paths above. Keep credentials, backups, and receipts
 private; they are ignored by Git. Preparation, tests, and validation perform
 no publishing or outreach. The illustrated brief and contact draft remain unsent.
 
-The backup immediately before the Hamonshū removal is
-`private/page-backup-50ddd17718a7372b.json`, with the current publication receipt at
+The backup immediately before the latest caption-style update is
+`private/page-backup-8f3ccb44897db891.json`, with the current publication receipt at
 `private/publish-receipt.json`. To restore that saved content with authenticated
 access, run:
 
 ```sh
 python3 scripts/update-setouchi-futures.py restore \
-  --backup output/setouchi-futures-h3r5-20261106/private/page-backup-50ddd17718a7372b.json
+  --backup output/setouchi-futures-h3r5-20261106/private/page-backup-8f3ccb44897db891.json
 ```
 
 Restoration checks the published content hash first and refuses to overwrite

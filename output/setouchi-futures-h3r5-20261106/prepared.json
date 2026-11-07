@@ -12,6 +12,10 @@
     "preceding_list_count": 3,
     "anchor": "setouchi-futures-visuals",
     "include_hamonshu_gallery": false,
+    "map_caption_details": {
+      "class": "bkoz-txt-details",
+      "text_align": "left"
+    },
     "atlas": "output/atlas",
     "output": "output/setouchi-futures-h3r5-20261106",
     "background": "#240413",
@@ -135,7 +139,7 @@
     ],
     "analysis_h3_resolution": 5
   },
-  "config_sha256": "808b55a673d0fa80c3dc6e92092bb44b50f1d364f1048449ddc829f1682fbb4c",
+  "config_sha256": "fe14c21b5264e5aeb9363c045b58e0ef39a04d026bc150463069b931bb43ef76",
   "assets": [
     {
       "key": "world-water-detail",

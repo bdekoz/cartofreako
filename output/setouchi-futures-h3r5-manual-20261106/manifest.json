@@ -5,10 +5,10 @@
   "destination": "https://benjamin.dekosnik.com/futures/setouchi-2028/",
   "page_id": 3175,
   "source_bundle": "output/setouchi-futures-h3r5-20261106",
-  "prepared_sha256": "199d4f5e13ef655bfe81b3a5d2a600f5c89d3080ec539534c07f9af73a0cd29a",
-  "source_validation_sha256": "e51e0d8b847fd6203fa970743bfe526f5d766c85ce62cff96ba42053ad5c9838",
+  "prepared_sha256": "46da96b87b98a5fa41ec77baa8767b342bcf248a2544cecbf9a22c8b806fb727",
+  "source_validation_sha256": "2fbcb4d8a88e04a778a14bdf433dbc71ca6c26c21fecb64e50b4133b4e01d0a7",
   "builder_sha256": "22afe237e20c5482df75aa1309f56d06dfbcb27d0b08998148d87569bb659faf",
-  "guide_template_sha256": "4e0e7ef8ce3a06ec17cde4ca97a49e9a752ea74c2a54cd20ddeea64410fb72e5",
+  "guide_template_sha256": "19de0422b33c840d6ad8f6c81212eab88e1228638f98bacfba85c59379923231",
   "documentation_sources": {
     "media": "https://wordpress.org/documentation/article/media-library-screen/",
     "image": "https://wordpress.org/documentation/article/image-block/",

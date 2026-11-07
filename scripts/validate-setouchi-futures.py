@@ -93,6 +93,10 @@ def browser_checks(output, temp):
                         stacked_on_phone:innerWidth>781||[...document.querySelectorAll('.wp-block-columns')].every(r=>getComputedStyle(r).display==='block'),
                         gallery_sections:[...document.querySelectorAll('h3')].map(h=>h.textContent),
                         images_inside_viewport:images.every(i=>i.getBoundingClientRect().right<=innerWidth+1),
+                        caption_details_count:document.querySelectorAll('figcaption > div').length,
+                        caption_details_classes:[...new Set([...document.querySelectorAll('figcaption > div')].map(d=>d.className))],
+                        caption_alignments:[...new Set([...document.querySelectorAll('figcaption > div')].map(d=>getComputedStyle(d).textAlign))],
+                        caption_font_sizes:[...new Set([...document.querySelectorAll('figcaption > div')].map(d=>getComputedStyle(d).fontSize))],
                         hamonshu_heights:images.slice(-3).map(i=>Math.round(i.getBoundingClientRect().height))};})()""")
                     values.update(section=section, lazy_loading_declared=lazy, images_decoded_before_capture=True)
                     for key in ['no_horizontal_overflow', 'all_images_loaded', 'all_have_alt', 'lazy_loading_declared', 'stacked_on_phone', 'images_inside_viewport']:
@@ -102,6 +106,11 @@ def browser_checks(output, temp):
                         values['hamonshu_heights'] = []
                     if values['viewport'] != [width, height] or (hamonshu_count and len(set(values['hamonshu_heights'])) != 1):
                         raise ValueError('Unexpected viewport or unequal Hamonshū frames')
+                    details = config.get('map_caption_details')
+                    if details and (values['caption_details_count'] != len(config['maps']) * 2
+                                    or values['caption_details_classes'] != [details['class']]
+                                    or values['caption_alignments'] != [details['text_align']]):
+                        raise ValueError('Map captions do not use the selected details style and alignment')
                     stem = f'{width}-' + ('world' if section == 'World' else 'japan' if section.startswith('Japan') else 'hamonshu')
                     data = client.call('Page.captureScreenshot', {'format': 'png', 'captureBeyondViewport': False})
                     (temp / (stem + '.png')).write_bytes(base64.b64decode(data['data']))

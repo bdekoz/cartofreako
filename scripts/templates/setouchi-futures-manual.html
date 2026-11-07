@@ -145,6 +145,12 @@
   </ol>
   <p class="note"><a href="https://wordpress.org/documentation/article/image-block/">WordPress Image block instructions</a> ·
     <a href="https://wordpress.org/documentation/article/link-editing/">Link controls</a>.</p>
+  <p><strong>Map caption typography:</strong> use the image block’s <strong>Edit as HTML</strong>
+    option and wrap the title, description, and legend link inside its existing
+    <code>&lt;figcaption&gt;</code> with
+    <code>&lt;div class="bkoz-txt-details" style="text-align:left"&gt;…&lt;/div&gt;</code>.
+    Keep the caption text and links inside that div. This uses the site’s details typography
+    and overrides its default centered alignment for the World and Japan captions.</p>
   <p><strong>Framing:</strong> keep complete images visible. Use <strong>Contain</strong> when
     setting an aspect ratio. The reference uses <strong>44:19.052559</strong> frames for maps;
     if your editor has no custom-ratio control, use <strong>Original</strong> for the map cards.

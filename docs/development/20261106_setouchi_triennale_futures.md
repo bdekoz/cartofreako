@@ -1,6 +1,6 @@
 # Setouchi 2028 futures: image grids, website publishing, and outreach
 
-Date: 2026-11-07. Status: ten-map H3r5 gallery published on page 3175; Hamonshū image section removed; public content verified; host blocks automated live-browser inspection.
+Date: 2026-11-07. Status: ten-map H3r5 gallery published on page 3175 with left-aligned details captions; Hamonshū image section removed; public content verified; host blocks automated live-browser inspection.
 
 ## Task and accumulated decisions
 
@@ -45,6 +45,7 @@ the control used by the resolution comparison. The r3 settings SHA-256 remains
 | Image delivery | 640/1280-pixel cards, 3840-pixel full-sheet details, separate legend/source PDFs. |
 | Japan card crops | Water, Atmosphere, and Temperature: `[0.5, 1.75, 29.1, 17.25]` inches. Full sheets remain linked; Fiber and Observer retain the full composition. |
 | Gallery layout | Two geographic rows of two maps, then a full-width observer panorama per scope; stacked phone layout; `include_hamonshu_gallery: false`. |
+| Map caption typography | Each World/Japan caption uses `<div class="bkoz-txt-details" style="text-align:left">` inside its existing `figcaption`; the site's details typography supplies the remaining text styling. |
 | Website scope | Published after the three proposal/atlas links and before “Two atlases, one shared table”; existing theme typography inherited. |
 
 Reproduce this saved edition from the repository root:
@@ -935,6 +936,43 @@ tests pass, and local validation confirms ten figures and 30 upload assets.
 Four local browser captures cover both grids at desktop and phone widths;
 all ten images load with alt text, and the phone layout stacks without
 horizontal overflow.
+
+### Left-aligned details typography for map captions — 7 November 2026
+
+The user requested the text under the World and Japan images use a left-aligned
+`<div class="bkoz-txt-details">`. The site's current custom CSS defines that
+class as Raleway/sans-serif, weight 400, 14 px text with 16 px line height,
+gray color, full width, and 7 px padding. Its default alignment is centered,
+so each of the ten caption divs explicitly sets `style="text-align:left"`.
+The existing semantic `figcaption` remains around the details div.
+
+Saved the class and alignment in `map_caption_details` in both selected
+manifests and the prepared edition. The generator applies the wrapper to map
+captions, and the local preview mirrors the existing site class. The manual
+package explains the same markup for editing through the web UI.
+
+The authenticated page contained newer spacer, rule, and attribution edits,
+including an unclosed gallery block wrapper. Applied a targeted edit to only
+the ten caption interiors, preserving all other raw content byte-for-byte.
+Caption wording, image attributes, and link destinations are unchanged. This
+avoids replacing the gallery from an older local template; the full-gallery
+publisher retains its structural guards for any later broader update.
+
+The pre-style backup is
+`output/setouchi-futures-h3r5-20261106/private/page-backup-8f3ccb44897db891.json`.
+The prior receipt is retained as
+`private/publish-receipt-before-caption-style-20261107.json`; the current
+publication receipt identifies the operation as `caption-style-only`.
+The review record is `private/caption-style-plan-20261107.json`.
+
+WordPress saved-content readback matches the caption-only plan. Public HTML
+returns HTTP 200 and contains all ten left-aligned details divs. Verification
+confirms unchanged caption wording, image attributes, link destinations, and
+all raw content outside the caption interiors. The receipt is
+`private/caption-style-verification-20261107.json`. Local desktop and phone
+checks report ten `bkoz-txt-details` captions, computed left alignment, and
+14 px text; all images load without horizontal overflow. All 27 publisher
+tests pass. The regenerated manual package retains 30 uploads and ten figures.
 
 ## Contact approaches: Hajime Narukawa
 
