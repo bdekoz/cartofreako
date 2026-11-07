@@ -974,6 +974,27 @@ checks report ten `bkoz-txt-details` captions, computed left alignment, and
 14 px text; all images load without horizontal overflow. All 27 publisher
 tests pass. The regenerated manual package retains 30 uploads and ten figures.
 
+### Restore reverted caption styling — 7 November 2026
+
+A later check requested by the user confirmed that all ten World and Japan
+captions had lost their `bkoz-txt-details` divs in both the saved WordPress
+content and the public page. The check establishes the missing markup, not
+which editor action removed it.
+
+Restored `<div class="bkoz-txt-details" style="text-align:left">` inside each
+existing `figcaption`, using a fresh authenticated page read and a content-hash
+check immediately before publication. All raw content outside the caption
+interiors remains byte-for-byte identical, including the user's latest prose
+and layout edits. Caption text, image attributes, and links are unchanged.
+The local generator and manual package already retain the requested styling.
+
+Saved-content readback matches the repair plan, and the public page returns
+HTTP 200 with all ten left-aligned details wrappers. The pre-repair backup is
+`output/setouchi-futures-h3r5-20261106/private/page-backup-b5613047e43c3e69.json`.
+The private verification record is `private/caption-repair-verification-20261107.json`
+under that edition; the preceding publication receipt is preserved as
+`private/publish-receipt-before-caption-repair-20261107.json`.
+
 ## Contact approaches: Hajime Narukawa
 
 Keio's current [faculty profile](https://www.keio.ac.jp/en/faculty/k_100012208/)
