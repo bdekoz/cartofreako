@@ -1,6 +1,6 @@
 # Setouchi 2028 futures: image grids, website publishing, and outreach
 
-Date: 2026-11-06. Status: selected H3r5 gallery and print edition validated; manual WordPress web UI package prepared; WordPress publication deferred.
+Date: 2026-11-06. Status: selected H3r5 edition and manual package validated; REST publication authorized, but authentication currently returns HTTP 401; website unchanged by the publisher.
 
 ## Task and accumulated decisions
 
@@ -821,6 +821,39 @@ editor lacks a custom 44:19.052559 ratio, its documented fallback is Original
 for maps; the three Japan crop cards will then be taller. Hamonshū uses 4:3
 Contain. This affects web framing only; the selected artwork is unchanged.
 The package performs no WordPress writes or outreach.
+
+### REST publication attempt — 6 November 2026
+
+The user authorized publishing the prepared gallery to WordPress page 3175
+with the supplied application password. The credential was read into memory
+and sent only to the intended site over HTTPS; no credential values were
+printed or added to repository files.
+
+The REST index and public page both returned HTTP 200, and the index advertises
+Application Passwords. Authenticated page access failed with HTTP 401.
+`/wp-json/wp/v2/users/me?context=edit` returned `rest_not_logged_in`, including
+uncached checks through the normal route and `index.php?rest_route=...`.
+The client verified that it sent the correct Basic Authorization header.
+Removing the password's display spaces did not change the result. These
+checks do not establish whether the credential is valid or whether server
+configuration prevents WordPress from processing it. The remaining check is
+the credential's site/account association, then host/plugin authentication
+configuration if that association is correct. WordPress documents these
+[application-password troubleshooting checks](https://developer.wordpress.org/advanced-administration/security/application-passwords/).
+
+No media were uploaded and no page writes were attempted. All 49 local media
+hashes still match the validated selected edition, the gallery requires 36
+uploads and 13 figures, and all 23 publisher tests passed. A private public-page
+reference was saved under the selected edition's ignored `private/` directory;
+this is not an authenticated, restorable backup of the raw editor content.
+
+The current public page also differs from the original insertion assumptions:
+the three proposal/atlas links are items in one list, and “Two atlases, one
+shared table” is a bold paragraph rather than an H2. Once authenticated access
+works, inspect and back up `content.raw`, adapt the insertion check to this
+observed structure, preserve all surrounding content, then upload, apply, and
+verify the public gallery. Do not substitute rendered public HTML for the raw
+editor content when publishing or restoring.
 
 ## Contact approaches: Hajime Narukawa
 
