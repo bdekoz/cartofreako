@@ -302,7 +302,7 @@ the Japan region. This one-day test supports checking decoding, alignment
 and regional disagreement; it does not establish a multi-year error model
 or independence from shared observation inputs.
 
-## Month-to-month and year-to-year acquisition plan
+## Seasonal comparison and continuing acquisition
 
 There is no single month of maximum climate variance. Distinguish the warmest
 mean, the largest month-to-month change, interannual anomaly variance, and
@@ -340,50 +340,20 @@ pollution episode. Ocean winter heatwave interpretation follows a local
 seasonal baseline, as discussed in the
 [WMO marine-heatwave overview](https://wmo.int/resources/wmo-bulletin/vol-75-2/marine-heatwaves-are-key-tracking-climate-change).
 
-Implement future acquisition as versioned editions:
+Future daily, monthly, matched-period and revision work is specified in the
+[Stage 2 acquisition contract](20261108_anthropocene_ocean_temperature_stage_2.md#shared-method-and-acquisition-contract).
+It preserves this edition's hashes and the distinctions among seasonality,
+anomaly, event counts and changing observation coverage.
 
-1. **Daily raw layer:** retain provider, variable, units, UTC/source-local
-   calendar, source version, file URL, retrieval time, hash, missing/quality
-   flags and preliminary/final status. Keep the original grid and values.
-2. **Daily analysis layer:** retain native-center membership, H3 resolution,
-   masks, support counts and transformation version. Reject calendar/grid
-   drift. For station data, retain station identity and eligibility separately.
-3. **Monthly layer:** save mean SST, mean anomaly, record-high/low counts,
-   eligible days, coverage and source-specific uncertainty/context fields.
-   Do not derive daily records from monthly means. Mark partial months explicitly.
-4. **Comparison layer:** produce same-month/year and matched-YTD comparisons
-   with the same valid support. Retain full-year products for completed years.
-   Separate seasonality from anomalies; publish regional distributions as
-   well as a global aggregate.
-5. **Revision policy:** weekly provisional review; re-fetch NOAA's recent
-   provisional window after its approximately fifteen-day revision period;
-   freeze monthly and annual editions after source latency. Preserve the
-   November 8 hashes rather than overwriting the research snapshot.
-6. **Seasonal selection:** after the full baseline is available, rank each
-   region's monthly mean, interannual anomaly variance and absolute
-   month-to-month change separately. Test a common cohort and show coverage
-   sensitivity. Use these results to choose exhibition examples.
+## Stage 2 — separate approved implementation plan
 
-## Four inferred climate plates proposed for Stage 2
-
-These are suggestions, not additional implemented/default plates. The first
-two reuse most of the newly acquired ocean data and have the lowest marginal
-acquisition cost.
-
-| Priority / candidate | Inference and proposed measure | Data and method | Main qualification |
-| --- | --- | --- | --- |
-| 1. `anthropocene-marine-heatwave-YYYY` | Days in events, longest duration and cumulative intensity in °C-days | OISST daily series; local calendar-day 90th percentile; events lasting at least five consecutive days; explicitly specified smoothing, gap bridging, leap days and cross-year treatment | A fixed 1991–2020 baseline would be a declared adaptation; test against other established baselines. Event intensity, duration and occurrence need separate legend keys |
-| 2. `anthropocene-ocean-thermal-season-YYYY` | Earlier/later onset and length of the local warm season relative to climatology | Reuse daily SST and climatology; choose a declared local seasonal threshold, persistent crossings and circular calendar statistics | Tropical weak-seasonal cycles, ice and multiple crossings may make onset undefined; no universal ecological threshold is implied |
-| 3. `anthropocene-coastal-compound-heat-YYYY` | Days with simultaneous unusual land and adjacent-ocean heat | Pair coastal regions using CPC land temperature and OISST local-percentile exceedance; retain separate land/ocean supports and shared valid days | H3 proximity alone does not define a coastal relationship; co-occurrence does not establish mechanism or impact |
-| 4. `anthropocene-heat-particulate-coexposure-YYYY` | Days with simultaneous unusual heat and elevated PM2.5, starting with the India pilot | Join eligible daily monitor observations to explicitly chosen heat regions and local calendars; keep reference and low-cost sensors separate | Coverage and station selection constrain inference. A particulate comparison threshold is not a safety boundary, and co-occurrence does not identify pollution sources or attribute climate causation |
-
-The marine-heatwave definition follows the
-[Hobday et al. framework](https://doi.org/10.1016/j.pocean.2015.12.014).
-An operational implementation still needs pinned window/smoothing and gap
-rules; [EPA's documented implementation](https://www.epa.gov/system/files/documents/2024-06/marine-heat-waves_documentation.pdf)
-uses a different reference period, illustrating why baseline labels cannot
-be omitted. Prefer one map per measure or explicitly separate variants,
-rather than collapsing unlike climate quantities into one score.
+The four inferred plate families—marine heatwaves, ocean thermal seasons,
+compound coastal heat, and the India heat–particulate pilot—are approved for
+unattended implementation. Their methods, data dependencies, presentation,
+execution sequence and acceptance criteria are now in the separate
+[Stage 2 plan](20261108_anthropocene_ocean_temperature_stage_2.md).
+They remain planned optional prototypes until implemented and validated;
+they are not included in this document's completed Stage 0/1 plate counts.
 
 ## Reproduction and verification
 
@@ -454,5 +424,7 @@ The ocean source cutoff is November 7; the edition date is November 8.
    provider boundary after the concrete download scope is known. Public
    documentation discovery is already complete; no credential is needed to
    finish this NOAA/JMA review edition.
-3. **Stage 2 selection:** choose which of the four inferred plates merits
-   implementation. They remain documented proposals until selected.
+
+All four inferred Stage 2 families have been selected and approved. Their
+remaining human decisions are recorded at the end of the
+[separate Stage 2 plan](20261108_anthropocene_ocean_temperature_stage_2.md#human-gated-decisions-after-the-local-review).
