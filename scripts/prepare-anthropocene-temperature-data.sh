@@ -13,8 +13,8 @@ fi
 data_dir=${1:-assets.static/anthropocene}
 raw_dir="$data_dir/.raw/cpc"
 prepared_dir="$data_dir/.prepared"
-profile_2025="$data_dir/anthropocene-temperature-2025-profile.json"
-profile_2026="$data_dir/anthropocene-temperature-2026-profile.json"
+profile_2025="$data_dir/anthropocene-land-temperature-2025-profile.json"
+profile_2026="$data_dir/anthropocene-land-temperature-2026-profile.json"
 preparer=${ANTHROPOCENE_TEMPERATURE_PREPARER:-src.generate/prepare-anthropocene-temperature}
 
 for path in \
@@ -46,10 +46,10 @@ done
 
 mkdir -p "$prepared_dir"
 "$preparer" "$raw_dir" \
-  "$profile_2025" "$prepared_dir/anthropocene-temperature-2025.geojson" \
-  "$profile_2026" "$prepared_dir/anthropocene-temperature-2026.geojson"
+  "$profile_2025" "$prepared_dir/anthropocene-land-temperature-2025.geojson" \
+  "$profile_2026" "$prepared_dir/anthropocene-land-temperature-2026.geojson"
 sha256sum \
-  "$prepared_dir/anthropocene-temperature-2025.geojson" \
-  "$prepared_dir/anthropocene-temperature-2026.geojson"
+  "$prepared_dir/anthropocene-land-temperature-2025.geojson" \
+  "$prepared_dir/anthropocene-land-temperature-2026.geojson"
 printf '%s\n' \
   'Candidates prepared only. Review coverage, totals, regional audits, profiles, and checksums before promotion.'

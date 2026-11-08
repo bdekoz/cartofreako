@@ -7,7 +7,7 @@
 [Generated previews](../../getting-started/build.md#generated-artifact-previews)
 
 This is the human-readable index to the checked
-[`cartofreako-resources-profile-v3`](../../../../assets.static/resources/resources-profile.json)
+[`cartofreako-resources-profile-v3`](../../../../assets.static/resources/current-20261108/resources-profile.json)
 metric catalog. The JSON profile remains authoritative for exact units,
 reference periods, source IDs, coverage, output tags, palettes, and lifecycle
 status. The checked snapshot contains 59 metric definitions across six
@@ -38,8 +38,8 @@ as follows:
 | Profile status | Count | Public pass class | Meaning |
 | --- | ---: | --- | --- |
 | `default` | 6 | Standard | Released and selected as the default metric for its family |
-| `released` | 8 | Standard | Released alongside the family default |
-| `planned` | 41 | Exploration only | Definition retained, but promotion work is incomplete |
+| `released` | 10 | Standard | Released alongside the family default, including lithium and uranium |
+| `planned` | 39 | Exploration only | Definition retained, but promotion work is incomplete |
 | `supplemental` | 3 | Exploration only | Potential supporting product; not an optional production pass |
 | `research-gap` | 1 | Exploration only | No source currently satisfies the definition and release gates |
 
@@ -50,9 +50,11 @@ authorization contract must be documented explicitly instead of overloading
 
 ## Standard resource passes
 
-These 14 metrics have a nonempty output tag, normalized data or checked
-spatial input, a passing release gate, Make rules, six-projection outputs, and
-public v12 previews.
+These 16 metrics have a nonempty output tag, normalized data or checked
+spatial input, a passing release gate and six-projection Make rules. The
+original fourteen have historical public previews; the November 8 lithium
+and uranium additions have local World/Japan sheets. The reef metric now
+belongs to Anthropocene in the current atlas.
 
 | Family | Metric ID | Reference period | Output tag |
 | --- | --- | --- | --- |
@@ -62,9 +64,11 @@ public v12 previews.
 | Energy | `petroleum-refinery-throughput` | Latest reported from 2018–2024 | `petrochemical-refinery-throughput-latest-2024` |
 | Food | `food-production-index` | 2022 | `food-production-index-2022` |
 | Fauna | `fisheries-production` | Latest accepted through 2024 | `fisheries-production-latest-2024` |
-| Fauna | `coral-reef-threat` | *Reefs at Risk Revisited*, 2011 | `coral-reef-threat-2011` |
+| Anthropocene | `coral-reef-threat` | *Reefs at Risk Revisited*, 2011 | `coral-reef-threat-2011` |
 | Flora | `forest-area-percent` | 2023 | `forest-area-percent-2023` |
 | Mineral | `rare-earth-mine-production` | 2025 estimate | `rare-earth-mine-production-2025` |
+| Mineral | `lithium-mine-production` | 2025 estimate | `lithium-mine-production-2025` |
+| Mineral | `uranium-mine-production` | 2024 | `uranium-mine-production-2024` |
 | Human | `population-under-30` | 2024 | `population-under-30-2024` |
 | Human | `population-over-60` | 2024 | `population-over-60-2024` |
 | Human | `upper-secondary-attainment` | Latest observation from 2018–2025 | `upper-secondary-attainment-latest-2025` |
@@ -98,14 +102,14 @@ artifact.
 
 ### Minerals
 
-The following 23 USGS-oriented commodity definitions are all `planned` and
-exploration-only. A commodity name does not yet imply a released metric:
+The following 21 commodity definitions remain `planned` and
+exploration-only. Lithium and uranium now have the explicit mine-production
+metrics above. A commodity name does not imply other released measures:
 mine production, refined production, processing capacity, reserves,
 resources, and trade must remain separate.
 
 | Metric ID | Title | Metric ID | Title |
 | --- | --- | --- | --- |
-| `uranium` | Uranium | `lithium` | Lithium |
 | `cobalt` | Cobalt | `nickel` | Nickel |
 | `natural-graphite` | Natural graphite | `manganese` | Manganese |
 | `copper` | Copper | `bauxite-aluminum` | Bauxite and aluminum |
@@ -159,3 +163,9 @@ are present and reviewed:
 An optional pass must meet the same implementation and quality boundary. Its
 only difference is a deliberate, documented opt-in constraint such as source
 credentials or license acceptance.
+
+## Current atlas additions — 8 November 2026
+
+The [current plate catalog](../../../../config/atlas-plates.json) moves the historical coral-reef threat plate to Anthropocene, groups EIA and OPEC petroleum studies under Energy resources, and adds `resources-mineral-lithium-mine-production-2025`, `resources-mineral-uranium-mine-production-2024`, and `resources-mineral-mine-production-comparison`.
+
+Mineral identity is consistent across the separate and combined sheets: rare earths are purple circles, lithium cyan squares, and uranium amber triangles. Quantity scales and observation years are separate. The dated resource snapshot can be recreated with `python3 scripts/prepare-mineral-additions.py`; the source tables and coverage gaps are in [the additions ledger](../../../../config/mineral-additions-20261108.json).

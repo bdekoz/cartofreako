@@ -1,0 +1,502 @@
+{
+  "period": "1 January\u20137 November, each year; 311 calendar days",
+  "method": "At each H3 cell and calendar day, retain the pair only if both years are valid. Identical paired cell-day support and weights in the two means; sum-of-source-center cos(latitude) weights approximate ocean area. Region membership uses H3 centers.",
+  "climate_interpretation": "A one-year difference is not an attribution result or a long-term trend. November is a 7-day partial month.",
+  "regions": [
+    {
+      "region": "global source-supported ocean",
+      "paired_cell_days": 167205423,
+      "sst_2025_degC": 20.156820929153085,
+      "sst_2026_degC": 20.318284147208985,
+      "difference_2026_minus_2025_degC": 0.1614632180559024,
+      "months": [
+        {
+          "month": 1,
+          "days": 31,
+          "sst_2025_degC": 20.05303948788402,
+          "sst_2026_degC": 19.98917911906765,
+          "difference_2026_minus_2025_degC": -0.06386036881636926,
+          "paired_cell_days": 16756494
+        },
+        {
+          "month": 2,
+          "days": 28,
+          "sst_2025_degC": 20.14894455650369,
+          "sst_2026_degC": 20.13167443459318,
+          "difference_2026_minus_2025_degC": -0.017270121910508206,
+          "paired_cell_days": 15183178
+        },
+        {
+          "month": 3,
+          "days": 31,
+          "sst_2025_degC": 20.071384760810403,
+          "sst_2026_degC": 20.13421523569162,
+          "difference_2026_minus_2025_degC": 0.06283047488121633,
+          "paired_cell_days": 16933967
+        },
+        {
+          "month": 4,
+          "days": 30,
+          "sst_2025_degC": 20.09712877309061,
+          "sst_2026_degC": 20.242680884394,
+          "difference_2026_minus_2025_degC": 0.14555211130339252,
+          "paired_cell_days": 16226593
+        },
+        {
+          "month": 5,
+          "days": 31,
+          "sst_2025_degC": 20.099524345061006,
+          "sst_2026_degC": 20.212458887822653,
+          "difference_2026_minus_2025_degC": 0.11293454276164445,
+          "paired_cell_days": 16663470
+        },
+        {
+          "month": 6,
+          "days": 30,
+          "sst_2025_degC": 20.13893224957735,
+          "sst_2026_degC": 20.33021258733948,
+          "difference_2026_minus_2025_degC": 0.19128033776212694,
+          "paired_cell_days": 16009605
+        },
+        {
+          "month": 7,
+          "days": 31,
+          "sst_2025_degC": 20.252694099397512,
+          "sst_2026_degC": 20.442583983248188,
+          "difference_2026_minus_2025_degC": 0.18988988385067365,
+          "paired_cell_days": 16598779
+        },
+        {
+          "month": 8,
+          "days": 31,
+          "sst_2025_degC": 20.336368284931595,
+          "sst_2026_degC": 20.55885185142334,
+          "difference_2026_minus_2025_degC": 0.22248356649174603,
+          "paired_cell_days": 16625796
+        },
+        {
+          "month": 9,
+          "days": 30,
+          "sst_2025_degC": 20.267004892841168,
+          "sst_2026_degC": 20.58179504617384,
+          "difference_2026_minus_2025_degC": 0.3147901533326708,
+          "paired_cell_days": 16036192
+        },
+        {
+          "month": 10,
+          "days": 31,
+          "sst_2025_degC": 20.133263323108032,
+          "sst_2026_degC": 20.5121379486767,
+          "difference_2026_minus_2025_degC": 0.37887462556866464,
+          "paired_cell_days": 16467700
+        },
+        {
+          "month": 11,
+          "days": 7,
+          "sst_2025_degC": 20.03346341134723,
+          "sst_2026_degC": 20.510616178291,
+          "difference_2026_minus_2025_degC": 0.47715276694377035,
+          "paired_cell_days": 3703649
+        }
+      ]
+    },
+    {
+      "region": "Japan 20\u201350N / 120\u2013160E",
+      "paired_cell_days": 4830946,
+      "sst_2025_degC": 21.205410147794158,
+      "sst_2026_degC": 21.075187672065105,
+      "difference_2026_minus_2025_degC": -0.13022247572905046,
+      "months": [
+        {
+          "month": 1,
+          "days": 31,
+          "sst_2025_degC": 17.428242624867924,
+          "sst_2026_degC": 17.345106861339012,
+          "difference_2026_minus_2025_degC": -0.08313576352891328,
+          "paired_cell_days": 474554
+        },
+        {
+          "month": 2,
+          "days": 28,
+          "sst_2025_degC": 16.379741568460926,
+          "sst_2026_degC": 16.509649083776484,
+          "difference_2026_minus_2025_degC": 0.12990751531555658,
+          "paired_cell_days": 422766
+        },
+        {
+          "month": 3,
+          "days": 31,
+          "sst_2025_degC": 16.071243736103195,
+          "sst_2026_degC": 16.386500321963716,
+          "difference_2026_minus_2025_degC": 0.31525658586052174,
+          "paired_cell_days": 475300
+        },
+        {
+          "month": 4,
+          "days": 30,
+          "sst_2025_degC": 16.853603243104907,
+          "sst_2026_degC": 17.376707928872264,
+          "difference_2026_minus_2025_degC": 0.5231046857673569,
+          "paired_cell_days": 468666
+        },
+        {
+          "month": 5,
+          "days": 31,
+          "sst_2025_degC": 19.3435005267201,
+          "sst_2026_degC": 19.521688823295545,
+          "difference_2026_minus_2025_degC": 0.17818829657544796,
+          "paired_cell_days": 485020
+        },
+        {
+          "month": 6,
+          "days": 30,
+          "sst_2025_degC": 22.41563808364548,
+          "sst_2026_degC": 22.061292652617713,
+          "difference_2026_minus_2025_degC": -0.35434543102776606,
+          "paired_cell_days": 469620
+        },
+        {
+          "month": 7,
+          "days": 31,
+          "sst_2025_degC": 25.268182843247786,
+          "sst_2026_degC": 24.88030362884462,
+          "difference_2026_minus_2025_degC": -0.3878792144031667,
+          "paired_cell_days": 485274
+        },
+        {
+          "month": 8,
+          "days": 31,
+          "sst_2025_degC": 26.710334528777807,
+          "sst_2026_degC": 26.086352102939458,
+          "difference_2026_minus_2025_degC": -0.623982425838349,
+          "paired_cell_days": 485274
+        },
+        {
+          "month": 9,
+          "days": 30,
+          "sst_2025_degC": 26.342915615571556,
+          "sst_2026_degC": 25.724593692817113,
+          "difference_2026_minus_2025_degC": -0.6183219227544409,
+          "paired_cell_days": 469620
+        },
+        {
+          "month": 10,
+          "days": 31,
+          "sst_2025_degC": 24.274281953126454,
+          "sst_2026_degC": 23.934846773972364,
+          "difference_2026_minus_2025_degC": -0.33943517915409216,
+          "paired_cell_days": 485274
+        },
+        {
+          "month": 11,
+          "days": 7,
+          "sst_2025_degC": 22.39782450123805,
+          "sst_2026_degC": 22.260305128013137,
+          "difference_2026_minus_2025_degC": -0.13751937322491312,
+          "paired_cell_days": 109578
+        }
+      ]
+    },
+    {
+      "region": "Northern Hemisphere",
+      "paired_cell_days": 69994322,
+      "sst_2025_degC": 22.414398037534987,
+      "sst_2026_degC": 22.609507623294203,
+      "difference_2026_minus_2025_degC": 0.19510958575921633,
+      "months": [
+        {
+          "month": 1,
+          "days": 31,
+          "sst_2025_degC": 21.01730945375665,
+          "sst_2026_degC": 20.978255063707106,
+          "difference_2026_minus_2025_degC": -0.03905439004954502,
+          "paired_cell_days": 6740750
+        },
+        {
+          "month": 2,
+          "days": 28,
+          "sst_2025_degC": 20.84550777009217,
+          "sst_2026_degC": 20.802156341756728,
+          "difference_2026_minus_2025_degC": -0.04335142833543955,
+          "paired_cell_days": 5997433
+        },
+        {
+          "month": 3,
+          "days": 31,
+          "sst_2025_degC": 20.80050947137955,
+          "sst_2026_degC": 20.92339571565509,
+          "difference_2026_minus_2025_degC": 0.1228862442755427,
+          "paired_cell_days": 6676065
+        },
+        {
+          "month": 4,
+          "days": 30,
+          "sst_2025_degC": 21.16599197520071,
+          "sst_2026_degC": 21.400520469779615,
+          "difference_2026_minus_2025_degC": 0.23452849457890182,
+          "paired_cell_days": 6529113
+        },
+        {
+          "month": 5,
+          "days": 31,
+          "sst_2025_degC": 21.956104518688853,
+          "sst_2026_degC": 22.128199211177186,
+          "difference_2026_minus_2025_degC": 0.1720946924883317,
+          "paired_cell_days": 6829489
+        },
+        {
+          "month": 6,
+          "days": 30,
+          "sst_2025_degC": 22.85082423222143,
+          "sst_2026_degC": 23.081955800239985,
+          "difference_2026_minus_2025_degC": 0.23113156801855564,
+          "paired_cell_days": 6729223
+        },
+        {
+          "month": 7,
+          "days": 31,
+          "sst_2025_degC": 23.751418415114223,
+          "sst_2026_degC": 23.9777905893728,
+          "difference_2026_minus_2025_degC": 0.22637217425857384,
+          "paired_cell_days": 7137775
+        },
+        {
+          "month": 8,
+          "days": 31,
+          "sst_2025_degC": 24.212262006100357,
+          "sst_2026_degC": 24.434195211658732,
+          "difference_2026_minus_2025_degC": 0.22193320555837476,
+          "paired_cell_days": 7306623
+        },
+        {
+          "month": 9,
+          "days": 30,
+          "sst_2025_degC": 23.84731779122109,
+          "sst_2026_degC": 24.17827269444329,
+          "difference_2026_minus_2025_degC": 0.330954903222197,
+          "paired_cell_days": 7157210
+        },
+        {
+          "month": 10,
+          "days": 31,
+          "sst_2025_degC": 23.21018304171328,
+          "sst_2026_degC": 23.59239577247134,
+          "difference_2026_minus_2025_degC": 0.3822127307580604,
+          "paired_cell_days": 7273735
+        },
+        {
+          "month": 11,
+          "days": 7,
+          "sst_2025_degC": 22.609562502098672,
+          "sst_2026_degC": 23.107277069695307,
+          "difference_2026_minus_2025_degC": 0.4977145675966356,
+          "paired_cell_days": 1616906
+        }
+      ]
+    },
+    {
+      "region": "Southern Hemisphere",
+      "paired_cell_days": 97211101,
+      "sst_2025_degC": 18.467061302903808,
+      "sst_2026_degC": 18.60334076377866,
+      "difference_2026_minus_2025_degC": 0.1362794608748508,
+      "months": [
+        {
+          "month": 1,
+          "days": 31,
+          "sst_2025_degC": 19.362979152574496,
+          "sst_2026_degC": 19.2813668858132,
+          "difference_2026_minus_2025_degC": -0.0816122667612993,
+          "paired_cell_days": 10015744
+        },
+        {
+          "month": 2,
+          "days": 28,
+          "sst_2025_degC": 19.660903222837344,
+          "sst_2026_degC": 19.661906755525713,
+          "difference_2026_minus_2025_degC": 0.001003532688368501,
+          "paired_cell_days": 9185745
+        },
+        {
+          "month": 3,
+          "days": 31,
+          "sst_2025_degC": 19.561681181170183,
+          "sst_2026_degC": 19.58252893321317,
+          "difference_2026_minus_2025_degC": 0.020847752042984332,
+          "paired_cell_days": 10257902
+        },
+        {
+          "month": 4,
+          "days": 30,
+          "sst_2025_degC": 19.332882667557307,
+          "sst_2026_degC": 19.4148159226137,
+          "difference_2026_minus_2025_degC": 0.08193325505639051,
+          "paired_cell_days": 9697480
+        },
+        {
+          "month": 5,
+          "days": 31,
+          "sst_2025_degC": 18.743261365925726,
+          "sst_2026_degC": 18.812978426321603,
+          "difference_2026_minus_2025_degC": 0.06971706039587502,
+          "paired_cell_days": 9833981
+        },
+        {
+          "month": 6,
+          "days": 30,
+          "sst_2025_degC": 18.099472873456026,
+          "sst_2026_degC": 18.26078337255327,
+          "difference_2026_minus_2025_degC": 0.161310499097244,
+          "paired_cell_days": 9280382
+        },
+        {
+          "month": 7,
+          "days": 31,
+          "sst_2025_degC": 17.55045808022902,
+          "sst_2026_degC": 17.712170905727554,
+          "difference_2026_minus_2025_degC": 0.1617128254985359,
+          "paired_cell_days": 9461004
+        },
+        {
+          "month": 8,
+          "days": 31,
+          "sst_2025_degC": 17.263958434989533,
+          "sst_2026_degC": 17.486878271016618,
+          "difference_2026_minus_2025_degC": 0.22291983602708337,
+          "paired_cell_days": 9319173
+        },
+        {
+          "month": 9,
+          "days": 30,
+          "sst_2025_degC": 17.37555815472491,
+          "sst_2026_degC": 17.67729371906852,
+          "difference_2026_minus_2025_degC": 0.3017355643436088,
+          "paired_cell_days": 8878982
+        },
+        {
+          "month": 10,
+          "days": 31,
+          "sst_2025_degC": 17.678712534976118,
+          "sst_2026_degC": 18.05492425430322,
+          "difference_2026_minus_2025_degC": 0.3762117193270997,
+          "paired_cell_days": 9193965
+        },
+        {
+          "month": 11,
+          "days": 7,
+          "sst_2025_degC": 18.006515253297234,
+          "sst_2026_degC": 18.467489409678553,
+          "difference_2026_minus_2025_degC": 0.46097415638132205,
+          "paired_cell_days": 2086743
+        }
+      ]
+    },
+    {
+      "region": "tropics 20S\u201320N",
+      "paired_cell_days": 54927576,
+      "sst_2025_degC": 27.50733931335993,
+      "sst_2026_degC": 27.86616130294951,
+      "difference_2026_minus_2025_degC": 0.35882198958957856,
+      "months": [
+        {
+          "month": 1,
+          "days": 31,
+          "sst_2025_degC": 27.39964654794257,
+          "sst_2026_degC": 27.30701482122056,
+          "difference_2026_minus_2025_degC": -0.09263172672201114,
+          "paired_cell_days": 5475096
+        },
+        {
+          "month": 2,
+          "days": 28,
+          "sst_2025_degC": 27.62764121629381,
+          "sst_2026_degC": 27.575283666296237,
+          "difference_2026_minus_2025_degC": -0.05235754999757311,
+          "paired_cell_days": 4945248
+        },
+        {
+          "month": 3,
+          "days": 31,
+          "sst_2025_degC": 27.950598061875432,
+          "sst_2026_degC": 27.9673252561694,
+          "difference_2026_minus_2025_degC": 0.016727194293967507,
+          "paired_cell_days": 5475096
+        },
+        {
+          "month": 4,
+          "days": 30,
+          "sst_2025_degC": 28.14217830799293,
+          "sst_2026_degC": 28.337089945739272,
+          "difference_2026_minus_2025_degC": 0.19491163774634143,
+          "paired_cell_days": 5298480
+        },
+        {
+          "month": 5,
+          "days": 31,
+          "sst_2025_degC": 28.077470927889056,
+          "sst_2026_degC": 28.310347955956193,
+          "difference_2026_minus_2025_degC": 0.23287702806713503,
+          "paired_cell_days": 5475096
+        },
+        {
+          "month": 6,
+          "days": 30,
+          "sst_2025_degC": 27.60251290780017,
+          "sst_2026_degC": 28.024772446675126,
+          "difference_2026_minus_2025_degC": 0.42225953887495665,
+          "paired_cell_days": 5298480
+        },
+        {
+          "month": 7,
+          "days": 31,
+          "sst_2025_degC": 27.185002664618658,
+          "sst_2026_degC": 27.656449291940003,
+          "difference_2026_minus_2025_degC": 0.4714466273213434,
+          "paired_cell_days": 5475096
+        },
+        {
+          "month": 8,
+          "days": 31,
+          "sst_2025_degC": 26.973858673813332,
+          "sst_2026_degC": 27.520016808574702,
+          "difference_2026_minus_2025_degC": 0.5461581347613726,
+          "paired_cell_days": 5475096
+        },
+        {
+          "month": 9,
+          "days": 30,
+          "sst_2025_degC": 27.003008492507863,
+          "sst_2026_degC": 27.7441923394157,
+          "difference_2026_minus_2025_degC": 0.7411838469078371,
+          "paired_cell_days": 5298480
+        },
+        {
+          "month": 10,
+          "days": 31,
+          "sst_2025_degC": 27.199461258922174,
+          "sst_2026_degC": 28.095674175303166,
+          "difference_2026_minus_2025_degC": 0.8962129163809928,
+          "paired_cell_days": 5475096
+        },
+        {
+          "month": 11,
+          "days": 7,
+          "sst_2025_degC": 27.201485566112222,
+          "sst_2026_degC": 28.36070043171632,
+          "difference_2026_minus_2025_degC": 1.1592148656040988,
+          "paired_cell_days": 1236312
+        }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "path": "work/2025.npy",
+      "sha256": "6db264816395442785cb70de5424e3baeea28e0e39e61454f54723894db9d5bd"
+    },
+    {
+      "path": "work/2026.npy",
+      "sha256": "eec268275585351097d7f2b72136142abffd9b140f5c11d5b9a0608ee49b705d"
+    }
+  ]
+}

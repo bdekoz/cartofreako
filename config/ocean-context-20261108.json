@@ -1,0 +1,31 @@
+{
+  "snapshot": "2026-11-08",
+  "files": [
+    {
+      "path": "cache/coral/ct5km_dhw-max_v3.1_2025.nc",
+      "url": "https://www.star.nesdis.noaa.gov/pub/socd/mecb/crw/data/5km/v3.1_op/nc/v1.0/annual/ct5km_dhw-max_v3.1_2025.nc",
+      "sha256": "c7fac8bd700052d2bcd7d5cc48ff878c0b633db551ed95a8ce33fd8343747f64",
+      "bytes": 14551455,
+      "retrieved_at": "2026-11-08T20:21:04.353890+00:00"
+    },
+    {
+      "path": "cache/coral/ct5km_dhw-max-ytd_v3.1_20261107.nc",
+      "url": "https://www.star.nesdis.noaa.gov/pub/socd/mecb/crw/data/5km/v3.1_op/nc/v1.0/daily/year-to-date/ct5km_dhw-max-ytd_v3.1_20261107.nc",
+      "sha256": "0d06b5b15fa5a602021f59de0126b914257e9f83daac9cdb668a8631438684a2",
+      "bytes": 15883229,
+      "retrieved_at": "2026-11-08T20:21:09.095824+00:00"
+    },
+    {
+      "path": "cache/coral/ct5km_dhw-max-ytd_v3.1_20251107.nc",
+      "url": "https://www.star.nesdis.noaa.gov/pub/socd/mecb/crw/data/5km/v3.1_op/nc/v1.0/daily/year-to-date_2025/ct5km_dhw-max-ytd_v3.1_20251107.nc",
+      "sha256": "c6170ae971aef0b0d3fd7f9160d39d37203200c1a99df472cabc3047ff78a063",
+      "bytes": 14396126,
+      "retrieved_at": "2026-11-08T20:21:15.287307+00:00"
+    },
+    {
+      "path": "research/mgd_sst_glb_D20261107.txt.gz",
+      "url": "https://www.data.jma.go.jp/goos/data/pub/JMA-product/mgd_sst_glb_D/2026/mgd_sst_glb_D20261107.txt.gz",
+      "sha256": "299b82eeeea77d8e136ef08bb40855c6e91870249c8243452f5132d6dd729915"
+    }
+  ]
+}

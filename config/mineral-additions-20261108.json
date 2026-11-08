@@ -1,0 +1,185 @@
+{
+  "schema": "cartofreako-mineral-additions-v1",
+  "prepared_on": "2026-11-08",
+  "sources": [
+    {
+      "id": "usgs-lithium-mcs-2026",
+      "organization": "USGS",
+      "title": "Mineral Commodity Summaries 2026 \u2014 Lithium",
+      "release": "February 2026, page 2 mine-production table",
+      "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-lithium.pdf",
+      "retrieved_at": "2026-11-08",
+      "license": "USGS public domain; factual table extract",
+      "sha256": "53f92ea45c367c36f05919151f7784feda5776095afaf3a25aec795a27be106f"
+    },
+    {
+      "id": "bgs-wmp-2020-2024",
+      "organization": "British Geological Survey",
+      "title": "World Mineral Production 2020\u20132024 \u2014 Uranium",
+      "release": "2026, printed page 75",
+      "url": "https://nora.nerc.ac.uk/id/eprint/541620/1/WMP_2020%20to%202024.pdf",
+      "retrieved_at": "2026-11-08",
+      "license": "\u00a9 UKRI 2026; attributed factual extract, compilation rights retained",
+      "sha256": "260a9891d28082990e49a75b97c386da1499af1ba59aad8743407c0c57aa55c6"
+    }
+  ],
+  "metrics": [
+    {
+      "id": "lithium-mine-production",
+      "title": "Lithium mine production",
+      "year": 2025,
+      "unit": "metric tonnes lithium content",
+      "source_id": "usgs-lithium-mcs-2026",
+      "world_total": 290000,
+      "world_total_scope": "Rounded world total excluding withheld United States production",
+      "rows": [
+        {
+          "iso3": "ARG",
+          "value": 23000,
+          "state": "estimated"
+        },
+        {
+          "iso3": "AUS",
+          "value": 92000,
+          "state": "estimated"
+        },
+        {
+          "iso3": "BRA",
+          "value": 12000,
+          "state": "estimated"
+        },
+        {
+          "iso3": "CAN",
+          "value": 5600,
+          "state": "estimated"
+        },
+        {
+          "iso3": "CHL",
+          "value": 56000,
+          "state": "estimated"
+        },
+        {
+          "iso3": "CHN",
+          "value": 62000,
+          "state": "estimated"
+        },
+        {
+          "iso3": "MLI",
+          "value": 9400,
+          "state": "estimated"
+        },
+        {
+          "iso3": "PRT",
+          "value": 380,
+          "state": "estimated"
+        },
+        {
+          "iso3": "ZWE",
+          "value": 28000,
+          "state": "estimated"
+        }
+      ],
+      "withheld": [
+        "USA"
+      ],
+      "notes": "2025 estimates. U.S. production is withheld, not zero. Other-countries aggregate is zero in the source but does not assign zero to every unnamed country. Not lithium carbonate equivalent, reserves, or resources.",
+      "transcribed_country_total": 288380,
+      "unallocated_difference_to_rounded_total": 1620
+    },
+    {
+      "id": "uranium-mine-production",
+      "title": "Uranium mine production",
+      "year": 2024,
+      "unit": "metric tonnes uranium metal content",
+      "source_id": "bgs-wmp-2020-2024",
+      "world_total": 62500,
+      "world_total_scope": "Rounded BGS global mine production; excludes decommissioning operations",
+      "rows": [
+        {
+          "iso3": "AUS",
+          "value": 5469,
+          "state": "reported"
+        },
+        {
+          "iso3": "BRA",
+          "value": 40,
+          "state": "estimated"
+        },
+        {
+          "iso3": "CAN",
+          "value": 15952,
+          "state": "reported"
+        },
+        {
+          "iso3": "CHN",
+          "value": 1600,
+          "state": "estimated"
+        },
+        {
+          "iso3": "CZE",
+          "value": 17,
+          "state": "reported"
+        },
+        {
+          "iso3": "DEU",
+          "value": 0,
+          "state": "reported"
+        },
+        {
+          "iso3": "IND",
+          "value": 500,
+          "state": "reported"
+        },
+        {
+          "iso3": "IRN",
+          "value": 20,
+          "state": "estimated"
+        },
+        {
+          "iso3": "KAZ",
+          "value": 23270,
+          "state": "reported"
+        },
+        {
+          "iso3": "NAM",
+          "value": 7334,
+          "state": "reported"
+        },
+        {
+          "iso3": "NER",
+          "value": 1080,
+          "state": "reported"
+        },
+        {
+          "iso3": "PAK",
+          "value": 45,
+          "state": "estimated"
+        },
+        {
+          "iso3": "UKR",
+          "value": 288,
+          "state": "estimated"
+        },
+        {
+          "iso3": "USA",
+          "value": 260,
+          "state": "reported"
+        },
+        {
+          "iso3": "UZB",
+          "value": 3600,
+          "state": "estimated"
+        },
+        {
+          "iso3": "ZAF",
+          "value": 250,
+          "state": "reported"
+        }
+      ],
+      "withheld": [],
+      "notes": "BGS 2024 country series, printed page 75. Preserve estimated-country flags. Germany is an explicitly reported zero. Not U3O8-equivalent mass, enrichment, reserves, or nuclear power capacity. BGS and WNA totals differ; this plate uses BGS consistently. The 16 listed country rows sum to 59,725 tU (95.56% of the 62,500 tU printed world total); 2,775 tU remain unallocated. Russia has no row in this BGS table and remains missing; the residual is not assigned to it.",
+      "transcribed_country_total": 59725,
+      "unallocated_difference_to_rounded_total": 2775
+    }
+  ]
+}

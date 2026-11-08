@@ -19,8 +19,8 @@ default-generated, release-eligible pass across all six projections.
 | --- | --- | --- | --- |
 | `anthropocene-particulate-2025` | Complete-year source-separated observation atlas | Standard; default-generated | Accepted experimental |
 | `anthropocene-particulate-2026` | Explicitly partial-year source-separated observation atlas | Standard; default-generated | Accepted experimental |
-| `anthropocene-temperature-2025` | Complete-year CPC temperature field | Standard; default-generated | Accepted experimental |
-| `anthropocene-temperature-2026` | Explicitly partial-year CPC temperature field | Standard; default-generated | Accepted experimental |
+| `anthropocene-land-temperature-2025` | Complete-year CPC temperature field | Standard; default-generated | Accepted experimental |
+| `anthropocene-land-temperature-2026` | Explicitly partial-year CPC temperature field | Standard; default-generated | Accepted experimental |
 
 The former unqualified `anthropocene` pass was removed. Compatibility Make
 aliases build the year-bearing particulate pair; they do not recreate an

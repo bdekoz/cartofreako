@@ -54,7 +54,7 @@ projection:
 ```text
 resources-energy-solar-capacity-2025-ck-44-22.svg.gz
 resources-energy-wind-capacity-2025-star-x-34-44.svg.gz
-resources-fauna-coral-reef-threat-2011-ck-44-22.svg.gz
+anthropocene-coral-reef-threat-2011-ck-44-22.svg.gz
 resources-flora-forest-area-percent-2023-voronoi-44-22.916667.svg.gz
 resources-mineral-rare-earth-mine-production-2025-ck-44-22.svg.gz
 resources-human-population-over-60-2024-ck-44-22.svg.gz

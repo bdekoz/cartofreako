@@ -17,11 +17,11 @@ Resources are six independent families: `resources-energy`,
 There is no combined resource score.
 
 The [resource metric catalog](metric-catalog.md) is the visible
-lifecycle index for all 59 definitions. It separates the 14 standard passes
-below from optional-pass infrastructure and 45 exploration-only entries.
+lifecycle index for all 59 definitions. It separates the 16 implemented metrics
+below from optional-pass infrastructure and 43 exploration-only entries.
 `Supplemental` catalog status does not mean an implemented optional pass.
 
-The checked snapshot releases 14 separate metric products:
+The dated November 8 extension releases 16 separate metric products:
 
 | Family | Metric | Artifact stem |
 | --- | --- | --- |
@@ -31,9 +31,11 @@ The checked snapshot releases 14 separate metric products:
 | Energy | Petroleum refinery throughput, latest 2018–2024 | `resources-energy-petrochemical-refinery-throughput-latest-2024` |
 | Food | Food production index, 2022 | `resources-food-food-production-index-2022` |
 | Fauna | Total fisheries production, 2024 | `resources-fauna-fisheries-production-latest-2024` |
-| Fauna | Coral-reef integrated local threat, 2011 | `resources-fauna-coral-reef-threat-2011` |
+| Anthropocene | Coral-reef integrated local threat, 2011 | `anthropocene-coral-reef-threat-2011` |
 | Flora | Forest area, 2023 | `resources-flora-forest-area-percent-2023` |
 | Mineral | Rare-earth mine production, 2025 estimate | `resources-mineral-rare-earth-mine-production-2025` |
+| Mineral | Lithium mine production, 2025 estimate | `resources-mineral-lithium-mine-production-2025` |
+| Mineral | Uranium mine production, 2024 | `resources-mineral-uranium-mine-production-2024` |
 | Human | Population under 30, 2024 | `resources-human-population-under-30-2024` |
 | Human | Population 60+, 2024 | `resources-human-population-over-60-2024` |
 | Human | Upper-secondary attainment, latest 2018–2025 | `resources-human-upper-secondary-attainment-latest-2025` |
@@ -43,13 +45,14 @@ The checked snapshot releases 14 separate metric products:
 The public term `petrochemical` is only a convenient Make-target alias for the
 precisely labeled refinery-throughput metric. The map is not nameplate
 capacity, extraction, chemical-plant capacity, or all petrochemical output.
-All fourteen products—including fisheries and the spatial reef product—are
-standard, offline passes in `make all`; reef generation is not
+All sixteen products—including fisheries and the spatial reef product—are
+standard, offline passes in `make all`; the reef plate is grouped under
+Anthropocene. Reef generation is not
 authorization-gated.
 
 ## Data contract and gates
 
-[`resources-profile.json`](../../../../assets.static/resources/resources-profile.json)
+[`resources-profile.json`](../../../../assets.static/resources/current-20261108/resources-profile.json)
 uses `cartofreako-resources-profile-v3`. It defines the source register,
 country geometry and values digests, six families, palettes, metrics, one
 default per family, and either a country coverage definition or a spatial
@@ -61,8 +64,8 @@ uses six fixed capacity classes and the yellow/orange palette. Petroleum uses
 browns. Missing data retain a separate neutral fill. Historical Stage 13/14
 artifacts retain their original opacity contracts.
 
-[`resources-values.json`](../../../../assets.static/resources/resources-values.json)
-uses `cartofreako-resources-values-v3`. Its 1,679 records contain family,
+[`resources-values.json`](../../../../assets.static/resources/current-20261108/resources-values.json)
+uses `cartofreako-resources-values-v3`. Its 1,704 records contain family,
 metric, ISO3 key, observation year, finite nonnegative value, and value state.
 [`coral-reefs-025deg.geojson`](../../../../assets.static/resources/coral-reefs-025deg.geojson)
 is the separately digested spatial input.
@@ -198,3 +201,9 @@ The fetcher stages upstream files in a temporary directory. The Python
 preparer validates source anchors/totals, names, time windows, age/rate
 formulas, reef geometry/counts, and gates before atomically installing the v3
 documents and `SHA256SUMS`.
+
+## Current atlas additions — 8 November 2026
+
+The [current plate catalog](../../../../config/atlas-plates.json) moves the historical coral-reef threat plate to Anthropocene, groups EIA and OPEC petroleum studies under Energy resources, and adds `resources-mineral-lithium-mine-production-2025`, `resources-mineral-uranium-mine-production-2024`, and `resources-mineral-mine-production-comparison`.
+
+Mineral identity is consistent across the separate and combined sheets: rare earths are purple circles, lithium cyan squares, and uranium amber triangles. Quantity scales and observation years are separate. The dated resource snapshot can be recreated with `python3 scripts/prepare-mineral-additions.py`; the source tables and coverage gaps are in [the additions ledger](../../../../config/mineral-additions-20261108.json).

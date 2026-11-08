@@ -1,0 +1,36 @@
+{
+  "source": "data/matched-comparison.json",
+  "source_sha256": "96130f9e80271d49e47a3b186e1b92fa60444da3613e240867339cc197378275",
+  "seasonal_rankings": [
+    {
+      "region": "global source-supported ocean",
+      "warmest_complete_2026_month": 9,
+      "largest_absolute_paired_difference_complete_month": 10
+    },
+    {
+      "region": "Japan 20\u201350N / 120\u2013160E",
+      "warmest_complete_2026_month": 8,
+      "largest_absolute_paired_difference_complete_month": 8
+    },
+    {
+      "region": "Northern Hemisphere",
+      "warmest_complete_2026_month": 8,
+      "largest_absolute_paired_difference_complete_month": 10
+    },
+    {
+      "region": "Southern Hemisphere",
+      "warmest_complete_2026_month": 2,
+      "largest_absolute_paired_difference_complete_month": 10
+    },
+    {
+      "region": "tropics 20S\u201320N",
+      "warmest_complete_2026_month": 4,
+      "largest_absolute_paired_difference_complete_month": 10
+    }
+  ],
+  "outputs": {
+    "monthly-paired-comparison.svg": "5f40e41e4a02e272291edc2af24b4de620ec2f327cf07a1fb1b20a23e76a542c",
+    "monthly-paired-comparison.png": "bdabc16b330e91126379ead206f193d54b31ac75df8ad4a92c5e97d8f69f7991",
+    "monthly-paired-comparison.pdf": "77da63f1c8fbb5d3b146a95a2e0bc8b0a109ac1b7a758558e07b5853a224f0fb"
+  }
+}

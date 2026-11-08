@@ -1,5 +1,13 @@
 # Cloud-atmosphere generation implementation notes
 
+Current atlas presentation, 8 November 2026: the World and Japan sheets use
+the saved Setouchi H3r5 edition with amber maps, white nominal 0.66-point land
+outlines and 100 solar-radiation opacity levels over 0–400 W/m². Map graphics
+and legend/source sheets remain separate. The selection is pinned in
+[`config/atlas-plates.json`](../../../config/atlas-plates.json); observation
+dates remain the original October snapshot. See the
+[stage-one atlas record](../../development/20261108_anthropocene_ocean_temperature_stage_1.md).
+
 [Documentation index](../../../index.md) ·
 [Generation pipeline](../getting-started/generation.md) ·
 [P-Tree download quick start](../data/ptree-download.md) ·

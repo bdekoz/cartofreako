@@ -521,7 +521,7 @@ temperature_output_basename(const generation::projection_spec& spec,
                             const temperature_profile& profile)
 {
   return generation::output_basename(
-    "anthropocene-temperature-" + std::to_string(profile.calendar_year), spec);
+    "anthropocene-land-temperature-" + std::to_string(profile.calendar_year), spec);
 }
 
 inline void
@@ -532,7 +532,7 @@ generate_temperature(const generation::projection_spec& spec,
   const std::string basename = temperature_output_basename(spec, profile);
   const generation::projection_context context(spec, basename);
   generation::projection_document document(
-    basename, std::string(spec.title) + " Anthropocene non-sparse temperature "
+    basename, std::string(spec.title) + " Anthropocene land-temperature records "
       + std::to_string(profile.calendar_year), context.map_frame.frame_area);
   document.add_raw(temperature_metadata(spec, profile, dataset));
   add_temperature_background(document, context);

@@ -1,0 +1,323 @@
+{
+  "entries": [
+    {
+      "stem": "resources-mineral-rare-earth-mine-production-2025",
+      "title": "Rare-earth mine production / 2025",
+      "period_and_units": "2025 / metric tonnes REO equivalent",
+      "interpretation": "Mine production; reserves and processing are separate.",
+      "source_ids": [
+        "usgs-mcs-2026"
+      ],
+      "japan_source_ids": [
+        "usgs-mcs-2026"
+      ],
+      "method": "Country choropleth; five log1p quantity classes; fixed mineral hue.",
+      "japan": "National observations in the existing Japan viewport; not local mine locations.",
+      "inputs": [
+        {
+          "path": "assets.static/resources/current-20261108/resources-profile.json",
+          "sha256": "74a51c9cad3e2d2bb509244725fb748eda879bdeab63952090673a6c59b892fa"
+        }
+      ],
+      "key": [],
+      "presentation": "Wine/amber, Atkinson Hyperlegible, separate source sheet."
+    },
+    {
+      "stem": "resources-mineral-lithium-mine-production-2025",
+      "title": "Lithium mine production / 2025",
+      "period_and_units": "2025 / metric tonnes lithium content",
+      "interpretation": "2025 estimates. U.S. production is withheld, not zero. Other-countries aggregate is zero in the source but does not assign zero to every unnamed country. Not lithium carbonate equivalent, reserves, or resources. Coverage denominator: Rounded world total excluding withheld United States production.",
+      "source_ids": [
+        "usgs-lithium-mcs-2026"
+      ],
+      "japan_source_ids": [
+        "usgs-lithium-mcs-2026"
+      ],
+      "method": "Country choropleth; five log1p quantity classes; fixed mineral hue.",
+      "japan": "National observations in the existing Japan viewport; not local mine locations.",
+      "inputs": [
+        {
+          "path": "assets.static/resources/current-20261108/resources-profile.json",
+          "sha256": "74a51c9cad3e2d2bb509244725fb748eda879bdeab63952090673a6c59b892fa"
+        }
+      ],
+      "key": [],
+      "presentation": "Wine/amber, Atkinson Hyperlegible, separate source sheet."
+    },
+    {
+      "stem": "resources-mineral-uranium-mine-production-2024",
+      "title": "Uranium mine production / 2024",
+      "period_and_units": "2024 / metric tonnes uranium metal content",
+      "interpretation": "BGS 2024 country series, printed page 75. Preserve estimated-country flags. Germany is an explicitly reported zero. Not U3O8-equivalent mass, enrichment, reserves, or nuclear power capacity. BGS and WNA totals differ; this plate uses BGS consistently. The 16 listed country rows sum to 59,725 tU (95.56% of the 62,500 tU printed world total); 2,775 tU remain unallocated. Russia has no row in this BGS table and remains missing; the residual is not assigned to it. Coverage denominator: Rounded BGS global mine production; excludes decommissioning operations.",
+      "source_ids": [
+        "bgs-wmp-2020-2024"
+      ],
+      "japan_source_ids": [
+        "bgs-wmp-2020-2024"
+      ],
+      "method": "Country choropleth; five log1p quantity classes; fixed mineral hue.",
+      "japan": "National observations in the existing Japan viewport; not local mine locations.",
+      "inputs": [
+        {
+          "path": "assets.static/resources/current-20261108/resources-profile.json",
+          "sha256": "74a51c9cad3e2d2bb509244725fb748eda879bdeab63952090673a6c59b892fa"
+        }
+      ],
+      "key": [],
+      "presentation": "Wine/amber, Atkinson Hyperlegible, separate source sheet."
+    },
+    {
+      "stem": "resources-mineral-mine-production-comparison",
+      "title": "Minerals / mine production",
+      "period_and_units": "Rare earths 2025, lithium 2025, uranium 2024; distinct source units",
+      "interpretation": "Commodity colors and shapes; country locations; no cross-commodity total.",
+      "source_ids": [
+        "usgs-mcs-2026",
+        "usgs-lithium-mcs-2026",
+        "bgs-wmp-2020-2024"
+      ],
+      "japan_source_ids": [
+        "usgs-mcs-2026",
+        "usgs-lithium-mcs-2026",
+        "bgs-wmp-2020-2024"
+      ],
+      "method": "Symbol area proportional within each mineral; independently normalized; country representative points.",
+      "japan": "National producer symbols, not mine locations.",
+      "inputs": [],
+      "key": [],
+      "presentation": "Wine/amber, Atkinson Hyperlegible, separate source sheet."
+    }
+  ],
+  "sources": {
+    "usgs-mcs-2026": {
+      "id": "usgs-mcs-2026",
+      "organization": "U.S. Geological Survey",
+      "title": "Mineral Commodity Summaries 2026",
+      "release": "2026",
+      "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026.pdf",
+      "retrieved_at": "2026-08-06",
+      "license": "U.S. Government work; normalized factual extract",
+      "sha256": "595e6e66674236dea40125a03eb1ea6b347f331c0bcf3411a1e77eba53c0d391",
+      "period": "2026",
+      "notes": "Pinned source extract; observation year is in each metric."
+    },
+    "usgs-lithium-mcs-2026": {
+      "id": "usgs-lithium-mcs-2026",
+      "organization": "USGS",
+      "title": "Mineral Commodity Summaries 2026 \u2014 Lithium",
+      "release": "February 2026, page 2 mine-production table",
+      "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-lithium.pdf",
+      "retrieved_at": "2026-11-08",
+      "license": "USGS public domain; factual table extract",
+      "sha256": "53f92ea45c367c36f05919151f7784feda5776095afaf3a25aec795a27be106f",
+      "period": "February 2026, page 2 mine-production table",
+      "notes": "Pinned source extract; observation year is in each metric."
+    },
+    "bgs-wmp-2020-2024": {
+      "id": "bgs-wmp-2020-2024",
+      "organization": "British Geological Survey",
+      "title": "World Mineral Production 2020\u20132024 \u2014 Uranium",
+      "release": "2026, printed page 75",
+      "url": "https://nora.nerc.ac.uk/id/eprint/541620/1/WMP_2020%20to%202024.pdf",
+      "retrieved_at": "2026-11-08",
+      "license": "\u00a9 UKRI 2026; attributed factual extract, compilation rights retained",
+      "sha256": "260a9891d28082990e49a75b97c386da1499af1ba59aad8743407c0c57aa55c6",
+      "period": "2026, printed page 75",
+      "notes": "Pinned source extract; observation year is in each metric."
+    }
+  },
+  "records": [
+    {
+      "stem": "resources-mineral-rare-earth-mine-production-2025",
+      "scope": "world",
+      "kind": "map",
+      "sheet_background": "#240413",
+      "svg": "maps/world/svg/resources-mineral-rare-earth-mine-production-2025.svg",
+      "svg_sha256": "6a9c5b5d7f92dd7f8709cb69a8cfdee86dca4eee5db4009eb4b00a149b9b11c1",
+      "pdf": "maps/world/pdf/resources-mineral-rare-earth-mine-production-2025.pdf",
+      "pdf_sha256": "df636d111abc4ae482202c28ba82b320e33960f644750d080054d434969efdec",
+      "preview": "previews/world/resources-mineral-rare-earth-mine-production-2025.png",
+      "preview_sha256": "a1634f7fea2bc5fbb84f743ba4342bcc2752dedfefdac900b81f1c43cfd0eb10"
+    },
+    {
+      "stem": "resources-mineral-rare-earth-mine-production-2025",
+      "scope": "world",
+      "kind": "legend",
+      "sheet_background": "#240413",
+      "svg": "legends/world/svg/resources-mineral-rare-earth-mine-production-2025-legend.svg",
+      "svg_sha256": "8001bba4032df640fc5984baa06e4aeb7ada2ebde8e299bf08245c645b7d9d6e",
+      "pdf": "legends/world/pdf/resources-mineral-rare-earth-mine-production-2025-legend.pdf",
+      "pdf_sha256": "393260743a25251c41afc4c579cec6faf8808d177eff9ebb879c2a3b725e2147",
+      "preview": "previews/world/resources-mineral-rare-earth-mine-production-2025-legend.png",
+      "preview_sha256": "1d5c3d2f9e2c57ca3d54f78aa136588fc8e2012d7ac23f84d7c421341fa4acba"
+    },
+    {
+      "stem": "resources-mineral-rare-earth-mine-production-2025",
+      "scope": "japan",
+      "kind": "map",
+      "sheet_background": "#240413",
+      "svg": "maps/japan/svg/resources-mineral-rare-earth-mine-production-2025.svg",
+      "svg_sha256": "54dc8de29018820121db53abf645d67adb0ca1b32a9c1dc6de5a9125d738da1f",
+      "pdf": "maps/japan/pdf/resources-mineral-rare-earth-mine-production-2025.pdf",
+      "pdf_sha256": "a456c830f506ec4fcf9adbdc11559a34bf74fcd68370d733bf6a5a71346bd93d",
+      "preview": "previews/japan/resources-mineral-rare-earth-mine-production-2025.png",
+      "preview_sha256": "1c52c7a06186e6857d45eae80cafeede9e2a9ae0207bfb4eea2c3eee63c78bb2"
+    },
+    {
+      "stem": "resources-mineral-rare-earth-mine-production-2025",
+      "scope": "japan",
+      "kind": "legend",
+      "sheet_background": "#240413",
+      "svg": "legends/japan/svg/resources-mineral-rare-earth-mine-production-2025-legend.svg",
+      "svg_sha256": "4aee3eeb2ed6a453a2a06baedbbf4a708f432ee4d53d5c5fb67db8bee0eefc57",
+      "pdf": "legends/japan/pdf/resources-mineral-rare-earth-mine-production-2025-legend.pdf",
+      "pdf_sha256": "b7da27e7837512ce505ebbf6268cc13ceb3991d6e68e54c90d4882f0ce7ae71f",
+      "preview": "previews/japan/resources-mineral-rare-earth-mine-production-2025-legend.png",
+      "preview_sha256": "574e4a3a57e674bedbc38b766d55808735060c662f283d653c8855aebde7aee6"
+    },
+    {
+      "stem": "resources-mineral-lithium-mine-production-2025",
+      "scope": "world",
+      "kind": "map",
+      "sheet_background": "#240413",
+      "svg": "maps/world/svg/resources-mineral-lithium-mine-production-2025.svg",
+      "svg_sha256": "98f2154a9263544510ed589d9c1d234d4a6d16a253e4729019b7b12c48253fca",
+      "pdf": "maps/world/pdf/resources-mineral-lithium-mine-production-2025.pdf",
+      "pdf_sha256": "623a4695180bd0073d49a9b91ed7a49a6c4e939ff9f556be5340ec8f0da64b7e",
+      "preview": "previews/world/resources-mineral-lithium-mine-production-2025.png",
+      "preview_sha256": "6a74947823bc6a88e7db01bbcc72b44778d0435d8efea2f8afb2c51103993696"
+    },
+    {
+      "stem": "resources-mineral-lithium-mine-production-2025",
+      "scope": "world",
+      "kind": "legend",
+      "sheet_background": "#240413",
+      "svg": "legends/world/svg/resources-mineral-lithium-mine-production-2025-legend.svg",
+      "svg_sha256": "89eb817c372b32b21cea7a59eb50d801c3464edf4d22024162092e2cb9a74251",
+      "pdf": "legends/world/pdf/resources-mineral-lithium-mine-production-2025-legend.pdf",
+      "pdf_sha256": "0b05ab86ed421701aadb7f5c50e8c06c08079033ca72983500ae3d57ad9dd3d7",
+      "preview": "previews/world/resources-mineral-lithium-mine-production-2025-legend.png",
+      "preview_sha256": "b3d24d960d2e3d48c7bc6cad12cc0d247bd9847d1bd9cb1ba13e78ab099be513"
+    },
+    {
+      "stem": "resources-mineral-lithium-mine-production-2025",
+      "scope": "japan",
+      "kind": "map",
+      "sheet_background": "#240413",
+      "svg": "maps/japan/svg/resources-mineral-lithium-mine-production-2025.svg",
+      "svg_sha256": "e7b75ce8cab1e2780659aeaaab42cbbb2b0d27321cef3ccaf1e645f7ad0bd790",
+      "pdf": "maps/japan/pdf/resources-mineral-lithium-mine-production-2025.pdf",
+      "pdf_sha256": "ad8a346185c364ca90925f50e93e48597c738bf43a3bb80bdc808d3b0f292389",
+      "preview": "previews/japan/resources-mineral-lithium-mine-production-2025.png",
+      "preview_sha256": "5b43c08bff502a4de3e15784b0e2c3df4001676ac4ec0de9426eeb112692000e"
+    },
+    {
+      "stem": "resources-mineral-lithium-mine-production-2025",
+      "scope": "japan",
+      "kind": "legend",
+      "sheet_background": "#240413",
+      "svg": "legends/japan/svg/resources-mineral-lithium-mine-production-2025-legend.svg",
+      "svg_sha256": "553fd12c903ff4e9be78086c8cced63b8eef38f20c7b4fdae070f7939f7611d4",
+      "pdf": "legends/japan/pdf/resources-mineral-lithium-mine-production-2025-legend.pdf",
+      "pdf_sha256": "c8a38ee9efef1537ee662160608edc5e13782cfa7ae6d49892a0f02ed5818fa5",
+      "preview": "previews/japan/resources-mineral-lithium-mine-production-2025-legend.png",
+      "preview_sha256": "3996aeba221e9291f703dbc7d00232dc04d1e2346dd51ee76d88e30edc72f1d9"
+    },
+    {
+      "stem": "resources-mineral-uranium-mine-production-2024",
+      "scope": "world",
+      "kind": "map",
+      "sheet_background": "#240413",
+      "svg": "maps/world/svg/resources-mineral-uranium-mine-production-2024.svg",
+      "svg_sha256": "851ac8e61d74ca8fddfa24f0f18a653cb65107ce6d56dc3c43ff258c27f4f94a",
+      "pdf": "maps/world/pdf/resources-mineral-uranium-mine-production-2024.pdf",
+      "pdf_sha256": "98cd6a13e96f7fe1d659414b110cd07f94957f544136e23a6bfb5d359539b4d9",
+      "preview": "previews/world/resources-mineral-uranium-mine-production-2024.png",
+      "preview_sha256": "a9a7067d16e87daf6e025502d5d4eca2cb32d2fab51bda89935b323c9f57a75b"
+    },
+    {
+      "stem": "resources-mineral-uranium-mine-production-2024",
+      "scope": "world",
+      "kind": "legend",
+      "sheet_background": "#240413",
+      "svg": "legends/world/svg/resources-mineral-uranium-mine-production-2024-legend.svg",
+      "svg_sha256": "d75a9594907e56da84191a765ecbfcc2a38c6103735fe214f8e6f156b7edf35f",
+      "pdf": "legends/world/pdf/resources-mineral-uranium-mine-production-2024-legend.pdf",
+      "pdf_sha256": "2b86a063521e4d8850e2f16cdb9b8b9fd6e06c6f6c17d32a29c6dc02557235c5",
+      "preview": "previews/world/resources-mineral-uranium-mine-production-2024-legend.png",
+      "preview_sha256": "28cbdc610446d4c849ed3a49804cde3f5d1917a75e1e47d4ebe9cd219beeb23e"
+    },
+    {
+      "stem": "resources-mineral-uranium-mine-production-2024",
+      "scope": "japan",
+      "kind": "map",
+      "sheet_background": "#240413",
+      "svg": "maps/japan/svg/resources-mineral-uranium-mine-production-2024.svg",
+      "svg_sha256": "57ed1946caba5f19c41c6c8897aa54009a33a32156521f369b0271b98980e438",
+      "pdf": "maps/japan/pdf/resources-mineral-uranium-mine-production-2024.pdf",
+      "pdf_sha256": "338e72dfd7d7cc44714648c9e9d2a1553e6c2480e48b18231b82890bef3576f4",
+      "preview": "previews/japan/resources-mineral-uranium-mine-production-2024.png",
+      "preview_sha256": "a1ef20c9e1913992f197212dedeb1a3d34c62f75342d08b09a653e39d3de38d6"
+    },
+    {
+      "stem": "resources-mineral-uranium-mine-production-2024",
+      "scope": "japan",
+      "kind": "legend",
+      "sheet_background": "#240413",
+      "svg": "legends/japan/svg/resources-mineral-uranium-mine-production-2024-legend.svg",
+      "svg_sha256": "806c71aa9919824632090f9e4d910142084cf9f7525947604879da2c0c25dc7c",
+      "pdf": "legends/japan/pdf/resources-mineral-uranium-mine-production-2024-legend.pdf",
+      "pdf_sha256": "d5893fc9130504e18043426632c3a86e15826b57076ecf98721984b95d15a7b1",
+      "preview": "previews/japan/resources-mineral-uranium-mine-production-2024-legend.png",
+      "preview_sha256": "b03ed58d0dc3198ed1f08d0a8989f57705ac033e8b6e523323e361dbb024553f"
+    },
+    {
+      "stem": "resources-mineral-mine-production-comparison",
+      "scope": "world",
+      "kind": "map",
+      "sheet_background": "#240413",
+      "svg": "maps/world/svg/resources-mineral-mine-production-comparison.svg",
+      "svg_sha256": "62dd8f4ba1fc9e786f2da33e4d288d662cdb93e02f0e2c80130e8db63dc12728",
+      "pdf": "maps/world/pdf/resources-mineral-mine-production-comparison.pdf",
+      "pdf_sha256": "c6ca4338ec208aa44f673c2c16238b4bbda90e2a49b17d9bbe5764cd84cf83b5",
+      "preview": "previews/world/resources-mineral-mine-production-comparison.png",
+      "preview_sha256": "9409da514dbd063386a1f3b96d9323174ef755b198ee8f701511ebca63c260f3"
+    },
+    {
+      "stem": "resources-mineral-mine-production-comparison",
+      "scope": "world",
+      "kind": "legend",
+      "sheet_background": "#240413",
+      "svg": "legends/world/svg/resources-mineral-mine-production-comparison-legend.svg",
+      "svg_sha256": "05ef0a5f380c7c373db907ab55c77f145a9cf24c743a218da1feade695ea2da0",
+      "pdf": "legends/world/pdf/resources-mineral-mine-production-comparison-legend.pdf",
+      "pdf_sha256": "759cd379f5e06e1781e552fc90567f1006e6e979480c7793d47bc3c067166374",
+      "preview": "previews/world/resources-mineral-mine-production-comparison-legend.png",
+      "preview_sha256": "dc33f9b946c2d66e49201ef830b13f00e56c75657d93e4af51cec79125138b99"
+    },
+    {
+      "stem": "resources-mineral-mine-production-comparison",
+      "scope": "japan",
+      "kind": "map",
+      "sheet_background": "#240413",
+      "svg": "maps/japan/svg/resources-mineral-mine-production-comparison.svg",
+      "svg_sha256": "c6df203ff44a20ea0bc907fa4a7150f4d64d5e66339278c955c26583cae4ff56",
+      "pdf": "maps/japan/pdf/resources-mineral-mine-production-comparison.pdf",
+      "pdf_sha256": "14f250191f1bf1220a0466539b5631182788c19dacd2a3904b24e07b945b2847",
+      "preview": "previews/japan/resources-mineral-mine-production-comparison.png",
+      "preview_sha256": "d8a6a9fe6f2451a3e6f9e2847015098221c9d054a2dc19f56eac4dc011e2e8cb"
+    },
+    {
+      "stem": "resources-mineral-mine-production-comparison",
+      "scope": "japan",
+      "kind": "legend",
+      "sheet_background": "#240413",
+      "svg": "legends/japan/svg/resources-mineral-mine-production-comparison-legend.svg",
+      "svg_sha256": "05ef0a5f380c7c373db907ab55c77f145a9cf24c743a218da1feade695ea2da0",
+      "pdf": "legends/japan/pdf/resources-mineral-mine-production-comparison-legend.pdf",
+      "pdf_sha256": "b782cf6e4df58d76e2125539aa0db2635c74a8fd82004435a7e702252a28e416",
+      "preview": "previews/japan/resources-mineral-mine-production-comparison-legend.png",
+      "preview_sha256": "dc33f9b946c2d66e49201ef830b13f00e56c75657d93e4af51cec79125138b99"
+    }
+  ]
+}

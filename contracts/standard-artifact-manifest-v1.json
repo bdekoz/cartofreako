@@ -5,6 +5,39 @@
   "artifactCount": 223,
   "artifacts": [
     {
+      "id": "anthropocene-coral-reef-threat-2011.authagraph.whole-map",
+      "stem": "anthropocene-coral-reef-threat-2011-authagraph-44-19.052559",
+      "sourceSvg": "assets.generated/authagraph/svg/anthropocene-coral-reef-threat-2011-authagraph-44-19.052559.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-coral-reef-threat-2011",
+      "projectionId": "authagraph",
+      "layoutId": "authagraph",
+      "family": "authagraph",
+      "sliceId": null
+    },
+    {
+      "id": "anthropocene-land-temperature-2025.authagraph.whole-map",
+      "stem": "anthropocene-land-temperature-2025-authagraph-44-19.052559",
+      "sourceSvg": "assets.generated/authagraph/svg/anthropocene-land-temperature-2025-authagraph-44-19.052559.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-land-temperature-2025",
+      "projectionId": "authagraph",
+      "layoutId": "authagraph",
+      "family": "authagraph",
+      "sliceId": null
+    },
+    {
+      "id": "anthropocene-land-temperature-2026.authagraph.whole-map",
+      "stem": "anthropocene-land-temperature-2026-authagraph-44-19.052559",
+      "sourceSvg": "assets.generated/authagraph/svg/anthropocene-land-temperature-2026-authagraph-44-19.052559.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-land-temperature-2026",
+      "projectionId": "authagraph",
+      "layoutId": "authagraph",
+      "family": "authagraph",
+      "sliceId": null
+    },
+    {
       "id": "anthropocene-particulate-2025.authagraph.whole-map",
       "stem": "anthropocene-particulate-2025-authagraph-44-19.052559",
       "sourceSvg": "assets.generated/authagraph/svg/anthropocene-particulate-2025-authagraph-44-19.052559.svg",
@@ -21,28 +54,6 @@
       "sourceSvg": "assets.generated/authagraph/svg/anthropocene-particulate-2026-authagraph-44-19.052559.svg",
       "lifecycle": "standard",
       "passId": "anthropocene-particulate-2026",
-      "projectionId": "authagraph",
-      "layoutId": "authagraph",
-      "family": "authagraph",
-      "sliceId": null
-    },
-    {
-      "id": "anthropocene-temperature-2025.authagraph.whole-map",
-      "stem": "anthropocene-temperature-2025-authagraph-44-19.052559",
-      "sourceSvg": "assets.generated/authagraph/svg/anthropocene-temperature-2025-authagraph-44-19.052559.svg",
-      "lifecycle": "standard",
-      "passId": "anthropocene-temperature-2025",
-      "projectionId": "authagraph",
-      "layoutId": "authagraph",
-      "family": "authagraph",
-      "sliceId": null
-    },
-    {
-      "id": "anthropocene-temperature-2026.authagraph.whole-map",
-      "stem": "anthropocene-temperature-2026-authagraph-44-19.052559",
-      "sourceSvg": "assets.generated/authagraph/svg/anthropocene-temperature-2026-authagraph-44-19.052559.svg",
-      "lifecycle": "standard",
-      "passId": "anthropocene-temperature-2026",
       "projectionId": "authagraph",
       "layoutId": "authagraph",
       "family": "authagraph",
@@ -76,28 +87,6 @@
       "sourceSvg": "assets.generated/authagraph/svg/astro-observer-hubble-authagraph-44-19.052559.svg",
       "lifecycle": "standard",
       "passId": "astro-observer-hubble",
-      "projectionId": "authagraph",
-      "layoutId": "authagraph",
-      "family": "authagraph",
-      "sliceId": null
-    },
-    {
-      "id": "bathymetry-hamonshu.authagraph.whole-map",
-      "stem": "bathymetry-hamonshu-authagraph-44-19.052559",
-      "sourceSvg": "assets.generated/authagraph/svg/bathymetry-hamonshu-authagraph-44-19.052559.svg",
-      "lifecycle": "standard",
-      "passId": "bathymetry-hamonshu",
-      "projectionId": "authagraph",
-      "layoutId": "authagraph",
-      "family": "authagraph",
-      "sliceId": null
-    },
-    {
-      "id": "bathymetry-roulette.authagraph.whole-map",
-      "stem": "bathymetry-roulette-authagraph-44-19.052559",
-      "sourceSvg": "assets.generated/authagraph/svg/bathymetry-roulette-authagraph-44-19.052559.svg",
-      "lifecycle": "standard",
-      "passId": "bathymetry-roulette",
       "projectionId": "authagraph",
       "layoutId": "authagraph",
       "family": "authagraph",
@@ -258,17 +247,6 @@
       "sliceId": null
     },
     {
-      "id": "resources-fauna-coral-reef-threat-2011.authagraph.whole-map",
-      "stem": "resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559",
-      "sourceSvg": "assets.generated/authagraph/svg/resources-fauna-coral-reef-threat-2011-authagraph-44-19.052559.svg",
-      "lifecycle": "standard",
-      "passId": "resources-fauna-coral-reef-threat-2011",
-      "projectionId": "authagraph",
-      "layoutId": "authagraph",
-      "family": "authagraph",
-      "sliceId": null
-    },
-    {
       "id": "resources-fauna-fisheries-production-latest-2024.authagraph.whole-map",
       "stem": "resources-fauna-fisheries-production-latest-2024-authagraph-44-19.052559",
       "sourceSvg": "assets.generated/authagraph/svg/resources-fauna-fisheries-production-latest-2024-authagraph-44-19.052559.svg",
@@ -357,11 +335,33 @@
       "sliceId": null
     },
     {
+      "id": "resources-mineral-lithium-mine-production-2025.authagraph.whole-map",
+      "stem": "resources-mineral-lithium-mine-production-2025-authagraph-44-19.052559",
+      "sourceSvg": "assets.generated/authagraph/svg/resources-mineral-lithium-mine-production-2025-authagraph-44-19.052559.svg",
+      "lifecycle": "standard",
+      "passId": "resources-mineral-lithium-mine-production-2025",
+      "projectionId": "authagraph",
+      "layoutId": "authagraph",
+      "family": "authagraph",
+      "sliceId": null
+    },
+    {
       "id": "resources-mineral-rare-earth-mine-production-2025.authagraph.whole-map",
       "stem": "resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559",
       "sourceSvg": "assets.generated/authagraph/svg/resources-mineral-rare-earth-mine-production-2025-authagraph-44-19.052559.svg",
       "lifecycle": "standard",
       "passId": "resources-mineral-rare-earth-mine-production-2025",
+      "projectionId": "authagraph",
+      "layoutId": "authagraph",
+      "family": "authagraph",
+      "sliceId": null
+    },
+    {
+      "id": "resources-mineral-uranium-mine-production-2024.authagraph.whole-map",
+      "stem": "resources-mineral-uranium-mine-production-2024-authagraph-44-19.052559",
+      "sourceSvg": "assets.generated/authagraph/svg/resources-mineral-uranium-mine-production-2024-authagraph-44-19.052559.svg",
+      "lifecycle": "standard",
+      "passId": "resources-mineral-uranium-mine-production-2024",
       "projectionId": "authagraph",
       "layoutId": "authagraph",
       "family": "authagraph",
@@ -376,6 +376,39 @@
       "projectionId": "authagraph",
       "layoutId": "authagraph",
       "family": "authagraph",
+      "sliceId": null
+    },
+    {
+      "id": "anthropocene-coral-reef-threat-2011.cahill-keyes.whole-map",
+      "stem": "anthropocene-coral-reef-threat-2011-ck-44-22",
+      "sourceSvg": "assets.generated/cahill-keyes/svg/anthropocene-coral-reef-threat-2011-ck-44-22.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-coral-reef-threat-2011",
+      "projectionId": "cahill-keyes",
+      "layoutId": "cahill-keyes",
+      "family": "cahill-keyes",
+      "sliceId": null
+    },
+    {
+      "id": "anthropocene-land-temperature-2025.cahill-keyes.whole-map",
+      "stem": "anthropocene-land-temperature-2025-ck-44-22",
+      "sourceSvg": "assets.generated/cahill-keyes/svg/anthropocene-land-temperature-2025-ck-44-22.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-land-temperature-2025",
+      "projectionId": "cahill-keyes",
+      "layoutId": "cahill-keyes",
+      "family": "cahill-keyes",
+      "sliceId": null
+    },
+    {
+      "id": "anthropocene-land-temperature-2026.cahill-keyes.whole-map",
+      "stem": "anthropocene-land-temperature-2026-ck-44-22",
+      "sourceSvg": "assets.generated/cahill-keyes/svg/anthropocene-land-temperature-2026-ck-44-22.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-land-temperature-2026",
+      "projectionId": "cahill-keyes",
+      "layoutId": "cahill-keyes",
+      "family": "cahill-keyes",
       "sliceId": null
     },
     {
@@ -395,28 +428,6 @@
       "sourceSvg": "assets.generated/cahill-keyes/svg/anthropocene-particulate-2026-ck-44-22.svg",
       "lifecycle": "standard",
       "passId": "anthropocene-particulate-2026",
-      "projectionId": "cahill-keyes",
-      "layoutId": "cahill-keyes",
-      "family": "cahill-keyes",
-      "sliceId": null
-    },
-    {
-      "id": "anthropocene-temperature-2025.cahill-keyes.whole-map",
-      "stem": "anthropocene-temperature-2025-ck-44-22",
-      "sourceSvg": "assets.generated/cahill-keyes/svg/anthropocene-temperature-2025-ck-44-22.svg",
-      "lifecycle": "standard",
-      "passId": "anthropocene-temperature-2025",
-      "projectionId": "cahill-keyes",
-      "layoutId": "cahill-keyes",
-      "family": "cahill-keyes",
-      "sliceId": null
-    },
-    {
-      "id": "anthropocene-temperature-2026.cahill-keyes.whole-map",
-      "stem": "anthropocene-temperature-2026-ck-44-22",
-      "sourceSvg": "assets.generated/cahill-keyes/svg/anthropocene-temperature-2026-ck-44-22.svg",
-      "lifecycle": "standard",
-      "passId": "anthropocene-temperature-2026",
       "projectionId": "cahill-keyes",
       "layoutId": "cahill-keyes",
       "family": "cahill-keyes",
@@ -450,28 +461,6 @@
       "sourceSvg": "assets.generated/cahill-keyes/svg/astro-observer-hubble-ck-44-22.svg",
       "lifecycle": "standard",
       "passId": "astro-observer-hubble",
-      "projectionId": "cahill-keyes",
-      "layoutId": "cahill-keyes",
-      "family": "cahill-keyes",
-      "sliceId": null
-    },
-    {
-      "id": "bathymetry-hamonshu.cahill-keyes.whole-map",
-      "stem": "bathymetry-hamonshu-ck-44-22",
-      "sourceSvg": "assets.generated/cahill-keyes/svg/bathymetry-hamonshu-ck-44-22.svg",
-      "lifecycle": "standard",
-      "passId": "bathymetry-hamonshu",
-      "projectionId": "cahill-keyes",
-      "layoutId": "cahill-keyes",
-      "family": "cahill-keyes",
-      "sliceId": null
-    },
-    {
-      "id": "bathymetry-roulette.cahill-keyes.whole-map",
-      "stem": "bathymetry-roulette-ck-44-22",
-      "sourceSvg": "assets.generated/cahill-keyes/svg/bathymetry-roulette-ck-44-22.svg",
-      "lifecycle": "standard",
-      "passId": "bathymetry-roulette",
       "projectionId": "cahill-keyes",
       "layoutId": "cahill-keyes",
       "family": "cahill-keyes",
@@ -764,17 +753,6 @@
       "sliceId": null
     },
     {
-      "id": "resources-fauna-coral-reef-threat-2011.cahill-keyes.whole-map",
-      "stem": "resources-fauna-coral-reef-threat-2011-ck-44-22",
-      "sourceSvg": "assets.generated/cahill-keyes/svg/resources-fauna-coral-reef-threat-2011-ck-44-22.svg",
-      "lifecycle": "standard",
-      "passId": "resources-fauna-coral-reef-threat-2011",
-      "projectionId": "cahill-keyes",
-      "layoutId": "cahill-keyes",
-      "family": "cahill-keyes",
-      "sliceId": null
-    },
-    {
       "id": "resources-fauna-fisheries-production-latest-2024.cahill-keyes.whole-map",
       "stem": "resources-fauna-fisheries-production-latest-2024-ck-44-22",
       "sourceSvg": "assets.generated/cahill-keyes/svg/resources-fauna-fisheries-production-latest-2024-ck-44-22.svg",
@@ -863,11 +841,33 @@
       "sliceId": null
     },
     {
+      "id": "resources-mineral-lithium-mine-production-2025.cahill-keyes.whole-map",
+      "stem": "resources-mineral-lithium-mine-production-2025-ck-44-22",
+      "sourceSvg": "assets.generated/cahill-keyes/svg/resources-mineral-lithium-mine-production-2025-ck-44-22.svg",
+      "lifecycle": "standard",
+      "passId": "resources-mineral-lithium-mine-production-2025",
+      "projectionId": "cahill-keyes",
+      "layoutId": "cahill-keyes",
+      "family": "cahill-keyes",
+      "sliceId": null
+    },
+    {
       "id": "resources-mineral-rare-earth-mine-production-2025.cahill-keyes.whole-map",
       "stem": "resources-mineral-rare-earth-mine-production-2025-ck-44-22",
       "sourceSvg": "assets.generated/cahill-keyes/svg/resources-mineral-rare-earth-mine-production-2025-ck-44-22.svg",
       "lifecycle": "standard",
       "passId": "resources-mineral-rare-earth-mine-production-2025",
+      "projectionId": "cahill-keyes",
+      "layoutId": "cahill-keyes",
+      "family": "cahill-keyes",
+      "sliceId": null
+    },
+    {
+      "id": "resources-mineral-uranium-mine-production-2024.cahill-keyes.whole-map",
+      "stem": "resources-mineral-uranium-mine-production-2024-ck-44-22",
+      "sourceSvg": "assets.generated/cahill-keyes/svg/resources-mineral-uranium-mine-production-2024-ck-44-22.svg",
+      "lifecycle": "standard",
+      "passId": "resources-mineral-uranium-mine-production-2024",
       "projectionId": "cahill-keyes",
       "layoutId": "cahill-keyes",
       "family": "cahill-keyes",
@@ -882,6 +882,39 @@
       "projectionId": "cahill-keyes",
       "layoutId": "cahill-keyes",
       "family": "cahill-keyes",
+      "sliceId": null
+    },
+    {
+      "id": "anthropocene-coral-reef-threat-2011.dymaxion.whole-map",
+      "stem": "anthropocene-coral-reef-threat-2011-dymaxion-44-20.78461",
+      "sourceSvg": "assets.generated/dymaxion/svg/anthropocene-coral-reef-threat-2011-dymaxion-44-20.78461.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-coral-reef-threat-2011",
+      "projectionId": "dymaxion",
+      "layoutId": "dymaxion",
+      "family": "dymaxion",
+      "sliceId": null
+    },
+    {
+      "id": "anthropocene-land-temperature-2025.dymaxion.whole-map",
+      "stem": "anthropocene-land-temperature-2025-dymaxion-44-20.78461",
+      "sourceSvg": "assets.generated/dymaxion/svg/anthropocene-land-temperature-2025-dymaxion-44-20.78461.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-land-temperature-2025",
+      "projectionId": "dymaxion",
+      "layoutId": "dymaxion",
+      "family": "dymaxion",
+      "sliceId": null
+    },
+    {
+      "id": "anthropocene-land-temperature-2026.dymaxion.whole-map",
+      "stem": "anthropocene-land-temperature-2026-dymaxion-44-20.78461",
+      "sourceSvg": "assets.generated/dymaxion/svg/anthropocene-land-temperature-2026-dymaxion-44-20.78461.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-land-temperature-2026",
+      "projectionId": "dymaxion",
+      "layoutId": "dymaxion",
+      "family": "dymaxion",
       "sliceId": null
     },
     {
@@ -901,28 +934,6 @@
       "sourceSvg": "assets.generated/dymaxion/svg/anthropocene-particulate-2026-dymaxion-44-20.78461.svg",
       "lifecycle": "standard",
       "passId": "anthropocene-particulate-2026",
-      "projectionId": "dymaxion",
-      "layoutId": "dymaxion",
-      "family": "dymaxion",
-      "sliceId": null
-    },
-    {
-      "id": "anthropocene-temperature-2025.dymaxion.whole-map",
-      "stem": "anthropocene-temperature-2025-dymaxion-44-20.78461",
-      "sourceSvg": "assets.generated/dymaxion/svg/anthropocene-temperature-2025-dymaxion-44-20.78461.svg",
-      "lifecycle": "standard",
-      "passId": "anthropocene-temperature-2025",
-      "projectionId": "dymaxion",
-      "layoutId": "dymaxion",
-      "family": "dymaxion",
-      "sliceId": null
-    },
-    {
-      "id": "anthropocene-temperature-2026.dymaxion.whole-map",
-      "stem": "anthropocene-temperature-2026-dymaxion-44-20.78461",
-      "sourceSvg": "assets.generated/dymaxion/svg/anthropocene-temperature-2026-dymaxion-44-20.78461.svg",
-      "lifecycle": "standard",
-      "passId": "anthropocene-temperature-2026",
       "projectionId": "dymaxion",
       "layoutId": "dymaxion",
       "family": "dymaxion",
@@ -956,28 +967,6 @@
       "sourceSvg": "assets.generated/dymaxion/svg/astro-observer-hubble-dymaxion-44-20.78461.svg",
       "lifecycle": "standard",
       "passId": "astro-observer-hubble",
-      "projectionId": "dymaxion",
-      "layoutId": "dymaxion",
-      "family": "dymaxion",
-      "sliceId": null
-    },
-    {
-      "id": "bathymetry-hamonshu.dymaxion.whole-map",
-      "stem": "bathymetry-hamonshu-dymaxion-44-20.78461",
-      "sourceSvg": "assets.generated/dymaxion/svg/bathymetry-hamonshu-dymaxion-44-20.78461.svg",
-      "lifecycle": "standard",
-      "passId": "bathymetry-hamonshu",
-      "projectionId": "dymaxion",
-      "layoutId": "dymaxion",
-      "family": "dymaxion",
-      "sliceId": null
-    },
-    {
-      "id": "bathymetry-roulette.dymaxion.whole-map",
-      "stem": "bathymetry-roulette-dymaxion-44-20.78461",
-      "sourceSvg": "assets.generated/dymaxion/svg/bathymetry-roulette-dymaxion-44-20.78461.svg",
-      "lifecycle": "standard",
-      "passId": "bathymetry-roulette",
       "projectionId": "dymaxion",
       "layoutId": "dymaxion",
       "family": "dymaxion",
@@ -1138,17 +1127,6 @@
       "sliceId": null
     },
     {
-      "id": "resources-fauna-coral-reef-threat-2011.dymaxion.whole-map",
-      "stem": "resources-fauna-coral-reef-threat-2011-dymaxion-44-20.78461",
-      "sourceSvg": "assets.generated/dymaxion/svg/resources-fauna-coral-reef-threat-2011-dymaxion-44-20.78461.svg",
-      "lifecycle": "standard",
-      "passId": "resources-fauna-coral-reef-threat-2011",
-      "projectionId": "dymaxion",
-      "layoutId": "dymaxion",
-      "family": "dymaxion",
-      "sliceId": null
-    },
-    {
       "id": "resources-fauna-fisheries-production-latest-2024.dymaxion.whole-map",
       "stem": "resources-fauna-fisheries-production-latest-2024-dymaxion-44-20.78461",
       "sourceSvg": "assets.generated/dymaxion/svg/resources-fauna-fisheries-production-latest-2024-dymaxion-44-20.78461.svg",
@@ -1237,11 +1215,33 @@
       "sliceId": null
     },
     {
+      "id": "resources-mineral-lithium-mine-production-2025.dymaxion.whole-map",
+      "stem": "resources-mineral-lithium-mine-production-2025-dymaxion-44-20.78461",
+      "sourceSvg": "assets.generated/dymaxion/svg/resources-mineral-lithium-mine-production-2025-dymaxion-44-20.78461.svg",
+      "lifecycle": "standard",
+      "passId": "resources-mineral-lithium-mine-production-2025",
+      "projectionId": "dymaxion",
+      "layoutId": "dymaxion",
+      "family": "dymaxion",
+      "sliceId": null
+    },
+    {
       "id": "resources-mineral-rare-earth-mine-production-2025.dymaxion.whole-map",
       "stem": "resources-mineral-rare-earth-mine-production-2025-dymaxion-44-20.78461",
       "sourceSvg": "assets.generated/dymaxion/svg/resources-mineral-rare-earth-mine-production-2025-dymaxion-44-20.78461.svg",
       "lifecycle": "standard",
       "passId": "resources-mineral-rare-earth-mine-production-2025",
+      "projectionId": "dymaxion",
+      "layoutId": "dymaxion",
+      "family": "dymaxion",
+      "sliceId": null
+    },
+    {
+      "id": "resources-mineral-uranium-mine-production-2024.dymaxion.whole-map",
+      "stem": "resources-mineral-uranium-mine-production-2024-dymaxion-44-20.78461",
+      "sourceSvg": "assets.generated/dymaxion/svg/resources-mineral-uranium-mine-production-2024-dymaxion-44-20.78461.svg",
+      "lifecycle": "standard",
+      "passId": "resources-mineral-uranium-mine-production-2024",
       "projectionId": "dymaxion",
       "layoutId": "dymaxion",
       "family": "dymaxion",
@@ -1256,6 +1256,39 @@
       "projectionId": "dymaxion",
       "layoutId": "dymaxion",
       "family": "dymaxion",
+      "sliceId": null
+    },
+    {
+      "id": "anthropocene-coral-reef-threat-2011.myriahedral.whole-map",
+      "stem": "anthropocene-coral-reef-threat-2011-myriahedral-44-24.75",
+      "sourceSvg": "assets.generated/myriahedral/svg/anthropocene-coral-reef-threat-2011-myriahedral-44-24.75.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-coral-reef-threat-2011",
+      "projectionId": "myriahedral",
+      "layoutId": "myriahedral",
+      "family": "myriahedral",
+      "sliceId": null
+    },
+    {
+      "id": "anthropocene-land-temperature-2025.myriahedral.whole-map",
+      "stem": "anthropocene-land-temperature-2025-myriahedral-44-24.75",
+      "sourceSvg": "assets.generated/myriahedral/svg/anthropocene-land-temperature-2025-myriahedral-44-24.75.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-land-temperature-2025",
+      "projectionId": "myriahedral",
+      "layoutId": "myriahedral",
+      "family": "myriahedral",
+      "sliceId": null
+    },
+    {
+      "id": "anthropocene-land-temperature-2026.myriahedral.whole-map",
+      "stem": "anthropocene-land-temperature-2026-myriahedral-44-24.75",
+      "sourceSvg": "assets.generated/myriahedral/svg/anthropocene-land-temperature-2026-myriahedral-44-24.75.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-land-temperature-2026",
+      "projectionId": "myriahedral",
+      "layoutId": "myriahedral",
+      "family": "myriahedral",
       "sliceId": null
     },
     {
@@ -1275,28 +1308,6 @@
       "sourceSvg": "assets.generated/myriahedral/svg/anthropocene-particulate-2026-myriahedral-44-24.75.svg",
       "lifecycle": "standard",
       "passId": "anthropocene-particulate-2026",
-      "projectionId": "myriahedral",
-      "layoutId": "myriahedral",
-      "family": "myriahedral",
-      "sliceId": null
-    },
-    {
-      "id": "anthropocene-temperature-2025.myriahedral.whole-map",
-      "stem": "anthropocene-temperature-2025-myriahedral-44-24.75",
-      "sourceSvg": "assets.generated/myriahedral/svg/anthropocene-temperature-2025-myriahedral-44-24.75.svg",
-      "lifecycle": "standard",
-      "passId": "anthropocene-temperature-2025",
-      "projectionId": "myriahedral",
-      "layoutId": "myriahedral",
-      "family": "myriahedral",
-      "sliceId": null
-    },
-    {
-      "id": "anthropocene-temperature-2026.myriahedral.whole-map",
-      "stem": "anthropocene-temperature-2026-myriahedral-44-24.75",
-      "sourceSvg": "assets.generated/myriahedral/svg/anthropocene-temperature-2026-myriahedral-44-24.75.svg",
-      "lifecycle": "standard",
-      "passId": "anthropocene-temperature-2026",
       "projectionId": "myriahedral",
       "layoutId": "myriahedral",
       "family": "myriahedral",
@@ -1330,28 +1341,6 @@
       "sourceSvg": "assets.generated/myriahedral/svg/astro-observer-hubble-myriahedral-44-24.75.svg",
       "lifecycle": "standard",
       "passId": "astro-observer-hubble",
-      "projectionId": "myriahedral",
-      "layoutId": "myriahedral",
-      "family": "myriahedral",
-      "sliceId": null
-    },
-    {
-      "id": "bathymetry-hamonshu.myriahedral.whole-map",
-      "stem": "bathymetry-hamonshu-myriahedral-44-24.75",
-      "sourceSvg": "assets.generated/myriahedral/svg/bathymetry-hamonshu-myriahedral-44-24.75.svg",
-      "lifecycle": "standard",
-      "passId": "bathymetry-hamonshu",
-      "projectionId": "myriahedral",
-      "layoutId": "myriahedral",
-      "family": "myriahedral",
-      "sliceId": null
-    },
-    {
-      "id": "bathymetry-roulette.myriahedral.whole-map",
-      "stem": "bathymetry-roulette-myriahedral-44-24.75",
-      "sourceSvg": "assets.generated/myriahedral/svg/bathymetry-roulette-myriahedral-44-24.75.svg",
-      "lifecycle": "standard",
-      "passId": "bathymetry-roulette",
       "projectionId": "myriahedral",
       "layoutId": "myriahedral",
       "family": "myriahedral",
@@ -1512,17 +1501,6 @@
       "sliceId": null
     },
     {
-      "id": "resources-fauna-coral-reef-threat-2011.myriahedral.whole-map",
-      "stem": "resources-fauna-coral-reef-threat-2011-myriahedral-44-24.75",
-      "sourceSvg": "assets.generated/myriahedral/svg/resources-fauna-coral-reef-threat-2011-myriahedral-44-24.75.svg",
-      "lifecycle": "standard",
-      "passId": "resources-fauna-coral-reef-threat-2011",
-      "projectionId": "myriahedral",
-      "layoutId": "myriahedral",
-      "family": "myriahedral",
-      "sliceId": null
-    },
-    {
       "id": "resources-fauna-fisheries-production-latest-2024.myriahedral.whole-map",
       "stem": "resources-fauna-fisheries-production-latest-2024-myriahedral-44-24.75",
       "sourceSvg": "assets.generated/myriahedral/svg/resources-fauna-fisheries-production-latest-2024-myriahedral-44-24.75.svg",
@@ -1611,11 +1589,33 @@
       "sliceId": null
     },
     {
+      "id": "resources-mineral-lithium-mine-production-2025.myriahedral.whole-map",
+      "stem": "resources-mineral-lithium-mine-production-2025-myriahedral-44-24.75",
+      "sourceSvg": "assets.generated/myriahedral/svg/resources-mineral-lithium-mine-production-2025-myriahedral-44-24.75.svg",
+      "lifecycle": "standard",
+      "passId": "resources-mineral-lithium-mine-production-2025",
+      "projectionId": "myriahedral",
+      "layoutId": "myriahedral",
+      "family": "myriahedral",
+      "sliceId": null
+    },
+    {
       "id": "resources-mineral-rare-earth-mine-production-2025.myriahedral.whole-map",
       "stem": "resources-mineral-rare-earth-mine-production-2025-myriahedral-44-24.75",
       "sourceSvg": "assets.generated/myriahedral/svg/resources-mineral-rare-earth-mine-production-2025-myriahedral-44-24.75.svg",
       "lifecycle": "standard",
       "passId": "resources-mineral-rare-earth-mine-production-2025",
+      "projectionId": "myriahedral",
+      "layoutId": "myriahedral",
+      "family": "myriahedral",
+      "sliceId": null
+    },
+    {
+      "id": "resources-mineral-uranium-mine-production-2024.myriahedral.whole-map",
+      "stem": "resources-mineral-uranium-mine-production-2024-myriahedral-44-24.75",
+      "sourceSvg": "assets.generated/myriahedral/svg/resources-mineral-uranium-mine-production-2024-myriahedral-44-24.75.svg",
+      "lifecycle": "standard",
+      "passId": "resources-mineral-uranium-mine-production-2024",
       "projectionId": "myriahedral",
       "layoutId": "myriahedral",
       "family": "myriahedral",
@@ -1710,6 +1710,39 @@
       "sliceId": null
     },
     {
+      "id": "anthropocene-coral-reef-threat-2011.star-x.whole-map",
+      "stem": "anthropocene-coral-reef-threat-2011-star-x-34-44",
+      "sourceSvg": "assets.generated/star-x/svg/anthropocene-coral-reef-threat-2011-star-x-34-44.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-coral-reef-threat-2011",
+      "projectionId": "star-x",
+      "layoutId": "star-x",
+      "family": "star-x",
+      "sliceId": null
+    },
+    {
+      "id": "anthropocene-land-temperature-2025.star-x.whole-map",
+      "stem": "anthropocene-land-temperature-2025-star-x-34-44",
+      "sourceSvg": "assets.generated/star-x/svg/anthropocene-land-temperature-2025-star-x-34-44.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-land-temperature-2025",
+      "projectionId": "star-x",
+      "layoutId": "star-x",
+      "family": "star-x",
+      "sliceId": null
+    },
+    {
+      "id": "anthropocene-land-temperature-2026.star-x.whole-map",
+      "stem": "anthropocene-land-temperature-2026-star-x-34-44",
+      "sourceSvg": "assets.generated/star-x/svg/anthropocene-land-temperature-2026-star-x-34-44.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-land-temperature-2026",
+      "projectionId": "star-x",
+      "layoutId": "star-x",
+      "family": "star-x",
+      "sliceId": null
+    },
+    {
       "id": "anthropocene-particulate-2025.star-x.whole-map",
       "stem": "anthropocene-particulate-2025-star-x-34-44",
       "sourceSvg": "assets.generated/star-x/svg/anthropocene-particulate-2025-star-x-34-44.svg",
@@ -1726,28 +1759,6 @@
       "sourceSvg": "assets.generated/star-x/svg/anthropocene-particulate-2026-star-x-34-44.svg",
       "lifecycle": "standard",
       "passId": "anthropocene-particulate-2026",
-      "projectionId": "star-x",
-      "layoutId": "star-x",
-      "family": "star-x",
-      "sliceId": null
-    },
-    {
-      "id": "anthropocene-temperature-2025.star-x.whole-map",
-      "stem": "anthropocene-temperature-2025-star-x-34-44",
-      "sourceSvg": "assets.generated/star-x/svg/anthropocene-temperature-2025-star-x-34-44.svg",
-      "lifecycle": "standard",
-      "passId": "anthropocene-temperature-2025",
-      "projectionId": "star-x",
-      "layoutId": "star-x",
-      "family": "star-x",
-      "sliceId": null
-    },
-    {
-      "id": "anthropocene-temperature-2026.star-x.whole-map",
-      "stem": "anthropocene-temperature-2026-star-x-34-44",
-      "sourceSvg": "assets.generated/star-x/svg/anthropocene-temperature-2026-star-x-34-44.svg",
-      "lifecycle": "standard",
-      "passId": "anthropocene-temperature-2026",
       "projectionId": "star-x",
       "layoutId": "star-x",
       "family": "star-x",
@@ -1781,28 +1792,6 @@
       "sourceSvg": "assets.generated/star-x/svg/astro-observer-hubble-star-x-34-44.svg",
       "lifecycle": "standard",
       "passId": "astro-observer-hubble",
-      "projectionId": "star-x",
-      "layoutId": "star-x",
-      "family": "star-x",
-      "sliceId": null
-    },
-    {
-      "id": "bathymetry-hamonshu.star-x.whole-map",
-      "stem": "bathymetry-hamonshu-star-x-34-44",
-      "sourceSvg": "assets.generated/star-x/svg/bathymetry-hamonshu-star-x-34-44.svg",
-      "lifecycle": "standard",
-      "passId": "bathymetry-hamonshu",
-      "projectionId": "star-x",
-      "layoutId": "star-x",
-      "family": "star-x",
-      "sliceId": null
-    },
-    {
-      "id": "bathymetry-roulette.star-x.whole-map",
-      "stem": "bathymetry-roulette-star-x-34-44",
-      "sourceSvg": "assets.generated/star-x/svg/bathymetry-roulette-star-x-34-44.svg",
-      "lifecycle": "standard",
-      "passId": "bathymetry-roulette",
       "projectionId": "star-x",
       "layoutId": "star-x",
       "family": "star-x",
@@ -1963,17 +1952,6 @@
       "sliceId": null
     },
     {
-      "id": "resources-fauna-coral-reef-threat-2011.star-x.whole-map",
-      "stem": "resources-fauna-coral-reef-threat-2011-star-x-34-44",
-      "sourceSvg": "assets.generated/star-x/svg/resources-fauna-coral-reef-threat-2011-star-x-34-44.svg",
-      "lifecycle": "standard",
-      "passId": "resources-fauna-coral-reef-threat-2011",
-      "projectionId": "star-x",
-      "layoutId": "star-x",
-      "family": "star-x",
-      "sliceId": null
-    },
-    {
       "id": "resources-fauna-fisheries-production-latest-2024.star-x.whole-map",
       "stem": "resources-fauna-fisheries-production-latest-2024-star-x-34-44",
       "sourceSvg": "assets.generated/star-x/svg/resources-fauna-fisheries-production-latest-2024-star-x-34-44.svg",
@@ -2062,11 +2040,33 @@
       "sliceId": null
     },
     {
+      "id": "resources-mineral-lithium-mine-production-2025.star-x.whole-map",
+      "stem": "resources-mineral-lithium-mine-production-2025-star-x-34-44",
+      "sourceSvg": "assets.generated/star-x/svg/resources-mineral-lithium-mine-production-2025-star-x-34-44.svg",
+      "lifecycle": "standard",
+      "passId": "resources-mineral-lithium-mine-production-2025",
+      "projectionId": "star-x",
+      "layoutId": "star-x",
+      "family": "star-x",
+      "sliceId": null
+    },
+    {
       "id": "resources-mineral-rare-earth-mine-production-2025.star-x.whole-map",
       "stem": "resources-mineral-rare-earth-mine-production-2025-star-x-34-44",
       "sourceSvg": "assets.generated/star-x/svg/resources-mineral-rare-earth-mine-production-2025-star-x-34-44.svg",
       "lifecycle": "standard",
       "passId": "resources-mineral-rare-earth-mine-production-2025",
+      "projectionId": "star-x",
+      "layoutId": "star-x",
+      "family": "star-x",
+      "sliceId": null
+    },
+    {
+      "id": "resources-mineral-uranium-mine-production-2024.star-x.whole-map",
+      "stem": "resources-mineral-uranium-mine-production-2024-star-x-34-44",
+      "sourceSvg": "assets.generated/star-x/svg/resources-mineral-uranium-mine-production-2024-star-x-34-44.svg",
+      "lifecycle": "standard",
+      "passId": "resources-mineral-uranium-mine-production-2024",
       "projectionId": "star-x",
       "layoutId": "star-x",
       "family": "star-x",
@@ -2081,6 +2081,39 @@
       "projectionId": "star-x",
       "layoutId": "star-x",
       "family": "star-x",
+      "sliceId": null
+    },
+    {
+      "id": "anthropocene-coral-reef-threat-2011.voronoi.whole-map",
+      "stem": "anthropocene-coral-reef-threat-2011-voronoi-44-22.916667",
+      "sourceSvg": "assets.generated/voronoi/svg/anthropocene-coral-reef-threat-2011-voronoi-44-22.916667.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-coral-reef-threat-2011",
+      "projectionId": "voronoi",
+      "layoutId": "voronoi",
+      "family": "voronoi",
+      "sliceId": null
+    },
+    {
+      "id": "anthropocene-land-temperature-2025.voronoi.whole-map",
+      "stem": "anthropocene-land-temperature-2025-voronoi-44-22.916667",
+      "sourceSvg": "assets.generated/voronoi/svg/anthropocene-land-temperature-2025-voronoi-44-22.916667.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-land-temperature-2025",
+      "projectionId": "voronoi",
+      "layoutId": "voronoi",
+      "family": "voronoi",
+      "sliceId": null
+    },
+    {
+      "id": "anthropocene-land-temperature-2026.voronoi.whole-map",
+      "stem": "anthropocene-land-temperature-2026-voronoi-44-22.916667",
+      "sourceSvg": "assets.generated/voronoi/svg/anthropocene-land-temperature-2026-voronoi-44-22.916667.svg",
+      "lifecycle": "standard",
+      "passId": "anthropocene-land-temperature-2026",
+      "projectionId": "voronoi",
+      "layoutId": "voronoi",
+      "family": "voronoi",
       "sliceId": null
     },
     {
@@ -2100,28 +2133,6 @@
       "sourceSvg": "assets.generated/voronoi/svg/anthropocene-particulate-2026-voronoi-44-22.916667.svg",
       "lifecycle": "standard",
       "passId": "anthropocene-particulate-2026",
-      "projectionId": "voronoi",
-      "layoutId": "voronoi",
-      "family": "voronoi",
-      "sliceId": null
-    },
-    {
-      "id": "anthropocene-temperature-2025.voronoi.whole-map",
-      "stem": "anthropocene-temperature-2025-voronoi-44-22.916667",
-      "sourceSvg": "assets.generated/voronoi/svg/anthropocene-temperature-2025-voronoi-44-22.916667.svg",
-      "lifecycle": "standard",
-      "passId": "anthropocene-temperature-2025",
-      "projectionId": "voronoi",
-      "layoutId": "voronoi",
-      "family": "voronoi",
-      "sliceId": null
-    },
-    {
-      "id": "anthropocene-temperature-2026.voronoi.whole-map",
-      "stem": "anthropocene-temperature-2026-voronoi-44-22.916667",
-      "sourceSvg": "assets.generated/voronoi/svg/anthropocene-temperature-2026-voronoi-44-22.916667.svg",
-      "lifecycle": "standard",
-      "passId": "anthropocene-temperature-2026",
       "projectionId": "voronoi",
       "layoutId": "voronoi",
       "family": "voronoi",
@@ -2155,28 +2166,6 @@
       "sourceSvg": "assets.generated/voronoi/svg/astro-observer-hubble-voronoi-44-22.916667.svg",
       "lifecycle": "standard",
       "passId": "astro-observer-hubble",
-      "projectionId": "voronoi",
-      "layoutId": "voronoi",
-      "family": "voronoi",
-      "sliceId": null
-    },
-    {
-      "id": "bathymetry-hamonshu.voronoi.whole-map",
-      "stem": "bathymetry-hamonshu-voronoi-44-22.916667",
-      "sourceSvg": "assets.generated/voronoi/svg/bathymetry-hamonshu-voronoi-44-22.916667.svg",
-      "lifecycle": "standard",
-      "passId": "bathymetry-hamonshu",
-      "projectionId": "voronoi",
-      "layoutId": "voronoi",
-      "family": "voronoi",
-      "sliceId": null
-    },
-    {
-      "id": "bathymetry-roulette.voronoi.whole-map",
-      "stem": "bathymetry-roulette-voronoi-44-22.916667",
-      "sourceSvg": "assets.generated/voronoi/svg/bathymetry-roulette-voronoi-44-22.916667.svg",
-      "lifecycle": "standard",
-      "passId": "bathymetry-roulette",
       "projectionId": "voronoi",
       "layoutId": "voronoi",
       "family": "voronoi",
@@ -2337,17 +2326,6 @@
       "sliceId": null
     },
     {
-      "id": "resources-fauna-coral-reef-threat-2011.voronoi.whole-map",
-      "stem": "resources-fauna-coral-reef-threat-2011-voronoi-44-22.916667",
-      "sourceSvg": "assets.generated/voronoi/svg/resources-fauna-coral-reef-threat-2011-voronoi-44-22.916667.svg",
-      "lifecycle": "standard",
-      "passId": "resources-fauna-coral-reef-threat-2011",
-      "projectionId": "voronoi",
-      "layoutId": "voronoi",
-      "family": "voronoi",
-      "sliceId": null
-    },
-    {
       "id": "resources-fauna-fisheries-production-latest-2024.voronoi.whole-map",
       "stem": "resources-fauna-fisheries-production-latest-2024-voronoi-44-22.916667",
       "sourceSvg": "assets.generated/voronoi/svg/resources-fauna-fisheries-production-latest-2024-voronoi-44-22.916667.svg",
@@ -2436,11 +2414,33 @@
       "sliceId": null
     },
     {
+      "id": "resources-mineral-lithium-mine-production-2025.voronoi.whole-map",
+      "stem": "resources-mineral-lithium-mine-production-2025-voronoi-44-22.916667",
+      "sourceSvg": "assets.generated/voronoi/svg/resources-mineral-lithium-mine-production-2025-voronoi-44-22.916667.svg",
+      "lifecycle": "standard",
+      "passId": "resources-mineral-lithium-mine-production-2025",
+      "projectionId": "voronoi",
+      "layoutId": "voronoi",
+      "family": "voronoi",
+      "sliceId": null
+    },
+    {
       "id": "resources-mineral-rare-earth-mine-production-2025.voronoi.whole-map",
       "stem": "resources-mineral-rare-earth-mine-production-2025-voronoi-44-22.916667",
       "sourceSvg": "assets.generated/voronoi/svg/resources-mineral-rare-earth-mine-production-2025-voronoi-44-22.916667.svg",
       "lifecycle": "standard",
       "passId": "resources-mineral-rare-earth-mine-production-2025",
+      "projectionId": "voronoi",
+      "layoutId": "voronoi",
+      "family": "voronoi",
+      "sliceId": null
+    },
+    {
+      "id": "resources-mineral-uranium-mine-production-2024.voronoi.whole-map",
+      "stem": "resources-mineral-uranium-mine-production-2024-voronoi-44-22.916667",
+      "sourceSvg": "assets.generated/voronoi/svg/resources-mineral-uranium-mine-production-2024-voronoi-44-22.916667.svg",
+      "lifecycle": "standard",
+      "passId": "resources-mineral-uranium-mine-production-2024",
       "projectionId": "voronoi",
       "layoutId": "voronoi",
       "family": "voronoi",

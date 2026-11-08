@@ -120,17 +120,18 @@ ANTHROPOCENE_PROFILE ?= $(ANTHROPOCENE_PARTICULATE_PROFILE_2026)
 ANTHROPOCENE_GEOJSON ?= $(ANTHROPOCENE_PARTICULATE_GEOJSON_2026)
 ANTHROPOCENE_VERIFIER := $(ANTHROPOCENE_PARTICULATE_VERIFIER)
 ANTHROPOCENE_TEMPERATURE_PROFILE_2025 ?= \
-	$(ANTHROPOCENE_DATA_DIR)/anthropocene-temperature-2025-profile.json
+	$(ANTHROPOCENE_DATA_DIR)/anthropocene-land-temperature-2025-profile.json
 ANTHROPOCENE_TEMPERATURE_PROFILE_2026 ?= \
-	$(ANTHROPOCENE_DATA_DIR)/anthropocene-temperature-2026-profile.json
+	$(ANTHROPOCENE_DATA_DIR)/anthropocene-land-temperature-2026-profile.json
 ANTHROPOCENE_TEMPERATURE_GEOJSON_2025 ?= \
-	$(ANTHROPOCENE_DATA_DIR)/anthropocene-temperature-2025.geojson
+	$(ANTHROPOCENE_DATA_DIR)/anthropocene-land-temperature-2025.geojson
 ANTHROPOCENE_TEMPERATURE_GEOJSON_2026 ?= \
-	$(ANTHROPOCENE_DATA_DIR)/anthropocene-temperature-2026.geojson
+	$(ANTHROPOCENE_DATA_DIR)/anthropocene-land-temperature-2026.geojson
 ANTHROPOCENE_CPC_FETCHER := scripts/fetch-anthropocene-cpc-data.sh
 ANTHROPOCENE_TEMPERATURE_PREPARATION_SCRIPT := \
 	scripts/prepare-anthropocene-temperature-data.sh
-RESOURCES_DATA_DIR ?= $(STATIC_ASSET_DIR)/resources
+RESOURCES_DATA_DIR ?= $(STATIC_ASSET_DIR)/resources/current-20261108
+RESOURCES_BASE_DATA_DIR ?= $(STATIC_ASSET_DIR)/resources
 RESOURCES_PROFILE ?= $(RESOURCES_DATA_DIR)/resources-profile.json
 RESOURCES_VALUES ?= $(RESOURCES_DATA_DIR)/resources-values.json
 RESOURCES_COUNTRIES ?= $(RESOURCES_DATA_DIR)/countries-110m.geojson
@@ -606,19 +607,19 @@ ANTHROPOCENE_PARTICULATE_PDFS := \
 ANTHROPOCENE_PARTICULATE_PNGS := \
 	$(call svg_to_png,$(ANTHROPOCENE_PARTICULATE_SVGS))
 ANTHROPOCENE_TEMPERATURE_2025_SVGS := \
-	$(call generated_svg,anthropocene-temperature-2025-ck-44-22.svg) \
-	$(call generated_svg,anthropocene-temperature-2025-authagraph-44-19.052559.svg) \
-	$(call generated_svg,anthropocene-temperature-2025-dymaxion-44-20.78461.svg) \
-	$(call generated_svg,anthropocene-temperature-2025-myriahedral-44-24.75.svg) \
-	$(call generated_svg,anthropocene-temperature-2025-star-x-34-44.svg) \
-	$(call generated_svg,anthropocene-temperature-2025-voronoi-44-22.916667.svg)
+	$(call generated_svg,anthropocene-land-temperature-2025-ck-44-22.svg) \
+	$(call generated_svg,anthropocene-land-temperature-2025-authagraph-44-19.052559.svg) \
+	$(call generated_svg,anthropocene-land-temperature-2025-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,anthropocene-land-temperature-2025-myriahedral-44-24.75.svg) \
+	$(call generated_svg,anthropocene-land-temperature-2025-star-x-34-44.svg) \
+	$(call generated_svg,anthropocene-land-temperature-2025-voronoi-44-22.916667.svg)
 ANTHROPOCENE_TEMPERATURE_2026_SVGS := \
-	$(call generated_svg,anthropocene-temperature-2026-ck-44-22.svg) \
-	$(call generated_svg,anthropocene-temperature-2026-authagraph-44-19.052559.svg) \
-	$(call generated_svg,anthropocene-temperature-2026-dymaxion-44-20.78461.svg) \
-	$(call generated_svg,anthropocene-temperature-2026-myriahedral-44-24.75.svg) \
-	$(call generated_svg,anthropocene-temperature-2026-star-x-34-44.svg) \
-	$(call generated_svg,anthropocene-temperature-2026-voronoi-44-22.916667.svg)
+	$(call generated_svg,anthropocene-land-temperature-2026-ck-44-22.svg) \
+	$(call generated_svg,anthropocene-land-temperature-2026-authagraph-44-19.052559.svg) \
+	$(call generated_svg,anthropocene-land-temperature-2026-dymaxion-44-20.78461.svg) \
+	$(call generated_svg,anthropocene-land-temperature-2026-myriahedral-44-24.75.svg) \
+	$(call generated_svg,anthropocene-land-temperature-2026-star-x-34-44.svg) \
+	$(call generated_svg,anthropocene-land-temperature-2026-voronoi-44-22.916667.svg)
 ANTHROPOCENE_TEMPERATURE_SVGS := \
 	$(ANTHROPOCENE_TEMPERATURE_2025_SVGS) \
 	$(ANTHROPOCENE_TEMPERATURE_2026_SVGS)
@@ -645,11 +646,15 @@ RESOURCES_ENERGY_SVGS := $(RESOURCES_ENERGY_SOLAR_SVGS) \
 
 RESOURCES_FOOD_SVGS := $(call resource_metric_svgs,resources-food,food-production-index-2022)
 RESOURCES_FAUNA_FISHERIES_SVGS := $(call resource_metric_svgs,resources-fauna,fisheries-production-latest-2024)
-RESOURCES_FAUNA_REEFS_SVGS := $(call resource_metric_svgs,resources-fauna,coral-reef-threat-2011)
-RESOURCES_FAUNA_SVGS := $(RESOURCES_FAUNA_FISHERIES_SVGS) \
-	$(RESOURCES_FAUNA_REEFS_SVGS)
+RESOURCES_FAUNA_REEFS_SVGS := $(call resource_metric_svgs,anthropocene,coral-reef-threat-2011)
+ANTHROPOCENE_CORAL_REEF_SVGS := $(RESOURCES_FAUNA_REEFS_SVGS)
+ACCEPTED_EXPERIMENTAL_SVGS += $(ANTHROPOCENE_CORAL_REEF_SVGS)
+RESOURCES_FAUNA_SVGS := $(RESOURCES_FAUNA_FISHERIES_SVGS)
 RESOURCES_FLORA_SVGS := $(call resource_metric_svgs,resources-flora,forest-area-percent-2023)
-RESOURCES_MINERAL_SVGS := $(call resource_metric_svgs,resources-mineral,rare-earth-mine-production-2025)
+RESOURCES_MINERAL_RARE_EARTH_SVGS := $(call resource_metric_svgs,resources-mineral,rare-earth-mine-production-2025)
+RESOURCES_MINERAL_LITHIUM_SVGS := $(call resource_metric_svgs,resources-mineral,lithium-mine-production-2025)
+RESOURCES_MINERAL_URANIUM_SVGS := $(call resource_metric_svgs,resources-mineral,uranium-mine-production-2024)
+RESOURCES_MINERAL_SVGS := $(RESOURCES_MINERAL_RARE_EARTH_SVGS) $(RESOURCES_MINERAL_LITHIUM_SVGS) $(RESOURCES_MINERAL_URANIUM_SVGS)
 
 RESOURCES_HUMAN_UNDER_30_SVGS := $(call resource_metric_svgs,resources-human,population-under-30-2024)
 RESOURCES_HUMAN_OVER_60_SVGS := $(call resource_metric_svgs,resources-human,population-over-60-2024)
@@ -726,8 +731,7 @@ GENERATED_SVGS := \
 	$(NETWORK_INFRASTRUCTURE_SITES_SVGS) $(FIBER_SYNTHESIZED_SVGS) \
 	$(NETWORK_GROUNDSTATIONS_SVGS) \
 	$(ACCEPTED_EXPERIMENTAL_SVGS) \
-	$(RESOURCES_SVGS) \
-	$(BATHYMETRY_ROULETTE_SVGS) $(BATHYMETRY_HAMONSHU_SVGS)
+	$(RESOURCES_SVGS)
 GENERATED_PDFS := $(call svg_to_pdf,$(GENERATED_SVGS))
 GENERATED_PNGS := $(call svg_to_png,$(GENERATED_SVGS))
 STANDARD_ARTIFACT_MANIFEST := contracts/standard-artifact-manifest-v1.json
@@ -747,8 +751,7 @@ SNAPSHOT_SVGS := \
 	$(NETWORK_INFRASTRUCTURE_SITES_SVGS) $(FIBER_SYNTHESIZED_SVGS) \
 	$(NETWORK_GROUNDSTATIONS_SVGS) \
 	$(ACCEPTED_EXPERIMENTAL_SVGS) \
-	$(RESOURCES_SVGS) $(BATHYMETRY_ROULETTE_SVGS) \
-	$(BATHYMETRY_HAMONSHU_SVGS)
+	$(RESOURCES_SVGS)
 SNAPSHOT_WIDTH ?= 480
 CK_SNAPSHOT_WIDTH ?= $(SNAPSHOT_WIDTH)
 SNAPSHOT_THUMBNAILS := $(call svg_to_thumbnail,$(SNAPSHOT_SVGS))
@@ -785,8 +788,8 @@ ANTHROPOCENE_PARTICULATE_STAR_X_PNGS := \
 	$(call generated_png,anthropocene-particulate-2025-star-x-34-44.png) \
 	$(call generated_png,anthropocene-particulate-2026-star-x-34-44.png)
 ANTHROPOCENE_TEMPERATURE_STAR_X_PNGS := \
-	$(call generated_png,anthropocene-temperature-2025-star-x-34-44.png) \
-	$(call generated_png,anthropocene-temperature-2026-star-x-34-44.png)
+	$(call generated_png,anthropocene-land-temperature-2025-star-x-34-44.png) \
+	$(call generated_png,anthropocene-land-temperature-2026-star-x-34-44.png)
 RESOURCES_STAR_X_PNGS := $(filter %-star-x-34-44.png,$(RESOURCES_PNGS))
 BATHYMETRY_ROULETTE_STAR_X_PNG := \
 	$(call generated_png,bathymetry-roulette-star-x-34-44.png)
@@ -995,7 +998,7 @@ RESOURCE_PROJECTION_NAMES := cahill-keyes authagraph dymaxion myriahedral \
 RESOURCE_METRIC_TARGET_STEMS := resources-energy-solar resources-energy-wind \
 	resources-energy-nuclear resources-energy-petrochemical \
 	resources-food-production resources-fauna-fisheries resources-fauna-reefs \
-	resources-flora-forest resources-mineral-rare-earth \
+	resources-flora-forest resources-mineral-rare-earth resources-mineral-lithium resources-mineral-uranium \
 	resources-human-under-30 resources-human-over-60 \
 	resources-human-upper-secondary resources-human-bachelors \
 	resources-human-patents
@@ -1115,8 +1118,8 @@ PUBLIC_TARGETS := all all-experiments all-experiments-fetch \
 	generate-anthropocene-star-x generate-anthropocene-voronoi \
 	generate-anthropocene-2025 generate-anthropocene-2026 \
 	generate-anthropocene-years generate-anthropocene-year-artifacts \
-	generate-anthropocene-temperature-2025 \
-	generate-anthropocene-temperature-2026 \
+	generate-anthropocene-land-temperature-2025 \
+	generate-anthropocene-land-temperature-2026 \
 	generate-anthropocene-temperature-years \
 	generate-anthropocene-temperature-artifacts \
 	generate-resources generate-resources-projections \
@@ -1282,10 +1285,10 @@ render-marshall-islands-speculations-v01: wasm-projections \
 		$(NATURAL_EARTH_STAMP) fetch-marshall-islands-sources \
 		$(GENERATED_DIR)/dymaxion/png/water-dymaxion-44-20.78461.png \
 		$(GENERATED_DIR)/cahill-keyes/svg/water-ck-44-22.svg \
-		$(GENERATED_DIR)/cahill-keyes/svg/resources-fauna-coral-reef-threat-2011-ck-44-22.svg \
+		$(GENERATED_DIR)/cahill-keyes/svg/anthropocene-coral-reef-threat-2011-ck-44-22.svg \
 		$(GENERATED_DIR)/cahill-keyes/svg/network-fiber-ck-44-22.svg \
 		$(GENERATED_DIR)/cahill-keyes/svg/resources-human-population-under-30-2024-ck-44-22.svg \
-		$(GENERATED_DIR)/star-x/png/anthropocene-temperature-2026-star-x-34-44.png \
+		$(GENERATED_DIR)/star-x/png/anthropocene-land-temperature-2026-star-x-34-44.png \
 		$(GENERATED_DIR)/star-x/png/network-fiber-star-x-34-44.png \
 		$(GENERATED_DIR)/star-x/png/water-star-x-34-44.png \
 		scripts/render-marshall-islands-speculations-v01.sh \
@@ -2342,7 +2345,10 @@ prepare-anthropocene-temperature-data: \
 # Explicit maintainer workflow. Ordinary resources generation is offline and
 # reads only the checked normalized snapshot.
 refresh-resources-data: $(RESOURCES_FETCHER) $(RESOURCES_PREPARER)
-	"$(RESOURCES_FETCHER)" "$(RESOURCES_DATA_DIR)"
+	"$(RESOURCES_FETCHER)" "$(RESOURCES_BASE_DATA_DIR)"
+ifneq ($(abspath $(RESOURCES_DATA_DIR)),$(abspath $(RESOURCES_BASE_DATA_DIR)))
+	python3 scripts/prepare-mineral-additions.py --source "$(RESOURCES_BASE_DATA_DIR)" --output "$(RESOURCES_DATA_DIR)"
+endif
 
 fetch-natural-earth-10m: $(NATURAL_EARTH_STAMP)
 
@@ -2828,23 +2834,23 @@ $(3): $(ANTHROPOCENE_TEMPERATURE_GENERATOR) \
 endef
 
 $(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,cahill-keyes,\
-	$(call generated_svg,anthropocene-temperature-2025-ck-44-22.svg),\
-	$(call generated_svg,anthropocene-temperature-2026-ck-44-22.svg)))
+	$(call generated_svg,anthropocene-land-temperature-2025-ck-44-22.svg),\
+	$(call generated_svg,anthropocene-land-temperature-2026-ck-44-22.svg)))
 $(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,authagraph,\
-	$(call generated_svg,anthropocene-temperature-2025-authagraph-44-19.052559.svg),\
-	$(call generated_svg,anthropocene-temperature-2026-authagraph-44-19.052559.svg)))
+	$(call generated_svg,anthropocene-land-temperature-2025-authagraph-44-19.052559.svg),\
+	$(call generated_svg,anthropocene-land-temperature-2026-authagraph-44-19.052559.svg)))
 $(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,dymaxion,\
-	$(call generated_svg,anthropocene-temperature-2025-dymaxion-44-20.78461.svg),\
-	$(call generated_svg,anthropocene-temperature-2026-dymaxion-44-20.78461.svg)))
+	$(call generated_svg,anthropocene-land-temperature-2025-dymaxion-44-20.78461.svg),\
+	$(call generated_svg,anthropocene-land-temperature-2026-dymaxion-44-20.78461.svg)))
 $(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,myriahedral,\
-	$(call generated_svg,anthropocene-temperature-2025-myriahedral-44-24.75.svg),\
-	$(call generated_svg,anthropocene-temperature-2026-myriahedral-44-24.75.svg)))
+	$(call generated_svg,anthropocene-land-temperature-2025-myriahedral-44-24.75.svg),\
+	$(call generated_svg,anthropocene-land-temperature-2026-myriahedral-44-24.75.svg)))
 $(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,star-x,\
-	$(call generated_svg,anthropocene-temperature-2025-star-x-34-44.svg),\
-	$(call generated_svg,anthropocene-temperature-2026-star-x-34-44.svg)))
+	$(call generated_svg,anthropocene-land-temperature-2025-star-x-34-44.svg),\
+	$(call generated_svg,anthropocene-land-temperature-2026-star-x-34-44.svg)))
 $(eval $(call ANTHROPOCENE_TEMPERATURE_PROJECTION_RULES,voronoi,\
-	$(call generated_svg,anthropocene-temperature-2025-voronoi-44-22.916667.svg),\
-	$(call generated_svg,anthropocene-temperature-2026-voronoi-44-22.916667.svg)))
+	$(call generated_svg,anthropocene-land-temperature-2025-voronoi-44-22.916667.svg),\
+	$(call generated_svg,anthropocene-land-temperature-2026-voronoi-44-22.916667.svg)))
 
 # Current defaults generate paired particulate and temperature products for
 # the complete 2025 year and explicitly partial 2026 year.
@@ -2891,16 +2897,16 @@ generate-anthropocene-artifacts: \
 # These year targets are the implemented Stage 8b temperature-field theme.
 # Additional observation, fire/air, and ocean themes can join each dependency
 # list without changing the public target names.
-generate-anthropocene-temperature-2025: $(ANTHROPOCENE_TEMPERATURE_2025_SVGS)
-generate-anthropocene-temperature-2026: $(ANTHROPOCENE_TEMPERATURE_2026_SVGS)
+generate-anthropocene-land-temperature-2025: $(ANTHROPOCENE_TEMPERATURE_2025_SVGS)
+generate-anthropocene-land-temperature-2026: $(ANTHROPOCENE_TEMPERATURE_2026_SVGS)
 generate-anthropocene-temperature-years: $(ANTHROPOCENE_TEMPERATURE_SVGS)
 generate-anthropocene-temperature-artifacts: \
 	$(ANTHROPOCENE_TEMPERATURE_SVGS) $(ANTHROPOCENE_TEMPERATURE_PDFS) \
 	$(ANTHROPOCENE_TEMPERATURE_PNGS)
 generate-anthropocene-2025: generate-anthropocene-particulate-2025 \
-	generate-anthropocene-temperature-2025
+	generate-anthropocene-land-temperature-2025
 generate-anthropocene-2026: generate-anthropocene-particulate-2026 \
-	generate-anthropocene-temperature-2026
+	generate-anthropocene-land-temperature-2026
 generate-anthropocene-years: generate-anthropocene-particulate \
 	generate-anthropocene-temperature-years
 generate-anthropocene-year-artifacts: \
@@ -2951,7 +2957,9 @@ $(eval $(call RESOURCES_METRIC_RULES,resources-food,food-production-index,produc
 $(eval $(call RESOURCES_METRIC_RULES,resources-fauna,fisheries-production,fisheries,$(RESOURCES_FAUNA_FISHERIES_SVGS)))
 $(eval $(call RESOURCES_METRIC_RULES,resources-fauna,coral-reef-threat,reefs,$(RESOURCES_FAUNA_REEFS_SVGS)))
 $(eval $(call RESOURCES_METRIC_RULES,resources-flora,forest-area-percent,forest,$(RESOURCES_FLORA_SVGS)))
-$(eval $(call RESOURCES_METRIC_RULES,resources-mineral,rare-earth-mine-production,rare-earth,$(RESOURCES_MINERAL_SVGS)))
+$(eval $(call RESOURCES_METRIC_RULES,resources-mineral,rare-earth-mine-production,rare-earth,$(RESOURCES_MINERAL_RARE_EARTH_SVGS)))
+$(eval $(call RESOURCES_METRIC_RULES,resources-mineral,lithium-mine-production,lithium,$(RESOURCES_MINERAL_LITHIUM_SVGS)))
+$(eval $(call RESOURCES_METRIC_RULES,resources-mineral,uranium-mine-production,uranium,$(RESOURCES_MINERAL_URANIUM_SVGS)))
 $(eval $(call RESOURCES_METRIC_RULES,resources-human,population-under-30,under-30,$(RESOURCES_HUMAN_UNDER_30_SVGS)))
 $(eval $(call RESOURCES_METRIC_RULES,resources-human,population-over-60,over-60,$(RESOURCES_HUMAN_OVER_60_SVGS)))
 $(eval $(call RESOURCES_METRIC_RULES,resources-human,upper-secondary-attainment,upper-secondary,$(RESOURCES_HUMAN_UPPER_SECONDARY_SVGS)))
@@ -3497,3 +3505,28 @@ SETOUCHI_V3_DATE ?=
 setouchi-v3:
 	python3 scripts/build-setouchi-proposal.py --source "$(SETOUCHI_ST2_OUTPUT)" --output "$(SETOUCHI_V3_OUTPUT)" $(if $(strip $(SETOUCHI_V3_DATE)),--date "$(SETOUCHI_V3_DATE)")
 	python3 scripts/validate-setouchi-proposal.py --output "$(SETOUCHI_V3_OUTPUT)"
+
+# Current atlas identities; legacy generator names remain compatibility commands.
+.PHONY: check-atlas-catalog generate-anthropocene-land-temperature generate-anthropocene-coral-reef-threat generate-ocean-temperature-preview
+check-atlas-catalog:
+	python3 scripts/check-atlas-catalog.py
+generate-anthropocene-land-temperature: generate-anthropocene-temperature
+generate-anthropocene-coral-reef-threat: generate-resources-fauna-reefs
+generate-ocean-temperature-preview:
+	python3 scripts/build-ocean-temperature-plates.py
+
+.PHONY: prepare-mineral-additions
+prepare-mineral-additions:
+	python3 scripts/prepare-mineral-additions.py --source "$(RESOURCES_BASE_DATA_DIR)" --output "$(RESOURCES_DATA_DIR)"
+
+# The dated extension is prepared offline from the retained base snapshot.
+# Overrides may point at another independently prepared profile.
+ifeq ($(RESOURCES_DATA_DIR),$(STATIC_ASSET_DIR)/resources/current-20261108)
+$(RESOURCES_PROFILE) $(RESOURCES_VALUES) $(RESOURCES_COUNTRIES) $(RESOURCES_REEFS) $(RESOURCES_CHECKSUMS) &: \
+		scripts/prepare-mineral-additions.py config/mineral-additions-20261108.json \
+		$(RESOURCES_BASE_DATA_DIR)/resources-profile.json \
+		$(RESOURCES_BASE_DATA_DIR)/resources-values.json \
+		$(RESOURCES_BASE_DATA_DIR)/countries-110m.geojson \
+		$(RESOURCES_BASE_DATA_DIR)/coral-reefs-025deg.geojson
+	python3 scripts/prepare-mineral-additions.py --source "$(RESOURCES_BASE_DATA_DIR)" --output "$(RESOURCES_DATA_DIR)"
+endif

@@ -3,6 +3,7 @@
 #include <cairo.h>
 #include <map>
 #include <memory>
+#include <set>
 #include <rapidjson/ostreamwrapper.h>
 #include <rapidjson/writer.h>
 #include "cloud-atmosphere-generation.h"
@@ -159,7 +160,7 @@ int main(int argc, char** argv)
 {
   try
     {
-      if (argc != 6) throw std::invalid_argument("usage: render-setouchi-h3-cells atmosphere|temperature PROFILE DATA SETTINGS OUTPUT-DIR");
+      if (argc != 6) throw std::invalid_argument("usage: render-setouchi-h3-cells atmosphere|temperature|ocean PROFILE DATA SETTINGS OUTPUT-DIR");
       const std::string subject = argv[1];
       const auto settings = atm::read_json_document(argv[4]);
       const fs::path output = argv[5]; fs::create_directories(output);
@@ -206,6 +207,35 @@ int main(int argc, char** argv)
                   if (value) cells.push_back({cell.h3, static_cast<double>(value), layer == 0 ? 0U
                     : layer == 1 ? temp::temperature_high_bin(value) + 1
                     : temp::temperature_bin(value, profile.low_scale_days) + 1});
+                }
+              render_layer(id, cells, settings, output, context, writer);
+            }
+          writer.EndArray();
+        }
+      else if (subject == "ocean")
+        {
+          const auto data = atm::read_json_document(argv[3]);
+          atm::atmosphere_require(data["schema"].IsString()
+            && std::string(data["schema"].GetString()) == "cartofreako-ocean-render-v1",
+            "Invalid ocean render schema");
+          writer.Uint(5);
+          writer.Key("layers"); writer.StartArray();
+          for (const auto& layer : data["layers"].GetArray())
+            {
+              const std::string id = layer["id"].GetString();
+              atm::atmosphere_require(settings["styles"].HasMember(id.c_str()), "Missing ocean layer style");
+              std::vector<render_cell> cells;
+              std::set<H3Index> seen;
+              for (const auto& item : layer["cells"].GetArray())
+                {
+                  const auto h3 = std::stoull(item[0].GetString(), nullptr, 16);
+                  const auto value = item[1].GetDouble();
+                  const auto bin = item[2].GetUint();
+                  atm::atmosphere_require(isValidCell(h3) && getResolution(h3) == 5
+                    && std::isfinite(value) && seen.insert(h3).second,
+                    "Invalid or duplicate ocean cell");
+                  atm::atmosphere_require(settings["styles"][id.c_str()].HasMember(std::to_string(bin).c_str()), "Missing ocean bin style");
+                  cells.push_back({h3, value, bin});
                 }
               render_layer(id, cells, settings, output, context, writer);
             }

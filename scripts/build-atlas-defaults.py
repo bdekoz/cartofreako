@@ -261,6 +261,19 @@ def verify_subjects(out, config, recipe):
                 assert len(links) == 124
                 assert all(css(n.attrib)['stroke'] == recipe['text'] and float(css(n.attrib)['stroke-opacity']) == 1 for n in links)
                 result[scope+'/'+stem] = {'fiber_links': len(links)}
+    for scope in ('world','japan'):
+        root=read_svg(out/'maps'/scope/'svg/cloud-atmosphere.svg')
+        assert root.get('data-h3-resolution')=='5'
+        assert root.get('data-sheet-background')=='#fcc553'
+        radiation=root.xpath('//*[@id="surface-shortwave-radiation"]')[0]
+        assert radiation.get('data-observed-cells')=='1448374'
+        outlines=root.xpath('//*[@id="web-land-outlines"]')[0]
+        # Placed <use> nodes reference the shared coastline definition; Japan
+        # has no copied Antarctic paths inside its overlay wrapper.
+        paths=root.xpath('//*[@id="terrestrial-coastline" or @id="web-land-outlines"]//*[local-name()="path"]')
+        paints=[css(n.attrib) for n in paths if css(n.attrib).get('stroke')]
+        assert paints and all(p['stroke']=='#ffffff' and float(p['stroke-opacity'])==1 for p in paints)
+        result[scope+'/cloud-atmosphere']={'h3_resolution':5,'background':'#fcc553','radiation_cells':1448374,'white_land_outlines':True,'selected_presentation':root.get('data-selected-presentation')}
     return result
 
 
@@ -277,29 +290,36 @@ def main():
         parser.error('Default atlas output must be separate from its source edition')
     receipt_path = out/'sources/atlas-presentation.json'
     fingerprint = {'generation_style_sha256': digest(ROOT/'generation-style.json'),
+                   'catalog_sha256': digest(ROOT/'config/atlas-plates.json'),
+                   'catalog_applier_sha256': digest(ROOT/'scripts/apply-atlas-catalog.py'),
+                   'mineral_supplement_sha256': digest(ROOT/'output/mineral-additions-20261108/supplement-manifest.json'),
                    'recipe_sha256': digest(ROOT/STYLE['atlas']['presentation']['recipe_file']),
                    'builder_sha256': digest(Path(__file__)), 'theme_sha256': digest(ROOT/'scripts/atlas_presentation.py')}
     if args.check:
         receipt = read(receipt_path)
         assert receipt['fingerprint'] == fingerprint, 'Stale atlas presentation'
-        assert len(receipt['records']) == 152
+        assert len(receipt['records']) == 4*sum(p['default'] for p in importlib.import_module('atlas_catalog').catalog()['plates'])
         for source in receipt['inputs']:
             assert digest(ROOT/source['path']) == source['sha256'], source['path']
         for r in receipt['records']:
             assert digest(out/r['svg']) == r['svg_sha256'], r['svg']
             if not args.skip_exports:
+                if 'pdf' in r and 'preview' in r:
+                    for key in ('pdf','preview'):
+                        assert digest(out/r[key]) == r[key+'_sha256']
+                    continue
                 export = read(out/'sources/sheet-exports'/f"{r['kind']}-{r['scope']}-{r['stem']}.json")
                 assert export['fingerprint']['svg_sha256'] == r['svg_sha256']
                 for file in export['outputs'].values():
                     assert digest(out/file['path']) == file['sha256']
         subjects = verify_subjects(out, config, recipe)
         write(out/'sources'/('sheets-validation-svg.json' if args.skip_exports else 'sheets-validation.json'),
-              {'status': 'passed', 'sheets': 152, 'exports_checked': not args.skip_exports, 'presentation': recipe['id'], 'subjects': subjects})
-        print('Default atlas verified: 152 sheets / '+recipe['palette'])
+              {'status': 'passed', 'sheets': len(receipt['records']), 'exports_checked': not args.skip_exports, 'presentation': recipe['id'], 'subjects': subjects})
+        print(f'Default atlas verified: {len(receipt["records"])} sheets / '+recipe['palette'])
         return
     cache_path = out/'sources/presentation-cache.json'
     previous = read(receipt_path) if receipt_path.exists() else read(cache_path) if cache_path.exists() else {}
-    prior = {(r['kind'], r['scope'], r['stem']): r for r in previous.get('records', [])}
+    prior = {(r['kind'], r['scope'], r.get('source_stem',r['stem'])): r for r in previous.get('records', [])}
     theme_current = all(previous.get('fingerprint', {}).get(key) == fingerprint[key]
                         for key in ('generation_style_sha256', 'recipe_sha256', 'theme_sha256'))
     register_fonts()
@@ -342,10 +362,12 @@ def main():
     for r in sorted(base['records'], key=lambda r: r['kind'] != 'map'):
         r = copy.deepcopy(r)
         stem, scope, kind = r['stem'], r['scope'], r['kind']
+        if not importlib.import_module('atlas_catalog').lookup()[stem]['default']:
+            continue
         source, target = args.source/r['svg'], out/r['svg']
         remember(source)
         cached = prior.get((kind, scope, stem))
-        if (stem not in subjects and theme_current and cached and cached['presentation'] == 'st2-theme'
+        if (stem not in subjects and theme_current and cached and cached.get('presentation') == 'st2-theme'
                 and cached['presentation_source_sha256'] == digest(source) and target.exists()
                 and digest(target) == cached['svg_sha256']):
             cached['source'] = str(source.resolve())
@@ -458,7 +480,8 @@ def main():
                         'palette': recipe, 'astronomy_label_font_size_pt': config['astronomy_label_font_size_pt'],
                         'inputs': [{'path': path, 'sha256': value} for path, value in sorted(inputs.items())],
                         'records': records})
-    print('Composed 152 default atlas sheets / '+recipe['palette'], flush=True)
+    importlib.import_module('apply-atlas-catalog').apply(out)
+    print('Composed current default atlas / '+recipe['palette'], flush=True)
 
 
 if __name__ == '__main__':

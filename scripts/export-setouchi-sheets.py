@@ -30,6 +30,8 @@ def main():
         key=f'{kind}-{scope}-{stem}';receipt=receipts/(key+'.json')
         background=record.get('sheet_background', 'white')
         fingerprint={'svg_sha256':digest(svg),'font_provenance_sha256':font_hash,'dpi':DPI,'exporter':'separate-sheets-v1'}
+        native=kind=='map' and stem.startswith('network-swarm-')
+        if native:fingerprint.update(native_exporter_sha256=digest(ROOT/'scripts/export-native-swarm.py'),canvas_background=background)
         if receipt.exists():
             previous=json.loads(receipt.read_text())
             if previous['fingerprint']==fingerprint and all(
@@ -37,18 +39,19 @@ def main():
                 print('cached',key,flush=True);return previous
         for path in (pdf,png,preview):path.parent.mkdir(parents=True,exist_ok=True)
         start=time.monotonic()
-        native=kind=='map' and stem.startswith('network-swarm-')
         with (receipts/(key+'.log')).open('w') as log:
             if native:
                 commands=[[sys.executable,str(ROOT/'scripts/export-native-swarm.py'),str(svg),'--pdf',str(pdf),
-                           '--png',str(png),'--preview',str(preview),'--dpi',str(DPI)]]
+                           '--png',str(png),'--preview',str(preview),'--dpi',str(DPI),'--background',background]]
             else:
                 commands=[['inkscape',str(svg),'--export-area-page','--export-filename='+str(pdf)],
                           ['inkscape',str(svg),'--export-area-page',f'--export-dpi={DPI}','--export-background='+background,
                            '--export-background-opacity=255','--export-png-color-mode=RGB_8','--export-filename='+str(png)]]
                 if kind=='legend':commands.append(['inkscape',str(svg),'--export-area-drawing','--export-width=3840',
                            '--export-background='+background,'--export-background-opacity=255','--export-filename='+str(preview)])
-            for command in commands:subprocess.run(command,env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
+            for command in commands:
+                if command[0]=='inkscape':command=['bash',str(ROOT/'scripts/run-inkscape.sh'),*command]
+                subprocess.run(command,env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
         with Image.open(png) as image:
             assert image.size==(13200,5716),(key,image.size)
             if kind=='map' and not native:

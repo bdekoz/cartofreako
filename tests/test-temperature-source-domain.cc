@@ -14,9 +14,9 @@ int main(int argc, char** argv)
 {
   assert(argc == 2);
   const fs::path scratch = argv[1]; fs::create_directories(scratch);
-  const fs::path source = "assets.static/anthropocene/anthropocene-temperature-2026.geojson";
+  const fs::path source = "assets.static/anthropocene/anthropocene-land-temperature-2026.geojson";
   auto profile = temperature::load_temperature_profile(
-    "assets.static/anthropocene/anthropocene-temperature-2026-profile.json");
+    "assets.static/anthropocene/anthropocene-land-temperature-2026-profile.json");
   const auto original = temperature::load_temperature_dataset(source, profile);
   for (const int resolution : {3, 5, 8})
     {

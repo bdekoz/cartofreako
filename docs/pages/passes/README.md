@@ -15,7 +15,7 @@ class, visual policy, verification, and scientific or licensing boundary.
 | Lifecycle | Meaning |
 | --- | --- |
 | **Standard** | Reproducible without a credential or special acceptance, part of the default artifact graph, and eligible for the next generated-assets release; sealed older galleries may differ |
-| **Optional** | Implemented but gated by a credential, license acceptance, source availability, or deliberate operator authorization |
+| **Optional** | Implemented outside the default artifact graph; includes opt-in prototypes and products gated by credentials, terms or source availability |
 | **Exploration only** | Evaluated or proposed without a released production artifact; absence from a release is intentional |
 
 Lifecycle and maturity are independent. Lifecycle controls what is generated
@@ -27,12 +27,18 @@ exploration-only, and it does not broaden an evidence claim.
 
 The machine-readable [current pass-status manifest](../../../contracts/pass-status-v1.json)
 classifies `anthropocene-particulate-2025`,
-`anthropocene-particulate-2026`, `anthropocene-temperature-2025`, and
-`anthropocene-temperature-2026` as current, standard, default-generated, and
+`anthropocene-particulate-2026`, `anthropocene-land-temperature-2025`, and
+`anthropocene-land-temperature-2026` as current, standard, default-generated, and
 accepted-experimental. `make check-pass-status` verifies all 24 projection
 artifacts against the standard manifest. The synthetic PurpleAir interface,
 bounded water-debris, and Majuro evidence families remain exploration-only
 despite having implemented generators.
+
+The [November 8 plate catalog](../../../config/atlas-plates.json) also records
+Bathymetry Roulette and Hamonshū as optional prototypes, moves historical
+reef threat to Anthropocene, and groups petroleum studies under Energy.
+The [water-temperature study](../../development/20261108_anthropocene_ocean_temperature_stage_1.md)
+documents the separate SST/anomaly prototypes and the completed mineral additions.
 
 ## Pass families
 

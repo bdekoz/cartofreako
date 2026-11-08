@@ -1,0 +1,1189 @@
+{
+  "schema": "oisst-downloads-v1",
+  "files": [
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1982.nc",
+      "bytes": 73598062,
+      "last_modified": "Tue, 03 Jan 2023 22:25:04 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:59:12.577155+00:00",
+      "sha256": "201c6d1520a7be2c77a242340411150994cbebb3ae06ecb214735863b069966c",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1983.nc",
+      "bytes": 73794639,
+      "last_modified": "Tue, 03 Jan 2023 22:25:18 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:59:33.844842+00:00",
+      "sha256": "a0b1d327de0e2ec32b4a00da7d07b1e59da7b095c97e9375466d020b9ce9d4ca",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1984.nc",
+      "bytes": 73136990,
+      "last_modified": "Tue, 03 Jan 2023 22:25:30 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:00:33.464444+00:00",
+      "sha256": "ebcd7836bc6c036bf361a50eee894f2ecd7bde205133b4e57a0167fa12a425d7",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1985.nc",
+      "bytes": 73512814,
+      "last_modified": "Tue, 03 Jan 2023 22:25:45 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:01:54.568293+00:00",
+      "sha256": "4ee414c5b0eac89b2938f6716116b4d20ed8c194ec489db5e5ca60608ba51769",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1986.nc",
+      "bytes": 74015134,
+      "last_modified": "Tue, 03 Jan 2023 22:26:01 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:03:09.024463+00:00",
+      "sha256": "9176fee2fbd07642f1223a0d0d85657c4f69fd989ae009c66e8ef96b578f9950",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1987.nc",
+      "bytes": 67418903,
+      "last_modified": "Tue, 03 Jan 2023 22:26:14 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:03:54.067797+00:00",
+      "sha256": "060a52cc30d3ca82b929b4509e51b0aa0d292e3045be4eea776519d477883821",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1988.nc",
+      "bytes": 67564461,
+      "last_modified": "Tue, 03 Jan 2023 22:26:29 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:06:01.545349+00:00",
+      "sha256": "949b6f0a00ffeebe59f8b56eb8891011b06791fb8b421b6db4eb4a992695dd7f",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1989.nc",
+      "bytes": 69888903,
+      "last_modified": "Tue, 03 Jan 2023 22:26:40 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:07:33.983924+00:00",
+      "sha256": "cd6f30d7bf7ee8a6e4fda164626883d627bd4ff9fd15d51d081ae25f40cc1f49",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1990.nc",
+      "bytes": 70779337,
+      "last_modified": "Tue, 03 Jan 2023 22:26:56 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:08:08.254414+00:00",
+      "sha256": "df0829d3f5ee712f677f1e95aee5c790339960be2672c6293d65b76b31813706",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1991.nc",
+      "bytes": 71350335,
+      "last_modified": "Tue, 03 Jan 2023 22:27:08 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:17:33.996358+00:00",
+      "sha256": "cab4cd6e9f517fd8ead480e0a95de886e99d298b344fc6edce55a38a9e39f35e",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1992.nc",
+      "bytes": 69998923,
+      "last_modified": "Tue, 03 Jan 2023 22:27:18 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:18:04.471660+00:00",
+      "sha256": "0c87b66bc7eeb66f7b7ac6f9d6d3a2e0f0becff27a3b876c18e04eba70c3e5ea",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1993.nc",
+      "bytes": 70473636,
+      "last_modified": "Tue, 03 Jan 2023 22:27:30 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:19:15.058556+00:00",
+      "sha256": "0366a7b8a635b3a412e00f4434602e680486c5c274a28bed0d5d9d40fe3d4fff",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1994.nc",
+      "bytes": 69970004,
+      "last_modified": "Tue, 03 Jan 2023 22:27:41 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:22:27.183080+00:00",
+      "sha256": "c65d08dd29c841efafead4dbeb749e41898eff0c30c670dd6fdfeae137346d61",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1995.nc",
+      "bytes": 70323130,
+      "last_modified": "Tue, 03 Jan 2023 22:27:54 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:23:09.615177+00:00",
+      "sha256": "9e54f84eb4750e3414dee7adecb7b6dbb31899b5dfb0d6c941920dfe2c32c170",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1996.nc",
+      "bytes": 72076102,
+      "last_modified": "Tue, 03 Jan 2023 22:28:15 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:23:58.463484+00:00",
+      "sha256": "2812f356c93956e9d78eeeed86cb1f9cd2ea044e4dca0f43af9131cce22148d8",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1997.nc",
+      "bytes": 68986881,
+      "last_modified": "Tue, 03 Jan 2023 22:28:29 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:26:40.877097+00:00",
+      "sha256": "96a5d96b4e08a9fb2ffc30fa3b01e0b9682b75f85a61ee1ffff8b8d299722310",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1998.nc",
+      "bytes": 70773745,
+      "last_modified": "Tue, 03 Jan 2023 22:28:46 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:27:25.706630+00:00",
+      "sha256": "95e97189c6a7326efb2d9f760a2efd688a9f8cbe8c4d6d22e48f24c80859147c",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.1999.nc",
+      "bytes": 68699662,
+      "last_modified": "Tue, 03 Jan 2023 22:29:03 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:28:36.026302+00:00",
+      "sha256": "ffeb923ba3ff888748771291b2a25463f7c1b7bf3e43db4f98213de9b4da7f25",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2000.nc",
+      "bytes": 69387404,
+      "last_modified": "Tue, 03 Jan 2023 22:29:14 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:31:24.193152+00:00",
+      "sha256": "b7a3a0d5c88283d33fb8096099981f5951c3c245deda178b32af5c4daaa0aeb7",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2001.nc",
+      "bytes": 70241574,
+      "last_modified": "Tue, 03 Jan 2023 22:29:31 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:32:01.801841+00:00",
+      "sha256": "ec1358fbd0c93a0defc8dfd68d5e9f712e3bb7d761ef0e2dc480cc101d6c9717",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2002.nc",
+      "bytes": 69484376,
+      "last_modified": "Tue, 03 Jan 2023 22:29:49 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:32:50.102351+00:00",
+      "sha256": "fb105a846322724e2d6a876d88031f3eedf462c81a00f1ee59d4e173df0b2655",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2003.nc",
+      "bytes": 71337926,
+      "last_modified": "Tue, 03 Jan 2023 22:30:06 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:35:30.039519+00:00",
+      "sha256": "b89b78c3682a0774c893cf5683772d3cd97c9117f8e1c71f1bfd3982d1acbc5b",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2004.nc",
+      "bytes": 67577265,
+      "last_modified": "Tue, 03 Jan 2023 22:30:22 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:36:07.156568+00:00",
+      "sha256": "d619b65a9eb51c9bf6cd49601f2b1e9a2af301a68db1fb2ba974808ba941173f",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2005.nc",
+      "bytes": 71173348,
+      "last_modified": "Tue, 03 Jan 2023 22:30:33 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:37:07.168784+00:00",
+      "sha256": "81b212689ac985cdbf5fc13b733a25da9ce2f5e5073927c0fa0a5813e8f9531c",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2006.nc",
+      "bytes": 70100132,
+      "last_modified": "Tue, 03 Jan 2023 22:30:49 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:39:15.892004+00:00",
+      "sha256": "e342fa8f4b4825f15f6743830983b33b8539889b1d6211cd7213b2c2236fb61d",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2007.nc",
+      "bytes": 66274177,
+      "last_modified": "Tue, 03 Jan 2023 22:31:09 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:40:02.392335+00:00",
+      "sha256": "0fc326415b4061994f43c1d7e59e3db953f76dc50b75f3a0c6f2dc657fbf0693",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2008.nc",
+      "bytes": 69475597,
+      "last_modified": "Tue, 03 Jan 2023 22:31:21 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:41:08.529280+00:00",
+      "sha256": "32b4ad664355bed4d3dab5f5d4ca31e22a7b49c8ce56de0bfe813676cb494a0c",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2009.nc",
+      "bytes": 65243941,
+      "last_modified": "Tue, 03 Jan 2023 22:31:43 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:44:15.317197+00:00",
+      "sha256": "845d604c91cbd93422995c9931acbbf40c2a82862aaebaaef988b993a67fea1b",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2010.nc",
+      "bytes": 62883073,
+      "last_modified": "Tue, 03 Jan 2023 22:31:54 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:45:02.924396+00:00",
+      "sha256": "5b62db506922322810e11d644a6f15c075f60477fb0cd28aa03e049b3422fa96",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2011.nc",
+      "bytes": 63340618,
+      "last_modified": "Tue, 03 Jan 2023 22:32:06 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:45:58.324040+00:00",
+      "sha256": "3be3420339eee1922bb0641d102d4321761a4e5593329e8db47c28ee4491ce7a",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2012.nc",
+      "bytes": 72155025,
+      "last_modified": "Tue, 03 Jan 2023 22:32:25 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:49:04.145658+00:00",
+      "sha256": "dc34d5af2e35ecb9e3196e4a22e1f32b776adf663657985faf9f43e4d740f746",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2013.nc",
+      "bytes": 73016072,
+      "last_modified": "Tue, 03 Jan 2023 22:32:39 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:49:39.953956+00:00",
+      "sha256": "f079188d282c64c418189f5a4afadc62f221126388a9707f53bcdb1bc150f394",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2014.nc",
+      "bytes": 73345899,
+      "last_modified": "Tue, 03 Jan 2023 22:32:55 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:50:08.820098+00:00",
+      "sha256": "65939e24785d48819fe6c31cadee796657d81528471544f0c99fd3d781ef09eb",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2015.nc",
+      "bytes": 73125996,
+      "last_modified": "Tue, 03 Jan 2023 22:33:07 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:52:52.674495+00:00",
+      "sha256": "5608795e53d76d4de33c1ab4635a7ca13c3a96eb3dbef54243a1f30cf387332e",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2016.nc",
+      "bytes": 72211154,
+      "last_modified": "Tue, 03 Jan 2023 20:19:54 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:53:10.939569+00:00",
+      "sha256": "6531adccdb8fa2808e2e81898c0b04a08ceeb23232f03b826fbab7e46e8ea4ff",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2017.nc",
+      "bytes": 68935344,
+      "last_modified": "Tue, 03 Jan 2023 20:20:07 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:53:58.787089+00:00",
+      "sha256": "dba9295a741ee5bcde2dadef203683d6435f5bd6420ae62f1b9c91fbdea5b797",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2018.nc",
+      "bytes": 63418887,
+      "last_modified": "Tue, 03 Jan 2023 20:20:16 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:55:41.880101+00:00",
+      "sha256": "9a4f496d4f35f5934aca25ecb29b308a51e2bff39dfc613bcba10f82d55c7fdd",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2019.nc",
+      "bytes": 64005191,
+      "last_modified": "Tue, 03 Jan 2023 20:20:28 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:56:00.223944+00:00",
+      "sha256": "6bf390e680874c70268a3a75fca2d834b6a96b098d336f0a04fa5596ba74989c",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2020.nc",
+      "bytes": 66455791,
+      "last_modified": "Tue, 03 Jan 2023 20:20:41 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:57:14.338516+00:00",
+      "sha256": "a529feea775f08d227c42bf97bbc638e3749982ef6bc786f489a7273bcf7e820",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2021.nc",
+      "bytes": 65861063,
+      "last_modified": "Tue, 03 Jan 2023 20:20:57 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:10:15.660459+00:00",
+      "sha256": "857ccad9d0fe308fcdb69aac049d98baa9a56df9f1afe10dc3d4a3a717f5c570",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2022.nc",
+      "bytes": 64894226,
+      "last_modified": "Mon, 30 Jan 2023 17:31:07 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:11:37.663753+00:00",
+      "sha256": "e61c41aba6b24a74972811918423da493d38369c762dd73222e88f7ea2310167",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2023.nc",
+      "bytes": 65539805,
+      "last_modified": "Tue, 30 Jan 2024 17:32:23 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:11:59.485506+00:00",
+      "sha256": "dfdcd958e7b36d86b56913e09757775c3f8aaf574f65e06a149910d8045be6e9",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2024.nc",
+      "bytes": 65120609,
+      "last_modified": "Thu, 30 Jan 2025 17:32:05 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:13:54.395603+00:00",
+      "sha256": "f8e041b7f7596706ebb1da5afb8523db53dc783d2c7d60c1504f70a2bb9c6f0b",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2025.nc",
+      "bytes": 64537801,
+      "last_modified": "Fri, 30 Jan 2026 17:32:13 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:13:44.082560+00:00",
+      "sha256": "97a844a7fe967f6a2e30773c775fffaaf1dbf2cb29b14e6ea1fbac992331c89c",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/icec.day.mean.2026.nc",
+      "bytes": 51582287,
+      "last_modified": "Sun, 08 Nov 2026 17:36:21 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:14:14.876536+00:00",
+      "sha256": "58d79c63a01175b23f7128b950a7253ef5be67de82624283108f25e91328cb84",
+      "shape": [
+        311,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/lsmask.oisst.nc",
+      "bytes": 4157776,
+      "last_modified": "Tue, 26 Apr 2016 21:33:04 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:13:03.044701+00:00",
+      "sha256": "91205a24d3f11ce285bf47d5b046a26c4bdf845cba14e54ffd7c20c434755966",
+      "shape": [
+        1,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1982.nc",
+      "bytes": 482123869,
+      "last_modified": "Tue, 03 Jan 2023 22:25:03 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:00:10.245141+00:00",
+      "sha256": "d0b0fc83dba09b676597066c88b0726e9ae7b2f57ac848b6c52a16ade7e53049",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1983.nc",
+      "bytes": 482454616,
+      "last_modified": "Tue, 03 Jan 2023 22:25:16 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:01:28.150791+00:00",
+      "sha256": "547fcb435dee2f197796aeb62b85da36e5aa985205f9957ecc474db571d07ad0",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1984.nc",
+      "bytes": 484623005,
+      "last_modified": "Tue, 03 Jan 2023 22:25:29 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:02:38.931021+00:00",
+      "sha256": "66c0409c389d9f94eef17853dd66790ab11407de4f275a48dda3f47752ff1d72",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1985.nc",
+      "bytes": 482121858,
+      "last_modified": "Tue, 03 Jan 2023 22:25:44 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:03:29.623439+00:00",
+      "sha256": "0fe98818b3edddd748030acc4343947ed63efa642768120e1f74aca1f3d4e139",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1986.nc",
+      "bytes": 481957489,
+      "last_modified": "Tue, 03 Jan 2023 22:25:59 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:05:14.563133+00:00",
+      "sha256": "3d1799a7ecfbc1b53d82cf424602fb02a13e7fce4532aa1897fbbd913478104a",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1987.nc",
+      "bytes": 478995835,
+      "last_modified": "Tue, 03 Jan 2023 22:26:13 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:06:50.385525+00:00",
+      "sha256": "4e83ed2792c5cde91ba9d860c747db0a8d7756cb4fb346741676350543436e1d",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1988.nc",
+      "bytes": 477824587,
+      "last_modified": "Tue, 03 Jan 2023 22:26:27 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:07:19.917040+00:00",
+      "sha256": "1aff09fff597e7bdc80d89d181f5ef1d7a850ecc0cef53a3e10133b258691bb6",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1989.nc",
+      "bytes": 477456324,
+      "last_modified": "Tue, 03 Jan 2023 22:26:39 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:09:47.357821+00:00",
+      "sha256": "4ccc9bdc10ecf9ac7812433d48a771711e6fd1722ef55b04b0c4ce75a9830712",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1990.nc",
+      "bytes": 479328121,
+      "last_modified": "Tue, 03 Jan 2023 22:26:55 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:11:08.965040+00:00",
+      "sha256": "80079091a6c3c0133716d01d80a0378fcab4ce32a668f119a555e3f1d56b1162",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1991.nc",
+      "bytes": 478707153,
+      "last_modified": "Tue, 03 Jan 2023 22:27:06 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:18:24.350689+00:00",
+      "sha256": "1cb6de54590a89c01153a1f035e98f368d84b434c4fa5be82bb8e88e397ca6fd",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1992.nc",
+      "bytes": 478244416,
+      "last_modified": "Tue, 03 Jan 2023 22:27:16 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:21:52.195044+00:00",
+      "sha256": "aad86fadf43faa6175cbebff3596fdb80545443086742dd2150afb6d26931d91",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1993.nc",
+      "bytes": 477350790,
+      "last_modified": "Tue, 03 Jan 2023 22:27:28 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:22:23.457826+00:00",
+      "sha256": "d429e879678081d16070062d7c8c234e7e847b3f838d964433933505a7137f7c",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1994.nc",
+      "bytes": 475602345,
+      "last_modified": "Tue, 03 Jan 2023 22:27:39 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:23:32.854634+00:00",
+      "sha256": "e82effa1b8de467f121dd34ca8bacbcdc9c55adb64ce4bc7bae92ba75746c578",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1995.nc",
+      "bytes": 462106991,
+      "last_modified": "Tue, 03 Jan 2023 22:27:52 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:25:58.971323+00:00",
+      "sha256": "bcb75357894c6010086cab9f7eab76a330fc6b390a5e62feaf9f9fc00780b055",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1996.nc",
+      "bytes": 477794497,
+      "last_modified": "Tue, 03 Jan 2023 22:28:11 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:26:48.722440+00:00",
+      "sha256": "ea0857ef9d836f725582d34d246783be12341ffc1f94bf133755a3fa72cb7398",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1997.nc",
+      "bytes": 474782276,
+      "last_modified": "Tue, 03 Jan 2023 22:28:28 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:27:59.030120+00:00",
+      "sha256": "aed46d81a34cd578e8330f5a7f7a3c92884519c2d6c85ab7ba61441f8020c43a",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1998.nc",
+      "bytes": 476899336,
+      "last_modified": "Tue, 03 Jan 2023 22:28:44 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:30:42.128753+00:00",
+      "sha256": "48bf60dfa6a916fd6172c1f7373abf72763cf79a6e9ca52f90a1e2c41fe9fc88",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.1999.nc",
+      "bytes": 474864448,
+      "last_modified": "Tue, 03 Jan 2023 22:29:01 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:30:58.816277+00:00",
+      "sha256": "2e04d932665a655752ffa5d3dea018e2c7eb2fb0f11474de2b70ccda8424826f",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2000.nc",
+      "bytes": 479689889,
+      "last_modified": "Tue, 03 Jan 2023 22:29:13 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:32:14.434741+00:00",
+      "sha256": "3dcf3ddc9ce883770aafc038c1dfb456ff171ef85d0fb7ce7a9433a7eeef6ec3",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2001.nc",
+      "bytes": 475235587,
+      "last_modified": "Tue, 03 Jan 2023 22:29:30 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:34:59.559773+00:00",
+      "sha256": "4b09fbe963c807ab1c2708036dfdc5e34cbab567b1f6f2ad033fd24665c6923e",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2002.nc",
+      "bytes": 476534982,
+      "last_modified": "Tue, 03 Jan 2023 22:29:47 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:35:21.554857+00:00",
+      "sha256": "f387f7c5f1179ce512ffa276692c6efdd6466675a816ee9cfcaaf1c2f74c6e54",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2003.nc",
+      "bytes": 474306345,
+      "last_modified": "Tue, 03 Jan 2023 22:30:04 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:36:21.137678+00:00",
+      "sha256": "d0f365baa28979bf719286272d717767028f15a238d7e4bffed84c6739cceddf",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2004.nc",
+      "bytes": 477447701,
+      "last_modified": "Tue, 03 Jan 2023 22:30:20 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:38:42.229243+00:00",
+      "sha256": "d8f35884f8632ba0b4a68b704df0212b1b8b0b4034d1e6b8da2d3540309b05b2",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2005.nc",
+      "bytes": 482827995,
+      "last_modified": "Tue, 03 Jan 2023 22:30:31 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:39:25.331313+00:00",
+      "sha256": "a1f7ce19b3e61ca324fb7330cf1cbb5f9851143a2e49db97903ed643f428c8b4",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2006.nc",
+      "bytes": 482528270,
+      "last_modified": "Tue, 03 Jan 2023 22:30:47 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:40:22.562084+00:00",
+      "sha256": "7a7f41a6afef6959c7a24d25a88ae686f4c291383d7f1e267f079fb9041e924c",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2007.nc",
+      "bytes": 475594666,
+      "last_modified": "Tue, 03 Jan 2023 22:31:06 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:43:41.279975+00:00",
+      "sha256": "b3882ffe0c5a9562f40b171178f2e8daf00404a5b7a636c9a9a6a8bcffddae6c",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2008.nc",
+      "bytes": 474758947,
+      "last_modified": "Tue, 03 Jan 2023 22:31:19 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:44:29.178441+00:00",
+      "sha256": "4db53878f50d73cc11d03f991116c6249568eb7efd1be08836ab5c60cb1f4e59",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2009.nc",
+      "bytes": 467882106,
+      "last_modified": "Tue, 03 Jan 2023 22:31:41 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:45:20.637350+00:00",
+      "sha256": "1d52370ccb8b9341c502951fa55162fdd5d70f1ae874598394fb3eb17dad6207",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2010.nc",
+      "bytes": 464784096,
+      "last_modified": "Tue, 03 Jan 2023 22:31:52 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:48:38.565628+00:00",
+      "sha256": "36258158d221d876b5198d3bbf064e47be0fd4a99a04a50830a9cae25a73bcca",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2011.nc",
+      "bytes": 466004973,
+      "last_modified": "Tue, 03 Jan 2023 22:32:05 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:49:00.431559+00:00",
+      "sha256": "76d2052aaa4820ce8e19b0ddbb5c6a7618002e3fd96856a8c2fbf10315a2df20",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2012.nc",
+      "bytes": 476030069,
+      "last_modified": "Tue, 03 Jan 2023 22:32:22 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:49:35.105376+00:00",
+      "sha256": "384f6c2e13c33caf37f42a98bf0ff4b15cc8f56139d412d58c91f03579568acf",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2013.nc",
+      "bytes": 474202360,
+      "last_modified": "Tue, 03 Jan 2023 22:32:38 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:52:16.458804+00:00",
+      "sha256": "eb9eedd5178e66eee292f77416557ad90c5bb21fab956e4bc7ff0fd9f1f4ae9f",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2014.nc",
+      "bytes": 474353964,
+      "last_modified": "Tue, 03 Jan 2023 22:32:54 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:52:37.228781+00:00",
+      "sha256": "d6a8c6e1b42866e4ab0ba16d3175482a1e46563aa8b7319a9d55280228f66216",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2015.nc",
+      "bytes": 475720594,
+      "last_modified": "Tue, 03 Jan 2023 22:33:06 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:53:35.688085+00:00",
+      "sha256": "346e724205257e2db9219e61b6412f869f517e4069936e7f91f654399531d993",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2016.nc",
+      "bytes": 483050515,
+      "last_modified": "Tue, 03 Jan 2023 20:19:53 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:55:20.881063+00:00",
+      "sha256": "504c01b69238d31792d224fc84f43701a9a9bcf642f95743c1cf3d645032fa9a",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2017.nc",
+      "bytes": 480726682,
+      "last_modified": "Tue, 03 Jan 2023 20:20:05 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:55:41.932060+00:00",
+      "sha256": "583bfc5c6be5becc41e103328b2730ab9402f53c992e41c1e62784d41e20afca",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2018.nc",
+      "bytes": 477805437,
+      "last_modified": "Tue, 03 Jan 2023 20:20:15 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:56:43.828022+00:00",
+      "sha256": "d5e6457f56ab6420e213f6bd32c33ef4f01486fed765a99362037a78299b9c27",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2019.nc",
+      "bytes": 476611864,
+      "last_modified": "Tue, 03 Jan 2023 20:20:26 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:58:50.131822+00:00",
+      "sha256": "551d895961e18400b96c7b1d1d1f9c062b45e8d76600942fad770be4ab97b7fa",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2020.nc",
+      "bytes": 483224043,
+      "last_modified": "Tue, 03 Jan 2023 20:20:39 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:58:53.944827+00:00",
+      "sha256": "8fb6a11dad9e9fd7d1d0f4df35d9404ef40bcfd8ea95e4246971953ca67b4d12",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2021.nc",
+      "bytes": 481854317,
+      "last_modified": "Tue, 03 Jan 2023 20:20:55 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:11:37.272779+00:00",
+      "sha256": "79a3d27e0ede50f20e7ac9fdc8be986e41ca8555d16177f47ae17351ab034f11",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2022.nc",
+      "bytes": 471581106,
+      "last_modified": "Mon, 30 Jan 2023 17:30:29 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:13:29.788141+00:00",
+      "sha256": "7559a2e482dfb52e41cf10ca5752edbc1a62110563e1b685716c86fde96ed1c9",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2023.nc",
+      "bytes": 472111898,
+      "last_modified": "Tue, 30 Jan 2024 17:32:08 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:14:33.436551+00:00",
+      "sha256": "7884a7ec2fa41d12fa4ef1e77973e830c7ab4e4670a0b126fcf414a37a6ad9a3",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2024.nc",
+      "bytes": 470666620,
+      "last_modified": "Thu, 30 Jan 2025 17:31:38 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T21:14:58.551882+00:00",
+      "sha256": "6a0bc0161252a1d54b209c5c7b6f80d6cb11a48071648744db090ce20b4370bc",
+      "shape": [
+        366,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2025.nc",
+      "bytes": 474901771,
+      "last_modified": "Fri, 30 Jan 2026 17:31:47 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:17:34.874965+00:00",
+      "sha256": "9de0ba4504a9dd0993fb068e09d20672ff798029f56e351f16d5e845a7c44973",
+      "shape": [
+        365,
+        720,
+        1440
+      ]
+    },
+    {
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/sst.day.mean.2026.nc",
+      "bytes": 404627963,
+      "last_modified": "Sun, 08 Nov 2026 17:35:58 GMT",
+      "etag": null,
+      "retrieved_at": "2026-11-08T20:16:49.738691+00:00",
+      "sha256": "b7603fe25df651db9334b476e0873e9fcc6add1cd191e5e13c8d3ae56781b580",
+      "shape": [
+        311,
+        720,
+        1440
+      ]
+    }
+  ],
+  "failures": []
+}

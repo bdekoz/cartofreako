@@ -10,6 +10,8 @@ inline std::array<svg::color_qi, 5> resource_metric_palette(const std::string& i
   if (id == "fisheries-production") return generation_style::palette_fisheries_production;
   if (id == "forest-area-percent") return generation_style::palette_forest_area_percent;
   if (id == "rare-earth-mine-production") return generation_style::palette_rare_earth_mine_production;
+  if (id == "lithium-mine-production") return generation_style::palette_lithium_mine_production;
+  if (id == "uranium-mine-production") return generation_style::palette_uranium_mine_production;
   if (id == "population-under-30") return generation_style::palette_population_under_30;
   if (id == "population-over-60") return generation_style::palette_population_over_60;
   if (id == "upper-secondary-attainment") return generation_style::palette_upper_secondary_attainment;

@@ -165,7 +165,8 @@ resources_output_basename(const generation::projection_spec& spec,
   resources_require(!metric.output_tag.empty(),
                     "resources output requires a released metric");
   return generation::output_basename(
-    family.id + "-" + metric.output_tag, spec);
+    (metric.id == "coral-reef-threat" ? "anthropocene" : family.id)
+      + "-" + metric.output_tag, spec);
 }
 
 inline void

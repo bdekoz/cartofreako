@@ -32,12 +32,20 @@ def main() -> None:
     expected = {
         "anthropocene-particulate-2025",
         "anthropocene-particulate-2026",
-        "anthropocene-temperature-2025",
-        "anthropocene-temperature-2026",
+        "anthropocene-land-temperature-2025",
+        "anthropocene-land-temperature-2026",
+        "bathymetry-roulette",
+        "bathymetry-hamonshu",
     }
     passes = status["passes"]
     assert {value["id"] for value in passes} == expected
     for value in passes:
+        if value["id"].startswith("bathymetry-"):
+            assert value["lifecycle"] == "optional" and value["maturity"] == "prototype"
+            assert value["defaultGenerated"] is False and value["releaseEligible"] is False
+            assert value["artifactManifest"]["artifactCount"] == 0
+            assert value["id"] not in by_pass
+            continue
         artifacts = by_pass[value["id"]]
         assert len(artifacts) == value["artifactManifest"]["artifactCount"] == 6
         assert all(artifact["lifecycle"] == "standard" for artifact in artifacts)
@@ -49,7 +57,7 @@ def main() -> None:
         assert value["defaultGenerated"] is True
         assert value["maturity"] == "accepted-experimental"
 
-    print("Pass status passed: 4 current accepted-experimental Anthropocene passes remain standard across 24 artifacts.")
+    print("Pass status passed: 4 accepted-experimental temperature/particulate passes remain standard; both Bathymetry passes are optional prototypes.")
 
 
 if __name__ == "__main__":

@@ -42,12 +42,14 @@ inline constexpr std::array<svg::color_qi, 5> palette_petroleum_refinery_through
 inline constexpr std::array<svg::color_qi, 5> palette_food_production_index {svg::color::pink, svg::color::hotpink, svg::color::deeppink, svg::color::mediumvioletred, svg::color::peony};
 inline constexpr std::array<svg::color_qi, 5> palette_fisheries_production {svg::color::lightblue, svg::color::skyblue, svg::color::deepskyblue, svg::color::dodgerblue, svg::color::navy};
 inline constexpr std::array<svg::color_qi, 5> palette_forest_area_percent {svg::color::byakuroku, svg::color::usumoegi, svg::color::moegi, svg::color::midori, svg::color::duboisgreen5};
-inline constexpr std::array<svg::color_qi, 5> palette_rare_earth_mine_production {svg::color::plum, svg::color::orchid, svg::color::mediumorchid, svg::color::darkviolet, svg::color::purple};
+inline constexpr std::array<svg::color_qi, 5> palette_rare_earth_mine_production {svg::color_qi {229, 203, 244}, svg::color_qi {206, 167, 230}, svg::color_qi {183, 130, 212}, svg::color_qi {163, 98, 192}, svg::color_qi {136, 69, 170}};
 inline constexpr std::array<svg::color_qi, 5> palette_population_under_30 {svg::color::greenyellow, svg::color::chartreuse, svg::color::hiwamoegi, svg::color::rokusho, svg::color::aotakeiro};
 inline constexpr std::array<svg::color_qi, 5> palette_population_over_60 {svg::color::coral, svg::color::salmon, svg::color::tomato, svg::color::crimson, svg::color::foreigncrimson};
 inline constexpr std::array<svg::color_qi, 5> palette_upper_secondary_attainment {svg::color::atmosphericp, svg::color::dustyrose, svg::color::usuiro, svg::color::ayameiro, svg::color::murasaki};
 inline constexpr std::array<svg::color_qi, 5> palette_bachelors_attainment {svg::color::navajowhite, svg::color::kanzoiro, svg::color::akebonoiro, svg::color::sohi, svg::color::benikaba};
 inline constexpr std::array<svg::color_qi, 5> palette_resident_patent_applications_per_million {svg::color::lightskyblue, svg::color::cornflowerblue, svg::color::royalblue, svg::color::blueprintlight, svg::color::blueprintdark};
+inline constexpr std::array<svg::color_qi, 5> palette_lithium_mine_production {svg::color_qi {200, 246, 243}, svg::color_qi {143, 224, 219}, svg::color_qi {81, 197, 193}, svg::color_qi {35, 166, 166}, svg::color_qi {17, 129, 132}};
+inline constexpr std::array<svg::color_qi, 5> palette_uranium_mine_production {svg::color_qi {255, 241, 182}, svg::color_qi {255, 224, 132}, svg::color_qi {252, 197, 83}, svg::color_qi {220, 159, 47}, svg::color_qi {180, 123, 24}};
 inline constexpr std::array<double, 5> solar_upper_mw {100.0, 1000.0, 10000.0, 50000.0, 200000.0};
 inline constexpr std::array<std::uint64_t, 5> temperature_high_upper_days {5, 10, 20, 40, 80};
 }

@@ -325,7 +325,7 @@ def write_outputs(book,output,docs_page):
             for name,role,size,leading,space,keep in [('title','Bold',24,28,18,True),('h1','Bold',16,20,10,True),
                 ('h2','Bold',12,15,8,True),('body','Regular',9.3,13,8,False),('small','Regular',8,11,6,False)]}
     def para(value,style='body'):return Paragraph(value,styles[style])
-    intro='Sources for all 38 world/Japan pairs. Plate numbers match the revised legend footers. This bibliography identifies the snapshots actually drawn; a new render does not make dated observations current. Full file paths and SHA-256 hashes are in the accompanying JSON ledger.'
+    intro=f'Sources for all {len(book["entries"])} world/Japan pairs. This bibliography identifies the snapshots actually drawn; a new render does not make dated observations current. Full file paths and SHA-256 hashes are in the accompanying JSON ledger.'
     pdf=[para(escape(edition),'title'),para('Data plate bibliography'+('' if palette else ' · ST2'),'h1'),para(escape(intro)),
          para('Prepared '+prepared+'. Country statistics use national geometries; the Japan detail does not infer local values. Missing data are not zero. Exact formulas and full-precision boundaries are retained in the JSON ledger; printed legend labels are rounded.')]
     md=['---','layout: default','title: Setouchi 2028 plate bibliography','---','','# Setouchi 2028 plate bibliography','',intro,'',

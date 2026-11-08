@@ -210,6 +210,7 @@ def main():
     parser.add_argument('--pdf', type=Path)
     parser.add_argument('--png', type=Path)
     parser.add_argument('--preview', type=Path)
+    parser.add_argument('--background', help='Opaque canvas color for a framed print sheet')
     size = parser.add_mutually_exclusive_group()
     size.add_argument('--long-side', type=int, default=None)
     size.add_argument('--dpi', type=float, default=None)
@@ -223,7 +224,7 @@ def main():
 
     import cairo
     import gi
-    from PIL import Image
+    from PIL import Image, ImageColor
     gi.require_version('Rsvg', '2.0')
     from gi.repository import Rsvg
     os.environ.setdefault('XDG_CACHE_HOME', '/tmp/cartofreako-render-cache')
@@ -249,6 +250,15 @@ def main():
     if args.png:
         png = cairo.ImageSurface(cairo.FORMAT_ARGB32, *pixels)
         targets.append((png, *pixels))
+    if args.background:
+        color = ImageColor.getrgb(args.background)
+        for surface, _, _ in targets:
+            context = cairo.Context(surface)
+            context.set_source_rgb(*(channel / 255 for channel in color))
+            context.paint()
+        # Rounded raster dimensions can leave a fractional-pixel SVG letterbox.
+        # Paint the declared paper behind it before compositing; converting a
+        # partly transparent edge directly to RGB changes its channel values.
 
     def render(content):
         handle = Rsvg.Handle.new_from_data(content)
@@ -287,6 +297,7 @@ def main():
                 image.save(args.preview)
         temporary.replace(args.png)
     receipt = dict(source=str(args.source), source_sha256=digest(args.source),
+                   canvas_background=args.background,
                    renderer=f'librsvg / Cairo {cairo.cairo_version_string()}',
                    native_circles_retained=total, ordered_layers=layer_count, cyclic_copies=3 if cyclic else 1,
                    vector_pdf=bool(args.pdf), pdf_points=[width * 72, height * 72] if args.pdf else None,

@@ -252,7 +252,8 @@ main()
           {
           const std::string basename
             = resources::resources_output_basename(spec, family, metric);
-          assert(basename.starts_with(family.id + "-"));
+          assert(basename.starts_with(metric.id == "coral-reef-threat"
+            ? "anthropocene-" : family.id + "-"));
           assert(basename.ends_with(spec.output_tag));
           }
     }

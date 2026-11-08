@@ -49,7 +49,8 @@ revision and inventory.
   <tbody>
   {% for pass in category.passes %}
     {% if pass.tot_only and backend_id != "tot" %}{% continue %}{% endif %}
-    {% assign artifact_name = pass.stem | append: "-" | append: page.artifact_suffix %}
+    {% assign published_stem = pass.legacy_stem | default: pass.stem %}
+    {% assign artifact_name = published_stem | append: "-" | append: page.artifact_suffix %}
     <tr>
       <th scope="row">{{ pass.label }}</th>
       <td>

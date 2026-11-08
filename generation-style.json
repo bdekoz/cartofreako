@@ -19,13 +19,26 @@
       "data_colors": "preserve-source",
       "base_edition": "setouchi-st2"
     },
-    "sheet_sequence": ["map", "legend"],
+    "sheet_sequence": [
+      "map",
+      "legend"
+    ],
     "bibliography": "per-legend-sheet",
-    "pdf_editions": ["world", "japan", "combined"],
-    "pdf_excluded_stems": ["bathymetry-roulette", "bathymetry-hamonshu"],
+    "pdf_editions": [
+      "world",
+      "japan",
+      "combined"
+    ],
+    "pdf_excluded_stems": [
+      "bathymetry-roulette",
+      "bathymetry-hamonshu"
+    ],
     "image_width_inches": 43.5,
     "world_shift_source_inches": 4.4,
-    "antarctica_translation_source_inches": [-37.3872, 1.5506589999999996],
+    "antarctica_translation_source_inches": [
+      -37.3872,
+      1.5506589999999996
+    ],
     "plate_number": {
       "size_pt": 36,
       "weight": "700",
@@ -108,11 +121,11 @@
         "duboisgreen5"
       ],
       "rare-earth-mine-production": [
-        "plum",
-        "orchid",
-        "mediumorchid",
-        "darkviolet",
-        "purple"
+        "#e5cbf4",
+        "#cea7e6",
+        "#b782d4",
+        "#a362c0",
+        "#8845aa"
       ],
       "population-under-30": [
         "greenyellow",
@@ -148,6 +161,20 @@
         "royalblue",
         "blueprintlight",
         "blueprintdark"
+      ],
+      "lithium-mine-production": [
+        "#c8f6f3",
+        "#8fe0db",
+        "#51c5c1",
+        "#23a6a6",
+        "#118184"
+      ],
+      "uranium-mine-production": [
+        "#fff1b6",
+        "#ffe084",
+        "#fcc553",
+        "#dc9f2f",
+        "#b47b18"
       ]
     },
     "solar_colors": [
@@ -164,7 +191,21 @@
       10000,
       50000,
       200000
-    ]
+    ],
+    "mineral_types": {
+      "rare-earth": {
+        "color": "#b782d4",
+        "shape": "circle"
+      },
+      "lithium": {
+        "color": "#51c5c1",
+        "shape": "square"
+      },
+      "uranium": {
+        "color": "#fcc553",
+        "shape": "triangle"
+      }
+    }
   },
   "temperature": {
     "high_upper_days": [

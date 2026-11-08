@@ -255,7 +255,7 @@ Full-size masters are under `maps/{world,japan}/` and
 `legends/{world,japan}/`, with `svg`, `pdf`, `png` and `preview` subdirectories.
 Standard filenames under `plates/{world,japan}/{svg,pdf,png}/` resolve to
 these same separate sheets. For example,
-`anthropocene-temperature-2025-authagraph-44-19.052559.png` contains only
+`anthropocene-land-temperature-2025-authagraph-44-19.052559.png` contains only
 cartography/data; its `-legend.png` companion contains the legend and data
 bibliography. The same pairing applies to all 76 world/Japan maps and their
 previews. The default build prepares composition intermediates under

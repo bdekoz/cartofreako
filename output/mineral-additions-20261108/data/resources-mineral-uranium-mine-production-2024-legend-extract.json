@@ -1,0 +1,11 @@
+[
+  "Mineral resources / Uranium mine production",
+  "0 to <6.47",
+  "6.47 to <54.81",
+  "54.81 to <415.95",
+  "415.95 to <3113.96",
+  "3113.96 to 23270",
+  "metric tonnes uranium metal content / 2024 / reported-statistic",
+  "Five equal intervals of log(1 + value). izzi-hue named colours at 100% opacity. Grey: missing, never zero.",
+  "Country statistics; 16 of 177 mapped countries. Source dates and definitions: see the atlas source notes."
+]

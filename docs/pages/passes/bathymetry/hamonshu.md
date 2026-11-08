@@ -1,5 +1,7 @@
 # Bathymetry Hamonshū generation implementation notes
 
+**Current status (8 November 2026): optional prototype.** Excluded from default generation, standard artifact selection, and the current atlas. Explicit generation targets and historical editions remain available.
+
 [Documentation index](../../../../index.md) ·
 [Generation guide](../../getting-started/generation.md) ·
 [Generation methods](../../getting-started/generation-methods.md) ·

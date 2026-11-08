@@ -45,10 +45,10 @@ main()
 {
   const temperature::temperature_profile profile_2025
     = temperature::load_temperature_profile(
-      "assets.static/anthropocene/anthropocene-temperature-2025-profile.json");
+      "assets.static/anthropocene/anthropocene-land-temperature-2025-profile.json");
   const temperature::temperature_profile profile_2026
     = temperature::load_temperature_profile(
-      "assets.static/anthropocene/anthropocene-temperature-2026-profile.json");
+      "assets.static/anthropocene/anthropocene-land-temperature-2026-profile.json");
   assert(profile_2025.calendar_year == 2025);
   assert(!profile_2025.partial_year);
   assert(profile_2025.data_through == "2025-12-31");
@@ -72,11 +72,11 @@ main()
 
   const temperature::temperature_dataset dataset_2025
     = temperature::load_temperature_dataset(
-      "assets.static/anthropocene/anthropocene-temperature-2025.geojson",
+      "assets.static/anthropocene/anthropocene-land-temperature-2025.geojson",
       profile_2025);
   const temperature::temperature_dataset dataset_2026
     = temperature::load_temperature_dataset(
-      "assets.static/anthropocene/anthropocene-temperature-2026.geojson",
+      "assets.static/anthropocene/anthropocene-land-temperature-2026.geojson",
       profile_2026);
   assert(dataset_2025.cells.size() == 41162);
   assert(dataset_2026.cells.size() == 41162);

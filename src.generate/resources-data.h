@@ -731,6 +731,7 @@ load_resources_profile(const fs::path& configured_path)
       resources_require(parsed.value >= 0,
                         context + ".value must be nonnegative");
       resources_require(parsed.state == "reported-or-estimated"
+                          || parsed.state == "reported"
                           || parsed.state == "estimated"
                           || parsed.state == "derived",
                         context + " has unknown observation state");

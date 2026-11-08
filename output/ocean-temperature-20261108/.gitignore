@@ -1,0 +1,10 @@
+/cache/
+/work/
+maps/
+legends/
+/tiles/
+/logs/
+/research/*
+!/research/mgd_sst_glb_D20261107.txt.gz
+!/research/jma-readme.txt
+/data/monthly-*.npz

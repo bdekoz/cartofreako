@@ -63,9 +63,9 @@ for the source requirements, output locations and title-date override.
 | Eight slices | [`src.generate/generate-8-slice.cc`](../../../src.generate/generate-8-slice.cc) | Eight exact-octant enlargements from the Cahill-Keyes Earth SVG |
 | Myriahedral groups | [`src.generate/generate-myriahedral-slices.cc`](../../../src.generate/generate-myriahedral-slices.cc) | Two complementary exact-terminal-face masks from the Myriahedral water SVG |
 
-The aggregate target generates all four terrestrial artifact families, the
-blue Bathymetry Roulette and Bathymetry Hamonshū art families, astronomy and two Orbital
-Technosphere products, 14 Stage 12 resource products, one
+The aggregate target generates all four terrestrial artifact families,
+astronomy and two Orbital
+Technosphere products, 15 resource products plus the Anthropocene reef-threat plate, one
 Anthropocene observation atlas, two year-bearing Anthropocene temperature
 atlases, one cumulative
 network-swarm product, and one cloud/CDN infrastructure-site atlas for all six
@@ -194,7 +194,8 @@ The default locations can be overridden:
 | `ANTHROPOCENE_PARTICULATE_GEOJSON_2025`, `ANTHROPOCENE_PARTICULATE_GEOJSON_2026` | Year-bearing files in `$(ANTHROPOCENE_DATA_DIR)` | Checksum-pinned, source-separated H3 cell-day snapshots |
 | `ANTHROPOCENE_TEMPERATURE_PROFILE_2025`, `ANTHROPOCENE_TEMPERATURE_PROFILE_2026` | Year-bearing files in `$(ANTHROPOCENE_DATA_DIR)` | Complete-2025 and partial-2026 CPC field, record-baseline, coverage, and display contracts |
 | `ANTHROPOCENE_TEMPERATURE_GEOJSON_2025`, `ANTHROPOCENE_TEMPERATURE_GEOJSON_2026` | Year-bearing files in `$(ANTHROPOCENE_DATA_DIR)` | Checksum-pinned global-domain resolution-3 H3 temperature fields |
-| `RESOURCES_DATA_DIR` | `assets.static/resources` | Checked Stage 12 profile, values, country/reef geometry, checksums, and source-workflow README |
+| `RESOURCES_BASE_DATA_DIR` | `assets.static/resources` | Retained base resource snapshot and acquisition workflow |
+| `RESOURCES_DATA_DIR` | `assets.static/resources/current-20261108` | Dated offline extension with lithium and uranium; all other observation years are retained |
 | `RESOURCES_PROFILE` | `$(RESOURCES_DATA_DIR)/resources-profile.json` | Six resource families, source/metric catalogues, country/spatial gates, defaults, scales, and palettes |
 | `RESOURCES_VALUES` | `$(RESOURCES_DATA_DIR)/resources-values.json` | Normalized country values for implemented metrics |
 | `RESOURCES_COUNTRIES` | `$(RESOURCES_DATA_DIR)/countries-110m.geojson` | Compact Natural Earth country geometry keyed by `RESOURCE_A3` |
@@ -303,13 +304,13 @@ candidates are not accepted as generation-profile passes at all.
 | `anthropocene` | Four SVGs: particulate and temperature for 2025 and 2026 | Standard |
 | `resources-energy` | Four country products: solar, wind, nuclear, and refinery throughput | Standard |
 | `resources-food` | One food-production-index country choropleth | Standard |
-| `resources-fauna` | Fisheries country choropleth and coral-reef threat field | Standard |
+| `resources-fauna` | Fisheries country choropleth; reef threat is grouped under Anthropocene | Standard |
 | `resources-flora` | One forest-area country choropleth | Standard |
-| `resources-mineral` | One rare-earth mine-production country choropleth | Standard |
+| `resources-mineral` | Rare-earth, lithium and uranium mine-production country choropleths | Standard |
 | `resources-human` | Five country products: under 30, over 60, two attainment levels, and patents | Standard |
 | `network-swarm` | Two native cumulative swarm SVGs, 1080p/4K and 720p/SD | Standard |
-| `bathymetry-roulette` | One blue-ramp, filled, Voronoi-grouped roulette depth SVG | Standard |
-| `bathymetry-hamonshu` | One blue-ramp, Voronoi-grouped Hamonshū wave-field depth SVG | Standard |
+| `bathymetry-roulette` | One blue-ramp, filled, Voronoi-grouped roulette depth SVG | Optional prototype; excluded from defaults |
+| `bathymetry-hamonshu` | One blue-ramp, Voronoi-grouped Hamonshū wave-field depth SVG | Optional prototype; excluded from defaults |
 | `network-infrastructure` | One cloud/CDN infrastructure-site SVG; never the licensed topology product | Standard; licensed topology is a separate optional pass |
 | `fiber-synthesized` | One cleaned-union submarine-fiber SVG with 20260805 as the default layer | Standard |
 
@@ -682,19 +683,23 @@ observed-data and agentic iteration work is tracked in
 ## Stage 12 resources generation
 
 The resources pass is a strict, offline country/spatial pipeline split into
-six independent families and 14 released metrics. `resources-energy` builds
+six source families and 16 released metrics. `resources-energy` builds
 solar, wind, nuclear, and refinery-throughput maps; `resources-fauna` builds
-fisheries and coral-reef-threat maps; and `resources-human` builds five
-separate demographic, attainment, and patent maps. Food, flora, and mineral
-currently contribute one released map each.
+fisheries; and `resources-human` builds five separate demographic,
+attainment, and patent maps. Food and flora contribute one map each; minerals
+contribute rare earths, lithium and uranium. The source profile retains reef
+threat in its fauna data family, while its canonical plate and default
+artifact group are Anthropocene.
 
 The [resource metric catalog](../passes/resources/metric-catalog.md) lists all 59
-definitions: 14 standard products and 45 exploration-only candidates. There
+definitions: 16 implemented metric products and 43 exploration-only candidates. There
 are currently no optional resource metrics.
 
 Build all released products for a family/projection pair, one family across
-all projections, all families for one projection, or the entire 84-map
-matrix. Metric aliases select a single product:
+all projections, or all resource families for one projection. Reef threat
+has the separate `generate-anthropocene-coral-reef-threat` target. The curated
+atlas additionally groups the three petroleum studies under Energy and
+includes a combined mineral comparison. Metric aliases select one product:
 
 ```sh
 make generate-resources-energy-cahill-keyes
@@ -711,7 +716,7 @@ Inspect one without changing the checkout:
 
 ```sh
 gzip -cd \
-  assets.generated/cahill-keyes/svg/resources-fauna-coral-reef-threat-2011-ck-44-22.svg.gz \
+  assets.generated/cahill-keyes/svg/anthropocene-coral-reef-threat-2011-ck-44-22.svg.gz \
   > /tmp/resources-fauna-reefs.svg
 ```
 
@@ -841,7 +846,7 @@ does not vary spatially. Twenty-four jittered Voronoi regions group the twelve
 phase/size/offset variations. The original Natural Earth blue ramp supplies a
 second depth cue.
 
-Bathymetry Hamonshū is a separate standard art pass over the same Natural
+Bathymetry Hamonshū is an optional prototype art pass over the same Natural
 Earth clips, field spacing, 24-region assignment, 30% opacity, blue ramp, and
 shallow-to-deep replacement model. It substitutes twelve source-indexed Izzi
 Hamonshū wave motifs. Because those motifs are linework, depth increases the

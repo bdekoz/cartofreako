@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-07",
+  "jma_sha256": "299b82eeeea77d8e136ef08bb40855c6e91870249c8243452f5132d6dd729915",
+  "oisst_sha256": "b7603fe25df651db9334b476e0873e9fcc6add1cd191e5e13c8d3ae56781b580",
+  "jma_units": "0.1 degree Celsius; 888 sea ice; 999 land/undetermined",
+  "jma_grid_order": "north-to-south reversed to OISST south-to-north; longitudes already align",
+  "statistics": [
+    {
+      "region": "common global valid grid",
+      "paired_centers": 539809,
+      "jma_valid_centers": 550939,
+      "oisst_valid_centers_before_ice_screen": 691150,
+      "oisst_valid_centers_after_ice_screen": 552021,
+      "area_weighted_mean_jma_minus_oisst_degC": 0.07412784974177268,
+      "area_weighted_rmse_degC": 0.39147037109078114,
+      "median_absolute_difference_degC": 0.24000015258789276,
+      "p95_absolute_difference_degC": 0.8000003814697276
+    },
+    {
+      "region": "Japan region 20\u201350N, 120\u2013160E",
+      "paired_centers": 15605,
+      "jma_valid_centers": 15710,
+      "oisst_valid_centers_before_ice_screen": 15655,
+      "oisst_valid_centers_after_ice_screen": 15655,
+      "area_weighted_mean_jma_minus_oisst_degC": -0.04259742268051194,
+      "area_weighted_rmse_degC": 0.5195429159065009,
+      "median_absolute_difference_degC": 0.33000144958496236,
+      "p95_absolute_difference_degC": 1.0500000000000007
+    }
+  ],
+  "limitations": [
+    "One date, not a multi-year validation.",
+    "Providers share satellite and in-situ inputs: agreement is not an independent accuracy estimate.",
+    "JMA real-time ice and missing codes excluded; OISST reported ice fraction >=0.15 excluded.",
+    "Native 0.25 degree centers and cosine-latitude area weights; no resampling."
+  ]
+}

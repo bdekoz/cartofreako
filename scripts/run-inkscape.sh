@@ -13,8 +13,9 @@ fi
 
 if dbus-run-session -- "$@"; then
   exit 0
+else
+  status=$?
 fi
-status=$?
 if [ "$status" -eq 126 ] || [ "$status" -eq 127 ]; then
   exec "$@"
 fi

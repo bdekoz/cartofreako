@@ -1,6 +1,6 @@
 {
   "schemaVersion": "cartofreako-pass-status-v1",
-  "checkedOn": "2026-08-10",
+  "checkedOn": "2026-11-08",
   "axes": {
     "independent": true,
     "lifecycle": "Controls generation, artifact selection, gallery, and release behavior: standard, optional, or exploration-only.",
@@ -48,7 +48,7 @@
       ]
     },
     {
-      "id": "anthropocene-temperature-2025",
+      "id": "anthropocene-land-temperature-2025",
       "family": "temperature-field",
       "current": true,
       "lifecycle": "standard",
@@ -68,7 +68,7 @@
       ]
     },
     {
-      "id": "anthropocene-temperature-2026",
+      "id": "anthropocene-land-temperature-2026",
       "family": "temperature-field",
       "current": true,
       "lifecycle": "standard",
@@ -85,6 +85,44 @@
         "The 2026 product is explicitly partial-year and must not be compared as though it were a complete annual field.",
         "The rendered field is not an event-attribution result and does not imply uniform observational certainty.",
         "Accepted-experimental status is not permission to relabel, suppress the partial-year qualifier, or bypass source review."
+      ]
+    },
+    {
+      "id": "bathymetry-roulette",
+      "family": "bathymetry-art",
+      "current": true,
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "defaultGenerated": false,
+      "releaseEligible": false,
+      "acceptedOn": "2026-11-08",
+      "artifactManifest": {
+        "path": "contracts/standard-artifact-manifest-v1.json",
+        "artifactCount": 0
+      },
+      "statusReason": "Demoted to optional prototype by user instruction on 8 November 2026; excluded from the default atlas and standard artifact inventory.",
+      "claimBoundary": [
+        "Generalized depth-class art, not survey bathymetry.",
+        "Explicit generation targets remain available; historical editions retain their original files."
+      ]
+    },
+    {
+      "id": "bathymetry-hamonshu",
+      "family": "bathymetry-art",
+      "current": true,
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "defaultGenerated": false,
+      "releaseEligible": false,
+      "acceptedOn": "2026-11-08",
+      "artifactManifest": {
+        "path": "contracts/standard-artifact-manifest-v1.json",
+        "artifactCount": 0
+      },
+      "statusReason": "Demoted to optional prototype by user instruction on 8 November 2026; excluded from the default atlas and standard artifact inventory.",
+      "claimBoundary": [
+        "Generalized depth-class art, not survey bathymetry.",
+        "Explicit generation targets remain available; historical editions retain their original files."
       ]
     }
   ]

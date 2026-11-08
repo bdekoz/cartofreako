@@ -1,0 +1,26 @@
+[
+  {
+    "path": "data/coral-dhw-2025-annual.json",
+    "sha256": "bfcbc7dd712fe949542c7c48c6bf24ae213a4dc6e49ee25d05520b7878c88cf7",
+    "cells": 27372,
+    "maximum_dhw": 30.599998474121094,
+    "year": 2025,
+    "period": "annual"
+  },
+  {
+    "path": "data/coral-dhw-2026-annual.json",
+    "sha256": "8133d870e9e4973dc559ccbe0c62c5e36205fe0bade69f97ffe4eaee27d5622e",
+    "cells": 27372,
+    "maximum_dhw": 29.920000076293945,
+    "year": 2026,
+    "period": "annual"
+  },
+  {
+    "path": "data/coral-dhw-2025-matched.json",
+    "sha256": "d673412518b817d3ac88c66f0bb799072ddfcc308852b53e9dd377dd8afd0692",
+    "cells": 27372,
+    "maximum_dhw": 30.599998474121094,
+    "year": 2025,
+    "period": "matched"
+  }
+]

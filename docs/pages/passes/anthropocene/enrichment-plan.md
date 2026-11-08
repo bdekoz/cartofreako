@@ -307,12 +307,12 @@ assets.static/anthropocene/anthropocene-particulate-2025-profile.json
 assets.static/anthropocene/anthropocene-particulate-2025.geojson
 assets.static/anthropocene/anthropocene-particulate-2026-profile.json
 assets.static/anthropocene/anthropocene-particulate-2026.geojson
-assets.static/anthropocene/anthropocene-temperature-2025-profile.json
-assets.static/anthropocene/anthropocene-temperature-2025.geojson
-assets.static/anthropocene/anthropocene-temperature-2026-profile.json
-assets.static/anthropocene/anthropocene-temperature-2026.geojson
-assets.generated/cahill-keyes/png/anthropocene-temperature-2025-ck-44-22.png
-assets.generated/cahill-keyes/png/anthropocene-temperature-2026-ck-44-22.png
+assets.static/anthropocene/anthropocene-land-temperature-2025-profile.json
+assets.static/anthropocene/anthropocene-land-temperature-2025.geojson
+assets.static/anthropocene/anthropocene-land-temperature-2026-profile.json
+assets.static/anthropocene/anthropocene-land-temperature-2026.geojson
+assets.generated/cahill-keyes/png/anthropocene-land-temperature-2025-ck-44-22.png
+assets.generated/cahill-keyes/png/anthropocene-land-temperature-2026-ck-44-22.png
 ```
 
 Implemented temperature-field targets are:
