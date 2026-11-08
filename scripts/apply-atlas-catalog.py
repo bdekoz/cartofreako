@@ -125,7 +125,7 @@ def apply(root):
                     rr=next((r for r in e['separate_sheets'] if r['scope']==scope and r['kind']==kind),None)
                     if rr:links.append('<a href="'+escape(rr['svg'])+'">'+scope.title()+' '+kind+'</a>')
             parts.append('<article><strong>'+escape(e['title'])+'</strong><br><code>'+escape(e['stem'])+'</code><br>'+' · '.join(links)+'</article>')
-    parts.append('<h2>Prototypes</h2><p>Bathymetry Roulette and Bathymetry Hamonshū remain optional prototypes and are excluded from default plates.</p><p><a href="../ocean-temperature-20261108/index.html">Water-temperature stage-one previews</a></p></html>')
+    parts.append('<h2>Prototypes</h2><p>Bathymetry and the Stage 1/2 climate review editions remain optional prototypes, excluded from default plates.</p><p><a href="../ocean-temperature-20261108/index.html">Water-temperature Stage 1</a> · <a href="../ocean-temperature-stage-2-20261108/index.html">Derived climate plates / Stage 2</a></p></html>')
     (root/'index.html').write_text('\n'.join(parts)+'\n')
     print(f'Applied current catalog: {len(book["entries"])} default plates / {len(records)} sheets')
 

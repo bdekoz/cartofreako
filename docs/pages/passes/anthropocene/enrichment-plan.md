@@ -12,7 +12,14 @@ families: complete-2025/partial-2026 particulate observation atlases and
 complete-2025/partial-2026 NOAA CPC temperature fields. All four pass IDs are
 year-bearing and default-generated. The implementation also provides explicit
 global H3 coverage/missing semantics and a hard global-FIRMS refresh gate.
-CAMS and ocean products remain planned. PurpleAir now has a credential-free,
+CAMS remains planned. The **8 November 2026 ocean review editions are now
+implemented and validated**: [Stage 0/1](../../../development/20261108_anthropocene_ocean_temperature_stage_1.md)
+adds absolute SST, SST anomaly and a separate coral thermal-stress overlay;
+[Stage 2](../../../development/20261108_anthropocene_ocean_temperature_stage_2.md)
+adds marine heatwaves, thermal seasons, coastal joint heat and an India
+heat–PM2.5 pilot. These remain optional local prototypes, with separate maps
+and legends. The historical source audit and longer-term proposals below
+retain their original scope. PurpleAir has a credential-free,
 synthetic interface experiment; a real community-sensor adapter remains
 planned and separately permission-gated.
 
@@ -27,8 +34,10 @@ The completed and planned sequence is:
    year-qualified particulate observation atlas as a separate product.
 3. **Planned:** add globally complete CAMS analysis fields for modeled PM2.5 and smoke
    context without relabeling either one as a ground observation;
-4. **Planned:** add NOAA OISST marine-heatwave and Coral Reef Watch reef-heat-stress
-   products as a separate ocean theme; and
+4. **Local prototypes implemented:** NOAA OISST marine heatwaves and separate
+   Coral Reef Watch thermal-stress context, plus three further derived climate
+   families; production reef-mask expansion and default promotion remain
+   separate decisions; and
 5. **Interface implemented; observed data planned:** keep PurpleAir in a
    separately generated, permission-gated community-sensor product. The
    current synthetic overlay tests style and lifecycle only.
@@ -258,6 +267,12 @@ smoke from a PM2.5 exceedance alone.
 
 ## Ocean-distress implementation
 
+The November 8 studies linked above supersede the acquisition/implementation
+status of the OISST and CRW proposals in this section. They retain source
+support and do not claim a production global reef census. The remaining
+mask expansion, ecological interpretation and release decisions below still
+apply to any broader production theme.
+
 Coral heat stress is now practical enough to promote from an indefinite future
 phase, provided the reef-mask rights are resolved. CRW v3.1 supplies daily 5 km
 SST, HotSpot, Degree Heating Week, and Bleaching Alert Area files from 1985 to
@@ -385,8 +400,8 @@ window must be labelled separately.
 
 ### 5. Ocean fields
 
-- Implement OISST marine-heatwave fixtures and full-year/partial-year
-  aggregation.
+- **Implemented as local Stage 2 prototypes:** OISST marine-heatwave fixtures,
+  full-year/partial-year aggregation, matched windows and event ledgers.
 - Resolve a production reef mask, then add CRW bleaching-heat-stress fixtures
   and reef-only validation.
 - Render ocean fields below reef symbols and expose stress source/version in

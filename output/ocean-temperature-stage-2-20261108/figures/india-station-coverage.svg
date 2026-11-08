@@ -1,0 +1,923 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="936pt" height="648pt" viewBox="0 0 936 648" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-08T15:11:19.652328</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 648
+L 936 648
+L 936 0
+L 0 0
+z
+" style="fill: #240413"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 374.4 531.36
+L 842.4 531.36
+L 842.4 110.16
+L 374.4 110.16
+z
+" style="fill: #240413"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 374.4 512.214545
+L 465.568831 512.214545
+L 465.568831 507.035724
+L 374.4 507.035724
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 374.4 496.030729
+L 424.542857 496.030729
+L 424.542857 490.851908
+L 374.4 490.851908
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 374.4 479.846913
+L 663.101299 479.846913
+L 663.101299 474.668092
+L 374.4 474.668092
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 374.4 463.663097
+L 742.114286 463.663097
+L 742.114286 458.484276
+L 374.4 458.484276
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 374.4 447.479281
+L 596.244156 447.479281
+L 596.244156 442.30046
+L 374.4 442.30046
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 374.4 431.295465
+L 552.179221 431.295465
+L 552.179221 426.116643
+L 374.4 426.116643
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 374.4 415.111648
+L 698.049351 415.111648
+L 698.049351 409.932827
+L 374.4 409.932827
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 374.4 398.927832
+L 722.361039 398.927832
+L 722.361039 393.749011
+L 374.4 393.749011
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 374.4 382.744016
+L 722.361039 382.744016
+L 722.361039 377.565195
+L 374.4 377.565195
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 374.4 366.5602
+L 729.958442 366.5602
+L 729.958442 361.381379
+L 374.4 361.381379
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 374.4 350.376384
+L 726.919481 350.376384
+L 726.919481 345.197562
+L 374.4 345.197562
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 374.4 334.192567
+L 465.568831 334.192567
+L 465.568831 329.013746
+L 374.4 329.013746
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 374.4 318.008751
+L 699.568831 318.008751
+L 699.568831 312.82993
+L 374.4 312.82993
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 374.4 301.824935
+L 678.296104 301.824935
+L 678.296104 296.646114
+L 374.4 296.646114
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 374.4 285.641119
+L 711.724675 285.641119
+L 711.724675 280.462298
+L 374.4 280.462298
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 374.4 269.457303
+L 678.296104 269.457303
+L 678.296104 264.278482
+L 374.4 264.278482
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 374.4 253.273487
+L 676.776623 253.273487
+L 676.776623 248.094665
+L 374.4 248.094665
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 374.4 237.08967
+L 726.919481 237.08967
+L 726.919481 231.910849
+L 374.4 231.910849
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_21">
+    <path d="M 374.4 220.905854
+L 729.958442 220.905854
+L 729.958442 215.727033
+L 374.4 215.727033
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_22">
+    <path d="M 374.4 204.722038
+L 722.361039 204.722038
+L 722.361039 199.543217
+L 374.4 199.543217
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_23">
+    <path d="M 374.4 188.538222
+L 726.919481 188.538222
+L 726.919481 183.359401
+L 374.4 183.359401
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_24">
+    <path d="M 374.4 172.354406
+L 702.607792 172.354406
+L 702.607792 167.175584
+L 374.4 167.175584
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_25">
+    <path d="M 374.4 156.170589
+L 723.880519 156.170589
+L 723.880519 150.991768
+L 374.4 150.991768
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_26">
+    <path d="M 374.4 139.986773
+L 827.205195 139.986773
+L 827.205195 134.807952
+L 374.4 134.807952
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #8da0cb"/>
+   </g>
+   <g id="patch_27">
+    <path d="M 374.4 506.712048
+L 465.568831 506.712048
+L 465.568831 501.533227
+L 374.4 501.533227
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_28">
+    <path d="M 374.4 490.528232
+L 541.542857 490.528232
+L 541.542857 485.349411
+L 374.4 485.349411
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_29">
+    <path d="M 374.4 474.344416
+L 625.114286 474.344416
+L 625.114286 469.165594
+L 374.4 469.165594
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_30">
+    <path d="M 374.4 458.160599
+L 657.023377 458.160599
+L 657.023377 452.981778
+L 374.4 452.981778
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_31">
+    <path d="M 374.4 441.976783
+L 666.14026 441.976783
+L 666.14026 436.797962
+L 374.4 436.797962
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_32">
+    <path d="M 374.4 425.792967
+L 704.127273 425.792967
+L 704.127273 420.614146
+L 374.4 420.614146
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_33">
+    <path d="M 374.4 409.609151
+L 713.244156 409.609151
+L 713.244156 404.43033
+L 374.4 404.43033
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_34">
+    <path d="M 374.4 393.425335
+L 722.361039 393.425335
+L 722.361039 388.246513
+L 374.4 388.246513
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_35">
+    <path d="M 374.4 377.241518
+L 722.361039 377.241518
+L 722.361039 372.062697
+L 374.4 372.062697
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_36">
+    <path d="M 374.4 361.057702
+L 737.555844 361.057702
+L 737.555844 355.878881
+L 374.4 355.878881
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_37">
+    <path d="M 374.4 344.873886
+L 742.114286 344.873886
+L 742.114286 339.695065
+L 374.4 339.695065
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_38">
+    <path d="M 374.4 328.69007
+L 743.633766 328.69007
+L 743.633766 323.511249
+L 374.4 323.511249
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_39">
+    <path d="M 374.4 312.506254
+L 746.672727 312.506254
+L 746.672727 307.327433
+L 374.4 307.327433
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_40">
+    <path d="M 374.4 296.322438
+L 746.672727 296.322438
+L 746.672727 291.143616
+L 374.4 291.143616
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_41">
+    <path d="M 374.4 280.138621
+L 749.711688 280.138621
+L 749.711688 274.9598
+L 374.4 274.9598
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_42">
+    <path d="M 374.4 263.954805
+L 752.750649 263.954805
+L 752.750649 258.775984
+L 374.4 258.775984
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_43">
+    <path d="M 374.4 247.770989
+L 754.27013 247.770989
+L 754.27013 242.592168
+L 374.4 242.592168
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_44">
+    <path d="M 374.4 231.587173
+L 758.828571 231.587173
+L 758.828571 226.408352
+L 374.4 226.408352
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_45">
+    <path d="M 374.4 215.403357
+L 761.867532 215.403357
+L 761.867532 210.224535
+L 374.4 210.224535
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_46">
+    <path d="M 374.4 199.21954
+L 763.387013 199.21954
+L 763.387013 194.040719
+L 374.4 194.040719
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_47">
+    <path d="M 374.4 183.035724
+L 766.425974 183.035724
+L 766.425974 177.856903
+L 374.4 177.856903
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_48">
+    <path d="M 374.4 166.851908
+L 770.984416 166.851908
+L 770.984416 161.673087
+L 374.4 161.673087
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_49">
+    <path d="M 374.4 150.668092
+L 775.542857 150.668092
+L 775.542857 145.489271
+L 374.4 145.489271
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="patch_50">
+    <path d="M 374.4 134.484276
+L 796.815584 134.484276
+L 796.815584 129.305455
+L 374.4 129.305455
+z
+" clip-path="url(#pb7130cb9c0)" style="fill: #fcc553"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="m64dc9adc22" d="M 0 0
+L 0 3.5
+" style="stroke: #fff6e3; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m64dc9adc22" x="374.4" y="531.36" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #fff6e3" x="374.4" y="545.958437" transform="rotate(-0 374.4 545.958437)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#m64dc9adc22" x="468" y="531.36" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #fff6e3" x="468" y="545.958437" transform="rotate(-0 468 545.958437)">20</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#m64dc9adc22" x="561.6" y="531.36" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #fff6e3" x="561.6" y="545.958437" transform="rotate(-0 561.6 545.958437)">40</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m64dc9adc22" x="655.2" y="531.36" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #fff6e3" x="655.2" y="545.958437" transform="rotate(-0 655.2 545.958437)">60</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <g>
+       <use xlink:href="#m64dc9adc22" x="748.8" y="531.36" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #fff6e3" x="748.8" y="545.958437" transform="rotate(-0 748.8 545.958437)">80</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m64dc9adc22" x="842.4" y="531.36" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #fff6e3" x="842.4" y="545.958437" transform="rotate(-0 842.4 545.958437)">100</text>
+     </g>
+    </g>
+    <g id="text_7">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #fff6e3" x="608.4" y="559.636562" transform="rotate(-0 608.4 559.636562)">Joint eligible station-days / 308 calendar days (%)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_7">
+      <path d="M 374.4 506.873886
+L 842.4 506.873886
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <defs>
+       <path id="me91d26bca3" d="M 0 0
+L -3.5 0
+" style="stroke: #fff6e3; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="506.873886" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="509.913261" transform="rotate(-0 367.4 509.913261)">Mumbai / us_embassy:DS1010004</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_9">
+      <path d="M 374.4 490.69007
+L 842.4 490.69007
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="490.69007" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="493.729445" transform="rotate(-0 367.4 493.729445)">Sector 30, Faridabad - HSPCB / cpcb_caaqm:site_5341</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_11">
+      <path d="M 374.4 474.506254
+L 842.4 474.506254
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="474.506254" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="477.545629" transform="rotate(-0 367.4 477.545629)">Powai, Mumbai - MPCB / cpcb_caaqm:site_5112</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_13">
+      <path d="M 374.4 458.322438
+L 842.4 458.322438
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="458.322438" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="461.361813" transform="rotate(-0 367.4 461.361813)">Bidhannagar, Kolkata - WBPCB / cpcb_caaqm:site_5129</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_15">
+      <path d="M 374.4 442.138621
+L 842.4 442.138621
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="442.138621" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="445.177996" transform="rotate(-0 367.4 445.177996)">BTM Layout, Bengaluru - CPCB / cpcb_caaqm:site_162</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_17">
+      <path d="M 374.4 425.954805
+L 842.4 425.954805
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="425.954805" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_13">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="428.99418" transform="rotate(-0 367.4 428.99418)">Rajbagh, Srinagar - JKSPCB / openaq:220265</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_19">
+      <path d="M 374.4 409.770989
+L 842.4 409.770989
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_20">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="409.770989" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_14">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="412.810364" transform="rotate(-0 367.4 412.810364)">Zoo Park, Hyderabad - TSPCB / cpcb_caaqm:site_298</text>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_21">
+      <path d="M 374.4 393.587173
+L 842.4 393.587173
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_22">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="393.587173" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_15">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="396.626548" transform="rotate(-0 367.4 396.626548)">Rajbansi Nagar, Patna - BSPCB / cpcb_caaqm:site_5262</text>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_23">
+      <path d="M 374.4 377.403357
+L 842.4 377.403357
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_24">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="377.403357" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_16">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="380.442732" transform="rotate(-0 367.4 380.442732)">Vasundhara, Ghaziabad - UPPCB / openaq:5665</text>
+     </g>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_25">
+      <path d="M 374.4 361.21954
+L 842.4 361.21954
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_26">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="361.21954" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_17">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="364.258915" transform="rotate(-0 367.4 364.258915)">Punjab Agricultural University, Ludhiana - PPCB / cpcb_caaqm:site_253</text>
+     </g>
+    </g>
+    <g id="ytick_11">
+     <g id="line2d_27">
+      <path d="M 374.4 345.035724
+L 842.4 345.035724
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_28">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="345.035724" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_18">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="348.075099" transform="rotate(-0 367.4 348.075099)">Anand Vihar, New Delhi - DPCC / cpcb_caaqm:site_301</text>
+     </g>
+    </g>
+    <g id="ytick_12">
+     <g id="line2d_29">
+      <path d="M 374.4 328.851908
+L 842.4 328.851908
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_30">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="328.851908" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_19">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="331.891283" transform="rotate(-0 367.4 331.891283)">Sector 11, Faridabad - HSPCB / openaq:10908</text>
+     </g>
+    </g>
+    <g id="ytick_13">
+     <g id="line2d_31">
+      <path d="M 374.4 312.668092
+L 842.4 312.668092
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_32">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="312.668092" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_20">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="315.707467" transform="rotate(-0 367.4 315.707467)">Maninagar, Ahmedabad - GPCB / cpcb_caaqm:site_308</text>
+     </g>
+    </g>
+    <g id="ytick_14">
+     <g id="line2d_33">
+      <path d="M 374.4 296.484276
+L 842.4 296.484276
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_34">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="296.484276" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_21">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="299.523651" transform="rotate(-0 367.4 299.523651)">NISE Gwal Pahari, Gurugram - IMD / cpcb_caaqm:site_5025</text>
+     </g>
+    </g>
+    <g id="ytick_15">
+     <g id="line2d_35">
+      <path d="M 374.4 280.30046
+L 842.4 280.30046
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_36">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="280.30046" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_22">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="283.339835" transform="rotate(-0 367.4 283.339835)">Sector 22, Chandigarh - CPCC / cpcb_caaqm:site_5491</text>
+     </g>
+    </g>
+    <g id="ytick_16">
+     <g id="line2d_37">
+      <path d="M 374.4 264.116643
+L 842.4 264.116643
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_38">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="264.116643" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_23">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="267.156018" transform="rotate(-0 367.4 267.156018)">Residency Area, Indore - IMC / cpcb_caaqm:site_5854</text>
+     </g>
+    </g>
+    <g id="ytick_17">
+     <g id="line2d_39">
+      <path d="M 374.4 247.932827
+L 842.4 247.932827
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_40">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="247.932827" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_24">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="250.972202" transform="rotate(-0 367.4 250.972202)">Velachery Res. Area, Chennai - CPCB / cpcb_caaqm:site_288</text>
+     </g>
+    </g>
+    <g id="ytick_18">
+     <g id="line2d_41">
+      <path d="M 374.4 231.749011
+L 842.4 231.749011
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_42">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="231.749011" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_25">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="234.788386" transform="rotate(-0 367.4 234.788386)">Model Town, Patiala - PPCB / cpcb_caaqm:site_1437</text>
+     </g>
+    </g>
+    <g id="ytick_19">
+     <g id="line2d_43">
+      <path d="M 374.4 215.565195
+L 842.4 215.565195
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_44">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="215.565195" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_26">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="218.60457" transform="rotate(-0 367.4 218.60457)">Plammoodu, Thiruvananthapuram - Kerala PCB / cpcb_caaqm:site_252</text>
+     </g>
+    </g>
+    <g id="ytick_20">
+     <g id="line2d_45">
+      <path d="M 374.4 199.381379
+L 842.4 199.381379
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_46">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="199.381379" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_27">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="202.420754" transform="rotate(-0 367.4 202.420754)">Sanjay Nagar, Ghaziabad - UPPCB / cpcb_caaqm:site_5081</text>
+     </g>
+    </g>
+    <g id="ytick_21">
+     <g id="line2d_47">
+      <path d="M 374.4 183.197562
+L 842.4 183.197562
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_48">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="183.197562" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_28">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="186.236937" transform="rotate(-0 367.4 186.236937)">Mansarovar Sector-12, Jaipur - RSPCB / cpcb_caaqm:site_5725</text>
+     </g>
+    </g>
+    <g id="ytick_22">
+     <g id="line2d_49">
+      <path d="M 374.4 167.013746
+L 842.4 167.013746
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_50">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="167.013746" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_29">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="170.053121" transform="rotate(-0 367.4 170.053121)">Golden Temple, Amritsar - PPCB / cpcb_caaqm:site_256</text>
+     </g>
+    </g>
+    <g id="ytick_23">
+     <g id="line2d_51">
+      <path d="M 374.4 150.82993
+L 842.4 150.82993
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_52">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="150.82993" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_30">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="153.869305" transform="rotate(-0 367.4 153.869305)">Talkatora District Industries Center, Lucknow - CPCB / cpcb_caaqm:site_297</text>
+     </g>
+    </g>
+    <g id="ytick_24">
+     <g id="line2d_53">
+      <path d="M 374.4 134.646114
+L 842.4 134.646114
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke: #ffffff; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_54">
+      <g>
+       <use xlink:href="#me91d26bca3" x="374.4" y="134.646114" style="fill: #fff6e3; stroke: #fff6e3; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_31">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #fff6e3" x="367.4" y="137.685489" transform="rotate(-0 367.4 137.685489)">New Delhi / us_embassy:DS1010001</text>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_55">
+    <path d="M 748.8 531.36
+L 748.8 110.16
+" clip-path="url(#pb7130cb9c0)" style="fill: none; stroke-dasharray: 1,1.65; stroke-dashoffset: 0; stroke: #fff6e3"/>
+   </g>
+   <g id="patch_51">
+    <path d="M 374.4 531.36
+L 374.4 110.16
+" style="fill: none; stroke: #9e8994; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_52">
+    <path d="M 842.4 531.36
+L 842.4 110.16
+" style="fill: none; stroke: #9e8994; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_53">
+    <path d="M 374.4 531.36
+L 842.4 531.36
+" style="fill: none; stroke: #9e8994; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_54">
+    <path d="M 374.4 110.16
+L 842.4 110.16
+" style="fill: none; stroke: #9e8994; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_32">
+    <text style="font-size: 17px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #fcc553" x="374.4" y="104.16" transform="rotate(-0 374.4 104.16)">India reference-monitor coverage</text>
+   </g>
+   <g id="legend_1">
+    <g id="patch_55">
+     <path d="M 705.248437 505.602187
+L 725.248437 505.602187
+L 725.248437 498.602187
+L 705.248437 498.602187
+z
+" style="fill: #8da0cb"/>
+    </g>
+    <g id="text_33">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #fff6e3" x="733.248437" y="505.602187" transform="rotate(-0 733.248437 505.602187)">2025 matched</text>
+    </g>
+    <g id="patch_56">
+     <path d="M 705.248437 520.280312
+L 725.248437 520.280312
+L 725.248437 513.280312
+L 705.248437 513.280312
+z
+" style="fill: #fcc553"/>
+    </g>
+    <g id="text_34">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #fff6e3" x="733.248437" y="520.280312" transform="rotate(-0 733.248437 520.280312)">2026 through Nov 4</text>
+    </g>
+   </g>
+  </g>
+  <g id="text_35">
+   <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #fff6e3" x="65.52" y="631.8" transform="rotate(-0 65.52 631.8)">Selected stations only. Dotted line: 80% display gate. Year comparisons of joint heat–PM days use the same station and calendar-date pairs.</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pb7130cb9c0">
+   <rect x="374.4" y="110.16" width="468" height="421.2"/>
+  </clipPath>
+ </defs>
+</svg>

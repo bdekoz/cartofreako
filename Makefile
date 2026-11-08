@@ -2137,6 +2137,32 @@ build/setouchi-h3-tools/render-cells: scripts/render-setouchi-h3-cells.cc \
 		$(shell $(GDAL_CONFIG) --cflags) $(shell pkg-config --cflags cairo) $(CXXFLAGS) -O2 \
 		$< $(shell $(GDAL_CONFIG) --libs) $(shell pkg-config --libs cairo) -lh3 -o $@
 
+build/stage-2-project-points: scripts/project-stage-2-points.cc $(wildcard src.projections/*.h) \
+		src.generate/projection-generation-common.h
+	@mkdir -p $(@D)
+	$(CXX) $(CPPFLAGS) -I$(ALPHA60_SRC) -I$(IZZI_SRC) \
+		$(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) -O2 \
+		$< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
+
+.PHONY: fetch-ocean-stage-2 prepare-ocean-stage-2 render-ocean-stage-2 check-ocean-stage-2
+fetch-ocean-stage-2:
+	python3 scripts/fetch-ocean-stage-2.py
+
+prepare-ocean-stage-2:
+	python3 scripts/prepare-ocean-climate-baseline.py
+	python3 scripts/prepare-marine-heatwaves.py
+	python3 scripts/prepare-ocean-thermal-seasons.py
+	python3 scripts/prepare-coastal-compound-heat.py
+	python3 scripts/prepare-heat-particulate-coexposure.py
+	python3 scripts/analyze-ocean-stage-2.py
+
+render-ocean-stage-2:
+	python3 scripts/build-ocean-stage-2-plates.py
+
+check-ocean-stage-2:
+	python3 tests/test-ocean-stage-2.py
+	python3 scripts/validate-ocean-stage-2.py
+
 build/setouchi-h3-tools/test-source-domain: tests/test-temperature-source-domain.cc \
 		$(GENERATOR_SRC_DIR)/anthropocene-temperature-data.h $(GENERATOR_SRC_DIR)/temperature-source-grid.h
 	@mkdir -p $(@D)

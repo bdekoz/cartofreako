@@ -1,0 +1,293 @@
+{
+  "scope": "eight nearest source-supported illustrative locations; not a global sensitivity estimate",
+  "rows": [
+    {
+      "location": "Japan east",
+      "requested_latitude": 35,
+      "requested_longitude": 145,
+      "h3": "852f0b33fffffff",
+      "center": [
+        34.92244845365495,
+        145.17900992385307
+      ],
+      "year": 2025,
+      "common_eligible_days": 311,
+      "event_days_baseline_1982": 76,
+      "mean_p90_baseline_1982": 22.607709884643555,
+      "cumulative_intensity_baseline_1982_degC_days": 138.7411289215088,
+      "event_days_baseline_1991": 55,
+      "mean_p90_baseline_1991": 22.804893493652344,
+      "cumulative_intensity_baseline_1991_degC_days": 95.71826171875
+    },
+    {
+      "location": "North Atlantic",
+      "requested_latitude": 45,
+      "requested_longitude": -30,
+      "h3": "851a4d07fffffff",
+      "center": [
+        45.07235783413415,
+        -29.859964884103775
+      ],
+      "year": 2025,
+      "common_eligible_days": 311,
+      "event_days_baseline_1982": 35,
+      "mean_p90_baseline_1982": 17.166868209838867,
+      "cumulative_intensity_baseline_1982_degC_days": 62.245551109313965,
+      "event_days_baseline_1991": 34,
+      "mean_p90_baseline_1991": 17.18940544128418,
+      "cumulative_intensity_baseline_1991_degC_days": 55.73390483856201
+    },
+    {
+      "location": "South Pacific",
+      "requested_latitude": -35,
+      "requested_longitude": -150,
+      "h3": "85b51673fffffff",
+      "center": [
+        -35.07393150149138,
+        -150.18064749161263
+      ],
+      "year": 2025,
+      "common_eligible_days": 311,
+      "event_days_baseline_1982": 159,
+      "mean_p90_baseline_1982": 18.470691680908203,
+      "cumulative_intensity_baseline_1982_degC_days": 264.47234535217285,
+      "event_days_baseline_1991": 132,
+      "mean_p90_baseline_1991": 18.59600830078125,
+      "cumulative_intensity_baseline_1991_degC_days": 206.78508949279785
+    },
+    {
+      "location": "Indian Ocean",
+      "requested_latitude": -20,
+      "requested_longitude": 80,
+      "h3": "85aa63b3fffffff",
+      "center": [
+        -20.158967711203267,
+        80.07467034260374
+      ],
+      "year": 2025,
+      "common_eligible_days": 311,
+      "event_days_baseline_1982": 83,
+      "mean_p90_baseline_1982": 25.444534301757812,
+      "cumulative_intensity_baseline_1982_degC_days": 98.84722518920898,
+      "event_days_baseline_1991": 67,
+      "mean_p90_baseline_1991": 25.653581619262695,
+      "cumulative_intensity_baseline_1991_degC_days": 73.39170265197754
+    },
+    {
+      "location": "Equatorial Pacific",
+      "requested_latitude": 0,
+      "requested_longitude": -140,
+      "h3": "85798a33fffffff",
+      "center": [
+        -0.11038894337862437,
+        -140.08969874815597
+      ],
+      "year": 2025,
+      "common_eligible_days": 311,
+      "event_days_baseline_1982": 0,
+      "mean_p90_baseline_1982": 27.545652389526367,
+      "cumulative_intensity_baseline_1982_degC_days": 0.0,
+      "event_days_baseline_1991": 0,
+      "mean_p90_baseline_1991": 27.524110794067383,
+      "cumulative_intensity_baseline_1991_degC_days": 0.0
+    },
+    {
+      "location": "Mediterranean",
+      "requested_latitude": 35,
+      "requested_longitude": 18,
+      "h3": "853f004ffffffff",
+      "center": [
+        34.92131475213294,
+        18.03056243213444
+      ],
+      "year": 2025,
+      "common_eligible_days": 311,
+      "event_days_baseline_1982": 212,
+      "mean_p90_baseline_1982": 21.634794235229492,
+      "cumulative_intensity_baseline_1982_degC_days": 369.5187120437622,
+      "event_days_baseline_1991": 182,
+      "mean_p90_baseline_1991": 21.846811294555664,
+      "cumulative_intensity_baseline_1991_degC_days": 298.8808708190918
+    },
+    {
+      "location": "Australia west",
+      "requested_latitude": -25,
+      "requested_longitude": 110,
+      "h3": "85a62d9bfffffff",
+      "center": [
+        -24.89250070741346,
+        109.9184802095875
+      ],
+      "year": 2025,
+      "common_eligible_days": 311,
+      "event_days_baseline_1982": 181,
+      "mean_p90_baseline_1982": 23.93694305419922,
+      "cumulative_intensity_baseline_1982_degC_days": 311.9435863494873,
+      "event_days_baseline_1991": 178,
+      "mean_p90_baseline_1991": 23.986915588378906,
+      "cumulative_intensity_baseline_1991_degC_days": 296.955078125
+    },
+    {
+      "location": "South Atlantic",
+      "requested_latitude": -30,
+      "requested_longitude": -20,
+      "h3": "85c184c7fffffff",
+      "center": [
+        -30.17495207510949,
+        -20.12269075275504
+      ],
+      "year": 2025,
+      "common_eligible_days": 311,
+      "event_days_baseline_1982": 108,
+      "mean_p90_baseline_1982": 22.121320724487305,
+      "cumulative_intensity_baseline_1982_degC_days": 168.6911792755127,
+      "event_days_baseline_1991": 89,
+      "mean_p90_baseline_1991": 22.282201766967773,
+      "cumulative_intensity_baseline_1991_degC_days": 126.59887886047363
+    },
+    {
+      "location": "Japan east",
+      "requested_latitude": 35,
+      "requested_longitude": 145,
+      "h3": "852f0b33fffffff",
+      "center": [
+        34.92244845365495,
+        145.17900992385307
+      ],
+      "year": 2026,
+      "common_eligible_days": 311,
+      "event_days_baseline_1982": 17,
+      "mean_p90_baseline_1982": 22.607709884643555,
+      "cumulative_intensity_baseline_1982_degC_days": 28.58510971069336,
+      "event_days_baseline_1991": 18,
+      "mean_p90_baseline_1991": 22.804893493652344,
+      "cumulative_intensity_baseline_1991_degC_days": 31.403785705566406
+    },
+    {
+      "location": "North Atlantic",
+      "requested_latitude": 45,
+      "requested_longitude": -30,
+      "h3": "851a4d07fffffff",
+      "center": [
+        45.07235783413415,
+        -29.859964884103775
+      ],
+      "year": 2026,
+      "common_eligible_days": 310,
+      "event_days_baseline_1982": 19,
+      "mean_p90_baseline_1982": 17.166868209838867,
+      "cumulative_intensity_baseline_1982_degC_days": 28.45397186279297,
+      "event_days_baseline_1991": 11,
+      "mean_p90_baseline_1991": 17.18940544128418,
+      "cumulative_intensity_baseline_1991_degC_days": 18.780073165893555
+    },
+    {
+      "location": "South Pacific",
+      "requested_latitude": -35,
+      "requested_longitude": -150,
+      "h3": "85b51673fffffff",
+      "center": [
+        -35.07393150149138,
+        -150.18064749161263
+      ],
+      "year": 2026,
+      "common_eligible_days": 311,
+      "event_days_baseline_1982": 19,
+      "mean_p90_baseline_1982": 18.470691680908203,
+      "cumulative_intensity_baseline_1982_degC_days": 49.88674736022949,
+      "event_days_baseline_1991": 19,
+      "mean_p90_baseline_1991": 18.59600830078125,
+      "cumulative_intensity_baseline_1991_degC_days": 46.84598922729492
+    },
+    {
+      "location": "Indian Ocean",
+      "requested_latitude": -20,
+      "requested_longitude": 80,
+      "h3": "85aa63b3fffffff",
+      "center": [
+        -20.158967711203267,
+        80.07467034260374
+      ],
+      "year": 2026,
+      "common_eligible_days": 311,
+      "event_days_baseline_1982": 107,
+      "mean_p90_baseline_1982": 25.444534301757812,
+      "cumulative_intensity_baseline_1982_degC_days": 128.71677780151367,
+      "event_days_baseline_1991": 71,
+      "mean_p90_baseline_1991": 25.653581619262695,
+      "cumulative_intensity_baseline_1991_degC_days": 86.96674728393555
+    },
+    {
+      "location": "Equatorial Pacific",
+      "requested_latitude": 0,
+      "requested_longitude": -140,
+      "h3": "85798a33fffffff",
+      "center": [
+        -0.11038894337862437,
+        -140.08969874815597
+      ],
+      "year": 2026,
+      "common_eligible_days": 311,
+      "event_days_baseline_1982": 164,
+      "mean_p90_baseline_1982": 27.545652389526367,
+      "cumulative_intensity_baseline_1982_degC_days": 590.7157402038574,
+      "event_days_baseline_1991": 176,
+      "mean_p90_baseline_1991": 27.524110794067383,
+      "cumulative_intensity_baseline_1991_degC_days": 584.1289749145508
+    },
+    {
+      "location": "Mediterranean",
+      "requested_latitude": 35,
+      "requested_longitude": 18,
+      "h3": "853f004ffffffff",
+      "center": [
+        34.92131475213294,
+        18.03056243213444
+      ],
+      "year": 2026,
+      "common_eligible_days": 311,
+      "event_days_baseline_1982": 192,
+      "mean_p90_baseline_1982": 21.634794235229492,
+      "cumulative_intensity_baseline_1982_degC_days": 361.73414516448975,
+      "event_days_baseline_1991": 190,
+      "mean_p90_baseline_1991": 21.846811294555664,
+      "cumulative_intensity_baseline_1991_degC_days": 322.6931266784668
+    },
+    {
+      "location": "Australia west",
+      "requested_latitude": -25,
+      "requested_longitude": 110,
+      "h3": "85a62d9bfffffff",
+      "center": [
+        -24.89250070741346,
+        109.9184802095875
+      ],
+      "year": 2026,
+      "common_eligible_days": 311,
+      "event_days_baseline_1982": 86,
+      "mean_p90_baseline_1982": 23.93694305419922,
+      "cumulative_intensity_baseline_1982_degC_days": 103.82022285461426,
+      "event_days_baseline_1991": 83,
+      "mean_p90_baseline_1991": 23.986915588378906,
+      "cumulative_intensity_baseline_1991_degC_days": 97.15497970581055
+    },
+    {
+      "location": "South Atlantic",
+      "requested_latitude": -30,
+      "requested_longitude": -20,
+      "h3": "85c184c7fffffff",
+      "center": [
+        -30.17495207510949,
+        -20.12269075275504
+      ],
+      "year": 2026,
+      "common_eligible_days": 311,
+      "event_days_baseline_1982": 240,
+      "mean_p90_baseline_1982": 22.121320724487305,
+      "cumulative_intensity_baseline_1982_degC_days": 376.76888275146484,
+      "event_days_baseline_1991": 199,
+      "mean_p90_baseline_1991": 22.282201766967773,
+      "cumulative_intensity_baseline_1991_degC_days": 293.41201400756836
+    }
+  ]
+}

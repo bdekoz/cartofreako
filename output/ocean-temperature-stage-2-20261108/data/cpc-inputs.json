@@ -1,0 +1,486 @@
+{
+  "inputs": [
+    {
+      "year": 1991,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.1991.nc",
+      "sha256": "54b792205da92d48409f4fdf8c2f680eeaad423194f612118e66b1bddc4a89e0",
+      "dates": [
+        "1991-01-01",
+        "1991-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1991.nc"
+    },
+    {
+      "year": 1992,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.1992.nc",
+      "sha256": "4d4bb59878a1c5fb2a5f9136d03731475352837b86d5f26bfbae935837130660",
+      "dates": [
+        "1992-01-01",
+        "1992-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1992.nc"
+    },
+    {
+      "year": 1993,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.1993.nc",
+      "sha256": "d882c5ae51903baefc08185e9773e7364d6b4e6d17410fabade85360a3483b70",
+      "dates": [
+        "1993-01-01",
+        "1993-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1993.nc"
+    },
+    {
+      "year": 1994,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.1994.nc",
+      "sha256": "3d6fa1b65bb2aee7841573b4fa3f79c32c03cefd836defed5b268f2a41ae4f36",
+      "dates": [
+        "1994-01-01",
+        "1994-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1994.nc"
+    },
+    {
+      "year": 1995,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.1995.nc",
+      "sha256": "ae9d1175d46df050390e9e946388d6de0101186a6712aa8eb1b2b0364fad292f",
+      "dates": [
+        "1995-01-01",
+        "1995-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1995.nc"
+    },
+    {
+      "year": 1996,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.1996.nc",
+      "sha256": "76c5c40298ab5cb0bef554f11098b0d283d566e74c8ec5b07c28226b611b3ba3",
+      "dates": [
+        "1996-01-01",
+        "1996-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1996.nc"
+    },
+    {
+      "year": 1997,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.1997.nc",
+      "sha256": "f0a5c6b973f1cc25752dda31b97f1d8711b65d7c2d76500a105fde9e423bd192",
+      "dates": [
+        "1997-01-01",
+        "1997-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1997.nc"
+    },
+    {
+      "year": 1998,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.1998.nc",
+      "sha256": "8b245602d56ab14d94debebf21054d4039389b0d98d3b52e01cf2a30f5dfd813",
+      "dates": [
+        "1998-01-01",
+        "1998-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1998.nc"
+    },
+    {
+      "year": 1999,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.1999.nc",
+      "sha256": "e90d89cb016edf442bda2fdc3fe2a59e996399d3d6c4b673d77cd79c8a5558ec",
+      "dates": [
+        "1999-01-01",
+        "1999-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1999.nc"
+    },
+    {
+      "year": 2000,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2000.nc",
+      "sha256": "62286617e30be7774baa7aa4483a5221ca4be24e0b0581efb28877959bc567d8",
+      "dates": [
+        "2000-01-01",
+        "2000-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2000.nc"
+    },
+    {
+      "year": 2001,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2001.nc",
+      "sha256": "4b855ea314159099063038c16d5145d468fe9aa65805213f888169cca439c857",
+      "dates": [
+        "2001-01-01",
+        "2001-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2001.nc"
+    },
+    {
+      "year": 2002,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2002.nc",
+      "sha256": "c01fde676320d880bd04a85c34e511c7f7d14e7b927ca86137e7826731512259",
+      "dates": [
+        "2002-01-01",
+        "2002-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2002.nc"
+    },
+    {
+      "year": 2003,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2003.nc",
+      "sha256": "da3ead0772ba5724c3e5facd61da3c2694876f24a2dff99f712503703ba1cb08",
+      "dates": [
+        "2003-01-01",
+        "2003-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2003.nc"
+    },
+    {
+      "year": 2004,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2004.nc",
+      "sha256": "a915f407339f36dec79d63669f26ff0899d3d833d91b7ad6ba934405f274a3d5",
+      "dates": [
+        "2004-01-01",
+        "2004-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2004.nc"
+    },
+    {
+      "year": 2005,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2005.nc",
+      "sha256": "0a5b8f9c6ede967cbd3ee7a0f78b79cfd065be46e8a340b0eed10b01b836dc25",
+      "dates": [
+        "2005-01-01",
+        "2005-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2005.nc"
+    },
+    {
+      "year": 2006,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2006.nc",
+      "sha256": "32d9d2467a1e7aa97783af1e18b2a0f8b39f60bb1140c183d16ef3c45b0568ce",
+      "dates": [
+        "2006-01-01",
+        "2006-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2006.nc"
+    },
+    {
+      "year": 2007,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2007.nc",
+      "sha256": "4e02ad6e726b0df714a51744c3aedb3d365a25052cc17972262c71125c24411f",
+      "dates": [
+        "2007-01-01",
+        "2007-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2007.nc"
+    },
+    {
+      "year": 2008,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2008.nc",
+      "sha256": "95083458927b4fd214a9cd9de42a6a25c0ada90a00c286ea59e4fc7542f66a36",
+      "dates": [
+        "2008-01-01",
+        "2008-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2008.nc"
+    },
+    {
+      "year": 2009,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2009.nc",
+      "sha256": "f3286346abf8c7146b90e35da230c7eadbee09862d8163a222be4da864a7b75e",
+      "dates": [
+        "2009-01-01",
+        "2009-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2009.nc"
+    },
+    {
+      "year": 2010,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2010.nc",
+      "sha256": "4f90ec694bae988eb94487fa599602c7b5658becc07805108d2f72adc134b9e3",
+      "dates": [
+        "2010-01-01",
+        "2010-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2010.nc"
+    },
+    {
+      "year": 2011,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2011.nc",
+      "sha256": "452c7cd6ec1e7f06cb415c723fc547714c3627bf06ef89b3725e80c9a3153669",
+      "dates": [
+        "2011-01-01",
+        "2011-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2011.nc"
+    },
+    {
+      "year": 2012,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2012.nc",
+      "sha256": "09da0477459e763d2cf68c67145d8f2dda5a073289e042b8c29db8f2273f5ea5",
+      "dates": [
+        "2012-01-01",
+        "2012-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2012.nc"
+    },
+    {
+      "year": 2013,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2013.nc",
+      "sha256": "498ca5040e4e4502b31ef2fc7330ec7b668be9ea9653b03fc8778b00d2b61324",
+      "dates": [
+        "2013-01-01",
+        "2013-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2013.nc"
+    },
+    {
+      "year": 2014,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2014.nc",
+      "sha256": "59382bdbc576de613e47d17b6a5a5029323d362b2769babef2e526b992a6ef61",
+      "dates": [
+        "2014-01-01",
+        "2014-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2014.nc"
+    },
+    {
+      "year": 2015,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2015.nc",
+      "sha256": "c6d0e9b32ba9a08b6946b6b73fb33f1ffad38e49a78e77554483cde7b2121911",
+      "dates": [
+        "2015-01-01",
+        "2015-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2015.nc"
+    },
+    {
+      "year": 2016,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2016.nc",
+      "sha256": "5a840fe7f3cda062958e9730508d88a78ca39b9d23f24cf2dc94223ceb45bb2d",
+      "dates": [
+        "2016-01-01",
+        "2016-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2016.nc"
+    },
+    {
+      "year": 2017,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2017.nc",
+      "sha256": "274b25916cf6575c1082a4af962de546c96923f6cce7e0f0fce90fe88fef779b",
+      "dates": [
+        "2017-01-01",
+        "2017-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2017.nc"
+    },
+    {
+      "year": 2018,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2018.nc",
+      "sha256": "77eae81f65d4d114c3346fa1b6391cac5453283221bb83dda83c7fe5ab6ad007",
+      "dates": [
+        "2018-01-01",
+        "2018-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2018.nc"
+    },
+    {
+      "year": 2019,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2019.nc",
+      "sha256": "a7887b1bfd6dff310efbd7ca8cca5136e8afd17e6d7f8d0301f44ba04b49ed69",
+      "dates": [
+        "2019-01-01",
+        "2019-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2019.nc"
+    },
+    {
+      "year": 2020,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2020.nc",
+      "sha256": "e090a7b8fe43c5f85be3a68bf451968a19292619ddbbc1a841796bceb1efb7b0",
+      "dates": [
+        "2020-01-01",
+        "2020-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2020.nc"
+    },
+    {
+      "year": 2025,
+      "path": "assets.static/anthropocene/.raw/cpc/tmax.2025.nc",
+      "sha256": "c5c1cb2014fd89a0ed2963c085ff9bcafb559762779f556368f763f43e99c7ba",
+      "dates": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2025.nc"
+    },
+    {
+      "year": 2026,
+      "path": "output/ocean-temperature-stage-2-20261108/cache/cpc/tmax.2026.nc",
+      "sha256": "8581ce50473536c08f921089a8039a2c2b1bf16e721531a2c0da2c5c8eafe350",
+      "dates": [
+        "2026-01-01",
+        "2026-11-07"
+      ],
+      "max_period": "6z to 6z",
+      "valid_range": [
+        -90.0,
+        50.0
+      ],
+      "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2026.nc"
+    }
+  ],
+  "calendar": "provider date labels; max_period 6z to 6z; not an identical OISST or India local observation window",
+  "range_policy": "declared -90..50\u00b0C valid_range is honored even where actual_range metadata exceeds 50\u00b0C; those values remain excluded"
+}

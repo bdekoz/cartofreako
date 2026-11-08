@@ -26,6 +26,17 @@ The former unqualified `anthropocene` pass was removed. Compatibility Make
 aliases build the year-bearing particulate pair; they do not recreate an
 ambiguous unqualified artifact.
 
+The **8 November 2026 local review editions** add optional water-temperature
+and water-temperature-anomaly products, with a separately sourced coral
+thermal-stress overlay, followed by eight derived climate identities for
+marine heatwaves, thermal seasons, coastal joint heat and the India heat–PM2.5
+pilot. See the completed [Stage 0/1](../../../development/20261108_anthropocene_ocean_temperature_stage_1.md)
+and [Stage 2](../../../development/20261108_anthropocene_ocean_temperature_stage_2.md)
+records. These use the current separate map/legend presentation and explicit
+review targets; they do not join the six-projection standard generation
+aliases. The current catalog has 53 names, 39 defaults and 14 prototypes;
+the historical coral-reef threat plate is now grouped under Anthropocene.
+
 Two additional families are implemented as **exploration only** and remain
 outside default generation and release: the synthetic, default-visible
 PurpleAir interface review and the bounded water-debris depth-station
@@ -426,7 +437,9 @@ default-visible PurpleAir interface experiment without claiming sensor data;
 a real supplemental snapshot still requires a bounded scope or
 provider-arranged bulk extract. Its bounded water-debris experiment likewise
 renders only five reviewed 2018 depth stations and remains exploration-only.
-OISST/Coral Reef Watch ocean themes remain planned.
+OISST/Coral Reef Watch local review products and the four derived Stage 2
+families were subsequently completed on 8 November 2026; default promotion
+remains a separate decision recorded in the linked completion studies.
 
 
 ### Temperature display revision — 29 October 2026

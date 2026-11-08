@@ -1,0 +1,58 @@
+[
+  {
+    "year": 2025,
+    "minimum_amplitude_degC": 1,
+    "status_counts": {
+      "complete": 354168,
+      "weak seasonal amplitude": 13560,
+      "incomplete climatology": 95063,
+      "multiple baseline seasons": 9784,
+      "onset not observed": 35,
+      "missing transition support": 4829,
+      "open season": 7186,
+      "multiple observed seasons": 112085
+    }
+  },
+  {
+    "year": 2025,
+    "minimum_amplitude_degC": 3,
+    "status_counts": {
+      "complete": 281419,
+      "weak seasonal amplitude": 170079,
+      "incomplete climatology": 95063,
+      "multiple baseline seasons": 4444,
+      "onset not observed": 9,
+      "missing transition support": 1475,
+      "open season": 465,
+      "multiple observed seasons": 43756
+    }
+  },
+  {
+    "year": 2026,
+    "minimum_amplitude_degC": 1,
+    "status_counts": {
+      "complete": 206973,
+      "weak seasonal amplitude": 13560,
+      "incomplete climatology": 95063,
+      "multiple baseline seasons": 9784,
+      "onset not observed": 523,
+      "missing transition support": 5142,
+      "open season": 175014,
+      "multiple observed seasons": 90651
+    }
+  },
+  {
+    "year": 2026,
+    "minimum_amplitude_degC": 3,
+    "status_counts": {
+      "complete": 164866,
+      "weak seasonal amplitude": 170079,
+      "incomplete climatology": 95063,
+      "multiple baseline seasons": 4444,
+      "onset not observed": 163,
+      "missing transition support": 1983,
+      "open season": 123003,
+      "multiple observed seasons": 37109
+    }
+  }
+]

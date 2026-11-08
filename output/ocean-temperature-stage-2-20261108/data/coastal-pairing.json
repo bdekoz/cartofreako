@@ -1,0 +1,26 @@
+{
+  "source_geometries": {
+    "assets.static/natural-earth/10m-physical-vectors/ne_10m_land.shp": "4cad3a49bc75c1a4c2f3d7efae04f2f8e63151c96764b2658effabf524331fa6",
+    "assets.static/natural-earth/10m-physical-vectors/ne_10m_land.shx": "f3b02a190c3020eeafd0f48de982619826b57ecd853cbc68e4fc049652891a04",
+    "assets.static/natural-earth/10m-physical-vectors/ne_10m_land.dbf": "e422520372e65c6fb8220888580e5331d04699bcd71c27e53ad42e241a531cbd",
+    "assets.static/natural-earth/10m-physical-vectors/ne_10m_land.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+    "assets.static/natural-earth/10m-physical-vectors/ne_10m_ocean.shp": "bb5ae1e0922b02e61e14f6d562fc2299db4bef5ca36c1008b1a8e7ddf9da6410",
+    "assets.static/natural-earth/10m-physical-vectors/ne_10m_ocean.shx": "90ada34d9c3ff5f1f53064e01968b178b72d6eb8d3f1cbc1287b501e2805880b",
+    "assets.static/natural-earth/10m-physical-vectors/ne_10m_ocean.dbf": "4b2f302a84bcbb0fe5d744a9b40df173f562e07eb57532935fb6bc664d21fa33",
+    "assets.static/natural-earth/10m-physical-vectors/ne_10m_ocean.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+    "assets.static/natural-earth/10m-physical-vectors/ne_10m_coastline.shp": "459a4a97c09db19aadf5244026612de9d43748be27f83a360242b99f7fabb3c1",
+    "assets.static/natural-earth/10m-physical-vectors/ne_10m_coastline.shx": "f873afee7f56779ce52253f740ec251c2f12244aea911dc40f0a85d75de8d5f2",
+    "assets.static/natural-earth/10m-physical-vectors/ne_10m_coastline.dbf": "9ccc214342fe400bf8c7d91d7a5b276b0457b0ada03e8d4be16ac5ba13037f3b",
+    "assets.static/natural-earth/10m-physical-vectors/ne_10m_coastline.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+  },
+  "pair_count": 8993,
+  "geometry": "native CPC center in Natural Earth land; nearest shoreline sample at <=0.05\u00b0 spacing; ocean H3 center in Natural Earth ocean; line from shore to ocean center must not intersect land",
+  "distance": "spherical great-circle; nominal 100 km gates; shoreline reference uncertainty <= about 3 km from sampling; dateline-spanning planar segments conservatively excluded",
+  "support": "fixed Stage 1 H3 native-center membership; pair mean weighted by sum cos(native latitude); pair geometry uses H3 centers and does not resolve subcell coastlines",
+  "rejections": {
+    "no_visible_ocean": 5567,
+    "dateline_candidates": 433,
+    "land_barrier_candidates": 187032
+  },
+  "pairing_sha256": "76cbe8c475033e65a5e329fe892570f790fd2fe2b29ce50b243a59ea6f8d0510"
+}

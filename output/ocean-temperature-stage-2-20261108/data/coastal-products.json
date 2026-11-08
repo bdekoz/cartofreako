@@ -1,0 +1,44 @@
+[
+  {
+    "schema": "cartofreako-ocean-stage-2-product-v1",
+    "snapshot_as_of": "2026-11-08",
+    "method_config_sha256": "faffa37b579c6fe63071d81e64c1d0d5ccbe3de7205e6ffdcd174bfc20380d72",
+    "data_file": "coastal-compound-heat-2025-annual.npz",
+    "sha256": "856bb2cc12b46512e3cb2f03ec06cf2732ae0c961a9a295f7a6c93bb505796aa",
+    "family": "coastal-compound-heat",
+    "year": 2025,
+    "period": "annual",
+    "data_through": "2025-12-31",
+    "expected_days": 365,
+    "baseline": "1991\u20132020 local P90; native land TMAX and fixed adjacent-ocean mean",
+    "calendar": "date-aligned co-occurrence; CPC specifies 06Z\u201306Z"
+  },
+  {
+    "schema": "cartofreako-ocean-stage-2-product-v1",
+    "snapshot_as_of": "2026-11-08",
+    "method_config_sha256": "faffa37b579c6fe63071d81e64c1d0d5ccbe3de7205e6ffdcd174bfc20380d72",
+    "data_file": "coastal-compound-heat-2025-matched.npz",
+    "sha256": "0c4fa88b4536d936096718fb6da0c174340ecdfc48ba8653cad6d2363d1c1871",
+    "family": "coastal-compound-heat",
+    "year": 2025,
+    "period": "matched",
+    "data_through": "2025-11-07",
+    "expected_days": 311,
+    "baseline": "1991\u20132020 local P90; native land TMAX and fixed adjacent-ocean mean",
+    "calendar": "date-aligned co-occurrence; CPC specifies 06Z\u201306Z"
+  },
+  {
+    "schema": "cartofreako-ocean-stage-2-product-v1",
+    "snapshot_as_of": "2026-11-08",
+    "method_config_sha256": "faffa37b579c6fe63071d81e64c1d0d5ccbe3de7205e6ffdcd174bfc20380d72",
+    "data_file": "coastal-compound-heat-2026-annual.npz",
+    "sha256": "91075444909f0be17f091f1759a9e0a4452b37aab39285ca75ce9ad810370f37",
+    "family": "coastal-compound-heat",
+    "year": 2026,
+    "period": "annual",
+    "data_through": "2026-11-07",
+    "expected_days": 311,
+    "baseline": "1991\u20132020 local P90; native land TMAX and fixed adjacent-ocean mean",
+    "calendar": "date-aligned co-occurrence; CPC specifies 06Z\u201306Z"
+  }
+]

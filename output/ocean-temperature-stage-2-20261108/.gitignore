@@ -1,0 +1,13 @@
+/cache/
+/work/
+/**/work/
+/tiles/
+/logs/
+/maps/
+/legends/
+/**/maps/
+/**/legends/
+/research/marineHeatWaves.py
+/research/mhw-reference-commit.json
+/*.log
+__pycache__/

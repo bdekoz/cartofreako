@@ -43,7 +43,7 @@
     "passes": {
       "type": "array",
       "minItems": 4,
-      "maxItems": 6,
+      "maxItems": 14,
       "items": {
         "$ref": "#/$defs/pass"
       }
@@ -74,14 +74,23 @@
             "anthropocene-land-temperature-2025",
             "anthropocene-land-temperature-2026",
             "bathymetry-roulette",
-            "bathymetry-hamonshu"
+            "bathymetry-hamonshu",
+            "anthropocene-marine-heatwave-2025",
+            "anthropocene-marine-heatwave-2026",
+            "anthropocene-ocean-thermal-season-2025",
+            "anthropocene-ocean-thermal-season-2026",
+            "anthropocene-coastal-compound-heat-2025",
+            "anthropocene-coastal-compound-heat-2026",
+            "anthropocene-heat-particulate-coexposure-2025",
+            "anthropocene-heat-particulate-coexposure-2026"
           ]
         },
         "family": {
           "enum": [
             "particulate-observation-atlas",
             "temperature-field",
-            "bathymetry-art"
+            "bathymetry-art",
+            "derived-climate-review"
           ]
         },
         "current": {

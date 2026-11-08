@@ -1,12 +1,16 @@
-# Anthropocene water temperature — Stage 2 plan
+# Anthropocene water temperature — Stage 2 plan and completion record
 
 Plan date: **Sunday, 8 November 2026**.
 
-**Status: all four plate families are approved for unattended implementation.**
-This separate document records the implementation plan, dependencies,
-acceptance criteria and remaining human decisions. It is not a claim that
-Stage 2 data products or maps have already been generated. The completed
-repository reorganization and ocean review remain in the
+**Status: all four approved families are implemented and validated.**
+The local edition contains **eight optional year identities, 32 measure/period
+views and 128 separate map/legend sheets**, with four scientific figures.
+Open the [review index](../../output/ocean-temperature-stage-2-20261108/index.html),
+[validation receipt](../../output/ocean-temperature-stage-2-20261108/validation.json),
+or [package guide](../../output/ocean-temperature-stage-2-20261108/GIT-CONTENTS.md).
+The approved method contract is retained below, followed by actual findings,
+completion evidence and remaining human decisions. The completed
+repository reorganization and first ocean review remain in the
 [Stage 0/1 record](20261108_anthropocene_ocean_temperature_stage_1.md).
 
 Build a local prototype edition for 2025 and 2026 that adds marine heatwaves,
@@ -25,13 +29,13 @@ can be resolved unattended; human-gated decisions are collected at the end.
 | 3 | `anthropocene-coastal-compound-heat-YYYY` | Days with unusual land heat and adjacent-ocean warmth | Shared eligible days; co-occurrence fraction; separate land-only and ocean-only counts |
 | 4 | `anthropocene-heat-particulate-coexposure-YYYY` | Date-aligned unusual heat and elevated PM2.5 at the selected India monitors | Eligible station-days; co-occurrence fraction; separate heat-only and PM-only counts |
 
-The four families imply eight prospective year identities. Measures and
+The four families now have eight registered year identities. Measures and
 matched-window variants belong under those identities rather than becoming
-additional default passes. Register only implemented, validated prototypes
-in the [atlas catalog](../../config/atlas-plates.json), with `default: false`.
-The starting inventory is **45 named plates: 39 defaults and six prototypes**.
-Eight validated additions would make 53 named plates and 14 prototypes,
-while the default atlas would still contain 39 passes and 156 sheets.
+additional default passes. All eight are validated prototypes in the
+[atlas catalog](../../config/atlas-plates.json), with `default: false`.
+The inventory increased from 45 named plates to **53: 39 defaults and
+14 prototypes**. The default atlas still contains **39 passes and 156 sheets**;
+all default SVG/PDF/PNG receipts passed again after catalog integration.
 
 Existing absolute SST, SST anomaly and record-day views remain separate.
 Coral Degree Heating Weeks stays an independently sourced overlay on the
@@ -40,13 +44,13 @@ thermal-season length replaces DHW or the historical 2011 reef-threat plate.
 
 ## Starting evidence and data dependencies
 
-| Input or reusable component | Already available | Stage 2 work still required |
+| Input or reusable component | Starting evidence | Stage 2 completion |
 | --- | --- | --- |
-| NOAA OISST v2.1 | 1982–2026 SST/ice files and mask; 91 pinned input receipts; daily H3r5 working arrays and native-center membership | Derive seasonal percentile thresholds and event/season fields; freeze parameters and new receipts |
-| Stage 1 ocean products | 2025 full year, 2025 matched window and 2026 YTD; monthly arrays; paired regional summaries; 36 map/legend sheets | Reuse dates, support and export machinery; do not derive daily events from period means |
-| CPC land temperature | Existing native yearly TMAX/TMIN cache and land preparation pipeline | Audit actual dates, grid, source-day semantics and baseline completeness; acquire a separately dated refresh if needed |
-| India particulate | Expanded 24-reference-monitor selection and separate AirGradient series; daily eligibility and matched station-date tables | Audit monitor crosswalks and dates; join qualified PM2.5 observations to the chosen land-temperature support |
-| Rendering and catalog | H3r5 renderer, common AuthaGraph frames, separate legend builder and current catalog checks | Add prototype products, coverage views, source keys and export validation |
+| NOAA OISST v2.1 | 1982–2026 SST/ice files and mask; 91 pinned input receipts; daily H3r5 working arrays and native-center membership | Computed seasonal thresholds, event ledgers and season diagnostics over 596,710 source-supported H3 cells |
+| Stage 1 ocean products | 2025 full year, 2025 matched window and 2026 YTD; monthly arrays; paired regional summaries; 36 map/legend sheets | Reused fixed daily support, dates and export machinery; events were calculated from daily arrays |
+| CPC land temperature | Existing native yearly TMAX/TMIN cache and land preparation pipeline | Audited 32 TMAX inputs; separately acquired 2026 through November 7; retained the older land-plate cache |
+| India particulate | Expanded 24-reference-monitor selection and separate AirGradient series; daily eligibility and matched station-date tables | Audited 25 canonical monitors and 13,487 station-day rows; joined containing CPC cells and retained separate monitor classes |
+| Rendering and catalog | H3r5 renderer, common AuthaGraph frames, separate legend builder and current catalog checks | Exported 128 sheets, added eight optional identities and preserved the 39 default selections |
 
 The [OISST acquisition ledger](../../output/ocean-temperature-20261108/data/acquisition-manifest.json),
 [ocean package guide](../../output/ocean-temperature-20261108/GIT-CONTENTS.md),
@@ -59,9 +63,10 @@ describe the selected observation network; they do not establish national
 representativeness.
 
 The edition date is November 8. The pinned ocean observations end on
-**November 7**. Eligible reference PM2.5 currently ends on **November 4**;
-the partial November 5 records do not pass the daily gate. Read CPC's actual
-cutoff from its files. Every joined product ends at its own shared valid
+**November 7**. Eligible reference PM2.5 ends on **November 4**;
+the partial November 5 records do not pass the daily gate. The separate
+AirGradient series ends on **October 2**. Refreshed CPC TMAX contains 311 dates
+through **November 7**. Every joined product ends at its own shared valid
 support, which may be earlier than any provider's nominal endpoint.
 
 Keep source caches immutable. A needed CPC refresh goes into a new Stage 2
@@ -122,7 +127,7 @@ of persistent warmth above a local seasonal percentile. The
 provides a comparison for the core detector. Pin its exact revision when
 building fixtures. The following reference parameters are adopted explicitly:
 
-| Parameter | Planned setting |
+| Parameter | Implemented setting |
 | --- | --- |
 | Seasonal threshold | 90th percentile from an 11-day calendar window, followed by a 31-day circular moving average |
 | Event qualification | At least five consecutive days strictly above the threshold; ties do not exceed |
@@ -312,10 +317,12 @@ coverage diagnostics as standalone scientific figures with their source
 tables. A review index links every map to its exact companion legend and
 includes method and validation receipts.
 
-Planned repository additions below are names for future work, not existing
-commands or completed artifacts:
+The following repository additions are implemented. Shared calculations live
+in `scripts/ocean_stage_2.py` and the compiled
+`scripts/ocean-stage-2-kernels.cc`; source acquisition, sensitivity figures and
+independent validation remain separate entry points.
 
-| Planned path | Responsibility |
+| Implemented path | Responsibility |
 | --- | --- |
 | `config/ocean-stage-2-20261108.json` | Edition, source references, scientific parameters, windows, thresholds and scales |
 | `scripts/prepare-ocean-climate-baseline.py` | Shared, versioned seasonal means/percentiles and support diagnostics |
@@ -323,7 +330,9 @@ commands or completed artifacts:
 | `scripts/prepare-ocean-thermal-seasons.py` | Local seasonal cycles, crossings, eligibility, censoring and sensitivities |
 | `scripts/prepare-coastal-compound-heat.py` | Audited coastal pairs, land/ocean daily joins and joint counts |
 | `scripts/prepare-heat-particulate-coexposure.py` | Station crosswalks, calendar joins, separate monitor classes and matched cohorts |
-| `scripts/build-ocean-stage-2-plates.py` | Prototype maps, separate legends, figures and local review index |
+| `scripts/build-ocean-stage-2-plates.py` | Prototype maps, separate legends and local review index |
+| `scripts/analyze-ocean-stage-2.py` | Baseline/amplitude sensitivity, matched comparisons, coverage and method-example figures |
+| `scripts/fetch-ocean-stage-2.py` | Hash-checked restoration of the separate CPC refresh and pinned event-detector reference |
 | `scripts/validate-ocean-stage-2.py` | Independent numerical checks, support/ledger reconciliation and export receipts |
 | `output/ocean-temperature-stage-2-20261108/` | Curated normalized outputs, source/method receipts, proofs and validation; ignored bulk caches and print intermediates |
 
@@ -335,16 +344,16 @@ new scientific rules; documentation edits alone do not need new tests.
 
 ## Execution sequence and completion checks
 
-| Step | Work | Completion evidence |
+| Step | Completed work | Completion evidence |
 | --- | --- | --- |
-| 2.1 | Audit pinned inputs, current coverage and source calendars; freeze the method configuration | Input ledger, grid/date checks, source cutoffs and documented method choices |
-| 2.2 | Compute shared baseline diagnostics; implement marine heatwaves first | Reference agreement, event fixtures, sensitivity results and reconciled ledgers |
-| 2.3 | Implement thermal-season definitions and coverage masks | Circular-calendar fixtures, complete/incomplete season diagnostics and sensitivity results |
-| 2.4 | Implement coastal geometry and land/ocean daily joining | Inspected pairing examples, geometry rejection audit and four-state reconciliation |
-| 2.5 | Implement the India station/heat join | Audited crosswalk, timezone statement, matched station-date cohorts and independent hourly spot checks |
-| 2.6 | Render all supported year/measure variants and source sheets | SVG/PDF/PNG receipt for each declared sheet; complete companion links; World/Japan and India visual review |
-| 2.7 | Register validated optional prototypes and document findings | Catalog/status/style checks, unchanged default selection, completed result ledger and human decisions at the end |
-| 2.8 | Commit and push the reviewed implementation and curated evidence | Recorded commit IDs and verified remote branch; bulk caches excluded |
+| 2.1 | Audited pinned inputs and froze the method configuration | 79 source-file hashes verified; CPC refresh through November 7; separate India cutoffs and calendars |
+| 2.2 | Computed shared baselines and marine heatwaves | 20 independent calendar baselines, 60 cell-period checks, pinned-reference fixture and all 5,081,997 event rows reconciled |
+| 2.3 | Implemented thermal seasons and coverage masks | 40 independent cell-year checks; complete/open/missing/multiple-cycle fixtures; full-field amplitude and persistence sensitivity |
+| 2.4 | Constructed coastal pairs and daily joins | 8,993 pairs; all 110,119 saved sightlines checked; 16 raw pair-years and eight land/ocean percentile checks |
+| 2.5 | Joined India monitors to CPC heat context | 25 canonical monitors, 13,487 station-day rows, 848 monthly coverage rows and 14 independent hourly PM/CPC spot checks |
+| 2.6 | Rendered and inspected supported variants | 128 SVG/PDF/PNG sheets, 32 views, four figures and 455 index links checked; World/Japan/India visual review |
+| 2.7 | Registered eight optional prototypes and recorded findings | 53 named/39 default/14 prototype catalog passed; status/style/artifact checks passed; default 156 sheets verified |
+| 2.8 | Delivered the implementation and curated evidence through the authorized commit/push | Bulk caches and print intermediates excluded; the implementation commit containing this record identifies the delivery, with remote verification reported on completion |
 
 Run a small representative numerical pilot before a full-grid calculation.
 Resolve routine parameter or implementation defects using the documented
@@ -359,6 +368,223 @@ checks, map/legend exports and source/method/validation receipts. Include a
 completion ledger with actual outputs and deviations from this plan. Do not
 mark acquisition, processing, rendering or validation complete solely because
 their commands or intended paths have been documented.
+
+## Completed results and interpretation
+
+### Matched daily comparisons
+
+These are descriptive comparisons of the retained snapshot. They use the
+same eligible support in each year; their populations, spatial weights and
+observation windows differ, so they must not be pooled into an exposure score.
+The annual 2025 maps remain separate from the matched 2025 comparisons.
+Comparison totals include shared eligible days at supports below the map's
+80% period-coverage gate; the display gate controls which marks receive a
+value color, not which independently valid days exist in the ledgers.
+
+| Measure | Matched support | 2025 | 2026 |
+| --- | --- | ---: | ---: |
+| Marine heatwave event-span fraction | January 1–November 7; 162,464,171 shared eligible H3 cell-days; approximate area weights from fixed native centers | 22.17% | 30.73% |
+| Date-aligned coastal joint exceedance | January 1–November 7; 1,743,216 shared eligible pair-days | 142,768 days / 8.19% | 175,110 days / 10.05% |
+| Date-aligned heat–PM2.5 co-occurrence, reference monitors | January 1–November 4; 3,734 shared eligible station-days in the selected India network | 233 days / 6.24% | 318 days / 8.52% |
+
+The [monthly comparison figure](../../output/ocean-temperature-stage-2-20261108/figures/matched-cooccurrence.png)
+shows within-year changes and explicitly marks partial November. Its source
+tables retain each month's numerators and denominators:
+[marine](../../output/ocean-temperature-stage-2-20261108/data/marine-matched-comparison.json),
+[coastal](../../output/ocean-temperature-stage-2-20261108/data/coastal-comparisons.json),
+and [India](../../output/ocean-temperature-stage-2-20261108/data/india-comparisons.json).
+These are neither national population estimates nor event-attribution results.
+
+### Marine events, uncertainty at boundaries and baseline sensitivity
+
+The shared climatology uses linear quantile interpolation, 11 nonleap calendar
+days pooled across 30 baseline years, February 29 interpolation before the
+31-slot circular smoothing, and at least 24 years and 264 of 330 pooled
+samples in every contributing window. All 31 constituent windows must be
+supported. The baseline covers 596,710 source-supported H3 cells; 501,647 have
+a complete supported annual seasonal curve. Counts retain the minimum
+support across the smoothing window.
+
+Daily detection includes 2024 context before the displayed 2025/2026 years.
+The 2025 matched view is independently cut off on November 7 before event
+qualification. Confirmed spans include observed cooler interruptions of at
+most two days; missing or ice-excluded days are barriers. Full event dates
+and interval-clipped contributions are both saved. The three ledgers total
+5,081,997 event rows; overlapping annual/matched products are not independent
+event inventories.
+
+**Fine pale outlines identify an unobserved event boundary or a pending short
+run.** This is a completeness cue. A run of fewer than five hot days touching
+an unknown edge remains pending, and its days are excluded from the
+event-eligible denominator while remaining in observed-day coverage. Open
+event durations and intensities are observed contributions, not estimates of
+their eventual totals. The outline width was reduced after proof review so
+the value colors remain visible. Gray outlines retain source support that
+fails the displayed measure's eligibility gate.
+
+The pinned reference is
+[`marineHeatWaves.py` at d7292bf08ade0af213fa760b0d7e4adfe5f52894](https://github.com/ecjoliver/marineHeatWaves/blob/d7292bf08ade0af213fa760b0d7e4adfe5f52894/marineHeatWaves.py).
+The complete-data fixture agrees with its detector. Two compatibility
+substitutions for current NumPy run only in memory; the downloaded source and
+hash remain unchanged. Strict missing-data barriers and support gates are
+declared local adaptations.
+
+The [baseline sensitivity table](../../output/ocean-temperature-stage-2-20261108/data/baseline-sensitivity.json)
+compares 1991–2020 with 1982–2011 at eight illustrative source-supported
+locations, using shared eligible dates. Across the 16 location-year rows,
+switching to 1991–2020 changes event days by **−41 to +12** and signed
+cumulative intensity by **−83.36 to +2.82°C-days**. Annual mean seasonal P90
+changes range from **−0.022 to +0.212°C**. This sample is a method sensitivity,
+not a global estimate or a reason to switch baselines selectively.
+
+### Thermal-season coverage and sensitivity
+
+The 2°C amplitude gate and seven-day persistence rule are experimental
+screening choices. Warm-peak year labels use adjacent-year observations:
+even the 2025 season products may use 2026 context, always with the shared
+source cutoff of November 7, 2026. Completed length requires both supported
+transitions. Observed warm days count valid above-midpoint days within the
+available local cool-to-cool window; they are not a final season length.
+
+| Diagnostic status | 2025 cells | 2026 cells |
+| --- | ---: | ---: |
+| Complete season | 339,726 | 201,074 |
+| Weak seasonal amplitude | 67,980 | 67,980 |
+| Incomplete climatology | 95,063 | 95,063 |
+| Multiple baseline seasons | 6,491 | 6,491 |
+| Onset not observed | 12 | 168 |
+| Missing transition support | 4,829 | 5,134 |
+| Open season | 1,973 | 152,088 |
+| Multiple observed seasons | 80,636 | 68,712 |
+
+The totals are 596,710 cells in each year, not ocean-area percentages. The
+large 2026 open-season count is a source-cutoff limitation; a decrease in
+completed seasons is not evidence of shorter seasons. See the
+[coverage figure](../../output/ocean-temperature-stage-2-20261108/figures/season-coverage.png).
+
+At seven-day persistence, amplitude gates of 1/2/3°C yield
+206,973/201,074/164,866 complete 2026 seasons. At the 2°C gate, persistence
+of 5/7/10 days yields 182,358/201,074/214,657 complete seasons; stronger
+persistence rejects more brief competing cycles. Full diagnostic counts are
+retained in [amplitude sensitivity](../../output/ocean-temperature-stage-2-20261108/data/season-amplitude-sensitivity.json)
+and [season metadata](../../output/ocean-temperature-stage-2-20261108/data/season-products.json).
+
+The [event/season example](../../output/ocean-temperature-stage-2-20261108/figures/event-season-example.png)
+and its [daily table](../../output/ocean-temperature-stage-2-20261108/data/method-example.json)
+show why winter marine heatwaves and a warm-season onset are different
+measures. At the illustrated Japan-east cell, 2026 onset is 18 days later
+than its baseline, and the season is still open on November 7.
+
+### Coastal geometry and daily calendars
+
+The pairing table retains 8,993 CPC land centers and 110,119 ocean-member
+links, using the pinned Natural Earth 10 m land, ocean and shoreline vectors.
+The 100 km land-to-coast and ocean-neighborhood gates use great-circle
+distances. Shoreline sampling at no more than 0.05° gives nominal reference
+uncertainty of about 3 km. Ocean centers must lie in the marine polygon, and
+the shore-to-center segment must not cross land. The geometry audit rejected
+187,032 cross-land candidates and 433 dateline-spanning planar candidates;
+5,567 coastal land candidates had no visible eligible ocean support.
+
+This is conservative center-based adjacency, not a coastline-resolving
+footprint model. It can omit narrow or complex connections, and fixed H3
+membership does not resolve subcell coastlines. Shared ocean members also
+mean the pairs are not statistically independent. At 50 km, joint counts on
+shared support are 91,220 versus 95,638 at 100 km for the full 2025 year,
+and 98,494 versus 103,155 for 2026 YTD. These within-year distance tests use
+different temporal lengths; they are not another year comparison.
+
+CPC metadata specifies a **06Z-to-06Z maximum-temperature day**. Its declared
+valid range of −90 to 50°C is honored, including exclusion of values above
+that declared range. The OISST daily analysis and India local-day PM summaries
+do not establish identical observation windows. All joins are therefore
+labeled **date-aligned**, without an hourly simultaneity claim. Source and
+geometry receipts remain in [CPC inputs](../../output/ocean-temperature-stage-2-20261108/data/cpc-inputs.json)
+and [coastal pairing](../../output/ocean-temperature-stage-2-20261108/data/coastal-pairing.json).
+
+### India support, monitor classes and sensitivities
+
+The pilot preserves 24 reference monitors and one separate AirGradient
+monitor. The [crosswalk](../../output/ocean-temperature-stage-2-20261108/data/india-station-crosswalk.json)
+retains canonical/source IDs, native CPC assignments and coordinates. The
+containing-cell center and great-circle distance are saved for every monitor.
+The
+13,487 station-day rows contain no duplicate canonical monitor/date keys.
+Containing-cell TMAX is gridded context, not a monitor's measured air
+temperature. PM2.5 uses equal-weight distinct-hour means on Asia/Kolkata
+dates, with at least 18 valid hours; 35 µg/m³ is the atlas comparison
+threshold, not a health boundary.
+
+Reference-monitor map marks aggregate to 20 occupied H3 cells, counting each
+cell-date at most once. A joint mark requires heat and elevated PM at the
+**same monitor**; it cannot combine one monitor's heat with another's PM.
+Only 11 cells pass the 80% display gate in 2026, three in full-year 2025 and
+one in matched 2025. Map cell-day totals therefore differ from the
+station-day comparison above. The separate low-cost series has only 22
+matched station-days, insufficient for a broad year-to-year inference.
+
+The [station coverage figure](../../output/ocean-temperature-stage-2-20261108/figures/india-station-coverage.png)
+and [station summaries](../../output/ocean-temperature-stage-2-20261108/data/india-station-summary.json)
+show this uneven support. [Monthly station coverage](../../output/ocean-temperature-stage-2-20261108/data/india-station-monthly-coverage.json)
+retains each monitor, month and annual/matched window, including absent days
+in the denominator. Sensitivity records cover PM thresholds of
+25/35/50 µg/m³ and heat-date shifts of −1/0/+1 day, each on common eligible
+support. Independent hourly checks read adjacent archive filenames and
+select observation timestamps, because a local midnight can occur in the
+previous filename's archive. The pilot remains a selected observation
+network, without national interpolation or population extrapolation.
+
+## Delivery, reproducibility and final checks
+
+The 32 views comprise nine marine event views, eight thermal-season views,
+six coastal views, six reference-monitor views and three low-cost views.
+Each has two geographic scopes and a separate map and legend, giving 128
+sheets. Ocean/coastal scopes are World/Japan; the India pilot uses World/India.
+Proof review covered value colors, thin incomplete-event outlines, legend
+legibility, the retained Setouchi locator, India support marks and all four
+scientific figures. Print SVG/PDF masters are local, regenerable artifacts;
+preview PNGs, normalized products, ledgers, figures and receipts are curated
+for Git. See the [package guide](../../output/ocean-temperature-stage-2-20261108/GIT-CONTENTS.md).
+
+The 12 numerical fixtures passed, including threshold ties, event length/gap
+boundaries, missing support, leap calendars, reference agreement, seasonal
+cycles, four-state joins and spatial/date assignment. Independent production
+checks and all export checks passed as recorded in
+[validation.json](../../output/ocean-temperature-stage-2-20261108/validation.json).
+Catalog, pass status, generation style and the 223-entry standard-artifact
+manifest passed. The rebuilt default atlas separately passed all 156 sheet
+checks. Source caches, heavy daily arrays and unrelated user archives are
+excluded from this delivery.
+
+Reproduction requires the pinned Stage 1 daily ocean working arrays, the
+1991–2020 and 2025 CPC cache, retained India hourly observations, existing
+Natural Earth geometry and the current source atlas. Restore those using the
+[Stage 1 commands](20261108_anthropocene_ocean_temperature_stage_1.md#reproduction-and-verification)
+and [India study](20261108_particulate_data_enrichement_explore_v2_india.md).
+Dependencies include g++/OpenMP, libnetcdf, H3, NumPy, SciPy, pandas,
+GeoPandas/Shapely, Matplotlib, Pillow, lxml, GDAL/Cairo and Inkscape.
+Run from the repository root:
+
+```sh
+mkdir -p build/tmp build/tmp/matplotlib
+export TMPDIR="$PWD/build/tmp"
+export MPLCONFIGDIR="$PWD/build/tmp/matplotlib"
+export OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1
+make fetch-ocean-stage-2
+make prepare-ocean-stage-2
+make render-ocean-stage-2
+make check-ocean-stage-2
+make check-atlas-catalog check-pass-status check-standard-artifact-manifest check-generation-style
+```
+
+The fetcher rejects changed pinned bytes; a later provider revision requires
+a separate edition. Threshold caches key source/method hashes; coastal and
+station caches also key geometry or station assignment. Export receipts key
+SVG and linked layer content. `--exports-only` rechecks sheets and figures
+against an existing successful data receipt; it is not a substitute for the
+full data check after changing inputs or methods. No recurring acquisition
+job was installed. Commit/push is part of the already authorized delivery;
+the prior approved-plan revision is `bcccdffb33fef4415c9498572dbebcd266b9880e`.
 
 ## Human-gated decisions after the local review
 

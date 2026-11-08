@@ -1,0 +1,14 @@
+{
+  "schema": "cartofreako-ocean-stage-2-product-v1",
+  "snapshot_as_of": "2026-11-08",
+  "method_config_sha256": "faffa37b579c6fe63071d81e64c1d0d5ccbe3de7205e6ffdcd174bfc20380d72",
+  "data_file": "coastal-compound-heat-2026-annual.npz",
+  "sha256": "91075444909f0be17f091f1759a9e0a4452b37aab39285ca75ce9ad810370f37",
+  "family": "coastal-compound-heat",
+  "year": 2026,
+  "period": "annual",
+  "data_through": "2026-11-07",
+  "expected_days": 311,
+  "baseline": "1991\u20132020 local P90; native land TMAX and fixed adjacent-ocean mean",
+  "calendar": "date-aligned co-occurrence; CPC specifies 06Z\u201306Z"
+}

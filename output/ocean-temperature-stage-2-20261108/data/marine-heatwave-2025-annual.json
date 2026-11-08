@@ -1,0 +1,17 @@
+{
+  "schema": "cartofreako-ocean-stage-2-product-v1",
+  "snapshot_as_of": "2026-11-08",
+  "method_config_sha256": "faffa37b579c6fe63071d81e64c1d0d5ccbe3de7205e6ffdcd174bfc20380d72",
+  "data_file": "marine-heatwave-2025-annual.npz",
+  "sha256": "ade3b363e99d4148fcebe3bbb1b36a910063c9edcd766a1eb5a7fab70172c989",
+  "family": "marine-heatwave",
+  "year": 2025,
+  "period": "annual",
+  "data_through": "2025-12-31",
+  "expected_days": 365,
+  "baseline": "1991\u20132020",
+  "event_count": 1780430,
+  "event_ledger": "marine-events-2025-annual.csv.gz",
+  "event_ledger_sha256": "1811078a1ffcbb247b87e51696444bd6b1dce414198e555b1b39cceb812694b1",
+  "censoring": "observed spans clipped to reporting interval; edge durations are lower bounds; pending short runs excluded from event-eligible denominator, retained in observed/pending counts"
+}

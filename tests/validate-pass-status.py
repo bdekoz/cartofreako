@@ -37,10 +37,14 @@ def main() -> None:
         "bathymetry-roulette",
         "bathymetry-hamonshu",
     }
+    prototypes = {f'anthropocene-{family}-{year}' for family in
+                  ('marine-heatwave','ocean-thermal-season','coastal-compound-heat','heat-particulate-coexposure')
+                  for year in (2025,2026)}
+    expected |= prototypes
     passes = status["passes"]
     assert {value["id"] for value in passes} == expected
     for value in passes:
-        if value["id"].startswith("bathymetry-"):
+        if value["id"].startswith("bathymetry-") or value['id'] in prototypes:
             assert value["lifecycle"] == "optional" and value["maturity"] == "prototype"
             assert value["defaultGenerated"] is False and value["releaseEligible"] is False
             assert value["artifactManifest"]["artifactCount"] == 0
@@ -57,7 +61,7 @@ def main() -> None:
         assert value["defaultGenerated"] is True
         assert value["maturity"] == "accepted-experimental"
 
-    print("Pass status passed: 4 accepted-experimental temperature/particulate passes remain standard; both Bathymetry passes are optional prototypes.")
+    print("Pass status passed: 4 standard temperature/particulate passes; 2 Bathymetry and 8 Stage 2 climate identities remain optional prototypes.")
 
 
 if __name__ == "__main__":

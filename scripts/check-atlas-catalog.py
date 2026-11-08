@@ -18,6 +18,10 @@ def main():
     for year in (2025,2026):
         for metric in ('land-temperature','water-temperature','water-temperature-anomaly'):
             assert f'anthropocene-{metric}-{year}' in ids
+        for family in ('marine-heatwave','ocean-thermal-season','coastal-compound-heat','heat-particulate-coexposure'):
+            p=bank[f'anthropocene-{family}-{year}']
+            assert p['group']=='anthropocene' and p['lifecycle']=='optional' and p['maturity']=='prototype' and not p['default']
+    assert len(plates)==53 and sum(p['default'] for p in plates)==39
     assert bank['resources-fauna-coral-reef-threat-2011']['group']=='anthropocene'
     solar=bank['cloud-atmosphere']['selected_presentation']
     assert solar['h3_resolution']==5 and solar['map_background']=='#fcc553'

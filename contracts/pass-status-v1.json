@@ -124,6 +124,166 @@
         "Generalized depth-class art, not survey bathymetry.",
         "Explicit generation targets remain available; historical editions retain their original files."
       ]
+    },
+    {
+      "id": "anthropocene-marine-heatwave-2025",
+      "family": "derived-climate-review",
+      "current": true,
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "defaultGenerated": false,
+      "releaseEligible": false,
+      "acceptedOn": "2026-11-08",
+      "artifactManifest": {
+        "path": "contracts/standard-artifact-manifest-v1.json",
+        "artifactCount": 0
+      },
+      "statusReason": "Approved Stage 2 local research implementation; optional map/legend review edition with source, method and validation receipts. Default promotion and public gallery publication remain separate decisions.",
+      "claimBoundary": [
+        "Derived indices retain source support, daily eligibility, fixed baselines and incomplete-event/season flags.",
+        "2026 is partial-year; India uses selected monitor/date cohorts and separate reference/low-cost classes.",
+        "Co-occurrence does not establish causation, health burden or coral damage."
+      ]
+    },
+    {
+      "id": "anthropocene-marine-heatwave-2026",
+      "family": "derived-climate-review",
+      "current": true,
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "defaultGenerated": false,
+      "releaseEligible": false,
+      "acceptedOn": "2026-11-08",
+      "artifactManifest": {
+        "path": "contracts/standard-artifact-manifest-v1.json",
+        "artifactCount": 0
+      },
+      "statusReason": "Approved Stage 2 local research implementation; optional map/legend review edition with source, method and validation receipts. Default promotion and public gallery publication remain separate decisions.",
+      "claimBoundary": [
+        "Derived indices retain source support, daily eligibility, fixed baselines and incomplete-event/season flags.",
+        "2026 is partial-year; India uses selected monitor/date cohorts and separate reference/low-cost classes.",
+        "Co-occurrence does not establish causation, health burden or coral damage."
+      ]
+    },
+    {
+      "id": "anthropocene-ocean-thermal-season-2025",
+      "family": "derived-climate-review",
+      "current": true,
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "defaultGenerated": false,
+      "releaseEligible": false,
+      "acceptedOn": "2026-11-08",
+      "artifactManifest": {
+        "path": "contracts/standard-artifact-manifest-v1.json",
+        "artifactCount": 0
+      },
+      "statusReason": "Approved Stage 2 local research implementation; optional map/legend review edition with source, method and validation receipts. Default promotion and public gallery publication remain separate decisions.",
+      "claimBoundary": [
+        "Derived indices retain source support, daily eligibility, fixed baselines and incomplete-event/season flags.",
+        "2026 is partial-year; India uses selected monitor/date cohorts and separate reference/low-cost classes.",
+        "Co-occurrence does not establish causation, health burden or coral damage."
+      ]
+    },
+    {
+      "id": "anthropocene-ocean-thermal-season-2026",
+      "family": "derived-climate-review",
+      "current": true,
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "defaultGenerated": false,
+      "releaseEligible": false,
+      "acceptedOn": "2026-11-08",
+      "artifactManifest": {
+        "path": "contracts/standard-artifact-manifest-v1.json",
+        "artifactCount": 0
+      },
+      "statusReason": "Approved Stage 2 local research implementation; optional map/legend review edition with source, method and validation receipts. Default promotion and public gallery publication remain separate decisions.",
+      "claimBoundary": [
+        "Derived indices retain source support, daily eligibility, fixed baselines and incomplete-event/season flags.",
+        "2026 is partial-year; India uses selected monitor/date cohorts and separate reference/low-cost classes.",
+        "Co-occurrence does not establish causation, health burden or coral damage."
+      ]
+    },
+    {
+      "id": "anthropocene-coastal-compound-heat-2025",
+      "family": "derived-climate-review",
+      "current": true,
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "defaultGenerated": false,
+      "releaseEligible": false,
+      "acceptedOn": "2026-11-08",
+      "artifactManifest": {
+        "path": "contracts/standard-artifact-manifest-v1.json",
+        "artifactCount": 0
+      },
+      "statusReason": "Approved Stage 2 local research implementation; optional map/legend review edition with source, method and validation receipts. Default promotion and public gallery publication remain separate decisions.",
+      "claimBoundary": [
+        "Derived indices retain source support, daily eligibility, fixed baselines and incomplete-event/season flags.",
+        "2026 is partial-year; India uses selected monitor/date cohorts and separate reference/low-cost classes.",
+        "Co-occurrence does not establish causation, health burden or coral damage."
+      ]
+    },
+    {
+      "id": "anthropocene-coastal-compound-heat-2026",
+      "family": "derived-climate-review",
+      "current": true,
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "defaultGenerated": false,
+      "releaseEligible": false,
+      "acceptedOn": "2026-11-08",
+      "artifactManifest": {
+        "path": "contracts/standard-artifact-manifest-v1.json",
+        "artifactCount": 0
+      },
+      "statusReason": "Approved Stage 2 local research implementation; optional map/legend review edition with source, method and validation receipts. Default promotion and public gallery publication remain separate decisions.",
+      "claimBoundary": [
+        "Derived indices retain source support, daily eligibility, fixed baselines and incomplete-event/season flags.",
+        "2026 is partial-year; India uses selected monitor/date cohorts and separate reference/low-cost classes.",
+        "Co-occurrence does not establish causation, health burden or coral damage."
+      ]
+    },
+    {
+      "id": "anthropocene-heat-particulate-coexposure-2025",
+      "family": "derived-climate-review",
+      "current": true,
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "defaultGenerated": false,
+      "releaseEligible": false,
+      "acceptedOn": "2026-11-08",
+      "artifactManifest": {
+        "path": "contracts/standard-artifact-manifest-v1.json",
+        "artifactCount": 0
+      },
+      "statusReason": "Approved Stage 2 local research implementation; optional map/legend review edition with source, method and validation receipts. Default promotion and public gallery publication remain separate decisions.",
+      "claimBoundary": [
+        "Derived indices retain source support, daily eligibility, fixed baselines and incomplete-event/season flags.",
+        "2026 is partial-year; India uses selected monitor/date cohorts and separate reference/low-cost classes.",
+        "Co-occurrence does not establish causation, health burden or coral damage."
+      ]
+    },
+    {
+      "id": "anthropocene-heat-particulate-coexposure-2026",
+      "family": "derived-climate-review",
+      "current": true,
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "defaultGenerated": false,
+      "releaseEligible": false,
+      "acceptedOn": "2026-11-08",
+      "artifactManifest": {
+        "path": "contracts/standard-artifact-manifest-v1.json",
+        "artifactCount": 0
+      },
+      "statusReason": "Approved Stage 2 local research implementation; optional map/legend review edition with source, method and validation receipts. Default promotion and public gallery publication remain separate decisions.",
+      "claimBoundary": [
+        "Derived indices retain source support, daily eligibility, fixed baselines and incomplete-event/season flags.",
+        "2026 is partial-year; India uses selected monitor/date cohorts and separate reference/low-cost classes.",
+        "Co-occurrence does not establish causation, health burden or coral damage."
+      ]
     }
   ]
 }

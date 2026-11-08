@@ -1,0 +1,484 @@
+{
+  "matched_months": [
+    {
+      "monitor_class": "reference",
+      "month": 1,
+      "paired_station_days": 27,
+      "both_2025": 1,
+      "both_2026": 2
+    },
+    {
+      "monitor_class": "reference",
+      "month": 2,
+      "paired_station_days": 175,
+      "both_2025": 18,
+      "both_2026": 34
+    },
+    {
+      "monitor_class": "reference",
+      "month": 3,
+      "paired_station_days": 578,
+      "both_2025": 59,
+      "both_2026": 105
+    },
+    {
+      "monitor_class": "reference",
+      "month": 4,
+      "paired_station_days": 404,
+      "both_2025": 71,
+      "both_2026": 51
+    },
+    {
+      "monitor_class": "reference",
+      "month": 5,
+      "paired_station_days": 392,
+      "both_2025": 5,
+      "both_2026": 34
+    },
+    {
+      "monitor_class": "reference",
+      "month": 6,
+      "paired_station_days": 365,
+      "both_2025": 36,
+      "both_2026": 24
+    },
+    {
+      "monitor_class": "reference",
+      "month": 7,
+      "paired_station_days": 465,
+      "both_2025": 3,
+      "both_2026": 21
+    },
+    {
+      "monitor_class": "reference",
+      "month": 8,
+      "paired_station_days": 416,
+      "both_2025": 5,
+      "both_2026": 4
+    },
+    {
+      "monitor_class": "reference",
+      "month": 9,
+      "paired_station_days": 438,
+      "both_2025": 12,
+      "both_2026": 6
+    },
+    {
+      "monitor_class": "reference",
+      "month": 10,
+      "paired_station_days": 434,
+      "both_2025": 23,
+      "both_2026": 36
+    },
+    {
+      "monitor_class": "reference",
+      "month": 11,
+      "paired_station_days": 40,
+      "both_2025": 0,
+      "both_2026": 1
+    },
+    {
+      "monitor_class": "low-cost",
+      "month": 1,
+      "paired_station_days": 0,
+      "both_2025": 0,
+      "both_2026": 0
+    },
+    {
+      "monitor_class": "low-cost",
+      "month": 2,
+      "paired_station_days": 0,
+      "both_2025": 0,
+      "both_2026": 0
+    },
+    {
+      "monitor_class": "low-cost",
+      "month": 3,
+      "paired_station_days": 0,
+      "both_2025": 0,
+      "both_2026": 0
+    },
+    {
+      "monitor_class": "low-cost",
+      "month": 4,
+      "paired_station_days": 0,
+      "both_2025": 0,
+      "both_2026": 0
+    },
+    {
+      "monitor_class": "low-cost",
+      "month": 5,
+      "paired_station_days": 0,
+      "both_2025": 0,
+      "both_2026": 0
+    },
+    {
+      "monitor_class": "low-cost",
+      "month": 6,
+      "paired_station_days": 0,
+      "both_2025": 0,
+      "both_2026": 0
+    },
+    {
+      "monitor_class": "low-cost",
+      "month": 7,
+      "paired_station_days": 0,
+      "both_2025": 0,
+      "both_2026": 0
+    },
+    {
+      "monitor_class": "low-cost",
+      "month": 8,
+      "paired_station_days": 0,
+      "both_2025": 0,
+      "both_2026": 0
+    },
+    {
+      "monitor_class": "low-cost",
+      "month": 9,
+      "paired_station_days": 20,
+      "both_2025": 15,
+      "both_2026": 7
+    },
+    {
+      "monitor_class": "low-cost",
+      "month": 10,
+      "paired_station_days": 2,
+      "both_2025": 1,
+      "both_2026": 2
+    },
+    {
+      "monitor_class": "low-cost",
+      "month": 11,
+      "paired_station_days": 0,
+      "both_2025": 0,
+      "both_2026": 0
+    }
+  ],
+  "threshold_and_date_sensitivity": [
+    {
+      "year": 2025,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 25,
+      "heat_date_shift_days": -1,
+      "common_eligible_station_days": 5802,
+      "both_variant": 426,
+      "both_primary_on_common_support": 331
+    },
+    {
+      "year": 2025,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 25,
+      "heat_date_shift_days": -1,
+      "common_eligible_station_days": 100,
+      "both_variant": 38,
+      "both_primary_on_common_support": 40
+    },
+    {
+      "year": 2025,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 25,
+      "heat_date_shift_days": 0,
+      "common_eligible_station_days": 5804,
+      "both_variant": 435,
+      "both_primary_on_common_support": 332
+    },
+    {
+      "year": 2025,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 25,
+      "heat_date_shift_days": 0,
+      "common_eligible_station_days": 100,
+      "both_variant": 40,
+      "both_primary_on_common_support": 40
+    },
+    {
+      "year": 2025,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 25,
+      "heat_date_shift_days": 1,
+      "common_eligible_station_days": 5783,
+      "both_variant": 424,
+      "both_primary_on_common_support": 332
+    },
+    {
+      "year": 2025,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 25,
+      "heat_date_shift_days": 1,
+      "common_eligible_station_days": 99,
+      "both_variant": 39,
+      "both_primary_on_common_support": 40
+    },
+    {
+      "year": 2025,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 35,
+      "heat_date_shift_days": -1,
+      "common_eligible_station_days": 5802,
+      "both_variant": 313,
+      "both_primary_on_common_support": 331
+    },
+    {
+      "year": 2025,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 35,
+      "heat_date_shift_days": -1,
+      "common_eligible_station_days": 100,
+      "both_variant": 38,
+      "both_primary_on_common_support": 40
+    },
+    {
+      "year": 2025,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 35,
+      "heat_date_shift_days": 0,
+      "common_eligible_station_days": 5804,
+      "both_variant": 332,
+      "both_primary_on_common_support": 332
+    },
+    {
+      "year": 2025,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 35,
+      "heat_date_shift_days": 0,
+      "common_eligible_station_days": 100,
+      "both_variant": 40,
+      "both_primary_on_common_support": 40
+    },
+    {
+      "year": 2025,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 35,
+      "heat_date_shift_days": 1,
+      "common_eligible_station_days": 5783,
+      "both_variant": 329,
+      "both_primary_on_common_support": 332
+    },
+    {
+      "year": 2025,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 35,
+      "heat_date_shift_days": 1,
+      "common_eligible_station_days": 99,
+      "both_variant": 39,
+      "both_primary_on_common_support": 40
+    },
+    {
+      "year": 2025,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 50,
+      "heat_date_shift_days": -1,
+      "common_eligible_station_days": 5802,
+      "both_variant": 223,
+      "both_primary_on_common_support": 331
+    },
+    {
+      "year": 2025,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 50,
+      "heat_date_shift_days": -1,
+      "common_eligible_station_days": 100,
+      "both_variant": 37,
+      "both_primary_on_common_support": 40
+    },
+    {
+      "year": 2025,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 50,
+      "heat_date_shift_days": 0,
+      "common_eligible_station_days": 5804,
+      "both_variant": 237,
+      "both_primary_on_common_support": 332
+    },
+    {
+      "year": 2025,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 50,
+      "heat_date_shift_days": 0,
+      "common_eligible_station_days": 100,
+      "both_variant": 40,
+      "both_primary_on_common_support": 40
+    },
+    {
+      "year": 2025,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 50,
+      "heat_date_shift_days": 1,
+      "common_eligible_station_days": 5783,
+      "both_variant": 239,
+      "both_primary_on_common_support": 332
+    },
+    {
+      "year": 2025,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 50,
+      "heat_date_shift_days": 1,
+      "common_eligible_station_days": 99,
+      "both_variant": 37,
+      "both_primary_on_common_support": 40
+    },
+    {
+      "year": 2026,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 25,
+      "heat_date_shift_days": -1,
+      "common_eligible_station_days": 5375,
+      "both_variant": 521,
+      "both_primary_on_common_support": 417
+    },
+    {
+      "year": 2026,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 25,
+      "heat_date_shift_days": -1,
+      "common_eligible_station_days": 244,
+      "both_variant": 69,
+      "both_primary_on_common_support": 67
+    },
+    {
+      "year": 2026,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 25,
+      "heat_date_shift_days": 0,
+      "common_eligible_station_days": 5396,
+      "both_variant": 533,
+      "both_primary_on_common_support": 418
+    },
+    {
+      "year": 2026,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 25,
+      "heat_date_shift_days": 0,
+      "common_eligible_station_days": 245,
+      "both_variant": 75,
+      "both_primary_on_common_support": 67
+    },
+    {
+      "year": 2026,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 25,
+      "heat_date_shift_days": 1,
+      "common_eligible_station_days": 5396,
+      "both_variant": 526,
+      "both_primary_on_common_support": 418
+    },
+    {
+      "year": 2026,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 25,
+      "heat_date_shift_days": 1,
+      "common_eligible_station_days": 245,
+      "both_variant": 78,
+      "both_primary_on_common_support": 67
+    },
+    {
+      "year": 2026,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 35,
+      "heat_date_shift_days": -1,
+      "common_eligible_station_days": 5375,
+      "both_variant": 395,
+      "both_primary_on_common_support": 417
+    },
+    {
+      "year": 2026,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 35,
+      "heat_date_shift_days": -1,
+      "common_eligible_station_days": 244,
+      "both_variant": 61,
+      "both_primary_on_common_support": 67
+    },
+    {
+      "year": 2026,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 35,
+      "heat_date_shift_days": 0,
+      "common_eligible_station_days": 5396,
+      "both_variant": 418,
+      "both_primary_on_common_support": 418
+    },
+    {
+      "year": 2026,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 35,
+      "heat_date_shift_days": 0,
+      "common_eligible_station_days": 245,
+      "both_variant": 67,
+      "both_primary_on_common_support": 67
+    },
+    {
+      "year": 2026,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 35,
+      "heat_date_shift_days": 1,
+      "common_eligible_station_days": 5396,
+      "both_variant": 415,
+      "both_primary_on_common_support": 418
+    },
+    {
+      "year": 2026,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 35,
+      "heat_date_shift_days": 1,
+      "common_eligible_station_days": 245,
+      "both_variant": 64,
+      "both_primary_on_common_support": 67
+    },
+    {
+      "year": 2026,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 50,
+      "heat_date_shift_days": -1,
+      "common_eligible_station_days": 5375,
+      "both_variant": 256,
+      "both_primary_on_common_support": 417
+    },
+    {
+      "year": 2026,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 50,
+      "heat_date_shift_days": -1,
+      "common_eligible_station_days": 244,
+      "both_variant": 37,
+      "both_primary_on_common_support": 67
+    },
+    {
+      "year": 2026,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 50,
+      "heat_date_shift_days": 0,
+      "common_eligible_station_days": 5396,
+      "both_variant": 271,
+      "both_primary_on_common_support": 418
+    },
+    {
+      "year": 2026,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 50,
+      "heat_date_shift_days": 0,
+      "common_eligible_station_days": 245,
+      "both_variant": 39,
+      "both_primary_on_common_support": 67
+    },
+    {
+      "year": 2026,
+      "monitor_class": "reference",
+      "pm_limit_ug_m3": 50,
+      "heat_date_shift_days": 1,
+      "common_eligible_station_days": 5396,
+      "both_variant": 270,
+      "both_primary_on_common_support": 418
+    },
+    {
+      "year": 2026,
+      "monitor_class": "low-cost",
+      "pm_limit_ug_m3": 50,
+      "heat_date_shift_days": 1,
+      "common_eligible_station_days": 245,
+      "both_variant": 40,
+      "both_primary_on_common_support": 67
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "calendar": "January 1\u2013November 7 in each year",
+  "months": [
+    {
+      "month": 1,
+      "paired_cell_days": 16235440,
+      "weighted_denominator": 13379904.28698387,
+      "event_fraction_2025": 0.2760777790014435,
+      "event_fraction_2026": 0.21604357952617786
+    },
+    {
+      "month": 2,
+      "paired_cell_days": 14900387,
+      "weighted_denominator": 12215823.856811032,
+      "event_fraction_2025": 0.27366107050496974,
+      "event_fraction_2026": 0.22804349541959645
+    },
+    {
+      "month": 3,
+      "paired_cell_days": 16564599,
+      "weighted_denominator": 13559363.930622838,
+      "event_fraction_2025": 0.23317691941570895,
+      "event_fraction_2026": 0.25022979677347074
+    },
+    {
+      "month": 4,
+      "paired_cell_days": 15804547,
+      "weighted_denominator": 13003954.4570359,
+      "event_fraction_2025": 0.19687186176441057,
+      "event_fraction_2026": 0.27528270862311144
+    },
+    {
+      "month": 5,
+      "paired_cell_days": 16193427,
+      "weighted_denominator": 13366362.776361354,
+      "event_fraction_2025": 0.1996466252803566,
+      "event_fraction_2026": 0.2625781396801977
+    },
+    {
+      "month": 6,
+      "paired_cell_days": 15540527,
+      "weighted_denominator": 12864703.642524704,
+      "event_fraction_2025": 0.17582237736308068,
+      "event_fraction_2026": 0.29493239145020483
+    },
+    {
+      "month": 7,
+      "paired_cell_days": 16065848,
+      "weighted_denominator": 13296862.004650407,
+      "event_fraction_2025": 0.21206165220395273,
+      "event_fraction_2026": 0.34046850491287745
+    },
+    {
+      "month": 8,
+      "paired_cell_days": 16112476,
+      "weighted_denominator": 13320378.878486253,
+      "event_fraction_2025": 0.23879111853912266,
+      "event_fraction_2026": 0.35878236333427366
+    },
+    {
+      "month": 9,
+      "paired_cell_days": 15596280,
+      "weighted_denominator": 12891618.34501335,
+      "event_fraction_2025": 0.2193033967294402,
+      "event_fraction_2026": 0.40387514728049523
+    },
+    {
+      "month": 10,
+      "paired_cell_days": 16007365,
+      "weighted_denominator": 13264347.033650018,
+      "event_fraction_2025": 0.20241890603402948,
+      "event_fraction_2026": 0.41531966057061265
+    },
+    {
+      "month": 11,
+      "paired_cell_days": 3443275,
+      "weighted_denominator": 2857510.716859244,
+      "event_fraction_2025": 0.1770877714004024,
+      "event_fraction_2026": 0.4234101883677752
+    }
+  ],
+  "weighting": "sum cos(latitude) of fixed source centers; shared eligible cell-days; approximate area weighting"
+}

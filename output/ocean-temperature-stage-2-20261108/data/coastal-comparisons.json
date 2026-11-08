@@ -1,0 +1,86 @@
+{
+  "matched_months": [
+    {
+      "month": 1,
+      "paired_pair_days": 155615,
+      "both_2025": 13693,
+      "both_2026": 7132
+    },
+    {
+      "month": 2,
+      "paired_pair_days": 139351,
+      "both_2025": 8380,
+      "both_2026": 9076
+    },
+    {
+      "month": 3,
+      "paired_pair_days": 154323,
+      "both_2025": 13789,
+      "both_2026": 9260
+    },
+    {
+      "month": 4,
+      "paired_pair_days": 151555,
+      "both_2025": 11459,
+      "both_2026": 10541
+    },
+    {
+      "month": 5,
+      "paired_pair_days": 161600,
+      "both_2025": 11083,
+      "both_2026": 12054
+    },
+    {
+      "month": 6,
+      "paired_pair_days": 165967,
+      "both_2025": 13102,
+      "both_2026": 14962
+    },
+    {
+      "month": 7,
+      "paired_pair_days": 187882,
+      "both_2025": 19554,
+      "both_2026": 23787
+    },
+    {
+      "month": 8,
+      "paired_pair_days": 203242,
+      "both_2025": 17982,
+      "both_2026": 28257
+    },
+    {
+      "month": 9,
+      "paired_pair_days": 197885,
+      "both_2025": 18472,
+      "both_2026": 28359
+    },
+    {
+      "month": 10,
+      "paired_pair_days": 186296,
+      "both_2025": 12630,
+      "both_2026": 25606
+    },
+    {
+      "month": 11,
+      "paired_pair_days": 39500,
+      "both_2025": 2624,
+      "both_2026": 6076
+    }
+  ],
+  "distance_sensitivity_common_support": [
+    {
+      "year": 2025,
+      "shared_pair_days": 1193430,
+      "both_100km": 95638,
+      "both_50km": 91220,
+      "disagreeing_states": 65299
+    },
+    {
+      "year": 2026,
+      "shared_pair_days": 1026432,
+      "both_100km": 103155,
+      "both_50km": 98494,
+      "disagreeing_states": 55035
+    }
+  ]
+}

@@ -1,0 +1,408 @@
+{
+  "source": "output/india-particulate-20261108/enrichment/observations/openaq-station-days.csv.gz",
+  "source_sha256": "96e65eeeed4efc17665ae99f7194af8d37bcd521ade638526393f90e1a8712ff",
+  "stations": [
+    {
+      "id": "cpcb_caaqm:site_1437",
+      "name": "Model Town, Patiala - PPCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "5544",
+      "latitude": 30.349388,
+      "longitude": 76.366642,
+      "monitor_class": "reference",
+      "native_index": 85832,
+      "h3": "853d1617fffffff",
+      "cpc_center": [
+        30.25,
+        76.25
+      ],
+      "cpc_center_distance_km": 15.733286605070305
+    },
+    {
+      "id": "cpcb_caaqm:site_162",
+      "name": "BTM Layout, Bengaluru - CPCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "5548",
+      "latitude": 12.913522,
+      "longitude": 77.59508,
+      "monitor_class": "reference",
+      "native_index": 111035,
+      "h3": "85618927fffffff",
+      "cpc_center": [
+        12.75,
+        77.75
+      ],
+      "cpc_center_distance_km": 24.753297953814933
+    },
+    {
+      "id": "cpcb_caaqm:site_252",
+      "name": "Plammoodu, Thiruvananthapuram - Kerala PCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "5646",
+      "latitude": 8.5149093,
+      "longitude": 76.943588,
+      "monitor_class": "reference",
+      "native_index": 116793,
+      "h3": "85602623fffffff",
+      "cpc_center": [
+        8.75,
+        76.75
+      ],
+      "cpc_center_distance_km": 33.708730410655896
+    },
+    {
+      "id": "cpcb_caaqm:site_253",
+      "name": "Punjab Agricultural University, Ludhiana - PPCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "5569",
+      "latitude": 30.9028,
+      "longitude": 75.8086,
+      "monitor_class": "reference",
+      "native_index": 85111,
+      "h3": "85424923fffffff",
+      "cpc_center": [
+        30.75,
+        75.75
+      ],
+      "cpc_center_distance_km": 17.888265333309057
+    },
+    {
+      "id": "cpcb_caaqm:site_256",
+      "name": "Golden Temple, Amritsar - PPCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "5551",
+      "latitude": 31.62,
+      "longitude": 74.876512,
+      "monitor_class": "reference",
+      "native_index": 83669,
+      "h3": "85424d27fffffff",
+      "cpc_center": [
+        31.75,
+        74.75
+      ],
+      "cpc_center_distance_km": 18.76847574103196
+    },
+    {
+      "id": "cpcb_caaqm:site_288",
+      "name": "Velachery Res. Area, Chennai - CPCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "5655",
+      "latitude": 13.005219,
+      "longitude": 80.239812,
+      "monitor_class": "reference",
+      "native_index": 110320,
+      "h3": "85618c4ffffffff",
+      "cpc_center": [
+        13.25,
+        80.25
+      ],
+      "cpc_center_distance_km": 27.240792839660607
+    },
+    {
+      "id": "cpcb_caaqm:site_297",
+      "name": "Talkatora District Industries Center, Lucknow - CPCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "2456",
+      "latitude": 26.833997,
+      "longitude": 80.891736,
+      "monitor_class": "reference",
+      "native_index": 90881,
+      "h3": "853d8dcbfffffff",
+      "cpc_center": [
+        26.75,
+        80.75
+      ],
+      "cpc_center_distance_km": 16.88661875146836
+    },
+    {
+      "id": "cpcb_caaqm:site_298",
+      "name": "Zoo Park, Hyderabad - TSPCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "407",
+      "latitude": 17.349694,
+      "longitude": 78.451437,
+      "monitor_class": "reference",
+      "native_index": 104556,
+      "h3": "8560a25bfffffff",
+      "cpc_center": [
+        17.25,
+        78.25
+      ],
+      "cpc_center_distance_km": 24.087923821778993
+    },
+    {
+      "id": "cpcb_caaqm:site_301",
+      "name": "Anand Vihar, New Delhi - DPCC",
+      "source": "openaq-cpcb",
+      "openaq_id": "235",
+      "latitude": 28.646835,
+      "longitude": 77.316032,
+      "monitor_class": "reference",
+      "native_index": 87994,
+      "h3": "853da1abfffffff",
+      "cpc_center": [
+        28.75,
+        77.25
+      ],
+      "cpc_center_distance_km": 13.15575038185111
+    },
+    {
+      "id": "cpcb_caaqm:site_308",
+      "name": "Maninagar, Ahmedabad - GPCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "5631",
+      "latitude": 23.002657,
+      "longitude": 72.591912,
+      "monitor_class": "reference",
+      "native_index": 95905,
+      "h3": "8542cea7fffffff",
+      "cpc_center": [
+        23.25,
+        72.75
+      ],
+      "cpc_center_distance_km": 31.90254085648419
+    },
+    {
+      "id": "cpcb_caaqm:site_5025",
+      "name": "NISE Gwal Pahari, Gurugram - IMD",
+      "source": "openaq-cpcb",
+      "openaq_id": "10921",
+      "latitude": 28.422681,
+      "longitude": 77.148944,
+      "monitor_class": "reference",
+      "native_index": 88714,
+      "h3": "853da103fffffff",
+      "cpc_center": [
+        28.25,
+        77.25
+      ],
+      "cpc_center_distance_km": 21.598855150656746
+    },
+    {
+      "id": "cpcb_caaqm:site_5081",
+      "name": "Sanjay Nagar, Ghaziabad - UPPCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "10919",
+      "latitude": 28.685382,
+      "longitude": 77.453839,
+      "monitor_class": "reference",
+      "native_index": 87994,
+      "h3": "853da1abfffffff",
+      "cpc_center": [
+        28.75,
+        77.25
+      ],
+      "cpc_center_distance_km": 21.13668567508484
+    },
+    {
+      "id": "cpcb_caaqm:site_5112",
+      "name": "Powai, Mumbai - MPCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "6956",
+      "latitude": 19.1375,
+      "longitude": 72.915056,
+      "monitor_class": "reference",
+      "native_index": 101665,
+      "h3": "85608b57fffffff",
+      "cpc_center": [
+        19.25,
+        72.75
+      ],
+      "cpc_center_distance_km": 21.37581741848583
+    },
+    {
+      "id": "cpcb_caaqm:site_5129",
+      "name": "Bidhannagar, Kolkata - WBPCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "10851",
+      "latitude": 22.58157,
+      "longitude": 88.410025,
+      "monitor_class": "reference",
+      "native_index": 96656,
+      "h3": "853cf2c7fffffff",
+      "cpc_center": [
+        22.75,
+        88.25
+      ],
+      "cpc_center_distance_km": 24.907174039373828
+    },
+    {
+      "id": "cpcb_caaqm:site_5262",
+      "name": "Rajbansi Nagar, Patna - BSPCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "10599",
+      "latitude": 25.599486,
+      "longitude": 85.113666,
+      "monitor_class": "reference",
+      "native_index": 92330,
+      "h3": "853c138ffffffff",
+      "cpc_center": [
+        25.75,
+        85.25
+      ],
+      "cpc_center_distance_km": 21.605161584402072
+    },
+    {
+      "id": "cpcb_caaqm:site_5341",
+      "name": "Sector 30, Faridabad - HSPCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "10820",
+      "latitude": 28.4417,
+      "longitude": 77.3217,
+      "monitor_class": "reference",
+      "native_index": 88714,
+      "h3": "853da10ffffffff",
+      "cpc_center": [
+        28.25,
+        77.25
+      ],
+      "cpc_center_distance_km": 22.441269795245457
+    },
+    {
+      "id": "cpcb_caaqm:site_5491",
+      "name": "Sector 22, Chandigarh - CPCC",
+      "source": "openaq-cpcb",
+      "openaq_id": "233415",
+      "latitude": 30.735567,
+      "longitude": 76.775714,
+      "monitor_class": "reference",
+      "native_index": 85113,
+      "h3": "853d146bfffffff",
+      "cpc_center": [
+        30.75,
+        76.75
+      ],
+      "cpc_center_distance_km": 2.9350880032899065
+    },
+    {
+      "id": "cpcb_caaqm:site_5725",
+      "name": "Mansarovar Sector-12, Jaipur - RSPCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "3409430",
+      "latitude": 26.843698,
+      "longitude": 75.766894,
+      "monitor_class": "reference",
+      "native_index": 90871,
+      "h3": "853da21bfffffff",
+      "cpc_center": [
+        26.75,
+        75.75
+      ],
+      "cpc_center_distance_km": 10.55282577427338
+    },
+    {
+      "id": "cpcb_caaqm:site_5854",
+      "name": "Residency Area, Indore - IMC",
+      "source": "openaq-cpcb",
+      "openaq_id": "3409498",
+      "latitude": 22.7084,
+      "longitude": 75.8815,
+      "monitor_class": "reference",
+      "native_index": 96631,
+      "h3": "853d9293fffffff",
+      "cpc_center": [
+        22.75,
+        75.75
+      ],
+      "cpc_center_distance_km": 14.257840624218174
+    },
+    {
+      "id": "openaq:10908",
+      "name": "Sector 11, Faridabad - HSPCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "10908",
+      "latitude": 28.376058,
+      "longitude": 77.315741,
+      "monitor_class": "reference",
+      "native_index": 88714,
+      "h3": "853da10ffffffff",
+      "cpc_center": [
+        28.25,
+        77.25
+      ],
+      "cpc_center_distance_km": 15.42380031274783
+    },
+    {
+      "id": "openaq:220265",
+      "name": "Rajbagh, Srinagar - JKSPCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "220265",
+      "latitude": 34.06621,
+      "longitude": 74.81982,
+      "monitor_class": "reference",
+      "native_index": 80069,
+      "h3": "853d34a7fffffff",
+      "cpc_center": [
+        34.25,
+        74.75
+      ],
+      "cpc_center_distance_km": 21.422522025252047
+    },
+    {
+      "id": "openaq:5665",
+      "name": "Vasundhara, Ghaziabad - UPPCB",
+      "source": "openaq-cpcb",
+      "openaq_id": "5665",
+      "latitude": 28.660335,
+      "longitude": 77.357256,
+      "monitor_class": "reference",
+      "native_index": 87994,
+      "h3": "853da1abfffffff",
+      "cpc_center": [
+        28.75,
+        77.25
+      ],
+      "cpc_center_distance_km": 14.451009425197237
+    },
+    {
+      "id": "openaq:5728639",
+      "name": "Bemina, Srinagar",
+      "source": "openaq-airgradient",
+      "openaq_id": "5728639",
+      "latitude": 34.070236,
+      "longitude": 74.775485,
+      "monitor_class": "low-cost",
+      "native_index": 80069,
+      "h3": "853d34a7fffffff",
+      "cpc_center": [
+        34.25,
+        74.75
+      ],
+      "cpc_center_distance_km": 20.12594195829078
+    },
+    {
+      "id": "us_embassy:DS1010001",
+      "name": "New Delhi",
+      "source": "openaq-airnow",
+      "openaq_id": "8118",
+      "latitude": 28.63576,
+      "longitude": 77.22445,
+      "monitor_class": "reference",
+      "native_index": 87994,
+      "h3": "853da117fffffff",
+      "cpc_center": [
+        28.75,
+        77.25
+      ],
+      "cpc_center_distance_km": 12.945085737197598
+    },
+    {
+      "id": "us_embassy:DS1010004",
+      "name": "Mumbai",
+      "source": "openaq-airnow",
+      "openaq_id": "8039",
+      "latitude": 19.07283,
+      "longitude": 72.88261,
+      "monitor_class": "reference",
+      "native_index": 101665,
+      "h3": "85608b57fffffff",
+      "cpc_center": [
+        19.25,
+        72.75
+      ],
+      "cpc_center_distance_km": 24.127034904077384
+    }
+  ],
+  "duplicates": 0,
+  "coordinates": "all retained daily coordinates checked for stability; no nearest-valid replacement for a missing containing CPC cell"
+}

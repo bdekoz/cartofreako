@@ -1,0 +1,49 @@
+{
+  "schema": "cartofreako-ocean-stage-2-method-v1",
+  "snapshot_as_of": "2026-11-08",
+  "ocean_cutoff": "2026-11-07",
+  "baseline": [1991, 2020],
+  "sensitivity_baseline": [1982, 2011],
+  "calendar_window_days": 11,
+  "circular_smoothing_days": 31,
+  "percentile": 90,
+  "quantile_interpolation": "linear",
+  "minimum_baseline_years": 24,
+  "minimum_baseline_samples_fraction": 0.8,
+  "minimum_period_coverage": 0.8,
+  "h3_resolution": 5,
+  "marine_heatwave": {
+    "minimum_consecutive_days": 5,
+    "maximum_observed_gap_days": 2,
+    "missing_policy": "barrier; no interpolation or bridging",
+    "intensity": "signed SST minus smoothed seasonal mean; event spans include observed bridged days",
+    "leap_day": "interpolate climatology and percentile between February 28 and March 1 before smoothing"
+  },
+  "thermal_season": {
+    "minimum_amplitude_degC": 2,
+    "sensitivity_amplitudes_degC": [1, 3],
+    "persistence_days": 7,
+    "sensitivity_persistence_days": [5, 10],
+    "threshold": "midpoint of smoothed climatological minimum and maximum",
+    "cycle": "cool minimum before expected warm peak to next occurrence of cool minimum; year labels expected peak",
+    "ties": "first calendar slot; strict threshold crossings",
+    "multiple_cycle_policy": "reject baseline with more than one persistent warm run separated by a persistent cool run"
+  },
+  "coastal": {
+    "maximum_land_to_coast_km": 100,
+    "ocean_neighborhood_km": 100,
+    "sensitivity_distance_km": 50,
+    "land_variable": "CPC TMAX",
+    "calendar": "date-aligned; CPC metadata specifies 06Z to 06Z",
+    "ocean_aggregation": "fixed-member area-weighted mean before percentile calculation"
+  },
+  "particulate": {
+    "daily_pm25_comparison_ug_m3": 35,
+    "sensitivity_thresholds_ug_m3": [25, 50],
+    "minimum_distinct_hours": 18,
+    "timezone": "Asia/Kolkata",
+    "calendar": "date-aligned; not identical daily observation windows",
+    "monitor_classes": ["reference", "low-cost"],
+    "land_assignment": "containing native CPC cell; no nearest-valid substitution"
+  }
+}

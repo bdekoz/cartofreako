@@ -1,0 +1,21 @@
+{
+  "sources": [
+    {
+      "file": "data/marine-matched-comparison.json",
+      "sha256": "2424968b1113ef21025b862f9a6daef9e3304e5cd945add723c11c5ac5561bf6"
+    },
+    {
+      "file": "data/coastal-comparisons.json",
+      "sha256": "5eb82e81bdd4a30f9aaebd9635beb771f3651907f6814846b6e9f7681e8399c3"
+    },
+    {
+      "file": "data/india-comparisons.json",
+      "sha256": "b822548427a7495567788938df38fb99f80f1ad650f43a20cf1ad434d9605502"
+    }
+  ],
+  "outputs": {
+    "png": "201e491d600b24e9b11608ff4c9f4e6560c835b5086917231cecdc55cd0252c4",
+    "svg": "ed9013b5e2403a0fa2af8bdc62281622d9110e949c503189f96439fc4cd6d1c0",
+    "pdf": "c0677e07a09b290bff269251e1eedbab86d71e3a85abc14cdffa4e13cf83b615"
+  }
+}

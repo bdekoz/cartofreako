@@ -1,0 +1,226 @@
+[
+  {
+    "year": 1991,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.1991.nc",
+    "sha256": "54b792205da92d48409f4fdf8c2f680eeaad423194f612118e66b1bddc4a89e0",
+    "data_through": "1991-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1991.nc"
+  },
+  {
+    "year": 1992,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.1992.nc",
+    "sha256": "4d4bb59878a1c5fb2a5f9136d03731475352837b86d5f26bfbae935837130660",
+    "data_through": "1992-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1992.nc"
+  },
+  {
+    "year": 1993,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.1993.nc",
+    "sha256": "d882c5ae51903baefc08185e9773e7364d6b4e6d17410fabade85360a3483b70",
+    "data_through": "1993-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1993.nc"
+  },
+  {
+    "year": 1994,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.1994.nc",
+    "sha256": "3d6fa1b65bb2aee7841573b4fa3f79c32c03cefd836defed5b268f2a41ae4f36",
+    "data_through": "1994-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1994.nc"
+  },
+  {
+    "year": 1995,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.1995.nc",
+    "sha256": "ae9d1175d46df050390e9e946388d6de0101186a6712aa8eb1b2b0364fad292f",
+    "data_through": "1995-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1995.nc"
+  },
+  {
+    "year": 1996,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.1996.nc",
+    "sha256": "76c5c40298ab5cb0bef554f11098b0d283d566e74c8ec5b07c28226b611b3ba3",
+    "data_through": "1996-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1996.nc"
+  },
+  {
+    "year": 1997,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.1997.nc",
+    "sha256": "f0a5c6b973f1cc25752dda31b97f1d8711b65d7c2d76500a105fde9e423bd192",
+    "data_through": "1997-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1997.nc"
+  },
+  {
+    "year": 1998,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.1998.nc",
+    "sha256": "8b245602d56ab14d94debebf21054d4039389b0d98d3b52e01cf2a30f5dfd813",
+    "data_through": "1998-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1998.nc"
+  },
+  {
+    "year": 1999,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.1999.nc",
+    "sha256": "e90d89cb016edf442bda2fdc3fe2a59e996399d3d6c4b673d77cd79c8a5558ec",
+    "data_through": "1999-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.1999.nc"
+  },
+  {
+    "year": 2000,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2000.nc",
+    "sha256": "62286617e30be7774baa7aa4483a5221ca4be24e0b0581efb28877959bc567d8",
+    "data_through": "2000-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2000.nc"
+  },
+  {
+    "year": 2001,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2001.nc",
+    "sha256": "4b855ea314159099063038c16d5145d468fe9aa65805213f888169cca439c857",
+    "data_through": "2001-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2001.nc"
+  },
+  {
+    "year": 2002,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2002.nc",
+    "sha256": "c01fde676320d880bd04a85c34e511c7f7d14e7b927ca86137e7826731512259",
+    "data_through": "2002-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2002.nc"
+  },
+  {
+    "year": 2003,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2003.nc",
+    "sha256": "da3ead0772ba5724c3e5facd61da3c2694876f24a2dff99f712503703ba1cb08",
+    "data_through": "2003-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2003.nc"
+  },
+  {
+    "year": 2004,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2004.nc",
+    "sha256": "a915f407339f36dec79d63669f26ff0899d3d833d91b7ad6ba934405f274a3d5",
+    "data_through": "2004-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2004.nc"
+  },
+  {
+    "year": 2005,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2005.nc",
+    "sha256": "0a5b8f9c6ede967cbd3ee7a0f78b79cfd065be46e8a340b0eed10b01b836dc25",
+    "data_through": "2005-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2005.nc"
+  },
+  {
+    "year": 2006,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2006.nc",
+    "sha256": "32d9d2467a1e7aa97783af1e18b2a0f8b39f60bb1140c183d16ef3c45b0568ce",
+    "data_through": "2006-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2006.nc"
+  },
+  {
+    "year": 2007,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2007.nc",
+    "sha256": "4e02ad6e726b0df714a51744c3aedb3d365a25052cc17972262c71125c24411f",
+    "data_through": "2007-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2007.nc"
+  },
+  {
+    "year": 2008,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2008.nc",
+    "sha256": "95083458927b4fd214a9cd9de42a6a25c0ada90a00c286ea59e4fc7542f66a36",
+    "data_through": "2008-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2008.nc"
+  },
+  {
+    "year": 2009,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2009.nc",
+    "sha256": "f3286346abf8c7146b90e35da230c7eadbee09862d8163a222be4da864a7b75e",
+    "data_through": "2009-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2009.nc"
+  },
+  {
+    "year": 2010,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2010.nc",
+    "sha256": "4f90ec694bae988eb94487fa599602c7b5658becc07805108d2f72adc134b9e3",
+    "data_through": "2010-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2010.nc"
+  },
+  {
+    "year": 2011,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2011.nc",
+    "sha256": "452c7cd6ec1e7f06cb415c723fc547714c3627bf06ef89b3725e80c9a3153669",
+    "data_through": "2011-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2011.nc"
+  },
+  {
+    "year": 2012,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2012.nc",
+    "sha256": "09da0477459e763d2cf68c67145d8f2dda5a073289e042b8c29db8f2273f5ea5",
+    "data_through": "2012-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2012.nc"
+  },
+  {
+    "year": 2013,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2013.nc",
+    "sha256": "498ca5040e4e4502b31ef2fc7330ec7b668be9ea9653b03fc8778b00d2b61324",
+    "data_through": "2013-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2013.nc"
+  },
+  {
+    "year": 2014,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2014.nc",
+    "sha256": "59382bdbc576de613e47d17b6a5a5029323d362b2769babef2e526b992a6ef61",
+    "data_through": "2014-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2014.nc"
+  },
+  {
+    "year": 2015,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2015.nc",
+    "sha256": "c6d0e9b32ba9a08b6946b6b73fb33f1ffad38e49a78e77554483cde7b2121911",
+    "data_through": "2015-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2015.nc"
+  },
+  {
+    "year": 2016,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2016.nc",
+    "sha256": "5a840fe7f3cda062958e9730508d88a78ca39b9d23f24cf2dc94223ceb45bb2d",
+    "data_through": "2016-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2016.nc"
+  },
+  {
+    "year": 2017,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2017.nc",
+    "sha256": "274b25916cf6575c1082a4af962de546c96923f6cce7e0f0fce90fe88fef779b",
+    "data_through": "2017-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2017.nc"
+  },
+  {
+    "year": 2018,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2018.nc",
+    "sha256": "77eae81f65d4d114c3346fa1b6391cac5453283221bb83dda83c7fe5ab6ad007",
+    "data_through": "2018-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2018.nc"
+  },
+  {
+    "year": 2019,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2019.nc",
+    "sha256": "a7887b1bfd6dff310efbd7ca8cca5136e8afd17e6d7f8d0301f44ba04b49ed69",
+    "data_through": "2019-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2019.nc"
+  },
+  {
+    "year": 2020,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2020.nc",
+    "sha256": "e090a7b8fe43c5f85be3a68bf451968a19292619ddbbc1a841796bceb1efb7b0",
+    "data_through": "2020-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2020.nc"
+  },
+  {
+    "year": 2025,
+    "file": "assets.static/anthropocene/.raw/cpc/tmax.2025.nc",
+    "sha256": "c5c1cb2014fd89a0ed2963c085ff9bcafb559762779f556368f763f43e99c7ba",
+    "data_through": "2025-12-31",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2025.nc"
+  },
+  {
+    "year": 2026,
+    "file": "output/ocean-temperature-stage-2-20261108/cache/cpc/tmax.2026.nc",
+    "sha256": "8581ce50473536c08f921089a8039a2c2b1bf16e721531a2c0da2c5c8eafe350",
+    "data_through": "2026-11-07",
+    "url": "https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.2026.nc"
+  }
+]

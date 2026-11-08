@@ -1,0 +1,175 @@
+{
+  "status": "passed",
+  "source_files_verified": 79,
+  "independent_calendar_baselines": 20,
+  "independent_cell_periods": 60,
+  "reconciled_event_rows": 5081997,
+  "independent_season_cell_years": 40,
+  "coastal_pairs": 8993,
+  "line_of_sight_memberships": 110119,
+  "independent_pair_years": 16,
+  "independent_land_ocean_baselines": 8,
+  "station_day_rows": 13487,
+  "canonical_monitors": 25,
+  "station_month_coverage_rows": 848,
+  "independent_hourly_checks": [
+    {
+      "station": "cpcb_caaqm:site_1437",
+      "date": "2025-12-31",
+      "hours": 24,
+      "raw_sha256": {
+        "location-5544-20251230.csv.gz": "624cf2314c888a110ce3eecf16131d117416e2b645e16ff851517bf393f8dd7b",
+        "location-5544-20251231.csv.gz": "b3594ab1902ca164f9c20494545df843e302b492675739d1a74a8d72ce5f6a0f",
+        "location-5544-20260101.csv.gz": "8c585471d0aaf289df4fd20523fb6931014263878423ed4bb83ff98892cd7c8f"
+      }
+    },
+    {
+      "station": "cpcb_caaqm:site_1437",
+      "date": "2026-11-02",
+      "hours": 21,
+      "raw_sha256": {
+        "location-5544-20261101.csv.gz": "d84ef04c0b4a8e32f9a9c426d7eca0570b293650325f79e9117d71a58816ed5a",
+        "location-5544-20261102.csv.gz": "9ea9c266906ae40d0369ca0fffd8bee4eabd12a5097246266c6fd2cbc295df7f",
+        "location-5544-20261103.csv.gz": "f2619bf44c4419fe2c3f62a76610357f0f1a37ef3b1359f17f8313c74427bcfb"
+      }
+    },
+    {
+      "station": "cpcb_caaqm:site_256",
+      "date": "2025-12-31",
+      "hours": 24,
+      "raw_sha256": {
+        "location-5551-20251230.csv.gz": "caf69625e76fedaf1895692ad8cec53b7658ae0b1fd1a676f0894a264357299a",
+        "location-5551-20251231.csv.gz": "5e706af638fe746bebf62fd67c28a08b0bda8c031df0dca55ab8643f37b501e0",
+        "location-5551-20260101.csv.gz": "0a25891efac5de29983b67b33616bbda69119723a3ea17d8248a1132363f600c"
+      }
+    },
+    {
+      "station": "cpcb_caaqm:site_256",
+      "date": "2026-11-02",
+      "hours": 22,
+      "raw_sha256": {
+        "location-5551-20261101.csv.gz": "ee6ecad60cf37ab95472b3c208f814a5e4354eec218b6a40f7fb314812f6abbc",
+        "location-5551-20261102.csv.gz": "609cf227c609ac582955013d7ff4df7775b1fe1d8b4d1a3fed89443c12bc2bd8",
+        "location-5551-20261103.csv.gz": "f2215cfc0c04a911a761239feb92ffb78d0b3656095b16ad32f8df0003d146e6"
+      }
+    },
+    {
+      "station": "cpcb_caaqm:site_301",
+      "date": "2025-12-31",
+      "hours": 24,
+      "raw_sha256": {
+        "location-235-20251230.csv.gz": "37f51d20134ef1265681a43f512085d336ee2099f52f7721e04c0699a2dcb685",
+        "location-235-20251231.csv.gz": "40b2b25dbafdefe1975610d2cbf56a203a239fe7ec5cde562269309023e663a3",
+        "location-235-20260101.csv.gz": "83692e8ea67debc444be328117de52eb332be79b34525a9455ca7402f4622c6c"
+      }
+    },
+    {
+      "station": "cpcb_caaqm:site_301",
+      "date": "2026-11-02",
+      "hours": 24,
+      "raw_sha256": {
+        "location-235-20261101.csv.gz": "44f828dd8963acfe5648b4b864f97eb5d07cceae56d0488dfbd65d0b41b30b91",
+        "location-235-20261102.csv.gz": "81cb0411413a7b4e1a48e4a7aa700150bedbbaa3fb87cfafa7f5ca612e964312",
+        "location-235-20261103.csv.gz": "b35a87d1280a0e63d5b0e7e5d7b9ea9a5d1c1adcc4c3813f886b2ab842ed3e33"
+      }
+    },
+    {
+      "station": "cpcb_caaqm:site_5112",
+      "date": "2025-12-31",
+      "hours": 24,
+      "raw_sha256": {
+        "location-6956-20251230.csv.gz": "14fc0cb7fcc146ba02f5d58d668bcad3d20f1290bd784c47ce1b750c7340e1f2",
+        "location-6956-20251231.csv.gz": "02503fbf97445fd400473d31bf0bda21293771e3b84ca777935c27ab02045f75",
+        "location-6956-20260101.csv.gz": "04f0c39b22da12dbfcd70f39a3ad2d931d24520e09dbd20bdaf92418a9d26985"
+      }
+    },
+    {
+      "station": "cpcb_caaqm:site_5112",
+      "date": "2026-11-02",
+      "hours": 24,
+      "raw_sha256": {
+        "location-6956-20261101.csv.gz": "96fe5dd8a8eab64b6fea999d6f02f0d5b5cce3c45bc23c80cd35695ce1648bc7",
+        "location-6956-20261102.csv.gz": "9f44bb69499b449cafd8c757cf3c98d2c6b0635f9fbe5788e4b4381929f59f06",
+        "location-6956-20261103.csv.gz": "6e473214691b6ed28dda9af04ed1ee43353e4ae1ce8dc6ba92daafcbee8d163d"
+      }
+    },
+    {
+      "station": "cpcb_caaqm:site_5491",
+      "date": "2025-12-31",
+      "hours": 24,
+      "raw_sha256": {
+        "location-233415-20251230.csv.gz": "1535c47a51a92c44ef3090a41af636902dc3765435c785c63d8673e86e8f70a2",
+        "location-233415-20251231.csv.gz": "949623a63c47a842bbf21f7f1ef37bb4d7d71573edd19cb5478f345d2f4a10a6",
+        "location-233415-20260101.csv.gz": "944f333c87e72d0b819958384ee30aa11023c4a153334eef8e06efe92a8c5f4f"
+      }
+    },
+    {
+      "station": "cpcb_caaqm:site_5491",
+      "date": "2026-11-02",
+      "hours": 24,
+      "raw_sha256": {
+        "location-233415-20261101.csv.gz": "dc7b05230401a3564130c7bf5a53e054bf40a5e2db88e8c0b923746e78b9f03d",
+        "location-233415-20261102.csv.gz": "93d3946aa9fff885b0f97dea97cabd802d7e3d922185f1fe21a76ad565c6d50f",
+        "location-233415-20261103.csv.gz": "b93e71df2f3a7605168fad58f585a8d93eea906b0e76edba8d6dca228e3a678d"
+      }
+    },
+    {
+      "station": "openaq:220265",
+      "date": "2025-12-31",
+      "hours": 22,
+      "raw_sha256": {
+        "location-220265-20251230.csv.gz": "2607be5f0ab247c86120d45855d8a841dd77f1babe507a238eb99c63338f256c",
+        "location-220265-20251231.csv.gz": "752e45332cc45b0f907edec5ce7d3b8914ca58e7a7b7bee9859c5c355af605e1",
+        "location-220265-20260101.csv.gz": "a8df092d1404142265c14c14bd5dfe598a8e65c84e43e9ce57209fd66c9c46c2"
+      }
+    },
+    {
+      "station": "openaq:220265",
+      "date": "2026-11-01",
+      "hours": 24,
+      "raw_sha256": {
+        "location-220265-20261031.csv.gz": "bd5d5bbc937a8bbd610d946765266223b6de58fefd7885b84a556c0f2e4bef9f",
+        "location-220265-20261101.csv.gz": "59a7b00e3529c474fbf2f3d095052ecd14aa913ddc9544ad1700b4b4412863be",
+        "location-220265-20261102.csv.gz": "d8c4281b25567c6b70d63d2d4e0b711750000ed56dca64291c1f29186fb5374f"
+      }
+    },
+    {
+      "station": "us_embassy:DS1010004",
+      "date": "2025-03-03",
+      "hours": 24,
+      "raw_sha256": {
+        "location-8039-20250302.csv.gz": "454e30ea08720b1d3c2186b5c08ceb7a2a60a37bd0e2dd6e22758dc2fe4cf232",
+        "location-8039-20250303.csv.gz": "38c35a0bd9ff24346a883af39c5397dcba1459c1fcd8fd5bf3e0f3d882ba2508",
+        "location-8039-20250304.csv.gz": "913e08cf95c67fcd9326939d69de71454f60102e5f85c666a945eb86b2f73a46"
+      }
+    },
+    {
+      "station": "us_embassy:DS1010004",
+      "date": "2026-11-04",
+      "hours": 22,
+      "raw_sha256": {
+        "location-8039-20261103.csv.gz": "6556ca468d275be6fc3049466e046cf5672988c855e02f3119ba1862016fccc1",
+        "location-8039-20261104.csv.gz": "8a7942940f87a64734fa4983d950dae736555de6cff93c6965b69a2ca5c97c4c"
+      }
+    }
+  ],
+  "matched_station_days": 3756,
+  "data_only": true,
+  "method_config_sha256": "faffa37b579c6fe63071d81e64c1d0d5ccbe3de7205e6ffdcd174bfc20380d72",
+  "checked_at": "2026-11-08T15:13:07.240448-08:00",
+  "implementation_sha256": {
+    "scripts/ocean_stage_2.py": "7d11429093bdb341493a10355e9a29a73b94b0f7587bbdce417b2778ee51adee",
+    "scripts/ocean-stage-2-kernels.cc": "f684dad834664de7fd4bff86def816825120735344c0662544d9915f284e0076",
+    "scripts/project-stage-2-points.cc": "ead9352a474753732dc7de102021731a0721b00e585ca6b5f6558ab81837aff9",
+    "scripts/prepare-ocean-climate-baseline.py": "f93f67f4b6cc238550910f6819c36aaa6e5df54516005005a0670eaa424ad7d7",
+    "scripts/prepare-marine-heatwaves.py": "1c89edabdaf5af83cad314d57aa11ae6605f79dfec0dce6bd0b672427fd8a986",
+    "scripts/prepare-ocean-thermal-seasons.py": "a8bd6355523c55e83d739defeed144ab38da4a731d78429284d6f145a64b9e33",
+    "scripts/prepare-coastal-compound-heat.py": "e735ab0b8fb3b7cbe7c8d136589861209ac8ae0f7ea415416b38c93013075569",
+    "scripts/prepare-heat-particulate-coexposure.py": "1406213f9a94eb8923c2429983e8c62b32cca5d1cd8d22e42cbf121c8d327caa",
+    "scripts/analyze-ocean-stage-2.py": "d0552e5320911d539d6e16968a0cf0b92e61720c4ae50ce80cffddc4c7c1ed0a",
+    "scripts/build-ocean-stage-2-plates.py": "79c06daa037473067512b09c8056b13b7686100492570077fe509984c729def1",
+    "scripts/fetch-ocean-stage-2.py": "dadb0a423e30c777d6c80a3b71f19036699e084f3cab0a5f7920b14ae14575a4",
+    "scripts/validate-ocean-stage-2.py": "ef1c8eb834746795fe57446745fba811ac5e4302fedf55fbaee514362d5e109b",
+    "tests/test-ocean-stage-2.py": "a13bf6f0c7097401893253374300e6fe2e75ad60527d3481280cccff86d094da"
+  }
+}

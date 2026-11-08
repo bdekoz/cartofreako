@@ -80,7 +80,7 @@ filenames remain available as provenance and compatibility references.
 | Ocean and coral data added | The 1982–2026 OISST archive supplies the SST, anomaly and record-day calculations. CRW supplies separate 2025 annual, 2025 matched and 2026 YTD thermal-stress fields; a pinned November 7 JMA sample supplies the cross-provider check. The methods and actual coverage are detailed in Stage 1 below. |
 | Mineral identity encoded | Rare earths use purple/circles, lithium cyan/squares and uranium amber/triangles in the combined plate. Separate mineral choropleths use the corresponding hue with quantity classes. Symbol shape is a second identity cue. |
 | Mineral review sheets added | Separate rare-earth, lithium and uranium sheets plus a combined mineral comparison have World/Japan map and source-sheet pairs: 16 sheets. The combined overview compares countries within each mineral; it has no aggregate mineral tonnage. |
-| Catalog and current atlas rebuilt | A single [catalog](../../config/atlas-plates.json) holds 45 named plates: **39 defaults and 6 optional prototypes**. Defaults comprise 156 World/Japan map-and-legend sheets. The six prototypes are two Bathymetry plates and four new water-temperature year/measure plates. |
+| Catalog and current atlas rebuilt | At Stage 1 completion, the [catalog](../../config/atlas-plates.json) held 45 named plates: **39 defaults and 6 optional prototypes**. Defaults comprise 156 World/Japan map-and-legend sheets. The six prototypes were two Bathymetry plates and four new water-temperature year/measure plates. Stage 2 subsequently added eight optional climate identities. |
 | Legend and navigation consistency | Current atlas titles, companion links, source bibliography, group navigation and legend ordinals follow the catalog. Published historical gallery links use explicit legacy stems rather than being redirected to nonexistent renamed release files. |
 | Solar-radiation presentation synchronized | The current Atmosphere World/Japan map and legend pairs now adopt the saved November 6/7 Setouchi H3r5 edition. Nineteen pinned presentation inputs preserve the approved amber background, white land outlines, 100 radiation-opacity levels and original October observation dates. |
 | Native swarm export repaired | The current sheet-export check exposed a fractional-pixel letterbox at the raster canvas edge. Explicit opaque paper compositing now preserves the exact wine margin while retaining every native circle and paint order. A regression fixture checks both the background and a visible mark. |
@@ -115,7 +115,7 @@ each mineral's symbol areas to its own largest producer. Country areas or
 symbol sizes must not be interpreted as an all-mineral score. National values
 in the Japan viewport do not describe production within individual islands.
 
-### Current named passes
+### Named passes at Stage 1 completion
 
 The catalog is authoritative; the following inventory makes the reorganized
 groups explicit. `YYYY` entries below are separate 2025 and 2026 plates.
@@ -345,15 +345,16 @@ Future daily, monthly, matched-period and revision work is specified in the
 It preserves this edition's hashes and the distinctions among seasonality,
 anomaly, event counts and changing observation coverage.
 
-## Stage 2 — separate approved implementation plan
+## Stage 2 — separate completed implementation record
 
 The four inferred plate families—marine heatwaves, ocean thermal seasons,
-compound coastal heat, and the India heat–particulate pilot—are approved for
-unattended implementation. Their methods, data dependencies, presentation,
-execution sequence and acceptance criteria are now in the separate
-[Stage 2 plan](20261108_anthropocene_ocean_temperature_stage_2.md).
-They remain planned optional prototypes until implemented and validated;
-they are not included in this document's completed Stage 0/1 plate counts.
+compound coastal heat, and the India heat–particulate pilot—are implemented
+and validated. Their methods, actual results, 128 separate map/legend sheets,
+four scientific figures and completion evidence are in the separate
+[Stage 2 record](20261108_anthropocene_ocean_temperature_stage_2.md).
+Their eight year identities remain optional prototypes. The current catalog
+has 53 names: 39 defaults and 14 prototypes; this document preserves the
+45-name inventory at Stage 0/1 completion.
 
 ## Reproduction and verification
 

@@ -1,0 +1,70 @@
+{
+  "schema": "cartofreako-ocean-stage-2-product-v1",
+  "snapshot_as_of": "2026-11-08",
+  "method_config_sha256": "faffa37b579c6fe63071d81e64c1d0d5ccbe3de7205e6ffdcd174bfc20380d72",
+  "data_file": "ocean-thermal-season-2026.npz",
+  "sha256": "d26be1b189f19da966abde87d531e9db8a7765af3360ba4f5158d7e5e33ecea4",
+  "family": "ocean-thermal-season",
+  "year": 2026,
+  "period": "season",
+  "data_through": "2026-11-07",
+  "baseline": "1991\u20132020",
+  "season_year": "year of expected climatological warm peak; full available adjacent-year context",
+  "status_codes": {
+    "0": "complete",
+    "1": "weak seasonal amplitude",
+    "2": "incomplete climatology",
+    "3": "multiple baseline seasons",
+    "4": "onset not observed",
+    "5": "missing transition support",
+    "6": "open season",
+    "7": "multiple observed seasons"
+  },
+  "status_counts": {
+    "complete": 201074,
+    "weak seasonal amplitude": 67980,
+    "incomplete climatology": 95063,
+    "multiple baseline seasons": 6491,
+    "onset not observed": 168,
+    "missing transition support": 5134,
+    "open season": 152088,
+    "multiple observed seasons": 68712
+  },
+  "sensitivity_persistence_status_counts": {
+    "5": {
+      "complete": 182358,
+      "weak seasonal amplitude": 67980,
+      "incomplete climatology": 95063,
+      "multiple baseline seasons": 6573,
+      "onset not observed": 32,
+      "missing transition support": 5044,
+      "open season": 138286,
+      "multiple observed seasons": 101374
+    },
+    "7": {
+      "complete": 201074,
+      "weak seasonal amplitude": 67980,
+      "incomplete climatology": 95063,
+      "multiple baseline seasons": 6491,
+      "onset not observed": 168,
+      "missing transition support": 5134,
+      "open season": 152088,
+      "multiple observed seasons": 68712
+    },
+    "10": {
+      "complete": 214657,
+      "weak seasonal amplitude": 67980,
+      "incomplete climatology": 95063,
+      "multiple baseline seasons": 6322,
+      "onset not observed": 559,
+      "missing transition support": 5216,
+      "open season": 165217,
+      "multiple observed seasons": 41696
+    }
+  },
+  "amplitude_eligible_cells": {
+    "1": 488087,
+    "2": 433667,
+    "3": 331568
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "sources": [
+    {
+      "file": "data/marine-matched-comparison.json",
+      "sha256": "2424968b1113ef21025b862f9a6daef9e3304e5cd945add723c11c5ac5561bf6"
+    },
+    {
+      "file": "data/coastal-comparisons.json",
+      "sha256": "5eb82e81bdd4a30f9aaebd9635beb771f3651907f6814846b6e9f7681e8399c3"
+    },
+    {
+      "file": "data/india-comparisons.json",
+      "sha256": "b822548427a7495567788938df38fb99f80f1ad650f43a20cf1ad434d9605502"
+    },
+    {
+      "file": "data/season-products.json",
+      "sha256": "fb1282b7b731bbd2741d3c72a621c844d2dcc9eb0dc368474a4cea4acc670796"
+    },
+    {
+      "file": "data/india-station-summary.json",
+      "sha256": "0f353f9d4fc4c12c00c0c097fa16b51619eab6d6d51390cf83c1a7189119fee0"
+    }
+  ],
+  "outputs": {
+    "png": "76e76917a3575b595411f2d1e6d112d6bcd588bd5d68f7298c5e94f46e3b7b65",
+    "svg": "7d14d70070289973fcab65839d8add7890a3c45e8e50ef40761439ff8fb946fd",
+    "pdf": "ca098c16dc0a4a701a6e7486621c082fdf90f28f9630fc3425fa5c08845c89dd"
+  }
+}

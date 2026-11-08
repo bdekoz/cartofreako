@@ -1,0 +1,17 @@
+{
+  "schema": "cartofreako-ocean-stage-2-product-v1",
+  "snapshot_as_of": "2026-11-08",
+  "method_config_sha256": "faffa37b579c6fe63071d81e64c1d0d5ccbe3de7205e6ffdcd174bfc20380d72",
+  "data_file": "heat-particulate-coexposure-2026-annual-reference.npz",
+  "sha256": "7a4fc7d399a2a0fbd202d2fbea4697a9e7faa93c30408116fbe7518a720e3a2c",
+  "family": "heat-particulate-coexposure",
+  "year": 2026,
+  "period": "annual",
+  "monitor_class": "reference",
+  "data_through": "2026-11-04",
+  "expected_days": 308,
+  "station_count": 24,
+  "grain": "union of eligible local cell-dates; BOTH requires both conditions at the same station/date; reference and low-cost kept separate",
+  "baseline": "CPC TMAX 1991\u20132020 P90; PM2.5 daily mean >35 \u00b5g/m\u00b3 comparison threshold",
+  "calendar": "PM Asia/Kolkata local dates joined to CPC date labels; CPC max_period 06Z\u201306Z; not simultaneous hourly exposure"
+}

@@ -593,6 +593,86 @@
       "default": false,
       "source_stem": "anthropocene-water-temperature-anomaly-2026",
       "aliases": []
+    },
+    {
+      "id": "anthropocene-marine-heatwave-2025",
+      "title": "Marine heatwaves / 2025",
+      "group": "anthropocene",
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "default": false,
+      "source_stem": "anthropocene-marine-heatwave-2025",
+      "aliases": []
+    },
+    {
+      "id": "anthropocene-marine-heatwave-2026",
+      "title": "Marine heatwaves / 2026",
+      "group": "anthropocene",
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "default": false,
+      "source_stem": "anthropocene-marine-heatwave-2026",
+      "aliases": []
+    },
+    {
+      "id": "anthropocene-ocean-thermal-season-2025",
+      "title": "Ocean thermal seasons / 2025",
+      "group": "anthropocene",
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "default": false,
+      "source_stem": "anthropocene-ocean-thermal-season-2025",
+      "aliases": []
+    },
+    {
+      "id": "anthropocene-ocean-thermal-season-2026",
+      "title": "Ocean thermal seasons / 2026",
+      "group": "anthropocene",
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "default": false,
+      "source_stem": "anthropocene-ocean-thermal-season-2026",
+      "aliases": []
+    },
+    {
+      "id": "anthropocene-coastal-compound-heat-2025",
+      "title": "Date-aligned coastal heat / 2025",
+      "group": "anthropocene",
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "default": false,
+      "source_stem": "anthropocene-coastal-compound-heat-2025",
+      "aliases": []
+    },
+    {
+      "id": "anthropocene-coastal-compound-heat-2026",
+      "title": "Date-aligned coastal heat / 2026",
+      "group": "anthropocene",
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "default": false,
+      "source_stem": "anthropocene-coastal-compound-heat-2026",
+      "aliases": []
+    },
+    {
+      "id": "anthropocene-heat-particulate-coexposure-2025",
+      "title": "India heat–particulate co-occurrence / 2025",
+      "group": "anthropocene",
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "default": false,
+      "source_stem": "anthropocene-heat-particulate-coexposure-2025",
+      "aliases": []
+    },
+    {
+      "id": "anthropocene-heat-particulate-coexposure-2026",
+      "title": "India heat–particulate co-occurrence / 2026",
+      "group": "anthropocene",
+      "lifecycle": "optional",
+      "maturity": "prototype",
+      "default": false,
+      "source_stem": "anthropocene-heat-particulate-coexposure-2026",
+      "aliases": []
     }
   ],
   "notes": [
