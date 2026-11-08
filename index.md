@@ -8,9 +8,15 @@ title: Cartofreako
 # Cartofreako
 
 <p class="page-deck">Cartofreako is an atlas explorer with an optional
-ai-agented exploration workflow. It has six projection systems, 32 whole-map
-plates apiece, and one visual catalog for comparing physical, sky, network,
+ai-agented exploration workflow. It has six projection systems and visual
+catalogs for comparing physical, sky, network,
 anthropocene, and resource layers.</p>
+
+The current atlas has **53 named plates: 39 defaults and 14 optional
+prototypes**. The default World/Japan edition has 156 separate map/legend
+sheets. The gallery below retains its released snapshot; the
+[November completion records](docs/development/README.md) document the
+current catalog and local climate reviews.
 
 {% include v14-projection-gallery.md %}
 
@@ -19,7 +25,8 @@ anthropocene, and resource layers.</p>
 | Need | Go to |
 | --- | --- |
 | Browse the maps | [Visual gallery](docs/pages/gallery/README.md) |
-| Review the latest world and Japan plates | [Live Setouchi gallery](https://situationshipin.space/review/cartofreako-setouchi-2028-20261030/) · [Review guide](docs/pages/gallery/setouchi-2028.md) |
+| Review the published October 30 world and Japan plates | [Live Setouchi gallery](https://situationshipin.space/review/cartofreako-setouchi-2028-20261030/) · [Review guide](docs/pages/gallery/setouchi-2028.md) |
+| Inspect the current atlas and completed climate prototypes | [Pass catalog](docs/pages/passes/README.md) · [Stage 2 results](docs/development/20261108_anthropocene_ocean_temperature_stage_2.md) |
 | Build and generate artifacts | [Build and generated artifacts](docs/pages/getting-started/build.md) |
 | Track releases and preservation | [Releases and preservation](docs/pages/releases/README.md) |
 

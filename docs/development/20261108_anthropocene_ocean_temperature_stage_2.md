@@ -3,11 +3,17 @@
 Plan date: **Sunday, 8 November 2026**.
 
 **Status: all four approved families are implemented and validated.**
+Implementation revision: **`04114b36e83e8df025b2ca2f5850a2adc12b6d5d`**,
+committed and pushed to `origin/main`; the remote branch was verified.
 The local edition contains **eight optional year identities, 32 measure/period
 views and 128 separate map/legend sheets**, with four scientific figures.
 Open the [review index](../../output/ocean-temperature-stage-2-20261108/index.html),
 [validation receipt](../../output/ocean-temperature-stage-2-20261108/validation.json),
 or [package guide](../../output/ocean-temperature-stage-2-20261108/GIT-CONTENTS.md).
+The subsequent [documentation and build follow-up](20261108_documentation_followup.md)
+records work deferred for the next session, including the Eureka rebuild and
+aggregate default-atlas books; it does not reopen the completed Stage 2 data
+or individual-sheet checks.
 The approved method contract is retained below, followed by actual findings,
 completion evidence and remaining human decisions. The completed
 repository reorganization and first ocean review remain in the
@@ -295,7 +301,7 @@ month next to all co-occurrence results.
 
 ## Presentation and repository implementation
 
-Reuse the [approved Setouchi styling](20261106_setouchi_triennale_futures.md#current-saved-settings--7-november-2026)
+Reuse the [approved Setouchi styling](20261106_setouchi_triennale_futures.md)
 and [shared review-sheet builder](../../scripts/atlas_review_sheets.py):
 44 × 19.052559-inch sheets, the retained modified AuthaGraph composition,
 Atkinson Hyperlegible, wine `#240413` and amber `#fcc553`, and H3r5 where

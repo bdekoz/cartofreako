@@ -14,6 +14,15 @@ The [Setouchi 2028 review guide](gallery/setouchi-2028.md) leads to the
 with 38 paired subjects, 76 plates and downloadable review notes. It records
 the 2026-10-30 edition, its visual changes, source inventory and print files.
 
+The **8 November current atlas** has **53 named plates: 39 defaults and
+14 optional prototypes**. All 156 default World/Japan map/legend sheets have
+verified exports. The completed [Stage 0/1 record](../development/20261108_anthropocene_ocean_temperature_stage_1.md)
+documents the catalog reorganization and water-temperature products; the
+[Stage 2 record](../development/20261108_anthropocene_ocean_temperature_stage_2.md)
+documents eight further climate identities, 128 separate review sheets and
+four scientific figures. These local review editions have their own source
+cutoffs and do not change the dates of the published galleries.
+
 The gallery serves the selected image backend: the committed top-of-tree
 snapshot under `assets.tot/` (the live default) or the immutable v14 AAO
 release, both containing 217 standard products across 33 pass IDs, including
@@ -32,7 +41,8 @@ AAO prefix.
 | Map repository directories and individual source files | [Source layout conventions](getting-started/source_layout_conventions.md) |
 | Generate SVG, PDF, PNG, thumbnails, slices, and projection families | [Generation guide](getting-started/generation.md) |
 | Reuse approved line weights, colors, honeycombs and native swarm rendering | [Default generation styles](getting-started/generation-styles.md) |
-| Build the wine/amber atlas with separate map and attribution sheets | [Atlas defaults and build stages](getting-started/generation-styles.md#setouchi-st2-print-layout), [November review and delivery record](../development/20261103_starlink_update_explore.md) |
+| Build the wine/amber atlas with separate map and attribution sheets | [Atlas defaults and build stages](getting-started/generation-styles.md#setouchi-st2-print-layout), [completed Stage 0/1 record](../development/20261108_anthropocene_ocean_temperature_stage_1.md) |
+| Reproduce and inspect the optional ocean and derived climate reviews | [Stage 1 methods and commands](../development/20261108_anthropocene_ocean_temperature_stage_1.md#reproduction-and-verification), [Stage 2 results and commands](../development/20261108_anthropocene_ocean_temperature_stage_2.md#delivery-reproducibility-and-final-checks) |
 | Understand the selected profile, pass evaluation, and exact versus family workflows | [Generation methods and decision record](getting-started/generation-methods.md) |
 | Review the complete Stage 13 development manifest | [Stage 13 convergence notes](../development/20260815_stage-13.md) |
 | Follow the Stage 14 plan, implementation changes, and verification evidence | [Stage 14 convergence ledger](../development/20260815_stage-14.md) |
@@ -46,17 +56,17 @@ AAO prefix.
 
 The [resources metric catalog](passes/resources/metric-catalog.md) is the visible
 index of all 59 resource metrics. It states both subject meaning and release
-status; [`resources-profile.json`](../../assets.static/resources/resources-profile.json)
+status; [`resources-profile.json`](../../assets.static/resources/current-20261108/resources-profile.json)
 is the machine-readable authority.
 
 | Class | Meaning |
 | --- | --- |
 | **Standard pass** | Reproducible without a credential or special acceptance, included in `make all`, and eligible for the next generated-assets release. A sealed older gallery may have a different standard composition. |
-| **Optional pass** | Implemented but deliberately gated by credentials, license acceptance, or an operator decision. Authorization makes it eligible for subsequent configured generation. |
+| **Optional pass** | Implemented outside the default artifact graph; includes opt-in prototypes and products gated by credentials, terms or source availability. |
 | **Exploration only** | Cataloged, proposed, or source-tested without a released production output. It is not silently generated and is not a missing release artifact. |
 
-The current resource profile has 14 standard passes, no optional resource
-passes, and 45 exploration-only metrics. Project-wide optional products include
+The current resource profile has 16 implemented metrics, no optional resource
+metrics, and 43 exploration-only definitions. Project-wide optional products include
 the credentialed P-Tree Cloud-atmosphere pass and licensed network topology;
 NASA FIRMS remains an exploration input rather than a released optional pass.
 Pass maturity is a separate axis: the four current dual-year Anthropocene pass
@@ -64,7 +74,9 @@ IDs are standard and default-generated with **accepted-experimental**
 maturity. The synthetic PurpleAir interface, bounded water-debris, and Majuro
 evidence products remain exploration-only. See
 the [generation-pass overview](passes/README.md) and machine-readable
-[pass-status manifest](../../contracts/pass-status-v1.json).
+[pass-status manifest](../../contracts/pass-status-v1.json). The current atlas's
+14 prototypes comprise two Bathymetry identities, four water-temperature/SST
+anomaly identities and eight Stage 2 climate identities.
 
 | Family | Documentation |
 | --- | --- |

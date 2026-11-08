@@ -19,10 +19,12 @@ The **current default atlas** uses the **2026-11-03 MSP 5 settings** with
 section of the same JSON selects the approved recipe and saves the Setouchi
 frame, map/legend sequence, PDF selection, title typography and 300 dpi
 exports. Data colors remain distinct. `make atlas` applies this presentation
-to all 38 world/Japan pairs; the dated ST2 and MSP deliveries remain inputs.
-The implementation was committed and pushed as `97cb9a9`. Its completed
-review covers all 152 SVG sheets and 20 selected print sheets; the full print
-atlas has not yet been assembled with these defaults.
+to the current **39 default World/Japan subjects**, with **156 separate
+map/legend sheets**. The dated ST2 and MSP deliveries remain inputs. The
+November 8 review verified all 156 SVG/PDF/PNG sheets. The current catalog
+also contains 14 optional prototypes, including the completed Stage 1/2
+climate reviews. Aggregate-book assembly still needs the catalog-size update
+described below; the individual sheet exports are complete.
 
 [`generation-profile.json`](../../../generation-profile.json) selects which
 passes to run. Its development selection is AuthaGraph, Earth and Water.
@@ -160,160 +162,82 @@ screen copies, print deliverables and source inventory.
 ## Setouchi ST2 print layout
 
 The [second Setouchi revision](../../development/20261030_setouchi_triennale_explore_2.md)
-provides the atlas frame. The [MSP 5 review](../../development/20261103_starlink_update_explore.md)
-provides its current presentation defaults. Generate the complete edition with:
+provides the frame and the [MSP 5 review](../../development/20261103_starlink_update_explore.md)
+provides the wine/amber presentation. The [completed November 8 record](../../development/20261108_anthropocene_ocean_temperature_stage_1.md)
+updates the selection to **39 defaults**, numbered **01–39**, with World/Japan
+map and separate legend/source sheets: **78 maps and 78 legends**.
 
-```sh
-make atlas ASSET_JOBS=4
-```
+The [current catalog](../../../config/atlas-plates.json) groups historical
+coral-reef threat under Anthropocene and petroleum studies under Energy.
+Minerals include distinct rare-earth, lithium and uranium colors, with a
+separate comparison plate. Bathymetry remains optional. The selected
+solar/atmosphere plate uses the saved November 6/7 H3r5 treatment: amber
+ground, white coastlines and 100 opacity bands over 0–400 W/m².
 
-This reads the pinned first delivery at `output/setouchi-triennale-2028/`
-and its local source caches, prepares ST2 composition inputs in
-`build/atlas-st2-base/`, then writes the default edition to `output/atlas/`.
-Override `ATLAS_SOURCE`, `ATLAS_BASE` and `ATLAS_OUTPUT` for equivalent local
-locations. `make atlas-sheets` stops after composing and validating the 152
-SVG map and legend sheets. `make atlas` also exports 300 dpi PNGs, vector PDFs,
-previews, source bibliographies, a review index and the World/Japan/combined
-PDF editions. The historical `make setouchi-st2` target still writes its
-separate dated delivery.
+The shared composition retains the 44 × 19.052559-inch sheet, 43.5-inch
+centered map image, approved world displacement, Atkinson Hyperlegible,
+wine `#240413` and amber `#fcc553`. Measured palettes and source coordinates
+remain defined by the individual products. Each separate legend carries
+its own source dates, units and interpretation.
 
-The approved MSP 5 map/legend pairs supply the world groundstations, orbital
-global, orbital observer and all-sky astronomy subjects. Geographic Japan
-views use the updated groundstation and global orbital artwork in their
-existing viewport. The Japan all-sky view retains its locator and shared sky.
-The **Japan orbital observer retains its 29 October Setouchi positions** and
-source memberships; its markers and separate name layers receive the new
-presentation. Re-rendering does not fetch or imply new observations.
-
-`atlas.presentation.default_palette` selects `wine-amber` by default. The
-other approved choices remain `ultramarine-porcelain`, `plum-ice` and
-`midnight-champagne`. The recipe stays in
-[`config/msp-speculations-20261103.json`](../../../config/msp-speculations-20261103.json),
-so there is one saved definition of the approved point sizes and symbols.
-The page theme changes backgrounds, text and unmeasured basemap decoration;
-measured and categorical source palettes remain intact.
-
-The subject defaults are:
-
-- Groundstations: option 3 radial petals, aperture-proxy triangle areas,
-  honeycomb grouping and full-opacity amber fiber links. The November source
-  has 590 antenna records, 66 PoPs and 124 links; proxy size is not throughput.
-- Orbital global: Starlink NORAD IDs at **6 physical pt**, with other vendors'
-  name layers hidden. Representative ground tracks use **2×** stroke width;
-  reference graticules retain their widths.
-- Orbital observer: only Starlink names visible, at **6 physical pt**.
-  Named fleets retain separate name and location-point layers.
-- Both orbital subjects: Starlink **1.5× sunbursts**, Intelsat squares,
-  residual Earth observation triangles, black debris x marks with light halos,
-  distinct vendor colors and all satellite markers above the Starlink text.
-- All-sky astronomy: **12 physical pt** object labels and original symbol
-  colors. Japan viewport scaling is compensated to preserve the printed size.
-
-Wine and amber describe intended RGB hues. The saved palette is not a measured
-printer profile or a prediction of the hue produced with depleted inks.
-
-The saved presentation settings are:
-
-- Separate map and legend/source sheets for all 38 world/Japan pairs.
-- Separate World and Japan PDFs, each with 75 pages and 36 map/legend pairs.
-  Bathymetry Roulette and Bathymetry Hamonshu, including their legend/source
-  sheets, are excluded from the PDFs. The source plate identifiers stay
-  fixed, so 05 and 06 are omitted from the indexes. Both PDFs start with a
-  111.76 × 48.39 cm title sheet containing `CARTOFREAKO`, the date at half
-  the title's type size, and `WORLD` or `JAPAN` at the same size as the title.
-  All three lines are centered; the combined edition uses `WORLD + JAPAN`.
-  Edition notes use centimetres and the index uses the ST31 subject titles.
-  The build date defaults to the current date in Los Angeles. For a fixed
-  cover date, use `make atlas SETOUCHI_ST2_DATE=2026-11-03`; this override
-  changes the cover date, not the observation dates.
-- A centered 43.5-inch map image on a 44 × 19.052559-inch sheet. Proportional
-  scaling is 98.863636%; physical strokes scale with the artwork, while
-  opacity is retained. The original 0.5 pt fiber strokes print at 0.494318 pt.
-- The approved +4.35-inch printed horizontal move on every world sheet.
-  Terrestrial maps consolidate Antarctica at the same lower-left position,
-  including coastlines, ice and country fills. Japan views retain their
-  detail framing. Companion legends describe the deliberate displacement;
-  geophysical and network observations keep their source coordinates.
-- Atkinson Hyperlegible legends based on the supplied rare-earth reference,
-  with each plate's source bibliography alongside the key.
-- Plate numbers 01–38, shared by world and Japan companions, in 36 pt bold
-  amber. The footer is number only. The historical ST2 number treatment
-  remains in its source edition.
-- An aggregate ordered world map, world legend/sources, Japan map, Japan
-  legend/sources for each subject. No bibliography is appended at the end.
-
-Each new revision manifest records the atlas settings and the SHA-256 of
-`generation-style.json`. The reference render date identifies the approved
-appearance; it does not freeze future title dates or change observation dates.
-
-The separate default PDFs are `atlas-world.pdf` and `atlas-japan.pdf`;
-the combined 147-page edition is `atlas.pdf`. These are the outputs of the
-full build. Each edition has its own page index following the title page and
-edition notes. Individual sheet numbering stays 01–38.
-
-Full-size masters are under `maps/{world,japan}/` and
-`legends/{world,japan}/`, with `svg`, `pdf`, `png` and `preview` subdirectories.
-Standard filenames under `plates/{world,japan}/{svg,pdf,png}/` resolve to
-these same separate sheets. For example,
-`anthropocene-land-temperature-2025-authagraph-44-19.052559.png` contains only
-cartography/data; its `-legend.png` companion contains the legend and data
-bibliography. The same pairing applies to all 76 world/Japan maps and their
-previews. The default build prepares composition intermediates under
-`build/atlas-st2-base/sources/composition/`, outside the public plate folders.
-The dated ST2 delivery retains its own `sources/composition/` directory.
-
-`scripts/publish-setouchi-plate-files.py` binds all 608 standard filenames
-to the verified separate SVG, PDF, PNG and preview files. The Make target
-publishes these after export and verifies their bindings and checksums.
-The full review assembly also creates a four-sheet network proof under
-`proofs/43p5-antarctica-left/`. Earlier `prototypes/africa-framing/`
-comparisons belong to the historical ST2 delivery.
+The MSP 5 inputs retain the reviewed groundstation petals, aperture proxies,
+full-opacity fiber links, 6 pt Starlink labels, 1.5× sunbursts, vendor symbols
+and 12 pt all-sky labels. Japan's orbital observer retains its October 29
+positions. The recipe remains in
+[`config/msp-speculations-20261103.json`](../../../config/msp-speculations-20261103.json);
+the alternate reviewed palettes are ultramarine/porcelain, plum/ice and
+midnight/champagne. These RGB settings are not printer calibration profiles.
 
 ### Build stages and validation status
 
-The default-setting review composed **152 SVG sheets** and exported **20
-selected sheets**: Earth, network groundstations, orbital global, orbital
-observer and all-sky astronomy, each with World/Japan maps and separate
-legends. PDF font inspection confirmed 6 pt satellite labels and 12 pt all-sky
-labels in both scopes. The selected PDFs use the full 44 × 19.052559-inch
-sheet; their 300 dpi PNGs are 13,200 × 5,716 pixels.
-
-The full 152-sheet print export, public filename bindings, review index and
-aggregate PDFs remain a subsequent `make atlas` build. The validated SVG
-stage and the full build can be invoked separately:
+The current delivery has **156 verified SVG/PDF/PNG sheets**. Its inputs
+include the retained Setouchi/ST2 and MSP editions and November mineral
+supplements. These local sources must be available before composition;
+see the [Stage 1 reproduction record](../../development/20261108_anthropocene_ocean_temperature_stage_1.md#reproduction-and-verification).
 
 ```sh
 make atlas-sheets
 python3 scripts/build-atlas-defaults.py --output output/atlas --check --skip-exports
-
-make atlas ASSET_JOBS=4
+python3 scripts/export-setouchi-sheets.py --delivery output/atlas --workers 3
 python3 scripts/build-atlas-defaults.py --output output/atlas --check
-python3 scripts/publish-setouchi-plate-files.py --delivery output/atlas --check
 ```
 
-Checks read the saved inputs and output hashes; they do not fetch new data.
-If a complete local ST2 base already exists, the composition step can also
-reuse it directly:
+`ATLAS_SOURCE`, `ATLAS_BASE` and `ATLAS_OUTPUT` select the input edition,
+composition intermediates and output directory. Defaults are the retained
+first Setouchi delivery, `build/atlas-st2-base/` and `output/atlas/`. A complete
+existing ST2 base can also be reused directly:
 
 ```sh
 python3 scripts/build-atlas-defaults.py \
   --source output/setouchi-triennale-2028-st2 --output output/atlas
 ```
 
-The local review used that existing base. Receipts under `output/atlas/sources/`
-identify the actual input paths, selected recipe and generated files:
+The map/legend folders and export receipts are local build products. Ordinary
+sheet validation checks hashes and geometry without fetching new data.
 
-| Receipt | Scope |
+| Receipt under `output/atlas/sources/` | Current scope |
 | --- | --- |
-| `atlas-presentation.json` | Configuration, builder and source hashes; all 152 SVG records |
-| `sheets-validation-svg.json` | Passed SVG audit, including subject counts, label sizes and marker settings |
-| `sheet-export-manifest-selected.json` | The 20 selected PDF, PNG and preview exports |
-| `selected-export-validation.json` | Recorded inspection of those 20 exports, page dimensions and PDF type sizes |
-| `sheet-export-manifest.json`, `standard-plate-files.json`, `revision-manifest.json`, `sheets-validation.json` | Complete export, filename binding, assembly and validation receipts produced by the full build |
+| `atlas-presentation.json` | Saved settings, source/configuration hashes and all 156 SVG records |
+| `sheet-export-manifest.json` | All 156 individual PDF/PNG/preview exports |
+| `sheets-validation.json` | Passed 156-sheet verification, including subject presentation checks |
+| `atlas-catalog.json` | The 53-name catalog: 39 defaults and 14 optional prototypes |
 
-These delivery files are local build products. The committed sources are the
-saved configuration, durable builders, tests, approved study inputs and
-[work record](../../development/20261103_starlink_update_explore.md).
+**Aggregate PDF books remain deferred.** The final assembly used by
+`make atlas` still asserts the historical 38-subject/152-sheet inventory in
+`scripts/build-setouchi-revision-review.py`. Its 75-page per-scope and
+147-page combined counts describe the earlier 36-subject PDF selection,
+which omitted Bathymetry. They are not completion claims for the current
+39-subject books. The catalog-size update, current filename bindings and
+new aggregate-book verification are recorded in the
+[follow-up note](../../development/20261108_documentation_followup.md).
+
+The completed [Stage 2 review](../../development/20261108_anthropocene_ocean_temperature_stage_2.md)
+has a separate optional delivery: eight year identities, 32 measure/period
+views and 128 map/legend sheets. It uses the same presentation system with
+measure-specific keys and its own explicit build targets. World/Japan scopes
+apply to ocean/coastal views; the India pilot uses World/India. Neither this
+review nor the current default-atlas composition is part of `make all`'s
+standard native projection graph.
 
 ### Setouchi application edition (ST31–ST33)
 

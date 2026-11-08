@@ -14,6 +14,13 @@ title: Source data
 - [Anthropocene particulate sources](anthropocene-particulate.md) details the
   Japan, China and India PM2.5 ingestion, observation periods, quality filters,
   existing smoke/fire layers, and commercial/community sensor options.
+- [Completed ocean review](../../development/20261108_anthropocene_ocean_temperature_stage_1.md)
+  records NOAA OISST absolute SST, the 1991–2020 anomaly baseline, separate
+  Coral Reef Watch thermal stress, source receipts and reproducible exports.
+- [Completed Stage 2 climate review](../../development/20261108_anthropocene_ocean_temperature_stage_2.md)
+  records event/season definitions, CPC coastal pairing and the India heat–PM
+  join. Ocean and refreshed CPC end on November 7, 2026; eligible reference
+  PM ends on November 4 and the separate low-cost series on October 2.
 - [Anthropocene implementation](../passes/anthropocene/implementation.md) and
   the [Stage 15 FIRMS procedure](../../development/20260815_stage-15.md#getting-and-using-a-nasa-firms-map_key)
   document year-qualified particulate snapshots and secure NASA FIRMS key use.

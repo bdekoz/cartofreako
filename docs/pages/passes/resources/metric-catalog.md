@@ -11,7 +11,7 @@ This is the human-readable index to the checked
 metric catalog. The JSON profile remains authoritative for exact units,
 reference periods, source IDs, coverage, output tags, palettes, and lifecycle
 status. The checked snapshot contains 59 metric definitions across six
-families; 14 are standard release passes and 45 remain exploration-only.
+families; 16 are implemented standard metrics and 43 remain exploration-only.
 
 ## Pass classes
 
@@ -20,7 +20,7 @@ separate from whether an upstream source happens to require credentials.
 
 | Pass class | Definition | Build and release behavior | Current examples |
 | --- | --- | --- | --- |
-| **Standard pass** | Implemented, source-pinned, coverage-checked, and released | Included in the offline `make all` graph and generated for all six projections; appears in the public snapshot catalog | All 14 resource products listed below |
+| **Standard pass** | Implemented, source-pinned, coverage-checked, and eligible for release | Included in the offline `make all` graph and generated for all six projections; dated public galleries retain their earlier inventory | All 16 resource products listed below |
 | **Optional pass** | Implemented, but initially excluded from the standard graph because it requires credentials, license acceptance, or an explicit operator decision | Run through `generate-authorized-external`; a fully successful run persists only the pass name and enables its prepared artifact graph in later `make all` runs for that checkout. Absence never breaks a clean checkout | P-Tree Cloud-atmosphere and licensed network topology; no resource metric currently has this class |
 | **Exploration only** | Cataloged, researched, or source-tested, but not released | Has no production output tag or complete artifact rule and is absent from `make all`, release manifests, and public preview sheets | Every resource metric marked `planned`, `supplemental`, or `research-gap` below |
 

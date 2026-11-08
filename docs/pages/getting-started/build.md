@@ -224,21 +224,21 @@ The resource catalog distinguishes production behavior from research status:
 
 | Pass class | Meaning | Current resource count |
 | --- | --- | ---: |
-| **Standard pass** | Offline, included in `make all`, and eligible for the next generated-assets release | 14 |
+| **Standard pass** | Offline, included in `make all`, and eligible for the next generated-assets release | 16 |
 | **Optional pass** | Fully implemented but deliberately opt-in because of credentials, license acceptance, or an operator decision | 0 |
-| **Exploration only** | Cataloged or source-tested, but without a production output tag and released artifact | 45 |
+| **Exploration only** | Cataloged or source-tested, but without a production output tag and released artifact | 43 |
 
 No resource metric is currently optional. Project-wide optional passes are the
 credentialed P-Tree Cloud-atmosphere product and licensed network topology.
 NASA FIRMS has an optional authorization boundary, but remains an unrendered
 exploration input rather than an optional released pass.
 
-The 45 exploration-only entries comprise 41 `planned`, three `supplemental`,
+The 43 exploration-only entries comprise 39 `planned`, three `supplemental`,
 and one `research-gap` metric. `Supplemental` means a possible supporting
 product; it does **not** mean an implemented optional pass. The complete
 [human-readable catalog](../passes/resources/metric-catalog.md) maps every metric
 to its class and promotion boundary, while
-[`resources-profile.json`](../../../assets.static/resources/resources-profile.json)
+[`resources-profile.json`](../../../assets.static/resources/current-20261108/resources-profile.json)
 remains the machine-readable authority.
 The [network-swarm notes](../passes/network-swarm.md) record the fixed
 source audit, variable-input contract, H3/Izzi clustering, independent

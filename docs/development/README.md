@@ -7,6 +7,9 @@ title: Development records
 
 [Documentation index](../pages/README.md) · [Historical records](../pages/history/README.md)
 
+- [Current delivery and deferred documentation/build follow-up](20261108_documentation_followup.md)
+- [Completed Stage 2 climate prototypes: marine heatwaves, thermal seasons, coastal heat and India heat–PM2.5](20261108_anthropocene_ocean_temperature_stage_2.md)
+- [Completed Stage 0/1: atlas cleanup, mineral additions, SST, SST anomaly and coral thermal stress](20261108_anthropocene_ocean_temperature_stage_1.md)
 - [India particulate enrichment v2 and the 8 November data refresh](20261108_particulate_data_enrichement_explore_v2_india.md)
 - [MSP duotone formulations, low-ink production notes and four-palette test strip](20261104_msp_duotone_low_ink_formulation.md)
 - [November Starlink refresh, constellation layers, capability studies and MSP 5 atlas defaults](20261103_starlink_update_explore.md) · [Current atlas settings and build stages](../pages/getting-started/generation-styles.md#setouchi-st2-print-layout)

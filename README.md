@@ -24,7 +24,7 @@ standalone Equal Earth forward/reverse support, neutral PROJ/D3 comparison
 fixtures, and [five local positioning and slice studies](docs/development/20260815_equal-earth-positioning-speculations-v01.md)
 without changing the six-family release runtime.
 
-Review the latest complete **Setouchi 2028 world/Japan edition** in the
+Review the published **30 October Setouchi 2028 world/Japan edition** in the
 [live gallery](https://situationshipin.space/review/cartofreako-setouchi-2028-20261030/):
 38 paired subjects, 76 zoomable plates and downloadable feedback. The
 [review guide](docs/pages/gallery/setouchi-2028.md) explains the visual changes,
@@ -32,10 +32,20 @@ feedback workflow, source inventory and print deliverables.
 
 The current [atlas defaults](docs/pages/getting-started/generation-styles.md#setouchi-st2-print-layout)
 use the approved MSP 5 **wine/amber** presentation in the Setouchi AuthaGraph
-frame. `make atlas-sheets` composes and validates the 152 SVG map/legend
-sheets; `make atlas ASSET_JOBS=4` also exports and assembles the print edition
-under `output/atlas/`. The [November work record](docs/development/20261103_starlink_update_explore.md)
-records the approved settings, source dates and completed validation.
+frame. The [current catalog](config/atlas-plates.json) contains **53 named
+plates: 39 defaults and 14 optional prototypes**. The default World/Japan
+edition has **156 separate map/legend sheets**, all verified as SVG/PDF/PNG.
+`make atlas-sheets` composes the default SVG sheets under `output/atlas/`;
+the [build-stage notes](docs/pages/getting-started/generation-styles.md#build-stages-and-validation-status)
+record the export commands and remaining aggregate-book work.
+
+The completed [Stage 0/1 record](docs/development/20261108_anthropocene_ocean_temperature_stage_1.md)
+covers the plate reorganization, lithium/uranium additions, absolute SST,
+SST anomaly and separate coral thermal-stress overlay. The completed
+[Stage 2 record](docs/development/20261108_anthropocene_ocean_temperature_stage_2.md)
+adds eight optional climate identities, **128 separate map/legend sheets**
+and four scientific figures. Implementation `04114b3` is committed and pushed;
+default promotion and public-gallery publication remain human decisions.
 
 The top-level directories separate implementation, generation, verification,
 and artifacts:
@@ -111,22 +121,18 @@ compatibility contracts, and build requirements. The
 [forward/reverse API notes](docs/pages/runtime/projection-api.md) define
 runtime API 3, candidate/component statuses, batches, TypeScript, and headless behavior.
 
-Generate 24 production whole-earth maps, 18 timestamped astronomy maps, 12
-timestamped Orbital Technosphere maps, 84 Stage 12 resources maps, six
-native network-swarm resolution pairs, six filled blue Bathymetry Roulette maps, six
-blue Hamonshū bathymetry maps, 24
-source-separated Anthropocene observation and temperature maps, six cloud/CDN
-network-infrastructure site maps, six default-rendered Fiber Synthesized maps, five
-exploratory Myriahedral ocean perspectives, 12 Cahill-Keyes enlargement
-slices, and two Myriahedral face-group slices as layered SVG, PDF, and opaque-white,
-3840-pixel-long-side PNG artifacts. The Anthropocene count comprises complete
-2025 and partial 2026 for both particulate and temperature families. The same
-graph makes 34 480-pixel thumbnails for each of the six projections, 204
-total, with:
+Build the standard native projection artifact graph, including the
+2025/2026 Anthropocene land-temperature and particulate families and the
+November lithium/uranium resource additions, with:
 
 ```sh
 make all
 ```
+
+The [standard artifact manifest](contracts/standard-artifact-manifest-v1.json)
+currently has 223 entries. The separate 39-subject World/Japan atlas and the
+Stage 1/2 climate review editions use their documented explicit targets.
+The planned clean rebuild on Eureka is deferred to the next session.
 
 Build every implemented exploration-only product without invoking either
 release path with:
@@ -318,7 +324,7 @@ make generate-resources
 ```
 
 The [resource metric catalog](docs/pages/passes/resources/metric-catalog.md) distinguishes
-the 14 standard release passes from optional-pass infrastructure and 45
+the 16 implemented resource metrics from optional-pass infrastructure and 43
 exploration-only definitions, including the unreleased LGBTQIA-related and
 drug-policy candidates. The
 [Stage 12 implementation notes](docs/development/20260815_stage-12.md),

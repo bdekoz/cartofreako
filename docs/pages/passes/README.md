@@ -34,11 +34,32 @@ artifacts against the standard manifest. The synthetic PurpleAir interface,
 bounded water-debris, and Majuro evidence families remain exploration-only
 despite having implemented generators.
 
-The [November 8 plate catalog](../../../config/atlas-plates.json) also records
+The [November 8 plate catalog](../../../config/atlas-plates.json) contains
+**53 named plates: 39 defaults and 14 optional prototypes**. Each default has
+World/Japan cartography + graphics sheets and separate legend/source sheets,
+giving **156 verified sheets**. It also records
 Bathymetry Roulette and Hamonshū as optional prototypes, moves historical
 reef threat to Anthropocene, and groups petroleum studies under Energy.
 The [water-temperature study](../../development/20261108_anthropocene_ocean_temperature_stage_1.md)
 documents the separate SST/anomaly prototypes and the completed mineral additions.
+The completed [Stage 2 study](../../development/20261108_anthropocene_ocean_temperature_stage_2.md)
+adds the following optional families, each with separate 2025 and 2026 IDs:
+
+| Canonical family (`YYYY` is a four-digit year) | Measure and support |
+| --- | --- |
+| `anthropocene-marine-heatwave-YYYY` | Persistent seasonal SST exceedance; event days, observed duration and intensity |
+| `anthropocene-ocean-thermal-season-YYYY` | Experimental local onset/length measures with explicit open and undefined seasons |
+| `anthropocene-coastal-compound-heat-YYYY` | Date-aligned CPC land heat and adjacent-ocean warmth |
+| `anthropocene-heat-particulate-coexposure-YYYY` | Date-aligned heat and PM2.5 at selected India monitors; reference and low-cost products remain separate |
+
+Stage 2 has **32 measure/period views and 128 sheets**, plus four scientific
+figures. Ocean/coastal views use World/Japan; the India pilot uses World/India.
+The 14 prototypes are the eight Stage 2 identities, four Stage 1 water
+temperature/anomaly identities and two Bathymetry identities. They remain
+outside the 39-pass default atlas. `make all` builds the standard native
+projection graph; Stage 2 uses `make prepare-ocean-stage-2`,
+`make render-ocean-stage-2` and `make check-ocean-stage-2` with the study's
+pinned inputs restored first.
 
 ## Pass families
 
