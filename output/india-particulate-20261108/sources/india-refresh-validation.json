@@ -1,0 +1,177 @@
+{
+  "status": "passed",
+  "requested_data_through": "2026-11-08",
+  "changes": {
+    "added_station_days": 139,
+    "removed_station_days": 0,
+    "changed_station_days": 1
+  },
+  "coverage": [
+    {
+      "kind": "reference",
+      "year": "2025",
+      "stations": 16,
+      "eligible_station_days_before": 4006,
+      "eligible_station_days_after": 4006,
+      "first": "2025-01-01",
+      "last": "2025-12-31"
+    },
+    {
+      "kind": "reference",
+      "year": "2026",
+      "stations": 16,
+      "eligible_station_days_before": 3471,
+      "eligible_station_days_after": 3560,
+      "first": "2026-01-01",
+      "last": "2026-11-04"
+    },
+    {
+      "kind": "air-sensor",
+      "year": "2025",
+      "stations": 1,
+      "eligible_station_days_before": 100,
+      "eligible_station_days_after": 100,
+      "first": "2025-09-10",
+      "last": "2025-12-31"
+    },
+    {
+      "kind": "air-sensor",
+      "year": "2026",
+      "stations": 1,
+      "eligible_station_days_before": 245,
+      "eligible_station_days_after": 245,
+      "first": "2026-01-01",
+      "last": "2026-10-02"
+    }
+  ],
+  "checks": [
+    "unique station-day keys",
+    "inclusive local date bounds",
+    "finite nonnegative daily means",
+    "18 distinct valid hours eligibility",
+    "pre-2026-10-20 rows unchanged",
+    "Japan and China inputs byte-identical",
+    "profile data digests match",
+    "legacy features and values preserved",
+    "exceedance counts bounded by measured days",
+    "repository profile/GeoJSON checksum verifier passed for 2025 and 2026"
+  ],
+  "prepared_country_coverage": [
+    {
+      "year": 2025,
+      "country": "CHN",
+      "instrument_class": "monitor",
+      "stations": 1686,
+      "h3_cells": 562,
+      "first_date": "2025-01-01",
+      "last_date": "2025-12-31",
+      "distinct_dates": 358,
+      "valid_station_days": 547441,
+      "station_days_above_35": 158600,
+      "daily_mean_min_ug_m3": 2.333333,
+      "daily_mean_max_ug_m3": 1816.272727
+    },
+    {
+      "year": 2025,
+      "country": "IND",
+      "instrument_class": "monitor",
+      "stations": 16,
+      "h3_cells": 15,
+      "first_date": "2025-01-01",
+      "last_date": "2025-12-31",
+      "distinct_dates": 365,
+      "valid_station_days": 4006,
+      "station_days_above_35": 1951,
+      "daily_mean_min_ug_m3": 0.0,
+      "daily_mean_max_ug_m3": 1153.501957
+    },
+    {
+      "year": 2025,
+      "country": "IND",
+      "instrument_class": "sensor",
+      "stations": 1,
+      "h3_cells": 1,
+      "first_date": "2025-09-10",
+      "last_date": "2025-12-31",
+      "distinct_dates": 100,
+      "valid_station_days": 100,
+      "station_days_above_35": 98,
+      "daily_mean_min_ug_m3": 19.849194,
+      "daily_mean_max_ug_m3": 517.495311
+    },
+    {
+      "year": 2025,
+      "country": "JPN",
+      "instrument_class": "monitor",
+      "stations": 1076,
+      "h3_cells": 223,
+      "first_date": "2025-11-01",
+      "last_date": "2025-12-31",
+      "distinct_dates": 61,
+      "valid_station_days": 62014,
+      "station_days_above_35": 35,
+      "daily_mean_min_ug_m3": 0.0,
+      "daily_mean_max_ug_m3": 173.047619
+    },
+    {
+      "year": 2026,
+      "country": "CHN",
+      "instrument_class": "monitor",
+      "stations": 1345,
+      "h3_cells": 511,
+      "first_date": "2026-01-01",
+      "last_date": "2026-10-28",
+      "distinct_dates": 295,
+      "valid_station_days": 391529,
+      "station_days_above_35": 85278,
+      "daily_mean_min_ug_m3": 2.347826,
+      "daily_mean_max_ug_m3": 1034.416667
+    },
+    {
+      "year": 2026,
+      "country": "IND",
+      "instrument_class": "monitor",
+      "stations": 16,
+      "h3_cells": 15,
+      "first_date": "2026-01-01",
+      "last_date": "2026-11-04",
+      "distinct_dates": 308,
+      "valid_station_days": 3560,
+      "station_days_above_35": 1533,
+      "daily_mean_min_ug_m3": 0.0,
+      "daily_mean_max_ug_m3": 886.5
+    },
+    {
+      "year": 2026,
+      "country": "IND",
+      "instrument_class": "sensor",
+      "stations": 1,
+      "h3_cells": 1,
+      "first_date": "2026-01-01",
+      "last_date": "2026-10-02",
+      "distinct_dates": 245,
+      "valid_station_days": 245,
+      "station_days_above_35": 132,
+      "daily_mean_min_ug_m3": 4.191304,
+      "daily_mean_max_ug_m3": 278.921111
+    },
+    {
+      "year": 2026,
+      "country": "JPN",
+      "instrument_class": "monitor",
+      "stations": 1095,
+      "h3_cells": 226,
+      "first_date": "2026-01-01",
+      "last_date": "2026-09-30",
+      "distinct_dates": 273,
+      "valid_station_days": 283898,
+      "station_days_above_35": 100,
+      "daily_mean_min_ug_m3": 0.0,
+      "daily_mean_max_ug_m3": 415.05
+    }
+  ],
+  "documentation_checks": {
+    "changed_documents": "passed",
+    "repository_wide": "checker crashed while handling scripts/templates/setouchi-futures-manual.html outside the changed documents; no global pass claimed"
+  }
+}

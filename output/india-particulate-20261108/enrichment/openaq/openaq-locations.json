@@ -1,0 +1,227 @@
+[
+  {
+    "id": 8118,
+    "country": "IND",
+    "name": "New Delhi",
+    "provider": "AirNow",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/8118",
+    "metadata_sha256": "82c96730f89e153a5bce5a5e08d49a48ee6947e6d61566e827278c7eefa1466e"
+  },
+  {
+    "id": 8039,
+    "country": "IND",
+    "name": "Mumbai",
+    "provider": "AirNow",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/8039",
+    "metadata_sha256": "12244d936d74df90d09e76ca03af2e17fb60f9e83d120684f80bbfa79b6af0a5"
+  },
+  {
+    "id": 235,
+    "country": "IND",
+    "name": "Anand Vihar, Delhi",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/235",
+    "metadata_sha256": "ecc77d66a48ac9d9c6ac61600ee4686f71bfeeacc0bb60a13313b0b27055c3c0"
+  },
+  {
+    "id": 6956,
+    "country": "IND",
+    "name": "Powai, Mumbai",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/6956",
+    "metadata_sha256": "02edc2bdc115ac3b6c4dbf848ac563e6e84606eb81f2a0d843254db188a60e81"
+  },
+  {
+    "id": 5655,
+    "country": "IND",
+    "name": "Velachery, Chennai",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/5655",
+    "metadata_sha256": "9689da3a8553967d34b54d668da4b49c7b07fdfbf682c3fc003b940c8c60c134"
+  },
+  {
+    "id": 10851,
+    "country": "IND",
+    "name": "Bidhannagar, Kolkata",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/10851",
+    "metadata_sha256": "01887e21ce0d356d92a8ec7299344c695fb66c7f9c8280a9c5d622e3e33eca2b"
+  },
+  {
+    "id": 5548,
+    "country": "IND",
+    "name": "BTM Layout, Bengaluru",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/5548",
+    "metadata_sha256": "08944c01dcb88b86cfadd0b77579713be6f087957cd9883f70126550fb24d7e4"
+  },
+  {
+    "id": 5631,
+    "country": "IND",
+    "name": "Maninagar, Ahmedabad",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/5631",
+    "metadata_sha256": "8a61a34115320071a1434c4bdc6d51571838c0fd26fb8f30d14e53344e2a455b"
+  },
+  {
+    "id": 2456,
+    "country": "IND",
+    "name": "Talkatora, Lucknow",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/2456",
+    "metadata_sha256": "1e6194cda8bf36ed60e66d961393ba316b4aae042d45716fcdfe6047cbfacd22"
+  },
+  {
+    "id": 407,
+    "country": "IND",
+    "name": "Zoo Park, Hyderabad",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/407",
+    "metadata_sha256": "9e887e75441db226112ce1c288b9043d900c153f906242b883f3c670029e79c7"
+  },
+  {
+    "id": 220265,
+    "country": "IND",
+    "name": "Rajbagh, Srinagar",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/220265",
+    "metadata_sha256": "49a1d93555c10a85fab80bdcf176ff4674b565734055429522837894e08bb06d"
+  },
+  {
+    "id": 3409498,
+    "country": "IND",
+    "name": "Residency Area, Indore",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/3409498",
+    "metadata_sha256": "92be0b9f5502a55a4879186d44534f3fdfcbb69bd6c744cf7f8823cda4960524"
+  },
+  {
+    "id": 5646,
+    "country": "IND",
+    "name": "Plammoodu, Thiruvananthapuram",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/5646",
+    "metadata_sha256": "92b95182ae19c0d9f6d87cbbc8ef3fcd17de4a7919372831ecb40d76d675e4c2"
+  },
+  {
+    "id": 10599,
+    "country": "IND",
+    "name": "Rajbansi Nagar, Patna",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/10599",
+    "metadata_sha256": "c636a0a6418ecf42363881adcabae0a43e52166cf4e47f627ea06023812bc5f9"
+  },
+  {
+    "id": 3409430,
+    "country": "IND",
+    "name": "Mansarovar, Jaipur",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/3409430",
+    "metadata_sha256": "cb6869e84dddc61a6f1b2b950b851345b63b5dbd1738bb7bb54946d6b4e4830d"
+  },
+  {
+    "id": 233415,
+    "country": "IND",
+    "name": "Sector 22, Chandigarh",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/233415",
+    "metadata_sha256": "76a1939e6cee28626ffd8a9f4396723b6c9b58556771e2d695ef1a1d8818702d"
+  },
+  {
+    "id": 5728639,
+    "country": "IND",
+    "name": "Bemina, Srinagar",
+    "provider": "AirGradient",
+    "kind": "air-sensor",
+    "metadata_url": "https://explore.openaq.org/locations/5728639",
+    "metadata_sha256": "01598e6483c9efeeb5f7d7201451ed2b32227af2ee97f0b6ae4e3361407b511b"
+  },
+  {
+    "id": 5569,
+    "country": "IND",
+    "name": "Punjab Agricultural University, Ludhiana",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/5569",
+    "metadata_sha256": "789ba7d06fbf0b7b63e00adae0effc09a97ccc2c61f96b2af7624300fce4cbc5"
+  },
+  {
+    "id": 5551,
+    "country": "IND",
+    "name": "Golden Temple, Amritsar",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/5551",
+    "metadata_sha256": "588e010486190da69c644bedd5e8753a0ac6d76d5b50358080c450581f8bc582"
+  },
+  {
+    "id": 10921,
+    "country": "IND",
+    "name": "NISE Gwal Pahari, Gurugram",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/10921",
+    "metadata_sha256": "e2192835fb42ec5262bf40e70eb0df9f7d79bbdd029bf876c826dee6ed930153"
+  },
+  {
+    "id": 5544,
+    "country": "IND",
+    "name": "Model Town, Patiala",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/5544",
+    "metadata_sha256": "12228e16aad7d1928bcf261a9619dbedf6fb44a56d58387eb6334112f9483ece"
+  },
+  {
+    "id": 10908,
+    "country": "IND",
+    "name": "Sector 11, Faridabad",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/10908",
+    "metadata_sha256": "956057413e5472b6f4f4798e67e70aaa6fb49b2fdee26afe953b6c37c2067169"
+  },
+  {
+    "id": 10820,
+    "country": "IND",
+    "name": "Sector 30, Faridabad",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/10820",
+    "metadata_sha256": "c0f174eb3bd94dc1a66e85305d746178e8e22112cef7bdc6fc7808359a3cd472"
+  },
+  {
+    "id": 5665,
+    "country": "IND",
+    "name": "Vasundhara, Ghaziabad",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/5665",
+    "metadata_sha256": "c12f5430fb719e4900e726828b0c73c7cb8ec7efca917ef35b843cc2da1877c7"
+  },
+  {
+    "id": 10919,
+    "country": "IND",
+    "name": "Sanjay Nagar, Ghaziabad",
+    "provider": "CPCB",
+    "kind": "reference",
+    "metadata_url": "https://explore.openaq.org/locations/10919",
+    "metadata_sha256": "d7e0fae990e8ff6c4979acf2320efadfbd6729827936a41368427d82ffc08fad"
+  }
+]

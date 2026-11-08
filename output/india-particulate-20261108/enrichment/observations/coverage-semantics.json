@@ -1,0 +1,6 @@
+{
+  "zero": "Zero counts mean no records or eligible observations in the ingested snapshot; never zero concentration",
+  "denominator": "Calendar days in the requested window, not independently verified station operational uptime",
+  "xkdr_inventory": "Archive-wide 558 stations; matrix inclusion does not imply activity during 2024",
+  "openaq_parameters": "Pollutants/weather fields observed at least once for each selected location; unreported parameters are not imputed"
+}

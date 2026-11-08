@@ -4,6 +4,7 @@ import argparse
 from collections import defaultdict
 import csv
 import ctypes as C
+import datetime as dt
 import gzip
 import hashlib
 import io
@@ -48,7 +49,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--input', type=Path, default=ROOT / 'assets.static/anthropocene/asia-pm25')
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--as-of-utc', default='2026-10-29T23:00:00Z')
+    parser.add_argument('--data-through', type=dt.date.fromisoformat, default=dt.date(2026, 10, 28),
+                        help='Requested inclusive observation cutoff; actual coverage remains source-specific')
     args = parser.parse_args()
+    args.input = args.input.resolve()
+    acquired_at = dt.datetime.fromisoformat(args.as_of_utc.replace('Z', '+00:00'))
+    if acquired_at.utcoffset() != dt.timedelta(0):
+        parser.error('--as-of-utc must include the UTC offset or Z')
     args.output.mkdir(parents=True, exist_ok=True)
     coverage = defaultdict(lambda: defaultdict(set))
     exceed = defaultdict(lambda: defaultdict(set))
@@ -61,6 +69,8 @@ def main():
         input_files.append(dict(path=str(path.relative_to(ROOT)), sha256=hashlib.sha256(path.read_bytes()).hexdigest()))
         with gzip.open(path, 'rt') as stream:
             for row in csv.DictReader(stream):
+                if row['date'] > args.data_through.isoformat():
+                    continue
                 if row['eligible'].lower() != 'true':
                     continue
                 assert 18 <= int(row['valid_hours']) <= 24
@@ -118,7 +128,14 @@ def main():
         old_totals = data['metadata']['metric_cell_day_totals'].copy()
         old_features = {f['id']: f for f in data['features']}
         features = {f['id']: json.loads(json.dumps(f)) for f in data['features']}
-        profile['snapshot'].update(as_of_utc='2026-10-29T23:00:00Z', data_through=f'{year}-12-31' if year == 2025 else '2026-10-28')
+        available_dates = [s['available_through'] for s in profile['sources']
+                           if s['status'] == 'included' and s.get('available_through')]
+        available_dates.extend(date for (source_year, _), stats in source_stats.items()
+                               if source_year == year for date in stats['dates'])
+        if any(date > args.data_through.isoformat() for date in available_dates):
+            raise ValueError('Requested cutoff predates the immutable legacy snapshot')
+        profile['snapshot'].update(as_of_utc=args.as_of_utc, data_through=max(available_dates),
+                                   requested_data_through=min(f'{year}-12-31', args.data_through.isoformat()))
         profile['thresholds'].update(pm25_concentration_threshold_exclusive_ug_m3=35, pm25_minimum_valid_hours_per_day=18)
         profile['description'] += ' Asian measured PM2.5 and AirGradient sensor observations are separate from EPA AQI and smoke.'
         for prop, title, color, shape, scale, sources in METRICS:
@@ -165,7 +182,9 @@ def main():
     writer.writeheader()
     writer.writerows(ledger)
     (args.output / 'pm25-cell-days.csv.gz').write_bytes(gzip.compress(text.getvalue().encode(), mtime=0))
-    report = dict(status='passed', normalized_inputs=input_files, country_coverage=country_rows, checks=checks,
+    report = dict(status='passed', as_of_utc=args.as_of_utc,
+                  requested_data_through=args.data_through.isoformat(),
+                  normalized_inputs=input_files, country_coverage=country_rows, checks=checks,
                   extreme_value_review=dict(threshold_daily_mean_ug_m3=250, station_days=len(extreme_review), action='Retained provider-reported values pending station/operator quality review; 250 is a review trigger, not a validity cutoff or health standard.'),
                   interpretation='Counts describe available monitored days, not annual rates or national exposure. China and Japan coverage differ from selected Indian urban sites. Sensor observations remain separate.')
     (args.output / 'pm25-extreme-value-review.json').write_text(json.dumps(extreme_review, indent=2) + '\n')

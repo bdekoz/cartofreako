@@ -1,0 +1,9 @@
+# Preserve pinned source/export bytes across checkout line-ending settings.
+*.json -text
+*.geojson -text
+*.csv -text whitespace=cr-at-eol
+*.txt -text
+*.gz binary
+*.npz binary
+*.pdf binary
+*.png binary

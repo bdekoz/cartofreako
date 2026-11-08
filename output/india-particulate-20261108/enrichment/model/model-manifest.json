@@ -1,0 +1,34 @@
+{
+  "product": "LongPMInd",
+  "version": "v2",
+  "doi": "10.5281/zenodo.14557027",
+  "archive_period": "1980–2022",
+  "prepared_year": 2022,
+  "license": "CC BY 4.0",
+  "files": {
+    "pm25": {
+      "archive_sha256": "a42e00bd58b615ef686ec169bf58659acba00dcb82db95500a9c56fa522ccc61",
+      "member": "pm25_monthly/pm25_arr_10km_2022_monthly.nc",
+      "member_sha256": "8358e4d10b463ddade2e153570bcca8fce36c3302ed63254369bdca23c6a2f72",
+      "variable_units_attribute": "",
+      "negative_monthly_values_masked": 0,
+      "finite_annual_cells": 27708
+    },
+    "pm10": {
+      "archive_sha256": "5ac615efc0c7fb3a0536ec4fac343eedb97a7e51e78d1d97ba1f6654af77e20d",
+      "member": "pm10_monthly/pm10_arr_10km_2022_monthly.nc",
+      "member_sha256": "9fcf8c594cde2347dffc2b1bb80cd864344d0afe8a5e5024bee3eab09027963c",
+      "variable_units_attribute": "",
+      "negative_monthly_values_masked": 22,
+      "finite_annual_cells": 27692
+    }
+  },
+  "unit": "µg/m³",
+  "unit_provenance": "Research paper; NetCDF pollutant variable omits a units attribute",
+  "annual_method": "Calendar-day-weighted monthly means; require 12 finite, nonnegative months",
+  "negative_value_policy": "Raw negative model values retained in invalid-model-values.csv.gz; masked, not clipped to zero",
+  "paired_export_cells": 27692,
+  "observed_coverage_contribution": 0,
+  "independent_validation": "Not established: no verified held-out 2022 station set acquired",
+  "limitations": "Historical modeled layer only; no 2025/2026 gap filling, local source attribution, or finer resolution claim"
+}

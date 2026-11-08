@@ -1,0 +1,492 @@
+{
+  "status": "passed",
+  "requested_local_cutoff": "2026-11-08",
+  "national_inventory_stations": 558,
+  "selected_locations": 25,
+  "crosswalk": {
+    "coordinate_and_name_match": 21,
+    "unmatched": 2,
+    "separate_air_sensor": 1,
+    "ambiguous_match": 1
+  },
+  "openaq_coverage": [
+    {
+      "year": "2025",
+      "station_type": "air-sensor",
+      "parameter": "pm25",
+      "stations": 1,
+      "eligible_station_days": 100,
+      "first": "2025-09-10",
+      "last": "2025-12-31"
+    },
+    {
+      "year": "2025",
+      "station_type": "air-sensor",
+      "parameter": "relativehumidity",
+      "stations": 1,
+      "eligible_station_days": 100,
+      "first": "2025-09-10",
+      "last": "2025-12-31"
+    },
+    {
+      "year": "2025",
+      "station_type": "air-sensor",
+      "parameter": "temperature",
+      "stations": 1,
+      "eligible_station_days": 100,
+      "first": "2025-09-10",
+      "last": "2025-12-31"
+    },
+    {
+      "year": "2025",
+      "station_type": "reference",
+      "parameter": "pm10",
+      "stations": 22,
+      "eligible_station_days": 5397,
+      "first": "2025-02-19",
+      "last": "2025-12-31"
+    },
+    {
+      "year": "2025",
+      "station_type": "reference",
+      "parameter": "pm25",
+      "stations": 24,
+      "eligible_station_days": 5804,
+      "first": "2025-01-01",
+      "last": "2025-12-31"
+    },
+    {
+      "year": "2025",
+      "station_type": "reference",
+      "parameter": "relativehumidity",
+      "stations": 21,
+      "eligible_station_days": 4863,
+      "first": "2025-02-19",
+      "last": "2025-12-31"
+    },
+    {
+      "year": "2025",
+      "station_type": "reference",
+      "parameter": "temperature",
+      "stations": 20,
+      "eligible_station_days": 4862,
+      "first": "2025-02-19",
+      "last": "2025-12-31"
+    },
+    {
+      "year": "2025",
+      "station_type": "reference",
+      "parameter": "wind_direction",
+      "stations": 21,
+      "eligible_station_days": 1488,
+      "first": "2025-10-08",
+      "last": "2025-12-31"
+    },
+    {
+      "year": "2025",
+      "station_type": "reference",
+      "parameter": "wind_speed",
+      "stations": 21,
+      "eligible_station_days": 1487,
+      "first": "2025-10-08",
+      "last": "2025-12-31"
+    },
+    {
+      "year": "2026",
+      "station_type": "air-sensor",
+      "parameter": "pm25",
+      "stations": 1,
+      "eligible_station_days": 245,
+      "first": "2026-01-01",
+      "last": "2026-10-02"
+    },
+    {
+      "year": "2026",
+      "station_type": "air-sensor",
+      "parameter": "relativehumidity",
+      "stations": 1,
+      "eligible_station_days": 245,
+      "first": "2026-01-01",
+      "last": "2026-10-02"
+    },
+    {
+      "year": "2026",
+      "station_type": "air-sensor",
+      "parameter": "temperature",
+      "stations": 1,
+      "eligible_station_days": 245,
+      "first": "2026-01-01",
+      "last": "2026-10-02"
+    },
+    {
+      "year": "2026",
+      "station_type": "reference",
+      "parameter": "pm10",
+      "stations": 22,
+      "eligible_station_days": 5046,
+      "first": "2026-01-01",
+      "last": "2026-11-02"
+    },
+    {
+      "year": "2026",
+      "station_type": "reference",
+      "parameter": "pm25",
+      "stations": 24,
+      "eligible_station_days": 5396,
+      "first": "2026-01-01",
+      "last": "2026-11-04"
+    },
+    {
+      "year": "2026",
+      "station_type": "reference",
+      "parameter": "relativehumidity",
+      "stations": 21,
+      "eligible_station_days": 4667,
+      "first": "2026-01-01",
+      "last": "2026-11-02"
+    },
+    {
+      "year": "2026",
+      "station_type": "reference",
+      "parameter": "temperature",
+      "stations": 20,
+      "eligible_station_days": 3934,
+      "first": "2026-01-01",
+      "last": "2026-11-02"
+    },
+    {
+      "year": "2026",
+      "station_type": "reference",
+      "parameter": "wind_direction",
+      "stations": 21,
+      "eligible_station_days": 4678,
+      "first": "2026-01-01",
+      "last": "2026-11-02"
+    },
+    {
+      "year": "2026",
+      "station_type": "reference",
+      "parameter": "wind_speed",
+      "stations": 21,
+      "eligible_station_days": 4680,
+      "first": "2026-01-01",
+      "last": "2026-11-02"
+    }
+  ],
+  "openaq_instrument_hours": 1339685,
+  "independent_pm25_normalization": {
+    "rows": 13487,
+    "eligibility_and_hours_agree": true,
+    "maximum_serialized_mean_difference_ug_m3": 4.3000000005122274e-05,
+    "threshold_classifications_agree": true
+  },
+  "paired_hours": 260374,
+  "negative_coarse_hours": 4001,
+  "zero_pm10_denominator_hours": 1258,
+  "matched_station_days_by_parameter": {
+    "pm10": 3460,
+    "pm25": 3734
+  },
+  "xkdr_2024_coverage": [
+    {
+      "parameter": "pm10",
+      "stations": 525,
+      "eligible_station_days": 154964,
+      "first": "2024-01-01",
+      "last": "2024-12-31"
+    },
+    {
+      "parameter": "pm25",
+      "stations": 534,
+      "eligible_station_days": 157677,
+      "first": "2024-01-01",
+      "last": "2024-12-31"
+    }
+  ],
+  "xkdr_missing_coordinate_stations": 52,
+  "fire_coverage": [
+    {
+      "satellite": "N20",
+      "detections": 5286,
+      "first": "2026-11-01",
+      "last": "2026-11-08"
+    },
+    {
+      "satellite": "N21",
+      "detections": 5193,
+      "first": "2026-11-01",
+      "last": "2026-11-08"
+    }
+  ],
+  "iitm_forecast_category_sums": {
+    "2026-11-07": 100.9086663696,
+    "2026-11-08": 101.131291353,
+    "2026-11-09": 100.807209233,
+    "2026-11-10": 101.155208437
+  },
+  "model": {
+    "product": "LongPMInd",
+    "version": "v2",
+    "doi": "10.5281/zenodo.14557027",
+    "archive_period": "1980\u20132022",
+    "prepared_year": 2022,
+    "license": "CC BY 4.0",
+    "files": {
+      "pm25": {
+        "archive_sha256": "a42e00bd58b615ef686ec169bf58659acba00dcb82db95500a9c56fa522ccc61",
+        "member": "pm25_monthly/pm25_arr_10km_2022_monthly.nc",
+        "member_sha256": "8358e4d10b463ddade2e153570bcca8fce36c3302ed63254369bdca23c6a2f72",
+        "variable_units_attribute": "",
+        "negative_monthly_values_masked": 0,
+        "finite_annual_cells": 27708
+      },
+      "pm10": {
+        "archive_sha256": "5ac615efc0c7fb3a0536ec4fac343eedb97a7e51e78d1d97ba1f6654af77e20d",
+        "member": "pm10_monthly/pm10_arr_10km_2022_monthly.nc",
+        "member_sha256": "9fcf8c594cde2347dffc2b1bb80cd864344d0afe8a5e5024bee3eab09027963c",
+        "variable_units_attribute": "",
+        "negative_monthly_values_masked": 22,
+        "finite_annual_cells": 27692
+      }
+    },
+    "unit": "\u00b5g/m\u00b3",
+    "unit_provenance": "Research paper; NetCDF pollutant variable omits a units attribute",
+    "annual_method": "Calendar-day-weighted monthly means; require 12 finite, nonnegative months",
+    "negative_value_policy": "Raw negative model values retained in invalid-model-values.csv.gz; masked, not clipped to zero",
+    "paired_export_cells": 27692,
+    "observed_coverage_contribution": 0,
+    "independent_validation": "Not established: no verified held-out 2022 station set acquired",
+    "limitations": "Historical modeled layer only; no 2025/2026 gap filling, local source attribution, or finer resolution claim"
+  },
+  "profile_checks": [
+    {
+      "year": 2025,
+      "sha256": "984c42483635863d290f628c09a2e53f4f2cd4428b217de6024cedbf6cc60515",
+      "features": 50241
+    },
+    {
+      "year": 2026,
+      "sha256": "fa4d70ecc2413bd9d31cf869d6a78e581a96da9348504aafeea68cd6bab87dcb",
+      "features": 44636
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "observations/coverage-semantics.json",
+      "bytes": 477,
+      "sha256": "2c93f8952fb32e2b931e9cb95e78133a69a2e8f037f34eaa7178dfd3dc59903c"
+    },
+    {
+      "file": "observations/episodes.csv.gz",
+      "bytes": 59194,
+      "sha256": "32453311dbafba1e8f26be321cf34462820dd5c7b396dfedd2dbf0e136cc27bf"
+    },
+    {
+      "file": "observations/matched-station-days-2025-2026.csv.gz",
+      "bytes": 106074,
+      "sha256": "225589598f55421259dad84402585ce62ee0ce0534c8af4caffc719c0c4683f1"
+    },
+    {
+      "file": "observations/openaq-instrument-hours.csv.gz",
+      "bytes": 12596179,
+      "sha256": "5e861f04559d7ac8f86783890d9cfe4d09a70f6fa424afb5ca753d01483e9922"
+    },
+    {
+      "file": "observations/openaq-normalized-records.csv.gz",
+      "bytes": 49645546,
+      "sha256": "ca65681e24d8f2d7af000b658eca5766aa4c7f9a81543742381f2b4313b3a0ee"
+    },
+    {
+      "file": "observations/openaq-paired-days.csv.gz",
+      "bytes": 293032,
+      "sha256": "48218a4efe3c75fbeb6d86ede50ba9703e5f462b0fff8a181c3bd595e3729eb2"
+    },
+    {
+      "file": "observations/openaq-paired-hours.csv.gz",
+      "bytes": 5921610,
+      "sha256": "bef0a02ddc7dcba7d1660a81cd1d103ceacb1346589ff3041cee2e51d723b6bc"
+    },
+    {
+      "file": "observations/openaq-preparation-quality.json",
+      "bytes": 2098243,
+      "sha256": "d6233a1c87cf59dcc791650da653f3ca78fcf4927617ac9944f3fc29a8655247"
+    },
+    {
+      "file": "observations/openaq-station-days.csv.gz",
+      "bytes": 806990,
+      "sha256": "96e65eeeed4efc17665ae99f7194af8d37bcd521ade638526393f90e1a8712ff"
+    },
+    {
+      "file": "observations/station-month-coverage.csv.gz",
+      "bytes": 20642,
+      "sha256": "da4d1b7675f1a012bd5daf6d62a4766c78b6d4110b83c7cec580c5794be514aa"
+    },
+    {
+      "file": "observations/xkdr-2024-hours.csv.gz",
+      "bytes": 64664603,
+      "sha256": "91b64a294befebd40a1418546571e7b89446512f18d4046b43cc4d8855cd1ede"
+    },
+    {
+      "file": "observations/xkdr-2024-state-month-coverage.csv.gz",
+      "bytes": 3953,
+      "sha256": "c85696db244bec0602294ddba95518087bc92285fe33d15ff687c4e73793d2a0"
+    },
+    {
+      "file": "observations/xkdr-2024-station-coverage.csv.gz",
+      "bytes": 6752,
+      "sha256": "ea015fbe7939e75a26657d3d5d1b879cf7f4a09cbe1df508df57e8bed9ecc05d"
+    },
+    {
+      "file": "observations/xkdr-2024-station-days.csv.gz",
+      "bytes": 4203798,
+      "sha256": "5e24e6dd675b3a07364a5d8257dce21a7b6f1de443c65542a19c823b0a3948e3"
+    },
+    {
+      "file": "observations/xkdr-2024-station-month-coverage.csv.gz",
+      "bytes": 85000,
+      "sha256": "b65af6cc52c6cc53289c9a129feeb78b7fc4b8519a59d76694442e9406fda71d"
+    },
+    {
+      "file": "observations/xkdr-quality.json",
+      "bytes": 2696,
+      "sha256": "bb7512db0591a2437f9778ff8b8580770d44a5461e8068d724c5f8972851248f"
+    },
+    {
+      "file": "context/context-manifest.json",
+      "bytes": 1731,
+      "sha256": "395602bf7271d93c4a1b19f48f6907e4ffb5a8cbbc071cebd4a6f3c470d54292"
+    },
+    {
+      "file": "context/delhi-episode-context.csv.gz",
+      "bytes": 14434,
+      "sha256": "e81e7134692e30c4842f67eb8eee0d5201323a3e6941c0f4e13412f412ff3886"
+    },
+    {
+      "file": "context/firms-detections.csv.gz",
+      "bytes": 220297,
+      "sha256": "c86f00df0125548c1765e41833cce133cc2c4d5c017f31684e5e263fb14d970e"
+    },
+    {
+      "file": "context/firms-satellite-days.csv.gz",
+      "bytes": 259,
+      "sha256": "45f8edb890ebc7145a7e23261c83b74924871214bc83dc34885b1e15bc6c68af"
+    },
+    {
+      "file": "context/iitm-model-contributions.csv.gz",
+      "bytes": 1997,
+      "sha256": "f68961278bda8547a0b2ca7e09aaa914ec3ed38553bd6379312dbef02155a9b2"
+    },
+    {
+      "file": "model/invalid-model-values.csv.gz",
+      "bytes": 391,
+      "sha256": "a3ae1931085522abccf62501ad20e34c014251dfcb95e3e343d1b24ef97221c6"
+    },
+    {
+      "file": "model/longpmind-2022-grid.npz",
+      "bytes": 548627,
+      "sha256": "d7ab95a7c6e10b46e4156a2d7c7c8bd645502acf1dcb01ce874689fa55bebc8b"
+    },
+    {
+      "file": "model/longpmind-2022-native-grid.csv.gz",
+      "bytes": 621215,
+      "sha256": "8b943bfdc84f2fa0b494ccc616149e23fb14875b97dcc3156d5936a9dfcf150f"
+    },
+    {
+      "file": "model/longpmind-2022.geojson",
+      "bytes": 13390074,
+      "sha256": "eb583458921c7e150bec252f80ea9cf8373affa0247943805e74591206e60a0e"
+    },
+    {
+      "file": "model/model-manifest.json",
+      "bytes": 1580,
+      "sha256": "33c438c4fa344749a7294eb78362950f61521796fe965efd56d7e0c85743c528"
+    },
+    {
+      "file": "profiles/anthropocene-particulate-2025-profile.json",
+      "bytes": 11527,
+      "sha256": "587efd2893eadb1dac3d1b50b7fb86c46f83e7aa3b78034db7b930a99a7d73d4"
+    },
+    {
+      "file": "profiles/anthropocene-particulate-2025.geojson",
+      "bytes": 9742424,
+      "sha256": "984c42483635863d290f628c09a2e53f4f2cd4428b217de6024cedbf6cc60515"
+    },
+    {
+      "file": "profiles/anthropocene-particulate-2026-profile.json",
+      "bytes": 11572,
+      "sha256": "c75187fa7bd9953e52b04b978a9fcf97d34ef1b90bbaea515a1a8c25e0806a19"
+    },
+    {
+      "file": "profiles/anthropocene-particulate-2026.geojson",
+      "bytes": 8533761,
+      "sha256": "fa4d70ecc2413bd9d31cf869d6a78e581a96da9348504aafeea68cd6bab87dcb"
+    },
+    {
+      "file": "profiles/india-profile-quality.json",
+      "bytes": 1575,
+      "sha256": "2639ba41eef9e523da4d44ad7f78bb1861409c6790fb912d3c5a60a3a6da157b"
+    },
+    {
+      "file": "profiles/pm10-cell-days.csv.gz",
+      "bytes": 23908,
+      "sha256": "dfd5034dfb2ec805d9408a3edc6575237214e560e36c42c357c83dbb833440d0"
+    },
+    {
+      "file": "profiles/pm25-cell-days.csv.gz",
+      "bytes": 1129904,
+      "sha256": "aef405c21e39515ddb5b8d8ef7867e4995211448b4fe65d6a039d9e3a7c37279"
+    },
+    {
+      "file": "profiles/pm25-enrichment-quality.json",
+      "bytes": 5523,
+      "sha256": "3f3d894d447c33346190601751788cc873dc99acda2097a5b37102bffc01375a"
+    },
+    {
+      "file": "profiles/pm25-extreme-value-review.json",
+      "bytes": 127553,
+      "sha256": "7853fe68a7d72eb4df5e61f08458596b25a901a1f92e660f958110342317321b"
+    },
+    {
+      "file": "figures/delhi-episode-context.pdf",
+      "bytes": 29391,
+      "sha256": "f706735d6529c56e5a637cbf7568e034781d5421cf1a46c8ddc8ed479cbfc8c0"
+    },
+    {
+      "file": "figures/delhi-episode-context.png",
+      "bytes": 301804,
+      "sha256": "7be42e76b4c38d23271b83479868f49ef7cb5ddb5e081badcec22a665612abda"
+    },
+    {
+      "file": "figures/longpmind-2022-model.pdf",
+      "bytes": 260823,
+      "sha256": "ca95353b9a812e317d13e7d32f2a546a9985570b57c85d08c731e038e404078f"
+    },
+    {
+      "file": "figures/longpmind-2022-model.png",
+      "bytes": 331170,
+      "sha256": "a4f33878cd1742742f3ede5c53a431f67d66ace503d49f1a2719563a2f1771d8"
+    },
+    {
+      "file": "atlas-preview/anthropocene-particulate-2025-authagraph-44-19.052559.svg",
+      "bytes": 28446307,
+      "sha256": "f1d34457b03d45c0c8eb4b147cd3b2ca2c5366d504f41cfca48af8af97872aab"
+    },
+    {
+      "file": "atlas-preview/anthropocene-particulate-2026-authagraph-44-19.052559.svg",
+      "bytes": 23246472,
+      "sha256": "aa644420f45b58b75d7141dbafba6c106dc53d403d66047f5fedb62a74e12252"
+    },
+    {
+      "file": "atlas-preview/anthropocene-particulate-2026.png",
+      "bytes": 1066510,
+      "sha256": "ccdadd48b548a4dfafc90adad23733ac2e684792950b0f72eaadee9f4ca73ab0"
+    }
+  ],
+  "limits": [
+    "National 2025/2026 XKDR backfill requires a full-access key",
+    "ERA5 not acquired; no CDS credentials configured",
+    "FIRMS context is a rolling feed with partial boundary dates",
+    "IITM issue/version metadata unavailable and forecast composition does not close",
+    "LongPMInd independent held-out validation not established"
+  ]
+}

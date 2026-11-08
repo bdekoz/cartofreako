@@ -1,0 +1,50 @@
+[
+  {
+    "url": "https://airquality.xkdr.org/v1/meta",
+    "http_status": 200,
+    "retrieved_at_utc": "2026-11-08T18:08:13.373767+00:00",
+    "sha256": "82eaef2dac3da8b88a699f5ee82dd018743deaee0675865cca2d935039c80cff",
+    "bytes": 665,
+    "file": "xkdr-meta.json"
+  },
+  {
+    "url": "https://airquality.xkdr.org/v1/stations?city=Delhi&q=Anand+Vihar",
+    "http_status": 200,
+    "retrieved_at_utc": "2026-11-08T18:08:13.480633+00:00",
+    "sha256": "e3b1f94d98f24c4fc9017c7f8d900b55f6cd3758c8fd7a64eaebe510182fe1fe",
+    "bytes": 503,
+    "file": "xkdr-anand-vihar.json"
+  },
+  {
+    "url": "https://airquality.xkdr.org/v1/measurements?station=site_301&parameter=PM2.5&parameter=PM10&start=2024-11-01&end=2024-11-02&agg=raw&format=csv",
+    "http_status": 200,
+    "retrieved_at_utc": "2026-11-08T18:08:14.203662+00:00",
+    "sha256": "5eee0cdc8ca36588278257d56e85aedae488f04de197d3d14325265e8bcd834a",
+    "bytes": 4365,
+    "file": "xkdr-anand-vihar-20241101-02.csv",
+    "rows": 89,
+    "columns": [
+      "station_id",
+      "parameter_name",
+      "unit",
+      "collected_at",
+      "value"
+    ],
+    "sample": [
+      {
+        "station_id": "site_301",
+        "parameter_name": "PM10",
+        "unit": "\u00b5g/m\u00b3",
+        "collected_at": "2024-11-01 02:00:00",
+        "value": "983.0"
+      },
+      {
+        "station_id": "site_301",
+        "parameter_name": "PM10",
+        "unit": "\u00b5g/m\u00b3",
+        "collected_at": "2024-11-01 03:00:00",
+        "value": "642.0"
+      }
+    ]
+  }
+]

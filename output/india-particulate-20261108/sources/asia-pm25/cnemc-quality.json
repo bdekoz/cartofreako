@@ -1,0 +1,33 @@
+{
+  "source": "CNEMC via Wang Xiaolei / Quotsoft public archive",
+  "retrieved_at_utc": "2026-10-29T22:59:38.889857+00:00",
+  "requested_dates": [
+    "2025-01-01",
+    "2026-10-28"
+  ],
+  "station_coordinate_inventory_date": "2022-02-13",
+  "coordinate_inventory_url": "https://github.com/bryt888/hfaw/blob/3cd38dc7a3feb285ef143301455fb03748b572f5/AQI/data/stations_20220213.csv",
+  "coordinate_file_sha256": "d6e52d34ce5231cb60516766d34c5ef0495f48f948dcabca0a31e40a1e9e9533",
+  "coordinate_limit": "Historical station-code join, not a current surveyed inventory; unmatched/new/relocated stations need further review.",
+  "coordinate_rows_rejected": [
+    "1045A",
+    "1202A",
+    "1254A",
+    "1347A",
+    "2172A",
+    "2184A",
+    "2302A",
+    "2592A",
+    "2666A",
+    "3019A"
+  ],
+  "concentration_unit": "micrograms per cubic metre",
+  "local_timezone": "Asia/Shanghai",
+  "daily_rule": "Mean of at least 18 distinct nonnegative valid hourly PM2.5 observations; PM2.5_24h and AQI rows excluded",
+  "failures": [],
+  "stations": 1690,
+  "station_days": 967563,
+  "eligible_station_days": 938970,
+  "normalized_file": "cnemc-station-days.csv.gz",
+  "sha256": "252cc3d1bfb64a0daaf5d3e1e36165860b22b1d02007b9bbf15bcb9daab92846"
+}

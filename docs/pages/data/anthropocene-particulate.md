@@ -18,6 +18,24 @@ These additions are local study outputs in
 `output/setouchi-triennale-2028/`; they do not imply that the public gallery or
 the immutable v14 release has been republished.
 
+A separate [8 November India refresh and enrichment investigation](../../development/20261108_particulate_data_enrichement_explore_v2_india.md)
+is saved in `output/india-particulate-20261108/`. Its approved expansion in
+`enrichment/` increases the selected network from 16 to 24 reference monitors,
+with 5,396 eligible 2026 PM2.5 station-days and 5,046 PM10 station-days at 22 sites.
+The separate AirGradient sensor is retained. The requested cutoff is 8 November;
+eligible PM2.5 reaches 4 November, PM10 reaches 2 November, and partial PM2.5
+reaches 5 November. The local 2025/2026 atlas previews include separate PM10
+coverage and above-100 µg/m³ day legends; these are research counts, not formal
+regulatory-compliance results. Japanese, Chinese and legacy source dates remain
+visible. The table below describes the original October Setouchi acquisition.
+
+The same dated delivery includes national 2024 historical PM2.5/PM10 tables via
+XKDR, a descriptive Delhi fire/weather/model panel, and a distinct LongPMInd 2022
+modeled grid. Historical stations and modeled grid cells do not count as current
+reference-monitor coverage. Source-specific gaps, ambiguous identities, invalid
+model values and IITM forecast percentages that fail to sum to 100% are recorded
+in the investigation and validation receipts.
+
 ## What the new PM2.5 marks mean
 
 | Mark | Quantity | Missing and zero |

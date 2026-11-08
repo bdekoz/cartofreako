@@ -1,0 +1,223 @@
+{
+  "requested_data_through": "2026-11-08",
+  "checked_at_utc": "2026-11-08T18:48:54.831570+00:00",
+  "receipts": [
+    {
+      "url": "https://ews.tropmet.res.in/dss/",
+      "file": "raw/discovery/dss.txt",
+      "bytes": 77934,
+      "sha256": "2230a0b62c8f166d5d39c7f61852b9f39ee5aafee76832a13382aca62f2eef07",
+      "reused_cache": true,
+      "retrieved_at_utc": null,
+      "verified_at_utc": "2026-11-08T18:48:54.709486+00:00"
+    },
+    {
+      "url": "https://firms.modaps.eosdis.nasa.gov/api/active_fire_files/all?format=json",
+      "file": "raw/discovery/firms-catalog.json",
+      "bytes": 32574,
+      "sha256": "f1ffed71c56853c16bd0b1f31b206aa275b3f2e5704813c983d5d5f91870fda1",
+      "reused_cache": true,
+      "retrieved_at_utc": null,
+      "verified_at_utc": "2026-11-08T18:48:54.708981+00:00"
+    },
+    {
+      "url": "https://airquality.xkdr.org/v1/files",
+      "file": "raw/discovery/xkdr-files.json",
+      "bytes": 27541,
+      "sha256": "7fd506983d804b540569ee19a5583aa28bccaedfdaa30836bcec51664d1d96e1",
+      "reused_cache": true,
+      "retrieved_at_utc": null,
+      "verified_at_utc": "2026-11-08T18:48:54.708401+00:00"
+    },
+    {
+      "url": "https://airquality.xkdr.org/v1/meta",
+      "file": "raw/discovery/xkdr-meta.json",
+      "bytes": 665,
+      "sha256": "82eaef2dac3da8b88a699f5ee82dd018743deaee0675865cca2d935039c80cff",
+      "reused_cache": true,
+      "retrieved_at_utc": "2026-11-08T18:34:46.808373+00:00",
+      "verified_at_utc": "2026-11-08T18:48:54.708463+00:00"
+    },
+    {
+      "url": "https://airquality.xkdr.org/v1/stations",
+      "file": "raw/discovery/xkdr-stations.txt",
+      "bytes": 210164,
+      "sha256": "0ee29329640832f34fcb0144c3394f5dc1948cf42494d14a94fb68f3da70f294",
+      "reused_cache": true,
+      "retrieved_at_utc": null,
+      "verified_at_utc": "2026-11-08T18:48:54.708288+00:00"
+    },
+    {
+      "url": "https://zenodo.org/api/records/14557027",
+      "file": "raw/discovery/zenodo-record.txt",
+      "bytes": 5112,
+      "sha256": "f42b125d24784284e1ceafa321382fe986fae4c254316a94d4a9b06bf9f91439",
+      "reused_cache": true,
+      "retrieved_at_utc": null,
+      "verified_at_utc": "2026-11-08T18:48:54.709547+00:00"
+    },
+    {
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/active_fire/noaa-20-viirs-c2/csv/J1_VIIRS_C2_South_Asia_7d.csv",
+      "file": "raw/firms/J1_VIIRS_C2_South_Asia_7d.csv",
+      "bytes": 1341785,
+      "sha256": "24a818e04385f9db7bb2fe7dacaf8c73daf783716e06286257addf877f908315",
+      "reused_cache": true,
+      "retrieved_at_utc": "2026-11-08T18:24:23.431627+00:00",
+      "verified_at_utc": "2026-11-08T18:48:54.735472+00:00"
+    },
+    {
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/active_fire/noaa-21-viirs-c2/csv/J2_VIIRS_C2_South_Asia_7d.csv",
+      "file": "raw/firms/J2_VIIRS_C2_South_Asia_7d.csv",
+      "bytes": 1387362,
+      "sha256": "f0f5ab24d941fc07ba607af47c9772f33a05553f0a7b68365d048aafb92af8af",
+      "reused_cache": true,
+      "retrieved_at_utc": "2026-11-08T18:24:23.154579+00:00",
+      "verified_at_utc": "2026-11-08T18:48:54.736069+00:00"
+    },
+    {
+      "url": "https://zenodo.org/api/records/14557027/files/pm10_monthly.zip/content",
+      "file": "raw/longpmind/pm10_monthly.zip",
+      "bytes": 51569114,
+      "sha256": "5ac615efc0c7fb3a0536ec4fac343eedb97a7e51e78d1d97ba1f6654af77e20d",
+      "reused_cache": true,
+      "retrieved_at_utc": null,
+      "verified_at_utc": "2026-11-08T18:48:54.831295+00:00"
+    },
+    {
+      "url": "https://zenodo.org/api/records/14557027/files/pm25_monthly.zip/content",
+      "file": "raw/longpmind/pm25_monthly.zip",
+      "bytes": 51431454,
+      "sha256": "a42e00bd58b615ef686ec169bf58659acba00dcb82db95500a9c56fa522ccc61",
+      "reused_cache": true,
+      "retrieved_at_utc": null,
+      "verified_at_utc": "2026-11-08T18:48:54.830284+00:00"
+    },
+    {
+      "url": "https://airquality.xkdr.org/v1/files/v1/measurements/year=2024/month=01/data.parquet",
+      "file": "raw/xkdr/2024-01.parquet",
+      "bytes": 7674743,
+      "sha256": "cd71e0e1a3cba6645eaace96673ea66776e08d42c125806e81e814a05aef80ab",
+      "reused_cache": true,
+      "retrieved_at_utc": "2026-11-08T18:24:23.071493+00:00",
+      "verified_at_utc": "2026-11-08T18:48:54.716819+00:00"
+    },
+    {
+      "url": "https://airquality.xkdr.org/v1/files/v1/measurements/year=2024/month=02/data.parquet",
+      "file": "raw/xkdr/2024-02.parquet",
+      "bytes": 7131765,
+      "sha256": "0e09f26aa618d9f050e401fea021ec87e69c202f1d5cf94b96c8968a9a387b8a",
+      "reused_cache": true,
+      "retrieved_at_utc": "2026-11-08T18:24:24.865077+00:00",
+      "verified_at_utc": "2026-11-08T18:48:54.717553+00:00"
+    },
+    {
+      "url": "https://airquality.xkdr.org/v1/files/v1/measurements/year=2024/month=03/data.parquet",
+      "file": "raw/xkdr/2024-03.parquet",
+      "bytes": 7486404,
+      "sha256": "ab7fe2f12b1ce57c25698635733a1921127ec74ed0e52a3ad21aa7ef0b50c717",
+      "reused_cache": true,
+      "retrieved_at_utc": "2026-11-08T18:24:23.818742+00:00",
+      "verified_at_utc": "2026-11-08T18:48:54.717238+00:00"
+    },
+    {
+      "url": "https://airquality.xkdr.org/v1/files/v1/measurements/year=2024/month=04/data.parquet",
+      "file": "raw/xkdr/2024-04.parquet",
+      "bytes": 7176840,
+      "sha256": "973c6331153bf1642932d14cafbb0d595ded9e2ce609aa97d4c6515778e19e8b",
+      "reused_cache": true,
+      "retrieved_at_utc": "2026-11-08T18:24:24.636518+00:00",
+      "verified_at_utc": "2026-11-08T18:48:54.722402+00:00"
+    },
+    {
+      "url": "https://airquality.xkdr.org/v1/files/v1/measurements/year=2024/month=05/data.parquet",
+      "file": "raw/xkdr/2024-05.parquet",
+      "bytes": 7465083,
+      "sha256": "bedf06a82d8a37963de5688c62c212776065bf1b506926d952c31fa1b9c25eb1",
+      "reused_cache": true,
+      "retrieved_at_utc": "2026-11-08T18:24:24.652697+00:00",
+      "verified_at_utc": "2026-11-08T18:48:54.723747+00:00"
+    },
+    {
+      "url": "https://airquality.xkdr.org/v1/files/v1/measurements/year=2024/month=06/data.parquet",
+      "file": "raw/xkdr/2024-06.parquet",
+      "bytes": 6910860,
+      "sha256": "cf2f8569cba677067405dec7dae0c272b42b7615e5f192d64613a5705064c0b2",
+      "reused_cache": true,
+      "retrieved_at_utc": "2026-11-08T18:24:25.524985+00:00",
+      "verified_at_utc": "2026-11-08T18:48:54.723202+00:00"
+    },
+    {
+      "url": "https://airquality.xkdr.org/v1/files/v1/measurements/year=2024/month=07/data.parquet",
+      "file": "raw/xkdr/2024-07.parquet",
+      "bytes": 6913104,
+      "sha256": "32c876c126eadd1746465c74a59b80fb3659ff8db14efe50f2dae0f200b3e971",
+      "reused_cache": true,
+      "retrieved_at_utc": "2026-11-08T18:24:25.619228+00:00",
+      "verified_at_utc": "2026-11-08T18:48:54.727822+00:00"
+    },
+    {
+      "url": "https://airquality.xkdr.org/v1/files/v1/measurements/year=2024/month=08/data.parquet",
+      "file": "raw/xkdr/2024-08.parquet",
+      "bytes": 6771808,
+      "sha256": "02088c949fb490e4e2b4e71f79930ee943036ef98c4ea651fd3db394b503b74a",
+      "reused_cache": true,
+      "retrieved_at_utc": "2026-11-08T18:24:25.597002+00:00",
+      "verified_at_utc": "2026-11-08T18:48:54.728472+00:00"
+    },
+    {
+      "url": "https://airquality.xkdr.org/v1/files/v1/measurements/year=2024/month=09/data.parquet",
+      "file": "raw/xkdr/2024-09.parquet",
+      "bytes": 6905203,
+      "sha256": "4ad5e253fe40b16e5e3f11a698380b5af489dd463387e70a599708442a8b6143",
+      "reused_cache": true,
+      "retrieved_at_utc": "2026-11-08T18:24:26.421374+00:00",
+      "verified_at_utc": "2026-11-08T18:48:54.729083+00:00"
+    },
+    {
+      "url": "https://airquality.xkdr.org/v1/files/v1/measurements/year=2024/month=10/data.parquet",
+      "file": "raw/xkdr/2024-10.parquet",
+      "bytes": 7881226,
+      "sha256": "7a93efb9ba6656831e6076908d83477426ca1e5d66ac2e120b8eb0f09a811294",
+      "reused_cache": true,
+      "retrieved_at_utc": "2026-11-08T18:24:27.247224+00:00",
+      "verified_at_utc": "2026-11-08T18:48:54.733565+00:00"
+    },
+    {
+      "url": "https://airquality.xkdr.org/v1/files/v1/measurements/year=2024/month=11/data.parquet",
+      "file": "raw/xkdr/2024-11.parquet",
+      "bytes": 7982655,
+      "sha256": "822a894d114b84b34aac9b237f8cdf2e8e0dcd25839ec8ae418ba029a4e2590a",
+      "reused_cache": true,
+      "retrieved_at_utc": "2026-11-08T18:24:26.345496+00:00",
+      "verified_at_utc": "2026-11-08T18:48:54.734271+00:00"
+    },
+    {
+      "url": "https://airquality.xkdr.org/v1/files/v1/measurements/year=2024/month=12/data.parquet",
+      "file": "raw/xkdr/2024-12.parquet",
+      "bytes": 8069243,
+      "sha256": "c64c81a24d76ceb8b0a47a9e57c43c8a66a502082e098f36a4c81563113c8c1e",
+      "reused_cache": true,
+      "retrieved_at_utc": "2026-11-08T18:24:27.031852+00:00",
+      "verified_at_utc": "2026-11-08T18:48:54.734945+00:00"
+    }
+  ],
+  "access_limits": [
+    {
+      "source": "XKDR",
+      "year": 2025,
+      "reason": "Full-access API key absent; demo access is limited to 2024"
+    },
+    {
+      "source": "XKDR",
+      "year": 2026,
+      "reason": "Full-access API key absent; demo access is limited to 2024"
+    },
+    {
+      "source": "ERA5",
+      "reason": "Not fetched by this public-source adapter; CDS-authenticated acquisition is separate",
+      "cds_credentials_present": false
+    }
+  ],
+  "recent_fire_limit": "Public rolling seven-day feed only; not a historical fire archive",
+  "forecast_limit": "IITM chart data retain their forecast/history class and unknown issue time"
+}

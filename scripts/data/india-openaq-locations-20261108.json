@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-08",
+  "coverage": "Expanded selected Indian urban reference monitors with a northern India episode pilot; not an exhaustive national observation network",
+  "locations": [
+    {
+      "id": 8118,
+      "name": "New Delhi",
+      "provider": "AirNow",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "existing selected sample"
+    },
+    {
+      "id": 8039,
+      "name": "Mumbai",
+      "provider": "AirNow",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "existing selected sample"
+    },
+    {
+      "id": 235,
+      "name": "Anand Vihar, Delhi",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "existing selected sample"
+    },
+    {
+      "id": 6956,
+      "name": "Powai, Mumbai",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "existing selected sample"
+    },
+    {
+      "id": 5655,
+      "name": "Velachery, Chennai",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "existing selected sample"
+    },
+    {
+      "id": 10851,
+      "name": "Bidhannagar, Kolkata",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "existing selected sample"
+    },
+    {
+      "id": 5548,
+      "name": "BTM Layout, Bengaluru",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "existing selected sample"
+    },
+    {
+      "id": 5631,
+      "name": "Maninagar, Ahmedabad",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "existing selected sample"
+    },
+    {
+      "id": 2456,
+      "name": "Talkatora, Lucknow",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "existing selected sample"
+    },
+    {
+      "id": 407,
+      "name": "Zoo Park, Hyderabad",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "existing selected sample"
+    },
+    {
+      "id": 220265,
+      "name": "Rajbagh, Srinagar",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "existing selected sample"
+    },
+    {
+      "id": 3409498,
+      "name": "Residency Area, Indore",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "existing selected sample"
+    },
+    {
+      "id": 5646,
+      "name": "Plammoodu, Thiruvananthapuram",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "existing selected sample"
+    },
+    {
+      "id": 10599,
+      "name": "Rajbansi Nagar, Patna",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "existing selected sample"
+    },
+    {
+      "id": 3409430,
+      "name": "Mansarovar, Jaipur",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "existing selected sample"
+    },
+    {
+      "id": 233415,
+      "name": "Sector 22, Chandigarh",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "existing selected sample"
+    },
+    {
+      "id": 5728639,
+      "name": "Bemina, Srinagar",
+      "provider": "AirGradient",
+      "kind": "air-sensor",
+      "country": "IND",
+      "discovery": "existing selected sample"
+    },
+    {
+      "id": 5569,
+      "name": "Punjab Agricultural University, Ludhiana",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "https://explore.openaq.org/locations/5569"
+    },
+    {
+      "id": 5551,
+      "name": "Golden Temple, Amritsar",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "https://explore.openaq.org/locations/5551"
+    },
+    {
+      "id": 10921,
+      "name": "NISE Gwal Pahari, Gurugram",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "https://explore.openaq.org/locations/10921"
+    },
+    {
+      "id": 5544,
+      "name": "Model Town, Patiala",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "https://explore.openaq.org/locations/5544"
+    },
+    {
+      "id": 10908,
+      "name": "Sector 11, Faridabad",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "https://explore.openaq.org/locations/10908"
+    },
+    {
+      "id": 10820,
+      "name": "Sector 30, Faridabad",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "https://explore.openaq.org/locations/10820"
+    },
+    {
+      "id": 5665,
+      "name": "Vasundhara, Ghaziabad",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "https://explore.openaq.org/locations/5665"
+    },
+    {
+      "id": 10919,
+      "name": "Sanjay Nagar, Ghaziabad",
+      "provider": "CPCB",
+      "kind": "reference",
+      "country": "IND",
+      "discovery": "https://explore.openaq.org/locations/10919"
+    }
+  ]
+}

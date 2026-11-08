@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "year": 2025,
+      "existing_metrics_preserved": true,
+      "pm10_coverage": {
+        "stations": 22,
+        "eligible_station_days": 5397,
+        "first_date": "2025-02-19",
+        "last_date": "2025-12-31",
+        "unit": "\u00b5g/m\u00b3",
+        "minimum_hours": 18,
+        "threshold_exclusive": 100,
+        "interpretation": "Research daily completeness and threshold comparison; not formal NAAQS compliance",
+        "aggregation": "Union of local H3 r4 cell-days; any eligible station over threshold; absent is unknown"
+      },
+      "pm10_cell_days": {
+        "pm10_measured_days": 4741,
+        "pm10_concentration_gt100_days": 1876
+      },
+      "sha256": "984c42483635863d290f628c09a2e53f4f2cd4428b217de6024cedbf6cc60515"
+    },
+    {
+      "year": 2026,
+      "existing_metrics_preserved": true,
+      "pm10_coverage": {
+        "stations": 22,
+        "eligible_station_days": 5046,
+        "first_date": "2026-01-01",
+        "last_date": "2026-11-02",
+        "unit": "\u00b5g/m\u00b3",
+        "minimum_hours": 18,
+        "threshold_exclusive": 100,
+        "interpretation": "Research daily completeness and threshold comparison; not formal NAAQS compliance",
+        "aggregation": "Union of local H3 r4 cell-days; any eligible station over threshold; absent is unknown"
+      },
+      "pm10_cell_days": {
+        "pm10_measured_days": 4275,
+        "pm10_concentration_gt100_days": 1453
+      },
+      "sha256": "fa4d70ecc2413bd9d31cf869d6a78e581a96da9348504aafeea68cd6bab87dcb"
+    }
+  ]
+}

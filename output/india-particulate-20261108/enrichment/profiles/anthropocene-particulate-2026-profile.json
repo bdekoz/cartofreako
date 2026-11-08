@@ -1,0 +1,362 @@
+{
+  "schema_version": 1,
+  "name": "Anthropocene particulate 2026 partial-year atlas",
+  "description": "Source-separated counts of particulate, fire, smoke, air-quality, climate, hydrology, and weather observations; no composite attribution score. Asian measured PM2.5 and AirGradient sensor observations are separate from EPA AQI and smoke. Selected India PM10 coverage and >100 µg/m³ days have separate legends; historical modeled fields are separate files.",
+  "duration": {
+    "type": "calendar-year",
+    "year": 2026
+  },
+  "snapshot": {
+    "as_of_utc": "2026-11-08T18:27:07.663729+00:00",
+    "partial_year": true,
+    "data_through": "2026-11-04",
+    "requested_data_through": "2026-11-08"
+  },
+  "aggregation": {
+    "spatial_index": "H3",
+    "h3_resolution": 4,
+    "count_mode": "unique-source-reporting-days"
+  },
+  "thresholds": {
+    "minimum_record_years": 30,
+    "minimum_valid_days_per_year": 183,
+    "heavy_precipitation_minimum_mm": 10.0,
+    "heavy_precipitation_percentile": 0.95,
+    "heavy_precipitation_baseline_start": 1991,
+    "heavy_precipitation_baseline_end": 2020,
+    "pm25_aqi_threshold_exclusive": 100,
+    "pm25_concentration_threshold_exclusive_ug_m3": 35,
+    "pm25_minimum_valid_hours_per_day": 18,
+    "pm10_minimum_valid_hours_per_day": 18,
+    "pm10_concentration_threshold_exclusive_ug_m3": 100
+  },
+  "display": {
+    "marker_radius": 0.055,
+    "minimum_nonzero_opacity": 0.35,
+    "show_legend": true
+  },
+  "data": {
+    "geojson": "anthropocene-particulate-2026.geojson",
+    "sha256": "fa4d70ecc2413bd9d31cf869d6a78e581a96da9348504aafeea68cd6bab87dcb"
+  },
+  "metrics": [
+    {
+      "id": "climate-records:temperature-record-high-days",
+      "property": "temperature_record_high_days",
+      "family": "climate-records",
+      "title": "New daily maximum-temperature record days",
+      "enabled": true,
+      "scale_days": 8,
+      "color": "#d94841",
+      "shape": "triangle-up",
+      "sources": [
+        "noaa-ghcn-gsn"
+      ]
+    },
+    {
+      "id": "climate-records:temperature-record-low-days",
+      "property": "temperature_record_low_days",
+      "family": "climate-records",
+      "title": "New daily minimum-temperature record days",
+      "enabled": true,
+      "scale_days": 8,
+      "color": "#397dcc",
+      "shape": "triangle-down",
+      "sources": [
+        "noaa-ghcn-gsn"
+      ]
+    },
+    {
+      "id": "hydrology:precipitation-record-days",
+      "property": "precipitation_record_days",
+      "family": "hydrology",
+      "title": "New daily precipitation-record days",
+      "enabled": true,
+      "scale_days": 8,
+      "color": "#2475a9",
+      "shape": "diamond",
+      "sources": [
+        "noaa-ghcn-gsn"
+      ]
+    },
+    {
+      "id": "hydrology:heavy-precipitation-days",
+      "property": "heavy_precipitation_days",
+      "family": "hydrology",
+      "title": "Heavy-precipitation days above the 1991-2020 wet-day p95",
+      "enabled": true,
+      "scale_days": 24,
+      "color": "#1f9db5",
+      "shape": "circle",
+      "sources": [
+        "noaa-ghcn-gsn"
+      ]
+    },
+    {
+      "id": "fire:active-fire-days",
+      "property": "active_fire_days",
+      "family": "fire",
+      "title": "Satellite active-fire detection days",
+      "enabled": true,
+      "scale_days": 60,
+      "color": "#eb721f",
+      "shape": "hexagon",
+      "sources": [
+        "cwfis-hotspots",
+        "nasa-firms"
+      ]
+    },
+    {
+      "id": "atmosphere:observed-smoke-days",
+      "property": "observed_smoke_days",
+      "family": "atmosphere",
+      "title": "Analyst-observed smoke plume days",
+      "enabled": true,
+      "scale_days": 60,
+      "color": "#776b83",
+      "shape": "ring",
+      "sources": [
+        "noaa-hms-smoke"
+      ]
+    },
+    {
+      "id": "hydrology:flood-event-days",
+      "property": "flood_event_days",
+      "family": "hydrology",
+      "title": "Reported flood or heavy-rain event days",
+      "enabled": true,
+      "scale_days": 18,
+      "color": "#285bb5",
+      "shape": "square",
+      "sources": [
+        "noaa-storm-events"
+      ]
+    },
+    {
+      "id": "severe-weather:extreme-event-days",
+      "property": "extreme_weather_event_days",
+      "family": "severe-weather",
+      "title": "Reported severe-weather event days",
+      "enabled": true,
+      "scale_days": 24,
+      "color": "#a441a8",
+      "shape": "star",
+      "sources": [
+        "noaa-storm-events"
+      ]
+    },
+    {
+      "id": "air-quality-exposure:pm25-exceedance-days",
+      "property": "pm25_exceedance_days",
+      "family": "air-quality-exposure",
+      "title": "EPA PM2.5 AQI exceedance days (AQI above  100)",
+      "enabled": true,
+      "scale_days": 18,
+      "color": "#a56a25",
+      "shape": "cross-square",
+      "sources": [
+        "epa-airdata-pm25"
+      ]
+    },
+    {
+      "id": "air-quality-exposure:pm25-measured-days",
+      "property": "pm25_measured_days",
+      "family": "air-quality-exposure",
+      "title": "PM2.5 valid monitor days (at least 18 hours)",
+      "enabled": true,
+      "scale_days": 300,
+      "color": "#087f82",
+      "shape": "ring",
+      "sources": [
+        "jp-moe-soramame",
+        "cnemc-quotsoft",
+        "openaq-cpcb",
+        "openaq-airnow"
+      ]
+    },
+    {
+      "id": "air-quality-exposure:pm25-concentration-gt35-days",
+      "property": "pm25_concentration_gt35_days",
+      "family": "air-quality-exposure",
+      "title": "Monitor daily PM2.5 above 35 µg/m³ days",
+      "enabled": true,
+      "scale_days": 120,
+      "color": "#cd5a2a",
+      "shape": "cross-square",
+      "sources": [
+        "jp-moe-soramame",
+        "cnemc-quotsoft",
+        "openaq-cpcb",
+        "openaq-airnow"
+      ]
+    },
+    {
+      "id": "air-quality-exposure:pm25-sensor-measured-days",
+      "property": "pm25_sensor_measured_days",
+      "family": "air-quality-exposure",
+      "title": "AirGradient valid sensor days (separate)",
+      "enabled": true,
+      "scale_days": 300,
+      "color": "#b33b99",
+      "shape": "diamond",
+      "sources": [
+        "openaq-airgradient"
+      ]
+    },
+    {
+      "id": "air-quality-exposure:pm25-sensor-gt35-days",
+      "property": "pm25_sensor_gt35_days",
+      "family": "air-quality-exposure",
+      "title": "AirGradient daily PM2.5 above 35 µg/m³ days",
+      "enabled": true,
+      "scale_days": 120,
+      "color": "#722278",
+      "shape": "circle",
+      "sources": [
+        "openaq-airgradient"
+      ]
+    },
+    {
+      "id": "air-quality-exposure:pm10-measured-days",
+      "property": "pm10_measured_days",
+      "family": "air-quality-exposure",
+      "title": "India PM10 valid monitor days (at least 18 hours)",
+      "enabled": true,
+      "scale_days": 300,
+      "color": "#355c9a",
+      "shape": "ring",
+      "sources": [
+        "openaq-cpcb"
+      ]
+    },
+    {
+      "id": "air-quality-exposure:pm10-concentration-gt100-days",
+      "property": "pm10_concentration_gt100_days",
+      "family": "air-quality-exposure",
+      "title": "India monitor daily PM10 above 100 µg/m³ days",
+      "enabled": true,
+      "scale_days": 120,
+      "color": "#9d642d",
+      "shape": "cross-square",
+      "sources": [
+        "openaq-cpcb"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "noaa-ghcn-gsn",
+      "status": "included",
+      "coverage": "global GSN station points",
+      "available_through": "2026-08-04",
+      "url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd_gsn.tar.gz"
+    },
+    {
+      "id": "epa-airdata-pm25",
+      "status": "included",
+      "coverage": "United States regulatory monitor points",
+      "available_through": "2026-05-31",
+      "url": "https://aqs.epa.gov/aqsweb/airdata/daily_88101_2026.zip"
+    },
+    {
+      "id": "noaa-hms-smoke",
+      "status": "included",
+      "coverage": "North America analyst-drawn smoke polygons",
+      "available_through": "2026-08-03",
+      "url": "https://satepsanone.nesdis.noaa.gov/pub/FIRE/web/HMS/Smoke_Polygons/Shapefile/Annual_Bundles/hms_smoke2026.zip"
+    },
+    {
+      "id": "noaa-storm-events",
+      "status": "included",
+      "coverage": "United States reported event locations",
+      "available_through": "2026-04-30",
+      "url": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/"
+    },
+    {
+      "id": "cwfis-hotspots",
+      "status": "included",
+      "coverage": "Canada and North America public daily hotspot files; 167 available reporting days in this snapshot",
+      "available_through": "2026-08-04",
+      "url": "https://cwfis.cfs.nrcan.gc.ca/downloads/hotspots/"
+    },
+    {
+      "id": "nasa-firms",
+      "status": "configured-optional",
+      "coverage": "global satellite active-fire points, including northern Canada and Russia",
+      "available_through": null,
+      "credential_environment": "FIRMS_MAP_KEY",
+      "url": "https://firms.modaps.eosdis.nasa.gov/api/area/"
+    },
+    {
+      "id": "copernicus-sentinel-3-frp",
+      "status": "validation-only",
+      "coverage": "global Sentinel-3 fire radiative power, including northern Russia",
+      "available_through": null,
+      "url": "https://cds.climate.copernicus.eu/datasets/satellite-fire-radiative-power"
+    },
+    {
+      "id": "rosleskhoz-operational-reports",
+      "status": "validation-only",
+      "coverage": "Russian administrative fire reports; not a stable point API",
+      "available_through": null,
+      "url": "https://rosleshoz.gov.ru/activity/forest-security-and-protection/fires/operative-information/"
+    },
+    {
+      "id": "cal-fire-incidents",
+      "status": "supplemental-not-default",
+      "coverage": "California incident reports",
+      "available_through": null,
+      "url": "https://www.fire.ca.gov/incidents"
+    },
+    {
+      "id": "purpleair",
+      "status": "excluded-from-standard",
+      "coverage": "low-cost PM sensors; PM observations do not establish smoke attribution",
+      "available_through": null,
+      "url": "https://api.purpleair.com/"
+    },
+    {
+      "id": "jp-moe-soramame",
+      "status": "included",
+      "coverage": "Japan MOE / Soramame provisional government monitors",
+      "available_through": "2026-09-30",
+      "url": "https://soramame.env.go.jp/"
+    },
+    {
+      "id": "cnemc-quotsoft",
+      "status": "included",
+      "coverage": "China CNEMC hourly monitor data via Wang Xiaolei / Quotsoft; 2022 station-coordinate join",
+      "available_through": "2026-10-28",
+      "url": "https://quotsoft.net/air/"
+    },
+    {
+      "id": "openaq-cpcb",
+      "status": "included",
+      "coverage": "Selected Indian CPCB government monitors via OpenAQ public archive",
+      "available_through": "2026-11-02",
+      "url": "https://openaq-data-archive.s3.amazonaws.com/"
+    },
+    {
+      "id": "openaq-airnow",
+      "status": "included",
+      "coverage": "Selected Indian AirNow government monitors via OpenAQ public archive",
+      "available_through": "2026-11-04",
+      "url": "https://openaq-data-archive.s3.amazonaws.com/"
+    },
+    {
+      "id": "openaq-airgradient",
+      "status": "included",
+      "coverage": "One Indian AirGradient low-cost sensor; not a reference monitor; CC BY 4.0",
+      "available_through": "2026-10-02",
+      "url": "https://explore.openaq.org/locations/5728639"
+    }
+  ],
+  "future_phases": [
+    {
+      "id": "ocean-heat:coral-bleaching-stress-days",
+      "status": "separate-phase",
+      "reason": "Scientifically valuable, but reef masks, raster time-series sampling, marine projections, and uncertainty need a dedicated pipeline.",
+      "candidate_source": "NOAA Coral Reef Watch"
+    }
+  ]
+}

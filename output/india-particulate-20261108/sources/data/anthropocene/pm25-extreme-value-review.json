@@ -1,0 +1,5554 @@
+[
+  {
+    "source": "jp-moe-soramame",
+    "country": "JPN",
+    "station_id": "29451010",
+    "date": "2026-06-14",
+    "valid_hours": "20",
+    "mean_ug_m3": "415.05"
+  },
+  {
+    "source": "jp-moe-soramame",
+    "country": "JPN",
+    "station_id": "29451010",
+    "date": "2026-06-15",
+    "valid_hours": "19",
+    "mean_ug_m3": "361.105263"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1492A",
+    "date": "2025-01-01",
+    "valid_hours": "24",
+    "mean_ug_m3": "252.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1496A",
+    "date": "2025-01-01",
+    "valid_hours": "24",
+    "mean_ug_m3": "303.541667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2711A",
+    "date": "2025-01-01",
+    "valid_hours": "24",
+    "mean_ug_m3": "288.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3441A",
+    "date": "2025-01-01",
+    "valid_hours": "24",
+    "mean_ug_m3": "303.666667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3442A",
+    "date": "2025-01-01",
+    "valid_hours": "24",
+    "mean_ug_m3": "261.583333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1496A",
+    "date": "2025-01-02",
+    "valid_hours": "24",
+    "mean_ug_m3": "292.375"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2711A",
+    "date": "2025-01-02",
+    "valid_hours": "24",
+    "mean_ug_m3": "275.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3441A",
+    "date": "2025-01-02",
+    "valid_hours": "24",
+    "mean_ug_m3": "288.291667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1496A",
+    "date": "2025-01-03",
+    "valid_hours": "23",
+    "mean_ug_m3": "282.173913"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1496A",
+    "date": "2025-01-04",
+    "valid_hours": "21",
+    "mean_ug_m3": "284.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2711A",
+    "date": "2025-01-04",
+    "valid_hours": "21",
+    "mean_ug_m3": "259.952381"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3441A",
+    "date": "2025-01-04",
+    "valid_hours": "21",
+    "mean_ug_m3": "275.666667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1496A",
+    "date": "2025-01-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "261.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2711A",
+    "date": "2025-01-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "251.958333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3441A",
+    "date": "2025-01-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "264.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1496A",
+    "date": "2025-01-18",
+    "valid_hours": "24",
+    "mean_ug_m3": "292.041667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1496A",
+    "date": "2025-01-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "286.958333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2711A",
+    "date": "2025-01-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "266.458333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3441A",
+    "date": "2025-01-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "297.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1135A",
+    "date": "2025-01-20",
+    "valid_hours": "24",
+    "mean_ug_m3": "262.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1496A",
+    "date": "2025-01-20",
+    "valid_hours": "24",
+    "mean_ug_m3": "266.041667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2711A",
+    "date": "2025-01-20",
+    "valid_hours": "24",
+    "mean_ug_m3": "286.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3441A",
+    "date": "2025-01-20",
+    "valid_hours": "24",
+    "mean_ug_m3": "306.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1496A",
+    "date": "2025-01-21",
+    "valid_hours": "24",
+    "mean_ug_m3": "318.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2692A",
+    "date": "2025-01-21",
+    "valid_hours": "24",
+    "mean_ug_m3": "252.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2711A",
+    "date": "2025-01-21",
+    "valid_hours": "24",
+    "mean_ug_m3": "349.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3441A",
+    "date": "2025-01-21",
+    "valid_hours": "24",
+    "mean_ug_m3": "328.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3613A",
+    "date": "2025-01-21",
+    "valid_hours": "24",
+    "mean_ug_m3": "288.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1496A",
+    "date": "2025-01-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "306.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2711A",
+    "date": "2025-01-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "289.166667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3438A",
+    "date": "2025-01-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "261.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3441A",
+    "date": "2025-01-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "293.791667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1135A",
+    "date": "2025-01-24",
+    "valid_hours": "24",
+    "mean_ug_m3": "254.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1139A",
+    "date": "2025-01-24",
+    "valid_hours": "24",
+    "mean_ug_m3": "264.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1783A",
+    "date": "2025-01-24",
+    "valid_hours": "24",
+    "mean_ug_m3": "254.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1129A",
+    "date": "2025-01-25",
+    "valid_hours": "24",
+    "mean_ug_m3": "261.333333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1130A",
+    "date": "2025-01-25",
+    "valid_hours": "24",
+    "mean_ug_m3": "267.291667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1137A",
+    "date": "2025-01-25",
+    "valid_hours": "24",
+    "mean_ug_m3": "257.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1139A",
+    "date": "2025-01-25",
+    "valid_hours": "24",
+    "mean_ug_m3": "333.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1015A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "312.375"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1019A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "324.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1021A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "253.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1052A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "269.583333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1053A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "256.666667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1054A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "253.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1071A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "322.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1072A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "290.791667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1073A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "291.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1081A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "291.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1084A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "310.041667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1086A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "346.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1090A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "407.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1091A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "334.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1094A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "252.166667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1095A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "303.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1097A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "341.958333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1316A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "334.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1317A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "282.083333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1318A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "262.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1321A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "252.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1336A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "304.083333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1337A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "295.083333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1340A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "392.583333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1343A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "297.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1405A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "291.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1432A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "262.083333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1469A",
+    "date": "2025-01-29",
+    "valid_hours": "23",
+    "mean_ug_m3": "298.130435"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1471A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "281.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1473A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "259.041667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1474A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "282.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1489A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "281.25"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1490A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "453.291667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1493A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "459.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1496A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "288.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1515A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "310.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1520A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "277.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1524A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "277.375"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1585A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "401.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1587A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "437.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1589A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "398.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1590A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "314.291667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1597A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "302.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1598A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "274.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1805A",
+    "date": "2025-01-29",
+    "valid_hours": "18",
+    "mean_ug_m3": "251.111111"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1832A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "279.291667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1833A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "270.458333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1941A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "281.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1948A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "353.333333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2067A",
+    "date": "2025-01-29",
+    "valid_hours": "22",
+    "mean_ug_m3": "367.681818"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2069A",
+    "date": "2025-01-29",
+    "valid_hours": "23",
+    "mean_ug_m3": "285.521739"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2070A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "267.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2181A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "258.666667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2187A",
+    "date": "2025-01-29",
+    "valid_hours": "23",
+    "mean_ug_m3": "276.652174"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2188A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "261.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2195A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "253.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2220A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "415.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2221A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "347.25"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2222A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "392.041667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2223A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "370.958333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2396A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "357.291667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2398A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "343.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2399A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "370.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2400A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "251.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2401A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "272.375"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2402A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "281.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2404A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "349.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2405A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "371.458333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2406A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "257.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2407A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "354.25"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2410A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "264.041667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2464A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "260.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2467A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "364.041667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2478A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "259.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2481A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "257.958333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2484A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "287.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2485A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "259.666667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2488A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "292.583333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2489A",
+    "date": "2025-01-29",
+    "valid_hours": "23",
+    "mean_ug_m3": "312.608696"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2490A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "315.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2491A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "430.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2511A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "273.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2684A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "268.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2711A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "351.458333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2924A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "436.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2925A",
+    "date": "2025-01-29",
+    "valid_hours": "23",
+    "mean_ug_m3": "342.304348"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3020A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "293.041667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3034A",
+    "date": "2025-01-29",
+    "valid_hours": "23",
+    "mean_ug_m3": "339.086957"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3058A",
+    "date": "2025-01-29",
+    "valid_hours": "23",
+    "mean_ug_m3": "333.130435"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3134A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "333.083333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3138A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "268.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3140A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "293.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3171A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "260.791667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3204A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "270.458333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3208A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "258.458333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3283A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "372.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3324A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "286.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3325A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "271.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3327A",
+    "date": "2025-01-29",
+    "valid_hours": "18",
+    "mean_ug_m3": "313.944444"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3337A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "349.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3338A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "262.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3352A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "298.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3419A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "295.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3438A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "466.666667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3441A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "306.166667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3468A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "269.958333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3469A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "256.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3478A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "267.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3524A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "377.083333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3532A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "254.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3533A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "257.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3582A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "306.25"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3585A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "250.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3605A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "328.083333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3613A",
+    "date": "2025-01-29",
+    "valid_hours": "21",
+    "mean_ug_m3": "348.857143"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3683A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "305.958333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3699A",
+    "date": "2025-01-29",
+    "valid_hours": "22",
+    "mean_ug_m3": "326.909091"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3866A",
+    "date": "2025-01-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "267.958333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1090A",
+    "date": "2025-01-30",
+    "valid_hours": "24",
+    "mean_ug_m3": "265.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1919A",
+    "date": "2025-01-30",
+    "valid_hours": "24",
+    "mean_ug_m3": "262.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1948A",
+    "date": "2025-01-30",
+    "valid_hours": "24",
+    "mean_ug_m3": "373.375"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3165A",
+    "date": "2025-01-30",
+    "valid_hours": "24",
+    "mean_ug_m3": "274.458333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3520A",
+    "date": "2025-01-30",
+    "valid_hours": "24",
+    "mean_ug_m3": "330.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3524A",
+    "date": "2025-01-30",
+    "valid_hours": "24",
+    "mean_ug_m3": "274.166667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3607A",
+    "date": "2025-01-30",
+    "valid_hours": "19",
+    "mean_ug_m3": "313.052632"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3698A",
+    "date": "2025-01-30",
+    "valid_hours": "24",
+    "mean_ug_m3": "255.041667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3699A",
+    "date": "2025-01-30",
+    "valid_hours": "24",
+    "mean_ug_m3": "356.333333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1492A",
+    "date": "2025-02-08",
+    "valid_hours": "24",
+    "mean_ug_m3": "269.958333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3441A",
+    "date": "2025-02-08",
+    "valid_hours": "24",
+    "mean_ug_m3": "266.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3613A",
+    "date": "2025-02-08",
+    "valid_hours": "24",
+    "mean_ug_m3": "251.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1492A",
+    "date": "2025-02-09",
+    "valid_hours": "24",
+    "mean_ug_m3": "302.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1493A",
+    "date": "2025-02-09",
+    "valid_hours": "24",
+    "mean_ug_m3": "295.375"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1496A",
+    "date": "2025-02-09",
+    "valid_hours": "23",
+    "mean_ug_m3": "262.043478"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2709A",
+    "date": "2025-02-09",
+    "valid_hours": "24",
+    "mean_ug_m3": "250.791667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3438A",
+    "date": "2025-02-09",
+    "valid_hours": "24",
+    "mean_ug_m3": "250.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-03-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "252.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-03-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "428.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-03-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "370.458333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-03-16",
+    "valid_hours": "23",
+    "mean_ug_m3": "291.478261"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1949A",
+    "date": "2025-03-26",
+    "valid_hours": "19",
+    "mean_ug_m3": "313.736842"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1956A",
+    "date": "2025-03-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "352.333333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1957A",
+    "date": "2025-03-26",
+    "valid_hours": "23",
+    "mean_ug_m3": "437.130435"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1958A",
+    "date": "2025-03-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "568.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2187A",
+    "date": "2025-03-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "256.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2188A",
+    "date": "2025-03-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "255.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2686A",
+    "date": "2025-03-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "698.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2687A",
+    "date": "2025-03-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "685.458333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2695A",
+    "date": "2025-03-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "638.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2696A",
+    "date": "2025-03-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "707.25"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2025-03-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "339.333333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2025-03-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "300.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-03-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "323.333333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3242A",
+    "date": "2025-03-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "295.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3246A",
+    "date": "2025-03-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "450.583333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3284A",
+    "date": "2025-03-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "291.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-03-26",
+    "valid_hours": "22",
+    "mean_ug_m3": "610.409091"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-03-26",
+    "valid_hours": "22",
+    "mean_ug_m3": "470.590909"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3621A",
+    "date": "2025-03-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "287.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2025-03-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "325.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2695A",
+    "date": "2025-03-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "468.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2696A",
+    "date": "2025-03-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "532.25"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2025-03-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "821.333333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2025-03-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "665.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-03-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "842.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-03-27",
+    "valid_hours": "22",
+    "mean_ug_m3": "1816.272727"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-03-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "1529.375"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2025-03-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "791.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2025-03-28",
+    "valid_hours": "24",
+    "mean_ug_m3": "357.25"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2025-03-28",
+    "valid_hours": "24",
+    "mean_ug_m3": "422.166667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-03-28",
+    "valid_hours": "23",
+    "mean_ug_m3": "440.304348"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-03-28",
+    "valid_hours": "24",
+    "mean_ug_m3": "1111.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-03-28",
+    "valid_hours": "24",
+    "mean_ug_m3": "802.791667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2025-03-28",
+    "valid_hours": "24",
+    "mean_ug_m3": "340.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2025-03-29",
+    "valid_hours": "18",
+    "mean_ug_m3": "417.888889"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-03-29",
+    "valid_hours": "18",
+    "mean_ug_m3": "449.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-03-29",
+    "valid_hours": "18",
+    "mean_ug_m3": "702.555556"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-03-29",
+    "valid_hours": "18",
+    "mean_ug_m3": "545.777778"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2025-03-29",
+    "valid_hours": "18",
+    "mean_ug_m3": "398.888889"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2025-03-30",
+    "valid_hours": "24",
+    "mean_ug_m3": "406.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2025-03-30",
+    "valid_hours": "23",
+    "mean_ug_m3": "344.434783"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-03-30",
+    "valid_hours": "23",
+    "mean_ug_m3": "404.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-03-30",
+    "valid_hours": "18",
+    "mean_ug_m3": "637.166667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-03-30",
+    "valid_hours": "24",
+    "mean_ug_m3": "552.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2025-03-30",
+    "valid_hours": "22",
+    "mean_ug_m3": "361.409091"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2025-03-31",
+    "valid_hours": "24",
+    "mean_ug_m3": "308.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-03-31",
+    "valid_hours": "24",
+    "mean_ug_m3": "250.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-03-31",
+    "valid_hours": "24",
+    "mean_ug_m3": "387.041667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-03-31",
+    "valid_hours": "24",
+    "mean_ug_m3": "327.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2025-03-31",
+    "valid_hours": "24",
+    "mean_ug_m3": "315.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1139A",
+    "date": "2025-04-11",
+    "valid_hours": "24",
+    "mean_ug_m3": "264.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2204A",
+    "date": "2025-04-11",
+    "valid_hours": "24",
+    "mean_ug_m3": "293.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2205A",
+    "date": "2025-04-11",
+    "valid_hours": "24",
+    "mean_ug_m3": "303.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2206A",
+    "date": "2025-04-11",
+    "valid_hours": "24",
+    "mean_ug_m3": "312.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2682A",
+    "date": "2025-04-11",
+    "valid_hours": "24",
+    "mean_ug_m3": "268.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-04-11",
+    "valid_hours": "24",
+    "mean_ug_m3": "421.791667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-04-11",
+    "valid_hours": "24",
+    "mean_ug_m3": "354.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3650A",
+    "date": "2025-04-11",
+    "valid_hours": "23",
+    "mean_ug_m3": "265.652174"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1479A",
+    "date": "2025-04-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "253.25"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1930A",
+    "date": "2025-04-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "259.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1931A",
+    "date": "2025-04-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "294.291667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1932A",
+    "date": "2025-04-12",
+    "valid_hours": "23",
+    "mean_ug_m3": "329.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1933A",
+    "date": "2025-04-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "276.291667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1934A",
+    "date": "2025-04-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "322.541667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1936A",
+    "date": "2025-04-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "271.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1937A",
+    "date": "2025-04-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "307.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2523A",
+    "date": "2025-04-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "279.333333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2524A",
+    "date": "2025-04-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "293.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2526A",
+    "date": "2025-04-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "303.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2634A",
+    "date": "2025-04-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "333.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2635A",
+    "date": "2025-04-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "297.375"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2636A",
+    "date": "2025-04-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "313.458333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2637A",
+    "date": "2025-04-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "362.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3242A",
+    "date": "2025-04-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "351.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3246A",
+    "date": "2025-04-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "297.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3617A",
+    "date": "2025-04-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "347.041667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2696A",
+    "date": "2025-04-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "262.375"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2695A",
+    "date": "2025-04-18",
+    "valid_hours": "24",
+    "mean_ug_m3": "694.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2696A",
+    "date": "2025-04-18",
+    "valid_hours": "24",
+    "mean_ug_m3": "882.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-04-18",
+    "valid_hours": "24",
+    "mean_ug_m3": "551.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-04-18",
+    "valid_hours": "24",
+    "mean_ug_m3": "360.958333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2695A",
+    "date": "2025-04-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "508.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2696A",
+    "date": "2025-04-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "598.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2025-04-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "479.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2025-04-19",
+    "valid_hours": "23",
+    "mean_ug_m3": "398.130435"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-04-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "628.958333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-04-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "1005.166667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-04-19",
+    "valid_hours": "23",
+    "mean_ug_m3": "741.304348"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2025-04-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "490.583333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2696A",
+    "date": "2025-04-20",
+    "valid_hours": "22",
+    "mean_ug_m3": "257.181818"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-04-20",
+    "valid_hours": "24",
+    "mean_ug_m3": "256.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2695A",
+    "date": "2025-04-21",
+    "valid_hours": "24",
+    "mean_ug_m3": "284.583333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2696A",
+    "date": "2025-04-21",
+    "valid_hours": "24",
+    "mean_ug_m3": "320.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2673A",
+    "date": "2025-04-27",
+    "valid_hours": "22",
+    "mean_ug_m3": "313.454545"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-05-03",
+    "valid_hours": "23",
+    "mean_ug_m3": "702.521739"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-05-03",
+    "valid_hours": "23",
+    "mean_ug_m3": "697.478261"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-05-04",
+    "valid_hours": "24",
+    "mean_ug_m3": "301.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-05-04",
+    "valid_hours": "23",
+    "mean_ug_m3": "442.434783"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-05-04",
+    "valid_hours": "22",
+    "mean_ug_m3": "447.409091"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-05-05",
+    "valid_hours": "23",
+    "mean_ug_m3": "275.173913"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3607A",
+    "date": "2025-05-06",
+    "valid_hours": "23",
+    "mean_ug_m3": "253.695652"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2025-05-07",
+    "valid_hours": "24",
+    "mean_ug_m3": "381.291667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2025-05-07",
+    "valid_hours": "24",
+    "mean_ug_m3": "302.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-05-07",
+    "valid_hours": "24",
+    "mean_ug_m3": "449.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2025-05-07",
+    "valid_hours": "24",
+    "mean_ug_m3": "383.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2695A",
+    "date": "2025-05-08",
+    "valid_hours": "24",
+    "mean_ug_m3": "665.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2696A",
+    "date": "2025-05-08",
+    "valid_hours": "24",
+    "mean_ug_m3": "705.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2025-05-08",
+    "valid_hours": "24",
+    "mean_ug_m3": "251.541667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-05-08",
+    "valid_hours": "24",
+    "mean_ug_m3": "367.666667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2696A",
+    "date": "2025-05-09",
+    "valid_hours": "24",
+    "mean_ug_m3": "262.166667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2025-05-09",
+    "valid_hours": "24",
+    "mean_ug_m3": "535.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2025-05-09",
+    "valid_hours": "24",
+    "mean_ug_m3": "474.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-05-09",
+    "valid_hours": "24",
+    "mean_ug_m3": "701.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2025-05-09",
+    "valid_hours": "24",
+    "mean_ug_m3": "534.375"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2025-05-10",
+    "valid_hours": "24",
+    "mean_ug_m3": "271.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-05-10",
+    "valid_hours": "24",
+    "mean_ug_m3": "305.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-05-10",
+    "valid_hours": "24",
+    "mean_ug_m3": "321.791667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-05-10",
+    "valid_hours": "24",
+    "mean_ug_m3": "261.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2025-05-10",
+    "valid_hours": "24",
+    "mean_ug_m3": "271.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2696A",
+    "date": "2025-05-21",
+    "valid_hours": "23",
+    "mean_ug_m3": "267.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-05-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "342.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-05-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "338.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-05-30",
+    "valid_hours": "24",
+    "mean_ug_m3": "360.583333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-05-30",
+    "valid_hours": "24",
+    "mean_ug_m3": "274.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-05-31",
+    "valid_hours": "24",
+    "mean_ug_m3": "281.791667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-06-12",
+    "valid_hours": "18",
+    "mean_ug_m3": "295.222222"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2025-06-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "304.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-06-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "308.791667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-06-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "462.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-06-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "379.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2025-06-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "338.375"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-06-27",
+    "valid_hours": "22",
+    "mean_ug_m3": "314.590909"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-06-27",
+    "valid_hours": "22",
+    "mean_ug_m3": "303.772727"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-07-01",
+    "valid_hours": "23",
+    "mean_ug_m3": "392.26087"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-07-01",
+    "valid_hours": "23",
+    "mean_ug_m3": "328.652174"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-07-10",
+    "valid_hours": "24",
+    "mean_ug_m3": "256.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-08-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "323.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-08-16",
+    "valid_hours": "23",
+    "mean_ug_m3": "629.086957"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-08-16",
+    "valid_hours": "23",
+    "mean_ug_m3": "494.826087"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-08-17",
+    "valid_hours": "22",
+    "mean_ug_m3": "379.363636"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-08-17",
+    "valid_hours": "23",
+    "mean_ug_m3": "304.304348"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-08-18",
+    "valid_hours": "23",
+    "mean_ug_m3": "512.869565"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-08-18",
+    "valid_hours": "23",
+    "mean_ug_m3": "469.043478"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1956A",
+    "date": "2025-09-02",
+    "valid_hours": "23",
+    "mean_ug_m3": "281.043478"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1957A",
+    "date": "2025-09-02",
+    "valid_hours": "23",
+    "mean_ug_m3": "315.043478"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1958A",
+    "date": "2025-09-02",
+    "valid_hours": "23",
+    "mean_ug_m3": "283.478261"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2025-09-02",
+    "valid_hours": "23",
+    "mean_ug_m3": "274.913043"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2025-09-02",
+    "valid_hours": "23",
+    "mean_ug_m3": "328.956522"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-09-02",
+    "valid_hours": "23",
+    "mean_ug_m3": "272.521739"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-09-02",
+    "valid_hours": "23",
+    "mean_ug_m3": "304.304348"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-09-02",
+    "valid_hours": "23",
+    "mean_ug_m3": "264.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2025-09-02",
+    "valid_hours": "23",
+    "mean_ug_m3": "266.043478"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2025-09-03",
+    "valid_hours": "24",
+    "mean_ug_m3": "303.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2025-09-03",
+    "valid_hours": "24",
+    "mean_ug_m3": "339.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-09-03",
+    "valid_hours": "23",
+    "mean_ug_m3": "330.73913"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-09-03",
+    "valid_hours": "24",
+    "mean_ug_m3": "294.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2025-09-03",
+    "valid_hours": "24",
+    "mean_ug_m3": "315.541667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2696A",
+    "date": "2025-09-05",
+    "valid_hours": "24",
+    "mean_ug_m3": "281.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2025-09-05",
+    "valid_hours": "24",
+    "mean_ug_m3": "362.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2025-09-05",
+    "valid_hours": "24",
+    "mean_ug_m3": "479.041667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-09-05",
+    "valid_hours": "24",
+    "mean_ug_m3": "386.25"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-09-05",
+    "valid_hours": "24",
+    "mean_ug_m3": "399.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-09-05",
+    "valid_hours": "24",
+    "mean_ug_m3": "324.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2025-09-05",
+    "valid_hours": "24",
+    "mean_ug_m3": "390.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2025-09-06",
+    "valid_hours": "24",
+    "mean_ug_m3": "351.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2025-09-06",
+    "valid_hours": "24",
+    "mean_ug_m3": "421.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-09-06",
+    "valid_hours": "24",
+    "mean_ug_m3": "389.166667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2025-09-06",
+    "valid_hours": "24",
+    "mean_ug_m3": "352.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2025-09-07",
+    "valid_hours": "21",
+    "mean_ug_m3": "315.285714"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2025-09-07",
+    "valid_hours": "20",
+    "mean_ug_m3": "344.6"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2025-09-07",
+    "valid_hours": "23",
+    "mean_ug_m3": "305.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2025-09-07",
+    "valid_hours": "23",
+    "mean_ug_m3": "304.086957"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2025-09-16",
+    "valid_hours": "24",
+    "mean_ug_m3": "250.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-09-16",
+    "valid_hours": "24",
+    "mean_ug_m3": "462.958333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2025-09-16",
+    "valid_hours": "24",
+    "mean_ug_m3": "399.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-09-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "275.166667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2025-09-25",
+    "valid_hours": "21",
+    "mean_ug_m3": "254.095238"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1773A",
+    "date": "2025-10-14",
+    "valid_hours": "23",
+    "mean_ug_m3": "419.869565"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1774A",
+    "date": "2025-10-14",
+    "valid_hours": "23",
+    "mean_ug_m3": "257.347826"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1775A",
+    "date": "2025-10-14",
+    "valid_hours": "23",
+    "mean_ug_m3": "345.434783"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1776A",
+    "date": "2025-10-14",
+    "valid_hours": "23",
+    "mean_ug_m3": "273.956522"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1778A",
+    "date": "2025-10-14",
+    "valid_hours": "21",
+    "mean_ug_m3": "257.52381"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2868A",
+    "date": "2025-10-14",
+    "valid_hours": "23",
+    "mean_ug_m3": "260.478261"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1130A",
+    "date": "2025-11-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "305.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1134A",
+    "date": "2025-11-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "258.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1136A",
+    "date": "2025-11-22",
+    "valid_hours": "22",
+    "mean_ug_m3": "262.636364"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1137A",
+    "date": "2025-11-22",
+    "valid_hours": "22",
+    "mean_ug_m3": "296.318182"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1138A",
+    "date": "2025-11-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "250.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2266A",
+    "date": "2025-11-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "332.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2267A",
+    "date": "2025-11-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "310.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2266A",
+    "date": "2025-11-23",
+    "valid_hours": "24",
+    "mean_ug_m3": "275.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2267A",
+    "date": "2025-11-23",
+    "valid_hours": "24",
+    "mean_ug_m3": "254.458333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3344A",
+    "date": "2025-11-23",
+    "valid_hours": "24",
+    "mean_ug_m3": "262.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1102A",
+    "date": "2025-11-24",
+    "valid_hours": "22",
+    "mean_ug_m3": "251.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1103A",
+    "date": "2025-11-24",
+    "valid_hours": "22",
+    "mean_ug_m3": "257.818182"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1104A",
+    "date": "2025-11-24",
+    "valid_hours": "22",
+    "mean_ug_m3": "257.636364"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1105A",
+    "date": "2025-11-24",
+    "valid_hours": "22",
+    "mean_ug_m3": "255.454545"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1106A",
+    "date": "2025-11-24",
+    "valid_hours": "22",
+    "mean_ug_m3": "251.545455"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1127A",
+    "date": "2025-11-24",
+    "valid_hours": "23",
+    "mean_ug_m3": "252.565217"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1749A",
+    "date": "2025-11-24",
+    "valid_hours": "23",
+    "mean_ug_m3": "255.826087"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1750A",
+    "date": "2025-11-24",
+    "valid_hours": "22",
+    "mean_ug_m3": "275.090909"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1751A",
+    "date": "2025-11-24",
+    "valid_hours": "23",
+    "mean_ug_m3": "273.565217"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1753A",
+    "date": "2025-11-24",
+    "valid_hours": "23",
+    "mean_ug_m3": "250.608696"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1772A",
+    "date": "2025-11-24",
+    "valid_hours": "22",
+    "mean_ug_m3": "555.681818"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1773A",
+    "date": "2025-11-24",
+    "valid_hours": "22",
+    "mean_ug_m3": "331.045455"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1774A",
+    "date": "2025-11-24",
+    "valid_hours": "22",
+    "mean_ug_m3": "556.818182"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1775A",
+    "date": "2025-11-24",
+    "valid_hours": "22",
+    "mean_ug_m3": "545.363636"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1776A",
+    "date": "2025-11-24",
+    "valid_hours": "22",
+    "mean_ug_m3": "536.590909"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2219A",
+    "date": "2025-11-24",
+    "valid_hours": "22",
+    "mean_ug_m3": "254.909091"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2868A",
+    "date": "2025-11-24",
+    "valid_hours": "21",
+    "mean_ug_m3": "632.190476"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1125A",
+    "date": "2025-11-25",
+    "valid_hours": "19",
+    "mean_ug_m3": "266.947368"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1772A",
+    "date": "2025-11-25",
+    "valid_hours": "23",
+    "mean_ug_m3": "733.391304"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1773A",
+    "date": "2025-11-25",
+    "valid_hours": "23",
+    "mean_ug_m3": "875.173913"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1774A",
+    "date": "2025-11-25",
+    "valid_hours": "23",
+    "mean_ug_m3": "881.652174"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1775A",
+    "date": "2025-11-25",
+    "valid_hours": "23",
+    "mean_ug_m3": "898.913043"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1776A",
+    "date": "2025-11-25",
+    "valid_hours": "23",
+    "mean_ug_m3": "864.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1778A",
+    "date": "2025-11-25",
+    "valid_hours": "20",
+    "mean_ug_m3": "1174.25"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2232A",
+    "date": "2025-11-25",
+    "valid_hours": "23",
+    "mean_ug_m3": "259.086957"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2868A",
+    "date": "2025-11-25",
+    "valid_hours": "21",
+    "mean_ug_m3": "715.666667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1131A",
+    "date": "2025-11-26",
+    "valid_hours": "23",
+    "mean_ug_m3": "274.173913"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1133A",
+    "date": "2025-11-26",
+    "valid_hours": "23",
+    "mean_ug_m3": "261.826087"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1134A",
+    "date": "2025-11-26",
+    "valid_hours": "23",
+    "mean_ug_m3": "250.826087"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1135A",
+    "date": "2025-11-26",
+    "valid_hours": "23",
+    "mean_ug_m3": "265.043478"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1136A",
+    "date": "2025-11-26",
+    "valid_hours": "23",
+    "mean_ug_m3": "284.217391"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1138A",
+    "date": "2025-11-26",
+    "valid_hours": "23",
+    "mean_ug_m3": "285.130435"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1140A",
+    "date": "2025-11-26",
+    "valid_hours": "23",
+    "mean_ug_m3": "296.347826"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1773A",
+    "date": "2025-11-26",
+    "valid_hours": "22",
+    "mean_ug_m3": "268.272727"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1775A",
+    "date": "2025-11-26",
+    "valid_hours": "23",
+    "mean_ug_m3": "331.956522"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1778A",
+    "date": "2025-11-26",
+    "valid_hours": "21",
+    "mean_ug_m3": "303.619048"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-01-20",
+    "valid_hours": "24",
+    "mean_ug_m3": "355.958333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-01-20",
+    "valid_hours": "24",
+    "mean_ug_m3": "339.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-01-21",
+    "valid_hours": "24",
+    "mean_ug_m3": "370.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-01-21",
+    "valid_hours": "24",
+    "mean_ug_m3": "347.666667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-01-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "301.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-01-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "281.291667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1094A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "266.666667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1095A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "300.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1097A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "316.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1490A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "264.25"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1493A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "487.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1600A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "425.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1601A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "440.166667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1602A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "393.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1603A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "525.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1658A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "271.041667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1756A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "276.166667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1761A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "253.791667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1763A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "387.375"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1764A",
+    "date": "2026-02-17",
+    "valid_hours": "22",
+    "mean_ug_m3": "320.681818"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2166A",
+    "date": "2026-02-17",
+    "valid_hours": "22",
+    "mean_ug_m3": "287.954545"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2207A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "261.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2208A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "289.375"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2229A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "295.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2232A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "267.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2875A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "265.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3421A",
+    "date": "2026-02-17",
+    "valid_hours": "23",
+    "mean_ug_m3": "324.26087"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3438A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "444.375"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3441A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "260.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3468A",
+    "date": "2026-02-17",
+    "valid_hours": "23",
+    "mean_ug_m3": "255.26087"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3498A",
+    "date": "2026-02-17",
+    "valid_hours": "18",
+    "mean_ug_m3": "269.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3501A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "283.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3516A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "262.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3699A",
+    "date": "2026-02-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "460.041667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2695A",
+    "date": "2026-02-25",
+    "valid_hours": "24",
+    "mean_ug_m3": "294.166667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2696A",
+    "date": "2026-02-25",
+    "valid_hours": "24",
+    "mean_ug_m3": "286.958333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2026-02-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "349.083333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2026-02-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "452.041667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2026-02-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "429.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-02-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "361.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-02-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "372.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2026-02-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "362.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2695A",
+    "date": "2026-02-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "282.25"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2696A",
+    "date": "2026-02-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "284.083333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2026-02-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "315.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2026-02-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "348.333333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2026-02-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "329.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-02-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "340.791667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-02-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "343.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2026-02-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "334.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2026-02-28",
+    "valid_hours": "24",
+    "mean_ug_m3": "326.541667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1748A",
+    "date": "2026-03-03",
+    "valid_hours": "24",
+    "mean_ug_m3": "290.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1749A",
+    "date": "2026-03-03",
+    "valid_hours": "24",
+    "mean_ug_m3": "311.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1750A",
+    "date": "2026-03-03",
+    "valid_hours": "24",
+    "mean_ug_m3": "259.291667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1751A",
+    "date": "2026-03-03",
+    "valid_hours": "24",
+    "mean_ug_m3": "322.666667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1753A",
+    "date": "2026-03-03",
+    "valid_hours": "23",
+    "mean_ug_m3": "312.565217"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2212A",
+    "date": "2026-03-03",
+    "valid_hours": "24",
+    "mean_ug_m3": "286.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2213A",
+    "date": "2026-03-03",
+    "valid_hours": "22",
+    "mean_ug_m3": "252.318182"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2214A",
+    "date": "2026-03-03",
+    "valid_hours": "24",
+    "mean_ug_m3": "262.458333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1493A",
+    "date": "2026-03-04",
+    "valid_hours": "24",
+    "mean_ug_m3": "284.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2686A",
+    "date": "2026-03-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "365.666667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2687A",
+    "date": "2026-03-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "435.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1489A",
+    "date": "2026-03-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "276.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2196A",
+    "date": "2026-03-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "285.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2026-03-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "446.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2026-03-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "500.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2026-03-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "484.541667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2924A",
+    "date": "2026-03-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "256.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-03-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "638.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-03-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "750.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2026-03-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "476.666667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2026-03-14",
+    "valid_hours": "24",
+    "mean_ug_m3": "274.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2026-03-14",
+    "valid_hours": "24",
+    "mean_ug_m3": "321.333333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2026-03-14",
+    "valid_hours": "24",
+    "mean_ug_m3": "311.25"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-03-14",
+    "valid_hours": "24",
+    "mean_ug_m3": "571.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-03-14",
+    "valid_hours": "24",
+    "mean_ug_m3": "567.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2026-03-14",
+    "valid_hours": "24",
+    "mean_ug_m3": "300.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1751A",
+    "date": "2026-03-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "250.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2229A",
+    "date": "2026-03-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "259.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2230A",
+    "date": "2026-03-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "262.083333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2026-03-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "388.083333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2026-03-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "426.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2026-03-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "398.791667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3486A",
+    "date": "2026-03-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "289.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-03-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "261.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-03-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "262.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2026-03-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "405.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2695A",
+    "date": "2026-03-16",
+    "valid_hours": "24",
+    "mean_ug_m3": "259.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2696A",
+    "date": "2026-03-16",
+    "valid_hours": "24",
+    "mean_ug_m3": "250.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1130A",
+    "date": "2026-03-28",
+    "valid_hours": "22",
+    "mean_ug_m3": "292.363636"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1133A",
+    "date": "2026-03-28",
+    "valid_hours": "22",
+    "mean_ug_m3": "258.954545"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1134A",
+    "date": "2026-03-28",
+    "valid_hours": "22",
+    "mean_ug_m3": "259.409091"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1136A",
+    "date": "2026-03-28",
+    "valid_hours": "22",
+    "mean_ug_m3": "277.136364"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1137A",
+    "date": "2026-03-28",
+    "valid_hours": "22",
+    "mean_ug_m3": "267.590909"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1138A",
+    "date": "2026-03-28",
+    "valid_hours": "22",
+    "mean_ug_m3": "331.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1775A",
+    "date": "2026-04-03",
+    "valid_hours": "22",
+    "mean_ug_m3": "254.5"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2868A",
+    "date": "2026-04-03",
+    "valid_hours": "22",
+    "mean_ug_m3": "257.727273"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-04-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "660.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-04-13",
+    "valid_hours": "23",
+    "mean_ug_m3": "408.043478"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1489A",
+    "date": "2026-04-19",
+    "valid_hours": "23",
+    "mean_ug_m3": "257.173913"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "1949A",
+    "date": "2026-04-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "266.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2695A",
+    "date": "2026-04-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "340.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2696A",
+    "date": "2026-04-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "360.458333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-04-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "1034.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-04-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "916.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-04-20",
+    "valid_hours": "24",
+    "mean_ug_m3": "564.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-04-20",
+    "valid_hours": "24",
+    "mean_ug_m3": "393.583333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-04-21",
+    "valid_hours": "24",
+    "mean_ug_m3": "300.291667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2187A",
+    "date": "2026-05-14",
+    "valid_hours": "24",
+    "mean_ug_m3": "276.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2188A",
+    "date": "2026-05-14",
+    "valid_hours": "24",
+    "mean_ug_m3": "284.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2196A",
+    "date": "2026-05-14",
+    "valid_hours": "24",
+    "mean_ug_m3": "250.75"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2686A",
+    "date": "2026-05-20",
+    "valid_hours": "24",
+    "mean_ug_m3": "283.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2687A",
+    "date": "2026-05-20",
+    "valid_hours": "24",
+    "mean_ug_m3": "308.791667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2695A",
+    "date": "2026-05-21",
+    "valid_hours": "24",
+    "mean_ug_m3": "466.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2026-05-21",
+    "valid_hours": "24",
+    "mean_ug_m3": "324.583333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2026-05-21",
+    "valid_hours": "24",
+    "mean_ug_m3": "299.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2696A",
+    "date": "2026-05-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "278.333333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2026-05-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "323.291667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2026-05-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "447.416667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2026-05-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "422.583333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-05-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "586.458333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-05-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "581.666667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2026-05-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "370.583333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2695A",
+    "date": "2026-05-24",
+    "valid_hours": "24",
+    "mean_ug_m3": "271.791667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2696A",
+    "date": "2026-05-24",
+    "valid_hours": "24",
+    "mean_ug_m3": "265.958333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-05-24",
+    "valid_hours": "24",
+    "mean_ug_m3": "858.666667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-05-24",
+    "valid_hours": "22",
+    "mean_ug_m3": "856.772727"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-05-25",
+    "valid_hours": "24",
+    "mean_ug_m3": "264.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-05-25",
+    "valid_hours": "21",
+    "mean_ug_m3": "259.047619"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-07-25",
+    "valid_hours": "24",
+    "mean_ug_m3": "323.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-07-25",
+    "valid_hours": "24",
+    "mean_ug_m3": "335.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-08-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "252.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2026-10-24",
+    "valid_hours": "23",
+    "mean_ug_m3": "277.913043"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2026-10-24",
+    "valid_hours": "24",
+    "mean_ug_m3": "254.125"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-10-25",
+    "valid_hours": "24",
+    "mean_ug_m3": "461.833333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2026-10-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "267.333333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2026-10-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "319.458333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2026-10-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "298.375"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-10-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "358.208333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-10-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "391.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2026-10-26",
+    "valid_hours": "23",
+    "mean_ug_m3": "364.434783"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2026-10-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "279.625"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2026-10-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "367.916667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2026-10-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "302.25"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3614A",
+    "date": "2026-10-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "291.0"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3615A",
+    "date": "2026-10-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "306.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2026-10-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "356.541667"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2697A",
+    "date": "2026-10-28",
+    "valid_hours": "24",
+    "mean_ug_m3": "275.708333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2698A",
+    "date": "2026-10-28",
+    "valid_hours": "24",
+    "mean_ug_m3": "289.875"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "2699A",
+    "date": "2026-10-28",
+    "valid_hours": "24",
+    "mean_ug_m3": "272.958333"
+  },
+  {
+    "source": "cnemc-quotsoft",
+    "country": "CHN",
+    "station_id": "3665A",
+    "date": "2026-10-28",
+    "valid_hours": "24",
+    "mean_ug_m3": "443.875"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-10-20",
+    "valid_hours": "20",
+    "mean_ug_m3": "296.25"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-10-21",
+    "valid_hours": "22",
+    "mean_ug_m3": "328.818182"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-10-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "253.041667"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-11-08",
+    "valid_hours": "24",
+    "mean_ug_m3": "303.291667"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-11-09",
+    "valid_hours": "24",
+    "mean_ug_m3": "250.041667"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-11-11",
+    "valid_hours": "24",
+    "mean_ug_m3": "350.625"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-11-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "346.458333"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-11-13",
+    "valid_hours": "19",
+    "mean_ug_m3": "327.526316"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-11-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "268.833333"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-11-16",
+    "valid_hours": "24",
+    "mean_ug_m3": "275.416667"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-11-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "254.833333"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-11-18",
+    "valid_hours": "19",
+    "mean_ug_m3": "294.0"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-11-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "317.375"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-11-21",
+    "valid_hours": "24",
+    "mean_ug_m3": "302.583333"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-11-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "295.666667"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-11-23",
+    "valid_hours": "23",
+    "mean_ug_m3": "357.565217"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-11-24",
+    "valid_hours": "24",
+    "mean_ug_m3": "277.583333"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-11-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "333.833333"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-11-28",
+    "valid_hours": "24",
+    "mean_ug_m3": "261.083333"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-12-02",
+    "valid_hours": "24",
+    "mean_ug_m3": "272.916667"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-12-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "355.208333"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-12-13",
+    "valid_hours": "23",
+    "mean_ug_m3": "471.652174"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-12-14",
+    "valid_hours": "24",
+    "mean_ug_m3": "506.5"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-12-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "355.708333"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-12-18",
+    "valid_hours": "23",
+    "mean_ug_m3": "344.130435"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-12-19",
+    "valid_hours": "23",
+    "mean_ug_m3": "275.0"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-12-20",
+    "valid_hours": "24",
+    "mean_ug_m3": "386.541667"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-12-21",
+    "valid_hours": "24",
+    "mean_ug_m3": "260.875"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-12-22",
+    "valid_hours": "23",
+    "mean_ug_m3": "336.565217"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-12-23",
+    "valid_hours": "24",
+    "mean_ug_m3": "293.0"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-12-26",
+    "valid_hours": "24",
+    "mean_ug_m3": "337.708333"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-12-27",
+    "valid_hours": "23",
+    "mean_ug_m3": "349.826087"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-12-28",
+    "valid_hours": "24",
+    "mean_ug_m3": "372.125"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-12-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "358.25"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-12-30",
+    "valid_hours": "23",
+    "mean_ug_m3": "359.695652"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2025-12-31",
+    "valid_hours": "24",
+    "mean_ug_m3": "323.625"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2026-01-01",
+    "valid_hours": "24",
+    "mean_ug_m3": "263.791667"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "235",
+    "date": "2026-01-09",
+    "valid_hours": "24",
+    "mean_ug_m3": "281.208333"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "2456",
+    "date": "2026-03-11",
+    "valid_hours": "24",
+    "mean_ug_m3": "329.194236"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "5646",
+    "date": "2025-02-19",
+    "valid_hours": "23",
+    "mean_ug_m3": "505.818841"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "5646",
+    "date": "2025-03-04",
+    "valid_hours": "24",
+    "mean_ug_m3": "641.291667"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "5646",
+    "date": "2025-03-05",
+    "valid_hours": "20",
+    "mean_ug_m3": "604.5875"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "5646",
+    "date": "2025-03-08",
+    "valid_hours": "22",
+    "mean_ug_m3": "537.0"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "5646",
+    "date": "2025-03-11",
+    "valid_hours": "24",
+    "mean_ug_m3": "289.795139"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "5646",
+    "date": "2025-03-14",
+    "valid_hours": "24",
+    "mean_ug_m3": "359.489583"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "5646",
+    "date": "2025-03-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "530.864583"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "5646",
+    "date": "2025-03-20",
+    "valid_hours": "24",
+    "mean_ug_m3": "770.211806"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "5646",
+    "date": "2025-03-21",
+    "valid_hours": "24",
+    "mean_ug_m3": "669.875"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "5646",
+    "date": "2025-03-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "559.166667"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "5646",
+    "date": "2026-03-14",
+    "valid_hours": "22",
+    "mean_ug_m3": "406.924242"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "5655",
+    "date": "2026-02-12",
+    "valid_hours": "23",
+    "mean_ug_m3": "300.475688"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2025-07-31",
+    "valid_hours": "24",
+    "mean_ug_m3": "928.250729"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2025-08-02",
+    "valid_hours": "24",
+    "mean_ug_m3": "559.408437"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2025-09-20",
+    "valid_hours": "23",
+    "mean_ug_m3": "494.468841"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2025-10-07",
+    "valid_hours": "24",
+    "mean_ug_m3": "927.447917"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2025-10-08",
+    "valid_hours": "24",
+    "mean_ug_m3": "985.0"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2025-10-09",
+    "valid_hours": "24",
+    "mean_ug_m3": "614.745104"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2025-12-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "394.0"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2025-12-14",
+    "valid_hours": "24",
+    "mean_ug_m3": "394.0"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2025-12-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "394.0"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2025-12-16",
+    "valid_hours": "24",
+    "mean_ug_m3": "394.0"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2025-12-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "394.0"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2025-12-18",
+    "valid_hours": "23",
+    "mean_ug_m3": "865.086957"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2025-12-19",
+    "valid_hours": "23",
+    "mean_ug_m3": "1153.501957"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2026-05-02",
+    "valid_hours": "18",
+    "mean_ug_m3": "886.5"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2026-05-03",
+    "valid_hours": "24",
+    "mean_ug_m3": "886.5"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2026-05-04",
+    "valid_hours": "21",
+    "mean_ug_m3": "666.607024"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2026-05-05",
+    "valid_hours": "18",
+    "mean_ug_m3": "802.123333"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "6956",
+    "date": "2026-05-08",
+    "valid_hours": "24",
+    "mean_ug_m3": "556.360521"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8039",
+    "date": "2026-10-18",
+    "valid_hours": "23",
+    "mean_ug_m3": "272.043478"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8039",
+    "date": "2026-10-24",
+    "valid_hours": "24",
+    "mean_ug_m3": "257.458333"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-01-03",
+    "valid_hours": "22",
+    "mean_ug_m3": "262.0"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-01-04",
+    "valid_hours": "24",
+    "mean_ug_m3": "276.333333"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-01-09",
+    "valid_hours": "24",
+    "mean_ug_m3": "258.833333"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-01-10",
+    "valid_hours": "23",
+    "mean_ug_m3": "258.217391"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-01-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "269.166667"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-11-10",
+    "valid_hours": "24",
+    "mean_ug_m3": "270.333333"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-11-11",
+    "valid_hours": "24",
+    "mean_ug_m3": "298.75"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-11-12",
+    "valid_hours": "24",
+    "mean_ug_m3": "329.541667"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-11-13",
+    "valid_hours": "22",
+    "mean_ug_m3": "288.818182"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-12-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "350.791667"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-12-14",
+    "valid_hours": "24",
+    "mean_ug_m3": "385.5"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-12-15",
+    "valid_hours": "24",
+    "mean_ug_m3": "273.708333"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-12-18",
+    "valid_hours": "24",
+    "mean_ug_m3": "301.5"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-12-20",
+    "valid_hours": "24",
+    "mean_ug_m3": "273.041667"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-12-22",
+    "valid_hours": "24",
+    "mean_ug_m3": "283.833333"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-12-23",
+    "valid_hours": "24",
+    "mean_ug_m3": "291.083333"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-12-27",
+    "valid_hours": "24",
+    "mean_ug_m3": "264.166667"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-12-29",
+    "valid_hours": "24",
+    "mean_ug_m3": "288.625"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2025-12-31",
+    "valid_hours": "24",
+    "mean_ug_m3": "277.708333"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2026-01-13",
+    "valid_hours": "24",
+    "mean_ug_m3": "258.041667"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2026-01-17",
+    "valid_hours": "24",
+    "mean_ug_m3": "363.458333"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2026-01-18",
+    "valid_hours": "24",
+    "mean_ug_m3": "294.458333"
+  },
+  {
+    "source": "openaq-airnow",
+    "country": "IND",
+    "station_id": "8118",
+    "date": "2026-01-19",
+    "valid_hours": "24",
+    "mean_ug_m3": "272.25"
+  },
+  {
+    "source": "openaq-cpcb",
+    "country": "IND",
+    "station_id": "220265",
+    "date": "2025-11-16",
+    "valid_hours": "24",
+    "mean_ug_m3": "252.314931"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-11-10",
+    "valid_hours": "23",
+    "mean_ug_m3": "279.353174"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-11-11",
+    "valid_hours": "24",
+    "mean_ug_m3": "278.309803"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-11-15",
+    "valid_hours": "23",
+    "mean_ug_m3": "320.747627"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-11-16",
+    "valid_hours": "21",
+    "mean_ug_m3": "363.352781"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-11-17",
+    "valid_hours": "21",
+    "mean_ug_m3": "382.391283"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-11-18",
+    "valid_hours": "23",
+    "mean_ug_m3": "376.745616"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-11-21",
+    "valid_hours": "23",
+    "mean_ug_m3": "357.499988"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-11-22",
+    "valid_hours": "23",
+    "mean_ug_m3": "258.818877"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-11-23",
+    "valid_hours": "20",
+    "mean_ug_m3": "307.598126"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-11-24",
+    "valid_hours": "19",
+    "mean_ug_m3": "363.6245"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-11-25",
+    "valid_hours": "21",
+    "mean_ug_m3": "359.560958"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-11-26",
+    "valid_hours": "21",
+    "mean_ug_m3": "377.324151"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-11-27",
+    "valid_hours": "23",
+    "mean_ug_m3": "394.754377"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-11-28",
+    "valid_hours": "21",
+    "mean_ug_m3": "427.214052"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-11-29",
+    "valid_hours": "23",
+    "mean_ug_m3": "415.539444"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-11-30",
+    "valid_hours": "21",
+    "mean_ug_m3": "448.183612"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-01",
+    "valid_hours": "19",
+    "mean_ug_m3": "463.428832"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-06",
+    "valid_hours": "22",
+    "mean_ug_m3": "455.731381"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-07",
+    "valid_hours": "19",
+    "mean_ug_m3": "495.177078"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-08",
+    "valid_hours": "23",
+    "mean_ug_m3": "417.312781"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-09",
+    "valid_hours": "22",
+    "mean_ug_m3": "360.261657"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-10",
+    "valid_hours": "20",
+    "mean_ug_m3": "449.943972"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-11",
+    "valid_hours": "21",
+    "mean_ug_m3": "463.556246"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-12",
+    "valid_hours": "21",
+    "mean_ug_m3": "456.599312"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-13",
+    "valid_hours": "23",
+    "mean_ug_m3": "488.565804"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-14",
+    "valid_hours": "22",
+    "mean_ug_m3": "496.458379"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-15",
+    "valid_hours": "23",
+    "mean_ug_m3": "517.495311"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-16",
+    "valid_hours": "22",
+    "mean_ug_m3": "461.993217"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-17",
+    "valid_hours": "19",
+    "mean_ug_m3": "473.887634"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-18",
+    "valid_hours": "22",
+    "mean_ug_m3": "516.771459"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-19",
+    "valid_hours": "22",
+    "mean_ug_m3": "510.615394"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-27",
+    "valid_hours": "22",
+    "mean_ug_m3": "267.623301"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-28",
+    "valid_hours": "20",
+    "mean_ug_m3": "303.211231"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-29",
+    "valid_hours": "23",
+    "mean_ug_m3": "305.035333"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-30",
+    "valid_hours": "20",
+    "mean_ug_m3": "264.248481"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2025-12-31",
+    "valid_hours": "20",
+    "mean_ug_m3": "253.585975"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2026-01-13",
+    "valid_hours": "20",
+    "mean_ug_m3": "255.54157"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2026-01-14",
+    "valid_hours": "21",
+    "mean_ug_m3": "278.921111"
+  },
+  {
+    "source": "openaq-airgradient",
+    "country": "IND",
+    "station_id": "5728639",
+    "date": "2026-01-16",
+    "valid_hours": "21",
+    "mean_ug_m3": "264.807682"
+  }
+]

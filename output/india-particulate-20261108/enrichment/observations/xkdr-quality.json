@@ -1,0 +1,77 @@
+{
+  "year": 2024,
+  "station_count": 537,
+  "station_days": 352531,
+  "eligible_station_days": 312641,
+  "missing_coordinate_station_days": 26049,
+  "quality_flags": {
+    "duplicate_rows_removed": 0,
+    "": 7796941,
+    "negative": 24
+  },
+  "inputs": [
+    {
+      "file": "raw/xkdr/2024-01.parquet",
+      "sha256": "cd71e0e1a3cba6645eaace96673ea66776e08d42c125806e81e814a05aef80ab",
+      "raw_particulate_records": 670931
+    },
+    {
+      "file": "raw/xkdr/2024-02.parquet",
+      "sha256": "0e09f26aa618d9f050e401fea021ec87e69c202f1d5cf94b96c8968a9a387b8a",
+      "raw_particulate_records": 625142
+    },
+    {
+      "file": "raw/xkdr/2024-03.parquet",
+      "sha256": "ab7fe2f12b1ce57c25698635733a1921127ec74ed0e52a3ad21aa7ef0b50c717",
+      "raw_particulate_records": 661817
+    },
+    {
+      "file": "raw/xkdr/2024-04.parquet",
+      "sha256": "973c6331153bf1642932d14cafbb0d595ded9e2ce609aa97d4c6515778e19e8b",
+      "raw_particulate_records": 631415
+    },
+    {
+      "file": "raw/xkdr/2024-05.parquet",
+      "sha256": "bedf06a82d8a37963de5688c62c212776065bf1b506926d952c31fa1b9c25eb1",
+      "raw_particulate_records": 641581
+    },
+    {
+      "file": "raw/xkdr/2024-06.parquet",
+      "sha256": "cf2f8569cba677067405dec7dae0c272b42b7615e5f192d64613a5705064c0b2",
+      "raw_particulate_records": 605541
+    },
+    {
+      "file": "raw/xkdr/2024-07.parquet",
+      "sha256": "32c876c126eadd1746465c74a59b80fb3659ff8db14efe50f2dae0f200b3e971",
+      "raw_particulate_records": 635283
+    },
+    {
+      "file": "raw/xkdr/2024-08.parquet",
+      "sha256": "02088c949fb490e4e2b4e71f79930ee943036ef98c4ea651fd3db394b503b74a",
+      "raw_particulate_records": 637818
+    },
+    {
+      "file": "raw/xkdr/2024-09.parquet",
+      "sha256": "4ad5e253fe40b16e5e3f11a698380b5af489dd463387e70a599708442a8b6143",
+      "raw_particulate_records": 634410
+    },
+    {
+      "file": "raw/xkdr/2024-10.parquet",
+      "sha256": "7a93efb9ba6656831e6076908d83477426ca1e5d66ac2e120b8eb0f09a811294",
+      "raw_particulate_records": 684373
+    },
+    {
+      "file": "raw/xkdr/2024-11.parquet",
+      "sha256": "822a894d114b84b34aac9b237f8cdf2e8e0dcd25839ec8ae418ba029a4e2590a",
+      "raw_particulate_records": 682796
+    },
+    {
+      "file": "raw/xkdr/2024-12.parquet",
+      "sha256": "c64c81a24d76ceb8b0a47a9e57c43c8a66a502082e098f36a4c81563113c8c1e",
+      "raw_particulate_records": 685858
+    }
+  ],
+  "license": "CC BY 4.0; credit XKDR, CPCB and US Department of State/AirNow",
+  "overlap_policy": "2024 backfill is separate from OpenAQ 2025/2026; never union mirrors as extra stations",
+  "access_limit": "No full-access XKDR key configured; 2025/2026 national backfill not acquired"
+}

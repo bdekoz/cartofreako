@@ -1,0 +1,35 @@
+{
+  "fire_inputs": [
+    {
+      "file": "raw/firms/J1_VIIRS_C2_South_Asia_7d.csv",
+      "sha256": "24a818e04385f9db7bb2fe7dacaf8c73daf783716e06286257addf877f908315"
+    },
+    {
+      "file": "raw/firms/J2_VIIRS_C2_South_Asia_7d.csv",
+      "sha256": "f0f5ab24d941fc07ba607af47c9772f33a05553f0a7b68365d048aafb92af8af"
+    }
+  ],
+  "dss_sha256": "2230a0b62c8f166d5d39c7f61852b9f39ee5aafee76832a13382aca62f2eef07",
+  "region_bbox": [
+    72,
+    27,
+    79,
+    33
+  ],
+  "fire_count_semantics": "Detections by satellite, not unique fires or crop-burning attribution",
+  "frp_semantics": "Sum of instantaneous detection FRP in MW, not integrated energy or emissions",
+  "fire_first_date": "2026-11-01",
+  "fire_last_date": "2026-11-08",
+  "dss_issue_time_status": "unknown; captured chart dates retained without invented issue times or lead times",
+  "date_alignment": "Monitor/fire dates are IST; IITM daily chart labels are joined as published, with timezone not independently specified",
+  "dss_forecast_category_totals": {
+    "2026-11-07": 100.90866666666636,
+    "2026-11-08": 101.13129166666636,
+    "2026-11-09": 100.80720833333423,
+    "2026-11-10": 101.15520833333343
+  },
+  "dss_composition_status": "Published forecast categories exceed 100 percent; retained with quality flags, never renormalized or used as a closed source-share composition",
+  "forecast_fire_assumption": "IITM states future stubble contributions use climatological fire counts/emissions",
+  "era5_status": "not acquired: no CDS credentials configured; measured station weather retained as a separately labeled input",
+  "interpretation": "Descriptive join only. No causal source shares inferred from fire/PM correlations. Missing days are null."
+}

@@ -44,6 +44,13 @@ LOCATIONS = {
 TLS = threading.local()
 
 
+def write_cache(path, body):
+    # Replacement preserves earlier snapshots that share immutable cache inodes.
+    temporary = path.with_name(path.name + '.part')
+    temporary.write_bytes(body)
+    temporary.replace(path)
+
+
 def get(url, params=None):
     if not hasattr(TLS, 'session'):
         TLS.session = requests.Session()
@@ -58,11 +65,11 @@ def get(url, params=None):
             time.sleep(1 + attempt)
 
 
-def list_files(location, year, root):
+def list_files(location, year, root, refresh=False):
     path = root / 'raw' / f'openaq-{location}-{year}-index.xml'
-    if not path.exists():
+    if refresh or not path.exists():
         params = {'list-type': '2', 'prefix': f'records/csv.gz/locationid={location}/year={year}/', 'max-keys': 1000}
-        path.write_bytes(get(S3, params).content)
+        write_cache(path, get(S3, params).content)
     tree = E.fromstring(path.read_bytes())
     ns = {'s': 'http://s3.amazonaws.com/doc/2006-03-01/'}
     assert tree.findtext('s:IsTruncated', namespaces=ns) == 'false'
@@ -70,11 +77,11 @@ def list_files(location, year, root):
 
 
 def fetch_file(job):
-    key, root = job
+    key, root, refresh = job
     path = root / 'raw' / Path(key).name
     try:
-        if not path.exists():
-            path.write_bytes(get(S3 + key).content)
+        if refresh or not path.exists():
+            write_cache(path, get(S3 + key).content)
         rows = []
         negative = wrong_unit = 0
         for r in csv.DictReader(io.StringIO(gzip.decompress(path.read_bytes()).decode('utf-8-sig'))):
@@ -103,16 +110,39 @@ def fetch_file(job):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', required=True, type=Path)
+    parser.add_argument('--locations-json', type=Path,
+                        help='Versioned location inventory with id, name, provider and kind fields')
+    parser.add_argument('--start', type=dt.date.fromisoformat, default=dt.date(2025, 1, 1))
+    parser.add_argument('--end', type=dt.date.fromisoformat, default=dt.date(2026, 10, 28),
+                        help='Inclusive observation-date cutoff in Asia/Kolkata')
+    parser.add_argument('--refresh-index', action='store_true',
+                        help='Refresh cached archive listings to discover newly published days')
+    parser.add_argument('--refresh-since', type=dt.date.fromisoformat,
+                        help='Redownload cached daily files from this date to capture revisions')
     args = parser.parse_args()
+    if args.start > args.end:
+        parser.error('--start must not be after --end')
+    locations = LOCATIONS
+    coverage_description = 'Selected Indian urban locations; not an exhaustive national inventory'
+    if args.locations_json:
+        inventory = json.loads(args.locations_json.read_text())
+        records = inventory['locations']
+        locations = {int(r['id']): (r['name'], r['provider'], r['kind']) for r in records}
+        if not locations or len(locations) != len(records):
+            parser.error('Location IDs must be nonempty and unique')
+        if any(r.get('country') != 'IND' for r in records):
+            parser.error('This adapter requires country=IND for every location')
+        coverage_description = inventory['coverage']
+    started_at = dt.datetime.now(dt.timezone.utc).isoformat()
     root = args.output
     (root / 'raw').mkdir(parents=True, exist_ok=True)
     metadata = []
     keys = []
-    for location, (name, provider, kind) in LOCATIONS.items():
+    for location, (name, provider, kind) in locations.items():
         url = f'https://explore.openaq.org/locations/{location}'
         path = root / 'raw' / f'openaq-location-{location}.html'
         if not path.exists():
-            path.write_bytes(get(url).content)
+            write_cache(path, get(url).content)
         html = path.read_text()
         soup = BeautifulSoup(html, 'html.parser')
         description = soup.get_text(' ', strip=True)
@@ -123,17 +153,25 @@ def main():
         row = dict(id=location, country='IND', name=name, provider=provider, kind=kind,
                    metadata_url=url, metadata_sha256=hashlib.sha256(path.read_bytes()).hexdigest())
         metadata.append(row)
-        for year in [2025, 2026]:
-            available = list_files(location, year, root)
+        for year in range(args.start.year, args.end.year + 1):
+            available = list_files(location, year, root, args.refresh_index)
             keys.extend(available)
             print(f'OpenAQ {location} {year}: {len(available)} daily archive files', flush=True)
     receipts, observations = [], defaultdict(lambda: defaultdict(dict))
     duplicate = conflict = 0
+    jobs = []
+    for key in keys:
+        file_date = dt.datetime.strptime(Path(key).name.rsplit('-', 1)[1][:8], '%Y%m%d').date()
+        # Archive partitions can differ from local observation dates. Keep a
+        # one-day margin and apply the exact inclusive limit to each row below.
+        if args.start - dt.timedelta(days=1) <= file_date <= args.end + dt.timedelta(days=1):
+            refresh = args.refresh_since is not None and file_date >= args.refresh_since
+            jobs.append((key, root, refresh))
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
-        for index, (receipt, rows) in enumerate(pool.map(fetch_file, [(k, root) for k in keys])):
+        for index, (receipt, rows) in enumerate(pool.map(fetch_file, jobs)):
             receipts.append(receipt)
             for location, sensor, stamp, lat, lon, value in rows:
-                if not '2025-01-01' <= stamp[:10] <= '2026-10-28':
+                if not args.start.isoformat() <= stamp[:10] <= args.end.isoformat():
                     continue
                 assert 6 < lat < 37 and 67 < lon < 98
                 group = observations[(location, stamp[:10])][sensor]
@@ -145,7 +183,7 @@ def main():
                 else:
                     group[stamp] = (lat, lon, value)
             if (index + 1) % 250 == 0:
-                print(f'OpenAQ files {index+1}/{len(keys)}', flush=True)
+                print(f'OpenAQ files {index+1}/{len(jobs)}', flush=True)
                 (root / 'openaq-download-receipts.json').write_text(json.dumps(receipts, indent=2) + '\n')
     normalized = []
     multiple_sensor_days = 0
@@ -172,11 +210,13 @@ def main():
             continue
         multiple_sensor_days += len(daily) > 1
         hours, sensor, mean, (lat, lon) = sorted(daily, key=lambda d: (-d[0], d[1]))[0]
-        name, provider, kind = LOCATIONS[location]
+        name, provider, kind = locations[location]
         normalized.append(dict(source='openaq-' + provider.lower(), country='IND', station_id=str(location),
                                station_name=name, station_type=kind, latitude=lat, longitude=lon,
                                date=date, valid_hours=hours, mean_ug_m3=round(mean, 6), eligible=hours >= 18,
                                sensor_id=sensor))
+    if not normalized:
+        raise ValueError('No valid PM2.5 station-days in the requested interval')
     text = io.StringIO(newline='')
     writer = csv.DictWriter(text, fieldnames=list(normalized[0]))
     writer.writeheader()
@@ -186,12 +226,20 @@ def main():
     (root / 'openaq-locations.json').write_text(json.dumps(metadata, indent=2) + '\n')
     (root / 'openaq-download-receipts.json').write_text(json.dumps(receipts, indent=2) + '\n')
     report = dict(source='OpenAQ public AWS archive; CPCB, AirNow, AirGradient providers',
+                  retrieval_started_at_utc=started_at,
                   retrieved_at_utc=dt.datetime.now(dt.timezone.utc).isoformat(),
-                  coverage='Selected Indian urban locations; not an exhaustive national inventory',
+                  requested_start=args.start.isoformat(), requested_end=args.end.isoformat(),
+                  observed_first_date=min(r['date'] for r in normalized),
+                  observed_last_date=max(r['date'] for r in normalized),
+                  eligible_last_date=max((r['date'] for r in normalized if r['eligible']), default=None),
+                  archive_indexes_refreshed=args.refresh_index,
+                  raw_files_refreshed_since=args.refresh_since.isoformat() if args.refresh_since else None,
+                  coverage=coverage_description,
+                  location_inventory=str(args.locations_json) if args.locations_json else 'legacy built-in selection',
                   local_timezone='Asia/Kolkata', unit='micrograms per cubic metre',
                   daily_rule='At least 18 distinct valid hours; within-hour readings averaged; choose the sensor with the most valid hours per station-day, ties by sensor ID',
                   duplicate_timestamp_rows=duplicate, conflicting_timestamp_keys=conflict,
-                  multiple_pm25_sensor_days=multiple_sensor_days, stations=len(LOCATIONS),
+                  multiple_pm25_sensor_days=multiple_sensor_days, stations=len(locations),
                   station_days=len(normalized), eligible_station_days=sum(r['eligible'] for r in normalized),
                   normalized_file=target.name, sha256=hashlib.sha256(target.read_bytes()).hexdigest(),
                   failures=[r for r in receipts if 'error' in r])

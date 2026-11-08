@@ -1,0 +1,167 @@
+{
+  "status": "passed",
+  "as_of_utc": "2026-11-08T18:07:47.200627+00:00",
+  "requested_data_through": "2026-11-08",
+  "normalized_inputs": [
+    {
+      "path": "output/india-particulate-20261108/sources/asia-pm25/soramame-station-days.csv.gz",
+      "sha256": "667cc43df9ceb87c6ad3c3cfaab375794764a60a33ceb8e9bd10f9cc84f8b503"
+    },
+    {
+      "path": "output/india-particulate-20261108/sources/asia-pm25/cnemc-station-days.csv.gz",
+      "sha256": "252cc3d1bfb64a0daaf5d3e1e36165860b22b1d02007b9bbf15bcb9daab92846"
+    },
+    {
+      "path": "output/india-particulate-20261108/sources/asia-pm25/openaq-station-days.csv.gz",
+      "sha256": "d2b4a4c3251cf0d861e2a1812b2268fc7c6bda64f1311cb08cd730e23508cdb1"
+    }
+  ],
+  "country_coverage": [
+    {
+      "year": 2025,
+      "country": "CHN",
+      "instrument_class": "monitor",
+      "stations": 1686,
+      "h3_cells": 562,
+      "first_date": "2025-01-01",
+      "last_date": "2025-12-31",
+      "distinct_dates": 358,
+      "valid_station_days": 547441,
+      "station_days_above_35": 158600,
+      "daily_mean_min_ug_m3": 2.333333,
+      "daily_mean_max_ug_m3": 1816.272727
+    },
+    {
+      "year": 2025,
+      "country": "IND",
+      "instrument_class": "monitor",
+      "stations": 16,
+      "h3_cells": 15,
+      "first_date": "2025-01-01",
+      "last_date": "2025-12-31",
+      "distinct_dates": 365,
+      "valid_station_days": 4006,
+      "station_days_above_35": 1951,
+      "daily_mean_min_ug_m3": 0.0,
+      "daily_mean_max_ug_m3": 1153.501957
+    },
+    {
+      "year": 2025,
+      "country": "IND",
+      "instrument_class": "sensor",
+      "stations": 1,
+      "h3_cells": 1,
+      "first_date": "2025-09-10",
+      "last_date": "2025-12-31",
+      "distinct_dates": 100,
+      "valid_station_days": 100,
+      "station_days_above_35": 98,
+      "daily_mean_min_ug_m3": 19.849194,
+      "daily_mean_max_ug_m3": 517.495311
+    },
+    {
+      "year": 2025,
+      "country": "JPN",
+      "instrument_class": "monitor",
+      "stations": 1076,
+      "h3_cells": 223,
+      "first_date": "2025-11-01",
+      "last_date": "2025-12-31",
+      "distinct_dates": 61,
+      "valid_station_days": 62014,
+      "station_days_above_35": 35,
+      "daily_mean_min_ug_m3": 0.0,
+      "daily_mean_max_ug_m3": 173.047619
+    },
+    {
+      "year": 2026,
+      "country": "CHN",
+      "instrument_class": "monitor",
+      "stations": 1345,
+      "h3_cells": 511,
+      "first_date": "2026-01-01",
+      "last_date": "2026-10-28",
+      "distinct_dates": 295,
+      "valid_station_days": 391529,
+      "station_days_above_35": 85278,
+      "daily_mean_min_ug_m3": 2.347826,
+      "daily_mean_max_ug_m3": 1034.416667
+    },
+    {
+      "year": 2026,
+      "country": "IND",
+      "instrument_class": "monitor",
+      "stations": 16,
+      "h3_cells": 15,
+      "first_date": "2026-01-01",
+      "last_date": "2026-11-04",
+      "distinct_dates": 308,
+      "valid_station_days": 3560,
+      "station_days_above_35": 1533,
+      "daily_mean_min_ug_m3": 0.0,
+      "daily_mean_max_ug_m3": 886.5
+    },
+    {
+      "year": 2026,
+      "country": "IND",
+      "instrument_class": "sensor",
+      "stations": 1,
+      "h3_cells": 1,
+      "first_date": "2026-01-01",
+      "last_date": "2026-10-02",
+      "distinct_dates": 245,
+      "valid_station_days": 245,
+      "station_days_above_35": 132,
+      "daily_mean_min_ug_m3": 4.191304,
+      "daily_mean_max_ug_m3": 278.921111
+    },
+    {
+      "year": 2026,
+      "country": "JPN",
+      "instrument_class": "monitor",
+      "stations": 1095,
+      "h3_cells": 226,
+      "first_date": "2026-01-01",
+      "last_date": "2026-09-30",
+      "distinct_dates": 273,
+      "valid_station_days": 283898,
+      "station_days_above_35": 100,
+      "daily_mean_min_ug_m3": 0.0,
+      "daily_mean_max_ug_m3": 415.05
+    }
+  ],
+  "checks": [
+    {
+      "year": 2025,
+      "legacy_features_preserved": true,
+      "legacy_totals_unchanged": true,
+      "output_features": 50237,
+      "added_metrics": {
+        "pm25_measured_days": 209913,
+        "pm25_concentration_gt35_days": 62886,
+        "pm25_sensor_measured_days": 100,
+        "pm25_sensor_gt35_days": 98
+      },
+      "sha256": "ff104d6e7459e003111c823ba865a57c3d06bdfd2e5513591c60564133e625c3"
+    },
+    {
+      "year": 2026,
+      "legacy_features_preserved": true,
+      "legacy_totals_unchanged": true,
+      "output_features": 44632,
+      "added_metrics": {
+        "pm25_measured_days": 212994,
+        "pm25_concentration_gt35_days": 36849,
+        "pm25_sensor_measured_days": 245,
+        "pm25_sensor_gt35_days": 132
+      },
+      "sha256": "c5918b6b7030d5b23d3f36387105ae8153848235a3bba47429a6d53483a496bf"
+    }
+  ],
+  "extreme_value_review": {
+    "threshold_daily_mean_ug_m3": 250,
+    "station_days": 694,
+    "action": "Retained provider-reported values pending station/operator quality review; 250 is a review trigger, not a validity cutoff or health standard."
+  },
+  "interpretation": "Counts describe available monitored days, not annual rates or national exposure. China and Japan coverage differ from selected Indian urban sites. Sensor observations remain separate."
+}
