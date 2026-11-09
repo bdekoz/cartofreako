@@ -1313,6 +1313,7 @@ check-dataset:
 	$(ATLAS_PYTHON) tests/test-dataset.py
 	$(ATLAS_PYTHON) tests/test-data-http-policy.py
 	$(ATLAS_PYTHON) tests/test-noaa-cpc-ping.py
+	$(ATLAS_PYTHON) tests/test-astro-setouchi-plates.py
 	$(ATLAS_PYTHON) tests/test-data-workflow.py
 
 check-firms-coverage: build/test-firms-coverage

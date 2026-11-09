@@ -50,6 +50,44 @@ and its geographic locator retained. The locator uses the page palette;
 sky symbols retain their source colors. These settings reuse the October 29
 sky and are applied by the atlas composer, with a separate attribution sheet.
 
+## Refreshed astronomy-only Setouchi plates
+
+The astronomy source can be built and reviewed independently while a full
+`data-update` edition is still waiting for other sources. First generate the
+native astronomy SVGs with the explicitly staged `ASTRO_DATA_DIR`, as in the
+[generation guide](../getting-started/generation.md). Then compose the wine/amber
+presentation and separate legend/source plates:
+
+```sh
+python3 scripts/build-astro-setouchi-plates.py \
+  --source output/astro-preview-20261109 \
+  --data-dir .cartofreako/data/editions/20261109t173133z-bb0c6b3081da/inputs/astronomy \
+  --output output/astro-setouchi-20261109 --workers 2
+```
+
+Use matching source and input directories from the intended run. The composer
+checks the source SVG timestamp against its profile and verifies that celestial
+geometry, categorical symbol colors, label positions and text remain intact.
+Setouchi wine `#240413` and amber `#fcc553` style the page and typography;
+object labels use 12 physical points. Landscape maps have a centered 43.5-inch
+image width; the native portrait Star-X projection retains its proportions
+with a 43.5-inch image height. Styling does not relocate the San Francisco
+observer or change the source calculation instant.
+
+The 18 native maps become 18 map/legend pairs. The output contains
+`maps/PROJECTION/` and `legends/PROJECTION/`, each with `svg/`, `pdf/`, `png/`
+and `preview/` folders. PNG plates use 300 DPI by default; `--dpi` overrides it.
+`index.html` reviews the pairs, and `astro-setouchi-map-and-legend-plates.pdf`
+combines them as alternating map and legend pages. Legends derive object counts,
+observer details, Hubble element epochs and enlarged example glyphs from the
+actual source SVG. Profiles/catalogs are copied under `sources/data/`; their
+hashes and per-object source URLs are in `sources/input-manifest.json`.
+`sources/plates.json` records source/output hashes and exact pixel dimensions.
+
+This produces a local review delivery and does not activate an incomplete
+dataset edition. Verify the presentation invariants with
+`python3 tests/test-astro-setouchi-plates.py`.
+
 ## Authoritative JSON profile
 
 [`astro-profile.json`](../../../assets.static/astronomy/astro-profile.json) and
