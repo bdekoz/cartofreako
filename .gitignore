@@ -70,6 +70,8 @@
 /generation-profile.local.json
 /.cartofreako/
 /.venv-data/
+/noaa-cpc-ping-status.log
+/noaa-cpc-ping-monitor.log
 /output/data-editions/
 
 # Downloaded inputs and local build products.

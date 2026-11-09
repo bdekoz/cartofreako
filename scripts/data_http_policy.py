@@ -9,13 +9,14 @@ import math
 import os
 from pathlib import Path
 import random
+import shlex
 import sys
 import time
 from urllib.error import HTTPError
 from urllib.parse import urlsplit
 from urllib.request import urlopen
 
-from dataset import DatasetError, atomic_json, redact
+from dataset import DatasetError, ROOT, atomic_json, redact
 
 
 def setting(name, default, *, positive=False):
@@ -132,11 +133,23 @@ def retry_hint(when):
     return f'Try again no earlier than {timestamp(when)} with: {command}'
 
 
-def retry_after(value):
+def retry_after(value, *, now=None):
     try:
-        return max(0, float(value)) if value.isdigit() else max(0, parsedate_to_datetime(value).timestamp() - time.time())
+        return max(0, float(value)) if value.isdigit() else max(0, parsedate_to_datetime(value).timestamp() - (time.time() if now is None else now))
     except (TypeError, ValueError, OverflowError):
         return 0
+
+
+def cpc_ping_hint(url):
+    parts = urlsplit(url)
+    if ((parts.hostname == 'psl.noaa.gov' or (parts.hostname or '').endswith('.psl.noaa.gov'))
+            and '/cpc_global_temp/' in parts.path):
+        command = shlex.join(['nohup', 'python3', str(ROOT/'scripts/noaa-cpc-ping.py'), '--url', url])
+        return ('Pause data-update; first success timestamp will be in '
+                + str(ROOT/'noaa-cpc-ping-status.log') + '. Launch an hourly CPC monitor: ' + command
+                + ' > ' + shlex.quote(str(ROOT/'noaa-cpc-ping-monitor.log')) + ' 2>&1 < /dev/null &'
+                )
+    return None
 
 
 def open_response(request, pacer, progress):
@@ -172,6 +185,11 @@ def open_response(request, pacer, progress):
                                  'provider reset time unknown (no usable Retry-After)')
                 progress.report(f'WARNING: HTTP 429 Too Many Requests; {provider_note}; '
                                 f'next eligible retry {timestamp(next_at)}', force=True)
+                if not getattr(progress, 'cpc_ping_hint_shown', False):
+                    hint = cpc_ping_hint(request.full_url)
+                    if hint:
+                        progress.report(hint, force=True)
+                        progress.cpc_ping_hint_shown = True
             remaining = deadline - time.monotonic()
             if delay >= remaining:
                 raise DatasetError(f'HTTP {code}; retry budget exhausted or insufficient for next cooldown '

@@ -248,6 +248,43 @@ Repeated `make data-update` invocations therefore continue partial transfers
 and reuse complete CPC files checked that day. The calendar boundary is UTC,
 not a rolling 24-hour interval or the machine's local midnight.
 
+To wait gently for recovery after a CPC 429, stop the full acquisition and
+launch the durable hourly monitor from the repository root:
+
+```sh
+nohup python3 scripts/noaa-cpc-ping.py \
+  > noaa-cpc-ping-monitor.log 2>&1 < /dev/null &
+```
+
+The default probe is the affected `tmin.1981.nc` file. Select another failing
+file with `--url URL` (the 429 warning prints a launch command with that URL).
+Each probe makes one GET requesting a single byte, with no automatic request
+retries or redirects. It reads at most one byte even if the server ignores the
+range. HTTP 200/206 with data counts as success; 429, other errors and timeouts
+keep the monitor waiting. `Retry-After` seconds and HTTP dates extend the
+hourly interval when needed. Existing shared NOAA cooldowns also apply.
+The saved schedule prevents an immediate extra probe after a restart, and a
+lock prevents duplicate monitors using the same cache.
+
+On the **first successful ping**, it appends a UTC timestamp, HTTP status and
+URL to `noaa-cpc-ping-status.log` at the repository root
+(`/home/bkoz/src/cartofreako/noaa-cpc-ping-status.log` on this checkout), then
+exits. Earlier recovery entries remain in the file. Failed probes appear only
+in `noaa-cpc-ping-monitor.log`; they never write a success timestamp.
+Both logs are local ignored files. `nohup` lets the monitor survive a shell
+logout. It never changes cached download bytes or resumes the full update.
+
+```sh
+tail -f noaa-cpc-ping-monitor.log
+cat noaa-cpc-ping-status.log
+```
+
+`--once` makes a single eligible check (exit 0 for success, 1 for a failed
+probe, 2 if a saved cooldown prevents a request). `--log`, `--cache`,
+`--interval` and `--timeout` override their defaults; the interval defaults
+to 3600 seconds and timeout to 20 seconds. A successful ping indicates
+availability at that moment; the full transfer may still encounter throttling.
+
 NOAA also documents a [bulk HTTPS download service](https://psl.noaa.gov/data/ftp.html).
 It can be selected explicitly:
 

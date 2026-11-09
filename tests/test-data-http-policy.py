@@ -155,6 +155,8 @@ class Policy(unittest.TestCase):
         self.assertIn('WARNING: HTTP 429 Too Many Requests', self.log.getvalue())
         self.assertIn('provider reset time unknown', self.log.getvalue())
         self.assertIn('next eligible retry', self.log.getvalue())
+        self.assertIn('scripts/noaa-cpc-ping.py', self.log.getvalue())
+        self.assertIn('noaa-cpc-ping-status.log', self.log.getvalue())
         self.assertIn("make data-update DATA_UPDATE_ARGS='--resume fixture-run'", str(failure.exception))
 
     def test_throttling_raises_zero_baseline_interval(self):
