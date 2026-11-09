@@ -122,6 +122,8 @@ actual source periods. A retrieval date is not an observation date.
 
 Mutable CPC and OISST files use HTTP revalidation. Interrupted HTTP transfers
 resume only with matching validators; changed remote identities restart.
+CPC downloads use verified 2 MiB byte ranges to avoid NOAA proxy truncation;
+resuming a failed update also reuses partial CPC files from earlier attempts.
 CelesTrak retains its two-hour request policy. The optional NASA SSC reference
 may remain explicitly historical. Network, groundstation and audited annual
 publication inputs are copied and labeled as pinned local data; no external

@@ -126,21 +126,38 @@ class Freshness(unittest.TestCase):
                 if state["fail"]:
                     self.send_error(503)
                     return
-                if self.headers.get("If-None-Match") == state["etag"]:
+                if len(state['calls']) == state.get('change_on_call'):
+                    state.update(data=b'a completely different revision', etag='"two"')
+                if ((state['etag'] and self.headers.get("If-None-Match") == state["etag"])
+                        or (state.get('last_modified') and self.headers.get('If-Modified-Since') == state['last_modified'])):
                     self.send_response(304)
                     self.end_headers()
                     return
-                offset = 0
-                if self.headers.get('If-Range') == state['etag'] and self.headers.get('Range'):
-                    offset = int(self.headers['Range'].split('=')[1].split('-')[0])
-                self.send_response(206 if offset else 200)
-                self.send_header("ETag", state["etag"])
-                if offset:
-                    self.send_header('Content-Range', f'bytes {offset}-{len(state["data"])-1}/{len(state["data"])}')
-                self.send_header("Content-Length", str(len(state["data"])-offset))
+                offset, end, ranged = 0, len(state['data']) - 1, False
+                requested = self.headers.get('Range')
+                validator = state['etag']
+                if not validator or validator.startswith('W/'):
+                    validator = state.get('last_modified')
+                if (requested and not state.get('ignore_ranges')
+                        and self.headers.get('If-Range') in (None, validator)):
+                    start, stop = requested.split('=')[1].split('-')
+                    offset = int(start)
+                    end = min(int(stop), end) if stop else end
+                    ranged = True
+                self.send_response(206 if ranged else 200)
+                if not state.get('no_validator'):
+                    if state['etag']:
+                        self.send_header("ETag", state["etag"])
+                    if state.get('last_modified'):
+                        self.send_header('Last-Modified', state['last_modified'])
+                if ranged:
+                    reported_start = offset + 1 if state.get('bad_range') else offset
+                    self.send_header('Content-Range', f'bytes {reported_start}-{end}/{len(state["data"])}')
+                self.send_header("Content-Length", str(end-offset+1))
                 self.end_headers()
-                payload = state['data'][offset:]
-                if state.pop('truncate', False):
+                payload = state['data'][offset:end+1]
+                if (state.pop('truncate', False)
+                        or (state.get('truncate_unbounded') and (not requested or requested.endswith('-')))):
                     payload = payload[:len(payload)//2]
                 self.wfile.write(payload)
         self.server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
@@ -195,6 +212,66 @@ class Freshness(unittest.TestCase):
         self.state.update(data=b'a completely different revision', etag='"two"')
         fetch(self.url, self.root/'second', self.root/'cache')
         self.assertEqual((self.root/'second').read_bytes(), self.state['data'])
+
+    def test_bounded_ranges_avoid_proxy_truncation_and_revalidate(self):
+        self.state['truncate_unbounded'] = True
+        first = fetch(self.url, self.root/'first', self.root/'cache', range_size=7)
+        self.assertEqual((self.root/'first').read_bytes(), self.state['data'])
+        self.assertEqual([call['Range'] for call in self.state['calls']],
+                         ['bytes=0-6', 'bytes=7-13', 'bytes=14-18'])
+        self.assertEqual(self.state['calls'][1]['If-Range'], '"one"')
+        second = fetch(self.url, self.root/'second', self.root/'cache', range_size=7)
+        self.assertEqual(first['sha256'], second['sha256'])
+        self.assertEqual(self.state['calls'][-1]['If-None-Match'], '"one"')
+
+    def test_bounded_ranges_resume_existing_open_ended_partial(self):
+        self.state['truncate_unbounded'] = True
+        with self.assertRaises(dataset.DatasetError):
+            fetch(self.url, self.root/'first', self.root/'cache')
+        fetch(self.url, self.root/'second', self.root/'cache', range_size=7)
+        self.assertEqual((self.root/'second').read_bytes(), self.state['data'])
+        self.assertEqual(self.state['calls'][1]['Range'], 'bytes=9-15')
+        self.assertFalse(list((self.root/'cache/http').glob('*.part')))
+
+    def test_interrupted_bounded_range_preserves_and_resumes_partial(self):
+        self.state['truncate'] = True
+        with self.assertRaises(dataset.DatasetError):
+            fetch(self.url, self.root/'first', self.root/'cache', range_size=7)
+        self.assertFalse((self.root/'first').exists())
+        fetch(self.url, self.root/'second', self.root/'cache', range_size=7)
+        self.assertEqual((self.root/'second').read_bytes(), self.state['data'])
+        self.assertEqual(self.state['calls'][1]['Range'], 'bytes=3-9')
+
+    def test_revision_changed_between_ranges_replaces_partial(self):
+        self.state['change_on_call'] = 2
+        fetch(self.url, self.root/'first', self.root/'cache', range_size=7)
+        self.assertEqual((self.root/'first').read_bytes(), self.state['data'])
+
+    def test_server_ignoring_bounded_ranges_downloads_full_object(self):
+        self.state['ignore_ranges'] = True
+        fetch(self.url, self.root/'first', self.root/'cache', range_size=7)
+        self.assertEqual((self.root/'first').read_bytes(), self.state['data'])
+        self.assertEqual(len(self.state['calls']), 1)
+
+    def test_inconsistent_range_cannot_publish_an_object(self):
+        self.state['bad_range'] = True
+        with self.assertRaisesRegex(dataset.DatasetError, 'inconsistent partial response'):
+            fetch(self.url, self.root/'first', self.root/'cache', range_size=7)
+        self.assertFalse((self.root/'first').exists())
+
+    def test_multiple_ranges_require_identity_validator(self):
+        self.state['no_validator'] = True
+        with self.assertRaisesRegex(dataset.DatasetError, 'without an identity validator'):
+            fetch(self.url, self.root/'first', self.root/'cache', range_size=7)
+        self.assertFalse((self.root/'first').exists())
+
+    def test_bounded_resume_with_last_modified_like_noaa(self):
+        self.state.update(etag=None, last_modified='Mon, 13 Apr 2020 21:00:04 GMT', truncate=True)
+        with self.assertRaises(dataset.DatasetError):
+            fetch(self.url, self.root/'first', self.root/'cache')
+        fetch(self.url, self.root/'second', self.root/'cache', range_size=7)
+        self.assertEqual((self.root/'second').read_bytes(), self.state['data'])
+        self.assertEqual(self.state['calls'][1]['If-Range'], self.state['last_modified'])
 
     def test_shared_source_is_acquired_once_in_a_run_then_revalidated_next_run(self):
         with patch.dict(os.environ,{'DATA_UPDATE_RUN_ID':'first-run'}):

@@ -81,6 +81,18 @@ download failure. Native tests reproduce the 202/216 outage failure, test
 standard/NRT detections do not multiply H3 cell-days. Live NASA reacquisition
 still requires the key in the invoking shell.
 
+## CPC download repair follow-up
+
+The edition downloader initially bypassed the CPC fetcher's bounded-range
+strategy, so NOAA's proxy could truncate full/open-ended yearly NetCDF
+transfers repeatedly. CPC now requests verified 2 MiB ranges through the
+shared HTTP cache, retaining conditional freshness checks, immutable objects
+and identity-checked resume. Existing partial downloads can continue without
+deleting the failed run or restarting previously completed sources.
+Regression fixtures cover truncated transfers, partial-file migration,
+conditional revalidation, changed provider identities, ignored ranges and
+inconsistent or unvalidated partial responses.
+
 ## Intended user workflow
 
 After installing prerequisites and configuring required source credentials:

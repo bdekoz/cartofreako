@@ -89,9 +89,11 @@ for year in $(seq "$start_year" "$end_year"); do
     output="$raw_dir/$variable.$year.nc"
     if [[ -n ${DATA_HTTP_CACHE:-} ]]; then
       # Current-data editions revalidate provider bytes even when an older
-      # cached NetCDF still opens. The shared downloader preserves old objects.
+      # cached NetCDF still opens. Keep bounded requests here too: NOAA's
+      # proxy can close full/open-ended transfers before the yearly file ends.
+      printf 'revalidating %s in verified byte ranges\n' "$file_url/$variable.$year.nc"
       python3 "$(dirname -- "${BASH_SOURCE[0]}")/data-http-fetch.py" \
-        "$file_url/$variable.$year.nc" "$output"
+        "$file_url/$variable.$year.nc" "$output" --range-size 2097152
       validate "$output" "$variable" \
         || { echo "CPC download is not a readable $variable NetCDF" >&2; exit 1; }
       continue
