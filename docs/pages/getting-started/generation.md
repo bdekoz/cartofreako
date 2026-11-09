@@ -101,7 +101,28 @@ before the aggregate to fetch and update every external experimental source —
 Natural Earth, astro, orbiting, atoll evidence, and the JAXA P-Tree trust
 anchor and data. The fetch target is separate: the aggregate registry itself
 still contains no fetch, external authorization, or publication target.
-those evidence inputs.
+
+Source refresh targets can also be run individually:
+
+| Source | Make targets, in order |
+| --- | --- |
+| Astronomy: Gaia, exoplanets, JPL small bodies | `fetch-astro-data` |
+| Orbital catalogs: CelesTrak and optional NASA reference | `fetch-orbiting-data` |
+| JAXA clouds and atmosphere | `prepare-cloud-atmosphere-data` (includes fetching; requires configured P-Tree credentials) |
+| Atoll evidence | `prepare-atoll-evidence-data` (includes fetching) |
+| Particulate observations, 2025 and 2026 | `fetch-anthropocene-data`, then `prepare-anthropocene-data` |
+| NOAA CPC temperatures | `fetch-anthropocene-cpc-data`, then `prepare-anthropocene-temperature-data` |
+| Resources | `refresh-resources-data` |
+| Natural Earth basemap | `fetch-natural-earth-10m` (downloads when needed) |
+
+`all-experiments-fetch` runs `clean` and the experimental source fetches
+listed above; it does not include the particulate, CPC temperature, or
+resources refresh targets. There is no single target that refreshes every
+source. Fetches respect configured years, profile boundaries, and caches;
+a successful fetch does not universally advance observation dates or select
+its candidate snapshot for generation. See the
+[prerequisites](prerequisites.md#anthropocene-input-preparation) for the
+particulate FIRMS requirement and input preparation workflow.
 
 The preferred long-running release workflow bounds its first pass to two
 concurrent recipes by default, keeps independent targets moving after a
@@ -187,7 +208,7 @@ The default locations can be overridden:
 | `CLOUD_ATMOSPHERE_DATA_DIR` | `assets.static/cloud-atmosphere` | JAXA source profile plus ignored raw and prepared refresh staging |
 | `CLOUD_ATMOSPHERE_PROFILE` | `$(CLOUD_ATMOSPHERE_DATA_DIR)/cloud-atmosphere-profile.json` | Process-time, latest-not-after, source, freshness, QA, H3 aggregation, and display contract |
 | `CLOUD_ATMOSPHERE_GEOJSON` | `$(CLOUD_ATMOSPHERE_DATA_DIR)/.prepared/cloud-atmosphere-latest.geojson` | Locally prepared, checksum-verified H3 observation snapshot |
-| `ORBITING_DATA_DIR` | `assets.static/orbital-technosphere` | Orbital Technosphere profile, OMM CSV snapshots, NASA reference, and checksums |
+| `ORBITING_DATA_DIR` | `assets.static/orbital-technosphere/20261109` | Orbital Technosphere profile, OMM CSV snapshots, NASA reference, and checksums |
 | `ORBITING_PROFILE` | `$(ORBITING_DATA_DIR)/orbital-technosphere-profile.json` | Authoritative propagation instant, make-invocation reference point, catalog roles, freshness rules, visibility rules, and display budgets |
 | `ANTHROPOCENE_DATA_DIR` | `assets.static/anthropocene` | Checked dual-year particulate and CPC profiles, normalized H3 GeoJSON files, checksums, and ignored refresh staging |
 | `ANTHROPOCENE_PARTICULATE_PROFILE_2025`, `ANTHROPOCENE_PARTICULATE_PROFILE_2026` | Year-bearing files in `$(ANTHROPOCENE_DATA_DIR)` | Complete-2025 and partial-2026 duration, source coverage, thresholds, metric enablement, scales, and styles |
@@ -578,10 +599,20 @@ Orbital refresh is an explicit, atomic action:
 make fetch-orbiting-data
 ```
 
-The refresh acquires OMM CSV groups from CelesTrak and selected-spacecraft
-reference positions from NASA SSCWeb, then rewrites their checksums. It does
-not change the profile's timestamp or location; those must be reviewed with
-the NASA query interval. The
+The refresh validates OMM CSV groups from CelesTrak and attempts to acquire
+selected-spacecraft reference positions from NASA SSCWeb. It writes a new
+dated snapshot under `build/`, including checksums and acquisition receipts;
+existing snapshots and the generation profile remain unchanged. The candidate
+uses the current UTC calculation time (or `ORBITING_TIMESTAMP`) and adjusts
+the NASA query interval to match. Review the candidate before selecting it
+with `ORBITING_PROFILE`.
+
+`NASA current reference unavailable` is a nonfatal warning: the fetch continues
+with the checked-in NASA reference dated 2026-08-13, marked
+`historical-validation-only`. Current CelesTrak catalogs are retained, but
+the historical NASA positions do not validate their current positions.
+The warning includes the network or query error; `Created ...` confirms
+that the orbital snapshot was installed successfully. The
 [implementation notes](../passes/orbital-technosphere.md) cover
 the source feasibility decision, profile schema, category memberships,
 coordinate pipeline, SVG metadata, verification, and operational-use limits.

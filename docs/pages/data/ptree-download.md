@@ -98,7 +98,7 @@ First confirm the local compiler, H3, GDAL NetCDF/GeoTIFF drivers, utilities,
 font, and rendering tools:
 
 ```sh
-make check-prerequisite
+make check-prerequisites
 ```
 
 For one internally consistent and reproducible run, capture the current UTC
@@ -190,7 +190,7 @@ downloaded successfully.
 | `P-Tree supplied no matching H09 CLP NetCDF` | Confirm the product-root listing contains H09 L2CLP010 data and that `SOURCE_DATE_EPOCH` is not before the archive. This is distinct from authorization, which is checked first. |
 | A selected source is older than its preferred target | This is allowed for the newest published observation ending no later than process start. Review the exact source interval, age, and `latest available` label in the generated legend. Refresh before publication when a newer observation is required. |
 | A public JAXA collection cannot be resolved | Retry in case the static catalog is temporarily unavailable, then compare the collection IDs in the [source profile](../../../assets.static/cloud-atmosphere/cloud-atmosphere-profile.json) with the [live JAXA Earth STAC root](https://data.earth.jaxa.jp/stac/cog/v1/catalog.json). |
-| Missing GDAL NetCDF or GeoTIFF support | Run `make check-prerequisite` and install the missing GDAL drivers before preparation. |
+| Missing GDAL NetCDF or GeoTIFF support | Run `make check-prerequisites` and install the missing GDAL drivers before preparation. |
 | Checksum mismatch during preparation or verification | Treat the staged data as incomplete or modified. Rerun fetch/preparation; do not edit the digest or snapshot to force acceptance. |
 | A layer is labeled `latest available` | The selected observation exceeded its preferred target but remains valid as the newest source in the authorized snapshot. Refresh the snapshot for a current-data product; do not edit its date or suppress the label. |
 

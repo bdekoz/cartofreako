@@ -52,10 +52,10 @@ stores catalog IDs as strings and initializes SGP4 directly from OMM fields.
 
 ## Reproducible profile and acquisition
 
-[`orbital-technosphere-profile.json`](../../../assets.static/orbital-technosphere/20261103/orbital-technosphere-profile.json)
+[`orbital-technosphere-profile.json`](../../../assets.static/orbital-technosphere/20261109/orbital-technosphere-profile.json)
 is authoritative. It records:
 
-- calculation time `2026-11-03T17:10:00Z`;
+- calculation time `2026-11-09T01:12:00Z`;
 - the make-invocation reference point, San Francisco at `37.7749° N`,
   `122.4194° W`, elevation 16 m, as an explicit profile value;
 - SGP4, WGS-72, and AFSPC compatibility mode;
@@ -83,8 +83,12 @@ download inside the service's two-hour update interval and stops on any
 CelesTrak HTTP error instead of retrying a 403 or 404. The shared download
 cache is `build/orbital-technosphere-download-cache`.
 
-The November snapshot contains 16,844 primary active records and 25
-membership/debris catalogs. At the pinned instant, 17,909 objects are plotted:
+The default November 9 snapshot contains 16,893 primary active records and 25
+membership/debris catalogs, downloaded at 01:04 UTC. Of the active records,
+16,867 pass the epoch freshness limits at the pinned calculation instant.
+Both `make generate-orbiting` and the standalone fetch script select this
+snapshot by default. The retained November 3 snapshot contains 16,844 primary
+active records. At its pinned instant, 17,909 objects are plotted:
 16,808 active records and 1,101 bounded debris records. Forty-four records
 are excluded by the epoch filter; none failed propagation. The original
 August snapshot remains the historical SGP4/NASA and Hubble test input.
@@ -271,7 +275,7 @@ checks unique SVG IDs, exact marker/name pairing, original names, layer nesting,
 visibility and conserved per-group counts against the selected profile. It
 also verifies each marker shape, black debris strokes, matching companion
 keys and attribution, and Starlink-only 9 pt IDs on native global plates.
-All twelve global/observer map/legend pairs were checked for this snapshot;
+All twelve global/observer map/legend pairs were checked for the November 3 snapshot;
 each global product has 17,909 pairs and each observer product has 1,088 pairs.
 
 For a composed default atlas, run

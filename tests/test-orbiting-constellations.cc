@@ -9,12 +9,13 @@ namespace orbital = cart0freak0::orbiting_generation;
 int main()
 {
   const auto config = orbital::load_profile(
-    "assets.static/orbital-technosphere/20261103/orbital-technosphere-profile.json");
+    "assets.static/orbital-technosphere/20261109/orbital-technosphere-profile.json");
+  assert(config.calculation_time.iso_utc == "2026-11-09T01:12:00Z");
   assert(config.groups.size() == 25);
   assert(!config.display.show_satellite_names);
   const auto catalogs = orbital::load_catalogs(config);
   const auto propagated = orbital::propagate_catalog(catalogs, config);
-  assert(catalogs.active_records == 16844);
+  assert(catalogs.active_records == 16893);
   assert(propagated.objects.size() > 16000);
   std::set<std::string> input_ids;
   for (const auto& object : catalogs.objects)

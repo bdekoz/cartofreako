@@ -179,7 +179,7 @@ check_required_tool "tar" "tar"
 check_required_tool "gzip" "gzip"
 check_required_tool "jq" "jq"
 check_required_tool "Python 3" "python3"
-check_required_tool "ripgrep" "rg"
+check_required_tool "ripgrep (rg; package: ripgrep)" "rg"
 check_required_tool "find" "find"
 check_required_tool "GNU-compatible date" "date"
 check_required_tool "sha256sum" "sha256sum"
@@ -189,9 +189,9 @@ check_required_tool "Coreutils wc" "wc"
 check_required_tool "Coreutils cmp" "cmp"
 check_required_tool "Coreutils realpath" "realpath"
 check_required_file "Alpha60 header" "$alpha60_src/a60-io.h"
-check_required_file "Izzi header" "$izzi_src/a60-svg.h"
+check_required_file "Izzi header" "$izzi_src/izzi-svg.h"
 check_required_file "Izzi roulette header" \
-  "$izzi_src/a60-svg-curves-roulette.h"
+  "$izzi_src/izzi-svg-curves-roulette.h"
 check_required_directory "Cloud/CDN source checkout" \
   "$network_infrastructure_cloud_source"
 check_required_directory "Submarine-cable source checkout" \
@@ -426,6 +426,7 @@ printf '\n'
 if [ "$required_failures" -ne 0 ]; then
   printf '%s required prerequisite check(s) failed. See docs/pages/getting-started/prerequisites.md.\n' \
     "$required_failures"
+  printf '%s\n' 'Run make install-prerequisites to install missing native dependencies.'
   if [ "$optional_missing" -ne 0 ]; then
     printf '%s optional WebAssembly prerequisite(s) were also not found.\n' \
       "$optional_missing"

@@ -15,12 +15,13 @@ generation workflow. They do not require the same software:
 | C++20 compiler and standard library | Tests, profile resolution, and native generators | Builds the projection checks, generation-profile resolver, sixteen SVG-generation programs, and the Anthropocene and Cloud-atmosphere preparers |
 | RapidJSON development headers | Configured generation plus astronomy, Cloud-atmosphere, Orbital Technosphere, resources, Anthropocene, network-swarm, and network-infrastructure tests and generators | Parses the generation preference, authoritative data profiles, astronomy JSON, NASA SSCWeb references, normalized H3 observations, cumulative swarm GeoJSON, and infrastructure source records |
 | Alpha60 headers | SVG generation | Supplies `a60-io.h` and shared runtime-resource interfaces |
-| Izzi headers | SVG generation | Supplies `a60-svg.h`, roulette and Hamonshū curve construction, and SVG document/path serialization |
+| Izzi headers | SVG generation | Supplies `izzi-svg.h`, roulette and Hamonshū curve construction, and SVG document/path serialization |
 | H3 development headers and library | Cloud-atmosphere, Network-swarm, and Anthropocene tests, normalization, and generation | Validates 64-bit cells, aggregates raster and point observations, computes configurable parent clusters, and creates cell boundaries with the H3 v4 API |
 | GDAL development package with OGR, GeoTIFF, and NetCDF drivers | Earth, water, both bathymetry-art passes, Cloud-atmosphere, resources, global Orbital Technosphere, Anthropocene, network-swarm, and network-infrastructure generation | Reads Natural Earth/HMS vectors plus JAXA COG and P-Tree NetCDF rasters |
 | GEOS support in GDAL | Natural Earth-backed generation | Performs polygon intersection, repair, and seam-safe clipping |
 | Fontconfig and Atkinson Hyperlegible | Graticule, astronomy, Orbital Technosphere, resources, Anthropocene, network-swarm, network-infrastructure, and both bathymetry-art families | Resolves the default accessible label face and prevents silent font substitution |
-| Git, Bash, Python 3, `curl`, `jq`, `unzip`, `tar`, GNU `gzip`, `rg`, `find`, `sha256sum`, and GNU coreutils including `cmp`, `date`, and `realpath` | Natural Earth, astronomy, Cloud-atmosphere, orbital, resources, Anthropocene, network-swarm, and network-infrastructure preparation or validation | Resolves static STAC metadata, downloads, verifies commits and files, compares, dates, transforms JSON, extracts or installs bounded source data, and creates deterministic compressed resource SVGs |
+| Ripgrep (`rg`; package name `ripgrep`) | Anthropocene Storm Events discovery and source preparation or validation scripts | Searches downloaded listings and source records; must be available in the shell running Make |
+| Git, Bash, Python 3, `curl`, `jq`, `unzip`, `tar`, GNU `gzip`, `find`, `sha256sum`, and GNU coreutils including `cmp`, `date`, and `realpath` | Natural Earth, astronomy, Cloud-atmosphere, orbital, resources, Anthropocene, network-swarm, and network-infrastructure preparation or validation | Resolves static STAC metadata, downloads, verifies commits and files, compares, dates, transforms JSON, extracts or installs bounded source data, and creates deterministic compressed resource SVGs |
 | Inkscape | Complete artifact generation and visual review | Exports PDF/PNG and inspects SVG layers, clipping, geometry, and seams |
 | Doxygen | API reference generation | Builds the documented projection-header reference under `docs/doxygen/` |
 | Emscripten, Node.js, and Chrome/Chromium | Optional WebAssembly builds | Builds and tests the all-six-projection runtime, worker and adapters, the compatibility modules, and the illustrative Myriahedral overlay |
@@ -28,7 +29,7 @@ generation workflow. They do not require the same software:
 Check the complete installed toolchain from the repository root with:
 
 ```sh
-make check-prerequisite
+make check-prerequisites
 ```
 
 The underlying checker also has a no-argument mode and can be run directly:
@@ -64,7 +65,7 @@ Cloud-atmosphere fixture, Orbital Technosphere, resources, Anthropocene, network
 and network-infrastructure profiles and bounded snapshots.
 It does not open Natural Earth, invoke Inkscape, or use network access.
 
-`make check-prerequisite` also verifies that the external sibling source roots
+`make check-prerequisites` also verifies that the external sibling source roots
 `../cloud_cdn_cache/` and `../www.submarinecablemap.com/` exist. Override those
 checks with `NETWORK_INFRASTRUCTURE_CLOUD_SOURCE` and
 `SUBMARINE_CABLE_SOURCE` when the repositories live elsewhere. Commit and
@@ -215,6 +216,45 @@ pass. `nasa-firms` remains refresh/review-only. Override the state path with
 
 ## Install the system packages
 
+Install missing native dependencies and verify the result with:
+
+```sh
+make install-prerequisites
+make check-prerequisites
+```
+
+Both Make targets use the plural form; the previous singular target names
+have been removed.
+
+The installer supports Fedora and related distributions, Debian/Ubuntu
+(including WSL), and macOS with an existing Homebrew installation. It queries
+the package manager for missing packages, including development headers,
+Inkscape, ripgrep, and Fontconfig. Linux package installation uses `sudo`
+when needed and can prompt for your password. Run Make as your normal user.
+Already installed packages are omitted from the install request; the package
+manager may still update dependencies needed by the missing packages.
+
+The original Atkinson Hyperlegible family is installed when missing. On
+systems without the font package, the installer downloads the four original
+faces and their license from [Google Fonts](https://github.com/google/fonts/tree/main/ofl/atkinsonhyperlegible)
+into the user's font directory and verifies the family with Fontconfig.
+If `LABEL_FONT` selects another family, install that family separately.
+
+Missing Alpha60, Izzi, cloud/CDN, and Submarine Cable Map sibling repositories
+are cloned at the configured paths; a new cloud/CDN checkout uses the
+documented pinned revision. Existing directories are never pulled, reset, or
+switched to another revision. The final checker honors the same compiler,
+source-path, and font overrides as `make check-prerequisites` and fails if any
+required dependency remains unavailable. Optional WebAssembly tools remain
+optional; use the [WebAssembly workflow](../runtime/myriahedral-workflow.md)
+to set up Emscripten and its browser tooling.
+
+Preview installation without changing anything:
+
+```sh
+make install-prerequisites PREREQUISITE_INSTALL_ARGS=--dry-run
+```
+
 The commands below install a full native contributor workstation, including
 Inkscape. Package names may differ on older or derivative distributions.
 
@@ -229,7 +269,7 @@ sudo dnf install \
 The `-devel` packages are important: the runtime-only GDAL package does not
 provide the C++ headers and link metadata used by the Makefile. Some Fedora
 releases package the NetCDF driver separately; install the matching GDAL
-NetCDF plugin if `make check-prerequisite` reports it missing.
+NetCDF plugin if `make check-prerequisites` reports it missing.
 
 ### Debian and Ubuntu
 
@@ -287,7 +327,7 @@ fc-match -f '%{family}\n' 'Atkinson Hyperlegible'
 ```
 
 The second command must report `Atkinson Hyperlegible`, not a substitute.
-`make check-prerequisite` performs this exact-family check. Choose another
+`make check-prerequisites` performs this exact-family check. Choose another
 installed family for a deliberate variant with `LABEL_FONT`; force rebuilding
 existing artifacts because changing a Make variable does not alter their file
 timestamps:
@@ -373,7 +413,7 @@ Useful independent checks are:
 ```sh
 test -r /usr/include/h3/h3api.h
 ldconfig -p | grep libh3
-make check-prerequisite
+make check-prerequisites
 ```
 
 Use a development package compatible with the v4 names `getResolution`,
@@ -408,8 +448,8 @@ workspace/
 │   └── src/a60-io.h
 ├── izzi/
 │   └── src/
-│       ├── a60-svg.h
-│       └── a60-svg-curves-roulette.h
+│       ├── izzi-svg.h
+│       └── izzi-svg-curves-roulette.h
 └── cartofreako/
     ├── Makefile
     ├── src.projections/
@@ -550,13 +590,22 @@ external inputs with:
 make fetch-orbiting-data
 ```
 
-That target needs Bash, `curl`, `rg`, `sha256sum`, Coreutils, and outbound
-HTTPS access. It stages all CelesTrak and NASA responses, checks the OMM
-header, active-catalog size, and NASA success status, and only then installs
-the set and rewrites `SHA256SUMS`. It never changes the profile time or
-location. A complete set less than two hours old is reused in accordance with
-CelesTrak's update policy; HTTP refusals are reported without retrying or
-replacing the old set. See the
+That target needs Bash, Python 3, Coreutils, and outbound HTTPS access. It
+validates the CelesTrak OMM schemas, catalog sizes and epoch freshness, then
+writes a new dated snapshot under `build/` with `SHA256SUMS` and acquisition
+receipts. The candidate uses the current UTC time (or `ORBITING_TIMESTAMP`)
+and preserves the template observer location. Existing snapshots and the
+generation profile remain unchanged; review the candidate before selecting
+it with `ORBITING_PROFILE`.
+
+Successful downloads less than two hours old are reused in accordance with
+CelesTrak's update policy; CelesTrak HTTP refusals stop the refresh without
+retrying or installing an incomplete set. NASA SSCWeb is optional: if its
+current query fails, `NASA current reference unavailable` is a nonfatal
+warning, and the candidate retains the checked-in 2026-08-13 NASA reference
+as `historical-validation-only`. It does not validate current positions.
+For example, `Network is unreachable` indicates a network connection failure;
+the orbital refresh can still finish with `Created ...`. See the
 [Orbital Technosphere implementation notes](../passes/orbital-technosphere.md)
 for source roles, SGP4 boundaries, and refresh procedure.
 
@@ -573,12 +622,22 @@ make fetch-anthropocene-data
 make prepare-anthropocene-data
 ```
 
+If fetching stops with `rg: command not found`, run `make install-prerequisites`
+or install the `ripgrep` package in the environment running Make
+(`sudo dnf install ripgrep` on Fedora,
+`sudo apt-get install ripgrep` on Debian/Ubuntu, or `brew install ripgrep`
+on macOS). Verify with `rg --version`, then rerun `make fetch-anthropocene-data`.
+An editor or coding agent's private copy of `rg` may not be on your shell's
+`PATH`. `make check-prerequisites` checks for the command before a full build.
+
 The fetcher stages mutable annual sources under ignored `.raw/YEAR/`, validates
 containers, records raw digests, and discovers the newest year-specific Storm
-Events files. It fetches every available CWFIS reporting day through the
-profile snapshot boundary and tolerates only HTTP 404 for an absent day. Set a
-free `FIRMS_MAP_KEY` to request five-day global NASA FIRMS chunks, including
-northern Russia; without it, CWFIS remains the public default fire source.
+Events files. It uses annual CWFIS hotspot archives for past years and daily
+files for the current year, tolerating only HTTP 404 for an absent day.
+A global refresh requires `FIRMS_MAP_KEY` for five-day global NASA FIRMS
+chunks, including northern Russia. The explicit
+`ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY=1` override stages regional data for
+local pipeline debugging; it must not be promoted as a global snapshot.
 
 The preparer verifies the raw checksum manifest, expands files in a temporary
 directory, compiles station records, fills smoke polygons, joins event
@@ -753,8 +812,8 @@ order:
 
 ```sh
 test -f ../alpha60/src/a60-io.h
-test -f ../izzi/src/a60-svg.h
-test -f ../izzi/src/a60-svg-curves-roulette.h
+test -f ../izzi/src/izzi-svg.h
+test -f ../izzi/src/izzi-svg-curves-roulette.h
 gdal-config --ogr-enabled
 make check
 make fetch-natural-earth-10m
@@ -791,7 +850,7 @@ opaque white.
 | Symptom | Cause and remedy |
 | --- | --- |
 | `a60-io.h: No such file or directory` | Clone Alpha60 beside cartofreako or set `ALPHA60_SRC` |
-| `a60-svg.h: No such file or directory` | Clone Izzi beside cartofreako or set `IZZI_SRC` |
+| `izzi-svg.h: No such file or directory` | Clone Izzi beside cartofreako or set `IZZI_SRC` |
 | `gdal-config: command not found` | Install the GDAL development package or set `GDAL_CONFIG` |
 | `h3/h3api.h: No such file or directory` or `cannot find -lh3` | Install the H3 development package, not only an H3 runtime/CLI package |
 | `gdal_priv.h: No such file or directory` | A runtime GDAL package is present without development headers |
@@ -804,7 +863,7 @@ opaque white.
 | `authorize-external` rejects P-Tree | Put the registered credentials in the `ftp.ptree.jaxa.jp` entry of `PTREE_NETRC`, restrict the file to owner-only access, run `make install-jaxa-certificate`, and retry the read-only check |
 | P-Tree fetch reports `curl: (9)` for a current date directory | Update to the latest resolver; it traverses only server-advertised directories and uses the last published observation while recording its source date |
 | Network-swarm archive/member checksum mismatch | Restore the checked-in network-swarm archive or deliberately update the archive, profile provenance, hashes, tests, documentation, and all six products together |
-| Cloud/CDN or submarine-cable source checkout is missing | Clone the documented repository beside `cartofreako`, or set `NETWORK_INFRASTRUCTURE_CLOUD_SOURCE` or `SUBMARINE_CABLE_SOURCE`; run `make check-prerequisite` before `make all` |
+| Cloud/CDN or submarine-cable source checkout is missing | Clone the documented repository beside `cartofreako`, or set `NETWORK_INFRASTRUCTURE_CLOUD_SOURCE` or `SUBMARINE_CABLE_SOURCE`; run `make check-prerequisites` before `make all` |
 | Network-infrastructure checkout, commit, or digest mismatch | Point the Make variables at the profile-pinned external checkouts, restore the consumed tracked paths, or deliberately update the profile, tests, documentation, and artifacts together |
 | Network-infrastructure topology opt-in rejected | Review the source terms, set `NETWORK_TOPOLOGY_LICENSE_ACCEPTED=CC-BY-NC-SA-3.0`, then run either the read-only `make EXTERNAL_PASSES=network-topology authorize-external` check or the mutating `generate-authorized-external` target |
 | Inkscape is slow on an Earth, water, bathymetry-art, orbital, Anthropocene, network-swarm, or network-infrastructure SVG | Close other large documents and inspect one layer family at a time |

@@ -68,6 +68,16 @@ C++20 compiler, RapidJSON and H3 development files, sibling Alpha60/Izzi
 headers, and the checked-in astronomy, Cloud-atmosphere fixture, Orbital
 Technosphere, Anthropocene, resources, and network-swarm snapshots.
 
+Install missing native dependencies, then verify the toolchain with:
+
+```sh
+make install-prerequisites
+make check-prerequisites
+```
+
+The target names use the plural form. Preview installation with
+`make install-prerequisites PREREQUISITE_INSTALL_ARGS=--dry-run`.
+
 List every supported top-level Make target with:
 
 ```sh
@@ -140,17 +150,20 @@ release path with:
 ```sh
 make list-experiments
 make all-experiments
+```
 
 On a fresh host, run `make all-experiments-fetch` first. It fetches and
 updates every external experimental source — Natural Earth, astro, orbiting,
 atoll evidence, and the JAXA P-Tree trust anchor and data — before the
-aggregate runs.
-```
+aggregate runs. It also runs `clean`; particulate observations, CPC
+temperatures, and resources use their separate refresh targets documented
+in the [generation guide](docs/pages/getting-started/generation.md).
 
-The seven-builder aggregate covers the Stage 15 GPU controls, local consumer
+The eight-builder aggregate covers the Stage 15 GPU controls, local consumer
 layout prototype, Majuro evidence canary, Marshall Islands speculative renders,
-full six-projection Majuro evidence pass, synthetic PurpleAir interface review,
-and bounded water-debris experiment. It contains no fetch, external
+Equal Earth positioning comparisons, full six-projection Majuro evidence pass,
+synthetic PurpleAir interface review, and bounded water-debris experiment.
+It contains no fetch, external
 authorization, benchmark, promotion, GitHub release, or UCB AAO/S3 target.
 The GPU controls consume the frozen Stage 14 full-PNG corpus, so the aggregate
 builds any missing parents from the standard generation graph first.
@@ -261,6 +274,10 @@ checked-in OMM CSV and NASA SSCWeb snapshots preserve the input state:
 make generate-orbiting
 make fetch-orbiting-data
 ```
+
+The default snapshot is `assets.static/orbital-technosphere/20261109`, pinned
+to `2026-11-09T01:12:00Z`. NASA's August reference is retained for historical
+validation only.
 
 See the [Orbital Technosphere implementation notes](docs/pages/passes/orbital-technosphere.md)
 for source feasibility, naming, propagation, detiling layers, and accuracy

@@ -94,7 +94,7 @@ CLOUD_ATMOSPHERE_STAC_RESOLVER := scripts/resolve-jaxa-stac.py
 CLOUD_ATMOSPHERE_PREPARATION_SCRIPT := \
 	scripts/prepare-cloud-atmosphere-data.sh
 CLOUD_ATMOSPHERE_VERIFIER := scripts/verify-cloud-atmosphere-data.sh
-ORBITING_DATA_DIR ?= $(STATIC_ASSET_DIR)/orbital-technosphere/20261103
+ORBITING_DATA_DIR ?= $(STATIC_ASSET_DIR)/orbital-technosphere/20261109
 ORBITING_PROFILE ?= \
 	$(ORBITING_DATA_DIR)/orbital-technosphere-profile.json
 ORBITING_FETCHER := scripts/fetch-orbiting-data.sh
@@ -202,6 +202,8 @@ KML_GEOJSON_CONVERTER := scripts/convert-kml-geojson.py
 NETWORK_GROUNDSTATIONS_CHECKSUMS := \
 	$(NETWORK_GROUNDSTATIONS_DATA_DIR)/SHA256SUMS
 PREREQUISITE_CHECKER := scripts/check-prerequisites.sh
+PREREQUISITE_INSTALLER := scripts/install-prerequisites.sh
+PREREQUISITE_INSTALL_ARGS ?=
 NATURAL_EARTH_STAMP := \
 	$(NATURAL_EARTH_DIR)/.natural-earth-10m-physical-5.1.1
 PROJECTION_NAMES := cahill-keyes authagraph dymaxion myriahedral star-x voronoi
@@ -1023,7 +1025,7 @@ PUBLIC_TARGETS := all all-experiments all-experiments-fetch \
 	check-anthropocene-particulate \
 	check-anthropocene-purpleair-experiments \
 	check-anthropocene-water-debris-experiments \
-	check-prerequisite \
+	check-prerequisites install-prerequisites check-prerequisites-installer \
 	check-resources-svg-archives check-network-fiber \
 	check-network-groundstations \
 	check-forward-reverse-projection-api \
@@ -1390,8 +1392,7 @@ configured: $(GENERATION_PROFILE_RESOLVER) $(GENERATION_PROFILE)
 		printf 'generation profile: %s\n' "$(GENERATION_PROFILE)" && \
 		$(MAKE) --no-print-directory $$targets
 
-check-prerequisite: $(PREREQUISITE_CHECKER)
-	@MAKE_VERSION="$(MAKE_VERSION)" CXX="$(CXX)" \
+PREREQUISITE_ENV = MAKE_VERSION="$(MAKE_VERSION)" CXX="$(CXX)" \
 		CPPFLAGS="$(CPPFLAGS)" CXXFLAGS="$(CXXFLAGS)" \
 		ALPHA60_SRC="$(ALPHA60_SRC)" IZZI_SRC="$(IZZI_SRC)" \
 		GDAL_CONFIG="$(GDAL_CONFIG)" INKSCAPE="$(INKSCAPE)" \
@@ -1399,8 +1400,16 @@ check-prerequisite: $(PREREQUISITE_CHECKER)
 		NODE="$(NODE)" WEB_BROWSER="$(WEB_BROWSER)" \
 		NETWORK_INFRASTRUCTURE_CLOUD_SOURCE="$(abspath $(NETWORK_INFRASTRUCTURE_CLOUD_SOURCE))" \
 		SUBMARINE_CABLE_SOURCE="$(abspath $(SUBMARINE_CABLE_SOURCE))" \
-		LABEL_FONT="$(LABEL_FONT)" \
-		"$(PREREQUISITE_CHECKER)"
+		LABEL_FONT="$(LABEL_FONT)"
+
+check-prerequisites: $(PREREQUISITE_CHECKER)
+	@$(PREREQUISITE_ENV) "$(PREREQUISITE_CHECKER)"
+
+install-prerequisites: $(PREREQUISITE_INSTALLER) $(PREREQUISITE_CHECKER)
+	@$(PREREQUISITE_ENV) "$(PREREQUISITE_INSTALLER)" $(PREREQUISITE_INSTALL_ARGS)
+
+check-prerequisites-installer:
+	python3 tests/test-install-prerequisites.py
 
 check-resources-svg-archives: $(RESOURCES_SVG_ARCHIVES)
 	"$(GZIP)" -t $(RESOURCES_SVG_ARCHIVES)
@@ -1768,7 +1777,7 @@ check-anthropocene-particulate: \
 		"$(ANTHROPOCENE_PARTICULATE_GEOJSON_2026)"
 	$(TEST_DIR)/test-anthropocene-particulate-generation
 
-check: check-generation-style check-pass-status check-anthropocene-particulate check-orbiting \
+check: check-prerequisites-installer check-generation-style check-pass-status check-anthropocene-particulate check-orbiting \
 		$(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) \
 		$(ANTHROPOCENE_PARTICULATE_GEOJSON_2025) \
 		$(ANTHROPOCENE_PARTICULATE_GEOJSON_2026) \
@@ -2391,7 +2400,7 @@ $(NETWORK_INFRASTRUCTURE_CLOUD_MANIFEST):
 	@printf '%s\n' \
 		'missing cloud/CDN source manifest: $@' \
 		'expected a pinned checkout at $(abspath $(NETWORK_INFRASTRUCTURE_CLOUD_SOURCE))' \
-		'run make check-prerequisite for the complete source check' \
+		'run make check-prerequisites for the complete source check' \
 		'or set NETWORK_INFRASTRUCTURE_CLOUD_SOURCE to the checkout root' >&2
 	@exit 1
 

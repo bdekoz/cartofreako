@@ -133,6 +133,7 @@ def main():
                     raise ValueError("NASA reference query did not report SUCCESS")
                 nasa["reference_timestamp"] = profile["timestamp"]
                 nasa["reference_status"] = "current-query; independent comparison not yet performed"
+                nasa.pop("refresh_error", None)
             except Exception as error:
                 if args.historical_reference_profile is None:
                     raise
@@ -145,7 +146,9 @@ def main():
                 profile["catalogs"]["nasa_ssc_reference"] = nasa
                 note = {"url": nasa["query_url"], "sha256": digest(data), "bytes": len(data),
                         "retrieved_at": historical["snapshot"]["collection_completed_at"]}
-                print(f"NASA current reference unavailable; retaining explicitly dated historical reference: {error}", flush=True)
+                print(f"WARNING (nonfatal): NASA current reference unavailable: {error}. "
+                      f"Continuing with NASA reference dated {nasa['reference_timestamp']} "
+                      "for historical validation only; current CelesTrak catalogs are retained.", flush=True)
             (stage / nasa["file"]).write_bytes(data)
             sources.append(dict(note, id="nasa-ssc-reference", file=nasa["file"],
                                 reference_status=nasa["reference_status"], reference_timestamp=nasa["reference_timestamp"]))
