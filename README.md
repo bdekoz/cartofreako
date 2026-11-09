@@ -78,6 +78,20 @@ make check-prerequisites
 The target names use the plural form. Preview installation with
 `make install-prerequisites PREREQUISITE_INSTALL_ARGS=--dry-run`.
 
+Refresh all configured data sources and prepare their candidates with:
+
+```sh
+make data-update
+```
+
+This shares the experimental source fetches with `all-experiments-fetch` and
+adds Anthropocene particulate observations, CPC temperatures, resources,
+network preparation, and pinned ocean inputs. It runs the steps serially,
+stops on failure, and leaves generated maps in place. P-Tree credentials and
+a `FIRMS_MAP_KEY` are required for the complete run. See the
+[source refresh workflow](docs/pages/getting-started/generation.md#updating-all-configured-data-sources)
+for coverage and snapshot review requirements.
+
 List every supported top-level Make target with:
 
 ```sh

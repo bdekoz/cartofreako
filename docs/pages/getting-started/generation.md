@@ -102,6 +102,34 @@ Natural Earth, astro, orbiting, atoll evidence, and the JAXA P-Tree trust
 anchor and data. The fetch target is separate: the aggregate registry itself
 still contains no fetch, external authorization, or publication target.
 
+## Updating all configured data sources
+
+```sh
+make data-update
+```
+
+This top-level aggregate reuses the experimental source targets from
+`all-experiments-fetch` and adds the other existing data refresh and
+preparation rules. It runs one serial submake, even when invoked with `-j`,
+so each fetch completes before its preparation. It stops at the first failed
+step, including when the caller uses `-k`, and prints its completion message
+only after every step succeeds. It does not invoke `clean`, render maps,
+publish artifacts, or change the release dependency graph.
+
+The shared steps cover Natural Earth, the JAXA trust anchor, astronomy,
+orbital catalogs, atoll evidence, and cloud-atmosphere fetching/preparation.
+The additional steps fetch and prepare both particulate years and CPC
+temperatures, refresh resources and the synthesized fiber data, prepare the
+network-swarm input, restore the pinned Stage 2 ocean inputs, and verify the
+prepared cloud-atmosphere snapshot. Preparation may compile its native tools.
+
+Run `make install-prerequisites` first if the native toolchain is incomplete.
+The complete update requires the configured P-Tree credentials,
+`FIRMS_MAP_KEY` for global particulate data, and the documented local network
+source inputs. Each child target reports its own missing inputs or errors;
+the aggregate does not skip an unavailable source. Resuming with
+`make data-update` follows each child's existing cache and reuse policy.
+
 Source refresh targets can also be run individually:
 
 | Source | Make targets, in order |
@@ -114,15 +142,26 @@ Source refresh targets can also be run individually:
 | NOAA CPC temperatures | `fetch-anthropocene-cpc-data`, then `prepare-anthropocene-temperature-data` |
 | Resources | `refresh-resources-data` |
 | Natural Earth basemap | `fetch-natural-earth-10m` (downloads when needed) |
+| Synthesized submarine fiber | `refresh-network-fiber` (rebuilds from configured local snapshots) |
+| Network swarm | `prepare-network-swarm-data` (prepares the pinned local archive) |
+| Stage 2 ocean inputs | `fetch-ocean-stage-2` (restores/verifies the frozen acquisition receipt) |
 
 `all-experiments-fetch` runs `clean` and the experimental source fetches
 listed above; it does not include the particulate, CPC temperature, or
-resources refresh targets. There is no single target that refreshes every
-source. Fetches respect configured years, profile boundaries, and caches;
+resources refresh targets; `data-update` includes them. Fetches respect
+configured years, profile boundaries, and caches;
 a successful fetch does not universally advance observation dates or select
 its candidate snapshot for generation. See the
 [prerequisites](prerequisites.md#anthropocene-input-preparation) for the
 particulate FIRMS requirement and input preparation workflow.
+
+`data-update` retains those same review boundaries: orbital and Anthropocene
+candidates require review before selecting or promoting them, and CPC
+preparation checks that its raw manifest matches the selected profiles.
+Astronomy and resources follow their existing in-place refresh behavior.
+Frozen ocean inputs and network archives retain their pinned versions;
+external source repositories and groundstation snapshots have no automatic
+latest-version refresh rule and are not advanced by this aggregate.
 
 The preferred long-running release workflow bounds its first pass to two
 concurrent recipes by default, keeps independent targets moving after a

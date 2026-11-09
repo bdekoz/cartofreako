@@ -1009,10 +1009,21 @@ RESOURCE_METRIC_PUBLIC_TARGETS := \
 		$(foreach projection,$(RESOURCE_PROJECTION_NAMES),\
 			generate-$(stem)-$(projection)))
 
-PUBLIC_TARGETS := all all-experiments all-experiments-fetch \
+EXPERIMENT_DATA_FETCH_TARGETS := fetch-natural-earth-10m \
+	install-jaxa-certificate \
+	fetch-astro-data fetch-orbiting-data \
+	fetch-atoll-evidence-data prepare-atoll-evidence-data \
+	fetch-cloud-atmosphere-data prepare-cloud-atmosphere-data
+DATA_UPDATE_TARGETS := $(EXPERIMENT_DATA_FETCH_TARGETS) \
+	fetch-anthropocene-data prepare-anthropocene-data \
+	fetch-anthropocene-cpc-data prepare-anthropocene-temperature-data \
+	refresh-resources-data refresh-network-fiber prepare-network-swarm-data \
+	fetch-ocean-stage-2 verify-cloud-atmosphere-data
+
+PUBLIC_TARGETS := all all-experiments all-experiments-fetch data-update \
 	all-experiments-resilient all-resilient \
 	assets-single assets-resilient \
-	check check-docs check-all-experiments \
+	check check-docs check-all-experiments check-data-update \
 	check-print-contract check-pass-status \
 	audit-dymaxion-ulp \
 	check-projection-fixtures check-wasm-projection-fixtures \
@@ -1244,13 +1255,19 @@ all-experiments: all-experiments-fetch
 	@printf '%s\n' \
 		'Built every implemented non-release experiment; no publication target was invoked.'
 
-all-experiments-fetch: clean fetch-natural-earth-10m \
-		install-jaxa-certificate \
-		fetch-astro-data fetch-orbiting-data \
-		fetch-atoll-evidence-data prepare-atoll-evidence-data \
-		fetch-cloud-atmosphere-data prepare-cloud-atmosphere-data
+all-experiments-fetch: clean $(EXPERIMENT_DATA_FETCH_TARGETS)
 	@printf '%s\n' \
 		'Cleaned, then fetched and updated every external experimental source.'
+
+# A single serial submake preserves fetch/prepare ordering, deduplicates shared
+# prerequisites, and stops on failure even when the caller uses -j or -k.
+data-update:
+	+$(MAKE) --no-print-directory -j1 --no-keep-going $(DATA_UPDATE_TARGETS)
+	@printf '%s\n' \
+		'Completed every configured data refresh and preparation step; review candidate snapshots before promotion.'
+
+check-data-update: tests/test-data-update.py Makefile
+	python3 tests/test-data-update.py
 
 all-experiments-resilient: all-experiments-fetch
 	+$(MAKE) --no-print-directory all-resilient
@@ -1777,7 +1794,7 @@ check-anthropocene-particulate: \
 		"$(ANTHROPOCENE_PARTICULATE_GEOJSON_2026)"
 	$(TEST_DIR)/test-anthropocene-particulate-generation
 
-check: check-prerequisites-installer check-generation-style check-pass-status check-anthropocene-particulate check-orbiting \
+check: check-data-update check-prerequisites-installer check-generation-style check-pass-status check-anthropocene-particulate check-orbiting \
 		$(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) \
 		$(ANTHROPOCENE_PARTICULATE_GEOJSON_2025) \
 		$(ANTHROPOCENE_PARTICULATE_GEOJSON_2026) \
