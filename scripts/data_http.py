@@ -1,15 +1,40 @@
 """Revalidate remote objects without modifying previously selected editions."""
 from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 import hashlib
 import json
 import os
 from pathlib import Path
 import shutil
 import re
+import sys
+import time
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 from dataset import DatasetError, atomic_json, digest, lock, redact, utcnow
+
+
+def _open(request):
+    for attempt in range(6):
+        try:
+            return urlopen(request, timeout=180)
+        except HTTPError as error:
+            if attempt == 5 or error.code not in (408, 429, 500, 502, 503, 504):
+                raise
+            delay = min(60, 2 ** (attempt + 1))
+            retry_after = error.headers.get('Retry-After', '')
+            try:
+                provider_delay = (int(retry_after) if retry_after.isdigit() else
+                                  (parsedate_to_datetime(retry_after) - datetime.now(timezone.utc)).total_seconds())
+                delay = max(delay, provider_delay)
+            except (TypeError, ValueError, OverflowError):
+                pass
+            code = error.code
+            error.close()
+            print(f'data-http-fetch: HTTP {code}; retrying in {delay:g}s '
+                  f'({attempt + 1}/5)', file=sys.stderr, flush=True)
+            time.sleep(delay)
 
 
 def fetch(url, destination, cache, *, minimum_interval=0, headers=None, range_size=None):
@@ -41,7 +66,7 @@ def _download(url, headers, temporary, partial_receipt, range_size):
             request_headers["Range"] = f"bytes={offset}-{end}"
         elif offset:
             request_headers["Range"] = f"bytes={offset}-"
-        with urlopen(Request(url, headers=request_headers), timeout=180) as response:
+        with _open(Request(url, headers=request_headers)) as response:
             expected = response.headers.get("Content-Length")
             total = int(expected) if expected else None
             etag = response.headers.get("ETag")

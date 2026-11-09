@@ -89,6 +89,8 @@ transfers repeatedly. CPC now requests verified 2 MiB ranges through the
 shared HTTP cache, retaining conditional freshness checks, immutable objects
 and identity-checked resume. Existing partial downloads can continue without
 deleting the failed run or restarting previously completed sources.
+Transient HTTP failures, including NOAA throttling (429), retry up to five
+times per request with exponential backoff and respect `Retry-After`.
 Regression fixtures cover truncated transfers, partial-file migration,
 conditional revalidation, changed provider identities, ignored ranges and
 inconsistent or unvalidated partial responses.

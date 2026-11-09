@@ -3,6 +3,7 @@
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import importlib.util
+import io
 import json
 import os
 from pathlib import Path
@@ -123,6 +124,11 @@ class Freshness(unittest.TestCase):
                 pass
             def do_GET(self):
                 state["calls"].append(dict(self.headers))
+                if state.get('transient_errors'):
+                    self.send_response(state['transient_errors'].pop(0))
+                    self.send_header('Retry-After', '7')
+                    self.end_headers()
+                    return
                 if state["fail"]:
                     self.send_error(503)
                     return
@@ -184,9 +190,11 @@ class Freshness(unittest.TestCase):
     def test_failed_revalidation_does_not_claim_old_cache_is_current(self):
         fetch(self.url, self.root / "first", self.root / "cache")
         self.state["fail"] = True
-        with self.assertRaises(dataset.DatasetError):
-            fetch(self.url, self.root / "second", self.root / "cache")
+        with patch('data_http.time.sleep'), patch('sys.stderr', new_callable=io.StringIO):
+            with self.assertRaises(dataset.DatasetError):
+                fetch(self.url, self.root / "second", self.root / "cache")
         self.assertFalse((self.root / "second").exists())
+        self.assertEqual(len(self.state['calls']), 7)  # Initial success plus six attempts.
 
     def test_minimum_interval_respects_provider_policy(self):
         fetch(self.url, self.root / "first", self.root / "cache", minimum_interval=7200)
@@ -272,6 +280,14 @@ class Freshness(unittest.TestCase):
         fetch(self.url, self.root/'second', self.root/'cache', range_size=7)
         self.assertEqual((self.root/'second').read_bytes(), self.state['data'])
         self.assertEqual(self.state['calls'][1]['If-Range'], self.state['last_modified'])
+
+    def test_provider_throttling_retries_same_range_and_respects_delay(self):
+        self.state['transient_errors'] = [429, 503]
+        with patch('data_http.time.sleep') as sleep, patch('sys.stderr', new_callable=io.StringIO):
+            fetch(self.url, self.root/'first', self.root/'cache', range_size=7)
+        self.assertEqual((self.root/'first').read_bytes(), self.state['data'])
+        self.assertEqual([call.args[0] for call in sleep.call_args_list], [7, 7])
+        self.assertEqual([call['Range'] for call in self.state['calls'][:3]], ['bytes=0-6'] * 3)
 
     def test_shared_source_is_acquired_once_in_a_run_then_revalidated_next_run(self):
         with patch.dict(os.environ,{'DATA_UPDATE_RUN_ID':'first-run'}):
