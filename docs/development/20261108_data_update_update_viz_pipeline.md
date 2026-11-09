@@ -89,11 +89,39 @@ transfers repeatedly. CPC now requests verified 2 MiB ranges through the
 shared HTTP cache, retaining conditional freshness checks, immutable objects
 and identity-checked resume. Existing partial downloads can continue without
 deleting the failed run or restarting previously completed sources.
-Transient HTTP failures, including NOAA throttling (429), retry up to five
-times per request with exponential backoff and respect `Retry-After`.
+The initial five-retry policy exhausted its 62-second fallback window during
+the subsequent 96-file acquisition. The downloader now uses a configurable
+30-minute budget per request/range, randomized exponential backoff, and
+`Retry-After` seconds/dates. Persistent provider pacing is shared across files,
+processes, runs and both PSL hostnames. Throttling increases the interval;
+ten successful requests reduce it gradually. Logs include the filename,
+retained/expected bytes, elapsed time, next retry and remaining budget.
+The Make settings and optional bulk endpoint are documented in the
+[generation guide](../pages/getting-started/generation.md#noaa-download-controls).
+URL-specific receipts/partials retain provenance when selecting a different
+endpoint; endpoint switching never appends unverified partials. The original
+THREDDS default is retained to preserve existing partial-file resume.
+Changed implementation fingerprints require a new acquisition run; shared
+HTTP objects and partials still carry forward without rewriting old journals.
+CPC files checked on the same UTC calendar day now reuse hash-verified complete
+objects across update runs without network requests. Their receipt retains the
+actual provider-check time and records `same-utc-day` cache acquisition. The
+next day's new run revalidates conditionally. This is separate from the existing
+same-run checkpoint policy and does not change other providers' freshness rules.
 Regression fixtures cover truncated transfers, partial-file migration,
 conditional revalidation, changed provider identities, ignored ranges and
 inconsistent or unvalidated partial responses.
+
+Follow-up verification: `make check-dataset` passes 58 tests and
+`tests/test-data-update.py` passes seven more. The four updated documents pass
+193 local-link checks. Live acquisition resumed the retained 58 MiB
+`tmax.1981.nc` partial, recovered through repeated NOAA 429 responses, and
+completed all 87,362,645 bytes. SHA-256 matches the HTTP receipt; GDAL opens
+the 720×360 grid and 365 daily bands. A second same-day fetch with network
+access explicitly disabled reused the cached object and preserved its original
+provider-check time. Five complete CPC objects are now available in the shared
+cache. Full acquisition remains pending an exported `FIRMS_MAP_KEY` in the
+invoking environment; no active edition was changed during these checks.
 
 ## Intended user workflow
 

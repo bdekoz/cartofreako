@@ -124,6 +124,8 @@ Mutable CPC and OISST files use HTTP revalidation. Interrupted HTTP transfers
 resume only with matching validators; changed remote identities restart.
 CPC downloads use verified 2 MiB byte ranges to avoid NOAA proxy truncation;
 resuming a failed update also reuses partial CPC files from earlier attempts.
+CPC objects already checked on the same UTC day are reused across update runs;
+their receipts retain the actual provider-check time.
 CelesTrak retains its two-hour request policy. The optional NASA SSC reference
 may remain explicitly historical. Network, groundstation and audited annual
 publication inputs are copied and labeled as pinned local data; no external
@@ -170,12 +172,96 @@ make atlas-optional ATLAS_OPTIONAL_ARGS='--resume <failed-build-id>'
 ```
 
 Resume verifies completed bytes and implementation fingerprints; changed
-methods require a new run. `DATA_UPDATE_ARGS='--candidate-only'` validates
+methods require a new run. After updating downloader code, use `make data-update`
+without `--resume`: completed HTTP cache objects and identity-checked partial
+downloads survive between runs, so a new run can revalidate/reuse those bytes.
+The old failed run remains available for inspection; its fingerprint is not rewritten.
+`DATA_UPDATE_ARGS='--candidate-only'` validates
 without activation. `DATA_ROOT=/large/local/filesystem/cartofreako-data`
 relocates the input store. The default preflight working-space budget is
 160 GiB free, excluding final print exports; adjust `DATA_UPDATE_MIN_FREE_GIB`
 only from measured local storage needs. Inputs and referenced caches survive
 `make clean`; deletion is an explicit storage-management operation.
+
+### NOAA download controls
+
+CPC fetches use the shared Python HTTP downloader for both edition acquisition
+and missing legacy inputs. It requests verified byte ranges and retains partial
+files under `DATA_ROOT/cache/http/` (default `.cartofreako/data/cache/http/`).
+An explicit `DATA_HTTP_CACHE` overrides that location. New update runs
+revalidate CPC provider freshness on the first request of each UTC day;
+later runs that day reuse hash-verified complete objects without contacting
+NOAA again. The next UTC day triggers conditional revalidation. A provider's
+304 response reuses existing bytes. Direct legacy fetches still reuse readable
+local NetCDF files. Scientific coverage checks and the 1979–2026 range remain
+unchanged.
+
+NOAA PSL requests share a persistent pacing/cooldown record under
+`cache/http/providers/`, including across files, processes, and the
+`psl.noaa.gov` and `downloads.psl.noaa.gov` endpoints. Requests start at least
+two seconds apart. Each HTTP 429 doubles the interval up to its configured
+maximum and applies a randomized cooldown starting at 30 seconds. After ten
+successful requests the interval decreases by 10%, down to the configured
+minimum. A successful range does not immediately reset throttled pacing.
+Transient HTTP 408/429/500/502/503/504 failures retry within a time budget;
+`Retry-After` seconds and HTTP dates are honored. If the requested cooldown
+exceeds the remaining budget, the command fails with the shared cooldown and
+partial bytes retained. Increasing Make's job count does not bypass pacing.
+
+The following Make variables are exported through recursive acquisition
+commands. Durations are seconds; they can also be set in the environment for
+direct script use.
+
+| Variable | Default | Meaning |
+| --- | --- | --- |
+| `DATA_HTTP_RETRY_BUDGET` | `1800` | Positive time budget per HTTP request/range, including pacing and retries. A successful range starts a new budget for the next range. |
+| `NOAA_HTTP_MIN_INTERVAL` | `2` | Minimum interval between NOAA PSL request starts; zero disables the baseline delay, while throttling still applies. |
+| `NOAA_HTTP_MAX_INTERVAL` | `60` | Maximum adaptive request interval; must be at least the minimum. Provider cooldowns and `Retry-After` may be longer. |
+| `DATA_HTTP_PROGRESS_INTERVAL` | `30` | Positive interval between progress messages; retry decisions and completion also print immediately. |
+| `CPC_HTTP_RANGE_SIZE` | `2097152` | Positive byte count per CPC range (2 MiB). Keep this size unless larger ranges have been tested against proxy truncation. |
+| `CPC_HTTP_DAILY_CACHE` | `1` | Reuse complete CPC objects checked on the same UTC day across update invocations; `0` requests revalidation in each new run. Original provider-check/retrieval times remain in receipts. |
+| `CPC_BASE_URL` | `https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp` | CPC access point; included in HTTP cache identity and provenance. |
+
+For a conservative initial acquisition:
+
+```sh
+make data-update DATA_HTTP_RETRY_BUDGET=1800 \
+  NOAA_HTTP_MIN_INTERVAL=5 NOAA_HTTP_MAX_INTERVAL=120
+
+# Retry an interrupted run with the same implementation.
+make data-update DATA_UPDATE_ARGS='--resume <failed-update-id>' \
+  DATA_HTTP_RETRY_BUDGET=1800 NOAA_HTTP_MIN_INTERVAL=5 NOAA_HTTP_MAX_INTERVAL=120
+```
+
+Logs identify each file, received/expected bytes, elapsed time, retry time,
+and remaining retry budget. A failed update keeps the previous active edition.
+HTTP 429 prints an explicit **Too Many Requests** warning. When the server
+provides `Retry-After`, the warning shows that time in UTC. Otherwise it states
+that the provider's reset time is unknown. The next eligible local retry time
+is shown separately; it is a conservative cooldown, not a guarantee that the
+provider's quota resets then. If the retry budget is exhausted, the error tells
+when to try again and prints the existing `make data-update` command with the
+run ID when available.
+Avoid deleting caches or repeatedly starting new runs to clear rate limits;
+all runs share the provider cooldown.
+Repeated `make data-update` invocations therefore continue partial transfers
+and reuse complete CPC files checked that day. The calendar boundary is UTC,
+not a rolling 24-hour interval or the machine's local midnight.
+
+NOAA also documents a [bulk HTTPS download service](https://psl.noaa.gov/data/ftp.html).
+It can be selected explicitly:
+
+```sh
+make data-update CPC_BASE_URL=https://downloads.psl.noaa.gov/Datasets/cpc_global_temp
+```
+
+Changing the endpoint creates separate URL receipts and partial files; bytes
+from two endpoints are never appended together. Existing cache entries remain
+intact. A completed download deduplicates by content hash, but an old endpoint's
+partial is resumed only when that endpoint is selected again. No automatic
+endpoint switch bypasses provider cooldowns or freshness checks.
+
+### Required source credentials
 
 The complete update requires P-Tree access, an exported `FIRMS_MAP_KEY`,
 and the configured local inputs. FIRMS is checked before downloads. Request

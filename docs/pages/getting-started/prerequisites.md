@@ -694,6 +694,11 @@ NASA emails it to your registered address. Export the key in the shell
 running Make, as shown in the
 [data-update workflow](generation.md#updating-all-configured-data-sources).
 The aggregate and direct particulate fetcher check for it before downloading.
+For CPC HTTP 429 responses, use the documented
+[NOAA download controls](generation.md#noaa-download-controls). The downloader
+shares adaptive pacing and provider cooldowns across files/processes, retains
+partial bytes, and exposes retry-budget settings through Make. After a code
+update, start a new `make data-update` run; shared HTTP caches remain reusable.
 The explicit
 `ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY=1` override stages regional data for
 local pipeline debugging; it must not be promoted as a global snapshot.

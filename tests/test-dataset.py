@@ -6,17 +6,30 @@ import importlib.util
 import io
 import json
 import os
+import subprocess
 from pathlib import Path
 import sys
 import tempfile
 import threading
 import unittest
+from types import SimpleNamespace
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import dataset
 from data_http import fetch
+
+
+def virtual_clock():
+    clock = SimpleNamespace(now=0.0, sleeps=[])
+    clock.monotonic = lambda: clock.now
+    clock.time = lambda: 1794240000 + clock.now
+    def sleep(delay):
+        clock.sleeps.append(delay)
+        clock.now += delay
+    clock.sleep = sleep
+    return clock
 
 
 def fixture(root, ident="fixture"):
@@ -190,11 +203,14 @@ class Freshness(unittest.TestCase):
     def test_failed_revalidation_does_not_claim_old_cache_is_current(self):
         fetch(self.url, self.root / "first", self.root / "cache")
         self.state["fail"] = True
-        with patch('data_http.time.sleep'), patch('sys.stderr', new_callable=io.StringIO):
+        with patch('data_http_policy.time', virtual_clock()), \
+             patch('data_http_policy.random.uniform', return_value=1), \
+             patch.dict(os.environ, {'DATA_HTTP_RETRY_BUDGET': '3'}), \
+             patch('sys.stderr', new_callable=io.StringIO):
             with self.assertRaises(dataset.DatasetError):
                 fetch(self.url, self.root / "second", self.root / "cache")
         self.assertFalse((self.root / "second").exists())
-        self.assertEqual(len(self.state['calls']), 7)  # Initial success plus six attempts.
+        self.assertEqual(len(self.state['calls']), 3)  # Initial success plus two attempts within budget.
 
     def test_minimum_interval_respects_provider_policy(self):
         fetch(self.url, self.root / "first", self.root / "cache", minimum_interval=7200)
@@ -283,11 +299,77 @@ class Freshness(unittest.TestCase):
 
     def test_provider_throttling_retries_same_range_and_respects_delay(self):
         self.state['transient_errors'] = [429, 503]
-        with patch('data_http.time.sleep') as sleep, patch('sys.stderr', new_callable=io.StringIO):
+        clock = virtual_clock()
+        with patch('data_http_policy.time', clock), \
+             patch('data_http_policy.random.uniform', return_value=1), \
+             patch('sys.stderr', new_callable=io.StringIO):
             fetch(self.url, self.root/'first', self.root/'cache', range_size=7)
         self.assertEqual((self.root/'first').read_bytes(), self.state['data'])
-        self.assertEqual([call.args[0] for call in sleep.call_args_list], [7, 7])
+        self.assertEqual(clock.sleeps, [30, 7])
         self.assertEqual([call['Range'] for call in self.state['calls'][:3]], ['bytes=0-6'] * 3)
+
+    def test_retry_budget_failure_retains_partial_for_next_run(self):
+        self.state['truncate'] = True
+        with self.assertRaises(dataset.DatasetError):
+            fetch(self.url, self.root/'first', self.root/'cache')
+        partial = next((self.root/'cache/http').glob('*.part'))
+        before = partial.read_bytes()
+        self.state['transient_errors'] = [429] * 10
+        with patch('data_http_policy.time', virtual_clock()), \
+             patch('data_http_policy.random.uniform', return_value=1), \
+             patch.dict(os.environ, {'DATA_HTTP_RETRY_BUDGET': '60'}), \
+             patch('sys.stderr', new_callable=io.StringIO):
+            with self.assertRaisesRegex(dataset.DatasetError, 'year.nc; 9 partial bytes retained'):
+                fetch(self.url, self.root/'failed', self.root/'cache', range_size=7)
+        self.assertEqual(partial.read_bytes(), before)
+        self.assertFalse((self.root/'failed').exists())
+        self.state['transient_errors'] = []
+        fetch(self.url, self.root/'recovered', self.root/'cache', range_size=7)
+        self.assertEqual((self.root/'recovered').read_bytes(), self.state['data'])
+
+    def test_endpoint_switch_keeps_separate_partial_identity(self):
+        self.state['truncate'] = True
+        with self.assertRaises(dataset.DatasetError):
+            fetch(self.url, self.root/'old', self.root/'cache')
+        partial = next((self.root/'cache/http').glob('*.part'))
+        before = partial.read_bytes()
+        fetch(self.url+'?endpoint=bulk', self.root/'new', self.root/'cache', range_size=7)
+        self.assertEqual(partial.read_bytes(), before)
+        fetch(self.url, self.root/'resumed', self.root/'cache', range_size=7)
+        self.assertEqual((self.root/'resumed').read_bytes(), self.state['data'])
+
+    def test_cpc_script_uses_configured_endpoint_ranges_cache_and_manifest(self):
+        validator = self.root/'gdalinfo-fixture'
+        validator.write_text('#!' + sys.executable + '\n' + '''import pathlib, sys
+path = sys.argv[1].split(':', 1)[1].rsplit(':', 1)[0]
+assert pathlib.Path(path).read_bytes() == b'first readable data'
+''')
+        validator.chmod(0o755)
+        env = {**os.environ, 'CPC_BASE_URL': self.url.rsplit('/', 1)[0],
+               'CPC_HTTP_RANGE_SIZE': '7', 'DATA_HTTP_CACHE': str(self.root/'cache'),
+               'GDALINFO': str(validator), 'DATA_UPDATE_RUN_ID': 'script-fixture'}
+        command = ['bash', str(ROOT/'scripts/fetch-anthropocene-cpc-data.sh'),
+                   str(self.root/'cpc'), '1981', '1981']
+        result = subprocess.run(command, env=env, text=True, capture_output=True, timeout=20)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        raw = self.root/'cpc/.raw/cpc'
+        self.assertEqual((raw/'tmax.1981.nc').read_bytes(), self.state['data'])
+        self.assertEqual((raw/'tmin.1981.nc').read_bytes(), self.state['data'])
+        self.assertEqual(len(self.state['calls']), 6)
+        self.assertEqual(self.state['calls'][0]['Range'], 'bytes=0-6')
+        self.assertEqual(len((raw/'SHA256SUMS').read_text().splitlines()), 2)
+        calls = len(self.state['calls'])
+        env['DATA_UPDATE_RUN_ID'] = 'another-script-run'
+        result = subprocess.run(command, env=env, text=True, capture_output=True, timeout=20)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(len(self.state['calls']), calls)
+        self.assertIn('same-utc-day', result.stderr)
+        # Direct legacy fetches retain readable local-file reuse, even though
+        # missing-file transfers now use the same shared Python downloader.
+        env.pop('DATA_HTTP_CACHE')
+        result = subprocess.run(command, env=env, text=True, capture_output=True, timeout=20)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(len(self.state['calls']), calls)
 
     def test_shared_source_is_acquired_once_in_a_run_then_revalidated_next_run(self):
         with patch.dict(os.environ,{'DATA_UPDATE_RUN_ID':'first-run'}):
@@ -300,6 +382,36 @@ class Freshness(unittest.TestCase):
             revised=fetch(self.url,self.root/'revised',self.root/'cache')
         self.assertNotEqual(first['sha256'],revised['sha256'])
         self.assertEqual(len(self.state['calls']),2)
+
+    def test_same_utc_day_reuses_verified_bytes_across_runs_then_revalidates(self):
+        current = [datetime(2026, 11, 9, 23, 50, tzinfo=timezone.utc)]
+        with patch('data_http.datetime') as clock, \
+             patch('data_http.utcnow', side_effect=lambda: current[0].isoformat()):
+            clock.now.side_effect = lambda zone: current[0]
+            clock.fromisoformat.side_effect = datetime.fromisoformat
+            with patch.dict(os.environ, {'DATA_UPDATE_RUN_ID': 'daily-first'}):
+                first = fetch(self.url, self.root/'first', self.root/'cache', same_day_cache=True)
+            current[0] = datetime(2026, 11, 9, 23, 59, tzinfo=timezone.utc)
+            with patch.dict(os.environ, {'DATA_UPDATE_RUN_ID': 'daily-second'}):
+                second = fetch(self.url, self.root/'second', self.root/'cache', same_day_cache=True)
+            self.assertEqual(len(self.state['calls']), 1)
+            self.assertEqual(second['checked_at'], first['checked_at'])
+            self.assertEqual(second['cache_policy'], 'same-utc-day')
+            current[0] = datetime(2026, 11, 10, 0, 0, tzinfo=timezone.utc)
+            with patch.dict(os.environ, {'DATA_UPDATE_RUN_ID': 'next-day'}):
+                next_day = fetch(self.url, self.root/'next-day', self.root/'cache', same_day_cache=True)
+        self.assertEqual(len(self.state['calls']), 2)
+        self.assertEqual(self.state['calls'][-1]['If-None-Match'], '"one"')
+        self.assertEqual(next_day['sha256'], first['sha256'])
+
+    def test_same_day_cache_still_rejects_corrupt_immutable_objects(self):
+        record = fetch(self.url, self.root/'first', self.root/'cache', same_day_cache=True)
+        obj = self.root/'cache/sha256'/record['sha256']
+        obj.chmod(0o644)
+        obj.write_bytes(b'corrupt')
+        with self.assertRaisesRegex(dataset.DatasetError, 'Corrupted HTTP cache object'):
+            fetch(self.url, self.root/'second', self.root/'cache', same_day_cache=True)
+        self.assertFalse((self.root/'second').exists())
 
 
 if __name__ == "__main__":

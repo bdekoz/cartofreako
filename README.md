@@ -95,6 +95,10 @@ outputs and their receipts live under `output/data-editions/<dataset-id>/`;
 The update requires an exported `FIRMS_MAP_KEY`, configured P-Tree credentials,
 and the configured local swarm/network and audited petroleum inputs. Mutable
 NOAA files are revalidated; pinned local publications retain their dates.
+NOAA downloads use shared adaptive pacing and a 30-minute retry budget per
+request. Repeated updates on the same UTC day reuse validated CPC files and
+continue saved partial downloads. See the [Make download controls](docs/pages/getting-started/generation.md#noaa-download-controls)
+for rate limits, progress, retry settings and the optional bulk endpoint.
 A failed update or build preserves the previous completed selection. See the
 [source refresh workflow](docs/pages/getting-started/generation.md#updating-all-configured-data-sources)
 for credentials, storage, resume and replay commands. `make all` and

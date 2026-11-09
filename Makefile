@@ -155,6 +155,17 @@ ANTHROPOCENE_TEMPERATURE_GEOJSON_2025 ?= \
 ANTHROPOCENE_TEMPERATURE_GEOJSON_2026 ?= \
 	$(ANTHROPOCENE_DATA_DIR)/anthropocene-land-temperature-2026.geojson
 ANTHROPOCENE_CPC_FETCHER := scripts/fetch-anthropocene-cpc-data.sh
+# Shared downloader settings are exported through recursive acquisition makes.
+# NOAA pacing persists under DATA_HTTP_CACHE/http/providers across files/runs.
+DATA_HTTP_RETRY_BUDGET ?= 1800
+NOAA_HTTP_MIN_INTERVAL ?= 2
+NOAA_HTTP_MAX_INTERVAL ?= 60
+DATA_HTTP_PROGRESS_INTERVAL ?= 30
+CPC_HTTP_RANGE_SIZE ?= 2097152
+CPC_HTTP_DAILY_CACHE ?= 1
+CPC_BASE_URL ?= https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp
+export DATA_HTTP_RETRY_BUDGET NOAA_HTTP_MIN_INTERVAL NOAA_HTTP_MAX_INTERVAL
+export DATA_HTTP_PROGRESS_INTERVAL CPC_HTTP_RANGE_SIZE CPC_HTTP_DAILY_CACHE CPC_BASE_URL
 ANTHROPOCENE_TEMPERATURE_PREPARATION_SCRIPT := \
 	scripts/prepare-anthropocene-temperature-data.sh
 RESOURCES_DATA_DIR ?= $(STATIC_ASSET_DIR)/resources/current-20261108
@@ -1300,6 +1311,7 @@ endif
 
 check-dataset:
 	$(ATLAS_PYTHON) tests/test-dataset.py
+	$(ATLAS_PYTHON) tests/test-data-http-policy.py
 	$(ATLAS_PYTHON) tests/test-data-workflow.py
 
 check-firms-coverage: build/test-firms-coverage
