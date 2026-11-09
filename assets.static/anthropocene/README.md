@@ -148,8 +148,11 @@ NASA FIRMS requires the free `FIRMS_MAP_KEY`. Request it on the official
 keep it only in the acquisition process environment. A new global refresh
 fails when the key or staged FIRMS rows are absent unless the explicit
 `ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY=1` debugging override is set. The
-fetcher reads FIRMS' advertised date ranges, joins standard S-NPP processing to
-its NRT tail in five-day chunks, and avoids logging the key. Preparation audits
+fetcher reads FIRMS' advertised date ranges, joins standard NOAA-20 processing to
+its NRT tail in five-day chunks, and avoids logging the key. S-NPP has documented
+2026 outages and stopped delivery on November 2; choose a historical sensor
+explicitly with `ANTHROPOCENE_FIRMS_SOURCES`. A refresh replaces old sensor
+CSVs rather than silently mixing selections. Preparation audits
 at least 95% of expected dates and nonzero rows in North America, South
 America, Europe, Africa, northern Asia, East Asia, and Oceania. Both checked
 particulate snapshots have no FIRMS rows and therefore make no global fire

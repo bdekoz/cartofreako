@@ -53,10 +53,11 @@ class Theme(xml.sax.ContentHandler):
     Only page backgrounds, text and unmeasured basemap decoration change paint.
     Country metrics, bathymetry, astronomy and categorical marks keep their paint.
     """
-    def __init__(self, stream, recipe, kind, subject=None):
+    def __init__(self, stream, recipe, kind, subject=None, attributes=None):
         self.writer = XMLGenerator(stream, encoding="utf-8")
         self.recipe, self.kind = recipe, kind
         self.subject = subject
+        self.attributes = attributes or {}
         self.stack = []
 
     def startDocument(self):
@@ -68,6 +69,7 @@ class Theme(xml.sax.ContentHandler):
         parents = [p.get("id", "") for p in self.stack]
         r = self.recipe
         if not self.stack:
+            a.update(self.attributes)
             a["data-atlas-presentation"] = r["id"]
             a["data-sheet-background"] = r["background"]
             self.writer.startElement(name, a)
@@ -118,7 +120,7 @@ class Theme(xml.sax.ContentHandler):
         self.writer.endElement(name)
 
 
-def theme(source, destination, recipe, kind, subject=None):
+def theme(source, destination, recipe, kind, subject=None, attributes=None):
     destination.parent.mkdir(parents=True, exist_ok=True)
     with destination.open("w") as stream:
-        xml.sax.parse(str(source), Theme(stream, recipe, kind, subject))
+        xml.sax.parse(str(source), Theme(stream, recipe, kind, subject, attributes))

@@ -7,6 +7,7 @@ from lxml import etree as E
 from legend_informatics import ROOT, WIDTH, HEIGHT, font_environment
 from setouchi_h3_trials import render_svg
 from ocean_temperature import digest
+from viz_context import snapshot_date
 
 NS='http://www.w3.org/2000/svg'
 INK='http://www.inkscape.org/namespaces/inkscape'
@@ -24,6 +25,12 @@ def text(parent,x,y,value,size=.24,**attrs):
 
 
 def save(root,path):
+    from dataset import context, digest
+    selected = context(required=False)
+    if selected:
+        manifest, value = selected
+        root.set('data-dataset-id', value['dataset_id'])
+        root.set('data-dataset-manifest-sha256', digest(manifest))
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
     E.ElementTree(root).write(str(path),encoding='UTF-8',xml_declaration=True)
 
@@ -55,7 +62,7 @@ def legend(stem,title,subtitle,sections,notes,sources):
     for source in sources:
         for line in textwrap.wrap(source,200):text(root,.8,y,line,.205);y+=.29
     if y>18.65:raise ValueError('Legend content overflows the sheet: '+stem)
-    text(root,.8,18.65,'CARTOFREAKO  /  8 NOVEMBER 2026  /  Separate map and source sheet',.20)
+    text(root,.8,18.65,'CARTOFREAKO  /  '+snapshot_date().strftime('%-d %B %Y').upper()+'  /  Separate map and source sheet',.20)
     return root
 
 

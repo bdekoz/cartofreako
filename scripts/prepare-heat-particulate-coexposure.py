@@ -8,10 +8,11 @@ import json
 
 import numpy as np
 
-from ocean_stage_2 import ROOT,OUTPUT,NetCDF,cpc_path,cpc_dates,dates,slots,nonleap_indices,climatology,save_product
+from ocean_stage_2 import ROOT,OUTPUT,NetCDF,cpc_path,cpc_dates,dates,slots,nonleap_indices,climatology,save_product,product_months,cutoff
+from viz_context import input_path
 from ocean_temperature import digest,write_json,h3_cell,h3_center
 
-SOURCE=ROOT/'output/india-particulate-20261108/enrichment/observations/openaq-station-days.csv.gz'
+SOURCE=input_path('INDIA_OBSERVATIONS',ROOT/'output/india-particulate-20261108/enrichment/observations/openaq-station-days.csv.gz')
 
 
 def containing_cell(lat,lon):
@@ -19,8 +20,8 @@ def containing_cell(lat,lon):
     return int(np.floor((90-lat)/.5))*720+int(np.floor((lon%360)/.5))
 
 
-def read_observations():
-    with gzip.open(SOURCE,'rt') as f:rows=[r for r in csv.DictReader(f) if r['parameter']=='pm25']
+def read_observations(source=None):
+    with gzip.open(source or SOURCE,'rt') as f:rows=[r for r in csv.DictReader(f) if r['parameter']=='pm25']
     seen=set();stations={}
     for r in rows:
         key=(r['canonical_id'],r['date'])
@@ -44,7 +45,8 @@ def heat_series(stations):
     indices=np.array([s['native_index'] for s in stations]);arrays={};receipts=[]
     for year in list(range(1991,2021))+[2025,2026]:
         path=folder/f'tmax-{year}.npy';source=cpc_path(year)
-        key={'source_sha256':digest(source),'station_indices':hashlib.sha256(indices.tobytes()).hexdigest()}
+        key={'source_sha256':digest(source),'station_indices':hashlib.sha256(indices.tobytes()).hexdigest(),
+             'implementation_sha256':digest(__file__)}
         receipt=path.with_suffix('.json');old=json.loads(receipt.read_text()) if receipt.exists() else {}
         with NetCDF(source) as nc:
             ds=cpc_dates(nc)
@@ -52,7 +54,9 @@ def heat_series(stations):
                 np.save(path,nc.read('tmax').reshape(len(ds),-1)[:,indices])
                 write_json(receipt,{'inputs':key,'sha256':digest(path)})
         arrays[year]=np.load(path)
-        receipts.append({'year':year,'file':str(source.relative_to(ROOT)),'sha256':digest(source),'data_through':str(ds[-1]),
+        if year==cutoff().year:
+            arrays[year]=arrays[year][:(cutoff()-date(year,1,1)).days+1]
+        receipts.append({'year':year,'file':str(source.resolve()),'sha256':digest(source),'data_through':str(ds[-1]),
                          'url':f'https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.{year}.nc'})
     values=np.stack([arrays[y][nonleap_indices(y)].T for y in range(1991,2021)],axis=1)
     mean,q,count,years=climatology(values)
@@ -80,7 +84,7 @@ def counts(states):
 
 
 def station_diagnostics(stations):
-    write_json(OUTPUT/'data/india-station-crosswalk.json',{'source':str(SOURCE.relative_to(ROOT)),'source_sha256':digest(SOURCE),'stations':stations,
+    write_json(OUTPUT/'data/india-station-crosswalk.json',{'source':str(SOURCE.resolve()),'source_sha256':digest(SOURCE),'stations':stations,
        'duplicates':0,'coordinates':'all retained daily coordinates checked for stability; no nearest-valid replacement for a missing containing CPC cell'})
     with gzip.open(OUTPUT/'data/india-station-days.csv.gz','rt') as f:
         states={(r['canonical_id'],r['date']):int(r['state']) for r in csv.DictReader(f)}
@@ -152,7 +156,7 @@ def main():
                  'grain':'union of eligible local cell-dates; BOTH requires both conditions at the same station/date; reference and low-cost kept separate',
                  'baseline':'CPC TMAX 1991–2020 P90; PM2.5 daily mean >35 µg/m³ comparison threshold',
                  'calendar':'PM Asia/Kolkata local dates joined to CPC date labels; CPC max_period 06Z–06Z; not simultaneous hourly exposure'}))
-        for month in range(1,12):
+        for month in product_months():
             ix=[i for i,d in enumerate(dates(2025,cutoff)) if d.month==month]
             a=byyear[2025][0][ix][:,selected];b=byyear[2026][0][ix][:,selected];common=(a>0)&(b>0)
             matched.append({'monitor_class':kind,'month':month,'paired_station_days':int(common.sum()),

@@ -185,7 +185,7 @@ def destination_values(text: str, html_only: bool = False) -> list[tuple[int, st
 
 def local_target(root: Path, source: Path, destination: str) -> tuple[Path | None, str]:
     if not destination or destination.startswith("#"):
-        return source, unquote(destination.removeprefix("#"))
+        return (root / source).resolve(), unquote(destination.removeprefix("#"))
     if "{{" in destination or "{%" in destination:
         return None, ""
 

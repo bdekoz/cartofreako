@@ -12,7 +12,7 @@ fi
 
 data_dir=$1
 start_year=${2:-1979}
-end_year=${3:-$(date -u +%Y)}
+end_year=${3:-${CPC_END_YEAR:-$(date -u +%Y)}}
 if [[ ! $start_year =~ ^[0-9]{4}$ || ! $end_year =~ ^[0-9]{4}$ \
       || $start_year -gt $end_year ]]; then
   echo "invalid CPC year range: $start_year through $end_year" >&2
@@ -87,6 +87,15 @@ download_by_ranges() {
 for year in $(seq "$start_year" "$end_year"); do
   for variable in tmax tmin; do
     output="$raw_dir/$variable.$year.nc"
+    if [[ -n ${DATA_HTTP_CACHE:-} ]]; then
+      # Current-data editions revalidate provider bytes even when an older
+      # cached NetCDF still opens. The shared downloader preserves old objects.
+      python3 "$(dirname -- "${BASH_SOURCE[0]}")/data-http-fetch.py" \
+        "$file_url/$variable.$year.nc" "$output"
+      validate "$output" "$variable" \
+        || { echo "CPC download is not a readable $variable NetCDF" >&2; exit 1; }
+      continue
+    fi
     if [[ -s $output ]] && validate "$output" "$variable"; then
       printf 'using existing CPC input %s\n' "$output"
       continue

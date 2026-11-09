@@ -14,14 +14,26 @@ ordinary Cartofreako regeneration. They are saved in
 generators and the CDN, swarm and Japan detail builders. These layer generators
 do not require files under `output/setouchi-triennale-2028/`.
 
+For current inputs, run `make data-update` then `make atlas-optional`.
+The [edition workflow](generation.md#updating-all-configured-data-sources)
+records which source periods and hashes each build consumes. A Japan ground
+or orbital observer is derived from the selected profile at Setouchi;
+celestial content remains an observer view. Atmospheric atlas preparation
+retains H3r5, the 100-level radiation opacity scale and amber presentation.
+Petroleum keeps its fixed thresholds and mineral symbols keep their distinct
+units and independent normalizations. Separate legends use selected source
+periods; books and contact sheets derive their totals from the catalog.
+
 The **current default atlas** uses the **2026-11-03 MSP 5 settings** with
 **wine/amber** selected: `#240413` ground and `#fcc553` text. The `atlas`
 section of the same JSON selects the approved recipe and saves the Setouchi
 frame, map/legend sequence, PDF selection, title typography and 300 dpi
 exports. Data colors remain distinct. `make atlas` applies this presentation
 to the current **39 default World/Japan subjects**, with **156 separate
-map/legend sheets**. The dated ST2 and MSP deliveries remain inputs. The
-November 8 review verified all 156 SVG/PDF/PNG sheets. The current catalog
+map/legend sheets**. Current-data composition generates new native layers from the selected
+edition and reuses the approved framing and palette. Dated ST2/MSP rendered
+deliveries are used by the explicit `DATASET=legacy` workflow. The historical
+November 8 review verified its 156 SVG/PDF/PNG sheets. The current catalog
 also contains 14 optional prototypes, including the completed Stage 1/2
 climate reviews. Aggregate-book assembly still needs the catalog-size update
 described below; the individual sheet exports are complete.

@@ -11,6 +11,29 @@ title: Source layout conventions
 [Build and generated artifacts](build.md) ·
 [Visual gallery](../gallery/README.md)
 
+## Dataset editions and build runs
+
+[`config/data-products.json`](../../../config/data-products.json) declares
+source groups, bindings, years and method policies.
+[`contracts/dataset-manifest-v1.schema.json`](../../../contracts/dataset-manifest-v1.schema.json)
+describes the manifest; `scripts/dataset.py` verifies content and paths.
+
+| Local path | Responsibility |
+| --- | --- |
+| `.cartofreako/data/cache/sha256/` | Immutable acquired objects with separate HTTP freshness/partial-download receipts |
+| `.cartofreako/data/runs/<update-id>/state.json` | Resumable source checkpoints and failures |
+| `.cartofreako/data/editions/<dataset-id>/dataset.json` | Validated edition, retained dependency registry, implementations and all input hashes |
+| `.cartofreako/data/current.json` | Atomic selection of a complete validated input edition |
+| `output/data-editions/<dataset-id>/builds/<build-id>/` | Full build run: native, atlas, optional ocean/climate and validation outputs |
+| `.cartofreako/data/build-current.json` | Receipt/hash/output path of the validated full build |
+
+Standalone subsets use `native/` and `atlas/` directly under their dataset
+output directory. Full runs remain separate so a failure preserves completed
+outputs. Historical tracked files under `assets.static/` and dated `output/`
+deliveries stay separate. `DATA_ROOT` relocates the input store; `make clean`
+does not delete dataset editions. See the
+[workflow and recovery commands](generation.md#updating-all-configured-data-sources).
+
 ## Repository layout
 
 | Directory | Responsibility | Start here |

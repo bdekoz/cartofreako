@@ -36,11 +36,12 @@ A separate C++20 profile resolver validates the user-configurable projection
 and pass selection used by a bare `make`. It chooses existing Make targets; it
 does not duplicate generation logic or filter SVG layers after generation.
 
-For the approved World/Japan atlas, use `make atlas ASSET_JOBS=4`. This reads
-the atlas and layer defaults in `generation-style.json` and builds the approved
-MSP 5 wine/amber presentation in the Setouchi frame, from pinned local inputs. See
-[Default atlas settings](generation-styles.md#setouchi-st2-print-layout)
-for the source requirements, output locations and title-date override.
+For the complete current-data workflow, run `make data-update`, followed by
+`make ASSET_JOBS=2 atlas-optional`. A selected validated edition is required
+for builds; `DATASET=legacy` selects the historical repository workflow.
+`make all` builds the native set, while `make atlas` builds the default
+World/Japan atlas. See [dataset selection](#updating-all-configured-data-sources)
+and [presentation settings](generation-styles.md#setouchi-st2-print-layout).
 
 | Artifact | Generator | Principal input |
 | --- | --- | --- |
@@ -105,30 +106,104 @@ still contains no fetch, external authorization, or publication target.
 ## Updating all configured data sources
 
 ```sh
+make install-prerequisites
+make check-prerequisites
+make data-update
+make ASSET_JOBS=2 atlas-optional
+```
+
+`data-update` captures one UTC calculation boundary, acquires into an isolated
+edition, prepares normalized inputs, and validates their hashes, profiles,
+coverage and scientific invariants. Only then does it atomically select
+`.cartofreako/data/current.json`. It does not render or clean existing maps.
+An unavailable required source stops the run and leaves the prior edition
+selected. Successful updates print the dataset ID, acquisition modes and
+actual source periods. A retrieval date is not an observation date.
+
+Mutable CPC and OISST files use HTTP revalidation. Interrupted HTTP transfers
+resume only with matching validators; changed remote identities restart.
+CelesTrak retains its two-hour request policy. The optional NASA SSC reference
+may remain explicitly historical. Network, groundstation and audited annual
+publication inputs are copied and labeled as pinned local data; no external
+checkout is pulled. The configured product years remain 2025 and 2026.
+
+The full `atlas-optional` aggregate runs prerequisites, the two-pass native
+`all-resilient` build, fresh atlas composition/export, all Stage 1 ocean
+measures and matched periods, and Stage 2 preparation/rendering/validation.
+It includes all eight implemented optional climate identities, their figures
+and diagnostics. Optional status and scientific definitions remain unchanged.
+Building consumes local selected inputs and does not refresh providers.
+
+Every recursive Make and Python process receives the same immutable manifest.
+A concurrent activation cannot switch either resilient pass. Current builds
+reject conflicting profile overrides. Without an active edition, a current
+build stops with instructions to update or explicitly choose legacy mode.
+
+```sh
+# Inspect the selected immutable manifest path.
+python3 scripts/dataset-context.py --print
+
+# Rebuild an earlier validated edition without provider access.
+make DATASET_MANIFEST=/absolute/path/to/edition/dataset.json atlas-optional
+
+# Historical repository snapshots and retained presentation deliveries.
+make DATASET=legacy all-resilient
+make DATASET=legacy atlas
+```
+
+The full build creates a separate run under
+`output/data-editions/<dataset-id>/builds/<build-id>/`. It contains `native/`,
+`atlas/`, `anthropocene-optional/ocean/`, `anthropocene-optional/climate/`,
+and `validation/`. Standalone subset commands use the corresponding folders
+directly under `output/data-editions/<dataset-id>/`. SVG metadata and receipt
+hashes trace exports to their inputs. The full-build receipt and
+`.cartofreako/data/build-current.json` advance only after every group passes.
+The previous completed output run stays intact when a rebuild fails.
+
+For interrupted work, use the IDs printed in the error log:
+
+```sh
+make data-update DATA_UPDATE_ARGS='--resume <failed-update-id>'
+make atlas-optional ATLAS_OPTIONAL_ARGS='--resume <failed-build-id>'
+```
+
+Resume verifies completed bytes and implementation fingerprints; changed
+methods require a new run. `DATA_UPDATE_ARGS='--candidate-only'` validates
+without activation. `DATA_ROOT=/large/local/filesystem/cartofreako-data`
+relocates the input store. The default preflight working-space budget is
+160 GiB free, excluding final print exports; adjust `DATA_UPDATE_MIN_FREE_GIB`
+only from measured local storage needs. Inputs and referenced caches survive
+`make clean`; deletion is an explicit storage-management operation.
+
+The complete update requires P-Tree access, an exported `FIRMS_MAP_KEY`,
+and the configured local inputs. FIRMS is checked before downloads. Request
+a free key from the [NASA FIRMS map-key page](https://firms.modaps.eosdis.nasa.gov/api/map_key/);
+NASA emails the key. The [FIRMS download page](https://firms.modaps.eosdis.nasa.gov/download/)
+can resend it. In Bash:
+
+```sh
+read -rsp 'NASA FIRMS MAP_KEY: ' FIRMS_MAP_KEY
+printf '\n'
+export FIRMS_MAP_KEY
 make data-update
 ```
 
-This top-level aggregate reuses the experimental source targets from
-`all-experiments-fetch` and adds the other existing data refresh and
-preparation rules. It runs one serial submake, even when invoked with `-j`,
-so each fetch completes before its preparation. It stops at the first failed
-step, including when the caller uses `-k`, and prints its completion message
-only after every step succeeds. It does not invoke `clean`, render maps,
-publish artifacts, or change the release dependency graph.
+The error log repeats these request/recovery instructions. Full current
+editions require global FIRMS data. The regional-development override applies
+to direct debugging targets and cannot activate a complete current edition.
+Keys and private credential files are excluded from manifests and logs.
+See [prerequisites](prerequisites.md#current-data-and-complete-optional-builds).
 
-The shared steps cover Natural Earth, the JAXA trust anchor, astronomy,
-orbital catalogs, atoll evidence, and cloud-atmosphere fetching/preparation.
-The additional steps fetch and prepare both particulate years and CPC
-temperatures, refresh resources and the synthesized fiber data, prepare the
-network-swarm input, restore the pinned Stage 2 ocean inputs, and verify the
-prepared cloud-atmosphere snapshot. Preparation may compile its native tools.
+FIRMS defaults to NOAA-20 standard processing plus NRT, following S-NPP's
+2026 outages and cessation. A temporal-coverage failure now lists the covered
+date count, percentage and missing dates. Refetch after removing an obsolete
+`ANTHROPOCENE_FIRMS_SOURCES` override; preparation retains its 95% coverage
+requirement. See [the source transition and audit](../passes/anthropocene/implementation.md#fire-source-evaluation-canada-and-northern-russia).
 
-Run `make install-prerequisites` first if the native toolchain is incomplete.
-The complete update requires the configured P-Tree credentials,
-`FIRMS_MAP_KEY` for global particulate data, and the documented local network
-source inputs. Each child target reports its own missing inputs or errors;
-the aggregate does not skip an unavailable source. Resuming with
-`make data-update` follows each child's existing cache and reuse policy.
+The implementation has fixture and numerical regression coverage. Full live
+acquisition and print acceptance still require the source credentials and
+local inputs; dated completion records remain evidence for their captured
+historical editions, not a claim that a new edition has been rendered.
 
 Source refresh targets can also be run individually:
 
@@ -146,81 +221,11 @@ Source refresh targets can also be run individually:
 | Network swarm | `prepare-network-swarm-data` (prepares the pinned local archive) |
 | Stage 2 ocean inputs | `fetch-ocean-stage-2` (restores/verifies the frozen acquisition receipt) |
 
-`all-experiments-fetch` runs `clean` and the experimental source fetches
-listed above; it does not include the particulate, CPC temperature, or
-resources refresh targets; `data-update` includes them. Fetches respect
-configured years, profile boundaries, and caches;
-a successful fetch does not universally advance observation dates or select
-its candidate snapshot for generation. See the
-[prerequisites](prerequisites.md#anthropocene-input-preparation) for the
-particulate FIRMS requirement and input preparation workflow.
-
-`data-update` retains those same review boundaries: orbital and Anthropocene
-candidates require review before selecting or promoting them, and CPC
-preparation checks that its raw manifest matches the selected profiles.
-Astronomy and resources follow their existing in-place refresh behavior.
-Frozen ocean inputs and network archives retain their pinned versions;
-external source repositories and groundstation snapshots have no automatic
-latest-version refresh rule and are not advanced by this aggregate.
-
-The preferred long-running release workflow bounds its first pass to two
-concurrent recipes by default, keeps independent targets moving after a
-failure, and then reruns the unfinished graph with one active recipe:
-
-```sh
-make assets-resilient
-make ASSET_JOBS=4 assets-resilient  # only after sizing the host for four jobs
-```
-
-`assets-resilient` first runs the deterministic three-rule chain: `make
-clean`, then `make all-experiments-fetch` (Natural Earth, astro, orbiting,
-atoll evidence, and the JAXA P-Tree trust anchor and data), then `make
-all-experiments`. Generation therefore always starts from a clean tree with
-every external experimental source fetched and updated, so a release build
-never fails mid-graph for missing vendor data.
-
-`ASSET_JOBS` affects only the keep-going first pass; the completion pass is
-always serial. PDF and PNG exports write a process-specific temporary file,
-require a nonempty result, and atomically rename it over the destination.
-`.DELETE_ON_ERROR` removes ordinary failed targets, while `make
-clean-failed-generated` removes zero-length PDF/PNG files and abandoned export
-temporaries without deleting successful artifacts.
-
-Use `make assets-single` for the identical artifact set with a forced
-single-job recursive build. It is the first workaround when concurrent
-generators or Inkscape exports exhaust memory, and it overrides an inherited
-or command-line `-j` setting for the generated-asset sub-build:
-
-```sh
-make assets-single
-```
-
-`make generated-projections`, `make generate-projections`, and
-`make make-generated` are equivalent aliases. The original individual
-Cahill-Keyes targets also remain available.
-
-The suite fixes the largest print dimension at 44 inches while retaining each
-projection's exact aspect-ratio contract:
-
-| Projection | Frame | Exact construction |
-| --- | ---: | --- |
-| Cahill-Keyes | `44 × 22` | `2:1` |
-| AuthaGraph | `44 × 19.052559` | height `= 11√3` |
-| Dymaxion | `44 × 20.78461` | height `= 44 × 3√3/11`, ratio `11/(3√3)` |
-| Myriahedral | `44 × 24.75` | `16:9` |
-| Star-X | `34 × 44` | `17:22` |
-| Voronoi | `44 × 22.916667` | height `= 275/12`, ratio `48:25` |
-
-The numeric frame is also the SVG's unitless coordinate system. Generated
-root documents attach `in` to `width` and `height`, but leave `viewBox`
-numeric: a Cahill-Keyes document is therefore `width="44in"`,
-`height="22in"`, and `viewBox="0 0 44 22"`. One viewBox coordinate unit maps
-to one physical inch without changing projection formulas or path data.
-
-The filenames round irrational or recurring dimensions to six decimals,
-matching Izzi's serialized `viewBox`; the in-memory frames use the exact
-double expressions. These files are diagnostic and illustrative rather than
-a general map-rendering command line.
+`all-experiments-fetch` retains its historical clean/fetch behavior. The
+individual maintainer targets above retain their destination, cache and
+candidate-review contracts. They do not activate a current data edition.
+Use `data-update` for transactional acquisition and automatic validated local
+selection; use `DATASET=legacy` when manually selecting historical candidates.
 
 ## Build orchestration and inputs
 

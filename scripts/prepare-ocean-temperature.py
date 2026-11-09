@@ -10,6 +10,7 @@ import argparse
 import calendar
 from datetime import date, timedelta
 import json
+import os
 from pathlib import Path
 import time
 
@@ -52,7 +53,7 @@ def aggregate_day(sst, ice, indices, inverse, members):
 
 def grid(cache, work):
     source = cache/'lsmask.oisst.nc'
-    key = {'source_sha256': digest(source), 'algorithm': ALGORITHM}
+    key = {'source_sha256': digest(source), 'algorithm': ALGORITHM, 'implementation_sha256': digest(__file__)}
     receipt, target = work/'grid.json', work/'grid.npz'
     if receipt.exists() and target.exists() and json.loads(receipt.read_text()) == key:
         return dict(np.load(target))
@@ -82,16 +83,19 @@ def cache_year(cache, work, year, g):
         if digest(path) != receipt['sha256']:
             raise ValueError('Changed raw input ' + str(path))
         sources.append(receipt)
-    key = {'algorithm': ALGORITHM, 'grid_sha256': digest(work/'grid.npz'), 'sources': sources}
+    key = {'algorithm': ALGORITHM, 'grid_sha256': digest(work/'grid.npz'), 'implementation_sha256': digest(__file__),
+           'sources': [{k:r[k] for k in ('url','sha256','shape') if k in r} for r in sources]}
     target, receipt = work/f'{year}.npy', work/f'{year}.json'
     if target.exists() and receipt.exists():
         old = json.loads(receipt.read_text())
         if old['inputs'] == key and old['sha256'] == digest(target):
             return
     with NetCDF(paths[0]) as sst, NetCDF(paths[1]) as ice:
-        days = dates(sst, year)
-        assert days == dates(ice, year)
-        assert sst.shape('sst') == ice.shape('icec') == (len(days),720,1440)
+        sst_days, ice_days = dates(sst, year), dates(ice, year)
+        days = sst_days[:min(len(sst_days),len(ice_days))]
+        assert days == ice_days[:len(days)]
+        assert sst.shape('sst') == (len(sst_days),720,1440)
+        assert ice.shape('icec') == (len(ice_days),720,1440)
         assert sst.attributes('sst')['units'] == 'degC'
         assert ice.attributes('icec')['valid_range'] == [0.,1.]
         if year < 2026:
@@ -184,7 +188,8 @@ def summarize(work, output, g, cutoff, snapshot_date=date(2026,11,8)):
                 anomaly_baseline='1991–2020 calendar-day mean; minimum 24 of 30 years',
                 ice_policy='Exclude daily source cells with reported ice fraction >=0.15; retain sparse ice-field missing values where SST is valid. Fraction range 0..1 overrides misleading PSL percent label.',
                 expected_days=expected_days, display_minimum_day_fraction=.8,
-                preliminary_after='2026-10-24' if year==2026 else None,
+                preliminary_after=('2026-10-24' if year==2026 else None) if not os.environ.get('DATA_HTTP_CACHE') else None,
+                provider_revision_status='Recent provider values may be revised; no per-day finality flag supplied by the yearly source',
                 occupied_cells=n, displayed_sst_cells=int(np.isfinite(mean).sum()), displayed_anomaly_cells=int(np.isfinite(anomaly).sum()),
                 high_record_cell_days=int(values['high_days'].sum()),low_record_cell_days=int(values['low_days'].sum()),
                 data_file=path.name, sha256=digest(path), algorithm=ALGORITHM)

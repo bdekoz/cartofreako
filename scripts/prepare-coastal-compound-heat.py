@@ -2,6 +2,7 @@
 """Geometry-audited coastal pairings and date-aligned land/ocean extremes."""
 from datetime import date
 import json
+import os
 from pathlib import Path
 
 import geopandas as gpd
@@ -10,7 +11,7 @@ import shapely as shp
 from scipy.spatial import cKDTree
 from scipy.sparse import csr_matrix,save_npz,load_npz
 
-from ocean_stage_2 import ROOT,OUTPUT,OCEAN,CONFIG,NetCDF,cpc_path,cpc_dates,dates,slots,nonleap_indices,climatology,save_product
+from ocean_stage_2 import ROOT,OUTPUT,OCEAN,CONFIG,NetCDF,cpc_path,cpc_dates,dates,slots,nonleap_indices,climatology,save_product,matched_days,product_months,cutoff
 from ocean_temperature import digest,write_json,h3_cell
 
 EARTH=6371.0088
@@ -26,14 +27,14 @@ def kilometers(chord):
 
 
 def geometries():
-    root=ROOT/'assets.static/natural-earth/10m-physical-vectors'
+    root=Path(os.environ.get('NATURAL_EARTH_DIR',ROOT/'assets.static/natural-earth/10m-physical-vectors'))
     land=shp.union_all(gpd.read_file(root/'ne_10m_land.shp').geometry.to_numpy())
     ocean=gpd.read_file(root/'ne_10m_ocean.shp').geometry.iloc[0]
     coast=gpd.read_file(root/'ne_10m_coastline.shp').geometry.to_numpy()
     # <=0.05-degree shoreline samples bound nominal reference-point spacing.
     points=shp.get_coordinates(shp.segmentize(coast,.05))[:,::-1]
     shp.prepare(land);shp.prepare(ocean)
-    receipts={str(p.relative_to(ROOT)):digest(p) for name in ('land','ocean','coastline')
+    receipts={str(p.resolve()):digest(p) for name in ('land','ocean','coastline')
               for ext in ('shp','shx','dbf','prj') if (p:=root/f'ne_10m_{name}.{ext}').exists()}
     return land,ocean,points,receipts
 
@@ -57,7 +58,8 @@ def build_pairs():
     target=folder/'pairs.npz'
     receipt=OUTPUT/'data/coastal-pairing.json'
     old=json.loads(receipt.read_text()) if receipt.exists() else {}
-    if target.exists() and old.get('implementation_sha256')==digest(__file__) and old.get('grid_sha256')==digest(OCEAN/'work/grid.npz'):
+    if (target.exists() and old.get('implementation_sha256')==digest(__file__) and old.get('grid_sha256')==digest(OCEAN/'work/grid.npz')
+            and old.get('cpc_available_source_sha256')==digest(cpc_path(2025)) and old.get('configuration_sha256')==digest(CONFIG)):
         if all(digest(ROOT/p)==h for p,h in old['source_geometries'].items()):return dict(np.load(target))
     land,ocean,coast,receipts=geometries();tree=cKDTree(xyz(coast))
     with NetCDF(cpc_path(2025)) as nc:
@@ -100,6 +102,7 @@ def build_pairs():
          offsets50=np.concatenate([[0],np.cumsum([len(m) for m in members50])]),members50=np.concatenate(members50))
     write_json(OUTPUT/'data/coastal-pairing.json',{'source_geometries':receipts,'pair_count':len(k),
         'implementation_sha256':digest(__file__),'grid_sha256':digest(OCEAN/'work/grid.npz'),
+        'cpc_available_source_sha256':digest(cpc_path(2025)),'configuration_sha256':digest(CONFIG),
         'geometry':'native CPC center in Natural Earth land; nearest shoreline sample at <=0.05° spacing; ocean H3 center in Natural Earth ocean; line from shore to ocean center must not intersect land',
         'distance':'spherical great-circle; nominal 100 km gates; shoreline reference uncertainty <= about 3 km from sampling; dateline-spanning planar segments conservatively excluded',
         'support':'fixed Stage 1 H3 native-center membership; pair mean weighted by sum cos(native latitude); pair geometry uses H3 centers and does not resolve subcell coastlines',
@@ -114,18 +117,23 @@ def prepare_series(pairs):
         paths={k:folder/f'{k}-{year}.npy' for k in ['land','ocean100','ocean50']}
         path=cpc_path(year)
         key={'land_sha256':digest(path),'ocean_sha256':json.loads((OCEAN/'work'/f'{year}.json').read_text())['sha256'],
-             'pairing_sha256':digest(OUTPUT/'data/coastal-pairing.npz'),'implementation_sha256':digest(__file__)}
+             'pairing_sha256':digest(OUTPUT/'data/coastal-pairing.npz'),'implementation_sha256':digest(__file__),
+             'configuration_sha256':digest(CONFIG)}
         receipt=folder/f'inputs-{year}.json';old=json.loads(receipt.read_text()) if receipt.exists() else {}
         cached=old.get('inputs')==key and all(p.exists() and digest(p)==old.get('files',{}).get(k) for k,p in paths.items())
         with NetCDF(path) as nc:
             ds=cpc_dates(nc);attrs=nc.attributes('tmax')
+            ocean=np.load(OCEAN/'work'/f'{year}.npy',mmap_mode='r')
+            length=min(len(ds),len(ocean))
+            if year==cutoff().year:length=min(length,(cutoff()-date(year,1,1)).days+1)
+            if not length:raise ValueError('No shared coastal observation days')
+            ds=ds[:length];ocean=ocean[:length]
             if not cached:
-                data=nc.read('tmax').reshape(len(ds),-1)[:,pairs['native_indices']]
+                raw=nc.read('tmax');data=raw.reshape(raw.shape[0],-1)[:length,pairs['native_indices']]
                 np.save(paths['land'],data)
-        receipts.append({'year':year,'path':str(path.relative_to(ROOT)),'sha256':digest(path),
+        receipts.append({'year':year,'path':str(path.resolve()),'sha256':digest(path),
                          'dates':[str(ds[0]),str(ds[-1])],'max_period':attrs['max_period'],'valid_range':attrs['valid_range'],
                          'url':f'https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp/tmax.{year}.nc'})
-        ocean=np.load(OCEAN/'work'/f'{year}.npy',mmap_mode='r')
         assert len(ds)==len(ocean)
         for radius,m in matrices.items():
             dest=paths[f'ocean{radius}']
@@ -184,15 +192,17 @@ def main():
             flags[radius,year]=joint_states(land,water,landq,oq,dates(year,len(land)))
             np.save(folder/f'states-{radius}-{year}.npy',flags[radius,year])
             if radius!=100:continue
-            for period,length in [('annual',len(land)),('matched',311)]:
+            current_length=len(np.load(folder/'land-2026.npy',mmap_mode='r'))
+            for period,length in [('annual',len(land)),('matched',min(matched_days(),len(land),current_length))]:
                 if year==2026 and period=='matched':continue
                 values=summarize_states(flags[radius,year][:length])
                 products.append(save_product(f'coastal-compound-heat-{year}-{period}',{**values,**pairs},
                  {'family':'coastal-compound-heat','year':year,'period':period,'data_through':str(dates(year,length)[-1]),'expected_days':length,
                   'baseline':'1991–2020 local P90; native land TMAX and fixed adjacent-ocean mean','calendar':'date-aligned co-occurrence; CPC specifies 06Z–06Z'}))
     matched=[]
-    for month in range(1,12):
-        ix=[i for i,d in enumerate(dates(2025,311)) if d.month==month];a=flags[100,2025][ix];b=flags[100,2026][ix]
+    common_length=min(matched_days(),len(flags[100,2025]),len(flags[100,2026]))
+    for month in product_months():
+        ix=[i for i,d in enumerate(dates(2025,common_length)) if d.month==month];a=flags[100,2025][ix];b=flags[100,2026][ix]
         common=(a>0)&(b>0);den=int(common.sum())
         matched.append({'month':month,'paired_pair_days':den,'both_2025':int(np.sum(common&(a==4))),'both_2026':int(np.sum(common&(b==4)))})
     sensitivity=[]

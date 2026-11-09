@@ -9,7 +9,8 @@ import shutil
 
 import numpy as np
 
-from ocean_stage_2 import OUTPUT,OCEAN,dates,slots,event_flags,event_edges,save_product
+from ocean_stage_2 import OUTPUT,OCEAN,dates,slots,event_flags,event_edges,save_product,cutoff,matched_cutoff,matched_days,product_months
+from ocean_stage_2 import ocean_array
 from ocean_temperature import write_json,digest
 
 
@@ -17,9 +18,9 @@ def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--chunk',type=int,default=4096);a=p.parse_args()
     grid=dict(np.load(OCEAN/'work/grid.npz'));n=len(grid['cells']);base=OUTPUT/'work/baseline'
     mean=np.load(base/'mean.npy',mmap_mode='r');threshold=np.load(base/'threshold.npy',mmap_mode='r')
-    source=[np.load(OCEAN/'work'/f'{y}.npy',mmap_mode='r') for y in (2024,2025,2026)]
+    source=[ocean_array(y) for y in (2024,2025,2026)]
     all_days=sum([dates(y,len(s)) for y,s in zip((2024,2025,2026),source)],[])
-    periods=[(2025,'annual',date(2025,12,31)),(2025,'matched',date(2025,11,7)),(2026,'annual',date(2026,11,7))]
+    periods=[(2025,'annual',date(2025,12,31)),(2025,'matched',matched_cutoff()),(2026,'annual',cutoff())]
     products=[];daily_dir=OUTPUT/'work/marine-daily';daily_dir.mkdir(parents=True,exist_ok=True)
     for year,period,cutoff in periods:
         length=(cutoff-all_days[0]).days+1;ds=all_days[:length];sl=slots(ds)
@@ -68,19 +69,19 @@ def main():
         np.savez_compressed(OUTPUT/'work'/f'marine-monthly-{year}-{period}.npz',**monthly)
         products.append(meta)
     # Compare the same eligible calendar-date/cell pairs, with both detectors
-    # cut at November 7. A full-year 2025 detector is never used for this pair.
+    # cut at the selected shared calendar endpoint. A full-year 2025 detector is never used for this pair.
     rows=[]
-    for month in range(1,12):
+    for month in product_months():
         totals=np.zeros(4,dtype='float64')
         for lo in range(0,n,a.chunk):
             hi=min(lo+a.chunk,n);a1=np.load(daily_dir/f'2025-matched-{lo:06d}.npz')['flags'];a2=np.load(daily_dir/f'2026-annual-{lo:06d}.npz')['flags']
-            ix=[i for i,d in enumerate(dates(2025,311)) if d.month==month]
+            ix=[i for i,d in enumerate(dates(2025,matched_days())) if d.month==month]
             pair=((a1[:,ix]&1)>0)&((a2[:,ix]&1)>0)&((a1[:,ix]&32)==0)&((a2[:,ix]&32)==0);w=grid['weights'][lo:hi,None]
             totals += [pair.sum(),np.sum(pair*w),np.sum(pair*((a1[:,ix]&4)>0)*w),np.sum(pair*((a2[:,ix]&4)>0)*w)]
         rows.append({'month':month,'paired_cell_days':int(totals[0]),'weighted_denominator':totals[1],
                      'event_fraction_2025':totals[2]/totals[1],'event_fraction_2026':totals[3]/totals[1]})
     write_json(OUTPUT/'data/marine-products.json',products)
-    write_json(OUTPUT/'data/marine-matched-comparison.json',{'calendar':'January 1–November 7 in each year','months':rows,
+    write_json(OUTPUT/'data/marine-matched-comparison.json',{'calendar':f'January 1–{cutoff().strftime("%B %d")} in each year','months':rows,
                'weighting':'sum cos(latitude) of fixed source centers; shared eligible cell-days; approximate area weighting'})
 
 

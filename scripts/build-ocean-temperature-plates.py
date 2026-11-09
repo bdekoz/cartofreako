@@ -14,6 +14,7 @@ import numpy as np
 
 from atlas_review_sheets import ROOT, NS, FG, el, legend, export, font_environment
 from ocean_temperature import digest, write_json
+from viz_context import ocean_output, atlas_root, cutoff, snapshot_date
 from setouchi_h3_trials import settings_for
 
 TEMPLATE='anthropocene-land-temperature-2026'
@@ -83,7 +84,7 @@ def prepare_sst_preview(root):
         valid=np.isfinite(data).sum(axis=0);mean=np.nanmean(data,axis=0)
         mean[valid<.8*len(data)]=np.nan
         np.savez_compressed(path,cells=g['cells'],mean_sst=mean,valid_days=valid)
-        write_json(path.with_suffix('.json'),dict(year=year,period='annual',data_through=f'{year}-12-31' if year==2025 else '2026-11-07',expected_days=len(data),analysis_stage='sst-only-preview',grid='NOAA OISST 0.25 degree original ocean centers',h3_resolution=5,sha256=digest(path),occupied_cells=len(g['cells']),displayed_sst_cells=int(np.isfinite(mean).sum())))
+        write_json(path.with_suffix('.json'),dict(year=year,period='annual',data_through=f'{year}-12-31' if year==2025 else str(cutoff()),expected_days=len(data),analysis_stage='sst-only-preview',grid='NOAA OISST 0.25 degree original ocean centers',h3_resolution=5,sha256=digest(path),occupied_cells=len(g['cells']),displayed_sst_cells=int(np.isfinite(mean).sum())))
 
 
 def make_legend(stem,title,mode,metadata,scope,period,coral):
@@ -96,7 +97,7 @@ def make_legend(stem,title,mode,metadata,scope,period,coral):
                    'notes':['Mean of daily mean SST. At least 80% valid days required. Ocean surface, not subsurface heat content.']},
                   {'title':'Coral thermal exposure / °C-weeks','keys':[(c,l,'outline') for c,l in zip(DHW_COLORS,['0 to <4','4 to <8','8 to <12','12 to <16','16 to <20','20 or greater'])],
                    'notes':['Outlines: maximum Degree Heating Week during this period. DHW accumulates qualifying thermal stress over a rolling 12-week window.','Satellite exposure near historical reef locators; not observations of bleaching or mortality.']},
-                  {'title':'Comparing the years','notes':['2025 full-year and 2026 year-to-date totals have different temporal support.','Use the matched 1 January–7 November 2025 view when comparing with 2026.','DHW is a period maximum, not an annual heat sum. Early-January DHW can include stress from the preceding year.']}]
+                  {'title':'Comparing the years','notes':['2025 full-year and 2026 year-to-date totals have different temporal support.','Use the matched 2025 calendar window when comparing with 2026; its actual endpoint is recorded on the legend.','DHW is a period maximum, not an annual heat sum. Early-January DHW can include stress from the preceding year.']}]
     elif mode=='anomaly':
         labels=['Below −2','−2 to <−1','−1 to <−0.5','−0.5 to <0','0 to <0.5','0.5 to <1','1 to <2','2 or warmer']
         sections=[{'title':'Mean SST anomaly / °C','keys':list(zip(ANOMALY_COLORS,labels))},
@@ -109,7 +110,7 @@ def make_legend(stem,title,mode,metadata,scope,period,coral):
                   {'title':'Record definition','notes':[f'Strict daily-mean SST records against 1982–{year-1}, matching calendar month and day.','The target value is compared before entering history. Thus 2025 is not in its own baseline; it is in the 2026 baseline.','This is the ocean counterpart to land record-day counts, but SST is a daily mean; land uses daily TMAX and TMIN.']}]
     notes=['Actual H3 resolution 5 boundaries. Original 0.25° OISST centers are averaged per H3 cell before temporal comparisons; incomplete sample membership masks that cell-day. No interpolation or source-footprint filling.',
            'Daily reported sea-ice concentration ≥15% is excluded. The PSL ice field stores fractions (0–1) despite its percent label; its sparse missing mask is retained separately from SST validity.',
-           'Fixed bins across years. Recent 2026 NOAA values may be revised; this snapshot is dated 8 November 2026 and ends on 7 November. Land-temperature plates retain their own earlier cutoff.']
+           f'Fixed bins across years. Recent NOAA values may be revised; snapshot {snapshot_date()}, ocean cutoff {cutoff}. Land-temperature plates retain their own source cutoff.']
     if mode=='sst':notes.append('Coral: original 0.05° CRW centers within the WRI 2011 0.25° reef-presence locator; maximum valid DHW per H3 cell. The locator is historical and coarser than present reef boundaries.')
     sources=['NOAA OISST v2.1 / https://www.ncei.noaa.gov/products/optimum-interpolation-sst',
              'NOAA PSL yearly files / https://psl.noaa.gov/thredds/catalog/Datasets/noaa.oisst.v2.highres/catalog.html']
@@ -119,10 +120,10 @@ def make_legend(stem,title,mode,metadata,scope,period,coral):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--root',type=Path,default=ROOT/'output/ocean-temperature-20261108')
+    p.add_argument('--root',type=Path,default=ocean_output())
     p.add_argument('--sst-only',action='store_true')
     p.add_argument('--dpi',type=int,default=300)
-    a=p.parse_args();root=a.root.resolve();atlas=ROOT/'output/atlas';env=font_environment()
+    a=p.parse_args();root=a.root.resolve();atlas=atlas_root();env=font_environment()
     subprocess.run(['make','build/setouchi-h3-tools/render-cells'],cwd=ROOT,check=True)
     if a.sst_only:prepare_sst_preview(root)
     source_stem=TEMPLATE if (atlas/'maps/world/svg'/(TEMPLATE+'.svg')).exists() else TEMPLATE.replace('anthropocene-land-temperature','anthropocene-temperature')
@@ -174,10 +175,10 @@ def main():
             products.append(dict(stem=stem,title=title,mode=mode,period=period,year=year,metadata=meta,tiles_receipt=str(receipt.relative_to(root))))
             print(f'Built {stem} / {mode} / {period}',flush=True)
     write_json(root/'preview-manifest.json',dict(schema='cartofreako-ocean-previews-v1',products=products,records=all_records,provisional_sst_only=a.sst_only))
-    parts=['<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Water temperature / stage one</title><style>body{background:#240413;color:#fcc553;font:18px sans-serif;margin:2rem}a{color:inherit}img{width:100%;height:auto}article{margin:3rem 0}.pair{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}@media(max-width:900px){.pair{display:block}}</style><h1>Water temperature / stage one</h1><p>8 November 2026 snapshot. 2025: complete year; 2026: through 7 November. Use matched periods for year-to-year comparisons. These are optional research previews.</p>']
+    parts=['<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Water temperature / stage one</title><style>body{background:#240413;color:#fcc553;font:18px sans-serif;margin:2rem}a{color:inherit}img{width:100%;height:auto}article{margin:3rem 0}.pair{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}@media(max-width:900px){.pair{display:block}}</style><h1>Water temperature / stage one</h1><p>Dataset-specific snapshot. 2025: complete year; 2026: selected year-to-date window. Use matched periods for year-to-year comparisons. These are optional research previews.</p>']
     if a.sst_only:parts.append('<p>Initial SST/coral previews. Historical record and anomaly preparation is still running.</p>')
     for product in products:
-        period_label='1 January–7 November' if product['period']=='matched' else 'Year to date: through 7 November' if product['year']==2026 else 'Complete year'
+        period_label='1 January–'+cutoff().strftime('%B %d') if product['period']=='matched' else 'Year to date: through '+cutoff().strftime('%B %d') if product['year']==2026 else 'Complete year'
         parts.append('<article><h2>'+escape(product['title'])+'</h2><p>'+period_label+'</p><div class="pair">')
         for scope in ('world','japan'):
             rr=[r for r in all_records if all(r[k]==product[k] for k in ('stem','mode','period')) and r['scope']==scope]

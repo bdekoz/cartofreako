@@ -11,7 +11,9 @@ import numpy as np
 from scipy.spatial import cKDTree
 
 from ocean_stage_2 import OUTPUT,OCEAN,ROOT,dates,slots,nonleap_indices,climatology,event_flags,thermal_seasons,SEASON_STATUS
+from ocean_stage_2 import ocean_array
 from ocean_temperature import digest,write_json
+from viz_context import cutoff, matched_cutoff, product_months
 
 
 def baseline_sensitivity():
@@ -23,13 +25,13 @@ def baseline_sensitivity():
     _,indices=cKDTree(xyz(points)).query(xyz(np.array([[lat,lon] for _,lat,lon in locations])))
     baselines={}
     for first,last in [(1991,2020),(1982,2011)]:
-        a=np.stack([np.load(OCEAN/'work'/f'{y}.npy',mmap_mode='r')[:,indices][nonleap_indices(y)].T for y in range(first,last+1)],axis=1)
+        a=np.stack([ocean_array(y)[:,indices][nonleap_indices(y)].T for y in range(first,last+1)],axis=1)
         baselines[first]=climatology(a)[:2]
-    source=[np.load(OCEAN/'work'/f'{y}.npy',mmap_mode='r')[:,indices] for y in (2024,2025,2026)]
+    source=[ocean_array(y)[:,indices] for y in (2024,2025,2026)]
     all_days=dates(2024)+dates(2025)+dates(2026,len(source[-1]));a=np.concatenate(source).T
     rows=[]
     for year in (2025,2026):
-        end=all_days.index(date(year,11,7))+1;start=all_days.index(date(year,1,1));flags={}
+        end=all_days.index(matched_cutoff(year))+1;start=all_days.index(date(year,1,1));flags={}
         for first,(mean,q) in baselines.items():flags[first]=event_flags(a[:,:end],q,all_days[:end])[:,start:]
         common=((flags[1991]&1)>0)&((flags[1982]&1)>0)&((flags[1991]&32)==0)&((flags[1982]&32)==0)
         for i,(name,lat,lon) in enumerate(locations):
@@ -51,7 +53,7 @@ def method_examples():
     examples=json.loads((OUTPUT/'data/baseline-sensitivity.json').read_text())['rows']
     selected=next(r for r in examples if r['location']=='Japan east' and r['year']==2026)
     cells=np.load(OCEAN/'work/grid.npz')['cells'];i=int(np.flatnonzero(cells==int(selected['h3'],16))[0])
-    source=[np.load(OCEAN/'work'/f'{y}.npy',mmap_mode='r')[:,i] for y in (2024,2025,2026)]
+    source=[ocean_array(y)[:,i] for y in (2024,2025,2026)]
     ds=dates(2024)+dates(2025)+dates(2026,len(source[-1]));values=np.concatenate(source)
     mean=np.load(OUTPUT/'work/baseline/mean.npy',mmap_mode='r')[i]
     q=np.load(OUTPUT/'work/baseline/threshold.npy',mmap_mode='r')[i]
@@ -66,14 +68,14 @@ def method_examples():
                      'p90_degC':number(q[s]),'event_flags':int(flags[j])})
     receipts={str((OCEAN/'work'/f'{y}.json').relative_to(ROOT)):digest(OCEAN/'work'/f'{y}.json') for y in (2024,2025,2026)}
     result={'location':selected['location'],'h3':selected['h3'],'center':selected['center'],
-            'year':2026,'cutoff':'2026-11-07','season':season,'season_status':SEASON_STATUS[int(season['status'])],
+            'year':2026,'cutoff':str(cutoff()),'season':season,'season_status':SEASON_STATUS[int(season['status'])],
             'baseline_receipt_sha256':digest(OUTPUT/'data/baseline.json'),'source_receipts_sha256':receipts,'rows':rows}
     write_json(OUTPUT/'data/method-example.json',result)
 
 
 def seasonal_sensitivity():
     grid=dict(np.load(OCEAN/'work/grid.npz'));n=len(grid['cells']);mean=np.load(OUTPUT/'work/baseline/mean.npy',mmap_mode='r')
-    source=[np.load(OCEAN/'work'/f'{y}.npy',mmap_mode='r') for y in (2024,2025,2026)]
+    source=[ocean_array(y) for y in (2024,2025,2026)]
     ds=dates(2024)+dates(2025)+dates(2026,len(source[-1]));result=[]
     for year in (2025,2026):
         for gate in (1,3):
@@ -112,10 +114,10 @@ def figures():
             values=[100*r[f'event_fraction_{year}'] if den is None else 100*r[f'both_{year}']/r[den] if r[den] else np.nan for r in rows]
             ax.plot([r['month'] for r in rows],values,'o-',color=color,label=str(year),markersize=4)
         ax.set_title(title,color='#fcc553',fontsize=11);ax.set_ylabel('Percent of shared eligible days');ax.set_ylim(bottom=0)
-        ax.set_xticks([1,3,5,7,9,11],['Jan','Mar','May','Jul','Sep','Nov*'])
+        ax.set_xticks(list(product_months()),[__import__('calendar').month_abbr[m] for m in product_months()])
     leg=axes[0].legend(frameon=False)
     for text in leg.get_texts():text.set_color('#fff6e3')
-    finish(fig,'matched-cooccurrence','* November: through 7th for ocean/coastal, 4th for India. Different populations and grains; no pooled exposure score. Ocean uses approximate area weights.')
+    finish(fig,'matched-cooccurrence',f'Ocean cutoff {cutoff()}; coastal and India use their actual shorter shared eligible support. Different populations and grains; no pooled exposure score.')
     seasons=read('season-products.json');fig,ax=plt.subplots(figsize=(13,5));left=np.zeros(2)
     colors=['#6cbf9a','#948ca5','#514858','#a787bc','#c0a15d','#a1bacb','#fcc553','#db758e']
     for status,color in zip(SEASON_STATUS,colors):
@@ -125,15 +127,15 @@ def figures():
     fig.subplots_adjust(right=.70)
     leg=ax.legend(loc='upper left',bbox_to_anchor=(1.01,1),fontsize=9,frameon=False)
     for text in leg.get_texts():text.set_color('#fff6e3')
-    finish(fig,'season-coverage','Warm-peak year labels; observations through 7 November 2026. An open season has no observed final length. Weak/multiple cycles are explicitly undefined.')
+    finish(fig,'season-coverage',f'Warm-peak year labels; ocean observations through {cutoff()}. An open season has no observed final length. Weak/multiple cycles remain undefined.')
     stations=read('india-station-summary.json');selected=[r for r in stations if r['monitor_class']=='reference' and r['year']==2026 and r['period']=='annual']
     selected.sort(key=lambda r:r['eligible_days']);ids=[r['id'] for r in selected]
     old={r['id']:r for r in stations if r['monitor_class']=='reference' and r['year']==2025 and r['period']=='matched'}
     fig,ax=plt.subplots(figsize=(13,9));yy=np.arange(len(ids))
-    for shift,rows,color,label in [(-.17,[old[i] for i in ids],'#8da0cb','2025 matched'),(.17,selected,'#fcc553','2026 through Nov 4')]:
+    for shift,rows,color,label in [(-.17,[old[i] for i in ids],'#8da0cb','2025 matched'),(.17,selected,'#fcc553','2026 eligible window')]:
         ax.barh(yy+shift,[100*r['eligible_days']/r['expected_days'] for r in rows],height=.32,color=color,label=label)
     ax.set_yticks(yy,[r['name']+' / '+r['id'] for r in selected],fontsize=8);ax.set_xlim(0,100);ax.axvline(80,color='#fff6e3',linestyle=':',linewidth=1)
-    ax.set_xlabel('Joint eligible station-days / 308 calendar days (%)');ax.set_title('India reference-monitor coverage',loc='left',fontsize=17,color='#fcc553')
+    ax.set_xlabel('Joint eligible station-days / labeled calendar window (%)');ax.set_title('India reference-monitor coverage',loc='left',fontsize=17,color='#fcc553')
     leg=ax.legend(loc='lower right',frameon=False)
     for text in leg.get_texts():text.set_color('#fff6e3')
     fig.subplots_adjust(left=.40)
@@ -156,7 +158,7 @@ def figures():
     detail=f"H3 {sample['h3']}; {sample['center'][0]:.2f}°N, {sample['center'][1]:.2f}°E. Season status: {sample['season_status']}."
     if season['onset_departure'] is not None:detail+=f" Onset departure: {season['onset_departure']:+.0f} days."
     if season['length'] is not None:detail+=f" Completed length: {season['length']:.0f} days."
-    finish(fig,'event-season-example',detail+'\nDaily observations end 7 November; event shading includes observed joined gaps. This single location illustrates the definitions, not a regional estimate.')
+    finish(fig,'event-season-example',detail+f'\nDaily ocean observations end {cutoff()}; shading includes observed joined gaps. This location illustrates definitions, not a regional estimate.')
 
 
 if __name__=='__main__':

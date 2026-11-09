@@ -9,6 +9,23 @@
 [Particulate data sources and Asian coverage](../../data/anthropocene-particulate.md) ·
 [Snapshot assets](../../../../assets.static/anthropocene/README.md)
 
+## Current-data acquisition and builds
+
+`make data-update` acquires global particulate observations, revalidates CPC
+and OISST, discovers CRW/JMA context and refreshes the configured India monitor
+archive. It generates and validates new profile/normalized-data pairs inside
+an isolated edition, then selects the complete edition automatically. A
+required-source failure retains the previous selection. The FIRMS error log
+includes key request/recovery instructions.
+
+`make atlas-optional` includes standard particulate/land-temperature maps and
+all implemented optional ocean/climate families, periods, diagnostics and
+exports. Actual per-source dates and QA-eligible common support govern joined
+windows; absent observations are not zero. Source dates and hashes remain in
+the edition and map/legend receipts. No optional family changes lifecycle.
+Use `DATASET_MANIFEST` for immutable replay or `DATASET=legacy` for the frozen
+repository workflow. See [the commands, credentials and recovery guide](../../getting-started/generation.md#updating-all-configured-data-sources).
+
 ## Current pass status
 
 The four standard Anthropocene pass IDs are current **accepted experimental**
@@ -198,6 +215,20 @@ without rows in each audited world region. The explicit
 `ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY=1` override is for local pipeline
 debugging, not promotion. Active-fire detections are thermal anomalies, not
 automatically wildfire incidents, burned area, cause, or impact.
+
+The current default acquisition uses `VIIRS_NOAA20_SP VIIRS_NOAA20_NRT`.
+[NASA's Suomi-NPP outage log](https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html)
+documents the March–July 2026 gaps: the locally staged S-NPP inputs contained
+detections on only 202 of the 216 dates through August 4 (93.5%). NOAA also
+[ended S-NPP science delivery on November 2, 2026](https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026).
+NOAA-20 standard processing and its advertised NRT tail retain the VIIRS
+375 m source family. `ANTHROPOCENE_FIRMS_SOURCES` remains an explicit sensor
+override for historical studies. Each refresh replaces the managed FIRMS
+CSV directory, so old sensor files cannot silently join the new selection.
+The 95% calendar-date and global-region requirements remain in force.
+Preparation audits FIRMS before the other feeds, reports actual covered and
+missing dates on failure, and records detection dates in candidate metadata.
+Header-only or unavailable days are not converted to observed zero-fire days.
 
 ## Smoke, flood, severe weather, and EPA methods
 

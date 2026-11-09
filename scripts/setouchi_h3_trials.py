@@ -129,7 +129,7 @@ def prepare_tiles(config, product, atlas):
 
 
 def map_tree(source, product, build, settings, rendered, item, scope, data_metadata, directory):
-    tree = etree.parse(str(source))
+    tree = etree.parse(str(source), etree.XMLParser(huge_tree=True))
     root = tree.getroot()
     root.set('data-h3-resolution', str(product['h3_resolution']))
     root.set('data-h3-trial', 'source-center aggregation; actual cell boundaries; no interpolation')

@@ -16,7 +16,9 @@ from PIL import Image
 import shapely as shp
 
 from ocean_stage_2 import ROOT,OUTPUT,OCEAN,CONFIG,dates,nonleap_indices,NetCDF,cpc_path
+from ocean_stage_2 import ocean_array
 from ocean_temperature import digest,write_json
+from viz_context import cutoff
 
 
 def reference_climate(years):
@@ -69,14 +71,14 @@ def ocean_checks():
     # Eight geographical examples plus a systematic sample spanning H3 order.
     sensitivity=json.loads((OUTPUT/'data/baseline-sensitivity.json').read_text())['rows']
     bank={int(c):i for i,c in enumerate(grid['cells'])};indices=sorted(set([bank[int(r['h3'],16)] for r in sensitivity]+list(np.linspace(0,n-1,12,dtype=int))))
-    inputs=[np.load(OCEAN/'work'/f'{y}.npy',mmap_mode='r') for y in range(1991,2021)]
+    inputs=[ocean_array(y) for y in range(1991,2021)]
     mean=np.load(OUTPUT/'work/baseline/mean.npy',mmap_mode='r');q=np.load(OUTPUT/'work/baseline/threshold.npy',mmap_mode='r')
     refs={}
     for i in indices:
         x=np.stack([a[nonleap_indices(y),i] for a,y in zip(inputs,range(1991,2021))]);refs[i]=reference_climate(x)
         for actual,expected in [(mean[i],refs[i][0]),(q[i],refs[i][1])]:np.testing.assert_allclose(actual,expected,atol=4e-6,rtol=0,equal_nan=True)
-    ds=dates(2024)+dates(2025)+dates(2026,311)
-    target=np.concatenate([np.load(OCEAN/'work'/f'{y}.npy',mmap_mode='r')[:,indices] for y in (2024,2025,2026)])
+    ds=dates(2024)+dates(2025)+dates(2026,(cutoff()-date(2026,1,1)).days+1)
+    target=np.concatenate([ocean_array(y)[:,indices] for y in (2024,2025,2026)])
     products=json.loads((OUTPUT/'data/marine-products.json').read_text());ledgers=0
     for meta in products:
         a=dict(np.load(OUTPUT/'data'/meta['data_file']));end=ds.index(date.fromisoformat(meta['data_through']))+1;first=ds.index(date(meta['year'],1,1))
@@ -144,8 +146,8 @@ def season_checks():
     grid=dict(np.load(OCEAN/'work/grid.npz'));bank={int(c):i for i,c in enumerate(grid['cells'])}
     samples=json.loads((OUTPUT/'data/baseline-sensitivity.json').read_text())['rows']
     indices=sorted(set([bank[int(r['h3'],16)] for r in samples]+list(np.linspace(0,len(bank)-1,12,dtype=int))))
-    values=np.concatenate([np.load(OCEAN/'work'/f'{y}.npy',mmap_mode='r')[:,indices] for y in (2024,2025,2026)])
-    ds=dates(2024)+dates(2025)+dates(2026,311);mean=np.load(OUTPUT/'work/baseline/mean.npy',mmap_mode='r')
+    values=np.concatenate([ocean_array(y)[:,indices] for y in (2024,2025,2026)])
+    ds=dates(2024)+dates(2025)+dates(2026,(cutoff()-date(2026,1,1)).days+1);mean=np.load(OUTPUT/'work/baseline/mean.npy',mmap_mode='r')
     for year in (2025,2026):
         actual=dict(np.load(OUTPUT/'data'/f'ocean-thermal-season-{year}.npz'))
         for column,i in enumerate(indices):
@@ -158,7 +160,8 @@ def coastal_checks():
     p=dict(np.load(OUTPUT/'data/coastal-pairing.npz'));meta=json.loads((OUTPUT/'data/coastal-pairing.json').read_text())
     assert digest(OUTPUT/'data/coastal-pairing.npz')==meta['pairing_sha256']
     for name,sha in meta['source_geometries'].items():assert digest(ROOT/name)==sha
-    folder=ROOT/'assets.static/natural-earth/10m-physical-vectors'
+    from viz_context import input_path
+    folder=input_path('NATURAL_EARTH_DIR', ROOT/'assets.static/natural-earth/10m-physical-vectors')
     land=shp.union_all(gpd.read_file(folder/'ne_10m_land.shp').geometry.to_numpy());shp.prepare(land)
     ocean=gpd.read_file(folder/'ne_10m_ocean.shp').geometry.iloc[0];shp.prepare(ocean)
     assert np.all(shp.contains_xy(land,p['centers'][:,1],p['centers'][:,0]))
@@ -173,7 +176,8 @@ def coastal_checks():
         assert not np.any(shp.intersects(land,lines))
     weights=np.load(OCEAN/'work/grid.npz')['weights'];chosen=np.linspace(0,len(p['centers'])-1,8,dtype=int)
     for year in (2025,2026):
-        ocean_daily=np.load(OCEAN/'work'/f'{year}.npy',mmap_mode='r');computed=np.load(OUTPUT/'work/coastal'/f'ocean100-{year}.npy',mmap_mode='r')
+        computed=np.load(OUTPUT/'work/coastal'/f'ocean100-{year}.npy',mmap_mode='r')
+        ocean_daily=np.load(OCEAN/'work'/f'{year}.npy',mmap_mode='r')[:len(computed)]
         native=np.load(OUTPUT/'work/coastal'/f'land-{year}.npy',mmap_mode='r')
         with NetCDF(cpc_path(year)) as nc:
             for i in chosen:
@@ -222,7 +226,9 @@ def india_checks():
             group=rows[rows.date.str.startswith(year)]
             if group.empty:continue
             row=group.iloc[-1];s=stations[sid]
-            raw_folder=ROOT/'output/india-particulate-20261108/enrichment/openaq/raw'
+            from dataset import binding, context
+            raw_folder=(binding('INDIA_METADATA').parent/'openaq/raw' if context(required=False)
+                        else ROOT/'output/india-particulate-20261108/enrichment/openaq/raw')
             # Archive file labels are not observation calendars. In particular,
             # an AirNow midnight can appear in the preceding day's archive.
             raw_paths=[raw_folder/f'location-{s["openaq_id"]}-{(date.fromisoformat(row.date)+timedelta(days=k)):%Y%m%d}.csv.gz' for k in (-1,0,1)]
@@ -254,9 +260,15 @@ def india_checks():
 
 
 def sheet_checks():
-    manifest=json.loads((OUTPUT/'preview-manifest.json').read_text());records=manifest['records'];assert len(records)==128
+    from dataset import context
+    selected=context(required=False)
+    registry=selected[1]['registry'] if selected else json.loads((ROOT/'config/data-products.json').read_text())
+    definitions=registry['optional_families']
+    expected_views=sum(len(f['periods'])*(sum(len(metrics) for metrics in f['classes'].values())
+                       if 'classes' in f else len(f['metrics'])) for f in definitions.values())
+    manifest=json.loads((OUTPUT/'preview-manifest.json').read_text());records=manifest['records'];assert len(records)==4*expected_views
     keys=[(r['stem'],r['metric'],r['period'],r['monitor_class'],r['scope'],r['kind']) for r in records]
-    assert len(set(keys))==128
+    assert len(set(keys))==4*expected_views
     assert all((*key[:-1], 'legend' if key[-1]=='map' else 'map') in keys for key in keys)
     for r in records:
         for k in ('svg','pdf','preview'):assert digest(OUTPUT/r[k])==r[k+'_sha256'],r[k]

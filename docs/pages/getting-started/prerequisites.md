@@ -4,6 +4,57 @@
 [SVG generation pipeline](generation.md) ·
 [WebAssembly workflow](../runtime/myriahedral-workflow.md)
 
+## Current data and complete optional builds
+
+```sh
+make install-prerequisites
+make check-prerequisites
+make data-update
+make ASSET_JOBS=2 atlas-optional
+```
+
+The installer includes scientific Python dependencies by default. When they
+are unavailable to the system interpreter, it creates `.venv-data/` and
+uses system site packages for the OS-provided PyGObject/Pycairo/librsvg bindings,
+and installs the scientific versions in
+[`scripts/requirements-atlas.txt`](../../../scripts/requirements-atlas.txt).
+Make selects that interpreter automatically, including recursive Python
+commands. `INSTALL_ATLAS_PREREQUISITES=0` restricts installation to native
+dependencies. Scientific checks cover NumPy, SciPy, pandas, GeoPandas,
+Shapely, Matplotlib, lxml, Pillow, ReportLab, Requests and Beautiful Soup,
+plus NetCDF, H3, Cairo, PyGObject/librsvg, a CXX OpenMP compile/link/runtime
+probe and Poppler tools (`pdfinfo`, `pdfunite`).
+The direct shell checker below checks the native baseline; the Make target
+also runs the scientific checker.
+
+Before acquisition, configure an exported `FIRMS_MAP_KEY` and a private
+`PTREE_NETRC` (default `~/.netrc`) with the `ftp.ptree.jaxa.jp` entry.
+The FIRMS error log includes the free registration and key-recovery URLs;
+see [the generation guide](generation.md#updating-all-configured-data-sources).
+India observations use the existing selected reference/AirGradient monitors
+from OpenAQ's public AWS archive. This does not require expanding station
+selection or entering credentials into a manifest.
+
+The preflight requires configured local network checkouts, the native swarm
+archive selected by `generation-style.json`, its IPinfo MMDB, the corresponding Alpha60 torrent definitions, and audited
+petroleum tables. `NATIVE_SWARM_CACHE_ARCHIVE` and
+`NATIVE_SWARM_GEOLOCATION_DB` can identify their actual locations. These
+inputs are copied with hashes and remain explicitly pinned. `NATIVE_SWARM_DATA_ROOT`
+selects the Alpha60 data root. The native swarm adapter also needs the existing
+libtorrent-rasterbar and GeoLite2++ development installation selected by
+`LIBTORRENT_PREFIX` and `GEOLITE2PP_PREFIX`; their source/version setup remains
+the Alpha60 toolchain contract. Source checkouts
+must satisfy their existing commit/digest checks; they are not pulled.
+
+Allow substantial local storage for 1982–2026 raw OISST files, CPC baselines,
+H3 working arrays, and print exports. The acquisition preflight defaults to a
+160 GiB free working-space budget; final 300 dpi exports need additional
+space. `DATA_ROOT` relocates inputs/cache; outputs remain in the repository's
+ignored `output/data-editions/`. Adjust `DATA_UPDATE_MIN_FREE_GIB` for a
+measured warm-cache run. Full builds have separate output run directories,
+so failed work cannot overwrite a completed edition. See the generation
+guide for update/build resume commands and explicit historical replay.
+
 ## Requirement levels
 
 Cartofreako has a small self-contained projection test suite and a larger SVG
@@ -262,6 +313,7 @@ Inkscape. Package names may differ on older or derivative distributions.
 
 ```sh
 sudo dnf install \
+  python3-gobject python3-cairo librsvg2 netcdf-devel libmaxminddb-devel cairo-devel pkgconf-pkg-config poppler-utils \
   gcc-c++ make git bash python3 curl jq unzip tar gzip findutils ripgrep coreutils fontconfig \
   gdal gdal-devel geos geos-devel rapidjson-devel h3 h3-devel inkscape doxygen
 ```
@@ -276,6 +328,7 @@ NetCDF plugin if `make check-prerequisites` reports it missing.
 ```sh
 sudo apt-get update
 sudo apt-get install \
+  python3-venv python3-gi python3-gi-cairo python3-cairo gir1.2-rsvg-2.0 libnetcdf-dev libmaxminddb-dev libcairo2-dev pkg-config poppler-utils \
   build-essential git bash python3 jq curl unzip tar gzip findutils ripgrep coreutils fontconfig \
   fonts-atkinson-hyperlegible \
   gdal-bin libgdal-dev libgeos-dev rapidjson-dev libh3-dev inkscape doxygen
@@ -288,7 +341,7 @@ components:
 
 ```sh
 xcode-select --install
-brew install make gdal h3 rapidjson coreutils git ripgrep jq python doxygen fontconfig
+brew install make gdal h3 rapidjson coreutils git ripgrep jq python doxygen fontconfig pygobject3 py3cairo librsvg netcdf libmaxminddb cairo pkg-config poppler libomp
 brew install --cask inkscape font-atkinson-hyperlegible
 ```
 
@@ -635,7 +688,13 @@ containers, records raw digests, and discovers the newest year-specific Storm
 Events files. It uses annual CWFIS hotspot archives for past years and daily
 files for the current year, tolerating only HTTP 404 for an absent day.
 A global refresh requires `FIRMS_MAP_KEY` for five-day global NASA FIRMS
-chunks, including northern Russia. The explicit
+chunks, including northern Russia. Request a free key at the
+[NASA FIRMS map-key page](https://firms.modaps.eosdis.nasa.gov/api/map_key/);
+NASA emails it to your registered address. Export the key in the shell
+running Make, as shown in the
+[data-update workflow](generation.md#updating-all-configured-data-sources).
+The aggregate and direct particulate fetcher check for it before downloading.
+The explicit
 `ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY=1` override stages regional data for
 local pipeline debugging; it must not be promoted as a global snapshot.
 

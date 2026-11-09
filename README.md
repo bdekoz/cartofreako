@@ -78,19 +78,28 @@ make check-prerequisites
 The target names use the plural form. Preview installation with
 `make install-prerequisites PREREQUISITE_INSTALL_ARGS=--dry-run`.
 
-Refresh all configured data sources and prepare their candidates with:
+Acquire and select a validated data edition, then build the full plate set:
 
 ```sh
 make data-update
+make ASSET_JOBS=2 atlas-optional
 ```
 
-This shares the experimental source fetches with `all-experiments-fetch` and
-adds Anthropocene particulate observations, CPC temperatures, resources,
-network preparation, and pinned ocean inputs. It runs the steps serially,
-stops on failure, and leaves generated maps in place. P-Tree credentials and
-a `FIRMS_MAP_KEY` are required for the complete run. See the
+`data-update` prepares isolated inputs and selects them only after validation.
+`atlas-optional` builds standard native artifacts, the default World/Japan
+atlas, and all implemented optional Anthropocene ocean and climate products.
+It uses one frozen edition and performs no provider acquisition. Completed
+outputs and their receipts live under `output/data-editions/<dataset-id>/`;
+`.cartofreako/data/build-current.json` identifies the validated full build.
+
+The update requires an exported `FIRMS_MAP_KEY`, configured P-Tree credentials,
+and the configured local swarm/network and audited petroleum inputs. Mutable
+NOAA files are revalidated; pinned local publications retain their dates.
+A failed update or build preserves the previous completed selection. See the
 [source refresh workflow](docs/pages/getting-started/generation.md#updating-all-configured-data-sources)
-for coverage and snapshot review requirements.
+for credentials, storage, resume and replay commands. `make all` and
+`make atlas` build smaller subsets of the selected edition. Use
+`DATASET=legacy` explicitly for historical repository paths.
 
 List every supported top-level Make target with:
 

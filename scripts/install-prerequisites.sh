@@ -61,7 +61,7 @@ case $platform in
     set --
     for package in gcc-c++ make git bash python3 curl jq unzip tar gzip findutils \
         ripgrep coreutils fontconfig gdal gdal-devel geos geos-devel \
-        rapidjson-devel h3 h3-devel inkscape doxygen; do
+        rapidjson-devel h3 h3-devel inkscape doxygen python3-gobject python3-cairo librsvg2 netcdf-devel libmaxminddb-devel cairo-devel pkgconf-pkg-config poppler-utils; do
       if ! rpm -q "$package" >/dev/null 2>&1; then set -- "$@" "$package"; fi
     done
     if [ "$#" -gt 0 ]; then as_root dnf install -y "$@"; fi
@@ -70,7 +70,8 @@ case $platform in
     set --
     for package in build-essential git bash python3 curl jq unzip tar gzip \
         findutils ripgrep coreutils fontconfig fonts-atkinson-hyperlegible \
-        gdal-bin libgdal-dev libgeos-dev rapidjson-dev libh3-dev inkscape doxygen; do
+        gdal-bin libgdal-dev libgeos-dev rapidjson-dev libh3-dev inkscape doxygen \
+        python3-venv python3-gi python3-gi-cairo python3-cairo gir1.2-rsvg-2.0 libnetcdf-dev libmaxminddb-dev libcairo2-dev pkg-config poppler-utils; do
       status=$(dpkg-query -W -f='${Status}' "$package" 2>/dev/null || :)
       if [ "$status" != 'install ok installed' ]; then set -- "$@" "$package"; fi
     done
@@ -90,7 +91,7 @@ case $platform in
       exit 1
     fi
     set --
-    for package in make gdal h3 rapidjson coreutils git ripgrep jq python doxygen fontconfig; do
+    for package in make gdal h3 rapidjson coreutils git ripgrep jq python doxygen fontconfig pygobject3 py3cairo librsvg netcdf libmaxminddb cairo pkg-config poppler libomp; do
       if ! brew list --formula "$package" >/dev/null 2>&1; then set -- "$@" "$package"; fi
     done
     if [ "$#" -gt 0 ]; then run brew install "$@"; fi
@@ -177,5 +178,8 @@ clone_missing "${SUBMARINE_CABLE_SOURCE:-$workspace_root/www.submarinecablemap.c
 if [ "$dry_run" -eq 1 ]; then
   echo 'Dry run complete; no packages, fonts or repositories were changed.'
   exit 0
+fi
+if [ "${INSTALL_ATLAS_PREREQUISITES:-1}" = 1 ] && [ -f "$script_directory/install-atlas-prerequisites.sh" ]; then
+  run sh "$script_directory/install-atlas-prerequisites.sh"
 fi
 exec "$script_directory/check-prerequisites.sh"

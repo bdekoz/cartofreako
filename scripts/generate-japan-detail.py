@@ -83,7 +83,10 @@ def main():
     band=source_attributes.get('data-resolution-partition')
     boundary=json.loads((ROOT/'config/regions/japan-10m.geojson').read_text())['geometry']
     rings=[ring for poly in boundary['coordinates'] for ring in poly] if boundary['type']=='MultiPolygon' else boundary['coordinates']
-    projected=[projection.project(ring) for ring in rings];points=[p for ring in projected for p in ring]
+    points=projection.project([point for ring in rings for point in ring])
+    projected=[];offset=0
+    for ring in rings:
+        projected.append(points[offset:offset+len(ring)]);offset+=len(ring)
     xs,ys=zip(*points);pad=STYLE['japan']['boundary_padding_inches']
     box=[min(xs)-pad,min(ys)-pad,max(xs)-min(xs)+2*pad,max(ys)-min(ys)+2*pad]
     vx,vy,vw,vh=STYLE['japan']['viewport_inches'];scale=min(vw/box[2],vh/box[3])
@@ -119,8 +122,11 @@ def main():
             for fragment in handler.legends:group.append(E.fromstring(fragment.encode()))
             with tempfile.TemporaryDirectory(prefix='cartofreako-legend-') as tmp:
                 path=Path(tmp)/'legend.svg';save(legend,path)
-                result=subprocess.run(['inkscape',str(path),'--query-id=detail-source-legend','--query-x','--query-y','--query-width','--query-height'],capture_output=True,text=True,check=True)
-                lx,ly,lw,lh=[float(v)/96 for v in result.stdout.split()]
+                result=subprocess.run(['bash',str(ROOT/'scripts/run-inkscape.sh'),'inkscape',str(path),'--query-id=detail-source-legend','--query-x','--query-y','--query-width','--query-height'],capture_output=True,text=True,check=True)
+                bounds=[float(line.strip())/96 for line in result.stdout.splitlines()
+                        if re.fullmatch(r'[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?',line.strip())]
+                if len(bounds)!=4:raise ValueError('Inkscape did not return four Japan legend bounds')
+                lx,ly,lw,lh=bounds
             fit=min(12.8/lw,6.3/lh)
             wrapper=el('g',notes,transform=f'translate(30 10.5) scale({fit}) translate({-lx} {-ly})')
             for child in group:wrapper.append(child)

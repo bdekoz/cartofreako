@@ -69,6 +69,8 @@
 # Optional local generation preference (the default profile is checked in).
 /generation-profile.local.json
 /.cartofreako/
+/.venv-data/
+/output/data-editions/
 
 # Downloaded inputs and local build products.
 /assets.static/natural-earth/10m-physical-vectors/

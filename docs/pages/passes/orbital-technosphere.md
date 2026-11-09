@@ -4,6 +4,21 @@
 [Generation pipeline](../getting-started/generation.md) ·
 [Prerequisites](../getting-started/prerequisites.md)
 
+## Current local selection
+
+`make data-update` captures CelesTrak inputs into a complete validated edition
+and automatically selects it for subsequent native/atlas builds. The two-hour
+request policy remains; NASA may remain a dated historical validation
+reference. The manifest records that distinction. Hubble observer elements
+come from the same science catalog and are checked at the selected calculation
+time. Japan observer profiles derive from that edition's inputs.
+
+`make atlas-optional` freezes the edition across recursive builds and records
+its ID and hashes in output metadata/receipts. For an older edition pass
+`DATASET_MANIFEST=/absolute/path/to/dataset.json`; for checked repository
+snapshots use `DATASET=legacy`. Direct orbital fetch targets retain their
+candidate-review workflow. See [the complete workflow](../getting-started/generation.md#updating-all-configured-data-sources).
+
 ## Outcome and naming
 
 Stage 4.2 is feasible as a visualization-grade generation pass and is

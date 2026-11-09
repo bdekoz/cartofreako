@@ -104,7 +104,9 @@ def main():
         binary=ROOT/'build/generate-native-swarm'
         signature=dict(binary_sha256=digest(binary),projection=args.projection,collection=args.collection,
                        archive_sha256=archive_sha,geolocation_sha256=digest(args.geolocation_database),
-                       documents=[(p.name,p.stat().st_size,p.stat().st_mtime_ns) for p in documents])
+                       documents=[(p.name,digest(p)) for p in documents],
+                       torrent_definitions=[(p.name,digest(p)) for p in sorted(Path(os.environ.get('NATIVE_SWARM_DATA_ROOT',ROOT.parent/'alpha60-data')).glob('torrent/'+args.collection+'/*.torrent'))],
+                       adapter_sha256=digest(__file__))
         marker=raw/'render-inputs.json';serialized=json.dumps(signature,sort_keys=True)
         complete=marker.exists() and marker.read_text()==serialized
         complete=complete and all(len(list(raw.glob('*-downloader-cumulative-'+band+'-render*.svg')))==1 for band in STYLE['swarm']['partitions'])
@@ -112,7 +114,10 @@ def main():
             # Changing the collection or torrent count changes native filenames.
             # Remove only this adapter's stale, regenerable raw partitions.
             for previous in raw.glob('*-downloader-cumulative-*-render*.svg'):previous.unlink()
-            env=dict(os.environ,a60_PREFIX_DIR=os.environ.get('ALPHA60_ROOT',str(ROOT.parent/'alpha60')),a60_DATA_DIR=str(ROOT.parent/'alpha60-data'),a60_GEOLOCATION_DB=str(args.geolocation_database.resolve()))
+            data=os.environ.get('NATIVE_SWARM_DATA_ROOT',str(ROOT.parent/'alpha60-data'))
+            env=dict(os.environ,a60_PREFIX_DIR=os.environ.get('ALPHA60_ROOT',str(ROOT.parent/'alpha60')),
+                     a60_DATA_DIR=data,a60_METADATA_DIR=data,a60_SAMPLE_DIR=str(cache),
+                     a60_GEOLOCATION_DB=str(args.geolocation_database.resolve()))
             print('Rendering native Alpha60 cumulative cache in '+args.projection,flush=True)
             subprocess.run([str(binary),args.projection,str(cache),args.collection,str(raw)],cwd=args.work_dir,env=env,check=True)
             marker.write_text(serialized)
@@ -125,7 +130,7 @@ def main():
             if len(sources)!=1:raise ValueError('Native renderer did not produce exactly one '+band+' partition')
             output=args.output_dir/('network-swarm-'+band+projection.suffix+'.svg')
             receipt=compose(sources[0],output,projection,band,args.collection,period)
-            receipt.update(collection=args.collection,period=period,cache_directory=str(cache),cache_archive_sha256=archive_sha,cache_documents=len(documents),style_sha256=digest(ROOT/'generation-style.json'))
+            receipt.update(collection=args.collection,period=period,cache_directory=str(cache),cache_archive_sha256=archive_sha,cache_documents=len(documents),style_sha256=digest(ROOT/'generation-style.json'),native_inputs=signature)
             output.with_suffix('.provenance.json').write_text(json.dumps(receipt,indent=2)+'\n');receipts.append(receipt)
             print('Rendered',output.name,receipt['native_circles'],'native circles',flush=True)
         # Keep the existing gallery/artifact identifier as a 1080p/4K alias.

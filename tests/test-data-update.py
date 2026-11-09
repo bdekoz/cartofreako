@@ -52,19 +52,65 @@ os.execvp('make', ['make', '-f', os.environ['DATA_UPDATE_TEST_MAKEFILE'], *sys.a
         self.wrapper.chmod(0o755)
         self.env = {**os.environ, 'DATA_UPDATE_TEST_LOG': str(self.log),
                     'DATA_UPDATE_TEST_MAKEFILE': str(fixture), 'DATA_UPDATE_TEST_FAIL': '',
+                    'FIRMS_MAP_KEY': 'fixture-key-do-not-log',
+                    'ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY': '0',
                     'MAKEFLAGS': '', 'MFLAGS': '', 'MAKEOVERRIDES': ''}
 
     def run_update(self, *flags, failure=''):
         return subprocess.run(['make', '--no-print-directory', *flags,
-                               f'MAKE={self.wrapper}', 'data-update'], cwd=ROOT,
+                               f'MAKE={self.wrapper}', 'DATASET=legacy', 'data-update'], cwd=ROOT,
                               env={**self.env, 'DATA_UPDATE_TEST_FAIL': failure},
                               text=True, capture_output=True, timeout=30)
+
+    def assert_firms_setup_instructions(self, message):
+        self.assertIn('Request a free key at https://firms.modaps.eosdis.nasa.gov/api/map_key/', message)
+        self.assertIn('Register your email address; NASA will email the key', message)
+        self.assertIn('https://firms.modaps.eosdis.nasa.gov/download/ to resend your key', message)
+        self.assertIn("read -rsp 'NASA FIRMS MAP_KEY: ' FIRMS_MAP_KEY", message)
+        self.assertIn('export FIRMS_MAP_KEY', message)
+        self.assertIn('make data-update', message)
 
     def test_all_source_steps_run_once_in_order_under_parallel_make(self):
         result = self.run_update('-j8')
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(self.log.read_text().splitlines(), EXPECTED)
         self.assertIn('Completed every configured data refresh', result.stdout)
+        self.assertNotIn(self.env['FIRMS_MAP_KEY'], result.stdout + result.stderr)
+
+    def test_missing_firms_key_stops_before_any_source_update(self):
+        self.env['FIRMS_MAP_KEY'] = ''
+        result = self.run_update('-j8', '-k')
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('Export FIRMS_MAP_KEY', result.stderr)
+        self.assert_firms_setup_instructions(result.stderr)
+        self.assertFalse(self.log.exists())
+        self.assertNotIn('Completed every configured data refresh', result.stdout)
+
+    def test_direct_fetch_without_key_does_not_download_or_stage(self):
+        curl = self.folder / 'curl'
+        curl.write_text('#!/bin/sh\nprintf "unexpected download\\n" >&2\nexit 99\n')
+        curl.chmod(0o755)
+        data = self.folder / 'data'
+        profile = ROOT / 'assets.static/anthropocene/anthropocene-particulate-2025-profile.json'
+        result = subprocess.run(['bash', str(ROOT / 'scripts/fetch-anthropocene-particulate-data.sh'),
+                                 str(data), str(profile)], cwd=ROOT,
+                                env={**self.env, 'FIRMS_MAP_KEY': '',
+                                     'PATH': str(self.folder) + os.pathsep + self.env['PATH']},
+                                text=True, capture_output=True, timeout=30)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('no downloads started', result.stderr)
+        self.assert_firms_setup_instructions(result.stderr)
+        self.assertNotIn('unexpected download', result.stderr)
+        self.assertFalse(data.exists())
+
+    def test_credential_check_preserves_explicit_regional_override(self):
+        result = subprocess.run(['bash', str(ROOT / 'scripts/fetch-anthropocene-particulate-data.sh'),
+                                 '--check-credentials'], cwd=ROOT,
+                                env={**self.env, 'FIRMS_MAP_KEY': '',
+                                     'ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY': '1'},
+                                text=True, capture_output=True, timeout=30)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout + result.stderr, '')
 
     def test_fetch_failure_stops_preparation_and_reports_failure_under_keep_going(self):
         failed = 'fetch-anthropocene-cpc-data'

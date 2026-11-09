@@ -92,6 +92,10 @@ test $# -ge 2 || usage
 mode=$1
 cloud_root=$2
 
+if [[ -n ${DATASET_MANIFEST:-} ]]; then
+  exec python3 "$(dirname "$0")/check-dataset-network.py" "$@"
+fi
+
 cloud_commit=1be1eb04e73320e0337a74a99686cd532f09ad9b
 cloud_manifest=data/manifest.20260805.json
 cloud_manifest_sha256=35d6d0edd250e4aa7528dfa5b0bff68714dc45c4c2637ea568cadb960b912679

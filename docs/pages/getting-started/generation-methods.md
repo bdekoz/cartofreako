@@ -4,6 +4,28 @@
 [Generation guide](generation.md) ·
 [Prerequisites](prerequisites.md)
 
+## Dataset selection and optional aggregate
+
+`make data-update` prepares and validates a complete local input edition.
+`make atlas-optional` builds its standard native artifacts, default World/Japan
+atlas, four Stage 1 year identities and eight Stage 2 climate year identities,
+including SST, anomalies, coral exposure, record-day, marine-heatwave,
+thermal-season, coastal and selected India heat–PM measures, matched periods,
+sensitivity tables and figures. Optional identities remain prototypes.
+
+The migration preserves the 1991–2020 baseline, strict record ordering,
+calendar/leap handling, original source-center/H3 support, ice/missingness
+rules, coverage gates, event-gap rules, incomplete-season states, and India
+station/timezone joins. Reference and low-cost monitors remain separate.
+Actual common eligible dates determine joined windows. A changed source file
+can revise values without advancing its observation endpoint. Pinned annual
+publications and static geometry retain their own years.
+
+See [acquisition, selection, output and replay](generation.md#updating-all-configured-data-sources)
+and the [approved implementation plan](../../development/20261108_data_update_update_viz_pipeline.md).
+The dated scientific completion records document their frozen editions;
+new live editions require their own acquisition and numerical/export receipts.
+
 ## Scope and preservation policy
 
 This is the central decision record for work whose proposed deliverable is a

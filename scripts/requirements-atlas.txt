@@ -1,0 +1,12 @@
+# Versions exercised by the current scientific regression suite.
+numpy==2.4.6
+scipy==1.16.2
+pandas==2.3.3
+geopandas==1.1.4
+shapely==2.2.0
+matplotlib==3.10.8
+lxml==6.1.1
+Pillow==12.3.0
+reportlab==4.5.1
+requests==2.33.1
+beautifulsoup4==4.15.0

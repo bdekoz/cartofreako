@@ -7,15 +7,17 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import shlex
 
 import numpy as np
 
 from ocean_temperature import NetCDF, digest, write_json
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT/'output/ocean-temperature-stage-2-20261108'
-OCEAN = ROOT/'output/ocean-temperature-20261108'
-CONFIG = ROOT/'config/ocean-stage-2-20261108.json'
+from viz_context import climate_output, climate_config, ocean_root, cutoff, snapshot_date, matched_cutoff, matched_days, product_months
+OUTPUT = climate_output()
+OCEAN = ocean_root()
+CONFIG = climate_config()
 
 
 def config():
@@ -40,6 +42,11 @@ def dates(year, count=None):
     return [start+timedelta(days=i) for i in range(count if count is not None else (date(year+1,1,1)-start).days)]
 
 
+def ocean_array(year):
+    value=np.load(OCEAN/'work'/f'{year}.npy',mmap_mode='r')
+    return value[:(cutoff()-date(year,1,1)).days+1] if year==cutoff().year else value
+
+
 def slots(days):
     return np.array([(d.replace(year=2000)-date(2000,1,1)).days for d in days],dtype='int32')
 
@@ -53,9 +60,10 @@ def kernel():
     source=ROOT/'scripts/ocean-stage-2-kernels.cc'
     target=ROOT/'build/ocean-stage-2-kernels.so'
     receipt=target.with_suffix('.json')
-    key={'source':digest(source),'flags':['-O3','-std=c++17','-fopenmp','-shared','-fPIC']}
+    key={'source':digest(source),'compiler':shlex.split(os.environ.get('CXX','g++')),
+         'flags':['-O3','-std=c++17','-fopenmp','-shared','-fPIC']}
     if not target.exists() or not receipt.exists() or json.loads(receipt.read_text())!=key:
-        subprocess.run(['g++',*key['flags'],str(source),'-o',str(target)],check=True)
+        subprocess.run([*key['compiler'],*key['flags'],str(source),'-o',str(target)],check=True)
         write_json(receipt,key)
     os.environ.setdefault('OMP_NUM_THREADS','12')
     lib=C.CDLL(str(target))
@@ -118,6 +126,9 @@ def thermal_seasons(values,mean,days,year,persistence=7,amplitude=2):
 
 
 def cpc_path(year):
+    if os.environ.get('DATASET_MANIFEST'):
+        from dataset import binding
+        return binding('ANTHROPOCENE_DATA_DIR')/'.raw/cpc'/f'tmax.{year}.nc'
     refreshed=OUTPUT/'cache/cpc'/f'tmax.{year}.nc'
     return refreshed if refreshed.exists() else ROOT/'assets.static/anthropocene/.raw/cpc'/f'tmax.{year}.nc'
 
@@ -132,7 +143,7 @@ def cpc_dates(nc):
 def save_product(name, arrays, metadata):
     path=OUTPUT/'data'/(name+'.npz');path.parent.mkdir(parents=True,exist_ok=True)
     np.savez_compressed(path,**arrays)
-    meta={'schema':'cartofreako-ocean-stage-2-product-v1','snapshot_as_of':'2026-11-08',
+    meta={'schema':'cartofreako-ocean-stage-2-product-v1','snapshot_as_of':str(snapshot_date()),
           'method_config_sha256':digest(CONFIG),'data_file':path.name,'sha256':digest(path),**metadata}
     write_json(path.with_suffix('.json'),meta)
     return meta

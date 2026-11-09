@@ -1,0 +1,177 @@
+{
+  "schema": "cartofreako-data-products-v1",
+  "years": [
+    2025,
+    2026
+  ],
+  "groups": {
+    "standard": {
+      "sources": [
+        "astronomy",
+        "orbital",
+        "anthropocene",
+        "resources",
+        "natural-earth",
+        "network"
+      ],
+      "bindings": [
+        "ASTRO_DATA_DIR",
+        "ORBITING_PROFILE",
+        "ANTHROPOCENE_DATA_DIR",
+        "RESOURCES_DATA_DIR",
+        "NATURAL_EARTH_DIR",
+        "NETWORK_SWARM_PROFILE",
+        "FIBER_SYNTHESIZED_DATA_DIR",
+        "NETWORK_GROUNDSTATIONS_PROFILE",
+        "NETWORK_INFRASTRUCTURE_CLOUD_SOURCE",
+        "CDN_SOURCE_PROFILE",
+        "NATIVE_SWARM_GEOLOCATION_DB",
+        "SUBMARINE_CABLE_SOURCE",
+        "INTERNET_EXCHANGE_SOURCE",
+        "NATIVE_SWARM_DATA_ROOT",
+        "NATIVE_SWARM_CACHE_DIRECTORY"
+      ]
+    },
+    "atlas": {
+      "sources": [
+        "astronomy",
+        "orbital",
+        "anthropocene",
+        "resources",
+        "natural-earth",
+        "network",
+        "atmosphere",
+        "atoll",
+        "petroleum"
+      ],
+      "bindings": [
+        "CLOUD_ATMOSPHERE_PROFILE",
+        "CLOUD_ATMOSPHERE_GEOJSON",
+        "ATOLL_EVIDENCE_DIR",
+        "PETROLEUM_DATA",
+        "ATLAS_CLOUD_PROFILE",
+        "ATLAS_CLOUD_GEOJSON"
+      ]
+    },
+    "anthropocene-optional": {
+      "sources": [
+        "ocean",
+        "ocean-context",
+        "india",
+        "anthropocene"
+      ],
+      "bindings": [
+        "OCEAN_ROOT",
+        "OCEAN_CONFIG",
+        "CLIMATE_CONFIG",
+        "INDIA_OBSERVATIONS",
+        "INDIA_METADATA"
+      ]
+    }
+  },
+  "policies": {
+    "celestrak": {
+      "minimum_interval_seconds": 7200
+    },
+    "mutable-year-files": {
+      "revalidate": "conditional-http-or-verified-download"
+    },
+    "historical-baselines": {
+      "years": [
+        1991,
+        2020
+      ],
+      "method_changes": "explicit-version"
+    },
+    "local-inputs": {
+      "freshness": "pinned-local",
+      "copy_consumed_bytes": true
+    }
+  },
+  "optional_families": {
+    "marine-heatwave": {
+      "periods": [
+        [
+          2025,
+          "annual"
+        ],
+        [
+          2025,
+          "matched"
+        ],
+        [
+          2026,
+          "annual"
+        ]
+      ],
+      "metrics": [
+        "event_days",
+        "longest_duration",
+        "cumulative_intensity"
+      ]
+    },
+    "ocean-thermal-season": {
+      "periods": [
+        [
+          2025,
+          "season"
+        ],
+        [
+          2026,
+          "season"
+        ]
+      ],
+      "metrics": [
+        "onset_departure",
+        "length",
+        "length_departure",
+        "observed_warm_days"
+      ]
+    },
+    "coastal-compound-heat": {
+      "periods": [
+        [
+          2025,
+          "annual"
+        ],
+        [
+          2025,
+          "matched"
+        ],
+        [
+          2026,
+          "annual"
+        ]
+      ],
+      "metrics": [
+        "both_days",
+        "fraction"
+      ]
+    },
+    "heat-particulate-coexposure": {
+      "periods": [
+        [
+          2025,
+          "annual"
+        ],
+        [
+          2025,
+          "matched"
+        ],
+        [
+          2026,
+          "annual"
+        ]
+      ],
+      "classes": {
+        "reference": [
+          "both_days",
+          "fraction"
+        ],
+        "low-cost": [
+          "both_days"
+        ]
+      }
+    }
+  }
+}

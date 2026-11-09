@@ -8,7 +8,8 @@
 
 int main(int argc, char** argv)
 {
-  if (argc != 5)
+  const bool check_inputs = argc == 4 && std::string(argv[1]) == "--check-inputs";
+  if (argc != 5 && !check_inputs)
     {
       std::cerr << "usage: generate-native-swarm PROJECTION CACHE COLLECTION OUTPUT\n";
       return 2;
@@ -23,6 +24,16 @@ int main(int argc, char** argv)
   collection.initialize_ids_and_members();
   a60::swarm_geos swarm = a60::coalesce_with_unique_btiha(collection, "cumulative");
   a60::weigh_unique_collection(swarm);
+  if (check_inputs)
+    {
+      for (const auto [first, second] : {
+             std::pair{a60::resolution_mode::r1080p, a60::resolution_mode::r4k},
+             std::pair{a60::resolution_mode::r720p, a60::resolution_mode::rsd}})
+        if (swarm.partition_cache_by_mode(first, second).members.empty())
+          throw std::runtime_error("Native swarm input lacks a required resolution partition");
+      std::cout << "Native swarm ingestion and both resolution partitions passed\n";
+      return 0;
+    }
   namespace generation = cart0freak0::generation;
   const auto& spec = generation::find_projection_spec(argv[1]);
   const a60::carto::frame frame(svg::area<> {spec.width * 96, spec.height * 96});

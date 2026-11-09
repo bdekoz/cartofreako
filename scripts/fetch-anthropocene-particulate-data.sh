@@ -5,6 +5,41 @@
 
 set -euo pipefail
 
+check_credentials()
+{
+  if [[ -n ${FIRMS_MAP_KEY:-} \
+        || ${ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY:-0} == 1 ]]; then
+    return 0
+  fi
+  cat >&2 <<'EOF'
+FIRMS_MAP_KEY is required for a global Anthropocene refresh; no downloads started.
+No nonempty FIRMS_MAP_KEY is exported to this process.
+
+Request a free key at https://firms.modaps.eosdis.nasa.gov/api/map_key/
+Register your email address; NASA will email the key to you.
+If your email is already registered, log in at
+https://firms.modaps.eosdis.nasa.gov/download/ to resend your key.
+
+Export FIRMS_MAP_KEY in the shell running Make. In Bash:
+  read -rsp 'NASA FIRMS MAP_KEY: ' FIRMS_MAP_KEY
+  printf '\n'
+  export FIRMS_MAP_KEY
+  make data-update
+
+ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY=1 is only for local pipeline debugging.
+EOF
+  return 1
+}
+
+if [[ ${1:-} == --check-credentials ]]; then
+  if [[ $# != 1 ]]; then
+    echo "usage: $0 --check-credentials" >&2
+    exit 2
+  fi
+  check_credentials
+  exit 0
+fi
+
 if [[ $# -gt 2 ]]; then
   echo "usage: $0 [anthropocene-data-directory particulate-profile]" >&2
   exit 2
@@ -34,6 +69,10 @@ if [[ -n $data_through ]]; then
   snapshot_date=$(date -u -d "$data_through + 1 day" +%F)
 fi
 
+# Reject missing credentials before allocating staging space or downloading
+# the large public archives. The aggregate also runs this as its first step.
+check_credentials
+
 raw_dir="$data_dir/.raw/$year"
 temporary_dir=$(mktemp -d)
 trap 'rm -rf "$temporary_dir"' EXIT
@@ -44,10 +83,18 @@ fetch() {
   local url=$2
   local description=${3:-$url}
   echo "fetching $description"
-  curl -sS --fail --remove-on-error -A "$user_agent" \
-    -o "$output" "$url"
+  fetch_was_remote=1
+  if [[ -n ${DATA_HTTP_CACHE:-} ]]; then
+    python3 "$(dirname "$0")/data-http-fetch.py" "$url" "$output"
+    if [[ $(jq -r '.acquisition' "$output.receipt.json") == policy-cache ]]; then
+      fetch_was_remote=0
+    fi
+  else
+    curl -sS --fail --remove-on-error -A "$user_agent" \
+      -o "$output" "$url"
+  fi
   if [[ ! -s $output ]]; then
-    echo "download is empty: $url" >&2
+    echo "download is empty: $description" >&2
     exit 1
   fi
 }
@@ -161,12 +208,13 @@ if [[ -n ${FIRMS_MAP_KEY:-} ]]; then
     exit 1
   fi
 
-  # S-NPP is the canonical global VIIRS series. Standard processing and NRT
-  # are queried only over the ranges advertised by FIRMS, so the NRT tail
-  # begins where the approximately five-month-lagged standard series ends.
-  # Maintainers may add NOAA-20/21 sources explicitly for a multi-sensor union.
+  # NOAA-20 remains supported after Suomi-NPP's November 2026 cessation.
+  # S-NPP's documented 2026 outages also leave its year-to-date series below
+  # the global preparation coverage gate. Keep one consistent VIIRS sensor
+  # across the configured years; explicit overrides remain available.
+  # Query standard processing and NRT only within advertised availability.
   read -r -a firms_sources <<< \
-    "${ANTHROPOCENE_FIRMS_SOURCES:-VIIRS_SNPP_SP VIIRS_SNPP_NRT}"
+    "${ANTHROPOCENE_FIRMS_SOURCES:-VIIRS_NOAA20_SP VIIRS_NOAA20_NRT}"
   if ((${#firms_sources[@]} == 0)); then
     echo "ANTHROPOCENE_FIRMS_SOURCES must name at least one FIRMS source" >&2
     exit 1
@@ -231,7 +279,7 @@ if [[ -n ${FIRMS_MAP_KEY:-} ]]; then
         day_range=5
       fi
       output=$(printf '%s/firms/%03d-%s-%s.csv' \
-        "$temporary_dir" "$chunk_index" "$firms_source")
+        "$temporary_dir" "$chunk_index" "$firms_source" "$current_date")
       url="https://firms.modaps.eosdis.nasa.gov/api/area/csv/${FIRMS_MAP_KEY}/${firms_source}/world/${day_range}/${current_date}"
       fetch "$output" "$url" \
         "NASA FIRMS $firms_source world/$day_range from $current_date"
@@ -241,22 +289,16 @@ if [[ -n ${FIRMS_MAP_KEY:-} ]]; then
       fi
       current_date=$(date -u -d "$current_date + $day_range days" +%F)
       ((chunk_index += 1))
-      if [[ $current_date < $source_end && $firms_delay != 0 ]]; then
+      if [[ $current_date < $source_end && $firms_delay != 0 && $fetch_was_remote != 0 ]]; then
         sleep "$firms_delay"
       fi
     done
   done
 else
-  if [[ ${ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY:-0} == 1 ]]; then
-    echo "FIRMS_MAP_KEY is unset; staging regional-development-only data" >&2
-  else
-    echo "FIRMS_MAP_KEY is required for a global Anthropocene refresh" >&2
-    echo "set ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY=1 only for local pipeline debugging" >&2
-    exit 1
-  fi
+  echo "FIRMS_MAP_KEY is unset; staging regional-development-only data" >&2
 fi
 
-mkdir -p "$raw_dir/cwfis" "$raw_dir/firms"
+mkdir -p "$raw_dir/cwfis"
 install -m 0644 "$temporary_dir/ghcnd_gsn.tar.gz" "$raw_dir/"
 install -m 0644 "$temporary_dir/ghcnd-stations.txt" "$raw_dir/"
 install -m 0644 "$temporary_dir/daily_88101_${year}.zip" "$raw_dir/"
@@ -274,10 +316,31 @@ firms_file=$(find "$temporary_dir/firms" -maxdepth 1 -type f -name '*.csv' \
   -print -quit)
 if [[ -n $firms_file ]]; then
   install -m 0644 "$availability" "$raw_dir/"
-  find "$temporary_dir/firms" -maxdepth 1 -type f -name '*.csv' \
-    -exec install -m 0644 -t "$raw_dir/firms" {} +
+fi
+# Replace the managed FIRMS directory after acquisition completes. Retaining
+# CSVs from an earlier sensor selection would silently create a multi-sensor
+# union, and obsolete chunks could conceal gaps in the newly selected feed.
+staged_firms=$(mktemp -d "$raw_dir/.firms-new.XXXXXX")
+find "$temporary_dir/firms" -maxdepth 1 -type f -name '*.csv' \
+  -exec install -m 0644 -t "$staged_firms" {} +
+if [[ -d $raw_dir/firms ]]; then
+  previous_firms=$(mktemp -d "$raw_dir/.firms-old.XXXXXX")
+  rmdir "$previous_firms"
+  mv "$raw_dir/firms" "$previous_firms"
+  if ! mv "$staged_firms" "$raw_dir/firms"; then
+    mv "$previous_firms" "$raw_dir/firms"
+    exit 1
+  fi
+  rm -rf -- "$previous_firms"
+else
+  mv "$staged_firms" "$raw_dir/firms"
 fi
 
+if [[ -n ${DATA_HTTP_CACHE:-} ]]; then
+  mkdir -p "$raw_dir/acquisition"
+  find "$temporary_dir" -type f -name '*.receipt.json' \
+    -exec install -m 0644 -t "$raw_dir/acquisition" {} +
+fi
 find "$raw_dir" -type f ! -name SHA256SUMS -print0 \
   | sort -z | xargs -0 sha256sum > "$raw_dir/SHA256SUMS"
 printf 'Anthropocene particulate raw refresh staged in %s (%s CWFIS files)\n' \

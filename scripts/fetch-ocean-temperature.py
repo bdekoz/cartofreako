@@ -6,6 +6,7 @@ import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 import json
+import os
 from pathlib import Path
 import time
 
@@ -18,6 +19,17 @@ BASE = 'https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/'
 
 def fetch(name, directory):
     path, receipt = directory / name, directory / (name + '.json')
+    if os.environ.get('DATA_HTTP_CACHE'):
+        from data_http import fetch as checked_fetch
+        record = checked_fetch(BASE + name, path, os.environ['DATA_HTTP_CACHE'])
+        with NetCDF(path) as nc:
+            shape = nc.shape('sst' if name.startswith('sst.') else 'icec' if name.startswith('icec.') else 'lsmask')
+            if shape[-2:] != (720, 1440):
+                raise ValueError('Unexpected native OISST grid: ' + str(shape))
+        record['shape'] = shape
+        write_json(receipt, record)
+        print('freshness-checked ' + name, flush=True)
+        return record
     if path.exists() and receipt.exists():
         record = json.loads(receipt.read_text())
         if digest(path) == record['sha256']:

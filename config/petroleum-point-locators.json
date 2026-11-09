@@ -1,0 +1,8 @@
+{
+  "schema": "cartofreako-petroleum-point-locators-v1",
+  "coordinate_frame": "authagraph-44-19.052559",
+  "provenance": "Retained approved petroleum locator geometry; no production value is retained here.",
+  "points": {
+    "BHR": [7.7466596669, 6.3767186977]
+  }
+}

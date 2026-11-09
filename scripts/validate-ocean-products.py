@@ -11,7 +11,8 @@ import numpy as np
 
 from ocean_temperature import NetCDF, digest, write_json
 
-ROOT=Path(__file__).resolve().parents[1]/'output/ocean-temperature-20261108'
+from viz_context import ocean_output, snapshot_date
+ROOT=ocean_output()
 
 
 def main():
@@ -48,7 +49,7 @@ def main():
             path=root/'data'/f'water-temperature-{year}-{period}.npz'
             metadata=json.loads(path.with_suffix('.json').read_text());product=np.load(path)
             assert metadata['sha256']==digest(path)
-            assert metadata['snapshot_as_of']=='2026-11-08'
+            assert metadata['snapshot_as_of']==str(snapshot_date())
             last=metadata['data_through'][5:];days=sorted(day for day in by_year[year] if day<=last)
             assert metadata['expected_days']==len(days)
             for name in ('valid_days','anomaly_days','eligible_days','high_days','low_days'):
@@ -81,7 +82,8 @@ def main():
         annual=np.load(root/'data'/f'water-temperature-{year}-annual.npz')
         for name in totals:np.testing.assert_allclose(months[name].sum(axis=0),annual[name])
         for month in range(1,13):
-            maximum=calendar.monthrange(year,month)[1] if year==2025 or month<11 else 7 if month==11 else 0
+            through=json.loads((root/'data'/f'water-temperature-{year}-annual.json').read_text())['data_through'][5:]
+            maximum=sum(int(day[:2])==month and day<=through for day in by_year[year])
             assert np.all(months['valid_days'][month-1]<=maximum)
     sheets=[]
     if not data_only:

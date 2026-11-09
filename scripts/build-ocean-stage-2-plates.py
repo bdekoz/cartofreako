@@ -16,6 +16,7 @@ import numpy as np
 
 from atlas_review_sheets import legend,save,font_environment
 from ocean_stage_2 import ROOT,OUTPUT
+from viz_context import atlas_root, cutoff, snapshot_date
 from ocean_temperature import digest,write_json
 from setouchi_h3_trials import settings_for
 
@@ -97,13 +98,13 @@ def india_view(settings):
 
 
 def frame(scope,stem,title,tile_dir,rendered,settings,directory,meta):
-    if scope!='india':doc=maps.frame(ROOT/'output/atlas',scope,stem,title,tile_dir,rendered,settings,directory,meta)
+    if scope!='india':doc=maps.frame(atlas_root(),scope,stem,title,tile_dir,rendered,settings,directory,meta)
     else:
         adapted=deepcopy(rendered)
         for layer in adapted['layers']:
             layer['tiles']=[dict(t,scope='japan') for t in layer['tiles'] if t['scope']=='india']
         config=deepcopy(settings);view=next(v for v in config['views'] if v['id']=='india');view['id']='japan';config['views']=[view]
-        doc=maps.frame(ROOT/'output/atlas','japan',stem,title,tile_dir,adapted,config,directory,meta)
+        doc=maps.frame(atlas_root(),'japan',stem,title,tile_dir,adapted,config,directory,meta)
         use=doc.xpath('//*[local-name()="use" and @xlink:href="#source-content"]',namespaces={'xlink':'http://www.w3.org/1999/xlink'})[0]
         viewport=use.getparent();clip=viewport.getparent().get('clip-path')[5:-1]
         rect=doc.xpath('//*[@id=$id]/*[local-name()="rect"]',id=clip)[0]
@@ -141,7 +142,7 @@ def make_legend(stem,title,metric,meta,scope):
         method=['Local daily SST above its seasonal 90th percentile for at least five consecutive days. Qualifying events may join across at most two observed cooler days. Missing or ice days never bridge.',
                 'Fixed 1991–2020 baseline: 11-day pools, 31-day smoothing. Strict threshold ties do not exceed. Event spans include bridged cooler days.']
         interpretation=['Intensity is signed SST minus seasonal mean, summed over event-span days. Longest span is clipped to the displayed interval.',
-                        'Fine pale outlines: event boundary is unobserved, or a short run is pending. Pending runs are excluded from event-eligible denominators. Matched views use each year’s November 7 cutoff.']
+                        'Fine pale outlines: event boundary is unobserved, or a short run is pending. Pending runs are excluded from event-eligible denominators. Matched views use the selected shared calendar cutoff.']
     elif family=='ocean-thermal-season':
         method=['Experimental local seasonal index. Threshold is the midpoint of the smoothed climatological minimum and maximum; amplitude must be at least 2°C. Seven persistent days define each crossing.',
                 'Season is anchored at the local cool phase and labeled by expected warm-peak year. Adjacent-year observations are used; this is not an ecological season definition.']
@@ -163,22 +164,22 @@ def make_legend(stem,title,metric,meta,scope):
               {'title':'Definition','notes':method},{'title':'Reading the result','notes':interpretation}]
     notes=[meta['support'],'Shared scale boundaries across years and views. Gray outlines show source support below the measure’s eligibility rule. Empty space is not an observed zero.',
            'Counts and fractions require at least 80% eligible days in the labeled interval; completed seasons additionally require supported transitions. Actual dates and exclusions are retained in the data ledger.',
-           'Local prototype edition dated 8 November 2026. Recent provider values may be revised. No attribution, population exposure or coral-bleaching outcome is inferred.']
+           'Local prototype edition with source-specific dates in the selected input ledger. Recent provider values may be revised. No attribution, population exposure or coral-bleaching outcome is inferred.']
     if scope=='japan':notes.append('Yellow point: retained conceptual Setouchi geographic reference, 34.45°N / 133.99°E.')
     sources=['NOAA OISST v2.1 / https://www.ncei.noaa.gov/products/optimum-interpolation-sst',
-             'Method, inputs, tables and validation: output/ocean-temperature-stage-2-20261108/']
+             'Method, inputs, tables and validation: data/ and validation.json in this dataset output']
     if family in ('coastal-compound-heat','heat-particulate-coexposure'):sources.append('CPC Global Temperature / https://psl.noaa.gov/thredds/catalog/Datasets/cpc_global_temp/catalog.html')
-    if family=='heat-particulate-coexposure':sources.append('OpenAQ/CPCB/AirNow and separate AirGradient pilot / November 8 India enrichment ledger')
+    if family=='heat-particulate-coexposure':sources.append('OpenAQ public archive / selected CPCB, AirNow and separate AirGradient monitors; actual station-days in data/india-station-days.csv.gz')
     return legend(stem,title,subtitle,sections,notes,sources)
 
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--families',nargs='*',default=['marine','season','coastal','india']);p.add_argument('--workers',type=int,default=3);p.add_argument('--index-only',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--families',nargs='*',default=['marine','season','coastal','india']);p.add_argument('--workers',type=int,default=int(os.environ.get('ASSET_JOBS','2')));p.add_argument('--index-only',action='store_true');a=p.parse_args()
     if a.index_only:
         manifest=json.loads((OUTPUT/'preview-manifest.json').read_text())
         write_index(manifest['products'],manifest['records']);return
     subprocess.run(['make','build/setouchi-h3-tools/render-cells','build/stage-2-project-points'],cwd=ROOT,check=True)
-    settings=settings_for(ROOT/'output/atlas',maps.TEMPLATE,300);india_view(settings)
+    settings=settings_for(atlas_root(),maps.TEMPLATE,300);india_view(settings)
     env=font_environment();env['TMPDIR']=str(ROOT/'build/tmp')
     entries=[]
     for f in a.families:entries+=json.loads((OUTPUT/'data'/f'{f}-products.json').read_text())
@@ -244,7 +245,8 @@ def main():
 
 
 def write_index(products,records):
-    html=['<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Anthropocene / Stage 2</title><style>body{background:#240413;color:#fcc553;font:18px sans-serif;margin:2rem}a{color:inherit}img{width:100%;height:auto}.pair{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}article{margin:3rem 0}@media(max-width:900px){.pair{display:block}}</style><h1>Anthropocene / Stage 2</h1><p>Local prototype review / 8 November 2026. Separate map and legend/source sheets. Ocean and CPC observations through November 7; India monitor cutoffs differ. Use matched support for year comparisons.</p><p><a href="../../docs/development/20261108_anthropocene_ocean_temperature_stage_2.md">Methods and completion record</a> · <a href="data/india-station-summary.json">Station coverage</a> · <a href="validation.json">Validation</a></p>']
+    methods_href=os.path.relpath(ROOT/"docs/development/20261108_anthropocene_ocean_temperature_stage_2.md",OUTPUT)
+    html=['<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Anthropocene / Stage 2</title><style>body{background:#240413;color:#fcc553;font:18px sans-serif;margin:2rem}a{color:inherit}img{width:100%;height:auto}.pair{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}article{margin:3rem 0}@media(max-width:900px){.pair{display:block}}</style><h1>Anthropocene / Stage 2</h1><p>Local prototype review / dataset-specific observation windows. Separate map and legend/source sheets. Ocean, CPC and India monitor cutoffs are recorded separately in each legend. Use matched support for year comparisons.</p><p><a href="'+methods_href+'">Methods and completion record</a> · <a href="data/india-station-summary.json">Station coverage</a> · <a href="validation.json">Validation</a></p>']
     html.append('<h2>Comparisons and coverage</h2><p><a href="figures/matched-cooccurrence.png">Matched monthly comparisons</a> · <a href="figures/season-coverage.png">Season definitions and coverage</a> · <a href="figures/india-station-coverage.png">India monitor coverage</a> · <a href="figures/event-season-example.png">Event and season example</a></p>')
     for product in products:
         m=product['metadata'];rr=[r for r in records if r['stem']==product['stem'] and r['metric']==product['metric'] and r['period']==m['period'] and r['monitor_class']==m.get('monitor_class')]

@@ -120,6 +120,7 @@ struct source_statistics
   std::uint64_t firms_rows = 0;
   std::uint64_t firms_files = 0;
   std::uint64_t firms_unique_days = 0;
+  std::set<int> firms_detection_days;
   std::uint64_t firms_north_america_rows = 0;
   std::uint64_t firms_south_america_rows = 0;
   std::uint64_t firms_europe_rows = 0;
@@ -1151,6 +1152,73 @@ process_fire_sources(const inputs& paths, const configuration& config,
     process_fire_csv(path, config, output, statistics.firms_rows,
                      &statistics, &firms_days);
   statistics.firms_unique_days = firms_days.size();
+  statistics.firms_detection_days.insert(firms_days.begin(), firms_days.end());
+}
+
+std::string
+iso_day(const int key)
+{
+  std::ostringstream text;
+  text << std::setfill('0') << std::setw(4) << key / 10000 << '-'
+       << std::setw(2) << (key / 100) % 100 << '-'
+       << std::setw(2) << key % 100;
+  return text.str();
+}
+
+std::vector<int>
+missing_firms_days(const configuration& config,
+                   const source_statistics& statistics)
+{
+  const std::chrono::sys_days first {
+    std::chrono::year {config.year} / std::chrono::January / 1};
+  const auto snapshot = make_day(
+    config.snapshot_date_key / 10000,
+    static_cast<unsigned>((config.snapshot_date_key / 100) % 100),
+    static_cast<unsigned>(config.snapshot_date_key % 100));
+  require(snapshot.has_value() && *snapshot > first,
+          "invalid configured snapshot date");
+  std::vector<int> missing;
+  for (auto day = first; day < *snapshot; day += std::chrono::days {1})
+    if (!statistics.firms_detection_days.contains(sys_day_key(day)))
+      missing.push_back(sys_day_key(day));
+  return missing;
+}
+
+void
+validate_required_firms(const configuration& config,
+                        const source_statistics& statistics)
+{
+  require(statistics.firms_rows > 0 && statistics.firms_unique_days > 0,
+          "required NASA FIRMS inputs contained no usable data rows");
+  require(statistics.firms_north_america_rows > 0
+            && statistics.firms_south_america_rows > 0
+            && statistics.firms_europe_rows > 0
+            && statistics.firms_africa_rows > 0
+            && statistics.firms_northern_asia_rows > 0
+            && statistics.firms_east_asia_rows > 0
+            && statistics.firms_oceania_rows > 0,
+          "required NASA FIRMS input failed the global region audit");
+  const auto missing = missing_firms_days(config, statistics);
+  const std::uint64_t expected_days
+    = statistics.firms_unique_days + missing.size();
+  if (statistics.firms_unique_days * 100 < expected_days * 95)
+    {
+      std::ostringstream message;
+      message << "required NASA FIRMS input covers "
+              << statistics.firms_unique_days << '/' << expected_days
+              << " snapshot days (" << std::fixed << std::setprecision(1)
+              << 100.0 * statistics.firms_unique_days / expected_days
+              << "%; minimum 95%). Missing detection dates:";
+      for (const int day : missing)
+        message << ' ' << iso_day(day);
+      message << ". Missing detections are unavailable, not zero. "
+              << "Suomi-NPP has documented outages and ceased delivery on "
+                 "2026-11-02; refresh with the supported defaults "
+                 "VIIRS_NOAA20_SP VIIRS_NOAA20_NRT using "
+                 "make fetch-anthropocene-data, then make prepare-anthropocene-data. "
+                 "Check ANTHROPOCENE_FIRMS_SOURCES if explicitly set.";
+      throw std::runtime_error(message.str());
+    }
 }
 
 std::string
@@ -1196,6 +1264,11 @@ write_statistics(Writer& writer,
   value("firms_northern_asia_rows", statistics.firms_northern_asia_rows);
   value("firms_east_asia_rows", statistics.firms_east_asia_rows);
   value("firms_oceania_rows", statistics.firms_oceania_rows);
+  writer.Key("firms_detection_dates");
+  writer.StartArray();
+  for (const int day : statistics.firms_detection_days)
+    writer.String(iso_day(day).c_str());
+  writer.EndArray();
   writer.EndObject();
 }
 
@@ -1315,6 +1388,11 @@ run(const int argc, char** argv)
   const configuration config = load_configuration(paths.profile);
   observations data;
   source_statistics statistics;
+  // Audit the satellite feed before processing the larger unrelated inputs.
+  std::cerr << "preparing active-fire feeds\n";
+  process_fire_sources(paths, config, data, statistics);
+  if (paths.require_firms)
+    validate_required_firms(config, statistics);
   std::cerr << "preparing GHCN/GSN records\n";
   process_ghcn(paths, config, data, statistics);
   std::cerr << "preparing EPA PM2.5 exceedances\n";
@@ -1323,32 +1401,6 @@ run(const int argc, char** argv)
   process_hms(paths.hms_shapefile, config, data, statistics);
   std::cerr << "preparing NOAA Storm Events\n";
   process_storm_events(paths, config, data, statistics);
-  std::cerr << "preparing active-fire feeds\n";
-  process_fire_sources(paths, config, data, statistics);
-  if (paths.require_firms)
-    {
-      require(statistics.firms_rows > 0 && statistics.firms_unique_days > 0,
-              "required NASA FIRMS inputs contained no usable data rows");
-      require(statistics.firms_north_america_rows > 0
-                && statistics.firms_south_america_rows > 0
-                && statistics.firms_europe_rows > 0
-                && statistics.firms_africa_rows > 0
-                && statistics.firms_northern_asia_rows > 0
-                && statistics.firms_east_asia_rows > 0
-                && statistics.firms_oceania_rows > 0,
-              "required NASA FIRMS input failed the global region audit");
-      const std::chrono::sys_days first {
-        std::chrono::year {config.year} / std::chrono::January / 1};
-      const auto snapshot = make_day(
-        config.snapshot_date_key / 10000,
-        static_cast<unsigned>((config.snapshot_date_key / 100) % 100),
-        static_cast<unsigned>(config.snapshot_date_key % 100));
-      require(snapshot.has_value(), "invalid configured snapshot date");
-      const std::uint64_t expected_days = static_cast<std::uint64_t>(
-        (*snapshot - first).count());
-      require(statistics.firms_unique_days * 100 >= expected_days * 95,
-              "required NASA FIRMS input covers fewer than 95% of snapshot days");
-    }
   std::cerr << "writing " << data.size() << " H3 cells\n";
   write_geojson(paths.output, config, data, statistics);
   return 0;

@@ -8,6 +8,7 @@ the maximum of valid samples is retained as a conservative exposure display.
 import argparse
 from collections import defaultdict
 import json
+import os
 from pathlib import Path
 
 import numpy as np
@@ -18,7 +19,7 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 def prepare(root):
-    locator=ROOT/'assets.static/resources/coral-reefs-025deg.geojson'
+    locator=Path(os.environ.get('RESOURCES_DATA_DIR', ROOT/'assets.static/resources'))/'coral-reefs-025deg.geojson'
     features=json.loads(locator.read_text())['features']
     source_cells=set()
     for f in features:
@@ -49,13 +50,13 @@ def prepare(root):
         for cell,value,flag in zip(cells,values,mask):
             if flag!=0 or not np.isfinite(value):continue
             key=f'{cell:x}';maxima[key]=max(maxima.get(key,0),float(value));members[key]+=1
-        year=2026 if '20261107' in path.name else 2025
-        period='matched' if '20251107' in path.name else 'annual'
+        year=source.get('year', 2026 if '20261107' in path.name else 2025)
+        period=source.get('period', 'matched' if '20251107' in path.name else 'annual')
         data={'schema':'cartofreako-coral-dhw-v1','year':year,'period':period,
               'units':'degree_Celsius_weeks','source':source,
               'source_time_coverage_start':attrs['time_coverage_start'],
               'source_time_coverage_end_exclusive':attrs['time_coverage_end'],
-              'locator':{'path':str(locator.relative_to(ROOT)),'sha256':digest(locator),'year':2011,'source_grid_cells':len(features)},
+              'locator':{'path':str(locator.resolve()),'sha256':digest(locator),'year':2011,'source_grid_cells':len(features)},
               'method':'Maximum CRW period-maximum DHW among valid original 0.05° centers within each H3r5 cell and the WRI historical 0.25° reef-presence locator. No interpolation.',
               'claim_boundary':'Satellite-derived thermal exposure around historically mapped reefs; not observed bleaching, reef extent, mortality, or current coral condition.',
               'cells':[[key,round(value,2),members[key]] for key,value in sorted(maxima.items())]}

@@ -1,3 +1,30 @@
+# Resolve one immutable data edition before expanding its generation graph.
+# Historical tests, maintenance commands and explicit legacy builds remain
+# available without a current pointer. Every recursive build inherits the
+# frozen context rather than resolving "current" again.
+DATASET ?= current
+DATASET_BOUND ?= 0
+ATLAS_PYTHON ?= $(if $(wildcard .venv-data/bin/python),$(abspath .venv-data/bin/python),python3)
+DATASET_BIND_GOALS := $(if $(MAKECMDGOALS),$(filter all all-resilient assets-single assets-resilient atlas atlas-sheets atlas-optional configured generate-% render-ocean-stage-2 prepare-ocean-stage-2 check-ocean-stage-2,$(MAKECMDGOALS)),configured)
+ifneq ($(DATASET),legacy)
+ifneq ($(DATASET_BOUND),1)
+ifneq ($(strip $(DATASET_BIND_GOALS)),)
+DATASET_RECURSE := 1
+endif
+endif
+endif
+
+ifeq ($(DATASET_RECURSE),1)
+ifneq ($(filter data-update,$(MAKECMDGOALS)),)
+$(error Run make data-update and the build as two separate invocations)
+endif
+.DEFAULT_GOAL := dataset-entry
+.PHONY: dataset-entry $(MAKECMDGOALS)
+$(MAKECMDGOALS): dataset-entry
+dataset-entry:
+	+@DATASET_MANIFEST="$(DATASET_MANIFEST)" $(ATLAS_PYTHON) scripts/dataset-context.py -- $(MAKE) --no-print-directory $(if $(MAKECMDGOALS),$(MAKECMDGOALS),configured)
+else
+
 CXX ?= g++
 PROJECTION_SRC_DIR := src.projections
 GENERATOR_SRC_DIR := src.generate
@@ -1020,10 +1047,10 @@ DATA_UPDATE_TARGETS := $(EXPERIMENT_DATA_FETCH_TARGETS) \
 	refresh-resources-data refresh-network-fiber prepare-network-swarm-data \
 	fetch-ocean-stage-2 verify-cloud-atmosphere-data
 
-PUBLIC_TARGETS := all all-experiments all-experiments-fetch data-update \
+PUBLIC_TARGETS := all all-experiments all-experiments-fetch data-update atlas-optional \
 	all-experiments-resilient all-resilient \
 	assets-single assets-resilient \
-	check check-docs check-all-experiments check-data-update \
+	check check-docs check-all-experiments check-data-update check-dataset check-firms-coverage \
 	check-print-contract check-pass-status \
 	audit-dymaxion-ulp \
 	check-projection-fixtures check-wasm-projection-fixtures \
@@ -1261,10 +1288,27 @@ all-experiments-fetch: clean $(EXPERIMENT_DATA_FETCH_TARGETS)
 
 # A single serial submake preserves fetch/prepare ordering, deduplicates shared
 # prerequisites, and stops on failure even when the caller uses -j or -k.
-data-update:
+data-update: $(ANTHROPOCENE_PARTICULATE_FETCHER)
+	@$(ANTHROPOCENE_PARTICULATE_FETCHER) --check-credentials
+ifeq ($(DATASET),legacy)
 	+$(MAKE) --no-print-directory -j1 --no-keep-going $(DATA_UPDATE_TARGETS)
 	@printf '%s\n' \
 		'Completed every configured data refresh and preparation step; review candidate snapshots before promotion.'
+else
+	@$(ATLAS_PYTHON) scripts/data-update.py $(DATA_UPDATE_ARGS)
+endif
+
+check-dataset:
+	$(ATLAS_PYTHON) tests/test-dataset.py
+	$(ATLAS_PYTHON) tests/test-data-workflow.py
+
+check-firms-coverage: build/test-firms-coverage
+	build/test-firms-coverage
+	python3 tests/test-firms-fetch.py
+
+build/test-firms-coverage: tests/test-firms-coverage.cc src.generate/prepare-anthropocene-particulate.cc
+	@mkdir -p build
+	$(CXX) $(CPPFLAGS) $(shell $(GDAL_CONFIG) --cflags) $(CXXFLAGS) $< $(shell $(GDAL_CONFIG) --libs) -lh3 -o $@
 
 check-data-update: tests/test-data-update.py Makefile
 	python3 tests/test-data-update.py
@@ -1421,6 +1465,7 @@ PREREQUISITE_ENV = MAKE_VERSION="$(MAKE_VERSION)" CXX="$(CXX)" \
 
 check-prerequisites: $(PREREQUISITE_CHECKER)
 	@$(PREREQUISITE_ENV) "$(PREREQUISITE_CHECKER)"
+	@MPLCONFIGDIR="$(abspath build/tmp/matplotlib)" $(ATLAS_PYTHON) scripts/check-atlas-prerequisites.py
 
 install-prerequisites: $(PREREQUISITE_INSTALLER) $(PREREQUISITE_CHECKER)
 	@$(PREREQUISITE_ENV) "$(PREREQUISITE_INSTALLER)" $(PREREQUISITE_INSTALL_ARGS)
@@ -1794,7 +1839,7 @@ check-anthropocene-particulate: \
 		"$(ANTHROPOCENE_PARTICULATE_GEOJSON_2026)"
 	$(TEST_DIR)/test-anthropocene-particulate-generation
 
-check: check-data-update check-prerequisites-installer check-generation-style check-pass-status check-anthropocene-particulate check-orbiting \
+check: check-data-update check-dataset check-firms-coverage check-prerequisites-installer check-generation-style check-pass-status check-anthropocene-particulate check-orbiting \
 		$(SGP4_OBJECT) $(NETWORK_SWARM_GEOJSON) \
 		$(ANTHROPOCENE_PARTICULATE_GEOJSON_2025) \
 		$(ANTHROPOCENE_PARTICULATE_GEOJSON_2026) \
@@ -2110,6 +2155,11 @@ $(GENERATION_PROFILE_RESOLVER): \
 
 $(SGP4_OBJECT): $(SGP4_SOURCE) $(SGP4_HEADER)
 	$(CXX) -std=c++20 -w -c $(SGP4_SOURCE) -o $@
+
+build/validate-dataset-native: scripts/validate-dataset-native.cc $(SGP4_OBJECT) \
+		$(wildcard $(GENERATOR_SRC_DIR)/*data.h)
+	@mkdir -p build
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< $(SGP4_OBJECT) -lh3 -lmaxminddb -o $@
 
 $(ORBITING_GENERATOR): $(GENERATOR_SRC_DIR)/generate-orbiting.cc \
 		$(ORBITING_GENERATOR_HEADERS) $(SGP4_OBJECT)
@@ -3524,6 +3574,16 @@ ATLAS_BASE ?= build/atlas-st2-base
 ATLAS_OUTPUT ?= output/atlas
 .PHONY: atlas atlas-sheets setouchi-st2
 # The default edition uses the approved MSP 5 presentation; dated ST2 stays separate.
+ifneq ($(strip $(DATASET_MANIFEST)),)
+atlas-sheets: build/generation-context build/setouchi-h3-tools/render-cells
+	+$(MAKE) --no-print-directory -j1 generate-authagraph generate-astro-authagraph generate-orbiting-authagraph generate-resources-artifacts generate-network-cdn-authagraph generate-network-fiber-authagraph generate-network-groundstations-authagraph generate-network-swarm-authagraph generate-anthropocene-authagraph generate-cloud-atmosphere-authagraph
+	$(ATLAS_PYTHON) scripts/build-current-atlas.py
+
+atlas: atlas-sheets
+	$(ATLAS_PYTHON) scripts/export-setouchi-sheets.py --delivery "$(ATLAS_OUTPUT)" --workers "$(ASSET_JOBS)"
+	$(ATLAS_PYTHON) scripts/check-current-build.py --atlas
+	$(ATLAS_PYTHON) scripts/build-current-books.py
+else
 atlas-sheets: build/generation-context
 	python3 scripts/compile-generation-style.py --check
 	python3 scripts/revise-setouchi-plates.py --delivery "$(ATLAS_SOURCE)" --output "$(ATLAS_BASE)"
@@ -3538,6 +3598,10 @@ atlas: atlas-sheets
 	python3 scripts/publish-setouchi-plate-files.py --delivery "$(ATLAS_OUTPUT)"
 	python3 scripts/build-setouchi-revision-review.py --output "$(ATLAS_OUTPUT)" $(if $(strip $(SETOUCHI_ST2_DATE)),--date "$(SETOUCHI_ST2_DATE)")
 	python3 scripts/build-atlas-defaults.py --output "$(ATLAS_OUTPUT)" --check
+endif
+
+atlas-optional:
+	$(ATLAS_PYTHON) scripts/atlas-optional.py --jobs "$(ASSET_JOBS)" $(ATLAS_OPTIONAL_ARGS)
 
 setouchi-st2: build/generation-context
 	python3 scripts/revise-setouchi-plates.py --delivery "$(SETOUCHI_ST2_SOURCE)" --output "$(SETOUCHI_ST2_OUTPUT)"
@@ -3582,3 +3646,5 @@ $(RESOURCES_PROFILE) $(RESOURCES_VALUES) $(RESOURCES_COUNTRIES) $(RESOURCES_REEF
 		$(RESOURCES_BASE_DATA_DIR)/coral-reefs-025deg.geojson
 	python3 scripts/prepare-mineral-additions.py --source "$(RESOURCES_BASE_DATA_DIR)" --output "$(RESOURCES_DATA_DIR)"
 endif
+
+endif # DATASET_RECURSE
