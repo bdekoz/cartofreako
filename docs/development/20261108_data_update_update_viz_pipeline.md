@@ -50,14 +50,15 @@ The documentation checker's self-fragment crash is repaired; its full scan
 still reports 30 pre-existing anchor/template-link errors in unrelated
 historical documents and unexpanded HTML templates.
 
-Outstanding production acceptance is explicit: this session has no exported
-`FIRMS_MAP_KEY`, and the default native swarm archive
-`../alpha60-samples-cache/dan-da-dan-210.cache/cache.20260304.tar.xz` is absent.
-A current update now fails before downloads for these missing prerequisites.
-Supply the configured archive or `NATIVE_SWARM_CACHE_DIRECTORY` and source
-credentials, then retain the activated manifest and full-build receipts from
-the two-command workflow. Until that succeeds, this record does not claim
-fresh-checkout/live-source acceptance or completion of the rollout criteria.
+Outstanding production acceptance is explicit: the initial validation session
+had no exported `FIRMS_MAP_KEY`, and the original sibling-path swarm archive
+was absent. On November 9 the configured default was changed to the supplied,
+readable archive at
+`/mnt/gold/src/alpha60-samples-cache.gold/dan-da-dan-210.cache/cache.20260304.tar.xz`;
+the local-input preflight now accepts it. With the source credentials exported,
+retain the activated manifest and full-build receipts from the two-command
+workflow. Until that succeeds, this record does not claim fresh-checkout/live-source
+acceptance or completion of the rollout criteria.
 
 ## FIRMS coverage repair follow-up
 

@@ -265,7 +265,7 @@ The default locations can be overridden:
 | `RESOURCES_VALUES` | `$(RESOURCES_DATA_DIR)/resources-values.json` | Normalized country values for implemented metrics |
 | `RESOURCES_COUNTRIES` | `$(RESOURCES_DATA_DIR)/countries-110m.geojson` | Compact Natural Earth country geometry keyed by `RESOURCE_A3` |
 | `RESOURCES_REEFS` | `$(RESOURCES_DATA_DIR)/coral-reefs-025deg.geojson` | Checked quarter-degree coral-reef presence/threat cells derived from WRI geometry |
-| `NATIVE_SWARM_CACHE_ARCHIVE` | `../alpha60-samples-cache/dan-da-dan-210.cache/cache.20260304.tar.xz` | Native cumulative cache; `NATIVE_SWARM_CACHE_DIRECTORY` selects an extracted cache instead |
+| `NATIVE_SWARM_CACHE_ARCHIVE` | `/mnt/gold/src/alpha60-samples-cache.gold/dan-da-dan-210.cache/cache.20260304.tar.xz` | Native cumulative cache; `NATIVE_SWARM_CACHE_DIRECTORY` selects an extracted cache instead |
 | `NATIVE_SWARM_GEOLOCATION_DB` | `../geoip-databases/ipinfo/standard_location.mmdb` | Native Alpha60 geolocation database |
 | `CDN_SOURCE_PROFILE` | `config/cdn-sources.json` | Approved `.bkoz` manifest and reference lookup pins |
 | `NETWORK_SWARM_SOURCE` | `assets.static/network-swarm/house-of-the-dragon-301-cumulative-aggregate.geojson.zip` | Legacy aggregate renderer input |

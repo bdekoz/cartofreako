@@ -117,7 +117,7 @@ canonical loader verifies the pinned files and writes record, locality and
 display-group ledgers under `build/default-styles/`.
 
 Swarm defaults read
-`../alpha60-samples-cache/dan-da-dan-210.cache/cache.20260304.tar.xz` and
+`/mnt/gold/src/alpha60-samples-cache.gold/dan-da-dan-210.cache/cache.20260304.tar.xz` and
 `../geoip-databases/ipinfo/standard_location.mmdb`. The archive remains local;
 only cumulative JSON documents are extracted. Override
 `NATIVE_SWARM_CACHE_ARCHIVE`, or set `NATIVE_SWARM_CACHE_DIRECTORY` to an

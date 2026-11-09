@@ -13,7 +13,7 @@ standalone default is AuthaGraph. The adapter reuses Alpha60 cache ingestion,
 unique BTIH coalescing, weighting, member colors and native circle geometry.
 
 The default media collection is **Dan Da Dan 210**. Its local cache is
-`../alpha60-samples-cache/dan-da-dan-210.cache/cache.20260304.tar.xz`:
+`/mnt/gold/src/alpha60-samples-cache.gold/dan-da-dan-210.cache/cache.20260304.tar.xz`:
 383 cumulative documents covering 2025-09-04 through 2026-03-04. Generation
 produces separate **1080p/4K** and **720p/SD** sheets. Each circle retains its
 native radius and color at **5% fill opacity**. Observations across torrents
