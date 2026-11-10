@@ -243,12 +243,16 @@ nohup python3 scripts/ping-nasa-exoplanet-archive.py \
 The [monitor](../../../scripts/ping-nasa-exoplanet-archive.py) issues a one-row
 `pl_name` query and requires a valid CSV header and a nonempty planet name.
 An HTTP 200 maintenance page does not count as recovery.
-Probe results show a red `no` or green `yes` immediately after the UTC
+Probe results show a red `no` or green `yes` immediately after the local
 timestamp, including in redirected monitor output. Cooldown messages show
 red `no` and indicate that no new check was made. It honors
 `Retry-After`, including HTTP dates, and persists the next eligible probe time
 under the shared cache so restarts preserve the cooldown. Only one monitor
-can run per cache. On first success it appends the UTC timestamp to
+can run per cache. Displayed times, retry deadlines and the success log use the
+machine's local timezone with its UTC offset and abbreviation (such as PST or
+PDT); daylight saving changes are handled automatically. The internal journal
+retains UTC timestamps and epoch-based cooldowns. On first success it appends
+the local timestamp to
 `nasa-exoplanet-ping-status.log` at the repository root and exits; it does not
 start acquisition or modify downloaded data. The timestamp marks the first
 observed successful check, rather than the exact time NASA recovered.

@@ -2,6 +2,7 @@
 """Check NASA's Exoplanet TAP service hourly until a valid one-row CSV query succeeds."""
 import argparse
 import csv
+from datetime import datetime, timezone
 from http.client import HTTPException
 import io
 import json
@@ -20,6 +21,11 @@ from dataset import DatasetError, ROOT, atomic_json, data_root, lock, redact
 URL = 'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?' + urlencode(
     {'query': 'SELECT TOP 1 pl_name FROM pscomppars', 'format': 'csv'})
 MAX_RESPONSE_BYTES = 65536
+
+
+def local_timestamp(when):
+    local = datetime.fromtimestamp(when, timezone.utc).astimezone()
+    return local.isoformat(timespec='seconds') + ' ' + local.tzname()
 
 
 def availability(success):
@@ -78,8 +84,8 @@ def monitor(url, status_log, cache, *, interval=3600, timeout=20, once=False):
             now = time.time()
             due = state.get('next_probe_at', 0)
             if due > now:
-                print(f'{timestamp(now)} {availability(False)} Next probe no earlier than '
-                      f'{timestamp(due)} (cooldown; no new check)', flush=True)
+                print(f'{local_timestamp(now)} {availability(False)} Next probe no earlier than '
+                      f'{local_timestamp(due)} (cooldown; no new check)', flush=True)
                 if once:
                     return 2
                 wait_until(due)
@@ -94,12 +100,12 @@ def monitor(url, status_log, cache, *, interval=3600, timeout=20, once=False):
             state.update(last_status=status, last_note=note,
                          next_probe_at=max(now + interval, received + delay))
             atomic_json(journal, state)
-            print(f'{timestamp(received)} {availability(success)} HTTP '
+            print(f'{local_timestamp(received)} {availability(success)} HTTP '
                   f'{status if status is not None else "unavailable"}: {note}', flush=True)
             if success:
                 status_log.parent.mkdir(parents=True, exist_ok=True)
                 with status_log.open('a') as stream:
-                    stream.write(f'{timestamp(received)} HTTP {status} first successful NASA Exoplanet '
+                    stream.write(f'{local_timestamp(received)} HTTP {status} first successful NASA Exoplanet '
                                  f'Archive ping; valid pl_name CSV; {redact(url)}\n')
                     stream.flush()
                     os.fsync(stream.fileno())
@@ -107,8 +113,8 @@ def monitor(url, status_log, cache, *, interval=3600, timeout=20, once=False):
                       'Retry with: make data-update', flush=True)
                 return 0
             if value:
-                print(f'Retry-After: {value}', flush=True)
-            print(f'Next probe no earlier than {timestamp(state["next_probe_at"])}', flush=True)
+                print(f'Retry-After: {delay:g}s (until {local_timestamp(received + delay)})', flush=True)
+            print(f'Next probe no earlier than {local_timestamp(state["next_probe_at"])}', flush=True)
             if once:
                 return 1
 

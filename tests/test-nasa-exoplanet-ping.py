@@ -5,11 +5,14 @@ from email.utils import format_datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import importlib.util
 import io
+import json
+import os
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import threading
+import time
 from types import SimpleNamespace
 import unittest
 from unittest.mock import MagicMock, patch
@@ -49,6 +52,43 @@ class Monitor(unittest.TestCase):
         response.read.return_value = body
         response.__enter__.return_value = response
         return response
+
+    def local_zone(self, name):
+        setting = patch.dict(os.environ, {'TZ': name})
+        setting.start()
+        time.tzset()
+        def restore():
+            setting.stop()
+            time.tzset()
+        self.addCleanup(restore)
+
+    @unittest.skipUnless(hasattr(time, 'tzset'), 'requires configurable local timezone')
+    def test_local_timestamps_follow_timezone_and_daylight_saving(self):
+        self.local_zone('America/Los_Angeles')
+        winter = datetime(2026, 1, 15, 20, 30, tzinfo=timezone.utc).timestamp()
+        summer = datetime(2026, 7, 15, 20, 30, tzinfo=timezone.utc).timestamp()
+        self.assertEqual(ping.local_timestamp(winter), '2026-01-15T12:30:00-08:00 PST')
+        self.assertEqual(ping.local_timestamp(summer), '2026-07-15T13:30:00-07:00 PDT')
+        self.local_zone('Asia/Tokyo')
+        self.assertEqual(ping.local_timestamp(winter), '2026-01-16T05:30:00+09:00 JST')
+
+    @unittest.skipUnless(hasattr(time, 'tzset'), 'requires configurable local timezone')
+    def test_retry_and_cooldown_display_local_times_but_preserve_utc_journal(self):
+        self.local_zone('America/Los_Angeles')
+        self.clock.now = datetime(2026, 11, 10, 20, tzinfo=timezone.utc).timestamp()
+        retry = format_datetime(datetime(2026, 11, 10, 22, tzinfo=timezone.utc), usegmt=True)
+        with patch.object(ping, 'probe', return_value=(503, {'Retry-After': retry}, False, 'maintenance')) as probe:
+            self.assertEqual(self.run_monitor(once=True), 1)
+            self.assertEqual(self.run_monitor(once=True), 2)
+        probe.assert_called_once()
+        output = self.output.getvalue()
+        self.assertIn('2026-11-10T12:00:00-08:00 PST \033[31mno\033[0m HTTP 503', output)
+        self.assertIn('Retry-After: 7200s (until 2026-11-10T14:00:00-08:00 PST)', output)
+        self.assertIn('Next probe no earlier than 2026-11-10T14:00:00-08:00 PST', output)
+        self.assertNotIn('GMT', output)
+        journal = json.loads((self.cache/'http/monitors/nasa-exoplanet-ping.json').read_text())
+        self.assertEqual(journal['last_attempt_at'], '2026-11-10T20:00:00Z')
+        self.assertEqual(journal['next_probe_at'], self.clock.now + 7200)
 
     def test_valid_csv_is_required_and_response_read_is_bounded(self):
         response = self.response(b'pl_name\n"Proxima Cen b"\n')
@@ -105,10 +145,10 @@ class Monitor(unittest.TestCase):
         self.assertEqual(self.clock.now, start + 3600)
         lines = self.log.read_text().splitlines()
         self.assertEqual(len(lines), 1)
-        self.assertTrue(lines[0].startswith(ping.timestamp(start + 3600) + ' HTTP 200'))
+        self.assertTrue(lines[0].startswith(ping.local_timestamp(start + 3600) + ' HTTP 200'))
         self.assertIn('Retry with: make data-update', self.output.getvalue())
-        self.assertIn(ping.timestamp(start) + ' \033[31mno\033[0m HTTP 503', self.output.getvalue())
-        self.assertIn(ping.timestamp(start + 3600) + ' \033[32myes\033[0m HTTP 200', self.output.getvalue())
+        self.assertIn(ping.local_timestamp(start) + ' \033[31mno\033[0m HTTP 503', self.output.getvalue())
+        self.assertIn(ping.local_timestamp(start + 3600) + ' \033[32myes\033[0m HTTP 200', self.output.getvalue())
         self.assertEqual(preserved.read_bytes(), b'downloaded bytes')
 
     def test_retry_after_seconds_and_dates_extend_the_hourly_interval(self):
@@ -166,8 +206,9 @@ class Monitor(unittest.TestCase):
                                 text=True, capture_output=True, timeout=20)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(calls, ['/query'])
-        self.assertRegex(result.stdout, r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z \x1b\[32myes\x1b\[0m HTTP 200')
-        self.assertRegex(self.log.read_text(), r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z HTTP 200 ')
+        local_stamp = r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2} \S+'
+        self.assertRegex(result.stdout, local_stamp + r' \x1b\[32myes\x1b\[0m HTTP 200')
+        self.assertRegex(self.log.read_text(), '^' + local_stamp + ' HTTP 200 ')
 
 
 if __name__ == '__main__':
