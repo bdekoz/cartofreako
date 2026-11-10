@@ -192,8 +192,14 @@ wine `#240413` and amber `#fcc553`. Measured palettes and source coordinates
 remain defined by the individual products. Each separate legend carries
 its own source dates, units and interpretation.
 
-The MSP 5 inputs retain the reviewed groundstation petals, aperture proxies,
-full-opacity fiber links, 6 pt Starlink labels, 1.5× sunbursts, vendor symbols
+Default groundstation maps use the [SLSL v3 recipe](../../../config/starlink-star-light-v3-20261109.json):
+nine equal-area capability silhouettes, doubled radius spread, full-opacity
+source links, and no filled continental land or Antarctic inset. Current
+and retained atlas builds share this renderer and regenerate matching
+legends; current editions use their selected dataset profile. Unknown sizes
+and PoPs keep their previous sizes. The dated MSP studies retain their petals.
+
+The remaining MSP 5 settings retain 6 pt Starlink labels, 1.5× sunbursts, vendor symbols
 and 12 pt all-sky labels. Japan's orbital observer retains its October 29
 positions. The recipe remains in
 [`config/msp-speculations-20261103.json`](../../../config/msp-speculations-20261103.json);

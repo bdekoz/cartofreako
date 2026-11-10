@@ -6,12 +6,14 @@ import io
 import json
 from pathlib import Path
 import sys
+import tempfile
 import unittest
+from unittest.mock import patch
 import xml.sax
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'scripts'))
-from atlas_presentation import Theme, settings, css
+from atlas_presentation import Theme, settings, css, groundstation_settings
 from lxml import etree as E
 from cartofreako_style import STYLE
 
@@ -54,6 +56,49 @@ class AtlasPresentation(unittest.TestCase):
         self.assertEqual(css(after.xpath('//*[@id="locator"]')[0].attrib)['fill'], '#47231d')
         self.assertEqual(dict(after.xpath('//*[@id="member"]')[0].attrib),
                          {'id': 'member', 'cx': '10', 'cy': '20', 'r': '3'})
+
+    def test_groundstation_default_uses_selected_source_and_replaces_both_viewports(self):
+        ground = builder.GROUNDSTATIONS
+        config = groundstation_settings(STYLE)
+        self.assertEqual(config['radius_spread_multiplier'], 2)
+        self.assertEqual(len(set(config['capability_markers'].values())), 9)
+        with tempfile.TemporaryDirectory() as directory:
+            work = Path(directory)
+            def feature(identifier, folder, fields, geometry):
+                return {'id':identifier, 'properties':{'Name':identifier, 'folder_path':[folder],
+                        'extended_data':[{'name':k,'value':v} for k,v in fields]}, 'geometry':geometry}
+            document = {'features':[
+                feature('known', 'North America', [('Freq','Ka'),('Ka Antenna Size','1.85'),('Ka Antenna Count','40')],
+                        {'type':'Point','coordinates':[10,5]}),
+                feature('unknown', 'North America', [], {'type':'Point','coordinates':[20,5]}),
+                feature('pop', 'PoPs & Backbone', [], {'type':'Point','coordinates':[30,5]}),
+                feature('link', 'PoPs & Backbone', [], {'type':'LineString','coordinates':[[10,5],[30,5]]})]}
+            data = work/'selected.geojson'; data.write_text(json.dumps(document))
+            profile = work/'profile.json'
+            profile.write_text(json.dumps({'source':{'geojson':data.name, 'gateways_sha256':builder.digest(data),
+                                                     'datestamp':'20990101'}}))
+            source = work/'native.svg'
+            source.write_text('''<svg xmlns="http://www.w3.org/2000/svg">
+                <g id="terrestrial-land"><path d="M 0 0 L 1 1"/></g>
+                <g id="starlink-gateways-old"><polygon data-groundstation="true" points="0,0 1,1 2,0"/></g>
+                <g id="starlink-gateway-links"><path data-gateway-link="true" d="M 10 5 L 30 5"/></g></svg>''')
+            with patch.object(ground, 'Projection') as projection:
+                projection.return_value.project.side_effect = lambda points: points
+                native, evidence = ground.prepare(source, work, self.recipe, profile_path=profile)
+            self.assertEqual(evidence['source_date'], '20990101')
+            self.assertEqual(evidence['summary']['source_records'], 4)
+            self.assertEqual(evidence['source_sha256'], builder.digest(data))
+            for bank in ('source-cartography', 'source-content'):
+                root = E.fromstring(f'''<svg xmlns="http://www.w3.org/2000/svg">
+                    <defs><g id="{bank}"/></defs><g id="antarctica-consolidated-inset"/>
+                    <g id="viewport" transform="scale(3)"/></svg>'''.encode())
+                ground.replace_source(root, native)
+                self.assertFalse(root.xpath('//*[@id="terrestrial-land" or @id="antarctica-consolidated-inset" or @id="starlink-gateways-old"]'))
+                sites = root.xpath('//*[@data-groundstation="true"]')
+                self.assertEqual({n.get('data-record-id') for n in sites}, {'known','unknown'})
+                self.assertEqual(len(root.xpath('//*[@data-kind="pop"]')), 1)
+                self.assertEqual(root.xpath('//*[@data-gateway-link="true"]')[0].get('d'), 'M 10 5 L 30 5')
+                self.assertEqual(root.xpath('//*[@id="viewport"]')[0].get('transform'), 'scale(3)')
 
     def test_japan_type_is_physical_not_enlarged(self):
         base = E.fromstring(b'''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

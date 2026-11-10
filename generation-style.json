@@ -12,6 +12,7 @@
     "reference_render_date": "2026-11-03",
     "reference_generation_commit": "d1118f3",
     "presentation": {
+      "groundstation_recipe_file": "config/starlink-star-light-v3-20261109.json",
       "family": "msp-speculation-5",
       "default_palette": "wine-amber",
       "recipe_file": "config/msp-speculations-20261103.json",

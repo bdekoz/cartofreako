@@ -3682,4 +3682,29 @@ $(RESOURCES_PROFILE) $(RESOURCES_VALUES) $(RESOURCES_COUNTRIES) $(RESOURCES_REEF
 	python3 scripts/prepare-mineral-additions.py --source "$(RESOURCES_BASE_DATA_DIR)" --output "$(RESOURCES_DATA_DIR)"
 endif
 
+# Focused SLSL edition: explicit pinned orbital inputs, independent of the
+# unfinished full data-update edition. No source refresh is implicit here.
+SLSL_PYTHON ?= $(if $(wildcard build/slsl-venv/bin/python),$(abspath build/slsl-venv/bin/python),$(ATLAS_PYTHON))
+SLSL_NATIVE_DIR ?= build/starlink-star-light-v3/native
+SLSL_OUTPUT ?= output/starlink-star-light-v3-20261109
+SLSL_LAND_DIR ?= $(if $(wildcard build/starlink-star-light-v3/native-data/ne_10m_land.shp),$(abspath build/starlink-star-light-v3/native-data),$(abspath $(NATURAL_EARTH_DIR)))
+SLSL_PROFILE := assets.static/orbital-technosphere/20261109/orbital-technosphere-profile.json
+SLSL_INPUTS := $(wildcard assets.static/orbital-technosphere/20261109/*)
+SLSL_NATIVE_SVGS := $(addprefix $(SLSL_NATIVE_DIR)/orbital-technosphere-,global-authagraph-44-19.052559.svg observer-authagraph-44-19.052559.svg)
+
+$(SLSL_NATIVE_SVGS) &: $(ORBITING_GENERATOR) $(SLSL_INPUTS)
+	@test -f "$(SLSL_LAND_DIR)/ne_10m_land.shp" || { echo "Missing Natural Earth land: set SLSL_LAND_DIR or run make fetch-natural-earth-10m"; exit 1; }
+	mkdir -p "$(SLSL_NATIVE_DIR)"
+	cd "$(SLSL_NATIVE_DIR)" && NATURAL_EARTH_DIR="$(abspath $(SLSL_LAND_DIR))" CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(ORBITING_GENERATOR))" authagraph global "$(abspath $(SLSL_PROFILE))"
+	cd "$(SLSL_NATIVE_DIR)" && CARTOFREAKO_LABEL_FONT="$(LABEL_FONT)" "$(abspath $(ORBITING_GENERATOR))" authagraph observer "$(abspath $(SLSL_PROFILE))"
+
+.PHONY: starlink-star-light-v3 check-starlink-star-light-v3
+starlink-star-light-v3: build/generation-context $(SLSL_NATIVE_SVGS)
+	$(SLSL_PYTHON) scripts/build-starlink-star-light.py --native "$(SLSL_NATIVE_DIR)" --output "$(SLSL_OUTPUT)" --workers "$(ASSET_JOBS)"
+
+check-starlink-star-light-v3:
+	$(SLSL_PYTHON) tests/test-starlink-star-light.py
+	$(SLSL_PYTHON) tests/test-groundstation-capabilities.py
+	$(SLSL_PYTHON) scripts/build-starlink-star-light.py --output "$(SLSL_OUTPUT)" --check
+
 endif # DATASET_RECURSE

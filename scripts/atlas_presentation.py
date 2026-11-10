@@ -8,7 +8,21 @@ from xml.sax.saxutils import XMLGenerator
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def groundstation_settings(profile):
+    path = ROOT/profile['atlas']['presentation']['groundstation_recipe_file']
+    config = json.loads(path.read_text())
+    shapes = config['capability_markers']
+    if (set(shapes) != {'ka', 'ka-e', 'e', 'qv', 'quad', 'community', 'ttc', 'ku', 'unknown'}
+            or set(shapes.values()) != {'circle', 'square', 'diamond', 'pentagon', 'hexagon',
+                                       'star', 'cross', 'saltire', 'octagon'}):
+        raise ValueError('Groundstations require nine distinct capability silhouettes')
+    if not 0 < config['radius_spread_multiplier'] < 100:
+        raise ValueError('Invalid groundstation radius spread')
+    return config
+
+
 def settings(profile):
+    groundstation_settings(profile)
     presentation = profile["atlas"]["presentation"]
     if presentation["data_colors"] != "preserve-source":
         raise ValueError("Atlas presentation must retain data colors")
