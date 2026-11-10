@@ -364,7 +364,7 @@ The AuthaGraph raster was visually inspected with the named count legend.
 The durable implementation is in `src.generate/orbiting-data.h` and
 `src.generate/orbiting-generation.h`. The default Make input selects the new
 dated profile; Hubble's astronomy input and the historical orbital tests keep
-the August elements. `scripts/refresh-orbiting-snapshot.py` and the existing
+the August elements. `scripts/fetch-orbiting-snapshot.py` and the existing
 shell entry point capture future snapshots in new directories rather than
 mutating a checked reference. Active populations exceeding the configured
 budget now fail explicitly instead of being silently truncated.

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Acquire, prepare and atomically select a complete immutable data edition."""
 import argparse
+from copy import deepcopy
 from datetime import datetime, timezone
 import json
 import os
@@ -18,6 +19,15 @@ from data_sources import Sources
 
 ORDER = ("natural-earth", "orbital", "astronomy", "anthropocene", "resources",
          "atmosphere", "atoll", "network", "petroleum", "ocean", "ocean-context", "india")
+DEPENDENCIES = {"astronomy": ("orbital",), "ocean-context": ("ocean", "resources"),
+                "india": ("ocean-context",)}
+# Context preparation updates the completed ocean source's config/products.
+# A failed preparation must not leave that source checkpoint falsely trusted.
+MUTATES = {"ocean-context": ("ocean",)}
+
+
+class IncompleteUpdate(DatasetError):
+    """Independent acquisition progressed, but required sources are pending."""
 
 
 def preflight(root):
@@ -52,7 +62,11 @@ def preflight(root):
         raise DatasetError("Insufficient dataset workspace; use DATA_ROOT on a larger filesystem or adjust DATA_UPDATE_MIN_FREE_GIB for a measured warm-cache run")
 
 
-def update(root, *, requested_as_of, jobs=2, resume=None, adapters=None, candidate_only=False, validate_sources=None):
+def update(root, *, requested_as_of, jobs=2, resume=None, adapters=None, candidate_only=False,
+           validate_sources=None, keep_going=False, defer=()):
+    deferred = set(defer)
+    if deferred - set(ORDER):
+        raise DatasetError('Unknown deferred source: ' + ', '.join(sorted(deferred - set(ORDER))))
     root = Path(root).resolve()
     implementation_paths=sorted({p for folder in ("scripts", "config", "src.generate", "src.projections")
                                              for p in (ROOT / folder).rglob("*")
@@ -79,7 +93,16 @@ def update(root, *, requested_as_of, jobs=2, resume=None, adapters=None, candida
         edition.mkdir(parents=True, exist_ok=True)
         source = Sources(edition, requested_as_of, root / "cache", jobs)
         source.records, source.bindings = state["sources"], state["bindings"]
-        atomic_json(state_path, state)
+        issues = {}
+        state.update(status="preparing", current_source=None, issues=issues,
+                     deferred_sources=sorted(deferred), keep_going=keep_going)
+        state.pop('error', None)
+
+        def checkpoint():
+            state.update(sources=source.records, bindings=source.bindings, issues=issues)
+            atomic_json(state_path, state)
+
+        checkpoint()
         print(f"Dataset run {state['dataset_id']}; requested as of {requested_as_of}", flush=True)
         try:
             for ident in ORDER:
@@ -91,18 +114,75 @@ def update(root, *, requested_as_of, jobs=2, resume=None, adapters=None, candida
                         raise DatasetError("Resume source bytes changed: " + ident)
                     print("Verified completed source " + ident, flush=True)
                     continue
+                if ident in deferred:
+                    issues[ident] = {"status": "deferred", "reason": "explicitly deferred for this invocation"}
+                    print("Deferred " + ident + "; continuing independent sources", flush=True)
+                    checkpoint()
+                    continue
+                complete = {record["id"] for record in source.records}
+                missing = [dep for dep in DEPENDENCIES.get(ident, ()) if dep not in complete]
+                if missing:
+                    issues[ident] = {"status": "blocked", "dependencies": missing,
+                                     "reason": "required source is incomplete: " + ", ".join(missing)}
+                    print("Blocked " + ident + " by " + ", ".join(missing) + "; continuing independent sources", flush=True)
+                    checkpoint()
+                    continue
                 print("Updating " + ident, flush=True)
-                adapter = (adapters or {}).get(ident) or getattr(source, ident.replace("-", "_"), None)
-                if adapter is None:
-                    raise DatasetError("No current-data adapter implemented for required source: " + ident)
-                adapter(source) if adapters and ident in adapters else adapter()
-                record = next((r for r in source.records if r["id"] == ident), None)
-                if record is None:
-                    raise DatasetError("Source adapter did not produce a validation record: " + ident)
-                state["completed_files"] = {r["id"]: [file_record(edition, edition / path) for path in r["files"]]
-                                            for r in source.records}
-                state.update(sources=source.records, bindings=source.bindings)
-                atomic_json(state_path, state)
+                state['current_source'] = ident
+                checkpoint()
+                before_records, before_bindings = deepcopy(source.records), dict(source.bindings)
+                try:
+                    adapter = (adapters or {}).get(ident) or getattr(source, ident.replace("-", "_"), None)
+                    if adapter is None:
+                        raise DatasetError("No current-data adapter implemented for required source: " + ident)
+                    adapter(source) if adapters and ident in adapters else adapter()
+                    record = next((r for r in source.records if r["id"] == ident), None)
+                    if record is None:
+                        raise DatasetError("Source adapter did not produce a validation record: " + ident)
+                    completed_files = {r["id"]: [file_record(edition, edition / path) for path in r["files"]]
+                                       for r in source.records}
+                except Exception as error:
+                    source.records, source.bindings = before_records, before_bindings
+                    for affected in MUTATES.get(ident, ()):
+                        source.records = [r for r in source.records if r['id'] != affected]
+                        state.get('completed_files', {}).pop(affected, None)
+                        issues[affected] = {'status': 'invalidated',
+                                            'reason': ident + ' changed shared inputs before failing; retry required'}
+                    issues[ident] = {'status': 'failed', 'reason': redact(error)}
+                    state['current_source'] = None
+                    checkpoint()
+                    if not keep_going:
+                        raise
+                    print('Source failed: ' + ident + ': ' + redact(error) +
+                          '; completed work saved; continuing independent sources', file=sys.stderr, flush=True)
+                    continue
+                # Only declared shared-input preparation can revise an earlier
+                # checkpoint. Never bless unexpected mutations by rehashing it.
+                for prior in before_records:
+                    previous_id = prior['id']
+                    if previous_id in MUTATES.get(ident, ()):
+                        continue
+                    current = next((r for r in source.records if r['id'] == previous_id), None)
+                    if (current != prior or completed_files.get(previous_id) !=
+                            state.get('completed_files', {}).get(previous_id)):
+                        source.records, source.bindings = before_records, before_bindings
+                        raise DatasetError('Completed source changed unexpectedly during ' + ident + ': ' + previous_id)
+                state['completed_files'] = completed_files
+                state['current_source'] = None
+                checkpoint()
+            if implementation_record(implementation_paths) != identity:
+                raise DatasetError('Implementation changed during acquisition; start a new run to keep method provenance consistent')
+            pending = [ident for ident in ORDER if not any(r['id'] == ident for r in source.records)]
+            if pending:
+                state.update(status='incomplete', current_source=None,
+                             error='Required sources pending: ' + ', '.join(pending))
+                checkpoint()
+                print(f"Incomplete run {state['dataset_id']}: {len(source.records)}/{len(ORDER)} sources saved; no edition selected", flush=True)
+                for ident in pending:
+                    issue = issues.get(ident, {'status':'pending', 'reason':'not completed'})
+                    print(f"  {ident}: {issue['status']}; {issue['reason']}", flush=True)
+                print(f"Continue with make data-update-resilient DATA_UPDATE_ARGS='--resume {state['dataset_id']}'", flush=True)
+                raise IncompleteUpdate(state['error'])
             (validate_sources or source.validate_profiles)()
             if implementation_record(implementation_paths) != identity:
                 raise DatasetError('Implementation changed during acquisition; start a new run to keep method provenance consistent')
@@ -131,10 +211,13 @@ def update(root, *, requested_as_of, jobs=2, resume=None, adapters=None, candida
             for record in source.records:
                 print(f"  {record['id']}: {record['acquisition']}; {json.dumps(record['coverage'], sort_keys=True)}", flush=True)
             return path
+        except IncompleteUpdate:
+            raise
         except Exception as error:
             state.update(status="failed", error=redact(error))
-            atomic_json(state_path, state)
-            print(f"Failed run {state['dataset_id']}; state {state_path}; retry with make data-update DATA_UPDATE_ARGS='--resume {state['dataset_id']}'", file=sys.stderr)
+            checkpoint()
+            target = 'data-update-resilient' if keep_going else 'data-update'
+            print(f"Failed run {state['dataset_id']}; state {state_path}; retry with make {target} DATA_UPDATE_ARGS='--resume {state['dataset_id']}'", file=sys.stderr)
             raise
 
 
@@ -145,6 +228,9 @@ def main():
     parser.add_argument("--jobs", type=int, default=2, choices=(1, 2, 3))
     parser.add_argument("--resume")
     parser.add_argument("--candidate-only", action="store_true")
+    parser.add_argument('--keep-going', action='store_true', help='save failures and continue independent sources; incomplete runs are not activated')
+    parser.add_argument('--defer', action='append', default=[], choices=ORDER, metavar='SOURCE',
+                        help='defer a required source for this invocation; repeatable; retry it on resume')
     args = parser.parse_args()
     try:
         requested = datetime.fromisoformat(args.as_of)
@@ -152,7 +238,7 @@ def main():
             raise DatasetError("--as-of must be an explicit UTC timestamp")
         preflight(args.root)
         update(args.root, requested_as_of=args.as_of, jobs=args.jobs, resume=args.resume,
-               candidate_only=args.candidate_only)
+               candidate_only=args.candidate_only, keep_going=args.keep_going, defer=args.defer)
         print("Next: make atlas-optional")
         return 0
     except Exception as error:

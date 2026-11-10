@@ -72,6 +72,8 @@
 /.venv-data/
 /noaa-cpc-ping-status.log
 /noaa-cpc-ping-monitor.log
+/nasa-exoplanet-ping-status.log
+/nasa-exoplanet-ping-monitor.log
 /data-update-progress.log
 /output/data-editions/
 

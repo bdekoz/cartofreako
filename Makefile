@@ -15,7 +15,7 @@ endif
 endif
 
 ifeq ($(DATASET_RECURSE),1)
-ifneq ($(filter data-update update-data,$(MAKECMDGOALS)),)
+ifneq ($(filter data-update update-data data-update-resilient,$(MAKECMDGOALS)),)
 $(error Run make data-update and the build as two separate invocations)
 endif
 .DEFAULT_GOAL := dataset-entry
@@ -116,8 +116,8 @@ CLOUD_ATMOSPHERE_GEOJSON ?= \
 CLOUD_ATMOSPHERE_FIXTURE := \
 	$(CLOUD_ATMOSPHERE_DATA_DIR)/fixtures/cloud-atmosphere-fixture.geojson
 CLOUD_ATMOSPHERE_FETCHER := scripts/fetch-cloud-atmosphere-data.sh
-CLOUD_ATMOSPHERE_PTREE_RESOLVER := scripts/resolve-jaxa-ptree.sh
-CLOUD_ATMOSPHERE_STAC_RESOLVER := scripts/resolve-jaxa-stac.py
+CLOUD_ATMOSPHERE_PTREE_RESOLVER := scripts/fetch-jaxa-ptree.sh
+CLOUD_ATMOSPHERE_STAC_RESOLVER := scripts/fetch-jaxa-stac.py
 CLOUD_ATMOSPHERE_PREPARATION_SCRIPT := \
 	scripts/prepare-cloud-atmosphere-data.sh
 CLOUD_ATMOSPHERE_VERIFIER := scripts/verify-cloud-atmosphere-data.sh
@@ -163,9 +163,14 @@ NOAA_HTTP_MAX_INTERVAL ?= 60
 DATA_HTTP_PROGRESS_INTERVAL ?= 30
 CPC_HTTP_RANGE_SIZE ?= 2097152
 CPC_HTTP_DAILY_CACHE ?= 1
+CPC_ARCHIVE_CACHE ?= 1
+CPC_INCREMENTAL ?= 1
+CPC_SUBSET_BASE_URL ?= https://psl.noaa.gov/thredds/ncss/grid/Datasets/cpc_global_temp
 CPC_BASE_URL ?= https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp
 export DATA_HTTP_RETRY_BUDGET NOAA_HTTP_MIN_INTERVAL NOAA_HTTP_MAX_INTERVAL
 export DATA_HTTP_PROGRESS_INTERVAL CPC_HTTP_RANGE_SIZE CPC_HTTP_DAILY_CACHE CPC_BASE_URL
+export CPC_ARCHIVE_CACHE
+export CPC_INCREMENTAL CPC_SUBSET_BASE_URL
 ANTHROPOCENE_TEMPERATURE_PREPARATION_SCRIPT := \
 	scripts/prepare-anthropocene-temperature-data.sh
 RESOURCES_DATA_DIR ?= $(STATIC_ASSET_DIR)/resources/current-20261108
@@ -1058,7 +1063,7 @@ DATA_UPDATE_TARGETS := $(EXPERIMENT_DATA_FETCH_TARGETS) \
 	refresh-resources-data refresh-network-fiber prepare-network-swarm-data \
 	fetch-ocean-stage-2 verify-cloud-atmosphere-data
 
-PUBLIC_TARGETS := all all-experiments all-experiments-fetch data-update update-data atlas-optional \
+PUBLIC_TARGETS := all all-experiments all-experiments-fetch data-update update-data data-update-resilient atlas-optional \
 	all-experiments-resilient all-resilient \
 	assets-single assets-resilient \
 	check check-docs check-all-experiments check-data-update check-dataset check-firms-coverage \
@@ -1301,6 +1306,15 @@ all-experiments-fetch: clean $(EXPERIMENT_DATA_FETCH_TARGETS)
 # prerequisites, and stops on failure even when the caller uses -j or -k.
 update-data: data-update
 
+ifeq ($(DATASET),legacy)
+data-update-resilient:
+	@printf '%s\n' 'data-update-resilient requires the current-edition workflow; omit DATASET=legacy' >&2
+	@exit 2
+else
+data-update-resilient: override DATA_UPDATE_ARGS += --keep-going
+data-update-resilient: data-update
+endif
+
 data-update: $(ANTHROPOCENE_PARTICULATE_FETCHER)
 	@$(ANTHROPOCENE_PARTICULATE_FETCHER) --check-credentials
 ifeq ($(DATASET),legacy)
@@ -1313,9 +1327,13 @@ endif
 
 check-dataset:
 	$(ATLAS_PYTHON) tests/test-dataset.py
+	$(ATLAS_PYTHON) tests/test-cpc-archive.py
+	$(ATLAS_PYTHON) tests/test-fetch-cpc-current-year.py
 	$(ATLAS_PYTHON) tests/test-data-http-policy.py
-	$(ATLAS_PYTHON) tests/test-noaa-cpc-ping.py
+	$(ATLAS_PYTHON) tests/test-ping-noaa-cpc.py
+	$(ATLAS_PYTHON) tests/test-nasa-exoplanet-ping.py
 	$(ATLAS_PYTHON) tests/test-astro-setouchi-plates.py
+	$(ATLAS_PYTHON) tests/test-astro-fetch.py
 	$(ATLAS_PYTHON) tests/test-india-openaq-cache.py
 	$(ATLAS_PYTHON) tests/test-data-workflow.py
 
@@ -1903,8 +1921,8 @@ check: check-data-update check-dataset check-firms-coverage check-prerequisites-
 		$(shell $(GDAL_CONFIG) --libs) -lh3 \
 		-o $(TEST_DIR)/test-cloud-atmosphere-generation
 	$(TEST_DIR)/test-cloud-atmosphere-generation
-	$(TEST_DIR)/test-resolve-jaxa-ptree.sh
-	python3 $(TEST_DIR)/test-resolve-jaxa-stac.py
+	$(TEST_DIR)/test-fetch-jaxa-ptree.sh
+	python3 $(TEST_DIR)/test-fetch-jaxa-stac.py
 	$(TEST_DIR)/test-generate-authorized-external.sh
 	$(CXX) $(CPPFLAGS) -I$(IZZI_SRC) $(CXXFLAGS) \
 		$(TEST_DIR)/test-bathymetry-roulette-style.cc \
@@ -2367,7 +2385,7 @@ generate-authorized-external: $(EXTERNAL_GENERATOR) $(EXTERNAL_AUTHORIZER) \
 	MAKE_COMMAND="$(EXTERNAL_MAKE_COMMAND)" \
 		"$(EXTERNAL_GENERATOR)" $(EXTERNAL_PASSES)
 
-fetch-astro-data: $(ASTRO_FETCHER)
+fetch-astro-data: $(ASTRO_FETCHER) scripts/fetch-astro-data.py
 	$(ASTRO_FETCHER) "$(ASTRO_DATA_DIR)"
 
 fetch-cloud-atmosphere-data: $(CLOUD_ATMOSPHERE_FETCHER) \
@@ -2391,13 +2409,13 @@ $(CLOUD_ATMOSPHERE_GEOJSON):
 	"$(MAKE)" --no-print-directory fetch-cloud-atmosphere-data
 	"$(MAKE)" --no-print-directory prepare-cloud-atmosphere-data
 
-fetch-orbiting-data: $(ORBITING_FETCHER) scripts/refresh-orbiting-snapshot.py $(ORBITING_PROFILE)
+fetch-orbiting-data: $(ORBITING_FETCHER) scripts/fetch-orbiting-snapshot.py $(ORBITING_PROFILE)
 	ORBITING_PROFILE="$(abspath $(ORBITING_PROFILE))" \
 		$(ORBITING_FETCHER) "$(ORBITING_REFRESH_DIR)"
 
 .PHONY: check-orbiting
 check-orbiting: $(SGP4_OBJECT)
-	python3 tests/test-refresh-orbiting-snapshot.py
+	python3 tests/test-fetch-orbiting-snapshot.py
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
 		$(TEST_DIR)/test-orbiting-generation.cc $(SGP4_OBJECT) \
 		-o $(TEST_DIR)/test-orbiting-generation
@@ -2449,7 +2467,7 @@ prepare-anthropocene-particulate-data: \
 		prepare-anthropocene-particulate-2026
 prepare-anthropocene-data: prepare-anthropocene-particulate-data
 
-fetch-anthropocene-cpc-data: $(ANTHROPOCENE_CPC_FETCHER)
+fetch-anthropocene-cpc-data: $(ANTHROPOCENE_CPC_FETCHER) scripts/import-cpc-archive.py scripts/fetch-cpc-current-year.py
 	$(ANTHROPOCENE_CPC_FETCHER) "$(ANTHROPOCENE_DATA_DIR)" 1979 2026
 
 prepare-anthropocene-temperature-data: \

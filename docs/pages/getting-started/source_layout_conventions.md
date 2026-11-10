@@ -55,6 +55,34 @@ name. The shared Alpha60-compatible interface and frame headers retain their
 established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 `web/`, and `assets/` layout are no longer canonical.
 
+## Data acquisition script names
+
+Use `ping-` for a small provider availability or recovery probe. A ping does
+not download a usable dataset. Use `fetch-` for commands that acquire source
+data, including selection, validation, caching and incremental downloads.
+
+| Script | Purpose |
+| --- | --- |
+| [`ping-noaa-cpc.py`](../../../scripts/ping-noaa-cpc.py) | Probe one byte, honor provider cooldowns, and record the first successful response. |
+| [`ping-nasa-exoplanet-archive.py`](../../../scripts/ping-nasa-exoplanet-archive.py) | Probe a tiny TAP query and require a valid planet response. |
+| [`fetch-data-http.py`](../../../scripts/fetch-data-http.py) | Download one object through the shared HTTP cache and retry policy. |
+| [`fetch-orbiting-snapshot.py`](../../../scripts/fetch-orbiting-snapshot.py) | Download and validate a dated orbital snapshot. |
+| [`fetch-jaxa-ptree.sh`](../../../scripts/fetch-jaxa-ptree.sh) | Select and download a P-Tree observation. |
+| [`fetch-jaxa-stac.py`](../../../scripts/fetch-jaxa-stac.py) | Select and download JAXA STAC assets. |
+| [`fetch-cpc-current-year.py`](../../../scripts/fetch-cpc-current-year.py) | Download missing daily CPC subsets and extend the retained year prefix. |
+| [`import-cpc-archive.py`](../../../scripts/import-cpc-archive.py) | Verify and import already-local archives without contacting NOAA. |
+
+Local preparation, validation, installation, authorization and publication
+commands retain names describing those broader operations. Shared Python
+modules retain their importable underscore names. `data-update.py` orchestrates
+acquisition, preparation, validation and edition selection.
+
+The six renamed acquisition scripts use only their new names; callers, Make
+prerequisites and matching tests have moved with them. Existing monitor lock,
+journal and log names and cache identities remain unchanged so saved state
+continues to work. See [resuming after implementation changes](generation.md#resilient-data-updates)
+before restarting an older data-update run.
+
 ## Source guide
 
 | File | Role |
@@ -154,10 +182,10 @@ established `a60-carto-*.h` names. Paths from the earlier `src/`, `generated/`,
 | [`src.generate/generate-cloud-atmosphere.cc`](../../../src.generate/generate-cloud-atmosphere.cc) | Thin six-projection Cloud-atmosphere generator entry point |
 | [`src.generate/prepare-cloud-atmosphere.cc`](../../../src.generate/prepare-cloud-atmosphere.cc) | GDAL NetCDF/COG sampling, scale/QA handling, H3 aggregation, and prepared GeoJSON writer |
 | [`tests/test-cloud-atmosphere-generation.cc`](../../../tests/test-cloud-atmosphere-generation.cc) | Profile, fixture, time, shared-Sun, semantics, H3, and six-projection geometry tests |
-| [`tests/test-resolve-jaxa-stac.py`](../../../tests/test-resolve-jaxa-stac.py) | Offline latest-not-after and nonoverlapping JAXA COG tile-level selection test |
+| [`tests/test-fetch-jaxa-stac.py`](../../../tests/test-fetch-jaxa-stac.py) | Offline latest-not-after and nonoverlapping JAXA COG tile-level selection test |
 | [`assets.static/cloud-atmosphere/`](../../../assets.static/cloud-atmosphere/) | Authoritative source/QA profile, terms and workflow note, and visibly synthetic test fixture |
 | [`scripts/fetch-cloud-atmosphere-data.sh`](../../../scripts/fetch-cloud-atmosphere-data.sh) | Credential-safe P-Tree and public JAXA Earth latest-not-after refresh |
-| [`scripts/resolve-jaxa-stac.py`](../../../scripts/resolve-jaxa-stac.py) | Static-STAC traversal, COG-level selection, download, and source manifest helper |
+| [`scripts/fetch-jaxa-stac.py`](../../../scripts/fetch-jaxa-stac.py) | Static-STAC traversal, COG-level selection, download, and source manifest helper |
 | [`scripts/prepare-cloud-atmosphere-data.sh`](../../../scripts/prepare-cloud-atmosphere-data.sh) | Atomic raw-to-prepared H3 snapshot workflow |
 | [`scripts/verify-cloud-atmosphere-data.sh`](../../../scripts/verify-cloud-atmosphere-data.sh) | Prepared snapshot checksum and production-schema gate |
 | [`src.generate/resources-data.h`](../../../src.generate/resources-data.h) | Strict Stage 12 v3 source catalogue, six-family country/spatial profile, coverage, and normalized-value loader |

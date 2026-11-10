@@ -144,7 +144,7 @@ def cpc_ping_hint(url):
     parts = urlsplit(url)
     if ((parts.hostname == 'psl.noaa.gov' or (parts.hostname or '').endswith('.psl.noaa.gov'))
             and '/cpc_global_temp/' in parts.path):
-        command = shlex.join(['nohup', 'python3', str(ROOT/'scripts/noaa-cpc-ping.py'), '--url', url])
+        command = shlex.join(['nohup', 'python3', str(ROOT/'scripts/ping-noaa-cpc.py'), '--url', url])
         return ('Pause data-update; first success timestamp will be in '
                 + str(ROOT/'noaa-cpc-ping-status.log') + '. Launch an hourly CPC monitor: ' + command
                 + ' > ' + shlex.quote(str(ROOT/'noaa-cpc-ping-monitor.log')) + ' 2>&1 < /dev/null &'

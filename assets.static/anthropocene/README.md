@@ -92,6 +92,22 @@ The normalized 2025 and 2026 GeoJSON SHA-256 values are respectively
 and
 `5953eba7ed3e73ecc0d77961a17759336f1833118d7850a5891a316369c9bde2`.
 
+To reuse the historical raw inputs in the current-edition acquisition cache,
+run `python3 scripts/import-cpc-archive.py`. It imports closed years 1979–2025,
+preserves already refreshed cache objects, validates checksums and NetCDF
+readability, and leaves this checked snapshot intact. Current updates then
+reuse those archives while checking the 2026 published date range and fetching
+only missing daily observations through NOAA's subset service. Existing 2026
+days are retained. Per-file receipts identify pinned archives without inventing recent
+provider-check times. `CPC_ARCHIVE_CACHE=0` explicitly disables archive reuse
+for an update.
+
+`scripts/fetch-cpc-current-year.py --variable tmax` (or `tmin`) independently
+updates the current-year cache, retaining verified local prefixes and completed
+daily subset downloads across retries. The complete update invokes it
+automatically. `CPC_INCREMENTAL=0` explicitly requests whole-year refresh;
+routine updates do not download 2025 or repeat existing 2026 observations.
+
 Generate their SVG families or all exported artifacts with:
 
 ```sh

@@ -68,8 +68,14 @@ class NetCDF:
                 value = C.create_string_buffer(length.value + 1)
                 self.check(self.lib.nc_get_att_text(self.id, var, key, value))
                 value = value.value.decode('utf-8', errors='replace')
-            elif kind.value == 12:  # NC_STRING (not used by the selected products)
-                continue
+            elif kind.value == 12:  # NC_STRING, used by NOAA's subset service.
+                strings = (C.c_char_p * length.value)()
+                self.check(self.lib.nc_get_att_string(self.id, var, key, strings))
+                try:
+                    value = [item.decode('utf-8') if item is not None else '' for item in strings]
+                    value = value[0] if len(value) == 1 else value
+                finally:
+                    self.check(self.lib.nc_free_string(C.c_size_t(length.value), strings))
             else:
                 value = np.empty(length.value, dtype='float64')
                 self.check(self.lib.nc_get_att_double(self.id, var, key, value.ctypes.data_as(C.POINTER(C.c_double))))

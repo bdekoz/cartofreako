@@ -10,6 +10,7 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import patch
+from unittest.mock import Mock
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
@@ -85,6 +86,126 @@ class Workflow(unittest.TestCase):
     def test_candidate_only_never_changes_current(self):
         path=self.execute(adapters=self.adapters(),candidate_only=True)
         self.assertTrue(path.is_file());self.assertFalse((self.root/'current.json').exists())
+
+    def test_deferred_astronomy_saves_other_sources_and_resume_completes_it(self):
+        old,_=fixtures.fixture(self.root/'editions/old','old')
+        dataset.activate(self.root,old)
+        before=(self.root/'current.json').read_bytes()
+        calls=[]
+        validate=Mock()
+        with self.assertRaisesRegex(update.IncompleteUpdate,'astronomy'):
+            update.update(self.root,requested_as_of='2026-11-08T00:00:00Z',
+                          adapters=self.adapters(calls=calls),validate_sources=validate,
+                          keep_going=True,defer=['astronomy'])
+        self.assertEqual(calls,[name for name in update.ORDER if name!='astronomy'])
+        validate.assert_not_called()
+        state_path=next((self.root/'runs').glob('*/state.json'))
+        state=json.loads(state_path.read_text())
+        self.assertEqual(state['status'],'incomplete')
+        self.assertEqual(state['issues']['astronomy']['status'],'deferred')
+        self.assertEqual(len(state['sources']),11)
+        self.assertEqual((self.root/'current.json').read_bytes(),before)
+        self.assertFalse((self.root/'editions'/state['dataset_id']/'dataset.json').exists())
+        calls=[]
+        path=self.execute(resume=state['dataset_id'],adapters=self.adapters(calls=calls),keep_going=True)
+        self.assertEqual(calls,['astronomy'])
+        self.assertEqual(dataset.load(self.root/'current.json')[0],path)
+
+    def test_resilient_failure_continues_other_sources_without_activation(self):
+        calls=[]
+        with self.assertRaisesRegex(update.IncompleteUpdate,'astronomy'):
+            self.execute(adapters=self.adapters(fail='astronomy',calls=calls),keep_going=True)
+        self.assertEqual(calls,list(update.ORDER))
+        state=json.loads(next((self.root/'runs').glob('*/state.json')).read_text())
+        self.assertEqual(state['issues']['astronomy']['status'],'failed')
+        self.assertEqual(len(state['sources']),11)
+        self.assertFalse((self.root/'current.json').exists())
+
+    def test_resilient_orbital_failure_blocks_astronomy_and_keeps_independent_work(self):
+        calls=[]
+        with self.assertRaises(update.IncompleteUpdate):
+            self.execute(adapters=self.adapters(fail='orbital',calls=calls),keep_going=True)
+        self.assertNotIn('astronomy',calls)
+        self.assertIn('anthropocene',calls)
+        self.assertIn('india',calls)
+        state=json.loads(next((self.root/'runs').glob('*/state.json')).read_text())
+        self.assertEqual(state['issues']['astronomy']['status'],'blocked')
+        self.assertEqual(state['issues']['astronomy']['dependencies'],['orbital'])
+
+    def test_resilient_resources_failure_blocks_ocean_context_and_india(self):
+        calls=[]
+        with self.assertRaises(update.IncompleteUpdate):
+            self.execute(adapters=self.adapters(fail='resources',calls=calls),keep_going=True)
+        self.assertIn('ocean',calls)
+        self.assertIn('atmosphere',calls)
+        self.assertNotIn('ocean-context',calls)
+        self.assertNotIn('india',calls)
+        state=json.loads(next((self.root/'runs').glob('*/state.json')).read_text())
+        self.assertEqual(state['issues']['india']['dependencies'],['ocean-context'])
+
+    def test_failed_adapter_cannot_leave_partial_validation_records_or_bindings(self):
+        adapters=self.adapters()
+        original=adapters['resources']
+        def fail_after_record(source):
+            original(source)
+            source.bind('LEAKED_PARTIAL_BINDING',source.directory('resources')/'input.json')
+            raise dataset.DatasetError('fixture failed after recording partial work')
+        adapters['resources']=fail_after_record
+        with self.assertRaises(update.IncompleteUpdate):
+            self.execute(adapters=adapters,keep_going=True)
+        state=json.loads(next((self.root/'runs').glob('*/state.json')).read_text())
+        self.assertNotIn('resources',[r['id'] for r in state['sources']])
+        self.assertNotIn('resources',state['completed_files'])
+        self.assertNotIn('LEAKED_PARTIAL_BINDING',state['bindings'])
+
+    def test_failed_context_invalidates_mutated_ocean_checkpoint_and_resume_repairs_it(self):
+        adapters=self.adapters()
+        def fail_after_mutation(source):
+            (source.directory('ocean')/'input.json').write_text('modified by failed context preparation')
+            raise dataset.DatasetError('context failed')
+        adapters['ocean-context']=fail_after_mutation
+        with self.assertRaises(update.IncompleteUpdate):
+            self.execute(adapters=adapters,keep_going=True)
+        state=json.loads(next((self.root/'runs').glob('*/state.json')).read_text())
+        self.assertNotIn('ocean',[r['id'] for r in state['sources']])
+        self.assertNotIn('ocean',state['completed_files'])
+        self.assertEqual(state['issues']['ocean']['status'],'invalidated')
+        calls=[]
+        path=self.execute(resume=state['dataset_id'],adapters=self.adapters(calls=calls),keep_going=True)
+        self.assertEqual(calls,['ocean','ocean-context','india'])
+        self.assertTrue(path.is_file())
+
+    def test_resilient_resume_still_rejects_changed_completed_bytes(self):
+        with self.assertRaises(update.IncompleteUpdate):
+            self.execute(adapters=self.adapters(),keep_going=True,defer=['astronomy'])
+        state=json.loads(next((self.root/'runs').glob('*/state.json')).read_text())
+        record=state['completed_files']['natural-earth'][0]
+        (self.root/'editions'/state['dataset_id']/record['path']).write_text('corrupt')
+        calls=[]
+        with self.assertRaisesRegex(dataset.DatasetError,'Resume source bytes changed'):
+            self.execute(resume=state['dataset_id'],adapters=self.adapters(calls=calls),keep_going=True)
+        self.assertEqual(calls,[])
+        self.assertFalse((self.root/'current.json').exists())
+
+    def test_unknown_deferred_source_is_rejected_before_acquisition(self):
+        calls=[]
+        with self.assertRaisesRegex(dataset.DatasetError,'Unknown deferred source'):
+            self.execute(adapters=self.adapters(calls=calls),defer=['not-a-source'])
+        self.assertEqual(calls,[])
+        self.assertFalse((self.root/'runs').exists())
+
+    def test_resilient_mode_never_blesses_unexpected_changes_to_a_completed_source(self):
+        calls=[]
+        adapters=self.adapters(calls=calls)
+        original=adapters['resources']
+        def unexpected_mutation(source):
+            original(source)
+            (source.directory('natural-earth')/'input.json').write_text('unexpected change')
+        adapters['resources']=unexpected_mutation
+        with self.assertRaisesRegex(dataset.DatasetError,'Completed source changed unexpectedly'):
+            self.execute(adapters=adapters,keep_going=True)
+        self.assertNotIn('atmosphere',calls)
+        self.assertFalse((self.root/'current.json').exists())
 
     def test_build_bindings_are_frozen_and_recursive_make_receives_them(self):
         first,manifest=fixtures.fixture(self.root/'editions/first','first')

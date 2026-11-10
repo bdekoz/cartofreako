@@ -11,7 +11,7 @@ import unittest
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
-SPEC = importlib.util.spec_from_file_location("refresh", ROOT / "scripts/refresh-orbiting-snapshot.py")
+SPEC = importlib.util.spec_from_file_location("refresh", ROOT / "scripts/fetch-orbiting-snapshot.py")
 refresh = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(refresh)
 DATA = ROOT / "assets.static/orbital-technosphere/20261103"

@@ -86,7 +86,21 @@ make ASSET_JOBS=2 atlas-optional
 ```
 
 `data-update` prepares isolated inputs and selects them only after validation.
-`make update-data` is an alias for the same update. Selected India OpenAQ
+`make data-update-resilient` saves source failures and continues independent
+sources, matching the `all-resilient` naming for plate builds. To work while
+the NASA Exoplanet Archive is unavailable:
+
+```sh
+make data-update-resilient DATA_UPDATE_ARGS='--defer astronomy'
+```
+
+Required sources remain required: a partial run exits nonzero, prints its
+pending sources and resume command, and preserves the previous selection.
+Resume without `--defer` when the provider recovers. See
+[resilient acquisition](docs/pages/getting-started/generation.md#resilient-data-updates)
+for dependencies, journals and retry examples.
+
+`make update-data` aliases `make data-update`. Selected India OpenAQ
 daily archives from January 2025 onward are preserved in a shared cache;
 updates refresh archive listings and download only missing daily files.
 `atlas-optional` builds standard native artifacts, the default World/Japan
@@ -95,12 +109,13 @@ It uses one frozen edition and performs no provider acquisition. Completed
 outputs and their receipts live under `output/data-editions/<dataset-id>/`;
 `.cartofreako/data/build-current.json` identifies the validated full build.
 
-The update requires an exported `FIRMS_MAP_KEY`, configured P-Tree credentials,
+Both acquisition targets require an exported `FIRMS_MAP_KEY`, configured P-Tree credentials,
 and the configured local swarm/network and audited petroleum inputs. Mutable
 NOAA files are revalidated; pinned local publications retain their dates.
 NOAA downloads use shared adaptive pacing and a 30-minute retry budget per
-request. Repeated updates on the same UTC day reuse validated CPC files and
-continue saved partial downloads. See the [Make download controls](docs/pages/getting-started/generation.md#noaa-download-controls)
+request. CPC 1979–2025 archives are pinned; 2026 updates retain existing
+observations and fetch only missing daily subsets. Saved subsets and partial
+downloads survive retries. See the [Make download controls](docs/pages/getting-started/generation.md#noaa-download-controls)
 for rate limits, progress, retry settings and the optional bulk endpoint.
 A failed update or build preserves the previous completed selection. See the
 [source refresh workflow](docs/pages/getting-started/generation.md#updating-all-configured-data-sources)

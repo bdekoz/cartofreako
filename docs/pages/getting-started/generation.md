@@ -116,8 +116,10 @@ make ASSET_JOBS=2 atlas-optional
 edition, prepares normalized inputs, and validates their hashes, profiles,
 coverage and scientific invariants. Only then does it atomically select
 `.cartofreako/data/current.json`. It does not render or clean existing maps.
-An unavailable required source stops the run and leaves the prior edition
-selected. Successful updates print the dataset ID, acquisition modes and
+The default update stops at the first failed source and leaves the prior
+edition selected. The resilient target continues independent sources and
+saves an incomplete run until all required sources are available. Successful
+updates print the dataset ID, acquisition modes and
 actual source periods. A retrieval date is not an observation date.
 
 `make update-data` is an alias for `make data-update`, including its arguments,
@@ -144,18 +146,27 @@ See the [optional-source coverage audit](../../development/20261109_data_update_
 for standalone research fetchers and deliberately pinned inputs outside the
 current update workflow.
 
-Mutable CPC and OISST files use HTTP revalidation. Interrupted HTTP transfers
+Mutable OISST files use HTTP revalidation; CPC retains closed years and
+requests only missing 2026 daily observations. Interrupted HTTP transfers
 resume only with matching validators; changed remote identities restart.
-CPC downloads use verified 2 MiB byte ranges to avoid NOAA proxy truncation;
-resuming a failed update also reuses partial CPC files from earlier attempts.
-CPC objects already checked on the same UTC day are reused across update runs;
-their receipts retain the actual provider-check time.
+CPC whole-year refreshes, when explicitly requested, use verified 2 MiB byte
+ranges to avoid NOAA proxy truncation. Cached objects, completed daily subsets
+and partial transfers survive failed runs. Time inventories checked on the
+same UTC day are reused; receipts retain the actual provider-check time.
 For local hourly progress reports and CPC completion estimates, see the
 [progress reporter](../../development/data-update-hourly-progress.md).
 CelesTrak retains its two-hour request policy. The optional NASA SSC reference
 may remain explicitly historical. Network, groundstation and audited annual
 publication inputs are copied and labeled as pinned local data; no external
 checkout is pulled. The configured product years remain 2025 and 2026.
+
+Astronomy requests use bounded retries (60 seconds by default), honor
+`Retry-After`, and reuse successful requests on the same UTC day. Gaia falls
+back from ESA to the official ARI DR3 partner service using the same query.
+`ASTRO_HTTP_RETRY_BUDGET` overrides the retry budget. Persistent NASA Exoplanet
+Archive maintenance still stops acquisition; failed queries do not replace
+previous catalogs or the selected edition. See the
+[astronomy acquisition notes](../passes/astronomy.md#source-evaluation-and-bounded-snapshots).
 
 The full `atlas-optional` aggregate runs prerequisites, the two-pass native
 `all-resilient` build, fresh atlas composition/export, all Stage 1 ocean
@@ -209,18 +220,134 @@ relocates the input store. The default preflight working-space budget is
 only from measured local storage needs. Inputs and referenced caches survive
 `make clean`; deletion is an explicit storage-management operation.
 
+### Resilient data updates
+
+| Command | Behavior |
+| --- | --- |
+| `make data-update` | Acquire, prepare, validate and select a complete edition; stop on the first source failure. |
+| `make update-data` | Alias for `data-update`. |
+| `make data-update-resilient` | Continue independent source groups after failures, checkpoint successful work, and report pending sources. |
+| `make all-resilient` | Build native plates from the selected local edition using the existing resilient build passes. |
+| `make atlas-optional` | Build the complete standard, atlas and optional plate set from one selected edition. |
+
+Both acquisition targets reuse the same caches. The resilient target adds
+`--keep-going` to `scripts/data-update.py` while preserving other
+`DATA_UPDATE_ARGS`. It supports the current-edition workflow; omit
+`DATASET=legacy`.
+
+```sh
+# Try every source; a provider outage does not stop unrelated work.
+make data-update-resilient
+
+# Known NASA outage: acquire the other required inputs without trying astronomy.
+make data-update-resilient DATA_UPDATE_ARGS='--defer astronomy'
+
+# When NASA recovers, retry pending sources and reuse completed checkpoints.
+make data-update-resilient DATA_UPDATE_ARGS='--resume <run-id>'
+
+# Continue an incomplete run while explicitly retaining a known deferral.
+make data-update-resilient \
+  DATA_UPDATE_ARGS='--resume <run-id> --defer astronomy'
+```
+
+`--defer SOURCE` is repeatable and applies only to that invocation. A resume
+without the flag retries the deferred source. Already completed sources are
+checksum-verified and skipped. Resuming keeps the run's original calculation
+boundary and implementation fingerprint. A new run selects a new boundary
+and reuses shared cached inputs. After changing acquisition code, start a new
+run rather than resuming a journal made by the older implementation.
+
+Dependencies are respected: astronomy needs orbital data; ocean context needs
+ocean and resources; India validation needs ocean context. A failed or deferred
+prerequisite blocks its dependents while other sources continue. For example,
+`--defer ocean` also blocks ocean context and India. Deferred and failed sources
+remain required for the complete edition.
+
+The journal at `DATA_ROOT/runs/<run-id>/state.json` records validated source
+checkpoints, the current source, and failed, deferred, blocked or invalidated
+sources. Hourly progress reports display those issues and the source actually
+running. If context preparation changes shared ocean inputs and then fails,
+that ocean checkpoint is invalidated and rebuilt on resume. Unexpected changes
+to other completed sources stop the update rather than blessing new hashes.
+
+When required sources remain pending, the run ends as `incomplete`, returns a
+nonzero exit status, prints a resume command, and leaves the prior active
+edition untouched. It creates no usable partial manifest and does not run the
+final full-edition validation. After every source completes, the normal full
+validation and atomic selection still apply. Prerequisite, credential, storage,
+checksum and implementation checks remain enforced.
+
 ### NOAA download controls
 
-CPC fetches use the shared Python HTTP downloader for both edition acquisition
-and missing legacy inputs. It requests verified byte ranges and retains partial
-files under `DATA_ROOT/cache/http/` (default `.cartofreako/data/cache/http/`).
-An explicit `DATA_HTTP_CACHE` overrides that location. New update runs
-revalidate CPC provider freshness on the first request of each UTC day;
-later runs that day reuse hash-verified complete objects without contacting
-NOAA again. The next UTC day triggers conditional revalidation. A provider's
-304 response reuses existing bytes. Direct legacy fetches still reuse readable
-local NetCDF files. Scientific coverage checks and the 1979–2026 range remain
-unchanged.
+CPC acquisition retains closed years and existing current-year observations.
+Only missing 2026 daily observations are downloaded. Shared HTTP objects and
+partial downloads live under `DATA_ROOT/cache/` (default
+`.cartofreako/data/cache/`); `DATA_HTTP_CACHE` overrides the cache location.
+Direct legacy fetches preserve their existing readable NetCDF files.
+Scientific coverage checks and the 1979–2026 input range remain unchanged.
+
+Historical CPC files can be imported once from the older local dataset:
+
+```sh
+python3 scripts/import-cpc-archive.py
+```
+
+The [importer](../../../scripts/import-cpc-archive.py) verifies 1979–2025
+TMAX/TMIN against the source `SHA256SUMS` and checks that GDAL can read each
+variable. It preserves already refreshed HTTP-cache copies in preference to
+older local bytes, then imports the remaining files into the shared
+content-addressed cache. Existing archive pins are retained on repeated imports.
+`--source` selects another raw directory and `--cache` selects another cache.
+The older source files and HTTP partial downloads remain intact.
+
+Subsequent updates stage these 94 pinned archives without provider requests.
+2025 is complete and receives no routine freshness checks. Archive
+receipts preserve their provenance and actual known retrieval/provider-check
+times; unknown historical times remain null. Importing does not select an
+incomplete edition. The new edition still needs all source and scientific
+validation before activation. To revalidate historical files for an explicit
+update, pass `CPC_ARCHIVE_CACHE=0`. Starting a new run is required after
+changing acquisition code; shared cached objects remain reusable.
+
+The archive index and import summary live under `cache/cpc-archive/`.
+Hourly progress reports include the pinned archives in their cached-file
+counts and exclude them from estimated provider requests.
+
+For 2026, [`fetch-cpc-current-year.py`](../../../scripts/fetch-cpc-current-year.py)
+imports the most complete checksum-verified local prefix for each variable.
+It checks NOAA's small NCSS time inventory once per UTC day, then requests
+one native-grid NetCDF subset for each missing day. Existing daily arrays and
+their scientific metadata are retained. Grid orientation, units, missing-value
+encoding and exact dates must match before appending through libnetcdf.
+There is no spatial resampling or byte append to a changing annual download.
+Year files are assembled privately and published only after validation.
+
+The prefix and daily subsets live under `cache/cpc-current/`, with immutable
+content-addressed objects and per-day HTTP receipts. Restarts reuse verified
+daily subsets across UTC days. A failed request leaves the previous year
+prefix intact; completed missing-day downloads are retained for retry. Freshness
+checks can discover new observations, but do not replace existing dates with
+upstream revisions. `CPC_INCREMENTAL=0` explicitly selects whole-year HTTP
+refresh behavior for a deliberate revision check or initial bootstrap.
+
+The November 10 migration retained TMAX through November 7 and TMIN through
+August 4. The approved one-time TMIN backfill fills August 5 onward; subsequent
+updates request only days after the retained prefix. November and December
+data are requested as NOAA publishes them. A sparse November-only TMIN file
+would not satisfy the full-year coverage requirement.
+
+An independent current-year update can run while the full workflow waits for
+another provider:
+
+```sh
+python3 scripts/fetch-cpc-current-year.py --variable tmax
+python3 scripts/fetch-cpc-current-year.py --variable tmin
+```
+
+`--seed-only` imports a local prefix without contacting NOAA; repeatable
+`--seed FILE` selects bootstrap inputs. A second worker for the same variable
+and cache is rejected. Resume a stopped backfill by running the same command;
+the complete `make data-update` command invokes these workers automatically.
 
 NOAA PSL requests share a persistent pacing/cooldown record under
 `cache/http/providers/`, including across files, processes, and the
@@ -245,7 +372,10 @@ direct script use.
 | `NOAA_HTTP_MAX_INTERVAL` | `60` | Maximum adaptive request interval; must be at least the minimum. Provider cooldowns and `Retry-After` may be longer. |
 | `DATA_HTTP_PROGRESS_INTERVAL` | `30` | Positive interval between progress messages; retry decisions and completion also print immediately. |
 | `CPC_HTTP_RANGE_SIZE` | `2097152` | Positive byte count per CPC range (2 MiB). Keep this size unless larger ranges have been tested against proxy truncation. |
-| `CPC_HTTP_DAILY_CACHE` | `1` | Reuse complete CPC objects checked on the same UTC day across update invocations; `0` requests revalidation in each new run. Original provider-check/retrieval times remain in receipts. |
+| `CPC_HTTP_DAILY_CACHE` | `1` | Reuse the 2026 time inventory and HTTP objects checked on the same UTC day; `0` revalidates the inventory in each new run. Previously retained observation dates remain pinned. |
+| `CPC_ARCHIVE_CACHE` | `1` | Stage imported 1979–2025 CPC archives without provider requests. `0` enables ordinary HTTP revalidation/download for those years for this update. |
+| `CPC_INCREMENTAL` | `1` | Request only missing daily 2026 observations. `0` explicitly enables whole-year HTTP refresh. |
+| `CPC_SUBSET_BASE_URL` | `https://psl.noaa.gov/thredds/ncss/grid/Datasets/cpc_global_temp` | NOAA's native-grid daily subset service, using the same shared provider pacing. |
 | `CPC_BASE_URL` | `https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp` | CPC access point; included in HTTP cache identity and provenance. |
 
 For a conservative initial acquisition:
@@ -278,7 +408,7 @@ To wait gently for recovery after a CPC 429, stop the full acquisition and
 launch the durable hourly monitor from the repository root:
 
 ```sh
-nohup python3 scripts/noaa-cpc-ping.py \
+nohup python3 scripts/ping-noaa-cpc.py \
   > noaa-cpc-ping-monitor.log 2>&1 < /dev/null &
 ```
 

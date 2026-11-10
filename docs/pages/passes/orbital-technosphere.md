@@ -83,7 +83,7 @@ Generation never infers a location from an IP address and never silently
 uses the host clock. This keeps one build repeatable from any machine.
 
 [`scripts/fetch-orbiting-data.sh`](../../../scripts/fetch-orbiting-data.sh)
-invokes [the snapshot recorder](../../../scripts/refresh-orbiting-snapshot.py).
+invokes [the snapshot recorder](../../../scripts/fetch-orbiting-snapshot.py).
 It reads all catalog URLs from the profile, validates OMM schemas, unique
 NORAD IDs, finite elements, population limits and epoch freshness, then
 installs a new dated directory with acquisition receipts and `SHA256SUMS`.

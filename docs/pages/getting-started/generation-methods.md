@@ -7,6 +7,11 @@
 ## Dataset selection and optional aggregate
 
 `make data-update` prepares and validates a complete local input edition.
+`make data-update-resilient` checkpoints successful acquisition groups and
+continues independent groups after a provider failure. Explicit deferrals,
+such as `DATA_UPDATE_ARGS='--defer astronomy'`, permit useful acquisition during
+an outage; all sources must still complete before validation and activation.
+See [resilient acquisition and resume](generation.md#resilient-data-updates).
 `make atlas-optional` builds its standard native artifacts, default World/Japan
 atlas, four Stage 1 year identities and eight Stage 2 climate year identities,
 including SST, anomalies, coral exposure, record-day, marine-heatwave,

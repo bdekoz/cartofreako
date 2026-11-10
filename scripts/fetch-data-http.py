@@ -18,5 +18,5 @@ try:
     fetch(args.url, args.output, os.environ["DATA_HTTP_CACHE"],
           minimum_interval=args.minimum_interval, range_size=args.range_size, same_day_cache=args.same_day_cache)
 except (DatasetError, KeyError) as error:
-    print(f"data-http-fetch: {error}", file=sys.stderr)
+    print(f"fetch-data-http: {error}", file=sys.stderr)
     sys.exit(1)

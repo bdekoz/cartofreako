@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Check aggregate ordering and failure propagation without fetching data."""
 import os
+import json
 from pathlib import Path
 import re
 import subprocess
@@ -150,6 +151,25 @@ os.execvp('make', ['make', '-f', os.environ['DATA_UPDATE_TEST_MAKEFILE'], *sys.a
                                 cwd=ROOT, env=self.env, text=True, capture_output=True, check=True)
         self.assertIn('data-update', result.stdout.splitlines())
         self.assertIn('update-data', result.stdout.splitlines())
+        self.assertIn('data-update-resilient', result.stdout.splitlines())
+
+    def test_resilient_target_preserves_user_arguments_and_enables_keep_going(self):
+        python=self.folder/'python-wrapper'
+        python.write_text('#!'+sys.executable+'\nimport json,sys\nprint(json.dumps(sys.argv[1:]))\n')
+        python.chmod(0o755)
+        result=subprocess.run(['make','--no-print-directory','DATASET=current',
+                               'data-update-resilient',f'ATLAS_PYTHON={python}',
+                               'DATA_UPDATE_ARGS=--defer astronomy'],cwd=ROOT,env=self.env,
+                              text=True,capture_output=True,timeout=30)
+        self.assertEqual(result.returncode,0,result.stderr)
+        command=next(json.loads(line) for line in result.stdout.splitlines() if line.startswith('['))
+        self.assertEqual(command,['scripts/data-update.py','--defer','astronomy','--keep-going'])
+
+    def test_resilient_target_rejects_legacy_workflow(self):
+        result=subprocess.run(['make','--no-print-directory','DATASET=legacy','data-update-resilient'],
+                              cwd=ROOT,env=self.env,text=True,capture_output=True,timeout=30)
+        self.assertNotEqual(result.returncode,0)
+        self.assertIn('requires the current-edition workflow',result.stderr)
 
 
 if __name__ == '__main__':

@@ -177,7 +177,7 @@ Relevant evidence:
   [profile/data verifier](../../scripts/verify-anthropocene-particulate-data.sh).
 - [CPC fetcher](../../scripts/fetch-anthropocene-cpc-data.sh) and
   [temperature preparation wrapper](../../scripts/prepare-anthropocene-temperature-data.sh).
-- [Orbital snapshot recorder](../../scripts/refresh-orbiting-snapshot.py).
+- [Orbital snapshot recorder](../../scripts/fetch-orbiting-snapshot.py).
 - [Resource extension](../../scripts/prepare-mineral-additions.py).
 - [Atlas compositor](../../scripts/build-atlas-defaults.py) and
   [presentation revision script](../../scripts/revise-setouchi-plates.py).

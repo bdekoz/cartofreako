@@ -185,7 +185,7 @@ class Sources:
     def orbital(self):
         target = self.edition / "inputs/orbital"
         template = Path(os.environ.get("ORBITING_PROFILE", ROOT / "assets.static/orbital-technosphere/20261109/orbital-technosphere-profile.json"))
-        self.run("python3", ROOT / "scripts/refresh-orbiting-snapshot.py", "--template", template,
+        self.run("python3", ROOT / "scripts/fetch-orbiting-snapshot.py", "--template", template,
                  "--output", target, "--timestamp", self.as_of.isoformat().replace("+00:00", "Z"),
                  "--cache", self.cache / "celestrak", "--historical-reference-profile",
                  ROOT / "assets.static/orbital-technosphere/orbital-technosphere-profile.json")
@@ -259,7 +259,10 @@ class Sources:
                 self.run("bash", ROOT / "scripts/verify-anthropocene-particulate-data.sh", path, destination)
         self.bind("ANTHROPOCENE_DATA_DIR", target)
         self.record("anthropocene", target, {"cpc": {str(y): json.loads((target / f"anthropocene-land-temperature-{y}-profile.json").read_text())["snapshot"] for y in (2025, 2026)},
-                    "particulate": "source-specific eligible dates retained in normalized metadata"})
+                    "particulate": "source-specific eligible dates retained in normalized metadata"},
+                    cpc_archive_policy="Imported 1979–2025 inputs retain pinned-local provenance; 2026 appends missing observations. Per-file receipts identify actual acquisition.",
+                    cpc_archived_files=sum(json.loads(p.read_text()).get('cache_policy') == 'pinned-cpc-archive'
+                                           for p in cpc.glob('*.receipt.json')))
 
     def resources(self):
         base, target = self.directory("resources-base"), self.directory("resources")

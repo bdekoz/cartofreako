@@ -85,7 +85,7 @@ fetch() {
   echo "fetching $description"
   fetch_was_remote=1
   if [[ -n ${DATA_HTTP_CACHE:-} ]]; then
-    python3 "$(dirname "$0")/data-http-fetch.py" "$url" "$output"
+    python3 "$(dirname "$0")/fetch-data-http.py" "$url" "$output"
     if [[ $(jq -r '.acquisition' "$output.receipt.json") == policy-cache ]]; then
       fetch_was_remote=0
     fi

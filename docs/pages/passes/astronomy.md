@@ -212,8 +212,62 @@ interchangeable catalogs:
 `make fetch-astro-data` runs
 [`fetch-astro-data.sh`](../../../scripts/fetch-astro-data.sh) and refreshes bounded
 snapshots: 500 Gaia DR3 stars brighter than G 5.5, 250 nearby confirmed-planet
-rows, and seven named JPL SBDB records. The script checks row counts and writes
-`SHA256SUMS`. It does not modify the profile or the curated transient file.
+rows, and seven named JPL SBDB records. The shell entry point calls
+[`fetch-astro-data.py`](../../../scripts/fetch-astro-data.py), which uses the
+shared HTTP cache, bounded retries and provider `Retry-After` headers. The
+default retry budget is 60 seconds per request; override it with
+`ASTRO_HTTP_RETRY_BUDGET` (or the general `DATA_HTTP_RETRY_BUDGET`).
+
+Gaia first queries ESA; on failure it runs the same DR3 query against the
+[official ARI partner service](https://gaia.ari.uni-heidelberg.de/). Source
+receipts identify the endpoint actually used. Successful requests are reused
+on the same UTC day across retries and new editions; older cache objects are
+revalidated. An outage never silently selects an older catalog.
+
+The fetcher validates complete CSV row counts, columns, identities and celestial
+coordinates, and JPL object identities and required orbital elements. It stages
+all nine catalogs before replacing previous outputs and writes portable
+`SHA256SUMS` plus per-file HTTP receipts. A later failure retains successful
+downloads in the shared cache. It does not modify the profile or the curated
+transient file. If NASA Exoplanet Archive maintenance persists beyond the retry
+budget, acquisition fails with the affected catalog name and retains the prior
+selected edition; try again once the provider recovers.
+
+To monitor the actual NASA data service once per hour until it recovers:
+
+```sh
+nohup python3 scripts/ping-nasa-exoplanet-archive.py \
+  > nasa-exoplanet-ping-monitor.log 2>&1 < /dev/null &
+```
+
+The [monitor](../../../scripts/ping-nasa-exoplanet-archive.py) issues a one-row
+`pl_name` query and requires a valid CSV header and a nonempty planet name.
+An HTTP 200 maintenance page does not count as recovery.
+Probe results show a red `no` or green `yes` immediately after the UTC
+timestamp, including in redirected monitor output. Cooldown messages show
+red `no` and indicate that no new check was made. It honors
+`Retry-After`, including HTTP dates, and persists the next eligible probe time
+under the shared cache so restarts preserve the cooldown. Only one monitor
+can run per cache. On first success it appends the UTC timestamp to
+`nasa-exoplanet-ping-status.log` at the repository root and exits; it does not
+start acquisition or modify downloaded data. The timestamp marks the first
+observed successful check, rather than the exact time NASA recovered.
+
+```sh
+# Check once, subject to any saved cooldown.
+python3 scripts/ping-nasa-exoplanet-archive.py --once
+
+tail -f nasa-exoplanet-ping-monitor.log
+cat nasa-exoplanet-ping-status.log
+```
+
+Exit codes for `--once` are 0 for valid CSV, 1 for failure, and 2 when the saved
+cooldown prevents a request. `--interval`, `--timeout`, `--log` and `--cache`
+can override defaults. The default request timeout is 20 seconds.
+
+Changing acquisition code requires a new `make data-update` run rather than
+resuming a journal created with the older implementation. Cached downloads,
+including CPC partial transfers, remain reusable by the new run.
 Hubble's checked OMM row comes from
 `assets.static/orbital-technosphere/celestrak-science.csv`, shared with the
 Orbital Technosphere pass and refreshed deliberately by

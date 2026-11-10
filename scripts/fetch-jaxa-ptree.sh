@@ -9,13 +9,13 @@ set -euo pipefail
 usage()
 {
   printf '%s\n' \
-    'usage: resolve-jaxa-ptree.sh PRODUCT-URL CUTOFF-UTC OUTPUT-DIRECTORY OUTPUT-JSON' >&2
+    'usage: fetch-jaxa-ptree.sh PRODUCT-URL CUTOFF-UTC OUTPUT-DIRECTORY OUTPUT-JSON' >&2
   exit 2
 }
 
 fail()
 {
-  printf 'resolve-jaxa-ptree: %s\n' "$*" >&2
+  printf 'fetch-jaxa-ptree: %s\n' "$*" >&2
   exit 1
 }
 

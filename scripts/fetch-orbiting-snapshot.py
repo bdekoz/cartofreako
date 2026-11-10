@@ -163,7 +163,7 @@ def main():
         print(f"Created {args.output}: {len(sources) - 1} OMM catalogs; profile {profile['timestamp']}")
         return 0
     except Exception as error:
-        print(f"refresh-orbiting-snapshot: {error}; no snapshot installed", file=sys.stderr)
+        print(f"fetch-orbiting-snapshot: {error}; no snapshot installed", file=sys.stderr)
         return 1
 
 

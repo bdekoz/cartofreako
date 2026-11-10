@@ -11,8 +11,8 @@ fi
 
 data_dir=${1:-assets.static/cloud-atmosphere}
 profile="$data_dir/cloud-atmosphere-profile.json"
-resolver=$(dirname "$0")/resolve-jaxa-stac.py
-ptree_resolver=$(dirname "$0")/resolve-jaxa-ptree.sh
+resolver=$(dirname "$0")/fetch-jaxa-stac.py
+ptree_resolver=$(dirname "$0")/fetch-jaxa-ptree.sh
 for path in "$profile" "$resolver" "$ptree_resolver"; do
   if [[ ! -f $path ]]; then
     echo "missing cloud-atmosphere input: $path" >&2

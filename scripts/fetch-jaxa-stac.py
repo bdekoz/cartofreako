@@ -212,5 +212,5 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except Exception as error:  # concise command-line failure, no credentials
-        print(f"resolve-jaxa-stac: {error}", file=sys.stderr)
+        print(f"fetch-jaxa-stac: {error}", file=sys.stderr)
         raise SystemExit(1)

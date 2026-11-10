@@ -76,6 +76,18 @@
     "mutable-year-files": {
       "revalidate": "conditional-http-or-verified-download"
     },
+    "cpc-archive": {
+      "years": [1979, 2025],
+      "acquisition": "pinned-local",
+      "integrity": "recorded-sha256-and-readable-netcdf",
+      "provider_refresh": "explicit CPC_ARCHIVE_CACHE=0"
+    },
+    "cpc-current-year": {
+      "year": 2026,
+      "acquisition": "append-missing-daily-subsets",
+      "existing_observations": "retain-with-provenance",
+      "provider_refresh": "daily-time-inventory; only missing dates fetched"
+    },
     "historical-baselines": {
       "years": [
         1991,

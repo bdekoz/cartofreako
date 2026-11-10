@@ -43,8 +43,7 @@ def atomic_json(path, value):
         Path(name).unlink(missing_ok=True)
 
 
-def writer_running(root):
-    path = root/'update.lock'
+def held_lock(path):
     if not path.exists():
         return False
     with path.open() as stream:
@@ -54,6 +53,10 @@ def writer_running(root):
             return True
         fcntl.flock(stream, fcntl.LOCK_UN)
     return False
+
+
+def writer_running(root):
+    return held_lock(root/'update.lock')
 
 
 def pacing_seconds(requests, interval, successes, minimum=2):
@@ -84,12 +87,41 @@ def snapshot(root, now, minimum=2):
         if '/cpc_global_temp/' in url and name in NAMES and item.get('bytes', 0)>0:
             if (root/'cache/sha256'/item['sha256']).is_file():
                 cached[name] = item
+    pinned = {}
+    archive = read(root/'cache/cpc-archive/manifest.json', {})
+    for name, item in archive.get('files', {}).items():
+        if name in NAMES and int(name.split('.')[1]) <= 2025:
+            obj = root/'cache/sha256'/item['sha256']
+            if obj.is_file() and obj.stat().st_size == item['bytes']:
+                pinned[name] = item
+                cached[name] = item
+    current_year = {}
+    for variable in ('tmax', 'tmin'):
+        name = f'{variable}.2026.nc'
+        item = read(root/'cache/cpc-current'/f'{variable}.2026.json', {})
+        if not item:
+            continue
+        obj = root/'cache/sha256'/item['sha256']
+        if not obj.is_file() or obj.stat().st_size != item['bytes']:
+            continue
+        cached[name] = item
+        start, end = item.get('pending_start'), item.get('pending_through')
+        needed = ((datetime.fromisoformat(end)-datetime.fromisoformat(start)).days+1) if start and end else 0
+        saved = [path.stem for path in (root/'cache/cpc-current/parts'/f'{variable}.2026').glob('*.nc')
+                 if start and end and start <= path.stem <= end and path.with_name(path.name+'.receipt.json').exists()]
+        checked = item.get('inventory_checked_at')
+        check_due = not checked or datetime.fromisoformat(checked).astimezone(timezone.utc).date() != datetime.fromtimestamp(now, timezone.utc).date()
+        current_year[name] = {'variable':variable, 'through':item['data_through'],
+                             'needed_days':needed, 'cached_days':len(saved),
+                             'remaining_requests':max(0, needed-len(saved))+int(check_due),
+                             'latest_saved_day':max(saved) if saved else None,
+                             'running':held_lock(root/'cache/cpc-current'/f'{variable}.2026.lock')}
     complete = {name: (raw/name).stat().st_size for name in NAMES if (raw/name).is_file()}
     typical = sum(r['bytes'] for r in cached.values())/len(cached) if cached else 88_000_000
     partials = {}
     bases = ('https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp',
              'https://downloads.psl.noaa.gov/Datasets/cpc_global_temp')
-    for name in set(NAMES)-set(complete):
+    for name in set(NAMES)-set(complete)-set(pinned)-set(current_year):
         for base in bases:
             key = hashlib.sha256((base+'/'+name+'{}').encode()).hexdigest()
             part = cache/(key+'.part')
@@ -101,6 +133,11 @@ def snapshot(root, now, minimum=2):
                     partials[name] = item
     requests = 0
     for name in set(NAMES)-set(complete):
+        if name in pinned:
+            continue
+        if name in current_year:
+            requests += current_year[name]['remaining_requests']
+            continue
         if name in partials:
             item = partials[name]
             requests += max(0, math.ceil((item['total']-item['bytes'])/2097152))
@@ -120,8 +157,11 @@ def snapshot(root, now, minimum=2):
     sources = [r['id'] for r in state.get('sources', [])]
     return {'at': now, 'run_id': ident, 'status': state['status'], 'error': state.get('error'),
             'writer_running': writer_running(root), 'completed_sources': sources,
-            'phase': next((s for s in ORDER if s not in sources), 'validation/activation'),
-            'complete': len(complete), 'cached': len(cached), 'total_files': len(NAMES),
+            'phase': state.get('current_source') or next((s for s in ORDER if s not in sources), 'validation/activation'),
+            'source_issues': state.get('issues', {}),
+            'complete': len(complete), 'cached': len(cached), 'pinned_archives': len(pinned), 'total_files': len(NAMES),
+            'current_year':current_year,
+            'cpc_workers':[s['variable'] for s in current_year.values() if s['running']],
             'downloaded_bytes': sum(complete.values())+sum(p['bytes'] for p in partials.values()),
             'expected_bytes': typical*len(NAMES), 'remaining_requests': requests,
             'partial': max(partials.values(), key=lambda p:p['mtime']) if partials else None,
@@ -137,13 +177,26 @@ def report(current, previous):
              f'Sources: {len(current["completed_sources"])}/{len(ORDER)} complete; phase: {current["phase"]}',
              f'CPC: {current["complete"]}/96 files downloaded; {current["cached"]}/96 cached; '
              f'{current["downloaded_bytes"]/1024**3:.2f}/{current["expected_bytes"]/1024**3:.2f} GiB in this edition.']
+    for name, issue in current.get('source_issues', {}).items():
+        lines.append(f'Source {name}: {issue["status"]}; {issue["reason"]}')
+    if current.get('pinned_archives'):
+        lines.append(f'Pinned CPC archives: {current["pinned_archives"]} files need no provider request.')
+    for item in current.get('current_year', {}).values():
+        text=f'CPC 2026 {item["variable"].upper()}: retained through {item["through"]}'
+        if item['needed_days']:
+            text+=f'; {item["cached_days"]}/{item["needed_days"]} missing days cached'
+            if item['latest_saved_day']:
+                text+='; latest saved '+item['latest_saved_day']
+        text+='; worker '+('running' if item['running'] else 'not running')
+        lines.append(text+'.')
     partial = current['partial']
     if partial:
         lines.append(f'Current file: {partial["name"]} — {100*partial["bytes"]/partial["total"]:.1f}% '
                      f'({partial["bytes"]:,}/{int(partial["total"]):,} bytes); '
                      f'last progress {datetime.fromtimestamp(partial["mtime"], LOCAL):%H:%M:%S %Z}.')
     lines.append(f'Adaptive spacing: {current["pacing_interval"]:.1f}s between requests.')
-    if previous and previous['run_id']==current['run_id']:
+    if (previous and previous['run_id']==current['run_id']
+            and previous.get('pinned_archives', 0)==current.get('pinned_archives', 0)):
         delta = current['downloaded_bytes']-previous['downloaded_bytes']
         elapsed = current['at']-previous['at']
         if elapsed>0:
@@ -154,9 +207,9 @@ def report(current, previous):
                 current['observed_eta_seconds'] = max(0, current['expected_bytes']-current['downloaded_bytes'])/rate
                 lines.append(f'Observed-rate ETA: about {current["observed_eta_seconds"]/3600:.1f}h if that rate persists; '
                              'recently recovering pacing can make this conservative.')
-    if current['complete']==96:
+    if current['complete']==96 and not current.get('cpc_workers'):
         lines.append('CPC downloads complete. Remaining source preparation/validation has no reliable ETA yet.')
-    elif current['status']=='failed' or not current['writer_running']:
+    elif (current['status']=='failed' or not current['writer_running']) and not current.get('cpc_workers'):
         lines.append('Completion ETA unavailable while the update is stopped; saved bytes remain available.')
     else:
         seconds = current['pacing_model_seconds']
@@ -226,6 +279,10 @@ def main():
     if args.install_hourly or args.uninstall_hourly:
         configure_hourly(root, args.notify, args.uninstall_hourly, args.minimum_interval)
         return 0
+    # Leave the hourly schedule dormant between acquisition runs. Independent
+    # CPC workers remain visible in manual reports but do not enable this job.
+    if args.scheduled and not writer_running(root):
+        return 0
     folder = root/'reports'
     folder.mkdir(parents=True, exist_ok=True)
     with (folder/'progress-report.lock').open('a') as stream:
@@ -250,8 +307,6 @@ def main():
                 notify_user('\n'.join(notice))
             except (OSError, subprocess.TimeoutExpired) as error:
                 print('Desktop notification unavailable: '+str(error), file=sys.stderr)
-        if args.scheduled and current['status'] in ('active', 'validated-candidate'):
-            configure_hourly(root, remove=True)
     return 0
 
 

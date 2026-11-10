@@ -129,7 +129,7 @@ def main():
         print('CPC monitor stopped; saved probe schedule retained.', file=sys.stderr)
         return 130
     except (DatasetError, OSError, ValueError) as error:
-        print('noaa-cpc-ping: '+redact(error), file=sys.stderr)
+        print('ping-noaa-cpc: '+redact(error), file=sys.stderr)
         return 1
 
 

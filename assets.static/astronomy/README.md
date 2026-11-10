@@ -33,6 +33,15 @@ The fetch is intentionally separate from SVG rendering. A normal generator run
 is offline and reproducible from the profile and snapshots. Refreshing a
 catalog may change results because the upstream archives evolve.
 
+The fetcher retries transient failures, honors `Retry-After`, and falls back
+from ESA Gaia to the official ARI Gaia DR3 service with the same query. It
+validates all nine responses before replacing previous catalogs and writes
+`SHA256SUMS` and per-file HTTP receipts. Successful responses live in the shared
+data cache and are reused on the same UTC day, including when a later provider
+fails. Persistent outages stop the refresh without silently selecting older
+catalogs. The per-request retry budget defaults to 60 seconds; override with
+`ASTRO_HTTP_RETRY_BUDGET`.
+
 `curated-sky.json` adds a small multi-wavelength deep-sky collection and the
 GCN transient snapshot associated with the checked-in timestamp. Its source
 URLs preserve provenance for every item. JAXA Earth data is owned by the

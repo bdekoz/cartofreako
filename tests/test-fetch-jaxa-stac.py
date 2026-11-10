@@ -10,7 +10,7 @@ import runpy
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-MODULE = runpy.run_path(str(ROOT / "scripts" / "resolve-jaxa-stac.py"))
+MODULE = runpy.run_path(str(ROOT / "scripts" / "fetch-jaxa-stac.py"))
 BASE = "https://example.invalid/stac/collection/"
 
 

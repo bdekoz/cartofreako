@@ -3,7 +3,7 @@
 set -euo pipefail
 
 repository_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)
-resolver="$repository_root/scripts/resolve-jaxa-ptree.sh"
+resolver="$repository_root/scripts/fetch-jaxa-ptree.sh"
 temporary_dir=$(mktemp -d)
 trap 'rm -rf -- "$temporary_dir"' EXIT
 

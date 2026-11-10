@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'scripts'))
 from dataset import DatasetError, lock
 
-spec = importlib.util.spec_from_file_location('cpc_ping', ROOT/'scripts/noaa-cpc-ping.py')
+spec = importlib.util.spec_from_file_location('cpc_ping', ROOT/'scripts/ping-noaa-cpc.py')
 ping = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(ping)
 
@@ -157,7 +157,7 @@ class Monitor(unittest.TestCase):
         self.assertIn('timed out', note)
 
     def test_default_success_log_is_in_repository_root(self):
-        with patch.object(sys, 'argv', ['noaa-cpc-ping.py', '--once']), patch.object(ping, 'monitor', return_value=0) as monitor:
+        with patch.object(sys, 'argv', ['ping-noaa-cpc.py', '--once']), patch.object(ping, 'monitor', return_value=0) as monitor:
             self.assertEqual(ping.main(), 0)
         self.assertEqual(monitor.call_args.args[1], ROOT/'noaa-cpc-ping-status.log')
 
@@ -177,7 +177,7 @@ class Monitor(unittest.TestCase):
         self.addCleanup(server.server_close)
         self.addCleanup(server.shutdown)
         threading.Thread(target=server.serve_forever, daemon=True).start()
-        result = subprocess.run([sys.executable, str(ROOT/'scripts/noaa-cpc-ping.py'), '--once',
+        result = subprocess.run([sys.executable, str(ROOT/'scripts/ping-noaa-cpc.py'), '--once',
                                  '--url', f'http://127.0.0.1:{server.server_port}/tmin.1981.nc',
                                  '--cache', str(self.cache), '--log', str(self.log)],
                                 capture_output=True, text=True, timeout=20)
