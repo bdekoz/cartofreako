@@ -150,6 +150,8 @@ CPC downloads use verified 2 MiB byte ranges to avoid NOAA proxy truncation;
 resuming a failed update also reuses partial CPC files from earlier attempts.
 CPC objects already checked on the same UTC day are reused across update runs;
 their receipts retain the actual provider-check time.
+For local hourly progress reports and CPC completion estimates, see the
+[progress reporter](../../development/data-update-hourly-progress.md).
 CelesTrak retains its two-hour request policy. The optional NASA SSC reference
 may remain explicitly historical. Network, groundstation and audited annual
 publication inputs are copied and labeled as pinned local data; no external
