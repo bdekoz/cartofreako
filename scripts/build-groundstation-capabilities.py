@@ -42,8 +42,17 @@ def radius(record, config):
     area = record["aperture_proxy_m2"]
     if area is None:
         return size["unknown_radius_inches"]
-    return max(size["minimum_radius_inches"],
-               size["reference_radius_inches"]*math.sqrt(area/size["reference_aperture_m2"]))
+    minimum = size["minimum_radius_inches"]
+    baseline = max(minimum,
+                   size["reference_radius_inches"]*math.sqrt(area/size["reference_aperture_m2"]))
+    # A presentation spread changes neither the listed aperture nor unknowns.
+    # Keeping the floor fixed makes the low-to-high radius span explicit.
+    spread = size.get("radius_spread_multiplier", 1)
+    if not math.isfinite(spread) or spread <= 0:
+        raise ValueError("Radius spread must be finite and positive")
+    if spread == 1:
+        return baseline
+    return minimum + spread * (baseline - minimum)
 
 
 def layout(records, projection, config):

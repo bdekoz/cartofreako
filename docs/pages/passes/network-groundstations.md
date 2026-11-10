@@ -61,7 +61,17 @@ update the profile's feature count, date and hashes, then `SHA256SUMS`.
 
 ## Default rendering
 
-The pass follows the alpha60 Starlink gateway style:
+The **default atlas** uses the [SLSL v3 groundstation treatment](../../development/20261109_starlink_star_light_v3.md):
+nine capability silhouettes, twice the low-to-high radius span, full-opacity
+amber links, and no filled continental land or Antarctic inset. The shared
+renderer recomputes collision placement and preserves tethers to source
+positions. Unknown sizes and PoPs remain fixed; links never acquire antenna
+symbols. Each atlas companion legend describes the enhanced aperture display
+and the selected source population. `generation-style.json` selects the
+recipe for both current and retained atlas builds.
+
+The raw native pass, used as a geometric input to atlas composition, retains
+the alpha60 Starlink gateway style:
 
 | Layer | Mark |
 | --- | --- |

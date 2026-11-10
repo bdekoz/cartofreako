@@ -16,6 +16,7 @@ import re
 import xml.sax
 
 from atlas_presentation import settings, theme, css, paint
+import atlas_groundstations as GROUNDSTATIONS
 from cartofreako_style import STYLE
 from legend_informatics import E, ROOT, NS, WIDTH, HEIGHT, digest, el, save, text, register_fonts
 
@@ -260,7 +261,14 @@ def verify_subjects(out, config, recipe):
                 links = root.xpath('//*[@data-gateway-link="true"]')
                 assert len(links) == 124
                 assert all(css(n.attrib)['stroke'] == recipe['text'] and float(css(n.attrib)['stroke-opacity']) == 1 for n in links)
-                result[scope+'/'+stem] = {'fiber_links': len(links)}
+                sites = root.xpath('//*[@data-groundstation="true"]')
+                assert len(sites) == 590
+                assert len(root.xpath('//*[@data-kind="pop"]')) == 66
+                assert len({n.get('data-marker-shape') for n in sites}) == 9
+                assert not root.xpath('//*[@id="terrestrial-land" or @id="antarctica-consolidated-inset"]')
+                assert max(float(n.get('data-radius-inches')) for n in sites) > .318
+                result[scope+'/'+stem] = {'source_links': len(links), 'antenna_records': len(sites),
+                                        'presentation': 'slsl-v3'}
     for scope in ('world','japan'):
         root=read_svg(out/'maps'/scope/'svg/cloud-atmosphere.svg')
         assert root.get('data-h3-resolution')=='5'
@@ -294,6 +302,10 @@ def main():
                    'catalog_applier_sha256': digest(ROOT/'scripts/apply-atlas-catalog.py'),
                    'mineral_supplement_sha256': digest(ROOT/'output/mineral-additions-20261108/supplement-manifest.json'),
                    'recipe_sha256': digest(ROOT/STYLE['atlas']['presentation']['recipe_file']),
+                   'groundstation_recipe_sha256': digest(ROOT/STYLE['atlas']['presentation']['groundstation_recipe_file']),
+                   'groundstation_builder_sha256': digest(ROOT/'scripts/atlas_groundstations.py'),
+                   'slsl_builder_sha256': digest(ROOT/'scripts/starlink_star_light.py'),
+                   'capability_builder_sha256': digest(ROOT/'scripts/build-groundstation-capabilities.py'),
                    'builder_sha256': digest(Path(__file__)), 'theme_sha256': digest(ROOT/'scripts/atlas_presentation.py')}
     if args.check:
         receipt = read(receipt_path)
@@ -357,6 +369,13 @@ def main():
     records = []
     work = out/'sources/presentation-work'
     work.mkdir(parents=True, exist_ok=True)
+    groundstation_native, groundstation_evidence = GROUNDSTATIONS.prepare(
+        selected[('network-groundstations', 'map')][1], work, recipe)
+    for path in (groundstation_native, work/'groundstation-capability-evidence.json',
+                 ROOT/groundstation_evidence['source'],
+                 ROOT/groundstation_evidence['configuration']['source_profile'],
+                 ROOT/GROUNDSTATIONS.groundstation_settings(STYLE)['capability_config']):
+        remember(path)
     observer = None
     # Maps first: the retained Japan observer supplies its new legend keys.
     for r in sorted(base['records'], key=lambda r: r['kind'] != 'map'):
@@ -377,7 +396,17 @@ def main():
             continue
         root = None
         origin = 'st2-theme'
-        if stem in subjects and (scope == 'world' or (scope == 'japan' and kind == 'legend' and not stem.endswith('observer'))):
+        if stem == 'network-groundstations':
+            if kind == 'map':
+                root = (copy.deepcopy(selected[(stem, kind)][0]) if scope == 'world' else read_svg(source))
+                GROUNDSTATIONS.replace_source(root, groundstation_native)
+                r['framing_adjustment'] = {'groundstation_presentation':'slsl-v3',
+                                           'filled_land':False, 'antarctic_inset':False}
+            else:
+                root = GROUNDSTATIONS.legend(scope, groundstation_evidence, recipe)
+            source = groundstation_native
+            origin = 'slsl-v3-groundstations'
+        elif stem in subjects and (scope == 'world' or (scope == 'japan' and kind == 'legend' and not stem.endswith('observer'))):
             root = copy.deepcopy(selected[(stem, kind)][0])
             source = selected[(stem, kind)][1]
             origin = 'approved-msp-5'

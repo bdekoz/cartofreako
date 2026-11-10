@@ -74,6 +74,7 @@
 /noaa-cpc-ping-monitor.log
 /data-update-progress.log
 /output/data-editions/
+/output/starlink-star-light-v3-20261109/
 
 # Downloaded inputs and local build products.
 /assets.static/natural-earth/10m-physical-vectors/

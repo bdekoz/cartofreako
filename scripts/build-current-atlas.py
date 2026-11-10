@@ -22,6 +22,7 @@ from lxml import etree as E
 from dataset import ROOT, DatasetError, atomic_json, binding, context, digest, output
 from atlas_presentation import settings, theme
 from atlas_presentation import css, paint
+import atlas_groundstations as GROUNDSTATIONS
 from cartofreako_style import STYLE, Projection
 from legend_informatics import WIDTH, HEIGHT, SUFFIX, font_environment, legend_group, register_fonts
 from atlas_review_sheets import el, legend, save
@@ -407,6 +408,10 @@ def build(catalog=None):
             source = work / ("cloud-atmosphere" + SUFFIX + ".svg")
         else:
             source = native_path(native, plate)
+        groundstation_evidence = None
+        if ident == 'network-groundstations':
+            source, groundstation_evidence = GROUNDSTATIONS.prepare(source, work, recipe,
+                profile_path=binding('NETWORK_GROUNDSTATIONS_PROFILE'))
         for scope in ("world", "japan"):
             selected = observer_source(source, plate, scope, work)
             target = destination / "maps" / scope / "svg" / (ident + ".svg")
@@ -431,7 +436,12 @@ def build(catalog=None):
                 celestial_presentation(target,plate,recipe)
             legend_path = destination / "legends" / scope / "svg" / (ident + "-legend.svg")
             legend_path.parent.mkdir(parents=True, exist_ok=True)
-            standalone_legend(plate, selected, legend_path, manifest, scope, manifest["sources"])
+            if groundstation_evidence is not None:
+                companion = GROUNDSTATIONS.legend(scope, groundstation_evidence, recipe)
+                companion.set('data-dataset-id', manifest['dataset_id'])
+                save(companion, legend_path)
+            else:
+                standalone_legend(plate, selected, legend_path, manifest, scope, manifest["sources"])
             for kind, path in (("map", target), ("legend", legend_path)):
                 records.append({"kind": kind, "scope": scope, "stem": ident, "source_stem": plate["source_stem"],
                                 "svg": path.relative_to(destination).as_posix(), "svg_sha256": digest(path),

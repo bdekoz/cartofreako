@@ -1,0 +1,71 @@
+{
+  "schema": "cartofreako-starlink-star-light-v3-v1",
+  "output": "output/starlink-star-light-v3-20261109",
+  "sources": {
+    "astronomy": {
+      "path": "output/msp-speculations-20261103/msp-speculation-5/wine-amber/astro-all-sky-authagraph-44-19.052559.svg.gz",
+      "sha256": "e4f3965d9db88fd886d307f7c8f17316c556c752acf05fa808d4ec718199114e"
+    },
+    "groundstations": {
+      "path": "output/msp-speculations-20261103/msp-speculation-5/wine-amber/network-groundstations-authagraph-44-19.052559.svg.gz",
+      "sha256": "01314eeb65e6fc8e3bd92fd95ed56bec4a67085c533d595f58337f2be7221e3d"
+    }
+  },
+  "orbital_profile": "assets.static/orbital-technosphere/20261109/orbital-technosphere-profile.json",
+  "orbital_native_directory": "build/starlink-star-light-v3/native",
+  "capability_config": "config/groundstation-capabilities-20261103.json",
+  "palette": "wine-amber",
+  "astronomy_labels": {
+    "before_pt": 12,
+    "after_pt": 9.6
+  },
+  "astronomy_side_margin_factor": 0.5,
+  "radius_spread_multiplier": 2,
+  "legend_mm": [
+    420,
+    297
+  ],
+  "regions": [
+    {
+      "id": "conus",
+      "name": "Contiguous USA",
+      "bounds_lon_lat": [
+        -125,
+        24,
+        -66,
+        50
+      ]
+    },
+    {
+      "id": "alaska",
+      "name": "Alaska / including the Aleutians",
+      "bounds_lon_lat": [
+        172,
+        50,
+        231,
+        72.5
+      ]
+    },
+    {
+      "id": "hawaii",
+      "name": "Hawaii / including the northwest islands",
+      "bounds_lon_lat": [
+        -179,
+        18,
+        -154,
+        29
+      ]
+    }
+  ],
+  "capability_markers": {
+    "ka": "circle",
+    "ka-e": "square",
+    "e": "diamond",
+    "qv": "pentagon",
+    "quad": "hexagon",
+    "community": "star",
+    "ttc": "cross",
+    "ku": "saltire",
+    "unknown": "octagon"
+  }
+}
