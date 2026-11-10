@@ -35,6 +35,14 @@ India observations use the existing selected reference/AirGradient monitors
 from OpenAQ's public AWS archive. This does not require expanding station
 selection or entering credentials into a manifest.
 
+Provider recovery does not require reinstalling prerequisites. Use
+`make data-update-resilient DATA_UPDATE_ARGS='--defer astronomy'` to acquire
+independent groups during a NASA outage. All required groups must finish
+before a new edition becomes buildable. See the
+[update/build settings](generation.md#update-and-build-configuration) and
+[particulate options](generation.md#particulate-acquisition-options) for
+cache reuse, interpreter selection and intentional revision checks.
+
 The preflight requires configured local network checkouts, the native swarm
 archive selected by `generation-style.json`, its IPinfo MMDB, the corresponding Alpha60 torrent definitions, and audited
 petroleum tables. `NATIVE_SWARM_CACHE_ARCHIVE` and
@@ -664,9 +672,10 @@ for source roles, SGP4 boundaries, and refresh procedure.
 
 ## Anthropocene input preparation
 
-Anthropocene generation and `make check` run offline from the checked
-`assets.static/anthropocene/` profile, normalized H3 GeoJSON, and checksum.
-Ordinary builds need no raw NOAA, EPA, CWFIS, or FIRMS files. A deliberate
+Explicit `DATASET=legacy` Anthropocene builds and `make check` use the checked
+`assets.static/anthropocene/` profile, normalized H3 GeoJSON and checksum.
+Current-edition builds use their selected validated local inputs. Rendering
+requires no provider requests. A deliberate
 refresh uses Bash, `curl`, `tar`, `gzip`, `unzip`, `rg`, `find`, GNU `date`,
 `sha256sum`, GDAL/OGR, H3, and substantial temporary disk space:
 
@@ -699,6 +708,10 @@ For CPC HTTP 429 responses, use the documented
 shares adaptive pacing and provider cooldowns across files/processes, retains
 partial bytes, and exposes retry-budget settings through Make. After a code
 update, start a new `make data-update` run; shared HTTP caches remain reusable.
+Completed FIRMS/CWFIS periods and historical particulate archives are retained
+across runs; the NOAA-20 2025 series needs a one-time acquisition when only
+S-NPP exists locally. `PARTICULATE_REFRESH=1` deliberately rechecks retained
+periods. Mutable current-year bulk files still require freshness checks.
 The explicit
 `ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY=1` override stages regional data for
 local pipeline debugging; it must not be promoted as a global snapshot.

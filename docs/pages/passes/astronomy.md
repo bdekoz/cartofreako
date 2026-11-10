@@ -215,8 +215,11 @@ snapshots: 500 Gaia DR3 stars brighter than G 5.5, 250 nearby confirmed-planet
 rows, and seven named JPL SBDB records. The shell entry point calls
 [`fetch-astro-data.py`](../../../scripts/fetch-astro-data.py), which uses the
 shared HTTP cache, bounded retries and provider `Retry-After` headers. The
-default retry budget is 60 seconds per request; override it with
-`ASTRO_HTTP_RETRY_BUDGET` (or the general `DATA_HTTP_RETRY_BUDGET`).
+standalone fallback retry budget is 60 seconds per request.
+`ASTRO_HTTP_RETRY_BUDGET` takes precedence over the general
+`DATA_HTTP_RETRY_BUDGET`. Make exports the general budget (normally 1800
+seconds); set `ASTRO_HTTP_RETRY_BUDGET=60` in the environment for short
+astronomy retries during a full update.
 
 Gaia first queries ESA; on failure it runs the same DR3 query against the
 [official ARI partner service](https://gaia.ari.uni-heidelberg.de/). Source

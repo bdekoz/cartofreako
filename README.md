@@ -117,11 +117,22 @@ request. CPC 1979–2025 archives are pinned; 2026 updates retain existing
 observations and fetch only missing daily subsets. Saved subsets and partial
 downloads survive retries. See the [Make download controls](docs/pages/getting-started/generation.md#noaa-download-controls)
 for rate limits, progress, retry settings and the optional bulk endpoint.
+Particulate updates also retain completed FIRMS/CWFIS periods and closed-year
+archives. NOAA-20 data for 2025 is acquired once when older files contain only
+S-NPP; later runs reuse completed matching-sensor chunks. See the
+[particulate options](docs/pages/getting-started/generation.md#particulate-acquisition-options)
+for local import and deliberate revision checks.
 A failed update or build preserves the previous completed selection. See the
 [source refresh workflow](docs/pages/getting-started/generation.md#updating-all-configured-data-sources)
 for credentials, storage, resume and replay commands. `make all` and
 `make atlas` build smaller subsets of the selected edition. Use
 `DATASET=legacy` explicitly for historical repository paths.
+
+After changing acquisition code, start a new cached run without `--resume`.
+For NASA availability, the [recovery probe](docs/pages/passes/astronomy.md#source-evaluation-and-bounded-snapshots)
+prints local-time red `no` / green `yes` results and exits on the first valid
+response. The [hourly reporter](docs/development/data-update-hourly-progress.md)
+emits scheduled reports at `:00` only while either data-update target is running.
 
 List every supported top-level Make target with:
 

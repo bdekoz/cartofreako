@@ -34,6 +34,49 @@ The repository is organized as described in the
 [source layout conventions](source_layout_conventions.md). The build graph,
 released artifact catalog, and resource metric classes follow below.
 
+## Build a selected data edition
+
+Acquire a complete validated input edition, then render in a separate Make
+invocation:
+
+```sh
+make data-update
+make ASSET_JOBS=2 atlas-optional
+```
+
+During a provider outage, use `make data-update-resilient` to continue independent
+source groups. `DATA_UPDATE_ARGS='--defer astronomy'` skips a known NASA outage
+for that invocation. A failed or deferred required group leaves acquisition
+incomplete and the previously selected edition unchanged. Builds use that
+previous complete edition until all required new inputs validate. See
+[resilient acquisition](generation.md#resilient-data-updates).
+
+| Target or configuration | Build behavior |
+| --- | --- |
+| `make all-resilient` | Standard native artifacts with parallel first pass and serial retry. |
+| `make atlas` | Default World/Japan atlas sheets and exports. |
+| `make atlas-optional` | Standard native artifacts, atlas, and all implemented optional Anthropocene ocean/climate plates. |
+| `ASSET_JOBS=2` | Render/export concurrency; no effect on provider request pacing. |
+| `DATA_ROOT=/path/to/data` | Select the input store containing the active edition. |
+| `DATASET_MANIFEST=/absolute/path/to/dataset.json` | Build a specific validated edition instead of the current selection. |
+| `ATLAS_OPTIONAL_ARGS='--resume BUILD_ID'` | Retry a failed full output run using the same manifest and implementation. |
+| `DATASET=legacy` | Build explicitly retained repository snapshots without requiring a selected current edition. |
+
+Current full builds write to
+`output/data-editions/<dataset-id>/builds/<build-id>/`, with `native/`, `atlas/`,
+`anthropocene-optional/ocean/`, `anthropocene-optional/climate/` and `validation/`.
+The validated full-build receipt selects
+`.cartofreako/data/build-current.json`; selecting new inputs alone does not
+select new rendered outputs. Historical output descriptions below refer to
+the legacy `assets.generated/` layout. See the
+[update/build configuration reference](generation.md#update-and-build-configuration)
+for replay, interpreter, storage and acquisition settings.
+
+Astronomy can also be reviewed from explicitly staged matching inputs while
+an edition is incomplete. The
+[astronomy-only Setouchi workflow](../passes/astronomy.md#refreshed-astronomy-only-setouchi-plates)
+documents separate wine/amber map and legend plates and their output paths.
+
 ## Choose a projection
 
 | Projection | Geometric model | Required map ratio | Public class | Factory |

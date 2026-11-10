@@ -160,10 +160,12 @@ may remain explicitly historical. Network, groundstation and audited annual
 publication inputs are copied and labeled as pinned local data; no external
 checkout is pulled. The configured product years remain 2025 and 2026.
 
-Astronomy requests use bounded retries (60 seconds by default), honor
+Astronomy requests use bounded retries, honor
 `Retry-After`, and reuse successful requests on the same UTC day. Gaia falls
 back from ESA to the official ARI DR3 partner service using the same query.
-`ASTRO_HTTP_RETRY_BUDGET` overrides the retry budget. Persistent NASA Exoplanet
+`ASTRO_HTTP_RETRY_BUDGET` overrides the general `DATA_HTTP_RETRY_BUDGET`;
+standalone fetching falls back to 60 seconds when neither is set. Make exports
+the general budget, normally 1800 seconds. Persistent NASA Exoplanet
 Archive maintenance still stops acquisition; failed queries do not replace
 previous catalogs or the selected edition. See the
 [astronomy acquisition notes](../passes/astronomy.md#source-evaluation-and-bounded-snapshots).
@@ -277,12 +279,43 @@ final full-edition validation. After every source completes, the normal full
 validation and atomic selection still apply. Prerequisite, credential, storage,
 checksum and implementation checks remain enforced.
 
+### Update and build configuration
+
+| Setting | Default | Applies to |
+| --- | --- | --- |
+| `DATASET` | `current` | Builds select a validated edition. `legacy` explicitly selects retained repository paths; `data-update-resilient` requires current-edition mode. |
+| `DATASET_MANIFEST` | Active edition in `DATA_ROOT/current.json` | Replay a specific validated edition by absolute manifest path, independently of the current selection. |
+| `DATA_ROOT` | `.cartofreako/data` | Acquisition journals, editions, shared caches and selection pointers; does not relocate rendered outputs. |
+| `DATA_UPDATE_MIN_FREE_GIB` | `160` | Minimum free working space checked before acquisition. |
+| `DATA_UPDATE_AS_OF` | Current UTC instant | Environment variable selecting the acquisition calculation boundary; use an explicit UTC ISO timestamp. |
+| `DATA_UPDATE_ARGS` | Empty | Arguments to the updater: `--resume ID`, repeatable `--defer SOURCE`, `--candidate-only`, `--as-of UTC`, and `--jobs 1`, `2` or `3`. Resilient Make adds `--keep-going`. |
+| `ASSET_JOBS` | `2` | Render/export workers and the first resilient native build pass; the retry pass remains serial. It does not control provider request pacing. |
+| `ATLAS_OPTIONAL_ARGS` | Empty | Arguments to the full build coordinator; `--resume BUILD_ID` retries its failed output run using the same edition and implementation. |
+| `ATLAS_PYTHON` | `.venv-data/bin/python` when available, otherwise `python3` | Scientific interpreter used by acquisition and full-build coordination. |
+| `ASTRO_HTTP_RETRY_BUDGET` | General HTTP budget when set; otherwise `60` | Environment option limiting each astronomy request, independently of the slower NOAA transfer budget. |
+
+Set Make options on its command line and environment-only options before it:
+
+```sh
+DATA_UPDATE_AS_OF=2026-11-10T23:00:00Z \
+  make data-update-resilient DATA_ROOT=/large/local/cartofreako-data \
+  DATA_UPDATE_ARGS='--defer astronomy --jobs 2'
+
+make DATA_ROOT=/large/local/cartofreako-data ASSET_JOBS=2 atlas-optional
+```
+
+The example timestamp is an explicit historical boundary; omit it for current
+acquisition. The build uses the selected edition's boundary. Changing a
+worker count does not advance the observation cutoff or refresh inputs.
+
 ### NOAA download controls
 
 CPC acquisition retains closed years and existing current-year observations.
 Only missing 2026 daily observations are downloaded. Shared HTTP objects and
 partial downloads live under `DATA_ROOT/cache/` (default
-`.cartofreako/data/cache/`); `DATA_HTTP_CACHE` overrides the cache location.
+`.cartofreako/data/cache/`). The edition coordinator binds every adapter to
+`DATA_ROOT/cache`; standalone fetch scripts can use `DATA_HTTP_CACHE` to
+select a different shared HTTP cache.
 Direct legacy fetches preserve their existing readable NetCDF files.
 Scientific coverage checks and the 1979–2026 input range remain unchanged.
 
@@ -330,9 +363,10 @@ checks can discover new observations, but do not replace existing dates with
 upstream revisions. `CPC_INCREMENTAL=0` explicitly selects whole-year HTTP
 refresh behavior for a deliberate revision check or initial bootstrap.
 
-The November 10 migration retained TMAX through November 7 and TMIN through
-August 4. The approved one-time TMIN backfill fills August 5 onward; subsequent
-updates request only days after the retained prefix. November and December
+The November 10 migration initially retained TMAX through November 7 and TMIN
+through August 4, then backfilled missing observations. An older retained
+prefix can require that one-time backfill; subsequent updates request only
+days after the retained prefix. November and December
 data are requested as NOAA publishes them. A sparse November-only TMIN file
 would not satisfy the full-year coverage requirement.
 
@@ -492,6 +526,51 @@ make data-update-resilient DATA_UPDATE_ARGS='--defer astronomy'
 This reuses the shared cache while preserving completed periods. Astronomy
 remains required before the edition can be selected. Resume the new run's ID
 without `--defer` after NASA recovers.
+
+#### Particulate acquisition options
+
+| Setting | Default | Behavior |
+| --- | --- | --- |
+| `PARTICULATE_REFRESH` | `0` | Make exports this option. `0` retains completed periods; `1` bypasses retention and local import for a deliberate upstream revision check. Same-run deduplication still applies. |
+| `PARTICULATE_REUSE_FROM` | Automatic local discovery | Environment option restricting import to `/path/to/anthropocene/.raw/YEAR/` beneath the supplied data directory. |
+| `ANTHROPOCENE_FIRMS_SOURCES` | `VIIRS_NOAA20_SP VIIRS_NOAA20_NRT` | Environment option selecting exact source identities. A different sensor requires its own acquisition; caches are not relabeled. |
+| `ANTHROPOCENE_FIRMS_DELAY_SECONDS` | `25` | Environment option spacing successful remote FIRMS chunks within each source. Cache reuse incurs no chunk delay. |
+
+Routine updates need none of these overrides. To import another local
+Anthropocene data directory or perform a deliberate particulate revision check:
+
+```sh
+PARTICULATE_REUSE_FROM=/large/local/anthropocene \
+  make data-update-resilient DATA_UPDATE_ARGS='--defer astronomy'
+
+make data-update-resilient PARTICULATE_REFRESH=1 \
+  DATA_UPDATE_ARGS='--defer astronomy'
+```
+
+Local import can be run separately without contacting a provider:
+
+```sh
+python3 scripts/import-anthropocene-particulate.py \
+  --year 2026 --cache .cartofreako/data/cache
+```
+
+An exported `FIRMS_MAP_KEY` is needed to identify FIRMS request receipts during
+import; public historical and CWFIS files can be imported without it. The
+importer does not start a NOAA-20 download or select an edition.
+
+To acquire only the complete 2025 particulate source set, including missing
+NOAA-20 chunks, using the same cache:
+
+```sh
+DATA_HTTP_CACHE="$PWD/.cartofreako/data/cache" \
+  make DATASET=legacy fetch-anthropocene-particulate-2025
+```
+
+This maintainer command stages raw files under the legacy data directory; it
+does not prepare plates or activate a current edition. A later full update
+reuses its cache. `staging` log lines identify requested inputs; the following
+`using validated cache (completed-period)` line confirms that no provider
+download occurred. HTTP 404 CWFIS days remain eligible for later checks.
 
 ### Required source credentials
 

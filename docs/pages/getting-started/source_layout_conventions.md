@@ -71,6 +71,7 @@ data, including selection, validation, caching and incremental downloads.
 | [`fetch-jaxa-stac.py`](../../../scripts/fetch-jaxa-stac.py) | Select and download JAXA STAC assets. |
 | [`fetch-cpc-current-year.py`](../../../scripts/fetch-cpc-current-year.py) | Download missing daily CPC subsets and extend the retained year prefix. |
 | [`import-cpc-archive.py`](../../../scripts/import-cpc-archive.py) | Verify and import already-local archives without contacting NOAA. |
+| [`import-anthropocene-particulate.py`](../../../scripts/import-anthropocene-particulate.py) | Import checksummed matching-sensor FIRMS periods and public historical/daily files without provider requests. |
 
 Local preparation, validation, installation, authorization and publication
 commands retain names describing those broader operations. Shared Python

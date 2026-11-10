@@ -6,8 +6,10 @@ cached downloads. It lives under `tools/` so adding it does not change the
 scientific implementation fingerprint of an active acquisition. Commits change
 the fingerprint's revision. While acquisition is running, commit and push from
 a separate worktree and leave the acquisition checkout's HEAD and scripts
-unchanged. Updating that checkout before acquisition finishes invalidates its
-method provenance checks.
+unchanged. The fingerprint also records whether tracked files are modified,
+so documentation edits can change a previously clean checkout's fingerprint.
+Keep those edits in a separate worktree during acquisition. Updating that
+checkout before acquisition finishes invalidates its method provenance checks.
 
 Print a report immediately:
 
@@ -54,6 +56,10 @@ that extrapolation can be conservative during recovery. When neither the main
 update nor a CPC worker is running, no active completion estimate is shown.
 Completing CPC does not mean the full acquisition
 and scientific preparation have completed.
+The completion estimate covers CPC only, not a remaining FIRMS backfill,
+particulate preparation, OISST transfer or full plate rendering. Completed
+particulate-period reuse is visible in the acquisition log; see
+[cache controls](../pages/getting-started/generation.md#particulate-acquisition-options).
 
 For `make data-update-resilient`, reports show the current source being worked
 on and list failed, deferred, blocked and invalidated sources from the journal.
