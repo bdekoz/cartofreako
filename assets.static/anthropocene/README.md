@@ -176,6 +176,18 @@ claim; CWFIS is regional QA/fallback only. The complete secure key procedure
 is recorded in the
 [Stage 15 plan](../../docs/development/20260815_stage-15.md#getting-and-using-a-nasa-firms-map_key).
 
+Current-edition updates retain completed particulate periods across dates and
+runs. Closed-year EPA/HMS/CWFIS archives, versioned Storm Events files, CWFIS
+daily files and FIRMS chunks are reused from the verified shared HTTP cache.
+The local importer checks raw-file manifests before adopting matching-sensor
+FIRMS periods or public historical files. Unknown original provider-check
+times remain unknown. Old S-NPP data cannot replace a NOAA-20 acquisition;
+the 2025 NOAA-20 series is downloaded once, with stopped attempts preserved.
+Later updates append missing periods, retaining short tails. Mutable annual
+feeds still require freshness checks. `PARTICULATE_REFRESH=1` explicitly
+rechecks completed inputs for upstream revisions. See the
+[incremental workflow](../../docs/pages/getting-started/generation.md#incremental-particulate-updates).
+
 See the [Anthropocene implementation notes](../../docs/pages/passes/anthropocene/implementation.md)
 for current source roles, formulas, coverage boundaries, refresh commands, and
 interpretation limits, and the

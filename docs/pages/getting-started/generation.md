@@ -454,6 +454,45 @@ intact. A completed download deduplicates by content hash, but an old endpoint's
 partial is resumed only when that endpoint is selected again. No automatic
 endpoint switch bypasses provider cooldowns or freshness checks.
 
+### Incremental particulate updates
+
+Particulate acquisition retains verified completed periods across runs and
+UTC dates. Closed-year EPA PM2.5 and HMS smoke archives, CWFIS annual archives,
+versioned Storm Events files, successful CWFIS daily files and bounded NASA
+FIRMS chunks are reused without provider requests. Their receipts retain the
+original check time. GHCN, the current-year EPA/HMS bulk files, source indexes
+and the FIRMS availability table still receive freshness checks, with reuse
+on the same UTC day. These providers expose some mutable feeds as whole
+archives, so a changed current-year archive can require a full-file transfer.
+
+The [local importer](../../../scripts/import-anthropocene-particulate.py)
+discovers checksummed raw files in the older repository snapshot, earlier
+editions and the target directory. It imports matching FIRMS sensors and
+contiguous observed dates, preserves provider-checked cache objects in
+preference to older local bytes, and never invents a provider-check timestamp.
+`PARTICULATE_REUSE_FROM=/path/to/anthropocene` restricts import to that data
+directory's `.raw/YEAR/` files. Changed local or cached checksums stop reuse.
+
+The selected NOAA-20 source requires a one-time 2025 acquisition when the
+older local files contain only S-NPP. Those sensors are not interchangeable.
+Already downloaded NOAA-20 chunks from a stopped attempt remain reusable;
+the next run fetches only missing chunks. A short final chunk is retained
+when new days become available, and acquisition continues after that chunk.
+Completed 2026 observations remain pinned, including provisional NRT data.
+Use `PARTICULATE_REFRESH=1` only for an intentional upstream revision check;
+it bypasses completed-period retention and local import.
+
+After installing changes to acquisition code, start a new run rather than
+resuming a journal with an older implementation fingerprint:
+
+```sh
+make data-update-resilient DATA_UPDATE_ARGS='--defer astronomy'
+```
+
+This reuses the shared cache while preserving completed periods. Astronomy
+remains required before the edition can be selected. Resume the new run's ID
+without `--defer` after NASA recovers.
+
 ### Required source credentials
 
 The complete update requires P-Tree access, an exported `FIRMS_MAP_KEY`,

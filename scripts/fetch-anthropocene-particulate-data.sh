@@ -74,6 +74,16 @@ fi
 check_credentials
 
 raw_dir="$data_dir/.raw/$year"
+refresh=${PARTICULATE_REFRESH:-0}
+case $refresh in 0|1) ;; *) echo 'PARTICULATE_REFRESH must be 0 or 1' >&2; exit 2 ;; esac
+importer=$(dirname "$0")/import-anthropocene-particulate.py
+if [[ -n ${DATA_HTTP_CACHE:-} && $refresh == 0 ]]; then
+  import_sources=()
+  if [[ -n ${PARTICULATE_REUSE_FROM:-} ]]; then
+    import_sources+=(--source "$PARTICULATE_REUSE_FROM/.raw/$year")
+  fi
+  python3 "$importer" --cache "$DATA_HTTP_CACHE" --year "$year" --data-directory "$data_dir" "${import_sources[@]}"
+fi
 temporary_dir=$(mktemp -d)
 trap 'rm -rf "$temporary_dir"' EXIT
 user_agent='cartofreako-anthropocene-particulate/1.0 (+https://github.com/bkoz/cartofreako)'
@@ -82,10 +92,16 @@ fetch() {
   local output=$1
   local url=$2
   local description=${3:-$url}
-  echo "fetching $description"
+  local retain=${4:-0}
+  echo "staging $description"
   fetch_was_remote=1
   if [[ -n ${DATA_HTTP_CACHE:-} ]]; then
-    python3 "$(dirname "$0")/fetch-data-http.py" "$url" "$output"
+    local -a policy=()
+    if [[ $refresh == 0 ]]; then
+      policy+=(--same-day-cache)
+      if [[ $retain == 1 ]]; then policy+=(--retain-cache); fi
+    fi
+    python3 "$(dirname "$0")/fetch-data-http.py" "$url" "$output" "${policy[@]}"
     if [[ $(jq -r '.acquisition' "$output.receipt.json") == policy-cache ]]; then
       fetch_was_remote=0
     fi
@@ -100,14 +116,17 @@ fetch() {
 }
 
 mkdir -p "$temporary_dir/cwfis" "$temporary_dir/firms"
+archive_year=0
+if ((year < $(date -u +%Y))); then archive_year=1; fi
 fetch "$temporary_dir/ghcnd_gsn.tar.gz" \
   'https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd_gsn.tar.gz'
 fetch "$temporary_dir/ghcnd-stations.txt" \
   'https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt'
 fetch "$temporary_dir/daily_88101_${year}.zip" \
-  "https://aqs.epa.gov/aqsweb/airdata/daily_88101_${year}.zip"
+  "https://aqs.epa.gov/aqsweb/airdata/daily_88101_${year}.zip" "EPA PM2.5 $year annual archive" "$archive_year"
 fetch "$temporary_dir/hms_smoke${year}.zip" \
-  "https://satepsanone.nesdis.noaa.gov/pub/FIRE/web/HMS/Smoke_Polygons/Shapefile/Annual_Bundles/hms_smoke${year}.zip"
+  "https://satepsanone.nesdis.noaa.gov/pub/FIRE/web/HMS/Smoke_Polygons/Shapefile/Annual_Bundles/hms_smoke${year}.zip" \
+  "NOAA HMS smoke $year annual archive" "$archive_year"
 
 tar -tzf "$temporary_dir/ghcnd_gsn.tar.gz" >/dev/null
 unzip -tqq "$temporary_dir/daily_88101_${year}.zip"
@@ -125,8 +144,8 @@ if [[ -z $details_name || -z $locations_name ]]; then
   echo "NOAA Storm Events index has no details/locations pair for $year" >&2
   exit 1
 fi
-fetch "$temporary_dir/$details_name" "$storm_base/$details_name"
-fetch "$temporary_dir/$locations_name" "$storm_base/$locations_name"
+fetch "$temporary_dir/$details_name" "$storm_base/$details_name" "$details_name" 1
+fetch "$temporary_dir/$locations_name" "$storm_base/$locations_name" "$locations_name" 1
 gzip -t "$temporary_dir/$details_name"
 gzip -t "$temporary_dir/$locations_name"
 
@@ -144,7 +163,7 @@ if ((year < current_year)); then
     fi
     install -m 0644 "$CWFIS_ARCHIVE_CACHE" "$archive"
   else
-    fetch "$archive" "$archive_url" "CWFIS ${year} annual hotspot archive"
+    fetch "$archive" "$archive_url" "CWFIS ${year} annual hotspot archive" 1
   fi
   unzip -tqq "$archive"
   archive_member=$(unzip -Z1 "$archive" \
@@ -168,8 +187,21 @@ else
     compact_date=${current_date//-/}
     output="$temporary_dir/cwfis/$compact_date.csv"
     url="https://cwfis.cfs.nrcan.gc.ca/downloads/hotspots/$compact_date.csv"
-    status=$(curl -sS --remove-on-error -A "$user_agent" \
-      -o "$output" -w '%{http_code}' "$url")
+    if [[ -n ${DATA_HTTP_CACHE:-} ]]; then
+      policy=()
+      if [[ $refresh == 0 ]]; then policy+=(--retain-cache --same-day-cache); fi
+      if python3 "$(dirname "$0")/fetch-data-http.py" "$url" "$output" \
+          --allow-missing "${policy[@]}"; then
+        status=200
+      else
+        result=$?
+        if [[ $result != 3 ]]; then exit "$result"; fi
+        status=404
+      fi
+    else
+      status=$(curl -sS --remove-on-error -A "$user_agent" \
+        -o "$output" -w '%{http_code}' "$url")
+    fi
     case $status in
       200)
         if [[ $(sed -n '1p' "$output") != lat,*lon,*rep_date,* ]]; then
@@ -278,11 +310,15 @@ if [[ -n ${FIRMS_MAP_KEY:-} ]]; then
       if ((day_range > 5)); then
         day_range=5
       fi
+      if [[ -n ${DATA_HTTP_CACHE:-} && $refresh == 0 ]]; then
+        day_range=$(python3 "$importer" --cache "$DATA_HTTP_CACHE" \
+          --chunk-source "$firms_source" --chunk-start "$current_date" --chunk-days "$day_range")
+      fi
       output=$(printf '%s/firms/%03d-%s-%s.csv' \
         "$temporary_dir" "$chunk_index" "$firms_source" "$current_date")
       url="https://firms.modaps.eosdis.nasa.gov/api/area/csv/${FIRMS_MAP_KEY}/${firms_source}/world/${day_range}/${current_date}"
       fetch "$output" "$url" \
-        "NASA FIRMS $firms_source world/$day_range from $current_date"
+        "NASA FIRMS $firms_source world/$day_range from $current_date" 1
       if [[ $(sed -n '1p' "$output") != latitude,longitude,* ]]; then
         echo "unexpected NASA FIRMS CSV response for $firms_source on $current_date" >&2
         exit 1

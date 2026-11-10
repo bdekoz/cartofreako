@@ -13,14 +13,16 @@ from dataset import DatasetError, atomic_json, digest, lock, redact, utcnow
 from data_http_policy import Pacer, Progress, open_response
 
 
-def fetch(url, destination, cache, *, minimum_interval=0, headers=None, range_size=None, same_day_cache=False):
+def fetch(url, destination, cache, *, minimum_interval=0, headers=None, range_size=None, same_day_cache=False,
+          retain_cache=False, allow_missing=False):
     if range_size is not None and range_size <= 0:
         raise DatasetError("HTTP byte-range size must be positive")
     cache = Path(cache)
     key = hashlib.sha256((url + json.dumps(headers or {}, sort_keys=True)).encode()).hexdigest()
     with lock(cache / "http", key):
         return _fetch(url, destination, cache, minimum_interval=minimum_interval,
-                      headers=headers, range_size=range_size, same_day_cache=same_day_cache)
+                      headers=headers, range_size=range_size, same_day_cache=same_day_cache,
+                      retain_cache=retain_cache, allow_missing=allow_missing)
 
 
 def _download(url, headers, temporary, partial_receipt, range_size, pacer, progress):
@@ -91,7 +93,8 @@ def _download(url, headers, temporary, partial_receipt, range_size, pacer, progr
             offset, validator = size, current_validator
 
 
-def _fetch(url, destination, cache, *, minimum_interval=0, headers=None, range_size=None, same_day_cache=False):
+def _fetch(url, destination, cache, *, minimum_interval=0, headers=None, range_size=None, same_day_cache=False,
+           retain_cache=False, allow_missing=False):
     cache, destination = Path(cache), Path(destination)
     key = hashlib.sha256((url + json.dumps(headers or {}, sort_keys=True)).encode()).hexdigest()
     receipts = cache / "http"
@@ -102,19 +105,21 @@ def _fetch(url, destination, cache, *, minimum_interval=0, headers=None, range_s
     if previous and (not prior.is_file() or digest(prior) != previous["sha256"]):
         raise DatasetError("Corrupted HTTP cache object: " + key)
     checked = datetime.now(timezone.utc)
-    age = ((checked - datetime.fromisoformat(previous["checked_at"])).total_seconds()
-           if previous else float("inf"))
+    checked_at = previous.get('checked_at') if previous else None
+    age = ((checked - datetime.fromisoformat(checked_at)).total_seconds()
+           if checked_at else float("inf"))
     request_headers = {"User-Agent": "cartofreako-data-update/1.0", **(headers or {})}
     run_id = os.environ.get('DATA_UPDATE_RUN_ID')
     same_run = bool(run_id and previous and previous.get('checked_run') == run_id)
-    same_day = bool(same_day_cache and previous and age >= 0
+    same_day = bool(same_day_cache and checked_at and age >= 0
                     and datetime.fromisoformat(previous['checked_at']).astimezone(timezone.utc).date() == checked.date())
-    if previous and (same_run or same_day or 0 <= age < minimum_interval):
-        policy = 'same-run' if same_run else 'same-utc-day' if same_day else 'minimum-interval'
+    if previous and (retain_cache or same_run or same_day or 0 <= age < minimum_interval):
+        policy = ('completed-period' if retain_cache else 'same-run' if same_run else
+                  'same-utc-day' if same_day else 'minimum-interval')
         record = {**previous, "acquisition": "policy-cache", "cache_policy": policy}
         progress = Progress(url)
         progress.offset = progress.total = record['bytes']
-        progress.report(f'using validated cache ({policy}); provider checked {record["checked_at"]}', force=True)
+        progress.report(f'using validated cache ({policy}); provider checked {checked_at or "unknown (local import)"}', force=True)
     else:
         if previous:
             if previous.get("etag"):
@@ -141,6 +146,11 @@ def _fetch(url, destination, cache, *, minimum_interval=0, headers=None, range_s
                           "retrieved_at": utcnow(), "checked_at": utcnow(),
                           **validators, "acquisition": "remote-checked"}
             except HTTPError as error:
+                if error.code == 404 and allow_missing:
+                    error.close()
+                    temporary.unlink(missing_ok=True)
+                    partial_receipt.unlink(missing_ok=True)
+                    return None
                 if error.code != 304 or previous is None:
                     error.close()
                     raise

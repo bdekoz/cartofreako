@@ -171,6 +171,8 @@ export DATA_HTTP_RETRY_BUDGET NOAA_HTTP_MIN_INTERVAL NOAA_HTTP_MAX_INTERVAL
 export DATA_HTTP_PROGRESS_INTERVAL CPC_HTTP_RANGE_SIZE CPC_HTTP_DAILY_CACHE CPC_BASE_URL
 export CPC_ARCHIVE_CACHE
 export CPC_INCREMENTAL CPC_SUBSET_BASE_URL
+PARTICULATE_REFRESH ?= 0
+export PARTICULATE_REFRESH
 ANTHROPOCENE_TEMPERATURE_PREPARATION_SCRIPT := \
 	scripts/prepare-anthropocene-temperature-data.sh
 RESOURCES_DATA_DIR ?= $(STATIC_ASSET_DIR)/resources/current-20261108
@@ -1328,6 +1330,7 @@ endif
 check-dataset:
 	$(ATLAS_PYTHON) tests/test-dataset.py
 	$(ATLAS_PYTHON) tests/test-cpc-archive.py
+	$(ATLAS_PYTHON) tests/test-particulate-cache.py
 	$(ATLAS_PYTHON) tests/test-fetch-cpc-current-year.py
 	$(ATLAS_PYTHON) tests/test-data-http-policy.py
 	$(ATLAS_PYTHON) tests/test-ping-noaa-cpc.py
@@ -2429,12 +2432,14 @@ check-orbiting: $(SGP4_OBJECT)
 
 fetch-anthropocene-particulate-2025: \
 		$(ANTHROPOCENE_PARTICULATE_FETCHER) \
+		scripts/import-anthropocene-particulate.py scripts/fetch-data-http.py \
 		$(ANTHROPOCENE_PARTICULATE_PROFILE_2025)
 	$(ANTHROPOCENE_PARTICULATE_FETCHER) "$(ANTHROPOCENE_DATA_DIR)" \
 		"$(ANTHROPOCENE_PARTICULATE_PROFILE_2025)"
 
 fetch-anthropocene-particulate-2026: \
 		$(ANTHROPOCENE_PARTICULATE_FETCHER) \
+		scripts/import-anthropocene-particulate.py scripts/fetch-data-http.py \
 		$(ANTHROPOCENE_PARTICULATE_PROFILE_2026)
 	$(ANTHROPOCENE_PARTICULATE_FETCHER) "$(ANTHROPOCENE_DATA_DIR)" \
 		"$(ANTHROPOCENE_PARTICULATE_PROFILE_2026)"

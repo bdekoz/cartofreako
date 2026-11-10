@@ -261,6 +261,7 @@ class Sources:
         self.record("anthropocene", target, {"cpc": {str(y): json.loads((target / f"anthropocene-land-temperature-{y}-profile.json").read_text())["snapshot"] for y in (2025, 2026)},
                     "particulate": "source-specific eligible dates retained in normalized metadata"},
                     cpc_archive_policy="Imported 1979–2025 inputs retain pinned-local provenance; 2026 appends missing observations. Per-file receipts identify actual acquisition.",
+                    particulate_cache_policy="Completed matching-sensor FIRMS/CWFIS periods and closed annual inputs are retained; mutable bulk feeds are revalidated. Per-file receipts preserve original check times.",
                     cpc_archived_files=sum(json.loads(p.read_text()).get('cache_policy') == 'pinned-cpc-archive'
                                            for p in cpc.glob('*.receipt.json')))
 

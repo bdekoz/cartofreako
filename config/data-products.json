@@ -88,6 +88,13 @@
       "existing_observations": "retain-with-provenance",
       "provider_refresh": "daily-time-inventory; only missing dates fetched"
     },
+    "particulate-completed-periods": {
+      "acquisition": "retain-verified-completed-periods",
+      "firms_sensor_identity": "exact-match-required",
+      "local_import": "recorded-sha256; contiguous observed FIRMS dates",
+      "mutable_feeds": "daily-http-revalidation; bulk transfer when changed",
+      "provider_refresh": "explicit PARTICULATE_REFRESH=1"
+    },
     "historical-baselines": {
       "years": [
         1991,

@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Exercise the real fetch wrapper with small offline provider responses."""
-from datetime import date
+from datetime import date, timedelta
 import gzip
+import hashlib
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import io
 import json
 import os
@@ -10,6 +12,7 @@ import subprocess
 import sys
 import tarfile
 import tempfile
+import threading
 import unittest
 import zipfile
 
@@ -77,6 +80,112 @@ else:raise RuntimeError('Unexpected fixture URL')
     def run_fetch(self, **env):
         return subprocess.run(['bash',str(ROOT/'scripts/fetch-anthropocene-particulate-data.sh'),str(self.data),str(self.profile)],
                               cwd=ROOT,env={**self.env,**env},text=True,capture_output=True,timeout=30)
+
+    def cached_provider(self, year=2026):
+        self.provider_calls = []
+        self.nrt_end = 10
+        fixtures = self.root/'fixtures'
+        annual = self.root/'annual.zip'
+        with zipfile.ZipFile(annual, 'w') as archive:
+            archive.writestr(f'{year}_hotspots.csv', 'lat,lon,rep_date,source\n40,-100,2025-01-01,fixture\n')
+        owner = self
+        class Handler(BaseHTTPRequestHandler):
+            def log_message(self, *_):
+                pass
+            def do_GET(self):
+                owner.provider_calls.append(self.path)
+                if '/api/area/' in self.path:
+                    parts=self.path.split('/')
+                    start=date.fromisoformat(parts[-1]);days=int(parts[-2])
+                    body=('latitude,longitude,acq_date\n'+''.join(
+                        '40,-100,'+str(start+timedelta(days=n))+'\n' for n in range(days))).encode()
+                elif '/api/data_availability/' in self.path:
+                    body=(f'data_id,min_date,max_date\nVIIRS_NOAA20_SP,{year}-01-01,{year}-01-05\n'
+                          f'VIIRS_NOAA20_NRT,{year}-01-04,{year}-01-{owner.nrt_end:02d}\n').encode()
+                elif self.path.endswith('ghcnd_gsn.tar.gz'):body=(fixtures/'ghcn.tar.gz').read_bytes()
+                elif self.path.endswith('ghcnd-stations.txt'):body=b'fixture inventory\n'
+                elif '/daily_88101_' in self.path:body=(fixtures/'epa.zip').read_bytes()
+                elif '/hms_smoke' in self.path:body=(fixtures/'hms.zip').read_bytes()
+                elif self.path.endswith('/csvfiles/'):
+                    body=(f'StormEvents_details-ftp_v1.0_d{year}_c20260111.csv.gz\n'
+                          f'StormEvents_locations-ftp_v1.0_d{year}_c20260111.csv.gz\n').encode()
+                elif 'StormEvents_' in self.path:body=(fixtures/'storm.csv.gz').read_bytes()
+                elif '/hotspots/archive/' in self.path:body=annual.read_bytes()
+                elif '/hotspots/' in self.path:body=b'lat,lon,rep_date,source\n40,-100,2026-01-01,fixture\n'
+                else:
+                    self.send_error(500);return
+                etag='"'+hashlib.sha256(body).hexdigest()+'"'
+                self.send_response(304 if self.headers.get('If-None-Match')==etag else 200)
+                self.send_header('ETag',etag)
+                self.send_header('Content-Length',str(len(body)))
+                self.end_headers()
+                if self.headers.get('If-None-Match')!=etag:self.wfile.write(body)
+        server=ThreadingHTTPServer(('127.0.0.1',0),Handler)
+        self.addCleanup(server.server_close)
+        threading.Thread(target=server.serve_forever,daemon=True).start()
+        self.addCleanup(server.shutdown)
+        hook=self.root/'http-fixture'
+        hook.mkdir()
+        (hook/'sitecustomize.py').write_text('''import urllib.request,urllib.parse,os
+original=urllib.request.urlopen
+def local(request,*args,**kwargs):
+    parsed=urllib.parse.urlsplit(request.full_url)
+    request=urllib.request.Request(os.environ['PARTICULATE_HTTP_FIXTURE']+parsed.path,
+        data=request.data,headers=dict(request.header_items()),method=request.get_method())
+    return original(request,*args,**kwargs)
+urllib.request.urlopen=local
+''')
+        return {'DATA_HTTP_CACHE':str(self.root/'cache'), 'PARTICULATE_REUSE_FROM':str(self.root/'no-prior-inputs'),
+                'PARTICULATE_HTTP_FIXTURE':f'http://127.0.0.1:{server.server_port}', 'PYTHONPATH':str(hook),
+                'DATA_UPDATE_RUN_ID':'first-run','PARTICULATE_REFRESH':'0'}
+
+    def age_receipts(self):
+        for path in (self.root/'cache/http').glob('*.json'):
+            value=json.loads(path.read_text())
+            value['checked_at']='2026-01-01T00:00:00Z'
+            path.write_text(json.dumps(value))
+
+    def test_cached_full_fetch_only_requests_missing_new_days_after_short_tail(self):
+        env=self.cached_provider()
+        first=self.run_fetch(**env)
+        self.assertEqual(first.returncode,0,first.stderr)
+        self.age_receipts()
+        self.provider_calls.clear()
+        self.nrt_end=12
+        profile=json.loads(self.profile.read_text())
+        profile['snapshot'].update(as_of_utc='2026-01-13T00:00:00Z',data_through='2026-01-12')
+        self.profile.write_text(json.dumps(profile,indent=2))
+        second=self.run_fetch(**{**env,'DATA_UPDATE_RUN_ID':'second-run'})
+        self.assertEqual(second.returncode,0,second.stderr)
+        firms=[p for p in self.provider_calls if '/api/area/' in p]
+        self.assertEqual(len(firms),1,firms)
+        self.assertTrue(firms[0].endswith('/VIIRS_NOAA20_NRT/world/2/2026-01-11'),firms)
+        cwfis=[p for p in self.provider_calls if '/hotspots/' in p]
+        self.assertEqual(cwfis,['/downloads/hotspots/20260111.csv','/downloads/hotspots/20260112.csv'])
+        self.assertNotIn(self.env['FIRMS_MAP_KEY'],second.stdout+second.stderr)
+        names={p.name for p in (self.data/'.raw/2026/firms').glob('*.csv')}
+        self.assertIn('001-VIIRS_NOAA20_NRT-2026-01-09.csv',names)
+        self.assertIn('002-VIIRS_NOAA20_NRT-2026-01-11.csv',names)
+        self.assertIn('completed-period',second.stderr)
+
+    def test_closed_year_never_repeats_archives_or_firms_in_a_new_run(self):
+        env=self.cached_provider(2025)
+        profile=json.loads(self.profile.read_text())
+        profile['duration']['year']=2025
+        profile['snapshot'].update(as_of_utc='2026-01-11T00:00:00Z',data_through='2025-01-10')
+        self.profile.write_text(json.dumps(profile,indent=2))
+        first=self.run_fetch(**env)
+        self.assertEqual(first.returncode,0,first.stderr)
+        self.age_receipts()
+        self.provider_calls.clear()
+        second=self.run_fetch(**{**env,'DATA_UPDATE_RUN_ID':'second-run'})
+        self.assertEqual(second.returncode,0,second.stderr)
+        self.assertFalse(any('/api/area/' in p or '/hotspots/' in p or '2025.zip' in p
+                             or 'StormEvents_' in p for p in self.provider_calls),self.provider_calls)
+        self.provider_calls.clear()
+        forced=self.run_fetch(**{**env,'DATA_UPDATE_RUN_ID':'third-run','PARTICULATE_REFRESH':'1'})
+        self.assertEqual(forced.returncode,0,forced.stderr)
+        self.assertTrue(any('/api/area/' in p for p in self.provider_calls))
 
     def test_supported_default_replaces_old_sensor_and_names_chunks_by_date(self):
         result = self.run_fetch()
