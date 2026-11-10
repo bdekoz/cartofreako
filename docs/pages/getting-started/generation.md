@@ -120,6 +120,30 @@ An unavailable required source stops the run and leaves the prior edition
 selected. Successful updates print the dataset ID, acquisition modes and
 actual source periods. A retrieval date is not an observation date.
 
+`make update-data` is an alias for `make data-update`, including its arguments,
+credentials, validation and failure behavior. Requesting both in one invocation
+runs acquisition once.
+
+The India adapter runs
+[`fetch-india-openaq-pm25.py`](../../../scripts/fetch-india-openaq-pm25.py)
+for the configured Indian station inventory from January 2025 through the
+run's observation cutoff. It refreshes archive listings to discover new days,
+but preserves downloaded daily files across dates, retries and new editions.
+The shared cache lives under `${DATA_ROOT}/cache/india-openaq` (default
+`.cartofreako/data/cache/india-openaq`). Existing daily files in earlier editions,
+the checked India source directory and local India enrichment outputs are
+imported without requesting their contents again. Recorded checksums are
+verified; a mismatch stops acquisition instead of silently replacing the file.
+Per-file receipts distinguish downloads, imports and cache reuse. Explicit
+manual `--refresh-since YYYY-MM-DD` permits intentional revision checks;
+the aggregate never supplies it. `--reuse-from /path/to/earlier/raw` can import
+another local archive directory. Earlier editions keep their original bytes
+even after an explicit refresh.
+
+See the [optional-source coverage audit](../../development/20261109_data_update_source_coverage.md)
+for standalone research fetchers and deliberately pinned inputs outside the
+current update workflow.
+
 Mutable CPC and OISST files use HTTP revalidation. Interrupted HTTP transfers
 resume only with matching validators; changed remote identities restart.
 CPC downloads use verified 2 MiB byte ranges to avoid NOAA proxy truncation;

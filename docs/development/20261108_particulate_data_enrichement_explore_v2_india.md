@@ -132,7 +132,7 @@ dated delivery.
 The implemented integration follows these rules:
 
 1. Override the fixed `LOCATIONS` default in
-   [`fetch-openaq-pm25.py`](../../scripts/fetch-openaq-pm25.py) with a versioned
+   [`fetch-india-openaq-pm25.py`](../../scripts/fetch-india-openaq-pm25.py) with a versioned
    inventory using `--locations-json`. The saved registry retains source IDs,
    coordinates, instrument class and crosswalk status. Historical coordinate
    validity is explicitly unverified. The [CPCB station-list snapshot][7] is a
@@ -336,7 +336,7 @@ Superiority over other modeled products is not established.
 The approved implementation is reproducible with these repository adapters:
 
 ```bash
-python3 scripts/fetch-openaq-pm25.py \
+python3 scripts/fetch-india-openaq-pm25.py \
   --output output/india-particulate-20261108/enrichment/openaq \
   --locations-json scripts/data/india-openaq-locations-20261108.json \
   --start 2025-01-01 --end 2026-11-08
@@ -399,7 +399,7 @@ cache and the existing Japanese/Chinese normalized inputs. The actual refresh
 and preparation commands were:
 
 ```bash
-python3 scripts/fetch-openaq-pm25.py \
+python3 scripts/fetch-india-openaq-pm25.py \
   --output output/india-particulate-20261108/sources/asia-pm25 \
   --start 2025-01-01 --end 2026-11-08 \
   --refresh-index --refresh-since 2026-10-20

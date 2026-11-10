@@ -56,9 +56,9 @@ os.execvp('make', ['make', '-f', os.environ['DATA_UPDATE_TEST_MAKEFILE'], *sys.a
                     'ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY': '0',
                     'MAKEFLAGS': '', 'MFLAGS': '', 'MAKEOVERRIDES': ''}
 
-    def run_update(self, *flags, failure=''):
+    def run_update(self, *flags, failure='', targets=('data-update',)):
         return subprocess.run(['make', '--no-print-directory', *flags,
-                               f'MAKE={self.wrapper}', 'DATASET=legacy', 'data-update'], cwd=ROOT,
+                               f'MAKE={self.wrapper}', 'DATASET=legacy', *targets], cwd=ROOT,
                               env={**self.env, 'DATA_UPDATE_TEST_FAIL': failure},
                               text=True, capture_output=True, timeout=30)
 
@@ -85,6 +85,16 @@ os.execvp('make', ['make', '-f', os.environ['DATA_UPDATE_TEST_MAKEFILE'], *sys.a
         self.assert_firms_setup_instructions(result.stderr)
         self.assertFalse(self.log.exists())
         self.assertNotIn('Completed every configured data refresh', result.stdout)
+
+    def test_update_data_alias_and_existing_target_acquire_only_once(self):
+        result = self.run_update('-j8', targets=('update-data', 'data-update'))
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.log.read_text().splitlines(), EXPECTED)
+
+    def test_update_data_alias_propagates_failure(self):
+        result = self.run_update('-j8', targets=('update-data',), failure=EXPECTED[0])
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(self.log.read_text().splitlines(), EXPECTED[:1])
 
     def test_direct_fetch_without_key_does_not_download_or_stage(self):
         curl = self.folder / 'curl'
@@ -139,6 +149,7 @@ os.execvp('make', ['make', '-f', os.environ['DATA_UPDATE_TEST_MAKEFILE'], *sys.a
         result = subprocess.run(['make', '--no-print-directory', '-s', 'list-targets'],
                                 cwd=ROOT, env=self.env, text=True, capture_output=True, check=True)
         self.assertIn('data-update', result.stdout.splitlines())
+        self.assertIn('update-data', result.stdout.splitlines())
 
 
 if __name__ == '__main__':

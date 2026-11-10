@@ -209,7 +209,7 @@ The acquisition and preparation scripts are:
 
 - [`fetch-soramame-pm25.py`](../../../scripts/fetch-soramame-pm25.py)
 - [`fetch-cnemc-pm25.py`](../../../scripts/fetch-cnemc-pm25.py)
-- [`fetch-openaq-pm25.py`](../../../scripts/fetch-openaq-pm25.py)
+- [`fetch-india-openaq-pm25.py`](../../../scripts/fetch-india-openaq-pm25.py)
 - [`prepare-asia-pm25.py`](../../../scripts/prepare-asia-pm25.py)
 
 Raw downloads, URL/hash receipts, station metadata and daily normalized tables

@@ -86,6 +86,9 @@ make ASSET_JOBS=2 atlas-optional
 ```
 
 `data-update` prepares isolated inputs and selects them only after validation.
+`make update-data` is an alias for the same update. Selected India OpenAQ
+daily archives from January 2025 onward are preserved in a shared cache;
+updates refresh archive listings and download only missing daily files.
 `atlas-optional` builds standard native artifacts, the default World/Japan
 atlas, and all implemented optional Anthropocene ocean and climate products.
 It uses one frozen edition and performs no provider acquisition. Completed

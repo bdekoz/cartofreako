@@ -514,9 +514,10 @@ class Sources:
         import csv
         target = self.directory("india")
         inventory = ROOT / "scripts/data/india-openaq-locations-20261108.json"
-        self.run("python3", ROOT / "scripts/fetch-openaq-pm25.py", "--output", target / "openaq",
+        self.run("python3", ROOT / "scripts/fetch-india-openaq-pm25.py", "--output", target / "openaq",
+                 "--cache-dir", self.cache / "india-openaq",
                  "--locations-json", inventory, "--start", "2025-01-01", "--end", str(self.last_day),
-                 "--refresh-index", "--refresh-since", "2025-01-01")
+                 "--refresh-index")
         report = json.loads((target / "openaq/openaq-quality.json").read_text())
         if report.get("failures"):
             raise DatasetError("OpenAQ archive acquisition has failed required station files")
@@ -552,4 +553,6 @@ class Sources:
         self.bind("INDIA_METADATA", target / "locations.json")
         self.record("india", target, {"observed_through": report["observed_last_date"],
                     "eligible_through": report["eligible_last_date"], "scope": report["coverage"],
-                    "monitor_classes": ["reference", "low-cost"]})
+                    "monitor_classes": ["reference", "low-cost"]}, "policy-cache",
+                    raw_cache_policy=report.get('raw_cache_policy'),
+                    raw_acquisition_counts=report.get('raw_acquisition_counts'))

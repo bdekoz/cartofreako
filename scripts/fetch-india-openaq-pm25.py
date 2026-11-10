@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Fetch selected, publicly documented OpenAQ stations from its key-free S3 archive."""
+"""Fetch selected Indian OpenAQ PM2.5 station-days, preserving downloaded archives."""
 import argparse
-from collections import defaultdict
+from collections import Counter, defaultdict
 import concurrent.futures
 import csv
 import datetime as dt
@@ -10,14 +10,19 @@ import hashlib
 import io
 import json
 import math
+import os
 from pathlib import Path
 import re
 import threading
 import time
+import shutil
 import xml.etree.ElementTree as E
 
 from bs4 import BeautifulSoup
 import requests
+from dataset import atomic_json, digest, lock
+
+PROJECT = Path(__file__).resolve().parents[1]
 
 S3 = 'https://openaq-data-archive.s3.amazonaws.com/'
 # Spatially distributed, documented reference monitors; this is an explicitly
@@ -44,6 +49,77 @@ LOCATIONS = {
 TLS = threading.local()
 
 
+class ArchiveCache:
+    """Reuse verified daily bytes across editions and adopt earlier local downloads."""
+    def __init__(self, directory, output, reuse_from=()):
+        self.directory, self.output = Path(directory), Path(output)
+        candidates = [self.output/'raw', *map(Path, reuse_from)]
+        data = Path(os.environ.get('DATA_ROOT', PROJECT/'.cartofreako/data'))
+        candidates += sorted(data.glob('editions/*/inputs/india/openaq/raw'), reverse=True)
+        for pattern in ('*/openaq/raw', '*/*/openaq/raw'):
+            candidates += sorted((PROJECT/'output').glob(pattern))
+        candidates += [PROJECT/'assets.static/anthropocene/asia-pm25/raw']
+        self.reuse = list(dict.fromkeys(p.resolve() for p in candidates if p.is_dir()))
+        self.expected = {}
+        for folder in self.reuse:
+            receipts = folder.parent/'openaq-download-receipts.json'
+            if receipts.is_file():
+                self.expected[folder] = {Path(r['key']).name:r['sha256'] for r in
+                                         json.loads(receipts.read_text()) if r.get('sha256')}
+
+    def materialize(self, cached, name):
+        target = self.output/'raw'/name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        if target.resolve() == cached.resolve():
+            return target
+        temporary = target.with_name(name+'.part')
+        temporary.unlink(missing_ok=True)
+        # Cache inodes are read-only and are replaced, never edited in place.
+        # Completed editions therefore retain their exact earlier bytes.
+        try:
+            os.link(cached, temporary)
+        except OSError:
+            shutil.copyfile(cached, temporary)
+        temporary.replace(target)
+        return target
+
+    def get(self, name, url, loader, refresh=False):
+        cached = self.directory/'raw'/name
+        receipt = self.directory/'receipts'/(name+'.json')
+        with lock(self.directory/'locks', hashlib.sha256(name.encode()).hexdigest()):
+            prior = json.loads(receipt.read_text()) if receipt.exists() else None
+            if cached.exists() and prior and digest(cached) != prior['sha256']:
+                raise ValueError('Cached OpenAQ archive checksum changed: '+name)
+            acquisition = 'cache-reused'
+            if refresh or not cached.exists():
+                adopted = None if refresh else next((p/name for p in self.reuse if (p/name).is_file()), None)
+                if adopted:
+                    body = adopted.read_bytes()
+                    expected = self.expected.get(adopted.parent, {}).get(name)
+                    if expected and hashlib.sha256(body).hexdigest()!=expected:
+                        raise ValueError('Earlier OpenAQ download checksum changed: '+str(adopted))
+                    acquisition = 'cache-imported'
+                else:
+                    body = loader()
+                    acquisition = 'downloaded'
+                if name.endswith('.csv.gz'):
+                    decoded = gzip.decompress(body).decode('utf-8-sig')
+                    required = {'location_id','sensors_id','datetime','lat','lon','parameter','units','value'}
+                    if not required.issubset(csv.DictReader(io.StringIO(decoded)).fieldnames or []):
+                        raise ValueError('Invalid OpenAQ archive columns: '+name)
+                cached.parent.mkdir(parents=True, exist_ok=True)
+                write_cache(cached, body)
+                cached.chmod(0o444)
+                prior = {'url':url,'sha256':digest(cached),
+                         'retrieved_at_utc':dt.datetime.now(dt.timezone.utc).isoformat() if acquisition=='downloaded' else None,
+                         'imported_from':str(adopted) if adopted else None}
+                atomic_json(receipt, prior)
+            elif prior is None:
+                prior = {'url':url,'sha256':digest(cached),'retrieved_at_utc':None,'imported_from':None}
+                atomic_json(receipt, prior)
+            return self.materialize(cached, name), {**prior, 'acquisition':acquisition}
+
+
 def write_cache(path, body):
     # Replacement preserves earlier snapshots that share immutable cache inodes.
     temporary = path.with_name(path.name + '.part')
@@ -65,10 +141,12 @@ def get(url, params=None):
             time.sleep(1 + attempt)
 
 
-def list_files(location, year, root, refresh=False):
+def list_files(location, year, root, refresh=False, cache=None):
     path = root / 'raw' / f'openaq-{location}-{year}-index.xml'
-    if refresh or not path.exists():
-        params = {'list-type': '2', 'prefix': f'records/csv.gz/locationid={location}/year={year}/', 'max-keys': 1000}
+    params = {'list-type': '2', 'prefix': f'records/csv.gz/locationid={location}/year={year}/', 'max-keys': 1000}
+    if cache is not None:
+        path, _ = cache.get(path.name, S3+'?prefix='+params['prefix'], lambda:get(S3, params).content, refresh)
+    elif refresh or not path.exists():
         write_cache(path, get(S3, params).content)
     tree = E.fromstring(path.read_bytes())
     ns = {'s': 'http://s3.amazonaws.com/doc/2006-03-01/'}
@@ -77,11 +155,10 @@ def list_files(location, year, root, refresh=False):
 
 
 def fetch_file(job):
-    key, root, refresh = job
+    key, root, refresh, cache = job
     path = root / 'raw' / Path(key).name
     try:
-        if refresh or not path.exists():
-            write_cache(path, get(S3 + key).content)
+        path, acquisition = cache.get(path.name, S3+key, lambda:get(S3+key).content, refresh)
         rows = []
         negative = wrong_unit = 0
         for r in csv.DictReader(io.StringIO(gzip.decompress(path.read_bytes()).decode('utf-8-sig'))):
@@ -101,15 +178,20 @@ def fetch_file(job):
             assert stamp.utcoffset() == dt.timedelta(hours=5, minutes=30)
             rows.append((int(r['location_id']), int(r['sensors_id']), stamp.isoformat(),
                          float(r['lat']), float(r['lon']), value))
-        return dict(key=key, sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
+        return dict(key=key, **acquisition,
                     pm25_rows=len(rows), negative_nonfinite_excluded=negative, wrong_unit_excluded=wrong_unit), rows
-    except (requests.RequestException, ValueError) as exc:
+    except (requests.RequestException, ValueError, OSError, EOFError) as exc:
         return dict(key=key, error=str(exc)), []
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', required=True, type=Path)
+    parser.add_argument('--cache-dir', type=Path,
+                        default=Path(os.environ.get('DATA_ROOT', PROJECT/'.cartofreako/data'))/'cache/india-openaq',
+                        help='Persistent raw archive cache shared across update runs')
+    parser.add_argument('--reuse-from', action='append', type=Path, default=[],
+                        help='Earlier raw download directory to import without network requests; repeatable')
     parser.add_argument('--locations-json', type=Path,
                         help='Versioned location inventory with id, name, provider and kind fields')
     parser.add_argument('--start', type=dt.date.fromisoformat, default=dt.date(2025, 1, 1))
@@ -136,13 +218,13 @@ def main():
     started_at = dt.datetime.now(dt.timezone.utc).isoformat()
     root = args.output
     (root / 'raw').mkdir(parents=True, exist_ok=True)
+    cache = ArchiveCache(args.cache_dir, root, args.reuse_from)
     metadata = []
     keys = []
     for location, (name, provider, kind) in locations.items():
         url = f'https://explore.openaq.org/locations/{location}'
         path = root / 'raw' / f'openaq-location-{location}.html'
-        if not path.exists():
-            write_cache(path, get(url).content)
+        path, _ = cache.get(path.name, url, lambda:get(url).content)
         html = path.read_text()
         soup = BeautifulSoup(html, 'html.parser')
         description = soup.get_text(' ', strip=True)
@@ -154,7 +236,7 @@ def main():
                    metadata_url=url, metadata_sha256=hashlib.sha256(path.read_bytes()).hexdigest())
         metadata.append(row)
         for year in range(args.start.year, args.end.year + 1):
-            available = list_files(location, year, root, args.refresh_index)
+            available = list_files(location, year, root, args.refresh_index, cache)
             keys.extend(available)
             print(f'OpenAQ {location} {year}: {len(available)} daily archive files', flush=True)
     receipts, observations = [], defaultdict(lambda: defaultdict(dict))
@@ -166,7 +248,7 @@ def main():
         # one-day margin and apply the exact inclusive limit to each row below.
         if args.start - dt.timedelta(days=1) <= file_date <= args.end + dt.timedelta(days=1):
             refresh = args.refresh_since is not None and file_date >= args.refresh_since
-            jobs.append((key, root, refresh))
+            jobs.append((key, root, refresh, cache))
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
         for index, (receipt, rows) in enumerate(pool.map(fetch_file, jobs)):
             receipts.append(receipt)
@@ -233,6 +315,9 @@ def main():
                   observed_last_date=max(r['date'] for r in normalized),
                   eligible_last_date=max((r['date'] for r in normalized if r['eligible']), default=None),
                   archive_indexes_refreshed=args.refresh_index,
+                  raw_cache_policy='preserve-downloaded-daily-files',
+                  raw_cache_directory=str(args.cache_dir),
+                  raw_acquisition_counts=dict(Counter(r.get('acquisition','failed') for r in receipts)),
                   raw_files_refreshed_since=args.refresh_since.isoformat() if args.refresh_since else None,
                   coverage=coverage_description,
                   location_inventory=str(args.locations_json) if args.locations_json else 'legacy built-in selection',

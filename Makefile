@@ -15,7 +15,7 @@ endif
 endif
 
 ifeq ($(DATASET_RECURSE),1)
-ifneq ($(filter data-update,$(MAKECMDGOALS)),)
+ifneq ($(filter data-update update-data,$(MAKECMDGOALS)),)
 $(error Run make data-update and the build as two separate invocations)
 endif
 .DEFAULT_GOAL := dataset-entry
@@ -1058,7 +1058,7 @@ DATA_UPDATE_TARGETS := $(EXPERIMENT_DATA_FETCH_TARGETS) \
 	refresh-resources-data refresh-network-fiber prepare-network-swarm-data \
 	fetch-ocean-stage-2 verify-cloud-atmosphere-data
 
-PUBLIC_TARGETS := all all-experiments all-experiments-fetch data-update atlas-optional \
+PUBLIC_TARGETS := all all-experiments all-experiments-fetch data-update update-data atlas-optional \
 	all-experiments-resilient all-resilient \
 	assets-single assets-resilient \
 	check check-docs check-all-experiments check-data-update check-dataset check-firms-coverage \
@@ -1299,6 +1299,8 @@ all-experiments-fetch: clean $(EXPERIMENT_DATA_FETCH_TARGETS)
 
 # A single serial submake preserves fetch/prepare ordering, deduplicates shared
 # prerequisites, and stops on failure even when the caller uses -j or -k.
+update-data: data-update
+
 data-update: $(ANTHROPOCENE_PARTICULATE_FETCHER)
 	@$(ANTHROPOCENE_PARTICULATE_FETCHER) --check-credentials
 ifeq ($(DATASET),legacy)
@@ -1314,6 +1316,7 @@ check-dataset:
 	$(ATLAS_PYTHON) tests/test-data-http-policy.py
 	$(ATLAS_PYTHON) tests/test-noaa-cpc-ping.py
 	$(ATLAS_PYTHON) tests/test-astro-setouchi-plates.py
+	$(ATLAS_PYTHON) tests/test-india-openaq-cache.py
 	$(ATLAS_PYTHON) tests/test-data-workflow.py
 
 check-firms-coverage: build/test-firms-coverage
