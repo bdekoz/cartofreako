@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Probe CPC hourly until a data request succeeds, then record its UTC time."""
+"""Probe CPC hourly until a data request succeeds, then log its Pacific time."""
 import argparse
 from http.client import HTTPException
 import json
@@ -82,7 +82,7 @@ def monitor(url, status_log, cache, *, interval=3600, timeout=20, once=False):
                 continue
             # Reserve the next hourly slot before I/O so restarting the
             # monitor cannot accidentally cause a burst of extra requests.
-            state.update(url=redact(url), last_attempt_at=timestamp(now), next_probe_at=now+interval)
+            state.update(url=redact(url), last_attempt_at=timestamp(now, utc=True), next_probe_at=now+interval)
             atomic_json(journal, state)
             status, headers, success, note = probe(url, timeout)
             received = time.time()

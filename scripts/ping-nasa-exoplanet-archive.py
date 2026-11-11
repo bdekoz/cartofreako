@@ -91,7 +91,7 @@ def monitor(url, status_log, cache, *, interval=3600, timeout=20, once=False):
                 wait_until(due)
                 continue
             # Reserve before I/O, so restarting cannot bypass the hourly slot.
-            state.update(url=redact(url), last_attempt_at=timestamp(now), next_probe_at=now + interval)
+            state.update(url=redact(url), last_attempt_at=timestamp(now, utc=True), next_probe_at=now + interval)
             atomic_json(journal, state)
             status, headers, success, note = probe(url, timeout)
             received = time.time()

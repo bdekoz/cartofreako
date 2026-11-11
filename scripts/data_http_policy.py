@@ -15,8 +15,11 @@ import time
 from urllib.error import HTTPError
 from urllib.parse import urlsplit
 from urllib.request import urlopen
+from zoneinfo import ZoneInfo
 
 from dataset import DatasetError, ROOT, atomic_json, redact
+
+PACIFIC = ZoneInfo('America/Los_Angeles')
 
 
 def setting(name, default, *, positive=False):
@@ -122,8 +125,12 @@ class Pacer:
                     state['successes'] = 0
 
 
-def timestamp(when):
-    return datetime.fromtimestamp(when, timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+def timestamp(when, *, utc=False):
+    """Display Pacific time with DST labels; retain UTC for persisted state."""
+    instant = datetime.fromtimestamp(when, timezone.utc)
+    if utc:
+        return instant.strftime('%Y-%m-%dT%H:%M:%SZ')
+    return instant.astimezone(PACIFIC).strftime('%Y-%m-%d %H:%M:%S %Z')
 
 
 def retry_hint(when):

@@ -146,7 +146,35 @@ See the [optional-source coverage audit](../../development/20261109_data_update_
 for standalone research fetchers and deliberately pinned inputs outside the
 current update workflow.
 
-Mutable OISST files use HTTP revalidation; CPC retains closed years and
+OISST remote refreshes are limited to the 2025 and 2026 product years:
+
+| Ocean input | Coverage | Acquisition |
+| --- | --- | --- |
+| SST and sea-ice concentration | 2025 full year and 2026 year to date | Four annual files, using HTTP freshness checks and resumable 8 MiB ranges |
+| Historical SST and sea-ice concentration | 1982–2024 | 86 verified local annual files; no provider requests |
+| Land mask | Fixed grid | One verified local file; no provider request |
+
+The historical files and land mask are copied from `OCEAN_HISTORY_DIR`
+(default `output/ocean-temperature-20261108/cache/oisst`), with receipt,
+checksum, and grid verification. These local inputs support the 1991–2020
+anomaly baseline and historical records; the output years remain 2025 and
+2026. Missing local history fails preflight instead of starting an automatic
+45-year download. Set `OCEAN_HISTORY_DIR=/path/to/verified/cache/oisst`
+when the existing archive is elsewhere.
+Existing prepared ocean arrays beside that archive are also reused when their
+input and implementation hashes match; changed inputs are recomputed.
+This limits remote acquisition while retaining the full scientific input
+range. Historical grids may still require local processing. The target
+products include full-year 2025, a matched 2025 window, and 2026 year to date;
+the actual common provider coverage and requested cutoff determine the
+matched window.
+
+The standalone `fetch-ocean-temperature.py` also defaults to
+`--start-year 2025 --end-year 2026`. Its `--history-dir` option stages verified
+older inputs. Broader remote ranges require an explicit `--start-year`;
+the current-edition adapter always supplies 2025 and 2026.
+
+The four refreshed OISST files use HTTP revalidation; CPC retains closed years and
 requests only missing 2026 daily observations. Interrupted HTTP transfers
 resume only with matching validators; changed remote identities restart.
 OISST downloads use verified 8 MiB byte ranges. CPC whole-year refreshes,
@@ -306,6 +334,7 @@ checksum and implementation checks remain enforced.
 | `DATASET` | `current` | Builds select a validated edition. `legacy` explicitly selects retained repository paths; `data-update-resilient` requires current-edition mode. |
 | `DATASET_MANIFEST` | Active edition in `DATA_ROOT/current.json` | Replay a specific validated edition by absolute manifest path, independently of the current selection. |
 | `DATA_ROOT` | `.cartofreako/data` | Acquisition journals, editions, shared caches and selection pointers; does not relocate rendered outputs. |
+| `OCEAN_HISTORY_DIR` | `output/ocean-temperature-20261108/cache/oisst` under the repository root | Verified 1982–2024 OISST annual files, land mask and matching `.nc.json` receipts. Independent of `DATA_ROOT`; never fetched automatically. |
 | `DATA_UPDATE_MIN_FREE_GIB` | `160` | Minimum free working space checked before acquisition. |
 | `DATA_UPDATE_AS_OF` | Current UTC instant | Environment variable selecting the acquisition calculation boundary; use an explicit UTC ISO timestamp. |
 | `DATA_UPDATE_ARGS` | Empty | Arguments to the updater: `--resume ID`, repeatable `--defer SOURCE`, `--candidate-only`, `--as-of UTC`, and `--jobs 1`, `2` or `3`. Resilient Make adds `--keep-going`. |
@@ -447,8 +476,15 @@ make data-update DATA_UPDATE_ARGS='--resume <failed-update-id>' \
 
 Logs identify each file, received/expected bytes, elapsed time, retry time,
 and remaining retry budget. A failed update keeps the previous active edition.
+Acquisition progress, shared HTTP retry deadlines and CPC monitor timestamps
+use Pacific time (`America/Los_Angeles`), with `PST` or `PDT` according to the
+date. Saved manifests, receipts, and monitor state continue to use UTC
+timestamps or Unix time. A `shared NOAA cooldown` or `waiting for provider
+cooldown` message also appears during ordinary spacing between successful
+range requests; it does not by itself indicate another failed transfer.
 HTTP 429 prints an explicit **Too Many Requests** warning. When the server
-provides `Retry-After`, the warning shows that time in UTC. Otherwise it states
+provides `Retry-After`, the warning shows that time in Pacific time. Otherwise
+it states
 that the provider's reset time is unknown. The next eligible local retry time
 is shown separately; it is a conservative cooldown, not a guarantee that the
 provider's quota resets then. If the retry budget is exhausted, the error tells
@@ -478,8 +514,8 @@ hourly interval when needed. Existing shared NOAA cooldowns also apply.
 The saved schedule prevents an immediate extra probe after a restart, and a
 lock prevents duplicate monitors using the same cache.
 
-On the **first successful ping**, it appends a UTC timestamp, HTTP status and
-URL to `noaa-cpc-ping-status.log` at the repository root
+On the **first successful ping**, it appends a Pacific timestamp with `PST` or
+`PDT`, HTTP status and URL to `noaa-cpc-ping-status.log` at the repository root
 (`/home/bkoz/src/cartofreako/noaa-cpc-ping-status.log` on this checkout), then
 exits. Earlier recovery entries remain in the file. Failed probes appear only
 in `noaa-cpc-ping-monitor.log`; they never write a success timestamp.

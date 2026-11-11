@@ -363,6 +363,13 @@ local renders. Downloading requires network access; the other steps use
 pinned local inputs. Source caches are intentionally larger than the curated
 review package.
 
+The standalone fetcher now defaults to 2025/2026. The command below explicitly
+bootstraps the complete historical archive needed for this original review;
+it can download about 23 GiB when no verified files are present. Routine
+current-edition updates instead reuse that archive through `OCEAN_HISTORY_DIR`
+and refresh only 2025/2026, as described in the
+[generation guide](../pages/getting-started/generation.md#updating-all-configured-data-sources).
+
 ```sh
 python3 scripts/migrate-land-temperature-names.py
 make prepare-mineral-additions
@@ -371,7 +378,7 @@ python3 scripts/build-atlas-defaults.py --skip-exports
 python3 scripts/export-setouchi-sheets.py --delivery output/atlas --workers 3
 python3 scripts/build-atlas-defaults.py --check
 
-python3 scripts/fetch-ocean-temperature.py --output output/ocean-temperature-20261108/cache/oisst --workers 3
+python3 scripts/fetch-ocean-temperature.py --output output/ocean-temperature-20261108/cache/oisst --start-year 1982 --end-year 2026 --workers 3
 python3 scripts/fetch-ocean-context.py
 python3 scripts/prepare-ocean-temperature.py --wait-for-downloads
 python3 scripts/prepare-coral-thermal-stress.py

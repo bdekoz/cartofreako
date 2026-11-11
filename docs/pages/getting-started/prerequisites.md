@@ -59,8 +59,27 @@ libtorrent-rasterbar and GeoLite2++ development installation selected by
 the Alpha60 toolchain contract. Source checkouts
 must satisfy their existing commit/digest checks; they are not pulled.
 
+Ocean preflight also requires the 1982–2024 SST and sea-ice files plus the land
+mask, each with its `.nc.json` receipt: 87 local inputs in total.
+`OCEAN_HISTORY_DIR` defaults to
+`output/ocean-temperature-20261108/cache/oisst` under the repository root.
+To reuse an archive stored elsewhere:
+
+```sh
+make data-update-resilient OCEAN_HISTORY_DIR=/path/to/verified/cache/oisst
+```
+
+The ocean adapter verifies receipt identity, byte counts, checksums and native
+grids before refreshing the four 2025/2026 files. Missing or changed history
+does not trigger a historical download. `DATA_ROOT` does not relocate this
+configured archive. The history supplies climatology and records for the
+2025/2026 products; prepared arrays are reused only when their recorded input
+and implementation hashes match.
+
 Allow substantial local storage for 1982–2026 raw OISST files, CPC baselines,
-H3 working arrays, and print exports. The acquisition preflight defaults to a
+H3 working arrays, and print exports even though only 2025/2026 OISST files
+are refreshed over the network. Local historical processing may still be
+needed when prepared arrays are incompatible. The acquisition preflight defaults to a
 160 GiB free working-space budget; final 300 dpi exports need additional
 space. `DATA_ROOT` relocates inputs/cache; outputs remain in the repository's
 ignored `output/data-editions/`. Adjust `DATA_UPDATE_MIN_FREE_GIB` for a

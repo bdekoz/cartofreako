@@ -11,7 +11,7 @@ from urllib.error import HTTPError
 from urllib.request import Request
 
 from dataset import DatasetError, atomic_json, digest, lock, redact, utcnow
-from data_http_policy import Pacer, Progress, TransferRetry, open_response
+from data_http_policy import Pacer, Progress, TransferRetry, open_response, timestamp
 
 
 def fetch(url, destination, cache, *, minimum_interval=0, headers=None, range_size=None, same_day_cache=False,
@@ -140,7 +140,8 @@ def _fetch(url, destination, cache, *, minimum_interval=0, headers=None, range_s
         record = {**previous, "acquisition": "policy-cache", "cache_policy": policy}
         progress = Progress(url)
         progress.offset = progress.total = record['bytes']
-        progress.report(f'using validated cache ({policy}); provider checked {checked_at or "unknown (local import)"}', force=True)
+        checked_display = timestamp(datetime.fromisoformat(checked_at).timestamp()) if checked_at else 'unknown (local import)'
+        progress.report(f'using validated cache ({policy}); provider checked {checked_display}', force=True)
     else:
         if previous:
             if previous.get("etag"):

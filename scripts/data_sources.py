@@ -77,7 +77,16 @@ def local_input_paths():
     paths += [Path(cached_directory) if cached_directory else archive if archive.is_absolute() else ROOT / archive,
               Path(os.environ.get("NATIVE_SWARM_GEOLOCATION_DB", ROOT.parent / "geoip-databases/ipinfo/standard_location.mmdb"))]
     paths.append(Path(os.environ.get('NATIVE_SWARM_DATA_ROOT',ROOT.parent/'alpha60-data'))/'torrent'/style['swarm']['collection'])
+    history = ocean_history_directory()
+    for name in ['lsmask.oisst.nc'] + [f'{var}.day.mean.{year}.nc'
+                 for year in range(1982, 2025) for var in ('sst', 'icec')]:
+        paths.extend((history / name, history / (name + '.json')))
     return paths
+
+
+def ocean_history_directory():
+    path = Path(os.environ.get('OCEAN_HISTORY_DIR', ROOT / 'output/ocean-temperature-20261108/cache/oisst')).expanduser()
+    return path if path.is_absolute() else ROOT / path
 
 
 class Sources:
@@ -433,7 +442,8 @@ class Sources:
     def ocean(self):
         target = self.directory("ocean")
         self.run("python3", ROOT / "scripts/fetch-ocean-temperature.py", "--output", target / "cache/oisst",
-                 "--end-year", "2026", "--workers", str(self.jobs))
+                 "--start-year", "2025", "--end-year", "2026", "--workers", str(self.jobs),
+                 "--history-dir", ocean_history_directory())
         cache = target / "cache/oisst"
         days = [set(netcdf_days(cache / f"{var}.day.mean.2026.nc", variable))
                 for var, variable in (("sst", "sst"), ("icec", "icec"))]
@@ -447,7 +457,9 @@ class Sources:
         atomic_json(target / "ocean-config.json", config)
         self.bind("OCEAN_ROOT", target)
         self.bind("OCEAN_CONFIG", target / "ocean-config.json")
-        self.record("ocean", target, {"oisst_available_through": str(common[-1]), "selected_through": str(through)})
+        self.record("ocean", target, {"oisst_available_through": str(common[-1]), "selected_through": str(through),
+                                    "remote_refresh_years": [2025, 2026],
+                                    "history_policy": "verified local 1982–2024 inputs and land mask; no provider requests"})
 
     def ocean_context(self):
         from data_http import fetch
@@ -501,6 +513,13 @@ class Sources:
         prepared_cache=self.cache/'ocean-working'
         if prepared_cache.is_dir():
             copy_tree(prepared_cache,target/'work')
+        else:
+            prior_work = ocean_history_directory().parent.parent / 'work'
+            prior_grid = prior_work / 'grid.json'
+            if (prior_grid.is_file() and json.loads(prior_grid.read_text()).get('implementation_sha256')
+                    == digest(ROOT / 'scripts/prepare-ocean-temperature.py')):
+                # cache_year/grid check input and implementation hashes before reuse.
+                copy_tree(prior_work, target/'work')
         self.run("python3", ROOT / "scripts/prepare-ocean-temperature.py", "--root", target,
                  "--cutoff", str(limit), "--snapshot-date", str(self.as_of.date()))
         self.run("python3", ROOT / "scripts/prepare-coral-thermal-stress.py", "--root", target,
@@ -511,7 +530,9 @@ class Sources:
         # The earlier acquisition record now includes its verified daily
         # arrays and normalized products; context gets separate provenance.
         self.records[:] = [r for r in self.records if r["id"] != "ocean"]
-        self.record("ocean", target, {"oisst_and_coral_selected_through": str(limit), "jma_through": available[-1]})
+        self.record("ocean", target, {"oisst_and_coral_selected_through": str(limit), "jma_through": available[-1],
+                                    "remote_refresh_years": [2025, 2026],
+                                    "history_policy": "verified local 1982–2024 inputs and land mask; no provider requests"})
         self.record("ocean-context", target / "cache/coral", {"selected_through": str(limit), "source_grid": "CRW original centers; historical reef locator"})
 
     def india(self):

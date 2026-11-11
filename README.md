@@ -115,14 +115,23 @@ outputs and their receipts live under `output/data-editions/<dataset-id>/`;
 `.cartofreako/data/build-current.json` identifies the validated full build.
 
 Both acquisition targets require an exported `FIRMS_MAP_KEY`, configured P-Tree credentials,
-and the configured local swarm/network and audited petroleum inputs. Mutable
+the configured local swarm/network and audited petroleum inputs, and the verified
+local ocean history archive selected by `OCEAN_HISTORY_DIR`. Mutable
 NOAA files are revalidated; pinned local publications retain their dates.
+Ocean refreshes request only four SST/sea-ice files for **2025 and 2026**.
+The 86 annual files for 1982–2024 and the land mask are verified and reused
+locally for climatology and record calculations. Missing history stops preflight;
+the updater does not download the full historical archive automatically.
 NOAA downloads use shared adaptive pacing and a 30-minute retry budget per
 request/range. OISST uses 8 MiB ranges and retries interrupted response bodies
 while retaining validated partial bytes. CPC 1979–2025 archives are pinned;
 2026 updates retain existing observations and fetch only missing daily subsets. Saved subsets and partial
 downloads survive retries. See the [Make download controls](docs/pages/getting-started/generation.md#noaa-download-controls)
 for rate limits, progress, retry settings and the optional bulk endpoint.
+Acquisition progress, retry deadlines and CPC monitor logs use Pacific time
+with automatic PST/PDT labels. Saved timestamps and daily cache boundaries
+retain their UTC semantics. A shared NOAA cooldown message can describe normal
+request spacing; actual HTTP failures print their status and retry attempt.
 Particulate updates also retain completed FIRMS/CWFIS periods and closed-year
 archives. NOAA-20 data for 2025 is acquired once when older files contain only
 S-NPP; later runs reuse completed matching-sensor chunks. See the

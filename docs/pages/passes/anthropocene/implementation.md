@@ -11,12 +11,19 @@
 
 ## Current-data acquisition and builds
 
-`make data-update` acquires global particulate observations, revalidates CPC
-and OISST, discovers CRW/JMA context and refreshes the configured India monitor
+`make data-update` acquires global particulate observations, retains CPC
+archives while appending missing 2026 observations, refreshes the four
+2025/2026 OISST SST/sea-ice files, discovers CRW/JMA context and refreshes the configured India monitor
 archive. It generates and validates new profile/normalized-data pairs inside
 an isolated edition, then selects the complete edition automatically. A
 required-source failure retains the previous selection. The FIRMS error log
 includes key request/recovery instructions.
+
+Ocean history from 1982–2024 and the land mask are verified local inputs from
+`OCEAN_HISTORY_DIR`. They support the 1991–2020 climatology and historical
+record comparisons for the 2025/2026 products. Missing history stops the
+update instead of requesting older years. Prepared historical arrays are
+reused only when their input and implementation hashes match.
 
 `make atlas-optional` includes standard particulate/land-temperature maps and
 all implemented optional ocean/climate families, periods, diagnostics and

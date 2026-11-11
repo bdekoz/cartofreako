@@ -15,6 +15,7 @@ import uuid
 from dataset import (ROOT, GROUPS, SCHEMA, DatasetError, activate, atomic_json, data_root,
                      digest, file_record, implementation_record, lock, redact, seal, utcnow, validate)
 from data_sources import Sources
+from data_http_policy import timestamp
 
 
 ORDER = ("natural-earth", "orbital", "astronomy", "anthropocene", "resources",
@@ -109,7 +110,8 @@ def update(root, *, requested_as_of, jobs=2, resume=None, adapters=None, candida
             atomic_json(state_path, state)
 
         checkpoint()
-        print(f"Dataset run {state['dataset_id']}; requested as of {requested_as_of}", flush=True)
+        requested_display = timestamp(datetime.fromisoformat(requested_as_of).timestamp())
+        print(f"Dataset run {state['dataset_id']}; requested as of {requested_display}", flush=True)
         try:
             for ident in ORDER:
                 previous = next((record for record in source.records if record["id"] == ident), None)

@@ -58,6 +58,8 @@ class Monitor(unittest.TestCase):
             self.assertEqual(self.run_monitor(), 0)
         self.assertEqual(probe.call_count, 2)
         self.assertEqual(self.clock.now, start+3600)
+        journal = json.loads((self.cache/'http/monitors/noaa-cpc-ping.json').read_text())
+        self.assertEqual(journal['last_attempt_at'], ping.timestamp(start+3600, utc=True))
         lines = self.log.read_text().splitlines()
         self.assertEqual(len(lines), 1)
         self.assertTrue(lines[0].startswith(ping.timestamp(start+3600)+' HTTP 206'))
@@ -183,7 +185,7 @@ class Monitor(unittest.TestCase):
                                 capture_output=True, text=True, timeout=20)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(calls, ['bytes=0-0'])
-        self.assertRegex(self.log.read_text(), r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z HTTP 206 ')
+        self.assertRegex(self.log.read_text(), r'^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} P[SD]T HTTP 206 ')
 
 
 if __name__ == '__main__':

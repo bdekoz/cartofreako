@@ -18,7 +18,7 @@ and [`scripts/data_sources.py`](../../scripts/data_sources.py).
 | Atoll | Configured USGS evidence, with its historical source periods |
 | Network | Configured local snapshots/archives, synthesis and preparation; no external checkout pulls |
 | Petroleum | Audited local EIA/OPEC tables, retaining their publication years |
-| Ocean and ocean context | OISST, CRW coral context and JMA, with preparation and validation |
+| Ocean and ocean context | Remote OISST refreshes for 2025/2026 only; verified local 1982–2024 history and land mask; CRW/JMA context, preparation and validation |
 | India | Selected Indian OpenAQ PM2.5 station-days for optional heat–particulate coexposure |
 
 The India fetcher is now named
@@ -33,6 +33,13 @@ missing daily archives. Earlier local downloads are imported and checked
 against recorded hashes when available. Explicit manual `--refresh-since`
 remains available for intentional revision acquisition. Download, import and
 reuse counts are recorded in `openaq-quality.json` and the source record.
+
+The ocean acquisition policy was narrowed on November 10: its four remote
+annual inputs are SST and sea ice for 2025 and 2026. `OCEAN_HISTORY_DIR`
+supplies 86 older annual files and the land mask with matching receipts.
+Preflight requires those local inputs; staging verifies their hashes and
+grids. Missing or changed history cannot fall back to remote acquisition.
+The full 1982–2026 input range still supports the scientific calculations.
 
 ## Standalone acquisition and preparation outside the aggregate
 

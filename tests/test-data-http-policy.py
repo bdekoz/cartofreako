@@ -18,7 +18,7 @@ from urllib.request import Request
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 from dataset import DatasetError
-from data_http_policy import Pacer, Progress, open_response, retry_after, setting
+from data_http_policy import Pacer, Progress, open_response, retry_after, setting, timestamp
 
 
 class Policy(unittest.TestCase):
@@ -75,6 +75,21 @@ class Policy(unittest.TestCase):
         date = format_datetime(datetime.fromtimestamp(self.clock.time()+180, timezone.utc), usegmt=True)
         self.assertEqual(retry_after(date), 180)
         self.assertEqual(retry_after('invalid'), 0)
+
+    def test_display_timestamps_follow_pacific_daylight_saving_transitions(self):
+        cases = (
+            ('2026-11-11T03:26:43Z', '2026-11-10 19:26:43 PST'),
+            ('2026-07-11T03:26:43Z', '2026-07-10 20:26:43 PDT'),
+            ('2026-03-08T09:59:59Z', '2026-03-08 01:59:59 PST'),
+            ('2026-03-08T10:00:00Z', '2026-03-08 03:00:00 PDT'),
+            ('2026-11-01T08:59:59Z', '2026-11-01 01:59:59 PDT'),
+            ('2026-11-01T09:00:00Z', '2026-11-01 01:00:00 PST'),
+        )
+        for utc, expected in cases:
+            with self.subTest(utc=utc):
+                when = datetime.fromisoformat(utc).timestamp()
+                self.assertEqual(timestamp(when), expected)
+                self.assertEqual(timestamp(when, utc=True), utc)
 
     def test_more_than_five_throttled_retries_fit_configured_time_budget(self):
         with patch.dict(os.environ, {'DATA_HTTP_RETRY_BUDGET': '1800'}):

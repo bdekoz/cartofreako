@@ -167,10 +167,12 @@ CPC_ARCHIVE_CACHE ?= 1
 CPC_INCREMENTAL ?= 1
 CPC_SUBSET_BASE_URL ?= https://psl.noaa.gov/thredds/ncss/grid/Datasets/cpc_global_temp
 CPC_BASE_URL ?= https://psl.noaa.gov/thredds/fileServer/Datasets/cpc_global_temp
+OCEAN_HISTORY_DIR ?= $(CURDIR)/output/ocean-temperature-20261108/cache/oisst
 export DATA_HTTP_RETRY_BUDGET NOAA_HTTP_MIN_INTERVAL NOAA_HTTP_MAX_INTERVAL
 export DATA_HTTP_PROGRESS_INTERVAL CPC_HTTP_RANGE_SIZE CPC_HTTP_DAILY_CACHE CPC_BASE_URL
 export CPC_ARCHIVE_CACHE
 export CPC_INCREMENTAL CPC_SUBSET_BASE_URL
+export OCEAN_HISTORY_DIR
 PARTICULATE_REFRESH ?= 0
 export PARTICULATE_REFRESH
 ANTHROPOCENE_TEMPERATURE_PREPARATION_SCRIPT := \
@@ -1329,6 +1331,7 @@ endif
 
 check-dataset:
 	$(ATLAS_PYTHON) tests/test-dataset.py
+	$(ATLAS_PYTHON) tests/test-ocean-fetch.py
 	$(ATLAS_PYTHON) tests/test-cpc-archive.py
 	$(ATLAS_PYTHON) tests/test-particulate-cache.py
 	$(ATLAS_PYTHON) tests/test-fetch-cpc-current-year.py
