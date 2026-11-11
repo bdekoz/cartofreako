@@ -171,7 +171,7 @@ izzi_src=${IZZI_SRC:-$workspace_root/izzi/src}
 clone_missing "$(dirname -- "$alpha60_src")" https://github.com/bdekoz/alpha60.git
 clone_missing "$(dirname -- "$izzi_src")" https://github.com/bdekoz/izzi.git
 clone_missing "${NETWORK_INFRASTRUCTURE_CLOUD_SOURCE:-$workspace_root/cloud_cdn_cache}" \
-  https://github.com/bdekoz/cloud_cdn_cache.git 1be1eb04e73320e0337a74a99686cd532f09ad9b
+  https://github.com/bdekoz/cloud_cdn_cache.git 2234be5c9bce123d26639e79935e54dd8f8785a8
 clone_missing "${SUBMARINE_CABLE_SOURCE:-$workspace_root/www.submarinecablemap.com}" \
   https://github.com/telegeography/www.submarinecablemap.com.git
 

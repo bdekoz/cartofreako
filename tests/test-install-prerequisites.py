@@ -140,7 +140,7 @@ class Installer(unittest.TestCase):
         self.assertEqual(len(calls), 3)
         self.assertEqual(calls[0], ['git', 'clone', 'https://github.com/bdekoz/izzi.git', str(self.folder / 'izzi')])
         self.assertEqual(calls[-1], ['git', '-C', str(self.folder / 'cloud'), 'checkout',
-                                   '1be1eb04e73320e0337a74a99686cd532f09ad9b'])
+                                   '2234be5c9bce123d26639e79935e54dd8f8785a8'])
         self.assertEqual((self.folder / 'alpha60/keep').read_text(), 'existing checkout')
 
     def test_missing_original_font_is_installed_with_license(self):

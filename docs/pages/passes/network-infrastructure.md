@@ -53,7 +53,7 @@ separate:
 
 | Source | Pinned snapshot | Implemented evidence |
 | --- | --- | --- |
-| [`bdekoz/cloud_cdn_cache`](https://github.com/bdekoz/cloud_cdn_cache) | commit `1be1eb04e73320e0337a74a99686cd532f09ad9b`, manifest dated 2026-08-05 | 28 canonical layers, 27,378 records, 1,003 rendered provider-declared Point records |
+| [`bdekoz/cloud_cdn_cache`](https://github.com/bdekoz/cloud_cdn_cache) | commit `2234be5c9bce123d26639e79935e54dd8f8785a8`, manifest dated 2026-08-05 | 28 canonical layers, 27,378 records, 1,003 rendered provider-declared Point records |
 | [TeleGeography Submarine Cable Map](https://github.com/telegeography/www.submarinecablemap.com) | content snapshot `v3.20260805` | 697 cable systems, 718 route features, 1,930 route parts, 28,150 vertices, and 1,922 landing points |
 | [TeleGeography Internet Exchange Map](https://github.com/telegeography/www.internetexchangemap.com) | commit `2b9c36ad7fad083c0b4db998c4dedadc1ba89027`, 2022-09-20 | 1,772 geolocated facilities, 1,103 exchanges, and 2,581 source membership entries |
 

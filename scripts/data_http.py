@@ -1,5 +1,6 @@
 """Revalidate remote objects without modifying previously selected editions."""
 from datetime import datetime, timezone
+from http.client import IncompleteRead
 import hashlib
 import json
 import os
@@ -10,7 +11,7 @@ from urllib.error import HTTPError
 from urllib.request import Request
 
 from dataset import DatasetError, atomic_json, digest, lock, redact, utcnow
-from data_http_policy import Pacer, Progress, open_response
+from data_http_policy import Pacer, Progress, TransferRetry, open_response
 
 
 def fetch(url, destination, cache, *, minimum_interval=0, headers=None, range_size=None, same_day_cache=False,
@@ -33,6 +34,7 @@ def _download(url, headers, temporary, partial_receipt, range_size, pacer, progr
         offset = 0
     progress.offset, progress.total = offset, partial.get('bytes') if offset else None
     progress.report('resuming' if offset else 'checking provider', force=True)
+    retry = TransferRetry(pacer, progress)
     while True:
         request_headers = dict(headers)
         if offset:
@@ -46,7 +48,9 @@ def _download(url, headers, temporary, partial_receipt, range_size, pacer, progr
             request_headers["Range"] = f"bytes={offset}-{end}"
         elif offset:
             request_headers["Range"] = f"bytes={offset}-"
-        with open_response(Request(url, headers=request_headers), pacer, progress) as response:
+        interrupted = None
+        with open_response(Request(url, headers=request_headers), pacer, progress,
+                           deadline=retry.deadline, record_success=False) as response:
             expected = response.headers.get("Content-Length")
             total = int(expected) if expected else None
             etag = response.headers.get("ETag")
@@ -78,19 +82,36 @@ def _download(url, headers, temporary, partial_receipt, range_size, pacer, progr
             atomic_json(partial_receipt, partial)
             progress.offset, progress.total = offset, total
             with open(temporary, "ab" if offset else "wb") as stream:
-                while block := response.read(1024 * 1024):
-                    stream.write(block)
-                    progress.offset += len(block)
-                    progress.report()
+                try:
+                    while block := response.read(1024 * 1024):
+                        stream.write(block)
+                        progress.offset += len(block)
+                        progress.report()
+                except IncompleteRead as error:
+                    stream.write(error.partial)
+                    progress.offset += len(error.partial)
+                    interrupted = error
+                except (TimeoutError, ConnectionError) as error:
+                    interrupted = error
                 stream.flush()
                 os.fsync(stream.fileno())
             size = temporary.stat().st_size
-            if not size or (response_end is not None and size != response_end):
-                raise DatasetError("Empty or incomplete download; validated partial retained: " + redact(url))
-            if total is None or size == total:
-                progress.report('download complete', force=True)
-                return {"etag": response.headers.get("ETag"), "last_modified": last_modified}
-            offset, validator = size, current_validator
+            if response_end is not None and size > response_end:
+                raise DatasetError("Provider returned more bytes than expected: " + redact(url))
+            complete = size and (size == response_end if response_end is not None else interrupted is None)
+            if complete:
+                pacer.success()
+                if total is None or size == total:
+                    progress.report('download complete', force=True)
+                    return {"etag": response.headers.get("ETag"), "last_modified": last_modified}
+                retry.reset()
+            else:
+                interrupted = interrupted or 'Empty or incomplete download'
+        # Close the response before waiting. Resume only bytes with a usable
+        # remote identity; a changed If-Range response replaces the partial.
+        offset, validator = (size if current_validator else 0), current_validator
+        if not complete:
+            retry.interrupted(interrupted)
 
 
 def _fetch(url, destination, cache, *, minimum_interval=0, headers=None, range_size=None, same_day_cache=False,

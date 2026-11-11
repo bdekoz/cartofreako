@@ -21,9 +21,9 @@ SUBMARINE_CABLE_SOURCE=../www.submarinecablemap.com
 INTERNET_EXCHANGE_SOURCE=../www.internetexchangemap.com
 ```
 
-The cloud pin uses audited commit
-`1be1eb04e73320e0337a74a99686cd532f09ad9b`: 28 canonical layers and
-27,378 records. The normal profile deliberately excludes observed cloud
+The cloud checkout is pinned to commit
+`2234be5c9bce123d26639e79935e54dd8f8785a8`, using the audited 2026-08-05
+manifest: 28 canonical layers and 27,378 records. The normal profile deliberately excludes observed cloud
 presences, including the new 11,659-record geocoded observation layer, so its
 rendered set remains 1,003 provider-declared locations. The observations stay
 in the parsed and validated source totals without being presented as declared

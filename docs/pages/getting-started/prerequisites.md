@@ -761,7 +761,7 @@ atlas needs only the cloud/CDN checkout. With the default sibling layout:
 
 ```sh
 git clone https://github.com/bdekoz/cloud_cdn_cache.git ../cloud_cdn_cache
-git -C ../cloud_cdn_cache checkout 1be1eb04e73320e0337a74a99686cd532f09ad9b
+git -C ../cloud_cdn_cache checkout 2234be5c9bce123d26639e79935e54dd8f8785a8
 make check-network-infrastructure-sources
 make generate-network-infrastructure
 ```

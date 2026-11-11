@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Exercise complete transactions, frozen build routing and scientific lags."""
 from datetime import date
+import builtins
 import importlib
 import json
 import os
@@ -28,6 +29,27 @@ class Workflow(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         self.registry = json.loads((ROOT/'config/data-products.json').read_text())
+
+    def test_preflight_rejects_missing_python_gdal_before_acquisition(self):
+        credentials = self.root/'netrc'
+        credentials.write_text('machine ftp.ptree.jaxa.jp login fixture password fixture\n')
+        credentials.chmod(0o600)
+        original_import = builtins.__import__
+        def without_gdal(name, *args, **kwargs):
+            if name == 'osgeo':
+                raise ModuleNotFoundError("No module named 'osgeo'")
+            return original_import(name, *args, **kwargs)
+        with patch.dict(os.environ, {'PTREE_NETRC': str(credentials),
+                                     'ANTHROPOCENE_REGIONAL_DEVELOPMENT_ONLY': '0'}), \
+             patch('shutil.which', return_value='/fixture/bin/tool'), \
+             patch('builtins.__import__', side_effect=without_gdal), \
+             patch('subprocess.run') as run, \
+             patch('data_sources.local_input_paths') as inputs:
+            with self.assertRaisesRegex(dataset.DatasetError, 'GDAL Python bindings unavailable.*python3-gdal'):
+                update.preflight(self.root)
+        self.assertEqual(run.call_count, 1)
+        self.assertIn('--check-credentials', run.call_args.args[0])
+        inputs.assert_not_called()
 
     def adapters(self, *, fail=None, calls=None):
         def callback(ident):

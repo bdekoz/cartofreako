@@ -42,6 +42,12 @@ def preflight(root):
         raise DatasetError("PTREE_NETRC must configure ftp.ptree.jaxa.jp before acquisition")
     if not all(shutil.which(tool) for tool in ("bash", "curl", "jq", "rg", "gdalinfo", "make")):
         raise DatasetError("Native dependencies are missing; run make install-prerequisites")
+    try:
+        from osgeo import ogr
+    except ImportError as error:
+        raise DatasetError(f"GDAL Python bindings unavailable for {sys.executable}; "
+                           "install python3-gdal for this interpreter (from osgeo import ogr): "
+                           + redact(error)) from None
     for module in ("numpy", "scipy", "pandas", "geopandas", "lxml", "PIL", "matplotlib", "requests", "bs4"):
         __import__(module)
     from data_sources import local_input_paths

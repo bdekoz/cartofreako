@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Transaction, integrity, freshness and selection regression tests."""
 from datetime import datetime, timezone
+from http.client import IncompleteRead
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import importlib.util
 import io
@@ -137,9 +138,12 @@ class Freshness(unittest.TestCase):
                 pass
             def do_GET(self):
                 state["calls"].append(dict(self.headers))
+                error = state.get('errors_on_call', {}).get(len(state['calls']))
                 if state.get('transient_errors'):
-                    self.send_response(state['transient_errors'].pop(0))
-                    self.send_header('Retry-After', '7')
+                    error = state['transient_errors'].pop(0)
+                if error:
+                    self.send_response(error)
+                    self.send_header('Retry-After', state.get('retry_after', '7'))
                     self.end_headers()
                     return
                 if state["fail"]:
@@ -175,7 +179,7 @@ class Freshness(unittest.TestCase):
                 self.send_header("Content-Length", str(end-offset+1))
                 self.end_headers()
                 payload = state['data'][offset:end+1]
-                if (state.pop('truncate', False)
+                if (state.pop('truncate', False) or state.get('truncate_always')
                         or (state.get('truncate_unbounded') and (not requested or requested.endswith('-')))):
                     payload = payload[:len(payload)//2]
                 self.wfile.write(payload)
@@ -185,6 +189,12 @@ class Freshness(unittest.TestCase):
         self.addCleanup(self.server.server_close)
         self.addCleanup(self.server.shutdown)
         self.url = f"http://127.0.0.1:{self.server.server_port}/year.nc"
+
+    def retain_interrupted_partial(self, destination, **kwargs):
+        # Force an exhausted budget to exercise recovery on a later invocation.
+        with patch.dict(os.environ, {'DATA_HTTP_RETRY_BUDGET': '1'}):
+            with self.assertRaisesRegex(dataset.DatasetError, 'retry budget'):
+                fetch(self.url, destination, self.root/'cache', **kwargs)
 
     def test_unchanged_data_uses_conditional_http_and_keeps_retrieval_time(self):
         first = fetch(self.url, self.root / "first", self.root / "cache")
@@ -220,8 +230,7 @@ class Freshness(unittest.TestCase):
 
     def test_interrupted_download_resumes_only_matching_remote_identity(self):
         self.state['truncate'] = True
-        with self.assertRaises(dataset.DatasetError):
-            fetch(self.url, self.root/'first', self.root/'cache')
+        self.retain_interrupted_partial(self.root/'first')
         self.assertFalse((self.root/'first').exists())
         self.assertEqual(len(list((self.root/'cache/http').glob('*.part'))), 1)
         fetch(self.url, self.root/'second', self.root/'cache')
@@ -231,8 +240,7 @@ class Freshness(unittest.TestCase):
 
     def test_changed_remote_identity_restarts_instead_of_appending(self):
         self.state['truncate'] = True
-        with self.assertRaises(dataset.DatasetError):
-            fetch(self.url, self.root/'first', self.root/'cache')
+        self.retain_interrupted_partial(self.root/'first')
         self.state.update(data=b'a completely different revision', etag='"two"')
         fetch(self.url, self.root/'second', self.root/'cache')
         self.assertEqual((self.root/'second').read_bytes(), self.state['data'])
@@ -250,8 +258,7 @@ class Freshness(unittest.TestCase):
 
     def test_bounded_ranges_resume_existing_open_ended_partial(self):
         self.state['truncate_unbounded'] = True
-        with self.assertRaises(dataset.DatasetError):
-            fetch(self.url, self.root/'first', self.root/'cache')
+        self.retain_interrupted_partial(self.root/'first')
         fetch(self.url, self.root/'second', self.root/'cache', range_size=7)
         self.assertEqual((self.root/'second').read_bytes(), self.state['data'])
         self.assertEqual(self.state['calls'][1]['Range'], 'bytes=9-15')
@@ -259,12 +266,87 @@ class Freshness(unittest.TestCase):
 
     def test_interrupted_bounded_range_preserves_and_resumes_partial(self):
         self.state['truncate'] = True
-        with self.assertRaises(dataset.DatasetError):
-            fetch(self.url, self.root/'first', self.root/'cache', range_size=7)
+        self.retain_interrupted_partial(self.root/'first', range_size=7)
         self.assertFalse((self.root/'first').exists())
         fetch(self.url, self.root/'second', self.root/'cache', range_size=7)
         self.assertEqual((self.root/'second').read_bytes(), self.state['data'])
         self.assertEqual(self.state['calls'][1]['Range'], 'bytes=3-9')
+
+    def test_ocean_cached_path_uses_ranges_and_recovers_truncation_in_one_call(self):
+        spec = importlib.util.spec_from_file_location('ocean_fetch', ROOT/'scripts/fetch-ocean-temperature.py')
+        ocean = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(ocean)
+        self.state.update(truncate=True, truncate_unbounded=True, etag=None,
+                          last_modified='Mon, 13 Apr 2020 21:00:04 GMT')
+        clock = virtual_clock()
+        with patch.object(ocean, 'BASE', self.url.rsplit('/', 1)[0] + '/'), \
+             patch.object(ocean, 'NetCDF') as netcdf, \
+             patch.dict(os.environ, {'DATA_HTTP_CACHE': str(self.root/'cache')}), \
+             patch('data_http_policy.time', clock):
+            netcdf.return_value.__enter__.return_value.shape.return_value = (1, 720, 1440)
+            record = ocean.fetch('sst.day.mean.2025.nc', self.root/'ocean')
+        self.assertEqual((self.root/'ocean/sst.day.mean.2025.nc').read_bytes(), self.state['data'])
+        self.assertEqual(record['bytes'], len(self.state['data']))
+        self.assertEqual([call['Range'] for call in self.state['calls']], ['bytes=0-8388607', 'bytes=9-18'])
+        self.assertEqual(self.state['calls'][1]['If-Range'], self.state['last_modified'])
+        self.assertEqual(clock.sleeps, [2])
+
+    def test_body_interruptions_recover_saved_bytes(self):
+        from data_http_policy import open_response
+        for error in (TimeoutError('read timed out'), ConnectionResetError('connection reset'),
+                      IncompleteRead(b't', 3)):
+            with self.subTest(error=type(error).__name__):
+                cache = self.root/type(error).__name__
+                calls = 0
+                class InterruptedResponse(io.BytesIO):
+                    status = 206
+                    headers = {'ETag': '"one"', 'Content-Length': '7', 'Content-Range': 'bytes 0-6/19'}
+                    def read(self, size):
+                        if self.tell() == 0:
+                            return super().read(4)
+                        raise error
+                def interrupted_response(*args, **kwargs):
+                    nonlocal calls
+                    calls += 1
+                    if calls == 1:
+                        return InterruptedResponse(self.state['data'])
+                    return open_response(*args, **kwargs)
+                before = len(self.state['calls'])
+                with patch('data_http.open_response', side_effect=interrupted_response), \
+                     patch('data_http_policy.time', virtual_clock()):
+                    fetch(self.url, cache/'output', cache, range_size=7)
+                offset = 5 if isinstance(error, IncompleteRead) else 4
+                self.assertEqual(self.state['calls'][before]['Range'], f'bytes={offset}-{offset+6}')
+                self.assertEqual(self.state['calls'][before]['If-Range'], '"one"')
+                self.assertEqual((cache/'output').read_bytes(), self.state['data'])
+
+    def test_repeated_truncation_exhausts_budget_without_publishing_or_counting_success(self):
+        self.state['truncate_always'] = True
+        clock = virtual_clock()
+        with patch('data_http_policy.time', clock), \
+             patch.dict(os.environ, {'DATA_HTTP_RETRY_BUDGET': '5'}), \
+             patch('data_http_policy.Pacer.success') as success:
+            with self.assertRaisesRegex(dataset.DatasetError, 'HTTP response retry budget'):
+                fetch(self.url, self.root/'output', self.root/'cache', range_size=7)
+        success.assert_not_called()
+        self.assertEqual(len(self.state['calls']), 2)
+        self.assertEqual(clock.sleeps, [2])
+        self.assertEqual(next((self.root/'cache/http').glob('*.part')).read_bytes(), self.state['data'][:6])
+        self.assertFalse((self.root/'output').exists())
+        self.assertFalse((self.root/'cache/sha256').exists())
+
+    def test_body_retry_does_not_reset_http_status_retry_budget(self):
+        self.state.update(truncate=True, errors_on_call={2: 503, 3: 503}, retry_after='1')
+        clock = virtual_clock()
+        with patch('data_http_policy.time', clock), \
+             patch('data_http_policy.random.uniform', return_value=1), \
+             patch.dict(os.environ, {'DATA_HTTP_RETRY_BUDGET': '3'}):
+            with self.assertRaisesRegex(dataset.DatasetError, 'HTTP 503; retry budget'):
+                fetch(self.url, self.root/'output', self.root/'cache', range_size=7)
+        self.assertEqual(len(self.state['calls']), 2)
+        self.assertEqual(clock.sleeps, [2])
+        self.assertEqual(next((self.root/'cache/http').glob('*.part')).read_bytes(), self.state['data'][:3])
+        self.assertFalse((self.root/'output').exists())
 
     def test_revision_changed_between_ranges_replaces_partial(self):
         self.state['change_on_call'] = 2
@@ -291,8 +373,7 @@ class Freshness(unittest.TestCase):
 
     def test_bounded_resume_with_last_modified_like_noaa(self):
         self.state.update(etag=None, last_modified='Mon, 13 Apr 2020 21:00:04 GMT', truncate=True)
-        with self.assertRaises(dataset.DatasetError):
-            fetch(self.url, self.root/'first', self.root/'cache')
+        self.retain_interrupted_partial(self.root/'first')
         fetch(self.url, self.root/'second', self.root/'cache', range_size=7)
         self.assertEqual((self.root/'second').read_bytes(), self.state['data'])
         self.assertEqual(self.state['calls'][1]['If-Range'], self.state['last_modified'])
@@ -310,8 +391,7 @@ class Freshness(unittest.TestCase):
 
     def test_retry_budget_failure_retains_partial_for_next_run(self):
         self.state['truncate'] = True
-        with self.assertRaises(dataset.DatasetError):
-            fetch(self.url, self.root/'first', self.root/'cache')
+        self.retain_interrupted_partial(self.root/'first')
         partial = next((self.root/'cache/http').glob('*.part'))
         before = partial.read_bytes()
         self.state['transient_errors'] = [429] * 10
@@ -329,8 +409,7 @@ class Freshness(unittest.TestCase):
 
     def test_endpoint_switch_keeps_separate_partial_identity(self):
         self.state['truncate'] = True
-        with self.assertRaises(dataset.DatasetError):
-            fetch(self.url, self.root/'old', self.root/'cache')
+        self.retain_interrupted_partial(self.root/'old')
         partial = next((self.root/'cache/http').glob('*.part'))
         before = partial.read_bytes()
         fetch(self.url+'?endpoint=bulk', self.root/'new', self.root/'cache', range_size=7)

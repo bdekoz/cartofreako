@@ -152,10 +152,37 @@ def cpc_ping_hint(url):
     return None
 
 
-def open_response(request, pacer, progress):
+class TransferRetry:
+    """Share one retry deadline across headers and interrupted response bodies."""
+    def __init__(self, pacer, progress):
+        self.pacer, self.progress = pacer, progress
+        self.budget = setting('DATA_HTTP_RETRY_BUDGET', 1800, positive=True)
+        self.reset()
+
+    def reset(self):
+        # Each completed range starts a new budget; failures cannot renew it.
+        self.deadline = time.monotonic() + self.budget
+        self.attempt = 0
+
+    def interrupted(self, reason):
+        self.attempt += 1
+        delay = min(30, 2 ** min(self.attempt, 5))
+        next_at = self.pacer.defer(delay, throttled=False)
+        remaining = self.deadline - time.monotonic()
+        if delay >= remaining:
+            raise DatasetError(f'{redact(reason)}; HTTP response retry budget exhausted or insufficient '
+                               f'for next retry (budget {self.budget:g}s); partial bytes retained. '
+                               + retry_hint(next_at))
+        self.progress.report(f'{redact(reason)}; body retry {self.attempt} in at least {delay:g}s; '
+                             f'retry budget remaining {remaining:.0f}s', force=True)
+        if not self.pacer.enabled:
+            self.progress.sleep(delay)
+
+
+def open_response(request, pacer, progress, *, deadline=None, record_success=True):
     budget = setting('DATA_HTTP_RETRY_BUDGET', 1800, positive=True)
     started = time.monotonic()
-    deadline = started + budget
+    deadline = min(deadline, started + budget) if deadline is not None else started + budget
     attempt = 0
     while True:
         if time.monotonic() >= deadline:
@@ -203,5 +230,6 @@ def open_response(request, pacer, progress):
             if not pacer.enabled:
                 progress.sleep(delay)
         else:
-            pacer.success()
+            if record_success:
+                pacer.success()
             return response

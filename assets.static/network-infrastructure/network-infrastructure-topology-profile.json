@@ -25,7 +25,7 @@
   "sources": {
     "cloud_cdn": {
       "repository": "https://github.com/bdekoz/cloud_cdn_cache",
-      "commit": "1be1eb04e73320e0337a74a99686cd532f09ad9b",
+      "commit": "2234be5c9bce123d26639e79935e54dd8f8785a8",
       "license": "ODC-By-1.0 original dataset; source-specific terms retained",
       "snapshot": "2026-08-05",
       "manifest": "data/manifest.20260805.json",

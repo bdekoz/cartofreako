@@ -15,13 +15,14 @@ import requests
 from ocean_temperature import NetCDF, digest, write_json
 
 BASE = 'https://psl.noaa.gov/thredds/fileServer/Datasets/noaa.oisst.v2.highres/'
+RANGE_SIZE = 8 * 1024**2
 
 
 def fetch(name, directory):
     path, receipt = directory / name, directory / (name + '.json')
     if os.environ.get('DATA_HTTP_CACHE'):
         from data_http import fetch as checked_fetch
-        record = checked_fetch(BASE + name, path, os.environ['DATA_HTTP_CACHE'])
+        record = checked_fetch(BASE + name, path, os.environ['DATA_HTTP_CACHE'], range_size=RANGE_SIZE)
         with NetCDF(path) as nc:
             shape = nc.shape('sst' if name.startswith('sst.') else 'icec' if name.startswith('icec.') else 'lsmask')
             if shape[-2:] != (720, 1440):
@@ -54,7 +55,7 @@ def fetch(name, directory):
             while offset < total:
                 # The NOAA proxy can truncate long responses. Small ranges are
                 # independently checked and resumed on the next attempt.
-                end = min(total-1, offset + 8 * 1024**2 - 1)
+                end = min(total-1, offset + RANGE_SIZE - 1)
                 headers = {'Range': f'bytes={offset}-{end}'}
                 if identity['last_modified']:
                     headers['If-Unmodified-Since'] = identity['last_modified']
