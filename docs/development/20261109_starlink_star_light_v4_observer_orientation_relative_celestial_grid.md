@@ -11,6 +11,7 @@ population easier to understand.
 The complete delivery contains 24 hourly map/legend pairs and a separate
 +24-hour proof. Open the [local stepper](../../output/starlink-star-light-v4-observer-hourly/index.html),
 [48-second MKV](../../output/starlink-star-light-v4-observer-hourly/observer-hourly-24-plates-48s.mkv),
+[Instagram portrait MP4](../../output/starlink-star-light-v4-observer-hourly/instagram/observer-hourly-instagram-1080x1920-48s.mp4),
 [A2 contact sheet](../../output/starlink-star-light-v4-observer-hourly/observer-hourly-contact-sheet.pdf),
 or [source and validation manifest](../../output/starlink-star-light-v4-observer-hourly/manifest.json).
 The separate
@@ -265,6 +266,46 @@ and was also checked against this installation's
 Optional MKV chapters can identify each hour at video times 00:00, 00:02,
 00:04, …, 00:46. Put the astronomical calculation timestamp in each chapter
 title; the video playback time and observation time are different clocks.
+
+## Instagram portrait edition
+
+The companion [Instagram MP4](../../output/starlink-star-light-v4-observer-hourly/instagram/observer-hourly-instagram-1080x1920-48s.mp4)
+recomposes the same 24 states for a **1080 × 1920, 9:16** screen. It retains
+the **48-second** runtime and two-second holds, using H.264 High 4.1,
+30 fps, `yuv420p`, BT.709, square pixels and a fast-start MP4 container,
+with no audio. A [cover image](../../output/starlink-star-light-v4-observer-hourly/instagram/observer-hourly-instagram-cover.jpg)
+and [posting caption](../../output/starlink-star-light-v4-observer-hourly/instagram/caption.txt)
+accompany the export.
+
+The upper panel shows the complete orbital-object plate; the lower panel
+isolates its horizon and fixed celestial equator. Both retain the original
+aspect ratio, projection, cyclic framing and curve geometry. The mobile
+presentation enlarges each marker silhouette **2× about its original
+center** and strengthens the reference curves. Scientific coordinates,
+object membership, categorical colors and illumination opacities remain
+unchanged. The video labels the symbol enlargement explicitly.
+
+Larger timestamps use `America/Los_Angeles` to select PST or PDT for the
+calculated instant. These November 8–9 states use **PST**. The title,
+timestamps, panels and progress strip leave space above, below and to the
+right for app controls. This is a presentation margin, not a guarantee
+about every Instagram interface. `START / REPLAY` and `FINAL SNAPSHOT`
+labels distinguish the final-to-first reset from another calculated hour.
+
+Build from the completed study without reacquiring data or recalculating
+the orbits:
+
+```sh
+python3 scripts/build-observer-instagram.py --proofs-only
+python3 scripts/build-observer-instagram.py
+```
+
+The builder verifies the original delivery hashes before reading its SVGs,
+checks membership and geometry while preparing the mobile panels, and
+checks all 1,440 decoded video frames against their scheduled hourly state.
+It records source, builder and output hashes in a separate
+[Instagram manifest](../../output/starlink-star-light-v4-observer-hourly/instagram/manifest.json).
+The original horizontal study and its manifest remain unchanged.
 
 ## Ending and looping
 
