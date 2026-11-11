@@ -481,6 +481,19 @@ make data-update DATA_UPDATE_ARGS='--resume <failed-update-id>' \
   DATA_HTTP_RETRY_BUDGET=1800 NOAA_HTTP_MIN_INTERVAL=5 NOAA_HTTP_MAX_INTERVAL=120
 ```
 
+If HTTP 429 responses keep recurring, stop the current invocation or let it
+finish before resuming its recorded run ID with slower request spacing:
+
+```sh
+make data-update-resilient \
+  DATA_UPDATE_ARGS='--resume <failed-update-id> --jobs 2' \
+  NOAA_HTTP_MIN_INTERVAL=120 NOAA_HTTP_MAX_INTERVAL=300
+```
+
+This allows at most one NOAA PSL request start every two minutes, with adaptive
+spacing up to five minutes. The resume verifies completed source checkpoints
+and retains partial downloads. Use the same implementation for the resume.
+
 Logs identify each file, received/expected bytes, elapsed time, retry time,
 and remaining retry budget. A failed update keeps the previous active edition.
 Acquisition progress, shared HTTP retry deadlines and CPC monitor timestamps
