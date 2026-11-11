@@ -555,7 +555,12 @@ class Sources:
                 rows.append({"canonical_id": "openaq:" + row["station_id"], "openaq_id": row["station_id"],
                              "sensor_id": row["sensor_id"],
                              "parameter": "pm25", "date": row["date"], "valid_hours": row["valid_hours"],
-                             "mean": row["mean_ug_m3"], "latitude": row["latitude"], "longitude": row["longitude"],
+                             "mean": row["mean_ug_m3"],
+                             # Collapse binary-float serialization noise far below
+                             # source precision; meaningful relocation still fails
+                             # the station crosswalk's exact metadata comparison.
+                             "latitude": format(float(row["latitude"]), '.12f'),
+                             "longitude": format(float(row["longitude"]), '.12f'),
                              "eligible": row["eligible"], "station_name": row["station_name"],
                              "station_type": row["station_type"], "source": row["source"], "unit": "µg/m³"})
         keys = [(r["canonical_id"], r["date"]) for r in rows]
@@ -571,9 +576,10 @@ class Sources:
         # activation; metadata drift cannot hide in a freshly hashed table.
         import importlib
         normalized,stations=importlib.import_module('prepare-heat-particulate-coexposure').read_observations(path)
+        monitor_classes = {station['id']: station['monitor_class'] for station in stations}
         through=json.loads((self.edition/self.bindings['CLIMATE_CONFIG']).read_text())['ocean_cutoff']
         for kind in ('reference','low-cost'):
-            if not any(row['station_type']==kind and row['eligible']=='True' and
+            if not any(monitor_classes[row['canonical_id']]==kind and row['eligible']=='True' and
                        '2026-01-01' <= row['date'] <= through for row in normalized):
                 raise DatasetError('India source has no eligible current-year shared-window station-days: '+kind)
         copy_file(inventory, target / "locations.json")

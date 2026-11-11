@@ -142,6 +142,13 @@ the aggregate never supplies it. `--reuse-from /path/to/earlier/raw` can import
 another local archive directory. Earlier editions keep their original bytes
 even after an explicit refresh.
 
+India validation uses the product crosswalk's monitor classes: OpenAQ's
+`air-sensor` label supplies the `low-cost` class. Normalized station coordinates
+use 12 decimal places to remove floating-point serialization noise; raw archive
+bytes are retained. Actual coordinate changes still fail the station metadata
+check, and both monitor classes require eligible observations in the shared
+current-year window.
+
 See the [optional-source coverage audit](../../development/20261109_data_update_source_coverage.md)
 for standalone research fetchers and deliberately pinned inputs outside the
 current update workflow.

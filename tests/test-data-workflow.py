@@ -2,6 +2,8 @@
 """Exercise complete transactions, frozen build routing and scientific lags."""
 from datetime import date
 import builtins
+import csv
+import gzip
 import importlib
 import json
 import os
@@ -56,6 +58,59 @@ class Workflow(unittest.TestCase):
             required = set(local_input_paths())
         for name in ('all.json', 'slim-2.json', 'slim-3.json'):
             self.assertIn(self.root/'iso-3166'/name, required)
+
+    def india_source(self, *, second_longitude=None, sensor_eligible=True):
+        edition = self.root/'edition'
+        edition.mkdir()
+        climate = edition/'climate.json'
+        climate.write_text(json.dumps({'ocean_cutoff': '2026-11-07'}))
+        source = Sources(edition, '2026-11-11T00:00:00Z', self.root/'cache')
+        source.bind('CLIMATE_CONFIG', climate)
+        reference = dict(station_id='233415', sensor_id='1', date='2026-11-05',
+                         valid_hours='24', mean_ug_m3='25', latitude='30.735567',
+                         longitude='76.775714', eligible='True', station_name='Chandigarh',
+                         station_type='reference', source='openaq-cpcb')
+        rows = [reference, {**reference, 'station_id': '5728639', 'sensor_id': '2',
+                           'station_type': 'air-sensor', 'station_name': 'Srinagar',
+                           'source': 'openaq-airgradient', 'eligible': str(sensor_eligible)}]
+        if second_longitude is not None:
+            rows.append({**reference, 'date': '2026-11-06', 'longitude': second_longitude})
+
+        def fetched(*args, **kwargs):
+            output = edition/'inputs/india/openaq'
+            output.mkdir(parents=True)
+            with gzip.open(output/'openaq-station-days.csv.gz', 'wt', newline='') as stream:
+                writer = csv.DictWriter(stream, rows[0].keys())
+                writer.writeheader()
+                writer.writerows(rows)
+            (output/'openaq-quality.json').write_text(json.dumps({
+                'failures': [], 'observed_last_date': '2026-11-06',
+                'eligible_last_date': '2026-11-06', 'coverage': 'fixture monitors'}))
+        source.run = Mock(side_effect=fetched)
+        return source
+
+    def test_india_accepts_archive_air_sensor_as_validated_low_cost_class(self):
+        source = self.india_source()
+        source.india()
+        self.assertEqual(source.records[0]['id'], 'india')
+        path = source.edition/source.bindings['INDIA_OBSERVATIONS']
+        with gzip.open(path, 'rt') as stream:
+            self.assertIn('air-sensor', {row['station_type'] for row in csv.DictReader(stream)})
+
+    def test_india_ignores_coordinate_serialization_noise(self):
+        source = self.india_source(second_longitude='76.77571400000001')
+        source.india()
+        self.assertEqual(source.records[0]['status'], 'validated')
+
+    def test_india_still_rejects_station_movement(self):
+        source = self.india_source(second_longitude='76.775715')
+        with self.assertRaisesRegex(AssertionError, 'Station metadata drift'):
+            source.india()
+
+    def test_india_still_requires_eligible_low_cost_observations(self):
+        source = self.india_source(sensor_eligible=False)
+        with self.assertRaisesRegex(dataset.DatasetError, 'station-days: low-cost'):
+            source.india()
 
     def adapters(self, *, fail=None, calls=None):
         def callback(ident):
