@@ -76,7 +76,9 @@ def local_input_paths():
     cached_directory=os.environ.get("NATIVE_SWARM_CACHE_DIRECTORY")
     paths += [Path(cached_directory) if cached_directory else archive if archive.is_absolute() else ROOT / archive,
               Path(os.environ.get("NATIVE_SWARM_GEOLOCATION_DB", ROOT.parent / "geoip-databases/ipinfo/standard_location.mmdb"))]
-    paths.append(Path(os.environ.get('NATIVE_SWARM_DATA_ROOT',ROOT.parent/'alpha60-data'))/'torrent'/style['swarm']['collection'])
+    native_data = Path(os.environ.get('NATIVE_SWARM_DATA_ROOT', ROOT.parent/'alpha60-data'))
+    paths.append(native_data/'torrent'/style['swarm']['collection'])
+    paths.extend(native_data/'iso-3166'/name for name in ('all.json', 'slim-2.json', 'slim-3.json'))
     history = ocean_history_directory()
     for name in ['lsmask.oisst.nc'] + [f'{var}.day.mean.{year}.nc'
                  for year in range(1982, 2025) for var in ('sst', 'icec')]:
@@ -404,6 +406,7 @@ class Sources:
         collection=style['swarm']['collection']
         data_root=Path(os.environ.get('NATIVE_SWARM_DATA_ROOT',ROOT.parent/'alpha60-data'))
         copy_tree(data_root/'torrent'/collection,target/'native-swarm/data/torrent'/collection)
+        copy_tree(data_root/'iso-3166', target/'native-swarm/data/iso-3166')
         if not list((target/'native-swarm/data/torrent'/collection).glob('*.torrent')):
             raise DatasetError('The native swarm collection has no torrent member definitions')
         database = Path(os.environ.get("NATIVE_SWARM_GEOLOCATION_DB", ROOT.parent / "geoip-databases/ipinfo/standard_location.mmdb"))

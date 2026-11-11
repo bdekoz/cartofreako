@@ -53,7 +53,11 @@ archive selected by `generation-style.json`, its IPinfo MMDB, the corresponding 
 petroleum tables. `NATIVE_SWARM_CACHE_ARCHIVE` and
 `NATIVE_SWARM_GEOLOCATION_DB` can identify their actual locations. These
 inputs are copied with hashes and remain explicitly pinned. `NATIVE_SWARM_DATA_ROOT`
-selects the Alpha60 data root. The native swarm adapter also needs the existing
+selects the Alpha60 data root, including its torrent definitions and
+`iso-3166/all.json`, `iso-3166/slim-2.json` and `iso-3166/slim-3.json` country
+references. The country-reference directory is copied into each edition so
+the native input checker and renderer can resolve countries there.
+The native swarm adapter also needs the existing
 libtorrent-rasterbar and GeoLite2++ development installation selected by
 `LIBTORRENT_PREFIX` and `GEOLITE2PP_PREFIX`; their source/version setup remains
 the Alpha60 toolchain contract. Source checkouts

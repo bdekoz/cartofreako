@@ -51,6 +51,12 @@ class Workflow(unittest.TestCase):
         self.assertIn('--check-credentials', run.call_args.args[0])
         inputs.assert_not_called()
 
+    def test_native_country_references_are_required_from_configured_data_root(self):
+        with patch.dict(os.environ, {'NATIVE_SWARM_DATA_ROOT': str(self.root)}):
+            required = set(local_input_paths())
+        for name in ('all.json', 'slim-2.json', 'slim-3.json'):
+            self.assertIn(self.root/'iso-3166'/name, required)
+
     def adapters(self, *, fail=None, calls=None):
         def callback(ident):
             def run(source):
