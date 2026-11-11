@@ -299,6 +299,28 @@ main()
 
   const std::string valid_json = read_file(profile_path);
   {
+    std::string current = valid_json;
+    replace_once(current, "\"schema\":",
+                 "\"dataset_resolved_at\": \"2026-11-11T04:36:05+00:00\", \"schema\":");
+    const auto temporary = profile_path.parent_path() / ".test-current-resources-profile.json";
+    { std::ofstream output {temporary}; output << current; }
+    const auto loaded = resources::load_resources_profile(temporary);
+    std::filesystem::remove(temporary);
+    assert(loaded.dataset_resolved_at == "2026-11-11T04:36:05+00:00");
+    assert(loaded.snapshot_as_of == profile.snapshot_as_of);
+    assert(loaded.values.size() == profile.values.size());
+  }
+  {
+    std::string invalid = valid_json;
+    replace_once(invalid, "\"schema\":", "\"dataset_resolved_at\": 42, \"schema\":");
+    expect_invalid(std::move(invalid), "dataset_resolved_at");
+  }
+  {
+    std::string invalid = valid_json;
+    replace_once(invalid, "\"schema\":", "\"unexpected_metadata\": true, \"schema\":");
+    expect_invalid(std::move(invalid), "unknown member 'unexpected_metadata'");
+  }
+  {
     std::string invalid = valid_json;
     replace_once(invalid, "\"name\":", "\"name\": \"duplicate\", \"name\":");
     expect_invalid(std::move(invalid), "duplicate member 'name'");

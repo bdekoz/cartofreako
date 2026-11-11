@@ -31,6 +31,97 @@ class IncompleteUpdate(DatasetError):
     """Independent acquisition progressed, but required sources are pending."""
 
 
+def implementation_paths():
+    return sorted({p for folder in ("scripts", "config", "src.generate", "src.projections")
+                   for p in (ROOT / folder).rglob("*")
+                   if p.is_file() and p.suffix in (".py", ".sh", ".cc", ".h", ".json")} |
+                  {ROOT / "Makefile", ROOT / "generation-style.json", ROOT / "generation-profile.json"})
+
+
+def finish(root, state_path, state, source, identity, *, candidate_only=False, validate_sources=None):
+    """Validate frozen source checkpoints and select them only after all checks."""
+    (validate_sources or source.validate_profiles)()
+    if implementation_record(implementation_paths()) != identity:
+        raise DatasetError('Implementation changed during final validation; retry validation with stable code')
+    edition = source.edition
+    paths = sorted({p for record in source.records for p in record["files"]})
+    files = [file_record(edition, edition / path) for path in paths]
+    expected = {row['path']: row for rows in state['completed_files'].values() for row in rows}
+    if {row['path']: row for row in files} != expected:
+        raise DatasetError('Completed source bytes changed during final validation')
+    manifest = seal({"schema": SCHEMA, "dataset_id": state["dataset_id"], "state": "validated",
+                     "requested_as_of": state['requested_as_of'], "resolved_at": utcnow(),
+                     "product_groups": list(GROUPS), "implementation": state['implementation'],
+                     "registry": json.loads((ROOT / "config/data-products.json").read_text()),
+                     "products": json.loads((ROOT / "config/atlas-plates.json").read_text()),
+                     "sources": source.records, "bindings": source.bindings, "files": files,
+                     "validation": {"status": "passed", "implementation": identity,
+                                    "checks": ["source-adapter-validation", "native-generator-loaders",
+                                               "ocean-preparation-invariants", "all-input-hashes",
+                                               "complete-product-bindings"]}})
+    validate(manifest, edition)
+    path = edition / "dataset.json"
+    atomic_json(path, manifest)
+    for row in manifest["files"]:
+        (edition / row["path"]).chmod(0o444)
+    path.chmod(0o444)
+    state['validation_implementation'] = identity
+    state["status"] = "validated-candidate" if candidate_only else "active"
+    state.pop('error', None)
+    atomic_json(state_path, state)
+    # Selection follows the durable journal and every validation check.
+    if not candidate_only:
+        activate(root, path)
+    print(f"Dataset {state['dataset_id']}: {state['status']}; manifest {path}", flush=True)
+    for record in source.records:
+        print(f"  {record['id']}: {record['acquisition']}; {json.dumps(record['coverage'], sort_keys=True)}", flush=True)
+    return path
+
+
+def validate_completed(root, run_id, *, candidate_only=False, validate_sources=None):
+    """Retry final validation only, retaining the original acquisition method."""
+    if not run_id.replace('-', '').replace('_', '').isalnum():
+        raise DatasetError('Invalid completed run ID')
+    root = Path(root).resolve()
+    identity = implementation_record(implementation_paths())
+    with lock(root):
+        state_path = root / 'runs' / run_id / 'state.json'
+        state = json.loads(state_path.read_text())
+        if state.get('dataset_id') != run_id:
+            raise DatasetError('Completed run ID does not match its journal')
+        records = state['sources']
+        if (state['status'] not in ('failed', 'validating') or len(records) != len(ORDER)
+                or {r['id'] for r in records} != set(ORDER) or state.get('issues')):
+            raise DatasetError('Validation-only retry requires a failed final check with all sources complete')
+        # Older journals reached this command only after checking acquisition
+        # implementation and completeness. Recognize that specific failure;
+        # incomplete runs and method-mismatch failures remain ineligible.
+        legacy_native_failure = state.get('error') == 'Source command failed: ' + str(ROOT/'build/validate-dataset-native')
+        if not state.get('acquisition_verified') and not legacy_native_failure:
+            raise DatasetError('Acquisition completion is unverified; a validation-only retry is not permitted')
+        for name in ('config/data-products.json', 'config/atlas-plates.json'):
+            if digest(ROOT/name) != state['implementation']['files'].get(name):
+                raise DatasetError('Product definitions changed; start a new acquisition run')
+        edition = root / 'editions' / run_id
+        for record in records:
+            expected = state.get('completed_files', {}).get(record['id'])
+            actual = [file_record(edition, edition/path) for path in record['files']]
+            if record.get('status') != 'validated' or not expected or actual != expected:
+                raise DatasetError('Completed source checkpoint changed: ' + record['id'])
+            print('Verified completed source ' + record['id'], flush=True)
+        source = Sources(edition, state['requested_as_of'], root/'cache')
+        source.records, source.bindings = records, state['bindings']
+        state.update(status='validating', current_source=None, acquisition_verified=True)
+        atomic_json(state_path, state)
+        try:
+            return finish(root, state_path, state, source, identity,
+                          candidate_only=candidate_only, validate_sources=validate_sources)
+        except Exception as error:
+            state.update(status='failed', error=redact(error))
+            atomic_json(state_path, state)
+            raise
+
+
 def preflight(root):
     subprocess.run(["bash", str(ROOT / "scripts/fetch-anthropocene-particulate-data.sh"),
                     "--check-credentials"], check=True, cwd=ROOT)
@@ -75,11 +166,7 @@ def update(root, *, requested_as_of, jobs=2, resume=None, adapters=None, candida
     if deferred - set(ORDER):
         raise DatasetError('Unknown deferred source: ' + ', '.join(sorted(deferred - set(ORDER))))
     root = Path(root).resolve()
-    implementation_paths=sorted({p for folder in ("scripts", "config", "src.generate", "src.projections")
-                                             for p in (ROOT / folder).rglob("*")
-                                             if p.is_file() and p.suffix in (".py", ".sh", ".cc", ".h", ".json")} |
-                                            {ROOT / "Makefile", ROOT / "generation-style.json", ROOT / "generation-profile.json"})
-    identity = implementation_record(implementation_paths)
+    identity = implementation_record(implementation_paths())
     with lock(root):
         if resume:
             if not resume.replace("-", "").replace("_", "").isalnum():
@@ -178,7 +265,7 @@ def update(root, *, requested_as_of, jobs=2, resume=None, adapters=None, candida
                 state['completed_files'] = completed_files
                 state['current_source'] = None
                 checkpoint()
-            if implementation_record(implementation_paths) != identity:
+            if implementation_record(implementation_paths()) != identity:
                 raise DatasetError('Implementation changed during acquisition; start a new run to keep method provenance consistent')
             pending = [ident for ident in ORDER if not any(r['id'] == ident for r in source.records)]
             if pending:
@@ -191,41 +278,19 @@ def update(root, *, requested_as_of, jobs=2, resume=None, adapters=None, candida
                     print(f"  {ident}: {issue['status']}; {issue['reason']}", flush=True)
                 print(f"Continue with make data-update-resilient DATA_UPDATE_ARGS='--resume {state['dataset_id']}'", flush=True)
                 raise IncompleteUpdate(state['error'])
-            (validate_sources or source.validate_profiles)()
-            if implementation_record(implementation_paths) != identity:
-                raise DatasetError('Implementation changed during acquisition; start a new run to keep method provenance consistent')
-            paths = sorted({p for record in source.records for p in record["files"]})
-            manifest = seal({"schema": SCHEMA, "dataset_id": state["dataset_id"], "state": "validated",
-                             "requested_as_of": requested_as_of, "resolved_at": utcnow(),
-                             "product_groups": list(GROUPS), "implementation": identity,
-                             "registry": json.loads((ROOT / "config/data-products.json").read_text()),
-                             "products": json.loads((ROOT / "config/atlas-plates.json").read_text()),
-                             "sources": source.records, "bindings": source.bindings,
-                             "files": [file_record(edition, edition / path) for path in paths],
-                             "validation": {"status": "passed", "checks": ["source-adapter-validation", "native-generator-loaders", "ocean-preparation-invariants", "all-input-hashes", "complete-product-bindings"]}})
-            validate(manifest, edition)
-            path = edition / "dataset.json"
-            atomic_json(path, manifest)
-            for row in manifest["files"]:
-                (edition / row["path"]).chmod(0o444)
-            path.chmod(0o444)
-            state["status"] = "validated-candidate" if candidate_only else "active"
-            atomic_json(state_path, state)
-            # Commit the selection last, after the complete resumable journal
-            # is durable. A journal write failure cannot advance current.
-            if not candidate_only:
-                activate(root, path)
-            print(f"Dataset {state['dataset_id']}: {state['status']}; manifest {path}", flush=True)
-            for record in source.records:
-                print(f"  {record['id']}: {record['acquisition']}; {json.dumps(record['coverage'], sort_keys=True)}", flush=True)
-            return path
+            state['acquisition_verified'] = True
+            checkpoint()
+            return finish(root, state_path, state, source, identity,
+                          candidate_only=candidate_only, validate_sources=validate_sources)
         except IncompleteUpdate:
             raise
         except Exception as error:
             state.update(status="failed", error=redact(error))
             checkpoint()
-            target = 'data-update-resilient' if keep_going else 'data-update'
-            print(f"Failed run {state['dataset_id']}; state {state_path}; retry with make {target} DATA_UPDATE_ARGS='--resume {state['dataset_id']}'", file=sys.stderr)
+            validation_only = state.get('acquisition_verified')
+            target = 'data-update' if validation_only else 'data-update-resilient' if keep_going else 'data-update'
+            retry = '--validate-completed' if validation_only else '--resume'
+            print(f"Failed run {state['dataset_id']}; state {state_path}; retry with make {target} DATA_UPDATE_ARGS='{retry} {state['dataset_id']}'", file=sys.stderr)
             raise
 
 
@@ -234,13 +299,22 @@ def main():
     parser.add_argument("--root", type=Path, default=data_root())
     parser.add_argument("--as-of", default=os.environ.get("DATA_UPDATE_AS_OF", utcnow()))
     parser.add_argument("--jobs", type=int, default=2, choices=(1, 2, 3))
-    parser.add_argument("--resume")
+    retry = parser.add_mutually_exclusive_group()
+    retry.add_argument("--resume")
+    retry.add_argument('--validate-completed', metavar='RUN_ID',
+                       help='retry only final validation of a complete failed run; retain acquisition provenance')
     parser.add_argument("--candidate-only", action="store_true")
     parser.add_argument('--keep-going', action='store_true', help='save failures and continue independent sources; incomplete runs are not activated')
     parser.add_argument('--defer', action='append', default=[], choices=ORDER, metavar='SOURCE',
                         help='defer a required source for this invocation; repeatable; retry it on resume')
     args = parser.parse_args()
     try:
+        if args.validate_completed:
+            if args.defer:
+                raise DatasetError('Validation-only retries cannot defer sources')
+            validate_completed(args.root, args.validate_completed, candidate_only=args.candidate_only)
+            print('Next: make atlas-optional')
+            return 0
         requested = datetime.fromisoformat(args.as_of)
         if requested.utcoffset() is None or requested.utcoffset().total_seconds() != 0:
             raise DatasetError("--as-of must be an explicit UTC timestamp")

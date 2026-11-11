@@ -171,6 +171,27 @@ os.execvp('make', ['make', '-f', os.environ['DATA_UPDATE_TEST_MAKEFILE'], *sys.a
         self.assertNotEqual(result.returncode,0)
         self.assertIn('requires the current-edition workflow',result.stderr)
 
+    def test_validation_only_routes_without_acquisition_credentials(self):
+        python=self.folder/'validation-python'
+        python.write_text('#!'+sys.executable+'\nimport json,sys\nprint(json.dumps(sys.argv[1:]))\n')
+        python.chmod(0o755)
+        for argument in ('--validate-completed fixture', '--validate-completed=fixture'):
+            with self.subTest(argument=argument):
+                result=subprocess.run(['make','--no-print-directory','DATASET=current','data-update',
+                                       f'ATLAS_PYTHON={python}',f'DATA_UPDATE_ARGS={argument}'],
+                                      cwd=ROOT,env={**self.env,'FIRMS_MAP_KEY':''},
+                                      text=True,capture_output=True,timeout=30)
+                self.assertEqual(result.returncode,0,result.stderr)
+                command=next(json.loads(line) for line in result.stdout.splitlines() if line.startswith('['))
+                self.assertEqual(command,['scripts/data-update.py',*argument.split()])
+                self.assertFalse(self.log.exists())
+
+    def test_validation_only_rejects_legacy_acquisition(self):
+        result=self.run_update('DATA_UPDATE_ARGS=--validate-completed fixture')
+        self.assertNotEqual(result.returncode,0)
+        self.assertIn('requires the current-edition workflow',result.stderr)
+        self.assertFalse(self.log.exists())
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -141,6 +141,7 @@ struct resources_profile
   std::string name;
   std::string description;
   std::string snapshot_as_of;
+  std::string dataset_resolved_at;
   std::string missing_semantics;
   double data_graphic_opacity = 1.0;
   fs::path country_geometry_path;
@@ -455,7 +456,8 @@ load_resources_profile(const fs::path& configured_path)
   rj::Document document = read_resources_document(path, 2U * 1024U * 1024U);
   require_members(document,
     {"schema", "name", "description", "snapshot_as_of", "missing_semantics",
-     "display", "country_geometry", "values", "sources", "families"}, {},
+     "display", "country_geometry", "values", "sources", "families"},
+    {"dataset_resolved_at"},
     path.string());
   resources_require(required_string(document, "schema", path.string())
                       == "cartofreako-resources-profile-v3",
@@ -466,6 +468,8 @@ load_resources_profile(const fs::path& configured_path)
   result.name = required_string(document, "name", path.string());
   result.description = required_string(document, "description", path.string());
   result.snapshot_as_of = required_string(document, "snapshot_as_of", path.string());
+  if (document.HasMember("dataset_resolved_at"))
+    result.dataset_resolved_at = required_string(document, "dataset_resolved_at", path.string());
   result.missing_semantics = required_string(document, "missing_semantics", path.string());
 
   const rj::Value& display = document["display"];

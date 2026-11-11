@@ -1320,7 +1320,14 @@ data-update-resilient: data-update
 endif
 
 data-update: $(ANTHROPOCENE_PARTICULATE_FETCHER)
+ifneq ($(filter --validate-completed --validate-completed=%,$(DATA_UPDATE_ARGS)),)
+ifeq ($(DATASET),legacy)
+	@printf '%s\n' '--validate-completed requires the current-edition workflow' >&2
+	@exit 2
+endif
+else
 	@$(ANTHROPOCENE_PARTICULATE_FETCHER) --check-credentials
+endif
 ifeq ($(DATASET),legacy)
 	+$(MAKE) --no-print-directory -j1 --no-keep-going $(DATA_UPDATE_TARGETS)
 	@printf '%s\n' \

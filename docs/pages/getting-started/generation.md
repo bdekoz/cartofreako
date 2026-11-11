@@ -255,6 +255,24 @@ The old failed run remains available for inspection; its fingerprint is not rewr
 The fingerprint also includes the Git revision and tracked working-tree status.
 Finish edits and commits before starting acquisition. Use a separate checkout
 for code or documentation changes while an update is running.
+
+When all sources completed and only final validation failed, a validator fix
+can be applied after the updater stops, then checked against those frozen inputs:
+
+```sh
+make data-update DATA_UPDATE_ARGS='--validate-completed <failed-update-id>'
+```
+
+This path requires verified acquisition completion, all required source
+checkpoints, unchanged product definitions, and matching file hashes. It runs
+the final native loaders and full manifest validation, and selects the edition
+only after they pass. It performs no acquisition or preparation. The manifest
+retains the original acquisition fingerprint in `implementation` and records
+the validation code separately in `validation.implementation`. Incomplete
+acquisitions and acquisition-method mismatches still require the ordinary
+resume or new-run workflow. Older journals that record the final native-loader
+failure are also supported.
+
 `DATA_UPDATE_ARGS='--candidate-only'` validates
 without activation. `DATA_ROOT=/large/local/filesystem/cartofreako-data`
 relocates the input store. The default preflight working-space budget is
@@ -344,7 +362,7 @@ checksum and implementation checks remain enforced.
 | `OCEAN_HISTORY_DIR` | `output/ocean-temperature-20261108/cache/oisst` under the repository root | Verified 1982–2024 OISST annual files, land mask and matching `.nc.json` receipts. Independent of `DATA_ROOT`; never fetched automatically. |
 | `DATA_UPDATE_MIN_FREE_GIB` | `160` | Minimum free working space checked before acquisition. |
 | `DATA_UPDATE_AS_OF` | Current UTC instant | Environment variable selecting the acquisition calculation boundary; use an explicit UTC ISO timestamp. |
-| `DATA_UPDATE_ARGS` | Empty | Arguments to the updater: `--resume ID`, repeatable `--defer SOURCE`, `--candidate-only`, `--as-of UTC`, and `--jobs 1`, `2` or `3`. Resilient Make adds `--keep-going`. |
+| `DATA_UPDATE_ARGS` | Empty | Arguments to the updater: `--resume ID`, `--validate-completed ID`, repeatable `--defer SOURCE`, `--candidate-only`, `--as-of UTC`, and `--jobs 1`, `2` or `3`. Resilient Make adds `--keep-going`. |
 | `ASSET_JOBS` | `2` | Render/export workers and the first resilient native build pass; the retry pass remains serial. It does not control provider request pacing. |
 | `ATLAS_OPTIONAL_ARGS` | Empty | Arguments to the full build coordinator; `--resume BUILD_ID` retries its failed output run using the same edition and implementation. |
 | `ATLAS_PYTHON` | `.venv-data/bin/python` when available, otherwise `python3` | Scientific interpreter used by acquisition and full-build coordination. |

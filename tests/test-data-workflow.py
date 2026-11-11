@@ -170,6 +170,98 @@ class Workflow(unittest.TestCase):
         path=self.execute(adapters=self.adapters(),candidate_only=True)
         self.assertTrue(path.is_file());self.assertFalse((self.root/'current.json').exists())
 
+    def completed_failure(self):
+        def reject():
+            raise dataset.DatasetError('fixture final validation failure')
+        with self.assertRaisesRegex(dataset.DatasetError, 'fixture final validation'):
+            update.update(self.root, requested_as_of='2026-11-08T00:00:00Z',
+                          adapters=self.adapters(), validate_sources=reject)
+        path = next((self.root/'runs').glob('*/state.json'))
+        return path, json.loads(path.read_text())
+
+    def test_validation_only_retry_retains_acquisition_and_records_new_validator(self):
+        state_path, state = self.completed_failure()
+        acquisition = state['implementation']
+        revised = {**acquisition, 'revision': 'f' * 40}
+        validator = Mock()
+        with patch.object(update, 'implementation_record', return_value=revised), \
+             patch.object(Sources, 'run', side_effect=AssertionError('acquisition must not run')):
+            path = update.validate_completed(self.root, state['dataset_id'], validate_sources=validator)
+        validator.assert_called_once_with()
+        manifest = dataset.load(path)[1]
+        self.assertEqual(manifest['implementation'], acquisition)
+        self.assertEqual(manifest['validation']['implementation'], revised)
+        self.assertEqual(dataset.load(self.root/'current.json')[0], path)
+        final = json.loads(state_path.read_text())
+        self.assertEqual(final['status'], 'active')
+        self.assertNotIn('error', final)
+
+    def test_validation_only_retry_rejects_incomplete_acquisition(self):
+        with self.assertRaises(dataset.DatasetError):
+            self.execute(adapters=self.adapters(fail='ocean'))
+        state = json.loads(next((self.root/'runs').glob('*/state.json')).read_text())
+        with self.assertRaisesRegex(dataset.DatasetError, 'all sources complete'):
+            update.validate_completed(self.root, state['dataset_id'], validate_sources=Mock())
+        self.assertFalse((self.root/'current.json').exists())
+
+    def test_validation_only_retry_rejects_unverified_acquisition_method(self):
+        path, state = self.completed_failure()
+        state.pop('acquisition_verified')
+        state['error'] = 'Implementation changed during acquisition'
+        path.write_text(json.dumps(state))
+        with self.assertRaisesRegex(dataset.DatasetError, 'completion is unverified'):
+            update.validate_completed(self.root, state['dataset_id'], validate_sources=Mock())
+
+    def test_validation_only_retry_recognizes_legacy_final_native_failure(self):
+        path, state = self.completed_failure()
+        state.pop('acquisition_verified')
+        state['error'] = 'Source command failed: ' + str(ROOT/'build/validate-dataset-native')
+        path.write_text(json.dumps(state))
+        result = update.validate_completed(self.root, state['dataset_id'], validate_sources=lambda: None)
+        self.assertEqual(dataset.load(result)[1]['implementation'], state['implementation'])
+
+    def test_validation_only_retry_rejects_changed_completed_bytes(self):
+        _, state = self.completed_failure()
+        row = state['completed_files']['natural-earth'][0]
+        (self.root/'editions'/state['dataset_id']/row['path']).write_text('changed')
+        with self.assertRaisesRegex(dataset.DatasetError, 'checkpoint changed'):
+            update.validate_completed(self.root, state['dataset_id'], validate_sources=Mock())
+        self.assertFalse((self.root/'current.json').exists())
+
+    def test_validation_only_retry_rejects_changed_product_definitions(self):
+        _, state = self.completed_failure()
+        original = update.digest
+        with patch.object(update, 'digest', side_effect=lambda p: '0' * 64
+                          if Path(p).name == 'data-products.json' else original(p)):
+            with self.assertRaisesRegex(dataset.DatasetError, 'Product definitions changed'):
+                update.validate_completed(self.root, state['dataset_id'], validate_sources=Mock())
+
+    def test_validation_only_retry_rejects_validator_input_mutation(self):
+        _, state = self.completed_failure()
+        row = state['completed_files']['natural-earth'][0]
+        path = self.root/'editions'/state['dataset_id']/row['path']
+        with self.assertRaisesRegex(dataset.DatasetError, 'bytes changed during final validation'):
+            update.validate_completed(self.root, state['dataset_id'],
+                                      validate_sources=lambda: path.write_text('changed'))
+        self.assertFalse((self.root/'current.json').exists())
+
+    def test_validation_only_retry_rejects_validator_implementation_change(self):
+        _, state = self.completed_failure()
+        changed = {**state['implementation'], 'revision': 'f' * 40}
+        with patch.object(update, 'implementation_record', side_effect=[state['implementation'], changed]):
+            with self.assertRaisesRegex(dataset.DatasetError, 'Implementation changed during final validation'):
+                update.validate_completed(self.root, state['dataset_id'], validate_sources=lambda: None)
+        self.assertFalse((self.root/'current.json').exists())
+
+    def test_interrupted_validation_only_retry_can_continue(self):
+        state_path, state = self.completed_failure()
+        with self.assertRaises(KeyboardInterrupt):
+            update.validate_completed(self.root, state['dataset_id'],
+                                      validate_sources=Mock(side_effect=KeyboardInterrupt))
+        self.assertEqual(json.loads(state_path.read_text())['status'], 'validating')
+        path = update.validate_completed(self.root, state['dataset_id'], validate_sources=lambda: None)
+        self.assertEqual(dataset.load(self.root/'current.json')[0], path)
+
     def test_deferred_astronomy_saves_other_sources_and_resume_completes_it(self):
         old,_=fixtures.fixture(self.root/'editions/old','old')
         dataset.activate(self.root,old)
