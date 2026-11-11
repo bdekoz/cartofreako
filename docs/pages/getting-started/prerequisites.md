@@ -27,6 +27,11 @@ probe and Poppler tools (`pdfinfo`, `pdfunite`).
 The direct shell checker below checks the native baseline; the Make target
 also runs the scientific checker.
 
+Acquisition preflight additionally imports `osgeo.ogr` using the selected
+`ATLAS_PYTHON` interpreter. Install matching GDAL Python bindings
+(`python3-gdal` on Fedora); the native `gdalinfo` executable is a separate
+prerequisite. Missing Python bindings stop the update before source downloads.
+
 Before acquisition, configure an exported `FIRMS_MAP_KEY` and a private
 `PTREE_NETRC` (default `~/.netrc`) with the `ftp.ptree.jaxa.jp` entry.
 The FIRMS error log includes the free registration and key-recovery URLs;

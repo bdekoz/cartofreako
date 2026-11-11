@@ -85,7 +85,9 @@ make data-update
 make ASSET_JOBS=2 atlas-optional
 ```
 
-`data-update` prepares isolated inputs and selects them only after validation.
+By default, both `data-update` and `data-update-resilient` select a complete
+edition after validation. After either succeeds, continue with `make atlas-optional`;
+running `make data-update` again starts another acquisition run.
 `make data-update-resilient` saves source failures and continues independent
 sources, matching the `all-resilient` naming for plate builds. To work while
 the NASA Exoplanet Archive is unavailable:
@@ -98,7 +100,10 @@ Required sources remain required: a partial run exits nonzero, prints its
 pending sources and resume command, and preserves the previous selection.
 Resume without `--defer` when the provider recovers. See
 [resilient acquisition](docs/pages/getting-started/generation.md#resilient-data-updates)
-for dependencies, journals and retry examples.
+for dependencies, journals and retry examples. To attempt astronomy with a
+10-minute retry budget per request, use
+`ASTRO_HTTP_RETRY_BUDGET=600 make data-update-resilient`. Through Make, the
+default is 30 minutes per request; the astronomy stage includes several queries.
 
 `make update-data` aliases `make data-update`. Selected India OpenAQ
 daily archives from January 2025 onward are preserved in a shared cache;
@@ -113,8 +118,9 @@ Both acquisition targets require an exported `FIRMS_MAP_KEY`, configured P-Tree 
 and the configured local swarm/network and audited petroleum inputs. Mutable
 NOAA files are revalidated; pinned local publications retain their dates.
 NOAA downloads use shared adaptive pacing and a 30-minute retry budget per
-request. CPC 1979–2025 archives are pinned; 2026 updates retain existing
-observations and fetch only missing daily subsets. Saved subsets and partial
+request/range. OISST uses 8 MiB ranges and retries interrupted response bodies
+while retaining validated partial bytes. CPC 1979–2025 archives are pinned;
+2026 updates retain existing observations and fetch only missing daily subsets. Saved subsets and partial
 downloads survive retries. See the [Make download controls](docs/pages/getting-started/generation.md#noaa-download-controls)
 for rate limits, progress, retry settings and the optional bulk endpoint.
 Particulate updates also retain completed FIRMS/CWFIS periods and closed-year

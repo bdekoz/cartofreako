@@ -149,9 +149,11 @@ current update workflow.
 Mutable OISST files use HTTP revalidation; CPC retains closed years and
 requests only missing 2026 daily observations. Interrupted HTTP transfers
 resume only with matching validators; changed remote identities restart.
-CPC whole-year refreshes, when explicitly requested, use verified 2 MiB byte
-ranges to avoid NOAA proxy truncation. Cached objects, completed daily subsets
-and partial transfers survive failed runs. Time inventories checked on the
+OISST downloads use verified 8 MiB byte ranges. CPC whole-year refreshes,
+when explicitly requested, use verified 2 MiB ranges. Both retry truncated
+response bodies, read timeouts and connection resets within the request/range
+retry budget, preserving validated partial bytes. Cached objects, completed
+daily subsets and partial transfers survive failed runs. Time inventories checked on the
 same UTC day are reused; receipts retain the actual provider-check time.
 For local hourly progress reports and CPC completion estimates, see the
 [progress reporter](../../development/data-update-hourly-progress.md).
@@ -215,6 +217,9 @@ methods require a new run. After updating downloader code, use `make data-update
 without `--resume`: completed HTTP cache objects and identity-checked partial
 downloads survive between runs, so a new run can revalidate/reuse those bytes.
 The old failed run remains available for inspection; its fingerprint is not rewritten.
+The fingerprint also includes the Git revision and tracked working-tree status.
+Finish edits and commits before starting acquisition. Use a separate checkout
+for code or documentation changes while an update is running.
 `DATA_UPDATE_ARGS='--candidate-only'` validates
 without activation. `DATA_ROOT=/large/local/filesystem/cartofreako-data`
 relocates the input store. The default preflight working-space budget is
@@ -228,7 +233,7 @@ only from measured local storage needs. Inputs and referenced caches survive
 | --- | --- |
 | `make data-update` | Acquire, prepare, validate and select a complete edition; stop on the first source failure. |
 | `make update-data` | Alias for `data-update`. |
-| `make data-update-resilient` | Continue independent source groups after failures, checkpoint successful work, and report pending sources. |
+| `make data-update-resilient` | Continue independent source groups after failures and checkpoint successful work; validate and select the edition when every required source completes. |
 | `make all-resilient` | Build native plates from the selected local edition using the existing resilient build passes. |
 | `make atlas-optional` | Build the complete standard, atlas and optional plate set from one selected edition. |
 
@@ -237,9 +242,17 @@ Both acquisition targets reuse the same caches. The resilient target adds
 `DATA_UPDATE_ARGS`. It supports the current-edition workflow; omit
 `DATASET=legacy`.
 
+Unless `--candidate-only` is set, a successful run of either acquisition target
+already selects the new edition in `DATA_ROOT/current.json`. Continue with
+`make atlas-optional`. Running `make data-update` after a successful resilient
+update starts another acquisition run.
+
 ```sh
 # Try every source; a provider outage does not stop unrelated work.
 make data-update-resilient
+
+# Attempt astronomy with a 10-minute retry budget per request.
+ASTRO_HTTP_RETRY_BUDGET=600 make data-update-resilient
 
 # Known NASA outage: acquire the other required inputs without trying astronomy.
 make data-update-resilient DATA_UPDATE_ARGS='--defer astronomy'
@@ -251,6 +264,13 @@ make data-update-resilient DATA_UPDATE_ARGS='--resume <run-id>'
 make data-update-resilient \
   DATA_UPDATE_ARGS='--resume <run-id> --defer astronomy'
 ```
+
+Without `--defer`, the updater attempts astronomy, including NASA exoplanet
+data. Make supplies a default retry budget of 1800 seconds (30 minutes) per
+request. `ASTRO_HTTP_RETRY_BUDGET=600` changes astronomy requests to 10 minutes;
+the complete astronomy stage can take longer because it includes multiple
+queries and Gaia fallback attempts. If astronomy fails, the resilient runner
+records the failure and continues independent sources.
 
 `--defer SOURCE` is repeatable and applies only to that invocation. A resume
 without the flag retries the deferred source. Already completed sources are
@@ -292,7 +312,7 @@ checksum and implementation checks remain enforced.
 | `ASSET_JOBS` | `2` | Render/export workers and the first resilient native build pass; the retry pass remains serial. It does not control provider request pacing. |
 | `ATLAS_OPTIONAL_ARGS` | Empty | Arguments to the full build coordinator; `--resume BUILD_ID` retries its failed output run using the same edition and implementation. |
 | `ATLAS_PYTHON` | `.venv-data/bin/python` when available, otherwise `python3` | Scientific interpreter used by acquisition and full-build coordination. |
-| `ASTRO_HTTP_RETRY_BUDGET` | General HTTP budget when set; otherwise `60` | Environment option limiting each astronomy request, independently of the slower NOAA transfer budget. |
+| `ASTRO_HTTP_RETRY_BUDGET` | Inherited HTTP budget, normally `1800` through Make | Environment override for each astronomy request. Direct script fetching falls back to `60` only when neither retry budget is set. |
 
 Set Make options on its command line and environment-only options before it:
 
@@ -390,10 +410,12 @@ two seconds apart. Each HTTP 429 doubles the interval up to its configured
 maximum and applies a randomized cooldown starting at 30 seconds. After ten
 successful requests the interval decreases by 10%, down to the configured
 minimum. A successful range does not immediately reset throttled pacing.
-Transient HTTP 408/429/500/502/503/504 failures retry within a time budget;
-`Retry-After` seconds and HTTP dates are honored. If the requested cooldown
-exceeds the remaining budget, the command fails with the shared cooldown and
-partial bytes retained. Increasing Make's job count does not bypass pacing.
+Transient HTTP 408/429/500/502/503/504 failures and interrupted response bodies
+share the request/range retry deadline. A body interruption does not restart
+that deadline. A completed, validated response advances the successful-request
+count; receiving headers alone does not. `Retry-After` seconds and HTTP dates
+are honored. If the requested cooldown exceeds the remaining budget, the
+command fails with the shared cooldown and partial bytes retained. Increasing Make's job count does not bypass pacing.
 
 The following Make variables are exported through recursive acquisition
 commands. Durations are seconds; they can also be set in the environment for
@@ -401,7 +423,7 @@ direct script use.
 
 | Variable | Default | Meaning |
 | --- | --- | --- |
-| `DATA_HTTP_RETRY_BUDGET` | `1800` | Positive time budget per HTTP request/range, including pacing and retries. A successful range starts a new budget for the next range. |
+| `DATA_HTTP_RETRY_BUDGET` | `1800` | Positive retry budget per HTTP request/range, including pacing, HTTP-status retries and interrupted-body retries. A completed range starts a new budget for the next range. |
 | `NOAA_HTTP_MIN_INTERVAL` | `2` | Minimum interval between NOAA PSL request starts; zero disables the baseline delay, while throttling still applies. |
 | `NOAA_HTTP_MAX_INTERVAL` | `60` | Maximum adaptive request interval; must be at least the minimum. Provider cooldowns and `Retry-After` may be longer. |
 | `DATA_HTTP_PROGRESS_INTERVAL` | `30` | Positive interval between progress messages; retry decisions and completion also print immediately. |
