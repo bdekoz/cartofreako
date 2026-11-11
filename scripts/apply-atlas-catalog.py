@@ -82,13 +82,18 @@ def apply(root):
                 if nodes:
                     nodes[0].text=f'{ordinals[newstem]:02d}'
                 else:
-                    node=E.SubElement(tree.getroot(),'{http://www.w3.org/2000/svg}text',id='plate-number',x='43.2',y='18.65',**{'font-family':'Atkinson Hyperlegible','font-size':'.5','font-weight':'700','text-anchor':'end','fill':'#fcc553'})
+                    width,height=map(float,tree.getroot().get('viewBox','0 0 44 19.052559').split()[2:])
+                    compact=width<20
+                    node=E.SubElement(tree.getroot(),'{http://www.w3.org/2000/svg}text',id='plate-number',
+                        x=str(width-.45) if compact else '43.2',y=str(height-.3) if compact else '18.65',
+                        **{'font-family':'Atkinson Hyperlegible','font-size':'.18' if compact else '.5',
+                           'font-weight':'700','text-anchor':'end','fill':'#240413' if compact else '#fcc553'})
                     node.text=f'{ordinals[newstem]:02d}'
                 for node in tree.xpath('//*[@data-plate-ordinal]'):node.set('data-plate-ordinal',str(ordinals[newstem]))
             target.parent.mkdir(parents=True,exist_ok=True)
             tree.write(str(target),encoding='UTF-8',xml_declaration=True)
         row.update(stem=newstem,source_stem=plate['source_stem'],svg=str(target.relative_to(root)),svg_sha256=digest(target),group=plate['group'])
-        row['sheet_background']=tree.getroot().get('data-sheet-background','#240413') if selected else '#240413'
+        row['sheet_background']=tree.getroot().get('data-sheet-background','#240413') if selected else row.get('sheet_background','#240413')
         # The current atlas exporter owns PDF/PNG receipts. The supplement's
         # exports describe its unnumbered sheets and must not overwrite or
         # compete with the current atlas's numbered legends and exports.

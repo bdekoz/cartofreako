@@ -16,6 +16,7 @@ import os
 from pathlib import Path
 import re
 import subprocess
+import tempfile
 
 from lxml import etree as E
 from PIL import Image
@@ -165,7 +166,7 @@ def refine_groundstations(approved, config, projection, *, profile_path=None, re
     remove(source, './/*[starts-with(@id,"starlink-gateways-") or contains(@id,"legend")]')
     remove(source, './/*[@id="groundstations-starlink" or @id="groundstation-location-tethers" or '
                    '@id="groundstation-pops" or @id="groundstation-cell-guides" or '
-                   '@id="groundstation-capability-metadata" or local-name()="defs"]')
+                   '@id="groundstation-capability-metadata" or @id="slsl-groundstation-encoding" or local-name()="defs"]')
     links = source.xpath('.//*[@data-gateway-link="true"]')
     link_records = [r for r in records if r['kind']=='link']
     if len(links) != len(link_records):
@@ -225,6 +226,8 @@ def orbital_source(native, plate, recipe):
             ids.append(copy)
     MSP.apply_variant(source,recipe,STEMS[plate],'map')
     MSP.apply_palette(source,recipe,'map')
+    for marker in source.xpath('//*[@data-role="debris" and @data-marker-shape="x"]'):
+        paint(marker.attrib,stroke='#ffffff',stroke_opacity=1)
     return source_group(source)
 
 
@@ -262,7 +265,20 @@ def fix_sky_labels(source, scale, points):
     return changes
 
 
-def add_sky(root, source, box, points=None, *, side_margin_factor=1, margin_box=None):
+def astronomy_ink_bounds(source):
+    """Measure the actual sky marks and curves without paper or name labels."""
+    proof=el('svg',width='44in',height=f'{HEIGHT}in',viewBox=f'0 0 44 {HEIGHT}')
+    content=deepcopy(source)
+    remove(content,'.//*[@id="labels" or @id="astronomy-background"]')
+    content.set('id','slsl-astronomy-ink')
+    proof.append(content)
+    with tempfile.TemporaryDirectory(prefix='slsl-sky-') as directory:
+        path=Path(directory)/'ink.svg';save(proof,path)
+        x,y,w,h=query_boxes(path,font_environment())['slsl-astronomy-ink']
+    return [v/96 for v in (x,y,w,h)]
+
+
+def add_sky(root, source, box, points=None, *, side_margin_factor=1, margin_box=None, page_margin_inches=None):
     # The reference frame is finite; glyphs and ornaments are allowed outside
     # it. Begin with the conservative source gutter, then tighten the requested
     # side margins uniformly. Export validation checks every visible edge glyph.
@@ -277,6 +293,16 @@ def add_sky(root, source, box, points=None, *, side_margin_factor=1, margin_box=
         scale = (mw-2*margin)/WIDTH
         dx,dy = mx+margin,my+(mh-HEIGHT*scale)/2
     content = deepcopy(source)
+    if page_margin_inches is not None:
+        # Accepted astronomy exports already contain this print-frame inset.
+        # Remove that presentation transform before fitting native sky geometry.
+        for frame in content.xpath('.//*[@id="setouchi-astronomy-frame"]'):
+            frame.attrib.pop('transform',None)
+        bounds=astronomy_ink_bounds(content)
+        mx,my,mw,mh=margin_box or box
+        inset=page_margin_inches
+        scale,dx,dy=fit_transform(bounds,(mx+inset,my+inset,mw-2*inset,mh-2*inset))
+        margin=min(dx+bounds[0]*scale-mx,mx+mw-(dx+(bounds[0]+bounds[2])*scale))
     changes = fix_sky_labels(content,scale,points) if points is not None else []
     if points is None:
         for layer in content.xpath('.//*[@id="starlink-name" or @id="starlink-id"]'):
@@ -290,7 +316,8 @@ def add_sky(root, source, box, points=None, *, side_margin_factor=1, margin_box=
     root.set('data-frame-side-margin-inches',str(margin))
     return {'scale':scale,'translation':[dx,dy],'source_bounds':bounds,'box':box,
             'previous_side_margin_inches':previous_margin,'side_margin_inches':margin,
-            'side_margin_factor':side_margin_factor,'label_adjustments':changes}
+            'side_margin_factor':side_margin_factor,'label_adjustments':changes,
+            'page_margin_inches':page_margin_inches}
 
 
 def region_bounds(projection, region):
@@ -353,9 +380,14 @@ def make_map(plate, scope, source, locator, config, regions):
     sky = plate in ('SLSL1','SLSL2')
     if sky:
         box = (.25,.25,43.5,HEIGHT-.5) if scope=='world' else (.25,.65,30.4,HEIGHT-1.05)
-        details['sky'] = add_sky(root,source,box,config['astronomy_labels']['after_pt'] if plate=='SLSL1' else None,
-                                 side_margin_factor=config['astronomy_side_margin_factor'] if plate=='SLSL1' else 1,
-                                 margin_box=(0,0,WIDTH,HEIGHT) if scope=='world' else None)
+        if plate=='SLSL2':
+            observer_box=(FRAMING.DX,FRAMING.DY,FRAMING.IMAGE_WIDTH,HEIGHT*FRAMING.SCALE) if scope=='world' else box
+            details['sky'] = add_observer(root,source,observer_box)
+        else:
+            details['sky'] = add_sky(root,source,box,config['astronomy_labels']['after_pt'],
+                                     side_margin_factor=config['astronomy_side_margin_factor'],
+                                     margin_box=(0,0,WIDTH,HEIGHT) if scope=='world' else None,
+                                     page_margin_inches=config.get('astronomy_page_margin_inches') if scope=='world' else None)
         if scope=='usa':
             defs = el('defs',root)
             defs.append(deepcopy(locator))
@@ -390,6 +422,27 @@ def make_map(plate, scope, source, locator, config, regions):
         details['panels'] = [viewport(root,r['id'],'source-cartography',r['projected_bounds'],box,r['name'],16)
                              for r,box in zip(regions,boxes)]
     return root,details
+
+
+def add_observer(root, source, box):
+    """Keep the accepted cyclic sky frame, with one editable source population."""
+    defs=el('defs',root)
+    content=deepcopy(source)
+    defs.append(content)
+    clip=el('clipPath',defs,id='observer-window',clipPathUnits='userSpaceOnUse')
+    el('rect',clip,width=WIDTH,height=HEIGHT)
+    scale,dx,dy=fit_transform((0,0,WIDTH,HEIGHT),box)
+    for label in content.xpath('.//*[@id="starlink-name"]/*'):
+        label.set('font-size',str(6/72/scale))
+        paint(label.attrib,font_size=6/72/scale)
+    frame=el('g',root,id='observer-image-frame',transform=f'translate({dx} {dy}) scale({scale})')
+    window=el('g',frame,clip_path='url(#observer-window)')
+    for offset in (FRAMING.SHIFT-WIDTH,FRAMING.SHIFT,FRAMING.SHIFT+WIDTH):
+        el('use',window,transform=f'translate({offset} 0)').set('{'+XL+'}href','#source-cartography')
+    root.set('data-celestial-frame','complete-sphere-cyclic')
+    root.set('data-image-scale',str(scale))
+    return {'scale':scale,'translation':[dx,dy],'box':box,
+            'cyclic_shift_source_inches':FRAMING.SHIFT}
 
 
 def make_locator(land, projection):
@@ -438,7 +491,8 @@ def source_keys(source, plate, profile, config, evidence):
     else:
         for kind in CAPABILITIES:
             example={'capability':kind,'status':'reported-operational','aperture_proxy_m2':50}
-            sample=marker(el('g'),example,config['capability_markers'][kind],0,0,.14,'key-sample-'+kind)
+            sample=marker(el('g'),example,config['capability_markers'][kind],0,0,.14,'key-sample-'+kind,
+                          foreground=BG,background=FG)
             keys.append((CAPABILITIES[kind][0]+f' / {evidence["summary"]["capabilities"][kind]}',sample))
     return keys
 
@@ -454,7 +508,6 @@ def icon(parent, sample, x, y, identifier):
         bounds=MSP.ORBITAL.LAYOUT.shape_bounds(copy)
     x0,y0,x1,y1=bounds
     scale=min(.22/max(x1-x0,.001),.22/max(y1-y0,.001))
-    el('rect',parent,x=x-.16,y=y-.16,width=.32,height=.32,rx='.035',fill=BG)
     group=el('g',parent,id=identifier,transform=f'translate({x} {y}) scale({scale}) translate({-(x0+x1)/2} {-(y0+y1)/2})')
     for n in copy.iter():
         n.attrib.pop('id',None)
@@ -485,16 +538,18 @@ def make_legend(plate, scope, source, config, profile, evidence, timestamp):
     if plate=='SLSL4':
         y+=.12
         for status,label in [('reported-operational','Solid / reported operational'),('unconfirmed','Dashed / planned or unconfirmed'),('retired','Dotted / source reports retirement')]:
-            sample=marker(el('g'),{'capability':'ka','status':status,'aperture_proxy_m2':50},'circle',0,0,.14,'status-'+status)
+            sample=marker(el('g'),{'capability':'ka','status':status,'aperture_proxy_m2':50},'circle',0,0,.14,'status-'+status,
+                          foreground=BG,background=FG)
             icon(root,sample,xs[0]+.17,y-.04,'key-'+status)
             tx(root,xs[0]+.45,y,label,10.5,BG); y+=.36
-        sample=marker(el('g'),{'capability':'ka','status':'unconfirmed','aperture_proxy_m2':None},'circle',0,0,.14,'unknown')
+        sample=marker(el('g'),{'capability':'ka','status':'unconfirmed','aperture_proxy_m2':None},'circle',0,0,.14,'unknown',
+                      foreground=BG,background=FG)
         icon(root,sample,xs[0]+.17,y-.04,'key-unknown-size')
         tx(root,xs[0]+.45,y,'Central hollow square / size unknown',10.5,BG);y+=.36
-        sample=el('circle',cx=0,cy=0,r='.08',fill='none',stroke=FG,stroke_width='.012')
+        sample=el('circle',cx=0,cy=0,r='.08',fill='none',stroke=BG,stroke_width='.012')
         icon(root,sample,xs[0]+.17,y-.04,'key-pop')
-        tx(root,xs[0]+.45,y,'Open circle / 66 PoPs, fixed size',10.5,BG);y+=.4
-        tx(root,xs[0],y,'124 source links / amber; thin tethers / ochre',10.5,BG)
+        tx(root,xs[0]+.45,y,f'Open circle / {evidence["summary"]["kinds"]["pop"]} PoPs, fixed size',10.5,BG);y+=.4
+        tx(root,xs[0],y,f'{evidence["summary"]["kinds"]["link"]} source links / amber; thin tethers / ochre',10.5,BG)
         y+=.5
         tx(root,xs[0],y,'Aperture proxy / World-sheet symbol sizes',11,BG,font_weight='700')
         y+=.55
@@ -502,8 +557,7 @@ def make_legend(plate, scope, source, config, profile, evidence, timestamp):
             x=xs[0]+.5+i*1.15
             example={'kind':'antenna-site','capability':'ka','status':'reported-operational','aperture_proxy_m2':area}
             radius=CAP.radius(example,evidence['configuration'])*FRAMING.SCALE
-            el('rect',root,x=x-.48,y=y-.38,width='.96',height='.76',rx='.035',fill=BG)
-            marker(root,example,'circle',x,y,radius,'aperture-key-'+str(i))
+            marker(root,example,'circle',x,y,radius,'aperture-key-'+str(i),foreground=BG,background=FG)
             tx(root,x,y+.57,f'{area:.1f} m²' if i==0 else f'{area:g} m²',9,BG,text_anchor='middle')
         y+=.8
     if y>h-.65:
@@ -518,12 +572,15 @@ def make_legend(plate, scope, source, config, profile, evidence, timestamp):
                      'Object-name type: 12 pt before revision; 9.6 pt after revision, a 20% reduction in both views. A complete celestial frame with a glyph gutter and inward label placement prevents edge clipping.',
                      ('This edition uses the latest preserved all-sky artwork in this checkout, calculated 29 October 2026. The separately documented November astronomy exports are unavailable here.' if timestamp=='2026-10-29T20:00:00Z' else 'The explicitly selected all-sky source retains its own calculation timestamp and catalog selection, recorded in the input manifest.')],
             'SLSL2':['Names shown for Starlink only, at 6 pt on the map. Starlink uses 1.5x sunbursts. Other fleet colors and shapes retain the accepted source encoding.',
-                     'Opacity records illumination. A black x with an amber halo marks debris. The horizon and equator describe the observer frame; the full frame does not imply an unobstructed view in every direction.'],
+                     'Cyclic framing shifts the flattened sky horizontally: artwork crossing one side of the sheet continues at the opposite side. The World image moves 4.35 inches to the right within its frame. This changes the display seam, not the celestial coordinates, observer location or calculation time.',
+                     'The brighter amber horizon curve is the San Francisco observer\'s zero-degree elevation boundary: the edge between sky above and below the local horizon. Only satellites above that boundary are plotted. Its curved shape comes from unfolding the celestial sphere into AuthaGraph; it is not an orbit or ground track. The fainter curve is the celestial equator, at zero declination.',
+                     'Opacity records illumination. A white x with an amber halo marks debris. Above-horizon selection does not imply naked-eye visibility or account for obstructions such as buildings and terrain.'],
             'SLSL3':['Starlink NORAD IDs appear at 6 pt on the world sheet, in a separate layer beneath the satellite marks. USA panels magnify this type with the map. Names remain editable and hidden. Sunbursts use the accepted 1.5x size; representative tracks use 2x stroke weight.',
+                     'A white x with an amber halo marks Orbital Debris.',
                      'One plotted satellite per NORAD ID. Overlapping memberships resolve by the profile order. Seven-day element age and six-hour future tolerance apply; these are calculated visualization positions.'],
             'SLSL4':['Nine silhouettes identify capability categories; silhouette area is equal at equal radius. The listed aperture proxy is the largest complete bank, max(N x pi x D squared / 4); bands are never summed.',
                      'The minimum radius remains 0.04 in. Radius = 0.04 + 2 x (previous radius - 0.04): the low-to-high radius span doubles. This is an enhanced display scale, not direct area proportionality to aperture. Unknown sizes and PoPs keep their previous size.',
-                     '538 antenna records have a size proxy; 52 do not. The 590 antenna records include proposed and retired sites. A source record is not necessarily a unique operating installation. Links include backbone and community satellite links; they are not all fibre.',
+                     (f'{evidence["summary"]["sized_sites"]} antenna records have a size proxy; {evidence["summary"]["unknown_size_sites"]} do not. The {evidence["summary"]["kinds"]["antenna-site"]} antenna records include proposed and retired sites. A source record is not necessarily a unique operating installation. Links include backbone and community satellite links; they are not all fibre.' if plate=='SLSL4' else ''),
                      'Filled continental land and the consolidated Antarctic inset are removed. Cluster displacement is recomputed to keep the larger marks apart; tethers retain the source-location connection.']}
     for note in common[plate]:
         y=paragraph(root,x,y,note,col,11)
@@ -538,14 +595,15 @@ def make_legend(plate, scope, source, config, profile, evidence, timestamp):
                  'Calculation: '+timestamp+'. Astronomy and orbital source dates are recorded separately.']
     elif plate in ('SLSL2','SLSL3'):
         meta=source.xpath('.//*[@id="orbital-technosphere-metadata"]')[0]
-        sources=['CelesTrak OMM elements and named memberships; the 9 November 2026 snapshot is propagated with SGP4, WGS-72 and AFSPC mode.',
+        sources=['CelesTrak OMM elements and named memberships; the selected dated snapshot is propagated with SGP4, WGS-72 and AFSPC mode.',
                  'https://celestrak.org/NORAD/documentation/gp-data-formats.php',
                  'https://celestrak.org/publications/AIAA/2006-6753/',
                  f'Calculation: {timestamp}. Plotted: {meta.get("data-visible-records")}; epoch exclusions: {meta.get("data-skipped-stale")}; propagation failures: {meta.get("data-failed-propagation")}.',
                  'The retained NASA SSC reference is historical validation only. It does not independently validate the November positions.',
                  'The pinned profile, acquisition receipt and catalog checksums are copied under sources/orbital/.']
     else:
-        sources=['Unofficial Starlink Global Gateways & PoPs. Supplied KML snapshot dated 3 November 2026; faithfully converted to GeoJSON. 780 records: 590 antenna records, 66 PoPs and 124 lines.',
+        summary=evidence['summary']
+        sources=[f'Unofficial Starlink Global Gateways & PoPs. Supplied KML snapshot {evidence["source_date"]}; faithfully converted to GeoJSON. {summary["source_records"]} records: {summary["kinds"]["antenna-site"]} antenna records, {summary["kinds"]["pop"]} PoPs and {summary["kinds"]["link"]} lines.',
                  'The filename date is not a per-site verification date. The supplied KML does not identify an author or license. The collection is not attributed to SpaceX.',
                  'Numeric antenna diameters are interpreted as metres, consistent with FCC DOC-374641A1 and DOC-395259A1. This does not verify individual sites.',
                  'https://docs.fcc.gov/public/attachments/DOC-374641A1.pdf',
@@ -553,7 +611,7 @@ def make_legend(plate, scope, source, config, profile, evidence, timestamp):
                  'Source fields, conflicts, incomplete inventories, old/new radii and display positions: sources/capability-evidence.json.']
     sources+=['AuthaGraph / Cartofreako. Natural Earth supplies terrestrial context. Atkinson Hyperlegible supplies the type.',
               'https://www.naturalearthdata.com/',
-              'Map: wine #240413, amber #fcc553; legend: amber ground, wine text. Symbol colors are retained on dark sample swatches.']
+              'Map: wine #240413, amber #fcc553; legend: amber ground, wine text. Symbols sit directly on the legend ground; groundstation keys use wine for contrast.']
     for note in sources:
         y=paragraph(root,x,y,note,col,10.5)
     if y>h-.7:
@@ -597,8 +655,10 @@ def export(record, output, env, width):
 
 def validate(output, records, sources, config, evidence, env, exports=True):
     checks=[]
-    if len(records)!=16 or len({(r['plate'],r['scope'],r['kind']) for r in records})!=16:
-        raise ValueError('Expected all sixteen unique map/legend sheets')
+    astronomy_margins=[]
+    expected={(p,s,k) for p in TITLES for s in config.get('scopes',('world','usa')) for k in ('map','legend')}
+    if len(records)!=len(expected) or {(r['plate'],r['scope'],r['kind']) for r in records}!=expected:
+        raise ValueError('Incomplete map/legend sheet selection')
     for record in records:
         svg=output/record['svg'];root=read_svg(svg)
         ids=root.xpath('//*[@id]/@id')
@@ -626,7 +686,8 @@ def validate(output, records, sources, config, evidence, env, exports=True):
                 if root.xpath('//*[@id="terrestrial-land" or @id="antarctica-consolidated-inset"]'):
                     raise ValueError('Removed groundstation layers survived')
                 sites=root.xpath('//*[@data-groundstation="true"]')
-                if len(sites)!=590 or len(root.xpath('//*[@data-kind="pop"]'))!=66 or len(root.xpath('//*[@data-gateway-link="true"]'))!=124:
+                counts=evidence['summary']['kinds']
+                if len(sites)!=counts['antenna-site'] or len(root.xpath('//*[@data-kind="pop"]'))!=counts['pop'] or len(root.xpath('//*[@data-gateway-link="true"]'))!=counts['link']:
                     raise ValueError('Groundstation conservation failed')
                 if {n.get('data-marker-shape') for n in sites}!=set(config['capability_markers'].values()):
                     raise ValueError('Expected nine capability silhouettes')
@@ -653,6 +714,8 @@ def validate(output, records, sources, config, evidence, env, exports=True):
             page_w,page_h=(float(v)*96 for v in root.get('viewBox').split()[2:])
             if record['plate']=='SLSL1' and record['kind']=='map':
                 targets=root.xpath('//*[@data-kind or starts-with(@id,"stationary-rays-") or starts-with(@id,"slsl-sky-label-")]/@id')
+                if root.xpath('//*[@id="celestial-reference"]'):
+                    targets.append('celestial-reference')
             elif record['kind']=='legend':
                 targets=['observer-notes']
                 # Inkscape-generated IDs are not present in query-all. The full
@@ -666,6 +729,15 @@ def validate(output, records, sources, config, evidence, env, exports=True):
                 x,y,w,h=boxes[ident]
                 if min(x,y)<-.1 or x+w>page_w+.1 or y+h>page_h+.1:
                     raise ValueError(f'Clipped artwork in {svg.name}: {ident} {boxes[ident]}')
+            if record['plate']=='SLSL1' and record['kind']=='map' and record['scope']=='world' and config.get('astronomy_page_margin_inches'):
+                ink=[boxes[ident] for ident in targets]
+                margins=[min(b[0] for b in ink)/96,min(b[1] for b in ink)/96,
+                         (page_w-max(b[0]+b[2] for b in ink))/96,
+                         (page_h-max(b[1]+b[3] for b in ink))/96]
+                requested=config['astronomy_page_margin_inches']
+                if min(margins)<requested-.001 or min(margins)>requested+.01:
+                    raise ValueError('Rendered astronomy margins differ from the requested ink fit')
+                astronomy_margins.append({'scope':'world','left_top_right_bottom_inches':margins})
             info=subprocess.check_output(['pdfinfo',str(output/record['outputs']['pdf']['path'])],text=True)
             size=re.search(r'Page size:\s+([\d.]+) x ([\d.]+) pts',info)
             if not size or any(abs(float(value)-expected*.75)>.1 for value,expected in zip(size.groups(),(page_w,page_h))):
@@ -684,6 +756,7 @@ def validate(output, records, sources, config, evidence, env, exports=True):
              'astronomy_object_and_label_conservation':True,'radius_before_inches':[min(old),max(old)],
              'radius_after_inches':[min(new),max(new)],'radius_span_multiplier':2,
              'minimum_groundstation_clearance_inches':clearance}
+    receipt['rendered_astronomy_margins']=astronomy_margins
     atomic_json(output/'validation.json',receipt)
     return receipt
 
@@ -693,8 +766,12 @@ def gallery(output, records):
           '<title>Starlink Star Light / v3</title><style>body{background:#240413;color:#fcc553;font:18px system-ui;margin:2rem auto;max-width:1600px;padding:0 1rem}a{color:inherit}p{max-width:90ch;line-height:1.5}article{margin:3rem 0}.pair{display:grid;grid-template-columns:1fr 1fr;gap:1rem}img{width:100%;height:auto}figure{margin:0}figcaption{margin:.7rem 0}@media(max-width:800px){.pair{grid-template-columns:1fr}}</style>',
           '<h1>Starlink Star Light / v3</h1><p>Four perspectives, World and USA. Wine/amber maps; amber/wine A3 landscape legends. USA sky sheets retain celestial coordinates with mainland, Alaska and Hawaii locators. Source dates are explicit in each legend and the production record.</p>',
           '<p><a href="starlink-star-light-v3.pdf">All 16 sheets / vector PDF</a> · <a href="pod/format-proofs.pdf">Book format proofs</a> · <a href="plan.md">Plan and production record</a> · <a href="pod-options.md">IngramSpark options</a> · <a href="validation.json">Validation</a> · <a href="manifest.json">Manifest</a></p>']
+    page[2]=page[2].replace('World and USA', ' / '.join(dict.fromkeys(r['scope'].title() for r in records)))
+    if all(r['scope']=='world' for r in records):
+        page[2]=page[2].replace(' USA sky sheets retain celestial coordinates with mainland, Alaska and Hawaii locators.','')
+    page[3]=page[3].replace('All 16 sheets',f'All {len(records)} sheets')
     for plate in TITLES:
-        for scope in ('world','usa'):
+        for scope in dict.fromkeys(r['scope'] for r in records):
             page.append('<article><h2>'+html.escape(plate+' / '+TITLES[plate]+' / '+scope.upper())+'</h2><div class="pair">')
             for r in (r for r in records if r['plate']==plate and r['scope']==scope):
                 links='<a href="'+r['svg']+'">SVG</a> · '+' · '.join('<a href="'+r['outputs'][key]['path']+'">'+key.upper()+'</a>' for key in ('pdf','png','svg.gz'))
@@ -744,6 +821,22 @@ def book_proofs(output, records):
 def write_plan(output, config, records, validation):
     dates={r['plate']:r['timestamp'] for r in records}
     sky_layout=next(r['layout']['sky'] for r in records if r['plate']=='SLSL1' and r['scope']=='world' and r['kind']=='map')
+    if config.get('scopes')==['world']:
+        lines=['# Starlink Star Light / World production record', '',
+               'Four World maps and four A3 landscape legends. Maps: 44 x 19.052559 in. Legends: 420 x 297 mm.', '',
+               '| Plate | Calculation or source date |', '| --- | --- |',
+               *[f'| {p}: {TITLES[p]} | {dates[p]} |' for p in TITLES], '',
+               'SLSL1 uses the pinned November astronomy artwork. Names are reduced from 12 to 9.6 pt. The pre-existing astronomy print inset is removed before fitting the rendered sky marks and curves with a 0.125-inch minimum page inset; edge labels move inward. This replaces the earlier duplicated framing and theoretical margin calculation.', '',
+               'SLSL2 keeps the 9 November 01:12 UTC orbital calculation. The 43.5-inch World image wraps horizontally after a 4.35-inch printed shift. Its legend explains cyclic framing, the local zero-elevation horizon and the celestial equator.', '',
+               'SLSL2 and SLSL3 use white (#ffffff) debris x markers with amber halos, including their legend keys. Starlink IDs remain 6 pt beneath the SLSL3 satellite marks; sunbursts remain 1.5x and global ground-track strokes 2x.', '',
+               'SLSL4 retains nine capability silhouettes, doubled radius span, source-preserving unknowns and tethers, without filled continental land or the consolidated Antarctic inset.', '',
+               'Legends use amber ground and wine text, source-derived counts and observer notes. Symbol keys have no backing boxes; groundstation keys use wine for contrast. These four World presentations are the atlas defaults; dataset-bound builds supply their own selected sources.', '',
+               'All source hashes, timestamps and sheet records are in manifest.json and sources/input-manifest.json. Validation: '+('eight SVG/PDF pairs, rendered bounds and physical dimensions passed.' if validation['exports_checked'] else 'SVG checks passed; exports skipped.'), '',
+               '```sh', 'python3 scripts/build-starlink-star-light.py --config config/starlink-star-light-world-20261110.json',
+               'python3 scripts/build-starlink-star-light.py --config config/starlink-star-light-world-20261110.json --check', '```', '']
+        (output/'plan.md').write_text('\n'.join(lines))
+        (output/'pod-options.md').write_text((ROOT/'docs/development/20261109_starlink_star_light_v3_pod.md').read_text())
+        return
     lines=['# Starlink Star Light v3: production plan and record','',
            'Eight map views and eight companion legends. Maps retain the 44 x 19.052559 inch plate; legends are landscape A3 (420 x 297 mm).',
            '', '## Source selection', '',
@@ -770,6 +863,8 @@ def write_plan(output, config, records, validation):
            '| A3 legend observer / body / sources | Reflowed from the wide source sheet | 12 / 11 / 10.5 pt |', '',
            'All numbers are physical points. SLSL1 type is compensated for each viewport scale, so the USA context layout does not reduce the text a second time. Labels move inward where their measured text width crosses the frame. Object coordinates and scientific attributes remain unchanged. The celestial composition is centered, without the former cyclic clipping window. SLSL3 USA panels magnify the 6 pt master type with the underlying map.', '',
            f'SLSL1 World left and right frame margins are halved from {sky_layout["previous_side_margin_inches"]:.6f} to {sky_layout["side_margin_inches"]:.6f} inches each. Uniform enlargement preserves the projection proportions; the actual rendered glyphs, rays and labels are checked against every page edge. The USA sky viewport also halves its internal side gutters.', '',
+           'SLSL3 Orbital Debris uses white (#ffffff) x markers with the accepted amber halos in both World and USA views and their companion legends.', '',
+           'SLSL2 retains the 9 November 2026, 01:12 UTC calculation and its 972 above-horizon objects. The accepted cyclic framing is restored: a 43.5-inch World image, shifted horizontally by 4.35 printed inches with edge wrapping. The USA context uses the same complete cyclic sky in its smaller viewport. Legends distinguish this display seam from the local zero-elevation horizon and celestial equator.', '',
            '## Groundstation encoding', '',
            '| Source capability | Marker |', '| --- | --- |',
            *[f'| {CAPABILITIES[k][0]} | {v} |' for k,v in config['capability_markers'].items()], '',
@@ -800,7 +895,8 @@ def verify_delivery(output):
     manifest=json.loads((output/'manifest.json').read_text())
     if digest(output/'manifest.json')!=status['manifest_sha256']:
         raise ValueError('Delivery manifest changed after completion')
-    if len(manifest['records'])!=16 or not manifest['validation']['exports_checked']:
+    expected=8*len(manifest['configuration'].get('scopes',('world','usa')))
+    if len(manifest['records'])!=expected or not manifest['validation']['exports_checked']:
         raise ValueError('Incomplete map/legend delivery')
     for record in manifest['files']:
         path=(output/record['path']).resolve()
@@ -811,7 +907,7 @@ def verify_delivery(output):
         companion=(output/record['svg']).parent/root.get('data-companion')
         if not companion.is_file():
             raise ValueError('Broken map/legend companion')
-    print('Verified 16 sheets and',len(manifest['files']),'delivery files')
+    print('Verified',expected,'sheets and',len(manifest['files']),'delivery files')
 
 
 def build(config_path=CONFIG, output=None, native=None, astronomy=None, workers=2, preview_width=2560, exports=True):
@@ -869,11 +965,11 @@ def build(config_path=CONFIG, output=None, native=None, astronomy=None, workers=
     timestamps['SLSL4']='source snapshot 2026-11-03'
     atomic_json(output/'sources/input-manifest.json',{'inputs':inputs,'config_sha256':digest(config_path),
                 'style_sha256':digest(ROOT/'generation-style.json'),'timestamps':timestamps,
-                'astronomy_availability':'explicit source override' if astronomy else 'latest preserved artwork; November preview/export directories absent',
+                'astronomy_availability':'explicit source override' if astronomy else 'pinned artwork: '+config['sources']['astronomy']['path'],
                 'regions':regions,'recipe':recipe})
     records=[]
     for plate,source in sources.items():
-        for scope in ('world','usa'):
+        for scope in config.get('scopes',('world','usa')):
             selected_regions=groundstation_regions(regions,evidence) if plate=='SLSL4' and scope=='usa' else regions
             root,details=make_map(plate,scope,source,locator,config,selected_regions)
             if plate=='SLSL4' and scope=='usa':

@@ -23,6 +23,7 @@ from dataset import ROOT, DatasetError, atomic_json, binding, context, digest, o
 from atlas_presentation import settings, theme
 from atlas_presentation import css, paint
 import atlas_groundstations as GROUNDSTATIONS
+import atlas_world as WORLD
 from cartofreako_style import STYLE, Projection
 from legend_informatics import WIDTH, HEIGHT, SUFFIX, font_environment, legend_group, register_fonts
 from atlas_review_sheets import el, legend, save
@@ -378,7 +379,7 @@ def japan_sky(source,destination,earth):
         stream.write('</g>'+suffix)
 
 
-def build(catalog=None):
+def build(catalog=None, scopes=('world','japan')):
     manifest_path, manifest = context()
     destination = output("atlas")
     work = destination / "sources/current-build"
@@ -412,8 +413,25 @@ def build(catalog=None):
         if ident == 'network-groundstations':
             source, groundstation_evidence = GROUNDSTATIONS.prepare(source, work, recipe,
                 profile_path=binding('NETWORK_GROUNDSTATIONS_PROFILE'))
-        for scope in ("world", "japan"):
+        for scope in scopes:
             selected = observer_source(source, plate, scope, work)
+            if scope=='world' and ident in WORLD.PLATES:
+                world_map,world_legend,_=WORLD.compose(ident,selected,work,recipe,
+                    orbital_profile=binding('ORBITING_PROFILE') if ident.startswith('orbital-') else None,
+                    groundstation_profile=binding('NETWORK_GROUNDSTATIONS_PROFILE') if ident=='network-groundstations' else None)
+                for kind,tree in (('map',world_map),('legend',world_legend)):
+                    path=destination/('maps' if kind=='map' else 'legends')/scope/'svg'/(ident+('-legend' if kind=='legend' else '')+'.svg')
+                    tree.set('data-dataset-id',manifest['dataset_id'])
+                    tree.set('data-dataset-manifest-sha256',digest(manifest_path))
+                    companion=f'../../../{"legends" if kind=="map" else "maps"}/{scope}/svg/{ident}{"-legend" if kind=="map" else ""}.svg'
+                    tree.set('data-legend-companion' if kind=='map' else 'data-map-companion',companion)
+                    save(tree,path)
+                    records.append({'kind':kind,'scope':scope,'stem':ident,'source_stem':plate['source_stem'],
+                        'svg':path.relative_to(destination).as_posix(),'svg_sha256':digest(path),
+                        'source':str(selected),'source_sha256':digest(selected),
+                        'sheet_background':'#fcc553' if kind=='legend' else recipe['background'],
+                        'dataset_id':manifest['dataset_id'],'manifest_sha256':digest(manifest_path)})
+                continue
             target = destination / "maps" / scope / "svg" / (ident + ".svg")
             target.parent.mkdir(parents=True, exist_ok=True)
             intermediate = work / f"{scope}-{ident}.svg"
@@ -462,7 +480,7 @@ def build(catalog=None):
     atomic_json(destination / "sources/dataset.json", manifest)
     atomic_json(destination / "sources/current-atlas.json", {"schema": "cartofreako-current-atlas-v1",
                 "dataset_id": manifest["dataset_id"], "manifest_sha256": digest(manifest_path),
-                "records": records, "expected_sheets": 4 * len(catalog)})
+                "records": records, "expected_sheets": 2 * len(scopes) * len(catalog)})
     atomic_json(destination / "sources/separate-sheets.json", {"schema": "cartofreako-current-atlas-v1", "records": records})
     return records
 

@@ -17,6 +17,7 @@ import xml.sax
 
 from atlas_presentation import settings, theme, css, paint
 import atlas_groundstations as GROUNDSTATIONS
+import atlas_world as WORLD
 from cartofreako_style import STYLE
 from legend_informatics import E, ROOT, NS, WIDTH, HEIGHT, digest, el, save, text, register_fonts
 
@@ -224,7 +225,7 @@ def verify_subjects(out, config, recipe):
     for scope in ('world', 'japan'):
         for stem in config['subjects']+recipe.get('additional_subjects', []):
             root = read_svg(out/'maps'/scope/'svg'/(stem+'.svg'))
-            scale = SCALE if scope == 'world' else use_scale(root, 'source-content')
+            scale = float(root.get('data-image-scale',SCALE)) if scope == 'world' else use_scale(root, 'source-content')
             if stem.startswith('orbital'):
                 points = root.xpath('//*[@data-norad-id and @data-marker-shape]')
                 assert len({n.get('data-norad-id') for n in points}) == len(points)
@@ -244,7 +245,7 @@ def verify_subjects(out, config, recipe):
                         assert float(marker.get('data-marker-linear-scale')) == 1.5
                     if role == 'debris':
                         assert marker.get('data-marker-shape') == 'x'
-                        assert css(marker.attrib)['stroke'] in ('rgb(0,0,0)', '#000000')
+                        assert css(marker.attrib)['stroke'] in (('#ffffff',) if scope=='world' else ('rgb(0,0,0)', '#000000'))
                     elif group == 'intelsat':
                         assert marker.get('data-marker-shape') == 'square'
                 assert len(names) == sum(p.get('data-display-group') == 'starlink' for p in points)
@@ -255,8 +256,9 @@ def verify_subjects(out, config, recipe):
             elif stem == 'astro-all-sky':
                 labels = root.xpath('//*[@id="labels"]/*[local-name()="text"]')
                 assert len(labels) == 35
-                assert all(abs(float(n.get('font-size'))*72*scale-config['astronomy_label_font_size_pt']) < 1e-8 for n in labels)
-                result[scope+'/'+stem] = {'labels': len(labels), 'physical_font_size_pt': 12}
+                points=WORLD.settings()['astronomy_labels']['after_pt'] if scope=='world' else config['astronomy_label_font_size_pt']
+                assert all(abs(float(n.get('font-size'))*72*scale-points) < 1e-8 for n in labels)
+                result[scope+'/'+stem] = {'labels': len(labels), 'physical_font_size_pt': points}
             else:
                 links = root.xpath('//*[@data-gateway-link="true"]')
                 assert len(links) == 124
@@ -305,6 +307,8 @@ def main():
                    'groundstation_recipe_sha256': digest(ROOT/STYLE['atlas']['presentation']['groundstation_recipe_file']),
                    'groundstation_builder_sha256': digest(ROOT/'scripts/atlas_groundstations.py'),
                    'slsl_builder_sha256': digest(ROOT/'scripts/starlink_star_light.py'),
+                   'world_recipe_sha256': digest(ROOT/STYLE['atlas']['presentation']['world_recipe_file']),
+                   'world_builder_sha256': digest(ROOT/'scripts/atlas_world.py'),
                    'capability_builder_sha256': digest(ROOT/'scripts/build-groundstation-capabilities.py'),
                    'builder_sha256': digest(Path(__file__)), 'theme_sha256': digest(ROOT/'scripts/atlas_presentation.py')}
     if args.check:
@@ -377,6 +381,7 @@ def main():
                  ROOT/GROUNDSTATIONS.groundstation_settings(STYLE)['capability_config']):
         remember(path)
     observer = None
+    world_trees = {}
     # Maps first: the retained Japan observer supplies its new legend keys.
     for r in sorted(base['records'], key=lambda r: r['kind'] != 'map'):
         r = copy.deepcopy(r)
@@ -396,7 +401,16 @@ def main():
             continue
         root = None
         origin = 'st2-theme'
-        if stem == 'network-groundstations':
+        if scope=='world' and stem in WORLD.PLATES:
+            if stem not in world_trees:
+                world_trees[stem]=WORLD.compose(stem,selected[(stem,'map')][0],work,recipe,
+                    orbital_profile=ROOT/'assets.static/orbital-technosphere/20261103/orbital-technosphere-profile.json',
+                    styled=True)
+            root=copy.deepcopy(world_trees[stem][0 if kind=='map' else 1])
+            source=selected[(stem,'map')][1]
+            origin='slsl-v3-world'
+            r['framing_adjustment']=world_trees[stem][2] if kind=='map' else {'size_mm':WORLD.settings()['legend_mm']}
+        elif stem == 'network-groundstations':
             if kind == 'map':
                 root = (copy.deepcopy(selected[(stem, kind)][0]) if scope == 'world' else read_svg(source))
                 GROUNDSTATIONS.replace_source(root, groundstation_native)
@@ -453,13 +467,16 @@ def main():
         if root is not None:
             root.set('data-atlas-source-kind', origin)
             root.set('data-legend-companion' if kind == 'map' else 'data-map-companion', stem+('-legend.svg' if kind == 'map' else '.svg'))
-            if kind == 'legend':
+            if kind == 'legend' and origin!='slsl-v3-world':
                 legend_number(root, entries[stem]['ordinal'], recipe)
                 for title in root.xpath('//*[@id="msp-print-note"]/*[local-name()="text"]')[:1]:
                     title.text = 'Atlas default / '+recipe['palette']
             temporary = work/f'{kind}-{scope}-{stem}.svg'
             save(root, temporary)
-            theme(temporary, target, recipe, kind, stem)
+            if origin=='slsl-v3-world':
+                save(root,target)
+            else:
+                theme(temporary, target, recipe, kind, stem)
             # Both passes must conserve every coordinate, object value and label.
             assert geometry(temporary) == geometry(target), stem+' presentation changed geometry'
             temporary.unlink()
@@ -469,7 +486,7 @@ def main():
             assert audit == geometry(target), stem+' presentation changed geometry'
         r.update(svg_sha256=digest(target), presentation_source=str(source.resolve().relative_to(ROOT)),
                  presentation_source_sha256=digest(source), presentation=origin,
-                 source=str(source.resolve()), sheet_background=recipe['background'], geometry_audit=audit)
+                 source=str(source.resolve()), sheet_background='#fcc553' if origin=='slsl-v3-world' and kind=='legend' else recipe['background'], geometry_audit=audit)
         r.pop('combined_source_sha256', None)
         records.append(r)
         write(cache_path, {'fingerprint': fingerprint, 'records': records})

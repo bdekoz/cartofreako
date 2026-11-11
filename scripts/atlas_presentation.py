@@ -24,6 +24,11 @@ def groundstation_settings(profile):
 def settings(profile):
     groundstation_settings(profile)
     presentation = profile["atlas"]["presentation"]
+    world=json.loads((ROOT/presentation['world_recipe_file']).read_text())
+    if world.get('scopes')!=['world'] or world['legend_mm']!=[420,297]:
+        raise ValueError('Atlas World recipe requires World maps and A3 landscape legends')
+    if not 0 < world.get('astronomy_page_margin_inches',0) < 1:
+        raise ValueError('Atlas astronomy requires an explicit page inset below one inch')
     if presentation["data_colors"] != "preserve-source":
         raise ValueError("Atlas presentation must retain data colors")
     config = json.loads((ROOT / presentation["recipe_file"]).read_text())

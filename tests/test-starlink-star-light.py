@@ -6,6 +6,7 @@ import math
 from pathlib import Path
 import sys
 import unittest
+from unittest.mock import patch
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 import starlink_star_light as s
@@ -85,6 +86,29 @@ class DisplayTests(unittest.TestCase):
         self.assertAlmostEqual(dx,s.WIDTH-(dx+s.WIDTH*scale))
         self.assertGreater(dx-.15*scale,0)
         self.assertGreater(dy-.15*scale,0)
+
+    def test_world_sky_fits_ink_after_removing_an_existing_print_inset(self):
+        source=s.el('g',id='source-cartography')
+        frame=s.el('g',source,id='setouchi-astronomy-frame',transform='translate(.25 .108) scale(.988636)')
+        stars=s.el('g',frame,id='stars')
+        s.el('circle',stars,id='edge-object',cx=0,cy=0,r='.15',data_kind='planet')
+        labels=s.el('g',frame,id='labels');s.tx(labels,0,0,'Edge object',12)
+        bounds=[-.15,-.15,44.3,s.HEIGHT+.3]
+        def measured(content):
+            self.assertIsNone(content.xpath('.//*[@id="setouchi-astronomy-frame"]')[0].get('transform'))
+            return bounds
+        root=s.sheet('SLSL1','world')
+        with patch.object(s,'astronomy_ink_bounds',side_effect=measured):
+            result=s.add_sky(root,source,(.25,.25,43.5,s.HEIGHT-.5),9.6,
+                margin_box=(0,0,s.WIDTH,s.HEIGHT),page_margin_inches=.125)
+        scale=result['scale'];dx,dy=result['translation'];x,y,w,h=bounds
+        margins=[dx+x*scale,dy+y*scale,s.WIDTH-dx-(x+w)*scale,s.HEIGHT-dy-(y+h)*scale]
+        self.assertGreaterEqual(min(margins),.125-1e-9)
+        self.assertAlmostEqual(min(margins),.125)
+        self.assertLess(max(margins),.5)
+        self.assertEqual(root.xpath('//*[@id="edge-object"]')[0].get('cx'),'0')
+        label=root.xpath('//*[@id="labels"]/*')[0]
+        self.assertAlmostEqual(float(label.get('font-size'))*72*scale,9.6)
 
     def test_observer_notes_distinguish_sky_from_geographic_details(self):
         for plate in s.TITLES:

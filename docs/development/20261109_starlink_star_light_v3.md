@@ -66,6 +66,21 @@ San Francisco horizon. There are 46 epoch exclusions and no propagation
 failures. The accepted vendor colors, 1.5× Starlink sunbursts, 6 pt World
 Starlink text and doubled global track strokes are retained.
 
+The 10 November follow-up changes SLSL3 **Orbital Debris** to a **white x**
+(`#ffffff`) in both World and USA views and their companion legends. The
+existing amber halo is retained.
+
+The observer follow-up retains the **9 November 2026, 01:12 UTC** calculation
+and its 972 above-horizon objects, while restoring SLSL2's accepted **cyclic
+framing**: the 43.5-inch World image shifts 4.35 printed inches to the right,
+with artwork wrapping across the side edges. The USA context uses the same
+complete cyclic sky within its viewport. Both legends explain that this
+changes the display seam, and identify the brighter amber **horizon curve**
+as San Francisco's zero-degree elevation boundary. The fainter curve is the
+celestial equator. The linked reference shows a different calculation time,
+so the retained November sky has different satellite positions and horizon
+geometry.
+
 The November astronomy exports and staged data directory described in
 `docs/pages/passes/astronomy.md` are absent from this checkout. SLSL1 therefore
 uses the latest preserved accepted all-sky artwork, calculated at
@@ -180,3 +195,103 @@ book-format comparison pages. Generated delivery files are ignored by Git;
 the configuration, implementation, tests and research record are durable
 source changes. The book comparisons are RGB layout studies, not press-ready
 interiors or a publishing submission.
+
+## World regeneration and atlas defaults — 10 November 2026
+
+The accepted changes are now regenerated as **four World maps and four A3
+landscape legends**, without rebuilding USA details. The new delivery is
+[`output/starlink-star-light-world-20261110/`](../../output/starlink-star-light-world-20261110/index.html),
+with an [eight-page PDF](../../output/starlink-star-light-world-20261110/starlink-star-light-v3.pdf),
+[production record](../../output/starlink-star-light-world-20261110/plan.md),
+[source manifest](../../output/starlink-star-light-world-20261110/sources/input-manifest.json)
+and [validation receipt](../../output/starlink-star-light-world-20261110/validation.json).
+The saved [World recipe](../../config/starlink-star-light-world-20261110.json)
+pins the selected local sources. This is a local regeneration, without a new
+remote acquisition or activation of an incomplete data edition.
+
+The November astronomy files are now present, superseding the earlier
+availability limitation above. SLSL1 uses the **9 November 2026, 17:31:33 UTC**
+AuthaGraph all-sky artwork: **726 objects and 35 labels**. Names remain
+**9.6 pt**, reduced from 12 pt; the complete sky, halved side margins and
+inward edge-label placement are retained. The selected SVG SHA-256 is
+`f7694b5eca2a77fdfba9fb6ef018d100f5e1cba988ca310a7b0c808c78835458`.
+
+As requested, SLSL2 and SLSL3 retain the **9 November 2026, 01:12 UTC**
+orbital calculation: **972 above-horizon objects** and **17,956 global
+objects**. SLSL2 restores the 43.5-inch cyclic World frame with a 4.35-inch
+printed shift. Its legend explains horizontal edge wrapping, San Francisco's
+zero-degree elevation horizon curve and the fainter celestial equator.
+SLSL3 uses **white x debris markers**, including its legend key, while
+retaining amber halos, 6 pt Starlink IDs, 1.5× sunbursts and 2× track strokes.
+SLSL4 retains the supplied **3 November 2026** collection: 590 antenna
+records, 66 PoPs and 124 links, with nine capability silhouettes, doubled
+radius span, tethers and the removed land/inset layers. All legends use
+**420 × 297 mm**, amber ground, wine text and observer notes.
+
+[`generation-style.json`](../../generation-style.json) now selects this
+World recipe. The shared
+[`atlas_world.py`](../../scripts/atlas_world.py) compositor supplies these
+four World map/legend pairs to both atlas builders. Dataset-bound atlas
+builds use their selected native sources and profiles; retained-edition
+builds preserve their historical dates and populations while adopting the
+presentation. Neither requires this generated World delivery to exist.
+Legend counts and source timestamps come from the selected sources. The
+atlas exporter reads physical SVG dimensions, supporting 44-inch maps and
+A3 legends in the same edition; catalog numbering fits inside the A3 sheet
+and preserves its amber background.
+
+```sh
+make DATASET=legacy starlink-star-light-world
+make DATASET=legacy check-starlink-star-light-world
+```
+
+All eight delivered SVG/PDF pairs pass population, rendered-bound, source
+hash and physical-page checks. Seven SLSL display tests, seven atlas
+presentation/export tests, eight generation-style tests and 40 data-workflow
+tests pass. Integration checks compose all eight World sheets through the
+current-atlas builder with explicitly selected local sources, plus all
+eight through the shared retained-source path. A World map and its A3
+legend also pass the atlas's actual 300 dpi exporter: **13,200 × 5,716 px**
+and **4,961 × 3,508 px**, respectively. These are focused checks; the full
+atlas and its unrelated plates were not regenerated.
+
+### All-sky margin correction and observer debris key
+
+The earlier margin statement above described the outer fit calculation,
+not the final rendered artwork. The November astronomy source already
+contained a `setouchi-astronomy-frame` inset. Keeping that inset inside the
+SLSL framing compounded the projection-frame inset to about **1.16 inches per side**.
+The previous checks conserved objects and prevented clipping but missed
+this nested presentation transform.
+
+The shared sky renderer now removes that source print-frame transform,
+measures the rendered sky glyphs, rays and reference curves, and fits them
+uniformly with a **0.125-inch minimum page inset**. Name labels remain
+**9.6 pt** and move inward as needed. Measured World ink margins are
+**0.1515 inches left/right** and **0.1250 inches top/bottom**. These values
+supersede the earlier theoretical 0.923340-inch margin. Object coordinates,
+the 726-object population and the astronomy timestamp are preserved.
+The production receipt now records rendered margins and rejects a fit
+whose measured minimum differs from the requested inset.
+
+The same saved `astronomy_page_margin_inches: 0.125` setting and shared
+renderer apply to **both default atlas creation paths**, preventing either
+native or previously framed astronomy inputs from reintroducing the inset.
+A regression exercises an already framed source and checks the resulting
+ink fit and physical label size.
+
+The debris color instruction is also applied to **SLSL2**: its **Objects
+Debris** legend key and all plotted debris marks now use a **white x**
+(`#ffffff`) with the existing map halos retained. Both orbital World
+plates and both World atlas defaults use white debris x markers; the
+observer legend's reading notes now describe the white symbol. The eight
+World sheets and combined PDF are regenerated together.
+
+The legend follow-up removes the dark backing boxes from every symbol
+in the **Symbols / full source population** column, including status,
+unknown-size, PoP and aperture examples. Symbols now sit directly on the
+amber sheet. Groundstation keys use wine strokes/fills for contrast;
+celestial and fleet keys retain their categorical colors and both debris
+keys remain white x marks. This shared legend change also applies to the
+World atlas defaults. The unknown-size central square remains part of its
+symbol, rather than a backing box.

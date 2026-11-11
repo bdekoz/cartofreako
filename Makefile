@@ -3722,4 +3722,13 @@ check-starlink-star-light-v3:
 	$(SLSL_PYTHON) tests/test-groundstation-capabilities.py
 	$(SLSL_PYTHON) scripts/build-starlink-star-light.py --output "$(SLSL_OUTPUT)" --check
 
+.PHONY: starlink-star-light-world check-starlink-star-light-world
+starlink-star-light-world: build/generation-context $(SLSL_NATIVE_SVGS)
+	$(SLSL_PYTHON) scripts/build-starlink-star-light.py --config config/starlink-star-light-world-20261110.json --native "$(SLSL_NATIVE_DIR)" --workers "$(ASSET_JOBS)"
+
+check-starlink-star-light-world:
+	$(SLSL_PYTHON) tests/test-starlink-star-light.py
+	$(SLSL_PYTHON) tests/test-atlas-presentation.py
+	$(SLSL_PYTHON) scripts/build-starlink-star-light.py --config config/starlink-star-light-world-20261110.json --check
+
 endif # DATASET_RECURSE

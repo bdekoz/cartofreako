@@ -18,6 +18,8 @@ from lxml import etree as E
 from cartofreako_style import STYLE
 
 builder = importlib.import_module('build-atlas-defaults')
+world = importlib.import_module('atlas_world')
+exporter = importlib.import_module('export-setouchi-sheets')
 
 
 class AtlasPresentation(unittest.TestCase):
@@ -85,6 +87,9 @@ class AtlasPresentation(unittest.TestCase):
             with patch.object(ground, 'Projection') as projection:
                 projection.return_value.project.side_effect = lambda points: points
                 native, evidence = ground.prepare(source, work, self.recipe, profile_path=profile)
+                native, evidence = ground.prepare(native, work, self.recipe, profile_path=profile)
+            ids=ground.S.read_svg(native).xpath('//*[@id]/@id')
+            self.assertEqual(len(ids),len(set(ids)))
             self.assertEqual(evidence['source_date'], '20990101')
             self.assertEqual(evidence['summary']['source_records'], 4)
             self.assertEqual(evidence['source_sha256'], builder.digest(data))
@@ -132,6 +137,44 @@ class AtlasPresentation(unittest.TestCase):
         self.assertEqual(css(debris.attrib)['stroke-opacity'], '1')
         self.assertEqual(len(root.xpath('//*[@data-source-center]')), 4)
         self.assertNotEqual(css(groups['starlink'][2][0].attrib)['fill'], css(groups['intelsat'][2][0].attrib)['fill'])
+
+    def test_world_adapter_preserves_selected_epoch_and_objects_with_a3_keys(self):
+        source=E.fromstring(b'''<svg xmlns="http://www.w3.org/2000/svg"><g id="source-cartography">
+          <metadata id="orbital-technosphere-metadata" data-timestamp="2099-01-02T03:04:05Z"
+             data-visible-records="1" data-skipped-stale="0" data-failed-propagation="0"/>
+          <g id="terrestrial-land"><path d="M 1 1 L 2 1 L 2 2 L 1 2 Z"/></g>
+          <g data-display-group="objects-debris" data-object-count="1">
+          <path d="M 10 5 L 10.1 5.1 M 10 5.1 L 10.1 5" data-object-kind="locpoint"
+            data-norad-id="123" data-role="debris" data-marker-shape="x"
+            style="fill:none;stroke:#000000;stroke-width:.01"/>
+          </g></g></svg>''')
+        with tempfile.TemporaryDirectory() as directory:
+            work=Path(directory)
+            profile=work/'profile.json';profile.write_text('{"catalogs":{"groups":[]}}')
+            for stem in ('orbital-technosphere-observer','orbital-technosphere-global'):
+                root,key,_=world.compose(stem,source,work,self.recipe,orbital_profile=profile,styled=True)
+                points=root.xpath('//*[@data-object-kind="locpoint"]')
+                self.assertEqual(len(points),1)
+                self.assertEqual(points[0].get('d'),source.xpath('//*[@data-object-kind="locpoint"]')[0].get('d'))
+                self.assertEqual(root.get('data-calculation-or-source-date'),'2099-01-02T03:04:05Z')
+                self.assertEqual(css(points[0].attrib)['stroke'],'#ffffff')
+                self.assertAlmostEqual(float(key.get('width')[:-2])*25.4,420)
+                self.assertAlmostEqual(float(key.get('height')[:-2])*25.4,297)
+                self.assertEqual(key.xpath('//*[@id="sheet-paper"]')[0].get('fill'),'#fcc553')
+                debris_label=next(n for n in key.xpath('//*[local-name()="text"]') if 'debris /' in (n.text or '').lower())
+                self.assertEqual(css(debris_label.getprevious()[0].attrib)['stroke'],'#ffffff')
+                if stem.endswith('observer'):
+                    notes=' '.join(key.xpath('//*[local-name()="text"]/text()'))
+                    self.assertIn('Cyclic framing',notes)
+                    self.assertIn('zero-degree elevation',notes)
+
+    def test_export_dimensions_follow_physical_page_size(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'sheet.svg'
+            for width,height,expected in (('44in','19.052559in',(13200,5716)),
+                                           ('420mm','297mm',(4961,3508))):
+                path.write_text(f'<svg width="{width}" height="{height}"/>')
+                self.assertEqual(exporter.sheet_pixels(path),expected)
 
 
 if __name__ == '__main__':

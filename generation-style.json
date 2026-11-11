@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "name": "Reviewed Cartofreako generation defaults",
-  "reviewed_on": "2026-11-03",
+  "reviewed_on": "2026-11-10",
   "default_projection": "authagraph",
   "reference_sheet_inches": [
     44,
@@ -18,7 +18,8 @@
       "recipe_file": "config/msp-speculations-20261103.json",
       "approved_delivery": "output/msp-speculations-20261103",
       "data_colors": "preserve-source",
-      "base_edition": "setouchi-st2"
+      "base_edition": "setouchi-st2",
+      "world_recipe_file": "config/starlink-star-light-world-20261110.json"
     },
     "sheet_sequence": [
       "map",

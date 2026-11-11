@@ -7,12 +7,27 @@ from pathlib import Path
 import subprocess
 import sys
 import time
+import re
+import xml.etree.ElementTree as ET
 
 from PIL import Image, ImageColor
 from legend_informatics import ROOT,FONT_DIR,digest,font_environment
 from cartofreako_style import STYLE
 
 DPI=STYLE['atlas']['png_dpi']
+
+
+def sheet_pixels(svg, dpi=DPI):
+    """Read physical page size, including A3 companions among atlas maps."""
+    with svg.open('rb') as stream:
+        attrs=next(ET.iterparse(stream,events=('start',)))[1].attrib
+    factors={'in':1,'mm':1/25.4,'cm':1/2.54,'pt':1/72,'px':1/96,'':1/96}
+    def pixels(value):
+        match=re.fullmatch(r'([\d.]+)(in|mm|cm|pt|px)?',value)
+        if not match:
+            raise ValueError('Unsupported SVG physical page size: '+value)
+        return round(float(match[1])*factors[match[2] or '']*dpi)
+    return pixels(attrs['width']),pixels(attrs['height'])
 
 
 def main():
@@ -29,7 +44,8 @@ def main():
         pdf=base/'pdf'/(name+'.pdf');png=base/'png'/(name+'.png');preview=base/'preview'/(name+'.png')
         key=f'{kind}-{scope}-{stem}';receipt=receipts/(key+'.json')
         background=record.get('sheet_background', 'white')
-        fingerprint={'svg_sha256':digest(svg),'font_provenance_sha256':font_hash,'dpi':DPI,'exporter':'separate-sheets-v1'}
+        dimensions=sheet_pixels(svg)
+        fingerprint={'svg_sha256':digest(svg),'font_provenance_sha256':font_hash,'dpi':DPI,'exporter':'separate-sheets-v2-physical-pages'}
         native=kind=='map' and stem.startswith('network-swarm-')
         if native:fingerprint.update(native_exporter_sha256=digest(ROOT/'scripts/export-native-swarm.py'),canvas_background=background)
         if receipt.exists():
@@ -53,17 +69,18 @@ def main():
                 if command[0]=='inkscape':command=['bash',str(ROOT/'scripts/run-inkscape.sh'),*command]
                 subprocess.run(command,env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
         with Image.open(png) as image:
-            assert image.size==(13200,5716),(key,image.size)
+            assert image.size==dimensions,(key,image.size,dimensions)
             if kind=='map' and not native:
                 image.thumbnail((3840,3840),Image.Resampling.LANCZOS);image.convert('RGB').save(preview)
             if kind=='map':
                 # Test only the clear parts of the configured margin bands,
                 # avoiding antialiasing at the exact image boundary.
                 with Image.open(png) as full:
-                    for box in [(0,0,74,5716),(13126,0,13200,5716),(0,0,13200,31),(0,5685,13200,5716)]:
+                    width,height=dimensions
+                    for box in [(0,0,74,height),(width-74,0,width,height),(0,0,width,31),(0,height-31,width,height)]:
                         assert full.crop(box).convert('RGB').getextrema()==tuple((v,v) for v in ImageColor.getrgb(background)),key+' margin'
         result={'kind':kind,'scope':scope,'stem':stem,'svg':record['svg'],'fingerprint':fingerprint,
-                'elapsed_seconds':round(time.monotonic()-start,2),'pixel_dimensions':[13200,5716],
+                'elapsed_seconds':round(time.monotonic()-start,2),'pixel_dimensions':list(dimensions),
                 'outputs':{key:{'path':str(path.relative_to(args.delivery)),'sha256':digest(path),'bytes':path.stat().st_size}
                            for key,path in [('pdf',pdf),('png',png),('preview',preview)]}}
         receipt.write_text(json.dumps(result,indent=2)+'\n');print('exported',key,result['elapsed_seconds'],flush=True)
