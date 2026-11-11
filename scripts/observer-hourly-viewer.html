@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Starlink Star Light · Hourly observer</title>
+<style>
+@font-face{font-family:'Atkinson Hyperlegible';src:url('assets/fonts/AtkinsonHyperlegible-Regular.ttf')}@font-face{font-family:'Atkinson Hyperlegible';font-weight:700;src:url('assets/fonts/AtkinsonHyperlegible-Bold.ttf')}
+:root{color-scheme:dark;--wine:#240413;--amber:#fcc553;--soft:#d4b9b9;--line:#633547}
+*{box-sizing:border-box}body{margin:0;background:var(--wine);color:#fff5e0;font-family:Atkinson,'Atkinson Hyperlegible',system-ui,sans-serif}
+header,main,footer{max-width:1600px;margin:auto;padding:24px 30px}header{padding-bottom:12px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:13px;letter-spacing:.16em;color:var(--amber);margin:0 0 10px}h1{font-size:clamp(28px,4vw,45px);line-height:1.1;margin:0 0 12px;font-weight:700}p{line-height:1.5;margin:8px 0}.lead{color:var(--soft);max-width:940px}
+a{color:var(--amber);text-underline-offset:3px}a:hover{color:white}.time-row{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin:8px 0 16px}
+#local-time{font-size:clamp(23px,3vw,34px);margin:0}#utc-time{color:var(--soft);font-size:17px}#hour{font-size:30px;font-variant-numeric:tabular-nums;color:var(--amber)}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}button,select{font:inherit;background:#42192b;color:#fff5e0;border:1px solid #80566a;border-radius:5px;padding:9px 14px;cursor:pointer}button:hover,select:hover{background:#583044}button:disabled{opacity:.4;cursor:default}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--amber);outline-offset:3px}#play{background:var(--amber);color:var(--wine);min-width:90px;font-weight:bold}
+.timeline{display:flex;gap:18px;align-items:center;margin:17px 0 20px}.timeline label{min-width:70px}.timeline input{width:100%;accent-color:var(--amber)}.layers{display:flex;gap:20px;flex-wrap:wrap;padding:14px 0;border-top:1px solid var(--line)}.layers label{display:flex;align-items:center;gap:7px}input[type=checkbox]{accent-color:var(--amber);width:17px;height:17px}
+#viewport{overflow:auto;max-height:78vh;border:1px solid var(--line);background:var(--wine);position:relative}#plate{min-width:100%;width:100%;line-height:0}#plate>svg{width:100%;height:auto;display:block}#plate svg{font-family:Atkinson,'Atkinson Hyperlegible',sans-serif}#plate.hide-names [data-object-kind=name],#plate.hide-names [data-object-kind=id]{display:none}#plate:not(.show-previous) #previous-hour-horizon{display:none}
+.key{display:flex;flex-wrap:wrap;gap:24px;font-size:14px;color:var(--soft);padding:12px 0}.key span{display:flex;align-items:center;gap:8px}.line{width:35px;border-top:2px solid var(--amber)}.line.equator{opacity:.3}.line.previous{border-color:#39d4e0;border-top-style:dashed}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:14px 0 8px}.stats div{padding:15px;background:#351021;border:1px solid var(--line);border-radius:4px}.stats dt{font-size:14px;color:var(--soft)}.stats dd{font-size:27px;font-variant-numeric:tabular-nums;margin:8px 0 0;color:var(--amber)}
+.downloads{display:flex;gap:21px;flex-wrap:wrap;padding:18px 0}.explanation{max-width:1000px;color:var(--soft);font-size:15px}footer{border-top:1px solid var(--line);font-size:14px;color:var(--soft);padding-top:15px}#status{min-height:24px;font-size:14px;color:var(--soft)}
+@media(max-width:700px){header,main,footer{padding:18px 14px}.stats{grid-template-columns:repeat(2,1fr)}.controls{gap:6px}button{padding:9px 10px}.layers{gap:13px}.time-row{gap:10px}}
+</style>
+<script defer src="frames.js"></script>
+<script defer src="viewer.js"></script>
+</head>
+<body>
+<header>
+<p class="eyebrow">STARLINK STAR LIGHT / v4</p>
+<h1 id="study-title">One observer. Twenty-four skies.</h1>
+<p class="lead">Step through a day above San Francisco using the frozen November 9 satellite catalog. The celestial grid and camera stay fixed while the local horizon and propagated satellites move.</p>
+</header>
+<main>
+<div class="time-row"><div><h2 id="local-time">Loading the accepted plate…</h2><p id="utc-time"></p></div><div id="hour" aria-label="Elapsed hour"></div></div>
+<div class="controls" aria-label="Hourly playback controls">
+<button id="previous" type="button">← Previous hour</button><button id="next" type="button">Next hour →</button>
+<button id="play" type="button">Play</button><button id="reset" type="button">Reset to the accepted plate</button>
+</div>
+<div class="timeline"><label for="slider">Hour</label><input id="slider" type="range" min="0" max="23" value="0" step="1" aria-label="Select elapsed hour"></div>
+<div class="layers">
+<label for="view">View <select id="view"><option value="full">Full plate</option><option value="orientation">Orientation only</option></select></label>
+<label><input id="previous-horizon" type="checkbox">Previous-hour horizon</label>
+<label><input id="names" type="checkbox" checked>Names</label>
+<label for="zoom">Zoom <select id="zoom"><option value="100">Fit</option><option value="200">200%</option><option value="300">300%</option><option value="400">400%</option></select></label>
+</div>
+<div id="viewport" tabindex="0" aria-label="Observer sky plate. Use the arrow keys to step by one hour."><div id="plate"></div></div>
+<div class="key"><span><i class="line"></i>Current zero-elevation horizon</span><span><i class="line equator"></i>Fixed celestial equator</span><span><i class="line previous"></i>Previous hour’s horizon, when enabled</span></div>
+<dl class="stats"><div><dt>Above-horizon objects</dt><dd id="plotted"></dd></div><div><dt>Epoch exclusions</dt><dd id="excluded"></dd></div><div><dt>Propagation failures</dt><dd id="failures"></dd></div><div><dt>Model sidereal orientation</dt><dd id="sidereal"></dd></div></dl>
+<p id="status" role="status" aria-live="polite"></p>
+<div class="downloads"><a id="map-pdf" href="#">This plate · PDF</a><a id="legend-pdf" href="#">This legend · A3 PDF</a><a id="map-svg" href="#">Editable SVG</a><a href="observer-hourly-contact-sheet.pdf">Contact sheet · PDF</a><a id="video" href="#">48-second MKV</a><a href="manifest.json">Sources &amp; validation</a></div>
+<div class="explanation">
+<p>“Above the horizon” means elevation ≥ 0° from San Francisco (37.7749° N, 122.4194° W; 16 m). It is not a higher position on this unfolded sky map or a guarantee of naked-eye visibility. The dashed previous horizon is a comparison boundary, not a satellite trajectory.</p>
+<p>Each hour is calculated independently with SGP4. The same catalog bytes are retained throughout; seven-day element-age and six-hour future-epoch limits remain active, so the eligible population can change. UTC-based model sidereal orientation follows the renderer’s existing GMST convention.</p>
+<p>Playback holds each hourly state for two seconds and stops at the end. The <span id="sample-count">24</span> sample times span <span id="elapsed-hours">23</span> elapsed hours. The <a href="frames/24/map.pdf">+24-hour proof</a> retains the full-day endpoint; the last frame does not physically loop back to the first. Fine names are available in the vector plate and at viewer zoom; the video overview hides them.</p>
+</div>
+</main>
+<footer>Frozen November 9 catalog · San Francisco observer · AuthaGraph celestial framing · CelesTrak orbital elements · Calculation and acquisition times remain separate.</footer>
+</body>
+</html>

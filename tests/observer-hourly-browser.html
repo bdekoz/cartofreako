@@ -1,0 +1,54 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Hourly observer browser checks</title>
+<style>body{font:16px sans-serif}iframe{width:1500px;height:1200px;border:0}</style>
+<pre id="result" data-status="running">Browser checks running</pre><iframe id="study" title="Hourly observer under test"></iframe>
+<script>
+(async()=>{
+const result=document.getElementById('result'),iframe=document.getElementById('study'),checks=[];
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function require(value,message){if(!value)throw Error(message);checks.push(message)}
+async function wait(test){for(let n=0;n<500;n++){if(test())return;await sleep(20)}throw Error('Timed out waiting for viewer state')}
+try{
+iframe.src=new URLSearchParams(location.search).get('viewer');
+await wait(()=>iframe.contentDocument?.documentElement.dataset.ready==='true');
+const d=iframe.contentDocument,w=iframe.contentWindow,$=id=>d.getElementById(id);
+const hour=()=>Number(d.documentElement.dataset.hour);
+const change=id=>$(id).dispatchEvent(new w.Event('change',{bubbles:true}));
+const eq=()=>Array.from($('plate').querySelectorAll('[id^="celestial-equator"]')).map(n=>n.getAttribute('d'));
+require(hour()===0&&$('previous').disabled,'Starts manually at accepted frame zero');
+require($('plotted').textContent==='972','Frame-zero plotted count is visible');
+require(Array.from($('plate').querySelectorAll('use')).some(n=>n.getBBox().width>1),'SVG use references render the source cartography');
+require($('previous-horizon').disabled,'No fictitious prior horizon on frame zero');
+const equator=JSON.stringify(eq());
+const horizon=Array.from($('plate').querySelectorAll('[id^="observer-horizon"]')).map(n=>n.getAttribute('d'));
+$('next').click();await wait(()=>hour()===1);
+require(JSON.stringify(eq())===equator,'Celestial equator stays fixed while stepping');
+$('previous-horizon').checked=true;change('previous-horizon');
+require($('plate').classList.contains('show-previous'),'Previous-hour overlay can be enabled');
+require(JSON.stringify(Array.from($('plate').querySelectorAll('#previous-hour-horizon path')).map(n=>n.getAttribute('d')))===JSON.stringify(horizon),'Overlay is the actual preceding horizon');
+$('names').checked=false;change('names');
+require($('plate').classList.contains('hide-names')&&$('plate').querySelectorAll('[data-object-kind="name"]').length>0,'Name toggle hides presentation while preserving name data');
+$('view').value='orientation';change('view');
+await wait(()=>$('plate').querySelectorAll('[data-object-kind]').length===0);
+require($('plate').querySelectorAll('[id^="observer-horizon"]').length>0&&JSON.stringify(eq())===equator,'Orientation view retains only reference geometry');
+$('view').value='full';change('view');await wait(()=>$('plate').querySelectorAll('[data-object-kind="locpoint"]').length>0);
+$('zoom').value='200';change('zoom');
+require($('plate').getBoundingClientRect().width>$('viewport').clientWidth*1.9,'Vector plate zooms for fine detail');
+$('zoom').value='100';change('zoom');
+$('slider').value=12;$('slider').dispatchEvent(new w.Event('input',{bubbles:true}));await wait(()=>hour()===12);
+require($('plotted').textContent==='1,008','Slider selects the independently calculated hour-12 population');
+d.body.dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));await wait(()=>hour()===13);
+require(hour()===13,'Arrow-key navigation advances by one hour');
+$('reset').click();await wait(()=>hour()===0);
+require($('play').getAttribute('aria-pressed')==='false','Reset returns to manual playback');
+$('play').click();await sleep(2150);await wait(()=>hour()===1);
+$('play').click();const paused=hour();await sleep(2150);
+require(hour()===paused&&$('play').getAttribute('aria-pressed')==='false','Two-second playback advances and Pause holds the current plate');
+$('slider').value=22;$('slider').dispatchEvent(new w.Event('input',{bubbles:true}));await wait(()=>hour()===22);
+$('play').click();await sleep(4250);await wait(()=>$('play').textContent==='Replay');
+require(hour()===23&&$('next').disabled,'Playback holds the final plate and stops without a physical-loop claim');
+require($('map-pdf').getAttribute('href')==='frames/23/map.pdf'&&$('legend-pdf').getAttribute('href')==='frames/23/legend.pdf','Downloads follow the selected frame');
+require(d.fonts.check('16px "Atkinson Hyperlegible"'),'Pinned local typography loads');
+result.dataset.status='passed';result.textContent=JSON.stringify({status:'passed',checks},null,2);
+}catch(error){result.dataset.status='failed';result.textContent=JSON.stringify({status:'failed',checks,error:String(error)},null,2)}
+})();
+</script></html>

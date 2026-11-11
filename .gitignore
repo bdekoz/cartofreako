@@ -77,6 +77,11 @@
 /data-update-progress.log
 /output/data-editions/
 /output/starlink-star-light-v3-20261109/
+/output/starlink-star-light-v4-observer-hourly/
+# Retain only the reviewed World observer reference used by hourly checks.
+/output/starlink-star-light-world-20261110/**
+!/output/starlink-star-light-world-20261110/**/
+!/output/starlink-star-light-world-20261110/maps/world/svg/slsl2-orbital-technosphere-observer.svg
 
 # Downloaded inputs and local build products.
 /assets.static/natural-earth/10m-physical-vectors/
