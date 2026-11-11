@@ -1,0 +1,158 @@
+{
+  "elapsed_hours": 128.03333333333333,
+  "equator_path_geometry_identical": true,
+  "external_sources": [
+    "https://aa.usno.navy.mil/data/siderealtime",
+    "https://aa.usno.navy.mil/faq/GAST"
+  ],
+  "local_sidereal_degrees": [
+    178.05456607509404,
+    303.8127208715305
+  ],
+  "native_shift_inches": 4.4,
+  "nov3_metadata": {
+    "data-debris-records": "1109",
+    "data-failed-propagation": "0",
+    "data-input-checksums": "SHA256SUMS",
+    "data-layer-membership-rule": "first-named-catalog-in-profile-order",
+    "data-nasa-ssc-query": "https://sscweb.gsfc.nasa.gov/WS/sscr/2/locations/iss,aqua,landsat9,goes19/20260813T153000Z,20260813T154000Z/geo,geij2000/",
+    "data-nasa-ssc-reference": "nasa-ssc-reference.json",
+    "data-primary-records": "16844",
+    "data-product": "observer",
+    "data-profile": "orbital-technosphere-profile.json",
+    "data-propagated-records": "17909",
+    "data-propagator": "SGP4/WGS72/AFSPC",
+    "data-reference-capture-method": "explicit profile value at make invocation",
+    "data-reference-elevation-m": "16.0",
+    "data-reference-latitude-deg": "37.774900",
+    "data-reference-longitude-deg-east": "-122.419400",
+    "data-reference-point": "San Francisco, California, USA",
+    "data-skipped-stale": "44",
+    "data-solar-altitude-deg": "24.616822",
+    "data-timestamp": "2026-11-03T17:10:00Z",
+    "data-visible-records": "1088",
+    "data-workflow": "Orbital Technosphere",
+    "id": "orbital-technosphere-metadata"
+  },
+  "nov9_metadata": {
+    "data-debris-records": "1109",
+    "data-failed-propagation": "0",
+    "data-input-checksums": "SHA256SUMS",
+    "data-layer-membership-rule": "first-named-catalog-in-profile-order",
+    "data-nasa-ssc-query": "https://sscweb.gsfc.nasa.gov/WS/sscr/2/locations/iss,aqua,landsat9,goes19/20260813T153000Z,20260813T154000Z/geo,geij2000/",
+    "data-nasa-ssc-reference": "nasa-ssc-reference.json",
+    "data-primary-records": "16893",
+    "data-product": "observer",
+    "data-profile": "orbital-technosphere-profile.json",
+    "data-propagated-records": "17956",
+    "data-propagator": "SGP4/WGS72/AFSPC",
+    "data-reference-capture-method": "explicit profile value at make invocation",
+    "data-reference-elevation-m": "16.0",
+    "data-reference-latitude-deg": "37.774900",
+    "data-reference-longitude-deg-east": "-122.419400",
+    "data-reference-point": "San Francisco, California, USA",
+    "data-skipped-stale": "46",
+    "data-solar-altitude-deg": "-2.350701",
+    "data-timestamp": "2026-11-09T01:12:00Z",
+    "data-visible-records": "972",
+    "data-workflow": "Orbital Technosphere",
+    "id": "orbital-technosphere-metadata"
+  },
+  "printed_image_width_inches": 43.5,
+  "printed_shift_inches": 4.35,
+  "question": "Why do the November 3 and November 9 observer plates look different?",
+  "reference_png_sha256": "f7b5716ed0accf7584a616bef02a7fd123431a45223076d122eaec135b25f154",
+  "reference_url": "https://benjamin.dekosnik.com/wp-content/uploads/2026/11/cartofreako-orbital-technosphere-observer-authagraph-44-19.052559-scaled.png",
+  "same_cyclic_framing": true,
+  "satellite_example": {
+    "nov3": {
+      "cx": "33.541523",
+      "cy": "7.258200",
+      "data-altitude-km": "35763.742",
+      "data-cospar-id": "2013-006A",
+      "data-display-group": "objects-other-active",
+      "data-element-age-days": "0.9010",
+      "data-element-epoch": "2026-11-02T19:32:33.309888",
+      "data-groups": "",
+      "data-marker-shape": "circle",
+      "data-name": "AMAZONAS 3",
+      "data-norad-id": "39078",
+      "data-object-kind": "locpoint",
+      "data-observer-azimuth-deg": "108.390063",
+      "data-observer-elevation-deg": "13.759969",
+      "data-observer-range-km": "40163.904",
+      "data-optical-candidate": "false",
+      "data-role": "other-active",
+      "data-source": "https://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=csv",
+      "data-subpoint-latitude-deg": "0.013003",
+      "data-subpoint-longitude-deg-east": "-60.965097",
+      "data-sunlit": "true",
+      "data-topocentric-dec-deg": "-5.538183",
+      "data-topocentric-ra-deg": "245.877182",
+      "id": "norad-39078",
+      "r": "0.019000",
+      "style": "fill:rgb(64,64,64); fill-opacity:0.88; stroke:rgb(1,0,0); stroke-opacity:0; stroke-width:0.018"
+    },
+    "nov9": {
+      "cx": "19.023328",
+      "cy": "14.285359",
+      "data-altitude-km": "35805.294",
+      "data-cospar-id": "2013-006A",
+      "data-display-group": "objects-other-active",
+      "data-element-age-days": "0.7479",
+      "data-element-epoch": "2026-11-08T07:15:00.123264",
+      "data-groups": "",
+      "data-marker-shape": "circle",
+      "data-name": "AMAZONAS 3",
+      "data-norad-id": "39078",
+      "data-object-kind": "locpoint",
+      "data-observer-azimuth-deg": "108.386746",
+      "data-observer-elevation-deg": "13.763938",
+      "data-observer-range-km": "40205.499",
+      "data-optical-candidate": "false",
+      "data-role": "other-active",
+      "data-source": "https://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=csv",
+      "data-subpoint-latitude-deg": "0.012315",
+      "data-subpoint-longitude-deg-east": "-60.959636",
+      "data-sunlit": "true",
+      "data-topocentric-dec-deg": "-5.533146",
+      "data-topocentric-ra-deg": "11.634460",
+      "id": "norad-39078",
+      "r": "0.019000",
+      "style": "fill:rgb(64,64,64); fill-opacity:0.88; stroke:rgb(1,0,0); stroke-opacity:0; stroke-width:0.018"
+    }
+  },
+  "scale": 0.9886363636363636,
+  "scientific_caveat": "The two catalogs and times differ; visible-population changes are not a causal estimate of catalog growth, satellite loss or time-only effects.",
+  "sidereal_phase_change_degrees": 125.75815479643643,
+  "source_files": [
+    {
+      "path": "output/msp-speculations-20261103/msp-speculation-5/wine-amber/orbital-technosphere-observer-authagraph-44-19.052559.svg.gz",
+      "sha256": "473d7282fd91388988546aa0fa4b162633f1810188a5a552b17365912b1901f1"
+    },
+    {
+      "path": "output/starlink-star-light-world-20261110/maps/world/svg/slsl2-orbital-technosphere-observer.svg",
+      "sha256": "66b5f769d2e4fdd1ebe4ca835fb97fa619a31ceb273eb354cf9647e750e763d1"
+    },
+    {
+      "path": "src.generate/orbiting-generation.h",
+      "sha256": "c17191074e53923f408b4d5978961d5ad33030fe0cb3ffb53e40cf211e626994"
+    },
+    {
+      "path": "src.generate/orbiting-data.h",
+      "sha256": "055768f9219eaac96ae2df340fa22496e488fa2ebe0f9ed4eb64736e8d1d8486"
+    },
+    {
+      "path": "src.generate/third_party/sgp4/SGP4.cpp",
+      "sha256": "2ee7ad0e8f201e8251894083fe21e33a7aace2f43c871bf04357eb44a891b06e"
+    }
+  ],
+  "source_width_inches": 44,
+  "visible_sets": {
+    "nov3": 1088,
+    "nov3_only": 886,
+    "nov9": 972,
+    "nov9_only": 770,
+    "shared": 202
+  }
+}

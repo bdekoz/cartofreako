@@ -1,0 +1,101 @@
+{
+  "inputs": [
+    {
+      "path": "sources/data/SHA256SUMS",
+      "sha256": "7165a765447f73cc19c3acd3bf999c7cd22d84dad5894768ee8131864afefa42"
+    },
+    {
+      "path": "sources/data/astro-hubble-profile.json",
+      "sha256": "8dc247a90f070bbfae796a134648d2016b602d57acc33e3c73a26fa0d0f7250b"
+    },
+    {
+      "path": "sources/data/astro-profile.json",
+      "sha256": "688de3779f909977a5516da0b4ae00f71e49594791185532347255e38d682c90"
+    },
+    {
+      "path": "sources/data/celestrak-hubble.csv",
+      "sha256": "ae37fe4f764765f480a7d6ab02de3e709df8f349aa78f2ed8ead1138bbcd5e83"
+    },
+    {
+      "path": "sources/data/curated-sky.json",
+      "sha256": "2c5680e1cbe4e8c3bdd51526c9506adedb91349960e37561a6dd2b9c8c838d39"
+    },
+    {
+      "path": "sources/data/gaia-dr3-bright.csv",
+      "sha256": "a7f3a3fcc49405ee2d651bbd70e827bb41ad66a78aa4f5bf6b9b79c7ce6034a4"
+    },
+    {
+      "path": "sources/data/nasa-exoplanet-nearby.csv",
+      "sha256": "a8f1a8e787b5543f859a0433bd195ba997662ee86ee5b58231b116f57ce20264"
+    },
+    {
+      "path": "sources/data/sbdb-67p.json",
+      "sha256": "113f805acfdc885b6b38ad273866d884122a57c39658564ad770c27b32345576"
+    },
+    {
+      "path": "sources/data/sbdb-apophis.json",
+      "sha256": "fb1f6fbb72e068fe39d277edf2d96202447a92af50032761ec7ce78757221f84"
+    },
+    {
+      "path": "sources/data/sbdb-ceres.json",
+      "sha256": "005a90d843cb5c0d5e9823bacab484bc62d45f26deaca9be0e7c49f2ed77381a"
+    },
+    {
+      "path": "sources/data/sbdb-encke.json",
+      "sha256": "e9d0496ff3c6b890067bf7ba29599200527d6fed9fc1d5fb71be6f190b72ede1"
+    },
+    {
+      "path": "sources/data/sbdb-eros.json",
+      "sha256": "be348e90e5cc19bf7a9b9fe9bfcd11e60a29b81f307e534824e3ad25b411c592"
+    },
+    {
+      "path": "sources/data/sbdb-halley.json",
+      "sha256": "2b7aa550c6f98b14dd6582e2b02f2567d8a0971d13fd519fef0ad6cf5749e0ba"
+    },
+    {
+      "path": "sources/data/sbdb-vesta.json",
+      "sha256": "360655e75a49b7283bc9ab72da094d765b36fdd6175d9147e6aa945919928e2e"
+    }
+  ],
+  "object_source_urls": [
+    "https://exoplanetarchive.ipac.caltech.edu/",
+    "https://gea.esac.esa.int/archive/",
+    "https://heasarc.gsfc.nasa.gov/",
+    "https://ssd-api.jpl.nasa.gov/doc/sbdb.html",
+    "https://ssd.jpl.nasa.gov/horizons/",
+    "https://ssd.jpl.nasa.gov/planets/approx_pos.html"
+  ],
+  "palette": {
+    "additional_subjects": [
+      "astro-all-sky"
+    ],
+    "background": "#240413",
+    "color_mode": "randoma11y-pair",
+    "directory": "msp-speculation-5/wine-amber",
+    "family": "msp-speculation-5",
+    "halo": "#fcc553",
+    "id": "msp-speculation-5-wine-amber",
+    "land": "#47231d",
+    "neutral": "#b7873f",
+    "palette": "Wine / amber",
+    "palette_option": 1,
+    "randoma11y_pair": "wine-amber",
+    "source_url": "https://randoma11y.com/%23fcc553/%23240413",
+    "srgb_contrast_ratio": 12.0264,
+    "text": "#fcc553",
+    "title": "MSP speculation 5 / palette 1",
+    "variant": {
+      "global_markers_above_starlink_text": true,
+      "global_starlink_font_size_pt": 6,
+      "global_track_width_scale": 2,
+      "groundstation_study": "option-3-petals",
+      "observer_starlink_font_size_pt": 6,
+      "observer_starlink_names": true,
+      "starlink_marker_linear_scale": 1.5,
+      "starlink_marker_shape": "sunburst"
+    }
+  },
+  "schema": "cartofreako-astro-setouchi-inputs-v1",
+  "source_directory": "/home/bkoz/src/cartofreako/.cartofreako/data/editions/20261109t173133z-bb0c6b3081da/inputs/astronomy",
+  "style_sha256": "1e807ab89f8cb6d3ea38fbc8c4b8b3af136261219472da5ac218fbd0a06ee873"
+}

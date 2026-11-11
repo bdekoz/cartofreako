@@ -1,6 +1,9 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
+# Preserve PDF byte offsets and source/manifest checksums.
+*.pdf binary
+
 # Preserve the checksum-pinned upstream font license, including its whitespace.
 assets/fonts/atkinson-hyperlegible/OFL.txt -text -whitespace
 

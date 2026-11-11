@@ -83,6 +83,15 @@
 !/output/starlink-star-light-world-20261110/**/
 !/output/starlink-star-light-world-20261110/maps/world/svg/slsl2-orbital-technosphere-observer.svg
 
+# Retain the reviewed observer comparison and its evidence, not render intermediates.
+/output/orbital-observer-nov3-nov9-comparison/*
+!/output/orbital-observer-nov3-nov9-comparison/orbital-observer-nov3-vs-nov9-annotated.pdf
+!/output/orbital-observer-nov3-nov9-comparison/evidence.json
+!/output/orbital-observer-nov3-nov9-comparison/manifest.json
+!/output/orbital-observer-nov3-nov9-comparison/sources/
+/output/orbital-observer-nov3-nov9-comparison/sources/*
+!/output/orbital-observer-nov3-nov9-comparison/sources/nov3-published-reference.png
+
 # Downloaded inputs and local build products.
 /assets.static/natural-earth/10m-physical-vectors/
 /assets.static/network-swarm/.prepared/

@@ -1,0 +1,33 @@
+{
+  "builder_sha256": "40e010736c6d2c0615f1fba435574aa3dc8218d6261428506977360180963e2e",
+  "evidence_sha256": "4ba3035abf5bd3ad0931820c8cbb5698dd1c0af56f0cc6a9c1e752c8cbfa89e9",
+  "page_size_mm": [
+    420,
+    297
+  ],
+  "pages": 8,
+  "pdf": "orbital-observer-nov3-vs-nov9-annotated.pdf",
+  "pdf_sha256": "d5305761ef69786c22233f474f2892139753e58ac1e0d9b8e35b7de8fb97b57d",
+  "source_files": [
+    {
+      "path": "output/msp-speculations-20261103/msp-speculation-5/wine-amber/orbital-technosphere-observer-authagraph-44-19.052559.svg.gz",
+      "sha256": "473d7282fd91388988546aa0fa4b162633f1810188a5a552b17365912b1901f1"
+    },
+    {
+      "path": "output/starlink-star-light-world-20261110/maps/world/svg/slsl2-orbital-technosphere-observer.svg",
+      "sha256": "66b5f769d2e4fdd1ebe4ca835fb97fa619a31ceb273eb354cf9647e750e763d1"
+    },
+    {
+      "path": "src.generate/orbiting-generation.h",
+      "sha256": "c17191074e53923f408b4d5978961d5ad33030fe0cb3ffb53e40cf211e626994"
+    },
+    {
+      "path": "src.generate/orbiting-data.h",
+      "sha256": "055768f9219eaac96ae2df340fa22496e488fa2ebe0f9ed4eb64736e8d1d8486"
+    },
+    {
+      "path": "src.generate/third_party/sgp4/SGP4.cpp",
+      "sha256": "2ee7ad0e8f201e8251894083fe21e33a7aace2f43c871bf04357eb44a891b06e"
+    }
+  ]
+}
