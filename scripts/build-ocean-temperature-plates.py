@@ -17,6 +17,7 @@ from ocean_temperature import digest, write_json
 from viz_context import ocean_output, atlas_root, cutoff, snapshot_date
 from setouchi_h3_trials import settings_for
 from optional_map_annotations import annotate_map
+from atlas_bibliography import geographic_context_citation
 
 TEMPLATE='anthropocene-land-temperature-2026'
 SST_BOUNDS=[0,5,10,15,20,25,28,30]
@@ -116,6 +117,7 @@ def make_legend(stem,title,mode,metadata,scope,period,coral):
     sources=['NOAA OISST v2.1 / https://www.ncei.noaa.gov/products/optimum-interpolation-sst',
              'NOAA PSL yearly files / https://psl.noaa.gov/thredds/catalog/Datasets/noaa.oisst.v2.highres/catalog.html']
     if mode=='sst':sources += ['NOAA Coral Reef Watch DHW / https://coralreefwatch.noaa.gov/product/5km/index_5km_dhw.php','WRI Reefs at Risk Revisited (2011) / https://www.wri.org/research/reefs-risk-revisited']
+    sources.append(geographic_context_citation())
     return legend(stem,title,subtitle,sections,notes,sources)
 
 

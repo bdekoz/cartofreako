@@ -12,7 +12,7 @@ import sys
 import uuid
 from zoneinfo import ZoneInfo
 
-from dataset import ROOT, DatasetError, IDENTIFIER, atomic_json, context, data_root, digest, implementation_record, lock, output, redact, utcnow
+from dataset import ROOT, DatasetError, IDENTIFIER, atomic_json, context, data_root, digest, implementation_record, lock, output, redact, utcnow, run_output, publish_output
 
 ACTIVE_STATE = None
 ACTIVE_STATE_PATH = None
@@ -120,6 +120,8 @@ def reuse_native(source_id, destination, manifest_path, manifest, identity):
     if not IDENTIFIER.fullmatch(source_id):
         raise DatasetError('Invalid native recovery build ID')
     source = destination.parent / source_id
+    if not source.exists():
+        source = run_output(manifest, source_id, existing=True)
     if source.resolve() == destination.resolve() or source.is_symlink():
         raise DatasetError('Native recovery needs a distinct, local source run')
     state_path = source / 'validation/build-state.json'
@@ -249,6 +251,7 @@ def main():
     recovery = parser.add_mutually_exclusive_group()
     recovery.add_argument('--resume', help='Resume a failed build run in the selected edition')
     recovery.add_argument('--reuse-native-from', help='Start a new run using verified native outputs of a failed run')
+    recovery.add_argument('--refresh-legends', action='store_true', help='Refresh A3 legends and books from the verified completed build')
     args = parser.parse_args()
     try:
         os.environ["ASSET_JOBS"] = str(args.jobs)
@@ -272,11 +275,13 @@ def main():
                 build_id=args.resume or utcnow().replace('-','').replace(':','').lower()+'-'+uuid.uuid4().hex[:12]
                 if not IDENTIFIER.fullmatch(build_id):
                     raise DatasetError('Invalid build resume ID')
-                base=ROOT/'output/data-editions'/ident/'builds'/build_id
+                base=run_output(manifest,build_id,existing=bool(args.resume))
                 state_path=base/'validation/build-state.json'
                 identity=implementation_record(implementation_paths())
                 if args.resume:
                     old=json.loads(state_path.read_text())
+                    if old.get('legend_refresh'):
+                        raise DatasetError('Restart a failed legend refresh with --refresh-legends; its shared maps must not enter a full native rebuild')
                     if old.get('status')=='complete' or old.get('manifest_sha256') != digest(path) or old.get('implementation') != identity:
                         raise DatasetError('Build resume requires the same failed run, dataset bytes and implementation')
                 os.environ['DATASET_OUTPUT_ROOT']=str(base)
@@ -296,13 +301,32 @@ def main():
                     persist_state()
             elif args.reuse_native_from:
                 raise DatasetError('Native recovery requires a selected immutable dataset')
-            run(["make", "--no-print-directory", "check-prerequisites"])
-            run([sys.executable, ROOT / 'scripts/export-setouchi-sheets.py',
-                 '--delivery', output('validation/image-decoder', ROOT/'build/atlas-image-decoder'),
-                 '--check-image-decoder'])
-            run(["make", "--no-print-directory", "-j1", "--no-keep-going", "all-resilient", f"ASSET_JOBS={args.jobs}"])
-            run(["make", "--no-print-directory", "-j1", "--no-keep-going", "atlas", f"ASSET_JOBS={args.jobs}"])
-            optional_products(args.jobs)
+            if args.refresh_legends:
+                if not selected:
+                    raise DatasetError('Legend refresh requires a selected completed dataset')
+                import refresh_atlas_legends as refresh
+                state['phase']='verify-and-reuse-completed-build'
+                persist_state()
+                state['legend_refresh']=refresh.clone_completed(base,manifest)
+                persist_state()
+                refresh.refresh_atlas(base)
+                run([sys.executable, ROOT/'scripts/export-setouchi-sheets.py', '--delivery', base/'atlas', '--workers', str(args.jobs)])
+                run([sys.executable, ROOT/'scripts/check-current-build.py', '--atlas'])
+                run([sys.executable, ROOT/'scripts/build-current-books.py'])
+                state['legend_refresh']['optional_legends']=refresh.refresh_optional(base,args.jobs)
+                run([sys.executable, ROOT/'scripts/validate-ocean-products.py', '--exports-only'])
+                run([sys.executable, ROOT/'scripts/validate-ocean-stage-2.py', '--exports-only'])
+                state['legend_refresh'].update(refresh.verify_parent(base,state['legend_refresh']))
+                atomic_json(base/'validation/legend-refresh.json',state['legend_refresh'])
+                persist_state()
+            else:
+                run(["make", "--no-print-directory", "check-prerequisites"])
+                run([sys.executable, ROOT / 'scripts/export-setouchi-sheets.py',
+                     '--delivery', output('validation/image-decoder', ROOT/'build/atlas-image-decoder'),
+                     '--check-image-decoder'])
+                run(["make", "--no-print-directory", "-j1", "--no-keep-going", "all-resilient", f"ASSET_JOBS={args.jobs}"])
+                run(["make", "--no-print-directory", "-j1", "--no-keep-going", "atlas", f"ASSET_JOBS={args.jobs}"])
+                optional_products(args.jobs)
             if selected:
                 # Publication of the build pointer requires validated outputs
                 # from every requested group, not just a new data selection.
@@ -314,23 +338,25 @@ def main():
                 receipt = {"schema": "cartofreako-full-build-v1", "status": "passed", "dataset_id": ident,
                            "manifest_sha256": digest(path), "completed_at": utcnow(),
                            "build_id":build_id,"validation":checks,"implementation":identity,
-                           "native_recovery":state.get('native_recovery'),
+                           "native_recovery":state.get('native_recovery'), "legend_refresh":state.get('legend_refresh'),
                            "files": [{"path": str(p.relative_to(base)), "sha256": digest(p)} for p in sorted(artifacts)]}
                 if implementation_record(implementation_paths()) != identity:
                     raise DatasetError('Implementation changed during rendering; keep this run as failed evidence and start a new build')
                 atomic_json(base / "validation/full-build.json", receipt)
                 state.update(status='complete',phase='complete',completed_at=utcnow())
                 atomic_json(state_path,state)
-                atomic_json(data_root() / "build-current.json", {"dataset_id": ident, "build_id":build_id,
-                            "output":str(base),"receipt": str(base / "validation/full-build.json"),
-                            "sha256": digest(base / "validation/full-build.json")})
+                public = publish_output(base,manifest,build_id)
+                report('Completed delivery: '+str(public))
         print("Complete native, atlas and optional Anthropocene build: dataset " + ident)
         return 0
     except Exception as error:
         if 'state' in locals():
             state.update(status='failed',error=redact(error))
             atomic_json(state_path,state)
-            print(f"Resume this output run with make atlas-optional ATLAS_OPTIONAL_ARGS='--resume {state['build_id']}'",file=sys.stderr)
+            if args.refresh_legends:
+                print("Restart from the completed parent with make atlas-optional ATLAS_OPTIONAL_ARGS='--refresh-legends'",file=sys.stderr)
+            else:
+                print(f"Resume this output run with make atlas-optional ATLAS_OPTIONAL_ARGS='--resume {state['build_id']}'",file=sys.stderr)
         print("atlas-optional: " + redact(error) + "; previous completed build retained", file=sys.stderr)
         return 1
     finally:

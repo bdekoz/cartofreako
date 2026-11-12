@@ -27,6 +27,8 @@ import atlas_world as WORLD
 from cartofreako_style import STYLE, Projection
 from legend_informatics import WIDTH, HEIGHT, SUFFIX, font_environment, legend_group, register_fonts
 from atlas_review_sheets import el, legend, save
+from atlas_legends import native_content, PAPER, update_a3_sources
+from atlas_bibliography import bibliography, write_bibliography
 
 FRAMING = importlib.import_module("setouchi_world_framing")
 REVISED = importlib.import_module("revise-setouchi-plates")
@@ -140,69 +142,82 @@ def native_path(native, plate):
     return path
 
 
-def standalone_legend(plate, source, destination, dataset, scope, all_sources):
+def standalone_legend(plate, source, destination, dataset, scope, all_sources, *, existing=None):
+    citations = bibliography(plate)
     special = special_legend(plate, dataset, scope)
     if special is not None:
-        special.set("data-dataset-id", dataset["dataset_id"])
-        save(special, destination)
-        return
-    group = REVISED.old_legend(source)
-    companion = source.with_name(source.stem + "-legend.svg")
-    if group is None and companion.is_file():
-        group = REVISED.old_legend(companion)
-    if group is not None:
-        # Preserve native units and class intervals. The source note is
-        # regenerated from the selected manifest rather than an old legend.
-        sheet = el("svg", width="44in", height=f"{HEIGHT}in", viewBox=f"0 0 44 {HEIGHT}",
-                   data_canonical_plate_id=plate["id"], data_sheet_kind="legend")
-        el("rect", sheet, width=44, height=HEIGHT, fill="#240413")
-        group=deepcopy(group)
-        sheet.append(group)
-        sheet.set("data-dataset-id", dataset["dataset_id"])
-        # Native legends can use projection coordinates; query the group
-        # bounds once and fit it to the separate sheet without changing keys.
-        group.set("id", "current-source-legend")
-        temporary = destination.with_name(destination.stem + ".source.svg")
-        save(sheet, temporary)
-        result = subprocess.run(["bash", str(ROOT / "scripts/run-inkscape.sh"), "inkscape", str(temporary),
-                                 "--query-id=current-source-legend", "--query-x", "--query-y",
-                                 "--query-width", "--query-height"], capture_output=True, text=True, check=True)
-        # Activated desktop services can print environment assignments to the
-        # isolated D-Bus session's stdout. Only complete numeric query lines
-        # belong to Inkscape's four-value geometry protocol.
-        numbers=[float(line.strip())/96 for line in result.stdout.splitlines()
-                 if re.fullmatch(r'[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?',line.strip())]
-        if len(numbers) != 4:
-            raise DatasetError('Inkscape did not return four legend bounds')
-        x,y,width,height=numbers
-        scale = min(41 / max(width, .001), 13.5 / max(height, .001))
-        sheet.remove(sheet[-1])
-        wrapper = el("g", sheet, transform=f"translate(1.3 2.5) scale({scale}) translate({-x} {-y})")
-        wrapper.append(group)
-        title = el("text", sheet, x="1", y="1.2", fill="#fcc553", font_size=".45", font_family="Atkinson Hyperlegible")
-        title.text = plate["title"] + " / " + scope
-        note = el("text", sheet, x="1", y="17.2", fill="#fcc553", font_size=".24", font_family="Atkinson Hyperlegible")
-        note.text = "Dataset " + dataset["dataset_id"] + "; exact source periods and hashes: sources/dataset.json"
-        themed = destination.with_name(destination.stem + ".theme.svg")
-        save(sheet, themed)
-        _, recipe = settings(STYLE)
-        current_theme(themed, destination, recipe, "legend")
-        themed.unlink()
-        temporary.unlink()
+        model = json.loads(special.xpath('//*[@id="atlas-legend-model"]')[0].text)
+        model['sources'] = citations['references']
+        model['scope'] = scope
+        sheet = legend(**model)
     else:
-        sheet = legend(plate["id"], plate["title"], scope.title() + " / dataset " + dataset["dataset_id"], [],
-                       ["See the accompanying dataset manifest for source-specific observation periods and pinned local input versions.",
-                        "Missing observations remain missing. A dataset update does not make pinned historical inputs current observations."],
-                       ["Dataset manifest: sources/dataset.json"])
-        sheet.set("data-dataset-id", dataset["dataset_id"])
-        save(sheet, destination)
+        group = None
+        if existing is not None:
+            groups = existing.xpath('//*[@id="current-source-legend"]')
+            group = groups[0] if groups else None
+        if group is None:
+            group = REVISED.old_legend(source)
+        companion = source.with_name(source.stem + "-legend.svg")
+        if group is None and companion.is_file():
+            group = REVISED.old_legend(companion)
+        keys, notes = native_content(group)
+        sections = [{'title':'Source symbols and class boundaries', 'keys':keys}] if keys else []
+        if plate['id'] == 'network-fiber':
+            keys = []
+            for color, label, dash in (
+                    ('#4cbb17','ITU land fibre / operational',None),
+                    ('#4cbb17','ITU land fibre / under construction','.09 .055'),
+                    ('#4cbb17','ITU land fibre / planned or proposed','.02 .055'),
+                    ('#000000','Submarine cable / current route',None),
+                    ('#000000','Submarine cable / planned','.09 .055'),
+                    ('#000000','Submarine cable / 2022-only route','.02 .055')):
+                symbol=el('line',x1=0,y1=0,x2=.48,y2=0,stroke=color,stroke_width=.025)
+                if dash:symbol.set('stroke-dasharray',dash)
+                keys.append({'label':label,'symbols':[E.tostring(symbol,encoding='unicode')]})
+            sections=[{'title':'Route colors and status strokes','keys':keys}]
+        elif plate['id'].startswith('network-swarm-'):
+            import colorsys
+            with source.open('rb') as stream:
+                stream.seek(max(0,source.stat().st_size-100000))
+                tail=stream.read().decode()
+            colors={tuple(map(int,m.split(','))) for m in re.findall(r'fill:rgb\((\d+,\d+,\d+)\)',tail)}
+            colors=[c for c in sorted(colors) if colorsys.rgb_to_hsv(*(v/255 for v in c))[1]>.3]
+            if not colors:raise DatasetError('Swarm source has no member palette')
+            families=((60,'2160p / yellow member family'),(300,'1080p / pink-purple member family')) if 'ge-' in plate['id'] else ((220,'720p / blue member family'),(120,'SD / green member family'))
+            keys=[]
+            for hue,label in families:
+                color=min(colors,key=lambda c:min(abs(colorsys.rgb_to_hsv(*(v/255 for v in c))[0]*360-hue),360-abs(colorsys.rgb_to_hsv(*(v/255 for v in c))[0]*360-hue)))
+                keys.append(('rgb('+','.join(map(str,color))+')',label,'circle'))
+            sections=[{'title':'Representative source member colors','keys':keys}]
+            notes.append('Key swatches show selected source colors at full opacity for identification. Map circles retain 5% opacity per observation and native weighted areas; overlaps accumulate. The two swatches are not a complete member-color inventory or a count scale.')
+        if plate['id'] == 'water':
+            tree = E.parse(str(source), E.XMLParser(huge_tree=True, resolve_entities=False, no_network=True))
+            depths = []
+            for depth in (0, 200, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000):
+                nodes = tree.xpath(f'//*[@id="bathymetry-{depth}m"]//*[local-name()="path"]')
+                if not nodes:
+                    raise DatasetError('Water source lacks bathymetry layer: '+str(depth))
+                color = css(nodes[0].attrib).get('fill', nodes[0].get('fill'))
+                depths.append((color, ('0 m / coastline' if depth == 0 else f'-{depth:,} m')))
+            sections = [{'title':'Nested bathymetry contours / metres', 'keys':depths}]
+            notes = ['Depth polygons are nested: darker blue indicates deeper ocean. These are generalized cartographic contours, not a new depth survey.',
+                     'Physical overlays also include rivers, lakes, reservoirs, playas, reefs, minor islands, glaciers and Antarctic ice shelves. These features have different source vintages.',
+                     'World framing displaces Antarctica to the lower left. Editorial ocean backing closes the former land void; it is not measured depth.']
+        if not notes:
+            notes = ['Read the geographic or celestial features at the displayed projection and scale. The source release and observation dates are identified in Data sources.',
+                     'The dataset acquisition date does not turn a historical source into a current observation.']
+        sheet = legend(plate['id'], plate['title'], scope.title()+' / dataset '+dataset['dataset_id'],
+                       sections, notes, citations['references'], scope=scope)
+    sheet.set('data-dataset-id', dataset['dataset_id'])
+    sheet.set('data-map-companion', f'../../../maps/{scope}/svg/{plate["id"]}.svg')
+    save(sheet, destination)
+    return citations
 
 
 def special_legend(plate, dataset, scope):
     stem = plate["source_stem"]
     if stem == "cloud-atmosphere":
         profile = json.loads(binding("ATLAS_CLOUD_PROFILE").read_text())
-        snapshot = json.loads(binding("ATLAS_CLOUD_GEOJSON").read_text())["metadata"]
         return legend(plate["id"], plate["title"], "H3 resolution 5 / " + scope.title(), [
             {"title": "Cloud fraction", "keys": list(zip(STYLE["atmosphere"]["cloud_colors"],
                 ["0 to <1/6", "1/6 to <2/6", "2/6 to <3/6", "3/6 to <4/6", "4/6 to <5/6", "5/6 to 1"])),
@@ -497,6 +512,8 @@ def build(catalog=None, scopes=('world','japan')):
                     groundstation_profile=binding('NETWORK_GROUNDSTATIONS_PROFILE') if ident=='network-groundstations' else None)
                 for kind,tree in (('map',world_map),('legend',world_legend)):
                     path=destination/('maps' if kind=='map' else 'legends')/scope/'svg'/(ident+('-legend' if kind=='legend' else '')+'.svg')
+                    if kind == 'legend':
+                        update_a3_sources(tree, bibliography(plate)['references'])
                     tree.set('data-dataset-id',manifest['dataset_id'])
                     tree.set('data-dataset-manifest-sha256',digest(manifest_path))
                     if 'source_reference_period' in plate:
@@ -536,6 +553,7 @@ def build(catalog=None, scopes=('world','japan')):
             legend_path.parent.mkdir(parents=True, exist_ok=True)
             if groundstation_evidence is not None:
                 companion = GROUNDSTATIONS.legend(scope, groundstation_evidence, recipe)
+                update_a3_sources(companion, bibliography(plate)['references'])
                 companion.set('data-dataset-id', manifest['dataset_id'])
                 save(companion, legend_path)
             else:
@@ -544,7 +562,7 @@ def build(catalog=None, scopes=('world','japan')):
                 records.append({"kind": kind, "scope": scope, "stem": ident, "source_stem": plate["source_stem"],
                                 "svg": path.relative_to(destination).as_posix(), "svg_sha256": digest(path),
                                 "source": str(selected), "source_sha256": digest(selected),
-                                "sheet_background": recipe["background"],
+                                "sheet_background": PAPER if kind == "legend" else recipe["background"],
                                 "dataset_id": manifest["dataset_id"], "manifest_sha256": digest(manifest_path)})
         if ident == "cloud-atmosphere":
             cloud_presentation(destination, manifest)
@@ -557,6 +575,7 @@ def build(catalog=None, scopes=('world','japan')):
                                                "sha256": digest((destination / record['svg']).parent / node.get('{http://www.w3.org/1999/xlink}href'))}
                                               for node in tree.xpath('//*[local-name()="image"]')]
         print("Composed current atlas: " + ident, flush=True)
+    write_bibliography(destination, [bibliography(p) for p in catalog])
     atomic_json(destination / "sources/dataset.json", manifest)
     by_id = {p['id']: p for p in catalog}
     for record in records:

@@ -439,7 +439,8 @@ class Workflow(unittest.TestCase):
 <g id="cpc-temperature-coverage"><path id="cpc-covered-cells" d="M 20 5 L 21 5 L 21 6 Z" style="fill:rgb(100,100,100);fill-opacity:1;stroke:rgb(100,100,100);stroke-opacity:0;stroke-width:0"/></g>
 <g id="cpc-temperature-record-high-days"><path data-bin="1" data-current-value="{value}" d="M 20 5 L 21 5 L 21 6 Z" style="fill:rgb(250,100,50);fill-opacity:1;stroke:rgb(250,100,50);stroke-opacity:0;stroke-width:0"/></g>
 </svg>''')
-        with patch.object(compositor,'context',return_value=(path,manifest)), patch.object(compositor,'output',side_effect=lambda name:{'atlas':atlas,'native':native}[name]):
+        with patch.object(compositor,'context',return_value=(path,manifest)), patch.object(compositor,'output',side_effect=lambda name:{'atlas':atlas,'native':native}[name]), \
+             patch.object(compositor,'bibliography',return_value={'plate':plate['id'],'references':['Fixture temperature provider / 2026'],'evidence':[]}):
             write(12);first=compositor.build([plate]);before=(atlas/'maps/world/svg'/f"{plate['id']}.svg").read_bytes()
             settings=settings_for(atlas,plate['id'],30)
             self.assertEqual([v['id'] for v in settings['views']],['world','japan'])
@@ -475,12 +476,13 @@ class Workflow(unittest.TestCase):
                 raise subprocess.CalledProcessError(2,command)
         with patch.object(aggregate,'ROOT',self.root), patch.object(aggregate,'context',return_value=(path,manifest)), \
              patch.object(aggregate,'data_root',return_value=self.root/'data'), patch.object(aggregate,'run',side_effect=stage), \
+             patch.object(aggregate,'run_output',side_effect=lambda manifest,ident,**kw:self.root/'data/render-runs'/ident), \
              patch.object(aggregate,'implementation_record',return_value={'fixture':'methods'}), \
              patch.object(sys,'argv',['atlas-optional.py']), patch.dict(os.environ,{},clear=False):
             self.assertEqual(aggregate.main(),1)
         self.assertEqual(pointer.read_bytes(),before)
         self.assertEqual(artifact.read_bytes(),b'previous completed artifact')
-        state=json.loads(next((self.root/'output').rglob('build-state.json')).read_text())
+        state=json.loads(next((self.root/'data').rglob('build-state.json')).read_text())
         self.assertEqual(state['status'],'failed')
 
     def test_document_self_fragment_resolves_in_repository(self):
@@ -523,14 +525,15 @@ class Workflow(unittest.TestCase):
         source.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="44in" height="19.052559in" viewBox="0 0 44 19.052559">'
                           '<g id="native-legend"><text x="2" y="4" font-size=".3">Temperature / degC / 12 to 15</text></g></svg>')
         target=self.root/'legend.svg'
-        compositor.standalone_legend({'id':'fixture','source_stem':'fixture','title':'Temperature'},source,target,{'dataset_id':'fixture'},'world',[])
+        with patch.object(compositor,'bibliography',return_value={'references':['Fixture temperature provider / degrees C'],'evidence':[]}):
+            compositor.standalone_legend({'id':'fixture','source_stem':'fixture','title':'Temperature'},source,target,{'dataset_id':'fixture'},'world',[])
         self.assertIn('Temperature / degC / 12 to 15',target.read_text())
         pdf=self.root/'legend.pdf'
         subprocess.run(['bash',str(ROOT/'scripts/run-inkscape.sh'),'inkscape',str(target),'--export-filename='+str(pdf)],
                        check=True,capture_output=True,text=True)
         self.assertTrue(pdf.read_bytes().startswith(b'%PDF-'))
         info=subprocess.check_output(['pdfinfo',str(pdf)],text=True)
-        self.assertIn('3168',info)
+        self.assertRegex(info,r'1190\.55\d* x 841\.89\d* pts')
 
 
 if __name__=='__main__':unittest.main()

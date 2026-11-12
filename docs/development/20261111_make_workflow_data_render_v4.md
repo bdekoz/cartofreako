@@ -775,3 +775,223 @@ The generation and build guides now cover supported native recovery, strict
 resume identity, image-decoder preflight, declared margins, source-period
 resolution, optional-map annotation checks, current product counts and the
 shared native-source dependency behavior observed during this run.
+
+## Legend and delivery-layout refinement — 11 November 2026
+
+### User review and approved requirements
+
+After reviewing the completed atlas, the user reported inconsistent legend
+typography, especially for Network CDN, Network Fiber, both Network Swarm
+plates and Anthropocene particulate. Atmosphere and Water provide the
+reference for a coherent companion-sheet treatment. The later requirements in
+[`20261109_starlink_star_light_v3.md`](20261109_starlink_star_light_v3.md)
+also apply throughout the atlas:
+
+- Use **landscape A3, 420 × 297 mm**, for legend plates.
+- Reverse the accepted randoma11y wine/amber pair on legends: **amber
+  `#fcc553` background and wine `#240413` text**. Preserve measured and
+  categorical symbol colors, class boundaries, units and source dates.
+- Use consistent physical typography from v3: **27 pt titles, 15 pt section
+  headings, 12 pt observer notes, 11 pt body text and 10.5 pt sources**,
+  with the bundled Atkinson Hyperlegible fonts. Reflow content into the page;
+  do not enlarge a native map legend as one graphic.
+- Include four clearly identified sections: **Legend**, **Data sources**,
+  **Observer note**, and **How to read this plate**. Observer notes must
+  distinguish projected geographic views from celestial views and explain
+  what World, Japan and India scopes actually mean for the relevant product.
+- Audit the bibliography for **every plate**, including Water, whose current
+  companion omits it. Each legend must identify its actual providers,
+  datasets/releases, applicable reference periods and citations. Resolve
+  these from the bound source profiles and recorded inputs; a generic
+  dataset-manifest pointer does not constitute a plate bibliography.
+- Regenerate the affected legend exports and the World, Japan and combined
+  atlas books using the completed dataset and existing cartographic sheets.
+- Present completed deliveries at **`output/data-edition/20261111/atlas/`**
+  and **`output/data-edition/20261111/anthropocene-optional/`**. The singular
+  `data-edition` and compact date are intentional. Dataset and build IDs
+  remain in provenance records and internal working storage.
+
+The user explicitly requested this refinement and its documentation; no
+additional design approval is pending. This subsection records the plan
+before implementation. The successful build described above remains the
+baseline and is not evidence that this refinement has already been rendered.
+
+### Diagnosis
+
+The current builder has multiple legend paths. The four approved Star Light
+World legends already use A3; most other subjects still use a 44-inch sheet.
+The native-legend fallback fits an entire extracted group by its bounds,
+retaining incompatible source font sizes and fonts. Some native labels even
+carry fractional `pt` sizes inside transformed coordinates. This produces
+very different effective typography from the Atmosphere/Water compositor.
+The native fallback also retains opaque legend panels and the map's dark
+page theme. Japan groundstations have a separate wide-sheet implementation.
+The existing validator checks files and hashes but does not enforce the
+physical legend page size, shared type scale or required explanatory sections.
+
+### Implementation and regeneration plan
+
+1. Consolidate legend layout around the A3 design. Reflow source-derived
+   keys and text at explicit physical sizes, retaining symbol geometry and
+   data colors. Add the four named sections and scope-specific observer text;
+   keep source periods and limitations attached to the correct products.
+   Audit the plate-to-source mapping and bibliography against the selected
+   dataset, including geographic basemaps, astronomy, networks and every
+   resource metric. Do not copy obsolete dates from a retained edition.
+2. Apply the same companion-sheet requirements to the optional ocean and
+   climate legends. Keep their scientific products, map exports and source
+   observations unchanged; verify that regeneration preserves their keys,
+   thresholds, coverage notes and citations.
+3. Add a supported legends-only refresh for a verified completed build.
+   Retain the previous successful receipt, reuse unchanged maps and data,
+   record the new legend implementation and exports, and reassemble all
+   three atlas books. Avoid new provider acquisition or recomputing native
+   swarm, ocean or climate analyses for a typography change.
+4. Publish the verified result under the requested date-based delivery path.
+   Keep incomplete work and historical build identities internal, and switch
+   the visible delivery only after validation. Preserve existing evidence
+   and compatibility with recorded older build paths.
+5. Verify A3 dimensions, the reversed palette, physical font sizes, all four
+   section labels, symbol/label conservation, source and map hashes, links
+   and book page order/counts. Rasterize representative PDFs, including CDN,
+   Fiber, Swarm, particulate, Atmosphere, Water, groundstations and optional
+   climate products, and inspect for clipping, overlap and readability.
+6. Record the actual changes, checks, resulting delivery paths and any
+   limitations here, and update the build/generation guidance to match the
+   supported refresh command and simplified output layout.
+
+### Implemented refinement and source audit
+
+The shared `atlas_legends.py` compositor now reflows source keys and prose
+onto landscape A3. Native font transforms and opaque inherited panels no
+longer determine the companion typography. Keys retain their original class
+labels and categorical paints; the four accepted Star Light World sheets
+retain their approved symbols and reading notes. Japan groundstations now
+uses the same A3 layout. Atlas and optional validators check physical page
+dimensions, the reversed palette, type sizes, section labels and text bounds.
+
+`atlas_bibliography.py` resolves a bibliography for every default subject.
+Water now identifies Natural Earth 5.1.1's physical layers and has a twelve-step
+bathymetry key sampled from the actual native layer paints. Projection geometry
+and graticules are identified as calculated coordinates rather than observations.
+Resource citations use each selected metric's actual reference period and
+provider release. Atmosphere cites the separate JAXA products and their actual
+observation intervals. Network CDN includes a readable source appendix with
+the input-layer references and the complete retained 365-reference provider
+bibliography, explicitly distinguishing supporting context from plotted inputs.
+Fiber gains status-stroke keys; both Swarm legends gain representative swatches
+from their actual source palettes, with the map's 5% opacity explained.
+
+Two interpretation corrections accompany the bibliography audit. The Japan
+ground-observer astronomy and orbital views are calculated from **Setouchi,
+34.45°N / 133.99°E**; they must not be described as San Francisco views with a
+Japan locator. The Hubble companion remains a spacecraft view. India's
+heat–particulate co-exposure uses CPC and OpenAQ observations; OISST is not
+listed as an input to that family. Geographic context is cited separately.
+
+The particulate audit found a stale source-profile label: NASA FIRMS remains
+marked `configured-optional`, although the prepared data includes **18,466,569
+FIRMS rows across 365 days in 2025**, and **16,866,048 rows across 314 days in
+2026, through 10 November**. Bibliography inclusion now follows the prepared
+source statistics and detection dates. Both particulate legends explicitly
+cite NASA FIRMS without exposing acquisition credentials. The immutable data
+and profiles are retained unchanged; this fixes their presentation and citation.
+
+The particulate profiles also retain old `available_through` configuration
+hints. The preparer does not refresh these hints, so they are no longer printed
+as measured source cutoffs. The legends identify the observation year and
+provider-specific coverage; FIRMS dates come from the ingested date list.
+Groundstations includes the supplied KML filename and the actual FCC and
+Ofcom references used for capability interpretation, with their limits stated.
+All optional ocean and climate legends also cite the selected Natural Earth
+release for their geographic context. Repeated refreshes replace the prior
+source column instead of accumulating duplicate text.
+
+The supported refresh is:
+
+```sh
+make atlas-optional ASSET_JOBS=4 ATLAS_OPTIONAL_ARGS='--refresh-legends'
+```
+
+It verifies the selected dataset and completed parent artifacts, checks the
+unchanged scientific producer fingerprints, refreshes **78 atlas legends and
+82 optional legends**, reuses maps and numerical products, reassembles the
+three books, and checks the exports. Mutable legend files, metadata and
+frontmatter have independent copies; unchanged large maps/native/data files
+are shared locally and checked against the retained parent. A failed refresh
+must be restarted with `--refresh-legends`, rather than resumed as a native
+rebuild. This prevents a native command from rewriting shared accepted maps.
+
+Completed deliveries are published by an atomic date-directory link at
+`output/data-edition/20261111/`. Private work and run identities are retained
+under `.cartofreako/data/render-runs/`; previous output paths remain usable as
+historical evidence. The climate method document is bundled in its delivery,
+so its link does not depend on the private directory depth. The full-build
+pointer records both the public path and internal storage path.
+
+The first refinement run, `20261112t054624z-b77ab7bad8d4`, rendered the sheets
+and passed the export checks. It was **not published**: the FIRMS source audit
+and portable-method-link fix changed the implementation before final sealing,
+and the existing implementation-identity guard rejected publication. Its
+failed state is retained. The second run, `20261112t055430z-ab5505442cfd`,
+likewise remained unpublished while the final source-date audit changed the
+implementation. Both runs passed their export validations and preserved the
+original completed delivery. The final run starts from that original verified
+atlas with the completed citation corrections.
+
+### Completed refinement delivery
+
+The final refresh, **`20261112t060251z-217cedb60b4f`**, passed all three
+export validations and published at **10:07:25 PM PST on 11 November 2026**.
+It uses the same frozen dataset, `20261111t043605z-cf34314e91c3`.
+
+The visible delivery is now:
+
+```text
+output/data-edition/20261111/
+  atlas/index.html
+  atlas/atlas-world.pdf                     80 pages
+  atlas/atlas-japan.pdf                     80 pages
+  atlas/atlas-combined.pdf                 158 pages
+  atlas/sources/plate-bibliography.html
+  anthropocene-optional/ocean/index.html
+  anthropocene-optional/climate/index.html
+  validation/full-build.json
+```
+
+All **160 distinct SVG/PDF legend pairs** use A3: **78 atlas**, **18 ocean**
+and **64 climate**. The atlas bibliography covers all **39 subjects**. The
+new full receipt contains **4,059 artifacts** and **327 implementation-file
+fingerprints**. Its SHA-256 is
+`b6825d735556fd2994fd8c8b18f68aaa07dc0120d02782bd67f2f95d7ebd08be`.
+All **4,054 parent artifacts remain unchanged**; the new delivery reuses
+**3,404 unchanged artifacts**, including **490 map artifacts**. Map generation,
+scientific calculations and provider acquisition were not rerun.
+
+Validation included **82 focused tests**: 14 legend/delivery regressions,
+11 recovery, 8 presentation, 9 export and 40 data-workflow tests. All 15
+modified Python modules compile; `git diff --check` passes. The three changed
+documentation files pass their local-link check (132 links).
+
+Twelve representative PDFs were rasterized and visually inspected: Water,
+Atmosphere, CDN, Fiber, Swarm, particulate, all-sky astronomy, Japan
+groundstations, ocean SST/coral exposure, marine heatwaves, Japan coastal
+compound heat and India heat–particulate co-exposure. Their source columns,
+keys and explanatory sections fit the A3 page without clipped or overlapping
+text. Review images and the review record are retained in
+`.cartofreako/data/operator-logs/atlas-a3-legend-review/`.
+
+The accepted build log is
+`.cartofreako/data/operator-logs/atlas-a3-legend-refresh-accepted-20261111.log`.
+
+A separate verification pass checked all **4,059 artifact hashes**, all
+**160 single-page A3 PDFs and their SVG typography**, and all **39 nonempty
+plate bibliographies**. It confirmed the hashes of **2,064 map/native/data
+files** against the original receipt, unchanged book input ordering, the
+**80 / 80 / 158** page counts, and A3 dimensions at every legend page inside
+each book. It also resolved **1,060 local links** through the public date path
+using browser URL normalization, including the bundled climate method note.
+The result is recorded in
+`.cartofreako/data/operator-logs/atlas-a3-legend-final-verification.json` and
+`.cartofreako/data/operator-logs/atlas-a3-independent-verification.log`;
+the verifier is retained with the visual-review artifacts.

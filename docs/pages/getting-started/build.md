@@ -60,17 +60,31 @@ previous complete edition until all required new inputs validate. See
 | `DATA_ROOT=/path/to/data` | Select the input store containing the active edition. |
 | `DATASET_MANIFEST=/absolute/path/to/dataset.json` | Build a specific validated edition instead of the current selection. |
 | `ATLAS_OPTIONAL_ARGS='--resume BUILD_ID'` | Retry a failed full output run using the same manifest and implementation. |
+| `ATLAS_OPTIONAL_ARGS='--refresh-legends'` | Reflow legends and rebuild books from the verified completed build; reuse maps and scientific products. |
 | `DATASET=legacy` | Build explicitly retained repository snapshots without requiring a selected current edition. |
 
-Current full builds write to
-`output/data-editions/<dataset-id>/builds/<build-id>/`, with `native/`, `atlas/`,
+Completed full builds are available at
+`output/data-edition/YYYYMMDD/`, with `native/`, `atlas/`,
 `anthropocene-optional/ocean/`, `anthropocene-optional/climate/` and `validation/`.
+The date is the dataset's UTC as-of date; the 11 November edition is
+`output/data-edition/20261111/atlas/`. Work and historical run IDs live under
+`.cartofreako/data/render-runs/`; the date path switches atomically after checks pass.
 The validated full-build receipt selects
 `.cartofreako/data/build-current.json`; selecting new inputs alone does not
 select new rendered outputs. Historical output descriptions below refer to
 the legacy `assets.generated/` layout. See the
 [update/build configuration reference](generation.md#update-and-build-configuration)
 for replay, interpreter, storage and acquisition settings.
+
+Atlas and optional legend sheets use landscape A3, amber paper, wine text and
+the v3 physical typography. Every sheet has **Legend**, **Data sources**,
+**Observer note** and **How to read this plate** sections. The atlas index
+links to the complete plate bibliography, including the retained provider
+references. To refresh these companions without a new acquisition or map render:
+
+```sh
+make atlas-optional ATLAS_OPTIONAL_ARGS='--refresh-legends'
+```
 
 Astronomy can also be reviewed from explicitly staged matching inputs while
 an edition is incomplete. The

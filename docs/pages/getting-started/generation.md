@@ -231,14 +231,35 @@ make DATASET=legacy all-resilient
 make DATASET=legacy atlas
 ```
 
-The full build creates a separate run under
-`output/data-editions/<dataset-id>/builds/<build-id>/`. It contains `native/`,
+The full build stages a separate run under
+`.cartofreako/data/render-runs/<dataset-id>/<build-id>/` and publishes the
+completed delivery at **`output/data-edition/YYYYMMDD/`**. The date comes from
+the dataset's UTC as-of timestamp, even if rendering finishes on another day.
+The visible date directory is an atomic link to the verified run. It contains `native/`,
 `atlas/`, `anthropocene-optional/ocean/`, `anthropocene-optional/climate/`,
 and `validation/`. Standalone subset commands use the corresponding folders
-directly under `output/data-editions/<dataset-id>/`. SVG metadata and receipt
+under `.cartofreako/data/render-work/<dataset-id>/`. SVG metadata and receipt
 hashes trace exports to their inputs. The full-build receipt and
 `.cartofreako/data/build-current.json` advance only after every group passes.
 The previous completed output run stays intact when a rebuild fails.
+Older recorded paths under `output/data-editions/` remain usable as recovery
+inputs; new full builds use the shorter published layout.
+
+For a completed build, regenerate only the legend companions and books with:
+
+```sh
+make atlas-optional ATLAS_OPTIONAL_ARGS='--refresh-legends'
+```
+
+This verifies the completed parent and dataset, reuses unchanged maps and
+scientific products, and creates a new render receipt. All legends use
+landscape A3 (420 × 297 mm), the reversed wine/amber palette, and the four
+sections **Legend**, **Data sources**, **Observer note** and **How to read this
+plate**. Physical type is 27 pt for titles, 15 pt for headings, 12 pt for
+observer notes, 11 pt for body text and 10.5 pt for references. Bibliographies
+come from the selected source profiles, with full provider references linked
+from `atlas/sources/plate-bibliography.html`. Failed refreshes retain the
+previous delivery; rerun `--refresh-legends` to start from that verified parent.
 
 For interrupted work, use the IDs printed in the error log:
 

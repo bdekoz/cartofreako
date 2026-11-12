@@ -76,6 +76,7 @@
 /nasa-exoplanet-ping-monitor.log
 /data-update-progress.log
 /output/data-editions/
+/output/data-edition/
 /output/starlink-star-light-v3-20261109/
 /output/starlink-star-light-v4-observer-hourly/
 # Retain only the reviewed World observer reference used by hourly checks.

@@ -263,8 +263,53 @@ def output(name, default=None):
     if selected is None:
         return default
     _, manifest = selected
-    base = ROOT / "output/data-editions" / manifest["dataset_id"]
+    base = working_output(manifest)
     selected_output = Path(os.environ.get('DATASET_OUTPUT_ROOT', base)).resolve()
-    if not selected_output.is_relative_to(base.resolve()):
+    allowed = (base, data_root()/'render-runs'/manifest['dataset_id'],
+               ROOT/'output/data-editions'/manifest['dataset_id'])
+    if not any(selected_output.is_relative_to(p.resolve()) for p in allowed):
         raise DatasetError('Build output must stay inside its dataset edition directory')
     return selected_output / name
+
+
+def working_output(manifest):
+    return data_root()/'render-work'/manifest['dataset_id']
+
+
+def delivery_output(manifest):
+    """Use the dataset's UTC as-of date, independent of render date/timezone."""
+    day = datetime.fromisoformat(manifest['requested_as_of']).strftime('%Y%m%d')
+    return ROOT/'output/data-edition'/day
+
+
+def run_output(manifest, build_id, *, existing=False):
+    if not IDENTIFIER.fullmatch(build_id):
+        raise DatasetError('Invalid build ID')
+    path = data_root()/'render-runs'/manifest['dataset_id']/build_id
+    legacy = ROOT/'output/data-editions'/manifest['dataset_id']/'builds'/build_id
+    return legacy if existing and not path.exists() and legacy.exists() else path
+
+
+def publish_output(base, manifest, build_id):
+    """Atomically expose a completed run at the short, date-based delivery path."""
+    base = Path(base).resolve()
+    receipt = base/'validation/full-build.json'
+    value = json.loads(receipt.read_text())
+    if value.get('status') != 'passed' or value.get('dataset_id') != manifest['dataset_id'] or value.get('build_id') != build_id:
+        raise DatasetError('Only a validated complete build can be published')
+    public = delivery_output(manifest)
+    public.parent.mkdir(parents=True, exist_ok=True)
+    # Replacing a managed symlink is atomic; never displace a user's directory.
+    if public.exists() and not public.is_symlink():
+        raise DatasetError('Delivery path is an existing directory: '+str(public))
+    temporary = public.with_name('.'+public.name+'-'+build_id)
+    temporary.symlink_to(os.path.relpath(base, public.parent), target_is_directory=True)
+    try:
+        os.replace(temporary, public)
+    finally:
+        temporary.unlink(missing_ok=True)
+    pointer = {'dataset_id':manifest['dataset_id'], 'build_id':build_id,
+               'output':str(public), 'storage_output':str(base),
+               'receipt':str(public/'validation/full-build.json'), 'sha256':digest(receipt)}
+    atomic_json(data_root()/'build-current.json', pointer)
+    return public

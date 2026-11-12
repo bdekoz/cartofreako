@@ -277,6 +277,9 @@ def sheet_checks():
         for k in ('svg','pdf','preview'):assert digest(OUTPUT/r[k])==r[k+'_sha256'],r[k]
         assert (OUTPUT/r['pdf']).read_bytes().startswith(b'%PDF-')
         tree=E.parse(str(OUTPUT/r['svg']),E.XMLParser(huge_tree=True))
+        if r['kind']=='legend':
+            from atlas_legends import validate_legend
+            validate_legend(tree.getroot())
         for node in tree.xpath('//*[local-name()="image"]'):
             href=node.get('{http://www.w3.org/1999/xlink}href') or node.get('href')
             if href and not href.startswith('data:'):assert ((OUTPUT/r['svg']).parent/href).resolve().exists(),href

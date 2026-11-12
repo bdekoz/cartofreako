@@ -8,7 +8,7 @@ from pathlib import Path
 import subprocess
 import sys
 
-from dataset import DatasetError, ROOT, data_root, digest, load, safe_path
+from dataset import DatasetError, ROOT, data_root, digest, load, safe_path, working_output
 
 
 def build_command(manifest_path, manifest, command):
@@ -19,7 +19,7 @@ def build_command(manifest_path, manifest, command):
               for name, value in manifest["bindings"].items()}
     values.update(DATASET_MANIFEST=str(manifest_path), DATASET_ID=manifest["dataset_id"],
                   DATASET_MANIFEST_SHA256=digest(manifest_path))
-    out = ROOT / "output/data-editions" / manifest["dataset_id"]
+    out = working_output(manifest)
     values.update(GENERATED_DIR=str(out / "native"), ATLAS_OUTPUT=str(out / "atlas"),
                   ATLAS_BASE=str(out / "atlas-base"),DATASET_OUTPUT_ROOT=str(out),
                   SOURCE_DATE_EPOCH=str(int(datetime.fromisoformat(manifest['requested_as_of']).timestamp())))

@@ -82,6 +82,7 @@ def main():
     html = ["<!doctype html><html lang=en><meta charset=utf-8><title>Current Cartofreako atlas</title>",
             "<h1>Cartofreako</h1><p>Dataset " + escape(dataset["dataset_id"]) + "</p>",
             '<p><a href="sources/dataset.json">Dataset sources, periods and hashes</a></p>']
+    html.append('<p><a href="sources/plate-bibliography.html">Data bibliography for every plate</a></p>')
     for book in books:
         html.append(f'<p><a href="{book["path"]}">{book["scope"].title()} book ({book["sheet_count"]} sheets)</a></p>')
     for contact in contacts:

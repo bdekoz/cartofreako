@@ -166,10 +166,12 @@ def make_legend(stem,title,metric,meta,scope):
            'Counts and fractions require at least 80% eligible days in the labeled interval; completed seasons additionally require supported transitions. Actual dates and exclusions are retained in the data ledger.',
            'Local prototype edition with source-specific dates in the selected input ledger. Recent provider values may be revised. No attribution, population exposure or coral-bleaching outcome is inferred.']
     if scope=='japan':notes.append('Yellow point: retained conceptual Setouchi geographic reference, 34.45°N / 133.99°E.')
-    sources=['NOAA OISST v2.1 / https://www.ncei.noaa.gov/products/optimum-interpolation-sst',
-             'Method, inputs, tables and validation: data/ and validation.json in this dataset output']
+    sources=[]
+    if family!='heat-particulate-coexposure':sources.append('NOAA OISST v2.1 / https://www.ncei.noaa.gov/products/optimum-interpolation-sst')
+    sources.append('Method, inputs, tables and validation: data/ and validation.json in this dataset output')
     if family in ('coastal-compound-heat','heat-particulate-coexposure'):sources.append('CPC Global Temperature / https://psl.noaa.gov/thredds/catalog/Datasets/cpc_global_temp/catalog.html')
-    if family=='heat-particulate-coexposure':sources.append('OpenAQ public archive / selected CPCB, AirNow and separate AirGradient monitors; actual station-days in data/india-station-days.csv.gz')
+    if family=='heat-particulate-coexposure':sources.append('OpenAQ public archive / https://openaq.org/ / selected CPCB, AirNow and separate AirGradient monitors; actual station-days in data/india-station-days.csv.gz')
+    sources.append(maps.geographic_context_citation())
     return legend(stem,title,subtitle,sections,notes,sources)
 
 
@@ -245,7 +247,18 @@ def main():
 
 
 def write_index(products,records):
-    methods_href=os.path.relpath(ROOT/"docs/development/20261108_anthropocene_ocean_temperature_stage_2.md",OUTPUT)
+    # Bundle the method record so the date-based delivery works independently
+    # of the private run's depth and of browser normalization of symlink URLs.
+    methods_href='sources/methods.html'
+    methods=OUTPUT/methods_href
+    methods.parent.mkdir(parents=True,exist_ok=True)
+    source=ROOT/'docs/development/20261108_anthropocene_ocean_temperature_stage_2.md'
+    methods.write_text('<!doctype html><html lang="en"><meta charset="utf-8"><title>Climate methods</title>'
+                      '<style>body{max-width:70rem;margin:3rem auto;padding:0 1rem;font:18px/1.5 sans-serif}pre{white-space:pre-wrap;overflow-wrap:anywhere}</style>'
+                      '<h1>Climate methods and historical implementation record</h1>'
+                      '<p><a href="../index.html">Current edition</a> · <a href="../validation.json">Current validation</a></p>'
+                      '<p>The retained method document below describes its original implementation. Current source dates, coverage and validation belong to the edition linked above.</p><pre>'
+                      +escape(source.read_text())+'</pre></html>\n')
     html=['<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Anthropocene / Stage 2</title><style>body{background:#240413;color:#fcc553;font:18px sans-serif;margin:2rem}a{color:inherit}img{width:100%;height:auto}.pair{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}article{margin:3rem 0}@media(max-width:900px){.pair{display:block}}</style><h1>Anthropocene / Stage 2</h1><p>Local prototype review / dataset-specific observation windows. Separate map and legend/source sheets. Ocean, CPC and India monitor cutoffs are recorded separately in each legend. Use matched support for year comparisons.</p><p><a href="'+methods_href+'">Methods and completion record</a> · <a href="data/india-station-summary.json">Station coverage</a> · <a href="validation.json">Validation</a></p>']
     html.append('<h2>Comparisons and coverage</h2><p><a href="figures/matched-cooccurrence.png">Matched monthly comparisons</a> · <a href="figures/season-coverage.png">Season definitions and coverage</a> · <a href="figures/india-station-coverage.png">India monitor coverage</a> · <a href="figures/event-season-example.png">Event and season example</a></p>')
     for product in products:

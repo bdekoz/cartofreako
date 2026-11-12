@@ -6,6 +6,8 @@ from pathlib import Path
 import sys
 
 from dataset import ROOT, DatasetError, atomic_json, context, digest, output
+from atlas_legends import validate_legend
+from lxml import etree as E
 
 
 def check_atlas():
@@ -24,6 +26,8 @@ def check_atlas():
     if set(by_key) != keys or len(exports) != len(keys):
         raise DatasetError("Atlas export selection is incomplete")
     for row in receipt["records"]:
+        if row['kind'] == 'legend':
+            validate_legend(E.parse(str(root/row['svg'])).getroot())
         for linked in row.get('linked_inputs', []):
             if digest(linked['path']) != linked['sha256']:
                 raise DatasetError('Atlas linked data changed after composition')
@@ -36,7 +40,15 @@ def check_atlas():
             path = root / item["path"]
             if not path.is_file() or not path.stat().st_size or digest(path) != item["sha256"]:
                 raise DatasetError("Missing/stale atlas export: " + str(path))
+    bibliography = json.loads((root/'sources/plate-bibliography.json').read_text())['plates']
+    if {p['plate'] for p in bibliography} != expected or any(not p['references'] for p in bibliography):
+        raise DatasetError('Every atlas plate needs a source bibliography')
+    for plate in bibliography:
+        for evidence in plate['evidence']:
+            if 'path' in evidence and digest(evidence['path']) != evidence['sha256']:
+                raise DatasetError('Bibliographic source profile changed')
     result = {"status": "passed", "dataset_id": dataset["dataset_id"], "sheets": len(keys),
+              "a3_legends":len(keys)//2, "plate_bibliographies":len(bibliography),
               "manifest_sha256": digest(selected)}
     atomic_json(root / "sources/current-validation.json", result)
     print(f"Current atlas passed: {len(keys)} sheets; dataset {dataset['dataset_id']}")

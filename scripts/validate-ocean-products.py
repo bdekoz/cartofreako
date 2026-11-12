@@ -13,14 +13,51 @@ from ocean_temperature import NetCDF, digest, write_json
 
 from viz_context import ocean_output, snapshot_date
 from optional_map_annotations import check_map_annotations
+from atlas_legends import validate_legend
 ROOT=ocean_output()
+
+
+def sheet_checks(root):
+    sheets = []
+    manifest=json.loads((root/'preview-manifest.json').read_text())
+    assert not manifest['provisional_sst_only']
+    assert len(manifest['products'])==9 and len(manifest['records'])==36
+    products={(p['year'],p['period'],p['mode']):p for p in manifest['products']}
+    for row in manifest['records']:
+        for field in ('svg','pdf','preview'):assert digest(root/row[field])==row[field+'_sha256']
+        path=root/row['svg'];tree=E.parse(str(path),E.XMLParser(huge_tree=True));svg=tree.getroot()
+        assert svg.get('data-canonical-plate-id')==row['stem']
+        if row['kind']=='legend':validate_legend(svg)
+        if row['kind']=='map':
+            product=products[row['year'],row['period'],row['mode']]
+            check_map_annotations(svg,row['scope'],row['stem'],product['title'],product['metadata'])
+            assert svg.get('data-h3-resolution')=='5'
+            assert not tree.xpath('//*[@id="cpc-temperature-coverage" or @id="cpc-temperature-record-high-days" or @id="cpc-temperature-record-low-days"]')
+            for node in tree.xpath('//*[local-name()="image"]'):
+                ref=node.get('{http://www.w3.org/1999/xlink}href') or node.get('href')
+                if ref and not ref.startswith('data:'):assert (path.parent/ref).is_file(),ref
+        sheets.append(row['svg'])
+    return len(sheets)
 
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root',type=Path,default=ROOT)
     parser.add_argument('--data-only',action='store_true')
-    root=parser.parse_args();data_only=root.data_only;root=root.root
+    parser.add_argument('--exports-only',action='store_true')
+    args=parser.parse_args();data_only=args.data_only;root=args.root
+    if args.exports_only:
+        if data_only:
+            parser.error('--data-only and --exports-only are mutually exclusive')
+        saved=json.loads((root/'validation.json').read_text())
+        assert saved['status']=='passed' and not saved['data_only']
+        assert saved['products_sha256']==digest(root/'data/products.json')
+        previous=digest(root/'validation.json')
+        saved.update(checked_export_sheets=sheet_checks(root), script_sha256=digest(Path(__file__)),
+                     scientific_validation_reused_from_sha256=previous)
+        write_json(root/'validation.json',saved)
+        print('Ocean exports passed; existing validated numerical products retained')
+        return
     ledger=json.loads((root/'data/input-ledger.json').read_text())
     assert len(ledger['years'])==45
     acquisition=json.loads((root/'cache/oisst/manifest.json').read_text())
@@ -86,30 +123,12 @@ def main():
             through=json.loads((root/'data'/f'water-temperature-{year}-annual.json').read_text())['data_through'][5:]
             maximum=sum(int(day[:2])==month and day<=through for day in by_year[year])
             assert np.all(months['valid_days'][month-1]<=maximum)
-    sheets=[]
-    if not data_only:
-        manifest=json.loads((root/'preview-manifest.json').read_text())
-        assert not manifest['provisional_sst_only']
-        assert len(manifest['products'])==9 and len(manifest['records'])==36
-        products={(p['year'],p['period'],p['mode']):p for p in manifest['products']}
-        for row in manifest['records']:
-            for field in ('svg','pdf','preview'):assert digest(root/row[field])==row[field+'_sha256']
-            path=root/row['svg'];tree=E.parse(str(path),E.XMLParser(huge_tree=True));svg=tree.getroot()
-            assert svg.get('data-canonical-plate-id')==row['stem']
-            if row['kind']=='map':
-                product=products[row['year'],row['period'],row['mode']]
-                check_map_annotations(svg,row['scope'],row['stem'],product['title'],product['metadata'])
-                assert svg.get('data-h3-resolution')=='5'
-                assert not tree.xpath('//*[@id="cpc-temperature-coverage" or @id="cpc-temperature-record-high-days" or @id="cpc-temperature-record-low-days"]')
-                for node in tree.xpath('//*[local-name()="image"]'):
-                    ref=node.get('{http://www.w3.org/1999/xlink}href') or node.get('href')
-                    if ref and not ref.startswith('data:'):assert (path.parent/ref).is_file(),ref
-            sheets.append(row['svg'])
+    sheets = sheet_checks(root) if not data_only else 0
     write_json(root/'validation.json',{'status':'passed','reference_checks':reference_checks,
                'native_grids_checked':90,'occupied_h3_cells':len(grid['cells']),
-               'checked_export_sheets':len(sheets),'data_only':data_only,
+               'checked_export_sheets':sheets,'data_only':data_only,
                'products_sha256':digest(root/'data/products.json'),'script_sha256':digest(Path(__file__))})
-    print(f'Ocean validation passed: 90 native grids, 32 independently recomputed cell-periods, {len(sheets)} exported sheets')
+    print(f'Ocean validation passed: 90 native grids, 32 independently recomputed cell-periods, {sheets} exported sheets')
 
 
 if __name__=='__main__':main()
