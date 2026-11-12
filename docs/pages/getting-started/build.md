@@ -113,11 +113,11 @@ make check
 
 Generate geometry, labeled graticules, both Natural Earth layer families,
 all three timestamped astronomy products, both timestamped Orbital Technosphere
-products, all 14 Stage 12 resource products, the Anthropocene observation and
-temperature atlases for both 2025 and 2026, the cumulative network-swarm,
+products, all 15 Stage 12 resource products, the historical coral reef-threat
+plate, the Anthropocene observation and temperature atlases for both 2025 and
+2026, both network-swarm selections,
 the network CDN site atlas, the default-rendered Network Fiber
-union, Bathymetry Roulette, and
-Bathymetry Hamonshū for
+union and Network Groundstations for
 all six projections with:
 
 ```sh
@@ -125,21 +125,22 @@ make all
 ```
 
 The 24 production whole-earth maps, 18 astronomy maps, 12 Orbital
-Technosphere maps, 84 resources maps, 24 Anthropocene maps, six network-swarm
+Technosphere maps, 90 resources maps, 30 Anthropocene maps, 12 network-swarm
 maps, six network CDN site maps, six Network Fiber maps, six
-Network Groundstations maps, six
-Bathymetry Roulette maps, six Bathymetry Hamonshū maps, five
+Network Groundstations maps, five
 exploratory Myriahedral water perspectives, 12 Cahill-Keyes enlargement
-slices, and two Myriahedral face-group slices total 217 current standard
+slices, and two Myriahedral face-group slices total 223 current standard
 products. They are
-organized first by projection beneath `assets.generated/`, then into `svg/`,
-`pdf/`, `png/`, and `thumbnail/` directories. The 84 resource SVGs also
-receive deterministic `.svg.gz` release archives. All 217 standard products have an Inkscape
-PDF and PNG beside their projection peers. PNGs preserve the source aspect ratio and
+organized first by projection beneath the selected build's `native/` directory
+(`assets.generated/` in legacy mode), then into `svg/`, `pdf/`, `png/`, and
+`thumbnail/` directories. The 90 resource products use deterministic `.svg.gz`
+masters. All 223 standard products have a PDF and PNG beside their projection
+peers, plus exact 1920 × 1080 screen PNG/lossless-WebP derivatives. PNGs preserve the source aspect ratio and
 have a longest side of 3840 pixels, the horizontal resolution of UHD 4K
 video. Transparent SVG page regions are flattened against an opaque white
-background. The standard graph also creates 33 480-pixel-wide thumbnails for
-every whole-map projection, 198 total.
+background. The standard graph also creates 34 map thumbnails for every
+whole-map projection, plus separate legend companions. Bathymetry Roulette and
+Bathymetry Hamonshū remain available through their optional targets.
 Review the complete all-projection release in the
 [generated snapshot catalog](#generated-artifact-previews). The
 targets `make generated-projections`, `make

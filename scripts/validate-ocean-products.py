@@ -12,6 +12,7 @@ import numpy as np
 from ocean_temperature import NetCDF, digest, write_json
 
 from viz_context import ocean_output, snapshot_date
+from optional_map_annotations import check_map_annotations
 ROOT=ocean_output()
 
 
@@ -90,11 +91,14 @@ def main():
         manifest=json.loads((root/'preview-manifest.json').read_text())
         assert not manifest['provisional_sst_only']
         assert len(manifest['products'])==9 and len(manifest['records'])==36
+        products={(p['year'],p['period'],p['mode']):p for p in manifest['products']}
         for row in manifest['records']:
             for field in ('svg','pdf','preview'):assert digest(root/row[field])==row[field+'_sha256']
             path=root/row['svg'];tree=E.parse(str(path),E.XMLParser(huge_tree=True));svg=tree.getroot()
             assert svg.get('data-canonical-plate-id')==row['stem']
             if row['kind']=='map':
+                product=products[row['year'],row['period'],row['mode']]
+                check_map_annotations(svg,row['scope'],row['stem'],product['title'],product['metadata'])
                 assert svg.get('data-h3-resolution')=='5'
                 assert not tree.xpath('//*[@id="cpc-temperature-coverage" or @id="cpc-temperature-record-high-days" or @id="cpc-temperature-record-low-days"]')
                 for node in tree.xpath('//*[local-name()="image"]'):

@@ -8,18 +8,44 @@ import os from 'node:os';
 import path from 'node:path';
 import {promisify} from 'node:util';
 import {createGunzip} from 'node:zlib';
+import {fileURLToPath} from 'node:url';
 
 import {containTransform} from '../src.wasm/cartofreako-screen.mjs';
 
 const execFileAsync = promisify(execFile);
-const root = path.resolve(new URL('..', import.meta.url).pathname);
-const generated = path.join(root, 'assets.generated');
+const root = fileURLToPath(new URL('..', import.meta.url));
+
+export function generatedDirectory(environment = process.env, repository = root) {
+    const selected = environment.DATASET_OUTPUT_ROOT
+        ? path.resolve(repository, environment.DATASET_OUTPUT_ROOT, 'native') : null;
+    const directory = path.resolve(repository, environment.GENERATED_DIR ?? selected ?? 'assets.generated');
+    requireCondition(!selected || selected === directory,
+        'GENERATED_DIR conflicts with the selected dataset output directory');
+    return directory;
+}
+
+export function artifactPaths(entry, directory = generatedDirectory()) {
+    requireCondition(/^assets\.generated\/[a-z-]+\/svg\/[a-z0-9.-]+\.svg$/.test(entry.sourceSvg),
+        `invalid canonical source SVG path: ${entry.sourceSvg}`);
+    const [, projection, , filename] = entry.sourceSvg.split('/');
+    requireCondition(path.basename(filename, '.svg') === entry.stem,
+        `source SVG stem differs from artifact stem: ${entry.id}`);
+    return {
+        svg: path.join(directory, projection, 'svg', filename),
+        pdf: path.join(directory, projection, 'pdf', `${entry.stem}.pdf`),
+        png: path.join(directory, projection, 'png', `${entry.stem}.png`),
+        screenPng: path.join(directory, projection, 'screen-1080p', `${entry.stem}.png`),
+        screenWebp: path.join(directory, projection, 'screen-1080p-webp', `${entry.stem}.webp`)
+    };
+}
+
+const generated = generatedDirectory();
 const manifestPath = path.join(root, 'contracts/standard-artifact-manifest-v1.json');
 const canvas = Object.freeze({width: 1920, height: 1080});
 const background = '#f4f5f5';
 const recipeVersion = 2;
 const defaultJobs = Math.min(4, os.availableParallelism?.() ?? os.cpus().length ?? 1);
-const jobs = Number(process.env.SCREEN_JOBS ?? defaultJobs);
+const jobs = Number(process.env.SCREEN_JOBS ?? process.env.ASSET_JOBS ?? defaultJobs);
 
 const projectionDefinitions = Object.freeze({
     'cahill-keyes': {family: 'cahill-keyes', frame: {x: 0, y: 0, width: 44, height: 22}, cutTopology: 'folded', inverseMode: 'face-qualified', nativeCellCount: 8, componentCount: 1},
@@ -172,7 +198,7 @@ function passYear(passId) {
 }
 
 async function existingSvg(entry) {
-    const source = path.join(root, entry.sourceSvg);
+    const source = artifactPaths(entry, generated).svg;
     const archive = `${source}.gz`;
     if (entry.passId.startsWith('resources-')) {
         await fs.access(archive);
@@ -183,21 +209,16 @@ async function existingSvg(entry) {
     return {file: source, mediaType: 'image/svg+xml', extra: {}};
 }
 
-function parentPath(entry, kind, extension) {
-    return path.join(root, entry.sourceSvg.replace('/svg/', `/${kind}/`)
-        .replace(/\.svg$/, extension));
-}
-
 async function processArtifact(entry, index, total) {
     const definition = projectionDefinitions[entry.projectionId];
     requireCondition(definition && definition.family === entry.family,
         `projection definition missing for ${entry.id}`);
     const svg = await existingSvg(entry);
-    const parentPng = parentPath(entry, 'png', '.png');
-    const parentPdf = parentPath(entry, 'pdf', '.pdf');
-    const projectionDirectory = entry.sourceSvg.split('/')[1];
-    const outputPng = path.join(generated, projectionDirectory, 'screen-1080p', `${entry.stem}.png`);
-    const outputWebp = path.join(generated, projectionDirectory, 'screen-1080p-webp', `${entry.stem}.webp`);
+    const locations = artifactPaths(entry, generated);
+    const parentPng = locations.png;
+    const parentPdf = locations.pdf;
+    const outputPng = locations.screenPng;
+    const outputWebp = locations.screenWebp;
     const [prefix, sourceHashes, sourceDimensions, contentSize] = await Promise.all([
         readXmlPrefix(svg.file),
         Promise.all([parentPng, svg.file, parentPdf].map(sha256)),
@@ -331,44 +352,50 @@ async function mapLimit(values, limit, callback) {
     return result;
 }
 
-requireCondition(Number.isInteger(jobs) && jobs > 0 && jobs <= 32,
-    'SCREEN_JOBS must be an integer from 1 through 32');
-const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf8'));
-requireCondition(manifest.schemaVersion === 'cartofreako-standard-artifact-manifest-v1'
-    && manifest.lifecycle === 'standard'
-    && manifest.artifactCount === manifest.artifacts.length,
-'invalid standard artifact manifest');
-for (const directory of [
-    ...new Set(manifest.artifacts.map(entry => path.join(generated,
-        entry.sourceSvg.split('/')[1], 'screen-1080p'))),
-    ...new Set(manifest.artifacts.map(entry => path.join(generated,
-        entry.sourceSvg.split('/')[1], 'screen-1080p-webp'))),
-    path.join(generated, 'catalog')
-]) await fs.mkdir(directory, {recursive: true});
+async function main() {
+    requireCondition(Number.isInteger(jobs) && jobs > 0 && jobs <= 32,
+        'SCREEN_JOBS must be an integer from 1 through 32');
+    const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf8'));
+    requireCondition(manifest.schemaVersion === 'cartofreako-standard-artifact-manifest-v1'
+        && manifest.lifecycle === 'standard'
+        && manifest.artifactCount === manifest.artifacts.length,
+    'invalid standard artifact manifest');
+    for (const directory of [
+        ...new Set(manifest.artifacts.map(entry => path.join(generated,
+            entry.sourceSvg.split('/')[1], 'screen-1080p'))),
+        ...new Set(manifest.artifacts.map(entry => path.join(generated,
+            entry.sourceSvg.split('/')[1], 'screen-1080p-webp'))),
+        path.join(generated, 'catalog')
+    ]) await fs.mkdir(directory, {recursive: true});
 
-const artifacts = await mapLimit(manifest.artifacts, jobs, processArtifact);
-artifacts.sort((left, right) => left.id.localeCompare(right.id, 'en'));
-const status = await command('git', ['status', '--short']);
-const catalog = {
-    schema: 'cartofreako-artifacts-v1',
-    catalogVersion: 1,
-    consumerProfile: {
-        id: 'screen-1080p-lossless-v1',
-        canvas,
-        fit: 'contain',
-        background,
-        recipeVersion
-    },
-    sourceRevision: {
-        gitCommit: await command('git', ['rev-parse', 'HEAD']),
-        workingTree: status === '' ? 'clean' : 'modified',
-        runtimeApi: 3,
-        geometryAbi: 1,
-        standardManifest: relative(manifestPath),
-        standardManifestSha256: await sha256(manifestPath)
-    },
-    artifacts
-};
-const catalogPath = path.join(generated, 'catalog', 'artifacts-v1.json');
-await fs.writeFile(catalogPath, `${JSON.stringify(catalog, null, 2)}\n`, 'utf8');
-console.log(`Generated ${artifacts.length} checked 1080p PNG/WebP pairs with ${jobs} workers and ${relative(catalogPath)}.`);
+    const artifacts = await mapLimit(manifest.artifacts, jobs, processArtifact);
+    artifacts.sort((left, right) => left.id.localeCompare(right.id, 'en'));
+    const status = await command('git', ['status', '--short']);
+    const catalog = {
+        schema: 'cartofreako-artifacts-v1',
+        catalogVersion: 1,
+        consumerProfile: {
+            id: 'screen-1080p-lossless-v1',
+            canvas,
+            fit: 'contain',
+            background,
+            recipeVersion
+        },
+        sourceRevision: {
+            gitCommit: await command('git', ['rev-parse', 'HEAD']),
+            workingTree: status === '' ? 'clean' : 'modified',
+            runtimeApi: 3,
+            geometryAbi: 1,
+            standardManifest: relative(manifestPath),
+            standardManifestSha256: await sha256(manifestPath)
+        },
+        artifacts
+    };
+    const catalogPath = path.join(generated, 'catalog', 'artifacts-v1.json');
+    await fs.writeFile(catalogPath, `${JSON.stringify(catalog, null, 2)}\n`, 'utf8');
+    console.log(`Generated ${artifacts.length} checked 1080p PNG/WebP pairs with ${jobs} workers and ${relative(catalogPath)}.`);
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+    await main();
+}

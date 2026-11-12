@@ -6,6 +6,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
 
 
@@ -27,10 +28,12 @@ def close(left: list[float], right: list[float]) -> bool:
 
 def main() -> None:
     manifest_path = ROOT / "contracts" / "standard-artifact-manifest-v1.json"
-    catalog_path = ROOT / "assets.generated" / "catalog" / "artifacts-v1.json"
+    selected = Path(os.environ['DATASET_OUTPUT_ROOT'])/'native' if os.environ.get('DATASET_OUTPUT_ROOT') else ROOT/'assets.generated'
+    catalog_path = Path(os.environ.get('GENERATED_DIR', selected)) / "catalog" / "artifacts-v1.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
-    assert manifest["artifactCount"] == 217 == len(catalog["artifacts"])
+    assert manifest["artifactCount"] > 0
+    assert manifest["artifactCount"] == len(catalog["artifacts"])
     assert {value["id"] for value in manifest["artifacts"]} == {
         value["id"] for value in catalog["artifacts"]}
     assert catalog["sourceRevision"]["standardManifestSha256"] == digest(manifest_path)
@@ -60,8 +63,8 @@ def main() -> None:
         for record in (*artifact["parents"].values(), screen["png"], screen["webp"]):
             assert digest(ROOT / record["path"]) == record["sha256"]
             file_count += 1
-    assert file_count == 1085
-    print("clean-room screen catalog passed: 217 artifacts / 1085 files / affine matrices / hashes")
+    assert file_count == 5 * manifest['artifactCount']
+    print(f"clean-room screen catalog passed: {manifest['artifactCount']} artifacts / {file_count} files / affine matrices / hashes")
 
 
 if __name__ == "__main__":

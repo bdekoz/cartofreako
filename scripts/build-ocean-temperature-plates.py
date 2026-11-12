@@ -16,6 +16,7 @@ from atlas_review_sheets import ROOT, NS, FG, el, legend, export, font_environme
 from ocean_temperature import digest, write_json
 from viz_context import ocean_output, atlas_root, cutoff, snapshot_date
 from setouchi_h3_trials import settings_for
+from optional_map_annotations import annotate_map
 
 TEMPLATE='anthropocene-land-temperature-2026'
 SST_BOUNDS=[0,5,10,15,20,25,28,30]
@@ -48,7 +49,7 @@ def layer(id,cells,values,bounds,mask=None,side='right'):
     return {'id':id,'cells':[[f'{cells[i]:x}',round(float(values[i]),5),int(b)] for i,b in zip(indices,bins)]}
 
 
-def frame(atlas,scope,stem,title,tiles,rendered,settings,root,metadata):
+def frame(atlas,scope,stem,title,tiles,rendered,settings,root,metadata,display_scope=None):
     source=atlas/'maps'/scope/'svg'/(TEMPLATE+'.svg')
     if not source.exists():source=source.with_name(TEMPLATE.replace('anthropocene-land-temperature','anthropocene-temperature')+'.svg')
     tree=E.parse(str(source),E.XMLParser(huge_tree=True));doc=tree.getroot()
@@ -56,7 +57,7 @@ def frame(atlas,scope,stem,title,tiles,rendered,settings,root,metadata):
     doc.set('data-data-through',metadata['data_through'])
     doc.set('data-legend-companion',f'../../../legends/{scope}/svg/{stem}-legend.svg')
     doc.set('data-source-grid','OISST 0.25 degree original centers; CRW 0.05 degree original centers')
-    for n in doc.xpath('./*[local-name()="title"]'):n.text=title
+    annotate_map(doc,display_scope or scope,stem,title,metadata)
     anchor=doc.xpath('//*[@id="cpc-temperature-coverage"]')[0];parent=anchor.getparent();position=parent.index(anchor)
     for n in doc.xpath('//*[@id="cpc-temperature-coverage" or @id="cpc-temperature-record-high-days" or @id="cpc-temperature-record-low-days" or @id="anthropocene-temperature-metadata"]'):
         n.getparent().remove(n)

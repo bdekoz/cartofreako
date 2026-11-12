@@ -59,6 +59,27 @@ class AtlasPresentation(unittest.TestCase):
         self.assertEqual(dict(after.xpath('//*[@id="member"]')[0].attrib),
                          {'id': 'member', 'cx': '10', 'cy': '20', 'r': '3'})
 
+    def test_current_resource_panel_uses_page_ink_pair_without_changing_swatches(self):
+        current = importlib.import_module('build-current-atlas')
+        fixture = ('<svg><g id="source-legend">'
+                   '<rect id="resource-legend-panel" style="fill:white;fill-opacity:.96"/>'
+                   '<rect id="measured-swatch" data-resource-legend-swatch="true" '
+                   'style="fill:#ff1493;fill-opacity:1"/>'
+                   '<text>2022 / source period</text></g></svg>')
+        with tempfile.TemporaryDirectory() as directory:
+            source, target = Path(directory)/'source.svg', Path(directory)/'target.svg'
+            source.write_text(fixture)
+            for kind in ('map', 'legend'):
+                current.current_theme(source, target, self.recipe, kind)
+                after = E.parse(str(target))
+                panel = css(after.xpath('//*[@id="resource-legend-panel"]')[0].attrib)
+                self.assertEqual(panel['fill'], self.recipe['background'])
+                self.assertEqual(panel['fill-opacity'], '1')
+                self.assertEqual(css(after.xpath('//*[@id="measured-swatch"]')[0].attrib),
+                                 {'fill': '#ff1493', 'fill-opacity': '1'})
+                self.assertEqual(css(after.xpath('//text')[0].attrib)['fill'], self.recipe['text'])
+                self.assertEqual(after.xpath('//text')[0].text, '2022 / source period')
+
     def test_groundstation_default_uses_selected_source_and_replaces_both_viewports(self):
         ground = builder.GROUNDSTATIONS
         config = groundstation_settings(STYLE)

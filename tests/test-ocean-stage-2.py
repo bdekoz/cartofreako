@@ -2,9 +2,13 @@
 """Independent numerical fixtures for Stage 2 scientific boundary rules."""
 from datetime import date,timedelta
 import importlib.util
+import importlib
+import json
 from pathlib import Path
 import sys
+import tempfile
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 
@@ -61,6 +65,39 @@ class EventTests(unittest.TestCase):
         self.assertTrue(event_edges(f,1,5)[1])
         known=((f&1)>0)&((f&32)==0)
         self.assertEqual(int(known.sum()),8)
+
+
+class MarineCommandTests(unittest.TestCase):
+    def test_full_command_uses_selected_cutoff_for_both_matched_periods(self):
+        marine=importlib.import_module('prepare-marine-heatwaves')
+        core=importlib.import_module('ocean_stage_2')
+        end=date(2026,11,9);matched=end.replace(year=2025)
+        count=(end-date(2026,1,1)).days+1
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);ocean=root/'ocean';out=root/'climate'
+            (ocean/'work').mkdir(parents=True);(out/'work/baseline').mkdir(parents=True)
+            np.savez(ocean/'work/grid.npz',cells=np.array([1],dtype='uint64'),
+                     centers=np.array([[0.,0.]]),weights=np.ones(1))
+            np.save(out/'work/baseline/mean.npy',np.zeros((1,366),dtype='float32'))
+            np.save(out/'work/baseline/threshold.npy',np.ones((1,366),dtype='float32'))
+            arrays={year:np.full((len(dates(year)) if year<2026 else count,1),2.,dtype='float32')
+                    for year in (2024,2025,2026)}
+            with patch.object(marine,'OCEAN',ocean),patch.object(marine,'OUTPUT',out), \
+                 patch.object(core,'OUTPUT',out),patch.object(marine,'cutoff',return_value=end), \
+                 patch.object(marine,'matched_cutoff',return_value=matched), \
+                 patch.object(marine,'matched_days',return_value=count), \
+                 patch.object(marine,'product_months',return_value=range(1,12)), \
+                 patch.object(marine,'ocean_array',side_effect=lambda year:arrays[year]), \
+                 patch.object(sys,'argv',['prepare-marine-heatwaves.py']):
+                marine.main()
+            products=json.loads((out/'data/marine-products.json').read_text())
+            self.assertEqual([(p['year'],p['period'],p['data_through'],p['expected_days']) for p in products],
+                             [(2025,'annual','2025-12-31',365),
+                              (2025,'matched','2025-11-09',313),(2026,'annual','2026-11-09',313)])
+            comparison=json.loads((out/'data/marine-matched-comparison.json').read_text())
+            self.assertEqual(comparison['calendar'],'January 1–November 09 in each year')
+            self.assertEqual(len(comparison['months']),11)
+            self.assertEqual(sum(r['paired_cell_days'] for r in comparison['months']),313)
 
 
 class JointTests(unittest.TestCase):

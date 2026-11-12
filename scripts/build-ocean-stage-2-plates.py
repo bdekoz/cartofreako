@@ -104,7 +104,7 @@ def frame(scope,stem,title,tile_dir,rendered,settings,directory,meta):
         for layer in adapted['layers']:
             layer['tiles']=[dict(t,scope='japan') for t in layer['tiles'] if t['scope']=='india']
         config=deepcopy(settings);view=next(v for v in config['views'] if v['id']=='india');view['id']='japan';config['views']=[view]
-        doc=maps.frame(atlas_root(),'japan',stem,title,tile_dir,adapted,config,directory,meta)
+        doc=maps.frame(atlas_root(),'japan',stem,title,tile_dir,adapted,config,directory,meta,display_scope='india')
         use=doc.xpath('//*[local-name()="use" and @xlink:href="#source-content"]',namespaces={'xlink':'http://www.w3.org/1999/xlink'})[0]
         viewport=use.getparent();clip=viewport.getparent().get('clip-path')[5:-1]
         rect=doc.xpath('//*[@id=$id]/*[local-name()="rect"]',id=clip)[0]

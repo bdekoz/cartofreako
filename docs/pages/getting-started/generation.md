@@ -253,6 +253,51 @@ without `--resume`: completed HTTP cache objects and identity-checked partial
 downloads survive between runs, so a new run can revalidate/reuse those bytes.
 The old failed run remains available for inspection; its fingerprint is not rewritten.
 The fingerprint also includes the Git revision and tracked working-tree status.
+
+For a failed atlas run whose native producers are unchanged, a supported
+post-native presentation, export or optional-stage fix can retain its expensive
+map exports in a **new** run:
+
+```sh
+make atlas-optional ATLAS_OPTIONAL_ARGS='--reuse-native-from <failed-build-id>'
+```
+
+This checks the exact dataset and native implementation, copies and hashes
+the saved files, regenerates screen derivatives, and retains a recovery receipt
+and the original build state. It rejects native-renderer, Make-graph, style or
+input changes and leaves the failed run untouched. `--resume` remains strict.
+Each new run records stage logs and command results under its `logs/` and
+`validation/build-state.json` paths. See the
+[v4 recovery work record](../../development/20261111_make_workflow_data_render_v4.md)
+for the diagnosed screen-path failure, validation fixes and completed-run evidence.
+
+Before rendering, `atlas-optional` checks actual linked-PNG decoding through
+Inkscape. A working local D-Bus image decoder is required in environments
+where Inkscape uses that service. The probe checks pixels, and sheet exports
+reject decoder errors even if Inkscape returns a successful exit status.
+Probe files are retained under the run's `validation/image-decoder/` directory.
+Sheet export checks honor explicitly declared SVG side margins while retaining
+the normal margin checks for other sheets. Export failures identify the sheet
+immediately and stop scheduling further sheets; already running exports finish
+before the command exits.
+
+Atlas composition resolves dated resource source names from the selected
+metric profile and checks the complete native selection before rendering.
+`atlas/sources/native-source-selection.json` records the resolved filenames,
+hashes and actual reference periods. Older catalog IDs are preserved as
+identifiers; the metric profile and native legends determine observation years.
+
+Optional ocean and climate maps take their title, displayed region, observation
+cutoff and companion legend from the product metadata. Regional views replace
+the template's old notes and legend, and World views receive an explicit SVG
+title. Full validation checks those annotations against the product manifest,
+alongside the scientific values, export hashes and linked images.
+
+Native swarm builds also read the configured Alpha60 and izzi source checkouts.
+A shared header change can recompile the adapter and invalidate its raw render
+caches even when the selected dataset is unchanged. Keep those checkouts stable
+while a long atlas build is running.
+
 Finish edits and commits before starting acquisition. Use a separate checkout
 for code or documentation changes while an update is running.
 
@@ -894,20 +939,19 @@ For compatibility with the requested `earth, ocean` vocabulary, `ocean`
 normalizes to the current `water` generation pass. It does not mean the
 `ocean` layer inside the Earth base SVG.
 
-Profile `"all"` means the six projections by 19 selectable passes. It
-produces 186 SVGs because astronomy, Orbital Technosphere, Anthropocene, and
-several resource families produce multiple products. It deliberately excludes Cahill-Keyes slices, exploratory
+Profile `"all"` expands the selectable projection/pass combinations; astronomy,
+Orbital Technosphere, Anthropocene and several resource families produce
+multiple products. It deliberately excludes Cahill-Keyes slices, exploratory
 Myriahedral perspectives and slices, and PDF/PNG exports. Those products do
 not form a projection/pass cross-product and remain available through their
 explicit targets. It includes Cloud-atmosphere and therefore requires a
-current locally prepared JAXA snapshot. A clean `make all` retains the
-credential-free 211 SVG products (84 stored as deterministic `.svg.gz`
-archives), 211 PDF, 211 full-size PNG products, and 32 thumbnails per
-projection. A recorded `jaxa-ptree` authorization adds all six
-Cloud-atmosphere SVG/PDF/PNG products and one thumbnail per projection; the
-resulting authorized graph has 217 products per full-size format and 33
-thumbnails per projection. The six opt-in topology products per format remain
-separate.
+current locally prepared JAXA snapshot. The canonical standard manifest now
+contains **223 products across 34 pass IDs**, including 90 resource products
+with deterministic `.svg.gz` masters. `make all` produces the standard
+SVG/PDF/PNG and screen PNG/WebP deliveries. A recorded `jaxa-ptree`
+authorization adds six Cloud-atmosphere products and one map thumbnail per
+projection. Explicitly enabled optional products remain outside the standard
+screen catalog.
 
 The resolver rejects empty selectors, duplicate aliases or JSON members,
 unknown names or members, a mixed `"all"` selector, and unsupported schema
@@ -976,12 +1020,14 @@ The full generators are not part of `make check`; invoking a `generate-*`
 target both writes its artifact and runs that generator's embedded structural
 checks.
 
-The 217 standard products plus explicitly enabled optional products are
+The 223 standard products plus explicitly enabled optional products are
 generated beneath their projection's `svg/`, `pdf/`, and `png/` directories;
-the 84 resource products also have deterministic `.svg.gz` companions in the
-SVG directories. A clean projection contact sheet has 33 lower-resolution
-PNGs, 198 total. Enabling the credentialed `jaxa-ptree` option adds one
-Cloud-atmosphere preview to each sheet, for 34 per projection and 204 total.
+the 90 resource products use deterministic `.svg.gz` masters in the SVG
+directories. The standard whole-map selection has 34 map thumbnails per
+projection, plus separately generated legend companions. Enabling the
+credentialed `jaxa-ptree` option adds one Cloud-atmosphere map preview to each
+sheet. Dataset-bound builds place these directories under their run's
+`native/` directory; legacy builds use `assets.generated/`.
 Large suites are released as versioned static bundles instead of being stored
 in Git. Regenerating with a different GDAL, GEOS, font, or Inkscape version
 can still produce ordering, coordinate, or rendering differences even though

@@ -22,8 +22,8 @@ def main():
     all_days=sum([dates(y,len(s)) for y,s in zip((2024,2025,2026),source)],[])
     periods=[(2025,'annual',date(2025,12,31)),(2025,'matched',matched_cutoff()),(2026,'annual',cutoff())]
     products=[];daily_dir=OUTPUT/'work/marine-daily';daily_dir.mkdir(parents=True,exist_ok=True)
-    for year,period,cutoff in periods:
-        length=(cutoff-all_days[0]).days+1;ds=all_days[:length];sl=slots(ds)
+    for year,period,period_end in periods:
+        length=(period_end-all_days[0]).days+1;ds=all_days[:length];sl=slots(ds)
         first=ds.index(date(year,1,1));expected=length-first
         counts={k:np.zeros(n,dtype='uint16') for k in ('observed_days','eligible_days','event_days','exceedance_days','longest_duration','pending_days','edge_events')}
         counts['cumulative_intensity']=np.zeros(n,dtype='float64')
@@ -63,7 +63,7 @@ def main():
                 np.savez_compressed(daily_dir/f'{year}-{period}-{lo:06d}.npz',flags=flags[:,first:],cells=grid['cells'][lo:hi])
                 if lo%(a.chunk*16)==0:print(f'Marine {year} {period}: {hi}/{n}',flush=True)
         meta=save_product(f'marine-heatwave-{year}-{period}',{**counts,'cells':grid['cells'],'centers':grid['centers'],'weights':grid['weights']},
-            {'family':'marine-heatwave','year':year,'period':period,'data_through':str(cutoff),'expected_days':expected,
+            {'family':'marine-heatwave','year':year,'period':period,'data_through':str(period_end),'expected_days':expected,
              'baseline':'1991–2020','event_count':event_count,'event_ledger':path.name,'event_ledger_sha256':digest(path),
              'censoring':'observed spans clipped to reporting interval; edge durations are lower bounds; pending short runs excluded from event-eligible denominator, retained in observed/pending counts'})
         np.savez_compressed(OUTPUT/'work'/f'marine-monthly-{year}-{period}.npz',**monthly)

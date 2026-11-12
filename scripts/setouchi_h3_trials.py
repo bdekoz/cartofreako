@@ -20,7 +20,8 @@ HREF = '{http://www.w3.org/1999/xlink}href'
 
 
 def render_svg(source, target, env, width=None):
-    args = ['inkscape', str(source), '--export-area-page', '--export-filename=' + str(target)]
+    args = ['bash', str(ROOT / 'scripts/run-inkscape.sh'), 'inkscape', str(source),
+            '--export-area-page', '--export-filename=' + str(target)]
     if width: args.append('--export-width=' + str(width))
     result = subprocess.run(args, env=env, text=True, capture_output=True)
     if result.returncode or 'Pixbuf::create_' in result.stderr or 'D-Bus error' in result.stderr:
@@ -48,8 +49,12 @@ def parse_style(text):
 
 
 def settings_for(atlas, stem, dpi):
-    world = etree.parse(str(atlas / 'maps/world/svg' / (stem + '.svg')))
-    japan = etree.parse(str(atlas / 'maps/japan/svg' / (stem + '.svg')))
+    # Generated H3 layers can contain path attributes larger than libxml2's
+    # default 10 MB limit. Match map_tree's large local SVG support without
+    # enabling entity expansion or external resource loading.
+    parser = etree.XMLParser(huge_tree=True, resolve_entities=False, no_network=True)
+    world = etree.parse(str(atlas / 'maps/world/svg' / (stem + '.svg')), parser)
+    japan = etree.parse(str(atlas / 'maps/japan/svg' / (stem + '.svg')), parser)
     styles = {}
     for node in world.xpath('//*[@data-bin or @id="cpc-covered-cells"]'):
         styles.setdefault(node.getparent().get('id'), {})[node.get('data-bin', '0')] = parse_style(node.get('style'))

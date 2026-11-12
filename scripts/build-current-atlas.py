@@ -20,7 +20,7 @@ from xml.sax.saxutils import XMLGenerator
 from lxml import etree as E
 
 from dataset import ROOT, DatasetError, atomic_json, binding, context, digest, output
-from atlas_presentation import settings, theme
+from atlas_presentation import settings, Theme
 from atlas_presentation import css, paint
 import atlas_groundstations as GROUNDSTATIONS
 import atlas_world as WORLD
@@ -31,6 +31,21 @@ from atlas_review_sheets import el, legend, save
 FRAMING = importlib.import_module("setouchi_world_framing")
 REVISED = importlib.import_module("revise-setouchi-plates")
 MSP = importlib.import_module('build-msp-speculations')
+
+
+class CurrentAtlasTheme(Theme):
+    def startElement(self, name, attrs):
+        if name == 'rect' and attrs.get('id') == 'resource-legend-panel':
+            attrs = dict(attrs)
+            paint(attrs, fill=self.recipe['background'], fill_opacity=1, stroke_opacity=0)
+        super().startElement(name, attrs)
+
+
+def current_theme(source, destination, recipe, kind, subject=None, attributes=None):
+    """Theme current sheets without recoloring resource data swatches."""
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    with destination.open('w') as stream:
+        xml.sax.parse(str(source), CurrentAtlasTheme(stream, recipe, kind, subject, attributes))
 
 
 class JapanDefinitions(xml.sax.ContentHandler):
@@ -68,7 +83,41 @@ class JapanDefinitions(xml.sax.ContentHandler):
         self.writer.characters(text)
 
 
-def native_path(native, plate):
+def resolve_catalog_sources(catalog, resource_profile=None):
+    """Resolve dated resource filenames from the selected metric definitions."""
+    requested = [p for p in catalog if p['source_stem'].startswith('resources-')
+                 and p['id'] != 'resources-mineral-mine-production-comparison']
+    if requested and resource_profile is None:
+        resource_profile = binding('RESOURCES_DATA_DIR')/'resources-profile.json'
+    profile = json.loads(resource_profile.read_text()) if requested else None
+    resolved = []
+    for original in catalog:
+        plate = dict(original)
+        if original in requested:
+            stem = original['source_stem']
+            exact, compatible = [], []
+            for family in profile['families']:
+                for metric in family['metrics']:
+                    tag = metric.get('output_tag')
+                    if not tag or metric.get('status') not in ('default', 'released'):
+                        continue
+                    canonical = ('anthropocene' if metric['id'] == 'coral-reef-threat'
+                                 else family['id']) + '-' + tag
+                    if stem in (canonical, family['id']+'-'+tag):
+                        exact.append((canonical, metric))
+                    elif stem.startswith(family['id']+'-'+metric['id']+'-'):
+                        compatible.append((canonical, metric))
+            candidates = exact or compatible
+            if len(candidates) != 1:
+                raise DatasetError('Atlas resource source is missing or ambiguous in the selected profile: ' + stem)
+            canonical, metric = candidates[0]
+            plate.update(catalog_source_stem=stem, source_stem=canonical,
+                         source_reference_period=metric['reference_period'])
+        resolved.append(plate)
+    return resolved
+
+
+def native_source(native, plate):
     stem = plate["source_stem"]
     stem = stem.replace("anthropocene-temperature-", "anthropocene-land-temperature-")
     if stem == "network-swarm-ge-1080p":
@@ -77,7 +126,11 @@ def native_path(native, plate):
     matches = [p for p in matches if p.name.endswith((".svg", ".svg.gz"))]
     if not matches:
         raise DatasetError("No fresh native source for atlas product: " + plate["id"])
-    path = matches[0]
+    return matches[0]
+
+
+def native_path(native, plate):
+    path = native_source(native, plate)
     if path.suffix == ".gz":
         target = native / "atlas-sources" / path.stem
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -133,7 +186,7 @@ def standalone_legend(plate, source, destination, dataset, scope, all_sources):
         themed = destination.with_name(destination.stem + ".theme.svg")
         save(sheet, themed)
         _, recipe = settings(STYLE)
-        theme(themed, destination, recipe, "legend")
+        current_theme(themed, destination, recipe, "legend")
         themed.unlink()
         temporary.unlink()
     else:
@@ -387,7 +440,30 @@ def build(catalog=None, scopes=('world','japan')):
     register_fonts()
     _, recipe = settings(STYLE)
     native = output("native")
-    catalog = catalog if catalog is not None else [p for p in manifest['products']['plates'] if p['default']]
+    catalog = resolve_catalog_sources(catalog if catalog is not None else
+                                      [p for p in manifest['products']['plates'] if p['default']])
+    selections = []
+    missing = []
+    for plate in catalog:
+        if (plate['source_stem'].startswith('petroleum-')
+                or plate['id'] in ('cloud-atmosphere', 'resources-mineral-mine-production-comparison')):
+            continue  # These atlas-only products are generated below.
+        try:
+            source = native_source(native, plate)
+        except DatasetError as error:
+            missing.append(str(error))
+            continue
+        selections.append({'id': plate['id'], 'source': str(source), 'source_sha256': digest(source),
+                           'catalog_source_stem': plate.get('catalog_source_stem', plate['source_stem']),
+                           'source_stem': plate['source_stem'],
+                           'reference_period': plate.get('source_reference_period')})
+    if missing:
+        raise DatasetError('Atlas native-source preflight failed: ' + '; '.join(missing))
+    atomic_json(destination/'sources/native-source-selection.json',
+                {'dataset_id': manifest['dataset_id'], 'manifest_sha256': digest(manifest_path),
+                 'resources_profile_sha256': digest(binding('RESOURCES_DATA_DIR')/'resources-profile.json')
+                    if any('source_reference_period' in p for p in catalog) else None,
+                 'selections': selections})
     # Framing's editorial ocean backing needs the fresh earth source beside
     # decompressed mineral/source inputs, not a retained historical source.
     earth = native / "authagraph/svg" / ("earth" + SUFFIX + ".svg")
@@ -423,6 +499,8 @@ def build(catalog=None, scopes=('world','japan')):
                     path=destination/('maps' if kind=='map' else 'legends')/scope/'svg'/(ident+('-legend' if kind=='legend' else '')+'.svg')
                     tree.set('data-dataset-id',manifest['dataset_id'])
                     tree.set('data-dataset-manifest-sha256',digest(manifest_path))
+                    if 'source_reference_period' in plate:
+                        tree.set('data-source-reference-period',plate['source_reference_period'])
                     companion=f'../../../{"legends" if kind=="map" else "maps"}/{scope}/svg/{ident}{"-legend" if kind=="map" else ""}.svg'
                     tree.set('data-legend-companion' if kind=='map' else 'data-map-companion',companion)
                     save(tree,path)
@@ -446,10 +524,12 @@ def build(catalog=None, scopes=('world','japan')):
                                 "--output", str(unwrapped)], check=True)
                 with intermediate.open("w") as stream:
                     xml.sax.parse(str(unwrapped), JapanDefinitions(stream))
-            theme(intermediate, target, recipe, "map", subject=ident, attributes={
+            current_theme(intermediate, target, recipe, "map", subject=ident, attributes={
                 "data-dataset-id": manifest["dataset_id"], "data-dataset-manifest-sha256": digest(manifest_path),
                 "data-canonical-plate-id": ident, "data-sheet-kind": "map",
-                "data-legend-companion": f"../../../legends/{scope}/svg/{ident}-legend.svg"})
+                "data-legend-companion": f"../../../legends/{scope}/svg/{ident}-legend.svg",
+                **({'data-source-reference-period':plate['source_reference_period']}
+                   if 'source_reference_period' in plate else {})})
             if celestial or ident.startswith('orbital-'):
                 celestial_presentation(target,plate,recipe)
             legend_path = destination / "legends" / scope / "svg" / (ident + "-legend.svg")
@@ -478,11 +558,25 @@ def build(catalog=None, scopes=('world','japan')):
                                               for node in tree.xpath('//*[local-name()="image"]')]
         print("Composed current atlas: " + ident, flush=True)
     atomic_json(destination / "sources/dataset.json", manifest)
+    by_id = {p['id']: p for p in catalog}
+    for record in records:
+        plate = by_id[record['stem']]
+        if 'source_reference_period' in plate:
+            record['source_reference_period'] = plate['source_reference_period']
+            record['catalog_source_stem'] = plate['catalog_source_stem']
     atomic_json(destination / "sources/current-atlas.json", {"schema": "cartofreako-current-atlas-v1",
                 "dataset_id": manifest["dataset_id"], "manifest_sha256": digest(manifest_path),
                 "records": records, "expected_sheets": 2 * len(scopes) * len(catalog)})
     atomic_json(destination / "sources/separate-sheets.json", {"schema": "cartofreako-current-atlas-v1", "records": records})
     return records
+
+
+def cloud_annotation_contrast(tree):
+    """Keep captions legible on the cloud sheet's amber background."""
+    for node in tree.xpath('//*[local-name()="text" or local-name()="tspan"]'):
+        attrs = dict(node.attrib)
+        paint(attrs, fill='#240413', stroke='none')
+        node.attrib.update(attrs)
 
 
 def cloud_presentation(destination, manifest):
@@ -505,6 +599,7 @@ def cloud_presentation(destination, manifest):
         target = destination/'maps'/scope/'svg/cloud-atmosphere.svg'
         tree = map_tree(target, product, work, config, rendered, {'background':'#fcc553'}, scope, meta, target.parent)
         tree.getroot().set('data-legend-companion',f'../../../legends/{scope}/svg/cloud-atmosphere-legend.svg')
+        cloud_annotation_contrast(tree)
         # Move each retained coastline above its observations in the same
         # coordinate frame. No reconstructed or historical coastline is used.
         for coast in tree.xpath('//*[@id="coastline" or @id="terrestrial-coastline" or @id="coastline-antarctic-inset"]'):

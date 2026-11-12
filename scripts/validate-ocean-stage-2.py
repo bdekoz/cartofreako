@@ -19,6 +19,7 @@ from ocean_stage_2 import ROOT,OUTPUT,OCEAN,CONFIG,dates,nonleap_indices,NetCDF,
 from ocean_stage_2 import ocean_array
 from ocean_temperature import digest,write_json
 from viz_context import cutoff
+from optional_map_annotations import check_map_annotations
 
 
 def reference_climate(years):
@@ -267,6 +268,8 @@ def sheet_checks():
     expected_views=sum(len(f['periods'])*(sum(len(metrics) for metrics in f['classes'].values())
                        if 'classes' in f else len(f['metrics'])) for f in definitions.values())
     manifest=json.loads((OUTPUT/'preview-manifest.json').read_text());records=manifest['records'];assert len(records)==4*expected_views
+    products={(p['stem'],p['metric'],p['metadata']['period'],p['metadata'].get('monitor_class')):p
+              for p in manifest['products']}
     keys=[(r['stem'],r['metric'],r['period'],r['monitor_class'],r['scope'],r['kind']) for r in records]
     assert len(set(keys))==4*expected_views
     assert all((*key[:-1], 'legend' if key[-1]=='map' else 'map') in keys for key in keys)
@@ -281,6 +284,8 @@ def sheet_checks():
             assert im.width==(1920 if r['kind']=='map' else 2200)
             assert im.height>500
         if r['kind']=='map':
+            product=products[r['stem'],r['metric'],r['period'],r['monitor_class']]
+            check_map_annotations(tree.getroot(),r['scope'],r['stem'],product['title'],product['metadata'])
             assert not tree.xpath('//*[@id="cpc-temperature-record-high-days" or @id="cpc-temperature-record-low-days"]')
             companion=tree.getroot().get('data-legend-companion');assert ((OUTPUT/r['svg']).parent/companion).resolve().exists()
     index=(OUTPUT/'index.html').read_text();links=re.findall(r'(?:href|src)="([^"#]+)"',index)
