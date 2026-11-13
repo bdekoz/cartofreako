@@ -13,7 +13,7 @@ import xml.sax
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'scripts'))
-from atlas_presentation import Theme, settings, css, groundstation_settings
+from atlas_presentation import Theme, settings, css, groundstation_settings, groundstation_background, orbital_presentation
 from lxml import etree as E
 from cartofreako_style import STYLE
 
@@ -58,6 +58,58 @@ class AtlasPresentation(unittest.TestCase):
         self.assertEqual(css(after.xpath('//*[@id="locator"]')[0].attrib)['fill'], '#47231d')
         self.assertEqual(dict(after.xpath('//*[@id="member"]')[0].attrib),
                          {'id': 'member', 'cx': '10', 'cy': '20', 'r': '3'})
+
+    def test_submarine_routes_and_landings_use_light_dyad_without_changing_status(self):
+        fixture = '''<svg><g id="network-fiber"><path id="route" d="M 0 0 L 1 1"
+          style="fill:none;stroke:rgb(0, 0, 0);stroke-width:.02;stroke-dasharray:.09 .055"/></g>
+          <g id="network-fiber-landings"><circle id="landing" cx="1" cy="1" r=".1" fill="black"/></g>
+          <g id="network-fiber-itu-terrestrial"><path id="land-route" stroke="rgb(76,187,23)"/></g>
+          <g id="unrelated"><path id="other" stroke="#000000"/></g></svg>'''
+        for pair in ('wine-amber', 'ultramarine-porcelain'):
+            profile = copy.deepcopy(STYLE)
+            profile['atlas']['presentation']['default_palette'] = pair
+            recipe = settings(profile)[1]
+            stream = io.StringIO()
+            xml.sax.parseString(fixture, Theme(stream, recipe, 'map', subject='network-fiber'))
+            after = E.fromstring(stream.getvalue().encode())
+            route = after.xpath('//*[@id="route"]')[0]
+            self.assertEqual(css(route.attrib)['stroke'], recipe['text'])
+            self.assertEqual(css(route.attrib)['stroke-dasharray'], '.09 .055')
+            self.assertEqual(css(route.attrib)['stroke-width'], '.02')
+            self.assertEqual(route.get('d'), 'M 0 0 L 1 1')
+            self.assertEqual(after.xpath('//*[@id="landing"]')[0].get('fill'), recipe['text'])
+            self.assertEqual(after.xpath('//*[@id="land-route"]')[0].get('stroke'), 'rgb(76,187,23)')
+            self.assertEqual(after.xpath('//*[@id="other"]')[0].get('stroke'), '#000000')
+
+    def test_groundstation_native_ocean_uses_dark_dyad_and_preserves_markers(self):
+        root = E.fromstring(b'<svg><g id="network-groundstations-background"><rect id="ocean" style="fill:rgb(242,244,243);fill-opacity:1"/></g><g id="stations"><circle id="site" fill="#fcc553" cx="1" cy="2" r=".1"/></g></svg>')
+        site = E.tostring(root.xpath('//*[@id="site"]')[0])
+        groundstation_background(root, self.recipe)
+        self.assertEqual(css(root.xpath('//*[@id="ocean"]')[0].attrib)['fill'], self.recipe['background'])
+        self.assertEqual(E.tostring(root.xpath('//*[@id="site"]')[0]), site)
+
+    def test_setouchi_orbital_context_removes_repeated_inset_and_preserves_data_paint(self):
+        fixture=b'''<svg xmlns="http://www.w3.org/2000/svg"><rect id="sheet-paper" fill="#240413"/>
+          <defs><g id="source-cartography"><g id="orbital-image-frame" transform="translate(.25 .1) scale(.9886)">
+          <g id="terrestrial-background"><rect width="44" height="19.052559" fill="#fcc553"/></g>
+          <g id="terrestrial-land"><path id="land" d="M 1 1 L 2 1 L 2 2 Z" fill="#47231d"/></g>
+          <circle id="satellite" data-norad-id="123" cx="12" cy="4" r=".02" fill="#ff4a18"/>
+          <text x="12" y="4" fill="#fcc553">123</text></g></g></defs>
+          <g id="st2-image-frame" transform="translate(.25 .1) scale(.9886)"><use href="#source-cartography"/></g></svg>'''
+        for stem,ground in [('orbital-technosphere-global','rgb(242,244,243)'),
+                            ('orbital-technosphere-observer','rgb(148,148,148)')]:
+            root=E.fromstring(fixture)
+            point=E.tostring(root.xpath('//*[@id="satellite"]')[0])
+            orbital_presentation(root,stem,cyclic=True)
+            self.assertFalse(root.xpath('//*[@id="terrestrial-background"]'))
+            self.assertIsNone(root.xpath('//*[@id="orbital-image-frame"]')[0].get('transform'))
+            self.assertEqual(root.xpath('//*[@id="orbital-image-paper"]')[0].get('fill'),ground)
+            self.assertEqual(css(root.xpath('//*[@id="sheet-paper"]')[0].attrib)['fill'],'#ffffff')
+            self.assertEqual(css(root.xpath('//*[@id="land"]')[0].attrib)['fill'],'rgb(216,221,219)')
+            self.assertEqual(E.tostring(root.xpath('//*[@id="satellite"]')[0]),point)
+            before=E.tostring(root)
+            orbital_presentation(root,stem,cyclic=True)
+            self.assertEqual(E.tostring(root),before)
 
     def test_current_resource_panel_uses_page_ink_pair_without_changing_swatches(self):
         current = importlib.import_module('build-current-atlas')

@@ -252,6 +252,9 @@ def main():
     recovery.add_argument('--resume', help='Resume a failed build run in the selected edition')
     recovery.add_argument('--reuse-native-from', help='Start a new run using verified native outputs of a failed run')
     recovery.add_argument('--refresh-legends', action='store_true', help='Refresh A3 legends and books from the verified completed build')
+    recovery.add_argument('--refresh-maps', nargs='+', choices=('network-fiber', 'network-groundstations',
+                          'orbital-technosphere-global', 'orbital-technosphere-observer'),
+                          help='Refresh selected atlas map presentation, all legends and books from the verified completed build')
     args = parser.parse_args()
     try:
         os.environ["ASSET_JOBS"] = str(args.jobs)
@@ -301,7 +304,7 @@ def main():
                     persist_state()
             elif args.reuse_native_from:
                 raise DatasetError('Native recovery requires a selected immutable dataset')
-            if args.refresh_legends:
+            if args.refresh_legends or args.refresh_maps:
                 if not selected:
                     raise DatasetError('Legend refresh requires a selected completed dataset')
                 import refresh_atlas_legends as refresh
@@ -309,7 +312,9 @@ def main():
                 persist_state()
                 state['legend_refresh']=refresh.clone_completed(base,manifest)
                 persist_state()
-                refresh.refresh_atlas(base)
+                refresh.refresh_atlas(base, map_stems=args.refresh_maps or ())
+                if args.refresh_maps:
+                    state['legend_refresh']['map_presentations'] = args.refresh_maps
                 run([sys.executable, ROOT/'scripts/export-setouchi-sheets.py', '--delivery', base/'atlas', '--workers', str(args.jobs)])
                 run([sys.executable, ROOT/'scripts/check-current-build.py', '--atlas'])
                 run([sys.executable, ROOT/'scripts/build-current-books.py'])
@@ -353,8 +358,9 @@ def main():
         if 'state' in locals():
             state.update(status='failed',error=redact(error))
             atomic_json(state_path,state)
-            if args.refresh_legends:
-                print("Restart from the completed parent with make atlas-optional ATLAS_OPTIONAL_ARGS='--refresh-legends'",file=sys.stderr)
+            if args.refresh_legends or args.refresh_maps:
+                flags = '--refresh-maps '+' '.join(args.refresh_maps) if args.refresh_maps else '--refresh-legends'
+                print("Restart from the completed parent with make atlas-optional ATLAS_OPTIONAL_ARGS='"+flags+"'",file=sys.stderr)
             else:
                 print(f"Resume this output run with make atlas-optional ATLAS_OPTIONAL_ARGS='--resume {state['build_id']}'",file=sys.stderr)
         print("atlas-optional: " + redact(error) + "; previous completed build retained", file=sys.stderr)

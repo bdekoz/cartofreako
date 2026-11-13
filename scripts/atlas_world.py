@@ -4,6 +4,7 @@ from pathlib import Path
 
 from cartofreako_style import STYLE, Projection
 from dataset import ROOT
+from atlas_presentation import groundstation_background, orbital_presentation, orbital_legend_reading
 import starlink_star_light as S
 
 PLATES={stem:plate for plate,stem in S.STEMS.items()}
@@ -26,6 +27,7 @@ def compose(stem, source, work, recipe, *, orbital_profile=None,
         content,evidence=S.refine_groundstations(document,config,
             Projection('authagraph',work/'world-projection'),
             profile_path=groundstation_profile,recipe=recipe)
+        groundstation_background(content, recipe)
         timestamp='source snapshot '+evidence['source_date']
     elif plate=='SLSL1':
         content=S.source_group(document)
@@ -33,14 +35,18 @@ def compose(stem, source, work, recipe, *, orbital_profile=None,
     else:
         profile=json.loads(Path(orbital_profile or ROOT/config['orbital_profile']).read_text())
         content=S.source_group(document) if styled else S.orbital_source(document,plate,recipe)
+        orbital_presentation(content, stem, cyclic=True)
         for marker in content.xpath('.//*[@data-role="debris" and @data-marker-shape="x"]'):
             S.paint(marker.attrib,stroke='#ffffff',stroke_opacity=1)
         timestamp=content.xpath('.//*[@id="orbital-technosphere-metadata"]')[0].get('data-timestamp')
     root,layout=S.make_map(plate,'world',content,None,config,[])
     legend=S.make_legend(plate,'world',content,config,profile,evidence,timestamp)
+    if plate in ('SLSL2','SLSL3'):
+        orbital_presentation(root, stem, cyclic=True)
+        orbital_legend_reading(legend)
     for tree in (root,legend):
         tree.set('data-atlas-world-presentation','slsl-v3')
         tree.set('data-canonical-plate-id',stem)
         tree.set('data-calculation-or-source-date',timestamp)
-        tree.set('data-sheet-background',S.FG if tree is legend else S.BG)
+        tree.set('data-sheet-background',S.FG if tree is legend else '#ffffff' if plate in ('SLSL2','SLSL3') else S.BG)
     return root,legend,layout

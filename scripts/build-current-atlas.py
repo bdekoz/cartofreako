@@ -29,6 +29,7 @@ from legend_informatics import WIDTH, HEIGHT, SUFFIX, font_environment, legend_g
 from atlas_review_sheets import el, legend, save
 from atlas_legends import native_content, PAPER, update_a3_sources
 from atlas_bibliography import bibliography, write_bibliography
+from atlas_presentation import orbital_presentation
 
 FRAMING = importlib.import_module("setouchi_world_framing")
 REVISED = importlib.import_module("revise-setouchi-plates")
@@ -142,6 +143,31 @@ def native_path(native, plate):
     return path
 
 
+def fiber_legend_sections(recipe):
+    keys = []
+    for color, label, dash in (
+            ('#4cbb17','ITU land fibre / operational',None),
+            ('#4cbb17','ITU land fibre / under construction','.09 .055'),
+            ('#4cbb17','ITU land fibre / planned or proposed','.02 .055'),
+            (recipe['text'],'Submarine cable / current route',None),
+            (recipe['text'],'Submarine cable / planned','.09 .055'),
+            (recipe['text'],'Submarine cable / 2022-only route','.02 .055')):
+        symbols = []
+        # The map's light routes need a dark halo on the reversed legend paper.
+        for stroke, width in ((recipe['background'], .065), (color, .025)):
+            symbol = el('line', x1=0, y1=0, x2=.48, y2=0, stroke=stroke, stroke_width=width)
+            if dash:
+                symbol.set('stroke-dasharray', dash)
+            symbols.append(E.tostring(symbol, encoding='unicode'))
+        keys.append({'label':label, 'symbols':symbols})
+    return [{'title':'Route colors and status strokes', 'keys':keys}]
+
+
+def fiber_reading_notes(notes):
+    return [note.replace('black = submarine cables', 'light dyad ink = submarine cables')
+                .replace('Black: dash planned', 'Submarine: dash planned') for note in notes]
+
+
 def standalone_legend(plate, source, destination, dataset, scope, all_sources, *, existing=None):
     citations = bibliography(plate)
     special = special_legend(plate, dataset, scope)
@@ -163,18 +189,9 @@ def standalone_legend(plate, source, destination, dataset, scope, all_sources, *
         keys, notes = native_content(group)
         sections = [{'title':'Source symbols and class boundaries', 'keys':keys}] if keys else []
         if plate['id'] == 'network-fiber':
-            keys = []
-            for color, label, dash in (
-                    ('#4cbb17','ITU land fibre / operational',None),
-                    ('#4cbb17','ITU land fibre / under construction','.09 .055'),
-                    ('#4cbb17','ITU land fibre / planned or proposed','.02 .055'),
-                    ('#000000','Submarine cable / current route',None),
-                    ('#000000','Submarine cable / planned','.09 .055'),
-                    ('#000000','Submarine cable / 2022-only route','.02 .055')):
-                symbol=el('line',x1=0,y1=0,x2=.48,y2=0,stroke=color,stroke_width=.025)
-                if dash:symbol.set('stroke-dasharray',dash)
-                keys.append({'label':label,'symbols':[E.tostring(symbol,encoding='unicode')]})
-            sections=[{'title':'Route colors and status strokes','keys':keys}]
+            _, recipe = settings(STYLE)
+            sections = fiber_legend_sections(recipe)
+            notes = fiber_reading_notes(notes)
         elif plate['id'].startswith('network-swarm-'):
             import colorsys
             with source.open('rb') as stream:
@@ -399,6 +416,7 @@ def celestial_presentation(path,plate,recipe):
             for track in root.xpath('//*[@id="representative-ground-tracks"]/*[local-name()="path"]'):
                 paint(track.attrib,stroke_width=float(css(track.attrib)['stroke-width'])*variant['global_track_width_scale'])
         root.set('data-satellite-name-display','starlink-only')
+        orbital_presentation(root,ident)
     else:
         config,_=settings(STYLE)
         for label in root.xpath('//*[@id="labels"]//*[local-name()="text"]'):
@@ -524,7 +542,7 @@ def build(catalog=None, scopes=('world','japan')):
                     records.append({'kind':kind,'scope':scope,'stem':ident,'source_stem':plate['source_stem'],
                         'svg':path.relative_to(destination).as_posix(),'svg_sha256':digest(path),
                         'source':str(selected),'source_sha256':digest(selected),
-                        'sheet_background':'#fcc553' if kind=='legend' else recipe['background'],
+                        'sheet_background':tree.get('data-sheet-background', recipe['background']),
                         'dataset_id':manifest['dataset_id'],'manifest_sha256':digest(manifest_path)})
                 continue
             target = destination / "maps" / scope / "svg" / (ident + ".svg")
@@ -562,7 +580,7 @@ def build(catalog=None, scopes=('world','japan')):
                 records.append({"kind": kind, "scope": scope, "stem": ident, "source_stem": plate["source_stem"],
                                 "svg": path.relative_to(destination).as_posix(), "svg_sha256": digest(path),
                                 "source": str(selected), "source_sha256": digest(selected),
-                                "sheet_background": PAPER if kind == "legend" else recipe["background"],
+                                "sheet_background": PAPER if kind == "legend" else '#ffffff' if ident.startswith('orbital-') else recipe["background"],
                                 "dataset_id": manifest["dataset_id"], "manifest_sha256": digest(manifest_path)})
         if ident == "cloud-atmosphere":
             cloud_presentation(destination, manifest)

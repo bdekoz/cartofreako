@@ -66,10 +66,87 @@ def paint(attrs, **values):
     attrs["style"] = ";".join(k + ":" + v for k, v in style.items())
 
 
+def fiber_route_paint(attrs, parents, recipe):
+    """Keep route status strokes; use the light dyad member for submarine ink."""
+    if not any(p.removesuffix('-antarctic-inset') in ('network-fiber', 'network-fiber-landings')
+               for p in parents):
+        return
+    style = css(attrs)
+    for field in ('stroke', 'fill'):
+        color = style.get(field, attrs.get(field, '')).lower().replace(' ', '')
+        if color in ('black', '#000', '#000000', 'rgb(0,0,0)'):
+            paint(attrs, **{field: recipe['text']})
+
+
+def groundstation_background(root, recipe):
+    """The native ocean rectangle must not cover the dark World sheet paper."""
+    for node in root.xpath('.//*[@id="network-groundstations-background"]/*'):
+        if node.tag.rsplit('}', 1)[-1] in ('rect', 'path'):
+            paint(node.attrib, fill=recipe['background'], fill_opacity=1, stroke_opacity=0)
+    return root
+
+
+def orbital_presentation(root, stem, *, cyclic=False):
+    """Restore Setouchi ground colors and one seamless cyclic source frame."""
+    from lxml import etree as E
+    observer = stem == 'orbital-technosphere-observer'
+    ground = 'rgb(148,148,148)' if observer else 'rgb(242,244,243)'
+    backgrounds = root.xpath('.//*[@id="terrestrial-background" or @id="observer-background"]')
+    for group in backgrounds:
+        if cyclic:
+            # Paper belongs behind the complete wrapped image. Repeated native
+            # background rectangles can cover marks crossing the display seam.
+            group.getparent().remove(group)
+        else:
+            for node in group:
+                if node.tag.rsplit('}', 1)[-1] in ('rect', 'path'):
+                    paint(node.attrib, fill=ground, fill_opacity=1, stroke_opacity=0)
+    if cyclic:
+        # The outer World frame already supplies its clear page margin. The
+        # native inset must not be repeated inside each 44-inch cyclic copy.
+        for frame in root.xpath('.//*[@id="orbital-image-frame"]'):
+            frame.attrib.pop('transform', None)
+        for frame in root.xpath('.//*[@id="st2-image-frame" or @id="observer-image-frame"]'):
+            if not frame.xpath('./*[@id="orbital-image-paper"]'):
+                paper = E.Element('{http://www.w3.org/2000/svg}rect',
+                                  id='orbital-image-paper', width='44', height='19.052559', fill=ground)
+                frame.insert(0, paper)
+    for node in root.xpath('.//*[local-name()="text"]'):
+        paint(node.attrib, fill='rgb(40,42,46)', stroke_opacity=0)
+    for node in root.xpath('.//*[local-name()="path"]'):
+        parents = [n.get('id', '') for n in node.iterancestors()]
+        if any(p.startswith('terrestrial-land') or p=='locator-land' for p in parents):
+            paint(node.attrib, fill='rgb(216,221,219)', stroke='rgb(216,221,219)')
+        elif 'locator-ocean' in parents:
+            paint(node.attrib, fill='rgb(242,244,243)', stroke='rgb(242,244,243)')
+        elif 'representative-ground-tracks' in parents:
+            paint(node.attrib, stroke='rgb(90,90,90)')
+        if node.get('id','').startswith('celestial-equator-segment-'):
+            paint(node.attrib, stroke='rgb(75,75,75)')
+        elif node.get('id','').startswith('observer-horizon-segment-'):
+            paint(node.attrib, stroke='rgb(236,75,37)')
+    for node in root.xpath('.//*[@id="sheet-paper" or @id="st2-sheet-paper"]'):
+        paint(node.attrib, fill='#ffffff')
+    if E.QName(root).localname=='svg':
+        for node in root.xpath('./*[local-name()="rect" and not(@id)]'):
+            if float(node.get('width','0'))==44:
+                paint(node.attrib, fill='#ffffff')
+        root.set('data-sheet-background','#ffffff')
+        root.set('data-atlas-orbital-palette','setouchi')
+    return root
+
+
+def orbital_legend_reading(root):
+    for node in root.xpath('.//*[local-name()="text"]'):
+        if node.text:
+            node.text = node.text.replace('brighter amber horizon curve', 'orange horizon curve')
+    return root
+
+
 class Theme(xml.sax.ContentHandler):
     """Stream the page theme, including multi-million-circle native swarms.
 
-    Only page backgrounds, text and unmeasured basemap decoration change paint.
+    Page backgrounds, text, basemap decoration and submarine route ink change paint.
     Country metrics, bathymetry, astronomy and categorical marks keep their paint.
     """
     def __init__(self, stream, recipe, kind, subject=None, attributes=None):
@@ -128,6 +205,8 @@ class Theme(xml.sax.ContentHandler):
             reference = {"coastline", "terrestrial-coastline", "minor-islands", "ice", "graticules", "terrestrial-reference"}
             if name in ("path", "line", "polyline") and any(p.removesuffix("-antarctic-inset") in reference for p in parents):
                 paint(a, stroke=r["neutral"])
+            if self.subject == 'network-fiber':
+                fiber_route_paint(a, parents, r)
             self.writer.startElement(name, a)
         self.stack.append(a)
 

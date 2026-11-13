@@ -77,8 +77,8 @@ the legacy `assets.generated/` layout. See the
 for replay, interpreter, storage and acquisition settings.
 
 Atlas and optional legend sheets use landscape A3, amber paper, wine text and
-the v3 physical typography. Every sheet has **Legend**, **Data sources**,
-**Observer note** and **How to read this plate** sections. The atlas index
+the v3 physical typography. Every sheet has **Legend**, **Data sources**
+and **How to read this plate** sections. The atlas index
 links to the complete plate bibliography, including the retained provider
 references. To refresh these companions without a new acquisition or map render:
 

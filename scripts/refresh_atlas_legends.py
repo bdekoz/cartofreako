@@ -12,12 +12,28 @@ from lxml import etree as E
 from dataset import DatasetError, ROOT, atomic_json, context, data_root, digest, output, utcnow
 from atlas_bibliography import bibliography, write_bibliography
 from atlas_legends import PAPER, update_a3_sources, validate_legend
+from atlas_presentation import groundstation_background, orbital_presentation, orbital_legend_reading
 from atlas_review_sheets import save
 from legend_informatics import font_environment
 from setouchi_h3_trials import render_svg
 
 
-def refresh_atlas(base, *, source=None):
+def retained_source(path, expected, base):
+    """Rebind moved build inputs only when the retained bytes match exactly."""
+    for folder in ('native', 'atlas'):
+        marker = '/'+folder+'/'
+        if marker in str(path):
+            candidate = base/folder/str(path).split(marker, 1)[1]
+            if candidate.is_file():
+                if digest(candidate) != expected:
+                    raise DatasetError('Retained atlas source changed: '+str(candidate))
+                return str(candidate)
+    if Path(path).is_file() and digest(path) == expected:
+        return str(path)
+    raise DatasetError('No verified retained atlas source: '+str(path))
+
+
+def refresh_atlas(base, *, source=None, map_stems=()):
     """Regenerate atlas legends from retained key content and bound source profiles."""
     builder = importlib.import_module('build-current-atlas')
     _, manifest = context()
@@ -27,8 +43,39 @@ def refresh_atlas(base, *, source=None):
     by_id = {p['id']:p for p in plates}
     citations = {p['id']:bibliography(p) for p in plates}
     records = deepcopy(old['records'])
+    _, recipe = builder.settings(builder.STYLE)
     for row in records:
+        rebound = retained_source(row['source'], row['source_sha256'], base)
+        if rebound != row['source']:
+            row.setdefault('source_original', row['source'])
+            row['source'] = rebound
+        for linked in row.get('linked_inputs', []):
+            rebound = retained_source(linked['path'], linked['sha256'], base)
+            if rebound != linked['path']:
+                linked.setdefault('original_path', linked['path'])
+                linked['path'] = rebound
         if row['kind'] != 'legend':
+            if row['stem'] in map_stems:
+                destination = base/'atlas'/row['svg']
+                temporary = destination.with_suffix('.refresh.svg')
+                if row['stem'] == 'network-fiber':
+                    builder.current_theme(source/'atlas'/row['svg'], temporary, recipe, 'map', subject=row['stem'])
+                elif row['stem'] == 'network-groundstations':
+                    tree = E.parse(str(source/'atlas'/row['svg'])).getroot()
+                    save(groundstation_background(tree, recipe), temporary)
+                elif row['stem'] in ('orbital-technosphere-global', 'orbital-technosphere-observer'):
+                    tree = E.parse(str(source/'atlas'/row['svg'])).getroot()
+                    save(orbital_presentation(tree, row['stem'], cyclic=row['scope']=='world'), temporary)
+                    row['sheet_background'] = '#ffffff'
+                else:
+                    raise DatasetError('Unsupported map presentation refresh: '+row['stem'])
+                # Maps/exports may share inodes with the accepted parent.
+                temporary.replace(destination)
+                for folder in ('pdf', 'png', 'preview'):
+                    suffix = '.pdf' if folder == 'pdf' else '.png'
+                    (destination.parent.parent/folder/destination.with_suffix(suffix).name).unlink(missing_ok=True)
+                row['svg_sha256'] = digest(destination)
+                print('Refreshed map presentation:',row['scope'],row['stem'],flush=True)
             continue
         plate, scope = by_id[row['stem']], row['scope']
         existing = E.parse(str(source/'atlas'/row['svg'])).getroot()
@@ -37,6 +84,9 @@ def refresh_atlas(base, *, source=None):
             if existing.xpath('//*[@id="atlas-legend-model"]'):
                 model = json.loads(existing.xpath('//*[@id="atlas-legend-model"]')[0].text)
                 model['sources'] = citations[plate['id']]['references']
+                if plate['id'] == 'network-fiber':
+                    model['sections'] = builder.fiber_legend_sections(recipe)
+                    model['notes'] = builder.fiber_reading_notes(model['notes'])
                 tree = builder.legend(**model)
             else:
                 tree = update_a3_sources(existing, citations[plate['id']]['references'])
@@ -50,6 +100,9 @@ def refresh_atlas(base, *, source=None):
         else:
             builder.standalone_legend(plate, Path(row['source']), destination, manifest, scope,
                                       manifest['sources'], existing=existing)
+        if plate['id']=='orbital-technosphere-observer':
+            tree=E.parse(str(destination)).getroot()
+            save(orbital_legend_reading(tree),destination)
         validate_legend(E.parse(str(destination)).getroot())
         row.update(svg_sha256=digest(destination), sheet_background=PAPER,
                    legend_presentation='a3-v3')

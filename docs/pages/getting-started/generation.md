@@ -253,13 +253,36 @@ make atlas-optional ATLAS_OPTIONAL_ARGS='--refresh-legends'
 
 This verifies the completed parent and dataset, reuses unchanged maps and
 scientific products, and creates a new render receipt. All legends use
-landscape A3 (420 × 297 mm), the reversed wine/amber palette, and the four
-sections **Legend**, **Data sources**, **Observer note** and **How to read this
-plate**. Physical type is 27 pt for titles, 15 pt for headings, 12 pt for
-observer notes, 11 pt for body text and 10.5 pt for references. Bibliographies
+landscape A3 (420 × 297 mm), the reversed wine/amber palette, and the three
+sections **Legend**, **Data sources** and **How to read this plate**.
+Physical type is 27 pt for titles, 15 pt for headings, 11 pt for body text
+and 10.5 pt for references. Bibliographies
 come from the selected source profiles, with full provider references linked
 from `atlas/sources/plate-bibliography.html`. Failed refreshes retain the
 previous delivery; rerun `--refresh-legends` to start from that verified parent.
+
+To update the fiber and groundstation map presentation along with the legends
+and books, use:
+
+```sh
+make atlas-optional ATLAS_OPTIONAL_ARGS='--refresh-maps network-fiber network-groundstations'
+```
+
+This uses the light palette member for submarine routes and landing points,
+keeps the green terrestrial routes and their status strokes, and uses the dark
+palette member behind groundstation maps. Only the selected map exports are
+regenerated; scientific inputs and the accepted parent delivery are retained.
+Moved source paths are rebound to retained files only after their hashes match.
+
+The orbital global/observer maps retain the Setouchi context palette: white
+paper, a pale geographic base for global positions, and a gray World observer
+sky. Japan keeps its separate angular sky panel and pale geographic locator.
+Their categorical satellite colors remain source-derived. To refresh these
+maps and rebuild the books:
+
+```sh
+make atlas-optional ATLAS_OPTIONAL_ARGS='--refresh-maps orbital-technosphere-global orbital-technosphere-observer'
+```
 
 For interrupted work, use the IDs printed in the error log:
 

@@ -995,3 +995,106 @@ The result is recorded in
 `.cartofreako/data/operator-logs/atlas-a3-legend-final-verification.json` and
 `.cartofreako/data/operator-logs/atlas-a3-independent-verification.log`;
 the verifier is retained with the visual-review artifacts.
+
+## Legend and network-map corrections — 12 November 2026
+
+The follow-up audit found that **140 of the 160 legends** repeated the same
+geographic Observer Note, with only World, Japan or India substituted. The
+remaining sheets used network or astronomy variants. At the user's request,
+the section is removed from every current atlas, ocean and climate legend,
+including the retained SLSL layouts. Reading guidance moves to the top of its
+column; symbols, bibliography and physical type are retained. Refreshing an
+older serialized legend model discards its observer paragraph, and the
+validator rejects the removed section.
+
+The user's page references identify Network fiber on page 15 and Network
+groundstations on page 17 in the World and Japan books. Submarine cable
+routes and landing points now use the selected dyad's light member (amber
+`#fcc553`); green terrestrial routes, geometry, line widths and status dashes
+are retained. Matching amber legend keys have a dark outline so they remain
+visible on the reversed legend paper. The groundstation World map had a
+native light ocean rectangle above its dark sheet paper; that rectangle now
+uses the dark member (wine `#240413`). The same presentation corrections apply
+to both geographic editions and their combined book inputs.
+
+The supported selective refresh is:
+
+```sh
+make atlas-optional ASSET_JOBS=4 \
+  ATLAS_OPTIONAL_ARGS='--refresh-maps network-fiber network-groundstations'
+```
+
+It refreshes the selected map exports, every legend, the three books and the
+contact sheets, while retaining the scientific products. Replaced map SVGs
+use atomic replacement, and selected map exports are detached before rendering
+so that shared files in the accepted parent remain unchanged.
+
+The initial legend-only attempt, `20261113t043541z-dd66433ea757`, exported all
+156 atlas sheets but failed source validation. Its records pointed to a removed
+historical build directory, although identical native inputs remained in the
+accepted delivery. Refresh now rebinds these paths to retained inputs only
+after matching their original SHA-256 values, preserving the original paths
+as provenance. The failed attempt did not replace the accepted delivery.
+
+Focused verification passes **87 tests**: 17 legend/delivery, 10 presentation,
+9 export, 11 recovery and 40 data-workflow tests. These include route paint
+and status preservation, groundstation background isolation, readable legend
+keys, Observer Note removal and refusal to rebind changed source bytes.
+
+The next review run, `20261113t044252z-a42f1283ca86`, passed all three export
+validators. Visual inspection identified old fiber prose that still described
+black cables. Correcting that prose during rendering caused the implementation
+guard to withhold publication. The final run,
+**`20261113t045014z-8dc2bb237484`**, includes the wording correction and published
+successfully at **8:55:03 PM PST on 12 November**, at the existing
+`output/data-edition/20261111/` path.
+
+Independent verification passed for all **160 legend SVG/PDF pairs**, confirming
+no Observer Note section and aligned reading headings. It also checked the
+network maps' requested paint against unchanged geometry, all artifact hashes,
+unchanged remaining map/native/data files, book input order and **80 / 80 / 158**
+page counts, and **1,060 local links**. Both selected map PDFs, representative
+atlas and optional legend PDFs, and World book pages 15 and 17 were rasterized
+for visual review. The receipt is
+`.cartofreako/data/operator-logs/atlas-presentation-refresh-verification.json`;
+the final log is
+`.cartofreako/data/operator-logs/atlas-presentation-refresh-final-20261112.log`.
+
+### Orbital palette and cyclic seam follow-up
+
+The user requested the Setouchi coloring on World book pages 37 and 39
+(orbital global positions and observer directions), and removal of the vertical
+strip on page 37. The retained Setouchi sheets establish white page paper,
+global water `rgb(242,244,243)`, land `rgb(216,221,219)`, observer sky
+`rgb(148,148,148)`, and type `rgb(40,42,46)`. The equator and tracks use gray;
+the observer horizon is orange. These context colors now override the atlas
+wine/amber theme for the two orbital subjects, in both geographic editions.
+Categorical satellite marker colors, source epochs and scientific positions
+are retained.
+
+The current World source contained an `orbital-image-frame` inset inside the
+outer cyclic page frame. Repeating that inset and its opaque native background
+created a vertical strip at the wrap boundary. The World adapter now applies
+the page margin once, removes repeated source paper, and paints one correctly
+colored image background beneath the three cyclic source references. Targeted
+previews confirm a continuous seam; regressions check unchanged satellite
+attributes and idempotent presentation updates.
+
+The refresh published as **`20261113t054328z-8f8b6a07f3a4`** at **9:48:51 PM
+PST on 12 November**. The World book pages 37 and 39 were rasterized from the
+delivered PDF and reviewed, along with the Japan observer PDF. Japan retains
+its distinct angular sky panel on white paper and pale geographic locator;
+the gray sky applies to the World all-sky sheet. All 16 selected orbital map
+artifacts in the accepted parent retain their original hashes. The focused
+checks now total **88 passing tests**, including the Setouchi context and cyclic
+inset regression. The build log is
+`.cartofreako/data/operator-logs/atlas-orbital-setouchi-refresh-20261112.log`.
+
+Independent verification passed for all **4,060 artifact hashes**, **160 legend
+SVG/PDF pairs**, **2,048 unchanged map/native/data files**, **1,060 local links**,
+and the **80 / 80 / 158** page books with unchanged input order. Satellite mark
+attributes are unchanged in all four refreshed orbital SVGs; the existing
+fiber and groundstation paint corrections also remain intact. The receipt is
+`.cartofreako/data/operator-logs/atlas-orbital-setouchi-verification.json`, with
+the independent log beside it as
+`atlas-orbital-setouchi-independent-20261112.log`.

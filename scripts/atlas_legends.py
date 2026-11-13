@@ -1,4 +1,4 @@
-"""A3 companion sheets: physical type, source-preserving keys and four sections."""
+"""A3 companion sheets: physical type, source-preserving keys and three sections."""
 from copy import deepcopy
 import html
 import importlib
@@ -11,7 +11,7 @@ from legend_informatics import el, register_fonts
 
 WIDTH, HEIGHT = 420 / 25.4, 297 / 25.4
 PAPER, INK = '#fcc553', '#240413'
-SECTIONS = ('Legend', 'Data sources', 'Observer note', 'How to read this plate')
+SECTIONS = ('Legend', 'Data sources', 'How to read this plate')
 
 
 def wrap(value, points, width, bold=False):
@@ -42,33 +42,6 @@ def text(parent, x, y, value, points=11, bold=False, role='body'):
               data_type_role=role, data_font_size_pt=points)
     node.text = str(value)
     return node
-
-
-def observer_note(stem, scope):
-    if stem.startswith('astro-') or stem == 'orbital-technosphere-observer':
-        if stem == 'astro-all-sky':
-            return ('The viewer looks outward from Earth over the complete celestial sphere. '
-                    'Positions are celestial directions, including objects below a local horizon; '
-                    'they are not terrestrial locations. A geographic locator does not crop or relocate this sky.')
-        if stem == 'astro-observer-hubble':
-            return ('The conceptual observer is the Hubble Space Telescope at the source calculation time. '
-                    'This is a calculated sky selection with the profile\'s Earth-limb and Sun avoidance rules, '
-                    'not a Hubble exposure. Geographic locators do not relocate the spacecraft.')
-        location = ('Setouchi, Japan (34.45 N, 133.99 E)' if scope=='japan' else
-                    'San Francisco, California (37.7749 N, 122.4194 W)')
-        return ('The observer is at '+location+', looking outward at the source calculation time. '
-                'Marks are celestial directions, not ground positions. The World and Japan '
-                'observer plates are calculated from different ground locations at the same instant. '
-                'Selection above the horizon does not imply naked-eye visibility.')
-    region = ('the complete Earth unfolded in AuthaGraph' if scope == 'world' else
-              'a geographic enlargement around Japan' if scope == 'japan' else
-              'a geographic enlargement of India')
-    note = 'The viewer looks down conceptually on ' + region + '. '
-    if stem == 'orbital-technosphere-global':
-        return note + 'Satellites are shown at Earth subpoints, not orbital height; lines are ground tracks. The observer sky plate instead looks outward from a ground location.'
-    if stem.startswith('network-'):
-        return note + 'Marks show recorded network geography. The view does not represent what is visible from a ground observer; source totals describe the full input unless explicitly labeled otherwise.'
-    return note + 'Locations and cell boundaries belong to the geographic surface. Read the mapped measure and its observation interval separately from the publication date; the projection is not a satellite photograph.'
 
 
 def native_content(group):
@@ -110,16 +83,17 @@ def _symbol(parent, item, x, y, index):
 
 
 def legend(stem, title, subtitle, sections, notes, sources, *, observer=None, scope=None):
+    # Accept observer from retained pre-removal models without rendering or
+    # serializing it again during a legend-only refresh.
     register_fonts()
     scope = scope or next((v for v in ('japan', 'india', 'world') if v in subtitle.lower()), 'world')
-    observer = observer or observer_note(stem, scope)
     if not sources:
         raise ValueError('A plate-specific bibliography is required: ' + stem)
     model = dict(stem=stem, title=title, subtitle=subtitle, sections=sections, notes=notes,
-                 sources=sources, observer=observer, scope=scope)
+                 sources=sources, scope=scope)
     root = el('svg', width='420mm', height='297mm', viewBox=f'0 0 {WIDTH} {HEIGHT}', role='img',
               data_canonical_plate_id=stem, data_sheet_kind='legend', data_legend_style='a3-v3',
-              data_sheet_background=PAPER, data_palette_reversed='true', data_observer_notes=observer)
+              data_sheet_background=PAPER, data_palette_reversed='true')
     el('title', root).text = title + ' / legend and data sources'
     el('metadata', root, id='atlas-legend-model').text = json.dumps(model, ensure_ascii=False)
     el('rect', root, id='legend-paper', width=WIDTH, height=HEIGHT, fill=PAPER)
@@ -168,11 +142,8 @@ def legend(stem, title, subtitle, sections, notes, sources, *, observer=None, sc
         source_y = paragraph(bibliography, xs[2], source_y, source, points=10.5, role='source')
     if source_y > bottom:
         raise ValueError(f'Data bibliography exceeds A3: {stem}, {source_y:.2f}')
-    view = el('g', root, id='observer-note', data_section='Observer note')
-    y = heading(view, xs[1], top, 'Observer note')
-    y = paragraph(view, xs[1], y, observer, points=12, role='observer')+.12
     reading = el('g', root, id='how-to-read', data_section='How to read this plate')
-    y = heading(reading, xs[1], y, 'How to read this plate')
+    y = heading(reading, xs[1], top, 'How to read this plate')
     x = xs[1]
     for value in how or ['Use the separate data bibliography to distinguish the source reference period from the dataset acquisition date.']:
         needed = len(wrap(value, 11, col))*11/72*1.35+.11
@@ -199,6 +170,10 @@ def validate_legend(root):
     if not papers or papers[0].get('fill') != PAPER:
         raise ValueError('Legend paper must use the light palette color')
     labels = {' '.join(''.join(n.itertext()).split()) for n in root.xpath('//*[local-name()="text"]')}
+    if (root.get('data-observer-notes') is not None or
+            root.xpath('//*[@id="observer-note" or @id="observer-notes"]') or
+            any(label.lower() in ('observer note', 'observer notes') for label in labels)):
+        raise ValueError('Legend must not contain an Observer note section')
     if not set(SECTIONS).issubset(labels):
         raise ValueError('Legend is missing a required section: ' + str(set(SECTIONS)-labels))
     for node in root.xpath('//*[local-name()="text"]'):
@@ -222,7 +197,8 @@ def validate_legend(root):
 def update_a3_sources(root, sources):
     """Retain the accepted v3 symbols and reading notes; supply bound citations."""
     register_fonts()
-    names = {'Symbols / full source population':'Legend', 'Observer notes':'Observer note',
+    remove_observer_note(root)
+    names = {'Symbols / full source population':'Legend',
              'How to read the plate':'How to read this plate', 'Sources / calculation':'Data sources'}
     for node in root.xpath('//*[local-name()="text"]'):
         if node.text in names:
@@ -246,4 +222,25 @@ def update_a3_sources(root, sources):
         raise ValueError('A3 source bibliography overflow')
     root.set('data-legend-style','a3-v3')
     root.set('data-sheet-background', PAPER)
+    return root
+
+
+def remove_observer_note(root):
+    """Remove the retained SLSL section and close its gap without scaling type."""
+    root.attrib.pop('data-observer-notes', None)
+    for group in root.xpath('//*[@id="observer-note" or @id="observer-notes"]'):
+        group.getparent().remove(group)
+    headings = [node for node in root.xpath('./*[local-name()="text"]')
+                if (node.text or '').lower() in ('observer note', 'observer notes')]
+    for heading in headings:
+        x, top = float(heading.get('x')), float(heading.get('y'))
+        root.remove(heading)
+        reading = [node for node in root.xpath('./*[local-name()="text"]')
+                   if node.text in ('How to read the plate', 'How to read this plate')
+                   and abs(float(node.get('x'))-x) < .001]
+        if reading:
+            start = float(reading[0].get('y'))
+            for node in root.xpath('./*[local-name()="text"]'):
+                if abs(float(node.get('x'))-x) < .001 and float(node.get('y')) >= start:
+                    node.set('y', str(float(node.get('y'))-start+top))
     return root

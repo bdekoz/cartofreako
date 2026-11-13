@@ -53,19 +53,11 @@ def legend(scope, evidence, recipe):
         {k:v for k,v in evidence.items() if k not in ('records', 'placement')}, sort_keys=True)
     if scope == 'japan':
         # Geographic scope changes; source totals and marker populations do not.
-        from atlas_legends import observer_note, wrap, text, WIDTH
-        observer = observer_note('network-groundstations', scope)
-        root.set('data-observer-notes', observer)
         for node in root.xpath('//*[local-name()="text"]'):
             if (node.text or '').startswith('World  |'):
                 node.text = node.text.replace('World  |', 'Japan  |', 1)
             if (node.text or '').startswith('STARLINK STAR LIGHT /'):
                 node.text = node.text.replace('/ WORLD /', '/ JAPAN /')
-        group = root.xpath('//*[@id="observer-notes"]')[0]
-        # Keep the original paragraph height; the new regional note is shorter.
-        for node in list(group):
-            group.remove(node)
-        col = (WIDTH-1.3)/3
-        for i, line in enumerate(wrap(observer, 12, col)):
-            text(group, .65+col, 2.05+i*12/72*1.4, line, 12, role='observer')
+    from atlas_legends import remove_observer_note
+    remove_observer_note(root)
     return root

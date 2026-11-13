@@ -27,7 +27,7 @@ class Legends(unittest.TestCase):
         tree=self.render()
         legends.validate_legend(tree)
         self.assertEqual((tree.get('width'),tree.get('height')),('420mm','297mm'))
-        for role,points in [('title',27),('heading',15),('observer',12),('body',11),('source',10.5)]:
+        for role,points in [('title',27),('heading',15),('body',11),('source',10.5)]:
             values=tree.xpath(f'//*[@data-type-role="{role}"]')
             self.assertTrue(values)
             self.assertTrue(all(abs(float(n.get('font-size'))*72-points)<1e-8 for n in values))
@@ -67,11 +67,32 @@ class Legends(unittest.TestCase):
         self.assertIn('bathymetry',' '.join(refs))
         self.assertIn('https://www.naturalearthdata.com/',' '.join(refs))
 
-    def test_japan_observer_sky_is_setouchi_not_san_francisco(self):
-        for stem in ('astro-observer-ground-multiband','orbital-technosphere-observer'):
-            self.assertIn('Setouchi',legends.observer_note(stem,'japan'))
-            self.assertIn('San Francisco',legends.observer_note(stem,'world'))
-        self.assertIn('Hubble',legends.observer_note('astro-observer-hubble','japan'))
+    def test_retained_models_drop_observer_note_and_reflow_reading_section(self):
+        tree=legends.legend('astro-observer-hubble','Hubble','Japan',[],
+                            ['Retained reading guidance'],['Retained source'],
+                            observer='Obsolete observer paragraph')
+        legends.validate_legend(tree)
+        self.assertNotIn('Obsolete observer paragraph',E.tostring(tree,encoding='unicode'))
+        self.assertFalse(tree.xpath('//*[@id="observer-note" or @data-type-role="observer"]'))
+        self.assertIsNone(tree.get('data-observer-notes'))
+        model=json.loads(tree.xpath('//*[@id="atlas-legend-model"]')[0].text)
+        self.assertNotIn('observer',model)
+        key=tree.xpath('//*[@id="legend"]/*[1]')[0]
+        reading=tree.xpath('//*[@id="how-to-read"]/*[1]')[0]
+        self.assertEqual(key.get('y'),reading.get('y'))
+
+    def test_retained_slsl_refresh_removes_note_and_closes_gap_idempotently(self):
+        tree=E.fromstring(b'<svg xmlns="http://www.w3.org/2000/svg" data-observer-notes="Old note"><text x="5.7" y="1.65">Observer notes</text><g id="observer-notes"><text>Old note</text></g><text x="5.7" y="4">How to read the plate</text><text x="5.7" y="4.4">Keep this guidance</text><text x=".45" y="2">Keep this key</text></svg>')
+        legends.update_a3_sources(tree,['Retained source'])
+        first=E.tostring(tree)
+        legends.update_a3_sources(tree,['Retained source'])
+        self.assertEqual(first,E.tostring(tree))
+        self.assertNotIn('observer',first.decode().lower())
+        reading=tree.xpath('//*[local-name()="text" and text()="How to read this plate"]')[0]
+        self.assertAlmostEqual(float(reading.get('y')),1.65)
+        guidance=tree.xpath('//*[local-name()="text" and text()="Keep this guidance"]')[0]
+        self.assertAlmostEqual(float(guidance.get('y')),2.05)
+        self.assertIn('Keep this key',''.join(tree.itertext()))
 
     def test_firms_bibliography_follows_ingestion_not_optional_profile_label(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -118,6 +139,33 @@ class Legends(unittest.TestCase):
             self.assertNotEqual(rows[0]['svg'],rows[1]['svg'])
             self.assertEqual(len(list(root.rglob('*.svg'))),2)
             for row in rows:self.assertEqual(dataset.digest(root/row['pdf']),row['pdf_sha256'])
+
+    def test_moved_atlas_source_requires_matching_retained_bytes(self):
+        from refresh_atlas_legends import retained_source
+        with tempfile.TemporaryDirectory() as folder:
+            base=Path(folder)
+            path=base/'native/authagraph/svg/geometry.svg'
+            path.parent.mkdir(parents=True)
+            path.write_text('Retained geometry')
+            old='/removed/build/native/authagraph/svg/geometry.svg'
+            self.assertEqual(retained_source(old,dataset.digest(path),base),str(path))
+            with self.assertRaisesRegex(dataset.DatasetError,'Retained atlas source changed'):
+                retained_source(old,'wrong hash',base)
+
+    def test_fiber_key_retains_light_route_ink_with_visible_dark_outline(self):
+        builder=importlib.import_module('build-current-atlas')
+        sections=builder.fiber_legend_sections({'text':legends.PAPER,'background':legends.INK})
+        tree=self.render(sections)
+        legends.validate_legend(tree)
+        for i in (3,4,5):
+            lines=tree.xpath(f'//*[@id="legend-symbol-{i}"]/*')
+            self.assertEqual([line.get('stroke') for line in lines],[legends.INK,legends.PAPER])
+            self.assertGreater(float(lines[0].get('stroke-width')),float(lines[1].get('stroke-width')))
+        notes=builder.fiber_reading_notes(['Kelly green = ITU land fibre | black = submarine cables | 0.5 pt / 75%',
+                                         'ITU: solid operational; dash construction; dots planned/proposed. Black: dash planned; dots 2022-only.'])
+        self.assertNotIn('black',' '.join(notes).lower())
+        self.assertIn('light dyad ink = submarine cables',notes[0])
+        self.assertIn('Submarine: dash planned; dots 2022-only.',notes[1])
 
 
 class Delivery(unittest.TestCase):
