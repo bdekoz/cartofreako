@@ -39,6 +39,15 @@ edition has **156 separate map/legend sheets**, all verified as SVG/PDF/PNG.
 the [build-stage notes](docs/pages/getting-started/generation-styles.md#build-stages-and-validation-status)
 record the export commands and remaining aggregate-book work.
 
+The completed [v4 book editions](docs/development/20261114_pod_expanded_v4.md)
+place each complete map across two full-bleed portrait A4 pages, followed by
+two pages of legend and source notes. World Atlas has 162 pages and Starlink
+has 38, with corresponding reflowable EPUBs. Build with
+`make publication-editions-v4` and audit with `make check-publication-editions-v4`;
+the [delivery notes](output/atlas-optional-v4-spread/README.md) describe frozen
+inputs, Izzi dependencies and validation. The previous
+[landscape variation](docs/development/20261114_pod_expanded_v2.md) remains available.
+
 The completed [Stage 0/1 record](docs/development/20261108_anthropocene_ocean_temperature_stage_1.md)
 covers the plate reorganization, lithium/uranium additions, absolute SST,
 SST anomaly and separate coral thermal-stress overlay. The completed

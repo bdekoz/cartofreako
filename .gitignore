@@ -81,6 +81,10 @@
 # Publication binaries and page renders are reproducible local deliveries.
 /output/atlas-optional-v3/*
 !/output/atlas-optional-v3/README.md
+/output/atlas-optional-v3-landscape/*
+!/output/atlas-optional-v3-landscape/README.md
+/output/atlas-optional-v4-spread/*
+!/output/atlas-optional-v4-spread/README.md
 /output/starlink-star-light-v4-observer-hourly/
 # Retain only the reviewed World observer reference used by hourly checks.
 /output/starlink-star-light-world-20261110/**

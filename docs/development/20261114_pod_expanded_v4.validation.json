@@ -1,0 +1,1404 @@
+{
+  "schema": "cartofreako-publication-delivery-summary-v3",
+  "edition": "v4",
+  "edition_date": "2026-11-14",
+  "layout": "portrait-map-spreads-v1",
+  "output_directory": "output/atlas-optional-v4-spread",
+  "user_choices": [
+    "Each map across two portrait A4 pages",
+    "Both map pages full bleed",
+    "Preserve complete map and extend background",
+    "Legend and overflow on the next two pages"
+  ],
+  "books": [
+    {
+      "stem": "atlas-world.20261112.v4",
+      "pages": 162,
+      "outputs": {
+        "print": {
+          "path": "atlas-world.20261112.v4.a4-portrait-spread.pdf",
+          "bytes": 103582163,
+          "sha256": "b2e039ca6a805e0eb87050befe5cd93647a544d58ee544df3beaff7cb1d7ef94"
+        },
+        "epub": {
+          "path": "atlas-world.20261112.v4.epub",
+          "bytes": 13991220,
+          "sha256": "5ba45c386a9d36b2ab6db9349cd5d4c819d714d6c1775ebeceb1af7b91b1811c"
+        },
+        "cover": {
+          "path": "atlas-world.20261112.v4.ebook-cover.jpg",
+          "bytes": 437501,
+          "sha256": "b70460ab666c895e4ebdf6524c29410fbb319f056c3332bacad0009d85659a6b"
+        }
+      },
+      "identity": {
+        "manifest_sha256": "5f125e9b05f829157a63950f69f67d56836c72891aaf34e06d701072968eec8f",
+        "profile_sha256": "c851b93792e03657f5a857e0682a6ab954ec65a1229527e8293f9957fe26ae1c",
+        "tools": {
+          "izzi_publication.py": "13b0526c2287ea89fbb5c733a14dd8f3e5d5b76a0f3271a6743c833512a5b94e",
+          "build-publication.py": "38dd0b8deda169238fa8851e07d2d04ecb263d4de9102819918f60b1445e8d68",
+          "review_raster.py": "e795d8966597c5fe5d9c942a0f22421f7bf62371da9689c4f4dc3b2c52f2f037"
+        }
+      },
+      "receipt_sha256": "ad45422d671ccbf83b3249bca31d9c4454850f28a0e4be64336b8294f9b54695",
+      "profile": {
+        "schema": "izzi-publication-profile-v1",
+        "id": "a4-portrait-spread-20261114",
+        "checked": "2026-11-14",
+        "layout": "portrait-map-spreads-v1",
+        "trim_mm": [
+          210,
+          297
+        ],
+        "inner_mm": 25,
+        "outer_mm": 13,
+        "top_mm": 13,
+        "bottom_mm": 13,
+        "inner_margin_by_pages": [
+          {
+            "max_pages": 60,
+            "inner_mm": 13
+          },
+          {
+            "max_pages": 150,
+            "inner_mm": 16
+          },
+          {
+            "max_pages": 400,
+            "inner_mm": 25
+          },
+          {
+            "max_pages": 600,
+            "inner_mm": 29
+          }
+        ],
+        "print_ppi": 300,
+        "pdfx": "PDF/X-3:2002",
+        "max_ink_percent": 240,
+        "min_pages": 2,
+        "max_pages": 600,
+        "epub_max_pixels": 3200000,
+        "epub_max_bytes": 100000000,
+        "epub_max_edge": 2400,
+        "cover_pixels": [
+          1400,
+          2240
+        ],
+        "sources": [
+          "https://assets.lulu.com/media/guides/en/lulu-book-creation-guide.pdf",
+          "https://www.ingramspark.com/hubfs/downloads/file-creation-guide.pdf",
+          "https://kdp.amazon.com/en_US/help/topic/G201834180"
+        ],
+        "notes": [
+          "Neutral A4 portrait interior master. Each complete artwork occupies an even/odd two-page spread, followed by exactly two pages of keys and notes.",
+          "Each page has 3 mm bleed on all four edges. TrimBox is A4; MediaBox/BleedBox are 216 x 303 mm. Text uses the recorded binding margins; artwork reaches the fold and outer trim.",
+          "Contain the entire map in the 420 x 297 mm trim spread. Extend its dominant border background without stretching or removing source coverage. Outer bleed repeats edge pixels; fold bleed contains the adjacent page pixels.",
+          "Integral pixels/mm above 300 ppi ensure exact matching halves. Receipt records the complete CMYK trim raster hash so final PDF halves can be rejoined and checked.",
+          "The neutral generation bounds and inherited binding bands are not a retailer eligibility claim. Product-specific export templates, wraparound covers and physical proof remain separate.",
+          "EPUB remains reflowable, with complete source text and optional detail images. It imposes no print split or parity."
+        ],
+        "bleed_mm": 3
+      },
+      "checks": {
+        "print": {
+          "pages": 162,
+          "images": 315,
+          "fonts": 2,
+          "maximum_ink_percent": 240.0,
+          "syntax": "pass",
+          "geometry_fonts_color_transparency": "pass",
+          "pdfx_declaration_and_output_intent": "pass",
+          "independent_pdfx_certification": "not run; no capable independent PDF/X validator installed"
+        },
+        "epub": {
+          "archive_xml_links_spine": "pass",
+          "images": 309,
+          "maximum_image_pixels": 3198750,
+          "EPUBCheck": "Validating using EPUB version 3.4 rules.\nNo errors or warnings detected.\nMessages: 0 fatals / 0 errors / 0 warnings / 0 infos\n\nEPUBCheck completed"
+        },
+        "all_print_pages_decode": "pass",
+        "unchanged_inputs": "pass",
+        "visual_review": "pending"
+      },
+      "content": {
+        "book": "atlas-world.20261112.v4",
+        "chapters": 39,
+        "paragraphs": 291,
+        "keys": 265,
+        "source_svg_text_lines": 1054,
+        "placed_image_ppi_and_margins": "pass",
+        "print_and_epub_text_coverage": "pass",
+        "source_hashes": "pass",
+        "facing_map_legend_pairs": null,
+        "four_page_map_and_legend_sequences": 39
+      },
+      "print_review": {
+        "schema": "izzi-publication-review-v1",
+        "reviewer_sha256": "19a8ad7e451a408dd1bec7e004e50f3b3bb46d3e36bfeac83217b939168b03f4",
+        "receipt_sha256": "ad45422d671ccbf83b3249bca31d9c4454850f28a0e4be64336b8294f9b54695",
+        "pdf_sha256": "b2e039ca6a805e0eb87050befe5cd93647a544d58ee544df3beaff7cb1d7ef94",
+        "actual_image_placements": 344,
+        "minimum_actual_ppi": 300.08315484439964,
+        "k_only_text_operations": 1604,
+        "words_inside_safety_margin": 8268,
+        "facing_spreads": "pass",
+        "maximum_artwork_fit": "pass",
+        "spreads": [
+          {
+            "chapter": "geometry-world",
+            "map_pages": [
+              6,
+              7
+            ],
+            "legend_pages": [
+              8,
+              9
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "12cf8ca195dda0f52b1eee492571e41f024f7803d963ab35b25756bd2797d8ae"
+          },
+          {
+            "chapter": "graticules-world",
+            "map_pages": [
+              10,
+              11
+            ],
+            "legend_pages": [
+              12,
+              13
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "791c7f785f36c4fb8cad660fa173d85e4322e9e5a0c73fe0bad9179b6fd97395"
+          },
+          {
+            "chapter": "earth-world",
+            "map_pages": [
+              14,
+              15
+            ],
+            "legend_pages": [
+              16,
+              17
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "58bd6df328ab8cba34065a66fbb9d49dcf1c28d65941213baec887b8b57251f9"
+          },
+          {
+            "chapter": "water-world",
+            "map_pages": [
+              18,
+              19
+            ],
+            "legend_pages": [
+              20,
+              21
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "86a428b88434ca23fa7358aaf9426d165a4003eba56c49c2c22d96d22e4d0b75"
+          },
+          {
+            "chapter": "cloud-atmosphere-world",
+            "map_pages": [
+              22,
+              23
+            ],
+            "legend_pages": [
+              24,
+              25
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "3c4a44673fe7d02335d254bae55c01578bfa65aaec64f61f9cbb618b441ff7a8"
+          },
+          {
+            "chapter": "network-cdn-world",
+            "map_pages": [
+              26,
+              27
+            ],
+            "legend_pages": [
+              28,
+              29
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "ead049d579e9e51ba5fff187641d8357d97cdde3b814a3a53cec3e439d079b3d"
+          },
+          {
+            "chapter": "network-fiber-world",
+            "map_pages": [
+              30,
+              31
+            ],
+            "legend_pages": [
+              32,
+              33
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "9bd11465cbe848b21922256a2f4eda20c69fd9709edfa7cd6f2239dde5b0cb5a"
+          },
+          {
+            "chapter": "network-groundstations-world",
+            "map_pages": [
+              34,
+              35
+            ],
+            "legend_pages": [
+              36,
+              37
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "995f278b100d8083a5c4ca5fe6d0ec43d655f38b59affd72ba268f35f204183a"
+          },
+          {
+            "chapter": "network-swarm-ge-1080p-world",
+            "map_pages": [
+              38,
+              39
+            ],
+            "legend_pages": [
+              40,
+              41
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733204545455844,
+            "trim_cmyk_sha256": "87d362fb8a0a683ae90ddc63a9820ece973094b431955dab936c22be80253a5f"
+          },
+          {
+            "chapter": "network-swarm-lt-1080p-world",
+            "map_pages": [
+              42,
+              43
+            ],
+            "legend_pages": [
+              44,
+              45
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733204545455844,
+            "trim_cmyk_sha256": "0d077d7511d9ce35626f5ae4753a64babdb626fed6ca8f7432ca7879045c9e83"
+          },
+          {
+            "chapter": "anthropocene-particulate-2025-world",
+            "map_pages": [
+              46,
+              47
+            ],
+            "legend_pages": [
+              48,
+              49
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "088cd4e1c6583e58f4788627dfd7430c8e857bf6169f4170b5248a4a7548663a"
+          },
+          {
+            "chapter": "anthropocene-particulate-2026-world",
+            "map_pages": [
+              50,
+              51
+            ],
+            "legend_pages": [
+              52,
+              53
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "dc358ee55550b7628d31fd2fb0623e2991b1699303bc1f55fa15f34a1df6039e"
+          },
+          {
+            "chapter": "anthropocene-land-temperature-2025-world",
+            "map_pages": [
+              54,
+              55
+            ],
+            "legend_pages": [
+              56,
+              57
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "cc6b65aa9c97ef45b8f349b7247b607c744a7727ce8be6275857064690cde2ab"
+          },
+          {
+            "chapter": "anthropocene-land-temperature-2026-world",
+            "map_pages": [
+              58,
+              59
+            ],
+            "legend_pages": [
+              60,
+              61
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "85a96d44bfbadb431b10e0723fbc41966353574d5ec493cbb218f13c54c516ee"
+          },
+          {
+            "chapter": "astro-all-sky-world",
+            "map_pages": [
+              62,
+              63
+            ],
+            "legend_pages": [
+              64,
+              65
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "c1eab76eddbb7d02f73973e85dc63f7440435dbc2b5e678213682222acefd202"
+          },
+          {
+            "chapter": "astro-observer-ground-multiband-world",
+            "map_pages": [
+              66,
+              67
+            ],
+            "legend_pages": [
+              68,
+              69
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "54d48dfe5958bc58259f04b5c6e33085efea9b499c640b4949ec3e9bc25193cc"
+          },
+          {
+            "chapter": "astro-observer-hubble-world",
+            "map_pages": [
+              70,
+              71
+            ],
+            "legend_pages": [
+              72,
+              73
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "b4797bb3b8dc32e36ddc5c59621bbed591689e7934750b126de6aa1532dd1c41"
+          },
+          {
+            "chapter": "orbital-technosphere-global-world",
+            "map_pages": [
+              74,
+              75
+            ],
+            "legend_pages": [
+              76,
+              77
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "39634a7337f273ca7718c7049d92b66f4d9a9c96690ad66b59cabf75ab43bf2b"
+          },
+          {
+            "chapter": "orbital-technosphere-observer-world",
+            "map_pages": [
+              78,
+              79
+            ],
+            "legend_pages": [
+              80,
+              81
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "48a12152197dd30933c67023c6eca6057c70ce700f47db504fc2bbdf29a17baf"
+          },
+          {
+            "chapter": "resources-energy-solar-capacity-2025-world",
+            "map_pages": [
+              82,
+              83
+            ],
+            "legend_pages": [
+              84,
+              85
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "b2c359b5344335e1ad386889f1c0989a1b3dbfc643ea140480827fd03436c53f"
+          },
+          {
+            "chapter": "resources-energy-wind-capacity-2025-world",
+            "map_pages": [
+              86,
+              87
+            ],
+            "legend_pages": [
+              88,
+              89
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "14664e63f275b131356dde6890817e6701610171f5dfb4d44b3cb593ef0055f2"
+          },
+          {
+            "chapter": "resources-energy-nuclear-operating-capacity-2024-world",
+            "map_pages": [
+              90,
+              91
+            ],
+            "legend_pages": [
+              92,
+              93
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "670076217f88694ba117c327a96f9dae696920b1e2afa59575c6188e71fb5478"
+          },
+          {
+            "chapter": "resources-energy-petrochemical-refinery-throughput-latest-2024-world",
+            "map_pages": [
+              94,
+              95
+            ],
+            "legend_pages": [
+              96,
+              97
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "e7098d62ec8c2422c357b3f1c02ffa181d1bab6844abd56e1cfe4a00c3a0b608"
+          },
+          {
+            "chapter": "resources-food-food-production-index-latest-2024-world",
+            "map_pages": [
+              98,
+              99
+            ],
+            "legend_pages": [
+              100,
+              101
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "14ab58331617931190a7d9c887cd4a61dc07ba39bf77ae1d3c2946e6661c55e1"
+          },
+          {
+            "chapter": "resources-fauna-fisheries-production-latest-2024-world",
+            "map_pages": [
+              102,
+              103
+            ],
+            "legend_pages": [
+              104,
+              105
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "8b800060b5d72af722eacbf1b533c067e4ae52ba9e7dab7ca9259fa92def40d2"
+          },
+          {
+            "chapter": "anthropocene-coral-reef-threat-2011-world",
+            "map_pages": [
+              106,
+              107
+            ],
+            "legend_pages": [
+              108,
+              109
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "6e32e58f8eb621a22a819cd1f3f3106584b1fa2fff96b239a4f41722d74b2fdc"
+          },
+          {
+            "chapter": "resources-flora-forest-area-percent-2024-world",
+            "map_pages": [
+              110,
+              111
+            ],
+            "legend_pages": [
+              112,
+              113
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "a392a568e21f4233574ee57c6acc806967aa0eb65bc37f33216566548e937178"
+          },
+          {
+            "chapter": "resources-mineral-rare-earth-mine-production-2025-world",
+            "map_pages": [
+              114,
+              115
+            ],
+            "legend_pages": [
+              116,
+              117
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "7f556cb93294285f06533112be0e1dce330495eedf6da2e7fc14833c08865508"
+          },
+          {
+            "chapter": "resources-human-population-under-30-2024-world",
+            "map_pages": [
+              118,
+              119
+            ],
+            "legend_pages": [
+              120,
+              121
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "86a73216d7733aa120c034429b52e33f3ccbf939fb850916b1afda6048e6b3e6"
+          },
+          {
+            "chapter": "resources-human-population-over-60-2024-world",
+            "map_pages": [
+              122,
+              123
+            ],
+            "legend_pages": [
+              124,
+              125
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "36efee9f44e4358836e856c3f16c5786b6319a68acf977b034b3cde54cfb2658"
+          },
+          {
+            "chapter": "resources-human-upper-secondary-attainment-latest-2025-world",
+            "map_pages": [
+              126,
+              127
+            ],
+            "legend_pages": [
+              128,
+              129
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "b3406c97177b7e34c9f0219f11ead2299cd7243c2543edee8af0b1b9faa8d95e"
+          },
+          {
+            "chapter": "resources-human-bachelors-attainment-latest-2024-world",
+            "map_pages": [
+              130,
+              131
+            ],
+            "legend_pages": [
+              132,
+              133
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "ffdddb28174dc54fd0580cf5b5a41edb2ca42f4dd23c4b55728bad1e781ac178"
+          },
+          {
+            "chapter": "resources-human-resident-patent-applications-per-million-2019-2021-world",
+            "map_pages": [
+              134,
+              135
+            ],
+            "legend_pages": [
+              136,
+              137
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "f4e3e6b455f02154e9608bfcbb15132aa0468b62c262546805770f77270c880f"
+          },
+          {
+            "chapter": "resources-energy-petroleum-eia-liquids-2025-world",
+            "map_pages": [
+              138,
+              139
+            ],
+            "legend_pages": [
+              140,
+              141
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "44641fd0d3776c5eaef9ead73ffb1db64b346f32b9d20142186aa338ab1c3d37"
+          },
+          {
+            "chapter": "resources-energy-petroleum-opec-liquids-projection-2030-world",
+            "map_pages": [
+              142,
+              143
+            ],
+            "legend_pages": [
+              144,
+              145
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "591279178a0797cfe733842bfba015a667163fa435fd200c6c00502e30401bcf"
+          },
+          {
+            "chapter": "resources-energy-petroleum-opec-country-coverage-2026-world",
+            "map_pages": [
+              146,
+              147
+            ],
+            "legend_pages": [
+              148,
+              149
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "b53475cda476c3b38a74a00980d2f9144ca7b23f08bd371ca9fa3ec442c93fe8"
+          },
+          {
+            "chapter": "resources-mineral-lithium-mine-production-2025-world",
+            "map_pages": [
+              150,
+              151
+            ],
+            "legend_pages": [
+              152,
+              153
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "6fecb556903c2ce662b710bdd3db6350bcba3c58ca5d2e23e5300fcabac04c36"
+          },
+          {
+            "chapter": "resources-mineral-uranium-mine-production-2024-world",
+            "map_pages": [
+              154,
+              155
+            ],
+            "legend_pages": [
+              156,
+              157
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "9b5e214b4b5d91d2221098efa5962c038e3e28cac87c0d4ce5f9fec96af442c3"
+          },
+          {
+            "chapter": "resources-mineral-mine-production-comparison-world",
+            "map_pages": [
+              158,
+              159
+            ],
+            "legend_pages": [
+              160,
+              161
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "8e0e9d848ad6a1c0519462154aedd5b8f245f3ae99362ccbbd1fa5d986030536"
+          }
+        ],
+        "visual_review": {
+          "status": "pass with documented source-detail limits",
+          "reviewer": "Codex visual inspection",
+          "date": "2026-11-14",
+          "scope": "All 162 final pages and all 78 map/legend spreads in contact sheets; selected larger legend pages, complete map spread, and ebook covers; no physical proof.",
+          "selected_pages": [
+            28,
+            76,
+            80,
+            161
+          ],
+          "selected_map_spreads": [
+            [
+              18,
+              19
+            ]
+          ],
+          "notes": [
+            "Complete maps join at the fold; each source border background extends to all trim edges. Original white-background orbital plates retain white.",
+            "All primary keys, original interpretation and source notes fit within the following two pages. Titles, margins, source columns and final production notes were inspected.",
+            "Dense original labels and existing overlaps remain source limitations and require enlargement."
+          ]
+        },
+        "decoded_pages": 162,
+        "contact_sheets": [
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/contact-1.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/contact-2.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/contact-3.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/contact-4.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/contact-5.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/contact-6.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/contact-7.jpg"
+        ],
+        "spread_previews": [
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-006-007.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-008-009.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-010-011.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-012-013.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-014-015.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-016-017.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-018-019.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-020-021.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-022-023.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-024-025.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-026-027.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-028-029.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-030-031.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-032-033.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-034-035.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-036-037.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-038-039.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-040-041.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-042-043.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-044-045.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-046-047.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-048-049.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-050-051.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-052-053.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-054-055.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-056-057.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-058-059.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-060-061.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-062-063.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-064-065.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-066-067.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-068-069.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-070-071.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-072-073.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-074-075.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-076-077.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-078-079.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-080-081.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-082-083.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-084-085.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-086-087.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-088-089.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-090-091.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-092-093.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-094-095.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-096-097.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-098-099.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-100-101.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-102-103.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-104-105.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-106-107.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-108-109.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-110-111.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-112-113.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-114-115.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-116-117.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-118-119.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-120-121.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-122-123.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-124-125.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-126-127.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-128-129.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-130-131.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-132-133.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-134-135.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-136-137.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-138-139.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-140-141.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-142-143.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-144-145.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-146-147.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-148-149.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-150-151.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-152-153.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-154-155.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-156-157.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/map-158-159.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/legend-160-161.jpg"
+        ],
+        "spread_contact_sheets": [
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/spread-contact-1.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/spread-contact-2.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/spread-contact-3.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/spread-contact-4.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/spread-contact-5.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/spread-contact-6.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/spread-contact-7.jpg"
+        ]
+      },
+      "reader_review": {
+        "schema": "izzi-epub-reader-review-v1",
+        "epub_sha256": "5ba45c386a9d36b2ab6db9349cd5d4c819d714d6c1775ebeceb1af7b91b1811c",
+        "reviewer_sha256": "cb8cdd9014247bd6212a5a2425c906e3b1398dcc48243cce91494fcb9cb072e0",
+        "previews": [
+          {
+            "chapter": "EPUB/chapter-network-cdn-world.xhtml",
+            "viewport": [
+              390,
+              844
+            ],
+            "reader_style": "phone",
+            "path": "chapter-network-cdn-world.phone.png",
+            "sha256": "23c63c2161fe0cb7d3167f7846204c65cb6bb92b9157f416b3a41fae8893fc7f"
+          },
+          {
+            "chapter": "EPUB/chapter-network-cdn-world.xhtml",
+            "viewport": [
+              390,
+              844
+            ],
+            "reader_style": "phone-large-dark",
+            "path": "chapter-network-cdn-world.phone-large-dark.png",
+            "sha256": "abdf6a75736d9213d0f1768873d4f11f29277b53a961e25d31a1b83f5a6ad689"
+          },
+          {
+            "chapter": "EPUB/chapter-network-cdn-world.xhtml",
+            "viewport": [
+              768,
+              1024
+            ],
+            "reader_style": "tablet",
+            "path": "chapter-network-cdn-world.tablet.png",
+            "sha256": "58d342394313051b85793904d313f460c9146acbf8d136ecfcd43f8683ffceb0"
+          },
+          {
+            "chapter": "EPUB/chapter-resources-human-resident-patent-applications-per-million-2019-2021-world.xhtml",
+            "viewport": [
+              390,
+              844
+            ],
+            "reader_style": "phone",
+            "path": "chapter-resources-human-resident-patent-applications-per-million-2019-2021-world.phone.png",
+            "sha256": "9ab02913e0f560c5918eea0f1e8ec96ea644767087cc835ba81ff3f3d520e2de"
+          },
+          {
+            "chapter": "EPUB/chapter-resources-human-resident-patent-applications-per-million-2019-2021-world.xhtml",
+            "viewport": [
+              390,
+              844
+            ],
+            "reader_style": "phone-large-dark",
+            "path": "chapter-resources-human-resident-patent-applications-per-million-2019-2021-world.phone-large-dark.png",
+            "sha256": "da6a2e0bfeadb94b2022ec8cd880fd647ccd01e0bd0b184c5b3314a189c1ad70"
+          },
+          {
+            "chapter": "EPUB/chapter-resources-human-resident-patent-applications-per-million-2019-2021-world.xhtml",
+            "viewport": [
+              768,
+              1024
+            ],
+            "reader_style": "tablet",
+            "path": "chapter-resources-human-resident-patent-applications-per-million-2019-2021-world.tablet.png",
+            "sha256": "39de7a8609eed442567417a53fc377df0956535bf91b1306feee6b32f0d94a8c"
+          }
+        ],
+        "scope": "Firefox viewport simulations; not Kindle Previewer or physical device testing",
+        "visual_review": {
+          "status": "pass",
+          "reviewer": "Codex visual inspection",
+          "date": "2026-11-14",
+          "scope": "Two chapters in 390 x 844 phone, 24px dark phone and 768 x 1024 tablet viewport screenshots. Visible headings, complete maps, captions and keys stay within the viewport. No scrolling, physical-device or Kindle Previewer test.",
+          "contact_sheet": "contact.jpg"
+        },
+        "browser": "Mozilla Firefox 160.0"
+      }
+    },
+    {
+      "stem": "starlink-star-light.v4",
+      "pages": 38,
+      "outputs": {
+        "print": {
+          "path": "starlink-star-light.v4.a4-portrait-spread.pdf",
+          "bytes": 24556612,
+          "sha256": "1e903047fa8dcaf5f747f8cef0f5ef2a1b5c110d3aadf1387731a5de03182ee8"
+        },
+        "epub": {
+          "path": "starlink-star-light.v4.epub",
+          "bytes": 9398012,
+          "sha256": "9dbf1e8df7426f05bb843a6380ca15bbc13664a9c3711184cec048b9eb8bd39e"
+        },
+        "cover": {
+          "path": "starlink-star-light.v4.ebook-cover.jpg",
+          "bytes": 701503,
+          "sha256": "3272761ed60ea117245a92d5dd880be0f5424bd6f65fe4dc16e1240d8050c8a7"
+        }
+      },
+      "identity": {
+        "manifest_sha256": "81d50f067afe27ea06e86f812229be9812c4587d3325f41e2ee32d6bbd8a532d",
+        "profile_sha256": "c851b93792e03657f5a857e0682a6ab954ec65a1229527e8293f9957fe26ae1c",
+        "tools": {
+          "izzi_publication.py": "13b0526c2287ea89fbb5c733a14dd8f3e5d5b76a0f3271a6743c833512a5b94e",
+          "build-publication.py": "38dd0b8deda169238fa8851e07d2d04ecb263d4de9102819918f60b1445e8d68",
+          "review_raster.py": "e795d8966597c5fe5d9c942a0f22421f7bf62371da9689c4f4dc3b2c52f2f037"
+        }
+      },
+      "receipt_sha256": "06a2daed16983fc8bf553c42fd04c6d9de7957d26f317d20bed1e2e80b5c455b",
+      "profile": {
+        "schema": "izzi-publication-profile-v1",
+        "id": "a4-portrait-spread-20261114",
+        "checked": "2026-11-14",
+        "layout": "portrait-map-spreads-v1",
+        "trim_mm": [
+          210,
+          297
+        ],
+        "inner_mm": 13,
+        "outer_mm": 13,
+        "top_mm": 13,
+        "bottom_mm": 13,
+        "inner_margin_by_pages": [
+          {
+            "max_pages": 60,
+            "inner_mm": 13
+          },
+          {
+            "max_pages": 150,
+            "inner_mm": 16
+          },
+          {
+            "max_pages": 400,
+            "inner_mm": 25
+          },
+          {
+            "max_pages": 600,
+            "inner_mm": 29
+          }
+        ],
+        "print_ppi": 300,
+        "pdfx": "PDF/X-3:2002",
+        "max_ink_percent": 240,
+        "min_pages": 2,
+        "max_pages": 600,
+        "epub_max_pixels": 3200000,
+        "epub_max_bytes": 100000000,
+        "epub_max_edge": 2400,
+        "cover_pixels": [
+          1400,
+          2240
+        ],
+        "sources": [
+          "https://assets.lulu.com/media/guides/en/lulu-book-creation-guide.pdf",
+          "https://www.ingramspark.com/hubfs/downloads/file-creation-guide.pdf",
+          "https://kdp.amazon.com/en_US/help/topic/G201834180"
+        ],
+        "notes": [
+          "Neutral A4 portrait interior master. Each complete artwork occupies an even/odd two-page spread, followed by exactly two pages of keys and notes.",
+          "Each page has 3 mm bleed on all four edges. TrimBox is A4; MediaBox/BleedBox are 216 x 303 mm. Text uses the recorded binding margins; artwork reaches the fold and outer trim.",
+          "Contain the entire map in the 420 x 297 mm trim spread. Extend its dominant border background without stretching or removing source coverage. Outer bleed repeats edge pixels; fold bleed contains the adjacent page pixels.",
+          "Integral pixels/mm above 300 ppi ensure exact matching halves. Receipt records the complete CMYK trim raster hash so final PDF halves can be rejoined and checked.",
+          "The neutral generation bounds and inherited binding bands are not a retailer eligibility claim. Product-specific export templates, wraparound covers and physical proof remain separate.",
+          "EPUB remains reflowable, with complete source text and optional detail images. It imposes no print split or parity."
+        ],
+        "bleed_mm": 3
+      },
+      "checks": {
+        "print": {
+          "pages": 38,
+          "images": 92,
+          "fonts": 2,
+          "maximum_ink_percent": 240.0,
+          "syntax": "pass",
+          "geometry_fonts_color_transparency": "pass",
+          "pdfx_declaration_and_output_intent": "pass",
+          "independent_pdfx_certification": "not run; no capable independent PDF/X validator installed"
+        },
+        "epub": {
+          "archive_xml_links_spine": "pass",
+          "images": 173,
+          "maximum_image_pixels": 3196863,
+          "EPUBCheck": "Validating using EPUB version 3.4 rules.\nNo errors or warnings detected.\nMessages: 0 fatals / 0 errors / 0 warnings / 0 infos\n\nEPUBCheck completed"
+        },
+        "all_print_pages_decode": "pass",
+        "unchanged_inputs": "pass",
+        "visual_review": "pending"
+      },
+      "content": {
+        "book": "starlink-star-light.v4",
+        "chapters": 8,
+        "paragraphs": 112,
+        "keys": 156,
+        "source_svg_text_lines": 487,
+        "placed_image_ppi_and_margins": "pass",
+        "print_and_epub_text_coverage": "pass",
+        "source_hashes": "pass",
+        "facing_map_legend_pairs": null,
+        "four_page_map_and_legend_sequences": 8
+      },
+      "print_review": {
+        "schema": "izzi-publication-review-v1",
+        "reviewer_sha256": "19a8ad7e451a408dd1bec7e004e50f3b3bb46d3e36bfeac83217b939168b03f4",
+        "receipt_sha256": "06a2daed16983fc8bf553c42fd04c6d9de7957d26f317d20bed1e2e80b5c455b",
+        "pdf_sha256": "1e903047fa8dcaf5f747f8cef0f5ef2a1b5c110d3aadf1387731a5de03182ee8",
+        "actual_image_placements": 173,
+        "minimum_actual_ppi": 300.08315484439964,
+        "k_only_text_operations": 636,
+        "words_inside_safety_margin": 4087,
+        "facing_spreads": "pass",
+        "maximum_artwork_fit": "pass",
+        "spreads": [
+          {
+            "chapter": "slsl1-astro-all-sky-world",
+            "map_pages": [
+              6,
+              7
+            ],
+            "legend_pages": [
+              8,
+              9
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "9e5a13cba5638aebbc08caf23182f5537d5b0535bd8cfd54d89876f096395ea9"
+          },
+          {
+            "chapter": "slsl1-astro-all-sky-usa",
+            "map_pages": [
+              10,
+              11
+            ],
+            "legend_pages": [
+              12,
+              13
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "2d0040dfb55d4a253863d9162903b556e14edf46ccf30667b28a7776771aec9c"
+          },
+          {
+            "chapter": "slsl2-orbital-technosphere-observer-world",
+            "map_pages": [
+              14,
+              15
+            ],
+            "legend_pages": [
+              16,
+              17
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "ea755a06a233fb5bd66d053c2839b649ac5acb8449c257f3c8c96d45722e265d"
+          },
+          {
+            "chapter": "slsl2-orbital-technosphere-observer-usa",
+            "map_pages": [
+              18,
+              19
+            ],
+            "legend_pages": [
+              20,
+              21
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "c1dd8cbae972da21e116e946b221bbaaf0092ad342c2ce8b3a863473b7e91783"
+          },
+          {
+            "chapter": "slsl3-orbital-technosphere-global-world",
+            "map_pages": [
+              22,
+              23
+            ],
+            "legend_pages": [
+              24,
+              25
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "0c18bad2f5eb78cabe5b0fd986a5b88d998fe45da40973304f3f02e95b11d2e9"
+          },
+          {
+            "chapter": "slsl3-orbital-technosphere-global-usa",
+            "map_pages": [
+              26,
+              27
+            ],
+            "legend_pages": [
+              28,
+              29
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "79f54c7e639eb192b038ed8500295eea29d4dc556101eaf1cca5a1e409ab82e5"
+          },
+          {
+            "chapter": "slsl4-network-groundstations-world",
+            "map_pages": [
+              30,
+              31
+            ],
+            "legend_pages": [
+              32,
+              33
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "4372154b17fc9b2f33f1794bae7b565386713b9f93961a9917e0af4a14a160c6"
+          },
+          {
+            "chapter": "slsl4-network-groundstations-usa",
+            "map_pages": [
+              34,
+              35
+            ],
+            "legend_pages": [
+              36,
+              37
+            ],
+            "full_bleed": "pass",
+            "fold_bleed_pixels_match": "pass",
+            "rejoined_trim_pixels": "pass",
+            "maximum_fit_error_mm": 0.06733250946969822,
+            "trim_cmyk_sha256": "09730c08be48e8f81a7b38b662194894e9dd34f74f570e13568b091945464d09"
+          }
+        ],
+        "visual_review": {
+          "status": "pass with documented source-detail limits",
+          "reviewer": "Codex visual inspection",
+          "date": "2026-11-14",
+          "scope": "All 38 final pages and all 16 map/legend spreads in contact sheets; selected larger legend pages and complete map spread; no physical proof.",
+          "selected_pages": [
+            20,
+            33,
+            37
+          ],
+          "selected_map_spreads": [
+            [
+              22,
+              23
+            ]
+          ],
+          "notes": [
+            "Complete maps join at the fold with extended background to all trim edges. No map-page publication furniture.",
+            "All keys, source notes and original interpretation text fit the following two pages; no clipping or type shrinking.",
+            "Original dense-label overlaps remain in the source map and require enlargement."
+          ]
+        },
+        "decoded_pages": 38,
+        "contact_sheets": [
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/contact-1.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/contact-2.jpg"
+        ],
+        "spread_previews": [
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/map-006-007.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/legend-008-009.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/map-010-011.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/legend-012-013.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/map-014-015.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/legend-016-017.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/map-018-019.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/legend-020-021.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/map-022-023.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/legend-024-025.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/map-026-027.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/legend-028-029.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/map-030-031.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/legend-032-033.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/map-034-035.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/legend-036-037.jpg"
+        ],
+        "spread_contact_sheets": [
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/spread-contact-1.jpg",
+          "/home/bkoz/src/cartofreako/output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/spread-contact-2.jpg"
+        ]
+      },
+      "reader_review": {
+        "schema": "izzi-epub-reader-review-v1",
+        "epub_sha256": "9dbf1e8df7426f05bb843a6380ca15bbc13664a9c3711184cec048b9eb8bd39e",
+        "reviewer_sha256": "cb8cdd9014247bd6212a5a2425c906e3b1398dcc48243cce91494fcb9cb072e0",
+        "previews": [
+          {
+            "chapter": "EPUB/chapter-slsl2-orbital-technosphere-observer-usa.xhtml",
+            "viewport": [
+              390,
+              844
+            ],
+            "reader_style": "phone",
+            "path": "chapter-slsl2-orbital-technosphere-observer-usa.phone.png",
+            "sha256": "296153d5e9e22905fb4fd6a14d45ae1b2fbe71336d16f87edacfece300128937"
+          },
+          {
+            "chapter": "EPUB/chapter-slsl2-orbital-technosphere-observer-usa.xhtml",
+            "viewport": [
+              390,
+              844
+            ],
+            "reader_style": "phone-large-dark",
+            "path": "chapter-slsl2-orbital-technosphere-observer-usa.phone-large-dark.png",
+            "sha256": "fcba3e5f389e899c686accf00f25ddec84cc90cbfada84ad386e47946cca6be5"
+          },
+          {
+            "chapter": "EPUB/chapter-slsl2-orbital-technosphere-observer-usa.xhtml",
+            "viewport": [
+              768,
+              1024
+            ],
+            "reader_style": "tablet",
+            "path": "chapter-slsl2-orbital-technosphere-observer-usa.tablet.png",
+            "sha256": "39bcdf0e56d5cfc404617e1b224592829808e74eaa66ced4d258e8b789826743"
+          },
+          {
+            "chapter": "EPUB/chapter-slsl4-network-groundstations-world.xhtml",
+            "viewport": [
+              390,
+              844
+            ],
+            "reader_style": "phone",
+            "path": "chapter-slsl4-network-groundstations-world.phone.png",
+            "sha256": "2acba57feeefd0056fa0f04ab6dfd20a28ed1e08a04f5f6ff261b75b605c0b91"
+          },
+          {
+            "chapter": "EPUB/chapter-slsl4-network-groundstations-world.xhtml",
+            "viewport": [
+              390,
+              844
+            ],
+            "reader_style": "phone-large-dark",
+            "path": "chapter-slsl4-network-groundstations-world.phone-large-dark.png",
+            "sha256": "191ca359d1c6979e59462e292f7164a76e2403ad4ecd3b1bbc062cf068f9198a"
+          },
+          {
+            "chapter": "EPUB/chapter-slsl4-network-groundstations-world.xhtml",
+            "viewport": [
+              768,
+              1024
+            ],
+            "reader_style": "tablet",
+            "path": "chapter-slsl4-network-groundstations-world.tablet.png",
+            "sha256": "758c0119f5ca14f4a20f495e18e3168cef58bf3e4f1e3253796ff41fc50a6a64"
+          }
+        ],
+        "scope": "Firefox viewport simulations; not Kindle Previewer or physical device testing",
+        "visual_review": {
+          "status": "pass",
+          "reviewer": "Codex visual inspection",
+          "date": "2026-11-14",
+          "scope": "Two chapters in 390 x 844 phone, 24px dark phone and 768 x 1024 tablet viewport screenshots. Visible headings, complete maps, captions and keys stay within the viewport. No scrolling, physical-device or Kindle Previewer test.",
+          "contact_sheet": "contact.jpg"
+        },
+        "browser": "Mozilla Firefox 160.0"
+      }
+    }
+  ],
+  "environment": {
+    "schema": "cartofreako-publication-environment-v3",
+    "layout": "portrait-map-spreads-v1",
+    "edition": "v4",
+    "python": "3.14.10 (main, Oct 26 2026, 00:00:00) [GCC 16.2.1 20260819 (Red Hat 16.2.1-2)]",
+    "git_base": {
+      "cartofreako": "166fa731bfd986dd8f9001ab846256fae7784c7e",
+      "izzi": "03fd482dd30e279a874af3fbf8907a09c929ac22"
+    },
+    "working_changes": "Uncommitted layout, adapter and review changes; exact production scripts and profile are frozen beside this record.",
+    "tests": {
+      "izzi_fast": 8,
+      "izzi_integration": 8,
+      "status": "pass",
+      "scope": "Includes existing portrait/mobile/landscape and EPUB build/resume checks; full-bleed trim geometry, matching fold pixels, rejoined map hash, wrong-half rejection and fixed-two-page overflow.",
+      "generic_example_pages": 14,
+      "verified_resume": "pass: both final book deliveries retain their exact bytes"
+    },
+    "epubcheck": {
+      "version": "5.4.0",
+      "jar_sha256": "2146665a124998dc6c908010ffe0d09dc4f4c8014f2c8fd6a1aa11f64c40ac93"
+    }
+  },
+  "tool_snapshot_sha256": {
+    "a4-portrait-spread-20261114.json": "c851b93792e03657f5a857e0682a6ab954ec65a1229527e8293f9957fe26ae1c",
+    "build-publication-editions.py": "197a3e0b3e836be23f677ee02e7836d1d523e2094ef7acda3a240ad9680f5c7e",
+    "build-publication.py": "38dd0b8deda169238fa8851e07d2d04ecb263d4de9102819918f60b1445e8d68",
+    "izzi_publication.py": "13b0526c2287ea89fbb5c733a14dd8f3e5d5b76a0f3271a6743c833512a5b94e",
+    "publication.py": "e4f7a865e21cc21dec6c5859b44111b726adc399b1f563f1cbd9c1163c2748c1",
+    "review-epub-reader.py": "cb8cdd9014247bd6212a5a2425c906e3b1398dcc48243cce91494fcb9cb072e0",
+    "review-publication.py": "19a8ad7e451a408dd1bec7e004e50f3b3bb46d3e36bfeac83217b939168b03f4",
+    "review_raster.py": "e795d8966597c5fe5d9c942a0f22421f7bf62371da9689c4f4dc3b2c52f2f037",
+    "test-publication-editions.py": "ae84a5034a06328695a2a6108b6cd694cab8eea0381c5614964b217c69e24586"
+  },
+  "remaining": [
+    "Provider template and product validation",
+    "Independent full PDF/X certification",
+    "Separate print wraparound covers",
+    "Final title/ISBN setup",
+    "Kindle Previewer",
+    "Physical proof"
+  ]
+}

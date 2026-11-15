@@ -1,14 +1,24 @@
 # Starlink Star Light v3: IngramSpark book options
 
-**Updated direction, 14 November 2026:** use A4 portrait and produce both the
-complete World atlas and the complete Starlink Star Light v3 collection as
-print interiors and corresponding EPUBs. Compare IngramSpark, Amazon KDP,
-and Lulu. Izzi owns the reusable visualization/production capability;
+**Latest variation, 14 November 2026:** the completed
+[v4 edition](20261114_pod_expanded_v4.md) spans each complete map across two
+full-bleed portrait A4 pages, followed by two legend/source pages. Its
+[delivery](../../output/atlas-optional-v4-spread/README.md) has 162 World Atlas
+pages and 38 Starlink pages, plus EPUBs. Original Starlink v3 content and
+observation dates are unchanged.
+
+**Previous landscape variation, 14 November 2026:** use A4 landscape, maximizing each
+cartographic plate on its own page with the legend on the facing page.
+Retain both the complete World atlas and the complete Starlink Star Light v3
+collection as print interiors and corresponding EPUBs. The
+[landscape delivery](../../output/atlas-optional-v3-landscape/README.md)
+now contains the rebuilt PDFs and EPUBs; the portrait delivery below is the
+previous baseline. Izzi owns the reusable visualization/production capability;
 Cartofreako supplies the cartographic content and book manifests. The
-[expanded v2 plan](20261114_pod_expanded_v2.md) is the current specification.
+[expanded v2 plan](20261114_pod_expanded_v2.md) documents that variation.
 The A5 options below are retained as the earlier format study.
 
-**Implemented delivery:** the [A4 Starlink interior](../../output/atlas-optional-v3/starlink-star-light.v3.a4.ingramspark.pdf)
+**Previous portrait delivery:** the [A4 Starlink interior](../../output/atlas-optional-v3/starlink-star-light.v3.a4.ingramspark.pdf)
 has 30 pages and all eight SLSL1-SLSL4 World/USA views. Its
 [reflowable EPUB](../../output/atlas-optional-v3/starlink-star-light.v3.epub)
 and RGB ebook cover are in the [delivery directory](../../output/atlas-optional-v3/README.md),

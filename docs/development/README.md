@@ -8,7 +8,8 @@ title: Development records
 [Documentation index](../pages/README.md) · [Historical records](../pages/history/README.md)
 
 - [Mobile PDF optimization: rasterized World atlas and repeatable conversion procedure](20261114_pdf_optimization_mobile.md)
-- [Implemented A4 print and EPUB editions: World atlas, Starlink Star Light, Izzi production ownership and validation](20261114_pod_expanded_v2.md)
+- [v4 full-bleed portrait spreads: complete two-page maps, two-page legends, PDFs and EPUBs](20261114_pod_expanded_v4.md)
+- [Previous A4 landscape and portrait editions: World atlas, Starlink Star Light and validation](20261114_pod_expanded_v2.md)
 - [Current delivery and deferred documentation/build follow-up](20261108_documentation_followup.md)
 - [Starlink Star Light v3: World/USA sheets, A3 legends and IngramSpark format studies](20261109_starlink_star_light_v3.md)
 - [Completed Stage 2 climate prototypes: marine heatwaves, thermal seasons, coastal heat and India heat–PM2.5](20261108_anthropocene_ocean_temperature_stage_2.md)

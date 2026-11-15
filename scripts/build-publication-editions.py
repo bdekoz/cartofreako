@@ -135,11 +135,13 @@ def legend_content(path, pdf_asset):
                                      'key_count': len(keys), 'source_date': root.get('data-calculation-or-source-date')}
 
 
-def prepare(kind, destination):
+def prepare(kind, destination, layout='portrait'):
     world = kind == 'world'
     base = (ROOT/'output/data-edition/20261111/atlas' if world else ROOT/'output/starlink-star-light-v3-20261109').resolve()
     source = base/('atlas-world.20261112.v3.pdf' if world else 'starlink-star-light-v3.pdf')
     stem = 'atlas-world.20261112.v3' if world else 'starlink-star-light.v3'
+    if layout == 'spread':
+        stem = stem.removesuffix('.v3')+'.v4'
     assets = {}
     def asset(identifier, path, expected=None):
         path = path.resolve(); checksum = digest(path)
@@ -201,6 +203,12 @@ def prepare(kind, destination):
         caption = 'Complete overview. Fine labels and individual marks require enlargement; use the readable key and accompanying detail views.'
         image = {'asset': map_asset, 'alt': title+'. '+subtitle+'. The legend and reading notes describe the symbols and interpretation.', 'caption': caption}
         chapter = {'id': identifier, 'title': title, 'subtitle': subtitle, 'image': image, 'sections': sections}
+        if layout in ('landscape', 'spread'):
+            # Keep source sections intact. These indices identify the original
+            # context paragraph that must share the facing page with every key.
+            context = next((i for i, section in enumerate(sections)
+                            if section.get('paragraphs') and section.get('role') != 'sources'), None)
+            chapter['facing_context'] = [[context, 0]] if context is not None else []
         if world:
             chapter['ebook_image'] = {**image, 'asset': 'mobile-book', 'page': 3+2*n}
         # These crops enlarge original artwork to approximately native label
@@ -257,6 +265,28 @@ def prepare(kind, destination):
             'Project sources: https://github.com/bdekoz/cartofreako and https://github.com/bdekoz/izzi.'
         ]
     }
+    if layout == 'landscape':
+        manifest['print_layout'] = 'facing-spreads-v1'
+        manifest['metadata']['edition'] = 'A4 landscape and digital edition / November 2026'
+        manifest['metadata']['identifier'] = 'urn:uuid:'+str(uuid.uuid5(
+            uuid.NAMESPACE_URL, 'https://github.com/bdekoz/cartofreako/'+stem+'/a4-landscape-20261114'))
+        manifest['introduction'][0] = 'This A4 landscape edition pairs each complete cartographic plate with a readable legend on the facing page.'
+        manifest['reading_guide'][0] = 'In print, each complete map fills the safe area of an even left page; its title, primary context and complete symbol key are on the facing right page. Longer explanations, sources and enlarged details follow the pair when needed. The ebook keeps each map and its text together in one reflowable chapter.'
+        manifest['reading_guide'][1] = 'Read symbol keys across each row and then down. Read explanatory text down the left column and then down the right column. Contents entries point to the map page; the facing legend repeats that reference.'
+        manifest['colophon'][1] = 'Atkinson Hyperlegible typography. A4 landscape pages with white safety margins and page-count-dependent binding allowance. Each complete map is proportionally fitted to the entire safe frame, with its primary legend opposite. Original artwork is rasterized at approximately 300 pixels per inch at its placed size; legend and explanatory text remains live.'
+    if layout == 'spread':
+        manifest['print_layout'] = 'portrait-map-spreads-v1'
+        manifest['metadata']['edition'] = 'v4 / A4 portrait spreads and digital edition / November 2026'
+        manifest['metadata']['identifier'] = 'urn:uuid:'+str(uuid.uuid5(
+            uuid.NAMESPACE_URL, 'https://github.com/bdekoz/cartofreako/'+stem+'/a4-portrait-spread-20261114'))
+        manifest['introduction'][0] = 'This v4 edition presents each complete cartographic plate across two facing A4 portrait pages, followed by a two-page legend and source-note spread.'
+        manifest['reading_guide'][0] = 'In print, each map spans an even left page and the facing odd right page. The full map is preserved at its largest proportional size across the spread, with its original background extended to the page edges. The next two facing pages contain its title, complete symbol key, interpretation and sources. The ebook keeps each complete map and its text together in one reflowable chapter.'
+        manifest['reading_guide'][1] = 'Read keys across each row, then down. Read explanatory text down the left column, then down the right column. Contents entries point to the first map page. The map joins at the centre fold; a physical binding can obscure fine marks there.'
+        manifest['reading_guide'][2] = 'The ebook supports zooming on complete maps and changing text size. Selected enlarged details remain in the ebook; the print edition gives each complete map a two-page spread.'
+        manifest['colophon'][1] = 'Atkinson Hyperlegible typography. A4 portrait trim, 210 x 297 mm, with 3 mm bleed on every edge. Each complete map is proportionally fitted across the 420 x 297 mm spread; its dominant border background fills the remaining space. A single raster is split into matching halves with shared fold bleed. Print maps exceed 300 pixels per inch at their placed size. Legend and source text remains live within mirrored binding margins.'
+        for chapter in chapters:
+            chapter.setdefault('ebook_image', dict(chapter['image']))
+            chapter['image']['caption'] = 'Complete map across the preceding two-page spread. Fine source labels and individual marks still require enlargement.'
     destination.mkdir(parents=True, exist_ok=True)
     manifest_path = destination/(stem+'.manifest.json')
     serialized = json.dumps(manifest, indent=2, ensure_ascii=False)+'\n'
@@ -271,19 +301,28 @@ def prepare(kind, destination):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--book', choices=['both', 'world', 'starlink'], default='both')
-    parser.add_argument('--output', type=Path, default=ROOT/'output/atlas-optional-v3')
+    parser.add_argument('--output', type=Path)
+    parser.add_argument('--layout', choices=['portrait', 'landscape', 'spread'], default='portrait')
+    parser.add_argument('--profile', type=Path, help='Explicit Izzi profile; defaults to the selected layout profile')
     parser.add_argument('--izzi', type=Path, default=ROOT.parent/'izzi')
     parser.add_argument('--epubcheck', type=Path, default=ROOT/'build/pod-tools/epubcheck-5.4.0/epubcheck.jar')
     parser.add_argument('--prepare-only', action='store_true'); parser.add_argument('--resume', action='store_true')
     args = parser.parse_args()
+    if args.output is None:
+        args.output = ROOT/{'portrait':'output/atlas-optional-v3', 'landscape':'output/atlas-optional-v3-landscape',
+                            'spread':'output/atlas-optional-v4-spread'}[args.layout]
+    profile = args.profile or args.izzi.resolve()/'config/publication'/ {
+        'portrait':'ingramspark-a4-20261114.json', 'landscape':'a4-landscape-facing-20261114.json',
+        'spread':'a4-portrait-spread-20261114.json'}[args.layout]
     for book in ('world', 'starlink') if args.book == 'both' else (args.book,):
-        manifest, stem = prepare(book, args.output.resolve()/'sources')
+        manifest, stem = prepare(book, args.output.resolve()/'sources', args.layout)
         print('Prepared '+str(manifest), flush=True)
         if not args.prepare_only:
             env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1')
             env['PYTHONPATH'] = str(ROOT/'build/setouchi-h3-python')+os.pathsep+env.get('PYTHONPATH', '')
             command = [sys.executable, str(args.izzi.resolve()/'scripts/build-publication.py'), 'build', str(manifest),
                        '--stem', stem, '--output', str(args.output.resolve()), '--epubcheck', str(args.epubcheck.resolve())]
+            command += ['--profile', str(profile.resolve())]
             if args.resume:
                 command.append('--resume')
             subprocess.run(command, check=True, env=env)

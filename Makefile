@@ -3736,10 +3736,25 @@ endif # DATASET_RECURSE
 # Optional book production lives in Izzi; Cartofreako supplies frozen content.
 PUBLICATION_IZZI ?= ../izzi
 PUBLICATION_OUTPUT ?= output/atlas-optional-v3
+PUBLICATION_LANDSCAPE_OUTPUT ?= output/atlas-optional-v3-landscape
+PUBLICATION_SPREAD_OUTPUT ?= output/atlas-optional-v4-spread
 PUBLICATION_EPUBCHECK ?= build/pod-tools/epubcheck-5.4.0/epubcheck.jar
-.PHONY: publication-editions check-publication-editions
+.PHONY: publication-editions check-publication-editions publication-editions-landscape check-publication-editions-landscape
 publication-editions:
 	PYTHONDONTWRITEBYTECODE=1 python3 scripts/build-publication-editions.py --izzi "$(PUBLICATION_IZZI)" --output "$(PUBLICATION_OUTPUT)" --epubcheck "$(PUBLICATION_EPUBCHECK)" --resume
 
 check-publication-editions:
 	PYTHONDONTWRITEBYTECODE=1 python3 tests/test-publication-editions.py --output "$(PUBLICATION_OUTPUT)" --report "$(PUBLICATION_OUTPUT)/validation/content.json"
+
+publication-editions-landscape:
+	PYTHONDONTWRITEBYTECODE=1 python3 scripts/build-publication-editions.py --layout landscape --izzi "$(PUBLICATION_IZZI)" --output "$(PUBLICATION_LANDSCAPE_OUTPUT)" --epubcheck "$(PUBLICATION_EPUBCHECK)" --resume
+
+check-publication-editions-landscape:
+	PYTHONDONTWRITEBYTECODE=1 python3 tests/test-publication-editions.py --output "$(PUBLICATION_LANDSCAPE_OUTPUT)" --report "$(PUBLICATION_LANDSCAPE_OUTPUT)/validation/content.json"
+
+.PHONY: publication-editions-v4 check-publication-editions-v4
+publication-editions-v4:
+	PYTHONDONTWRITEBYTECODE=1 python3 scripts/build-publication-editions.py --layout spread --izzi "$(PUBLICATION_IZZI)" --output "$(PUBLICATION_SPREAD_OUTPUT)" --epubcheck "$(PUBLICATION_EPUBCHECK)" --resume
+
+check-publication-editions-v4:
+	PYTHONDONTWRITEBYTECODE=1 python3 tests/test-publication-editions.py --output "$(PUBLICATION_SPREAD_OUTPUT)" --report "$(PUBLICATION_SPREAD_OUTPUT)/validation/content.json"
