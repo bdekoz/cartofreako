@@ -1,0 +1,241 @@
+{
+  "schema": "cartofreako-publication-delivery-summary-v1",
+  "edition_date": "2026-11-14",
+  "output_directory": "output/atlas-optional-v3",
+  "generic_production_owner": "izzi",
+  "content_owner": "cartofreako",
+  "tests": {
+    "izzi_fast": 6,
+    "izzi_integration": 4,
+    "status": "pass"
+  },
+  "books": [
+    {
+      "stem": "atlas-world.20261112.v3",
+      "outputs": {
+        "print": {
+          "path": "atlas-world.20261112.v3.a4.ingramspark.pdf",
+          "bytes": 35283041,
+          "sha256": "66290695805b758bf87014c59d8f58fede4f2bcf6e4ca82a18e259ed26783362"
+        },
+        "epub": {
+          "path": "atlas-world.20261112.v3.epub",
+          "bytes": 13980752,
+          "sha256": "4a308f3e24f444a6557f69cea9c35674c0f5198322eb6bb050be88eff8052f12"
+        },
+        "cover": {
+          "path": "atlas-world.20261112.v3.ebook-cover.jpg",
+          "bytes": 427217,
+          "sha256": "7d8068744aa8cffbbee2ba2535467174e0ce6c452bbc6f5a1c2e8fd61803f2af"
+        }
+      },
+      "identity": {
+        "manifest_sha256": "8a80c2f698b1721b3666f9bab2a4da4ebb69b39ebd40ea0cd95598865013da18",
+        "profile_sha256": "f2846f2b532503c4a37a22e6be546a108568716f26e6268b6f961e78c3a02b83",
+        "tools": {
+          "izzi_publication.py": "d22276977b610c6db4e78c2719203c4ed5483fd4c59ff568b57774b20da4865c",
+          "build-publication.py": "38dd0b8deda169238fa8851e07d2d04ecb263d4de9102819918f60b1445e8d68",
+          "review_raster.py": "e795d8966597c5fe5d9c942a0f22421f7bf62371da9689c4f4dc3b2c52f2f037"
+        }
+      },
+      "pages": 58,
+      "content": {
+        "book": "atlas-world.20261112.v3",
+        "chapters": 39,
+        "paragraphs": 291,
+        "keys": 265,
+        "source_svg_text_lines": 1054,
+        "placed_image_ppi_and_margins": "pass",
+        "print_and_epub_text_coverage": "pass",
+        "source_hashes": "pass"
+      },
+      "checks": {
+        "print": {
+          "pages": 58,
+          "images": 279,
+          "fonts": 2,
+          "maximum_ink_percent": 240.0,
+          "syntax": "pass",
+          "geometry_fonts_color_transparency": "pass",
+          "pdfx_declaration_and_output_intent": "pass",
+          "independent_pdfx_certification": "not run; no capable independent PDF/X validator installed"
+        },
+        "epub": {
+          "archive_xml_links_spine": "pass",
+          "images": 309,
+          "maximum_image_pixels": 3198750,
+          "EPUBCheck": "Validating using EPUB version 3.4 rules.\nNo errors or warnings detected.\nMessages: 0 fatals / 0 errors / 0 warnings / 0 infos\n\nEPUBCheck completed"
+        },
+        "all_print_pages_decode": "pass",
+        "unchanged_inputs": "pass"
+      },
+      "placement_review": {
+        "reviewer_sha256": "0d23a9f701239a846bf1b38192af868a198c866a14b626f59b5c5a229189f588",
+        "actual_image_placements": 309,
+        "minimum_actual_ppi": 300.0102809522177,
+        "k_only_text_operations": 1127,
+        "words_inside_safety_margin": 7418,
+        "visual_review": {
+          "status": "pass with documented source-detail limits",
+          "reviewer": "Codex visual inspection",
+          "date": "2026-11-14",
+          "scope": "All final PDF pages in contact sheets; selected full-page renders; cover images; no physical proof.",
+          "selected_pages": [
+            13,
+            57
+          ],
+          "notes": [
+            "Text, symbols, contents, page edges and source notes fit the layout.",
+            "Dense labels remain part of the original map artwork; overviews require enlargement and selected detail views do not make every source label readable.",
+            "Starlink final page is intentional even-page padding."
+          ]
+        },
+        "decoded_pages": 58
+      },
+      "reader_review": {
+        "browser": "Mozilla Firefox 160.0",
+        "scope": "Firefox viewport simulations; not Kindle Previewer or physical device testing",
+        "visual_review": {
+          "status": "pass",
+          "reviewer": "Codex visual inspection",
+          "date": "2026-11-14",
+          "scope": "Selected chapter screenshots in phone, tablet, and 24px dark-theme viewports. Long headings, captions and key text reflow within the viewport. This does not test scrolling or retailer reader navigation."
+        }
+      },
+      "build_receipt_sha256": "6f569a0e320485789dc0d170cc8488ef2595a10d74fee3c2db61962d1621b02b"
+    },
+    {
+      "stem": "starlink-star-light.v3",
+      "outputs": {
+        "print": {
+          "path": "starlink-star-light.v3.a4.ingramspark.pdf",
+          "bytes": 12501797,
+          "sha256": "04606da5015a973f510c4facee3f920dae9a0c23433cac79b45fc7c52ac93514"
+        },
+        "epub": {
+          "path": "starlink-star-light.v3.epub",
+          "bytes": 9387513,
+          "sha256": "01dc4465fe05e8743e1e4f1bddfe20bb5a005c6014df59b3d439877483d6cfee"
+        },
+        "cover": {
+          "path": "starlink-star-light.v3.ebook-cover.jpg",
+          "bytes": 691184,
+          "sha256": "e14d601394fa22b572e360c13da7c6e600eee6608d054a2bc038406078ae3c0e"
+        }
+      },
+      "identity": {
+        "manifest_sha256": "45175fcb1b7705469f4ab8edb4e67a17efa59255b6be396ea280728e75f4375f",
+        "profile_sha256": "f2846f2b532503c4a37a22e6be546a108568716f26e6268b6f961e78c3a02b83",
+        "tools": {
+          "izzi_publication.py": "d22276977b610c6db4e78c2719203c4ed5483fd4c59ff568b57774b20da4865c",
+          "build-publication.py": "38dd0b8deda169238fa8851e07d2d04ecb263d4de9102819918f60b1445e8d68",
+          "review_raster.py": "e795d8966597c5fe5d9c942a0f22421f7bf62371da9689c4f4dc3b2c52f2f037"
+        }
+      },
+      "pages": 30,
+      "content": {
+        "book": "starlink-star-light.v3",
+        "chapters": 8,
+        "paragraphs": 112,
+        "keys": 156,
+        "source_svg_text_lines": 487,
+        "placed_image_ppi_and_margins": "pass",
+        "print_and_epub_text_coverage": "pass",
+        "source_hashes": "pass"
+      },
+      "checks": {
+        "print": {
+          "pages": 30,
+          "images": 91,
+          "fonts": 2,
+          "maximum_ink_percent": 240.0,
+          "syntax": "pass",
+          "geometry_fonts_color_transparency": "pass",
+          "pdfx_declaration_and_output_intent": "pass",
+          "independent_pdfx_certification": "not run; no capable independent PDF/X validator installed"
+        },
+        "epub": {
+          "archive_xml_links_spine": "pass",
+          "images": 173,
+          "maximum_image_pixels": 3196863,
+          "EPUBCheck": "Validating using EPUB version 3.4 rules.\nNo errors or warnings detected.\nMessages: 0 fatals / 0 errors / 0 warnings / 0 infos\n\nEPUBCheck completed"
+        },
+        "all_print_pages_decode": "pass",
+        "unchanged_inputs": "pass"
+      },
+      "placement_review": {
+        "reviewer_sha256": "0d23a9f701239a846bf1b38192af868a198c866a14b626f59b5c5a229189f588",
+        "actual_image_placements": 173,
+        "minimum_actual_ppi": 300.0102809522177,
+        "k_only_text_operations": 536,
+        "words_inside_safety_margin": 4138,
+        "visual_review": {
+          "status": "pass with documented source-detail limits",
+          "reviewer": "Codex visual inspection",
+          "date": "2026-11-14",
+          "scope": "All final PDF pages in contact sheets; selected full-page renders; cover images; no physical proof.",
+          "selected_pages": [
+            11,
+            24
+          ],
+          "notes": [
+            "Text, symbols, contents, page edges and source notes fit the layout.",
+            "Dense labels remain part of the original map artwork; overviews require enlargement and selected detail views do not make every source label readable.",
+            "Starlink final page is intentional even-page padding."
+          ]
+        },
+        "decoded_pages": 30
+      },
+      "reader_review": {
+        "browser": "Mozilla Firefox 160.0",
+        "scope": "Firefox viewport simulations; not Kindle Previewer or physical device testing",
+        "visual_review": {
+          "status": "pass",
+          "reviewer": "Codex visual inspection",
+          "date": "2026-11-14",
+          "scope": "Selected chapter screenshots in phone, tablet, and 24px dark-theme viewports. Long headings, captions and key text reflow within the viewport. This does not test scrolling or retailer reader navigation."
+        }
+      },
+      "build_receipt_sha256": "b7a8c2bb5b6abb503d05b4d32e7b3fb616162308e0ada570b1dd923a1b80ffa6"
+    }
+  ],
+  "versions": {
+    "schema": "cartofreako-publication-environment-v1",
+    "python": "3.14.10 (main, Oct 26 2026, 00:00:00) [GCC 16.2.1 20260819 (Red Hat 16.2.1-2)]",
+    "versions": {
+      "Pillow": "13.0.0",
+      "pikepdf": "10.17.0",
+      "ReportLab": "4.5.1",
+      "Ghostscript": "10.06.0",
+      "Poppler": "pdftoppm version 26.01.0"
+    },
+    "epubcheck": {
+      "version": "EPUBCheck v5.4.0",
+      "jar_sha256": "2146665a124998dc6c908010ffe0d09dc4f4c8014f2c8fd6a1aa11f64c40ac93"
+    },
+    "git_base": {
+      "izzi": "b86be9811f87a86ddd7f28c3350f22358ce95881",
+      "cartofreako": "58e76ca0c3d466c0cb07b4c14bf477504bd0bc14"
+    },
+    "working_changes": "The production implementation was uncommitted during rendering; exact code hashes accompany the delivered source snapshots.",
+    "implementation_izzi_revision": "03fd482dd30e279a874af3fbf8907a09c929ac22"
+  },
+  "tool_snapshot_sha256": {
+    "build-publication.py": "38dd0b8deda169238fa8851e07d2d04ecb263d4de9102819918f60b1445e8d68",
+    "izzi_publication.py": "d22276977b610c6db4e78c2719203c4ed5483fd4c59ff568b57774b20da4865c",
+    "build-mobile-pdf.py": "04df26574de8b6fe5b9b1b1e53caf781cf7b5c087f611a573f0c38844cd32bd9",
+    "review_raster.py": "e795d8966597c5fe5d9c942a0f22421f7bf62371da9689c4f4dc3b2c52f2f037",
+    "review-publication.py": "0d23a9f701239a846bf1b38192af868a198c866a14b626f59b5c5a229189f588",
+    "review-epub-reader.py": "cb8cdd9014247bd6212a5a2425c906e3b1398dcc48243cce91494fcb9cb072e0",
+    "build-publication-editions.py": "27f348143c5806bb7f74cbff02f27b116d1705aa46fbb13bfd5e92e0b48d798f",
+    "test-publication-editions.py": "cdaba6c8e160956515afe294f64655416d21871d31b6b881622990d8eb6c9393",
+    "ingramspark-a4-20261114.json": "f2846f2b532503c4a37a22e6be546a108568716f26e6268b6f961e78c3a02b83"
+  },
+  "remaining": [
+    "Independent full PDF/X certification",
+    "Separate provider-template print wraparound covers",
+    "Final title/ISBN setup and retailer upload validation",
+    "Kindle Previewer",
+    "Physical proof"
+  ]
+}

@@ -3732,3 +3732,14 @@ check-starlink-star-light-world:
 	$(SLSL_PYTHON) scripts/build-starlink-star-light.py --config config/starlink-star-light-world-20261110.json --check
 
 endif # DATASET_RECURSE
+
+# Optional book production lives in Izzi; Cartofreako supplies frozen content.
+PUBLICATION_IZZI ?= ../izzi
+PUBLICATION_OUTPUT ?= output/atlas-optional-v3
+PUBLICATION_EPUBCHECK ?= build/pod-tools/epubcheck-5.4.0/epubcheck.jar
+.PHONY: publication-editions check-publication-editions
+publication-editions:
+	PYTHONDONTWRITEBYTECODE=1 python3 scripts/build-publication-editions.py --izzi "$(PUBLICATION_IZZI)" --output "$(PUBLICATION_OUTPUT)" --epubcheck "$(PUBLICATION_EPUBCHECK)" --resume
+
+check-publication-editions:
+	PYTHONDONTWRITEBYTECODE=1 python3 tests/test-publication-editions.py --output "$(PUBLICATION_OUTPUT)" --report "$(PUBLICATION_OUTPUT)/validation/content.json"

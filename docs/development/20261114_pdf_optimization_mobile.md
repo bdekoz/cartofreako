@@ -7,7 +7,7 @@ transparency groups, and high-resolution image layers.
 
 - Source: [`atlas-world.20261112.v3.pdf`](../../output/data-edition/20261111/atlas/atlas-world.20261112.v3.pdf)
 - Mobile edition: [`atlas-world.20261112.v3.mobile.pdf`](../../output/data-edition/20261111/atlas/atlas-world.20261112.v3.mobile.pdf)
-- Builder: [`scripts/build-mobile-pdf.py`](../../scripts/build-mobile-pdf.py)
+- Compatibility entry point: [`scripts/build-mobile-pdf.py`](../../scripts/build-mobile-pdf.py); production implementation: sibling Izzi's `scripts/build-mobile-pdf.py`
 - Conversion receipt: [`atlas-world.20261112.v3.mobile.json`](../../output/data-edition/20261111/atlas/sources/atlas-world.20261112.v3.mobile.json)
 
 The completed mobile edition is **17.18 MiB**, reduced from **716.74 MiB**
@@ -19,6 +19,30 @@ A3 legend pages use lossless compression.
 | --- | ---: | --- |
 | Original | 751,560,373 | `2dcbfc480081b0970f9813a73fc4967d54fdc0620ad249f4e961b31300085c11` |
 | Mobile | 18,010,765 | `72a41e854d86658a641f5616411e729c99b33a32e35e4ee8154f8e5f7baf2ae1` |
+
+## Production ownership and migration
+
+The generic exporter now lives in **Izzi**, alongside the A4 print and EPUB
+tools. Cartofreako's command remains a compatibility wrapper: it uses the
+sibling `../izzi` checkout by default, or the `IZZI_ROOT` environment variable,
+and preserves the optional pikepdf dependency path used by earlier recipes.
+The [expanded implementation record](20261114_pod_expanded_v2.md) describes
+both completed book editions and the repository boundary.
+
+The existing 80-page mobile PDF and its original
+`cartofreako-mobile-pdf-v1` receipt are preserved byte-for-byte. That receipt
+records the original builder hash and Pillow 12.3.0. New Izzi conversions use
+`izzi-mobile-pdf-v1` receipts; the migration was tested with Pillow 13.0.0.
+Use new output names for a fresh conversion. The current exporter supports
+`--resume` for its own completed receipts, checking input, tool, settings,
+output hash, geometry and linearization. It deliberately does not reinterpret
+the older receipt as an Izzi build.
+
+Izzi's integration fixture also tests mixed page sizes, cropped and rotated
+PDF pages, and identically colored portrait/landscape rasters. Unique image
+filenames prevent ReportLab's pixel-only image cache from conflating those
+different dimensions. The generic exporter uses the system temporary
+directory and removes intermediate files after completion.
 
 ## Relationship to earlier work
 
@@ -82,7 +106,8 @@ local mobile viewing come from the smaller file and simpler page contents.
 
 ## Reproduce the conversion
 
-Run from the repository root. Requirements are `pdftoppm` from Poppler and
+Run from the repository root with the sibling Izzi checkout available.
+Requirements are `pdftoppm` from Poppler and
 the Python packages Pillow, ReportLab, and pikepdf. This conversion used
 Poppler 26.01.0, Pillow 12.3.0, ReportLab 4.5.1, and pikepdf 10.17.0.
 The existing atlas environment supplies Pillow and ReportLab. If the optional
@@ -107,8 +132,9 @@ python3 scripts/build-mobile-pdf.py \
 
 The script refuses to overwrite either the source, an existing destination,
 or an existing receipt. For a new comparison, give the output and receipt
-new names. It creates intermediate page images under a temporary
-`tmp/pdfs/mobile-*` directory, removes them on completion, and records source
+new names. The original conversion used `tmp/pdfs/mobile-*`; the current
+Izzi implementation uses the system temporary directory. It removes
+intermediates on completion and records source
 and output SHA-256 hashes, byte counts, tool versions, per-page pixel sizes,
 and selected encodings in the receipt. PDF metadata timestamps are fixed
 for repeatable output; the receipt records the actual conversion time.

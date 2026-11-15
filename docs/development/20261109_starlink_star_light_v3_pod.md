@@ -8,8 +8,20 @@ Cartofreako supplies the cartographic content and book manifests. The
 [expanded v2 plan](20261114_pod_expanded_v2.md) is the current specification.
 The A5 options below are retained as the earlier format study.
 
-Research checked 9 November 2026. These are editorial options and actual-size
-layout proofs, not a finished book or a publishing submission.
+**Implemented delivery:** the [A4 Starlink interior](../../output/atlas-optional-v3/starlink-star-light.v3.a4.ingramspark.pdf)
+has 30 pages and all eight SLSL1-SLSL4 World/USA views. Its
+[reflowable EPUB](../../output/atlas-optional-v3/starlink-star-light.v3.epub)
+and RGB ebook cover are in the [delivery directory](../../output/atlas-optional-v3/README.md),
+alongside the complete 58-page World atlas edition. Original observation
+dates, observer notes, symbol keys and sources are retained. Ten Izzi tests,
+content coverage checks, local print preflight and EPUBCheck pass; rendered
+pages and browser reader previews were inspected. Dense original map labels
+still need enlargement. Print covers, independent PDF/X certification,
+retailer previews/upload checks and a physical proof remain outstanding.
+Both editions are below Lulu's 72-page Amazon color-print distribution minimum.
+
+The historical research below was checked 9 November 2026. Its A5 options and
+actual-size layout proofs are superseded by the implemented A4 editions above.
 
 The original recommendation was **A5 portrait, 48 pages**, using each full map as an overview and
 devoting subsequent pages to details. It meets the requested small format.

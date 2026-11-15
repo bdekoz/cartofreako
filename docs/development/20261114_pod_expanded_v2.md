@@ -1,5 +1,79 @@
 # Expanded print-on-demand and EPUB plan - 14 November 2026
 
+## Implemented delivery
+
+The approved plan is implemented for both books. The generic production
+engine, mobile exporter, dated provider profile, standalone example and ten
+tests live in **Izzi**. Cartofreako supplies the content adapter and checks
+that the complete selected cartographic content reaches both formats.
+
+The [delivery directory](../../output/atlas-optional-v3/README.md) contains:
+
+| Book | A4 print interior | Reflowable EPUB | Scope |
+| --- | --- | --- | --- |
+| World Atlas | [58 pages, 33.65 MiB](../../output/atlas-optional-v3/atlas-world.20261112.v3.a4.ingramspark.pdf) | [13.33 MiB](../../output/atlas-optional-v3/atlas-world.20261112.v3.epub) | All 39 maps; 291 paragraphs and 265 keys |
+| Starlink Star Light v3 | [30 pages, 11.92 MiB](../../output/atlas-optional-v3/starlink-star-light.v3.a4.ingramspark.pdf) | [8.95 MiB](../../output/atlas-optional-v3/starlink-star-light.v3.epub) | All eight World/USA views; 112 paragraphs and 156 keys |
+
+Each book also has a 1400 x 2240 RGB JPEG ebook cover. The PDFs use A4
+210 x 297 mm pages, mirrored 20/15 mm inner/outer margins, 10.5 pt body text,
+9.5 pt sources, embedded fonts, approximately 300 ppi CMYK artwork, and a
+240% total-ink cap. Longer symbol keys use two columns in row order. The
+print details come from original artwork; the World EPUB overview images
+reuse the completed mobile edition. No source content was updated.
+
+All 88 print pages decode, all 47 chapters retain their original order, and
+the integration check accounts for 1,541 original SVG text lines. PDF syntax,
+page boxes, actual image placement/resolution, ink samples, font embedding,
+K-only text and text safety bounds pass. EPUBCheck 5.4.0 reports zero errors
+and warnings for both books. All final pages were inspected in contact
+sheets, with selected larger page renders and phone/tablet/dark-theme EPUB
+screenshots. The [compact validation record](20261114_pod_expanded_v2.validation.json)
+links the measurements to exact output, tool and profile hashes.
+
+The PDFs were generated as PDF/X-3:2002 and pass the documented local
+preflight; an independent full PDF/X certification tool was unavailable.
+Dense labels inherited from the source maps still require enlargement.
+Separate print wraparound covers, final ISBN/title setup, Kindle Previewer,
+retailer upload checks and a physical proof remain publishing steps. Both
+books are below Lulu's 72-page minimum for Amazon color-print distribution.
+
+Reproduce or verify the existing delivery from the Cartofreako root:
+
+```sh
+make publication-editions
+make check-publication-editions
+```
+
+The first target uses `--resume`: it verifies source, manifest, profile, tool
+and output hashes before accepting an existing edition. For a fresh build:
+
+```sh
+make publication-editions PUBLICATION_OUTPUT=output/atlas-optional-v3-rebuild
+make check-publication-editions PUBLICATION_OUTPUT=output/atlas-optional-v3-rebuild
+```
+
+Override `PUBLICATION_IZZI` and `PUBLICATION_EPUBCHECK` for another Izzi
+checkout or EPUBCheck jar. The defaults use the sibling Izzi checkout and
+`build/pod-tools/epubcheck-5.4.0/epubcheck.jar`. The adapter retains the
+existing optional pikepdf location, `build/setouchi-h3-python`. Input paths
+and hashes are frozen in the generated `sources/*.manifest.json` files;
+the original frozen data/render assets must be available to rebuild.
+
+The delivered `sources/environment.json` records the base Git revisions and
+versions. `sources/production-tools/` preserves the exact production scripts
+and profile used during rendering; their hashes also appear in the receipts.
+The implementation is committed in Izzi as `03fd482dd30e279a874af3fbf8907a09c929ac22`.
+Fresh builds reproduce the content and layout. The standalone example's
+EPUB and JPEG cover reproduce byte-for-byte; Ghostscript refreshes PDF dates
+and identifiers, so fresh print PDFs are identical only after those fields
+are excluded. A resumed delivery retains and verifies its exact bytes.
+
+Izzi usage and tests are documented in its `docs/publication.md`,
+`docs/visual_workflow/tool_publication.md`, and `examples/publication/README.md`.
+The implemented optional targets are `check-publication-unit`,
+`check-publication-integration`, and `examples-publication`. The accepted
+design and test plan below remains the rationale and scope record.
+
 ## Decision and scope
 
 **Izzi owns the general publication and production capability. Cartofreako
@@ -41,8 +115,8 @@ workflows. Its production tooling already includes:
 - `docs/visual_workflow/tool_portrait_print.md` and `docs/dependencies.md`:
   optional production adapters, print editions, and validation workflows.
 
-The inspected export and core surfaces do not yet supply a general EPUB or
-POD PDF/X workflow. Izzi's `src/izzi-portrait.h::print_spec` governs physical
+Before this implementation, the inspected export and core surfaces did not
+supply a general EPUB or POD PDF/X workflow. Izzi's `src/izzi-portrait.h::print_spec` governs physical
 mark widths, gaps, and local coverage; it is not a book/publisher specification.
 Extending that portrait type with ISBN, EPUB, or vendor settings would mix
 unrelated responsibilities.
@@ -81,7 +155,7 @@ the selected binding and printing region.
 | --- | --- | --- |
 | IngramSpark | Primary target: A4 portrait, 210 x 297 mm, perfect-bound color paperback. The current matrix includes A4 Premium Color on 70 lb white paper. Use one interior PDF, PDF/X-1a:2001 or PDF/X-3:2002, CMYK, embedded fonts, and no printer marks. | EPUB 3 plus a separate RGB JPEG front cover. Prefer reflowable text because fixed-layout distribution is limited. |
 | Amazon KDP / Amazon.com | A4 paperback is available in premium color, 24-590 pages; standard color is unavailable at this size. Check against KDP's A4 preset and its own cover template. | Submit the EPUB directly to KDP. Preserve adjustable text, navigation, image descriptions, and legible maps. |
-| Lulu | A4 portrait is offered. Premium Color is the relevant image-book comparison. Apply Lulu's selected product/template rules; its bleed handling differs from IngramSpark. | EPUB supports ebook distribution; a PDF ebook alone is a Lulu-store product. Lulu's Amazon print distribution requires at least 72 pages for color books, which may exclude the shorter Starlink book. |
+| Lulu | A4 portrait is offered. Premium Color is the relevant image-book comparison. Apply Lulu's selected product/template rules; its bleed handling differs from IngramSpark. | EPUB supports ebook distribution; a PDF ebook alone is a Lulu-store product. Lulu's Amazon print distribution requires at least 72 pages for color books; both delivered editions are shorter. |
 
 Sources: [IngramSpark file creation guide, dated 24 August 2026](https://www.ingramspark.com/hubfs/downloads/file-creation-guide.pdf),
 [IngramSpark ebook guidance](https://www.ingramspark.com/plan-your-book/ebooks),
@@ -188,8 +262,7 @@ validation does not make tiny map labels legible.
 ## Documentation plan
 
 Document the generic capability in Izzi, then describe Cartofreako's use of
-it here. The following paths are proposed additions, not claims that the
-interfaces already exist.
+it here. All documentation paths in the accepted plan below are implemented.
 
 | Location | Planned documentation |
 | --- | --- |
@@ -280,7 +353,7 @@ Ghostscript, ReportLab, Pillow/ImageCms, and the existing optional pikepdf
 installation are available. Izzi already documents optional production
 dependencies separately from its C++ core.
 
-Proposed delivery names:
+Delivered names:
 
 ```text
 output/atlas-optional-v3/
