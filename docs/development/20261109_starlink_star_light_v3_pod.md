@@ -1,9 +1,17 @@
 # Starlink Star Light v3: IngramSpark book options
 
+**Updated direction, 14 November 2026:** use A4 portrait and produce both the
+complete World atlas and the complete Starlink Star Light v3 collection as
+print interiors and corresponding EPUBs. Compare IngramSpark, Amazon KDP,
+and Lulu. Izzi owns the reusable visualization/production capability;
+Cartofreako supplies the cartographic content and book manifests. The
+[expanded v2 plan](20261114_pod_expanded_v2.md) is the current specification.
+The A5 options below are retained as the earlier format study.
+
 Research checked 9 November 2026. These are editorial options and actual-size
 layout proofs, not a finished book or a publishing submission.
 
-Start with **A5 portrait, 48 pages**, using each full map as an overview and
+The original recommendation was **A5 portrait, 48 pages**, using each full map as an overview and
 devoting subsequent pages to details. It meets the requested small format.
 The 44-inch originals cannot simply be reduced to readable book pages.
 
