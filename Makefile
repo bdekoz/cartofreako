@@ -3755,6 +3755,12 @@ check-publication-editions-landscape:
 .PHONY: publication-editions-v4 check-publication-editions-v4
 publication-editions-v4:
 	PYTHONDONTWRITEBYTECODE=1 python3 scripts/build-publication-editions.py --layout spread --izzi "$(PUBLICATION_IZZI)" --output "$(PUBLICATION_SPREAD_OUTPUT)" --epubcheck "$(PUBLICATION_EPUBCHECK)" --resume
+	$(MAKE) --no-print-directory publication-ebook-covers-v4
 
 check-publication-editions-v4:
 	PYTHONDONTWRITEBYTECODE=1 python3 tests/test-publication-editions.py --output "$(PUBLICATION_SPREAD_OUTPUT)" --report "$(PUBLICATION_SPREAD_OUTPUT)/validation/content.json"
+
+.PHONY: publication-ebook-covers-v4
+publication-ebook-covers-v4:
+	PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$(CURDIR)/build/setouchi-h3-python:$(PYTHONPATH)" python3 "$(PUBLICATION_IZZI)/scripts/export-ebook-cover.py" "$(PUBLICATION_SPREAD_OUTPUT)/validation/atlas-world.20261112.v4.json" --manifest "$(PUBLICATION_SPREAD_OUTPUT)/sources/atlas-world.20261112.v4.manifest.json" --epubcheck "$(PUBLICATION_EPUBCHECK)" --resume
+	PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$(CURDIR)/build/setouchi-h3-python:$(PYTHONPATH)" python3 "$(PUBLICATION_IZZI)/scripts/export-ebook-cover.py" "$(PUBLICATION_SPREAD_OUTPUT)/validation/starlink-star-light.v4.json" --manifest "$(PUBLICATION_SPREAD_OUTPUT)/sources/starlink-star-light.v4.manifest.json" --epubcheck "$(PUBLICATION_EPUBCHECK)" --resume

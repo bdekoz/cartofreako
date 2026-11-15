@@ -7,8 +7,26 @@ page edge. The map pages contain no publication headings or page numbers.
 
 | Book | Full-bleed print interior | Reflowable EPUB | Ebook cover |
 | --- | --- | --- | --- |
-| World Atlas | [162 pages, 98.78 MiB](atlas-world.20261112.v4.a4-portrait-spread.pdf) | [13.34 MiB](atlas-world.20261112.v4.epub) | [RGB JPEG](atlas-world.20261112.v4.ebook-cover.jpg) |
-| Starlink Star Light v3 | [38 pages, 23.42 MiB](starlink-star-light.v4.a4-portrait-spread.pdf) | [8.96 MiB](starlink-star-light.v4.epub) | [RGB JPEG](starlink-star-light.v4.ebook-cover.jpg) |
+| World Atlas | [162 pages, 98.78 MiB](atlas-world.20261112.v4.a4-portrait-spread.pdf) | [Updated EPUB, 13.34 MiB](atlas-world.20261112.v4.cover1600.epub) | [1600 x 2560 RGB JPEG](atlas-world.20261112.v4.ebook-cover.1600.jpg) |
+| Starlink Star Light v3 | [38 pages, 23.42 MiB](starlink-star-light.v4.a4-portrait-spread.pdf) | [Updated EPUB, 8.95 MiB](starlink-star-light.v4.cover1600.epub) | [1600 x 2560 RGB JPEG](starlink-star-light.v4.ebook-cover.1600.jpg) |
+
+**Upload the covers and EPUBs linked above.** The original 1400-pixel JPEGs
+were too narrow for IngramSpark's external-cover requirement. Their corrected
+`.ebook-cover.1600.jpg` replacements are regenerated from original assets,
+at 1600 x 2560 pixels, RGB, with 350 dpi metadata. The matching
+`.cover1600.epub` files embed proportional 1414 x 2262 copies (3,198,468 pixels)
+to satisfy the separate 3.2-million-pixel EPUB image cap. Both revised EPUBs
+pass EPUBCheck; every resource except the cover and modification timestamp is
+byte-for-byte unchanged. The base files remain available for their historical
+receipts. See the [correction record](../../docs/development/20261114_ebook_cover_1600.md).
+
+The World Atlas also has a [typographic print-cover PDF](atlas-world.20261112.v4.print-cover.pdf):
+large CARTO / FREAKO on the front, WORLD ATLAS and 12 NOVEMBER 2026 on the
+back, in amber on wine. [Preview](atlas-world.20261112.v4.print-cover.png)
+and [separate panel masters](atlas-world.20261112.v4.print-cover.panels.pdf)
+are included. Its 11.328 mm working spine must be matched to the final
+printer template and processed page count; see the
+[cover specification and production notes](../../docs/development/20261114_world_atlas_print_cover.md).
 
 ## Geometry and reading order
 
@@ -79,9 +97,17 @@ make publication-editions-v4
 make check-publication-editions-v4
 ```
 
+`publication-editions-v4` now also verifies/builds the corrected digital
+derivatives. To regenerate just those covers and EPUBs, use
+`make publication-ebook-covers-v4`. This keeps the print interiors and their
+frozen receipts intact and writes separate `validation/*.cover1600.json`
+receipts for the digital correction.
+
 For a fresh build, set `PUBLICATION_SPREAD_OUTPUT` to a new directory on both
 commands. `PUBLICATION_IZZI` and `PUBLICATION_EPUBCHECK` override tool paths.
-The validated production engine is in
+The current v4 workflow requires the cover exporters and profile in
+[Izzi `7280f7c8`](https://github.com/bdekoz/izzi/commit/7280f7c813556eefc5b37bb2e7e02ccd59992400).
+The original print interiors were built with
 [Izzi `a2132cf9`](https://github.com/bdekoz/izzi/commit/a2132cf956cbc9a836f4f397639e43b3b1d946cc).
 Exact tool snapshots identify this delivery. The environment and validation
 records retain the pre-commit build state; subsequent source commits do not
@@ -98,7 +124,8 @@ local delivery files; a source checkout does not download those artifacts.
 
 These are neutral full-bleed interior masters generated as PDF/X-3:2002 and
 locally preflighted. Independent full PDF/X certification was unavailable.
-Provider template/product validation, separate wraparound covers, final
+Provider template/product validation, finalizing the World cover against its
+template, a Starlink wraparound cover, final
 metadata/ISBN setup and a physical proof remain publishing steps. The
 physical binding may hide fine marks at the centre fold; dense source labels
 still need enlargement. Ebook submission still needs retailer/Kindle Previewer

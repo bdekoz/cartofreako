@@ -1,0 +1,69 @@
+{
+  "schema": "izzi-type-cover-v1",
+  "title": "Cartofreako: World Atlas",
+  "creator": "Cartofreako",
+  "edition_date": "2026-11-12",
+  "trim_mm": [
+    210,
+    297
+  ],
+  "bleed_mm": 3.175,
+  "spine_mm": 11.328,
+  "front_lines": [
+    "CARTO",
+    "FREAKO"
+  ],
+  "back_lines": [
+    "WORLD ATLAS",
+    "12 NOVEMBER 2026"
+  ],
+  "background_cmyk": [
+    0.15,
+    0.9,
+    0.4,
+    0.85
+  ],
+  "type_cmyk": [
+    0,
+    0.22,
+    0.75,
+    0
+  ],
+  "font": {
+    "path": "../../../izzi/examples/publication/fonts/AtkinsonHyperlegible-Bold.ttf",
+    "sha256": "5a3b0c8cc8ca545155150b4512a1fa248298df121c50d6557e651e61fbdab92f"
+  },
+  "icc": {
+    "path": "/usr/share/ghostscript/iccprofiles/default_cmyk.icc",
+    "sha256": "8472fa1493a024b800b67dee9424835ec0c41ab79490200ae8ec4a689fd1b9a9"
+  },
+  "interior": {
+    "path": "../../output/atlas-optional-v4-spread/atlas-world.20261112.v4.a4-portrait-spread.pdf",
+    "sha256": "b2e039ca6a805e0eb87050befe5cd93647a544d58ee544df3beaff7cb1d7ef94",
+    "pages": 162
+  },
+  "spine_basis": {
+    "provider": "IngramSpark public spine calculator",
+    "product": "A4 perfect-bound paperback, Color 70 white paper, matte laminate",
+    "public_book_type_id": 4464,
+    "calculation_pages": 164,
+    "submitted_interior_pages": 162,
+    "spine_inches": 0.446,
+    "status": "working production master; final processed page count and printer template must confirm the spine",
+    "page_count_note": "164 allows two manufacturer/barcode pages after the 162-page interior. Calculator result for 162 pages is 0.440 in / 11.176 mm. The final title-specific template governs.",
+    "source": "https://myaccount.ingramspark.com/Portal/Tools/SpineCalculator",
+    "checked": "2026-11-14"
+  },
+  "barcode_reservation": {
+    "panel": "back",
+    "position": "lower left",
+    "clear_box_mm_from_trim": [
+      20,
+      20,
+      57.15,
+      31.75
+    ],
+    "printed_box": false,
+    "note": "Plain background only; leave this area available for the printer barcode. No ISBN or barcode was invented."
+  }
+}

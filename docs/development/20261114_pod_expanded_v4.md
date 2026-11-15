@@ -14,6 +14,12 @@ remain unchanged. Output is in `output/atlas-optional-v4-spread/`.
 
 ## Completed delivery
 
+The external ebook-cover size is corrected to **1600 x 2560 pixels** for
+both books. Use the `.ebook-cover.1600.jpg` and `.cover1600.epub` files linked
+in the delivery README. The [cover correction](20261114_ebook_cover_1600.md)
+explains the separate upload/embedded-image limits and preserves the original
+book receipts. The main v4 Make target includes this digital export stage.
+
 Both books are rebuilt and validated in the [v4 delivery directory](../../output/atlas-optional-v4-spread/README.md):
 **162 World Atlas pages** and **38 Starlink pages**, plus their reflowable EPUBs
 and ebook covers. All 200 print pages decode; all 47 four-page chapters preserve
@@ -98,6 +104,11 @@ paragraphs and keys, print preflight, EPUBCheck, and trimmed page/spread
 renders. Delivery receipts preserve output, asset, tool and profile hashes.
 
 ## Viewing and publishing
+
+The World Atlas now has a [typographic print-cover master](20261114_world_atlas_print_cover.md)
+with large CARTO / FREAKO on the front and WORLD ATLAS plus the edition date
+on the back. The final provider template must confirm its working spine;
+the separate front/back panel PDFs preserve the artwork independently.
 
 Review images crop to the TrimBox and join the map pages without an artificial
 centre gap. A PDF viewer displaying MediaBox shows the extra bleed; that is

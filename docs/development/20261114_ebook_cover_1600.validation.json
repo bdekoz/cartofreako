@@ -1,0 +1,97 @@
+{
+  "schema": "cartofreako-ebook-cover-correction-v1",
+  "date": "2026-11-14",
+  "external_cover_pixels": [
+    1600,
+    2560
+  ],
+  "embedded_cover_pixels": [
+    1414,
+    2262
+  ],
+  "books": [
+    {
+      "stem": "atlas-world.20261112.v4",
+      "outputs": {
+        "cover": {
+          "path": "atlas-world.20261112.v4.ebook-cover.1600.jpg",
+          "bytes": 512967,
+          "sha256": "efbcdf10dfcce6a230c441a3167378212e0d9e8e99e0f2d9e0ecb4dad12c2e28"
+        },
+        "epub": {
+          "path": "atlas-world.20261112.v4.cover1600.epub",
+          "bytes": 13986186,
+          "sha256": "9878e342d15514e8f8e790118205ed5d7ccb5104ba4ce6a3cf6e8afae0b50654"
+        }
+      },
+      "identity": {
+        "source_receipt_sha256": "ad45422d671ccbf83b3249bca31d9c4454850f28a0e4be64336b8294f9b54695",
+        "source_epub_sha256": "5ba45c386a9d36b2ab6db9349cd5d4c819d714d6c1775ebeceb1af7b91b1811c",
+        "manifest_sha256": "5f125e9b05f829157a63950f69f67d56836c72891aaf34e06d701072968eec8f",
+        "profile_sha256": "9c20ed669f73bb703ddc497c5d4e6eb4f0cfc556f678f1b5ebfafa2be786014c",
+        "tools": {
+          "export-ebook-cover.py": "e696303e793680b5cfab70a9dd55848e86f22a5bc5e08db6361a76dfe63797a5",
+          "izzi_publication.py": "13b0526c2287ea89fbb5c733a14dd8f3e5d5b76a0f3271a6743c833512a5b94e"
+        }
+      },
+      "checks": {
+        "archive_xml_links_spine": "pass",
+        "images": 309,
+        "maximum_image_pixels": 3198750,
+        "EPUBCheck": "Validating using EPUB version 3.4 rules.\nNo errors or warnings detected.\nMessages: 0 fatals / 0 errors / 0 warnings / 0 infos\n\nEPUBCheck completed",
+        "unchanged_other_epub_resources": 354,
+        "source_assets_unchanged": true
+      },
+      "visual_review": {
+        "status": "pass",
+        "scope": "Full external cover rendered from original artwork; typography, artwork, margins and edition line inspected. Embedded cover is a proportional copy of this design.",
+        "reviewer": "Codex"
+      }
+    },
+    {
+      "stem": "starlink-star-light.v4",
+      "outputs": {
+        "cover": {
+          "path": "starlink-star-light.v4.ebook-cover.1600.jpg",
+          "bytes": 852366,
+          "sha256": "f37dea782385f99854d74ac4ddefaecbe7e5ae038a591503720050c58d2f3cdd"
+        },
+        "epub": {
+          "path": "starlink-star-light.v4.cover1600.epub",
+          "bytes": 9387139,
+          "sha256": "da19362240629a6d0b0d5bc105419a67be64bd5d10c87a25c635ccfd0e50c942"
+        }
+      },
+      "identity": {
+        "source_receipt_sha256": "06a2daed16983fc8bf553c42fd04c6d9de7957d26f317d20bed1e2e80b5c455b",
+        "source_epub_sha256": "9dbf1e8df7426f05bb843a6380ca15bbc13664a9c3711184cec048b9eb8bd39e",
+        "manifest_sha256": "81d50f067afe27ea06e86f812229be9812c4587d3325f41e2ee32d6bbd8a532d",
+        "profile_sha256": "9c20ed669f73bb703ddc497c5d4e6eb4f0cfc556f678f1b5ebfafa2be786014c",
+        "tools": {
+          "export-ebook-cover.py": "e696303e793680b5cfab70a9dd55848e86f22a5bc5e08db6361a76dfe63797a5",
+          "izzi_publication.py": "13b0526c2287ea89fbb5c733a14dd8f3e5d5b76a0f3271a6743c833512a5b94e"
+        }
+      },
+      "checks": {
+        "archive_xml_links_spine": "pass",
+        "images": 173,
+        "maximum_image_pixels": 3198468,
+        "EPUBCheck": "Validating using EPUB version 3.4 rules.\nNo errors or warnings detected.\nMessages: 0 fatals / 0 errors / 0 warnings / 0 infos\n\nEPUBCheck completed",
+        "unchanged_other_epub_resources": 187,
+        "source_assets_unchanged": true
+      },
+      "visual_review": {
+        "status": "pass",
+        "scope": "Full external cover rendered from original artwork; typography, artwork, margins and edition line inspected. Embedded cover is a proportional copy of this design.",
+        "reviewer": "Codex"
+      }
+    }
+  ],
+  "behavior_checks": {
+    "undersized_external_profile_rejected": true,
+    "existing_derivative_requires_resume": true,
+    "source_publication_hashes_preserved": true,
+    "corrected_output_hashes_verified": true,
+    "main_v4_make_target_resume": "pass"
+  }
+}
