@@ -7,8 +7,8 @@ page edge. The map pages contain no publication headings or page numbers.
 
 | Book | Full-bleed print interior | Reflowable EPUB | Ebook cover |
 | --- | --- | --- | --- |
-| World Atlas | [162 pages, 98.78 MiB](atlas-world.20261112.v4.a4-portrait-spread.pdf) | [Updated EPUB, 13.34 MiB](atlas-world.20261112.v4.cover1600.epub) | [1600 x 2560 RGB JPEG](atlas-world.20261112.v4.ebook-cover.1600.jpg) |
-| Starlink Star Light v3 | [38 pages, 23.42 MiB](starlink-star-light.v4.a4-portrait-spread.pdf) | [Updated EPUB, 8.95 MiB](starlink-star-light.v4.cover1600.epub) | [1600 x 2560 RGB JPEG](starlink-star-light.v4.ebook-cover.1600.jpg) |
+| World Atlas | 162 pages, 98.78 MiB (`output/atlas-optional-v4-spread/atlas-world.20261112.v4.a4-portrait-spread.pdf`) | Updated EPUB, 13.34 MiB (`output/atlas-optional-v4-spread/atlas-world.20261112.v4.cover1600.epub`) | 1600 x 2560 RGB JPEG (`output/atlas-optional-v4-spread/atlas-world.20261112.v4.ebook-cover.1600.jpg`) |
+| Starlink Star Light v3 | 38 pages, 23.42 MiB (`output/atlas-optional-v4-spread/starlink-star-light.v4.a4-portrait-spread.pdf`) | Updated EPUB, 8.95 MiB (`output/atlas-optional-v4-spread/starlink-star-light.v4.cover1600.epub`) | 1600 x 2560 RGB JPEG (`output/atlas-optional-v4-spread/starlink-star-light.v4.ebook-cover.1600.jpg`) |
 
 **Upload the covers and EPUBs linked above.** The original 1400-pixel JPEGs
 were too narrow for IngramSpark's external-cover requirement. Their corrected
@@ -20,10 +20,10 @@ pass EPUBCheck; every resource except the cover and modification timestamp is
 byte-for-byte unchanged. The base files remain available for their historical
 receipts. See the [correction record](../../docs/development/20261114_ebook_cover_1600.md).
 
-The World Atlas also has a [typographic print-cover PDF](atlas-world.20261112.v4.print-cover.pdf):
+The World Atlas also has a typographic print-cover PDF (`output/atlas-optional-v4-spread/atlas-world.20261112.v4.print-cover.pdf`):
 large CARTO / FREAKO on the front, WORLD ATLAS and 12 NOVEMBER 2026 on the
-back, in amber on wine. [Preview](atlas-world.20261112.v4.print-cover.png)
-and [separate panel masters](atlas-world.20261112.v4.print-cover.panels.pdf)
+back, in amber on wine. Preview (`output/atlas-optional-v4-spread/atlas-world.20261112.v4.print-cover.png`)
+and separate panel masters (`output/atlas-optional-v4-spread/atlas-world.20261112.v4.print-cover.panels.pdf`)
 are included. Its 11.328 mm working spine must be matched to the final
 printer template and processed page count; see the
 [cover specification and production notes](../../docs/development/20261114_world_atlas_print_cover.md).
@@ -76,9 +76,9 @@ checked at phone/tablet widths and with large dark-theme text in Firefox.
 These are browser viewport simulations; physical-device, Kindle Previewer
 and physical print checks were not performed.
 
-- [World map and legend spread previews](validation/atlas-world.20261112.v4.pages/spread-contact-1.jpg)
-- [Starlink map and legend spread previews](validation/starlink-star-light.v4.pages/spread-contact-1.jpg)
-- [Complete content audit](validation/content.json)
+- World map and legend spread previews (`output/atlas-optional-v4-spread/validation/atlas-world.20261112.v4.pages/spread-contact-1.jpg`)
+- Starlink map and legend spread previews (`output/atlas-optional-v4-spread/validation/starlink-star-light.v4.pages/spread-contact-1.jpg`)
+- Complete content audit (`output/atlas-optional-v4-spread/validation/content.json`)
 - [Compact validation record](../../docs/development/20261114_pod_expanded_v4.validation.json)
 - [v4 delivery and reproduction notes](../../docs/development/20261114_pod_expanded_v4.md)
 

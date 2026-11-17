@@ -56,7 +56,7 @@ AAO prefix.
 
 The [resources metric catalog](passes/resources/metric-catalog.md) is the visible
 index of all 59 resource metrics. It states both subject meaning and release
-status; [`resources-profile.json`](../../assets.static/resources/current-20261108/resources-profile.json)
+status; `resources-profile.json` (`assets.static/resources/current-20261108/resources-profile.json`)
 is the machine-readable authority.
 
 | Class | Meaning |

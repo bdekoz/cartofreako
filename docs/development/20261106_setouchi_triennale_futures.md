@@ -800,7 +800,7 @@ access was unavailable.
 
 The durable entry point is
 [package-setouchi-futures-manual.py](../../scripts/package-setouchi-futures-manual.py),
-with a [browser-guide template](../../scripts/templates/setouchi-futures-manual.html):
+with a [browser-guide template](https://github.com/bdekoz/cartofreako/blob/main/scripts/templates/setouchi-futures-manual.html):
 
 ```sh
 python3 scripts/package-setouchi-futures-manual.py

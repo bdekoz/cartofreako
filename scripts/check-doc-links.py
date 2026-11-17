@@ -38,10 +38,20 @@ LOCAL_DELIVERY_ROOTS = (
     Path("output/setouchi-triennale-2028-st2"),
     Path("output/setouchi-triennale-2028-v3"),
 )
+# These are inputs to generators, with paths and placeholders filled in when
+# copied into a delivery. Keep these exclusions in sync with _config.yml.
+TEMPLATE_PATHS = (
+    Path("scripts/templates"),
+    Path("scripts/observer-hourly-viewer.html"),
+)
 
 
 def local_delivery_path(path: Path) -> bool:
     return any(path.is_relative_to(root) for root in LOCAL_DELIVERY_ROOTS)
+
+
+def template_path(path: Path) -> bool:
+    return any(path.is_relative_to(root) for root in TEMPLATE_PATHS)
 
 
 def repository_files(root: Path) -> list[Path]:
@@ -65,7 +75,7 @@ def repository_files(root: Path) -> list[Path]:
         path = Path(name)
         if any(part in SKIP_PARTS for part in path.parts):
             continue
-        if local_delivery_path(path):
+        if local_delivery_path(path) or template_path(path):
             continue
         if (root / path).is_file():
             files.append(path)
@@ -99,7 +109,9 @@ def github_slug(title: str) -> str:
         for character in title
         if character in " -_" or character.isalnum()
     )
-    return re.sub(r"[\s-]+", "-", title).strip("-")
+    # GitHub replaces each space with a hyphen after removing punctuation.
+    # For example, "Settings — today" produces "settings--today".
+    return title.replace(" ", "-")
 
 
 def document_anchors(path: Path) -> set[str]:
@@ -250,7 +262,10 @@ def main() -> int:
             if target is None:
                 continue
             checked += 1
-            if target.is_relative_to(root) and local_delivery_path(target.relative_to(root)):
+            if target.is_relative_to(root) and (
+                local_delivery_path(target.relative_to(root))
+                or template_path(target.relative_to(root))
+            ):
                 errors.append(
                     f"{source}:{line}: local delivery target is not published: "
                     f"{destination}; use a public review URL or a literal local path"

@@ -52,8 +52,8 @@ The brief above is retained as supplied. The focused implementation is
 with the saved [edition configuration](../../config/starlink-star-light-v3-20261109.json).
 It produces four World and four USA map sheets, each with a separate A3
 landscape legend, in
-[`output/starlink-star-light-v3-20261109/`](../../output/starlink-star-light-v3-20261109/index.html).
-The generated [production record](../../output/starlink-star-light-v3-20261109/plan.md)
+`output/starlink-star-light-v3-20261109/` (`output/starlink-star-light-v3-20261109/index.html`).
+The generated production record (`output/starlink-star-light-v3-20261109/plan.md`)
 contains the source dates, stages, exact type sizes, radius formula and build
 instructions. The [IngramSpark study](20261109_starlink_star_light_v3_pod.md)
 compares three formats with actual-size proof pages.
@@ -171,8 +171,8 @@ Checks cover source/output hashes, all 16 map/legend pairs, unique SVG IDs,
 object and label conservation, physical typography, source population
 counts, all nine symbols, doubled radius span, collision clearance, USA
 coverage, removed layers, reversed legend colors, observer notes, rendered
-astronomy bounds and PDF page dimensions. The [validation receipt](../../output/starlink-star-light-v3-20261109/validation.json)
-and [delivery manifest](../../output/starlink-star-light-v3-20261109/manifest.json)
+astronomy bounds and PDF page dimensions. The validation receipt (`output/starlink-star-light-v3-20261109/validation.json`)
+and delivery manifest (`output/starlink-star-light-v3-20261109/manifest.json`)
 are generated with the artifacts. Seven focused display regressions and nine
 existing capability-interpretation regressions accompany the build.
 
@@ -200,11 +200,11 @@ interiors or a publishing submission.
 
 The accepted changes are now regenerated as **four World maps and four A3
 landscape legends**, without rebuilding USA details. The new delivery is
-[`output/starlink-star-light-world-20261110/`](../../output/starlink-star-light-world-20261110/index.html),
-with an [eight-page PDF](../../output/starlink-star-light-world-20261110/starlink-star-light-v3.pdf),
-[production record](../../output/starlink-star-light-world-20261110/plan.md),
-[source manifest](../../output/starlink-star-light-world-20261110/sources/input-manifest.json)
-and [validation receipt](../../output/starlink-star-light-world-20261110/validation.json).
+`output/starlink-star-light-world-20261110/` (`output/starlink-star-light-world-20261110/index.html`),
+with an eight-page PDF (`output/starlink-star-light-world-20261110/starlink-star-light-v3.pdf`),
+production record (`output/starlink-star-light-world-20261110/plan.md`),
+source manifest (`output/starlink-star-light-world-20261110/sources/input-manifest.json`)
+and validation receipt (`output/starlink-star-light-world-20261110/validation.json`).
 The saved [World recipe](../../config/starlink-star-light-world-20261110.json)
 pins the selected local sources. This is a local regeneration, without a new
 remote acquisition or activation of an incomplete data edition.

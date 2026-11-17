@@ -190,8 +190,8 @@ response bodies, read timeouts and connection resets within the request/range
 retry budget, preserving validated partial bytes. Cached objects, completed
 daily subsets and partial transfers survive failed runs. Time inventories checked on the
 same UTC day are reused; receipts retain the actual provider-check time.
-For local hourly progress reports and CPC completion estimates, see the
-[progress reporter](../../development/data-update-hourly-progress.md).
+For download progress, shared cooldowns and CPC recovery monitoring, see the
+[NOAA download controls](#noaa-download-controls).
 CelesTrak retains its two-hour request policy. The optional NASA SSC reference
 may remain explicitly historical. Network, groundstation and audited annual
 publication inputs are copied and labeled as pinned local data; no external

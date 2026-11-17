@@ -17,8 +17,8 @@ page and its primary legend on the next odd right page.
 
 | Book | A4 landscape interior | Reflowable EPUB |
 | --- | --- | --- |
-| World Atlas | [102 pages, 55.16 MiB](../../output/atlas-optional-v3-landscape/atlas-world.20261112.v3.a4-landscape.pdf) | [13.34 MiB](../../output/atlas-optional-v3-landscape/atlas-world.20261112.v3.epub) |
-| Starlink Star Light v3 | [38 pages, 17.96 MiB](../../output/atlas-optional-v3-landscape/starlink-star-light.v3.a4-landscape.pdf) | [8.96 MiB](../../output/atlas-optional-v3-landscape/starlink-star-light.v3.epub) |
+| World Atlas | 102 pages, 55.16 MiB (`output/atlas-optional-v3-landscape/atlas-world.20261112.v3.a4-landscape.pdf`) | 13.34 MiB (`output/atlas-optional-v3-landscape/atlas-world.20261112.v3.epub`) |
+| Starlink Star Light v3 | 38 pages, 17.96 MiB (`output/atlas-optional-v3-landscape/starlink-star-light.v3.a4-landscape.pdf`) | 8.96 MiB (`output/atlas-optional-v3-landscape/starlink-star-light.v3.epub`) |
 
 The delivery retains all **47 maps, 403 paragraphs, 421 keys and 1,541
 source SVG text lines**. All 140 print pages decode; placement, parity,

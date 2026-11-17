@@ -307,7 +307,7 @@ and one `research-gap` metric. `Supplemental` means a possible supporting
 product; it does **not** mean an implemented optional pass. The complete
 [human-readable catalog](../passes/resources/metric-catalog.md) maps every metric
 to its class and promotion boundary, while
-[`resources-profile.json`](../../../assets.static/resources/current-20261108/resources-profile.json)
+`resources-profile.json` (`assets.static/resources/current-20261108/resources-profile.json`)
 remains the machine-readable authority.
 The [network-swarm notes](../passes/network-swarm.md) record the fixed
 source audit, variable-input contract, H3/Izzi clustering, independent

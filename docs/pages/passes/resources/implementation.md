@@ -52,7 +52,7 @@ authorization-gated.
 
 ## Data contract and gates
 
-[`resources-profile.json`](../../../../assets.static/resources/current-20261108/resources-profile.json)
+`resources-profile.json` (`assets.static/resources/current-20261108/resources-profile.json`)
 uses `cartofreako-resources-profile-v3`. It defines the source register,
 country geometry and values digests, six families, palettes, metrics, one
 default per family, and either a country coverage definition or a spatial
@@ -64,7 +64,7 @@ uses six fixed capacity classes and the yellow/orange palette. Petroleum uses
 browns. Missing data retain a separate neutral fill. Historical Stage 13/14
 artifacts retain their original opacity contracts.
 
-[`resources-values.json`](../../../../assets.static/resources/current-20261108/resources-values.json)
+`resources-values.json` (`assets.static/resources/current-20261108/resources-values.json`)
 uses `cartofreako-resources-values-v3`. Its 1,704 records contain family,
 metric, ISO3 key, observation year, finite nonnegative value, and value state.
 [`coral-reefs-025deg.geojson`](../../../../assets.static/resources/coral-reefs-025deg.geojson)

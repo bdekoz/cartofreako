@@ -9,11 +9,11 @@ AuthaGraph display framing. A manual stepper and a **1920 × 1080 MKV**, with
 population easier to understand.
 
 The complete delivery contains 24 hourly map/legend pairs and a separate
-+24-hour proof. Open the [local stepper](../../output/starlink-star-light-v4-observer-hourly/index.html),
-[48-second MKV](../../output/starlink-star-light-v4-observer-hourly/observer-hourly-24-plates-48s.mkv),
-[Instagram portrait MP4](../../output/starlink-star-light-v4-observer-hourly/instagram/observer-hourly-instagram-1080x1920-48s.mp4),
-[A2 contact sheet](../../output/starlink-star-light-v4-observer-hourly/observer-hourly-contact-sheet.pdf),
-or [source and validation manifest](../../output/starlink-star-light-v4-observer-hourly/manifest.json).
++24-hour proof. Open the local stepper (`output/starlink-star-light-v4-observer-hourly/index.html`),
+48-second MKV (`output/starlink-star-light-v4-observer-hourly/observer-hourly-24-plates-48s.mkv`),
+Instagram portrait MP4 (`output/starlink-star-light-v4-observer-hourly/instagram/observer-hourly-instagram-1080x1920-48s.mp4`),
+A2 contact sheet (`output/starlink-star-light-v4-observer-hourly/observer-hourly-contact-sheet.pdf`),
+or source and validation manifest (`output/starlink-star-light-v4-observer-hourly/manifest.json`).
 The separate
 [annotated November 3 / November 9 comparison PDF](../../output/orbital-observer-nov3-nov9-comparison/orbital-observer-nov3-vs-nov9-annotated.pdf)
 explains the underlying coordinate behavior.
@@ -98,7 +98,7 @@ Each native canary completed in about **1.3 seconds**, with three canaries
 running concurrently on this machine. This measures native calculation
 and SVG generation only. It does not establish the runtime of all 24/25
 frames, typography, preview/PDF rendering, viewer packaging or encoding.
-The local [canary receipt](../../build/observer-v4-feasibility/results.json)
+The local canary receipt (`build/observer-v4-feasibility/results.json`)
 retains exact metadata and timings.
 
 The completed sequence reproduces all three canaries. Across its 24 main
@@ -269,12 +269,12 @@ title; the video playback time and observation time are different clocks.
 
 ## Instagram portrait edition
 
-The companion [Instagram MP4](../../output/starlink-star-light-v4-observer-hourly/instagram/observer-hourly-instagram-1080x1920-48s.mp4)
+The companion Instagram MP4 (`output/starlink-star-light-v4-observer-hourly/instagram/observer-hourly-instagram-1080x1920-48s.mp4`)
 recomposes the same 24 states for a **1080 × 1920, 9:16** screen. It retains
 the **48-second** runtime and two-second holds, using H.264 High 4.1,
 30 fps, `yuv420p`, BT.709, square pixels and a fast-start MP4 container,
-with no audio. A [cover image](../../output/starlink-star-light-v4-observer-hourly/instagram/observer-hourly-instagram-cover.jpg)
-and [posting caption](../../output/starlink-star-light-v4-observer-hourly/instagram/caption.txt)
+with no audio. A cover image (`output/starlink-star-light-v4-observer-hourly/instagram/observer-hourly-instagram-cover.jpg`)
+and posting caption (`output/starlink-star-light-v4-observer-hourly/instagram/caption.txt`)
 accompany the export.
 
 The upper panel shows the complete orbital-object plate; the lower panel
@@ -304,7 +304,7 @@ The builder verifies the original delivery hashes before reading its SVGs,
 checks membership and geometry while preparing the mobile panels, and
 checks all 1,440 decoded video frames against their scheduled hourly state.
 It records source, builder and output hashes in a separate
-[Instagram manifest](../../output/starlink-star-light-v4-observer-hourly/instagram/manifest.json).
+Instagram manifest (`output/starlink-star-light-v4-observer-hourly/instagram/manifest.json`).
 The original horizontal study and its manifest remain unchanged.
 
 ## Ending and looping

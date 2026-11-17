@@ -21,7 +21,7 @@ end of this document.
 
 - [Ocean maps and separate legends](../../output/ocean-temperature-20261108/index.html).
 - [Mineral maps and separate legends](../../output/mineral-additions-20261108/index.html).
-- [Current default atlas](../../output/atlas/index.html).
+- Current default atlas (`output/atlas/index.html`).
 - [Authoritative plate catalog](../../config/atlas-plates.json).
 - [Paired-year comparison data](../../output/ocean-temperature-20261108/data/matched-comparison.json)
   and [JMA comparison](../../output/ocean-temperature-20261108/data/jma-oisst-20261107-comparison.json).
@@ -405,7 +405,7 @@ land-temperature generator tests also passed after the naming changes.
 atlas sheets have checked SVG/PDF/PNG exports. The
 [ocean validation receipt](../../output/ocean-temperature-20261108/validation.json)
 records 90 native grids and 32 independently recomputed cell-periods. The
-[current atlas validation](../../output/atlas/sources/sheets-validation.json)
+current atlas validation (`output/atlas/sources/sheets-validation.json`)
 confirms the 39 paired passes and the selected solar-radiation styling.
 The mineral supplement's 48 SVG/PDF/preview files match their receipts.
 All 126 ocean-index, 157 atlas-index and 40 mineral-index local references

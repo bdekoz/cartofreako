@@ -155,8 +155,8 @@ for credentials, storage, resume and replay commands. `make all` and
 After changing acquisition code, start a new cached run without `--resume`.
 For NASA availability, the [recovery probe](docs/pages/passes/astronomy.md#source-evaluation-and-bounded-snapshots)
 prints local-time red `no` / green `yes` results and exits on the first valid
-response. The [hourly reporter](docs/development/data-update-hourly-progress.md)
-emits scheduled reports at `:00` only while either data-update target is running.
+response. The [NOAA download controls](docs/pages/getting-started/generation.md#noaa-download-controls)
+describe acquisition progress, shared cooldowns and the hourly recovery monitor.
 
 List every supported top-level Make target with:
 

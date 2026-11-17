@@ -7,7 +7,7 @@
 [Generated previews](../../getting-started/build.md#generated-artifact-previews)
 
 This is the human-readable index to the checked
-[`cartofreako-resources-profile-v3`](../../../../assets.static/resources/current-20261108/resources-profile.json)
+`cartofreako-resources-profile-v3` (`assets.static/resources/current-20261108/resources-profile.json`)
 metric catalog. The JSON profile remains authoritative for exact units,
 reference periods, source IDs, coverage, output tags, palettes, and lifecycle
 status. The checked snapshot contains 59 metric definitions across six

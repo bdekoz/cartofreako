@@ -14,9 +14,9 @@ JPEG, with all 39 A3 legend pages lossless.
 
 | Artifact | Local delivery |
 | --- | --- |
-| Original atlas | [atlas-world.20261112.v3.pdf](../../output/data-edition/20261111/atlas/atlas-world.20261112.v3.pdf) |
-| Mobile edition | [atlas-world.20261112.v3.mobile.pdf](../../output/data-edition/20261111/atlas/atlas-world.20261112.v3.mobile.pdf) |
-| Original conversion receipt | [atlas-world.20261112.v3.mobile.json](../../output/data-edition/20261111/atlas/sources/atlas-world.20261112.v3.mobile.json) |
+| Original atlas | atlas-world.20261112.v3.pdf (`output/data-edition/20261111/atlas/atlas-world.20261112.v3.pdf`) |
+| Mobile edition | atlas-world.20261112.v3.mobile.pdf (`output/data-edition/20261111/atlas/atlas-world.20261112.v3.mobile.pdf`) |
+| Original conversion receipt | atlas-world.20261112.v3.mobile.json (`output/data-edition/20261111/atlas/sources/atlas-world.20261112.v3.mobile.json`) |
 
 The original receipt uses `cartofreako-mobile-pdf-v1`. New Izzi conversions
 use `izzi-mobile-pdf-v1`; preserve the existing delivery and receipt.

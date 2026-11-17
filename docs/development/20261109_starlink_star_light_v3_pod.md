@@ -19,9 +19,9 @@ Cartofreako supplies the cartographic content and book manifests. The
 and link to the full production plan in Izzi.
 The A5 options below are retained as the earlier format study.
 
-**Previous portrait delivery:** the [A4 Starlink interior](../../output/atlas-optional-v3/starlink-star-light.v3.a4.ingramspark.pdf)
+**Previous portrait delivery:** the A4 Starlink interior (`output/atlas-optional-v3/starlink-star-light.v3.a4.ingramspark.pdf`)
 has 30 pages and all eight SLSL1-SLSL4 World/USA views. Its
-[reflowable EPUB](../../output/atlas-optional-v3/starlink-star-light.v3.epub)
+reflowable EPUB (`output/atlas-optional-v3/starlink-star-light.v3.epub`)
 and RGB ebook cover are in the [delivery directory](../../output/atlas-optional-v3/README.md),
 alongside the complete 58-page World atlas edition. Original observation
 dates, observer notes, symbol keys and sources are retained. Ten Izzi tests,
@@ -69,7 +69,7 @@ recommended body sizes.
 | 2: Small square | 8 × 8 in / 203 × 203 mm; 40 pages; paperback or case laminate | 7 in | 15.91% | 1.53 pt | 0.95 pt | More breathing room for the USA panels and symbol keys. Still requires details and reflowed text. |
 | 3: Landscape | 11 × 8.5 in / 279 × 216 mm; 32 pages; Premium Color | 10 in | 22.73% | 2.18 pt | 1.36 pt | Best single-page match to the long map composition, but least portable. Separate detail pages remain necessary. |
 
-The six-page [format proof](../../output/starlink-star-light-v3-20261109/pod/format-proofs.pdf)
+The six-page format proof (`output/starlink-star-light-v3-20261109/pod/format-proofs.pdf`)
 places SLSL1 and SLSL4 at each proposed physical size, with readable explanatory
 text outside the image. Print at 100%, without “fit to page.” These proofs use
 screen previews to study scale; they are not the final print interiors.

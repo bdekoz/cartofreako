@@ -1,14 +1,14 @@
 # World Atlas typographic print cover
 
-The [cover PDF](../../output/atlas-optional-v4-spread/atlas-world.20261112.v4.print-cover.pdf)
+The cover PDF (`output/atlas-optional-v4-spread/atlas-world.20261112.v4.print-cover.pdf`)
 matches the latest 162-page, portrait A4 World Atlas. The right/front panel
 has large **CARTO** over **FREAKO**. The left/back panel has **WORLD ATLAS**
 and **12 NOVEMBER 2026**, the source edition date. The spine is unlettered.
 The design uses amber Atkinson Hyperlegible Bold on wine, without maps,
 decorative marks or additional cover copy.
 
-[Preview](../../output/atlas-optional-v4-spread/atlas-world.20261112.v4.print-cover.png)
-and [separate front/back panel masters](../../output/atlas-optional-v4-spread/atlas-world.20261112.v4.print-cover.panels.pdf)
+Preview (`output/atlas-optional-v4-spread/atlas-world.20261112.v4.print-cover.png`)
+and separate front/back panel masters (`output/atlas-optional-v4-spread/atlas-world.20261112.v4.print-cover.panels.pdf`)
 are included. The panels PDF contains the front first, then the back, each
 with exact 210 x 297 mm trim and 3.175 mm bleed. It can be placed on a final
 printer template independently of the wrap's working spine width.

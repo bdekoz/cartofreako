@@ -5,8 +5,8 @@ produced by Izzi from Cartofreako's frozen maps, legends and source notes.
 
 | Book | A4 print interior | Reflowable EPUB | External ebook cover |
 | --- | --- | --- | --- |
-| World Atlas: 39 maps, 58 pages | [PDF, 33.65 MiB](atlas-world.20261112.v3.a4.ingramspark.pdf) | [EPUB, 13.33 MiB](atlas-world.20261112.v3.epub) | [RGB JPEG](atlas-world.20261112.v3.ebook-cover.jpg) |
-| Starlink Star Light v3: eight World/USA maps, 30 pages | [PDF, 11.92 MiB](starlink-star-light.v3.a4.ingramspark.pdf) | [EPUB, 8.95 MiB](starlink-star-light.v3.epub) | [RGB JPEG](starlink-star-light.v3.ebook-cover.jpg) |
+| World Atlas: 39 maps, 58 pages | PDF, 33.65 MiB (`output/atlas-optional-v3/atlas-world.20261112.v3.a4.ingramspark.pdf`) | EPUB, 13.33 MiB (`output/atlas-optional-v3/atlas-world.20261112.v3.epub`) | RGB JPEG (`output/atlas-optional-v3/atlas-world.20261112.v3.ebook-cover.jpg`) |
+| Starlink Star Light v3: eight World/USA maps, 30 pages | PDF, 11.92 MiB (`output/atlas-optional-v3/starlink-star-light.v3.a4.ingramspark.pdf`) | EPUB, 8.95 MiB (`output/atlas-optional-v3/starlink-star-light.v3.epub`) | RGB JPEG (`output/atlas-optional-v3/starlink-star-light.v3.ebook-cover.jpg`) |
 
 The print PDFs are interiors for an IngramSpark A4 portrait premium-color
 paperback: 210 x 297 mm, no bleed or printer marks, mirrored 20/15 mm inner/outer
@@ -32,7 +32,7 @@ which link to the full dated provider assessment in Izzi.
 The World book retains all 39 map/legend pairs from
 `atlas-world.20261112.v3.pdf`, its original edition/acquisition information,
 291 explanatory/source paragraphs and 265 key entries. Its ebook overview
-images reuse the existing [80-page mobile PDF](../data-edition/20261111/atlas/atlas-world.20261112.v3.mobile.pdf).
+images reuse the existing 80-page mobile PDF (`output/data-edition/20261111/atlas/atlas-world.20261112.v3.mobile.pdf`).
 Print overviews and enlarged details use original artwork, not the mobile PDF.
 
 Starlink retains all eight SLSL1-SLSL4 World/USA map/legend pairs, 112

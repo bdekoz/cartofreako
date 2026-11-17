@@ -1370,7 +1370,8 @@ all-experiments-resilient: all-experiments-fetch
 check-all-experiments: tests/check-all-experiments.sh Makefile
 	"tests/check-all-experiments.sh"
 
-check-docs: $(DOC_LINK_CHECKER) check-pass-status
+check-docs: $(DOC_LINK_CHECKER) tests/test-doc-links.py check-pass-status
+	python3 tests/test-doc-links.py
 	"$(DOC_LINK_CHECKER)"
 
 TOT_PREVIEW_BUILDER := scripts/build-tot-preview.sh

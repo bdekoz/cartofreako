@@ -12,6 +12,7 @@ the repository's base resource snapshot and current atlas are available.
 The script prepares the dated resource extension and native metric SVGs
 before exporting separate World/Japan maps and legends.
 
-Map/PDF links in the index refer to those local print artifacts. The
+The index links to the committed screen previews. SVG/PDF labels identify
+local print artifacts and show their output paths on hover. The
 supplement manifest records their hashes and supplies the current atlas
 builder. Publication and a new repository commit are separate actions.

@@ -7,8 +7,8 @@ contain only their original cartography.
 
 | Book | A4 landscape interior | Reflowable EPUB | Ebook cover |
 | --- | --- | --- | --- |
-| World Atlas | [102 pages, 55.16 MiB](atlas-world.20261112.v3.a4-landscape.pdf) | [13.34 MiB](atlas-world.20261112.v3.epub) | [RGB JPEG](atlas-world.20261112.v3.ebook-cover.jpg) |
-| Starlink Star Light v3 | [38 pages, 17.96 MiB](starlink-star-light.v3.a4-landscape.pdf) | [8.96 MiB](starlink-star-light.v3.epub) | [RGB JPEG](starlink-star-light.v3.ebook-cover.jpg) |
+| World Atlas | 102 pages, 55.16 MiB (`output/atlas-optional-v3-landscape/atlas-world.20261112.v3.a4-landscape.pdf`) | 13.34 MiB (`output/atlas-optional-v3-landscape/atlas-world.20261112.v3.epub`) | RGB JPEG (`output/atlas-optional-v3-landscape/atlas-world.20261112.v3.ebook-cover.jpg`) |
+| Starlink Star Light v3 | 38 pages, 17.96 MiB (`output/atlas-optional-v3-landscape/starlink-star-light.v3.a4-landscape.pdf`) | 8.96 MiB (`output/atlas-optional-v3-landscape/starlink-star-light.v3.epub`) | RGB JPEG (`output/atlas-optional-v3-landscape/starlink-star-light.v3.ebook-cover.jpg`) |
 
 The interiors use true **297 x 210 mm** pages. Top, bottom and outer margins
 are 13 mm. World Atlas uses a 16 mm total inner margin and a 268 x 184 mm
@@ -54,9 +54,9 @@ phone/tablet widths and with large dark-theme text in Firefox. These are
 browser viewport simulations, not physical-device or Kindle Previewer tests.
 Dense source labels and source overlaps still require enlargement.
 
-- [World spread previews](validation/atlas-world.20261112.v3.pages/spread-contact-1.jpg)
-- [Starlink spread previews](validation/starlink-star-light.v3.pages/spread-contact-1.jpg)
-- [Content audit](validation/content.json)
+- World spread previews (`output/atlas-optional-v3-landscape/validation/atlas-world.20261112.v3.pages/spread-contact-1.jpg`)
+- Starlink spread previews (`output/atlas-optional-v3-landscape/validation/starlink-star-light.v3.pages/spread-contact-1.jpg`)
+- Content audit (`output/atlas-optional-v3-landscape/validation/content.json`)
 - [Compact validation record](../../docs/development/20261114_pod_expanded_v2.landscape.validation.json)
 - `sources/`: frozen manifests, content extraction, environment and exact
   production-tool/profile snapshots with SHA-256 hashes.
