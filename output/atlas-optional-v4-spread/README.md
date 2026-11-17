@@ -80,7 +80,7 @@ and physical print checks were not performed.
 - [Starlink map and legend spread previews](validation/starlink-star-light.v4.pages/spread-contact-1.jpg)
 - [Complete content audit](validation/content.json)
 - [Compact validation record](../../docs/development/20261114_pod_expanded_v4.validation.json)
-- [v4 design and reproduction notes](../../docs/development/20261114_pod_expanded_v4.md)
+- [v4 delivery and reproduction notes](../../docs/development/20261114_pod_expanded_v4.md)
 
 `sources/` preserves exact manifests, source extraction, production scripts,
 profile, environment and SHA-256 hashes. `validation/` holds build receipts,

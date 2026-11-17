@@ -24,7 +24,8 @@ KDP. These covers are not print wraparound covers.
 KDP's A4 premium-color size accepts this page-count range; standard color is
 unavailable at A4. Lulu needs its own product/template assessment. Both books
 are below Lulu's 72-page minimum for Amazon color-print distribution. See the
-[dated provider comparison and reproduction commands](../../docs/development/20261114_pod_expanded_v2.md).
+[delivery notes and reproduction commands](../../docs/development/20261114_pod_expanded_v2.md),
+which link to the full dated provider assessment in Izzi.
 
 ## Content and reading
 

@@ -9,11 +9,22 @@ title: Build and generated artifacts
 [Source layout conventions](source_layout_conventions.md) ·
 [Visual gallery](../gallery/README.md)
 
-## Since the v13 generated-assets release
+## Get the sources
 
-The gallery serves the selected image backend. Current source development
-adds capabilities without rewriting the sealed v13 UCB AAO/S3 deposit. See
-[the release notes](../releases/since-v13.md) for the full change list.
+The [Cartofreako GitHub repository](https://github.com/bdekoz/cartofreako)
+contains the C++20 projection implementations, map generators, build scripts,
+tests and documentation. Clone it with Git and enter the checkout:
+
+```sh
+git clone https://github.com/bdekoz/cartofreako.git
+cd cartofreako
+```
+
+Before building, follow the [prerequisites](prerequisites.md), including the
+[Alpha60 and Izzi source trees](prerequisites.md#alpha60-and-izzi-source-trees)
+used by the generators. The [source layout conventions](source_layout_conventions.md)
+explain the checkout's directories. To acquire current input data and render
+an edition, continue with [Build a selected data edition](#build-a-selected-data-edition).
 
 ## Project and build
 

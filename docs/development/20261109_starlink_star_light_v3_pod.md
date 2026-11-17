@@ -15,7 +15,8 @@ collection as print interiors and corresponding EPUBs. The
 now contains the rebuilt PDFs and EPUBs; the portrait delivery below is the
 previous baseline. Izzi owns the reusable visualization/production capability;
 Cartofreako supplies the cartographic content and book manifests. The
-[expanded v2 plan](20261114_pod_expanded_v2.md) documents that variation.
+[landscape delivery notes](20261114_pod_expanded_v2.md) document that variation
+and link to the full production plan in Izzi.
 The A5 options below are retained as the earlier format study.
 
 **Previous portrait delivery:** the [A4 Starlink interior](../../output/atlas-optional-v3/starlink-star-light.v3.a4.ingramspark.pdf)
