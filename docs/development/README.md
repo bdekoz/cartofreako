@@ -7,6 +7,7 @@ title: Development records
 
 [Documentation index](../pages/README.md) · [Historical records](../pages/history/README.md)
 
+- [Current World/Japan atlas-optional review: 151 maps and 151 legend/source sheets](../pages/gallery/setouchi-2028.md#current-atlas-optional-review)
 - [Mobile PDF delivery and reproduction: rasterized World atlas](20261114_pdf_optimization_mobile.md)
 - [v4 full-bleed portrait-spread delivery: complete maps, legends, PDFs and EPUBs](20261114_pod_expanded_v4.md)
 - [World Atlas typographic print cover: wrap, panel masters, dimensions and reproduction](20261114_world_atlas_print_cover.md)

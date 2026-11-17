@@ -24,9 +24,10 @@ standalone Equal Earth forward/reverse support, neutral PROJ/D3 comparison
 fixtures, and [five local positioning and slice studies](docs/development/20260815_equal-earth-positioning-speculations-v01.md)
 without changing the six-family release runtime.
 
-Review the published **30 October Setouchi 2028 world/Japan edition** in the
-[live gallery](https://situationshipin.space/review/cartofreako-setouchi-2028-20261030/):
-38 paired subjects, 76 zoomable plates and downloadable feedback. The
+Review the **17 November atlas-optional World/Japan edition** in the
+[live gallery](https://situationshipin.space/review/cartofreako-atlas-optional-20261117/):
+80 subjects, 151 maps and 151 companion legend/source sheets, including the
+optional ocean and climate variants from the completed 11 November data edition. The
 [review guide](docs/pages/gallery/setouchi-2028.md) explains the visual changes,
 feedback workflow, source inventory and print deliverables.
 

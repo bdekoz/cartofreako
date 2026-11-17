@@ -1,24 +1,62 @@
 ---
 layout: default
-title: Setouchi 2028 world and Japan review
+title: World and Japan atlas review
 ---
 
-# Setouchi 2028 world and Japan review
+# World and Japan atlas review
 
-Open the [world and Japan review gallery](https://situationshipin.space/review/cartofreako-setouchi-2028-20261030/)
-on situationshipin.space. The **2026-10-30 review edition** contains **38 world
-plates and 38 Japan companions**, paired by subject. It includes the complete
-plate set from the Setouchi delivery and is listed in the site's
-[Proofs catalog](https://situationshipin.space/proofs.html).
+Open the [current World/Japan atlas-optional review](https://situationshipin.space/review/cartofreako-atlas-optional-20261117/)
+on situationshipin.space. The **17 November 2026 review round** contains
+**80 subjects, 151 maps and 151 companion legend/source sheets**, using the
+current map presentation and amber A3 v3 legends. It implements the complete
+World/Japan revision requested in
+[issue #83](https://github.com/bdekoz/situationshipin.space/issues/83) and is
+listed in the [Proofs catalog](https://situationshipin.space/proofs.html).
 
 [Documentation index](../README.md) · [Visual gallery](README.md) ·
 [Default generation styles](../getting-started/generation-styles.md)
 
-The current [atlas build](../getting-started/generation-styles.md#setouchi-st2-print-layout)
-adopts the November MSP 5 wine/amber settings and writes to `output/atlas/`.
-Its 152 SVG sheets and 20 selected print sheets have been validated; the full
-print atlas has not yet been assembled with this presentation. The published
-gallery above and the ST2 delivery described below retain their dated editions.
+## Current atlas-optional review
+
+The review includes all available World/Japan map and legend sheets from the
+selected completed `atlas-optional` build: 39 default subjects, nine optional
+ocean variants and 32 optional climate variants. Catalog identities expand
+into separate periods and measures in this review. There are **80 World
+views** and **71 Japan views**, each with its own legend. Nine optional
+World/India products contribute their World sheets; no Japan sheet exists
+for those variants. India sheets are outside this collection.
+
+The source data edition is **11 November 2026**, and the completed render
+build is `20261113t054328z-8f8b6a07f3a4`. This review publication reuses those
+validated artifacts. Source observation dates, coverage, uncertainty and
+interpretation stay on the companion legends. The
+[source and image inventory](https://situationshipin.space/review/media/cartofreako-atlas-optional-20261117/plates.json)
+records the build/dataset identities, original implementation revision and
+working-tree state, style fingerprints, source hashes and every published
+image hash. The original full-build receipt and the three render-validation
+reports accompany that inventory.
+
+The gallery provides geographic filtering, search, expandable legends and
+separate feedback pages for every map and legend. Open a full image to zoom;
+review copies use lossless WebP up to 3840 pixels on the longest edge, with
+960-pixel thumbnails. Atlas PNG masters and optional print PDFs supply the
+derivatives. Full print masters remain local to Cartofreako.
+
+Saved reviews remain bound to exact source and image hashes. Download all
+302 sheet reviews and collection notes as one JSON file. The
+[previous October 30 round](https://situationshipin.space/review/cartofreako-setouchi-2028-20261030/)
+retains its 38 subjects, 76 original plates and review identities, and links
+forward to the current round. Earlier feedback is not assigned to revised
+images. Preparation and publication commands are documented in the
+[review site's README](https://github.com/bdekoz/situationshipin.space#current-cartofreako-atlas-optional-review).
+
+## Earlier October review rounds
+
+The October 30 gallery and ST2 delivery below retain their dated editions.
+The historical ST2 presentation has 152 SVG sheets and 20 selected print
+sheets; the current default atlas and completed books are described in the
+[build guide](../getting-started/build.md) and
+[publication delivery notes](../../development/20261114_pod_expanded_v4.md).
 
 The subsequent [ST2 revision](../../development/20261030_setouchi_triennale_explore_2.md)
 has a [plate-by-plate source bibliography](setouchi-2028-bibliography.md)
